@@ -1,0 +1,19 @@
+paginate: 10 # pagination based on number of posts
+paginate_path: "page:num"
+exclude: ["README.md"] # files to exclude
+pygments: true
+
+title: webcompat.com
+description: Stylish Jekyll Theme
+author:
+  name: webcompat.com
+  github: webcompat
+  twitter: webcompat
+  email_md5: bfbe6765eab573be863665dbfb935af5
+  bio: Compatibility on the World Wide Web.
+
+rss_path: feed.xml
+categories_path: categories.html
+tags_path: tags.html
+
+BASE_PATH: http://localhost:4000
