@@ -4,7 +4,7 @@ exclude: ["README.md"] # files to exclude
 pygments: true
 
 title: webcompat.com
-description: Stylish Jekyll Theme
+description: A website.
 author:
   name: webcompat.com
   github: webcompat
@@ -13,5 +13,3 @@ author:
   bio: Compatibility on the World Wide Web.
 
 rss_path: feed.xml
-categories_path: categories.html
-tags_path: tags.html

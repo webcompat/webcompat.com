@@ -24,6 +24,10 @@ body{
 	color: #2c3e50;
 }
 
+.sidebar-header img {
+    max-width: 100%;
+}
+
 a.nav-link {
 	padding-bottom: 5px;
 	padding-top: 7px;

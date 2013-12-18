@@ -1,8 +1,6 @@
 ---
 layout: post
 title: Lorem Ipsum wat
-categories: [cats, lizards, frogs]
-tags: [tacos, pizza, hambugers]
 fullview: true
 ---
 

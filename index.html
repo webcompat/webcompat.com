@@ -1,6 +1,6 @@
 ---
 layout: page
-title: webcompat.com
+title: A Better Web Starts Here.
 tagline:
 ---
 
@@ -40,36 +40,3 @@ tagline:
 
         </article>
 {% endfor %}
-<hr/>
-
-<ul class="pager">
-
-  {% if paginator.previous_page %}
-    <li class="previous">
-      {% if paginator.previous_page == 1 %}
-        <a href="/">&larr; Newer</a>
-      {% else %}
-        <a href="/page{{ paginator.previous_page }}">&larr; Newer</a>
-      {% endif %}
-    </li>
-  {% else %}
-    <li class="previous disabled">
-      <a>&larr; Newer</a>
-    </li>
-  {% endif %}
-
-  <li>
-          <span class="page_number">Page: {{ paginator.page }} of {{ paginator.total_pages }}</span>
-  </li>
-
-  {% if paginator.next_page %}
-    <li class="next">
-            <a href="/page{{ paginator.next_page }}">Older &rarr;</a>
-    </li>
-  {% else %}
-    <li class="next disabled">
-            <a>Older &rarr;</a>
-    </li>
-  {% endif %}
-
-</ul>
