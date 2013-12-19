@@ -41,9 +41,11 @@ body{
 	text-align: center;
 	margin-bottom: 10px;
 }
+
 .sidebar-header .title{
-	letter-spacing: 3px;
-	text-transform: uppercase;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 5px;
 }
 
 .sidebar-header .title a{

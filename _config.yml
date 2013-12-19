@@ -4,7 +4,7 @@ exclude: ["README.md"] # files to exclude
 pygments: true
 
 title: webcompat.com
-description: A website.
+description: A Resource for Web Compatibility.
 author:
   name: webcompat.com
   github: webcompat
