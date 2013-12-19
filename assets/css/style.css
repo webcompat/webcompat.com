@@ -11,6 +11,15 @@ body{
     color: rgb(8, 84, 153);
 }
 
+.alert {
+    padding: 10px;
+    color: inherit;
+}
+.alert-info {
+    background-color: rgb(251, 252, 202);
+    border-color: #ccc;
+    }
+
 .navbar-header {
     background: rgb(166, 162, 149);
 }
@@ -92,8 +101,8 @@ article{
 	letter-spacing: 3px;
 }
 
-article.home div a, article.home pre a { color: #2c3e50; }
-article.home div a:hover, article.home pre a:hover { color: #2c3e50; text-decoration: none; }
+a {text-decoration: underline;color: #085499}
+
 article img { max-width: 100%; }
 article.home.col-sm-10, article > div.col-sm-10 {padding-left:0}
 
