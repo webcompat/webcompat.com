@@ -4,7 +4,7 @@ title: Introducing webcompat.com.
 fullview: true
 ---
 
-<div class="alert alert-info">In the near future this site will serve as a central resource for tools, articles and documentation related to web compatibility. We encourage all those interested in contributing through programming, designing, triaging, reporting, writing content, and more, to <a href="https://wiki.mozilla.org/Compatibility/Mobile#Communication">reach out</a> and <a href="https://wiki.mozilla.org/Compatibility/Guide">get involved</a>.</div>
+<div class="alert alert-info">In the coming months this site will serve as a central resource for tools, articles and documentation focused on web compatibility. We encourage all those interested in contributing through programming, designing, triaging bugs, reporting issues, writing content, and more, to <a href="https://wiki.mozilla.org/Compatibility/Mobile#Communication">reach out</a> and <a href="https://wiki.mozilla.org/Compatibility/Guide">get involved</a>.</div>
 
 _A person should be able to use the Web in all browsers and devices_.
 
@@ -12,11 +12,13 @@ Web Compatibility issues are related to Web sites implementing techniques that c
 
 These issues are cross-platform, cross-product and related to the Web as a whole. There are circumstances when companies choose to use a standardized techniques which is not available for an older browser, but that should be mitigated by making the Web site usable under any circumstances. So if a person is using the last version of [Firefox][firefox] or a vocal browser such as [Jaws][jaws], or a proxy browser such as [Opera Mini][mini] or [UCWeb][ucweb], the Web site should be able to work.
 
-Mozilla has two areas for dealing with Web Compatibility issues. The goal is to make the Web usable by anyone&mdash;not just Firefox users, but we will focus the efforts on solving issues for Firefox users.
+Mozilla has two areas for dealing with Web Compatibility issues. The goal of the Mozilla Web Compatibility teams is to make the Web usable for anyone&mdash;not just Firefox users, but we focus resources on solving issues for Firefox users first.
+
+**The goal of this site is foster and support a broader Web Compatibilty community&mdash;in a vendor-agnostic way&mdash;for the benefit of the Web and its users.** While we're in the process of creating this site and its resources, you can learn more about Mozilla's current efforts below and get involved.
 
 ### Desktop Web Compatibility
 
-The Desktop Web Compatibility effort is at this time mostly driven by volunteers. There are no specific Mozilla resources allocated on it. You are more than welcome to contribute and help solving the issues by contacting Web sites.
+The Desktop Web Compatibility effort is at this time mostly driven by volunteers. There are no specific Mozilla resources dedicated to it. You are welcome to contribute by confirming or triaging bugs, or contacting sites.
 
 * [List of Desktop Web Compatibility issues][desktop-issues]
 
