@@ -1,0 +1,12 @@
+#          ,     ,
+#         (\____/)
+#          (_oo_)
+#            (O)  -  go away robots, this is a dev site.
+#          __||__    \)
+#       []/______\[] /
+#       / \______/ \/
+#      /    /__\
+#     (\   /____\
+#
+User-agent: *
+Disallow: /
