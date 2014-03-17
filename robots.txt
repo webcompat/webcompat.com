@@ -1,0 +1,3 @@
+# go away robots, this is a dev site.
+User-agent: *
+Disallow: /
