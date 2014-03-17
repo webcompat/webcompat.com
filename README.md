@@ -2,7 +2,7 @@
 
 Source code for webcompat.com
 
->>>----It's a work in progress---->
+`>>>----It's a work in progress---->`
 
 ### License
 
