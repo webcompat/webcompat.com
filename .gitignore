@@ -1,5 +1,7 @@
 _site/*
 .DS_Store
 config.py
+fabfile.py
 *.pyc
 *.db
+
