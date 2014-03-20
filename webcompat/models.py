@@ -2,24 +2,17 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-from sqlalchemy import create_engine, Column, Integer, String
+from sqlalchemy import Column, Integer, String
 from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
-from webcompat import app
+from webcompat import engine
 
-import os
-
-engine = create_engine('sqlite:///' + os.path.join(app.config['BASE_DIR'],
-                                                   'github-session.db'))
-db_session = scoped_session(sessionmaker(autocommit=False, autoflush=False,
+db_session = scoped_session(sessionmaker(autocommit=False,
+                                         autoflush=False,
                                          bind=engine))
 
 Base = declarative_base()
 Base.query = db_session.query_property()
-
-
-def init_db():
-    Base.metadata.create_all(bind=engine)
 
 
 class User(Base):
@@ -34,3 +27,6 @@ class User(Base):
 
     def __init__(self, github_access_token):
         self.github_access_token = github_access_token
+
+
+Base.metadata.create_all(bind=engine)
