@@ -1,12 +1,5 @@
 <!DOCTYPE html>
-<title>test</title>
-<style>
-a, input, textarea, img {display: block}
-</style>
-Hello {{person}}!
-<a href="{{ url_for("logout") }}">Logout</a><br><img src="http://www.gravatar.com/avatar/{{gravatar}}">
-<form method="post" action="/">
-<input name="title" placeholder="bug title">
-<textarea name="body" placeholder="Enter bug description here."></textarea>
-<input type="submit">
-</form>
+<title>webcompat.com</title>
+<p>webcompat.com home page</p>
+<a href="{{ url_for("new_issue") }}">Report a new issue.</a>
+<a href="{{ url_for("about") }}">About us.</a>
