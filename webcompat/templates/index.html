@@ -1,5 +1,48 @@
 <!DOCTYPE html>
-<title>webcompat.com</title>
-<p>webcompat.com home page</p>
-<a href="{{ url_for("new_issue") }}">Report a new issue.</a>
-<a href="{{ url_for("about") }}">About us.</a>
+<html lang="en">
+
+<head>
+    <title>webcompat.com</title>
+    <meta name="description" content="Open source community for web compatibility.  Report bugs from websites and help us move the web forward." />
+    <link href="../../static/css/main.css" type="text/css" rel="stylesheet" />
+</head>
+
+<body>
+    <div class="hero">
+      <img class="lightswitch" src="../../static/img/lightswitch.svg" alt="Light Switch">
+          <div id="maintitle">
+            <h1>A <span class="bold">Better Web</span><br> Starts With You.</h1>
+            <h2>Submit bugs for any browser or website all in one place.</h2>
+          </div>
+        <a class="button" id="button1" href="{{ url_for("new_issue") }}">Report bug</a>
+        <!--Search on Github
+          <div class="search">
+            <input type="search" placeholder="Search bugs on Github" >
+          </div>
+        -->
+    </div>
+
+    <div class="about">
+      <p>Webcompat.com is a gathering place for the web compatibility community.  This site is a place to report bugs from any website across the web - whether you are a developer or not.  Started by the Mozilla Web Compatibility team, this initiative is a global task force on a mission to improve the web one bug at a time.  Join us!  Let&#39;s work together to make the web a better place to work and play.
+      <a href="{{ url_for("about") }}">Read more about us.</a>
+    </div>
+
+    <div class="join">
+      <h3>Join Us.</h3>
+        <h4>Be a part of the Web Compat team</h4>
+          <h5>1. <a href="{{ url_for("new_issue") }}">Report</a> Bugs</h5>
+          <h5>2. <a href="{{ url_for("fix") }}">Fix</a> Bugs</h5>
+          <h5>3. <a href="{{ url_for("reachout") }}">Reach out</a> to Sites</h5>
+                <a class="button" id="button2" href="{{ url_for("join") }}">Learn More</a>
+    </div>
+</body>
+
+<!--How do I make the only the date appear?-->
+<footer>
+  <p class="footerleft">Last modified on 
+      <script>document.write(document.lastModified);</script>.
+  </p>
+  <p class="footerright">Contribute on Github</p>
+</footer>
+
+</html>
