@@ -2,7 +2,8 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-from flask import g, redirect, url_for, request, session, render_template
+from flask import (flash, g, redirect, request, render_template, session,
+                   url_for)
 from models import db_session, User
 from webcompat import github, app
 from datetime import datetime
@@ -60,9 +61,8 @@ def login():
 @github.authorized_handler
 def authorized(access_token):
     if access_token is None:
-        # TODO: http://flask.pocoo.org/docs/patterns/flashing/
-        # redirect back to index, flash a message that something is wrong.
-        return 'OH CRAP'
+        flash('Something went wrong trying to sign into GitHub. :(', 'error')
+        return redirect(url_for('index'))
     user = User.query.filter_by(github_access_token=access_token).first()
     if user is None:
         user = User(access_token)
@@ -77,7 +77,7 @@ def authorized(access_token):
 @app.route('/logout')
 def logout():
     session.pop('user_id', None)
-    # TODO: flash message, "You were successfully logged out"
+    flash('You were successfully logged out.', 'info')
     return redirect(url_for('index'))
 
 
