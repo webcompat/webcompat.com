@@ -4,7 +4,7 @@
 <head>
     <title>webcompat.com</title>
     <meta name="description" content="Open source community for web compatibility.  Report bugs from websites and help us move the web forward." />
-    <link href="../../static/css/main.css" type="text/css" rel="stylesheet" />
+    <link href="{{ url_for("static", filename="css/main.css") }}" type="text/css" rel="stylesheet" />
 </head>
 
 <body>
@@ -31,15 +31,15 @@
       <h3>Join Us.</h3>
         <h4>Be a part of the Web Compat team</h4>
           <h5>1. <a href="{{ url_for("new_issue") }}">Report</a> Bugs</h5>
-          <h5>2. <a href="{{ url_for("fix") }}">Fix</a> Bugs</h5>
-          <h5>3. <a href="{{ url_for("reachout") }}">Reach out</a> to Sites</h5>
-                <a class="button" id="button2" href="{{ url_for("join") }}">Learn More</a>
+          <h5>2. <a href="#">Fix</a> Bugs</h5>
+          <h5>3. <a href="#">Reach out</a> to Sites</h5>
+                <a class="button" id="button2" href="#">Learn More</a>
     </div>
 </body>
 
 <!--How do I make the only the date appear?-->
 <footer>
-  <p class="footerleft">Last modified on 
+  <p class="footerleft">Last modified on
       <script>document.write(document.lastModified);</script>.
   </p>
   <p class="footerright">Contribute on Github</p>
