@@ -61,7 +61,8 @@ def login():
 @github.authorized_handler
 def authorized(access_token):
     if access_token is None:
-        # TODO: not this, flash a message and send back?
+        # TODO: http://flask.pocoo.org/docs/patterns/flashing/
+        # redirect back to index, flash a message that something is wrong.
         return 'OH CRAP'
     user = User.query.filter_by(github_access_token=access_token).first()
     if user is None:
@@ -88,7 +89,18 @@ def show_issues():
 #TODO: /issues/new/<issue> redirect 307 to github repo issue
 @app.route('/issues/new', methods=['GET', 'POST'])
 def new_issue():
-    if request.method == 'POST' and g.user:
+    if request.method == 'GET':
+            if g.user:
+                user_info = github.get('user')
+                return render_template('new_issue.html',
+                                       person=user_info.get('login'),
+                                       gravatar=user_info.get('gravatar_id'))
+            else:
+                t = ('To report an issue please login! '
+                     '<a href="{{ url_for("login") }}">Login</a>')
+                return render_template_string(t)
+
+    elif request.method == 'POST' and g.user:
         # um, validation. probably should use wtfform?
         if request.form['title'] is not None:
             title = request.form['title']
@@ -96,17 +108,6 @@ def new_issue():
         github.post('repos/miketaylr/nobody-look-at-this/issues',
                     {'title': title, 'body': body})
         return "something useful like a link"
-
-    elif request.method == 'GET':
-        if g.user:
-            user_info = github.get('user')
-            return render_template('new_issue.html',
-                                   person=user_info.get('login'),
-                                   gravatar=user_info.get('gravatar_id'))
-        else:
-            t = ('To report an issue please login! '
-                 '<a href="{{ url_for("login") }}">Login</a>')
-            return render_template_string(t)
 
 
 @app.route('/about')
