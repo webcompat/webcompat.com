@@ -82,6 +82,7 @@ def logout():
 
 
 @app.route('/issues')
+@app.route('/issues/')
 def show_issues():
     return redirect(url_for('new_issue'), code=307)
 
