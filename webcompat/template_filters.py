@@ -4,6 +4,7 @@
 
 from webcompat import app
 
+
 @app.template_filter('format_date')
 def last_modified_format(value):
     return value.strftime('%B %d, %Y.')
