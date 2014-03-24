@@ -39,10 +39,8 @@
 
 <!--How do I make the only the date appear?-->
 <footer>
-  <p class="footerleft">Last modified on
-      <script>document.write(document.lastModified);</script>.
-  </p>
-  <p class="footerright">Contribute on Github</p>
+  <p class="footerleft">Last modified on {{ last_modified | format_date }}</p>
+  <p class="footerright"><a href="https://github.com/webcompat/webcompat.com">Contribute on Github</a></p>
 </footer>
 
 </html>

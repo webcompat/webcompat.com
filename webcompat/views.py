@@ -2,11 +2,14 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-from webcompat import github, app
 from flask import (g, redirect, url_for, request, session, render_template,
                    render_template_string)
-from flask.ext.github import GitHub
 from models import db_session, User
+from webcompat import github, app
+from datetime import datetime
+import os
+import template_filters
+import time
 
 
 @app.teardown_appcontext
@@ -37,7 +40,11 @@ def token_getter():
 @app.route('/')
 @app.route('/index')
 def index():
-    return render_template('index.html')
+    last_modified = time.ctime(os.path.getmtime(
+                               os.path.join(os.getcwd(),
+                                            'webcompat/templates/index.html')))
+    date_string = datetime.strptime(last_modified, '%a %b %d %H:%M:%S %Y')
+    return render_template('index.html', last_modified=date_string)
 
 
 @app.route('/login')
