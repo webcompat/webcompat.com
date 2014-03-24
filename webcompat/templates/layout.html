@@ -1,22 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <title>webcompat.com</title>
     <meta name="description" content="Open source community for web compatibility.  Report bugs from websites and help us move the web forward." />
     <link href="{{ url_for("static", filename="css/main.css") }}" type="text/css" rel="stylesheet" />
 </head>
-
 <body>
     {% for category, message in get_flashed_messages(with_categories=True) %}
     <div class="flash {{ category }}">{{ message }}</div>
     {% endfor %}
     {% block body %}{% endblock %}
+
+    <footer>
+      <p class="footerleft">Last modified on {{ g.last_modified | format_date }}</p>
+      <p class="footerright"><a href="https://github.com/webcompat/webcompat.com">Contribute on Github</a></p>
+    </footer>
 </body>
-
-<footer>
-  <p class="footerleft">Last modified on {{ g.last_modified | format_date }}</p>
-  <p class="footerright"><a href="https://github.com/webcompat/webcompat.com">Contribute on Github</a></p>
-</footer>
-
 </html>
