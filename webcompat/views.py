@@ -4,9 +4,10 @@
 
 from flask import (flash, g, redirect, request, render_template, session,
                    url_for)
+from datetime import datetime
+from issue_form import IssueForm
 from models import db_session, User
 from webcompat import github, app
-from datetime import datetime
 import os
 import template_filters
 import time
@@ -87,15 +88,20 @@ def show_issues():
     return redirect(url_for('new_issue'), code=307)
 
 
+# quick local testing of form
+@app.route('/fake-form')
+def fake_form():
+    form = IssueForm()
+    return render_template('new_issue.html', form=form)
+
+
 #TODO: /issues/new/<issue> redirect 307 to github repo issue
 @app.route('/issues/new', methods=['GET', 'POST'])
 def new_issue():
     if request.method == 'GET':
             if g.user:
                 user_info = github.get('user')
-                return render_template('new_issue.html',
-                                       person=user_info.get('login'),
-                                       gravatar=user_info.get('gravatar_id'))
+                return render_template('new_issue.html')
             else:
                 return redirect(url_for('login'))
 
