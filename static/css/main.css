@@ -1,0 +1,169 @@
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+
+
+ /* CSS Reset from Eric Meyer
+  http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+body {
+  line-height: 1;
+}
+ol, ul {
+  list-style: none;
+}
+blockquote, q {
+  quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+/*----------End CSS Reset----------*/
+
+
+/*----------Global Styles----------*/
+html {
+   font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+   font-weight: 300;
+}
+h1 {
+  font-size: 6.2em;  
+}
+h2 {
+  font-size: 1.75em;
+}
+h3 {
+  font-size: 4em;
+}
+h4 {
+  font-size: 1.7em;
+}
+h5 {
+  font-size: 2.5em;
+}
+p {
+  font-size: 1em;
+}
+.button {
+  text-align: center;
+  padding: .5em 1.75em ;
+  -moz-border-radius: 7.5px;
+  -webkit-border-radius: 7.5px;
+  border-radius: 7.5px;
+  color: #fdf3dd;
+  font-size: 1.5em;
+  line-height: 2em;
+  text-decoration: none;
+}
+a {
+  color: inherit;
+}
+.bold {
+  font-weight: 700;
+}
+.hero, .about, .join {
+  padding: 2em;
+}
+footer {
+  padding: 1em 6em;
+  background-color: #ffffff;
+  height: 1.5em;
+}
+.footerleft {
+  float: left;
+}
+.footerright {
+  float: right;
+}
+/*--------End Global Styles-------*/
+
+
+/*--------Homepage Styles--------*/
+.hero {
+  background-color: #67cedc;
+  -moz-box-shadow: inset 0 0 4em rgba(24, 30, 49, 0.45);
+  -webkit-box-shadow: inset 0 0 4em rgba(24, 30, 49, 0.45);
+  box-shadow: inset 0 0 4em rgba(24, 30, 49, 0.45);
+  text-align: center;
+  color: #fdf3dd;
+}
+.hero h1, h2 {
+  text-shadow: 1px 1px 2px #181e31
+}
+img.lightswitch {
+  float: left;  
+  width: 50px;
+}
+#maintitle {
+    padding: 3em; 
+}
+#button1 {
+  background-color: #f38326;
+  border: .15em solid #d47039;
+  color: #fdf3dd;
+}
+/*---Search on Github---*/
+input[type=search] {
+  float: left;
+  padding: 2em 3em;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  color: #fdf3dd;
+}
+.about, .join {
+  background-color: #f5ecdb;
+  padding: 3em 6em;
+}
+.about {
+  line-height: 150%;
+}
+.join {
+  color: #67cedc;
+  line-height: 350%;
+}
+.join h3 {
+  font-weight: bold;
+}
+#button2 {
+  background-color: transparent;
+  border: .15em solid #d47039;
+  color: #d47039;
+  font-weight: bold;
+}
+/*-------End Homepage Styles------*/
+
+

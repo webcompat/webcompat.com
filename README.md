@@ -1,10 +1,28 @@
-webcompat.com
-=============
+# webcompat.com
 
 Source code for webcompat.com
 
-Placeholder theme based on https://github.com/dbtek/dbyll.
+`>>>----It's a work in progress---->`
 
-For now this site is built using [Jekyll](http://jekyllrb.com). See [here](http://jekyllrb.com/docs/installation/) for how to install Jekyll.
+### License
 
-Once installed, use `jekyll serve --watch` in the site root to build the site. You can then see it at http://localhost:4000 and it will rebuild itself after a file is changed.
+This Source Code Form is subject to the terms of the Mozilla Public
+License, v. 2.0. If a copy of the MPL was not distributed with this
+file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+
+### Icon 
+
+Icon designed by Jeremy Lloyd.  Public domain via The Noun Project
+http://thenounproject.com/term/light-switch/2235/
+
+### Colors and Typography
+
+Blue - #67cedc
+Inset Shadow on Blue - #181e31
+Orange - #f38326
+Dark Orange - #d47039
+Beige - #fdf3dd
+
+Fonts
+Helvetica Neue
