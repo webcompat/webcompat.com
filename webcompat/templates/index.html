@@ -1,13 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <title>webcompat.com</title>
-    <meta name="description" content="Open source community for web compatibility.  Report bugs from websites and help us move the web forward." />
-    <link href="{{ url_for("static", filename="css/main.css") }}" type="text/css" rel="stylesheet" />
-</head>
-
-<body>
+{% extends "layout.html" %}
+{% block body %}
     <div class="hero">
       <img class="lightswitch" src="../../static/img/lightswitch.svg" alt="Light Switch">
           <div id="maintitle">
@@ -35,12 +27,4 @@
           <h5>3. <a href="#">Reach out</a> to Sites</h5>
                 <a class="button" id="button2" href="#">Learn More</a>
     </div>
-</body>
-
-<!--How do I make the only the date appear?-->
-<footer>
-  <p class="footerleft">Last modified on {{ last_modified | format_date }}</p>
-  <p class="footerright"><a href="https://github.com/webcompat/webcompat.com">Contribute on Github</a></p>
-</footer>
-
-</html>
+{% endblock %}
