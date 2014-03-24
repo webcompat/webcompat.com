@@ -1,9 +1,14 @@
-<!DOCTYPE html>
-<title>webcompat.com | Report an issue</title>
-Hello {{person}}!
-<a href="{{ url_for("logout") }}">Logout</a><br><img src="http://www.gravatar.com/avatar/{{gravatar}}">
+{% extends "layout.html" %}
+{% block body %}
 <form method="post" action="/">
-<input name="title" placeholder="bug title">
-<textarea name="body" placeholder="Enter bug description here."></textarea>
+ {{ form.url.label }} {{ form.url}}<hr>
+ {{ form.site_owner.label }} {{ form.site_owner}}<hr>
+ {{ form.problem_category.label }} {{ form.problem_category }}<hr>
+ {{ form.browser.label }} {{ form.browser }}<hr>
+ {{ form.version.label }} {{ form.version }}<hr>
+ <label for="description">How can we replicate this?</label>
+ {{ form.version.description.label }} {{ form.description }}<hr>
+ <a href="#">Cancel</a>
 <input type="submit">
 </form>
+{% endblock %}
