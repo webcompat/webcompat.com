@@ -22,6 +22,10 @@ def before_request():
     g.user = None
     if 'user_id' in session:
         g.user = User.query.get(session['user_id'])
+    last_modified = time.ctime(os.path.getmtime(
+                               os.path.join(os.getcwd(),
+                                            'webcompat/templates/index.html')))
+    g.last_modified = datetime.strptime(last_modified, '%a %b %d %H:%M:%S %Y')
 
 
 @app.after_request
@@ -40,11 +44,7 @@ def token_getter():
 @app.route('/')
 @app.route('/index')
 def index():
-    last_modified = time.ctime(os.path.getmtime(
-                               os.path.join(os.getcwd(),
-                                            'webcompat/templates/index.html')))
-    date_string = datetime.strptime(last_modified, '%a %b %d %H:%M:%S %Y')
-    return render_template('index.html', last_modified=date_string)
+    return render_template('index.html')
 
 
 @app.route('/login')
