@@ -2,8 +2,7 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-from flask import (g, redirect, url_for, request, session, render_template,
-                   render_template_string)
+from flask import g, redirect, url_for, request, session, render_template
 from models import db_session, User
 from webcompat import github, app
 from datetime import datetime
@@ -78,6 +77,7 @@ def authorized(access_token):
 @app.route('/logout')
 def logout():
     session.pop('user_id', None)
+    # TODO: flash message, "You were successfully logged out"
     return redirect(url_for('index'))
 
 
@@ -97,9 +97,7 @@ def new_issue():
                                        person=user_info.get('login'),
                                        gravatar=user_info.get('gravatar_id'))
             else:
-                t = ('To report an issue please login! '
-                     '<a href="{{ url_for("login") }}">Login</a>')
-                return render_template_string(t)
+                return redirect(url_for('login'))
 
     elif request.method == 'POST' and g.user:
         # um, validation. probably should use wtfform?
