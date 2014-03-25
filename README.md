@@ -25,7 +25,7 @@ Fonts:
 
 If you'd like to run the site locally, type these commands into the terminal (which should work on Mac and Linux operating systems--instructions for Windows would make a great first contribution to this project!)
 
-The only requiement is having [Virtualenv installed](http://www.virtualenv.org/en/latest/virtualenv.html#installation) (and presumably Python).
+The only requiement is having [pip installed](http://pip.readthedocs.org/en/latest/installing.html) (and presumably Python).
 
 ``` bash
 # clone the repo
