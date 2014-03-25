@@ -95,7 +95,7 @@ def fake_form():
     return render_template('new_issue.html', form=form)
 
 
-#TODO: /issues/new/<issue> redirect 307 to github repo issue
+#TODO: /issues/<issue> redirect 307 to github repo issue
 @app.route('/issues/new', methods=['GET', 'POST'])
 def new_issue():
     if request.method == 'GET':
