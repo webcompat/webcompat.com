@@ -1,15 +1,26 @@
 {% extends "layout.html" %}
 {% block body %}
-<form method="post" action="/">
- {{ form.url.label }} {{ form.url}}<hr>
- {{ form.site_owner.label }} {{ form.site_owner}}<hr>
- {{ form.problem_category.label }} {{ form.problem_category }}<hr>
- {{ form.browser.label }} {{ form.browser }}<hr>
- {{ form.version.label }} {{ form.version }}<hr>
- {{ form.summary.label }} {{ form.summary }}<hr>
- <label for="description">How can we replicate this?</label>
- {{ form.version.description.label }} {{ form.description }}<hr>
- <a href="#">Cancel</a>
-<input type="submit">
-</form>
+<div class="hero">
+{% if form.errors %}
+    <ul class="errors">
+    {% for field_name, field_errors in form.errors|dictsort if field_errors %}
+        {% for error in field_errors %}
+        <li>{{ form[field_name].label }}: {{ error }}</li>
+        {% endfor %}
+    {% endfor %}
+    </ul>
+{% endif %}
+    <form method="post" action="/issues/new">
+     <p class="required">{{ form.url.label }} {{ form.url}}</p>
+     <p>{{ form.site_owner.label }} {{ form.site_owner}}</p>
+     <p>{{ form.problem_category.label }} {{ form.problem_category }}</p>
+     <p>{{ form.browser.label }} {{ form.browser }}</p>
+     <p>{{ form.version.label }} {{ form.version }}</p>
+     <p>{{ form.summary.label }} {{ form.summary }}</p>
+     <p class="required"><label for="description">How can we replicate this?</label>
+     {{ form.version.description.label }} {{ form.description }}</p>
+     <a href="#">Cancel</a>
+    <input type="submit">
+    </form>
+</div>
 {% endblock %}

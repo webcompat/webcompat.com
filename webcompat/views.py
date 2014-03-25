@@ -98,21 +98,20 @@ def fake_form():
 #TODO: /issues/<issue> redirect 307 to github repo issue
 @app.route('/issues/new', methods=['GET', 'POST'])
 def new_issue():
+    form = IssueForm(request.form)
     if request.method == 'GET':
-            if g.user:
-                user_info = github.get('user')
-                return render_template('new_issue.html')
-            else:
-                return redirect(url_for('login'))
+        if g.user:
+            user_info = github.get('user')
+            return render_template('new_issue.html', form=form)
+        else:
+            return redirect(url_for('login'))
 
-    elif request.method == 'POST' and g.user:
-        # um, validation. probably should use wtfform?
-        if request.form['title'] is not None:
-            title = request.form['title']
-        body = request.form['body']
-        github.post('repos/' + app.config['ISSUES_REPO_URI'],
-                    {'title': title, 'body': body})
+    elif request.method == 'POST' and form.validate():
+        # request form is a ImmutableMultiDict (see copy method)
+        # # github.post('repos/' + app.config['ISSUES_REPO_URI'], massageFormDataAndReturnADict(request.form))
         return "something useful like a link"
+    else:
+        return render_template('new_issue.html', form=form)
 
 
 @app.route('/about')
