@@ -21,15 +21,57 @@ http://thenounproject.com/term/light-switch/2235/
 Fonts:
 `Helvetica Neue`
 
-### Developing Locally
+## Test Deployment
 
 If you'd like to run the site locally, type these commands into the terminal (which should work on Mac and Linux operating systems--instructions for Windows would make a great first contribution to this project!)
 
-The only requiement is having [pip installed](http://pip.readthedocs.org/en/latest/installing.html) (and, uh, Python). You probably want to [get the secrets](https://github.com/webcompat/webcompat.com/blob/dev.webcompat.com/config.py.example#L19-L22) for config.py as well.
+
+Install pip:
+
+	$ sudo easy_install pip
+
+###Installing and Setting up the Virtualenvwrapper
+	
+Install :
+	
+	$ sudo pip install virtualenv virtualenvwrapper
+	
+For Mac Users:
+
+Open up your .bash_profile or .profile, and after your PATH statement, add the following
+``` bash
+# set where virutal environments will live
+export WORKON_HOME=$HOME/.virtualenvs
+# ensure all new environments are isolated from the site-packages directory
+export VIRTUALENVWRAPPER_VIRTUALENV_ARGS='--no-site-packages'
+# use the same directory for virtualenvs as virtualenvwrapper
+export PIP_VIRTUALENV_BASE=$WORKON_HOME
+# makes pip detect an active virtualenv and install to it
+export PIP_RESPECT_VIRTUALENV=true
+if [[ -r /usr/local/bin/virtualenvwrapper.sh ]]; then
+    source /usr/local/bin/virtualenvwrapper.sh
+else
+    echo "WARNING: Can't find virtualenvwrapper.sh"
+fi
+```
+
+For Linux Users:
+
+    $ mkdir ~/virtualenvs
+    $ echo "export WORKON_HOME=~/virtualenvs" >> ~/.bashrc
+    $ echo "source /usr/local/bin/virtualenvwrapper.sh" >> ~/.bashrc
+    $ echo "export PIP_VIRTUALENV_BASE=~/virtualenvs" >> ~/.bashrc
+    $ source ~/.bashrc
+
+Create virtualenv :
+	
+	$ mkvirtualenv webcompat
+  
+#### Running Webcompat.com locally
 
 ``` bash
 # clone the repo
-git clone git@github.com:webcompat/webcompat.com.git
+git clone https://github.com/webcompat/webcompat.com.git
 # change to directory
 cd webcompat
 # checkout the dev branch
@@ -38,10 +80,6 @@ git checkout dev.webcompat.com
 cp config.py.example config.py
 # install dependencies
 pip install -r requirements.txt
-# initialize virtualenv
-virtualenv env
-# activate virtual environment
-source env/bin/activate
 # start local server
 python run.py
 ```
