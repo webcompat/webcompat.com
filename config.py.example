@@ -1,0 +1,25 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+import os
+
+# Development environment
+DEBUG = True
+
+# Define the application directory
+BASE_DIR = os.path.abspath(os.path.dirname(__file__))
+
+THREADS_PER_PAGE = 8
+
+# Secret key for signing cookies.
+# Doesn't really matter for local testing.
+SECRET_KEY = ""
+
+# Get the secrets from
+# https://github.com/organizations/webcompat/settings/applications/,
+# if you're part of the webcompat organization. Otherwise, create your own
+# test application and fill in the appropriate values.
+GITHUB_CLIENT_ID = ""
+GITHUB_CLIENT_SECRET = ""
+GITHUB_CALLBACK_URL = ""
