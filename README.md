@@ -31,6 +31,8 @@ The only requiement is having [Virtualenv installed](http://www.virtualenv.org/e
 git clone git@github.com:webcompat/webcompat.com.git
 # change to directory
 cd webcompat
+# checkout the dev branch
+git checkout dev.webcompat.com
 # initialize virtualenv
 virtualenv env
 # activate virtual environment
