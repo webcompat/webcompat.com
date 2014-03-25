@@ -23,3 +23,7 @@ SECRET_KEY = ""
 GITHUB_CLIENT_ID = ""
 GITHUB_CLIENT_SECRET = ""
 GITHUB_CALLBACK_URL = ""
+
+
+# GiHub Issues repo URI
+ISSUES_REPO_URI = "user/repo/issues"

@@ -110,7 +110,7 @@ def new_issue():
         if request.form['title'] is not None:
             title = request.form['title']
         body = request.form['body']
-        github.post('repos/miketaylr/nobody-look-at-this/issues',
+        github.post('repos/' + app.config['ISSUES_REPO_URI'],
                     {'title': title, 'body': body})
         return "something useful like a link"
 
