@@ -4,7 +4,7 @@
 
 
  /* CSS Reset from Eric Meyer
-  http://meyerweb.com/eric/tools/css/reset/ 
+  http://meyerweb.com/eric/tools/css/reset/
    v2.0 | 20110126
    License: none (public domain)
 */
@@ -17,8 +17,8 @@ b, u, i, center,
 dl, dt, dd, ol, ul, li,
 fieldset, form, label, legend,
 table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed, 
-figure, figcaption, footer, header, hgroup, 
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
 menu, nav, output, ruby, section, summary,
 time, mark, audio, video {
   margin: 0;
@@ -29,7 +29,7 @@ time, mark, audio, video {
   vertical-align: baseline;
 }
 /* HTML5 display-role reset for older browsers */
-article, aside, details, figcaption, figure, 
+article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
   display: block;
 }
@@ -56,11 +56,11 @@ table {
 
 /*----------Global Styles----------*/
 html {
-   font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+   font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
    font-weight: 300;
 }
 h1 {
-  font-size: 6.2em;  
+  font-size: 6.2em;
 }
 h2 {
   font-size: 1.75em;
@@ -124,11 +124,11 @@ footer {
   text-shadow: 1px 1px 2px #181e31
 }
 img.lightswitch {
-  float: left;  
+  float: left;
   width: 50px;
 }
 #maintitle {
-    padding: 3em; 
+    padding: 3em;
 }
 #button1 {
   background-color: #f38326;
@@ -167,3 +167,7 @@ input[type=search] {
 /*-------End Homepage Styles------*/
 
 
+/*------Form Validation------*/
+.errors { /* change me! */
+  background-color: red;
+}
