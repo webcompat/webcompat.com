@@ -11,14 +11,15 @@ http://thenounproject.com/term/light-switch/2235/
 
 ### Colors and Typography
 
-Blue - #67cedc
-Inset Shadow on Blue - #181e31
-Orange - #f38326
-Dark Orange - #d47039
-Beige - #fdf3dd
 
-Fonts
-Helvetica Neue
+* Blue - `#67cedc`
+* Inset Shadow on Blue - `#181e31`
+* Orange - `#f38326`
+* Dark Orange - `#d47039`
+* Beige - `#fdf3dd`
+
+Fonts: 
+`Helvetica Neue`
 
 ### Developing Locally
 
