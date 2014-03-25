@@ -3,7 +3,8 @@
 <head>
     <title>webcompat.com</title>
     <meta name="description" content="Open source community for web compatibility.  Report bugs from websites and help us move the web forward." />
-    <link href="{{ url_for("static", filename="css/main.css") }}" type="text/css" rel="stylesheet" />
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <link href="{{ url_for('static', filename='css/main.css') }}" type="text/css" rel="stylesheet" />
 </head>
 <body>
     {% for category, message in get_flashed_messages(with_categories=True) %}
