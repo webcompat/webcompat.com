@@ -16,5 +16,5 @@ class IssueForm(Form):
                                     ('dunno', 'I don\'t know but something\'s wrong.')])
     browser = StringField('Browser')
     version = StringField('Version')
-    problem = StringField('Problem in 5 words') # do we want validation here?
+    summary = StringField('Problem in 5 words', [validators.InputRequired()])
     description = TextAreaField('How can we replicate this?')
