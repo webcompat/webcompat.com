@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% block body %}
     <div class="hero">
-      <img class="lightswitch" src="../../static/img/lightswitch.svg" alt="Light Switch">
+      <img class="lightswitch" src="{{ url_for('static', filename='img/lightswitch.svg') }}" alt="Light Switch">
           <div id="maintitle">
             <h1>A <span class="bold">Better Web</span><br> Starts With You.</h1>
             <h2>Submit bugs for any browser or website all in one place.</h2>
