@@ -21,32 +21,6 @@ http://thenounproject.com/term/light-switch/2235/
 Fonts:
 `Helvetica Neue`
 
-### Developing Locally
-
-If you'd like to run the site locally, type these commands into the terminal (which should work on Mac and Linux operating systems--instructions for Windows would make a great first contribution to this project!)
-
-The only requiement is having [pip installed](http://pip.readthedocs.org/en/latest/installing.html) (and, uh, Python). You probably want to [get the secrets](https://github.com/webcompat/webcompat.com/blob/dev.webcompat.com/config.py.example#L19-L22) for config.py as well.
-
-``` bash
-# clone the repo
-git clone git@github.com:webcompat/webcompat.com.git
-# change to directory
-cd webcompat
-# checkout the dev branch
-git checkout dev.webcompat.com
-# set up config.py, filling in appropriate secrets
-cp config.py.example config.py
-# install dependencies
-pip install -r requirements.txt
-# initialize virtualenv
-virtualenv env
-# activate virtual environment
-source env/bin/activate
-# start local server
-python run.py
-```
-
-You should now have a local instance of the site running at `http://localhost:5000`. Please [file bugs](https://github.com/webcompat/webcompat.com/issues/new) if something went wrong!
 
 ### License
 
