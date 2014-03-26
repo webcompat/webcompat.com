@@ -27,6 +27,7 @@ time, mark, audio, video {
   font-size: 100%;
   font: inherit;
   vertical-align: baseline;
+  text-decoration: none;
 }
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure,
@@ -77,6 +78,11 @@ h5 {
 p {
   font-size: 1em;
 }
+nav {
+  text-align: right;
+  text-decoration: none;
+  padding-right: 2em;
+}
 .button {
   text-align: center;
   padding: .5em 1.75em ;
@@ -87,6 +93,9 @@ p {
   font-size: 1.5em;
   line-height: 2em;
   text-decoration: none;
+}
+.readmore {
+  font-weight: 600;
 }
 a {
   color: inherit;
@@ -108,8 +117,6 @@ footer {
 .footerright {
   float: right;
 }
-/*--------End Global Styles-------*/
-
 
 /*--------Homepage Styles--------*/
 .hero {
@@ -128,7 +135,7 @@ img.lightswitch {
   width: 50px;
 }
 #maintitle {
-    padding: 3em;
+  padding: 3em;
 }
 #button1 {
   background-color: #f38326;
@@ -164,10 +171,38 @@ input[type=search] {
   color: #d47039;
   font-weight: bold;
 }
-/*-------End Homepage Styles------*/
-
 
 /*------Form Validation------*/
-.errors { /* change me! */
-  background-color: red;
+.errors { 
+  margin: .5em 0;
+  padding: .75em;
+  background-color: #fdf3dd;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  color: #000;
+  font-size: 0.9em;
+}
+.errors li {
+  padding: .5em;
+}
+.errors h6 {
+  padding: .5em .3em;
+  color: red;
+  font-size: 1.4em;
+  font-weight: bold;
+}
+
+/*------Internal Pages------*/
+.page {
+  background-color: #67cedc;
+  -moz-box-shadow: inset 0 0 4em rgba(24, 30, 49, 0.45);
+  -webkit-box-shadow: inset 0 0 4em rgba(24, 30, 49, 0.45);
+  box-shadow: inset 0 0 4em rgba(24, 30, 49, 0.45);
+  text-align: left;
+  color: #fdf3dd;
+  padding: 2em;
+}
+.page h1, h2 {
+  margin: 1em;
 }
