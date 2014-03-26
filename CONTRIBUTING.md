@@ -19,7 +19,7 @@ sudo pip install virtualenv
 sudo pip install virtualenvwrapper
 # Configuring your environment
 echo "export WORKON_HOME=$HOME/.virtualenvs" > ~/.bashrc
-echo "export PROJECT_HOME=$HOME/Devel" > ~/.bashrc
+echo "export PROJECT_HOME=$HOME/code" > ~/.bashrc
 echo "source /usr/local/bin/virtualenvwrapper.sh" > ~/.bashrc
 source ~/.bashrc
 ```
@@ -28,6 +28,8 @@ Now let's move on the steps to grab the source code locally and work in a protec
 
 ``` bash
 # In the location of your choice
+mkdir ~/code
+cd ~/code
 # clone the repo
 git clone git@github.com:webcompat/webcompat.com.git
 # change to directory
