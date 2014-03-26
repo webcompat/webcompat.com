@@ -63,4 +63,11 @@ It will move you to the right directory in your environment.
 
 
 ## Creating Issues
+
+If there are any issues bothering about the project, please feel free to [create an issue](https://github.com/webcompat/webcompat.com/issues). We appreciate if you can be descriptive and explain the context of the issue.
+
 ## Proposing Code Changes
+
+* Is there a coding style?
+* tests cases?
+* Style recommendations for design?
