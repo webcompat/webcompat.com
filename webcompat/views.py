@@ -5,7 +5,7 @@
 from flask import (flash, g, redirect, request, render_template, session,
                    url_for)
 from datetime import datetime
-from issue_form import IssueForm
+from issue_form import build_formdata, IssueForm
 from models import db_session, User
 from webcompat import github, app
 import os
@@ -105,12 +105,13 @@ def new_issue():
             return render_template('new_issue.html', form=form)
         else:
             return redirect(url_for('login'))
-
     elif request.method == 'POST' and form.validate():
-        # request form is a ImmutableMultiDict (see copy method)
-        # # github.post('repos/' + app.config['ISSUES_REPO_URI'], massageFormDataAndReturnADict(request.form))
+        github.post('repos/' + app.config['ISSUES_REPO_URI'],
+                    build_formdata(request.form))
+        # Redirect to the repo? or Flash the URI?
         return "something useful like a link"
     else:
+        # Validation failed, re-render the form with the errors.
         return render_template('new_issue.html', form=form)
 
 
