@@ -4,6 +4,7 @@
 
 from flask import (flash, g, redirect, request, render_template, session,
                    url_for)
+from flask.ext.github import GitHubError
 from datetime import datetime
 from issue_form import build_formdata, IssueForm
 from models import db_session, User
@@ -118,6 +119,13 @@ def new_issue():
 @app.route('/about')
 def about():
     return render_template('about.html')
+
+
+@app.errorhandler(GitHubError)
+def jumpship():
+    session.pop('user_id', None)
+    flash('Something bad happened. Please try again?', 'error')
+    return redirect(url_for('index'))
 
 
 @app.errorhandler(404)
