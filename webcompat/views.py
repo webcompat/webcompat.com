@@ -108,12 +108,21 @@ def new_issue():
             return redirect(url_for('login'))
     elif request.method == 'POST' and form.validate():
         r = github.post('repos/' + app.config['ISSUES_REPO_URI'],
-                    build_formdata(request.form))
-        flash('Your issues "{0}" was created. Check it out here: {1}'.format(r.get('title'), r.get('url')))
-        return redirect(url_for('index'))
+                        build_formdata(request.form))
+        issue_number = r.get('number')
+        return redirect(url_for('show_issue', number=issue_number))
     else:
         # Validation failed, re-render the form with the errors.
         return render_template('new_issue.html', form=form)
+
+
+@app.route('/issues/<number>')
+def show_issue(number):
+    # In the future we can display the issue on our site, but for now
+    # we're just going to 307 to github issues.
+    uri = "https://github.com/{0}/{1}".format(app.config['ISSUES_REPO_URI'],
+                                              number)
+    return redirect(uri, code=307)
 
 
 @app.route('/about')
