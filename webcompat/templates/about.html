@@ -1,28 +1,22 @@
 {% extends "layout.html" %}
 {% block body %}
-  <div class="page">
-    <nav>
-        <img class="lightswitch" src="{{ url_for('static', filename='img/lightswitch.svg') }}" alt="Light Switch">
-        <ul>
-          <li><a href="about">About</a></li>
-        </ul>
-      </nav>
-    <h2>About Webcompat.com</h2>
-    <p>Webcompat.com is a gathering place for the web compatibility community. This site is a place to report bugs from any website across the web - whether you are a developer or not. Started by the Mozilla Web Compatibility team, this initiative is a global task force on a mission to improve the web one bug at a time. Join us! Let's work together to make the web a better place to work and play.</p>
-    <br>
-    <p>You can find more info on the web compatibility iniative here:</p>
-<!--Follow on Twitter-->
-    <a href="https://twitter.com/webcompat" class="twitter-follow-button" data-show-count="false">Follow @webcompat</a>
-    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
-    <br>
-    <a href="https://wiki.mozilla.org/Compatibility">Mozilla Wiki - Compatibility</a>
-    <a href="#">A link goes here</a>
-    <br>
-    <a href="#">A link goes here</a>
-    <br>
-    <a href="#">A link goes here</a>
-  </div>
-
-
-         
+<div class="page">
+  <nav>
+    <img class="lightswitch" src="{{ url_for('static', filename='img/lightswitch.svg') }}" alt="Light Switch">
+  </nav>
+  <h2>About Webcompat.com</h2>
+  <p>Webcompat.com is a gathering place for the web compatibility community. This site is a place to report bugs from any website across the web - whether you are a developer or not. Started by the Mozilla Web Compatibility team, this initiative is a global task force on a mission to improve the web one bug at a time. Join us! Let's work together to make the web a better place to work and play.</p>
+  <br>
+  <p>You can find more info on the web compatibility iniative here:</p>
+  <!--Follow on Twitter-->
+  <a href="https://twitter.com/webcompat" class="twitter-follow-button" data-show-count="false">Follow @webcompat</a>
+  <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+  <br>
+  <a href="https://wiki.mozilla.org/Compatibility">Mozilla Wiki - Compatibility</a>
+  <a href="#">A link goes here</a>
+  <br>
+  <a href="#">A link goes here</a>
+  <br>
+  <a href="#">A link goes here</a>
+</div>
 {% endblock %}
