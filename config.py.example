@@ -16,14 +16,20 @@ THREADS_PER_PAGE = 8
 # Doesn't really matter for local testing.
 SECRET_KEY = ""
 
-# Get the secrets from
-# https://github.com/organizations/webcompat/settings/applications/,
-# if you're part of the webcompat organization. Otherwise, create your own
-# test application and fill in the appropriate values.
-GITHUB_CLIENT_ID = ""
-GITHUB_CLIENT_SECRET = ""
-GITHUB_CALLBACK_URL = ""
+# Get the secrets from https://github.com/organizations/webcompat/settings/applications/,
+# if you're part of the webcompat organization. Otherwise, create your own test
+# and production applications.
 
+# We're in production
+if os.environ.get('WEBCOMPAT_PRODUCTION'):
+    GITHUB_CLIENT_ID = ""
+    GITHUB_CLIENT_SECRET = ""
+    GITHUB_CALLBACK_URL = ""
+else:
+    # We're in developement, use the test application
+    GITHUB_CLIENT_ID = ""
+    GITHUB_CLIENT_SECRET = ""
+    GITHUB_CALLBACK_URL = ""
 
-# GiHub Issues repo URI
-ISSUES_REPO_URI = "user/repo/issues"
+# GiHub Issues repo URI of the form "user/repo/issues"
+ISSUES_REPO_URI = ""
