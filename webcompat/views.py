@@ -107,10 +107,10 @@ def new_issue():
         else:
             return redirect(url_for('login'))
     elif request.method == 'POST' and form.validate():
-        github.post('repos/' + app.config['ISSUES_REPO_URI'],
+        r = github.post('repos/' + app.config['ISSUES_REPO_URI'],
                     build_formdata(request.form))
-        # Redirect to the repo? or Flash the URI?
-        return "something useful like a link"
+        flash('Your issues "{0}" was created. Check it out here: {1}'.format(r.get('title'), r.get('url')))
+        return redirect(url_for('index'))
     else:
         # Validation failed, re-render the form with the errors.
         return render_template('new_issue.html', form=form)
