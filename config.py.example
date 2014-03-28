@@ -20,9 +20,10 @@ SECRET_KEY = ""
 
 PRODUCTION = os.environ.get('WEBCOMPAT_PRODUCTION', False)
 
-# Get the secrets from https://github.com/organizations/webcompat/settings/applications/,
-# if you're part of the webcompat organization. Otherwise, create your own test
-# and production applications.
+# Get the secrets from [1] if you're part of the webcompat organization.
+# Otherwise, create your own test and production applications.
+#
+# [1]<https://github.com/organizations/webcompat/settings/applications/>
 
 # Default to production, otherwise development
 if PRODUCTION:
