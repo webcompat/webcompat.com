@@ -13,7 +13,7 @@
         {% if form.url.errors %}{% for error in form.url.errors %}
         <span class="help-inline">{{ error }}</span>
         {% endfor %}{% endif %}
-        {{ form.url(class_='form-control') }}
+        {{ form.url(class_='form-control required') }}
       </div>
     </div>
     <div class="row">
@@ -49,7 +49,7 @@
         {{ form.summary.label }}{% if form.summary.errors %}{% for error in form.summary.errors %}
         <span class="help-inline">{{ error }}</span>
         {% endfor %}{% endif %}
-        {{ form.summary(class_='form-control') }}
+        {{ form.summary(class_='form-control required') }}
       </div>
     </div>
     <div class="row">
@@ -60,6 +60,7 @@
     </div>
     <div class="row">
       <div class="col-md-12">
+      <p>* required field</p>
         <button class="button" type="submit">Report Bug</button>
       </div>
     </div>

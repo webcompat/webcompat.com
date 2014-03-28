@@ -17,10 +17,10 @@ summary_message = u'Please give the bug report a summary.'
 
 
 class IssueForm(Form):
-    url = StringField(u'Site URL', [Required(message=url_message)])
+    url = StringField(u'Site URL*', [Required(message=url_message)])
     browser = StringField(u'Browser', [Optional()])
     version = StringField(u'Version', [Optional()])
-    summary = StringField(u'Problem in 5 words',
+    summary = StringField(u'Problem in 5 words*',
                           [Required(message=summary_message)])
     description = TextAreaField(u'How can we replicate this?', [Optional()])
     site_owner = RadioField(u'Is this your website?', [Optional()],

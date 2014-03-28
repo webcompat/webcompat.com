@@ -615,6 +615,10 @@ form .button {
   padding-top: 0.25em;
   padding-bottom: 0.25em;
 }
+.row:last-child p {
+  margin-bottom: 0.5em;
+  color: #000;
+}
 /*------Form Validation------*/
 .errors {
   margin: .5em 0;
