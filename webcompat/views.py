@@ -133,7 +133,8 @@ def about():
 
 
 @app.errorhandler(GitHubError)
-def jumpship():
+def jumpship(e):
+    print(e)
     session.pop('user_id', None)
     flash('Something bad happened. Please try again?', 'error')
     return redirect(url_for('index'))
