@@ -45,7 +45,7 @@
       </div>
     </div>
     <div class="row">
-      <div class="form-group col-md-12 {% if form.url.errors %}has-error{% endif %}">
+      <div class="form-group col-md-12 {% if form.summary.errors %}has-error{% endif %}">
         {{ form.summary.label }}{% if form.summary.errors %}{% for error in form.summary.errors %}
         <span class="help-inline">{{ error }}</span>
         {% endfor %}{% endif %}
