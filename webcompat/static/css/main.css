@@ -619,6 +619,11 @@ form .button {
   margin-bottom: 0.5em;
   color: #000;
 }
+.radio-inline, .checkbox-inline {
+  /* Hack to get Chrome 24+ to behave.
+  See https://github.com/twbs/bootstrap/issues/6599 */
+  white-space: nowrap;
+}
 /*------Form Validation------*/
 .errors {
   margin: .5em 0;
