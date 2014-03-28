@@ -552,11 +552,14 @@ img.lightswitch {
 #shrink {
   font-size: 1.16em;
 }
-#button1 {
-  background: #f38326 url(../img/github-mark.png) no-repeat 10px;
+#button1, form button {
+  background-color: #f38326;
   border: .15em solid #d47039;
   color: #fdf3dd;
   margin-bottom: .5em;
+}
+.github {
+  background: #f38326 url(../img/github-mark.png) no-repeat 10px;
   padding-left: 2.25em;
 }
 /*---Search on Github---*/
@@ -604,6 +607,7 @@ label, .label {
 }
 #new-report h2 {
   margin-left: 0;
+  margin-bottom: 1em;
 }
 form .button {
   margin-top: 0.25em;
