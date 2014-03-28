@@ -18,16 +18,14 @@ THREADS_PER_PAGE = 8
 # Doesn't really matter for local testing.
 SECRET_KEY = ""
 
-# By default Flask serializes objects to ascii-encoded JSON.
-# We don't want that.
-JSON_AS_ASCII = False
+PRODUCTION = os.environ.get('WEBCOMPAT_PRODUCTION', False)
 
 # Get the secrets from https://github.com/organizations/webcompat/settings/applications/,
 # if you're part of the webcompat organization. Otherwise, create your own test
 # and production applications.
 
-# We're in production
-if os.environ.get('WEBCOMPAT_PRODUCTION'):
+# Default to production, otherwise development
+if PRODUCTION:
     GITHUB_CLIENT_ID = ""
     GITHUB_CLIENT_SECRET = ""
     GITHUB_CALLBACK_URL = ""
