@@ -8,24 +8,24 @@ from wtforms import Form, RadioField, StringField, TextAreaField
 from wtforms.validators import Optional, Required
 
 
-owner_choices = [('True', 'Yes'), ('False', 'No')]
-problem_choices = [('browser_bug', 'Looks like the browser has a bug'),
-                   ('site_bug', 'Looks like the website has a bug.'),
-                   ('unknown_bug', 'I don\'t know but something\'s wrong.')]
-url_message = 'A valid URL is required to report a bug!'
-summary_message = 'Please give the bug report a summary.'
+owner_choices = [(u'True', u'Yes'), (u'False', u'No')]
+problem_choices = [(u'browser_bug', u'Looks like the browser has a bug'),
+                   (u'site_bug', u'Looks like the website has a bug.'),
+                   (u'unknown_bug', u'I don\'t know but something\'s wrong.')]
+url_message = u'A valid URL is required to report a bug!'
+summary_message = u'Please give the bug report a summary.'
 
 
 class IssueForm(Form):
-    url = StringField('Site URL', [Required(message=url_message)])
-    browser = StringField('Browser', [Optional()])
-    version = StringField('Version', [Optional()])
-    summary = StringField('Problem in 5 words',
+    url = StringField(u'Site URL', [Required(message=url_message)])
+    browser = StringField(u'Browser', [Optional()])
+    version = StringField(u'Version', [Optional()])
+    summary = StringField(u'Problem in 5 words',
                           [Required(message=summary_message)])
-    description = TextAreaField('How can we replicate this?', [Optional()])
-    site_owner = RadioField('Is this your website?', [Optional()],
+    description = TextAreaField(u'How can we replicate this?', [Optional()])
+    site_owner = RadioField(u'Is this your website?', [Optional()],
                             choices=owner_choices)
-    problem_category = RadioField('What seems to be the trouble?',
+    problem_category = RadioField(u'What seems to be the trouble?',
                                   [Optional()], choices=problem_choices)
 
 
@@ -34,7 +34,7 @@ def wrap_label(type, value):
     we use to hide from users in GitHub issues. We can parse these later and
     add labels programmatically (as you have to have push access to the report
     to add labels.'''
-    return '<!-- @{0}: {1} -->'.format(type, value)
+    return u'<!-- @{0}: {1} -->'.format(type, value)
 
 
 def get_problem(type):
@@ -42,16 +42,16 @@ def get_problem(type):
         if choice[0] == type:
             return choice[1]
     # Something probably went wrong. Return something safe.
-    return "Unknown"
+    return u'Unknown'
 
 
 def get_owner(bool):
     if bool == 'True':
-        return 'Yes'
+        return u'Yes'
     elif bool == 'False':
-        return 'No'
+        return u'No'
     else:
-        return 'Unknown'
+        return u'Unknown'
 
 
 def get_labels(form_object):
@@ -93,7 +93,7 @@ def build_formdata(form_object):
     For now, we'll put them in the body so they're visible. But as soon as we
     have a bot set up to parse the label comments (see wrap_label), we'll stop
     doing that.'''
-    body = '''{0}
+    body = u'''{0}
 
 **URL**: {1}
 **Browser**: {2}
