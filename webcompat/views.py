@@ -123,7 +123,7 @@ def show_issue(number):
     # In the future we can display the issue on our site, but for now
     # we're just going to 307 to github issues.
     uri = u"https://github.com/{0}/{1}".format(app.config['ISSUES_REPO_URI'],
-                                              number)
+                                               number)
     return redirect(uri, code=307)
 
 
