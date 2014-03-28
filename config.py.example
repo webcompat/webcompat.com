@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
@@ -15,6 +17,10 @@ THREADS_PER_PAGE = 8
 # Secret key for signing cookies.
 # Doesn't really matter for local testing.
 SECRET_KEY = ""
+
+# By default Flask serializes objects to ascii-encoded JSON.
+# We don't want that.
+JSON_AS_ASCII = False
 
 # Get the secrets from https://github.com/organizations/webcompat/settings/applications/,
 # if you're part of the webcompat organization. Otherwise, create your own test
