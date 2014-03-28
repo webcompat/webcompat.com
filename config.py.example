@@ -18,7 +18,8 @@ THREADS_PER_PAGE = 8
 # Doesn't really matter for local testing.
 SECRET_KEY = ""
 
-PRODUCTION = os.environ.get('WEBCOMPAT_PRODUCTION', False)
+# the PRODUCTION env var is set in uwsgi.conf
+PRODUCTION = os.environ.get('PRODUCTION')
 
 # Get the secrets from [1] if you're part of the webcompat organization.
 # Otherwise, create your own test and production applications.
