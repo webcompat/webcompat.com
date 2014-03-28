@@ -56,7 +56,7 @@ def login():
     if session.get('user_id', None) is None:
         return github.authorize('public_repo')
     else:
-        return 'Already logged in'
+        return u'Already logged in'
 
 
 # OAuth2 callback handler that GitHub requires.
@@ -65,7 +65,7 @@ def login():
 @github.authorized_handler
 def authorized(access_token):
     if access_token is None:
-        flash('Something went wrong trying to sign into GitHub. :(', 'error')
+        flash(u'Something went wrong trying to sign into GitHub. :(', 'error')
         return redirect(url_for('index'))
     user = User.query.filter_by(github_access_token=access_token).first()
     if user is None:
@@ -81,7 +81,7 @@ def authorized(access_token):
 @app.route('/logout')
 def logout():
     session.pop('user_id', None)
-    flash('You were successfully logged out.', 'info')
+    flash(u'You were successfully logged out.', 'info')
     return redirect(url_for('index'))
 
 
@@ -122,7 +122,7 @@ def new_issue():
 def show_issue(number):
     # In the future we can display the issue on our site, but for now
     # we're just going to 307 to github issues.
-    uri = "https://github.com/{0}/{1}".format(app.config['ISSUES_REPO_URI'],
+    uri = u"https://github.com/{0}/{1}".format(app.config['ISSUES_REPO_URI'],
                                               number)
     return redirect(uri, code=307)
 
