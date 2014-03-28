@@ -6,19 +6,14 @@
 <div id="new-report" class="page">
   <div class="container">
   <h2>Bug Report</h2>
-  {% if form.errors %}
-  <ul class="errors">
-    {% for field_name, field_errors in form.errors|dictsort if field_errors %}
-    {% for error in field_errors %}
-    <li>{{ form[field_name].label }}: {{ error }}</li>
-    {% endfor %}
-    {% endfor %}
-  </ul>
-  {% endif %}
   <form method="post" class="cf" action="/issues/new">
     <div class="row">
-      <div class="form-group col-md-6">
-        {{ form.url.label }} {{ form.url(class_='form-control') }}
+      <div class="form-group col-md-6 {% if form.url.errors %}has-error{% endif %}">
+        {{ form.url.label }}
+        {% if form.url.errors %}{% for error in form.url.errors %}
+        <span class="help-inline">{{ error }}</span>
+        {% endfor %}{% endif %}
+        {{ form.url(class_='form-control') }}
       </div>
     </div>
     <div class="row">
@@ -50,8 +45,11 @@
       </div>
     </div>
     <div class="row">
-      <div class="form-group col-md-12">
-        {{ form.summary.label }} {{ form.summary(class_='form-control') }}
+      <div class="form-group col-md-12 {% if form.url.errors %}has-error{% endif %}">
+        {{ form.summary.label }}{% if form.summary.errors %}{% for error in form.summary.errors %}
+        <span class="help-inline">{{ error }}</span>
+        {% endfor %}{% endif %}
+        {{ form.summary(class_='form-control') }}
       </div>
     </div>
     <div class="row">
