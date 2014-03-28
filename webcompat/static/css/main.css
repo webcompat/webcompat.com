@@ -553,10 +553,11 @@ img.lightswitch {
   font-size: 1.16em;
 }
 #button1 {
-  background-color: #f38326;
+  background: #f38326 url(../img/github-mark.png) no-repeat 10px;
   border: .15em solid #d47039;
   color: #fdf3dd;
   margin-bottom: .5em;
+  padding-left: 2.25em;
 }
 /*---Search on Github---*/
 input[type=search] {
