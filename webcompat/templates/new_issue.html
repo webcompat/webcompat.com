@@ -13,7 +13,8 @@
         {% if form.url.errors %}{% for error in form.url.errors %}
         <span class="help-inline">{{ error }}</span>
         {% endfor %}{% endif %}
-        {{ form.url(class_='form-control required') }}
+        {{ form.url(class_='form-control required',
+                    placeholder='i.e., http://www.google.com') }}
       </div>
     </div>
     <div class="row">
@@ -49,7 +50,8 @@
         {{ form.summary.label }}{% if form.summary.errors %}{% for error in form.summary.errors %}
         <span class="help-inline">{{ error }}</span>
         {% endfor %}{% endif %}
-        {{ form.summary(class_='form-control required') }}
+        {{ form.summary(class_='form-control required',
+                        placeholder='i.e., Website images are upside down') }}
       </div>
     </div>
     <div class="row">
