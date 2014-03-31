@@ -599,6 +599,10 @@ input[type=search] {
   color: #fdf3dd;
   padding: 2em;
 }
+#beta {
+  padding: 0.5em;
+  text-align: center;
+}
 /*------About Page------*/
 #about-page h2 {
     margin-bottom: 2em;
