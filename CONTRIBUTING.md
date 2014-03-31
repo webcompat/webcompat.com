@@ -2,8 +2,6 @@
 
 You are welcome to contribute to this project.
 
-
-
 ## Working Environment setup
 
 If you'd like to run the site locally, type these commands into the terminal (which should work on Mac and Linux operating systems--instructions for Windows would make a great first contribution to this project!)
@@ -66,9 +64,13 @@ It will move you to the right directory in your environment.
 
 ## Creating Issues
 
-If there are any issues bothering about the project, please feel free to [create an issue](https://github.com/webcompat/webcompat.com/issues). We appreciate if you can be descriptive and explain the context of the issue.
+Please feel free to [create an issue](https://github.com/webcompat/webcompat.com/issues). We appreciate if you can be descriptive and explain the context of the issue.
 
 ## Proposing Code Changes
+
+All code contributions should come in the form of a [pull request](https://help.github.com/articles/creating-a-pull-request), ideally from a topic branch.
+
+Issues to resolve in the near future:
 
 * Is there a coding style?
 * tests cases?
