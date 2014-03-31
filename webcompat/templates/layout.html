@@ -9,6 +9,7 @@
     <link href="{{ url_for('static', filename='css/main.css') }}" type="text/css" rel="stylesheet" />
 </head>
 <body>
+    <div id="beta">Hello! Welcome to our early preview. We would love your <a href="https://github.com/webcompat/webcompat.com/issues?state=open">feedback</a>.</div>
     {% for category, message in get_flashed_messages(with_categories=True) %}
     <div class="flash {{ category }}">{{ message }}</div>
     {% endfor %}
