@@ -599,7 +599,13 @@ input[type=search] {
   color: #fdf3dd;
   padding: 2em;
 }
-
+/*------About Page------*/
+#about-page h2 {
+    margin-bottom: 2em;
+}
+#about-page h4 {
+    margin: 0.75em 0 1em;
+}
 /*------Form Page-------*/
 label, .label {
   color: #000;
