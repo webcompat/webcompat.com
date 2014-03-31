@@ -37,5 +37,8 @@ else:
     GITHUB_CLIENT_SECRET = ""
     GITHUB_CALLBACK_URL = ""
 
-# GiHub Issues repo URI of the form "user/repo/issues"
-ISSUES_REPO_URI = ""
+# GiHub Issues repo URI
+if PRODUCTION:
+    ISSUES_REPO_URI = "<user>/<repo>/issues"
+else:
+    ISSUES_REPO_URI = "<user>/<repo>/issues"
