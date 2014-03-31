@@ -4,7 +4,7 @@ title: Introducing webcompat.com.
 fullview: true
 ---
 
-<div class="alert alert-info">In the coming months this site will serve as a central resource for tools, articles and documentation focused on web compatibility. We encourage all those interested in contributing through programming, designing, triaging bugs, reporting issues, writing content, and more, to <a href="https://wiki.mozilla.org/Compatibility/Mobile#Communication">reach out</a> and <a href="https://wiki.mozilla.org/Compatibility/Guide">get involved</a>.</div>
+<div class="alert alert-info"><p>Hello! Head to <a href="http://dev.webcompat.com">dev.webcompat.com</a> to get an early preview of the direction webcompat.com is heading. Feel free to provide <a href="https://github.com/webcompat/webcompat.com/issues">feedback</a> and report bugs&mdash;or better yet&mdash;join us in our efforts.</p><p>It's still early days but we would love your help moving towards a <strong>more compatible web</strong>.</p></div>
 
 _A person should be able to use the Web in all browsers and devices_.
 
