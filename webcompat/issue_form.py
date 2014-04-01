@@ -4,6 +4,7 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
+from ua_parser import user_agent_parser
 from wtforms import Form, RadioField, StringField, TextAreaField
 from wtforms.validators import Optional, Required
 
@@ -29,14 +30,6 @@ class IssueForm(Form):
                                   [Optional()], choices=problem_choices)
 
 
-def wrap_label(type, value):
-    '''Helper method to wrap a label and its type in an HTML comment (which
-    we use to hide from users in GitHub issues. We can parse these later and
-    add labels programmatically (as you have to have push access to the report
-    to add labels.'''
-    return u'<!-- @{0}: {1} -->'.format(type, value)
-
-
 def get_problem(type):
     for choice in problem_choices:
         if choice[0] == type:
@@ -54,15 +47,46 @@ def get_owner(bool):
         return u'Unknown'
 
 
-def get_labels(form_object):
-    '''Create a list of labels, join on \n, return the result.'''
-    # TODO: labels should be parsed from the Browser field, which we should
-    # prepopulate with navigator.userAgent. We can use tobie's ua parser
-    # to get mobile, tablet, desktop, browsername maybe?
-    return ''
+def wrap_label(label):
+    '''Helper method to wrap a label and its type in an HTML comment (which
+    we use to hide from users in GitHub issues. We can parse these later and
+    add labels programmatically (as you have to have push access to the report
+    to add labels.'''
+    return u'<!-- @{0}: {1} -->\n'.format(*label)
 
 
-def build_formdata(form_object):
+def get_labels(user_agent_string):
+    labels = []
+    result = ''
+    # Parse labels from user agent string
+    ua_dict = user_agent_parser.Parse(user_agent_string)
+    ua = ua_dict['user_agent']
+    labels.append(('browser', ua.get('family', u'Unknown')))
+    # This is obviously a weak solution. A billion exceptions ahead.
+    if 'mobi' in user_agent_string.lower():
+        labels.append(('platform', 'mobile'))
+    if 'tablet' in user_agent_string.lower():
+        labels.append(('platform', 'tablet'))
+    # Now, "wrap the labels" and return them all as a single string
+    for label in labels:
+        result += wrap_label(label)
+    return result
+
+
+def get_browser_version(user_agent_string):
+    '''Returns a string representing the browser version.'''
+    ua_dict = user_agent_parser.Parse(user_agent_string)
+    ua = ua_dict['user_agent']
+    version = ua.get('major', u'Unknown')
+    # Add on the minor and patch version numbers if they exist
+    if version != u'Unknown' and ua.get('minor'):
+        version = version + "." + ua.get('minor')
+        if ua.get('patch'):
+            version = version + "." + ua.get('patch')
+    return version
+
+
+def build_formdata(request):
     '''Translate the form data that comes from our form into something that
     the GitHub API is expecting.
 
@@ -93,8 +117,9 @@ def build_formdata(form_object):
     For now, we'll put them in the body so they're visible. But as soon as we
     have a bot set up to parse the label comments (see wrap_label), we'll stop
     doing that.'''
+    form_object = request.form
+    user_agent_header = request.headers.get('User-Agent')
     body = u'''{0}
-
 **URL**: {1}
 **Browser**: {2}
 **Version**: {3}
@@ -102,7 +127,7 @@ def build_formdata(form_object):
 **Site owner**: {5}
 
 **Steps to Reproduce**
-{6}'''.format(get_labels(form_object),
+{6}'''.format(get_labels(user_agent_header),
               form_object.get('url'),
               form_object.get('browser'),
               form_object.get('version'),

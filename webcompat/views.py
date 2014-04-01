@@ -102,7 +102,7 @@ def new_issue():
             return redirect(url_for('login'))
     elif request.method == 'POST' and form.validate():
         r = github.post('repos/' + app.config['ISSUES_REPO_URI'],
-                        build_formdata(request.form))
+                        build_formdata(request))
         issue_number = r.get('number')
         return redirect(url_for('show_issue', number=issue_number))
     else:
