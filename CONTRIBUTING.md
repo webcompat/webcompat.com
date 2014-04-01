@@ -6,7 +6,7 @@ You are welcome to contribute to this project. Here are the guidelines we try to
  * [Issues and Bugs](#filing-an-issue)
  * [Triaging Issues](#triaging-issues)
  * [Feature Requests](#feature-requests)
- * [Submission Guidelines](#submit)
+ * [Submission Guidelines](#submission-guidelines)
 
 
 ## Question or Problem
