@@ -55,28 +55,26 @@ def wrap_label(label):
     return u'<!-- @{0}: {1} -->\n'.format(*label)
 
 
-def get_labels(user_agent_string):
+def get_labels(browser_name):
     labels = []
     result = ''
-    # Parse labels from user agent string
-    ua_dict = user_agent_parser.Parse(user_agent_string)
-    ua = ua_dict['user_agent']
-    labels.append(('browser', ua.get('family', u'Unknown')))
-    # This is obviously a weak solution. A billion exceptions ahead.
-    if 'mobi' in user_agent_string.lower():
-        labels.append(('platform', 'mobile'))
-    if 'tablet' in user_agent_string.lower():
-        labels.append(('platform', 'tablet'))
+    # Only the name for now.
+    labels.append(('browser', browser_name))
     # Now, "wrap the labels" and return them all as a single string
     for label in labels:
         result += wrap_label(label)
     return result
 
 
+def get_browser_name(user_agent_string):
+    ua_dict = user_agent_parser.Parse(user_agent_string)
+    return ua_dict.get('user_agent').get('family')
+
+
 def get_browser_version(user_agent_string):
     '''Returns a string representing the browser version.'''
     ua_dict = user_agent_parser.Parse(user_agent_string)
-    ua = ua_dict['user_agent']
+    ua = ua_dict.get('user_agent')
     version = ua.get('major', u'Unknown')
     # Add on the minor and patch version numbers if they exist
     if version != u'Unknown' and ua.get('minor'):
@@ -127,7 +125,7 @@ def build_formdata(request):
 **Site owner**: {5}
 
 **Steps to Reproduce**
-{6}'''.format(get_labels(user_agent_header),
+{6}'''.format(get_labels(form_object.get('browser')),
               form_object.get('url'),
               form_object.get('browser'),
               form_object.get('version'),

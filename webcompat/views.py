@@ -8,7 +8,8 @@ from flask import (flash, g, redirect, request, render_template, session,
                    url_for)
 from flask.ext.github import GitHubError
 from datetime import datetime
-from issue_form import build_formdata, IssueForm
+from issue_form import (build_formdata, get_browser_name, get_browser_version,
+                        IssueForm)
 from models import db_session, User
 from webcompat import github, app
 import os
@@ -94,6 +95,10 @@ def show_issues():
 @app.route('/issues/new', methods=['GET', 'POST'])
 def new_issue():
     form = IssueForm(request.form)
+    # prepopulate browser and version into form object
+    user_agent_header = request.headers.get('User-Agent')
+    form.browser.data = get_browser_name(user_agent_header)
+    form.version.data = get_browser_version(user_agent_header)
     if request.method == 'GET':
         if g.user:
             user_info = github.get('user')
