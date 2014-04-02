@@ -16,6 +16,13 @@ problem_choices = [(u'browser_bug', u'Looks like the browser has a bug'),
 url_message = u'A valid URL is required to report a bug!'
 summary_message = u'Please give the bug report a summary.'
 
+desc_default = u'''1) Navigate to: http://www.example.com
+2) …
+
+Expected Behavior:
+Actual Behavior:
+'''
+
 
 class IssueForm(Form):
     url = StringField(u'Site URL*', [Required(message=url_message)])
@@ -23,7 +30,8 @@ class IssueForm(Form):
     version = StringField(u'Version', [Optional()])
     summary = StringField(u'Problem in 5 words*',
                           [Required(message=summary_message)])
-    description = TextAreaField(u'How can we replicate this?', [Optional()])
+    description = TextAreaField(u'How can we replicate this?', [Optional()],
+                                default=desc_default)
     site_owner = RadioField(u'Is this your website?', [Optional()],
                             choices=owner_choices)
     problem_category = RadioField(u'What seems to be the trouble?',
