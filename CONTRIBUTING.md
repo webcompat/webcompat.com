@@ -61,6 +61,18 @@ All code contributions should come in the form of a [pull request](https://help.
 
 * In GitHub, send a pull request to `webcompat.com:dev.webcompat.com`*.
 
+To do this, click on the Edit button at the top.
+
+![master](https://i.cloudup.com/tgBan6xVWt-2000x2000.png)
+
+Select the `dev.webcompat.com` branch on the left hand side.
+
+![change](https://i.cloudup.com/TZGd2ze3DL-2000x2000.png)
+
+And you should be good to go.
+
+![ready](https://i.cloudup.com/gE8awVDEyE-2000x2000.png)
+
 * Continue discussion in the pull request.
 
 \*`dev.webcompat.com` is our "development" branch where we can test, experiment, and deploy changes to dev.webcompat.com before merging into `master` and pushing to webcompat.com.
