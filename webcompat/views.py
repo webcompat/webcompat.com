@@ -91,13 +91,6 @@ def show_issues():
     return redirect(url_for('new_issue'), code=307)
 
 
-# quick local testing of form
-@app.route('/fake-form')
-def fake_form():
-    form = IssueForm()
-    return render_template('new_issue.html', form=form)
-
-
 #TODO: /issues/<issue> redirect 307 to github repo issue
 @app.route('/issues/new', methods=['GET', 'POST'])
 def new_issue():
