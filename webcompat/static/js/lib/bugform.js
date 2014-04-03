@@ -8,14 +8,14 @@ function BugForm() {
 
   var self = {
     init: function() {
-      urlField.bind('input', self.copyURL)
+      urlField.bind('input', self.copyURL);
     },
     /*
        copy URL from urlField into the first line of the
        description field. early return if the user has deleted
        the first so we don't make them sad.
     */
-    copyURL: function(e) {
+    copyURL: function() {
       var firstLine = /^1\)\sNavigate.*\n/;
       descField.val(function(idx, value){
         var prefix = '1) Navigate to: ';
@@ -25,11 +25,11 @@ function BugForm() {
         return value.replace(firstLine, prefix + urlField.val() + '\n');
       });
     }
-  }
+  };
 
   return self.init();
-};
+}
 
 $(function(){
-  var bugForm = new BugForm()
-})
+  new BugForm();
+});
