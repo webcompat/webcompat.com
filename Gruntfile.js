@@ -53,8 +53,7 @@ module.exports = function(grunt) {
       beforeconcat: [
         'Gruntfile.js',
         '<%= jsPath %>/lib/bugform.js'
-      ],
-      afterconcat: ['dist/output.js']
+      ]
     },
     watch: {
       gruntfile: {
