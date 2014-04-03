@@ -31,8 +31,10 @@
       ga('create', 'UA-49507820-1', 'webcompat.com');
       ga('send', 'pageview');
     </script>
+    <script src="{{ url_for('static', filename='js/webcompat.min.js') }}"></script>
+    {% else %}
+    <script src="{{ url_for('static', filename='js/lib/jquery-1.11.0.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/lib/bugform.js') }}"></script>
     {% endif %}
-    <script src="{{ url_for('static', filename='js/jquery-1.11.0.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/bugform.js') }}"></script>
 </body>
 </html>

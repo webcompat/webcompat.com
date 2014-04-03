@@ -51,6 +51,7 @@ module.exports = function(grunt) {
         }
       },
       beforeconcat: [
+        'Gruntfile.js',
         '<%= jsPath %>/lib/bugform.js'
       ],
       afterconcat: ['dist/output.js']
@@ -58,7 +59,7 @@ module.exports = function(grunt) {
     watch: {
       gruntfile: {
         files: '<%= jshint.beforeconcat %>',
-        tasks: ['jshint:gruntfile']
+        tasks: ['jshint:beforeconcat']
       }
     }
   });
