@@ -140,6 +140,17 @@ workon webcompatcom
 
 It will move you to the right directory in your environment.
 
+## Installing Grunt
+
+We use [Grunt](http://gruntjs.com/) as a task runner to perform certain things (minify + concat JS assets, for example).
+
+You need to have [Node.js](http://nodejs.org/download/) installed to be able to run Grunt. Once that's done, use `npm` to install the grunt dependencies. Version 0.10.0 or above is required.
+
+From the project root:
+
+`npm install`
+
+You can then use the `grunt` command to run grunt tasks. `grunt --help` will list all the tasks.
 
 ### Acknowledgements
 A lot of this document was inspired directly by the excellent [Backbone.LayoutManager](https://github.com/tbranyen/backbone.layoutmanager/blob/master/CONTRIBUTING.md), [CouchDB](https://github.com/apache/couchdb/blob/master/src/fauxton/CONTRIBUTING.md), and [Angular.js](https://github.com/angular/angular.js/blob/master/CONTRIBUTING.md#issue) CONTRIBUTING files.
