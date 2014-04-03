@@ -1,5 +1,5 @@
-_site/*
 env/
+node_modules/
 .DS_Store
 config.py
 fabfile.py
