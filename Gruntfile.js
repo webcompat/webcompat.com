@@ -12,11 +12,11 @@ module.exports = function(grunt) {
     concat: {
       options: {
         banner: '<%= banner %>',
-        stripBanners: true
+        stripBanners: false
       },
       dist: {
         src: [
-            '<%= jsPath %>/jquery-1.11.0.min.js',
+            '<%= jsPath %>/lib/jquery-1.11.0.min.js',
             '<%= jsPath %>/lib/bugform.js'
         ],
         dest: '<%= jsPath %>/<%= pkg.name %>.js'
@@ -24,7 +24,8 @@ module.exports = function(grunt) {
     },
     uglify: {
       options: {
-        banner: '<%= banner %>'
+        banner: '<%= banner %>',
+        mangle: false
       },
       dist: {
         src: '<%= concat.dist.dest %>',

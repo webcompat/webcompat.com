@@ -6,3 +6,7 @@ fabfile.py
 *.pyc
 *.db
 
+# these are our 'dist' files
+# checking them into the repo is silly
+webcompat/**/webcompat.js
+webcompat/**/webcompat.min.js
