@@ -75,6 +75,8 @@ And you should be good to go.
 
 * Continue discussion in the pull request.
 
+After all that, if you'd like, you can add your name to our humans.txt file.
+
 \*`dev.webcompat.com` is our "development" branch where we can test, experiment, and deploy changes to dev.webcompat.com before merging into `master` and pushing to webcompat.com.
 
 ## Coding Style
