@@ -146,7 +146,11 @@ We use [Grunt](http://gruntjs.com/) as a task runner to perform certain things (
 
 You need to have [Node.js](http://nodejs.org/download/) installed to be able to run Grunt. Once that's done, use `npm` to install the grunt dependencies. Version 0.10.0 or above is required.
 
-From the project root:
+First install the `grunt-cli` tool:
+
+`npm install -g grunt-cli`
+
+Then, from the project root:
 
 `npm install`
 
