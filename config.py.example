@@ -34,7 +34,7 @@ if PRODUCTION:
     GITHUB_CLIENT_SECRET = ""
     GITHUB_CALLBACK_URL = ""
 else:
-    # We're in developement, use the test application
+    # We're in development, use the test application
     GITHUB_CLIENT_ID = ""
     GITHUB_CLIENT_SECRET = ""
     GITHUB_CALLBACK_URL = ""
