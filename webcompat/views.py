@@ -4,17 +4,17 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
+import os
+import template_filters
+import time
+from datetime import datetime
 from flask import (flash, g, redirect, request, render_template, session,
                    url_for)
 from flask.ext.github import GitHubError
-from datetime import datetime
 from issue_form import (build_formdata, get_browser_name, get_browser_version,
                         IssueForm, AUTH_REPORT, PROXY_REPORT)
 from models import db_session, User
 from webcompat import github, app
-import os
-import template_filters
-import time
 
 
 @app.teardown_appcontext
