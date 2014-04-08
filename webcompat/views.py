@@ -11,8 +11,9 @@ from datetime import datetime
 from flask import (flash, g, redirect, request, render_template, session,
                    url_for)
 from flask.ext.github import GitHubError
-from issue_form import (build_formdata, get_browser_name, get_browser_version,
-                        IssueForm, AUTH_REPORT, PROXY_REPORT)
+from form import (build_formdata, get_browser_name, get_browser_version,
+                  IssueForm, AUTH_REPORT, PROXY_REPORT)
+from issues import report_issue, proxy_report_issue
 from models import db_session, User
 from webcompat import github, app
 
@@ -93,8 +94,7 @@ def logout():
 @app.route('/file')
 def file_issue():
     '''File an issue on behalf of the user that just gave us authorization.'''
-    response = github.post('repos/' + app.config['ISSUES_REPO_URI'],
-                           build_formdata(session['form_data']))
+    response = report_issue(session['form_data'])
     # Get rid of stashed form data
     session.pop('form_data', None)
     return redirect(url_for('show_issue', number=response.get('number')))
@@ -118,14 +118,10 @@ def new_issue():
     # Form submission.
     elif request.method == 'POST' and form.validate():
         if request.form.get('submit-type') == AUTH_REPORT:
-            # If you're already authed, submit the bug.
-            if g.user:
-                r = github.post('repos/' + app.config['ISSUES_REPO_URI'],
-                                build_formdata(request.form))
+            if g.user:  # If you're already authed, submit the bug.
+                r = report_issue(request.form)
                 return redirect(url_for('show_issue', number=r.get('number')))
-            else:
-                # Stash the filled out form data into the session object
-                # and go do GitHub auth routine.
+            else:  # Stash form data into session, go do GitHub auth
                 session['form_data'] = request.form
                 return redirect(url_for('login'))
         elif request.form.get('submit-type') == PROXY_REPORT:
