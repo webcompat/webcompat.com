@@ -14,7 +14,7 @@
         <span class="help-inline">{{ error }}</span>
         {% endfor %}{% endif %}
         {{ form.url(class_='form-control required',
-                    placeholder='e.g., http://www.google.com') }}
+                    placeholder='e.g., http://www.example.com') }}
       </div>
     </div>
     <div class="row">
@@ -56,14 +56,19 @@
     </div>
     <div class="row">
       <div class="form-group col-md-12">
-        <label for="description">How can we replicate this?</label>
-        {{ form.version.description.label }} {{ form.description(class_='form-control', rows=6) }}
+        {{ form.description.label }} {{ form.description(class_='form-control', rows=6) }}
       </div>
     </div>
     <div class="row">
       <div class="col-md-12">
       <p>* required field</p>
-        <button class="button" type="submit">Report Bug</button>
+        <button name="submit-type" value="github-auth-report" class="btn btn-default btn-primary" type="submit">Login with GitHub and Report Bug</button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <p>Don't have a GitHub account, or don't want to authorize this site?</p>
+        <button name="submit-type" value="github-proxy-report" class="btn btn-default btn-primary">Report the bug on my behalf.</button>
       </div>
     </div>
   </form>

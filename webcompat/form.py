@@ -4,9 +4,12 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
+from ua_parser import user_agent_parser
 from wtforms import Form, RadioField, StringField, TextAreaField
 from wtforms.validators import Optional, Required
 
+AUTH_REPORT = 'github-auth-report'
+PROXY_REPORT = 'github-proxy-report'
 
 owner_choices = [(u'True', u'Yes'), (u'False', u'No')]
 problem_choices = [(u'browser_bug', u'Looks like the browser has a bug'),
@@ -15,6 +18,13 @@ problem_choices = [(u'browser_bug', u'Looks like the browser has a bug'),
 url_message = u'A valid URL is required to report a bug!'
 summary_message = u'Please give the bug report a summary.'
 
+desc_default = u'''1) Navigate to: http://www.example.com
+2) …
+
+Expected Behavior:
+Actual Behavior:
+'''
+
 
 class IssueForm(Form):
     url = StringField(u'Site URL*', [Required(message=url_message)])
@@ -22,19 +32,12 @@ class IssueForm(Form):
     version = StringField(u'Version', [Optional()])
     summary = StringField(u'Problem in 5 words*',
                           [Required(message=summary_message)])
-    description = TextAreaField(u'How can we replicate this?', [Optional()])
+    description = TextAreaField(u'How can we replicate this?', [Optional()],
+                                default=desc_default)
     site_owner = RadioField(u'Is this your website?', [Optional()],
                             choices=owner_choices)
     problem_category = RadioField(u'What seems to be the trouble?',
                                   [Optional()], choices=problem_choices)
-
-
-def wrap_label(type, value):
-    '''Helper method to wrap a label and its type in an HTML comment (which
-    we use to hide from users in GitHub issues. We can parse these later and
-    add labels programmatically (as you have to have push access to the report
-    to add labels.'''
-    return u'<!-- @{0}: {1} -->'.format(type, value)
 
 
 def get_problem(type):
@@ -54,12 +57,41 @@ def get_owner(bool):
         return u'Unknown'
 
 
-def get_labels(form_object):
-    '''Create a list of labels, join on \n, return the result.'''
-    # TODO: labels should be parsed from the Browser field, which we should
-    # prepopulate with navigator.userAgent. We can use tobie's ua parser
-    # to get mobile, tablet, desktop, browsername maybe?
-    return ''
+def wrap_label(label):
+    '''Helper method to wrap a label and its type in an HTML comment (which
+    we use to hide from users in GitHub issues. We can parse these later and
+    add labels programmatically (as you have to have push access to the report
+    to add labels.'''
+    return u'<!-- @{0}: {1} -->\n'.format(*label)
+
+
+def get_labels(browser_name):
+    labels = []
+    result = ''
+    # Only the name for now.
+    labels.append(('browser', browser_name))
+    # Now, "wrap the labels" and return them all as a single string
+    for label in labels:
+        result += wrap_label(label)
+    return result
+
+
+def get_browser_name(user_agent_string):
+    ua_dict = user_agent_parser.Parse(user_agent_string)
+    return ua_dict.get('user_agent').get('family')
+
+
+def get_browser_version(user_agent_string):
+    '''Returns a string representing the browser version.'''
+    ua_dict = user_agent_parser.Parse(user_agent_string)
+    ua = ua_dict.get('user_agent')
+    version = ua.get('major', u'Unknown')
+    # Add on the minor and patch version numbers if they exist
+    if version != u'Unknown' and ua.get('minor'):
+        version = version + "." + ua.get('minor')
+        if ua.get('patch'):
+            version = version + "." + ua.get('patch')
+    return version
 
 
 def build_formdata(form_object):
@@ -94,7 +126,6 @@ def build_formdata(form_object):
     have a bot set up to parse the label comments (see wrap_label), we'll stop
     doing that.'''
     body = u'''{0}
-
 **URL**: {1}
 **Browser**: {2}
 **Version**: {3}
@@ -102,7 +133,7 @@ def build_formdata(form_object):
 **Site owner**: {5}
 
 **Steps to Reproduce**
-{6}'''.format(get_labels(form_object),
+{6}'''.format(get_labels(form_object.get('browser')),
               form_object.get('url'),
               form_object.get('browser'),
               form_object.get('version'),
