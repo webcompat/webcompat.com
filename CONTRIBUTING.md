@@ -77,7 +77,7 @@ And you should be good to go.
 
 After all that, if you'd like, you can add your name to our humans.txt file.
 
-\*`dev.webcompat.com` is our "development" branch where we can test, experiment, and deploy changes to dev.webcompat.com before merging into `master` and pushing to webcompat.com.
+* `dev.webcompat.com` is our "development" branch where we can test, experiment, and deploy changes to dev.webcompat.com before merging into `master` and pushing to webcompat.com.
 
 ## Coding Style
 It's still early days for this project, so there are no strict coding guidelines (yet?).
@@ -91,7 +91,7 @@ When in doubt, follow the conventions you see used in the source already.
 
 If you'd like to run the site locally, here's how you can get set up (which should work on Mac and Linux operating systems&mdash;instructions for Windows would make a great first contribution to this project!)
 
-The only requiement is having [pip installed](http://pip.readthedocs.org/en/latest/installing.html) (and, of course Python). If you want to test issue submission, you need to [get the secrets](https://github.com/webcompat/webcompat.com/blob/dev.webcompat.com/config.py.example#L24-L38) for config.py and provide pointers to [repo issues URIs](https://github.com/webcompat/webcompat.com/blob/dev.webcompat.com/config.py.example#L40-L44).
+The only requirement is having [pip installed](http://pip.readthedocs.org/en/latest/installing.html) (and, of course Python). If you want to test issue submission, you need to [get the secrets](https://github.com/webcompat/webcompat.com/blob/dev.webcompat.com/config.py.example#L24-L38) for config.py and provide pointers to [repo issues URIs](https://github.com/webcompat/webcompat.com/blob/dev.webcompat.com/config.py.example#L40-L44).
 
 ``` bash
 # Install virtualenv
