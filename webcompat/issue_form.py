@@ -8,6 +8,8 @@ from ua_parser import user_agent_parser
 from wtforms import Form, RadioField, StringField, TextAreaField
 from wtforms.validators import Optional, Required
 
+AUTH_REPORT = 'github-auth-report'
+PROXY_REPORT = 'github-proxy-report'
 
 owner_choices = [(u'True', u'Yes'), (u'False', u'No')]
 problem_choices = [(u'browser_bug', u'Looks like the browser has a bug'),
@@ -92,7 +94,7 @@ def get_browser_version(user_agent_string):
     return version
 
 
-def build_formdata(request):
+def build_formdata(form_object):
     '''Translate the form data that comes from our form into something that
     the GitHub API is expecting.
 
@@ -123,8 +125,6 @@ def build_formdata(request):
     For now, we'll put them in the body so they're visible. But as soon as we
     have a bot set up to parse the label comments (see wrap_label), we'll stop
     doing that.'''
-    form_object = request.form
-    user_agent_header = request.headers.get('User-Agent')
     body = u'''{0}
 **URL**: {1}
 **Browser**: {2}
