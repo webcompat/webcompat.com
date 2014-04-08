@@ -99,9 +99,9 @@ sudo pip install virtualenv
 # Install virtualenvwrapper
 sudo pip install virtualenvwrapper
 # Configuring your environment
-echo "export WORKON_HOME=$HOME/.virtualenvs" > ~/.bashrc
-echo "export PROJECT_HOME=$HOME/code" > ~/.bashrc
-echo "source /usr/local/bin/virtualenvwrapper.sh" > ~/.bashrc
+echo "export WORKON_HOME=$HOME/.virtualenvs" >> ~/.bashrc
+echo "export PROJECT_HOME=$HOME/code" >> ~/.bashrc
+echo "source /usr/local/bin/virtualenvwrapper.sh" >> ~/.bashrc
 source ~/.bashrc
 ```
 
