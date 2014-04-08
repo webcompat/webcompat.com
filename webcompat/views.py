@@ -119,14 +119,18 @@ def new_issue():
     elif request.method == 'POST' and form.validate():
         if request.form.get('submit-type') == AUTH_REPORT:
             if g.user:  # If you're already authed, submit the bug.
-                r = report_issue(request.form)
-                return redirect(url_for('show_issue', number=r.get('number')))
+                response = report_issue(request.form)
+                return redirect(url_for('show_issue',
+                                number=response.get('number')))
             else:  # Stash form data into session, go do GitHub auth
                 session['form_data'] = request.form
                 return redirect(url_for('login'))
         elif request.form.get('submit-type') == PROXY_REPORT:
-            # TODO: proxy_report_issue()
-            return 'ok'
+            # `response` here is a Requests Response object, because
+            # the proxy_report_issue crafts a manual request with Requests
+            response = proxy_report_issue(request.form)
+            return redirect(url_for('show_issue',
+                            number=response.json().get('number')))
     else:
         # Validation failed, re-render the form with the errors.
         return render_template('new_issue.html', form=form)
