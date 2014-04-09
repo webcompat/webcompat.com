@@ -44,3 +44,10 @@ if PRODUCTION:
     ISSUES_REPO_URI = "<user>/<repo>/issues"
 else:
     ISSUES_REPO_URI = "<user>/<repo>/issues"
+
+# This is the oauth token we use to report issues on behalf of people
+# who don't want to give GitHub oauth access (or don't have GitHub accounts)
+# If you don't want to create another user for testing, you could put in
+# your own access token. See
+# help.github.com/articles/creating-an-access-token-for-command-line-use
+BOT_OAUTH_TOKEN = ""

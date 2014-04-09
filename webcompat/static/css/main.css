@@ -552,11 +552,16 @@ img.lightswitch {
 #shrink {
   font-size: 1.16em;
 }
-#button1, form button {
+#button1, form button.btn:not(.btn-link) {
   background-color: #f38326;
   border: .15em solid #d47039;
   color: #fdf3dd;
   margin-bottom: .5em;
+}
+form .btn-link, form .btn-link:hover {
+    color: #fff;
+    text-decoration: underline;
+    padding-left: 0;
 }
 .github {
   background: #f38326 url(../img/github-mark.png) no-repeat 10px;
@@ -633,6 +638,10 @@ form .button {
   /* Hack to get Chrome 24+ to behave.
   See https://github.com/twbs/bootstrap/issues/6599 */
   white-space: nowrap;
+}
+/* `ruby -e 'puts "skcah top yenoh".reverse'` */
+.col-dm-12 {
+  display: none !important;
 }
 /*------Form Validation------*/
 .errors {
