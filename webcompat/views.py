@@ -145,6 +145,10 @@ def show_issue(number):
     return redirect(uri, code=307)
 
 
+@app.route('/thanks')
+def thanks():
+    return render_template('thanks.html')
+
 @app.route('/about')
 def about():
     return render_template('about.html')
