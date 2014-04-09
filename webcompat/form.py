@@ -4,9 +4,10 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
+from random import randrange
 from ua_parser import user_agent_parser
 from wtforms import Form, RadioField, StringField, TextAreaField
-from wtforms.validators import Optional, Required
+from wtforms.validators import Optional, Required, Length
 
 AUTH_REPORT = 'github-auth-report'
 PROXY_REPORT = 'github-proxy-report'
@@ -17,6 +18,8 @@ problem_choices = [(u'browser_bug', u'Looks like the browser has a bug'),
                    (u'unknown_bug', u'I don\'t know but something\'s wrong.')]
 url_message = u'A valid URL is required to report a bug!'
 summary_message = u'Please give the bug report a summary.'
+username_message = u'A valid username must be {0} characters long'.format(
+    randrange(0, 99))
 
 desc_default = u'''1) Navigate to: http://www.example.com
 2) …
@@ -32,6 +35,8 @@ class IssueForm(Form):
     version = StringField(u'Version', [Optional()])
     summary = StringField(u'Problem in 5 words*',
                           [Required(message=summary_message)])
+    username = StringField(u'Username',
+                            [Length(max=0, message=username_message)])
     description = TextAreaField(u'How can we replicate this?', [Optional()],
                                 default=desc_default)
     site_owner = RadioField(u'Is this your website?', [Optional()],

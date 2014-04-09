@@ -634,6 +634,10 @@ form .button {
   See https://github.com/twbs/bootstrap/issues/6599 */
   white-space: nowrap;
 }
+/* `ruby -e 'puts "skcah top yenoh".reverse'` */
+.col-dm-12 {
+  display: none !important;
+}
 /*------Form Validation------*/
 .errors {
   margin: .5em 0;
