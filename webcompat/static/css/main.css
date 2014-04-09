@@ -552,11 +552,16 @@ img.lightswitch {
 #shrink {
   font-size: 1.16em;
 }
-#button1, form button {
+#button1, form button.btn:not(.btn-link) {
   background-color: #f38326;
   border: .15em solid #d47039;
   color: #fdf3dd;
   margin-bottom: .5em;
+}
+form .btn-link, form .btn-link:hover {
+    color: #fff;
+    text-decoration: underline;
+    padding-left: 0;
 }
 .github {
   background: #f38326 url(../img/github-mark.png) no-repeat 10px;
