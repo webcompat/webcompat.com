@@ -5,23 +5,23 @@
     <meta charset="utf-8">
     <meta name="description" content="Open source community for web compatibility.  Report bugs from websites and help us move the web forward." />
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
-    <link href="{{ url_for('static', filename='css/bootstrap.css') }}" type="text/css" rel="stylesheet" />
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
     <link href="{{ url_for('static', filename='css/main.css') }}" type="text/css" rel="stylesheet" />
 </head>
 <body>
-    <div id="beta">Hello! Welcome to our early preview. We would love your <a href="https://github.com/webcompat/webcompat.com/issues?state=open">feedback</a>.</div>
-    {% for category, message in get_flashed_messages(with_categories=True) %}
-    <div class="flash {{ category }}">{{ message }}</div>
-    {% endfor %}
-    {% block body %}{% endblock %}
+      <div id="beta">Hello! Welcome to our early preview. We would love your <a href="https://github.com/webcompat/webcompat.com/issues?state=open">feedback</a>.</div>
+      {% for category, message in get_flashed_messages(with_categories=True) %}
+      <div class="flash {{ category }}">{{ message }}</div>
+      {% endfor %}
+      {% block body %}{% endblock %}
 
-    <footer>
-      <p class="footerleft">Last modified on {{ g.last_modified | format_date }}</p>
-      <ul class="footerright">
-            <li><a href="{{ url_for('about') }}">About</a></li>
-            <li><a href="https://github.com/webcompat/webcompat.com">Contribute on GitHub</a></li>
+      <footer class="container">
+        <p class="footerleft">Last modified on {{ g.last_modified | format_date }}</p>
+        <ul class="footerright">
+          <li><a href="{{ url_for('about') }}">About</a></li>
+          <li><a href="https://github.com/webcompat/webcompat.com">Contribute on GitHub</a></li>
         </ul>
-    </footer>
+      </footer>
     {% if config.PRODUCTION %}
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

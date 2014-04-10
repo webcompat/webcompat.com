@@ -501,9 +501,11 @@ footer {
 }
 .footerleft {
   float: left;
+  padding-left: 6em;
 }
 .footerright {
   float: right;
+  padding-right: 6em;
 }
 .footerright li {
   display: inline;
@@ -580,12 +582,9 @@ input[type=search] {
   padding: 3em 6em;
 }
 .about {
-  background-color: #f5e0c7;
-  border-top: .75em solid #f6cfa0;
   line-height: 150%;
 }
 .join {
-  background-color: #f5ecdb;
   color: #67cedc;
   line-height: 350%;
 }
