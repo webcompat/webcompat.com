@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="description" content="Open source community for web compatibility.  Report bugs from websites and help us move the web forward." />
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
-    {% block extracss %}{% endblock %}
+    <link href="{{ url_for('static', filename='css/bootstrap.css') }}" type="text/css" rel="stylesheet" />
     <link href="{{ url_for('static', filename='css/main.css') }}" type="text/css" rel="stylesheet" />
 </head>
 <body>
