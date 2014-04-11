@@ -91,35 +91,25 @@ When in doubt, follow the conventions you see used in the source already.
 
 If you'd like to run the site locally, here's how you can get set up (which should work on Mac and Linux operating systems&mdash;instructions for Windows would make a great first contribution to this project!)
 
-The only requirement is having [pip installed](http://pip.readthedocs.org/en/latest/installing.html) (and, of course Python). If you want to test issue submission, you need to [get the secrets](https://github.com/webcompat/webcompat.com/blob/dev.webcompat.com/config.py.example#L24-L38) for config.py and provide pointers to [repo issues URIs](https://github.com/webcompat/webcompat.com/blob/dev.webcompat.com/config.py.example#L40-L44).
+The only requirement is having [pip installed](http://pip.readthedocs.org/en/latest/installing.html) and, of course Python. If you want to test issue submission, you need to [get the secrets](https://github.com/webcompat/webcompat.com/blob/dev.webcompat.com/config.py.example#L24-L38) for config.py and provide pointers to [repo issues URIs](https://github.com/webcompat/webcompat.com/blob/dev.webcompat.com/config.py.example#L40-L44).
 
 ``` bash
 # Install virtualenv
-sudo pip install virtualenv
-# Install virtualenvwrapper
-sudo pip install virtualenvwrapper
-# Configuring your environment
-echo "export WORKON_HOME=$HOME/.virtualenvs" >> ~/.bashrc
-echo "export PROJECT_HOME=$HOME/code" >> ~/.bashrc
-echo "source /usr/local/bin/virtualenvwrapper.sh" >> ~/.bashrc
-source ~/.bashrc
+[sudo] pip install virtualenv
 ```
 
 Now let's move on the steps to grab the source code locally and work in a protected environment of python.
 
 ``` bash
-# In the location of your choice
-mkdir ~/code
-cd ~/code
 # clone the repo
 git clone git@github.com:webcompat/webcompat.com.git
 # change to directory
 cd webcompat.com
-# Set up environment
-# * Will install the virtualenvironment
-# * will install the requirements
-# * will set the default dir for working
-mkvirtualenv -a /Your/full/path/webcompat.com/ -r requirements.txt webcompatcom
+# set up virtual environment
+virtualenv env
+source env/bin/activate
+# install dependencies
+pip install -r requirements.txt
 # set up config.py, filling in appropriate secrets and pointers to repos
 cp config.py.example config.py
 # start local server
@@ -127,20 +117,6 @@ python run.py
 ```
 
 You should now have a local instance of the site running at `http://127.0.0.1:5000/`. Please [file bugs](https://github.com/webcompat/webcompat.com/issues/new) if something went wrong!
-
-To leave the working environment, just type:
-
-```bash
-deactivate
-```
-
-If you want to work again on the project, you just need to do:
-
-```bash
-workon webcompatcom
-```
-
-It will move you to the right directory in your environment.
 
 ## Installing Grunt
 
