@@ -4,16 +4,18 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-from flask import (flash, g, redirect, request, render_template, session,
-                   url_for)
-from flask.ext.github import GitHubError
-from datetime import datetime
-from issue_form import build_formdata, IssueForm
-from models import db_session, User
-from webcompat import github, app
 import os
 import template_filters
 import time
+from datetime import datetime
+from flask import (flash, g, redirect, request, render_template, session,
+                   url_for)
+from flask.ext.github import GitHubError
+from form import (build_formdata, get_browser_name, get_browser_version,
+                  IssueForm, AUTH_REPORT, PROXY_REPORT)
+from issues import report_issue, proxy_report_issue
+from models import db_session, User
+from webcompat import github, app
 
 
 @app.teardown_appcontext
@@ -75,14 +77,27 @@ def authorized(access_token):
     db_session.commit()
 
     session['user_id'] = user.id
-    return redirect(url_for('new_issue'))
+    return redirect(url_for('file_issue'))
 
 
 @app.route('/logout')
 def logout():
     session.pop('user_id', None)
+    session.pop('form_data', None)
     flash(u'You were successfully logged out.', 'info')
     return redirect(url_for('index'))
+
+
+# This route won't ever be viewed by a human being--there's not
+# a corresponding template. It exists just to submit an issue after
+# a user auths with GitHub.
+@app.route('/file')
+def file_issue():
+    '''File an issue on behalf of the user that just gave us authorization.'''
+    response = report_issue(session['form_data'])
+    # Get rid of stashed form data
+    session.pop('form_data', None)
+    return redirect(url_for('show_issue', number=response.get('number')))
 
 
 @app.route('/issues')
@@ -90,21 +105,32 @@ def show_issues():
     return redirect(url_for('new_issue'), code=307)
 
 
-#TODO: /issues/<issue> redirect 307 to github repo issue
 @app.route('/issues/new', methods=['GET', 'POST'])
 def new_issue():
+    '''Main view where people come to report issues.'''
     form = IssueForm(request.form)
+    # add browser and version to form object data
+    form.browser.data = get_browser_name(request.headers.get('User-Agent'))
+    form.version.data = get_browser_version(request.headers.get('User-Agent'))
+    # GET means you want to file a report.
     if request.method == 'GET':
-        if g.user:
-            user_info = github.get('user')
-            return render_template('new_issue.html', form=form)
-        else:
-            return redirect(url_for('login'))
+        return render_template('new_issue.html', form=form)
+    # Form submission.
     elif request.method == 'POST' and form.validate():
-        r = github.post('repos/' + app.config['ISSUES_REPO_URI'],
-                        build_formdata(request.form))
-        issue_number = r.get('number')
-        return redirect(url_for('show_issue', number=issue_number))
+        if request.form.get('submit-type') == AUTH_REPORT:
+            if g.user:  # If you're already authed, submit the bug.
+                response = report_issue(request.form)
+                return redirect(url_for('show_issue',
+                                number=response.get('number')))
+            else:  # Stash form data into session, go do GitHub auth
+                session['form_data'] = request.form
+                return redirect(url_for('login'))
+        elif request.form.get('submit-type') == PROXY_REPORT:
+            # `response` here is a Requests Response object, because
+            # the proxy_report_issue crafts a manual request with Requests
+            response = proxy_report_issue(request.form)
+            return redirect(url_for('show_issue',
+                            number=response.json().get('number')))
     else:
         # Validation failed, re-render the form with the errors.
         return render_template('new_issue.html', form=form)
@@ -118,6 +144,10 @@ def show_issue(number):
                                                number)
     return redirect(uri, code=307)
 
+
+@app.route('/thanks')
+def thanks():
+    return render_template('thanks.html')
 
 @app.route('/about')
 def about():

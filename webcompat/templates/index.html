@@ -1,30 +1,24 @@
-{% extends "layout.html" %}
-{% block body %}
-    <div class="hero">
-        <img class="lightswitch" src="{{ url_for('static', filename='img/lightswitch.png') }}" alt="Light Switch">
-          <div id="maintitle">
-            <h1><span id="shrink">A <span class="bold">Better Web</span></span><br> Starts With You.</h1>
-            <h2>Submit bugs for any browser or website all in one place.</h2>
-          </div>
-        <a class="button github" id="button1" href="{{ url_for("new_issue") }}">Report bug</a>
-        <br>
-        <!--Search on Github
-          <div class="search">
-            <input type="search" placeholder="Search bugs on Github" >
-          </div>
-        -->
-    </div>
-
-    <div class="about">
-      <p>Webcompat.com is a gathering place for the web compatibility community.  This site is a place to report bugs from any website across the web - whether you are a developer or not.  Started by the Mozilla Web Compatibility team, this initiative is a global task force on a mission to improve the web one bug at a time.  Join us!  Let&#39;s work together to make the web a better place to work and play.
-      <a class="readmore" href="{{ url_for("about") }}">Read more about this project.</a>
-    </div>
-
-    <div class="join">
-      <h3>Join Us.</h3>
-        <h4>Be a part of the Web Compat team</h4>
-          <h5>1. <a href="{{ url_for("new_issue") }}">Report</a> Bugs</h5>
-          <h5>2. <a href="http://webcompat.com/bugsahoy/?analysis=1">Diagnose</a> Bugs</h5>
-          <h5>3. <a href="http://webcompat.com/bugsahoy/?outreach=1">Reach out</a> to Sites</h5>
-    </div>
+{%- extends "layout.html" -%}
+{%- block body -%}
+<div class="hero">
+  <img class="lightswitch" src="{{ url_for('static', filename='img/lightswitch.png') }}" alt="Light Switch">
+  <div id="maintitle">
+    <h1><span id="shrink">A <span class="bold">Better Web</span></span><br> Starts With You.</h1>
+    <h2>Submit bugs for any browser or website all in one place.</h2>
+  </div>
+  <a class="button github" id="button1" href="{{ url_for("new_issue") }}">Report bug</a>
+</div>
+<div class="container">
+  <div class="about">
+    <p>Webcompat.com is a gathering place for the web compatibility community.  This site is a place to report bugs from any website across the web - whether you are a developer or not.  Started by the Mozilla Web Compatibility team, this initiative is a global task force on a mission to improve the web one bug at a time.  Join us!  Let&#39;s work together to make the web a better place to work and play.</p>
+    <p><a class="readmore" href="{{ url_for("about") }}">Read more about this project.</a></p>
+  </div>
+  <div class="join">
+    <h3>Join Us.</h3>
+    <h4>Be a part of the Web Compat team</h4>
+    <h5>1. <a href="{{ url_for("new_issue") }}">Report</a> Bugs</h5>
+    <h5>2. <a href="http://webcompat.com/bugsahoy/?analysis=1">Diagnose</a> Bugs</h5>
+    <h5>3. <a href="http://webcompat.com/bugsahoy/?outreach=1">Reach out</a> to Sites</h5>
+  </div>
+</div>
 {% endblock %}

@@ -75,7 +75,9 @@ And you should be good to go.
 
 * Continue discussion in the pull request.
 
-\*`dev.webcompat.com` is our "development" branch where we can test, experiment, and deploy changes to dev.webcompat.com before merging into `master` and pushing to webcompat.com.
+After all that, if you'd like, you can add your name to our humans.txt file.
+
+* `dev.webcompat.com` is our "development" branch where we can test, experiment, and deploy changes to dev.webcompat.com before merging into `master` and pushing to webcompat.com.
 
 ## Coding Style
 It's still early days for this project, so there are no strict coding guidelines (yet?).
@@ -89,35 +91,25 @@ When in doubt, follow the conventions you see used in the source already.
 
 If you'd like to run the site locally, here's how you can get set up (which should work on Mac and Linux operating systems&mdash;instructions for Windows would make a great first contribution to this project!)
 
-The only requiement is having [pip installed](http://pip.readthedocs.org/en/latest/installing.html) (and, of course Python). If you want to test issue submission, you need to [get the secrets](https://github.com/webcompat/webcompat.com/blob/dev.webcompat.com/config.py.example#L24-L38) for config.py and provide pointers to [repo issues URIs](https://github.com/webcompat/webcompat.com/blob/dev.webcompat.com/config.py.example#L40-L44).
+The only requirement is having [pip installed](http://pip.readthedocs.org/en/latest/installing.html) and, of course Python. If you want to test issue submission, you need to [get the secrets](https://github.com/webcompat/webcompat.com/blob/dev.webcompat.com/config.py.example#L24-L38) for config.py and provide pointers to [repo issues URIs](https://github.com/webcompat/webcompat.com/blob/dev.webcompat.com/config.py.example#L40-L44).
 
 ``` bash
 # Install virtualenv
-sudo pip install virtualenv
-# Install virtualenvwrapper
-sudo pip install virtualenvwrapper
-# Configuring your environment
-echo "export WORKON_HOME=$HOME/.virtualenvs" >> ~/.bashrc
-echo "export PROJECT_HOME=$HOME/code" >> ~/.bashrc
-echo "source /usr/local/bin/virtualenvwrapper.sh" >> ~/.bashrc
-source ~/.bashrc
+[sudo] pip install virtualenv
 ```
 
 Now let's move on the steps to grab the source code locally and work in a protected environment of python.
 
 ``` bash
-# In the location of your choice
-mkdir ~/code
-cd ~/code
 # clone the repo
 git clone git@github.com:webcompat/webcompat.com.git
 # change to directory
 cd webcompat.com
-# Set up environment
-# * Will install the virtualenvironment
-# * will install the requirements
-# * will set the default dir for working
-mkvirtualenv -a /Your/full/path/webcompat.com/ -r requirements.txt webcompatcom
+# set up virtual environment
+virtualenv env
+source env/bin/activate
+# install dependencies
+pip install -r requirements.txt
 # set up config.py, filling in appropriate secrets and pointers to repos
 cp config.py.example config.py
 # start local server
@@ -126,20 +118,21 @@ python run.py
 
 You should now have a local instance of the site running at `http://127.0.0.1:5000/`. Please [file bugs](https://github.com/webcompat/webcompat.com/issues/new) if something went wrong!
 
-To leave the working environment, just type:
+## Installing Grunt
 
-```bash
-deactivate
-```
+We use [Grunt](http://gruntjs.com/) as a task runner to perform certain things (minify + concat JS assets, for example).
 
-If you want to work again on the project, you just need to do:
+You need to have [Node.js](http://nodejs.org/download/) installed to be able to run Grunt. Once that's done, use `npm` to install the grunt dependencies. Version 0.10.0 or above is required.
 
-```bash
-workon webcompatcom
-```
+First install the `grunt-cli` tool:
 
-It will move you to the right directory in your environment.
+`npm install -g grunt-cli`
 
+Then, from the project root:
+
+`npm install`
+
+You can then use the `grunt` command to run grunt tasks. `grunt --help` will list all the tasks.
 
 ### Acknowledgements
 A lot of this document was inspired directly by the excellent [Backbone.LayoutManager](https://github.com/tbranyen/backbone.layoutmanager/blob/master/CONTRIBUTING.md), [CouchDB](https://github.com/apache/couchdb/blob/master/src/fauxton/CONTRIBUTING.md), and [Angular.js](https://github.com/angular/angular.js/blob/master/CONTRIBUTING.md#issue) CONTRIBUTING files.

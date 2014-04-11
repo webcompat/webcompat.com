@@ -1,7 +1,4 @@
 {% extends "layout.html" %}
-{% block extracss %}
-<link href="{{ url_for('static', filename='css/bootstrap.css') }}" type="text/css" rel="stylesheet" />
-{% endblock %}
 {% block body %}
 <div id="new-report" class="page">
   <div class="container">
@@ -14,12 +11,10 @@
         <span class="help-inline">{{ error }}</span>
         {% endfor %}{% endif %}
         {{ form.url(class_='form-control required',
-                    placeholder='e.g., http://www.google.com') }}
+                    placeholder='e.g., http://www.example.com') }}
       </div>
-    </div>
-    <div class="row">
       <div class="form-group col-md-6">
-        <p class="label">Is this your site?</p>
+        <p id="site-owner" class="label">Is this your site?</p>
         {% for subradio in form.site_owner %}
         <div class="radio-inline">
           {{ subradio.label }} {{ subradio }}
@@ -56,14 +51,25 @@
     </div>
     <div class="row">
       <div class="form-group col-md-12">
-        <label for="description">How can we replicate this?</label>
-        {{ form.version.description.label }} {{ form.description(class_='form-control', rows=6) }}
+        {{ form.description.label }} {{ form.description(class_='form-control', rows=6) }}
+      </div>
+    </div>
+    <div class="row col-dm-12" aria-hidden="true">
+      <div class="form-group col-md-12 {% if form.summary.errors %}has-error{% endif %}">
+        {{ form.username.label }}{% if form.username.errors %}{% for error in form.username.errors %}
+        <span class="help-inline">{{ error }}</span>
+        {% endfor %}{% endif %}
+        {{ form.username(class_='form-control') }}
       </div>
     </div>
     <div class="row">
-      <div class="col-md-12">
-      <p>* required field</p>
-        <button class="button" type="submit">Report Bug</button>
+      <div class="col-md-4">
+        <p>* required field</p>
+        <button name="submit-type" value="github-auth-report" class="btn" type="submit">Report Bug as GitHub User</button>
+      </div>
+      <div class="col-md-8">
+      <p>Don't have a GitHub account, or don't want to authorize this site?</p>
+        <button name="submit-type" value="github-proxy-report" class="btn btn-link">Report Bug Anonymously</button>
       </div>
     </div>
   </form>
