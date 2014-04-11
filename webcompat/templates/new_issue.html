@@ -13,10 +13,8 @@
         {{ form.url(class_='form-control required',
                     placeholder='e.g., http://www.example.com') }}
       </div>
-    </div>
-    <div class="row">
       <div class="form-group col-md-6">
-        <p class="label">Is this your site?</p>
+        <p id="site-owner" class="label">Is this your site?</p>
         {% for subradio in form.site_owner %}
         <div class="radio-inline">
           {{ subradio.label }} {{ subradio }}
