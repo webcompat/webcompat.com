@@ -15,7 +15,7 @@ PROXY_REPORT = 'github-proxy-report'
 owner_choices = [(u'True', u'Yes'), (u'False', u'No')]
 problem_choices = [(u'browser_bug', u'Looks like the browser has a bug'),
                    (u'site_bug', u'Looks like the website has a bug.'),
-                   (u'unknown_bug', u'I don\'t know but something\'s wrong.')]
+                   (u'unknown_bug', u'Don\'t know but something\'s wrong.')]
 url_message = u'A valid URL is required to report a bug!'
 summary_message = u'Please give the bug report a summary.'
 username_message = u'A valid username must be {0} characters long'.format(
