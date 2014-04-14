@@ -122,11 +122,6 @@ form .btn-link, form .btn-link:hover {
     text-decoration: underline;
     padding-left: 0;
 }
-.github {
-  background: transparent;
-  border: 2px solid #f8c41c
-  padding-left: 2.25em;
-}
 /*---Search on Github---*/
 input[type=search] {
   float: left;
