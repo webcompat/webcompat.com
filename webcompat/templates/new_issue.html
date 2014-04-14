@@ -2,7 +2,7 @@
 {% block body %}
 <div id="new-report" class="page">
   <div class="container">
-  <h2>Bug Report</h2>
+  <h2>Report bug</h2>
   <form method="post" class="cf" action="/issues/new">
     <div class="row">
       <div class="form-group col-md-6 {% if form.url.errors %}has-error{% endif %}">
@@ -23,8 +23,10 @@
       </div>
     </div>
     <div class="row">
-      <div class="form-group col-md-12">
+      <div class="form-group col-md-6">
         <p class="label">What seems to be the trouble?</p>
+       </div>
+      <div class="form-group col-md-6">
         {% for subradio in form.problem_category %}
         <div class="radio">
           {{ subradio.label }} {{ subradio }}
@@ -63,13 +65,12 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-md-4">
-        <p>* required field</p>
-        <button name="submit-type" value="github-auth-report" class="btn" type="submit">Report Bug as GitHub User</button>
+      <div class="col-md-6">
+          <button name="submit-type" value="github-proxy-report" class="btn btn-link" id="submitanon">Report Anonymously</button>
       </div>
-      <div class="col-md-8">
-      <p>Don't have a GitHub account, or don't want to authorize this site?</p>
-        <button name="submit-type" value="github-proxy-report" class="btn btn-link">Report Bug Anonymously</button>
+      <div class="col-md-6">
+          <button name="submit-type" value="github-auth-report" class="btn" id="submitgithub" type="submit">Report via Github</button>
+      </div>
       </div>
     </div>
   </form>

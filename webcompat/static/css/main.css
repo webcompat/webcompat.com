@@ -26,27 +26,19 @@ html {
    font-weight: 300;
 }
 h1 {
-  font-size: 6.2em;
+  font-size: 3em;
 }
 h2 {
-  font-size: 1.75em;
+  font-size: 2em;
 }
 h3 {
-  font-size: 4em;
+  font-size: 1.5em;
 }
 h4 {
-  font-size: 1.7em;
-}
-h5 {
-  font-size: 2.5em;
+  font-size: 1.25em;
 }
 p {
   font-size: 1em;
-}
-nav {
-  text-align: right;
-  text-decoration: none;
-  padding-right: 2em;
 }
 .button {
   text-align: center;
@@ -103,46 +95,36 @@ footer {
 
 /*--------Homepage Styles--------*/
 .hero {
-  background-color: #67cedc;
-  -moz-box-shadow: inset 0 0 4em rgba(24, 30, 49, 0.45);
-  -webkit-box-shadow: inset 0 0 4em rgba(24, 30, 49, 0.45);
-  box-shadow: inset 0 0 4em rgba(24, 30, 49, 0.45);
-  text-align: center;
-  color: #fdf3dd;
+  background-color: #f8c41c;
+  text-align: left;
+  color: #fff;
   padding: 2em;
-}
-.hero h1, h2 {
-  text-shadow: 1px 1px 2px #181e31
-}
-.hero h1 {
-  text-transform: uppercase;
-  font-size: 4.9em;
-  margin-bottom: .25em;
-}
-img.lightswitch {
-  float: left;
-  width: 50px;
 }
 #maintitle {
   padding: 3em;
 }
-#shrink {
-  font-size: 1.16em;
-}
 #button1, form button.btn:not(.btn-link) {
-  background-color: #f38326;
-  border: .15em solid #d47039;
-  color: #fdf3dd;
+  background-color: transparent;
+  border: .35em solid #f8c41c;
   margin-bottom: .5em;
+  padding-left: 2em;
+  padding-right: 2em;
+  color: #404040;
   text-decoration: none !important;
+  font-weight: 700;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  border-radius: 20px;
 }
 form .btn-link, form .btn-link:hover {
-    color: #fff;
+    color: #404040;
+    font-weight: 700;
     text-decoration: underline;
     padding-left: 0;
 }
 .github {
-  background: #f38326 url(../img/github-mark.png) no-repeat 10px;
+  background: transparent;
+  border: 2px solid #f8c41c
   padding-left: 2.25em;
 }
 /*---Search on Github---*/
@@ -155,28 +137,21 @@ input[type=search] {
   color: #fdf3dd;
 }
 .about, .join {
-  padding: 3em 6em;
+  padding: 3em 0;
 }
 .about {
   line-height: 150%;
 }
 .join {
-  color: #67cedc;
+  color: #404040;
   line-height: 350%;
 }
-.join h3 {
-  font-weight: bold;
-  text-transform: uppercase;
-}
+
 
 /*------Internal Pages------*/
 .page {
-  background-color: #67cedc;
-  -moz-box-shadow: inset 0 0 4em rgba(24, 30, 49, 0.45);
-  -webkit-box-shadow: inset 0 0 4em rgba(24, 30, 49, 0.45);
-  box-shadow: inset 0 0 4em rgba(24, 30, 49, 0.45);
+  background-color: #f8c41c;
   text-align: left;
-  color: #fdf3dd;
   padding: 2em;
 }
 #beta {
@@ -192,7 +167,7 @@ input[type=search] {
 }
 /*------Form Page-------*/
 label, .label {
-  color: #000;
+  color: #404040;
   margin-bottom: 5px;
   font-weight: inherit;
   font-size: inherit;
@@ -200,15 +175,39 @@ label, .label {
 .label {
   padding-left: 0;
 }
+form.cf {
+  background: #fff;
+  padding: 2em 3em;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  border-radius: 20px;
+}
 #new-report h2 {
+  font: #fff;
   margin-left: 0;
   margin-bottom: 1em;
+}
+.form-control {
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  border-radius: 20px;
 }
 form .button {
   margin-top: 0.25em;
   margin-bottom: 0.5em;
   padding-top: 0.25em;
   padding-bottom: 0.25em;
+}
+#submitanon {
+  float: right;
+  text-align: center;
+}
+#submitgithub {
+  float: left;
+  text-align: center;
+}
+.row {
+  padding: .5em;
 }
 .row:last-child p {
   margin-bottom: 0.5em;
@@ -224,6 +223,12 @@ form .button {
   padding-left: 8px;
   margin-right: 8px;
   margin-left: 8px;
+  width:100%;
+  height: 34px;
+  border: 1px solid #ccc;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  border-radius: 20px;
 }
 .radio label, .radio-inline label {
   font-weight: 300;
