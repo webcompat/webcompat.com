@@ -6,7 +6,7 @@
     <meta name="description" content="Open source community for web compatibility.  Report bugs from websites and help us move the web forward." />
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
-    <link href="{{ url_for('static', filename='css/main.css') }}" type="text/css" rel="stylesheet" />
+    <link href="{{ url_for('static', filename='css/main.css') }}" type="text/css" rel="stylesheet">
 </head>
 <body>
       <div id="beta">Hello! Welcome to our early preview. We would love your <a href="https://github.com/webcompat/webcompat.com/issues?state=open">feedback</a>.</div>
@@ -34,6 +34,7 @@
     <script src="{{ url_for('static', filename='js/webcompat.min.js') }}"></script>
     {% else %}
     <script src="{{ url_for('static', filename='js/lib/jquery-1.11.0.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/lib/homepage.js') }}"></script>
     <script src="{{ url_for('static', filename='js/lib/bugform.js') }}"></script>
     {% endif %}
 </body>

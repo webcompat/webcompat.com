@@ -1,9 +1,6 @@
-{% extends "layout.html" %}
-{% block body %}
 <div id="new-report" class="page">
   <div class="container">
-  <h2>Report bug</h2>
-  <form method="post" class="cf" action="/issues/new">
+  <form method="post" class="cf" action="/">
     <div class="row">
       <div class="form-group col-md-6 {% if form.url.errors %}has-error{% endif %}">
         {{ form.url.label }}
@@ -76,4 +73,3 @@
   </form>
   </div>
 </div>
-{% endblock %}

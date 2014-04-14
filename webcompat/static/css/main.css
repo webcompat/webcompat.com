@@ -103,7 +103,7 @@ footer {
 #maintitle {
   padding: 3em;
 }
-#button1, form button.btn:not(.btn-link) {
+#report-bug, form button.btn:not(.btn-link) {
   background-color: transparent;
   border: .35em solid #f8c41c;
   margin-bottom: .5em;
@@ -121,11 +121,6 @@ form .btn-link, form .btn-link:hover {
     font-weight: 700;
     text-decoration: underline;
     padding-left: 0;
-}
-.github {
-  background: transparent;
-  border: 2px solid #f8c41c
-  padding-left: 2.25em;
 }
 /*---Search on Github---*/
 input[type=search] {
@@ -165,7 +160,7 @@ input[type=search] {
 #about-page h4 {
     margin: 0.75em 0 1em;
 }
-/*------Form Page-------*/
+/*------Forms-------*/
 label, .label {
   color: #404040;
   margin-bottom: 5px;
@@ -181,6 +176,9 @@ form.cf {
   -webkit-border-radius: 20px;
   -moz-border-radius: 20px;
   border-radius: 20px;
+}
+#new-report {
+  display: none;
 }
 #new-report h2 {
   font: #fff;
