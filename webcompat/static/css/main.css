@@ -123,6 +123,12 @@ form .btn-link, form .btn-link:hover {
     text-decoration: underline;
     padding-left: 0;
 }
+.form-opened {
+  display: block;
+}
+.form-closed {
+  display: none;
+}
 /*---Search on Github---*/
 input[type=search] {
   float: left;
@@ -177,9 +183,6 @@ form.cf {
   -webkit-border-radius: 20px;
   -moz-border-radius: 20px;
   border-radius: 20px;
-}
-#new-report {
-  display: none;
 }
 #new-report h2 {
   font: #fff;
