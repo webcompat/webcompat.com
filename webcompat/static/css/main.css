@@ -27,6 +27,7 @@ html {
 }
 h1 {
   font-size: 3em;
+  font-weight: 700;
 }
 h2 {
   font-size: 2em;
@@ -59,6 +60,12 @@ a {
 }
 .bold {
   font-weight: 700;
+}
+input[type=radio] {
+  display: none;
+}
+input[type=radio]:checked + label {
+  background: yellow;
 }
 footer {
   padding: 1em 6em;
