@@ -257,9 +257,28 @@ form .button {
   float: right;
 }
 .has-error input {
-  background: url(../img/error.svg) no-repeat right 50%;
+  background: url(../img/invalid.svg) no-repeat right 50%;
   background-size: 15px;
   background-origin: content-box;
+}
+.no-error input {
+  background: url(../img/valid.svg) no-repeat right 50%;
+  background-size: 20px;
+  background-origin: content-box;
+}
+.no-error .help-inline {
+  display: none;
+}
+.no-error .form-control {
+  border-color: #319501;
+}
+.no-error .form-control:focus{
+  border-color: #319501;
+  -webkit-box-shadow:none;
+  box-shadow:none;
+}
+.disabled {
+  opacity: 0.5;
 }
 /*------Media Queries------*/
 @media all and (max-width: 855px) {

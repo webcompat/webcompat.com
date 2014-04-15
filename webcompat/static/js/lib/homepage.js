@@ -10,7 +10,6 @@ function HomePage() {
     init: function() {
       button.on('click', self.toggleForm);
     },
-
     toggleForm: function(e) {
       var button = $(this);
       e.preventDefault();
