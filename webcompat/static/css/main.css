@@ -61,12 +61,6 @@ a {
 .bold {
   font-weight: 700;
 }
-input[type=radio] {
-  display: none;
-}
-input[type=radio]:checked + label {
-  background: yellow;
-}
 footer {
   padding: 1em 6em;
   background-color: #ffffff;
@@ -230,10 +224,6 @@ form .button {
   margin-left: 8px;
   width:100%;
   height: 34px;
-  border: 1px solid #ccc;
-  -webkit-border-radius: 20px;
-  -moz-border-radius: 20px;
-  border-radius: 20px;
 }
 .radio label, .radio-inline label {
   font-weight: 300;
