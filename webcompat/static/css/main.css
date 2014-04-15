@@ -254,8 +254,9 @@ form .button {
   float: right;
 }
 .has-error input {
-  background: url(../img/error.svg) no-repeat 98% 50%;
-  background-size: 3%;
+  background: url(../img/error.svg) no-repeat right 50%;
+  background-size: 15px;
+  background-origin: content-box;
 }
 /*------Media Queries------*/
 @media all and (max-width: 855px) {
