@@ -5,7 +5,7 @@
       <div class="form-group col-md-6 {% if form.url.errors %}has-error{% endif %}">
         {{ form.url.label }}
         {% if form.url.errors %}{% for error in form.url.errors %}
-        <span class="help-inline">{{ error }}</span>
+        <span class="help-inline bold">{{ error }}</span>
         {% endfor %}{% endif %}
         {{ form.url(class_='form-control required',
                     placeholder='e.g., http://www.example.com') }}
@@ -42,7 +42,7 @@
     <div class="row">
       <div class="form-group col-md-12 {% if form.summary.errors %}has-error{% endif %}">
         {{ form.summary.label }}{% if form.summary.errors %}{% for error in form.summary.errors %}
-        <span class="help-inline">{{ error }}</span>
+        <span class="help-inline bold">{{ error }}</span>
         {% endfor %}{% endif %}
         {{ form.summary(class_='form-control required',
                         placeholder='e.g., Website images are upside down') }}
@@ -56,7 +56,7 @@
     <div class="row col-dm-12" aria-hidden="true">
       <div class="form-group col-md-12 {% if form.summary.errors %}has-error{% endif %}">
         {{ form.username.label }}{% if form.username.errors %}{% for error in form.username.errors %}
-        <span class="help-inline">{{ error }}</span>
+        <span class="help-inline bold">{{ error }}</span>
         {% endfor %}{% endif %}
         {{ form.username(class_='form-control') }}
       </div>

@@ -228,6 +228,10 @@ form .button {
 .radio label, .radio-inline label {
   font-weight: 300;
 }
+/* bootstrap override */
+.radio-inline + .radio-inline {
+  margin-left: 8px;
+}
 #site-owner {
   display:block;
   text-align: left;
@@ -237,26 +241,23 @@ form .button {
   display: none !important;
 }
 /*------Form Validation------*/
-.errors {
-  margin: .5em 0;
-  padding: .75em;
-  background-color: #fdf3dd;
-  -moz-border-radius: 5px;
-  -webkit-border-radius: 5px;
-  border-radius: 5px;
-  color: #000;
-  font-size: 0.9em;
+.has-error .form-control {
+  border-color: #ff0000;
 }
-.errors li {
-  padding: .5em;
+.has-error .form-control:focus{
+  border-color: #ff0000;
+  -webkit-box-shadow:none;
+  box-shadow:none;
 }
-.errors h6 {
-  padding: .5em .3em;
-  color: red;
-  font-size: 1.4em;
-  font-weight: bold;
+.has-error .help-inline {
+  color: #ff0000;
+  float: right;
 }
-
+.has-error input {
+  background: url(../img/error.svg) no-repeat right 50%;
+  background-size: 15px;
+  background-origin: content-box;
+}
 /*------Media Queries------*/
 @media all and (max-width: 855px) {
   .hero h1 {
