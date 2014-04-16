@@ -7,6 +7,10 @@ You are welcome to contribute to this project. Here are the guidelines we try to
  * [Triaging Issues](#triaging-issues)
  * [Feature Requests](#feature-requests)
  * [Submission Guidelines](#submission-guidelines)
+ * [Coding Style](#coding-style)
+ * [Working Environment setup](#working-environment-setup)
+ * [Installing Grunt](#installing-grunt)
+ * [Running Tests](#running-tests)
 
 
 ## Question or Problem
@@ -133,6 +137,10 @@ Then, from the project root:
 `npm install`
 
 You can then use the `grunt` command to run grunt tasks. `grunt --help` will list all the tasks.
+
+## Running Tests
+
+You can run tests from the project root with the `nosetests` command.
 
 ### Acknowledgements
 A lot of this document was inspired directly by the excellent [Backbone.LayoutManager](https://github.com/tbranyen/backbone.layoutmanager/blob/master/CONTRIBUTING.md), [CouchDB](https://github.com/apache/couchdb/blob/master/src/fauxton/CONTRIBUTING.md), and [Angular.js](https://github.com/angular/angular.js/blob/master/CONTRIBUTING.md#issue) CONTRIBUTING files.
