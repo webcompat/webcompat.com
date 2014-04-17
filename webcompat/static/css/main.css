@@ -24,13 +24,42 @@ time, mark, audio, video {
 html {
    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
    font-weight: 300;
+   color: #404040;
+}
+nav {
+  background-color: #f8c41c;
+  min-height: 75px;
+  padding: .5em 5em;
+  clear: both;
+}
+.navleft {
+  float: left;
+}
+.navright {
+  float: right;
+}
+nav img {
+  width: 60%;
+}
+nav li {
+  display: inline;
+  vertical-align: middle;
+  line-height: 75px;
+  padding: 0.75em;
+  color: #fff;
+  font-weight: 700;
+  text-decoration: none;
+}
+nav a:hover {
+  color: #000;
 }
 h1 {
-  font-size: 3em;
+  font-size: 3.5em;
   font-weight: 700;
 }
 h2 {
   font-size: 2em;
+  font-weight: 600;
 }
 h3 {
   font-size: 1.5em;
@@ -51,9 +80,6 @@ p {
   line-height: 2em;
   text-decoration: none;
 }
-.readmore {
-  font-weight: 600;
-}
 a {
   color: inherit;
   text-decoration: underline !important;
@@ -62,18 +88,17 @@ a {
   font-weight: 700;
 }
 footer {
-  padding: 1em 6em;
+  padding-top: 1em;
+  padding-bottom: 2em;
   background-color: #ffffff;
-  height: 1.5em;
+  border-top: 5px solid #f8c41c;
   clear: both;
 }
 .footerleft {
   float: left;
-  padding-left: 6em;
 }
 .footerright {
   float: right;
-  padding-right: 6em;
 }
 .footerright li {
   display: inline;
@@ -95,16 +120,46 @@ footer {
 }
 
 /*--------Homepage Styles--------*/
-.hero {
+#hero {
   background-color: #f8c41c;
   text-align: left;
-  color: #fff;
-  padding: 2em;
+  color: #fff;5
 }
 #maintitle {
-  padding: 3em;
+  padding: 6em 5em;
 }
-#report-bug, form button.btn:not(.btn-link) {
+#maintitle h1 {
+  text-shadow: -1px -1px 0px rgba(0,0,0,.25);
+}
+#buttonclosed {
+  padding-top: 2em;
+}
+#report-bug {
+  font-size: 2em;
+  text-decoration: none;
+}
+#report-bug:hover {
+  color: #000;
+  padding-left: 0;
+}
+#lightbulb {
+  padding: 0 5em;
+}
+#lightbulb img {
+  margin: 0 auto;
+  display: block;
+  height: 80%;
+}
+/*.plusbtn {
+  background:#fff;
+  color:#f8c41c;
+  text-align:center;
+  border-radius: 50%;
+  font-size: 1.5em;
+  font-weight: bold;
+  min-width: 2em;
+}*/
+form button.btn:not(.btn-link) {
   background-color: transparent;
   border: .35em solid #f8c41c;
   margin-bottom: .5em;
@@ -138,34 +193,47 @@ input[type=search] {
   cursor: pointer;
   color: #fdf3dd;
 }
-.about, .join {
-  padding: 3em 0;
+#howitworks, #join {
+  padding: 3em 5em 2em 5em;
 }
-.about {
+#threesteps {
+  padding: 1em 0;
+}
+#join p {
+  padding: .5em 0;
   line-height: 150%;
 }
-.join {
-  color: #404040;
-  line-height: 350%;
+#join img {
+  width: 70%;
 }
+#threeways {
+  vertical-align: top;
+}
+.bignumber {
+  font-size: 2em;
+  font-weight: 700;
+  padding-right: 1em;
+}
+
 
 
 /*------Internal Pages------*/
 .page {
-  background-color: #f8c41c;
+  background-color: #fff;
+}
+.page h2 {
+    margin-bottom: 1em;
+}
+.page h4 {
+    margin: 0.75em 0 1em;
+}
+.maincontent {
   text-align: left;
-  padding: 2em;
+  padding: 2em 5em;
 }
 #beta {
   padding: 0.5em;
   text-align: center;
-}
-/*------About Page------*/
-#about-page h2 {
-    margin-bottom: 2em;
-}
-#about-page h4 {
-    margin: 0.75em 0 1em;
 }
 /*------Forms-------*/
 label, .label {
@@ -176,6 +244,9 @@ label, .label {
 }
 .label {
   padding-left: 0;
+}
+form {
+  border: 5px solid #f8c41c;
 }
 form.cf {
   background: #fff;
@@ -215,6 +286,7 @@ form .button {
   margin-bottom: 0.5em;
   color: #000;
 }
+
 /* bootstrap overrides */
 .radio-inline, .checkbox-inline {
   /* Hack to get Chrome 24+ to behave.
@@ -280,7 +352,9 @@ form .button {
 .disabled {
   opacity: 0.5;
 }
+
 /*------Media Queries------*/
+/*
 @media all and (max-width: 855px) {
   .hero h1 {
   font-size: 4.3em;
@@ -336,4 +410,4 @@ form .button {
     text-align: center;
     padding: .5em 0;
   }
-}
+}*/
