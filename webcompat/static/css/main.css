@@ -118,32 +118,6 @@ footer .follow {
 .footerleft a {
   margin-right: 1em;
 }
-@media all and (max-width: 750px) {
-  footer li {
-    font-size: 0.75em;
-  }
-}
-@media all and (max-width: 600px) {
-  footer .footerleft li {
-    display: block;
-  }
-  .flourish {
-    display: none;
-  }
-}
-@media all and (max-width: 450px) {
-  .maincontent.container, footer .container, nav {
-    padding-left: 3em;
-    padding-right: 3em;
-  }
-}
-@media all and (max-width: 375px) {
-  .footerright {
-    clear: left;
-    float: left;
-    margin-left: -10px;
-  }
-}
 
 /*--------Flash Messages---------*/
 .flash {
@@ -166,6 +140,10 @@ footer .follow {
   text-align: left;
   color: #fff;
   padding: 0;
+}
+#hero .container {
+  background: url(../img/LightBulbHero.png) no-repeat right 100px top;
+  background-origin: content-box;
 }
 #maintitle {
   padding: 6em 5em;
@@ -392,6 +370,37 @@ form .button {
 }
 
 /*------Media Queries------*/
+@media all and (max-width: 750px) {
+  footer li {
+    font-size: 0.75em;
+  }
+
+  #hero .container {
+    background-size: 18%;
+    background-position: right 100px top -50px;
+  }
+}
+@media all and (max-width: 600px) {
+  footer .footerleft li {
+    display: block;
+  }
+  .flourish {
+    display: none;
+  }
+}
+@media all and (max-width: 450px) {
+  .maincontent.container, footer .container, nav {
+    padding-left: 3em;
+    padding-right: 3em;
+  }
+}
+@media all and (max-width: 375px) {
+  .footerright {
+    clear: left;
+    float: left;
+    margin-left: -10px;
+  }
+}
 /*
 @media all and (max-width: 855px) {
   .hero h1 {
