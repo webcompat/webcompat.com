@@ -2,12 +2,16 @@
 {%- block body -%}
 <div class="container-fluid">
   <div class="row"  id="hero">
-      <div id="maintitle">
+      <div class="col-md-6" id="maintitle">
           <h1>Bug reporting <br>for the internet.</h1>
           <div id="buttonclosed">
           <a id="report-bug" href="{{ url_for("new_issue") }}">Report bug +</a>
           </div>
       </div>
+      <div class="col-md-6" id="lightbulb">
+        <img src="../img/lightbulbhero.png" alt="Lightbulb">
+      </div>
+    </div>
 {% include "form.html" %}
   </div>
 

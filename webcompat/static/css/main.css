@@ -26,6 +26,33 @@ html {
    font-weight: 300;
    color: #404040;
 }
+nav {
+  background-color: #f8c41c;
+  min-height: 75px;
+  padding: .5em 5em;
+  clear: both;
+}
+.navleft {
+  float: left;
+}
+.navright {
+  float: right;
+}
+nav img {
+  width: 60%;
+}
+nav li {
+  display: inline;
+  vertical-align: middle;
+  line-height: 75px;
+  padding: 0.75em;
+  color: #fff;
+  font-weight: 700;
+  text-decoration: none;
+}
+nav a:hover {
+  color: #000;
+}
 h1 {
   font-size: 3.5em;
   font-weight: 700;
@@ -96,11 +123,13 @@ footer {
 #hero {
   background-color: #f8c41c;
   text-align: left;
-  color: #fff;
-  padding: 4em 2.5em;
+  color: #fff;5
 }
 #maintitle {
-  padding: 4em 2.5em;
+  padding: 6em 5em;
+}
+#maintitle h1 {
+  text-shadow: -1px -1px 0px rgba(0,0,0,.25);
 }
 #buttonclosed {
   padding-top: 2em;
@@ -108,6 +137,18 @@ footer {
 #report-bug {
   font-size: 2em;
   text-decoration: none;
+}
+#report-bug:hover {
+  color: #000;
+  padding-left: 0;
+}
+#lightbulb {
+  padding: 0 5em;
+}
+#lightbulb img {
+  margin: 0 auto;
+  display: block;
+  height: 80%;
 }
 /*.plusbtn {
   background:#fff;
@@ -163,7 +204,7 @@ input[type=search] {
   line-height: 150%;
 }
 #join img {
-  width: 50px;
+  width: 70%;
 }
 #threeways {
   vertical-align: top;
@@ -178,20 +219,21 @@ input[type=search] {
 
 /*------Internal Pages------*/
 .page {
-  background-color: #f8c41c;
+  background-color: #fff;
+}
+.page h2 {
+    margin-bottom: 1em;
+}
+.page h4 {
+    margin: 0.75em 0 1em;
+}
+.maincontent {
   text-align: left;
-  padding: 2em;
+  padding: 2em 5em;
 }
 #beta {
   padding: 0.5em;
   text-align: center;
-}
-/*------About Page------*/
-#about-page h2 {
-    margin-bottom: 2em;
-}
-#about-page h4 {
-    margin: 0.75em 0 1em;
 }
 /*------Forms-------*/
 label, .label {
@@ -202,6 +244,9 @@ label, .label {
 }
 .label {
   padding-left: 0;
+}
+form {
+  border: 5px solid #f8c41c;
 }
 form.cf {
   background: #fff;
