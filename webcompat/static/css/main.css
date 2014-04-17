@@ -220,11 +220,12 @@ input[type=search] {
   padding: 1em 0;
 }
 #join p {
-  padding: .5em 0;
+  padding: 1em 0;
   line-height: 150%;
 }
 #join img {
-  width: 70%;
+  width: 50px;
+  margin-right: 1em;
 }
 #threeways {
   vertical-align: top;
@@ -232,8 +233,9 @@ input[type=search] {
 .bignumber {
   font-size: 2em;
   font-weight: 700;
-  padding-right: 1em;
-  padding-bottom: 1em;
+  padding: 0.2em 0.75em 0.5em 0.5em
+}
+#join img, .bignumber {
   float: left;
 }
 .bignumber + p {
