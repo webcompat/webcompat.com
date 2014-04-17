@@ -1,13 +1,7 @@
 {% extends "layout.html" %}
 {% block body %}
 <div id="about-page" class="page">
-  <nav role="navigation">
-    <div class="navleft">
-      <a href="/" >
-        <img src="{{ url_for('static', filename='img/lightswitch.png') }}" alt="Light Switch">
-      </a>
-    </div>
-  </nav>
+{% include "shared/nav.html" %}
   <div class="maincontent container">
       <h2>About</h2>
       <h4>What is webcompat.com?</h4>
