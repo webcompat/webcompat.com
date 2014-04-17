@@ -231,10 +231,6 @@ input[type=search] {
   text-align: left;
   padding: 2em 5em;
 }
-#beta {
-  padding: 0.5em;
-  text-align: center;
-}
 /*------Forms-------*/
 label, .label {
   color: #404040;
