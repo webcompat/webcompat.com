@@ -88,11 +88,15 @@ a {
   font-weight: 700;
 }
 footer {
-  padding-top: 1em;
-  padding-bottom: 2em;
   background-color: #ffffff;
   border-top: 5px solid #f8c41c;
   clear: both;
+}
+footer .container {
+  padding: 1em 5em 2em;
+}
+footer .follow {
+  font-weight: 700;
 }
 .footerleft {
   float: left;
@@ -100,10 +104,45 @@ footer {
 .footerright {
   float: right;
 }
+.footerleft li {
+  display: inline;
+  padding: 0.75em 0.75em 0.75em 0;
+}
 .footerright li {
   display: inline;
-  padding: 0.75em;
+  padding: 0.75em 0 0.75em 0.75em;
 }
+.footerleft a {
+  margin-right: 2em;
+}
+
+@media all and (max-width: 750px) {
+  footer li {
+    font-size: 0.75em;
+  }
+}
+@media all and (max-width: 600px) {
+  footer .footerleft li {
+    display: block;
+  }
+  .flourish {
+    display: none;
+  }
+}
+@media all and (max-width: 450px) {
+  .maincontent.container, footer .container, nav {
+    padding-left: 3em;
+    padding-right: 3em;
+  }
+}
+@media all and (max-width: 375px) {
+  .footerright {
+    clear: left;
+    float: left;
+    margin-left: -10px;
+  }
+}
+
 /*--------Flash Messages---------*/
 .flash {
   border: 0.15em solid #D47039;
