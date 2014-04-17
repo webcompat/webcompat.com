@@ -4,7 +4,7 @@
 
 function HomePage() {
   var button = $('#report-bug');
-  var form = $('#new-report');
+  var formContainer = $('#new-report');
 
   var self = {
     init: function() {
@@ -13,9 +13,11 @@ function HomePage() {
     toggleForm: function(e) {
       var button = $(this);
       e.preventDefault();
-      form.slideToggle(function(){
-        button.toggleClass('closed');
-        button.toggleClass('opened');
+      formContainer.slideToggle(function(){
+        formContainer.toggleClass('form-closed')
+                     .toggleClass('form-opened');
+        button.toggleClass('closed')
+              .toggleClass('opened');
       });
     }
   };
