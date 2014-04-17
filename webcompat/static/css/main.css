@@ -233,10 +233,12 @@ input[type=search] {
   font-size: 2em;
   font-weight: 700;
   padding-right: 1em;
+  padding-bottom: 1em;
+  float: left;
 }
-
-
-
+.bignumber + p {
+  padding: 0.6em;
+}
 /*------Internal Pages------*/
 .page {
   background-color: #fff;
@@ -370,7 +372,15 @@ form .button {
 }
 
 /*------Media Queries------*/
-@media all and (max-width: 750px) {
+@media all and (max-width: 950px) {
+  .bignumber {
+    padding-right: 0.5em;
+  }
+}
+@media all and (max-width: 770px) {
+  .bignumber {
+    padding-bottom: 0;
+  }
   footer li {
     font-size: 0.75em;
   }
