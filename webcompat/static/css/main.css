@@ -92,6 +92,9 @@ footer {
   border-top: 5px solid #f8c41c;
   clear: both;
 }
+footer a {
+  text-decoration: none !important;
+}
 footer .container {
   padding: 1em 5em 2em;
 }
@@ -113,9 +116,8 @@ footer .follow {
   padding: 0.75em 0 0.75em 0.75em;
 }
 .footerleft a {
-  margin-right: 2em;
+  margin-right: 1em;
 }
-
 @media all and (max-width: 750px) {
   footer li {
     font-size: 0.75em;
