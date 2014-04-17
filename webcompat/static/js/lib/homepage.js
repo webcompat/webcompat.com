@@ -11,7 +11,6 @@ function HomePage() {
       button.on('click', self.toggleForm);
     },
     toggleForm: function(e) {
-      var button = $(this);
       e.preventDefault();
       formContainer.slideToggle(function(){
         formContainer.toggleClass('form-closed')
