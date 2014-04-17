@@ -226,6 +226,7 @@ input[type=search] {
 #join img {
   width: 50px;
   margin-right: 1em;
+  display: table-cell;
 }
 #threeways {
   vertical-align: top;
@@ -233,13 +234,15 @@ input[type=search] {
 .bignumber {
   font-size: 2em;
   font-weight: 700;
-  padding: 0.2em 0.75em 0.5em 0.5em
+  padding: 0.2em 0.75em 0.5em 0.5em;
+  display: table-cell;
 }
 #join img, .bignumber {
   float: left;
 }
-.bignumber + p {
+.bignumber + p, #threeways img + p {
   padding: 0.6em;
+  display: table-cell;
 }
 /*------Internal Pages------*/
 .page {
