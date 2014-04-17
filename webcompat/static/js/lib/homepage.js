@@ -12,6 +12,9 @@ function HomePage() {
     },
     toggleForm: function(e) {
       e.preventDefault();
+      $('html, body').animate({
+        scrollTop: button.offset().top
+      }, 300);
       formContainer.slideToggle(function(){
         formContainer.toggleClass('form-closed')
                      .toggleClass('form-opened');

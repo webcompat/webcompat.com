@@ -200,6 +200,10 @@ form .btn-link, form .btn-link:hover {
 }
 .form-opened {
   display: block;
+  -webkit-transition: margin 100ms ease-out 10ms;
+  -moz-transition: margin 100ms ease-out 10ms;
+  transition: margin 100ms ease-out 10ms;
+  margin-top: 2em;
 }
 .form-closed {
   display: none;
