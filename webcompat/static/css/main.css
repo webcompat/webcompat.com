@@ -123,7 +123,8 @@ footer {
 #hero {
   background-color: #f8c41c;
   text-align: left;
-  color: #fff;5
+  color: #fff;
+  padding: 0;
 }
 #maintitle {
   padding: 6em 5em;
