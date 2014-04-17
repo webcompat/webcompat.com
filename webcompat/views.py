@@ -47,12 +47,6 @@ def token_getter():
         return user.github_access_token
 
 
-@app.route('/')
-@app.route('/index')
-def index():
-    return render_template('index.html')
-
-
 @app.route('/login')
 def login():
     if session.get('user_id', None) is None:
@@ -105,7 +99,7 @@ def show_issues():
     return redirect(url_for('new_issue'), code=307)
 
 
-@app.route('/issues/new', methods=['GET', 'POST'])
+@app.route('/', methods=['GET', 'POST'])
 def new_issue():
     '''Main view where people come to report issues.'''
     form = IssueForm(request.form)
@@ -114,7 +108,7 @@ def new_issue():
     form.version.data = get_browser_version(request.headers.get('User-Agent'))
     # GET means you want to file a report.
     if request.method == 'GET':
-        return render_template('new_issue.html', form=form)
+        return render_template('index.html', form=form)
     # Form submission.
     elif request.method == 'POST' and form.validate():
         if request.form.get('submit-type') == AUTH_REPORT:
@@ -133,7 +127,7 @@ def new_issue():
                             number=response.json().get('number')))
     else:
         # Validation failed, re-render the form with the errors.
-        return render_template('new_issue.html', form=form)
+        return render_template('index.html', form=form)
 
 
 @app.route('/issues/<number>')

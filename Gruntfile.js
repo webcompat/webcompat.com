@@ -17,6 +17,7 @@ module.exports = function(grunt) {
       dist: {
         src: [
             '<%= jsPath %>/lib/jquery-1.11.0.min.js',
+            '<%= jsPath %>/lib/homepage.js',
             '<%= jsPath %>/lib/bugform.js'
         ],
         dest: '<%= jsPath %>/<%= pkg.name %>.js'
@@ -53,6 +54,7 @@ module.exports = function(grunt) {
       },
       beforeconcat: [
         'Gruntfile.js',
+        '<%= jsPath %>/lib/homepage.js',
         '<%= jsPath %>/lib/bugform.js'
       ]
     },
