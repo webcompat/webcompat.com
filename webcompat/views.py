@@ -5,7 +5,6 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 import os
-import template_filters
 import time
 from datetime import datetime
 from flask import (flash, g, redirect, request, render_template, session,
@@ -28,10 +27,6 @@ def before_request():
     g.user = None
     if 'user_id' in session:
         g.user = User.query.get(session['user_id'])
-    last_modified = time.ctime(os.path.getmtime(
-                               os.path.join(os.getcwd(),
-                                            'webcompat/templates/index.html')))
-    g.last_modified = datetime.strptime(last_modified, '%a %b %d %H:%M:%S %Y')
 
 
 @app.after_request
