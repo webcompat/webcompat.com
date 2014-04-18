@@ -1,24 +1,53 @@
 {%- extends "layout.html" -%}
 {%- block body -%}
-<div class="hero">
-  <img class="lightswitch" src="{{ url_for('static', filename='img/lightswitch.png') }}" alt="Light Switch">
-  <div id="maintitle">
-    <h1><span id="shrink">A <span class="bold">Better Web</span></span><br> Starts With You.</h1>
-    <h2>Submit bugs for any browser or website all in one place.</h2>
+<div id="hero">
+  <div class="container">
+    <div id="maintitle">
+      <h1>Bug reporting <br>for the internet.</h1>
+      <a id="report-bug" class="closed" href="{{ url_for("new_issue") }}">Report bug  <img id="arrow" src="../img/arrowright.png" alt="arrow"></a>
+    </div>
   </div>
-  <a class="button github" id="button1" href="{{ url_for("new_issue") }}">Report bug</a>
 </div>
+{% include "form.html" %}
 <div class="container">
-  <div class="about">
-    <p>Webcompat.com is a gathering place for the web compatibility community.  This site is a place to report bugs from any website across the web - whether you are a developer or not.  Started by the Mozilla Web Compatibility team, this initiative is a global task force on a mission to improve the web one bug at a time.  Join us!  Let&#39;s work together to make the web a better place to work and play.</p>
-    <p><a class="readmore" href="{{ url_for("about") }}">Read more about this project.</a></p>
+  <div id="howitworks">
+    <h2>How It Works</h2>
+    <div class="row" id="threesteps">
+      <div class="col-md-4 col-sm-4 col-xs-12">
+        <span class="bignumber">1</span>
+        <p>Report a bug for any website or browser.</p>
+      </div>
+      <div class="col-md-4 col-sm-4 col-xs-12">
+        <span class="bignumber">2</span>
+        <p>Our team of volunteers diagnoses the bug.</p>
+      </div>
+      <div class="col-md-4 col-sm-4 col-xs-12">
+        <span class="bignumber">3</span>
+        <p>We send a fix to the site owner or browser.</p>
+      </div>
+    </div>
   </div>
-  <div class="join">
-    <h3>Join Us.</h3>
-    <h4>Be a part of the Web Compat team</h4>
-    <h5>1. <a href="{{ url_for("new_issue") }}">Report</a> Bugs</h5>
-    <h5>2. <a href="http://webcompat.com/bugsahoy/?analysis=1">Diagnose</a> Bugs</h5>
-    <h5>3. <a href="http://webcompat.com/bugsahoy/?outreach=1">Reach out</a> to Sites</h5>
+
+ <p class="divider" aria-hidden="true">___</p>
+
+  <div id="join">
+    <h2>Join The Team</h2>
+    <p>Webcompat.com is a gathering place for the web compatibility community.  This site is a place to report bugs from any website across the web - whether you are a developer or not.  Started by the Mozilla Web Compatibility team, this initiative is a global task force on a mission to improve the web one bug at a time.  Join us!  Let&#39;s work together to make the web a better place to work and play.
+    <p class="bold">Three Ways to Contribute \o/</p>
+    <div class="row" id="threeways">
+      <div class="col-md-4 col-sm-4 col-xs-12">
+        <img src="../img/step1icon.png" alt="Report bugs">
+        <p><a id="report-bug-link" href="{{ url_for("new_issue") }}">Report bugs</a></p>
+      </div>
+      <div class="col-md-4 col-sm-4 col-xs-12">
+        <img src="../img/step2icon.png" alt="Diagnose bugs">
+        <p><a href="http://webcompat.com/bugsahoy/?analysis=1">Diagnose bugs</a></p>
+      </div>
+      <div class="col-md-4 col-sm-4 col-xs-12">
+        <img src="../img/step3icon.png" alt="Reach out to sites">
+        <p><a href="http://webcompat.com/bugsahoy/?outreach=1">Reach out to sites</a></p>
+      </div>
+    </div>
   </div>
 </div>
 {% endblock %}

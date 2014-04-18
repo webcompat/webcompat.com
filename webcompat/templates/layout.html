@@ -1,40 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>webcompat.com</title>
-    <meta charset="utf-8">
-    <meta name="description" content="Open source community for web compatibility.  Report bugs from websites and help us move the web forward." />
-    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
-    <link href="{{ url_for('static', filename='css/main.css') }}" type="text/css" rel="stylesheet" />
+  <title>webcompat.com</title>
+  <meta charset="utf-8">
+  <meta name="description" content="Open source community for web compatibility.  Report bugs from websites and help us move the web forward." />
+  <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+  <link href="{{ url_for('static', filename='css/main.css') }}" type="text/css" rel="stylesheet">
 </head>
 <body>
-      <div id="beta">Hello! Welcome to our early preview. We would love your <a href="https://github.com/webcompat/webcompat.com/issues?state=open">feedback</a>.</div>
-      {% for category, message in get_flashed_messages(with_categories=True) %}
-      <div class="flash {{ category }}">{{ message }}</div>
-      {% endfor %}
-      {% block body %}{% endblock %}
-
-      <footer class="container">
-        <p class="footerleft">Last modified on {{ g.last_modified | format_date }}</p>
-        <ul class="footerright">
-          <li><a href="{{ url_for('about') }}">About</a></li>
-          <li><a href="https://github.com/webcompat/webcompat.com">Contribute on GitHub</a></li>
-        </ul>
-      </footer>
-    {% if config.PRODUCTION %}
-    <script>
-      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-      ga('create', 'UA-49507820-1', 'webcompat.com');
-      ga('send', 'pageview');
-    </script>
-    <script src="{{ url_for('static', filename='js/webcompat.min.js') }}"></script>
-    {% else %}
-    <script src="{{ url_for('static', filename='js/lib/jquery-1.11.0.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/lib/bugform.js') }}"></script>
-    {% endif %}
+{% for category, message in get_flashed_messages(with_categories=True) %}
+<div class="flash {{ category }}">{{ message }}</div>
+{% endfor %}
+{% block body %}{% endblock %}
+{% include "shared/footer.html" %}
+{% if config.PRODUCTION %}
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-49507820-1', 'webcompat.com');
+  ga('send', 'pageview');
+</script>
+<script src="{{ url_for('static', filename='js/webcompat.min.js') }}"></script>
+{% else %}
+<script src="{{ url_for('static', filename='js/lib/jquery-1.11.0.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/lib/homepage.js') }}"></script>
+<script src="{{ url_for('static', filename='js/lib/bugform.js') }}"></script>
+{% endif %}
 </body>
 </html>

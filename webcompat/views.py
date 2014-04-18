@@ -5,11 +5,11 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 import os
-import template_filters
 import time
+import urllib
 from datetime import datetime
 from flask import (flash, g, redirect, request, render_template, session,
-                   url_for)
+                   url_for, abort)
 from flask.ext.github import GitHubError
 from form import (build_formdata, get_browser_name, get_browser_version,
                   IssueForm, AUTH_REPORT, PROXY_REPORT)
@@ -28,10 +28,6 @@ def before_request():
     g.user = None
     if 'user_id' in session:
         g.user = User.query.get(session['user_id'])
-    last_modified = time.ctime(os.path.getmtime(
-                               os.path.join(os.getcwd(),
-                                            'webcompat/templates/index.html')))
-    g.last_modified = datetime.strptime(last_modified, '%a %b %d %H:%M:%S %Y')
 
 
 @app.after_request
@@ -45,12 +41,6 @@ def token_getter():
     user = g.user
     if user is not None:
         return user.github_access_token
-
-
-@app.route('/')
-@app.route('/index')
-def index():
-    return render_template('index.html')
 
 
 @app.route('/login')
@@ -97,7 +87,7 @@ def file_issue():
     response = report_issue(session['form_data'])
     # Get rid of stashed form data
     session.pop('form_data', None)
-    return redirect(url_for('show_issue', number=response.get('number')))
+    return redirect(url_for('thanks', number=response.get('number')))
 
 
 @app.route('/issues')
@@ -105,7 +95,7 @@ def show_issues():
     return redirect(url_for('new_issue'), code=307)
 
 
-@app.route('/issues/new', methods=['GET', 'POST'])
+@app.route('/', methods=['GET', 'POST'])
 def new_issue():
     '''Main view where people come to report issues.'''
     form = IssueForm(request.form)
@@ -114,13 +104,13 @@ def new_issue():
     form.version.data = get_browser_version(request.headers.get('User-Agent'))
     # GET means you want to file a report.
     if request.method == 'GET':
-        return render_template('new_issue.html', form=form)
+        return render_template('index.html', form=form)
     # Form submission.
     elif request.method == 'POST' and form.validate():
         if request.form.get('submit-type') == AUTH_REPORT:
             if g.user:  # If you're already authed, submit the bug.
                 response = report_issue(request.form)
-                return redirect(url_for('show_issue',
+                return redirect(url_for('thanks',
                                 number=response.get('number')))
             else:  # Stash form data into session, go do GitHub auth
                 session['form_data'] = request.form
@@ -129,11 +119,11 @@ def new_issue():
             # `response` here is a Requests Response object, because
             # the proxy_report_issue crafts a manual request with Requests
             response = proxy_report_issue(request.form)
-            return redirect(url_for('show_issue',
+            return redirect(url_for('thanks',
                             number=response.json().get('number')))
     else:
         # Validation failed, re-render the form with the errors.
-        return render_template('new_issue.html', form=form)
+        return render_template('index.html', form=form)
 
 
 @app.route('/issues/<number>')
@@ -145,9 +135,21 @@ def show_issue(number):
     return redirect(uri, code=307)
 
 
-@app.route('/thanks')
-def thanks():
-    return render_template('thanks.html')
+@app.route('/thanks/<number>')
+def thanks(number):
+    if number.isdigit():
+        issue = number
+        uri = u"https://github.com/{0}/{1}".format(
+            app.config['ISSUES_REPO_URI'], number)
+        text = u"I just filed a bug on the internet: "
+        encoded_issue = urllib.quote(uri.encode("utf-8"))
+        encoded_text = urllib.quote(text.encode("utf-8"))
+    else:
+        abort(404)
+    return render_template('thanks.html', number=issue,
+                           encoded_issue=encoded_issue,
+                           encoded_text=encoded_text)
+
 
 @app.route('/about')
 def about():
@@ -164,4 +166,15 @@ def jumpship(e):
 
 @app.errorhandler(404)
 def not_found(err):
-    return render_template('404.html'), 404
+    message = "We can't find what you are looking for."
+    return render_template('error.html',
+                           error_code=404,
+                           error_message=message), 404
+
+
+@app.errorhandler(500)
+def not_found(err):
+    message = "Internal Server Error"
+    return render_template('error.html',
+                           error_code=500,
+                           error_message=message), 500

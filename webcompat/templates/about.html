@@ -1,15 +1,17 @@
 {% extends "layout.html" %}
 {% block body %}
+<div id="wrap">
 <div id="about-page" class="page">
-  <nav>
-    <img class="lightswitch" src="{{ url_for('static', filename='img/lightswitch.png') }}" alt="Light Switch">
-  </nav>
-  <h2>About Webcompat.com</h2>
-  <h4>What is webcompat.com?</h4>
-  <p>Webcompat.com was developed by Mozilla to open the web compatibility effort to all users of the web. It is a single place for users to log web compatibility bugs for any browser. Developers can use it to get meaningful feedback about compatibility issues with their sites.</p>
-  <h4>What is Web Compatibility?</h4>
-  <p>Web compatibility is about ensuring that web users everywhere have a choice of which web browser or device they would like to use. This happens through finding compatibility issues on websites, understanding the issue, contacting the website and helping to resolve. The great thing is anyone can help, learn how you can get involved!</p>
-
-  <p>Interested in learning more? Check out the <a href="https://wiki.mozilla.org/Compatibility">Mozilla Compatibility Wiki</a>.</p>
+{% include "shared/nav.html" %}
+  <div class="maincontent container">
+      <h2>About</h2>
+      <h4>What is webcompat.com?</h4>
+      <p>Webcompat.com was developed by Mozilla to open the web compatibility effort to all users of the web. It is a single place for users to log web compatibility bugs for any browser. Developers can use it to get meaningful feedback about compatibility issues with their sites.</p>
+      <h4>What is Web Compatibility?</h4>
+      <p>Web compatibility is about ensuring that web users everywhere have a choice of which web browser or device they would like to use. This happens through finding compatibility issues on websites, understanding the issue, contacting the website and helping to resolve. The great thing is anyone can help, learn how you can get involved!</p>
+      <br>
+      <p>Interested in learning more? Check out the <a href="https://wiki.mozilla.org/Compatibility">Mozilla Compatibility Wiki</a>.</p>
+  </div>
+</div>
 </div>
 {% endblock %}

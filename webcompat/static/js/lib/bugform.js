@@ -5,10 +5,68 @@
 function BugForm() {
   var urlField = $('#url');
   var descField = $('#description');
+  var summaryField = $('#summary');
+  var submitButtons = $('button.btn');
+  var inputMap = {
+    'url': {
+      'elm': urlField, // elm is a jQuery object
+      'valid': false,
+      'helpText': 'A URL is required.'
+    },
+    'summary' : {
+      'elm': summaryField,
+      'valid': false,
+      'helpText': 'Please give a summary.'
+    }
+  };
 
   var self = {
     init: function() {
-      urlField.bind('input', self.copyURL);
+      urlField.on('input', self.copyURL);
+      self.disableSubmits();
+      urlField.on('blur', self.checkValidity);
+      summaryField.on('blur', self.checkValidity);
+    },
+    disableSubmits: function() {
+      submitButtons.prop('disabled', true);
+    },
+    enableSubmits: function() {
+      submitButtons.prop('disabled', false);
+    },
+    /* Check to see that the form element is not empty.
+       We don't do any other kind of validation yet. */
+    checkValidity: function(e) {
+      if ($.trim(e.target.value) === "") {
+        self.makeInvalid(e.target.id);
+      } else {
+        self.makeValid(e.target.id);
+      }
+    },
+    makeInvalid: function(id) {
+      if (inputMap[id].valid) {
+        return;
+      }
+
+      inputMap[id].valid = false;
+      inputMap[id].elm.parent()
+                      .removeClass('no-error')
+                      .addClass('has-error');
+
+      $('<span></span>', {
+        'class': 'help-inline bold',
+        'text': inputMap[id].helpText
+      }).insertAfter('label[for='+id+']');
+    },
+    makeValid: function(id) {
+      inputMap[id].valid = true;
+      inputMap[id].elm.parent()
+                      .removeClass('has-error')
+                      .addClass('no-error');
+      inputMap[id].elm.prev('.help-inline').remove();
+
+      if (inputMap['url'].valid && inputMap['summary'].valid) {
+        self.enableSubmits();
+      }
     },
     /*
        copy URL from urlField into the first line of the
