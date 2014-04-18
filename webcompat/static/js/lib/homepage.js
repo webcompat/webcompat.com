@@ -14,8 +14,14 @@ function HomePage() {
     toggleForm: function(e) {
       e.preventDefault();
       $('html, body').animate({
-        scrollTop: reportButton.offset().top
-      }, 300);
+        scrollTop: reportButton.offset().top + 5
+      }, 250);
+
+      if (reportButton.hasClass('opened')) {
+        $('html, body').animate({
+          scrollTop: 0
+        }, 250);
+      }
       formContainer.slideToggle(function(){
         formContainer.toggleClass('form-closed')
                      .toggleClass('form-opened');

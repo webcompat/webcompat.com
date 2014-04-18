@@ -204,7 +204,7 @@ footer .follow {
   background-origin: content-box;
 }
 #maintitle {
-  padding: 6em 5em 4em;
+  padding: 6em 5em;
 }
 #maintitle h1 {
   text-shadow: -1px -1px 0px rgba(0,0,0,.25);
@@ -215,6 +215,13 @@ footer .follow {
   top: 1em;
   font-size: 2em;
   text-decoration: none !important;
+}
+#report-bug.opened {
+  top: 2em;
+  -webkit-transition: top 55ms ease-out 0ms;
+  -moz-transition: top 55ms ease-out 0ms;
+  -o-transition: top 55ms ease-out 0ms;
+  transition: top 55ms ease-out 0ms;
 }
 #report-bug:hover, :focus {
   padding-left: 0;
