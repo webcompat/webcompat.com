@@ -6,6 +6,7 @@
 
 import os
 import time
+import urllib
 from datetime import datetime
 from flask import (flash, g, redirect, request, render_template, session,
                    url_for, abort)
@@ -138,9 +139,16 @@ def show_issue(number):
 def thanks(number):
     if number.isdigit():
         issue = number
+        uri = u"https://github.com/{0}/{1}".format(
+            app.config['ISSUES_REPO_URI'], number)
+        text = u"I just filed a bug on the internet: "
+        encoded_issue = urllib.quote(uri.encode("utf-8"))
+        encoded_text = urllib.quote(text.encode("utf-8"))
     else:
         abort(404)
-    return render_template('thanks.html', number=issue)
+    return render_template('thanks.html', number=issue,
+                           encoded_issue=encoded_issue,
+                           encoded_text=encoded_text)
 
 
 @app.route('/about')
