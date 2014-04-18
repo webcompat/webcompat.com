@@ -3,23 +3,24 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 function HomePage() {
-  var button = $('#report-bug');
+  var reportButton = $('#report-bug');
+  var reportLink = $('#report-bug-link')
   var formContainer = $('#new-report');
 
   var self = {
     init: function() {
-      button.on('click', self.toggleForm);
+      reportButton.add(reportLink).on('click', self.toggleForm);
     },
     toggleForm: function(e) {
       e.preventDefault();
       $('html, body').animate({
-        scrollTop: button.offset().top
+        scrollTop: reportButton.offset().top
       }, 300);
       formContainer.slideToggle(function(){
         formContainer.toggleClass('form-closed')
                      .toggleClass('form-opened');
-        button.toggleClass('closed')
-              .toggleClass('opened');
+        reportButton.toggleClass('closed')
+                    .toggleClass('opened');
       });
     }
   };
