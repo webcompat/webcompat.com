@@ -22,11 +22,11 @@ function HomePage() {
           scrollTop: 0
         }, 250);
       }
+      reportButton.toggleClass('closed')
+                  .toggleClass('opened');
       formContainer.slideToggle(function(){
         formContainer.toggleClass('form-closed')
                      .toggleClass('form-opened');
-        reportButton.toggleClass('closed')
-                    .toggleClass('opened');
       });
     }
   };
