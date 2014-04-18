@@ -232,7 +232,7 @@ footer .follow {
   height: 1.15em;
   vertical-align: middle;
 }
-#arrow:focus {
+.opened #arrow {
   -webkit-transform:rotate(90deg);
   -ms-transform:rotate(90deg);
   transform:rotate(90deg);
