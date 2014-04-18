@@ -21,6 +21,9 @@ time, mark, audio, video {
 
 
 /*----------Global Styles----------*/
+html, body {
+  height: 100%;
+}
 html {
    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
    font-weight: 300;
@@ -80,12 +83,64 @@ p {
   line-height: 2em;
   text-decoration: none;
 }
+.btn {
+  background-color: transparent;
+  border: .35em solid #f8c41c;
+  margin-bottom: .5em;
+  padding-left: 2em;
+  padding-right: 2em;
+  color: #000;
+  text-decoration: none !important;
+  font-weight: 700;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  border-radius: 20px;
+}
+.btn:hover {
+  background-color: #f8c41c;
+  color: #fff;
+}
+.btn-link {
+  color: #000;
+  font-weight: 700;
+}
+.btn-link:hover, .btn-link:focus {
+  color: #f8c41c;
+  outline: none;
+}
 a {
   color: inherit;
   text-decoration: underline !important;
 }
+a:hover, a:focus {
+  outline: none;
+}
+a:hover {
+  color: #000;
+}
+a:focus {
+  color: #fff;
+}
 .bold {
   font-weight: 700;
+}
+.divider {
+  font-weight: 700;
+  border-top: 5px solid #f8c41c;
+  width: 30px;
+  margin-left: 5em;
+  color: #fff;
+}
+/* Wrapper for page content to push down footer */
+#wrap {
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
+/* Negative indent footer by it's height */
+  margin: 0 auto -60px;
+}
+#push, footer {
+  height: 60px;
 }
 footer {
   background-color: #ffffff;
@@ -156,11 +211,11 @@ footer .follow {
   position: relative;
   top: 1em;
   font-size: 2em;
-  text-decoration: none;
+  text-decoration: none !important;
 }
-#report-bug:hover {
-  color: #000;
+#report-bug:hover, :focus {
   padding-left: 0;
+  color: #fff;
 }
 #lightbulb {
   padding: 0 5em;
@@ -170,22 +225,22 @@ footer .follow {
   display: block;
   height: 80%;
 }
-/*.plusbtn {
-  background:#fff;
-  color:#f8c41c;
-  text-align:center;
-  border-radius: 50%;
-  font-size: 1.5em;
-  font-weight: bold;
-  min-width: 2em;
-}*/
+#arrow {
+  height: 1.15em;
+  vertical-align: middle;
+}
+#arrow:focus {
+  -webkit-transform:rotate(90deg);
+  -ms-transform:rotate(90deg);
+  transform:rotate(90deg);
+}
 form button.btn:not(.btn-link) {
   background-color: transparent;
   border: .35em solid #f8c41c;
   margin-bottom: .5em;
   padding-left: 2em;
   padding-right: 2em;
-  color: #404040;
+  color: #000;
   text-decoration: none !important;
   font-weight: 700;
   -webkit-border-radius: 20px;
@@ -193,7 +248,7 @@ form button.btn:not(.btn-link) {
   border-radius: 20px;
 }
 form .btn-link, form .btn-link:hover {
-    color: #404040;
+    color: #000;
     font-weight: 700;
     text-decoration: underline;
     padding-left: 0;
@@ -203,7 +258,6 @@ form .btn-link, form .btn-link:hover {
   -webkit-transition: margin 100ms ease-out 10ms;
   -moz-transition: margin 100ms ease-out 10ms;
   transition: margin 100ms ease-out 10ms;
-  margin-top: 2em;
 }
 .form-closed {
   display: none;
@@ -218,7 +272,7 @@ input[type=search] {
   color: #fdf3dd;
 }
 #howitworks, #join {
-  padding: 3em 5em 2em 5em;
+  padding: 3em 5em;
 }
 #threesteps {
   padding: 1em 0;
@@ -258,29 +312,29 @@ input[type=search] {
 .page h4 {
     margin: 0.75em 0 1em;
 }
+.page p {
+  line-height: 150%;
+}
 .maincontent {
   text-align: left;
   padding: 2em 5em;
 }
 /*------Forms-------*/
 label, .label {
-  color: #404040;
+  color: #000;
   margin-bottom: 5px;
-  font-weight: inherit;
+  font-weight: 700;
   font-size: inherit;
 }
 .label {
   padding-left: 0;
 }
-form {
-  border: 5px solid #f8c41c;
-}
 form.cf {
   background: #fff;
-  padding: 2em 3em;
-  -webkit-border-radius: 20px;
+  padding: 3em 5em 2em 5em;
+/*  -webkit-border-radius: 20px;
   -moz-border-radius: 20px;
-  border-radius: 20px;
+  border-radius: 20px;*/
 }
 #new-report h2 {
   font: #fff;
@@ -291,6 +345,7 @@ form.cf {
   -webkit-border-radius: 20px;
   -moz-border-radius: 20px;
   border-radius: 20px;
+  padding: 0.5em;
 }
 form .button {
   margin-top: 0.25em;
@@ -301,10 +356,26 @@ form .button {
 #submitanon {
   float: right;
   text-align: center;
+  border: none;
+}
+#submitanon:hover {
+  color: #f8c41c;
 }
 #submitgithub {
   float: left;
   text-align: center;
+}
+#submitgithub:hover {
+  color: #f8c41c;
+}
+#submitdiv {
+  display: block;
+  font-weight: 700;
+  border-top: 5px solid #f8c41c;
+  width: 30px;
+  margin: 0;
+  color: #fff;
+  display: block;
 }
 .row {
   padding: .5em;
@@ -369,17 +440,26 @@ form .button {
   display: none;
 }
 .no-error .form-control {
-  border-color: #319501;
+  border-color: #f8c41c;
 }
 .no-error .form-control:focus{
-  border-color: #319501;
+  border-color: #f8c41c;
   -webkit-box-shadow:none;
   box-shadow:none;
 }
 .disabled {
   opacity: 0.5;
 }
+/*------Page Errors------*/
+#returnhome {
+  padding: 0;
+}
 
+
+/*------Social Share------*/
+#twittershare {
+  padding: 0;
+}
 /*------Media Queries------*/
 @media all and (max-width: 950px) {
   .bignumber {
@@ -389,6 +469,12 @@ form .button {
 @media all and (max-width: 770px) {
   .bignumber {
     padding-bottom: 0;
+  }
+  footer {
+    margin-left: -20px;
+    margin-right: -20px;
+    padding-left: 20px;
+    padding-right: 20px;
   }
   footer li {
     font-size: 0.75em;
@@ -411,6 +497,11 @@ form .button {
   .maincontent.container, footer .container, nav {
     padding-left: 3em;
     padding-right: 3em;
+  }
+}
+@media all and (max-width: 423px) { 
+  footer {
+    margin-top: 3em;
   }
 }
 @media all and (max-width: 375px) {

@@ -1,2 +1,17 @@
-<!DOCTYPE html>
-404 Not Found
+{% extends "layout.html" %}
+{% block body %}
+<div id="wrap">
+<div class="page">
+  <div class="404">
+{% include "shared/nav.html" %}
+    <div class="maincontent container" id="pageerror">
+    <h2>Yikes!  We can't find what you are looking for.</h2>
+    <h3>(sound of broken glass)</h3>
+    <br>
+    <br>
+    <button class="btn-link" id="returnhome"><a href="/">Return home</a></button>
+    </div>
+  </div>
+</div>
+</div>
+{% endblock %}

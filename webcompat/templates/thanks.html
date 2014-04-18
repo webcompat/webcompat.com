@@ -1,9 +1,19 @@
 {% extends "layout.html" %}
 {% block body %}
-<div class="thanks">
-  <h1>Thank you.</h1>
-  <p>Cute message goes here. You can check the status of your bugs here:</p>
-  <p><a href="#">github.com/unique-url</a></p>
-  <button>Share on Twitter</button>
+<div id="wrap">
+<div class="page">
+  <div class="thanks">
+{% include "shared/nav.html" %}
+    <div class="maincontent container">
+        <h2>Thank you.</h2>
+        <p>You're helping us make the web a better place to work and play.  
+          <br>
+         <br> 
+        Check the status of your bugs here: <a href="#">github.com/unique-url</a></p>
+          <br>
+       <button class="btn-link" id="twittershare"><a href="https://twitter.com/home?status=Report%20bugs%20for%20any%20browser%20or%20website%20%20http://webcompat.com%20%20@webcompat" target="_blank">Share on Twitter</a></button>
+    </div>
+  </div>
+</div>
 </div>
 {% endblock %}
