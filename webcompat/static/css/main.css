@@ -450,12 +450,14 @@ form .button {
 .disabled {
   opacity: 0.5;
 }
+/*------Thanks Page------*/
+.thanks p {
+  margin-bottom: 1.5em;
+}
 /*------Page Errors------*/
 #returnhome {
   padding: 0;
 }
-
-
 /*------Social Share------*/
 #twittershare {
   padding: 0;
