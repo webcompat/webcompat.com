@@ -244,7 +244,7 @@ footer .follow {
   -ms-transform:rotate(90deg);
   transform:rotate(90deg);
 }
-form button.btn:not(.btn-link) {
+form button.btn {
   background-color: transparent;
   border: .35em solid #f8c41c;
   margin-bottom: .5em;
@@ -361,16 +361,15 @@ form .button {
   padding-bottom: 0.25em;
 }
 #submitanon {
-  float: right;
-  text-align: center;
+  float: left;
   border: none;
 }
 #submitanon:hover {
   color: #f8c41c;
 }
 #submitgithub {
-  float: left;
-  text-align: center;
+  float: right;
+  margin: 0 auto;
 }
 #submitgithub:hover {
   color: #f8c41c;
@@ -380,7 +379,7 @@ form .button {
   font-weight: 700;
   border-top: 5px solid #f8c41c;
   width: 30px;
-  margin: 0;
+  margin: 1em 0 0;
   color: #fff;
   display: block;
 }
@@ -507,6 +506,10 @@ form .button {
 
   #hero .container {
     background: none;
+  }
+  .submit {
+    float: left;
+    margin: 0 0 1em;
   }
 }
 @media all and (max-width: 450px) {
