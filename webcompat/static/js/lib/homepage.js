@@ -4,7 +4,7 @@
 
 function HomePage() {
   var reportButton = $('#report-bug');
-  var reportLink = $('#report-bug-link')
+  var reportLink = $('#report-bug-link');
   var formContainer = $('#new-report');
 
   var self = {
