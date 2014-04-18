@@ -138,6 +138,7 @@ def show_issue(number):
 def thanks():
     return render_template('thanks.html')
 
+
 @app.route('/about')
 def about():
     return render_template('about.html')
@@ -153,4 +154,15 @@ def jumpship(e):
 
 @app.errorhandler(404)
 def not_found(err):
-    return render_template('404.html'), 404
+    message = "We can't find what you are looking for."
+    return render_template('error.html',
+                           error_code=404,
+                           error_message=message), 404
+
+
+@app.errorhandler(500)
+def not_found(err):
+    message = "Internal Server Error"
+    return render_template('error.html',
+                           error_code=500,
+                           error_message=message), 500
