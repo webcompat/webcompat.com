@@ -476,6 +476,9 @@ form .button {
   }
 }
 @media all and (max-width: 770px) {
+  #maintitle h1 {
+    font-size: 3em;
+  }
   .bignumber {
     padding-bottom: 0;
   }
@@ -491,7 +494,7 @@ form .button {
 
   #hero .container {
     background-size: 18%;
-    background-position: right 100px top -50px;
+    background-position: right 80px top -50px;
   }
 }
 @media all and (max-width: 600px) {
@@ -500,6 +503,10 @@ form .button {
   }
   .flourish {
     display: none;
+  }
+
+  #hero .container {
+    background: none;
   }
 }
 @media all and (max-width: 450px) {
@@ -520,60 +527,3 @@ form .button {
     margin-left: -10px;
   }
 }
-/*
-@media all and (max-width: 855px) {
-  .hero h1 {
-  font-size: 4.3em;
-  }
-  .hero h2 {
-  font-size: 1.55em;
-  }
-  .button {
-    font-size: 1.4em;
-    padding: .45em 1.65em;
-  }
-  .join h3 {
-    font-size: 3.5em;
-  }
-  .join h4 {
-    font-size: 1.5em;
-  }
-  .join h5 {
-    font-size: 2.5em;
-  }
-}
-
-@media all and (max-width: 773px) {
-  .hero h1 {
-  font-size: 4em;
-  }
-  .hero h2 {
-  font-size: 1.468745em;
-  }
-}
-
-@media all and (max-width: 730px) {
-  .hero h1 {
-  font-size: 3.5em;
-  }
-  .hero h2 {
-  font-size: 1.27em;
-  }
-  .join h3 {
-    font-size: 3em;
-  }
-  .join h4 {
-    font-size: 1.4em;
-    line-height: 125%;
-  }
-  .join h5 {
-    font-size: 2.25em;
-  }
-}
-@media all and (max-width: 661px) {
-  .footerleft, .footerright {
-    float: none;
-    text-align: center;
-    padding: .5em 0;
-  }
-}*/
