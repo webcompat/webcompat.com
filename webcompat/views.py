@@ -8,7 +8,7 @@ import os
 import time
 from datetime import datetime
 from flask import (flash, g, redirect, request, render_template, session,
-                   url_for)
+                   url_for, abort)
 from flask.ext.github import GitHubError
 from form import (build_formdata, get_browser_name, get_browser_version,
                   IssueForm, AUTH_REPORT, PROXY_REPORT)
@@ -134,9 +134,13 @@ def show_issue(number):
     return redirect(uri, code=307)
 
 
-@app.route('/thanks')
-def thanks():
-    return render_template('thanks.html')
+@app.route('/thanks/<number>')
+def thanks(number):
+    if number.isdigit():
+        issue = number
+    else:
+        abort(404)
+    return render_template('thanks.html', number=issue)
 
 
 @app.route('/about')
