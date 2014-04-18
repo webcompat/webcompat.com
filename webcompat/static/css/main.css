@@ -215,13 +215,17 @@ footer .follow {
   top: 1em;
   font-size: 2em;
   text-decoration: none !important;
+  -webkit-transition: top 100ms ease-out 0ms;
+  -moz-transition: top 100ms ease-out 0ms;
+  -o-transition: top 100ms ease-out 0ms;
+  transition: top 100ms ease-out 0ms;
 }
 #report-bug.opened {
   top: 2em;
-  -webkit-transition: top 55ms ease-out 0ms;
-  -moz-transition: top 55ms ease-out 0ms;
-  -o-transition: top 55ms ease-out 0ms;
-  transition: top 55ms ease-out 0ms;
+  -webkit-transition: top 100ms ease-out 0ms;
+  -moz-transition: top 100ms ease-out 0ms;
+  -o-transition: top 100ms ease-out 0ms;
+  transition: top 100ms ease-out 0ms;
 }
 #report-bug:hover, :focus {
   padding-left: 0;
