@@ -119,7 +119,7 @@ a:hover {
   color: #000;
 }
 a:focus {
-  color: #fff;
+  color: #808080;
 }
 .bold {
   font-weight: 700;
@@ -499,7 +499,7 @@ form .button {
     padding-right: 3em;
   }
 }
-@media all and (max-width: 423px) { 
+@media all and (max-width: 423px) {
   footer {
     margin-top: 3em;
   }
