@@ -121,6 +121,9 @@ a:hover {
 a:focus {
   color: #808080;
 }
+#hero a:focus {
+  color: #fff;
+}
 .bold {
   font-weight: 700;
 }
@@ -201,7 +204,7 @@ footer .follow {
   background-origin: content-box;
 }
 #maintitle {
-  padding: 6em 5em;
+  padding: 6em 5em 4em;
 }
 #maintitle h1 {
   text-shadow: -1px -1px 0px rgba(0,0,0,.25);
@@ -255,9 +258,6 @@ form .btn-link, form .btn-link:hover {
 }
 .form-opened {
   display: block;
-  -webkit-transition: margin 100ms ease-out 10ms;
-  -moz-transition: margin 100ms ease-out 10ms;
-  transition: margin 100ms ease-out 10ms;
 }
 .form-closed {
   display: none;
