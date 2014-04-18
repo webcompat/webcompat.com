@@ -86,7 +86,7 @@ def file_issue():
     response = report_issue(session['form_data'])
     # Get rid of stashed form data
     session.pop('form_data', None)
-    return redirect(url_for('show_issue', number=response.get('number')))
+    return redirect(url_for('thanks', number=response.get('number')))
 
 
 @app.route('/issues')
@@ -109,7 +109,7 @@ def new_issue():
         if request.form.get('submit-type') == AUTH_REPORT:
             if g.user:  # If you're already authed, submit the bug.
                 response = report_issue(request.form)
-                return redirect(url_for('show_issue',
+                return redirect(url_for('thanks',
                                 number=response.get('number')))
             else:  # Stash form data into session, go do GitHub auth
                 session['form_data'] = request.form
@@ -118,7 +118,7 @@ def new_issue():
             # `response` here is a Requests Response object, because
             # the proxy_report_issue crafts a manual request with Requests
             response = proxy_report_issue(request.form)
-            return redirect(url_for('show_issue',
+            return redirect(url_for('thanks',
                             number=response.json().get('number')))
     else:
         # Validation failed, re-render the form with the errors.
