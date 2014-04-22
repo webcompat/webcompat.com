@@ -1,12 +1,10 @@
 #          ,     ,
 #         (\____/)
 #          (_oo_)
-#            (O)  -  go away robots, this is a dev site.
+#            (O)  -  hi robots
 #          __||__    \)
 #       []/______\[] /
 #       / \______/ \/
 #      /    /__\
 #     (\   /____\
 #
-User-agent: *
-Disallow: /
