@@ -324,9 +324,20 @@ input[type=search] {
 }
 .page h4 {
     margin: 0.75em 0 1em;
+    font-weight: 700;
 }
 .page p {
   line-height: 150%;
+  margin-bottom: 1em;
+}
+.page ol {
+  margin: 1.25em 0;
+}
+.page li {
+  margin-bottom: 1em;
+}
+.page strong {
+  font-weight: 500;
 }
 .maincontent {
   text-align: left;
