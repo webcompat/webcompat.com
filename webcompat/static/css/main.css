@@ -267,7 +267,6 @@ form .btn-link, form .btn-link:hover {
     color: #000;
     font-weight: 700;
     text-decoration: underline;
-    padding-left: 0;
 }
 .form-opened {
   display: block;
@@ -384,15 +383,9 @@ form .button {
   float: left;
   border: none;
 }
-#submitanon:hover {
-  color: #f8c41c;
-}
 #submitgithub {
   float: right;
   margin: 0 auto;
-}
-#submitgithub:hover {
-  color: #f8c41c;
 }
 #submitdiv {
   display: block;
