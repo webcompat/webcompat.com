@@ -229,7 +229,7 @@ footer .follow {
   -o-transition: top 100ms ease-out 0ms;
   transition: top 100ms ease-out 0ms;
 }
-#report-bug:hover, :focus {
+#report-bug:hover, #report-bug:focus {
   padding-left: 0;
   color: #fff;
 }
