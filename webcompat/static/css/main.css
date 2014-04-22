@@ -140,7 +140,9 @@ a:focus {
   height: auto !important;
   height: 100%;
 /* Negative indent footer by it's height */
-  margin: 0 auto -60px;
+/*margin: 0 auto -60px;*/
+/* mike: commenting out because this collapses into content
+   at smaller viewports*/
 }
 #push, footer {
   height: 60px;
