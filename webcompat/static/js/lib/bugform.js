@@ -24,8 +24,8 @@ function BugForm() {
     init: function() {
       urlField.on('input', self.copyURL);
       self.disableSubmits();
-      urlField.on('blur', self.checkValidity);
-      summaryField.on('blur', self.checkValidity);
+      urlField.on('blur input', self.checkValidity);
+      summaryField.on('blur input', self.checkValidity);
     },
     disableSubmits: function() {
       submitButtons.prop('disabled', true);
