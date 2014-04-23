@@ -43,9 +43,8 @@ function BugForm() {
       }
     },
     makeInvalid: function(id) {
-      // Early return if the input is actually valid (which maybe should never
-      // happen?), or if inline help is already in place.
-      if (inputMap[id].valid || inputMap[id].elm.prev('.help-inline').length) {
+      // Early return if inline help is already in place.
+      if (inputMap[id].elm.prev('.help-inline').length) {
         return;
       }
 
