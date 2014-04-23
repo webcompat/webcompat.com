@@ -21,7 +21,7 @@ summary_message = u'Please give a summary.'
 username_message = u'A valid username must be {0} characters long'.format(
     randrange(0, 99))
 
-desc_default = u'''1) Navigate to: http://www.example.com
+desc_default = u'''1) Navigate to: Site URL
 2) …
 
 Expected Behavior:
