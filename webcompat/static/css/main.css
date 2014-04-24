@@ -525,16 +525,30 @@ form .button {
     float: left;
     margin: 0 0 1em;
   }
-}
-@media all and (max-width: 450px) {
-  .maincontent.container, footer .container, nav {
-    padding-left: 3em;
-    padding-right: 3em;
+  .col-md-6.submit, .col-md-6 button {
+    width: 100%;
   }
 }
-@media all and (max-width: 423px) {
+@media all and (max-width: 450px) {
+  .maincontent.container, footer .container, nav, form.cf {
+    padding-left: 1em;
+    padding-right: 1em;
+  }
+  #maintitle {
+    padding: 3em 1em 3em;
+  }
+  #report-bug.opened {
+    top: 1.25em;
+  }
+  #howitworks, #join {
+    padding: 2em 1em;
+  }
   footer {
     margin-top: 3em;
+  }
+  .has-error .help-inline {
+    float: none;
+    display: block;
   }
 }
 @media all and (max-width: 375px) {
