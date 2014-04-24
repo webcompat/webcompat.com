@@ -4,6 +4,7 @@ module.exports = function(grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     jsPath: 'webcompat/static/js',
+    cssPath: 'webcompat/static/css',
     banner: '/*! <%= pkg.title %>\n' +
       ' *  Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author.name %>\n' +
       ' *\n' +
@@ -21,6 +22,20 @@ module.exports = function(grunt) {
             '<%= jsPath %>/lib/bugform.js'
         ],
         dest: '<%= jsPath %>/<%= pkg.name %>.js'
+      }
+    },
+    cssmin: {
+      options: {
+        banner: '<%= banner %>'
+      },
+      combine: {
+        files: {
+          // output
+          '<%= cssPath %>/webcompat.min.css': [
+            // input
+            '<%= cssPath %>/main.css'
+          ]
+        }
       }
     },
     uglify: {
@@ -67,11 +82,12 @@ module.exports = function(grunt) {
   });
 
   grunt.loadNpmTasks('grunt-contrib-concat');
-  grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-contrib-jshint');
+  grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-watch');
 
   // Default task.
-  grunt.registerTask('default', ['jshint', 'concat', 'uglify']);
+  grunt.registerTask('default', ['jshint', 'concat', 'uglify', 'cssmin']);
 
 };
