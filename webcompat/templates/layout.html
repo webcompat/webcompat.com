@@ -9,9 +9,9 @@
   <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
 {%- if config.PRODUCTION -%}
   <link href="{{ url_for('static', filename='css/webcompat.min.css') }}" type="text/css" rel="stylesheet">
-{%- else -%}
+{%- else %}
   <link href="{{ url_for('static', filename='css/main.css') }}" type="text/css" rel="stylesheet">
-{%- endif -%}
+{%- endif %}
 </head>
 <body>
 {% for category, message in get_flashed_messages(with_categories=True) %}
@@ -19,7 +19,7 @@
 {% endfor %}
 {% block body %}{% endblock %}
 {% include "shared/footer.html" %}
-{% if config.PRODUCTION %}
+{%- if config.PRODUCTION %}
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -33,6 +33,6 @@
 <script src="{{ url_for('static', filename='js/lib/jquery-1.11.0.min.js') }}"></script>
 <script src="{{ url_for('static', filename='js/lib/homepage.js') }}"></script>
 <script src="{{ url_for('static', filename='js/lib/bugform.js') }}"></script>
-{% endif %}
+{%- endif %}
 </body>
 </html>
