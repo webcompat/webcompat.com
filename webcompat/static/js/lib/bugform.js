@@ -22,10 +22,23 @@ function BugForm() {
 
   var self = {
     init: function() {
+      self.checkParams();
       urlField.on('input', self.copyURL);
       self.disableSubmits();
       urlField.on('blur input', self.checkValidity);
       summaryField.on('blur input', self.checkValidity);
+    },
+    checkParams: function() {
+        // Assumes a URI like: /?open=1&url=http://webpy.org/, for use by addons
+        // Quick sanity check
+        if (!location.search.search(/open=1&url=.+$/)) {
+          return;
+        }
+        var urlParam = location.search.match(/url=(.+)$/);
+        if (urlParam != null) {
+          urlField.val(decodeURIComponent(urlParam[1]));
+          self.makeValid('url');
+      }
     },
     disableSubmits: function() {
       submitButtons.prop('disabled', true);
