@@ -110,20 +110,12 @@ p {
   outline: none;
 }
 a {
-  color: inherit;
+  color: #000;
   text-decoration: underline !important;
 }
 a:hover, a:focus {
-  outline: none;
-}
-a:hover {
   color: #000;
-}
-a:focus {
-  color: #808080;
-}
-#hero a:focus {
-  color: #fff;
+  outline: none;
 }
 .bold {
   font-weight: 700;
@@ -196,6 +188,15 @@ footer .follow {
 }
 
 /*--------Homepage Styles--------*/
+#feedback {
+  background: #fff;
+  color: #000;
+  text-align: center;
+  margin: 0 0.1em;
+  padding: 0.2em;
+  position: relative;
+  top: 0.1em;
+}
 #hero {
   background-color: #f8c41c;
   text-align: left;
@@ -217,6 +218,7 @@ footer .follow {
   position: relative;
   top: 1em;
   font-size: 2em;
+  color: #fff;
   text-decoration: none !important;
   -webkit-transition: top 100ms ease-out 0ms;
   -moz-transition: top 100ms ease-out 0ms;
