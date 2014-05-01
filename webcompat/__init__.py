@@ -4,6 +4,8 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
+'''This module powers the webcompat.com Flask application.'''
+
 from flask import Flask, render_template
 from flask.ext.github import GitHub
 from sqlalchemy import create_engine

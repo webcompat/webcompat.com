@@ -4,6 +4,9 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
+'''This module contains the base IssueForm class and helper methods that
+power the issue reporting form on webcompat.com.'''
+
 from random import randrange
 from ua_parser import user_agent_parser
 from wtforms import Form, RadioField, StringField, TextAreaField
@@ -30,13 +33,14 @@ Actual Behavior:
 
 
 class IssueForm(Form):
+    '''Define form fields and validation for our bug reporting form.'''
     url = StringField(u'Site URL*', [Required(message=url_message)])
     browser = StringField(u'Browser', [Optional()])
     version = StringField(u'Version', [Optional()])
     summary = StringField(u'Problem in 5 words*',
                           [Required(message=summary_message)])
     username = StringField(u'Username',
-                            [Length(max=0, message=username_message)])
+                           [Length(max=0, message=username_message)])
     description = TextAreaField(u'How can we replicate this?', [Optional()],
                                 default=desc_default)
     site_owner = RadioField(u'Is this your website?', [Optional()],
@@ -45,18 +49,20 @@ class IssueForm(Form):
                                   [Optional()], choices=problem_choices)
 
 
-def get_problem(type):
+def get_problem(category):
+    '''Return human-readable label for problem choices form value.'''
     for choice in problem_choices:
-        if choice[0] == type:
+        if choice[0] == category:
             return choice[1]
     # Something probably went wrong. Return something safe.
     return u'Unknown'
 
 
-def get_owner(bool):
-    if bool == 'True':
+def get_owner(is_site_owner):
+    '''Return human-readable language (Y/N) for site owner form value.'''
+    if is_site_owner == 'True':
         return u'Yes'
-    elif bool == 'False':
+    elif is_site_owner == 'False':
         return u'No'
     else:
         return u'Unknown'
@@ -71,6 +77,7 @@ def wrap_label(label):
 
 
 def get_labels(browser_name):
+    '''Return all labels as a single string.'''
     labels = []
     result = ''
     # Only the name for now.
@@ -82,12 +89,14 @@ def get_labels(browser_name):
 
 
 def get_browser_name(user_agent_string):
+    '''Return browser name (i.e., "user agent family") for pre-populating the
+    bug reporting form.'''
     ua_dict = user_agent_parser.Parse(user_agent_string)
     return ua_dict.get('user_agent').get('family')
 
 
 def get_browser_version(user_agent_string):
-    '''Returns a string representing the browser version.'''
+    '''Return a string representing the browser version.'''
     ua_dict = user_agent_parser.Parse(user_agent_string)
     ua = ua_dict.get('user_agent')
     version = ua.get('major', u'Unknown')
