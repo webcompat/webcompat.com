@@ -8,7 +8,7 @@
   <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
   <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
 {%- if config.PRODUCTION -%}
-  <link href="{{ url_for('static', filename='css/webcompat.min.css') }}" type="text/css" rel="stylesheet">
+  <link href="{{ url_for('static', filename='css/webcompat.min.css') }}?{{ bust_cache() }}" type="text/css" rel="stylesheet">
 {%- else %}
   <link href="{{ url_for('static', filename='css/main.css') }}" type="text/css" rel="stylesheet">
 {%- endif %}
@@ -28,7 +28,7 @@
   ga('create', 'UA-49507820-1', 'webcompat.com');
   ga('send', 'pageview');
 </script>
-<script src="{{ url_for('static', filename='js/webcompat.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/webcompat.min.js') }}?{{ bust_cache() }}"></script>
 {% else %}
 <script src="{{ url_for('static', filename='js/lib/jquery-1.11.0.min.js') }}"></script>
 <script src="{{ url_for('static', filename='js/lib/homepage.js') }}"></script>

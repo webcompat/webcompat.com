@@ -5,6 +5,7 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 import os
+from datetime import datetime
 
 # Define the application directory
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
@@ -22,6 +23,8 @@ DEBUG = False
 
 if not PRODUCTION:
     DEBUG = True
+
+STARTUP = str(datetime.now())
 
 # Get the secrets from [1] if you're part of the webcompat organization.
 # Otherwise, create your own test and production applications.
