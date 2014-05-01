@@ -33,8 +33,8 @@ class TestURLs(TestCase):
         self.assertEqual(rv.status_code, 200)
 
     def test_thanks(self):
-        '''Test that /thanks exists'''
-        rv = self.app.get('/thanks')
+        '''Test that /thanks/1 exists'''
+        rv = self.app.get('/thanks/1')
         self.assertEqual(rv.status_code, 200)
 
     def test_login(self):
