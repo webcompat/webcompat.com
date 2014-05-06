@@ -8,6 +8,9 @@
 
 from flask import Flask, render_template
 from flask.ext.github import GitHub
+from flask.ext.mail import Mail
+from flask_errormail import mail_on_500
+
 from sqlalchemy import create_engine
 import os
 
@@ -15,7 +18,11 @@ app = Flask(__name__, static_url_path='')
 app.config.from_object('config')
 engine = create_engine('sqlite:///' + os.path.join(app.config['BASE_DIR'],
                                                    'github-session.db'))
+
 github = GitHub(app)
+
+mail = Mail(app)
+mail_on_500(app, app.config['ADMINS'])
 
 # import views after we initialize our github object
 import webcompat.views
