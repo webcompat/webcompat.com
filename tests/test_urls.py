@@ -4,8 +4,14 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
+'''Tests for our URL endpoints.'''
 
-from unittest import TestCase
+import unittest
+import os.path
+import sys
+
+# Add webcompat module to import path
+sys.path.append(os.path.realpath(os.pardir))
 import webcompat
 
 # Any request that depends on parsing HTTP Headers (basically anything
@@ -14,7 +20,7 @@ headers = {'HTTP_USER_AGENT': ('Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; '
                                'rv:31.0) Gecko/20100101 Firefox/31.0')}
 
 
-class TestURLs(TestCase):
+class TestURLs(unittest.TestCase):
     def setUp(self):
         webcompat.app.config['TESTING'] = True
         self.app = webcompat.app.test_client()
