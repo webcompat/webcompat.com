@@ -17,7 +17,7 @@ module.exports = function(grunt) {
       },
       dist: {
         src: [
-            '<%= jsPath %>/lib/jquery-1.11.0.min.js',
+            '<%= jsPath %>/vendor/jquery-1.11.0.min.js',
             '<%= jsPath %>/lib/homepage.js',
             '<%= jsPath %>/lib/bugform.js'
         ],
