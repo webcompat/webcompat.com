@@ -18,6 +18,9 @@ module.exports = function(grunt) {
       dist: {
         src: [
             '<%= jsPath %>/vendor/jquery-1.11.0.min.js',
+            '<%= jsPath %>/vendor/handlebars-v-1.3.0.js',
+            '<%= jsPath %>/vendor/ember-1.5.1.js',
+            '<%= jsPath %>/vendor/ember-model-0.0.11.js',
             '<%= jsPath %>/lib/homepage.js',
             '<%= jsPath %>/lib/bugform.js'
         ],
