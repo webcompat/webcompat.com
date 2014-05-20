@@ -99,11 +99,11 @@ def file_issue():
 
 @app.route('/issues')
 def show_issues():
-    return redirect(url_for('new_issue'), code=307)
+    return redirect(url_for('index'), code=307)
 
 
 @app.route('/', methods=['GET', 'POST'])
-def new_issue():
+def index():
     '''Main view where people come to report issues.'''
     form = IssueForm(request.form)
     # add browser and version to form object data
