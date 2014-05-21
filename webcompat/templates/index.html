@@ -1,19 +1,7 @@
 {%- extends "layout.html" -%}
 {%- block body -%}
 <div id="hero">
-<div id="feedback">
-  <div class="container">
-    <a href="https://github.com/webcompat/webcompat.com/issues?state=open">Give Feedback</a>
-    <div class="pull-right">
-    {% if not session.user_id %}
-    <a href="{{ url_for('login') }}">Login</a>
-    {% else %}
-    <a href="{{ url_for('logout') }}">Logout</a>
-    <img class="avatar" src=" {{ session.avatar_url }}s=40">
-    {% endif %}
-    </div>
-  </div>
-</div>
+{% include "topbar.html" %}
   <div class="container">
     <div id="maintitle">
       <h1>Bug reporting <br>for the internet.</h1>
