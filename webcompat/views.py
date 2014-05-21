@@ -55,7 +55,15 @@ def login():
     if session.get('user_id', None) is None:
         return github.authorize('public_repo')
     else:
-        return u'Already logged in'
+        return redirect(url_for('index'))
+
+
+@app.route('/logout')
+def logout():
+    session.pop('user_id', None)
+    session.pop('form_data', None)
+    flash(u'You were successfully logged out.', 'info')
+    return redirect(url_for('index'))
 
 
 # OAuth2 callback handler that GitHub requires.
@@ -72,17 +80,11 @@ def authorized(access_token):
         db_session.add(user)
     user.github_access_token = access_token
     db_session.commit()
-
     session['user_id'] = user.id
-    return redirect(url_for('file_issue'))
-
-
-@app.route('/logout')
-def logout():
-    session.pop('user_id', None)
-    session.pop('form_data', None)
-    flash(u'You were successfully logged out.', 'info')
-    return redirect(url_for('index'))
+    if session.get('form_data', None) is not None:
+        return redirect(url_for('file_issue'))
+    else:
+        return redirect(url_for('index'))
 
 
 # This route won't ever be viewed by a human being--there's not
@@ -111,6 +113,8 @@ def index():
     form.version.data = get_browser_version(request.headers.get('User-Agent'))
     # GET means you want to file a report.
     if request.method == 'GET':
+        if g.user:
+            session["avatar_url"] = github.get('user').get('avatar_url', None)
         return render_template('index.html', form=form)
     # Form submission.
     elif request.method == 'POST' and form.validate():

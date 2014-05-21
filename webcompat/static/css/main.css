@@ -189,13 +189,37 @@ footer .follow {
 
 /*--------Homepage Styles--------*/
 #feedback {
-  background: #fff;
-  color: #000;
-  text-align: center;
-  margin: 0 0.1em;
-  padding: 0.2em;
+  background: #FBC55F;
+  padding: 0.5em 0;
+}
+#feedback a {
+  color: #fff;
+  padding: 0 5em;
+  text-decoration: none !important;
+}
+#feedback a:hover {
+  text-decoration: underline !important;
+}
+#feedback .container {
+  background-image: none !important;
+}
+#feedback .pull-right {
+  display: inline-block;
   position: relative;
-  top: 0.1em;
+  right: 5em;
+}
+#feedback .pull-right a {
+  padding-left: 0;
+  padding-right: 2em;
+}
+.avatar {
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  right: 0;
+  border-radius: 3px;
 }
 #hero {
   background-color: #f8c41c;
@@ -539,6 +563,13 @@ form .button {
   #maintitle {
     padding: 3em 1em 3em;
   }
+  #feedback .pull-right {
+    right: 1em;
+  }
+  #feedback a {
+    padding-right: 1em;
+    padding-left: 1em;
+  }
   #report-bug.opened {
     top: 1.25em;
   }
@@ -558,5 +589,20 @@ form .button {
     clear: left;
     float: left;
     margin-left: -10px;
+  }
+}
+
+@media all and (max-width: 330px) {
+  #feedback a {
+    font-size: 13px;
+  }
+  #feedback .pull-right {
+    right: 0;
+  }
+  #feedback .avatar {
+    display: none;
+  }
+  #feedback .pull-right a {
+    padding-right: 0 !important;
   }
 }
