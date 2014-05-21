@@ -538,6 +538,10 @@ form .button {
     display: block;
     margin-top: 1em;
   }
+  .key span {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
 }
 @media all and (max-width: 950px) {
   .bignumber {
