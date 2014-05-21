@@ -301,6 +301,30 @@ form .btn-link, form .btn-link:hover {
 .form-closed {
   display: none;
 }
+/*-------Browse Issues------*/
+#browse-issues-wrapper {
+  background-color: #f0f0f0;
+}
+#browse-issues h2 {
+  display: inline;
+  margin-right: 0.5em;
+}
+.key {
+  position: relative;
+  bottom:0.1em;
+}
+.key span {
+  padding: 0.3em 1em;
+}
+.issue-contactready {
+  border-left: 5px solid #a1ebbf;
+}
+.issue-needs-diagnosis {
+  border-left: 5px solid #ff8364;
+}
+.issue-closed {
+  border-left: 5px solid #6fc7fa;
+}
 /*---Search on Github---*/
 input[type=search] {
   float: left;
@@ -310,7 +334,7 @@ input[type=search] {
   cursor: pointer;
   color: #fdf3dd;
 }
-#howitworks, #join {
+#howitworks, #join, #browse-issues {
   padding: 3em 5em;
 }
 #threesteps {
@@ -509,6 +533,12 @@ form .button {
   padding: 0;
 }
 /*------Media Queries------*/
+@media all and (max-width: 990px) {
+  .key {
+    display: block;
+    margin-top: 1em;
+  }
+}
 @media all and (max-width: 950px) {
   .bignumber {
     padding-right: 0.5em;
@@ -573,7 +603,7 @@ form .button {
   #report-bug.opened {
     top: 1.25em;
   }
-  #howitworks, #join {
+  #howitworks, #join, #browse-issues {
     padding: 2em 1em;
   }
   footer {
