@@ -316,6 +316,10 @@ form .btn-link, form .btn-link:hover {
 .key span {
   padding: 0.3em 1em;
 }
+.issue {
+  background-color: #fff;
+  padding: 0.5em 1em;
+}
 .issue-contactready {
   border-left: 5px solid #a1ebbf;
 }
@@ -324,6 +328,10 @@ form .btn-link, form .btn-link:hover {
 }
 .issue-closed {
   border-left: 5px solid #6fc7fa;
+}
+#my-issues h3 {
+  padding-left: 15px;
+  padding-right: 15px;
 }
 /*---Search on Github---*/
 input[type=search] {
