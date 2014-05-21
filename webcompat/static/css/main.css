@@ -534,13 +534,8 @@ form .button {
 }
 /*------Media Queries------*/
 @media all and (max-width: 990px) {
-  .key {
-    display: block;
-    margin-top: 1em;
-  }
   .key span {
-    padding-top: 0;
-    padding-bottom: 0;
+    padding: 0 0 0 0.5em;
   }
 }
 @media all and (max-width: 950px) {
@@ -551,6 +546,10 @@ form .button {
 @media all and (max-width: 770px) {
   #maintitle h1 {
     font-size: 3em;
+  }
+  .key {
+    display: block;
+    margin-top: 1em;
   }
   .bignumber {
     padding-bottom: 0;
