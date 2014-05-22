@@ -317,6 +317,7 @@ form .btn-link, form .btn-link:hover {
 .issue {
   background-color: #fff;
   padding: 0.5em 1em;
+  margin-bottom: 1em;
 }
 .issue-contactready {
   border-left: 5px solid #a1ebbf;
