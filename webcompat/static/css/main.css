@@ -174,17 +174,15 @@ footer .follow {
 
 /*--------Flash Messages---------*/
 .flash {
-  border: 0.15em solid #D47039;
   position: absolute;
-  left: 50%;
-  top: 2em;
+  top: 0;
+  left:0;
+  right: 0;
+  opacity: 0.8;
   background-color: white;
-  padding: 1em;
-  border-radius: 5px;
-  color: #000;
-  margin-left: -25%;
-  width: 50%;
+  padding: 0.5em 1em;
   text-align: center;
+  color: #000;
 }
 
 /*--------Homepage Styles--------*/
