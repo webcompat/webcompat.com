@@ -78,7 +78,6 @@ def authorized(access_token):
     if user is None:
         user = User(access_token)
         db_session.add(user)
-    user.github_access_token = access_token
     db_session.commit()
     session['user_id'] = user.id
     if session.get('form_data', None) is not None:
@@ -114,7 +113,18 @@ def index():
     # GET means you want to file a report.
     if request.method == 'GET':
         if g.user:
-            session["avatar_url"] = github.get('user').get('avatar_url', None)
+            try:
+                user = User.query.get(session['user_id'])
+                if user.username and user.avatar_url:
+                    session["username"] = user.username
+                    session["avatar_url"] = user.avatar_url
+                else:
+                    gh_user = github.get('user')
+                    user.username = session["username"] = gh_user.get('login')
+                    user.avatar_url = session["avatar_url"] = gh_user.get('avatar_url')
+                    db_session.commit()
+            except ConnectionError, e:
+                print e
         return render_template('index.html', form=form)
     # Form submission.
     elif request.method == 'POST' and form.validate():

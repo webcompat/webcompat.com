@@ -24,11 +24,13 @@ class User(Base):
     # Current Github username limit is 39 chars
     # Let's assume it might change in the future?
     username = Column(String(64), unique=True)
+    avatar_url = Column(String(128))
     github_access_token = Column(Integer)
-    gravatar_id = Column(String(64))
 
     def __init__(self, github_access_token):
         self.github_access_token = github_access_token
+        self.username = ''
+        self.avatar_url = ''
 
 
 Base.metadata.create_all(bind=engine)
