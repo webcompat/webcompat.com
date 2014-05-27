@@ -13,7 +13,9 @@ from flask.ext.github import GitHubError
 from form import (build_formdata, get_browser_name, get_browser_version,
                   IssueForm, AUTH_REPORT, PROXY_REPORT)
 from hashlib import md5
-from issues import report_issue, proxy_report_issue
+from issues import (report_issue, proxy_report_issue, get_user_issues,
+                    get_contact_ready, proxy_get_contact_ready,
+                    get_needs_diagnosis, proxy_get_needs_diagnosis)
 from models import db_session, User
 from webcompat import github, app
 
@@ -48,6 +50,12 @@ def token_getter():
     user = g.user
     if user is not None:
         return user.github_access_token
+
+@app.template_filter('format_date')
+def format_date(datestring):
+    '''For now, just chops off crap.'''
+    #2014-05-01T02:26:28Z
+    return datestring[0:10]
 
 
 @app.route('/login')
@@ -125,7 +133,17 @@ def index():
                     db_session.commit()
             except ConnectionError, e:
                 print e
-        return render_template('index.html', form=form)
+            user_issues = get_user_issues(session["username"])
+            contact_ready = get_contact_ready()
+            needs_diagnosis = get_needs_diagnosis()
+        else:
+            my_issues = []
+            contact_ready = proxy_get_contact_ready()
+            needs_diagnosis = proxy_get_needs_diagnosis()
+        return render_template('index.html', form=form,
+                                user_issues=user_issues,
+                                contact_ready=contact_ready,
+                                needs_diagnosis=needs_diagnosis)
     # Form submission.
     elif request.method == 'POST' and form.validate():
         if request.form.get('submit-type') == AUTH_REPORT:
