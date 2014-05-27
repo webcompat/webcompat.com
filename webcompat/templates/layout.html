@@ -30,9 +30,9 @@
 <script src="{{ url_for('static', filename='js/vendor/jquery-1.11.0.min.js') }}"></script>
 <script src="{{ url_for('static', filename='js/vendor/handlebars-v1.3.0.js') }}"></script>
 <script src="{{ url_for('static', filename='js/vendor/ember-debug-1.5.1.js') }}"></script>
-<script src="{{ url_for('static', filename='js/vendor/ember-model-0.0.11.js') }}"></script>
 <script src="{{ url_for('static', filename='js/lib/homepage.js') }}"></script>
 <script src="{{ url_for('static', filename='js/lib/bugform.js') }}"></script>
+<script src="{{ url_for('static', filename='js/lib/app.js') }}"></script>
 {%- endif %}
 {% for category, message in get_flashed_messages(with_categories=True) %}
 <div class="flash {{ category }}">{{ message }}</div>

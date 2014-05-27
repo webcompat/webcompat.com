@@ -7,6 +7,8 @@
     {% else %}
     <a href="{{ url_for('logout') }}">Logout</a>
     <img class="avatar" src=" {{ session.avatar_url }}s=40">
+    <!-- temporary hack -->
+    <script>window.__username = "{{ session.username }}"</script>
     {% endif %}
     </div>
   </div>

@@ -2,9 +2,67 @@
   <div class="container" id="browse-issues">
     <h2>Browse Issues</h2>
     <span class="key">
-    <span class="issue-needs-diagnosis">Needs&nbsp;Diagnosis</span>
-    <span class="issue-contactready">Ready&nbsp;for&nbsp;Outreach</span>
-    <span class="issue-closed">Closed</span>
+      <span class="issue-needs-diagnosis">Needs&nbsp;Diagnosis</span>
+      <span class="issue-contactready">Ready&nbsp;for&nbsp;Outreach</span>
+      <span class="issue-closed">Closed</span>
     </span>
+    {% raw %}
+    <script type="text/x-handlebars" data-template-name="index">
+    <div id="my-issues" class="row">
+    {{ render "myIssues" myIssues }}
+    </div>
+    <div class="row">
+      {{ render "needsDiagnosis" needsDiagnosis }}
+      {{ render "contactReady" contactReady }}
+      <div class="row">
+        <p class="more-issues"><a href="">See More</a></p>
+      </div>
+    </div>
+    </script>
+    {% endraw %}
+    <!-- if logged in, if nothing, oh no! go report some boogs -->
+    {% if session.user_id %}{% raw %}
+    <script type="text/x-handlebars" data-template-name="myIssues">
+      <h3 class="h5">Submitted by Me</h3>
+      {{#each issue in controller }}
+      <div class="col-md-6">
+        <div class="issue issue-contactready">
+          <p class="issue-title">
+            <a href=""><span class="issue-number">Issue {{issue.number}}</span>: {{issue.title}}</a>
+          </p>
+          <p class="issue-metadata">Opened: <time>{{issue.created_at}}</time>, comments: {{issue.comments}}</p>
+        </div>
+      </div>
+      {{/each}}
+    </script>
+    {% endraw %}{% endif %}
+    {% raw %}
+    <script type="text/x-handlebars" data-template-name="needsDiagnosis">
+    <div class="col-md-6">
+      <h3 class="h5">Needs Diagnosis</h3>
+      {{#each issue in model}}
+        <div class="issue issue-needs-diagnosis">
+          <p class="issue-title">
+            <a href=""><span class="issue-number">Issue {{issue.number}}</span>: {{issue.title}}</a>
+          </p>
+          <p class="issue-metadata">Opened: <time{{issue.created_at}}</time>, comments: {{issue.comments}}</p>
+        </div>
+      {{/each}}
+    </div>
+    </script>
+    <script type="text/x-handlebars" data-template-name="contactReady">
+    <div class="col-md-6">
+      <h3 class="h5">Ready for Outreach</h3>
+      {{#each issue in model}}
+        <div class="issue issue-contactready">
+          <p class="issue-title">
+            <a href=""><span class="issue-number">Issue {{issue.number}}</span>: {{issue.title}}</a>
+          </p>
+          <p class="issue-metadata">Opened: <time>{{issue.created_at}}</time>, comments: {{issue.comments}}</p>
+        </div>
+      {{/each}}
+    </div>
+    </script>
+    {% endraw %}
   </div>
 </div>

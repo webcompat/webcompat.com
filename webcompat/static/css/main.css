@@ -328,6 +328,23 @@ form .btn-link, form .btn-link:hover {
 .issue-closed {
   border-left: 5px solid #6fc7fa;
 }
+.issue-number {
+  font-weight: 400;
+}
+.issue-title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom:0.5em;
+}
+.issue-metadata {
+  font-size: 12px;
+}
+.more-issues {
+  margin-bottom: -23em;
+  text-align: center;
+  clear: left;
+}
 #my-issues h3 {
   padding-left: 15px;
   padding-right: 15px;
@@ -457,7 +474,7 @@ form .button {
 .row {
   padding: .5em;
 }
-.row:last-child p {
+.row:last-child p:not(.issue-metadata) {
   margin-bottom: 0.5em;
   color: #000;
 }
