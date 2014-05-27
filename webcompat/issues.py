@@ -77,7 +77,16 @@ def proxy_get_contact_ready():
 def filter_needs_diagnosis(issues):
     '''For our purposes, "needs diagnosis" means anything that isn't an issue
     with a "contactready" label.'''
-    return [issue for issue in issues if not 'contactready' in issue["labels"]]
+    def not_contactready(issue):
+        print(type(issue))
+        if issue.get('labels') == []:
+            return True
+        else:
+            for label in issue.get('labels'):
+                if not 'contactready' in label.get('name'):
+                    return True
+
+    return [issue for issue in issues if not_contactready(issue)]
 
 
 def get_needs_diagnosis():
