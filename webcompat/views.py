@@ -159,7 +159,7 @@ def index():
             # the proxy_report_issue crafts a manual request with Requests
             response = proxy_report_issue(request.form)
             return redirect(url_for('thanks',
-                            number=response.json().get('number')))
+                            number=response.get('number')))
     else:
         # Validation failed, re-render the form with the errors.
         return render_template('index.html', form=form)
