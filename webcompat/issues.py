@@ -26,9 +26,9 @@ def proxy_request(method, uri, data=None):
     uri = 'https://api.github.com/repos/{0}'.format(URI)
     req = getattr(requests, method)
     if data:
-        return req(uri, data=data, headers=headers)
+        return req(uri, data=data, headers=headers).json()
     else:
-        return req(uri, headers=headers)
+        return req(uri, headers=headers).json()
 
 
 def report_issue(form):

@@ -137,7 +137,7 @@ def index():
             contact_ready = get_contact_ready()
             needs_diagnosis = get_needs_diagnosis()
         else:
-            my_issues = []
+            user_issues = []
             contact_ready = proxy_get_contact_ready()
             needs_diagnosis = proxy_get_needs_diagnosis()
         return render_template('index.html', form=form,
