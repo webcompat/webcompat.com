@@ -23,7 +23,6 @@ def proxy_request(method, path_mod='', data=None):
     Optionally pass in POST data via the `data` arg.'''
     headers = {'Authorization': 'token {0}'.format(TOKEN)}
     req_uri = 'https://api.github.com/repos/{0}{1}'.format(REPO_URI, path_mod)
-    print(req_uri)
     req = getattr(requests, method)
     if data:
         return req(req_uri, data=data, headers=headers).json()
@@ -58,7 +57,6 @@ def add_status_class(issues):
 def get_user_issues(username):
     '''Return 8 issues in the repo reported by `username` (the creator
     in the JSON response.'''
-    print('PROXY GET USER ISSUES')
     user_issues_uri = 'repos/{0}?creator={1}&state=all'.format(REPO_URI,
                                                                username)
     issues = github.get(user_issues_uri)
@@ -67,7 +65,6 @@ def get_user_issues(username):
 
 def get_contact_ready():
     '''Return all issues with a "contactready" label.'''
-    print('GET CONCTACT READY')
     uri = 'repos/{0}?labels=contactready'.format(REPO_URI)
     issues = github.get(uri)
     return issues[0:4]
@@ -75,7 +72,6 @@ def get_contact_ready():
 
 def proxy_get_contact_ready():
     '''Return a proxied request for all issues with a "contactready" label.'''
-    print('PROXY GET CONCTACT READY')
     issues = proxy_request('get', '?labels=contactready')
     return issues[0:4]
 
@@ -96,13 +92,11 @@ def filter_needs_diagnosis(issues):
 
 def get_needs_diagnosis():
     '''Return the first 4 issues that need diagnosis.'''
-    print('GET NEEDS DIAGNOSIS')
     issues = github.get('repos/{0}'.format(REPO_URI))
     return filter_needs_diagnosis(issues)[0:4]
 
 
 def proxy_get_needs_diagnosis():
     '''Return the first 4 issues that need diagnosis.'''
-    print('PROXY GET NEEDS DIAGNOSIS')
     issues = proxy_request('get')
     return filter_needs_diagnosis(issues)[0:4]
