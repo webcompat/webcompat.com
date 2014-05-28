@@ -13,7 +13,9 @@ from flask.ext.github import GitHubError
 from form import (build_formdata, get_browser_name, get_browser_version,
                   IssueForm, AUTH_REPORT, PROXY_REPORT)
 from hashlib import md5
-from issues import report_issue, proxy_report_issue
+from issues import (report_issue, proxy_report_issue, get_user_issues,
+                    get_contact_ready, proxy_get_contact_ready,
+                    get_needs_diagnosis, proxy_get_needs_diagnosis)
 from models import db_session, User
 from webcompat import github, app
 
@@ -49,13 +51,27 @@ def token_getter():
     if user is not None:
         return user.github_access_token
 
+@app.template_filter('format_date')
+def format_date(datestring):
+    '''For now, just chops off crap.'''
+    #2014-05-01T02:26:28Z
+    return datestring[0:10]
+
 
 @app.route('/login')
 def login():
     if session.get('user_id', None) is None:
         return github.authorize('public_repo')
     else:
-        return u'Already logged in'
+        return redirect(url_for('index'))
+
+
+@app.route('/logout')
+def logout():
+    session.pop('user_id', None)
+    session.pop('form_data', None)
+    flash(u'You were successfully logged out.', 'info')
+    return redirect(url_for('index'))
 
 
 # OAuth2 callback handler that GitHub requires.
@@ -70,19 +86,12 @@ def authorized(access_token):
     if user is None:
         user = User(access_token)
         db_session.add(user)
-    user.github_access_token = access_token
     db_session.commit()
-
     session['user_id'] = user.id
-    return redirect(url_for('file_issue'))
-
-
-@app.route('/logout')
-def logout():
-    session.pop('user_id', None)
-    session.pop('form_data', None)
-    flash(u'You were successfully logged out.', 'info')
-    return redirect(url_for('index'))
+    if session.get('form_data', None) is not None:
+        return redirect(url_for('file_issue'))
+    else:
+        return redirect(url_for('index'))
 
 
 # This route won't ever be viewed by a human being--there's not
@@ -99,11 +108,11 @@ def file_issue():
 
 @app.route('/issues')
 def show_issues():
-    return redirect(url_for('new_issue'), code=307)
+    return redirect(url_for('index'), code=307)
 
 
 @app.route('/', methods=['GET', 'POST'])
-def new_issue():
+def index():
     '''Main view where people come to report issues.'''
     form = IssueForm(request.form)
     # add browser and version to form object data
@@ -111,7 +120,30 @@ def new_issue():
     form.version.data = get_browser_version(request.headers.get('User-Agent'))
     # GET means you want to file a report.
     if request.method == 'GET':
-        return render_template('index.html', form=form)
+        if g.user:
+            try:
+                user = User.query.get(session['user_id'])
+                if user.username and user.avatar_url:
+                    session["username"] = user.username
+                    session["avatar_url"] = user.avatar_url
+                else:
+                    gh_user = github.get('user')
+                    user.username = session["username"] = gh_user.get('login')
+                    user.avatar_url = session["avatar_url"] = gh_user.get('avatar_url')
+                    db_session.commit()
+            except ConnectionError, e:
+                print e
+            user_issues = get_user_issues(session["username"])
+            contact_ready = get_contact_ready()
+            needs_diagnosis = get_needs_diagnosis()
+        else:
+            user_issues = []
+            contact_ready = proxy_get_contact_ready()
+            needs_diagnosis = proxy_get_needs_diagnosis()
+        return render_template('index.html', form=form,
+                                user_issues=user_issues,
+                                contact_ready=contact_ready,
+                                needs_diagnosis=needs_diagnosis)
     # Form submission.
     elif request.method == 'POST' and form.validate():
         if request.form.get('submit-type') == AUTH_REPORT:
@@ -126,8 +158,7 @@ def new_issue():
             # `response` here is a Requests Response object, because
             # the proxy_report_issue crafts a manual request with Requests
             response = proxy_report_issue(request.form)
-            return redirect(url_for('thanks',
-                            number=response.json().get('number')))
+            return redirect(url_for('thanks', number=response.get('number')))
     else:
         # Validation failed, re-render the form with the errors.
         return render_template('index.html', form=form)

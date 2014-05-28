@@ -174,28 +174,50 @@ footer .follow {
 
 /*--------Flash Messages---------*/
 .flash {
-  border: 0.15em solid #D47039;
   position: absolute;
-  left: 50%;
-  top: 2em;
+  top: 0;
+  left:0;
+  right: 0;
+  opacity: 0.8;
   background-color: white;
-  padding: 1em;
-  border-radius: 5px;
-  color: #000;
-  margin-left: -25%;
-  width: 50%;
+  padding: 0.5em 1em;
   text-align: center;
+  color: #000;
 }
 
 /*--------Homepage Styles--------*/
 #feedback {
-  background: #fff;
-  color: #000;
-  text-align: center;
-  margin: 0 0.1em;
-  padding: 0.2em;
+  background: #FBC55F;
+  padding: 0.5em 0;
+}
+#feedback a {
+  color: #fff;
+  padding: 0 5em;
+  text-decoration: none !important;
+}
+#feedback a:hover {
+  text-decoration: underline !important;
+}
+#feedback .container {
+  background-image: none !important;
+}
+#feedback .pull-right {
+  display: inline-block;
   position: relative;
-  top: 0.1em;
+  right: 5em;
+}
+#feedback .pull-right a {
+  padding-left: 0;
+  padding-right: 2em;
+}
+.avatar {
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  right: 0;
+  border-radius: 3px;
 }
 #hero {
   background-color: #f8c41c;
@@ -277,6 +299,56 @@ form .btn-link, form .btn-link:hover {
 .form-closed {
   display: none;
 }
+/*-------Browse Issues------*/
+#browse-issues-wrapper {
+  background-color: #f0f0f0;
+}
+#browse-issues h2 {
+  display: inline;
+  margin-right: 0.5em;
+}
+.key {
+  position: relative;
+  bottom:0.1em;
+}
+.key span {
+  padding: 0.3em 1em;
+}
+.issue {
+  background-color: #fff;
+  padding: 0.5em 1em;
+  margin-bottom: 1em;
+}
+.issue-contactready {
+  border-left: 5px solid #a1ebbf;
+}
+.issue-needs-diagnosis {
+  border-left: 5px solid #ff8364;
+}
+.issue-closed {
+  border-left: 5px solid #6fc7fa;
+}
+.issue-number {
+  font-weight: 400;
+}
+.issue-title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom:0.5em;
+}
+.issue-metadata {
+  font-size: 12px;
+}
+.more-issues {
+  margin-bottom: -23em;
+  text-align: center;
+  clear: left;
+}
+#my-issues h3 {
+  padding-left: 15px;
+  padding-right: 15px;
+}
 /*---Search on Github---*/
 input[type=search] {
   float: left;
@@ -286,7 +358,7 @@ input[type=search] {
   cursor: pointer;
   color: #fdf3dd;
 }
-#howitworks, #join {
+#howitworks, #join, #browse-issues {
   padding: 3em 5em;
 }
 #threesteps {
@@ -402,7 +474,7 @@ form .button {
 .row {
   padding: .5em;
 }
-.row:last-child p {
+.row:last-child p:not(.issue-metadata) {
   margin-bottom: 0.5em;
   color: #000;
 }
@@ -485,6 +557,11 @@ form .button {
   padding: 0;
 }
 /*------Media Queries------*/
+@media all and (max-width: 990px) {
+  .key span {
+    padding: 0 0 0 0.5em;
+  }
+}
 @media all and (max-width: 950px) {
   .bignumber {
     padding-right: 0.5em;
@@ -493,6 +570,10 @@ form .button {
 @media all and (max-width: 770px) {
   #maintitle h1 {
     font-size: 3em;
+  }
+  .key {
+    display: block;
+    margin-top: 1em;
   }
   .bignumber {
     padding-bottom: 0;
@@ -539,10 +620,17 @@ form .button {
   #maintitle {
     padding: 3em 1em 3em;
   }
+  #feedback .pull-right {
+    right: 1em;
+  }
+  #feedback a {
+    padding-right: 1em;
+    padding-left: 1em;
+  }
   #report-bug.opened {
     top: 1.25em;
   }
-  #howitworks, #join {
+  #howitworks, #join, #browse-issues {
     padding: 2em 1em;
   }
   footer {
@@ -558,5 +646,20 @@ form .button {
     clear: left;
     float: left;
     margin-left: -10px;
+  }
+}
+
+@media all and (max-width: 330px) {
+  #feedback a {
+    font-size: 13px;
+  }
+  #feedback .pull-right {
+    right: 0;
+  }
+  #feedback .avatar {
+    display: none;
+  }
+  #feedback .pull-right a {
+    padding-right: 0 !important;
   }
 }

@@ -64,13 +64,16 @@ module.exports = function(grunt) {
         browser: true,
         globals: {
           jQuery: true,
-          $: true
+          $: true,
+          Ember: true,
+          App: true
         }
       },
       beforeconcat: [
         'Gruntfile.js',
         '<%= jsPath %>/lib/homepage.js',
-        '<%= jsPath %>/lib/bugform.js'
+        '<%= jsPath %>/lib/bugform.js',
+        '<%= jsPath %>/lib/app.js'
       ]
     },
     watch: {

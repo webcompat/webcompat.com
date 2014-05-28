@@ -29,7 +29,7 @@ function HomePage() {
       }
       reportButton.toggleClass('closed')
                   .toggleClass('opened');
-      formContainer.slideToggle(function(){
+      formContainer.slideToggle(function() {
         formContainer.toggleClass('form-closed')
                      .toggleClass('form-opened');
       });
