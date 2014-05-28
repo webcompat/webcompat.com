@@ -57,7 +57,7 @@ def add_status_class(issues):
 
 
 def get_user_issues(username):
-    '''Return all issues in the repo reported by {{username}} (the creator
+    '''Return 8 issues in the repo reported by {{username}} (the creator
     in the JSON response.'''
     user_issues_uri = 'repos/{0}?creator={1}&state=all'.format(URI, username)
     issues = github.get(user_issues_uri)
@@ -78,7 +78,6 @@ def filter_needs_diagnosis(issues):
     '''For our purposes, "needs diagnosis" means anything that isn't an issue
     with a "contactready" label.'''
     def not_contactready(issue):
-        print(type(issue))
         if issue.get('labels') == []:
             return True
         else:
