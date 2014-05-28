@@ -19,7 +19,7 @@ module.exports = function(grunt) {
         src: [
             '<%= jsPath %>/vendor/jquery-1.11.0.min.js',
             '<%= jsPath %>/lib/homepage.js',
-            '<%= jsPath %>/lib/bugform.js',
+            '<%= jsPath %>/lib/bugform.js'
         ],
         dest: '<%= jsPath %>/<%= pkg.name %>.js'
       }
@@ -65,14 +65,15 @@ module.exports = function(grunt) {
         globals: {
           jQuery: true,
           $: true,
-          Ember: true
+          Ember: true,
+          App: true
         }
       },
       beforeconcat: [
         'Gruntfile.js',
         '<%= jsPath %>/lib/homepage.js',
         '<%= jsPath %>/lib/bugform.js',
-        '<%= jsPath %>/lib/app.js',
+        '<%= jsPath %>/lib/app.js'
       ]
     },
     watch: {

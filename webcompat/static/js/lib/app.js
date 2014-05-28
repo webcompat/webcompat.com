@@ -17,13 +17,13 @@ App.IndexRoute = Ember.Route.extend({
       //Only show 4 results for the non-mine issues
       needsDiagnosis: Ember.$.getJSON('https://api.github.com/repos/webcompat/web-bugs/issues').then(function(data) {
         return data.filter(function(issue){
-          if (issue.labels.indexOf("contactready") == -1) {
+          if (issue.labels.indexOf("contactready") === -1) {
             return true;
           }
         }).slice(0,4);
       }),
       contactReady: Ember.$.getJSON('https://api.github.com/repos/webcompat/web-bugs/issues?labels=contactready').then(function(data) {
-         return data.slice(0,4)
+         return data.slice(0,4);
       })
     });
   }
