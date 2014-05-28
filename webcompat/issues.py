@@ -13,33 +13,32 @@ from flask import session
 from form import build_formdata
 from webcompat import github, app
 
-URI = app.config['ISSUES_REPO_URI']
-CONTACT_READY_URI = 'repos/{0}?labels=contactready'.format(URI)
-NEEDS_DIAGNOSIS_URI = 'repos/{0}'.format(URI)
+REPO_URI = app.config['ISSUES_REPO_URI']
 TOKEN = app.config['BOT_OAUTH_TOKEN']
 
 
-def proxy_request(method, uri, data=None):
+def proxy_request(method, path_mod='', data=None):
     '''Make a GitHub API request with a bot's OAuth token, for non-logged in
-    users. Optionally pass in POST data via the `data` arg.'''
+    users. `path`, if included, will be appended to the end of the URI.
+    Optionally pass in POST data via the `data` arg.'''
     headers = {'Authorization': 'token {0}'.format(TOKEN)}
-    uri = 'https://api.github.com/repos/{0}'.format(URI)
+    req_uri = 'https://api.github.com/repos/{0}{1}'.format(REPO_URI, path_mod)
+    print(req_uri)
     req = getattr(requests, method)
     if data:
-        return req(uri, data=data, headers=headers).json()
+        return req(req_uri, data=data, headers=headers).json()
     else:
-        return req(uri, headers=headers).json()
+        return req(req_uri, headers=headers).json()
 
 
 def report_issue(form):
     '''Report an issue, as a logged in user.'''
-    return github.post('repos/{0}'.format(URI), build_formdata(form))
+    return github.post('repos/{0}'.format(REPO_URI), build_formdata(form))
 
 
 def proxy_report_issue(form):
     '''Report an issue, on behalf of a user.'''
-    uri = 'https://api.github.com/repos/{0}'.format(URI)
-    return proxy_request('post', uri, data=json.dumps(build_formdata(form)))
+    return proxy_request('post', data=json.dumps(build_formdata(form)))
 
 
 def add_status_class(issues):
@@ -57,21 +56,28 @@ def add_status_class(issues):
 
 
 def get_user_issues(username):
-    '''Return 8 issues in the repo reported by {{username}} (the creator
+    '''Return 8 issues in the repo reported by `username` (the creator
     in the JSON response.'''
-    user_issues_uri = 'repos/{0}?creator={1}&state=all'.format(URI, username)
+    print('PROXY GET USER ISSUES')
+    user_issues_uri = 'repos/{0}?creator={1}&state=all'.format(REPO_URI,
+                                                               username)
     issues = github.get(user_issues_uri)
     return add_status_class(issues)[0:8]
 
 
 def get_contact_ready():
     '''Return all issues with a "contactready" label.'''
-    return github.get(CONTACT_READY_URI)
+    print('GET CONCTACT READY')
+    uri = 'repos/{0}?labels=contactready'.format(REPO_URI)
+    issues = github.get(uri)
+    return issues[0:4]
 
 
 def proxy_get_contact_ready():
     '''Return a proxied request for all issues with a "contactready" label.'''
-    return proxy_request('get', CONTACT_READY_URI)
+    print('PROXY GET CONCTACT READY')
+    issues = proxy_request('get', '?labels=contactready')
+    return issues[0:4]
 
 
 def filter_needs_diagnosis(issues):
@@ -90,11 +96,13 @@ def filter_needs_diagnosis(issues):
 
 def get_needs_diagnosis():
     '''Return the first 4 issues that need diagnosis.'''
-    issues = github.get(NEEDS_DIAGNOSIS_URI)
+    print('GET NEEDS DIAGNOSIS')
+    issues = github.get('repos/{0}'.format(REPO_URI))
     return filter_needs_diagnosis(issues)[0:4]
 
 
 def proxy_get_needs_diagnosis():
     '''Return the first 4 issues that need diagnosis.'''
-    issues = proxy_request('get', NEEDS_DIAGNOSIS_URI)
+    print('PROXY GET NEEDS DIAGNOSIS')
+    issues = proxy_request('get')
     return filter_needs_diagnosis(issues)[0:4]
