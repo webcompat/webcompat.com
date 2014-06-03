@@ -523,15 +523,28 @@ form .button {
   color: #ff0000;
   float: right;
 }
-.has-error input {
-  background: url(../img/invalid.svg) no-repeat right 50%;
-  background-size: 15px;
-  background-origin: content-box;
+.validation-wrapper {
+  display: block;
 }
-.no-error input {
-  background: url(../img/valid.svg) no-repeat right 50%;
-  background-size: 20px;
-  background-origin: content-box;
+.validation-wrapper::after {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 20px;
+  position: absolute;
+  right: 25px;
+  top: 31px;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+.validation-wrapper input {
+  padding-right: 40px;
+}
+.no-error .validation-wrapper::after {
+  background-image: url(../img/valid.svg);
+}
+.has-error .validation-wrapper::after {
+  background-image: url(../img/invalid.svg);
 }
 .no-error .help-inline {
   display: none;
