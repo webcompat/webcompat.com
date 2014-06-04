@@ -27,10 +27,10 @@ class User(Base):
     avatar_url = Column(String(128))
     github_access_token = Column(Integer)
 
-    def __init__(self, github_access_token):
+    def __init__(self, github_access_token, username='', avatar_url=''):
         self.github_access_token = github_access_token
-        self.username = ''
-        self.avatar_url = ''
+        self.username = username
+        self.avatar_url = avatar_url
 
 
 Base.metadata.create_all(bind=engine)
