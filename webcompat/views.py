@@ -123,17 +123,19 @@ def index():
         if g.user:
             try:
                 user = User.query.get(session['user_id'])
-                if user.username and user.avatar_url:
-                    session["username"] = user.username
-                    session["avatar_url"] = user.avatar_url
+                if user.avatar_url != '' and user.username != '':
+                    session['username'] = user.username
+                    session['avatar_url'] = user.avatar_url
                 else:
                     gh_user = github.get('user')
-                    user.username = session["username"] = gh_user.get('login')
-                    user.avatar_url = session["avatar_url"] = gh_user.get('avatar_url')
+                    user.username = gh_user.get('login')
+                    user.avatar_url = gh_user.get('avatar_url')
                     db_session.commit()
+                    session['username'] = user.username
+                    session['avatar_url'] = user.avatar_url
             except ConnectionError, e:
                 print e
-            user_issues = get_user_issues(session["username"])
+            user_issues = get_user_issues(session['username'])
             contact_ready = get_contact_ready()
             needs_diagnosis = get_needs_diagnosis()
         else:
