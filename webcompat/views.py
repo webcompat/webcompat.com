@@ -68,8 +68,7 @@ def login():
 
 @app.route('/logout')
 def logout():
-    session.pop('user_id', None)
-    session.pop('form_data', None)
+    session.clear()
     flash(u'You were successfully logged out.', 'info')
     return redirect(url_for('index'))
 
