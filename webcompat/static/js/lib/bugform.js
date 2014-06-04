@@ -58,12 +58,12 @@ function BugForm() {
     },
     makeInvalid: function(id) {
       // Early return if inline help is already in place.
-      if (inputMap[id].elm.prev('.help-inline').length) {
+      if (inputMap[id].elm.parent().prev('.help-inline').length) {
         return;
       }
 
       inputMap[id].valid = false;
-      inputMap[id].elm.parent()
+      inputMap[id].elm.parents('.form-group')
                       .removeClass('no-error')
                       .addClass('has-error');
 
@@ -74,7 +74,7 @@ function BugForm() {
     },
     makeValid: function(id) {
       inputMap[id].valid = true;
-      inputMap[id].elm.parent()
+      inputMap[id].elm.parents('.form-group')
                       .removeClass('has-error')
                       .addClass('no-error');
       inputMap[id].elm.prev('.help-inline').remove();
