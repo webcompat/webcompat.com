@@ -17,7 +17,7 @@ import os
 app = Flask(__name__, static_url_path='')
 app.config.from_object('config')
 engine = create_engine('sqlite:///' + os.path.join(app.config['BASE_DIR'],
-                                                   'users.db'))
+                                                   'gh-users.db'))
 
 github = GitHub(app)
 
