@@ -51,6 +51,7 @@ def token_getter():
     if user is not None:
         return user.github_access_token
 
+
 @app.template_filter('format_date')
 def format_date(datestring):
     '''For now, just chops off crap.'''
@@ -140,9 +141,9 @@ def index():
             contact_ready = proxy_get_contact_ready()
             needs_diagnosis = proxy_get_needs_diagnosis()
         return render_template('index.html', form=form,
-                                user_issues=user_issues,
-                                contact_ready=contact_ready,
-                                needs_diagnosis=needs_diagnosis)
+                               user_issues=user_issues,
+                               contact_ready=contact_ready,
+                               needs_diagnosis=needs_diagnosis)
     # Form submission.
     elif request.method == 'POST' and form.validate():
         if request.form.get('submit-type') == AUTH_REPORT:
