@@ -188,7 +188,8 @@ def thanks(number):
         abort(404)
     return render_template('thanks.html', number=issue,
                            encoded_issue=encoded_issue,
-                           encoded_text=encoded_text)
+                           encoded_text=encoded_text,
+                           repo_uri=app.config['ISSUES_REPO_URI'])
 
 
 @app.route('/about')
