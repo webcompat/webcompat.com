@@ -43,9 +43,11 @@ function BugForm() {
     },
     disableSubmits: function() {
       submitButtons.prop('disabled', true);
+      submitButtons.css('opacity', 0.5);
     },
     enableSubmits: function() {
       submitButtons.prop('disabled', false);
+      submitButtons.css('opacity', 1);
     },
     /* Check to see that the form element is not empty.
        We don't do any other kind of validation yet. */
@@ -71,6 +73,7 @@ function BugForm() {
         'class': 'help-inline bold',
         'text': inputMap[id].helpText
       }).insertAfter('label[for='+id+']');
+      self.disableSubmits();
     },
     makeValid: function(id) {
       inputMap[id].valid = true;
