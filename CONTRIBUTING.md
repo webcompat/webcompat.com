@@ -65,7 +65,7 @@ All code contributions should come in the form of a [pull request](https://help.
 
 * In GitHub, send a pull request to `webcompat.com:dev.webcompat.com`*.
 
-To do this, click on the Edit button at the top.
+To do this, click on the Edit button at the top of the Pull Request page.
 
 ![master](https://i.cloudup.com/tgBan6xVWt-2000x2000.png)
 
