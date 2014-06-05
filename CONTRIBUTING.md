@@ -102,7 +102,7 @@ The only requirement is having [pip installed](http://pip.readthedocs.org/en/lat
 [sudo] pip install virtualenv
 ```
 
-Now let's move on the steps to grab the source code locally and work in a protected environment of python.
+Now let's move on to the steps to grab the source code locally and work in a protected environment of python.
 
 ``` bash
 # clone the repo
@@ -130,7 +130,7 @@ You need to have [Node.js](http://nodejs.org/download/) installed to be able to 
 
 First install the `grunt-cli` tool:
 
-`npm install -g grunt-cli`
+`[sudo] npm install -g grunt-cli`
 
 Then, from the project root:
 
@@ -142,6 +142,6 @@ You can then use the `grunt` command to run grunt tasks. `grunt --help` will lis
 
 You can run tests from the project root with the `nosetests` command.
 
-### Acknowledgements
+## Acknowledgements
 A lot of this document was inspired directly by the excellent [Backbone.LayoutManager](https://github.com/tbranyen/backbone.layoutmanager/blob/master/CONTRIBUTING.md), [CouchDB](https://github.com/apache/couchdb/blob/master/src/fauxton/CONTRIBUTING.md), and [Angular.js](https://github.com/angular/angular.js/blob/master/CONTRIBUTING.md#issue) CONTRIBUTING files.
 
