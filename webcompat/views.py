@@ -114,10 +114,12 @@ def show_issues():
 @app.route('/', methods=['GET', 'POST'])
 def index():
     '''Main view where people come to report issues.'''
-    form = IssueForm(request.form)
-    # add browser and version to form object data
-    form.browser.data = get_browser_name(request.headers.get('User-Agent'))
-    form.version.data = get_browser_version(request.headers.get('User-Agent'))
+    bug_form = IssueForm(request.form)
+    # add browser and version to bug_form object data
+    bug_form.browser.data = get_browser_name(
+        request.headers.get('User-Agent'))
+    bug_form.version.data = get_browser_version(
+        request.headers.get('User-Agent'))
     # GET means you want to file a report.
     if request.method == 'GET':
         if g.user:
@@ -142,12 +144,12 @@ def index():
             user_issues = []
             contact_ready = proxy_get_contact_ready()
             needs_diagnosis = proxy_get_needs_diagnosis()
-        return render_template('index.html', form=form,
+        return render_template('index.html', form=bug_form,
                                user_issues=user_issues,
                                contact_ready=contact_ready,
                                needs_diagnosis=needs_diagnosis)
     # Form submission.
-    elif request.method == 'POST' and form.validate():
+    elif request.method == 'POST' and bug_form.validate():
         if request.form.get('submit-type') == AUTH_REPORT:
             if g.user:  # If you're already authed, submit the bug.
                 response = report_issue(request.form)
@@ -163,7 +165,7 @@ def index():
             return redirect(url_for('thanks', number=response.get('number')))
     else:
         # Validation failed, re-render the form with the errors.
-        return render_template('index.html', form=form)
+        return render_template('index.html', form=bug_form)
 
 
 @app.route('/issues/<number>')
