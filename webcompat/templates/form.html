@@ -8,14 +8,14 @@
         <span class="help-inline bold">{{ error }}</span>
         {% endfor %}{% endif %}
         {{ form.url(class_='form-control required',
-                    placeholder='e.g., http://www.example.com') }}
+                    placeholder='e.g., http://www.example.com', required='true') }}
       </div>
       <div class="form-group col-md-6 {% if form.summary.errors %}has-error{% endif %}">
         {{ form.summary.label }}{% if form.summary.errors %}{% for error in form.summary.errors %}
         <span class="help-inline bold">{{ error }}</span>
         {% endfor %}{% endif %}
         {{ form.summary(class_='form-control required',
-                        placeholder='e.g., Website images are upside down') }}
+                        placeholder='e.g., Website images are upside down', required='true') }}
       </div>
     </div>
     <div class="row">
