@@ -9,7 +9,7 @@
         {% endfor %}{% endif %}
         <span class="validation-wrapper">
           {{ form.url(class_='form-control required',
-                      placeholder='e.g., http://www.example.com') }}
+                      placeholder='e.g., http://www.example.com', required=True) }}
         </span>
       </div>
       <div class="form-group col-md-6 {% if form.summary.errors %}has-error{% endif %}">
@@ -18,7 +18,7 @@
         {% endfor %}{% endif %}
         <span class="validation-wrapper">
           {{ form.summary(class_='form-control required',
-                          placeholder='e.g., Website images are upside down') }}
+                          placeholder='e.g., Website images are upside down', required=True) }}
         </span>
       </div>
     </div>
