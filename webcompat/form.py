@@ -9,6 +9,7 @@ power the issue reporting form on webcompat.com.'''
 
 from random import randrange
 from ua_parser import user_agent_parser
+from urlparse import urlparse
 from wtforms import Form, RadioField, StringField, TextAreaField
 from wtforms.validators import Optional, Required, Length
 
@@ -139,6 +140,11 @@ def build_formdata(form_object):
     For now, we'll put them in the body so they're visible. But as soon as we
     have a bot set up to parse the label comments (see wrap_label), we'll stop
     doing that.'''
+    # We want to normalize the title of the issue with the domain name.
+    parsed_uri = urlparse(form_object.get('url'))
+    summary = '{0} - {1}'.format(parsed_uri.netloc,
+                                 form_object.get('summary'))
+    # Preparing the body
     body = u'''{0}
 **URL**: {1}
 **Browser**: {2}
@@ -155,6 +161,6 @@ def build_formdata(form_object):
               get_owner(form_object.get('site_owner')),
               form_object.get('description'))
     result = {}
-    result['title'] = form_object.get('summary')
+    result['title'] = summary
     result['body'] = body
     return result
