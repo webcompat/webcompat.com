@@ -80,12 +80,14 @@ def filter_needs_diagnosis(issues):
     '''For our purposes, "needs diagnosis" means anything that isn't an issue
     with a "contactready" label.'''
     def not_contactready(issue):
+        match = True
         if issue.get('labels') == []:
-            return True
+            match = True
         else:
             for label in issue.get('labels'):
-                if not 'contactready' in label.get('name'):
-                    return True
+                if 'contactready' in label.get('name'):
+                    match = False
+        return match
 
     return [issue for issue in issues if not_contactready(issue)]
 
