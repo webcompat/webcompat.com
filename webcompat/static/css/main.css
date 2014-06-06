@@ -600,6 +600,12 @@ form .button {
     padding-left: 20px;
     padding-right: 20px;
   }
+@media all and (max-width: 770px) {
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: 0;
+    padding-right: 0;
+}
   footer li {
     font-size: 0.75em;
   }
