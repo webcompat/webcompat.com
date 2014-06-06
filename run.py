@@ -5,4 +5,4 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 from webcompat import app
-app.run()
+app.run(host='0.0.0.0')
