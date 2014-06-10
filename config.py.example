@@ -40,7 +40,7 @@ else:
     # We're in development, use the test application
     GITHUB_CLIENT_ID = ""
     GITHUB_CLIENT_SECRET = ""
-    GITHUB_CALLBACK_URL = ""
+    GITHUB_CALLBACK_URL = "http://localhost:5000/callback"
 
 # GiHub Issues repo URI
 if PRODUCTION:
