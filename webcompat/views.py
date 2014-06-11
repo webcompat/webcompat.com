@@ -5,6 +5,7 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 import os
+import sys
 import time
 import urllib
 from flask import (flash, g, redirect, request, render_template, session,
@@ -125,7 +126,7 @@ def index():
         if g.user:
             try:
                 user = User.query.get(session['user_id'])
-                if user.avatar_url != '' and user.username != '':
+                if user.avatar_url and user.username:
                     session['username'] = user.username
                     session['avatar_url'] = user.avatar_url
                 else:
@@ -135,9 +136,10 @@ def index():
                     db_session.commit()
                     session['username'] = user.username
                     session['avatar_url'] = user.avatar_url
-            except ConnectionError, e:
-                print e
-            user_issues = get_user_issues(session['username'])
+                user_issues = get_user_issues(session['username'])
+            except GitHubError:
+                e = sys.exc_info()
+                print(e)
             contact_ready = get_contact_ready()
             needs_diagnosis = get_needs_diagnosis()
         else:
