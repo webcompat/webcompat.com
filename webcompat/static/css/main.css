@@ -608,10 +608,7 @@ form .button {
     padding-bottom: 0;
   }
   footer {
-    margin-left: 0;
-    margin-right: 0;
-    padding-left: 0;
-    padding-right: 0;
+    height: 0;
   }
   footer li {
     font-size: 0.75em;
@@ -697,10 +694,5 @@ form .button {
   .row {
     margin-left: -20px;
     max-width: 320px;
-  }
-  footer {
-    margin-left: 0;
-    padding-left: 0;
-    padding-right: 0;
   }
 }
