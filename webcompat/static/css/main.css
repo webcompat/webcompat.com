@@ -586,17 +586,20 @@ form .button {
   padding: 0;
 }
 /*------Media Queries------*/
-@media all and (max-width: 990px) {
+/* 990px */
+@media all and (max-width: 61.865em) {
   .key span {
     padding: 0 0 0 0.5em;
   }
 }
-@media all and (max-width: 950px) {
+/* 950px */
+@media all and (max-width: 59.365em) {
   .bignumber {
     padding-right: 0.5em;
   }
 }
-@media all and (max-width: 770px) {
+/* 770px */
+@media all and (max-width: 48.115em) {
   #maintitle h1 {
     font-size: 3em;
   }
@@ -608,7 +611,7 @@ form .button {
     padding-bottom: 0;
   }
   footer {
-    height: 0;
+    height: auto;
   }
   footer li {
     font-size: 0.75em;
@@ -619,7 +622,8 @@ form .button {
     background-position: right 80px top -50px;
   }
 }
-@media all and (max-width: 600px) {
+/* 600px */
+@media all and (max-width: 37.49em) {
   footer .footerleft li {
     display: block;
   }
@@ -645,7 +649,8 @@ form .button {
     float: none;
   }
 }
-@media all and (max-width: 450px) {
+/* 450x px */
+@media all and (max-width: 28.115em) {
   .maincontent.container, footer .container, nav, form.cf {
     padding-left: 1em;
     padding-right: 1em;
@@ -670,15 +675,16 @@ form .button {
     margin-top: 3em;
   }
 }
-@media all and (max-width: 375px) {
+/* 375px */
+@media all and (max-width: 23.4275em) {
   .footerright {
     clear: left;
     float: left;
     margin-left: -10px;
   }
 }
-
-@media all and (max-width: 330px) {
+/* 330px */
+@media all and (max-width: 20.615em) {
   #feedback a {
     font-size: 13px;
   }
