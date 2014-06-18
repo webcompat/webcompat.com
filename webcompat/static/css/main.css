@@ -686,7 +686,7 @@ form .button {
 /* 330px */
 @media all and (max-width: 20.615em) {
   #feedback a {
-    font-size: 13px;
+    font-size: .8em;
   }
   #feedback .pull-right {
     right: 0;
