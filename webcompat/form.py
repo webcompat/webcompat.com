@@ -108,6 +108,16 @@ def get_browser_version(user_agent_string):
             version = version + "." + ua.get('patch')
     return version
 
+def domain_name(url):
+    '''Extract the domain name of a sanitized version of the submitted URL'''
+    # Removing leading spaces
+    url = url.lstrip()
+    # testing if it's an http URL
+    if url.startswith('http://') or url.startswith('https://'):
+        domain = urlpase(url).netloc
+    else:
+        domain = None
+    return domain
 
 def build_formdata(form_object):
     '''Translate the form data that comes from our form into something that
@@ -141,9 +151,11 @@ def build_formdata(form_object):
     have a bot set up to parse the label comments (see wrap_label), we'll stop
     doing that.'''
     # We want to normalize the title of the issue with the domain name.
-    parsed_uri = urlparse(form_object.get('url'))
-    summary = '{0} - {1}'.format(parsed_uri.netloc,
-                                 form_object.get('summary'))
+    domain = domain_name(form_object.get('url'))
+    if domain:
+        summary = '{0} - {1}'.format(domain, form_object.get('summary'))
+    else:
+        summary = '{0}'.format(form_object.get('summary'))
     # Preparing the body
     body = u'''{0}
 **URL**: {1}
