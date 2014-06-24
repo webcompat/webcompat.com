@@ -33,7 +33,7 @@ module.exports = function(grunt) {
           // output
           '<%= cssPath %>/webcompat.min.css': [
             // input
-            '<%= cssPath %>/webcompat.min.css'
+            '<%= cssPath %>/webcompat.dev.css'
           ]
         }
       }
@@ -77,7 +77,11 @@ module.exports = function(grunt) {
       ]
     },
     watch: {
-      gruntfile: {
+      css:{
+        files: '<%= cssPath %>/main.css',
+        tasks: ['autoprefixer']
+      },
+      script:{
         files: '<%= jshint.beforeconcat %>',
         tasks: ['jshint:beforeconcat']
       }
@@ -88,7 +92,7 @@ module.exports = function(grunt) {
       },
       no_dest: {
         src: '<%= cssPath %>/main.css',
-        dest: '<%= cssPath %>/webcompat.min.css'
+        dest: '<%= cssPath %>/webcompat.dev.css'
       }
     }  
   });
