@@ -77,8 +77,6 @@ p {
 .button {
   text-align: center;
   padding: .5em 1.75em ;
-  -moz-border-radius: 7.5px;
-  -webkit-border-radius: 7.5px;
   border-radius: 7.5px;
   font-size: 1.5em;
   line-height: 2em;
@@ -93,8 +91,6 @@ p {
   color: #000;
   text-decoration: none !important;
   font-weight: 700;
-  -webkit-border-radius: 20px;
-  -moz-border-radius: 20px;
   border-radius: 20px;
 }
 .btn:hover {
@@ -242,16 +238,10 @@ footer .follow {
   font-size: 2em;
   color: #fff;
   text-decoration: none !important;
-  -webkit-transition: top 100ms ease-out 0ms;
-  -moz-transition: top 100ms ease-out 0ms;
-  -o-transition: top 100ms ease-out 0ms;
   transition: top 100ms ease-out 0ms;
 }
 #report-bug.opened {
   top: 2em;
-  -webkit-transition: top 100ms ease-out 0ms;
-  -moz-transition: top 100ms ease-out 0ms;
-  -o-transition: top 100ms ease-out 0ms;
   transition: top 100ms ease-out 0ms;
 }
 #report-bug:hover, #report-bug:focus {
@@ -271,8 +261,6 @@ footer .follow {
   vertical-align: middle;
 }
 .opened #arrow {
-  -webkit-transform:rotate(90deg);
-  -ms-transform:rotate(90deg);
   transform:rotate(90deg);
 }
 form button.btn {
@@ -284,8 +272,6 @@ form button.btn {
   color: #000;
   text-decoration: none !important;
   font-weight: 700;
-  -webkit-border-radius: 20px;
-  -moz-border-radius: 20px;
   border-radius: 20px;
 }
 form .btn-link, form .btn-link:hover {
@@ -449,8 +435,6 @@ form.cf {
   margin-bottom: 1em;
 }
 .form-control {
-  -webkit-border-radius: 20px;
-  -moz-border-radius: 20px;
   border-radius: 20px;
   padding: 0.5em;
 }
@@ -527,7 +511,6 @@ form .button {
 }
 .has-error .form-control:focus{
   border-color: #ff0000;
-  -webkit-box-shadow:none;
   box-shadow:none;
 }
 .has-error .help-inline {
@@ -567,7 +550,6 @@ form .button {
 }
 .no-error .form-control:focus{
   border-color: #f8c41c;
-  -webkit-box-shadow:none;
   box-shadow:none;
 }
 .disabled {
