@@ -9,6 +9,7 @@ power the issue reporting form on webcompat.com.'''
 
 from random import randrange
 from ua_parser import user_agent_parser
+from urlparse import urlparse
 from wtforms import Form, RadioField, StringField, TextAreaField
 from wtforms.validators import Optional, Required, Length
 
@@ -107,6 +108,16 @@ def get_browser_version(user_agent_string):
             version = version + "." + ua.get('patch')
     return version
 
+def domain_name(url):
+    '''Extract the domain name of a sanitized version of the submitted URL'''
+    # Removing leading spaces
+    url = url.lstrip()
+    # testing if it's an http URL
+    if url.startswith('http://') or url.startswith('https://'):
+        domain = urlpase(url).netloc
+    else:
+        domain = None
+    return domain
 
 def build_formdata(form_object):
     '''Translate the form data that comes from our form into something that
@@ -139,6 +150,13 @@ def build_formdata(form_object):
     For now, we'll put them in the body so they're visible. But as soon as we
     have a bot set up to parse the label comments (see wrap_label), we'll stop
     doing that.'''
+    # We want to normalize the title of the issue with the domain name.
+    domain = domain_name(form_object.get('url'))
+    if domain:
+        summary = '{0} - {1}'.format(domain, form_object.get('summary'))
+    else:
+        summary = '{0}'.format(form_object.get('summary'))
+    # Preparing the body
     body = u'''{0}
 **URL**: {1}
 **Browser**: {2}
@@ -155,6 +173,6 @@ def build_formdata(form_object):
               get_owner(form_object.get('site_owner')),
               form_object.get('description'))
     result = {}
-    result['title'] = form_object.get('summary')
+    result['title'] = summary
     result['body'] = body
     return result
