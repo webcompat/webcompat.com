@@ -11,3 +11,4 @@ fabfile.py
 webcompat/**/webcompat.js
 webcompat/**/webcompat.min.js
 webcompat/**/*.min.css
+webcompat/**/*.dev.css
