@@ -36,8 +36,8 @@ Actual Behavior:
 class IssueForm(Form):
     '''Define form fields and validation for our bug reporting form.'''
     url = StringField(u'Site URL*', [Required(message=url_message)])
-    browser = StringField(u'Browser', [Optional()])
-    version = StringField(u'Version', [Optional()])
+    browser = StringField(u'Browser / Version', [Optional()])
+    os = StringField(u'Operating System', [Optional()])
     summary = StringField(u'Problem in 5 words*',
                           [Required(message=summary_message)])
     username = StringField(u'Username',
@@ -89,24 +89,36 @@ def get_labels(browser_name):
     return result
 
 
-def get_browser_name(user_agent_string):
-    '''Return browser name (i.e., "user agent family") for pre-populating the
-    bug reporting form.'''
-    ua_dict = user_agent_parser.Parse(user_agent_string)
-    return ua_dict.get('user_agent').get('family')
-
-
-def get_browser_version(user_agent_string):
-    '''Return a string representing the browser version.'''
+def get_browser(user_agent_string):
+    '''Return browser name (i.e., "user agent family") and version for
+    pre-populating the bug reporting form.'''
     ua_dict = user_agent_parser.Parse(user_agent_string)
     ua = ua_dict.get('user_agent')
+    name = ua.get('family')
     version = ua.get('major', u'Unknown')
     # Add on the minor and patch version numbers if they exist
     if version != u'Unknown' and ua.get('minor'):
         version = version + "." + ua.get('minor')
         if ua.get('patch'):
             version = version + "." + ua.get('patch')
-    return version
+    else:
+        version = ''
+    return '{0} {1}'.format(name, version)
+
+
+def get_os(user_agent_string):
+    '''Return operating system name for pre-populating the bug reporting
+    form.'''
+    ua_dict = user_agent_parser.Parse(user_agent_string)
+    os = ua_dict.get('os')
+    version = os.get('major', u'Unknown')
+    if version != u'Unknown' and os.get('major'):
+        version = version + "." + os.get('minor')
+        if os.get('patch'):
+            version = version + "." + os.get('patch')
+    else:
+        version = ''
+    return '{0} {1}'.format(os.get('family'), version)
 
 def domain_name(url):
     '''Extract the domain name of a sanitized version of the submitted URL'''
@@ -159,8 +171,8 @@ def build_formdata(form_object):
     # Preparing the body
     body = u'''{0}
 **URL**: {1}
-**Browser**: {2}
-**Version**: {3}
+**Browser / Version**: {2}
+**Operating System**: {3}
 **Problem type**: {4}
 **Site owner**: {5}
 
@@ -168,7 +180,7 @@ def build_formdata(form_object):
 {6}'''.format(get_labels(form_object.get('browser')),
               form_object.get('url'),
               form_object.get('browser'),
-              form_object.get('version'),
+              form_object.get('os'),
               get_problem(form_object.get('problem_category')),
               get_owner(form_object.get('site_owner')),
               form_object.get('description'))

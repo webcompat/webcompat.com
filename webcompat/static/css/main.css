@@ -573,6 +573,9 @@ form .button {
   .key span {
     padding: 0 0 0 0.5em;
   }
+  label {
+    float: none;
+  }
 }
 /* 950px */
 @media all and (max-width: 59.365em) {
@@ -626,9 +629,6 @@ form .button {
   .has-error .help-inline {
     float: none;
     display: block;
-  }
-  label {
-    float: none;
   }
 }
 /* 450x px */

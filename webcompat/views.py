@@ -11,7 +11,7 @@ import urllib
 from flask import (flash, g, redirect, request, render_template, session,
                    url_for, abort)
 from flask.ext.github import GitHubError
-from form import (build_formdata, get_browser_name, get_browser_version,
+from form import (build_formdata, get_browser, get_os,
                   IssueForm, AUTH_REPORT, PROXY_REPORT)
 from hashlib import md5
 from issues import (report_issue, proxy_report_issue, get_user_issues,
@@ -117,9 +117,9 @@ def index():
     '''Main view where people come to report issues.'''
     bug_form = IssueForm(request.form)
     # add browser and version to bug_form object data
-    bug_form.browser.data = get_browser_name(
+    bug_form.browser.data = get_browser(
         request.headers.get('User-Agent'))
-    bug_form.version.data = get_browser_version(
+    bug_form.os.data = get_os(
         request.headers.get('User-Agent'))
     # GET means you want to file a report.
     if request.method == 'GET':
