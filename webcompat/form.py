@@ -114,7 +114,7 @@ def domain_name(url):
     url = url.lstrip()
     # testing if it's an http URL
     if url.startswith('http://') or url.startswith('https://'):
-        domain = urlpase(url).netloc
+        domain = urlparse(url).netloc
     else:
         domain = None
     return domain
