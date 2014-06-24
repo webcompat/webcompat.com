@@ -238,10 +238,16 @@ footer .follow {
   font-size: 2em;
   color: #fff;
   text-decoration: none !important;
+  -webkit-transition: top 100ms ease-out 0ms;
+  -moz-transition: top 100ms ease-out 0ms;
+  -o-transition: top 100ms ease-out 0ms;
   transition: top 100ms ease-out 0ms;
 }
 #report-bug.opened {
   top: 2em;
+  -webkit-transition: top 100ms ease-out 0ms;
+  -moz-transition: top 100ms ease-out 0ms;
+  -o-transition: top 100ms ease-out 0ms;
   transition: top 100ms ease-out 0ms;
 }
 #report-bug:hover, #report-bug:focus {
@@ -261,6 +267,10 @@ footer .follow {
   vertical-align: middle;
 }
 .opened #arrow {
+  -webkit-transform:rotate(90deg);
+  -moz-transform:rotate(90deg);
+  -ms-transform:rotate(90deg);
+  -o-transform:rotate(90deg);
   transform:rotate(90deg);
 }
 form button.btn {

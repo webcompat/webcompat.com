@@ -33,7 +33,7 @@ module.exports = function(grunt) {
           // output
           '<%= cssPath %>/webcompat.min.css': [
             // input
-            '<%= cssPath %>/main.css'
+            '<%= cssPath %>/webcompat.dev.css'
           ]
         }
       }
@@ -77,11 +77,24 @@ module.exports = function(grunt) {
       ]
     },
     watch: {
-      gruntfile: {
+      css:{
+        files: '<%= cssPath %>/main.css',
+        tasks: ['autoprefixer']
+      },
+      script:{
         files: '<%= jshint.beforeconcat %>',
         tasks: ['jshint:beforeconcat']
       }
-    }
+    },
+    autoprefixer: {
+      options: {
+        browsers: ['ff >= 4', 'ie >= 8', 'safari >= 5.1', 'opera >= 12', 'chrome >=10']
+      },
+      no_dest: {
+        src: '<%= cssPath %>/main.css',
+        dest: '<%= cssPath %>/webcompat.dev.css'
+      }
+    }  
   });
 
   grunt.loadNpmTasks('grunt-contrib-concat');
@@ -89,8 +102,9 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-autoprefixer');
 
   // Default task.
-  grunt.registerTask('default', ['jshint', 'concat', 'uglify', 'cssmin']);
+  grunt.registerTask('default', ['jshint', 'concat', 'uglify', 'autoprefixer', 'cssmin']);
 
 };
