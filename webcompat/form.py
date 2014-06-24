@@ -38,6 +38,7 @@ class IssueForm(Form):
     url = StringField(u'Site URL*', [Required(message=url_message)])
     browser = StringField(u'Browser', [Optional()])
     version = StringField(u'Version', [Optional()])
+    os = StringField(u'Operating System', [Optional()])
     summary = StringField(u'Problem in 5 words*',
                           [Required(message=summary_message)])
     username = StringField(u'Username',
@@ -106,6 +107,13 @@ def get_browser_version(user_agent_string):
         version = version + "." + ua.get('minor')
         if ua.get('patch'):
             version = version + "." + ua.get('patch')
+    return version
+ 
+def get_browser_os(user_agent_string):
+    '''Return a string representing the Operating System.'''
+    ua_dict = user_agent_parser.Parse(user_agent_string)
+    os = ua_dict.get('os')
+    version = ua.get('major', u'Unknown')
     return version
 
 def domain_name(url):
