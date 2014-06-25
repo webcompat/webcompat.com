@@ -394,6 +394,7 @@ input[type=search] {
   margin-bottom: 1em;
 }
 .page ol {
+  line-height: 150%;
   margin: 1.25em 0;
 }
 .page li {
@@ -652,6 +653,9 @@ form .button {
   }
   #howitworks, #join, #browse-issues {
     padding: 2em 1em;
+  }
+  .page ol {
+    margin: 1.25em 0 1.25em 1.25em;
   }
   footer {
     margin-top: 3em;
