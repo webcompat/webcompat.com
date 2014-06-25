@@ -394,7 +394,8 @@ input[type=search] {
   margin-bottom: 1em;
 }
 .page ol {
-  margin: 1.25em 0;
+  line-height: 150%;
+  margin: 1.25em 0 1.25em 1.25em;
 }
 .page li {
   margin-bottom: 1em;
