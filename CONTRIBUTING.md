@@ -122,6 +122,13 @@ python run.py
 
 You should now have a local instance of the site running at `http://127.0.0.1:5000/`. Please [file bugs](https://github.com/webcompat/webcompat.com/issues/new) if something went wrong!
 
+Note: If you get a `TypeError: unhashable type` page when loading `http://127.0.0.1:5000/`, it means you've forgotten one of two (or both!) of the bare minimum config.py requirements:
+
+* A non-production `ISSUES_REPO_URI`: https://github.com/webcompat/webcompat.com/blob/master/config.py.example#L57, e.g., "miketaylr/nobody-look-at-this/issues"
+
+* `BOT_OAUTH_TOKEN`: https://github.com/webcompat/webcompat.com/blob/master/config.py.example#L64
+
+
 ## Installing Grunt
 
 We use [Grunt](http://gruntjs.com/) as a task runner to perform certain things (minify + concat JS assets, for example).
