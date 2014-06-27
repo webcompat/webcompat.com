@@ -16,8 +16,9 @@ THREADS_PER_PAGE = 8
 # Doesn't really matter for local testing.
 SECRET_KEY = ""
 
-# the PRODUCTION env var is set in uwsgi.conf
+# the PRODUCTION and DEVELOPMENT env var is set in uwsgi.conf
 PRODUCTION = os.environ.get('PRODUCTION')
+DEVELOPMENT = os.environ.get('DEVELOPMENT')
 
 DEBUG = False
 
@@ -30,14 +31,20 @@ STARTUP = str(datetime.now())
 # Otherwise, create your own test and production applications.
 #
 # [1]<https://github.com/organizations/webcompat/settings/applications/>
-
-# Default to production, otherwise development
+# If you're running this locally, you can ignore PRODUCTION and DEVELOPMENT
+# blocks
+# Production = webcompat.com
 if PRODUCTION:
     GITHUB_CLIENT_ID = ""
     GITHUB_CLIENT_SECRET = ""
     GITHUB_CALLBACK_URL = ""
+# Development = dev.webcompat.com
+elif DEVELOPMENT:
+    GITHUB_CLIENT_ID = ""
+    GITHUB_CLIENT_SECRET = ""
+    GITHUB_CALLBACK_URL = ""
 else:
-    # We're in development, use the test application
+    # We're running on localhost, use the test application
     GITHUB_CLIENT_ID = ""
     GITHUB_CLIENT_SECRET = ""
     GITHUB_CALLBACK_URL = "http://localhost:5000/callback"
@@ -45,6 +52,7 @@ else:
 # GiHub Issues repo URI
 if PRODUCTION:
     ISSUES_REPO_URI = "<user>/<repo>/issues"
+# Development and Local instances use the same test repo
 else:
     ISSUES_REPO_URI = "<user>/<repo>/issues"
 
