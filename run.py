@@ -5,4 +5,6 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 from webcompat import app
-app.run()
+
+if __name__ == '__main__':
+    app.run()
