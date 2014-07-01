@@ -74,44 +74,52 @@ h4 {
 p {
   font-size: 1em;
 }
-.button {
-  text-align: center;
-  padding: .5em 1.75em ;
-  border-radius: 7.5px;
-  font-size: 1.5em;
-  line-height: 2em;
-  text-decoration: none;
-}
+
+/* Button */
 .btn {
   background-color: transparent;
-  border: .35em solid #f8c41c;
   margin-bottom: .5em;
   padding-left: 2em;
   padding-right: 2em;
-  color: #000;
   text-decoration: none !important;
   font-weight: 700;
   border-radius: 20px;
+  color: #000;
 }
 .btn:hover {
-  background-color: #f8c41c;
-  color: #fff;
+  color:#fff;
 }
+.btn--default {
+  border: solid 4px #f8c41c;	
+}
+.btn--default:hover {
+  background-color: #f8c41c;
+}
+.btn--action {
+  border: solid 4px #c2c2c2;
+}
+.btn--action:hover {
+  background-color: #c2c2c2;
+}
+/* @todo delete style */
 .btn-link {
   color: #000;
   font-weight: 700;
+  background-color: #f8c41c;
 }
 .btn-link:hover, .btn-link:focus {
   color: #f8c41c;
   outline: none;
 }
+
+/* link */
 a {
   color: #000;
-  text-decoration: underline !important;
 }
 a:hover, a:focus {
   color: #000;
   outline: none;
+  text-decoration: underline;
 }
 .bold {
   font-weight: 700;
@@ -140,9 +148,6 @@ footer {
   background-color: #ffffff;
   border-top: 5px solid #f8c41c;
   clear: both;
-}
-footer a {
-  text-decoration: none !important;
 }
 footer .container {
   padding: 1em 5em 2em;
@@ -264,7 +269,7 @@ footer .follow {
   transform:rotate(90deg);
 }
 form button.btn {
-  background-color: transparent;
+  /*background-color: transparent;
   border: .35em solid #f8c41c;
   margin-bottom: .5em;
   padding-left: 2em;
@@ -272,7 +277,7 @@ form button.btn {
   color: #000;
   text-decoration: none !important;
   font-weight: 700;
-  border-radius: 20px;
+  border-radius: 20px;*/
 }
 form .btn-link, form .btn-link:hover {
     color: #000;
@@ -447,7 +452,6 @@ form .button {
 }
 #submitanon {
   float: left;
-  border: none;
 }
 #submitgithub {
   float: right;
