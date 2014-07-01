@@ -172,11 +172,7 @@ def index():
 
 @app.route('/issues/<number>')
 def show_issue(number):
-    # In the future we can display the issue on our site, but for now
-    # we're just going to 307 to github issues.
-    uri = u"https://github.com/{0}/{1}".format(app.config['ISSUES_REPO_URI'],
-                                               number)
-    return redirect(uri, code=307)
+    return render_template('issue.html', number=number)
 
 
 @app.route('/thanks/<number>')
