@@ -1,138 +1,138 @@
 {% extends "layout.html" %}
 {% block body %}
 <div id="wrap">
-    <div class="page">
-    {% include "shared/nav.html" %}
-      <div class="maincontent container issue">
-        <h2 class="issue__main_title">
-          <a class="issue__back" href="{{ url_for("index") }}"><img src="../img/arrowleft.png" alt="arrow"></a><!--
-          --><span class="issue__title">Issue 54: offset text on vidéo previews in portrait mode</span>
-        </h2>
-        <div class="issue__wrapper">
-            <!-- Issue Date -->
-    	    <div class="issue__create">
-    		    <div class="issue__date">Opened 6/20/14 by calexity . 0 comments</div>
-    	    </div>
-    	    <div class="issue__info">
-    			<!-- Issue Info -->
-    		    <ul class="issue__info__wrapper">
-    			    <li class="issue__info__item">
-    				    <div class="issue__info__label">URL</div>
-    				    <div class="issue__info__value">http://virginamerica.com</div>
-    			    </li>
-    			    <li class="issue__info__item">
-    				    <div class="issue__info__label">Browser Version</div>
-    				    <div class="issue__info__value">Google Chrome 35.0.1916.153</div>
-    			    </li>
-    			    <li class="issue__info__item">
-    				    <div class="issue__info__label">Problem Type</div>
-    				    <div class="issue__info__value">Looks like the site has a bug</div>
-    			    </li>
-    			    <li class="issue__info__item">
-    				    <div class="issue__info__label">Site Owner</div>
-    				    <div class="issue__info__value">No</div>
-    			    </li>
-    		    </ul>	    
-    		    <ul class="issue__info__wrapper">
-    			    <li class="issue__info__item">
-    				    <div class="issue__info__label">Steps to Reproduce</div>
-    			    </li>
-    			    <li class="issue__info__item">
-    				    <div class="issue__info__value">1) Navigate to: http://virginamerica</div>
-    			    </li>
-    			    <li class="issue__info__item">
-    				    <div class="issue__info__value">2) Click on Manage Flits</div>
-    			    </li>
-    			    <li class="issue__info__item">
-    				    <div class="issue__info__value">3) Page is blank</div>
-    			    </li>
-    		    </ul>			
-    		    <ul class="issue__info__wrapper">
-    			    <li class="issue__info__item">
-    				    <div class="issue__info__label">Expected behavior </div>
-    				    <div class="issue__info__value">Page should populate with flight info</div>
-    			    </li>
-    			    <li class="issue__info__item">
-    				    <div class="issue__info__label">Actual behavior</div>
-    				    <div class="issue__info__value">Page is blank</div>
-    			    </li>
-    		    </ul>			
-    		</div>
-    		<div class="issue__info">
-    		    <ul class="issue__info__wrapper">
-    			    <li class="issue__info__item">
-    				    <div class="issue__info__label">Label </div>
-    				    <div class="issue__info__value">IE, Chrome, Video</div>
-    				    <div class="issue__info__btn">Add label</div>
-    			    </li>
-    		    </ul>
-    		</div>
-    		<!-- Issue comment -->
-    		<div class="issue__comment">
-    			<div class="comment__img">
-    				<img class="" src="../img/Avatar.png" alt="avatar"/>
-    			</div>
-    			<div class="comment__msg">					
-    					<div class="comment__txt">	
-    						<div class="comment__header">
-    							 <span class="comment__owner">calexity</span> commented 2 hours ago
-    						</div>
-    						 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque risus enim, tristique at tellus ac, ornare suscipit metus. Donec aliquam sagittis ligula, eu ornare elit congue sed. Sed venenatis nisi et consectetur pulvinar. Donec et augue eu nibh venenatis hendrerit. Sed sed euismod tortor. Fusce facilisis nec justo id imperdiet. Curabitur ut aliquam odio. 	
-    					</div>
-    				</form>							
-    			</div>
-    		</div>
-    		<!-- Issue comment -->
-    		<div class="issue__comment">
-    			<div class="comment__img">
-    				<img class="" src="../img/Avatar.png" alt="avatar"/>
-    			</div>
-    			<div class="comment__msg">					
-    					<div class="comment__txt">	
-    						<div class="comment__header">
-    							 <span class="comment__owner">calexity</span> commented 2 hours ago
-    						</div>
-    						 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque risus enim, tristique at tellus ac, ornare suscipit metus. Donec aliquam sagittis ligula, eu ornare elit congue sed. Sed venenatis nisi et consectetur pulvinar. Donec et augue eu nibh venenatis hendrerit. Sed sed euismod tortor. Fusce facilisis nec justo id imperdiet. Curabitur ut aliquam odio. 	
-    					</div>
-    				</form>							
-    			</div>
-    		</div>
-    		<!-- Issue comment -->
-    		<div class="issue__comment">
-    			<div class="comment__img">
-    				<img class="" src="../img/Avatar.png" alt="avatar"/>
-    			</div>
-    			<div class="comment__msg">					
-    					<div class="comment__txt">	
-    						<div class="comment__header">
-    							 <span class="comment__owner">calexity</span> commented 2 hours ago
-    						</div>
-    						 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque risus enim, tristique at tellus ac, ornare suscipit metus. Donec aliquam sagittis ligula, eu ornare elit congue sed. Sed venenatis nisi et consectetur pulvinar. Donec et augue eu nibh venenatis hendrerit. Sed sed euismod tortor. Fusce facilisis nec justo id imperdiet. Curabitur ut aliquam odio. 	
-    						 <div class="comment__attach">
-    							 <img src="../img/screenie.png" />
-    						 </div>
-    					</div>
-    				</form>							
-    			</div>
-    		</div>
-    		<!-- Issue create comment -->
-    		<div class="issue__form">
-    			<div class="comment__img">
-    				<img class="" src="../img/Avatar.png" alt="avatar"/>
-    			</div>
-    			<div class="comment__msg">					
-    				<form action="#" method="post" class="">
-    					<div class="comment__caret">
-    						<div class="comment__dd">Attach images b dragging & dropping, <span class="comment__dd__label">selecting them</span> or pasting form the clipboad </div>
-    						<textarea class="comment__txt" placeholder="Leave a comment"></textarea>
-    					</div>
-    					<div class="comment__btn">
-    						<button value="close" class="btn btn--action" type="button">Close</button>
-    						<button value="comment" class="btn btn--default" type="submit">Comment</button>
-    					</div>
-    				</form>							
-    			</div>
-    		</div>
+  <div class="page">
+  {% include "shared/nav.html" %}
+    <div class="maincontent container issue">
+      <h2 class="issue__main_title">
+        <a class="issue__back" href="{{ url_for("index") }}"><img src="../img/arrowleft.png" alt="arrow"></a><!--
+        --><span class="issue__title">Issue 54: offset text on vidéo previews in portrait mode</span>
+      </h2>
+      <div class="issue__wrapper">
+          <!-- Issue Date -->
+        <div class="issue__create">
+          <div class="issue__date">Opened 6/20/14 by calexity . 0 comments</div>
+        </div>
+        <div class="issue__info">
+        <!-- Issue Info -->
+          <ul class="issue__info__wrapper">
+            <li class="issue__info__item">
+              <div class="issue__info__label">URL</div>
+              <div class="issue__info__value">http://virginamerica.com</div>
+            </li>
+            <li class="issue__info__item">
+              <div class="issue__info__label">Browser Version</div>
+              <div class="issue__info__value">Google Chrome 35.0.1916.153</div>
+            </li>
+            <li class="issue__info__item">
+              <div class="issue__info__label">Problem Type</div>
+              <div class="issue__info__value">Looks like the site has a bug</div>
+            </li>
+            <li class="issue__info__item">
+              <div class="issue__info__label">Site Owner</div>
+              <div class="issue__info__value">No</div>
+            </li>
+          </ul>
+          <ul class="issue__info__wrapper">
+            <li class="issue__info__item">
+              <div class="issue__info__label">Steps to Reproduce</div>
+            </li>
+            <li class="issue__info__item">
+              <div class="issue__info__value">1) Navigate to: http://virginamerica</div>
+            </li>
+            <li class="issue__info__item">
+              <div class="issue__info__value">2) Click on Manage Flits</div>
+            </li>
+            <li class="issue__info__item">
+              <div class="issue__info__value">3) Page is blank</div>
+            </li>
+          </ul>
+          <ul class="issue__info__wrapper">
+            <li class="issue__info__item">
+              <div class="issue__info__label">Expected behavior </div>
+              <div class="issue__info__value">Page should populate with flight info</div>
+            </li>
+            <li class="issue__info__item">
+              <div class="issue__info__label">Actual behavior</div>
+              <div class="issue__info__value">Page is blank</div>
+            </li>
+          </ul>
+        </div>
+        <div class="issue__info">
+            <ul class="issue__info__wrapper">
+              <li class="issue__info__item">
+                <div class="issue__info__label">Label </div>
+                <div class="issue__info__value">IE, Chrome, Video</div>
+                <div class="issue__info__btn">Add label</div>
+              </li>
+            </ul>
+        </div>
+        <!-- Issue comment -->
+        <div class="issue__comment">
+          <div class="comment__img">
+            <img class="" src="../img/Avatar.png" alt="avatar"/>
+          </div>
+          <div class="comment__msg">
+              <div class="comment__txt">
+                <div class="comment__header">
+                   <span class="comment__owner">calexity</span> commented 2 hours ago
+                </div>
+                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque risus enim, tristique at tellus ac, ornare suscipit metus. Donec aliquam sagittis ligula, eu ornare elit congue sed. Sed venenatis nisi et consectetur pulvinar. Donec et augue eu nibh venenatis hendrerit. Sed sed euismod tortor. Fusce facilisis nec justo id imperdiet. Curabitur ut aliquam odio.
+              </div>
+            </form>
+          </div>
+        </div>
+        <!-- Issue comment -->
+        <div class="issue__comment">
+          <div class="comment__img">
+            <img class="" src="../img/Avatar.png" alt="avatar"/>
+          </div>
+          <div class="comment__msg">
+              <div class="comment__txt">
+                <div class="comment__header">
+                   <span class="comment__owner">calexity</span> commented 2 hours ago
+                </div>
+                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque risus enim, tristique at tellus ac, ornare suscipit metus. Donec aliquam sagittis ligula, eu ornare elit congue sed. Sed venenatis nisi et consectetur pulvinar. Donec et augue eu nibh venenatis hendrerit. Sed sed euismod tortor. Fusce facilisis nec justo id imperdiet. Curabitur ut aliquam odio.
+              </div>
+            </form>
+          </div>
+        </div>
+        <!-- Issue comment -->
+        <div class="issue__comment">
+          <div class="comment__img">
+            <img class="" src="../img/Avatar.png" alt="avatar"/>
+          </div>
+          <div class="comment__msg">
+              <div class="comment__txt">
+                <div class="comment__header">
+                   <span class="comment__owner">calexity</span> commented 2 hours ago
+                </div>
+                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque risus enim, tristique at tellus ac, ornare suscipit metus. Donec aliquam sagittis ligula, eu ornare elit congue sed. Sed venenatis nisi et consectetur pulvinar. Donec et augue eu nibh venenatis hendrerit. Sed sed euismod tortor. Fusce facilisis nec justo id imperdiet. Curabitur ut aliquam odio.
+                 <div class="comment__attach">
+                   <img src="../img/screenie.png" />
+                 </div>
+              </div>
+            </form>
+          </div>
+        </div>
+        <!-- Issue create comment -->
+        <div class="issue__form">
+          <div class="comment__img">
+            <img class="" src="../img/Avatar.png" alt="avatar"/>
+          </div>
+          <div class="comment__msg">
+            <form action="#" method="post" class="">
+              <div class="comment__caret">
+                <div class="comment__dd">Attach images b dragging & dropping, <span class="comment__dd__label">selecting them</span> or pasting form the clipboad </div>
+                <textarea class="comment__txt" placeholder="Leave a comment"></textarea>
+              </div>
+              <div class="comment__btn">
+                <button value="close" class="btn btn--action" type="button">Close</button>
+                <button value="comment" class="btn btn--default" type="submit">Comment</button>
+              </div>
+            </form>
+          </div>
+        </div>
        </div>
     </div>
   </div>
