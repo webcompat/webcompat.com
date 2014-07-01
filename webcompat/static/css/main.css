@@ -568,7 +568,244 @@ form .button {
 #twittershare {
   padding: 0;
 }
+/*------Issues view------*/
+
+.issue {
+	
+}
+/* Wrapper title and date issue */
+.issue__main_title {
+	line-height: 1em;
+	margin-bottom: .5em;
+}
+.issue__title {
+	display: inline-block;
+	vertical-align: middle;
+}
+
+/* btn back /index */
+.issue__back {
+	display: inline-block;
+	vertical-align: middle;
+	margin:0 .8em 0 0;
+}
+
+/* wrapper isssue */
+.issue__wrapper {
+	margin:0 0 0 4.2em;
+}
+.issue__create {
+	font-size: 1.2em;
+	margin:0 0 3em 
+}
+
+/* State issue */
+.issue__state {
+	display: inline-block;
+	padding: 7px 23px;
+}
+.issue__state--1 {
+	color: #fff;
+	background-color: #ff8364;
+}
+.issue__date {
+	display: inline-block;
+}
+.issue__info + .issue__info {
+	margin: 2.3em 0 0;
+}
+.issue__info__wrapper {
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+.issue__info__wrapper + .issue__info__wrapper {
+	margin:2em 0 0;
+}
+
+.issue__info__item {
+	line-height: 1.4em;
+	/* to delete */
+	margin:0 0 .3em !important;
+}
+.issue__info__item:after {
+	display: table;
+	content: "";
+	clear: both;
+}
+.issue__info__label {
+	font-weight: bold;
+	font-size: 1.2em;
+	float: left;
+	margin-right:.6em;
+}
+.issue__info__value {
+	font-size: 1.2em;
+	float: left;
+}
+.issue__info__btn {
+	float: left;
+	margin-left:1.2em;
+	font-size: 1.2em;
+	color: #c2c2c2;
+}
+.issue__comment {
+	margin:4em 0 0;
+}
+.issue__comment + .issue__comment {
+	margin:1em 0 0 0;
+}
+.issue__comment:after {
+	display: table;
+	content: "";
+	clear: both;	
+} 
+.issue__form {
+	padding-top:2em;
+	margin:2em 0 0 ;
+}
+
+/*------Comment------*/
+
+.comment__img,
+.comment__msg {
+	float: left;
+}
+.comment__msg {
+	margin-left:.8em;
+}
+.comment__img img {
+	width: 59px;
+	height: 56px;
+}
+
+.comment__txt {
+	position: relative;
+	width: 650px;
+	min-height: 256px;
+	border: solid 2px #c2c2c2;
+	border-radius: 10px;
+	padding: 1em 1em 2em 1em;
+}
+
+/* img attach file */
+.comment__attach {
+	display: block;
+	margin:.8em 0 0 0;
+	padding: .4em;
+	text-align: center;
+	overflow: hidden /* prevent overflow */
+}
+/* prevent width of img */
+.comment__attach img {
+	width: 100%;
+	max-width: 100%;
+}
+/* comment with header */
+.issue__comment  .comment__txt {
+	padding-top: 0;
+	
+}
+.comment__txt:after {
+	position: absolute;
+	content: "";
+	width: 18px;
+	height: 18px;
+	top: 15px;
+	left: -10px;
+	background-color: #F0F0F0;
+	border-color: #c2c2c2;
+	border-style: solid;
+	border-width: 0px 0px 2px 2px;
+	transform: rotate(45deg);	
+}
+/* caret comment */
+.comment__caret {
+	position: relative;
+}
+.comment__caret:after {
+	position: absolute;
+	content: "";
+	width: 18px;
+	height: 18px;
+	top: 15px;
+	left: -8px;
+	background-color: #fff;
+	border-color: #c2c2c2;
+	border-style: solid;
+	border-width: 0px 0px 2px 2px;
+	transform: rotate(45deg);
+}
+
+/* placeholder style */
+.comment__txt::-webkit-input-placeholder {
+   color: #c2c2c2;  
+   opacity: 1;
+   font-size: 1.2em;
+   font-weight: 500;
+}
+
+.comment__txt:-moz-placeholder { /* Firefox 18- */
+   color: #c2c2c2;  
+   opacity: 1;
+   font-size: 1.2em;
+   font-weight: 500;
+}
+
+.comment__txt::-moz-placeholder {  /* Firefox 19+ */
+   color: #c2c2c2;  
+   opacity: 1;
+   font-size: 1.2em;
+   font-weight: 500;
+}
+
+comment__txt:-ms-input-placeholder {  
+   color: #c2c2c2;  
+   opacity: 1;
+   font-size: 1.2em;
+   font-weight: 500;
+}
+.comment__btn {
+	text-align: right;
+	margin:1.2em 0 0;
+}
+.comment__btn .btn {
+	text-align: center;
+}
+
+.comment__header {
+	border-radius: 10px 10px 0 0;
+	height: 3em;
+	line-height: 3em;
+	background-color: #F0F0F0;
+	padding:0 1em;
+	margin: 0 -1em;
+}
+.comment__owner {
+	font-weight: bold;
+}
+.comment__dd {
+  	position: absolute;
+  	bottom: .6em;
+  	width: 100%;
+  	text-align: center;
+  	color: #c2c2c2;
+  	font-size: .8em;
+  	z-index: 2;
+  	font-weight: bold;
+}
+.comment__dd__label {
+	color: #e6bf04;
+}
+
 /*------Media Queries------*/
+/* 1180px */
+@media all and (max-width: 73.74em){
+  /* Issues view */
+  .issue__wrapper {
+	margin:0;
+  }
+}
 /* 990px */
 @media all and (max-width: 61.865em) {
   .key span {
@@ -576,6 +813,9 @@ form .button {
   }
   label {
     float: none;
+  }
+  .comment__img {
+	  display: none;
   }
 }
 /* 950px */
@@ -606,6 +846,16 @@ form .button {
   #hero .container {
     background-size: 18%;
     background-position: right 80px top -50px;
+  }
+  /* Issues view */
+  .issue__comment,
+  .comment__txt,
+  .comment__msg {
+  	width: 100%;
+  }
+
+ .comment__btn {
+	text-align: center;
   }
 }
 /* 600px */
