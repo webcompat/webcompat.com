@@ -63,8 +63,7 @@ issues.Comments = Backbone.Model.extend({
 });
 
 issues.TitleView = Backbone.View.extend({
-  tagName: 'span',
-  className: 'issue__title',
+  el: $('.issue__main_title'),
   template: _.template($('#title-tmpl').html()),
   render: function() {
     this.$el.html(this.template(this.model.attributes));
@@ -105,7 +104,7 @@ issues.MainView = Backbone.View.extend({
   fetchModels: function() {
     var self = this;
     this.issue.fetch().success(function(){
-      self.title.setElement(self.$('.issue__main_title > span')).render();
+      self.title.render();
       self.metadata.render();
       self.body.render();
       self.render();

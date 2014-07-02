@@ -5,12 +5,12 @@
   {% include "shared/nav.html" %}
     <div class="maincontent container issue">
       <h2 class="issue__main_title">
+      <script type="text/template" id="title-tmpl">
         <a class="issue__back" href="{{ url_for("index") }}">
           <img src="../img/arrowleft.png" alt="arrow">
         </a>
-        <span>
-          <script type="text/template" id="title-tmpl">Issue <%= number %>: <%= title %></script>
-        </span>
+        Issue <%= number %>: <%= title %>
+      </script>
       </h2>
       <div class="issue__wrapper">
           <!-- Issue Date -->
