@@ -101,7 +101,6 @@ issues.MainView = Backbone.View.extend({
     this.title = new issues.TitleView({model: this.issue});
     this.metadata = new issues.MetaDataView({model: this.issue});
     this.body = new issues.BodyView({model: this.issue});
-    this.labels = new issues.LabelsView({model: this.issue});
   },
   fetchModels: function() {
     var self = this;
@@ -109,7 +108,6 @@ issues.MainView = Backbone.View.extend({
       self.title.setElement(self.$('.issue__main_title > span')).render();
       self.metadata.render();
       self.body.render();
-      self.labels.render();
       self.render();
     }).error(function(){console.log('set up flash message')});
   },
