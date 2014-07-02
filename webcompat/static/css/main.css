@@ -101,7 +101,7 @@ p {
   color:#fff;
 }
 .Button--default {
-  border: solid 4px #f8c41c;	
+  border: solid 4px #f8c41c;
 }
 .Button--default:hover {
   background-color: #f8c41c;
@@ -586,7 +586,7 @@ form .button {
 /*------Issues view------*/
 
 .issue {
-	
+  display: none;
 }
 /* Wrapper title and date issue */
 .issue__main_title {
@@ -611,7 +611,7 @@ form .button {
 }
 .issue__create {
 	font-size: 1.2em;
-	margin:0 0 3em 
+	margin:0 0 3em
 }
 
 /* State issue */
@@ -682,8 +682,8 @@ form .button {
 .issue__comment:after {
 	display: table;
 	content: "";
-	clear: both;	
-} 
+	clear: both;
+}
 .issue__form {
 	padding-top:2em;
 	margin:2em 0 0 ;
@@ -728,7 +728,7 @@ form .button {
 /* comment with header */
 .issue__comment  .comment__txt {
 	padding-top: 0;
-	
+
 }
 .comment__txt:after {
 	position: absolute;
@@ -741,7 +741,7 @@ form .button {
 	border-color: #c2c2c2;
 	border-style: solid;
 	border-width: 0px 0px 2px 2px;
-	transform: rotate(45deg);	
+	transform: rotate(45deg);
 }
 /* caret comment */
 .comment__caret {
@@ -763,28 +763,28 @@ form .button {
 
 /* placeholder style */
 .comment__txt::-webkit-input-placeholder {
-   color: #c2c2c2;  
+   color: #c2c2c2;
    opacity: 1;
    font-size: 1.2em;
    font-weight: 500;
 }
 
 .comment__txt:-moz-placeholder { /* Firefox 18- */
-   color: #c2c2c2;  
+   color: #c2c2c2;
    opacity: 1;
    font-size: 1.2em;
    font-weight: 500;
 }
 
 .comment__txt::-moz-placeholder {  /* Firefox 19+ */
-   color: #c2c2c2;  
+   color: #c2c2c2;
    opacity: 1;
    font-size: 1.2em;
    font-weight: 500;
 }
 
-comment__txt:-ms-input-placeholder {  
-   color: #c2c2c2;  
+comment__txt:-ms-input-placeholder {
+   color: #c2c2c2;
    opacity: 1;
    font-size: 1.2em;
    font-weight: 500;
