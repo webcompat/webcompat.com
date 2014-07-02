@@ -607,10 +607,19 @@ form .button {
 .issue__state {
 	display: inline-block;
 	padding: 7px 23px;
+	/*text-shadow: 0px 1px 2px #2C2C2C;*/
 }
-.issue__state--1 {
+.issue__state--need {
 	color: #fff;
 	background-color: #ff8364;
+}
+.issue__state--ready {
+	color: #fff;
+	background-color: #A1EBBF;
+}
+.issue__state--close {
+	color: #fff;
+	background-color: #6FC7FA;
 }
 .issue__date {
 	display: inline-block;
