@@ -8,16 +8,21 @@
         <a class="issue__back" href="{{ url_for("index") }}">
           <img src="../img/arrowleft.png" alt="arrow">
         </a>
-        <span></span>
+        <span>
+          <script type="text/template" id="title-tmpl">Issue <%= number %>: <%= title %></script>
+        </span>
       </h2>
       <div class="issue__wrapper">
           <!-- Issue Date -->
         <div class="issue__create">
-          <div class="issue__state issue__state--close"> Closed</div>
-          <div class="issue__date"></div>
+        <script type="text/template" id="metadata-tmpl">
+          <div class="issue__state issue__state--<%= stateClass %>"><%= issueState %></div>
+          <div class="issue__date">Opened <%= createdAt %> by <%= reporter %>. <%= commentNumber %> comments</div>
+        </script>
         </div>
         <div class="issue__info body">
         <!-- Issue Info -->
+        <script type="text/template" id="body-tmpl"><%= body %></script>
         </div>
         <div class="issue__info labels">
         <script type="text/template" id="labels-tmpl">
@@ -102,9 +107,6 @@
 </div>
 {% endblock %}
 {% block extrascripts %}
-<script type="text/template" id="title-tmpl">Issue <%= number %>: <%= title %></script>
-<script type="text/template" id="metadata-tmpl">Opened <%= createdAt %> by <%= reporter %>. <%= commentNumber %> comments</script>
-<script type="text/template" id="body-tmpl"><%= body %></script>
 <script src="{{ url_for('static', filename='js/vendor/underscore-min.js') }}"></script>
 <script src="{{ url_for('static', filename='js/vendor/backbone-min.js') }}"></script>
 <script>var issueNumber = {{ number }};</script>

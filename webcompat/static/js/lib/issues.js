@@ -6,8 +6,28 @@ var issues = issues || {};
 
 issues.Issue = Backbone.Model.extend({
   urlRoot: function() {
-    var base = "https://api.github.com/repos/webcompat/web-bugs/issues/";
+    var base = 'https://api.github.com/repos/webcompat/web-bugs/issues/';
     return base + this.get('number');
+  },
+  defaults: {
+    stateClass: 'need'
+  },
+  getState: function(state, labels) {
+    var i;
+    if (state == 'closed') {
+      this.set('stateClass', 'close');
+      return 'Closed';
+    }
+    if (labels.length) {
+      for (i in labels) {
+        if (labels[i].name && labels[i].name == 'contactready') {
+          this.set('stateClass', 'ready');
+          return 'Ready for Outreach';
+        }
+      }
+    }
+    //ND is the default value.
+    return 'Needs Diagnosis';
   },
   parseBody: function(body) {
     //need to tranform into expected HTML here....
@@ -27,6 +47,7 @@ issues.Issue = Backbone.Model.extend({
       body: this.parseBody(response.body),
       commentNumber: response.comments,
       createdAt: response.created_at.slice(0,10).replace(/-/g, '/'),
+      issueState: this.getState(response.state, response.labels),
       labels: this.parseLabels(response.labels),
       number: response.number,
       reporter: response.user.login,
@@ -51,8 +72,7 @@ issues.TitleView = Backbone.View.extend({
 });
 
 issues.MetaDataView = Backbone.View.extend({
-  tagName: 'div',
-  className: 'issue__date',
+  el: $('.issue__create'),
   template: _.template($('#metadata-tmpl').html()),
   render: function() {
     this.$el.html(this.template(this.model.attributes));
@@ -96,7 +116,7 @@ issues.MainView = Backbone.View.extend({
     var self = this;
     this.issue.fetch().success(function(){
       self.title.setElement(self.$('.issue__main_title > span')).render();
-      self.metadata.setElement(self.$('.issue__create')).render();
+      self.metadata.render();
       self.body.render();
       self.labels.render();
       self.render();
