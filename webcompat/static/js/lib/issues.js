@@ -13,6 +13,7 @@ issues.Issue = Backbone.Model.extend({
     stateClass: 'need'
   },
   getState: function(state, labels) {
+    //TODO: handle "sitewait"
     var i;
     if (state == 'closed') {
       this.set('stateClass', 'close');
@@ -80,19 +81,9 @@ issues.MetaDataView = Backbone.View.extend({
   }
 });
 
-//TODO: combine body + labels
 issues.BodyView = Backbone.View.extend({
-  el: $('.issue__info.body'),
-  template: _.template($('#body-tmpl').html()),
-  render: function() {
-    this.$el.html(this.template(this.model.attributes));
-    return this;
-  }
-});
-
-issues.LabelsView = Backbone.View.extend({
-  el: $('.issue__info.labels'),
-  template: _.template($('#labels-tmpl').html()),
+  el: $('.issue__info'),
+  template: _.template($('#issue-info-tmpl').html()),
   render: function() {
     this.$el.html(this.template(this.model.attributes));
     return this;
