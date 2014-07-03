@@ -18,6 +18,9 @@ module.exports = function(grunt) {
       dist: {
         src: [
             '<%= jsPath %>/vendor/jquery-1.11.0.min.js',
+            '<%= jsPath %>/vendor/underscore-min.js',
+            '<%= jsPath %>/vendor/backbone-min.js',
+            '<%= jsPath %>/vendor/moment-min.js',
             '<%= jsPath %>/lib/homepage.js',
             '<%= jsPath %>/lib/bugform.js'
         ],
@@ -65,15 +68,17 @@ module.exports = function(grunt) {
         globals: {
           jQuery: true,
           $: true,
-          Ember: true,
-          App: true
+          _: true,
+          Backbone: true,
+          issueNumber: true,
+          console: true
         }
       },
       beforeconcat: [
         'Gruntfile.js',
         '<%= jsPath %>/lib/homepage.js',
         '<%= jsPath %>/lib/bugform.js',
-        '<%= jsPath %>/lib/app.js'
+        '<%= jsPath %>/lib/issues.js'
       ]
     },
     watch: {
@@ -94,7 +99,7 @@ module.exports = function(grunt) {
         src: '<%= cssPath %>/main.css',
         dest: '<%= cssPath %>/webcompat.dev.css'
       }
-    }  
+    }
   });
 
   grunt.loadNpmTasks('grunt-contrib-concat');
