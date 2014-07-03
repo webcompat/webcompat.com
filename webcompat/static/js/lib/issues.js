@@ -126,11 +126,9 @@ issues.MainView = Backbone.View.extend({
   fetchModels: function() {
     var self = this;
     this.issue.fetch().success(function() {
-      //should just loop over these to look cool.
-      self.title.render();
-      self.metadata.render();
-      self.body.render();
-      self.render();
+      _.each([self.title, self.metadata, self.body, self], function(elm) {
+        elm.render();
+      });
       // If there are any comments, go fetch the model data
       if (self.issue.get('commentNumber') > 0) {
         self.comments.fetch().success(function() {
