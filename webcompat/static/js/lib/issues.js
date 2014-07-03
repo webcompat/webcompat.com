@@ -13,8 +13,7 @@ issues.Issue = Backbone.Model.extend({
     stateClass: 'need'
   },
   getState: function(state, labels) {
-    var i;
-    if (state == 'closed') {
+    if (state === 'closed') {
       this.set('stateClass', 'close');
       return 'Closed';
     }
@@ -44,9 +43,9 @@ issues.Issue = Backbone.Model.extend({
         return item.name;
       }
     });
-    return labelsMap.join(', ')
+    return labelsMap.join(', ');
   },
-  parse: function(response, options) {
+  parse: function(response) {
     this.set({
       body: this.parseBody(response.body),
       commentNumber: response.comments,
@@ -61,7 +60,7 @@ issues.Issue = Backbone.Model.extend({
 });
 
 issues.Comment = Backbone.Model.extend({
-  parse: function(response, options) {
+  parse: function(response) {
     this.set({
       commenter: response.user.login,
       avatarUrl: response.user.avatar_url,
@@ -118,10 +117,9 @@ issues.BodyView = Backbone.View.extend({
 
 issues.MainView = Backbone.View.extend({
   el: $('.maincontent'),
-  initialize: function(opts) {
+  initialize: function() {
     var issueNum = {number: issueNumber};
     this.issue = new issues.Issue(issueNum);
-    // This can be empty, i.e. issues without comments
     this.comments = new issues.CommentsCollection([]);
     this.initSubViews();
     this.fetchModels();
@@ -141,11 +139,11 @@ issues.MainView = Backbone.View.extend({
       self.render();
       // If there are any comments, go fetch the model data
       if (self.issue.get('commentNumber') > 0) {
-        self.comments.fetch().success(function(data) {
+        self.comments.fetch().success(function() {
           self.addExistingComments();
         });
       }
-    }).error(function(){console.log('set up flash message')});
+    }).error(function(){console.log('set up flash message');});
   },
   addComment: function(comment) {
     var view = new issues.CommentView({model: comment});
@@ -161,4 +159,4 @@ issues.MainView = Backbone.View.extend({
 
 jQuery.ajaxSetup({timeout: 5000});
 //Not using a router, so kick off things manually
-var mainView = new issues.MainView();
+new issues.MainView();
