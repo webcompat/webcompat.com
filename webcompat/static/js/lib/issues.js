@@ -13,21 +13,24 @@ issues.Issue = Backbone.Model.extend({
     stateClass: 'need'
   },
   getState: function(state, labels) {
-    //TODO: handle "sitewait"
     var i;
     if (state == 'closed') {
       this.set('stateClass', 'close');
       return 'Closed';
     }
-    if (labels.length) {
-      for (i in labels) {
-        if (labels[i].name && labels[i].name == 'contactready') {
-          this.set('stateClass', 'ready');
-          return 'Ready for Outreach';
-        }
-      }
+
+    var labelsNames = _.pluck(labels, 'name');
+    if (labelsNames.indexOf('sitewait')) {
+      this.set('stateClass', 'sitewait');
+      return 'Site Contacted';
     }
-    //ND is the default value.
+
+    if (labelsNames.indexOf('contactready')) {
+      this.set('stateClass', 'ready');
+      return 'Ready for Outreach';
+    }
+    //Needs Diagnosis is the default value.
+    //stateClass is set in this.defaults
     return 'Needs Diagnosis';
   },
   parseBody: function(body) {
