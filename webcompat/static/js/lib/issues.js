@@ -19,12 +19,12 @@ issues.Issue = Backbone.Model.extend({
     }
 
     var labelsNames = _.pluck(labels, 'name');
-    if (labelsNames.indexOf('sitewait')) {
+    if (labelsNames.indexOf('sitewait') > -1) {
       this.set('stateClass', 'sitewait');
       return 'Site Contacted';
     }
 
-    if (labelsNames.indexOf('contactready')) {
+    if (labelsNames.indexOf('contactready') > -1) {
       this.set('stateClass', 'ready');
       return 'Ready for Outreach';
     }
