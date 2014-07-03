@@ -60,16 +60,40 @@ issues.Issue = Backbone.Model.extend({
   }
 });
 
-issues.Comments = Backbone.Model.extend({
-  //Do comments stuff post MainView render
-  urlRoot: function() {}
+issues.Comment = Backbone.Model.extend({
+  parse: function(response, options) {
+    this.set({
+      commenter: response.user.login,
+      avatarUrl: response.user.avatar_url,
+      body: response.body
+    });
+  }
 });
+
+//need to figure out empty comments case
+issues.CommentsCollection = Backbone.Collection.extend({
+  model: issues.Comment,
+  url: function() {
+    var base = 'https://api.github.com/repos/webcompat/web-bugs/issues/';
+    return base + issueNumber + '/comments';
+  }
+});
+
+issues.CommentView = Backbone.View.extend({
+  className: 'issue__comment',
+  template: _.template($('#comment-tmpl').html()),
+  render: function() {
+    this.$el.html(this.template(this.model.toJSON()));
+    return this;
+  }
+});
+
 
 issues.TitleView = Backbone.View.extend({
   el: $('.issue__main_title'),
   template: _.template($('#title-tmpl').html()),
   render: function() {
-    this.$el.html(this.template(this.model.attributes));
+    this.$el.html(this.template(this.model.toJSON()));
     return this;
   }
 });
@@ -78,7 +102,7 @@ issues.MetaDataView = Backbone.View.extend({
   el: $('.issue__create'),
   template: _.template($('#metadata-tmpl').html()),
   render: function() {
-    this.$el.html(this.template(this.model.attributes));
+    this.$el.html(this.template(this.model.toJSON()));
     return this;
   }
 });
@@ -87,7 +111,7 @@ issues.BodyView = Backbone.View.extend({
   el: $('.issue__info'),
   template: _.template($('#issue-info-tmpl').html()),
   render: function() {
-    this.$el.html(this.template(this.model.attributes));
+    this.$el.html(this.template(this.model.toJSON()));
     return this;
   }
 });
@@ -95,7 +119,10 @@ issues.BodyView = Backbone.View.extend({
 issues.MainView = Backbone.View.extend({
   el: $('.maincontent'),
   initialize: function(opts) {
-    this.issue = new issues.Issue({number: issueNumber});
+    var issueNum = {number: issueNumber};
+    this.issue = new issues.Issue(issueNum);
+    // This can be empty, i.e. issues without comments
+    this.comments = new issues.CommentsCollection([]);
     this.initSubViews();
     this.fetchModels();
   },
@@ -106,12 +133,26 @@ issues.MainView = Backbone.View.extend({
   },
   fetchModels: function() {
     var self = this;
-    this.issue.fetch().success(function(){
+    this.issue.fetch().success(function() {
+      //should just loop over these to look cool.
       self.title.render();
       self.metadata.render();
       self.body.render();
       self.render();
+      // If there are any comments, go fetch the model data
+      if (self.issue.get('commentNumber') > 0) {
+        self.comments.fetch().success(function(data) {
+          self.addExistingComments();
+        });
+      }
     }).error(function(){console.log('set up flash message')});
+  },
+  addComment: function(comment) {
+    var view = new issues.CommentView({model: comment});
+    this.$(".issue__comment__wrapper").append(view.render().el);
+  },
+  addExistingComments: function() {
+    this.comments.each(this.addComment, this);
   },
   render: function() {
     this.$el.fadeIn();

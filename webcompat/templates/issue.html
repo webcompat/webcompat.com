@@ -13,7 +13,7 @@
       </script>
       </h2>
       <div class="issue__wrapper">
-          <!-- Issue Date -->
+        <!-- Issue Date -->
         <div class="issue__create">
         <script type="text/template" id="metadata-tmpl">
           <div class="issue__state issue__state--<%= stateClass %>"><%= issueState %></div>
@@ -36,53 +36,23 @@
         </script>
         </div>
         <!-- Issue comment -->
-        <div class="issue__comment">
-          <div class="comment__img">
-            <img class="" src="../img/Avatar.png" alt="avatar"/>
-          </div>
-          <div class="comment__msg">
+        <div class="issue__comment__wrapper">
+          <script type="text/template" id="comment-tmpl">
+            <div class="comment__img">
+              <img class="" src="<%= avatarUrl %>" alt="avatar"/>
+            </div>
+            <div class="comment__msg">
               <div class="comment__txt">
                 <div class="comment__header">
-                   <span class="comment__owner">calexity</span> commented 2 hours ago
+                   <span class="comment__owner"><%= commenter %></span> commented 2 hours ago
                 </div>
-                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque risus enim, tristique at tellus ac, ornare suscipit metus. Donec aliquam sagittis ligula, eu ornare elit congue sed. Sed venenatis nisi et consectetur pulvinar. Donec et augue eu nibh venenatis hendrerit. Sed sed euismod tortor. Fusce facilisis nec justo id imperdiet. Curabitur ut aliquam odio.
+                <%= body %>
               </div>
-            </form>
-          </div>
+              </form>
+            </div>
+          </script>
         </div>
-        <!-- Issue comment -->
-        <div class="issue__comment">
-          <div class="comment__img">
-            <img class="" src="../img/Avatar.png" alt="avatar"/>
-          </div>
-          <div class="comment__msg">
-              <div class="comment__txt">
-                <div class="comment__header">
-                   <span class="comment__owner">calexity</span> commented 2 hours ago
-                </div>
-                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque risus enim, tristique at tellus ac, ornare suscipit metus. Donec aliquam sagittis ligula, eu ornare elit congue sed. Sed venenatis nisi et consectetur pulvinar. Donec et augue eu nibh venenatis hendrerit. Sed sed euismod tortor. Fusce facilisis nec justo id imperdiet. Curabitur ut aliquam odio.
-              </div>
-            </form>
-          </div>
-        </div>
-        <!-- Issue comment -->
-        <div class="issue__comment">
-          <div class="comment__img">
-            <img class="" src="../img/Avatar.png" alt="avatar"/>
-          </div>
-          <div class="comment__msg">
-              <div class="comment__txt">
-                <div class="comment__header">
-                   <span class="comment__owner">calexity</span> commented 2 hours ago
-                </div>
-                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque risus enim, tristique at tellus ac, ornare suscipit metus. Donec aliquam sagittis ligula, eu ornare elit congue sed. Sed venenatis nisi et consectetur pulvinar. Donec et augue eu nibh venenatis hendrerit. Sed sed euismod tortor. Fusce facilisis nec justo id imperdiet. Curabitur ut aliquam odio.
-                 <div class="comment__attach">
-                   <img src="../img/screenie.png" />
-                 </div>
-              </div>
-            </form>
-          </div>
-        </div>
+
         <!-- Issue create comment -->
         <div class="issue__form">
           <div class="comment__img">
