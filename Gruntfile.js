@@ -70,8 +70,9 @@ module.exports = function(grunt) {
           $: true,
           _: true,
           Backbone: true,
+          console: true,
           issueNumber: true,
-          console: true
+          moment: true
         }
       },
       beforeconcat: [

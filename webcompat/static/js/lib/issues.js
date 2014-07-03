@@ -49,7 +49,7 @@ issues.Issue = Backbone.Model.extend({
     this.set({
       body: this.parseBody(response.body),
       commentNumber: response.comments,
-      createdAt: response.created_at.slice(0,10).replace(/-/g, '/'),
+      createdAt: moment(response.created_at).format('L'),
       issueState: this.getState(response.state, response.labels),
       labels: this.parseLabels(response.labels),
       number: response.number,
@@ -63,6 +63,7 @@ issues.Comment = Backbone.Model.extend({
   parse: function(response) {
     this.set({
       commenter: response.user.login,
+      createdAt: moment(response.created_at).fromNow(),
       avatarUrl: response.user.avatar_url,
       body: response.body
     });
