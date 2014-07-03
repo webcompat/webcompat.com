@@ -53,11 +53,11 @@
           </script>
         </div>
 
-        {% if session.user_id %}
+        {% if session.user_id and session.avatar_url %}
         <!-- Issue create comment -->
         <div class="issue__form">
           <div class="comment__img">
-            <img class="" src="../img/Avatar.png" alt="avatar"/>
+            <img class="" src="{{ session.avatar_url }}" alt="avatar"/>
           </div>
           <div class="comment__msg">
             <form action="#" method="post" class="">
