@@ -38,12 +38,7 @@ issues.Issue = Backbone.Model.extend({
     return body;
   },
   parseLabels: function(labels) {
-    var labelsMap = $.map(labels, function(item) {
-      if (item.hasOwnProperty('name')) {
-        return item.name;
-      }
-    });
-    return labelsMap.join(', ');
+    return _.pluck(labels, 'name').join(', ');
   },
   parse: function(response) {
     this.set({
