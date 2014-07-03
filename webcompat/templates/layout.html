@@ -48,6 +48,9 @@
 <script src="{{ url_for('static', filename='js/webcompat.min.js') }}?{{ bust_cache() }}"></script>
 {% else %}
 <script src="{{ url_for('static', filename='js/vendor/jquery-1.11.0.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/vendor/underscore-min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/vendor/backbone-min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/vendor/moment-min.js') }}"></script>
 <script src="{{ url_for('static', filename='js/lib/homepage.js') }}"></script>
 <script src="{{ url_for('static', filename='js/lib/bugform.js') }}"></script>
 {%- endif %}

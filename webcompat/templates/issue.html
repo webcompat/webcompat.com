@@ -77,8 +77,6 @@
 </div>
 {% endblock %}
 {% block extrascripts %}
-<script src="{{ url_for('static', filename='js/vendor/underscore-min.js') }}"></script>
-<script src="{{ url_for('static', filename='js/vendor/backbone-min.js') }}"></script>
 <script>var issueNumber = {{ number }};</script>
 <script src="{{ url_for('static', filename='js/lib/issues.js') }}"></script>
 {% endblock %}
