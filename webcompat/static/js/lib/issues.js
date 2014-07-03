@@ -69,7 +69,6 @@ issues.Comment = Backbone.Model.extend({
   }
 });
 
-//need to figure out empty comments case
 issues.CommentsCollection = Backbone.Collection.extend({
   model: issues.Comment,
   url: function() {
@@ -86,7 +85,6 @@ issues.CommentView = Backbone.View.extend({
     return this;
   }
 });
-
 
 issues.TitleView = Backbone.View.extend({
   el: $('.issue__main_title'),
