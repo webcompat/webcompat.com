@@ -53,6 +53,7 @@
           </script>
         </div>
 
+        {% if session.user_id %}
         <!-- Issue create comment -->
         <div class="issue__form">
           <div class="comment__img">
@@ -61,7 +62,7 @@
           <div class="comment__msg">
             <form action="#" method="post" class="">
               <div class="comment__caret">
-                <div class="comment__dd">Attach images b dragging & dropping, <span class="comment__dd__label">selecting them</span> or pasting form the clipboad </div>
+                <div class="comment__dd">Attach images by dragging &amp; dropping, <span class="comment__dd__label">selecting them</span> or pasting form the clipboad </div>
                 <textarea class="comment__txt" placeholder="Leave a comment"></textarea>
               </div>
               <div class="comment__btn">
@@ -71,6 +72,7 @@
             </form>
           </div>
         </div>
+        {% endif %}
        </div>
     </div>
   </div>
