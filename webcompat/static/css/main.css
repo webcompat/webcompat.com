@@ -1,3 +1,10 @@
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+
+/* Import var */
+@import "_variable.css";
+ 
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -26,14 +33,14 @@ html, body {
 }
 html {
    overflow-y: scroll;
-   font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+   font-family: var(--base_font-family);
    font-weight: 300;
-   color: #404040;
+   color: var(--wc_color_dark);
 }
 
 /*---------- Header ----------*/
 .header {
-  background: #FBC55F;
+  background: var(--color_theme_light);
   padding: 0.5em 0;
 }
 .nav {}
@@ -125,25 +132,25 @@ p {
   color:#fff;
 }
 .Button--default {
-  border: solid 4px #f8c41c;
+  border: solid 4px var(--color_theme_dark);
 }
 .Button--default:hover {
-  background-color: #f8c41c;
+  background-color: var(--color_theme_dark);
 }
 .Button--action {
-  border: solid 4px #c2c2c2;
+  border: solid 4px var(--wc_color_light);
 }
 .Button--action:hover {
-  background-color: #c2c2c2;
+  background-color: var(--wc_color_light);
 }
 /* @todo delete style */
 .btn-link {
   color: #000;
   font-weight: 700;
-  background-color: #f8c41c;
+  background-color: var(--color_theme_dark);
 }
 .btn-link:hover, .btn-link:focus {
-  color: #f8c41c;
+  color: var(--color_theme_dark);
   outline: none;
 }
 
@@ -161,7 +168,7 @@ a:hover, a:focus {
 }
 .divider {
   font-weight: 700;
-  border-top: 5px solid #f8c41c;
+  border-top: 5px solid var(--color_theme_dark);
   width: 30px;
   margin-left: 5em;
   color: #fff;
@@ -181,7 +188,7 @@ a:hover, a:focus {
 }
 footer {
   background-color: #ffffff;
-  border-top: 5px solid #f8c41c;
+  border-top: 5px solid var(--color_theme_dark);
   clear: both;
 }
 footer .container {
@@ -224,7 +231,7 @@ footer .follow {
 /*--------Homepage Styles--------*/
 
 #hero {
-  background-color: #f8c41c;
+  background-color: var(--color_theme_dark);
   text-align: left;
   color: #fff;
   padding: 0;
@@ -273,7 +280,7 @@ footer .follow {
 }
 form button.btn {
   /*background-color: transparent;
-  border: .35em solid #f8c41c;
+  border: .35em solid var(--color_theme_dark);
   margin-bottom: .5em;
   padding-left: 2em;
   padding-right: 2em;
@@ -314,13 +321,13 @@ form .btn-link, form .btn-link:hover {
   margin-bottom: 1em;
 }
 .issue-contactready {
-  border-left: 5px solid #a1ebbf;
+  border-left: 5px solid var(--state_ready);
 }
 .issue-needs-diagnosis {
-  border-left: 5px solid #ff8364;
+  border-left: 5px solid var(--state_need);
 }
 .issue-closed {
-  border-left: 5px solid #6fc7fa;
+  border-left: 5px solid var(--state_close);
 }
 .issue-number {
   font-weight: 400;
@@ -463,7 +470,7 @@ form .button {
 #submitdiv {
   display: block;
   font-weight: 700;
-  border-top: 5px solid #f8c41c;
+  border-top: 5px solid var(--color_theme_dark);
   width: 30px;
   margin: 1em 0 0;
   color: #fff;
@@ -554,10 +561,10 @@ form .button {
   display: none;
 }
 .no-error .form-control {
-  border-color: #f8c41c;
+  border-color: var(--color_theme_dark);
 }
 .no-error .form-control:focus{
-  border-color: #f8c41c;
+  border-color: var(--color_theme_dark);
   box-shadow:none;
 }
 .disabled {
@@ -615,19 +622,19 @@ form .button {
 }
 /*Needs Diagnosis*/
 .issue__state--need {
-	background-color: #ff8364;
+	background-color: var(--state_need);
 }
 /*Ready for Outreach*/
 .issue__state--ready {
-	background-color: #A1EBBF;
+	background-color: var(--state_ready);
 }
 /*Site wait*/
 .issue__state--sitewait {
-    background-color: #006B75;
+    background-color: var(--state_sitewait);
 }
 /*Close*/
 .issue__state--close {
-	background-color: #6FC7FA;
+	background-color: var(--state_close);
 }
 .issue__date {
 	display: inline-block;
@@ -668,7 +675,7 @@ form .button {
 	float: left;
 	margin-left:1.2em;
 	font-size: 1.2em;
-	color: #c2c2c2;
+	color: var(--wc_color_light);
 }
 /*------Comment------*/
 .comment {
@@ -705,7 +712,7 @@ form .button {
 	top: 15px;
 	left: -8px;
 	background-color: #f0f0f0;
-	border-color: #c2c2c2;
+	border-color: var(--wc_color_light);
 	border-style: solid;
 	border-width: 0px 0px 2px 2px;
 	transform: rotate(45deg);
@@ -736,7 +743,7 @@ form .button {
 	width: 650px;
 	/*last 256px*/
 	min-height: 128px;
-	border: solid 2px #c2c2c2;
+	border: solid 2px var(--wc_color_light);
 	border-radius: 10px;
 	padding: 0 1em 2em 1em;
 	word-wrap: break-word;
@@ -771,7 +778,7 @@ form .button {
   	bottom: .6em;
   	width: 100%;
   	text-align: center;
-  	color: #c2c2c2;
+  	color: var(--wc_color_light);
   	font-size: .8em;
   	z-index: 2;
   	font-weight: bold;
@@ -781,27 +788,27 @@ form .button {
 }
 /* Textarea Placeholder style */
 .comment__wrapper::-webkit-input-placeholder {
-   color: #c2c2c2;
+   color: var(--wc_color_light);
    opacity: 1;
    font-size: 1.2em;
    font-weight: 500;
 }
 .comment__wrapper:-moz-placeholder { /* Firefox 18- */
-   color: #c2c2c2;
+   color: var(--wc_color_light);
    opacity: 1;
    font-size: 1.2em;
    font-weight: 500;
 }
 
 .comment__wrapper::-moz-placeholder {  /* Firefox 19+ */
-   color: #c2c2c2;
+   color: var(--wc_color_light);
    opacity: 1;
    font-size: 1.2em;
    font-weight: 500;
 }
 
 comment__wrapper:-ms-input-placeholder {
-   color: #c2c2c2;
+   color: var(--wc_color_light);
    opacity: 1;
    font-size: 1.2em;
    font-weight: 500;

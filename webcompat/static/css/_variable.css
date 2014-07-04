@@ -1,0 +1,17 @@
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+
+/*----------Variable----------*/
+
+:root {
+  --color_theme_dark: #F8C41C; /*Dark Yellow*/
+  --color_theme_light: #FBC55F; /* Light Yellow */
+  --wc_color_dark: #404040; /* Dark Gray */
+  --wc_color_light: #c2c2c2; /* Dark Light */
+  --state_need : #ff8364;   /* Light red */
+  --state_ready : #a1ebbf; /* Light green */
+  --state_sitewait : #006B75; /* Dark green */
+  --state_close: #6FC7FA;   /* Light blue */
+  --base_font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+}
