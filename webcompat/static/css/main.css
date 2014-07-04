@@ -30,33 +30,44 @@ html {
    font-weight: 300;
    color: #404040;
 }
-nav {
-  background-color: #f8c41c;
-  min-height: 75px;
-  padding: .5em 5em;
-  clear: both;
+
+/*---------- Header ----------*/
+.header {
+  background: #FBC55F;
+  padding: 0.5em 0;
 }
-.navleft {
+.nav {}
+.nav__section{}
+.nav__section--left {
   float: left;
 }
-.navright {
+.nav__section--right {
   float: right;
 }
-nav img {
-  width: 60%;
-}
-nav li {
-  display: inline;
-  vertical-align: middle;
-  line-height: 75px;
-  padding: 0.75em;
+.nav__link {
+  display: block;
   color: #fff;
-  font-weight: 700;
-  text-decoration: none;
 }
-nav a:hover {
-  color: #000;
+.nav__link:hover {
+  color: #fff;
 }
+.nav__link--left {
+  padding-left:6em;
+}
+.nav__link--right {
+  padding-right:7em;
+}
+.header .container {
+  background-image: none !important;
+}
+.nav__avatar {
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+  border-radius: 3px;
+}
+
+/*----------Global H Styles----------*/
 h1 {
   font-size: 3.5em;
   font-weight: 700;
@@ -75,7 +86,7 @@ p {
   font-size: 1em;
 }
 
-/* Button */
+/*----------Button----------*/
 .Button {
   display: inline-block;
   background-color: transparent;
@@ -123,7 +134,7 @@ p {
   outline: none;
 }
 
-/* link */
+/*----------Link Styles----------*/
 a {
   color: #000;
 }
@@ -198,39 +209,7 @@ footer .follow {
 }
 
 /*--------Homepage Styles--------*/
-#feedback {
-  background: #FBC55F;
-  padding: 0.5em 0;
-}
-#feedback a {
-  color: #fff;
-  padding: 0 5em;
-  text-decoration: none !important;
-}
-#feedback a:hover {
-  text-decoration: underline !important;
-}
-#feedback .container {
-  background-image: none !important;
-}
-#feedback .pull-right {
-  display: inline-block;
-  position: relative;
-  right: 5em;
-}
-#feedback .pull-right a {
-  padding-left: 0;
-  padding-right: 2em;
-}
-.avatar {
-  width: 20px;
-  height: 20px;
-  display: inline-block;
-  position: absolute;
-  top: 0;
-  right: 0;
-  border-radius: 3px;
-}
+
 #hero {
   background-color: #f8c41c;
   text-align: left;
@@ -905,17 +884,14 @@ comment__wrapper:-ms-input-placeholder {
 }
 /* 450x px */
 @media all and (max-width: 28.115em) {
-  .maincontent.container, footer .container, nav, form.cf {
+  .maincontent.container, footer .container, form.cf {
     padding-left: 1em;
     padding-right: 1em;
   }
   #maintitle {
     padding: 3em 1em 3em;
   }
-  #feedback .pull-right {
-    right: 1em;
-  }
-  #feedback a {
+  .nav__link {
     padding-right: 1em;
     padding-left: 1em;
   }
@@ -945,14 +921,11 @@ comment__wrapper:-ms-input-placeholder {
   #feedback a {
     font-size: .8em;
   }
-  #feedback .pull-right {
-    right: 0;
-  }
   #feedback .avatar {
     display: none;
   }
-  #feedback .pull-right a {
-    padding-right: 0 !important;
+  .nav__link {
+    padding-right: 0;
   }
   .row {
     margin-left: -20px;
