@@ -123,9 +123,6 @@ p {
   white-space: nowrap;
   font-size: 14px;
   line-height: 1.42857143;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
   user-select: none;
 }
 .Button:hover {
