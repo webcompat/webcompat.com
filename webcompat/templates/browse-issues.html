@@ -12,7 +12,7 @@
       {% if user_issues|length %}
         {% for issue in user_issues %}
         <div class="col-md-6">
-        <div class="issue {{ issue.status_class }}">
+        <div class="issues {{ issue.status_class }}">
           <p class="issue-title">
             <a href="{{ issue.html_url }}"><span class="issue-number">Issue {{ issue.number }}</span>: {{ issue.title }}</a>
           </p>
@@ -30,7 +30,7 @@
       <h3 class="h5">Needs Diagnosis</h3>
       {% if needs_diagnosis|length %}
         {% for issue in needs_diagnosis %}
-        <div class="issue issue-needs-diagnosis">
+        <div class="issues issue-needs-diagnosis">
           <p class="issue-title">
             <a href="{{ issue.html_url }}"><span class="issue-number">Issue {{ issue.number }}</span>: {{ issue.title }}</a>
           </p>
@@ -45,7 +45,7 @@
       <h3 class="h5">Ready for Outreach</h3>
       {% if contact_ready|length %}
         {% for issue in contact_ready %}
-        <div class="issue issue-contactready">
+        <div class="issues issue-contactready">
           <p class="issue-title">
             <a href="{{ issue.html_url }}"><span class="issue-number">Issue {{ issue.number }}</span>: {{ issue.title }}</a>
           </p>

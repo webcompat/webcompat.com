@@ -28,11 +28,7 @@ time, mark, audio, video {
 
 
 /*----------Global Styles----------*/
-html, body {
-  height: 100%;
-}
 html {
-   overflow-y: scroll;
    font-family: var(--base_font-family);
    font-weight: 300;
    color: var(--wc_color_dark);
@@ -183,6 +179,8 @@ a:hover, a:focus {
 #push {
   height: 60px;
 }
+/*----------Footer ----------*/
+
 .footer {
   background-color: #ffffff;
   border-top: 5px solid var(--color_theme_dark);
@@ -316,7 +314,7 @@ form .btn-link, form .btn-link:hover {
 .key span {
   padding: 0.3em 1em;
 }
-.issue {
+.issues {
   background-color: #fff;
   padding: 0.5em 1em;
   margin-bottom: 1em;
