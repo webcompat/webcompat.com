@@ -18,7 +18,10 @@ module.exports = function(grunt) {
       dist: {
         src: [
             '<%= jsPath %>/vendor/jquery-1.11.0.min.js',
+            '<%= jsPath %>/vendor/underscore-min.js',
+            '<%= jsPath %>/vendor/backbone-min.js',
             '<%= jsPath %>/lib/homepage.js',
+            '<%= jsPath %>/vendor/moment-min.js',
             '<%= jsPath %>/lib/bugform.js'
         ],
         dest: '<%= jsPath %>/<%= pkg.name %>.js'
@@ -65,15 +68,18 @@ module.exports = function(grunt) {
         globals: {
           jQuery: true,
           $: true,
-          Ember: true,
-          App: true
+          _: true,
+          Backbone: true,
+          console: true,
+          issueNumber: true,
+          moment: true
         }
       },
       beforeconcat: [
         'Gruntfile.js',
         '<%= jsPath %>/lib/homepage.js',
         '<%= jsPath %>/lib/bugform.js',
-        '<%= jsPath %>/lib/app.js'
+        '<%= jsPath %>/lib/issue.js'
       ]
     },
     watch: {
