@@ -677,48 +677,77 @@ form .button {
 	font-size: 1.2em;
 	color: #c2c2c2;
 }
-.issue__comment {
+/*------Comment------*/
+.comment {
 	margin:4em 0 0;
 }
-.issue__comment + .issue__comment {
+.comment + .comment {
 	margin:1em 0 0 0;
 }
-.issue__comment:after {
+.comment:after {
 	display: table;
 	content: "";
 	clear: both;
 }
-.issue__form {
+/* case form */
+.comment--form {
 	padding-top:2em;
 	margin:2em 0 0 ;
 }
 
-/*------Comment------*/
-
-.comment__img,
-.comment__msg {
+.comment__avatar,
+.comment__body {
 	float: left;
 }
-.comment__msg {
+.comment__body {
 	margin-left:.8em;
+	position: relative;
 }
-.comment__img img {
+/* Caret */
+.comment__body--caret:after {
+	position: absolute;
+	content: "";
+	width: 18px;
+	height: 18px;
+	top: 15px;
+	left: -8px;
+	background-color: #f0f0f0;
+	border-color: #c2c2c2;
+	border-style: solid;
+	border-width: 0px 0px 2px 2px;
+	transform: rotate(45deg);
+}
+/* case form */
+.comment--form .comment__body--caret:after {
+   background-color: #fff;
+}
+.comment__avatar img {
 	width: 59px;
 	height: 56px;
 }
+.comment__header {
+	border-radius: 10px 10px 0 0;
+	background-color: #F0F0F0;
+	padding:.8em 1em;
+	margin: 0 -1em;
+}
+/* comment texte */
+.comment__content {
+    overflow: hidden;
+    word-break: break-word;
+    padding:.5em 0 0;
+}
 
-.comment__txt {
+.comment__wrapper {
 	position: relative;
 	width: 650px;
 	/*last 256px*/
 	min-height: 128px;
 	border: solid 2px #c2c2c2;
 	border-radius: 10px;
-	padding: 1em 1em 2em 1em;
-	overflow: hidden;
+	padding: 0 1em 2em 1em;
 	word-wrap: break-word;
 }
-
 /* img attach file */
 .comment__attach {
 	display: block;
@@ -733,87 +762,16 @@ form .button {
 	max-width: 100%;
 }
 /* comment with header */
-.issue__comment  .comment__txt {
-	padding-top: 0;
-
+.comment--form  .comment__wrapper {
+	padding-top: 1em;
 }
-.comment__txt:after {
-	position: absolute;
-	content: "";
-	width: 18px;
-	height: 18px;
-	top: 15px;
-	left: -10px;
-	background-color: #F0F0F0;
-	border-color: #c2c2c2;
-	border-style: solid;
-	border-width: 0px 0px 2px 2px;
-	transform: rotate(45deg);
-}
-/* caret comment */
-.comment__caret {
-	position: relative;
-}
-.comment__caret:after {
-	position: absolute;
-	content: "";
-	width: 18px;
-	height: 18px;
-	top: 15px;
-	left: -8px;
-	background-color: #fff;
-	border-color: #c2c2c2;
-	border-style: solid;
-	border-width: 0px 0px 2px 2px;
-	transform: rotate(45deg);
-}
-
-/* placeholder style */
-.comment__txt::-webkit-input-placeholder {
-   color: #c2c2c2;
-   opacity: 1;
-   font-size: 1.2em;
-   font-weight: 500;
-}
-
-.comment__txt:-moz-placeholder { /* Firefox 18- */
-   color: #c2c2c2;
-   opacity: 1;
-   font-size: 1.2em;
-   font-weight: 500;
-}
-
-.comment__txt::-moz-placeholder {  /* Firefox 19+ */
-   color: #c2c2c2;
-   opacity: 1;
-   font-size: 1.2em;
-   font-weight: 500;
-}
-
-comment__txt:-ms-input-placeholder {
-   color: #c2c2c2;
-   opacity: 1;
-   font-size: 1.2em;
-   font-weight: 500;
-}
-.comment__btn {
-	text-align: right;
-	margin:1.2em 0 0;
-}
-.comment__btn .btn {
-	text-align: center;
-}
-
-.comment__header {
-	border-radius: 10px 10px 0 0;
-	height: 3em;
-	line-height: 3em;
-	background-color: #F0F0F0;
-	padding:0 1em;
-	margin: 0 -1em;
-}
+/* name of owner */
 .comment__owner {
 	font-weight: bold;
+}
+/* drag and drop */
+.comment__drag{
+    position: relative;
 }
 .comment__dd {
   	position: absolute;
@@ -827,6 +785,40 @@ comment__txt:-ms-input-placeholder {
 }
 .comment__dd__label {
 	color: #e6bf04;
+}
+/* Textarea Placeholder style */
+.comment__wrapper::-webkit-input-placeholder {
+   color: #c2c2c2;
+   opacity: 1;
+   font-size: 1.2em;
+   font-weight: 500;
+}
+.comment__wrapper:-moz-placeholder { /* Firefox 18- */
+   color: #c2c2c2;
+   opacity: 1;
+   font-size: 1.2em;
+   font-weight: 500;
+}
+
+.comment__wrapper::-moz-placeholder {  /* Firefox 19+ */
+   color: #c2c2c2;
+   opacity: 1;
+   font-size: 1.2em;
+   font-weight: 500;
+}
+
+comment__wrapper:-ms-input-placeholder {
+   color: #c2c2c2;
+   opacity: 1;
+   font-size: 1.2em;
+   font-weight: 500;
+}
+.comment__button {
+	text-align: right;
+	margin:1.2em 0 0;
+}
+.comment__button .button {
+	text-align: center;
 }
 
 /*------Media Queries------*/
@@ -845,7 +837,7 @@ comment__txt:-ms-input-placeholder {
   label {
     float: none;
   }
-  .comment__img {
+  .comment__avatar {
 	  display: none;
   }
 }
@@ -879,13 +871,11 @@ comment__txt:-ms-input-placeholder {
     background-position: right 80px top -50px;
   }
   /* Issues view */
-  .issue__comment,
-  .comment__txt,
-  .comment__msg {
+  .comment__wrapper,
+  .comment__body {
   	width: 100%;
   }
-
- .comment__btn {
+ .comment__button {
 	text-align: center;
   }
 }
