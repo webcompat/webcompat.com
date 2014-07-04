@@ -18,9 +18,6 @@ module.exports = function(grunt) {
       dist: {
         src: [
             '<%= jsPath %>/vendor/jquery-1.11.0.min.js',
-            '<%= jsPath %>/vendor/underscore-min.js',
-            '<%= jsPath %>/vendor/backbone-min.js',
-            '<%= jsPath %>/vendor/moment-min.js',
             '<%= jsPath %>/lib/homepage.js',
             '<%= jsPath %>/lib/bugform.js'
         ],
@@ -68,24 +65,21 @@ module.exports = function(grunt) {
         globals: {
           jQuery: true,
           $: true,
-          _: true,
-          Backbone: true,
-          console: true,
-          issueNumber: true,
-          moment: true
+          Ember: true,
+          App: true
         }
       },
       beforeconcat: [
         'Gruntfile.js',
         '<%= jsPath %>/lib/homepage.js',
         '<%= jsPath %>/lib/bugform.js',
-        '<%= jsPath %>/lib/issues.js'
+        '<%= jsPath %>/lib/app.js'
       ]
     },
     watch: {
       css:{
         files: '<%= cssPath %>/main.css',
-        tasks: ['autoprefixer']
+        tasks: ['css']
       },
       script:{
         files: '<%= jshint.beforeconcat %>',
@@ -97,8 +91,18 @@ module.exports = function(grunt) {
         browsers: ['ff >= 4', 'ie >= 8', 'safari >= 5.1', 'opera >= 12', 'chrome >=10']
       },
       no_dest: {
-        src: '<%= cssPath %>/main.css',
+        src: '<%= cssPath %>/webcompat.dev.css',
         dest: '<%= cssPath %>/webcompat.dev.css'
+      }
+    },
+    myth: {
+      options:{
+        sourcemap: true
+      },
+      dist: {
+        files: {
+          '<%= cssPath %>/webcompat.dev.css': '<%= cssPath %>/main.css'
+        }
       }
     }
   });
@@ -109,8 +113,8 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-autoprefixer');
-
+  grunt.loadNpmTasks('grunt-myth');
   // Default task.
-  grunt.registerTask('default', ['jshint', 'concat', 'uglify', 'autoprefixer', 'cssmin']);
-
+  grunt.registerTask('default', ['jshint', 'concat', 'uglify','myth', 'autoprefixer', 'cssmin']);
+  grunt.registerTask('css', ['myth', 'autoprefixer']);
 };
