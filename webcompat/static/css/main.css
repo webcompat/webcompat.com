@@ -945,10 +945,10 @@ comment__wrapper:-ms-input-placeholder {
 }
 /* 330px */
 @media all and (max-width: 20.615em) {
-  #feedback a {
+  .nav__link {
     font-size: .8em;
   }
-  #feedback .avatar {
+  .nav__avatar {
     display: none;
   }
   .nav__link {
