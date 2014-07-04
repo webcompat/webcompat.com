@@ -136,16 +136,6 @@ p {
 .Button--action:hover {
   background-color: var(--wc_color_light);
 }
-/* @todo delete style */
-.btn-link {
-  color: #000;
-  font-weight: 700;
-  background-color: var(--color_theme_dark);
-}
-.btn-link:hover, .btn-link:focus {
-  color: var(--color_theme_dark);
-  outline: none;
-}
 
 /*----------Link Styles----------*/
 a {
@@ -276,22 +266,6 @@ a:hover, a:focus {
 }
 .opened #arrow {
   transform:rotate(90deg);
-}
-form button.btn {
-  /*background-color: transparent;
-  border: .35em solid var(--color_theme_dark);
-  margin-bottom: .5em;
-  padding-left: 2em;
-  padding-right: 2em;
-  color: #000;
-  text-decoration: none !important;
-  font-weight: 700;
-  border-radius: 20px;*/
-}
-form .btn-link, form .btn-link:hover {
-    color: #000;
-    font-weight: 700;
-    text-decoration: underline;
 }
 .form-opened {
   display: block;
