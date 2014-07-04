@@ -84,7 +84,7 @@ module.exports = function(grunt) {
     },
     watch: {
       css:{
-        files: '<%= cssPath %>/main.css',
+        files: '<%= cssPath %>/*.css',
         tasks: ['css']
       },
       script:{
