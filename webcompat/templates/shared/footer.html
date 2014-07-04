@@ -1,13 +1,13 @@
-<footer>
+<footer class="footer">
   <div class="container">
-  <ul class="footerleft">
-    <li><a href="{{ url_for('about') }}">About</a><span class="flourish" aria-hidden="true">//</span></li>
-    <li><a href="{{ url_for('privacy') }}">Privacy Policy</a><span class="flourish" aria-hidden="true">//</span></li>
-    <li><a href="mailto:compatibility@lists.mozilla.org?subject=[webcompat.com]">Contact</a><span class="flourish" aria-hidden="true">//</li>
-    <li><a href="https://github.com/webcompat/webcompat.com">Contribute on GitHub</a></li>
+  <ul class="footer__section footer__section--left">
+    <li class="footer__item"><a href="{{ url_for('about') }}">About</a><span class="flourish" aria-hidden="true">//</span></li><!--
+    --><li class="footer__item"><a href="{{ url_for('privacy') }}">Privacy Policy</a><span class="flourish" aria-hidden="true">//</span></li><!--
+    --><li class="footer__item"><a href="mailto:compatibility@lists.mozilla.org?subject=[webcompat.com]">Contact</a><span class="flourish" aria-hidden="true">//</li><!--
+    --><li class="footer__item"><a href="https://github.com/webcompat/webcompat.com">Contribute on GitHub</a></li>
   </ul>
-  <ul class="footerright">
-    <li class="follow"><a href="https://twitter.com/intent/user?screen_name=webcompat" target="_blank">Follow @WebCompat</a></li>
+  <ul class="footer__section footer__section--right">
+    <li class="footer__item follow"><a href="https://twitter.com/intent/user?screen_name=webcompat" target="_blank">Follow @WebCompat</a></li>
   </ul>
   </div>
 </footer>

@@ -180,35 +180,39 @@ a:hover, a:focus {
 /* mike: commenting out because this collapses into content
    at smaller viewports*/
 }
-#push, footer {
+#push {
   height: 60px;
 }
-footer {
+.footer {
   background-color: #ffffff;
   border-top: 5px solid var(--color_theme_dark);
   clear: both;
 }
-footer .container {
-  padding: 1em 5em 2em;
+.footer .container {
+  padding: 1em 3em 1em;
 }
-footer .follow {
+.footer .follow {
   font-weight: 700;
 }
-.footerleft {
+.footer__section {
+	list-style: none;
+}
+.footer__section--left {
   float: left;
 }
-.footerright {
+.footer__section--right {
   float: right;
 }
-.footerleft li {
-  display: inline;
+.footer__item {
+  display: inline-block;
+}
+.footer__section--left .footer__item {
   padding: 0.75em 0.75em 0.75em 0;
 }
-.footerright li {
-  display: inline;
+.footer__section--right .footer__item {
   padding: 0.75em 0 0.75em 0.75em;
 }
-.footerleft a {
+.footer__section--left a {
   margin-right: 1em;
 }
 
@@ -357,7 +361,7 @@ input[type=search] {
   color: #fdf3dd;
 }
 #howitworks, #join, #browse-issues {
-  padding: 3em 5em;
+  padding: 3em 3em;
 }
 #browse-issues {
   padding-bottom: 2em;
@@ -856,10 +860,10 @@ comment__wrapper:-ms-input-placeholder {
   .bignumber {
     padding-bottom: 0;
   }
-  footer {
+  .footer {
     height: auto;
   }
-  footer li {
+  .footer__item {
     font-size: 0.75em;
   }
 
@@ -878,7 +882,7 @@ comment__wrapper:-ms-input-placeholder {
 }
 /* 600px */
 @media all and (max-width: 37.49em) {
-  footer .footerleft li {
+  .footer__item {
     display: block;
   }
   .flourish {
@@ -902,7 +906,9 @@ comment__wrapper:-ms-input-placeholder {
 }
 /* 450x px */
 @media all and (max-width: 28.115em) {
-  .maincontent.container, footer .container, form.cf {
+  .maincontent.container, 
+  .footer .container, 
+  form.cf {
     padding-left: 1em;
     padding-right: 1em;
   }
@@ -922,16 +928,19 @@ comment__wrapper:-ms-input-placeholder {
   .page ol {
     margin: 1.25em 0 1.25em 1.25em;
   }
-  footer {
+  .footer {
     margin-top: 3em;
   }
 }
 /* 375px */
 @media all and (max-width: 23.4275em) {
-  .footerright {
-    clear: left;
-    float: left;
-    margin-left: -10px;
+  .footer__section--left,
+  .footer__section--right {
+    float: none;
+	margin:0;
+  }
+  .footer__section--right  .footer__item {
+    padding-left: 0;
   }
 }
 /* 330px */
