@@ -37,6 +37,19 @@ html {
   padding: 0.5em 0;
 }
 .nav {}
+.nav {
+  height: 20px;
+}
+.nav__logo {
+  height: 20px;
+}
+.nav--big{
+  height: 55px;
+  line-height: 55px;
+}
+.nav--big .nav__logo {
+    height: 55px;
+}
 .nav__section{}
 .nav__section--left {
   float: left;
@@ -569,19 +582,20 @@ form .button {
 }
 /* Wrapper title and date issue */
 .issue__main_title {
-	line-height: 1em;
-	margin-bottom: .5em;
+  line-height: 1em;
+  margin-bottom: .5em;
+  padding: 0px 0px 0px .5em;
 }
 .issue__title {
-	display: inline-block;
-	vertical-align: middle;
+  display: inline-block;
+  vertical-align: middle;
 }
 
 /* btn back /index */
 .issue__back {
-	display: inline-block;
-	vertical-align: middle;
-	margin:0 .8em 0 0;
+  display: inline-block;
+  vertical-align: middle;
+  margin:0 .8em 0 0;
 }
 
 /* wrapper isssue */
