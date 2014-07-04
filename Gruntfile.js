@@ -79,7 +79,7 @@ module.exports = function(grunt) {
         'Gruntfile.js',
         '<%= jsPath %>/lib/homepage.js',
         '<%= jsPath %>/lib/bugform.js',
-        '<%= jsPath %>/lib/issue.js'
+        '<%= jsPath %>/lib/issues.js'
       ]
     },
     watch: {
