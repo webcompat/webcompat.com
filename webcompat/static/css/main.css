@@ -139,10 +139,10 @@ p {
 
 /*----------Link Styles----------*/
 a {
-  color: #000;
+  color: var(--base-link-color);
 }
 a:hover, a:focus {
-  color: #000;
+  color: var(--base-link-color);
   outline: none;
   text-decoration: underline;
 }
