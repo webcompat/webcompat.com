@@ -33,6 +33,13 @@ html {
    font-weight: 300;
    color: var(--wc-variant-background-dark);
 }
+.wc-viewport {
+  min-width: var(--base-min-width);
+  min-width: 20rem;
+  max-width: var(--base-max-width);
+  max-width: 120rem;
+  margin:0 auto;
+}
 
 /*---------- Header ----------*/
 .header {

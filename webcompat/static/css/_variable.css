@@ -5,6 +5,8 @@
   --base-color : #333;
   --base-background: #fff;
   --base-font: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  --base-min-width:	320px;
+  --base-max-width: 1920px;
   --wb-background-dark: #F8C41C; /*Dark Yellow*/
   --wb-background-light: #FBC55F; /* Light Yellow */
   --wc-variant-background-dark: #404040; /* Dark Gray */
