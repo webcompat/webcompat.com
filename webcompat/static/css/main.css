@@ -73,6 +73,28 @@ html {
 .nav__link--right {
   padding-right:7em;
 }
+/* 450x px */
+@media all and (max-width: 28.115em) {
+  .nav__link--left {
+    padding-left:0;
+  }
+  .nav__link--right {
+    padding-right:0;
+  }
+}
+/* 450x px */
+@media all and (max-width: 28.115em) {
+  .nav.container {
+    padding-left: 1em;
+    padding-right: 1em;
+  }
+}
+/* 330px */
+@media all and (max-width: 20.615em) {
+  .nav__link {
+    font-size: .8em;
+  }
+}
 .header .container {
   background-image: none !important;
 }
@@ -82,6 +104,13 @@ html {
   display: inline-block;
   border-radius: 3px;
 }
+/* 330px */
+@media all and (max-width: 20.615em) {
+  .nav__avatar {
+    display: none;
+  }
+}
+
 
 /*----------Global H Styles----------*/
 h1 {
@@ -193,6 +222,12 @@ a:hover, a:focus {
   border-top: 5px solid var(--wb-background-dark);
   clear: both;
 }
+/* 450x px */
+@media all and (max-width: 28.115em) {
+  .footer {
+    margin-top: 3em;
+  }
+}
 .footer .container {
   padding: 1em 3em 1em;
 }
@@ -221,6 +256,33 @@ a:hover, a:focus {
   margin-right: 1em;
 }
 
+/* 600px */
+@media all and (max-width: 37.49em) {
+  .footer__item {
+    display: block;
+  }
+}
+/* 770px */
+@media all and (max-width: 48.115em) {
+  .footer__item {
+    font-size: 0.75em;
+  }
+}
+/* 375px */
+@media all and (max-width: 23.4275em) {
+  .footer__section--left,
+  .footer__section--right {
+    float: none;
+	margin:0;
+  }
+}
+/* 375px */
+@media all and (max-width: 23.4275em) {
+  .footer__section--right  .footer__item {
+    padding-left: 0;
+  }
+}
+
 /*--------Flash Messages---------*/
 .flash {
   position: absolute;
@@ -246,11 +308,36 @@ a:hover, a:focus {
   background: url(../img/LightBulbHero.png) no-repeat right 100px top;
   background-origin: content-box;
 }
+/* 770px */
+@media all and (max-width: 48.115em) {
+  #hero .container {
+    background-size: 18%;
+    background-position: right 80px top -50px;
+  }
+}
+/* 600px */
+@media all and (max-width: 37.49em) {
+  #hero .container {
+    background: none;
+  }
+}
 #maintitle {
   padding: 6em 5em;
 }
+/* 450x px */
+@media all and (max-width: 28.115em) {
+  #maintitle {
+    padding: 3em 1em 3em;
+  }
+}
 #maintitle h1 {
   text-shadow: -1px -1px 0px rgba(0,0,0,.25);
+}
+/* 770px */
+@media all and (max-width: 48.115em) {
+  #maintitle h1 {
+    font-size: 3em;
+  }
 }
 #report-bug {
   display: block;
@@ -264,6 +351,12 @@ a:hover, a:focus {
 #report-bug.opened {
   top: 2em;
   transition: top 100ms ease-out 0ms;
+}
+/* 450x px */
+@media all and (max-width: 28.115em) {
+  #report-bug.opened {
+    top: 1.25em;
+  }
 }
 #report-bug:hover, #report-bug:focus {
   padding-left: 0;
@@ -302,8 +395,21 @@ a:hover, a:focus {
   position: relative;
   bottom:0.1em;
 }
+/* 770px */
+@media all and (max-width: 48.115em) {
+  .key {
+    display: block;
+    margin-top: 1em;
+  }
+}
 .key span {
   padding: 0.3em 1em;
+}
+/* 990px */
+@media all and (max-width: 61.865em) {
+  .key span {
+    padding: 0 0 0 0.5em;
+  }
 }
 .issues {
   background-color: #fff;
@@ -349,7 +455,9 @@ input[type=search] {
   cursor: pointer;
   color: #fdf3dd;
 }
-#howitworks, #join, #browse-issues {
+#howitworks, 
+#join, 
+#browse-issues {
   padding: 3em 3em;
 }
 #browse-issues {
@@ -367,6 +475,14 @@ input[type=search] {
   margin-right: 1em;
   display: table-cell;
 }
+/* 450x px */
+@media all and (max-width: 28.115em) {
+  #howitworks, 
+  #join, 
+  #browse-issues {
+    padding: 2em 1em;
+  }
+}
 #threeways {
   vertical-align: top;
 }
@@ -375,6 +491,18 @@ input[type=search] {
   font-weight: 700;
   padding: 0.2em 0.75em 0.5em 0.5em;
   display: table-cell;
+}
+/* 950px */
+@media all and (max-width: 59.365em) {
+  .bignumber {
+    padding-right: 0.5em;
+  }
+}
+/* 770px */
+@media all and (max-width: 48.115em) {
+  .bignumber {
+    padding-bottom: 0;
+  }
 }
 #join img, .bignumber {
   float: left;
@@ -402,6 +530,12 @@ input[type=search] {
   line-height: 150%;
   margin: 1.25em 0;
 }
+/* 450x px */
+@media all and (max-width: 28.115em) {
+  .page ol {
+    margin: 1.25em 0 1.25em 1.25em;
+  }
+}
 .page li {
   margin-bottom: 1em;
 }
@@ -424,6 +558,12 @@ label, .label {
 }
 label {
   float: left;
+}
+/* 990px */
+@media all and (max-width: 61.865em) {
+  label {
+    float: none;
+  }
 }
 .label {
   padding-left: 0;
@@ -522,6 +662,25 @@ form .button {
   color: #ff0000;
   float: right;
 }
+
+/* 600px */
+@media all and (max-width: 37.49em) {
+  .flourish {
+    display: none;
+  }
+
+  .submit {
+    float: left;
+    margin: 0 0 1em;
+  }
+  .col-md-6.submit, .col-md-6 button {
+    width: 100%;
+  }
+  .has-error .help-inline {
+    float: none;
+    display: block;
+  }
+}
 .validation-wrapper {
   display: block;
   clear: both;
@@ -598,6 +757,13 @@ form .button {
 /* wrapper isssue */
 .issue__wrapper {
 	margin:0 0 0 4.2em;
+}
+/* 1180px */
+@media all and (max-width: 73.74em){
+  /* Issues view */
+  .issue__wrapper {
+	margin:0;
+  }
 }
 .issue__create {
 	font-size: 1.2em;
@@ -688,6 +854,20 @@ form .button {
 .comment__avatar,
 .comment__body {
 	float: left;
+}
+/* 770px */
+@media all and (max-width: 48.115em) {
+  /* Issues view */
+  .comment__wrapper,
+  .comment__body {
+  	width: 100%;
+  }
+}
+/* 990px */
+@media all and (max-width: 61.865em) {
+  .comment__avatar {
+	  display: none;
+  }
 }
 .comment__body {
 	margin-left:.8em;
@@ -807,92 +987,16 @@ comment__wrapper:-ms-input-placeholder {
 	text-align: right;
 	margin:1.2em 0 0;
 }
-.comment__button .button {
-	text-align: center;
-}
-
-/*------Media Queries------*/
-/* 1180px */
-@media all and (max-width: 73.74em){
-  /* Issues view */
-  .issue__wrapper {
-	margin:0;
-  }
-}
-/* 990px */
-@media all and (max-width: 61.865em) {
-  .key span {
-    padding: 0 0 0 0.5em;
-  }
-  label {
-    float: none;
-  }
-  .comment__avatar {
-	  display: none;
-  }
-}
-/* 950px */
-@media all and (max-width: 59.365em) {
-  .bignumber {
-    padding-right: 0.5em;
-  }
-}
 /* 770px */
 @media all and (max-width: 48.115em) {
-  #maintitle h1 {
-    font-size: 3em;
-  }
-  .key {
-    display: block;
-    margin-top: 1em;
-  }
-  .bignumber {
-    padding-bottom: 0;
-  }
-  .footer {
-    height: auto;
-  }
-  .footer__item {
-    font-size: 0.75em;
-  }
-
-  #hero .container {
-    background-size: 18%;
-    background-position: right 80px top -50px;
-  }
-  /* Issues view */
-  .comment__wrapper,
-  .comment__body {
-  	width: 100%;
-  }
  .comment__button {
 	text-align: center;
   }
 }
-/* 600px */
-@media all and (max-width: 37.49em) {
-  .footer__item {
-    display: block;
-  }
-  .flourish {
-    display: none;
-  }
-
-  #hero .container {
-    background: none;
-  }
-  .submit {
-    float: left;
-    margin: 0 0 1em;
-  }
-  .col-md-6.submit, .col-md-6 button {
-    width: 100%;
-  }
-  .has-error .help-inline {
-    float: none;
-    display: block;
-  }
+.comment__button .button {
+	text-align: center;
 }
+
 /* 450x px */
 @media all and (max-width: 28.115em) {
   .maincontent.container, 
@@ -901,48 +1005,9 @@ comment__wrapper:-ms-input-placeholder {
     padding-left: 1em;
     padding-right: 1em;
   }
-  #maintitle {
-    padding: 3em 1em 3em;
-  }
-  .nav__link {
-    padding-right: 1em;
-    padding-left: 1em;
-  }
-  #report-bug.opened {
-    top: 1.25em;
-  }
-  #howitworks, #join, #browse-issues {
-    padding: 2em 1em;
-  }
-  .page ol {
-    margin: 1.25em 0 1.25em 1.25em;
-  }
-  .footer {
-    margin-top: 3em;
-  }
-}
-/* 375px */
-@media all and (max-width: 23.4275em) {
-  .footer__section--left,
-  .footer__section--right {
-    float: none;
-	margin:0;
-  }
-  .footer__section--right  .footer__item {
-    padding-left: 0;
-  }
 }
 /* 330px */
 @media all and (max-width: 20.615em) {
-  .nav__link {
-    font-size: .8em;
-  }
-  .nav__avatar {
-    display: none;
-  }
-  .nav__link {
-    padding-right: 0;
-  }
   .row {
     margin-left: -20px;
     max-width: 320px;
