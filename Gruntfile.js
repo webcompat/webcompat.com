@@ -110,7 +110,17 @@ module.exports = function(grunt) {
           '<%= cssPath %>/webcompat.dev.css': '<%= cssPath %>/main.css'
         }
       }
+    },
+    cmq: {
+      options: {
+        log: true
+      },
+      your_target: {
+        files: {
+          '<%= cssPath %>' : ['<%= cssPath %>/webcompat.dev.css']
+        }
     }
+   }
   });
 
   grunt.loadNpmTasks('grunt-contrib-concat');
@@ -120,7 +130,8 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-autoprefixer');
   grunt.loadNpmTasks('grunt-myth');
+  grunt.loadNpmTasks('grunt-combine-media-queries');
   // Default task.
-  grunt.registerTask('default', ['jshint', 'concat', 'uglify','myth', 'autoprefixer', 'cssmin']);
+  grunt.registerTask('default', ['jshint', 'concat', 'uglify','myth', 'autoprefixer','cmq', 'cssmin']);
   grunt.registerTask('css', ['myth', 'autoprefixer']);
 };
