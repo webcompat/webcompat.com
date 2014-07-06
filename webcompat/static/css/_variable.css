@@ -15,4 +15,5 @@
   --wc-stat-close: #6FC7FA;   /* Light blue */
   --base-link-color: #000;
   --base-link-color-hover: var(--base-link-color);
+  --Button-disabled-opacity : 0.5; /* button opacity disabled*/
 }

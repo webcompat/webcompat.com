@@ -117,9 +117,22 @@ p {
   cursor: pointer;
   background-image: none;
   white-space: nowrap;
-  font-size: 14px;
-  line-height: 1.42857143;
+  font-size: .8;
+  line-height: normal;
   user-select: none;
+  -webkit-appearance: none; 
+}
+/**
+* Remove excess padding and border in Firefox 4+
+*/
+.Button::-moz-focus-inner {
+  border: 0;
+  padding: 0;
+}
+.Button:hover,
+.Button:focus,
+.Button:active {
+  text-decoration: none;
 }
 .Button:hover {
   color:#fff;
@@ -136,7 +149,11 @@ p {
 .Button--action:hover {
   background-color: var(--wc-variant-background-light);
 }
-
+.Button:disabled,
+.Button.is-disabled {
+  cursor: default;
+  opacity: var(--Button-disabled-opacity);
+}
 /*----------Link Styles----------*/
 a {
   color: var(--base-link-color);
