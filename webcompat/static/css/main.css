@@ -29,14 +29,14 @@ time, mark, audio, video {
 
 /*----------Global Styles----------*/
 html {
-   font-family: var(--base_font-family);
+   font-family: var(--base-font);
    font-weight: 300;
-   color: var(--wc_color_dark);
+   color: var(--wc-variant-background-dark);
 }
 
 /*---------- Header ----------*/
 .header {
-  background: var(--color_theme_light);
+  background: var(--wb-background-light);
   padding: 0.5em 0;
 }
 .nav {}
@@ -125,16 +125,16 @@ p {
   color:#fff;
 }
 .Button--default {
-  border: solid 4px var(--color_theme_dark);
+  border: solid 4px var(--wb-background-dark);
 }
 .Button--default:hover {
-  background-color: var(--color_theme_dark);
+  background-color: var(--wb-background-dark);
 }
 .Button--action {
-  border: solid 4px var(--wc_color_light);
+  border: solid 4px var(--wc-variant-background-light);
 }
 .Button--action:hover {
-  background-color: var(--wc_color_light);
+  background-color: var(--wc-variant-background-light);
 }
 
 /*----------Link Styles----------*/
@@ -151,7 +151,7 @@ a:hover, a:focus {
 }
 .divider {
   font-weight: 700;
-  border-top: 5px solid var(--color_theme_dark);
+  border-top: 5px solid var(--wb-background-dark);
   width: 30px;
   margin-left: 5em;
   color: #fff;
@@ -173,7 +173,7 @@ a:hover, a:focus {
 
 .footer {
   background-color: #ffffff;
-  border-top: 5px solid var(--color_theme_dark);
+  border-top: 5px solid var(--wb-background-dark);
   clear: both;
 }
 .footer .container {
@@ -220,7 +220,7 @@ a:hover, a:focus {
 /*--------Homepage Styles--------*/
 
 #hero {
-  background-color: var(--color_theme_dark);
+  background-color: var(--wb-background-dark);
   text-align: left;
   color: #fff;
   padding: 0;
@@ -294,13 +294,13 @@ a:hover, a:focus {
   margin-bottom: 1em;
 }
 .issue-contactready {
-  border-left: 5px solid var(--state_ready);
+  border-left: 5px solid var(--wc-state-ready);
 }
 .issue-needs-diagnosis {
-  border-left: 5px solid var(--state_need);
+  border-left: 5px solid var(--wc-state-need);
 }
 .issue-closed {
-  border-left: 5px solid var(--state_close);
+  border-left: 5px solid var(--wc-stat-close);
 }
 .issue-number {
   font-weight: 400;
@@ -443,7 +443,7 @@ form .button {
 #submitdiv {
   display: block;
   font-weight: 700;
-  border-top: 5px solid var(--color_theme_dark);
+  border-top: 5px solid var(--wb-background-dark);
   width: 30px;
   margin: 1em 0 0;
   color: #fff;
@@ -534,10 +534,10 @@ form .button {
   display: none;
 }
 .no-error .form-control {
-  border-color: var(--color_theme_dark);
+  border-color: var(--wb-background-dark);
 }
 .no-error .form-control:focus{
-  border-color: var(--color_theme_dark);
+  border-color: var(--wb-background-dark);
   box-shadow:none;
 }
 .disabled {
@@ -595,19 +595,19 @@ form .button {
 }
 /*Needs Diagnosis*/
 .issue__state--need {
-	background-color: var(--state_need);
+	background-color: var(--wc-state-need);
 }
 /*Ready for Outreach*/
 .issue__state--ready {
-	background-color: var(--state_ready);
+	background-color: var(--wc-state-ready);
 }
 /*Site wait*/
 .issue__state--sitewait {
-    background-color: var(--state_sitewait);
+    background-color: var(--wc-state-sitewait);
 }
 /*Close*/
 .issue__state--close {
-	background-color: var(--state_close);
+	background-color: var(--wc-stat-close);
 }
 .issue__date {
 	display: inline-block;
@@ -648,7 +648,7 @@ form .button {
 	float: left;
 	margin-left:1.2em;
 	font-size: 1.2em;
-	color: var(--wc_color_light);
+	color: var(--wc-variant-background-light);
 }
 /*------Comment------*/
 .comment {
@@ -685,7 +685,7 @@ form .button {
 	top: 15px;
 	left: -8px;
 	background-color: #f0f0f0;
-	border-color: var(--wc_color_light);
+	border-color: var(--wc-variant-background-light);
 	border-style: solid;
 	border-width: 0px 0px 2px 2px;
 	transform: rotate(45deg);
@@ -716,7 +716,7 @@ form .button {
 	width: 650px;
 	/*last 256px*/
 	min-height: 128px;
-	border: solid 2px var(--wc_color_light);
+	border: solid 2px var(--wc-variant-background-light);
 	border-radius: 10px;
 	padding: 0 1em 2em 1em;
 	word-wrap: break-word;
@@ -751,7 +751,7 @@ form .button {
   	bottom: .6em;
   	width: 100%;
   	text-align: center;
-  	color: var(--wc_color_light);
+  	color: var(--wc-variant-background-light);
   	font-size: .8em;
   	z-index: 2;
   	font-weight: bold;
@@ -761,27 +761,27 @@ form .button {
 }
 /* Textarea Placeholder style */
 .comment__wrapper::-webkit-input-placeholder {
-   color: var(--wc_color_light);
+   color: var(--wc-variant-background-light);
    opacity: 1;
    font-size: 1.2em;
    font-weight: 500;
 }
 .comment__wrapper:-moz-placeholder { /* Firefox 18- */
-   color: var(--wc_color_light);
+   color: var(--wc-variant-background-light);
    opacity: 1;
    font-size: 1.2em;
    font-weight: 500;
 }
 
 .comment__wrapper::-moz-placeholder {  /* Firefox 19+ */
-   color: var(--wc_color_light);
+   color: var(--wc-variant-background-light);
    opacity: 1;
    font-size: 1.2em;
    font-weight: 500;
 }
 
 comment__wrapper:-ms-input-placeholder {
-   color: var(--wc_color_light);
+   color: var(--wc-variant-background-light);
    opacity: 1;
    font-size: 1.2em;
    font-weight: 500;

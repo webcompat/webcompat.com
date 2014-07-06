@@ -1,13 +1,16 @@
 /*----------Variable----------*/
 
+
 :root {
-  --color_theme_dark: #F8C41C; /*Dark Yellow*/
-  --color_theme_light: #FBC55F; /* Light Yellow */
-  --wc_color_dark: #404040; /* Dark Gray */
-  --wc_color_light: #c2c2c2; /* Dark Light */
-  --state_need : #ff8364;   /* Light red */
-  --state_ready : #a1ebbf; /* Light green */
-  --state_sitewait : #006B75; /* Dark green */
-  --state_close: #6FC7FA;   /* Light blue */
-  --base_font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  --base-color : #333;
+  --base-background: #fff;
+  --base-font: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  --wb-background-dark: #F8C41C; /*Dark Yellow*/
+  --wb-background-light: #FBC55F; /* Light Yellow */
+  --wc-variant-background-dark: #404040; /* Dark Gray */
+  --wc-variant-background-light: #c2c2c2; /* Dark Light */
+  --wc-state-need : #ff8364;   /* Light red */
+  --wc-state-ready : #a1ebbf; /* Light green */
+  --wc-state-sitewait : #006B75; /* Dark green */
+  --wc-stat-close: #6FC7FA;   /* Light blue */
 }
