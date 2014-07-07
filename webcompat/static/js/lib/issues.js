@@ -141,7 +141,7 @@ issues.MainView = Backbone.View.extend({
   },
   addComment: function(comment) {
     var view = new issues.CommentView({model: comment});
-    this.$(".issue__comment__wrapper").append(view.render().el);
+    this.$(".comment").append(view.render().el);
   },
   addExistingComments: function() {
     this.comments.each(this.addComment, this);
