@@ -43,11 +43,11 @@ function BugForm() {
     },
     disableSubmits: function() {
       submitButtons.prop('disabled', true);
-      submitButtons.css('opacity', 0.5);
+      submitButtons.addClass('is-disabled');
     },
     enableSubmits: function() {
       submitButtons.prop('disabled', false);
-      submitButtons.css('opacity', 1);
+      submitButtons.removeClass('is-disabled');
     },
     /* Check to see that the form element is not empty.
        We don't do any other kind of validation yet. */
