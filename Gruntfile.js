@@ -73,6 +73,7 @@ module.exports = function(grunt) {
           Backbone: true,
           console: true,
           issueNumber: true,
+          marked: true,
           moment: true
         }
       },

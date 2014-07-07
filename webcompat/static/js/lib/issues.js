@@ -8,7 +8,7 @@ marked.setOptions({
   breaks: true,
   gfm: true,
   sanitize: true
-})
+});
 
 issues.Issue = Backbone.Model.extend({
   urlRoot: function() {
