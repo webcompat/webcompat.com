@@ -4,6 +4,12 @@
 
 var issues = issues || {};
 
+marked.setOptions({
+  breaks: true,
+  gfm: true,
+  sanitize: true
+})
+
 issues.Issue = Backbone.Model.extend({
   urlRoot: function() {
     var base = 'https://api.github.com/repos/webcompat/web-bugs/issues/';
@@ -32,17 +38,12 @@ issues.Issue = Backbone.Model.extend({
     //stateClass is set in this.defaults
     return 'Needs Diagnosis';
   },
-  parseBody: function(body) {
-    //need to tranform into expected HTML here....
-    //or convert to markdown
-    return body;
-  },
   parseLabels: function(labels) {
     return _.pluck(labels, 'name').join(', ');
   },
   parse: function(response) {
     this.set({
-      body: this.parseBody(response.body),
+      body: marked(response.body),
       commentNumber: response.comments,
       createdAt: moment(response.created_at).format('L'),
       issueState: this.getState(response.state, response.labels),
