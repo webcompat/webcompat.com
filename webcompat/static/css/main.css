@@ -840,6 +840,15 @@ form .button {
 	font-size: 1.2em;
 	color: var(--wc-variant-background-light);
 }
+/* wrapper comment issue */
+.issue__comment + .issue__comment {
+    margin-top:1em;
+}
+.issue__comment:after {
+    content: "";
+    display: table;
+    clear: both
+}
 /*------Comment------*/
 .comment {
 	margin:4em 0 0;
@@ -861,14 +870,6 @@ form .button {
 .comment__avatar,
 .comment__body {
 	float: left;
-}
-/* 770px */
-@media all and (max-width: 48.115em) {
-  /* Issues view */
-  .comment__wrapper,
-  .comment__body {
-  	width: 100%;
-  }
 }
 /* 990px */
 @media all and (max-width: 61.865em) {
@@ -932,6 +933,14 @@ form .button {
 	padding: .4em;
 	text-align: center;
 	overflow: hidden /* prevent overflow */
+}
+/* 770px */
+@media all and (max-width: 48.115em) {
+  /* Issues view */
+  .comment__wrapper,
+  .comment__body {
+  	width: 100%;
+  }
 }
 /* prevent width of img */
 .comment__attach img {
