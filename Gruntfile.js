@@ -1,7 +1,4 @@
-// Gruntfile.js
 module.exports = function (grunt) {
-    // load all grunt tasks matching the `grunt-*` pattern
-    require('load-grunt-tasks')(grunt);
 
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
@@ -13,9 +10,15 @@ module.exports = function (grunt) {
       ' *  This code is licensed under the MPL 2.0 License, except where\n' +
       ' *  otherwise stated. See http://mozilla.org/MPL/2.0/. */\n'
   });
+
   // Load per-task config from separate files.
   grunt.loadTasks('grunt-tasks');
+  
+  // load all grunt tasks
+  require('load-grunt-tasks')(grunt)
+  
   // Default task.
   grunt.registerTask('default', ['jshint', 'concat', 'uglify','myth', 'autoprefixer','cmq', 'cssmin']);
+  // Watch task
   grunt.registerTask('css', ['myth', 'autoprefixer']);
-}
+};
