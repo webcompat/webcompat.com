@@ -61,7 +61,7 @@ issues.Comment = Backbone.Model.extend({
       commenter: response.user.login,
       createdAt: moment(response.created_at).fromNow(),
       avatarUrl: response.user.avatar_url,
-      body: response.body
+      body: marked(response.body)
     });
   }
 });
