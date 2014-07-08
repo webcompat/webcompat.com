@@ -10,7 +10,6 @@
   },
   "devDependencies": {
     "grunt": "~0.4.2",
-    "load-grunt-tasks" : "*",
     "grunt-contrib-jshint": "~0.7.2",
     "grunt-contrib-watch": "~0.5.3",
     "grunt-contrib-concat": "~0.3.0",
@@ -18,6 +17,7 @@
     "grunt-contrib-cssmin": "~0.9.0",
     "grunt-autoprefixer": "~0.7.6",
     "grunt-myth": "~0.3.1",
-    "grunt-combine-media-queries": "~1.0.19"
+    "grunt-combine-media-queries": "~1.0.19",
+    "load-grunt-tasks": "~0.6.0"
   }
 }
