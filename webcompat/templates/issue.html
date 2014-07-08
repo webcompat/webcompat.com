@@ -20,18 +20,14 @@
           <div class="issue__date">Opened <%= createdAt %> by <%= reporter %>. <%= commentNumber %> comments</div>
         </script>
         </div>
-        <div class="issue__info">
+        <div class="issue__details">
         <!-- Issue Info -->
         <script type="text/template" id="issue-info-tmpl">
           <%= body %>
-          <div class="issue__info">
-            <ul class="issue__info__wrapper">
-              <li class="issue__info__item">
-                <div class="issue__info__label">Labels </div>
-                <div class="issue__info__value"><%= labels %></div>
-                <div class="issue__info__btn">Add label</div>
-              </li>
-            </ul>
+          <div class="issue__label">
+             <div class="issue__label__title">Labels </div>
+             <div class="issue__label__value"><%= labels %></div>
+             <div class="issue__label__btn">Add label</div>
           </div>
         </script>
         </div>
