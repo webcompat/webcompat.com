@@ -102,7 +102,7 @@ issues.MetaDataView = Backbone.View.extend({
 });
 
 issues.BodyView = Backbone.View.extend({
-  el: $('.issue__info'),
+  el: $('.issue__details'),
   template: _.template($('#issue-info-tmpl').html()),
   render: function() {
     this.$el.html(this.template(this.model.toJSON()));
