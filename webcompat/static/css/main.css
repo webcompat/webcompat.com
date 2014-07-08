@@ -845,6 +845,12 @@ form .button {
 	font-size: 1.2em;
 	color: var(--wc-variant-background-light);
 }
+
+/*------Comment------*/
+/*wrapper list comment */
+.comment {
+	margin:4em 0 0;
+}
 /* wrapper comment issue */
 .issue__comment + .issue__comment {
     margin-top:1em;
@@ -853,18 +859,6 @@ form .button {
     content: "";
     display: table;
     clear: both
-}
-/*------Comment------*/
-.comment {
-	margin:4em 0 0;
-}
-.comment + .comment {
-	margin:1em 0 0 0;
-}
-.comment:after {
-	display: table;
-	content: "";
-	clear: both;
 }
 /* case form */
 .comment--form {
