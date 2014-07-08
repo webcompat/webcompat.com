@@ -802,39 +802,44 @@ form .button {
 .issue__date {
 	display: inline-block;
 }
-.issue__info + .issue__info {
-	margin: 2.3em 0 0;
+
+/* container details issue */
+.issue__details {
+    word-break: break-word;
+    overflow: hidden;
 }
-.issue__info__wrapper {
+/* no need */
+/*.issue__info + .issue__info {
+	margin: 2.3em 0 0;
+}*/
+/*.issue__info__wrapper {
 	padding: 0;
 	margin: 0;
 	list-style: none;
-}
-.issue__info__wrapper + .issue__info__wrapper {
+}*/
+/*.issue__info__wrapper + .issue__info__wrapper {
 	margin:2em 0 0;
-}
+}*/
 
-.issue__info__item {
-	line-height: 1.4em;
-	/* to delete */
-	margin:0 0 .3em !important;
-}
-.issue__info__item:after {
+.issue__label:after {
 	display: table;
 	content: "";
 	clear: both;
 }
-.issue__info__label {
+/* name of label */
+.issue__label__title {
 	font-weight: bold;
 	font-size: 1.2em;
 	float: left;
 	margin-right:.6em;
 }
-.issue__info__value {
+/* value of label */
+.issue__label__value {
 	font-size: 1.2em;
 	float: left;
 }
-.issue__info__btn {
+/* btn add label */
+.issue__label__btn {
 	float: left;
 	margin-left:1.2em;
 	font-size: 1.2em;
