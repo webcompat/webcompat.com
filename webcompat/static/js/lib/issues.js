@@ -75,7 +75,7 @@ issues.CommentsCollection = Backbone.Collection.extend({
 });
 
 issues.CommentView = Backbone.View.extend({
-  className: 'issue__comment',
+  className: 'comment',
   template: _.template($('#comment-tmpl').html()),
   render: function() {
     this.$el.html(this.template(this.model.toJSON()));
@@ -141,7 +141,7 @@ issues.MainView = Backbone.View.extend({
   },
   addComment: function(comment) {
     var view = new issues.CommentView({model: comment});
-    this.$(".comment").append(view.render().el);
+    this.$(".issue__comment").append(view.render().el);
   },
   addExistingComments: function() {
     this.comments.each(this.addComment, this);

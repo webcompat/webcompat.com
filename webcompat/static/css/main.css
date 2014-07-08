@@ -4,7 +4,7 @@
 
 /* Import var */
 @import "_variable.css";
- 
+
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -156,7 +156,7 @@ p {
   font-size: .8;
   line-height: normal;
   user-select: none;
-  -webkit-appearance: none; 
+  -webkit-appearance: none;
 }
 /**
 * Remove excess padding and border in Firefox 4+
@@ -462,8 +462,8 @@ input[type=search] {
   cursor: pointer;
   color: #fdf3dd;
 }
-#howitworks, 
-#join, 
+#howitworks,
+#join,
 #browse-issues {
   padding: 3em 3em;
 }
@@ -484,8 +484,8 @@ input[type=search] {
 }
 /* 450x px */
 @media all and (max-width: 28.115em) {
-  #howitworks, 
-  #join, 
+  #howitworks,
+  #join,
   #browse-issues {
     padding: 2em 1em;
   }
@@ -848,14 +848,14 @@ form .button {
 
 /*------Comment------*/
 /*wrapper list comment */
-.comment {
+.issue__comment {
 	margin:4em 0 0;
 }
 /* wrapper comment issue */
-.issue__comment + .issue__comment {
+.comment + .comment {
     margin-top:1em;
 }
-.issue__comment:after {
+.comment:after {
     content: "";
     display: table;
     clear: both
@@ -1014,8 +1014,8 @@ comment__wrapper:-ms-input-placeholder {
 
 /* 450x px */
 @media all and (max-width: 28.115em) {
-  .maincontent.container, 
-  .footer .container, 
+  .maincontent.container,
+  .footer .container,
   form.cf {
     padding-left: 1em;
     padding-right: 1em;
