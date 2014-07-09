@@ -7,6 +7,7 @@ var issues = issues || {};
 marked.setOptions({
   breaks: true,
   gfm: true,
+  emoji: true,
   sanitize: true
 });
 
