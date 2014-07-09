@@ -4,6 +4,7 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
+import json
 import os
 import sys
 import time
@@ -16,7 +17,8 @@ from form import (build_formdata, get_browser, get_os,
 from hashlib import md5
 from issues import (report_issue, proxy_report_issue, get_user_issues,
                     get_contact_ready, proxy_get_contact_ready,
-                    get_needs_diagnosis, proxy_get_needs_diagnosis)
+                    get_needs_diagnosis, proxy_get_needs_diagnosis,
+                    proxy_request)
 from models import db_session, User
 from webcompat import github, app
 
@@ -172,7 +174,21 @@ def index():
 
 @app.route('/issues/<number>')
 def show_issue(number):
-    return render_template('issue.html', number=number)
+    '''Route to display a single issue. First the template is rendered, which
+    contains JS that will make a second XHR request (setting the proper accept
+    header) and the data from GitHub will be proxied back, either as an authed
+    user, or as one of our proxy bots.'''
+    if not number.isdigit():
+        abort(404)
+    if request.is_xhr and request.headers.get('accept') == 'application/json':
+        if g.user:
+            issue = github.get('repos/{0}/{1}'.format(
+                app.config['ISSUES_REPO_URI'], number))
+        else:
+            issue = proxy_request('get', '/{0}'.format(number))
+        return json.dumps(issue)
+    else:
+        return render_template('issue.html', number=number)
 
 
 @app.route('/thanks/<number>')

@@ -13,8 +13,7 @@ marked.setOptions({
 
 issues.Issue = Backbone.Model.extend({
   urlRoot: function() {
-    var base = 'https://api.github.com/repos/webcompat/web-bugs/issues/';
-    return base + this.get('number');
+    return '/issues/' + this.get('number');
   },
   defaults: {
     stateClass: 'need'
@@ -127,7 +126,8 @@ issues.MainView = Backbone.View.extend({
   },
   fetchModels: function() {
     var self = this;
-    this.issue.fetch().success(function() {
+    var headersBag = {headers: {'Accept': 'application/json'}};
+    this.issue.fetch(headersBag).success(function() {
       _.each([self.title, self.metadata, self.body, self], function(elm) {
         elm.render();
       });
