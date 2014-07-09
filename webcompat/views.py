@@ -141,7 +141,7 @@ def index():
                 user_issues = get_user_issues(session['username'])
             except GitHubError:
                 e = sys.exc_info()
-                print(e)
+                print('GitHubError: ', e)
             contact_ready = get_contact_ready()
             needs_diagnosis = get_needs_diagnosis()
         else:
@@ -218,7 +218,7 @@ def privacy():
 
 @app.errorhandler(GitHubError)
 def jumpship(e):
-    print(e)
+    print('jumpship! ', e)
     session.pop('user_id', None)
     flash('Something bad happened. Please try again?', 'error')
     return redirect(url_for('index'))

@@ -61,7 +61,7 @@
                 <textarea class="comment__wrapper" placeholder="Leave a comment"></textarea>
               </div>
               <div class="comment__button">
-                <a class="Button Button--action" href="{{ url_for("index") }}">Close</a>
+                <a class="Button Button--action" href="{{ url_for('index') }}">Close</a>
                 <button value="comment" class="Button Button--default" type="submit">Comment</button>
               </div>
             </form>
@@ -74,6 +74,6 @@
 </div>
 {% endblock %}
 {% block extrascripts %}
-<script>var issueNumber = {{ number }};</script>
+<script>var issueNumber={{ number }};</script>
 <script src="{{ url_for('static', filename='js/lib/issues.js') }}"></script>
 {% endblock %}
