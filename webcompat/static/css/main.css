@@ -47,28 +47,25 @@ html {
   padding: 0.5em 0;
 }
 .nav {}
-.nav {
-  height: 20px;
-}
 .nav__logo {
   height: 20px;
-}
-.nav--big{
-  height: 55px;
-  line-height: 55px;
+  vertical-align: middle;
 }
 .nav--big .nav__logo {
     height: 55px;
 }
-.nav__section{}
+.nav__section{
+	display: inline-block;
+	width: 50%;
+}
 .nav__section--left {
-  float: left;
+  text-align: left;
 }
 .nav__section--right {
-  float: right;
+  text-align: right;
 }
 .nav__link {
-  display: block;
+  display: inline-block;
   color: #fff;
 }
 .nav__link:hover {
@@ -106,10 +103,15 @@ html {
   background-image: none !important;
 }
 .nav__avatar {
-  width: 20px;
   height: 20px;
   display: inline-block;
   border-radius: 3px;
+  vertical-align: middle;
+  margin-left: .3em;
+  margin-right:7em;
+}
+.nav--big .nav__avatar {
+  height: 55px;
 }
 /* 330px */
 @media all and (max-width: 20.615em) {
