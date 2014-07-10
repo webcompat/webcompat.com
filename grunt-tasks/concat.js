@@ -12,9 +12,10 @@ module.exports = function(grunt) {
             '<%= jsPath %>/vendor/moment-min.js',
             '<%= jsPath %>/vendor/marked-min.js',
             '<%= jsPath %>/lib/homepage.js',
-            '<%= jsPath %>/lib/bugform.js'
+            '<%= jsPath %>/lib/bugform.js',
+            '<%= jsPath %>/lib/shared.js'
         ],
         dest: '<%= jsPath %>/<%= pkg.name %>.js'
-      } 
-   });	
+      }
+   });
 };

@@ -56,6 +56,7 @@
 <script src="{{ url_for('static', filename='js/vendor/marked-min.js') }}"></script>
 <script src="{{ url_for('static', filename='js/lib/homepage.js') }}"></script>
 <script src="{{ url_for('static', filename='js/lib/bugform.js') }}"></script>
+<script src="{{ url_for('static', filename='js/lib/shared.js') }}"></script>
 {%- endif %}
 {% for category, message in get_flashed_messages(with_categories=True) %}
 <div class="flash {{ category }}">{{ message }}</div>

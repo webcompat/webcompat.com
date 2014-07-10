@@ -64,17 +64,19 @@ def format_date(datestring):
 
 @app.route('/login')
 def login():
+    next_url = request.args.get('next') or url_for('index')
     if session.get('user_id', None) is None:
         return github.authorize('public_repo')
     else:
-        return redirect(url_for('index'))
+        return redirect(next_url)
 
 
 @app.route('/logout')
 def logout():
+    next_url = request.args.get('next') or url_for('index')
     session.clear()
     flash(u'You were successfully logged out.', 'info')
-    return redirect(url_for('index'))
+    return redirect(next_url)
 
 
 # OAuth2 callback handler that GitHub requires.
@@ -82,9 +84,10 @@ def logout():
 @app.route('/callback')
 @github.authorized_handler
 def authorized(access_token):
+    next_url = request.args.get('next') or url_for('index')
     if access_token is None:
         flash(u'Something went wrong trying to sign into GitHub. :(', 'error')
-        return redirect(url_for('index'))
+        return redirect(next_url)
     user = User.query.filter_by(github_access_token=access_token).first()
     if user is None:
         user = User(access_token)
@@ -94,7 +97,7 @@ def authorized(access_token):
     if session.get('form_data', None) is not None:
         return redirect(url_for('file_issue'))
     else:
-        return redirect(url_for('index'))
+        return redirect(next_url)
 
 
 # This route won't ever be viewed by a human being--there's not
