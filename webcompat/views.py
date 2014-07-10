@@ -15,6 +15,7 @@ from flask.ext.github import GitHubError
 from form import (build_formdata, get_browser, get_os,
                   IssueForm, AUTH_REPORT, PROXY_REPORT)
 from hashlib import md5
+from helpers import get_user_info
 from issues import (report_issue, proxy_report_issue, get_user_issues,
                     get_contact_ready, proxy_get_contact_ready,
                     get_needs_diagnosis, proxy_get_needs_diagnosis,
@@ -66,6 +67,7 @@ def format_date(datestring):
 def login():
     next_url = request.args.get('next') or url_for('index')
     if session.get('user_id', None) is None:
+        session['next_url'] = next_url
         return github.authorize('public_repo')
     else:
         return redirect(next_url)
@@ -84,7 +86,7 @@ def logout():
 @app.route('/callback')
 @github.authorized_handler
 def authorized(access_token):
-    next_url = request.args.get('next') or url_for('index')
+    next_url = session.get('next_url') or url_for('index')
     if access_token is None:
         flash(u'Something went wrong trying to sign into GitHub. :(', 'error')
         return redirect(next_url)
@@ -130,17 +132,7 @@ def index():
     if request.method == 'GET':
         if g.user:
             try:
-                user = User.query.get(session['user_id'])
-                if user.avatar_url and user.username:
-                    session['username'] = user.username
-                    session['avatar_url'] = user.avatar_url
-                else:
-                    gh_user = github.get('user')
-                    user.username = gh_user.get('login')
-                    user.avatar_url = gh_user.get('avatar_url')
-                    db_session.commit()
-                    session['username'] = user.username
-                    session['avatar_url'] = user.avatar_url
+                get_user_info()
                 user_issues = get_user_issues(session['username'])
             except GitHubError:
                 e = sys.exc_info()
@@ -191,6 +183,8 @@ def show_issue(number):
             issue = proxy_request('get', '/{0}'.format(number))
         return json.dumps(issue)
     else:
+        if g.user:
+            get_user_info()
         return render_template('issue.html', number=number)
 
 
@@ -204,6 +198,8 @@ def thanks(number):
         encoded_text = urllib.quote(text.encode("utf-8"))
     else:
         abort(404)
+    if g.user:
+        get_user_info()
     return render_template('thanks.html', number=issue,
                            encoded_issue=encoded_issue,
                            encoded_text=encoded_text)
@@ -211,11 +207,15 @@ def thanks(number):
 
 @app.route('/about')
 def about():
+    if g.user:
+        get_user_info()
     return render_template('about.html')
 
 
 @app.route('/privacy')
 def privacy():
+    if g.user:
+        get_user_info()
     return render_template('privacy.html')
 
 
