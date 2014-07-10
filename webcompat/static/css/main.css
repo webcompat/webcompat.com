@@ -52,11 +52,11 @@ html {
   vertical-align: middle;
 }
 .nav--big .nav__logo {
-    height: 55px;
+  height: 55px;
 }
 .nav__section{
-	display: inline-block;
-	width: 50%;
+  display: inline-block;
+  width: 50%;
 }
 .nav__section--left {
   text-align: left;
