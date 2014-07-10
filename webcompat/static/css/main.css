@@ -810,6 +810,12 @@ form .button {
     word-break: break-word;
     overflow: hidden;
 }
+
+/* temp hack to hide <!-- browser info --> */
+.issue__details > p:first-child {
+  display: none;
+}
+
 /* no need */
 /*.issue__info + .issue__info {
 	margin: 2.3em 0 0;
