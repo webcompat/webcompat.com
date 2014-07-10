@@ -136,9 +136,24 @@ issues.MainView = Backbone.View.extend({
       if (self.issue.get('commentNumber') > 0) {
         self.comments.fetch().success(function() {
           self.addExistingComments();
+        }).error(function() {
+          $('<div></div>', {
+            'class': 'flash error',
+            'text': 'There was an error retrieving issue comments.'
+          }).appendTo('body');
+
+          setTimeout(function(){
+            var __flashmsg = $('.flash');
+            if (__flashmsg.length) {__flashmsg.fadeOut();}
+          }, 2000);
         });
       }
-    }).error(function(){console.log('set up flash message');});
+    }).error(function() {
+      $('<div></div>', {
+        'class': 'flash error',
+        'text': 'There was an error retrieving the issue.'
+      }).appendTo('body');
+    });
   },
   addComment: function(comment) {
     var view = new issues.CommentView({model: comment});
