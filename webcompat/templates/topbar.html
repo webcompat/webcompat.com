@@ -5,13 +5,12 @@
     </div><!--
     --><div class="nav__section nav__section--right">
     {% if not session.user_id %}
-    <a class="nav__link nav__link--right" href="{{ url_for('login') }}">Login</a>
+      <a class="nav__link nav__link--right" href="{{ url_for('login') }}">Login</a>
     {% else %}
-    <a class="nav__link" href="{{ url_for('logout') }}">Logout
-    {% if session.user_id and session.avatar_url %}
+      <a class="nav__link" href="{{ url_for('logout') }}">Logout</a>
+      {% if session.user_id and session.avatar_url %}
       <img class="nav__avatar" src=" {{ session.avatar_url }}s=40">
       {% endif %}
-    </a>
     {% endif %}
     </div>
   </nav>
