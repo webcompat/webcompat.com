@@ -190,6 +190,23 @@ def show_issue(number):
         return render_template('issue.html', number=number, uri=uri)
 
 
+@app.route('/issues/<number>/comments')
+def proxy_comments(number):
+    '''Route to get issue comments and return them as JSON. This should 404 if
+    not requested via XHR with the right Accept header.'''
+    if not number.isdigit():
+        abort(404)
+    if request.is_xhr and request.headers.get('accept') == 'application/json':
+        if g.user:
+            comments = github.get('repos/{0}/{1}/comments'.format(
+                app.config['ISSUES_REPO_URI'], number))
+        else:
+            comments = proxy_request('get', '/{0}/comments'.format(number))
+        return json.dumps(comments)
+    else:
+        abort(404)
+
+
 @app.route('/thanks/<number>')
 def thanks(number):
     if number.isdigit():

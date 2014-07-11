@@ -69,8 +69,7 @@ issues.Comment = Backbone.Model.extend({
 issues.CommentsCollection = Backbone.Collection.extend({
   model: issues.Comment,
   url: function() {
-    var base = 'https://api.github.com/repos/webcompat/web-bugs/issues/';
-    return base + issueNumber + '/comments';
+    return '/issues/' + issueNumber + '/comments';
   }
 });
 
@@ -134,7 +133,7 @@ issues.MainView = Backbone.View.extend({
 
       // If there are any comments, go fetch the model data
       if (self.issue.get('commentNumber') > 0) {
-        self.comments.fetch().success(function() {
+        self.comments.fetch(headersBag).success(function() {
           self.addExistingComments();
         }).error(function() {
           $('<div></div>', {
