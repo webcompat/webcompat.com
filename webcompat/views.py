@@ -114,11 +114,6 @@ def file_issue():
     return redirect(url_for('thanks', number=response.get('number')))
 
 
-@app.route('/issues')
-def show_issues():
-    return redirect(url_for('index'), code=307)
-
-
 @app.route('/', methods=['GET', 'POST'])
 def index():
     '''Main view where people come to report issues.'''
@@ -167,6 +162,11 @@ def index():
         return render_template('index.html', form=bug_form)
 
 
+@app.route('/issues')
+def show_issues():
+    return redirect(url_for('index'), code=307)
+
+
 @app.route('/issues/<number>')
 def show_issue(number):
     '''Route to display a single issue. First the template is rendered, which
@@ -185,7 +185,9 @@ def show_issue(number):
     else:
         if g.user:
             get_user_info()
-        return render_template('issue.html', number=number)
+        # temporarily provide a link to github (until we can modify issues)
+        uri = 'https://github.com/{0}/{1}'.format(app.config['ISSUES_REPO_URI'], number)
+        return render_template('issue.html', number=number, uri=uri)
 
 
 @app.route('/thanks/<number>')
