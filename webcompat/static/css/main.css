@@ -373,11 +373,13 @@ a:hover, a:focus {
   background-color: #fff;
   color: var( --wb-background-dark);
   border-radius: 50%;
+  transition: all 0.3s linear 0s;
 }
 /* hover a icon */
 #report-bug:hover .icon {
   background-color: var( --wb-background-dark);
   color: #fff;
+  transition: all 0.3s linear 0s;
 }
 /* hover a - icon down */
 #report-bug:hover .icon:before {
@@ -796,10 +798,10 @@ form .button {
   vertical-align: middle;
   margin:0 .8em 0 0;
 }
-.issue__back:hover{
+.issue__back:hover {
   text-decoration: none;
 }
-.issue__back .icon{
+.issue__back .icon {
   display: inline-block;
   width: 1.25em;
   height: 1.25em;
@@ -808,9 +810,11 @@ form .button {
   background-color: var(--wc-variant-background-light);
   color: #fff;;
   border-radius:50%;
+  transition: all 0.3s linear 0s;
 }
 .issue__back:hover .icon {
   background-color: var(--wc-variant-background-dark); 
+  transition: all 0.3s linear 0s;
 }
 /* wrapper isssue */
 .issue__wrapper {
