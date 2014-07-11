@@ -4,6 +4,8 @@
 
 /* Import var */
 @import "_variable.css";
+/* import font */
+@import "_font.css";
 
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -362,6 +364,36 @@ a:hover, a:focus {
   text-decoration: none !important;
   transition: top 100ms ease-out 0ms;
 }
+/*icon */
+#report-bug .icon {
+  width: 1.15em;
+  height: 1.15em;
+  line-height: 1.15em;
+  margin-left:.3em;
+  background-color: #fff;
+  color: var( --wb-background-dark);
+  border-radius: 50%;
+}
+/* hover a icon */
+#report-bug:hover .icon {
+  background-color: var( --wb-background-dark);
+  color: #fff;
+}
+/* hover a - icon down */
+#report-bug:hover .icon:before {
+  content: "\e602";
+}
+/* open a - icon down*/
+#report-bug.opened .icon:before {
+  /*transform:rotate(90deg);*/
+  content: "\e602";
+}
+/* hover open a - icon up */
+#report-bug.opened:hover .icon:before {
+  /*transform:rotate(90deg);*/
+  content: "\e600";
+}
+
 #report-bug.opened {
   top: 2em;
   transition: top 100ms ease-out 0ms;
@@ -387,9 +419,6 @@ a:hover, a:focus {
 #arrow {
   height: 1.15em;
   vertical-align: middle;
-}
-.opened #arrow {
-  transform:rotate(90deg);
 }
 .form-opened {
   display: block;
@@ -767,7 +796,22 @@ form .button {
   vertical-align: middle;
   margin:0 .8em 0 0;
 }
-
+.issue__back:hover{
+  text-decoration: none;
+}
+.issue__back .icon{
+  display: inline-block;
+  width: 1.25em;
+  height: 1.25em;
+  line-height: 1.25em;
+  text-align: center;
+  background-color: var(--wc-variant-background-light);
+  color: #fff;;
+  border-radius:50%;
+}
+.issue__back:hover .icon {
+  background-color: var(--wc-variant-background-dark); 
+}
 /* wrapper isssue */
 .issue__wrapper {
 	margin:0 0 0 4.2em;
