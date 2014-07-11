@@ -14,7 +14,7 @@
         <div class="col-md-6">
         <div class="issues {{ issue.status_class }}">
           <p class="issue-title">
-            <a href="{{ issue.html_url }}"><span class="issue-number">Issue {{ issue.number }}</span>: {{ issue.title }}</a>
+            <a href="/issues/{{ issue.number }}"><span class="issue-number">Issue {{ issue.number }}</span>: {{ issue.title }}</a>
           </p>
           <p class="issue-metadata">Opened: <time>{{ issue.created_at|format_date }}</time>, comments: {{ issue.comments }}</p>
         </div>
@@ -32,7 +32,7 @@
         {% for issue in needs_diagnosis %}
         <div class="issues issue-needs-diagnosis">
           <p class="issue-title">
-            <a href="{{ issue.html_url }}"><span class="issue-number">Issue {{ issue.number }}</span>: {{ issue.title }}</a>
+            <a href="/issues/{{ issue.number }}"><span class="issue-number">Issue {{ issue.number }}</span>: {{ issue.title }}</a>
           </p>
           <p class="issue-metadata">Opened: <time>{{ issue.created_at|format_date }}</time>, comments: {{ issue.comments }}</p>
         </div>
@@ -47,7 +47,7 @@
         {% for issue in contact_ready %}
         <div class="issues issue-contactready">
           <p class="issue-title">
-            <a href="{{ issue.html_url }}"><span class="issue-number">Issue {{ issue.number }}</span>: {{ issue.title }}</a>
+            <a href="/issues/{{ issue.number }}"><span class="issue-number">Issue {{ issue.number }}</span>: {{ issue.title }}</a>
           </p>
           <p class="issue-metadata">Opened: <time>{{ issue.created_at|format_date }}</time>, comments: {{ issue.comments }}</p>
         </div>
