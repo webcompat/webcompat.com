@@ -371,13 +371,13 @@ a:hover, a:focus {
   line-height: 1.15em;
   margin-left:.3em;
   background-color: #fff;
-  color: var( --wb-background-dark);
+  color: var(--wb-background-dark);
   border-radius: 50%;
   transition: all 0.3s linear 0s;
 }
 /* hover a icon */
 #report-bug:hover .icon {
-  background-color: var( --wb-background-dark);
+  background-color: var(--wb-background-dark);
   color: #fff;
   transition: all 0.3s linear 0s;
 }
