@@ -38,6 +38,12 @@ class TestURLs(unittest.TestCase):
         rv = self.app.get('/about')
         self.assertEqual(rv.status_code, 200)
 
+    def test_privacy(self):
+        '''Test that /privacy exists'''
+        rv = self.app.get('/privacy')
+        self.assertEqual(rv.status_code, 200)
+
+
     def test_thanks(self):
         '''Test that /thanks/1 exists'''
         rv = self.app.get('/thanks/1')
@@ -50,12 +56,10 @@ class TestURLs(unittest.TestCase):
         self.assertIn('github.com/login/oauth/', rv.headers['Location'])
 
     def test_issue_redirect(self):
-        '''Test that the /issues/<number> route 307s to GitHub issues
-         (for now)'''
+        '''Test that the /issues/<number> exists, and does not redirect.'''
         rv = self.app.get('/issues/3')
-        self.assertEqual(rv.status_code, 307)
-        self.assertRegexpMatches(rv.headers['Location'],
-                                 r'https.+github.+issues')
+        self.assertEqual(rv.status_code, 200)
+        self.assertNotEqual(rv.status_code, 307)
 
     def test_issues_redirect(self):
         '''Test that the /issues route 307s to /index (for now)'''
