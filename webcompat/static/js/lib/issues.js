@@ -13,7 +13,7 @@ marked.setOptions({
 
 issues.Issue = Backbone.Model.extend({
   urlRoot: function() {
-    return '/issues/' + this.get('number');
+    return '/api/issues/' + this.get('number');
   },
   defaults: {
     stateClass: 'need'
@@ -69,7 +69,7 @@ issues.Comment = Backbone.Model.extend({
 issues.CommentsCollection = Backbone.Collection.extend({
   model: issues.Comment,
   url: function() {
-    return '/issues/' + issueNumber + '/comments';
+    return '/api/issues/' + issueNumber + '/comments';
   }
 });
 

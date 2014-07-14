@@ -169,9 +169,19 @@ def show_issues():
 
 @app.route('/issues/<number>')
 def show_issue(number):
-    '''Route to display a single issue. First the template is rendered, which
-    contains JS that will make a second XHR request (setting the proper accept
-    header) and the data from GitHub will be proxied back, either as an authed
+    '''Route to display a single issue.'''
+    if not number.isdigit():
+        abort(404)
+    if g.user:
+        get_user_info()
+    # temporarily provide a link to github (until we can modify issues)
+    uri = 'https://github.com/{0}/{1}'.format(app.config['ISSUES_REPO_URI'], number)
+    return render_template('issue.html', number=number, uri=uri)
+
+
+@app.route('/api/issues/<number>')
+def proxy_issue(number):
+    '''XHR endpoint to get issue data from GitHub, either as an authed
     user, or as one of our proxy bots.'''
     if not number.isdigit():
         abort(404)
@@ -183,17 +193,13 @@ def show_issue(number):
             issue = proxy_request('get', '/{0}'.format(number))
         return json.dumps(issue)
     else:
-        if g.user:
-            get_user_info()
-        # temporarily provide a link to github (until we can modify issues)
-        uri = 'https://github.com/{0}/{1}'.format(app.config['ISSUES_REPO_URI'], number)
-        return render_template('issue.html', number=number, uri=uri)
+        abort(406)
 
 
-@app.route('/issues/<number>/comments')
+@app.route('/api/issues/<number>/comments')
 def proxy_comments(number):
-    '''Route to get issue comments and return them as JSON. This should 404 if
-    not requested via XHR with the right Accept header.'''
+    '''XHR endpoint to get issues comments from GitHub, either as an authed
+    user, or as one of our proxy bots.'''
     if not number.isdigit():
         abort(404)
     if request.is_xhr and request.headers.get('accept') == 'application/json':
@@ -204,7 +210,7 @@ def proxy_comments(number):
             comments = proxy_request('get', '/{0}/comments'.format(number))
         return json.dumps(comments)
     else:
-        abort(404)
+        abort(406)
 
 
 @app.route('/thanks/<number>')
