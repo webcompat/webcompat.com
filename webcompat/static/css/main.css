@@ -814,7 +814,7 @@ form .button {
   transition: all 0.3s linear 0s;
 }
 .issue__back:hover .icon {
-  background-color: var(--wc-variant-background-dark); 
+  background-color: var(--wc-variant-background-dark);
   transition: all 0.3s linear 0s;
 }
 /* wrapper isssue */
@@ -870,18 +870,10 @@ form .button {
   display: none;
 }
 
-/* no need */
-/*.issue__info + .issue__info {
-	margin: 2.3em 0 0;
-}*/
-/*.issue__info__wrapper {
-	padding: 0;
-	margin: 0;
-	list-style: none;
-}*/
-/*.issue__info__wrapper + .issue__info__wrapper {
-	margin:2em 0 0;
-}*/
+/* To be deleted when issues are READ+WRITE*/
+.issue__github_link {
+  margin-top: 2.5em;
+}
 
 .issue__label:after {
 	display: table;
