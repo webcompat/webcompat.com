@@ -259,6 +259,13 @@ def not_found(err):
                            error_code=404,
                            error_message=message), 404
 
+@app.errorhandler(406)
+def not_found(err):
+    message = "There's something fishy with your Accept headers."
+    return render_template('error.html',
+                           error_code=406,
+                           error_message=message), 406
+
 
 @app.errorhandler(500)
 def not_found(err):
