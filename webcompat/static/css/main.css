@@ -861,7 +861,7 @@ form .button {
 
 /* container details issue */
 .issue__details {
-    word-break: break-word;
+    word-wrap: break-word;
     overflow: hidden;
 }
 .issue__details strong {
@@ -974,7 +974,7 @@ form .button {
 /* comment texte */
 .comment__content {
     overflow: hidden;
-    word-break: break-word;
+    word-wrap: break-word;
     padding:.5em 0 0;
 }
 .comment__content img {
