@@ -14,7 +14,7 @@ THREADS_PER_PAGE = 8
 
 # Secret key for signing cookies.
 # Doesn't really matter for local testing.
-SECRET_KEY = ""
+SECRET_KEY = "meow"
 
 # the PRODUCTION and DEVELOPMENT env var is set in uwsgi.conf
 PRODUCTION = os.environ.get('PRODUCTION')
