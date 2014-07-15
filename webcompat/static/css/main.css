@@ -356,7 +356,7 @@ a:hover, a:focus {
   }
 }
 #report-bug {
-  display: block;
+  display: inline-block;
   position: relative;
   top: 1em;
   font-size: 2em;
