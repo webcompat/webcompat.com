@@ -799,6 +799,13 @@ form .button {
   vertical-align: middle;
   margin:0 .8em 0 0;
 }
+/* 450px */
+@media all and (max-width:28.115em) {
+  .issue__back {
+    display:block;
+    margin-bottom:.3em;
+  }
+}
 .issue__back:hover {
   text-decoration: none;
 }
