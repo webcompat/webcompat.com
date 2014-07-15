@@ -19,6 +19,7 @@
     "myth" : "1.1.0",
     "grunt-myth": "~0.3.1",
     "grunt-combine-media-queries": "~1.0.19",
-    "load-grunt-tasks": "~0.6.0"
+    "load-grunt-tasks": "~0.6.0",
+    "intern": "2.0.1"
   }
 }
