@@ -786,7 +786,7 @@ form .button {
   line-height: 1em;
   margin-bottom: .5em;
   padding: 0px 0px 0px .5em;
-  word-break: break-word;
+  word-wrap: break-word;
 }
 .issue__title {
   display: inline-block;
@@ -798,6 +798,13 @@ form .button {
   display: inline-block;
   vertical-align: middle;
   margin:0 .8em 0 0;
+}
+/* 450px */
+@media all and (max-width:28.115em) {
+  .issue__back {
+    display:block;
+    margin-bottom:.3em;
+  }
 }
 .issue__back:hover {
   text-decoration: none;
@@ -861,16 +868,14 @@ form .button {
 
 /* container details issue */
 .issue__details {
-    word-break: break-word;
+    word-wrap: break-word;
     overflow: hidden;
 }
 .issue__details strong {
     font-weight: bold !important;
 }
 .issue__details img {
-    width: 100%;
     max-width: 100%;
-    height: 100%;
     max-height: 100%;
 }
 
@@ -974,7 +979,7 @@ form .button {
 /* comment texte */
 .comment__content {
     overflow: hidden;
-    word-break: break-word;
+    word-wrap: break-word;
     padding:.5em 0 0;
 }
 .comment__content img {
