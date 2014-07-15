@@ -786,7 +786,7 @@ form .button {
   line-height: 1em;
   margin-bottom: .5em;
   padding: 0px 0px 0px .5em;
-  word-break: break-word;
+  word-wrap: break-word;
 }
 .issue__title {
   display: inline-block;
