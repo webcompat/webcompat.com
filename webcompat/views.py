@@ -19,7 +19,7 @@ from helpers import get_user_info
 from issues import (report_issue, proxy_report_issue, get_user_issues,
                     get_contact_ready, proxy_get_contact_ready,
                     get_needs_diagnosis, proxy_get_needs_diagnosis,
-                    proxy_request)
+                    proxy_request, get_issue)
 from models import db_session, User
 from webcompat import github, app
 
@@ -174,9 +174,15 @@ def show_issue(number):
         abort(404)
     if g.user:
         get_user_info()
+    try:
+        title = get_issue(number)['title']
+    except GitHubError:
+        e = sys.exc_info()
+        print('GitHubError: ', e)
+        title = 'Web bug'
     # temporarily provide a link to github (until we can modify issues)
     uri = 'https://github.com/{0}/{1}'.format(app.config['ISSUES_REPO_URI'], number)
-    return render_template('issue.html', number=number, uri=uri)
+    return render_template('issue.html', number=number, uri=uri, title=title)
 
 
 @app.route('/api/issues/<number>')

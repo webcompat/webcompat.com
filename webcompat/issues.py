@@ -102,3 +102,10 @@ def proxy_get_needs_diagnosis():
     '''Return the first 4 issues that need diagnosis.'''
     issues = proxy_request('get')
     return filter_needs_diagnosis(issues)[0:4]
+
+
+def get_issue(number):
+    '''Return a single issue by issue number.'''
+    issue_uri = 'repos/{0}/{1}'.format(REPO_URI, number)
+    issue = github.get(issue_uri)
+    return issue
