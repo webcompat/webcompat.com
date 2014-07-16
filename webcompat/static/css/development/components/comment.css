@@ -19,8 +19,8 @@
 .comment__body {
   float: left;
 }
-/* 990px */
-@media all and (max-width: 61.865em) {
+
+@media (--viewport-990px) {
   .comment__avatar {
     display: none;
   }
@@ -86,8 +86,8 @@
   text-align: center;
   overflow: hidden /* prevent overflow */
 }
-/* 770px */
-@media all and (max-width: 48.115em) {
+
+@media (--viewport-770px) {
   /* Issues view */
   .comment__wrapper,
   .comment__body {
@@ -155,8 +155,8 @@ comment__wrapper:-ms-input-placeholder {
   text-align: right;
   margin:1.2em 0 0;
 }
-/* 770px */
-@media all and (max-width: 48.115em) {
+
+@media (--viewport-770px) {
  .comment__button {
   text-align: center;
   }

@@ -21,8 +21,8 @@
   vertical-align: middle;
   margin:0 .8em 0 0;
 }
-/* 450px */
-@media all and (max-width:28.115em) {
+
+@media (--viewport-450px) {
   .issue__back {
     display:block;
     margin-bottom:.3em;
@@ -50,8 +50,8 @@
 .issue__wrapper {
   margin:0 0 0 4.2em;
 }
-/* 1180px */
-@media all and (max-width: 73.74em){
+
+@media (--viewport-1180px) {
   /* Issues view */
   .issue__wrapper {
   margin:0;
