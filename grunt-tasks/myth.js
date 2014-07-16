@@ -5,8 +5,8 @@ module.exports = function(grunt) {
       },
       dist: {
         files: {
-          '<%= cssPath %>/webcompat.dev.css': '<%= cssPath %>/main.css'
+          '<%= cssPath %>/webcompat.dev.css': '<%= cssPath %>/development/main.css'
         }
-      }  
-   });	
+      }
+   });
 };

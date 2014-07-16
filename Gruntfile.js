@@ -19,7 +19,7 @@ module.exports = function (grunt) {
   require('load-grunt-tasks')(grunt)
 
   // Default task.
-  grunt.registerTask('default', ['jshint', 'concat', 'uglify','myth', 'autoprefixer','cmq', 'cssmin']);
-  // Watch task
+  grunt.registerTask('default', ['jshint', 'concat', 'uglify','myth', 'autoprefixer','cmq', 'cssmin', 'imagemin']);
+  // Css task
   grunt.registerTask('css', ['myth', 'autoprefixer']);
 };
