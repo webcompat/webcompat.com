@@ -2,8 +2,7 @@ init:
 	echo "❯ Initializing..."
 	(sudo pip install virtualenv)
 	(virtualenv env)
-	(source env/bin/activate)
-	pip install -r requirements.txt
+	sh -c '. env/bin/activate; pip install -r requirements.txt'
 	(cp config.py.example config.py)
 	@ npm install
 
