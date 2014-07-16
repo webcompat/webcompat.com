@@ -12,3 +12,6 @@ webcompat/**/webcompat.js
 webcompat/**/webcompat.min.js
 webcompat/**/*.min.css
 webcompat/**/*.dev.css
+
+#selenium server
+*.jar
