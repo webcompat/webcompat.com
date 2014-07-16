@@ -4,6 +4,7 @@ module.exports = function (grunt) {
     pkg: grunt.file.readJSON('package.json'),
     jsPath: 'webcompat/static/js',
     cssPath: 'webcompat/static/css',
+    imgPath: 'webcompat/static/img',
     banner: '/*! <%= pkg.title %>\n' +
       ' *  Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author.name %>\n' +
       ' *\n' +
@@ -13,10 +14,10 @@ module.exports = function (grunt) {
 
   // Load per-task config from separate files.
   grunt.loadTasks('grunt-tasks');
-  
+
   // load all grunt tasks
   require('load-grunt-tasks')(grunt)
-  
+
   // Default task.
   grunt.registerTask('default', ['jshint', 'concat', 'uglify','myth', 'autoprefixer','cmq', 'cssmin']);
   // Watch task
