@@ -4,22 +4,13 @@
 /* import font */
 @import "base/font.css";
 /*----------Component----------*/
-@import "base/button.css";
+@import "components/button.css";
 /*----------Layout----------*/
 /* Body */
 @import  "layout/body.css";
 /* import header */
 @import  "layout/header.css";
 
-/*----------Link Styles----------*/
-a {
-  color: var(--base-link-color);
-}
-a:hover, a:focus {
-  color: var(--base-link-color);
-  outline: none;
-  text-decoration: underline;
-}
 .bold {
   font-weight: 700;
 }

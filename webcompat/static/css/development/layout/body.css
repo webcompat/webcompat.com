@@ -54,3 +54,12 @@ h4 {
 p {
   font-size: 1em;
 }
+/*----------Link Styles----------*/
+a {
+  color: var(--base-link-color);
+}
+a:hover, a:focus {
+  color: var(--base-link-color);
+  outline: none;
+  text-decoration: underline;
+}
