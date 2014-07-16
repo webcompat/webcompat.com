@@ -1,62 +1,16 @@
+/*----------Base----------*/
 /* Import var */
 @import "base/variable.css";
 /* import font */
 @import "base/font.css";
+/*----------Component----------*/
+@import "base/button.css";
+/*----------Layout----------*/
+/* Body */
+@import  "layout/body.css";
 /* import header */
 @import  "layout/header.css";
 
-/*----------Button----------*/
-.Button {
-  display: inline-block;
-  background-color: transparent;
-  margin-bottom: .5em;
-  padding: .5em 2em;
-  text-decoration: none !important;
-  font-weight: 700;
-  border-radius: 20px;
-  color: #000;
-  text-align: center;
-  vertical-align: middle;
-  cursor: pointer;
-  background-image: none;
-  white-space: nowrap;
-  font-size: .8;
-  line-height: normal;
-  user-select: none;
-  -webkit-appearance: none;
-}
-/**
-* Remove excess padding and border in Firefox 4+
-*/
-.Button::-moz-focus-inner {
-  border: 0;
-  padding: 0;
-}
-.Button:hover,
-.Button:focus,
-.Button:active {
-  text-decoration: none;
-}
-.Button:hover {
-  color:#fff;
-}
-.Button--default {
-  border: solid 4px var(--wb-background-dark);
-}
-.Button--default:hover {
-  background-color: var(--wb-background-dark);
-}
-.Button--action {
-  border: solid 4px var(--wc-variant-background-light);
-}
-.Button--action:hover {
-  background-color: var(--wc-variant-background-light);
-}
-.Button:disabled,
-.Button.is-disabled {
-  cursor: default;
-  opacity: var(--Button-disabled-opacity);
-}
 /*----------Link Styles----------*/
 a {
   color: var(--base-link-color);
