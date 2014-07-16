@@ -1,7 +1,9 @@
 /* Import var */
-@import "base/_variable.css";
+@import "base/variable.css";
 /* import font */
-@import "base/_font.css";
+@import "base/font.css";
+/* import header */
+@import  "layout/header.css";
 
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
