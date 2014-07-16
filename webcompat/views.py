@@ -250,6 +250,13 @@ def privacy():
     return render_template('privacy.html')
 
 
+@app.route('/contributors')
+def contributors():
+    if g.user:
+        get_user_info()
+    return render_template('contributors.html')
+
+
 @app.errorhandler(GitHubError)
 def jumpship(e):
     print('jumpship! ', e)
