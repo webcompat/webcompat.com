@@ -20,5 +20,5 @@ dist:
 	@ grunt
 
 run:
-	@ echo "❯ Sarting..."
-	@ python run.py
+	@ echo "❯ Starting..."
+	@ sh -c '. env/bin/activate; python run.py'
