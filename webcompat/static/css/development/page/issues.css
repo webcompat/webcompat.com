@@ -135,8 +135,8 @@
   color: #fff;
   border-radius: 4px;
   padding: 0.2em;
-  font-size:.8em;
-  text-shadow: 0px 1px 2px #2c2c2c;
+  font-size:.6em;
+  font-weight: bold;
 }
 /* btn add label */
 .issue__label__btn {
