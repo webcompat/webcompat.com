@@ -26,3 +26,13 @@
   --base-link-color-hover: var(--base-link-color);
   --Button-disabled-opacity : 0.5; /* button opacity disabled*/
 }
+
+/* Custom media queries */
+@custom-media --viewport-330px all and (max-width: 20.615em);
+@custom-media --viewport-375px all and (max-width: 23.4275em);
+@custom-media --viewport-450px all and (max-width: 28.115em);
+@custom-media --viewport-600px all and (max-width: 37.49em);
+@custom-media --viewport-770px all and (max-width: 48.115em);
+@custom-media --viewport-950px all and (max-width: 59.365em);
+@custom-media --viewport-990px all and (max-width: 61.865em);
+@custom-media --viewport-1180px all and (max-width: 73.74em);
