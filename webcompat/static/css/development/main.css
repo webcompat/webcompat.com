@@ -516,14 +516,6 @@ form .button {
 .thanks p {
   margin-bottom: 1.5em;
 }
-/*------Page Errors------*/
-#returnhome {
-  padding: 0;
-}
-/*------Social Share------*/
-#twittershare {
-  padding: 0;
-}
 
 @media (--viewport-450px) {
   .maincontent.container,
