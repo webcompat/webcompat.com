@@ -38,16 +38,13 @@ issues.Issue = Backbone.Model.extend({
     //stateClass is set in this.defaults
     return 'Needs Diagnosis';
   },
-  parseLabels: function(labels) {
-    return _.pluck(labels, 'name').join(', ');
-  },
   parse: function(response) {
     this.set({
       body: marked(response.body),
       commentNumber: response.comments,
       createdAt: moment(response.created_at).format('L'),
       issueState: this.getState(response.state, response.labels),
-      labels: this.parseLabels(response.labels),
+      labels: response.labels,
       number: response.number,
       reporter: response.user.login,
       title: response.title
