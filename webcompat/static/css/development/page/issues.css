@@ -122,11 +122,19 @@
   font-size: 1.2em;
   float: left;
   margin-right:.6em;
+  padding: .2em;
 }
 /* value of label */
 .issue__label__value {
   font-size: 1.2em;
   float: left;
+}
+/* label item */
+.issue__label_item {
+  display: inline-block;
+  color: white;
+  border-radius: 2px;
+  padding: 0.2em;
 }
 /* btn add label */
 .issue__label__btn {
