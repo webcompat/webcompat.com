@@ -25,13 +25,10 @@
         <script type="text/template" id="issue-info-tmpl">
           <%= body %>
           <div class="issue__label">
-            <div class="issue__label__title">Labels </div>
-            <div class="issue__label__value">
+            <span class="issue__label_item issue__label_item--title">Labels</span>
               <% _.each(labels, function(label) { %>
               <span class="issue__label_item" style="background-color:#<%=label.color%>"><%= label.name %></span>
               <% }); %>
-            </div>
-            <!-- <div class="issue__label__btn">Add label</div> -->
           </div>
         </script>
         </div>

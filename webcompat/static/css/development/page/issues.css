@@ -115,27 +115,27 @@
   content: "";
   clear: both;
 }
-/* name of label */
-.issue__label__title {
-  font-weight: bold;
-  font-size: 1.2em;
-  float: left;
-  margin-right:.6em;
-  padding: .2em;
-}
 /* value of label */
-.issue__label__value {
+/*.issue__label__value {
   font-size: 1.2em;
   float: left;
-}
+}*/
 /* label item */
 .issue__label_item {
   display: inline-block;
+  vertical-align:middle;
+  line-height:1;
   color: #fff;
   border-radius: 4px;
-  padding: 0.2em;
-  font-size:.6em;
+  padding: 0.4em;
+  font-size:.7em;
   font-weight: bold;
+}
+/* Labels */
+.issue__label_item--title {
+  font-size: 1.2em;
+  margin-right:.3em;
+  color:#000;
 }
 /* btn add label */
 .issue__label__btn {
