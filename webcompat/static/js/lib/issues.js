@@ -121,8 +121,6 @@ issues.MainView = Backbone.View.extend({
     this.comments = new issues.CommentsCollection([]);
     this.initSubViews();
     this.fetchModels();
-
-    this.comments.bind("add", this.addComment);
   },
   initSubViews: function() {
     this.title = new issues.TitleView({model: this.issue});
@@ -141,6 +139,7 @@ issues.MainView = Backbone.View.extend({
       if (self.issue.get('commentNumber') > 0) {
         self.comments.fetch(headersBag).success(function() {
           self.addExistingComments();
+          self.comments.bind("add", self.addComment);
         }).error(function() {
           $('<div></div>', {
             'class': 'flash error',
@@ -179,7 +178,7 @@ issues.MainView = Backbone.View.extend({
       this.addComment(newComment);
       // Now empty out the textarea.
       textarea.val('');
-
+      // Push to GitHub
       newComment.save();
     }
   },
