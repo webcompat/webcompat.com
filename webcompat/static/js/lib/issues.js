@@ -38,16 +38,13 @@ issues.Issue = Backbone.Model.extend({
     //stateClass is set in this.defaults
     return 'Needs Diagnosis';
   },
-  parseLabels: function(labels) {
-    return _.pluck(labels, 'name').join(', ');
-  },
   parse: function(response) {
     this.set({
       body: marked(response.body),
       commentNumber: response.comments,
       createdAt: moment(response.created_at).format('L'),
       issueState: this.getState(response.state, response.labels),
-      labels: this.parseLabels(response.labels),
+      labels: response.labels,
       number: response.number,
       reporter: response.user.login,
       title: response.title
@@ -56,12 +53,16 @@ issues.Issue = Backbone.Model.extend({
 });
 
 issues.Comment = Backbone.Model.extend({
+  url: function() {
+    return '/api/issues/' + issueNumber + '/comments';
+  },
   parse: function(response) {
     this.set({
       commenter: response.user.login,
       createdAt: moment(response.created_at).fromNow(),
       avatarUrl: response.user.avatar_url,
-      body: marked(response.body)
+      body: marked(response.body),
+      rawBody: response.body
     });
   }
 });
@@ -111,6 +112,9 @@ issues.BodyView = Backbone.View.extend({
 
 issues.MainView = Backbone.View.extend({
   el: $('.maincontent'),
+  events: {
+    'click .Button--default': 'addNewComment'
+  },
   initialize: function() {
     var issueNum = {number: issueNumber};
     this.issue = new issues.Issue(issueNum);
@@ -135,6 +139,7 @@ issues.MainView = Backbone.View.extend({
       if (self.issue.get('commentNumber') > 0) {
         self.comments.fetch(headersBag).success(function() {
           self.addExistingComments();
+          self.comments.bind("add", self.addComment);
         }).error(function() {
           $('<div></div>', {
             'class': 'flash error',
@@ -156,7 +161,26 @@ issues.MainView = Backbone.View.extend({
   },
   addComment: function(comment) {
     var view = new issues.CommentView({model: comment});
-    this.$(".issue__comment").append(view.render().el);
+    $(".issue__comment").append(view.render().el);
+  },
+  addNewComment: function() {
+    var form = $('.comment--form');
+    var textarea = $('.comment__text');
+    // Only bother if the textarea isn't empty
+    if ($.trim(textarea.val())) {
+      var newComment = new issues.Comment({
+        commenter: form.data('username'),
+        createdAt: moment(new Date().toISOString()).fromNow(),
+        avatarUrl: form.data('avatarUrl'),
+        body: marked(textarea.val()),
+        rawBody: textarea.val()
+      });
+      this.addComment(newComment);
+      // Now empty out the textarea.
+      textarea.val('');
+      // Push to GitHub
+      newComment.save();
+    }
   },
   addExistingComments: function() {
     this.comments.each(this.addComment, this);

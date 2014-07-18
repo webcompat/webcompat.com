@@ -106,8 +106,7 @@
   display: none;
 }
 
-/* To be deleted when issues are READ+WRITE*/
-.issue__github_link {
+.issue__login_link {
   margin-top: 2.5em;
 }
 
@@ -122,11 +121,21 @@
   font-size: 1.2em;
   float: left;
   margin-right:.6em;
+  padding: .2em;
 }
 /* value of label */
 .issue__label__value {
   font-size: 1.2em;
   float: left;
+}
+/* label item */
+.issue__label_item {
+  display: inline-block;
+  color: #fff;
+  border-radius: 4px;
+  padding: 0.2em;
+  font-size:.6em;
+  font-weight: bold;
 }
 /* btn add label */
 .issue__label__btn {
