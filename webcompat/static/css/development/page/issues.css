@@ -106,8 +106,7 @@
   display: none;
 }
 
-/* To be deleted when issues are READ+WRITE*/
-.issue__github_link {
+.issue__login_link {
   margin-top: 2.5em;
 }
 

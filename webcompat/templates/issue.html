@@ -69,6 +69,8 @@
             </div>
           </div>
         </div>
+        {% else %}
+        <p class="issue__login_link">Please <a href="{{ url_for('login') }}">login</a> to leave a comment.</p>
         {% endif %}
        </div>
     </div>
