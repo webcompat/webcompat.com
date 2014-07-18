@@ -3,7 +3,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 (function(){
-  var logLink = $('.nav__section--right .nav__link');
+  var logLink = $('.nav__section--right .nav__link, .issue__login_link a');
   logLink.click(function() {
     var href = logLink.prop('href');
     logLink.prop('href', href + '?next=' + location.href);
