@@ -19,7 +19,7 @@ from helpers import get_user_info
 from issues import (report_issue, proxy_report_issue, get_user_issues,
                     get_contact_ready, proxy_get_contact_ready,
                     get_needs_diagnosis, proxy_get_needs_diagnosis,
-                    proxy_request, get_issue)
+                    proxy_request, get_issue, add_comment)
 from models import db_session, User
 from webcompat import github, app
 
@@ -202,13 +202,20 @@ def proxy_issue(number):
         abort(406)
 
 
-@app.route('/api/issues/<number>/comments')
+@app.route('/api/issues/<number>/comments', methods=['GET', 'POST'])
 def proxy_comments(number):
     '''XHR endpoint to get issues comments from GitHub, either as an authed
     user, or as one of our proxy bots.'''
     if not number.isdigit():
         abort(404)
-    if request.is_xhr and request.headers.get('accept') == 'application/json':
+    if request.method == 'POST':
+        try:
+            add_comment(number, request.data)
+            return ':)'
+        except GitHubError as e:
+            print('GitHubError: ', e.response.status_code)
+            return (':(', e.response.status_code)
+    elif request.is_xhr and request.headers.get('accept') == 'application/json':
         if g.user:
             comments = github.get('repos/{0}/{1}/comments'.format(
                 app.config['ISSUES_REPO_URI'], number))
