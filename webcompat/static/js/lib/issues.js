@@ -181,7 +181,6 @@ issues.MainView = Backbone.View.extend({
         rawBody: textarea.val()
       });
       this.addComment(newComment);
-      //setTimeout(Prism.highlightAll, 0);
       // Now empty out the textarea.
       textarea.val('');
       // Push to GitHub
