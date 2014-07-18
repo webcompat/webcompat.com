@@ -21,7 +21,8 @@ module.exports = function(grunt) {
           console: true,
           issueNumber: true,
           marked: true,
-          moment: true
+          moment: true,
+          Prism: true
         }
       },
       beforeconcat: [

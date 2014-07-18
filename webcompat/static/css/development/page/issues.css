@@ -112,10 +112,6 @@
   padding: 0.25em;
 }
 
-.issue__details pre, .comment__content pre {
-  padding: 0.5em 0.75em 0.75em;
-}
-
 /* temp hack to hide <!-- browser info --> */
 .issue__details > p:first-child {
   display: none;

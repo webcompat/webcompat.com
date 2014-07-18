@@ -18,6 +18,7 @@
 
 /*----------page----------*/
 @import  "page/issues.css";
+@import  "page/prism.css";
 
 .bold {
   font-weight: 700;

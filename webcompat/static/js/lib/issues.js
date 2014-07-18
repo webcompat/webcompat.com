@@ -133,12 +133,14 @@ issues.MainView = Backbone.View.extend({
     this.issue.fetch(headersBag).success(function() {
       _.each([self.title, self.metadata, self.body, self], function(elm) {
         elm.render();
+        setTimeout(Prism.highlightAll, 0);
       });
 
       // If there are any comments, go fetch the model data
       if (self.issue.get('commentNumber') > 0) {
         self.comments.fetch(headersBag).success(function() {
           self.addExistingComments();
+          setTimeout(Prism.highlightAll, 0);
           self.comments.bind("add", self.addComment);
         }).error(function() {
           $('<div></div>', {
@@ -176,6 +178,7 @@ issues.MainView = Backbone.View.extend({
         rawBody: textarea.val()
       });
       this.addComment(newComment);
+      setTimeout(Prism.highlightAll, 0);
       // Now empty out the textarea.
       textarea.val('');
       // Push to GitHub

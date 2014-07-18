@@ -10,6 +10,7 @@ module.exports = function(grunt) {
             '<%= jsPath %>/vendor/underscore-min.js',
             '<%= jsPath %>/vendor/backbone-min.js',
             '<%= jsPath %>/vendor/moment-min.js',
+            '<%= jsPath %>/vendor/prism.js',
             '<%= jsPath %>/vendor/marked-min.js',
             '<%= jsPath %>/lib/homepage.js',
             '<%= jsPath %>/lib/bugform.js',
