@@ -52,26 +52,21 @@
           </script>
         </div>
 
-        <p class="issue__github_link">Visit <a href="{{ uri }}">this issue on GitHub</a> to add comments.</p>
-
-        {% if false and session.user_id and session.avatar_url %}
-        <!-- Do not display for now -->
-        <!-- Issue create comment -->
-        <div class="comment comment--form">
+        {% if session.user_id and session.avatar_url %}
+        <!-- Create issue comment -->
+        <div class="comment comment--form" data-username={{ session.username }} data-avatar-url= {{ session.avatar_url }}>
           <div class="comment__avatar">
             <img class="" src="{{ session.avatar_url }}" alt="Avatar"/>
           </div>
           <div class="comment__body comment__body--caret">
-            <form action="#" method="post">
-              <div class="comment__drag">
-                <div class="comment__dd">Attach images by dragging &amp; dropping, <span class="comment__dd__label">selecting them</span> or pasting form the clipboad </div>
-                <textarea class="comment__wrapper" placeholder="Leave a comment"></textarea>
-              </div>
-              <div class="comment__button">
-                <a class="Button Button--action" href="{{ url_for('index') }}">Close</a>
-                <button value="comment" class="Button Button--default" type="submit">Comment</button>
-              </div>
-            </form>
+            <div class="comment__drag">
+              <!-- TODO(miket) <div class="comment__dd">Attach images by dragging &amp; dropping, <span class="comment__dd__label">selecting them</span> or pasting form the clipboad </div> -->
+              <textarea class="comment__wrapper comment__text" placeholder="Leave a comment"></textarea>
+            </div>
+            <div class="comment__button">
+              <!-- TODO(miket) <a class="Button Button--action" href="{{ url_for('index') }}">Close</a> -->
+              <button value="comment" class="Button Button--default" type="submit">Comment</button>
+            </div>
           </div>
         </div>
         {% endif %}

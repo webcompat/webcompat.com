@@ -53,12 +53,16 @@ issues.Issue = Backbone.Model.extend({
 });
 
 issues.Comment = Backbone.Model.extend({
+  url: function() {
+    return '/api/issues/' + issueNumber + '/comments';
+  },
   parse: function(response) {
     this.set({
       commenter: response.user.login,
       createdAt: moment(response.created_at).fromNow(),
       avatarUrl: response.user.avatar_url,
-      body: marked(response.body)
+      body: marked(response.body),
+      rawBody: response.body
     });
   }
 });
@@ -108,12 +112,17 @@ issues.BodyView = Backbone.View.extend({
 
 issues.MainView = Backbone.View.extend({
   el: $('.maincontent'),
+  events: {
+    'click .Button--default': 'addNewComment'
+  },
   initialize: function() {
     var issueNum = {number: issueNumber};
     this.issue = new issues.Issue(issueNum);
     this.comments = new issues.CommentsCollection([]);
     this.initSubViews();
     this.fetchModels();
+
+    this.comments.bind("add", this.addComment);
   },
   initSubViews: function() {
     this.title = new issues.TitleView({model: this.issue});
@@ -153,7 +162,26 @@ issues.MainView = Backbone.View.extend({
   },
   addComment: function(comment) {
     var view = new issues.CommentView({model: comment});
-    this.$(".issue__comment").append(view.render().el);
+    $(".issue__comment").append(view.render().el);
+  },
+  addNewComment: function() {
+    var form = $('.comment--form');
+    var textarea = $('.comment__text');
+    // Only bother if the textarea isn't empty
+    if ($.trim(textarea.val())) {
+      var newComment = new issues.Comment({
+        commenter: form.data('username'),
+        createdAt: moment(new Date().toISOString()).fromNow(),
+        avatarUrl: form.data('avatarUrl'),
+        body: marked(textarea.val()),
+        rawBody: textarea.val()
+      });
+      this.addComment(newComment);
+      // Now empty out the textarea.
+      textarea.val('');
+
+      newComment.save();
+    }
   },
   addExistingComments: function() {
     this.comments.each(this.addComment, this);
