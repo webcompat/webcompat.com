@@ -18,9 +18,7 @@
 @import "page/issues.css";
 @import "page/static.css";
 
-.bold {
-  font-weight: 700;
-}
+
 .divider {
   font-weight: 700;
   border-top: 5px solid var(--wb-background-dark);
