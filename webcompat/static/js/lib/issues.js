@@ -58,10 +58,11 @@ issues.Comment = Backbone.Model.extend({
   },
   parse: function(response) {
     this.set({
-      commenter: response.user.login,
-      createdAt: moment(response.created_at).fromNow(),
       avatarUrl: response.user.avatar_url,
       body: marked(response.body),
+      commenter: response.user.login,
+      createdAt: moment(response.created_at).fromNow(),
+      id: response.id,
       rawBody: response.body
     });
   }
@@ -76,6 +77,9 @@ issues.CommentsCollection = Backbone.Collection.extend({
 
 issues.CommentView = Backbone.View.extend({
   className: 'comment',
+  id: function() {
+    return 'issuecomment-' + this.model.get('id');
+  },
   template: _.template($('#comment-tmpl').html()),
   render: function() {
     this.$el.html(this.template(this.model.toJSON()));
