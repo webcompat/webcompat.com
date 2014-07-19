@@ -1,9 +1,8 @@
 {% extends "layout.html" %}
 {% block body %}
-<div id="wrap">
-  <div class="page">
+  <div class="page page--issue">
   {% include "shared/nav.html" %}
-    <div class="maincontent container issue">
+    <div class="wc-content wc-content--body issue">
       <h2 class="issue__main_title">
       <script type="text/template" id="title-tmpl">
         <a class="issue__back" href="{{ url_for("index") }}" title="Home">
@@ -72,7 +71,6 @@
        </div>
     </div>
   </div>
-</div>
 {% endblock %}
 {% block extrascripts %}
 <script>var issueNumber={{ number }};</script>

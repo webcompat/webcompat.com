@@ -111,7 +111,7 @@ issues.BodyView = Backbone.View.extend({
 });
 
 issues.MainView = Backbone.View.extend({
-  el: $('.maincontent'),
+  el: $('.issue'),
   events: {
     'click .Button--default': 'addNewComment'
   },
