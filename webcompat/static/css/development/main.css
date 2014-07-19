@@ -1,23 +1,17 @@
 /*----------Base----------*/
-/* Import var */
 @import "base/variable.css";
-/* import font */
 @import "base/font.css";
 
 /*----------Vendor----------*/
-/* Prism */
 @import "vendor/prism.css";
 
 /*----------Component----------*/
 @import "components/button.css";
-@import  "components/comment.css";
+@import "components/comment.css";
 
 /*----------Layout----------*/
-/* Body */
 @import  "layout/body.css";
-/* import header */
 @import  "layout/header.css";
-/* footer */
 @import  "layout/footer.css";
 
 /*----------page----------*/
