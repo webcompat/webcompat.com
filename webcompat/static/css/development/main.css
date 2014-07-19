@@ -10,12 +10,13 @@
 @import "components/comment.css";
 
 /*----------Layout----------*/
-@import  "layout/body.css";
-@import  "layout/header.css";
-@import  "layout/footer.css";
+@import "layout/body.css";
+@import "layout/header.css";
+@import "layout/footer.css";
 
 /*----------page----------*/
-@import  "page/issues.css";
+@import "page/issues.css";
+@import "page/static.css";
 
 .bold {
   font-weight: 700;
