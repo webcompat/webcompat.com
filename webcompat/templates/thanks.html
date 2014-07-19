@@ -1,7 +1,6 @@
 {% extends "layout.html" %}
 {% block body %}
-<div id="wrap">
-  <div class="page thanks">
+  <div class="page page--thanks">
     {% include "shared/nav.html" %}
     <div class="maincontent container">
       <h2>Thank you.</h2>
@@ -11,5 +10,4 @@
       <a class="Button Button--action" id="twittershare" href="https://twitter.com/intent/tweet?text={{ encoded_text }}&url={{ encoded_issue }}&via=webcompat" target="_blank">Share on Twitter</a>
     </div>
   </div>
-</div>
 {% endblock %}
