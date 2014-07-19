@@ -485,7 +485,6 @@ form .button {
 }
 
 @media (--viewport-450px) {
-  .maincontent.container,
   .footer .container,
   form.cf {
     padding-left: 1em;

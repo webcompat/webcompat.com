@@ -7,6 +7,7 @@
   --base-font: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
   --base-min-width:	320px;
   --base-max-width: 1920px;
+  --base-width-content : 1180px;
 }
 /* theme */
 :root {
