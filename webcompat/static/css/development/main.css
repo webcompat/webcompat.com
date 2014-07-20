@@ -27,20 +27,6 @@
   margin-left: 5em;
   color: #fff;
 }
-/* Wrapper for page content to push down footer */
-#wrap {
-  min-height: 100%;
-  height: auto !important;
-  height: 100%;
-/* Negative indent footer by it's height */
-/*margin: 0 auto -60px;*/
-/* mike: commenting out because this collapses into content
-   at smaller viewports*/
-}
-#push {
-  height: 60px;
-}
-
 
 /*--------Flash Messages---------*/
 .flash {
