@@ -63,9 +63,17 @@
     word-wrap: break-word;
     padding:.5em 0 0;
 }
+/* img */
 .comment__content img {
     max-width:100%;
     max-height:100%;
+}
+/* blockquote */
+.comment__content blockquote {
+  border-left: 4px solid var(--wb-background-light);
+  padding: 0px 1em;
+  margin: 1em 0px;
+  color: #6a6a6a;
 }
 
 .comment__wrapper {
