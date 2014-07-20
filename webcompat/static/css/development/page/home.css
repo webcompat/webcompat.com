@@ -17,29 +17,30 @@
   color: #fff;
   padding: 0;
 }
-#hero .container {
-  background: url(../img/LightBulbHero.png) no-repeat right 100px top;
+#hero .wc-home {
+  background: url(../img/LightBulbHero.png) no-repeat right top;
   background-origin: content-box;
 }
 
 @media (--viewport-770px) {
-  #hero .container {
+  #hero .wc-home {
     background-size: 18%;
-    background-position: right 80px top -50px;
   }
 }
-@media (--viewport-600px) {
-  #hero .container {
+@media (--viewport-450px) {
+  #hero .wc-home {
     background: none;
   }
 }
 #maintitle {
-  padding: 6em 5em;
+  padding-top: 6em;
+  padding-bottom:6em;
 }
 
 @media (--viewport-450px) {
   #maintitle {
-    padding: 3em 1em 3em;
+    padding-top: 3em;
+    padding-bottom:3em;
   }
 }
 #maintitle h1 {
