@@ -15,6 +15,7 @@
 @import "layout/footer.css";
 
 /*----------page----------*/
+@import "page/home.css";
 @import "page/issues.css";
 @import "page/static.css";
 
