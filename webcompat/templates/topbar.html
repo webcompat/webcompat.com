@@ -1,11 +1,11 @@
 <header class="header">
-  <nav class="container nav">
-    <div class="nav__section nav__section--left">
-      <a class="nav__link nav__link--left" href="https://github.com/webcompat/webcompat.com/issues?state=open">Give Feedback</a>
+  <nav class="wc-content">
+    <div class="nav__section">
+      <a class="nav__link" href="https://github.com/webcompat/webcompat.com/issues?state=open">Give Feedback</a>
     </div><!--
     --><div class="nav__section nav__section--right">
     {% if not session.user_id %}
-      <a class="nav__link nav__link--right" href="{{ url_for('login') }}">Login</a>
+      <a class="nav__link" href="{{ url_for('login') }}">Login</a>
     {% else %}
       <a class="nav__link" href="{{ url_for('logout') }}">Logout</a>
       {% if session.user_id and session.avatar_url %}

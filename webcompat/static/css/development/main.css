@@ -249,7 +249,8 @@ input[type=search] {
 #howitworks,
 #join,
 #browse-issues {
-  padding: 3em 3em;
+  padding-top: 3em;
+  padding-bottom:3em;
 }
 #browse-issues {
   padding-bottom: 2em;
@@ -485,6 +486,7 @@ form .button {
 }
 
 @media (--viewport-450px) {
+  .maincontent.container,
   .footer .container,
   form.cf {
     padding-left: 1em;
