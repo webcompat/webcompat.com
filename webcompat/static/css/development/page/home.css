@@ -281,11 +281,7 @@ label {
   padding-left: 0;
 }
 form.cf {
-  background: #fff;
-  padding: 3em 5em 2em 5em;
-/*  -webkit-border-radius: 20px;
-  -moz-border-radius: 20px;
-  border-radius: 20px;*/
+
 }
 #new-report h2 {
   font: #fff;
@@ -429,16 +425,6 @@ form .button {
 }
 .disabled {
   opacity: 0.5;
-}
-
-
-@media (--viewport-450px) {
-  .maincontent.container,
-  .footer .container,
-  form.cf {
-    padding-left: 1em;
-    padding-right: 1em;
-  }
 }
 
 @media (--viewport-330px) {
