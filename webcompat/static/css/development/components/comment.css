@@ -75,6 +75,10 @@
   margin: 1em 0px;
   color: #6a6a6a;
 }
+/* GitHub username */
+.comment__content .github__username {
+  font-weight: bold;
+}
 
 .comment__wrapper {
   position: relative;
