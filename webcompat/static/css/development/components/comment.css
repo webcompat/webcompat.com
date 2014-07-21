@@ -85,6 +85,7 @@
   border-radius: 10px;
   padding: 0 1em 2em 1em;
   word-wrap: break-word;
+  background : #fff;
 }
 /* img attach file */
 .comment__attach {
