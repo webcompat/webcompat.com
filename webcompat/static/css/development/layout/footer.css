@@ -46,7 +46,7 @@
   }
 }
 
-@media (--viewport-770px) {
+@media (--viewport-950px) {
   .footer__item {
     font-size: 0.75em;
   }
