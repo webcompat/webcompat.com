@@ -120,6 +120,7 @@ issues.MainView = Backbone.View.extend({
     'click .Button--default': 'addNewComment'
   },
   initialize: function() {
+    $(document.body).addClass('language-html');
     var issueNum = {number: issueNumber};
     this.issue = new issues.Issue(issueNum);
     this.comments = new issues.CommentsCollection([]);
