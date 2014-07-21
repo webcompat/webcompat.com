@@ -8,6 +8,7 @@ marked.setOptions({
   breaks: true,
   gfm: true,
   emoji: true,
+  ghUser: true,
   sanitize: true
 });
 
