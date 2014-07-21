@@ -171,7 +171,9 @@ issues.MainView = Backbone.View.extend({
     var view = new issues.CommentView({model: comment});
     var commentElm = view.render().el;
     $(".issue__comment").append(commentElm);
-    Prism.highlightElement($(commentElm).find('code')[0]);
+    _.each($(commentElm).find('code'), function(elm){
+      Prism.highlightElement(elm);
+    });
   },
   addNewComment: function() {
     var form = $('.comment--form');
