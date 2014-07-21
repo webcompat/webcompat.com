@@ -40,7 +40,7 @@
   background-color: #f0f0f0;
   border-color: var(--wc-variant-background-light);
   border-style: solid;
-  border-width: 0px 0px 2px 2px;
+  border-width: 0px 0px 1px 1px;
   transform: rotate(45deg);
 }
 /* case form */
@@ -81,7 +81,7 @@
   width: 650px;
   /*last 256px*/
   min-height: 128px;
-  border: solid 2px var(--wc-variant-background-light);
+  border: solid 1px var(--wc-variant-background-light);
   border-radius: 10px;
   padding: 0 1em 2em 1em;
   word-wrap: break-word;
