@@ -87,6 +87,11 @@
   display: inline-block;
 }
 
+.issue__reporter {
+  font-weight: bold;
+  font-weight: 500;
+}
+
 /* container details issue */
 .issue__details {
     word-wrap: break-word;

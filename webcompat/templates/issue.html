@@ -16,7 +16,11 @@
         <div class="issue__create">
         <script type="text/template" id="metadata-tmpl">
           <div class="issue__state issue__state--<%= stateClass %>"><%= issueState %></div>
-          <div class="issue__date">Opened <%= createdAt %> by <%= reporter %>. <%= commentNumber %> comments</div>
+          <div class="issue__date">Opened <%= createdAt %> by
+            <span class="issue__reporter">
+              <a href="https://github.com/<%= reporter %>"><%= reporter %></a>
+            </span>. <%= commentNumber %> comments
+          </div>
         </script>
         </div>
         <div class="issue__details">
@@ -40,7 +44,9 @@
             <div class="comment__body comment__body--caret">
               <div class="comment__wrapper">
                 <div class="comment__header">
-                   <span class="comment__owner"><%= commenter %></span> commented <a href="#issuecomment-<%= id %>"><%= createdAt %></a>
+                  <span class="comment__owner">
+                    <a href="https://github.com/<%= commenter %>"><%= commenter %></a>
+                  </span> commented <a href="#issuecomment-<%= id %>"><%= createdAt %></a>
                 </div>
                 <div class="comment__content"><%= body %></div>
               </div>
