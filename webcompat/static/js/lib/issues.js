@@ -181,10 +181,11 @@ issues.MainView = Backbone.View.extend({
     // Only bother if the textarea isn't empty
     if ($.trim(textarea.val())) {
       var newComment = new issues.Comment({
-        commenter: form.data('username'),
-        createdAt: moment(new Date().toISOString()).fromNow(),
         avatarUrl: form.data('avatarUrl'),
         body: marked(textarea.val()),
+        commenter: form.data('username'),
+        createdAt: moment(new Date().toISOString()).fromNow(),
+        id: null,
         rawBody: textarea.val()
       });
       this.addComment(newComment);
