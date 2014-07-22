@@ -1,9 +1,8 @@
 {% extends "layout.html" %}
 {% block body %}
-<div id="wrap">
-  <div class="page">
+  <div class="page page--issue">
   {% include "shared/nav.html" %}
-    <div class="maincontent container issue">
+    <div class="wc-content wc-content--body issue">
       <h2 class="issue__main_title">
       <script type="text/template" id="title-tmpl">
         <a class="issue__back" href="{{ url_for("index") }}" title="Home">
@@ -17,7 +16,11 @@
         <div class="issue__create">
         <script type="text/template" id="metadata-tmpl">
           <div class="issue__state issue__state--<%= stateClass %>"><%= issueState %></div>
-          <div class="issue__date">Opened <%= createdAt %> by <%= reporter %>. <%= commentNumber %> comments</div>
+          <div class="issue__date">Opened <%= createdAt %> by
+            <span class="issue__reporter">
+              <a href="https://github.com/<%= reporter %>"><%= reporter %></a>
+            </span>. <%= commentNumber %> comments
+          </div>
         </script>
         </div>
         <div class="issue__details">
@@ -25,13 +28,10 @@
         <script type="text/template" id="issue-info-tmpl">
           <%= body %>
           <div class="issue__label">
-            <div class="issue__label__title">Labels </div>
-            <div class="issue__label__value">
+            <span class="issue__label_item issue__label_item--title">Labels</span>
               <% _.each(labels, function(label) { %>
               <span class="issue__label_item" style="background-color:#<%=label.color%>"><%= label.name %></span>
               <% }); %>
-            </div>
-            <!-- <div class="issue__label__btn">Add label</div> -->
           </div>
         </script>
         </div>
@@ -44,7 +44,9 @@
             <div class="comment__body comment__body--caret">
               <div class="comment__wrapper">
                 <div class="comment__header">
-                   <span class="comment__owner"><%= commenter %></span> commented <%= createdAt %>
+                  <span class="comment__owner">
+                    <a href="https://github.com/<%= commenter %>"><%= commenter %></a>
+                  </span> commented <a href="#issuecomment-<%= id %>"><%= createdAt %></a>
                 </div>
                 <div class="comment__content"><%= body %></div>
               </div>
@@ -75,7 +77,6 @@
        </div>
     </div>
   </div>
-</div>
 {% endblock %}
 {% block extrascripts %}
 <script>var issueNumber={{ number }};</script>

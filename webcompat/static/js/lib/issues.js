@@ -8,6 +8,7 @@ marked.setOptions({
   breaks: true,
   gfm: true,
   emoji: true,
+  ghUser: true,
   sanitize: true
 });
 
@@ -58,10 +59,11 @@ issues.Comment = Backbone.Model.extend({
   },
   parse: function(response) {
     this.set({
-      commenter: response.user.login,
-      createdAt: moment(response.created_at).fromNow(),
       avatarUrl: response.user.avatar_url,
       body: marked(response.body),
+      commenter: response.user.login,
+      createdAt: moment(response.created_at).fromNow(),
+      id: response.id,
       rawBody: response.body
     });
   }
@@ -76,6 +78,9 @@ issues.CommentsCollection = Backbone.Collection.extend({
 
 issues.CommentView = Backbone.View.extend({
   className: 'comment',
+  id: function() {
+    return 'issuecomment-' + this.model.get('id');
+  },
   template: _.template($('#comment-tmpl').html()),
   render: function() {
     this.$el.html(this.template(this.model.toJSON()));
@@ -111,11 +116,12 @@ issues.BodyView = Backbone.View.extend({
 });
 
 issues.MainView = Backbone.View.extend({
-  el: $('.maincontent'),
+  el: $('.issue'),
   events: {
     'click .Button--default': 'addNewComment'
   },
   initialize: function() {
+    $(document.body).addClass('language-html');
     var issueNum = {number: issueNumber};
     this.issue = new issues.Issue(issueNum);
     this.comments = new issues.CommentsCollection([]);
@@ -133,6 +139,9 @@ issues.MainView = Backbone.View.extend({
     this.issue.fetch(headersBag).success(function() {
       _.each([self.title, self.metadata, self.body, self], function(elm) {
         elm.render();
+        _.each($('.issue__details code'), function(elm){
+          Prism.highlightElement(elm);
+        });
       });
 
       // If there are any comments, go fetch the model data
@@ -161,7 +170,11 @@ issues.MainView = Backbone.View.extend({
   },
   addComment: function(comment) {
     var view = new issues.CommentView({model: comment});
-    $(".issue__comment").append(view.render().el);
+    var commentElm = view.render().el;
+    $(".issue__comment").append(commentElm);
+    _.each($(commentElm).find('code'), function(elm){
+      Prism.highlightElement(elm);
+    });
   },
   addNewComment: function() {
     var form = $('.comment--form');
@@ -169,10 +182,11 @@ issues.MainView = Backbone.View.extend({
     // Only bother if the textarea isn't empty
     if ($.trim(textarea.val())) {
       var newComment = new issues.Comment({
-        commenter: form.data('username'),
-        createdAt: moment(new Date().toISOString()).fromNow(),
         avatarUrl: form.data('avatarUrl'),
         body: marked(textarea.val()),
+        commenter: form.data('username'),
+        createdAt: moment(new Date().toISOString()).fromNow(),
+        id: null,
         rawBody: textarea.val()
       });
       this.addComment(newComment);

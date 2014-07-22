@@ -256,12 +256,13 @@ def privacy():
         get_user_info()
     return render_template('privacy.html')
 
-
-@app.route('/contributors')
-def contributors():
-    if g.user:
-        get_user_info()
-    return render_template('contributors.html')
+# Non-production until we're ready for it.
+if not app.config['PRODUCTION']:
+    @app.route('/contributors')
+    def contributors():
+        if g.user:
+            get_user_info()
+        return render_template('contributors.html')
 
 
 @app.errorhandler(GitHubError)

@@ -70,7 +70,7 @@ function BugForm() {
                       .addClass('has-error');
 
       $('<span></span>', {
-        'class': 'help-inline bold',
+        'class': 'help-inline wc-bold',
         'text': inputMap[id].helpText
       }).insertAfter('label[for='+id+']');
       self.disableSubmits();
