@@ -62,8 +62,8 @@ issues.Comment = Backbone.Model.extend({
       avatarUrl: response.user.avatar_url,
       body: marked(response.body),
       commenter: response.user.login,
+      commentLinkId: 'issuecomment-' + response.id,
       createdAt: moment(response.created_at).fromNow(),
-      id: response.id,
       rawBody: response.body
     });
   }
@@ -79,7 +79,7 @@ issues.CommentsCollection = Backbone.Collection.extend({
 issues.CommentView = Backbone.View.extend({
   className: 'comment',
   id: function() {
-    return 'issuecomment-' + this.model.get('id');
+    return this.model.get('commentLinkId');
   },
   template: _.template($('#comment-tmpl').html()),
   render: function() {
