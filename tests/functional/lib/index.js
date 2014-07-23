@@ -16,14 +16,13 @@ define([
     name: 'index',
 
     'front page loads': function () {
-
       return this.remote
         .get(require.toUrl(url))
         .findByCssSelector('#maintitle h1').getVisibleText()
         .then(function (text) {
           assert.equal(text, 'Bug reporting\nfor the internet.');
         })
-        .end()
+        .end();
     },
 
     'form toggles open then closed': function () {
@@ -40,7 +39,7 @@ define([
         .findByCssSelector('.form-closed').isDisplayed()
         .then(function (isDisplayed) {
           assert.equal(isDisplayed, false);
-        })
+        });
     }
 
   });
