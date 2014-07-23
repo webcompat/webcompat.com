@@ -11,6 +11,11 @@ define(['intern/lib/args'], function (args) {
   var siteRoot = args.siteRoot ? args.siteRoot : 'http://127.0.0.1:5000';
 
   return {
+    // Configuration object for webcompat
+    wc: {
+      pageLoadTimeout: args.wcPageLoadTimeout ? parseInt(args.wcPageLoadTimeout, 10) : 10000
+    },
+
     // The port on which the instrumenting proxy will listen
     proxyPort: 9090,
 
