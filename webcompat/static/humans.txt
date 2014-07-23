@@ -3,7 +3,7 @@ webcompat.com is brought to you by:
 Adam Stevenson @adamopenweb
 Alexa Roman    @calexity
 Karl Dubost    @karlpro
-Mike Taylor    @miketaylr
+Mike Taylor    @miketaylr, miket@mozilla.com
 
 
       ,'``.._   ,'``.
