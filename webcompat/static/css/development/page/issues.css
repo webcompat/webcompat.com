@@ -96,6 +96,10 @@
     word-wrap: break-word;
     overflow: hidden;
 }
+/* force font-size */
+.issue__details * {
+  font-size:1em !important;
+}
 .issue__details strong {
     font-weight: bold !important;
 }
