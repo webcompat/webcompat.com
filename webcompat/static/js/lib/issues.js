@@ -186,7 +186,7 @@ issues.MainView = Backbone.View.extend({
         body: marked(textarea.val()),
         commenter: form.data('username'),
         createdAt: moment(new Date().toISOString()).fromNow(),
-        id: null,
+        commentLinkId: null,
         rawBody: textarea.val()
       });
       this.addComment(newComment);
