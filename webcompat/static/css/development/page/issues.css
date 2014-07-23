@@ -1,0 +1,166 @@
+/*------Issues view------*/
+
+.issue {
+  display: none;
+}
+/* Wrapper title and date issue */
+.issue__main_title {
+  line-height: 1em;
+  margin-bottom: .5em;
+  word-wrap: break-word;
+}
+.issue__title {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+/* btn back /index */
+.issue__back {
+  display: inline-block;
+  vertical-align: middle;
+  margin:0 .8em 0 0;
+}
+
+@media (--viewport-450px) {
+  .issue__back {
+    display:block;
+    margin-bottom:.3em;
+  }
+}
+.issue__back:hover {
+  text-decoration: none;
+}
+.issue__back .icon {
+  display: inline-block;
+  width: 1.25em;
+  height: 1.25em;
+  line-height: 1.25em;
+  text-align: center;
+  background-color: var(--wc-variant-background-light);
+  color: #fff;;
+  border-radius:50%;
+  transition: all 0.3s linear 0s;
+}
+.issue__back:hover .icon {
+  background-color: var(--wc-variant-background-dark);
+  transition: all 0.3s linear 0s;
+}
+/* wrapper isssue */
+.issue__wrapper {
+  margin:0 0 0 4.2em;
+}
+
+@media (--viewport-1180px) {
+  /* Issues view */
+  .issue__wrapper {
+  margin:0;
+  }
+}
+.issue__create {
+  font-size: 1.2em;
+  margin:0 0 2em
+}
+
+/* State issue */
+.issue__state {
+  display: inline-block;
+  padding: 7px 23px;
+  color: #fff;
+}
+/*Needs Diagnosis*/
+.issue__state--need {
+  background-color: var(--wc-state-need);
+}
+/*Ready for Outreach*/
+.issue__state--ready {
+  background-color: var(--wc-state-ready);
+}
+/*Site wait*/
+.issue__state--sitewait {
+    background-color: var(--wc-state-sitewait);
+}
+/*Close*/
+.issue__state--close {
+  background-color: var(--wc-stat-close);
+}
+.issue__date {
+  display: inline-block;
+}
+
+.issue__reporter {
+  font-weight: bold;
+}
+
+/* container details issue */
+.issue__details {
+    word-wrap: break-word;
+    overflow: hidden;
+}
+.issue__details strong {
+    font-weight: bold !important;
+}
+.issue__details img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.issue__details code, .comment__content code {
+  font-family: monospace;
+  font-size: 90%;
+}
+
+.issue__details p > code, .comment__content p > code {
+  color: inherit;
+  background-color: #F5F5F5;
+  padding: 0.25em;
+}
+
+/* temp hack to hide <!-- browser info --> */
+.issue__details > p:first-child {
+  display: none;
+}
+
+.issue__login_link {
+  margin-top: 2.5em;
+  text-align:center;
+}
+
+.issue__label:after {
+  display: table;
+  content: "";
+  clear: both;
+}
+/* value of label */
+/*.issue__label__value {
+  font-size: 1.2em;
+  float: left;
+}*/
+/* label item */
+.issue__label_item {
+  display: inline-block;
+  vertical-align:middle;
+  line-height:1;
+  color: #fff;
+  border-radius: 4px;
+  padding: 0.4em;
+  font-size:.7em;
+  font-weight: bold;
+}
+/* Labels */
+.issue__label_item--title {
+  font-size: 1.2em;
+  margin-right:.3em;
+  color:#000;
+}
+/* btn add label */
+.issue__label__btn {
+  float: left;
+  margin-left:1.2em;
+  font-size: 1.2em;
+  color: var(--wc-variant-background-light);
+}
+
+/*wrapper list comment */
+.issue__comment {
+  margin:4em 0 0;
+}

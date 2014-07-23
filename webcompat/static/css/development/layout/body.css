@@ -1,0 +1,94 @@
+/* Body */
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+
+/*----------Global Styles----------*/
+html {
+   font-family: var(--base-font);
+   font-weight: 300;
+   color: var(--wc-variant-background-dark);
+}
+/* min max class */
+.wc-viewport {
+  min-width: var(--base-min-width);
+  min-width: 20rem;
+  max-width: var(--base-max-width);
+  max-width: 120rem;
+  margin:0 auto;
+}
+
+.wc-content {
+  position:relative;
+  width:var(--base-width-content);
+  margin: 0 auto;
+  padding-left:5em;
+  padding-right:5em;
+}
+.wc-content--body {
+  padding-top:2em;
+  padding-bottom:2em;
+}
+.wc-content--footer {
+  padding-top:1em;
+  padding-bottom: 1em;
+}
+.wc-content:after {
+  content :"";
+  display:table;
+  clear:both;
+}
+@media (--viewport-1180px) {
+  .wc-content {
+    width:auto;
+    padding-left: 1em;
+    padding-right: 1em;
+  }
+}
+
+/*----------Global H Styles----------*/
+h1 {
+  font-size: 3.5em;
+  font-weight: 700;
+}
+h2 {
+  font-size: 2em;
+  font-weight: 600;
+}
+h3 {
+  font-size: 1.5em;
+}
+h4 {
+  font-size: 1.25em;
+}
+p {
+  font-size: 1em;
+}
+/*----------Link Styles----------*/
+a {
+  color: var(--base-link-color);
+}
+a:hover, a:focus {
+  color: var(--base-link-color);
+  outline: none;
+  text-decoration: underline;
+}

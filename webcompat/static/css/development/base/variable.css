@@ -1,0 +1,39 @@
+/*----------Variable----------*/
+
+/* base */
+:root {
+  --base-color : #333;
+  --base-background: #fff;
+  --base-font: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  --base-min-width:	320px;
+  --base-max-width: 1920px;
+  --base-width-content : 1180px;
+}
+/* theme */
+:root {
+  --wb-background-dark: #F8C41C; /*Dark Yellow*/
+  --wb-background-light: #FBC55F; /* Light Yellow */
+  --wc-variant-background-dark: #404040; /* Dark Gray */
+  --wc-variant-background-light: #c2c2c2; /* Dark Light */
+  --wc-state-need : #ff8364;   /* Light red */
+  --wc-state-ready : #a1ebbf; /* Light green */
+  --wc-state-sitewait : #006B75; /* Dark green */
+  --wc-stat-close: #6FC7FA;   /* Light blue */
+}
+
+/* link */
+:root {
+  --base-link-color: #000;
+  --base-link-color-hover: var(--base-link-color);
+  --Button-disabled-opacity : 0.5; /* button opacity disabled*/
+}
+
+/* Custom media queries */
+@custom-media --viewport-330px all and (max-width: 20.615em);
+@custom-media --viewport-375px all and (max-width: 23.4275em);
+@custom-media --viewport-450px all and (max-width: 28.115em);
+@custom-media --viewport-600px all and (max-width: 37.49em);
+@custom-media --viewport-770px all and (max-width: 48.115em);
+@custom-media --viewport-950px all and (max-width: 59.365em);
+@custom-media --viewport-990px all and (max-width: 61.865em);
+@custom-media --viewport-1180px all and (max-width: 73.74em);
