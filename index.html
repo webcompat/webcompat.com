@@ -41,29 +41,29 @@
   <div class="wc-content wc-content--body">
     <h1>Pattern-Portfolio</h1>
       <div class="portfolio">
-        <h2>Methdology : <strong>BEM</strong></h2>
+        <h2 class="portfolio__title">Methdology : <strong>BEM</strong></h2>
         <p>BEM is an abbreviation of three entities: a Block, an Element and a Modifier. BEM is a methodology of web projects development, that allows you to divide an interface into logically independent blocks. More info <a href="http://bem.info/" title="bem">here</a></p>
         <p>We use the postprocessor "Myth". File includes all the variables : <a href="https://github.com/webcompat/webcompat.com/blob/master/webcompat/static/css/development/base/variable.css">here</a>.
           Variables are used like this: <code>.Myclass {color: var (--nameOfvariable))</code></p>
       </div>
       <div class="portfolio">
-        <h2>Container</h2>
+        <h2 class="portfolio__title">Container</h2>
         <p>Use <code>.wc-content</code> for a responsive fixed width container.</p>
       </div>
       <div class="portfolio">
-        <h2>Typography</h2>
-        <h1>H1 title</h1> <code>font-size: 3.5em;font-weight: 700;</code>
-        <h2>H2 title</h2> <code>font-size: 2em;font-weight: 600;</code>
-        <h3>H3 title</h3> <code>font-size: 1.5em;</code>
-        <h4>h4 title</h4> <code>font-size: 1.25em;</code>
-        <p>p paragraph</p> <code>font-size:1em</code>
+        <h2 class="portfolio__title">Typography</h2>
+        <div><h1 class="wc-inlineBlock">H1 title</h1> <code>font-size: 3.5em;font-weight: 700;</code></div>
+        <div><h2 class="wc-inlineBlock">H2 title</h2> <code>font-size: 2em;font-weight: 600;</code></div>
+        <div><h3 class="wc-inlineBlock">H3 title</h3> <code>font-size: 1.5em;</code></div>
+        <div><h4 class="wc-inlineBlock">h4 title</h4> <code>font-size: 1.25em;</code></div>
+        <div><p class="wc-inlineBlock">p paragraph</p> <code>font-size:1em</code></div>
       </div>
       <div class="portfolio">
-        <h2>Font</h2>
+        <h2 class="portfolio__title">Font</h2>
         <p>Default font : <code>--base-font: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;</code></p>
       </div>
       <div class="portfolio">
-        <h2>Button</h2>
+        <h2 class="portfolio__title">Button</h2>
         <button type="button" class="Button Button--default">Button default</button> <code>.Button .Button--default</code><br/>
         <button type="button" class="Button Button--action">Button action</button> <code>.Button .Button--action</code>
         <br/>
@@ -71,7 +71,7 @@
         <button type="button" class="Button Button--action is-disabled">Button action disabled</button> <code>.Button .Button--action .is-disabled</code>
       </div>
       <div class="portfolio">
-        <h2>Color</h2>
+        <h2 class="portfolio__title">Color</h2>
         <p>
             <h3>Basic color</h3>
             <div><div class="portfolio_color" style="background-color:#F8C41C"></div> <code>.MyClass {background-color : var(--wb-background-dark);</code></div>
