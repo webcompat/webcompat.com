@@ -30,14 +30,63 @@
   <link href="webcompat/static/css/webcompat.dev.css?v=0.0.1" type="text/css" rel="stylesheet">
 </head>
 <body>
-<div class="wc-viewport">
+<div class="wc-viewport page">
   <header class="header">
     <nav class="wc-content">
       <div class="nav__section">
-        <span class="nav__link">WebCompat.com // Pattern-Portfolio</span>
+        <span class="nav__link">WebCompat.com</span>
       </div>
     </nav>
   </header>
-</div>
+  <div class="wc-content wc-content--body">
+    <h1>Pattern-Portfolio</h1>
+      <div class="portfolio">
+        <h2>Methdology : <strong>BEM</strong></h2>
+        <p>BEM is an abbreviation of three entities: a Block, an Element and a Modifier. BEM is a methodology of web projects development, that allows you to divide an interface into logically independent blocks. More info <a href="http://bem.info/" title="bem">here</a></p>
+        <p>We use the postprocessor "Myth". File includes all the variables : <a href="https://github.com/webcompat/webcompat.com/blob/master/webcompat/static/css/development/base/variable.css">here</a>
+          Variables are used like this: <code>.Myclass {color: var (--nameOfvariable))</code></p>
+      </div>
+      <div class="portfolio">
+        <h2>Container</h2>
+        <p>Use <code>.wc-content</code> for a responsive fixed width container.</p>
+      </div>
+      <div class="portfolio">
+        <h2>Typography</h2>
+        <h1>H1 title (font-size: 3.5em;font-weight: 700;)</h1>
+        <h2>H2 title (font-size: 2em;font-weight: 600;)</h2>
+        <h3>H3 title (font-size: 1.5em;)</h3>
+        <h4>h4 title (font-size: 1.25em;)</h4>
+        <p>p parapgraph (font-size:1em)</p>
+      </div>
+      <div class="portfolio">
+        <h2>Font</h2>
+        <p>Default font : <code>--base-font: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;</code></p>
+      </div>
+      <div class="portfolio">
+        <h2>Button</h2>
+        <button type="button" class="Button Button--default">Button default</button> <code>.Button .Button--default</code><br/>
+        <button type="button" class="Button Button--action">Button action</button> <code>.Button .Button--action</code>
+        <br/>
+        <button type="button" class="Button Button--default is-disabled">Button default disabled</button> <code>.Button .Button--default .is-disabled</code><br/>
+        <button type="button" class="Button Button--action is-disabled">Button action disabled</button> <code>.Button .Button--action .is-disabled</code>
+      </div>
+      <div class="portfolio">
+        <h2>Color</h2>
+        <p>
+            <h3>Basic color</h3>
+            <div><div class="portfolio_color" style="background-color:#F8C41C"></div> <code>.MyClass {background-color : var(--wb-background-dark);</code></div>
+            <div><div class="portfolio_color" style="background-color:#FBC55F"></div> <code>.MyClass {background-color : var(--wb-background-light);</code></div>
+            <div><div class="portfolio_color" style="background-color:#404040"></div> <code>.MyClass {background-color : var(--wc-variant-background-dark);</code></div>
+            <div><div class="portfolio_color" style="background-color:#c2c2c2"></div> <code>.MyClass {background-color : var(--wb-background-light:);</code></div>
+            <div><div class="portfolio_color" style="background-color:#F8C41C"></div> <code>.MyClass {background-color : var(--wb-background-dark:);</code></div>
+            <h3>State issue</h3>
+            <div><div class="portfolio_color" style="background-color:#ff8364"></div> <code>.MyClass {background-color : var(--wc-state-need);</code></div>
+            <div><div class="portfolio_color" style="background-color:#a1ebbf"></div> <code>.MyClass {background-color : var(--wc-state-ready);</code></div>
+            <div><div class="portfolio_color" style="background-color:#006B75"></div> <code>.MyClass {background-color : var(--wc-state-sitewait);</code></div>
+            <div><div class="portfolio_color" style="background-color:#6FC7FA"></div> <code>.MyClass {background-color : var(--wc-stat-close);</code></div>
+        </p>
+      </div>
+    </div>
+  </div>
 </body>
 </html>

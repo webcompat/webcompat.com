@@ -1,0 +1,27 @@
+/*------Pattern Portfolio view------*/
+
+.portfolio {
+  margin:2em 0;
+  border:solid 1px transparent;
+}
+h2 {
+  border-bottom: 1px solid #EEE;
+}
+code {
+  display:inline-block;
+  vertical-align: middle;
+  border: 1px solid #DDD;
+  margin: -1px 0px;
+  padding: 0.25em;
+  font-weight: bold;
+  background: #fafafa;
+  border-radius: 0.25em;
+  line-height: 1;
+}
+.portfolio_color {
+  display:inline-block;
+  width:200px;
+  height:40px;
+  vertical-align:middle;
+  margin:0 0 20px 0;
+}
