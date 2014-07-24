@@ -28,6 +28,11 @@
 .wc-float-right {
   float:right;
 }
+.wc-clear-float:after {
+  content:"";
+  display:table;
+  clear:both;
+}
 
 /*---------- Utilities Display ----------*/
 
