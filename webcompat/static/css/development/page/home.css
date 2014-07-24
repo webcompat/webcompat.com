@@ -3,7 +3,7 @@
 
 .divider {
   font-weight: 700;
-  border-top: 5px solid var(--wb-background-dark);
+  border-top: 5px solid var(--wc-background-dark);
   width: 30px;
   margin-left: 5em;
   color: #fff;
@@ -12,7 +12,7 @@
 /*--------Homepage Styles--------*/
 
 #hero {
-  background-color: var(--wb-background-dark);
+  background-color: var(--wc-background-dark);
   text-align: left;
   color: #fff;
   padding: 0;
@@ -68,13 +68,13 @@
   line-height: 1.15em;
   margin-left:.3em;
   background-color: #fff;
-  color: var(--wb-background-dark);
+  color: var(--wc-background-dark);
   border-radius: 50%;
   transition: all 0.3s linear 0s;
 }
 /* hover a icon */
 #report-bug:hover .icon {
-  background-color: var(--wb-background-dark);
+  background-color: var(--wc-background-dark);
   color: #fff;
   transition: all 0.3s linear 0s;
 }
@@ -309,7 +309,7 @@ form .button {
 #submitdiv {
   display: block;
   font-weight: 700;
-  border-top: 5px solid var(--wb-background-dark);
+  border-top: 5px solid var(--wc-background-dark);
   width: 30px;
   margin: 1em 0 0;
   color: #fff;
@@ -418,10 +418,10 @@ form .button {
   display: none;
 }
 .no-error .form-control {
-  border-color: var(--wb-background-dark);
+  border-color: var(--wc-background-dark);
 }
 .no-error .form-control:focus{
-  border-color: var(--wb-background-dark);
+  border-color: var(--wc-background-dark);
   box-shadow:none;
 }
 .disabled {
