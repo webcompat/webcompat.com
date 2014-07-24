@@ -1,6 +1,6 @@
 /*---------- Header ----------*/
 .header {
-  background: var(--wb-background-light);
+  background: var(--wc-background-light);
   padding: 0.5em 0;
 }
 .nav {}

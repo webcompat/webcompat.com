@@ -70,7 +70,7 @@
 }
 /* blockquote */
 .comment__content blockquote {
-  border-left: 4px solid var(--wb-background-light);
+  border-left: 4px solid var(--wc-background-light);
   padding: 0px 1em;
   margin: 1em 0px;
   color: #6a6a6a;

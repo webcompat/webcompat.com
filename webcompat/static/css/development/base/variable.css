@@ -11,8 +11,8 @@
 }
 /* theme */
 :root {
-  --wb-background-dark: #F8C41C; /*Dark Yellow*/
-  --wb-background-light: #FBC55F; /* Light Yellow */
+  --wc-background-dark: #F8C41C; /*Dark Yellow*/
+  --wc-background-light: #FBC55F; /* Light Yellow */
   --wc-variant-background-dark: #404040; /* Dark Gray */
   --wc-variant-background-light: #c2c2c2; /* Dark Light */
   --wc-state-need : #ff8364;   /* Light red */

@@ -34,10 +34,10 @@
   color:#fff;
 }
 .Button--default {
-  border: solid 4px var(--wb-background-dark);
+  border: solid 4px var(--wc-background-dark);
 }
 .Button--default:hover:not(.is-disabled) {
-  background-color: var(--wb-background-dark);
+  background-color: var(--wc-background-dark);
 }
 .Button--action {
   border: solid 4px var(--wc-variant-background-light);
