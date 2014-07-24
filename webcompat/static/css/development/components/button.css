@@ -25,24 +25,24 @@
   border: 0;
   padding: 0;
 }
-.Button:hover,
-.Button:focus,
-.Button:active {
+.Button:hover:not(.is-disabled),
+.Button:focus:not(.is-disabled),
+.Button:active:not(.is-disabled) {
   text-decoration: none;
 }
-.Button:hover {
+.Button:hover:not(.is-disabled) {
   color:#fff;
 }
 .Button--default {
-  border: solid 4px var(--wb-background-dark);
+  border: solid 4px var(--wc-background-dark);
 }
-.Button--default:hover {
-  background-color: var(--wb-background-dark);
+.Button--default:hover:not(.is-disabled) {
+  background-color: var(--wc-background-dark);
 }
 .Button--action {
   border: solid 4px var(--wc-variant-background-light);
 }
-.Button--action:hover {
+.Button--action:hover:not(.is-disabled) {
   background-color: var(--wc-variant-background-light);
 }
 .Button:disabled,
