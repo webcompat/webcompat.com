@@ -1,0 +1,63 @@
+/*---------- Utilities text ----------*/
+
+.wc-bold {
+  font-weight: 700;
+}
+
+/*---------- Utilities Position ----------*/
+
+.wc-pos-absolute {
+  position:absolute;
+}
+.wc-pos-relative {
+  position:relative;
+}
+.wc-pos-fixed {
+  position:fixed;
+}
+.wc-pos-static {
+  position:static;
+}
+
+/*---------- Utilities Layout ----------*/
+
+.wc-float-left {
+  float:left;
+}
+
+.wc-float-right {
+  float:right;
+}
+
+/*---------- Utilities Display ----------*/
+
+.wc-block {
+  display:block;
+}
+.wc-inline-block {
+  display:inline-block;
+}
+.wc-inline {
+  display:inline;
+}
+.wc-hidden {
+  display:none;
+}
+
+/*--------Flash Messages---------*/
+.flash {
+  position: absolute;
+  top: 0;
+  left:0;
+  right: 0;
+  opacity: 0.8;
+  background-color: white;
+  padding: 0.5em 1em;
+  text-align: center;
+  color: #000;
+}
+
+.error {
+  color: #fff;
+  background-color: rgba(255, 89, 89, 0.92)
+}
