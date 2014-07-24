@@ -1,7 +1,47 @@
-/*---------- Utils ----------*/
+/*---------- Utilities text ----------*/
 
 .wc-bold {
   font-weight: 700;
+}
+
+/*---------- Utilities Position ----------*/
+
+.wc-pos-absolute {
+  position:absolute;
+}
+.wc-pos-relative {
+  position:relative;
+}
+.wc-pos-fixed {
+  position:fixed;
+}
+.wc-pos-static {
+  position:static;
+}
+
+/*---------- Utilities Layout ----------*/
+
+.wc-float-left {
+  float:left;
+}
+
+.wc-float-right {
+  float:right;
+}
+
+/*---------- Utilities Display ----------*/
+
+.wc-block {
+  display:block;
+}
+.wc-inline-block {
+  display:inline-block;
+}
+.wc-inline {
+  display:inline;
+}
+.wc-hidden {
+  display:none;
 }
 
 /*--------Flash Messages---------*/
