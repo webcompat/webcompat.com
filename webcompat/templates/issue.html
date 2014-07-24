@@ -29,9 +29,16 @@
           <%= body %>
           <div class="issue__label">
             <span class="issue__label_item issue__label_item--title">Labels</span>
+            <% if (labels.length) { %>
               <% _.each(labels, function(label) { %>
-              <span class="issue__label_item" style="background-color:#<%=label.color%>"><%= label.name %></span>
+                <span class="issue__label_item" style="background-color:#<%=label.color%>">
+                  <%= label.name %>
+                </span>
               <% }); %>
+              <span class="Button Button--action issue__label--modify">edit</span>
+            <% } else { %>
+              <span class="Button Button--action issue__label--modify">add</span>
+            <% }%>
           </div>
         </script>
         </div>
