@@ -29,6 +29,12 @@
   float:right;
 }
 
+.wc-clear-float:after {
+  content:"";
+  display:table;
+  clear:both;
+}
+
 /*---------- Utilities Display ----------*/
 
 .wc-block {
