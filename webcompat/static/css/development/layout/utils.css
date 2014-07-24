@@ -29,6 +29,21 @@
   float:right;
 }
 
+/*---------- Utilities Display ----------*/
+
+.wc-block {
+  display:block;
+}
+.wc-inline-block {
+  display:inline-block;
+}
+.wc-inline {
+  display:inline;
+}
+.wc-hidden {
+  display:none;
+}
+
 /*--------Flash Messages---------*/
 .flash {
   position: absolute;
