@@ -4,23 +4,19 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-import json
-import os
 import sys
-import time
 import urllib
 from flask import (flash, g, redirect, request, render_template, session,
-                   url_for, abort)
+                   url_for)
 from flask.ext.github import GitHubError
-from form import (build_formdata, get_browser, get_os,
-                  IssueForm, AUTH_REPORT, PROXY_REPORT)
 from hashlib import md5
-from helpers import get_user_info
-from issues import (report_issue, proxy_report_issue, get_user_issues,
-                    get_contact_ready, proxy_get_contact_ready,
-                    get_needs_diagnosis, proxy_get_needs_diagnosis,
-                    proxy_request, get_issue, add_comment)
-from models import db_session, User
+from .form import get_browser, get_os, IssueForm, AUTH_REPORT, PROXY_REPORT
+from .helpers import get_user_info
+from .issues import (report_issue, proxy_report_issue, get_user_issues,
+                     get_contact_ready, proxy_get_contact_ready,
+                     get_needs_diagnosis, proxy_get_needs_diagnosis,
+                     get_issue)
+from .models import db_session, User
 from webcompat import github, app
 
 
@@ -183,43 +179,6 @@ def show_issue(number):
     return render_template('issue.html', number=number, uri=uri, title=title)
 
 
-@app.route('/api/issues/<int:number>')
-def proxy_issue(number):
-    '''XHR endpoint to get issue data from GitHub, either as an authed
-    user, or as one of our proxy bots.'''
-    if request.is_xhr and request.headers.get('accept') == 'application/json':
-        if g.user:
-            issue = github.get('repos/{0}/{1}'.format(
-                app.config['ISSUES_REPO_URI'], number))
-        else:
-            issue = proxy_request('get', '/{0}'.format(number))
-        return json.dumps(issue)
-    else:
-        abort(406)
-
-
-@app.route('/api/issues/<int:number>/comments', methods=['GET', 'POST'])
-def proxy_comments(number):
-    '''XHR endpoint to get issues comments from GitHub, either as an authed
-    user, or as one of our proxy bots.'''
-    if request.method == 'POST':
-        try:
-            add_comment(number, request.data)
-            return ':)'
-        except GitHubError as e:
-            print('GitHubError: ', e.response.status_code)
-            return (':(', e.response.status_code)
-    elif request.is_xhr and request.headers.get('accept') == 'application/json':
-        if g.user:
-            comments = github.get('repos/{0}/{1}/comments'.format(
-                app.config['ISSUES_REPO_URI'], number))
-        else:
-            comments = proxy_request('get', '/{0}/comments'.format(number))
-        return json.dumps(comments)
-    else:
-        abort(406)
-
-
 @app.route('/thanks/<int:number>')
 def thanks(number):
     issue = number
@@ -273,7 +232,7 @@ def not_found(err):
 
 
 @app.errorhandler(500)
-def not_found(err):
+def this_is_not_good(err):
     message = "Internal Server Error"
     return render_template('error.html',
                            error_code=500,

@@ -26,3 +26,7 @@ mail_on_500(app, app.config['ADMINS'])
 
 # import views after we initialize our github object
 import webcompat.views
+
+# register API blueprint
+from .api.endpoints import api
+app.register_blueprint(api)
