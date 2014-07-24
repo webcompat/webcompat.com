@@ -27,15 +27,14 @@ define([
 
     'form toggles open then closed': function () {
       return this.remote
+        .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url))
         .findByCssSelector('#report-bug.closed').click()
         .end()
-        .sleep(300)
         .findByCssSelector('.form-opened')
         .end()
         .findByCssSelector('#report-bug.opened').click()
         .end()
-        .sleep(300)
         .findByCssSelector('.form-closed').isDisplayed()
         .then(function (isDisplayed) {
           assert.equal(isDisplayed, false);
