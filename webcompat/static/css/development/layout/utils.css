@@ -1,8 +1,24 @@
-/*---------- Utils ----------*/
+/*---------- Utils text ----------*/
 
 .wc-bold {
   font-weight: 700;
 }
+
+/*---------- Utils Position ----------*/
+
+.wc-pos-absolute {
+  position:absolute;
+}
+.wc-pos-relative {
+  position:relative;
+}
+.wc-pos-fixed {
+  position:fixed;
+}
+.wc-pos-static {
+  position:static;
+}
+
 
 /*--------Flash Messages---------*/
 .flash {
