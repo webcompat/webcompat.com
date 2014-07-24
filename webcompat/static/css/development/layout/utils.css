@@ -1,10 +1,10 @@
-/*---------- Utils text ----------*/
+/*---------- Utilities text ----------*/
 
 .wc-bold {
   font-weight: 700;
 }
 
-/*---------- Utils Position ----------*/
+/*---------- Utilities Position ----------*/
 
 .wc-pos-absolute {
   position:absolute;
@@ -19,6 +19,15 @@
   position:static;
 }
 
+/*---------- Utilities Layout ----------*/
+
+.wc-float-left {
+  float:left;
+}
+
+.wc-float-right {
+  float:right;
+}
 
 /*--------Flash Messages---------*/
 .flash {
