@@ -167,11 +167,9 @@ def show_issues():
     return redirect(url_for('index'), code=307)
 
 
-@app.route('/issues/<number>')
+@app.route('/issues/<int:number>')
 def show_issue(number):
     '''Route to display a single issue.'''
-    if not number.isdigit():
-        abort(404)
     if g.user:
         get_user_info()
     try:
@@ -185,12 +183,10 @@ def show_issue(number):
     return render_template('issue.html', number=number, uri=uri, title=title)
 
 
-@app.route('/api/issues/<number>')
+@app.route('/api/issues/<int:number>')
 def proxy_issue(number):
     '''XHR endpoint to get issue data from GitHub, either as an authed
     user, or as one of our proxy bots.'''
-    if not number.isdigit():
-        abort(404)
     if request.is_xhr and request.headers.get('accept') == 'application/json':
         if g.user:
             issue = github.get('repos/{0}/{1}'.format(
@@ -202,12 +198,10 @@ def proxy_issue(number):
         abort(406)
 
 
-@app.route('/api/issues/<number>/comments', methods=['GET', 'POST'])
+@app.route('/api/issues/<int:number>/comments', methods=['GET', 'POST'])
 def proxy_comments(number):
     '''XHR endpoint to get issues comments from GitHub, either as an authed
     user, or as one of our proxy bots.'''
-    if not number.isdigit():
-        abort(404)
     if request.method == 'POST':
         try:
             add_comment(number, request.data)
@@ -226,16 +220,13 @@ def proxy_comments(number):
         abort(406)
 
 
-@app.route('/thanks/<number>')
+@app.route('/thanks/<int:number>')
 def thanks(number):
-    if number.isdigit():
-        issue = number
-        uri = u"http://webcompat.com/issues/{0}".format(number)
-        text = u"I just filed a bug on the internet: "
-        encoded_issue = urllib.quote(uri.encode("utf-8"))
-        encoded_text = urllib.quote(text.encode("utf-8"))
-    else:
-        abort(404)
+    issue = number
+    uri = u"http://webcompat.com/issues/{0}".format(number)
+    text = u"I just filed a bug on the internet: "
+    encoded_issue = urllib.quote(uri.encode("utf-8"))
+    encoded_text = urllib.quote(text.encode("utf-8"))
     if g.user:
         get_user_info()
     return render_template('thanks.html', number=issue,
