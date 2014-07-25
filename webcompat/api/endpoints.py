@@ -53,3 +53,29 @@ def proxy_comments(number):
         return json.dumps(comments)
     else:
         abort(406)
+
+
+@api.route('/issues/<int:number>/labels', methods=['POST'])
+def modify_labels(number):
+    '''XHR endpoint to modify issue labels. Sending in an empty array removes
+    them all as well.'''
+    try:
+        labels = proxy_request('put', '/{0}/labels'.format(number),
+                               data=request.data)
+        return json.dumps(labels)
+    except GitHubError as e:
+        print('GitHubError: ', e.response.status_code)
+        return (':(', e.response.status_code)
+
+
+@api.route('/issues/labels')
+def get_repo_labels():
+    '''XHR endpoint to get all possible labels in a repo.'''
+    # Chop off /issues. Someone feel free to refactor the ISSUES_REPO_URI.
+    labels_uri = app.config['ISSUES_REPO_URI'][:-7]
+    if request.is_xhr and request.headers.get('accept') == JSON_MIME:
+        if g.user:
+            labels = github.get('repos/{0}/labels'.format(labels_uri))
+        else:
+            labels = proxy_request('get', '/labels', uri=labels_uri)
+        return json.dumps(labels)
