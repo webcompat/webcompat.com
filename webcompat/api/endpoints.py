@@ -58,7 +58,8 @@ def proxy_comments(number):
 @api.route('/issues/<int:number>/labels', methods=['POST'])
 def modify_labels(number):
     '''XHR endpoint to modify issue labels. Sending in an empty array removes
-    them all as well.'''
+    them all as well. This method is always proxied because non-repo collabs
+    can't normally edit labels for an issue.'''
     try:
         labels = proxy_request('put', '/{0}/labels'.format(number),
                                data=request.data)
