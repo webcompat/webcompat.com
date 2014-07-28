@@ -45,7 +45,9 @@
           <% }%>
         </script>
         <script type="text/template" id="label-editor-tmpl">
-          <div><input placeholder="filter label"><button>Save &amp; Close</button></div>
+          <div>
+            <input class="issue__label--filter" placeholder="filter label"><button>Save &amp; Close</button>
+          </div>
           <% _.each(labels, function(label) { %>
             <label class="issue__label_item" style="background-color:#<%=label.color%>">
             <%= label.name %>
