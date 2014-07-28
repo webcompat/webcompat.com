@@ -197,7 +197,8 @@ issues.LabelEditorView = Backbone.View.extend({
   className: 'issue__label_editor',
   events: {
     'change input[type=checkbox]': 'updateView',
-    'click button': 'closeEditor'
+    'click button': 'closeEditor',
+    'keyup .issue__label--filter': 'filterLabels'
   },
   initialize: function(options) {
     this.issueView = options.issueView;
@@ -233,7 +234,22 @@ issues.LabelEditorView = Backbone.View.extend({
     // detach() (vs remove()) here because we don't want to lose events if the
     // user reopens the editor.
     this.$el.children().detach();
-  }
+  },
+  filterLabels: _.debounce(function(e) {
+    var re = new RegExp('^' + e.target.value, 'i');
+    var matches = _.pluck(_.filter(this.model.get('labels'), function(label) {
+      return re.test(label.name);
+    }), 'name');
+
+    // make sure everything is showing
+    $('.issue__label_item').show();
+
+    // hide the non-filter matches
+    var hidden = _.difference(_.pluck(this.model.get('labels'), 'name'), matches);
+    _.each(hidden, function(name) {
+      $('input[name='+name+']').parent().hide();
+    });
+  }, 100)
 });
 
 issues.MainView = Backbone.View.extend({
