@@ -27,3 +27,11 @@ Mike Taylor    @miketaylr      miket@mozilla.com
     `-. `.`.``-----``--,  .'
       |/`.\`'        ,',');
           `         (/  (/
+
+
+Contact Us
+----------
+
+You can find us on Twitter or email or at the public mailing list
+compatibility@lists.mozilla.org.  These are public forums, so please
+minimize any personal information you choose to share.
