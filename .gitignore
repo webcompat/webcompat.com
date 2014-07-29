@@ -17,3 +17,5 @@ webcompat/**/*.dev.css
 
 #selenium server
 *.jar
+*.pid
+nohup.out
