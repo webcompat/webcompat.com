@@ -149,6 +149,35 @@ You can then use the `grunt` command to run grunt tasks. `grunt --help` will lis
 
 You can run tests from the project root with the `nosetests` command.
 
+### Functional Tests
+
+We use [Intern](http://theintern.io/) to run functional tests.
+
+To run them, make sure you download the Selenium standalone server from the repo root:
+
+``` bash
+wget http://selenium-release.storage.googleapis.com/2.42/selenium-server-standalone-2.42.2.jar
+```
+
+The `firefox` binary will also need to be in your `PATH`. Here's how this can be done on OS X:
+
+``` bash
+export PATH="/Applications/Firefox.app/Contents/MacOS/:$PATH"
+```
+
+Start the Selenium and application servers (in separate terminal tabs or windows):
+
+``` bash
+java -jar selenium-server-standalone-2.42.2.jar
+source env/bin/activate && python run.py
+```
+
+And to run the tests (in a new tab or terminal window):
+
+``` bash
+node_modules/.bin/intern-runner config=tests/functional/intern
+```
+
 ## Acknowledgements
 A lot of this document was inspired directly by the excellent [Backbone.LayoutManager](https://github.com/tbranyen/backbone.layoutmanager/blob/master/CONTRIBUTING.md), [CouchDB](https://github.com/apache/couchdb/blob/master/src/fauxton/CONTRIBUTING.md), and [Angular.js](https://github.com/angular/angular.js/blob/master/CONTRIBUTING.md#issue) CONTRIBUTING files.
 
