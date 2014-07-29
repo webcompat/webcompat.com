@@ -9,21 +9,24 @@ authed user and the proxy case.'''
 
 import json
 import requests
-from flask import session
-from form import build_formdata
+from webcompat.form import build_formdata
 from webcompat import github, app
 
 REPO_URI = app.config['ISSUES_REPO_URI']
 TOKEN = app.config['BOT_OAUTH_TOKEN']
 
 
-def proxy_request(method, path_mod='', data=None):
+def proxy_request(method, path_mod='', data=None, uri=None):
     '''Make a GitHub API request with a bot's OAuth token, for non-logged in
     users. `path`, if included, will be appended to the end of the URI.
     Optionally pass in POST data via the `data` arg.'''
     headers = {'Authorization': 'token {0}'.format(TOKEN)}
-    req_uri = 'https://api.github.com/repos/{0}{1}'.format(REPO_URI, path_mod)
     req = getattr(requests, method)
+    if uri:
+        req_uri = 'https://api.github.com/repos/{0}{1}'.format(uri, path_mod)
+    else:
+        req_uri = 'https://api.github.com/repos/{0}{1}'.format(REPO_URI,
+                                                               path_mod)
     if data:
         return req(req_uri, data=data, headers=headers).json()
     else:

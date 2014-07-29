@@ -93,8 +93,9 @@
 
 /* container details issue */
 .issue__details {
-    word-wrap: break-word;
-    overflow: hidden;
+  word-wrap: break-word;
+  overflow: hidden;
+  position: relative;
 }
 /* force font-size */
 .issue__details * {
@@ -134,6 +135,10 @@
   content: "";
   clear: both;
 }
+
+.issue__label {
+  position: relative;
+}
 /* value of label */
 /*.issue__label__value {
   font-size: 1.2em;
@@ -167,4 +172,17 @@
 /*wrapper list comment */
 .issue__comment {
   margin:4em 0 0;
+}
+
+.issue__label--modify {
+  display: none;
+}
+
+/* Labels editor */
+.issue__label_editor {
+  background-color: gray;
+  width: 250px;
+  position: absolute;
+  bottom: 0;
+  right: 0;
 }

@@ -7,6 +7,10 @@ module.exports = function(grunt) {
       dist: {
         src: '<%= concat.dist.dest %>',
         dest: '<%= jsPath %>/<%= pkg.name %>.min.js'
-      } 
-   });	
+      },
+      issues: {
+        src: '<%= concat.issues.dest %>',
+        dest: '<%= jsPath %>/issues.min.js'
+      }
+   });
 };

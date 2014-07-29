@@ -17,6 +17,14 @@ module.exports = function(grunt) {
             '<%= jsPath %>/lib/shared.js'
         ],
         dest: '<%= jsPath %>/<%= pkg.name %>.js'
+      },
+      issues: {
+        src: [
+            '<%= jsPath %>/lib/comments.js',
+            '<%= jsPath %>/lib/labels.js',
+            '<%= jsPath %>/lib/issues.js'
+        ],
+        dest: '<%= jsPath %>/issues.js'
       }
    });
 };

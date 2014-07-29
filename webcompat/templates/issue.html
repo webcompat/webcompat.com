@@ -27,15 +27,38 @@
         <!-- Issue Info -->
         <script type="text/template" id="issue-info-tmpl">
           <%= body %>
-          <div class="issue__label">
-            <span class="issue__label_item issue__label_item--title">Labels</span>
-              <% _.each(labels, function(label) { %>
-              <span class="issue__label_item" style="background-color:#<%=label.color%>"><%= label.name %></span>
-              <% }); %>
-          </div>
         </script>
         </div>
-        <!-- Issue comment -->
+        <!-- Issue Labels -->
+        <div class="issue__label">
+        <script type="text/template" id="issue-labels-tmpl">
+          <span class="issue__label_item issue__label_item--title">Labels</span>
+          <% if (labels.length) { %>
+            <% _.each(labels, function(label) { %>
+              <span class="issue__label_item" style="background-color:#<%=label.color%>">
+                <%= label.name %>
+              </span>
+            <% }); %>
+            {% if session.user_id and session.avatar_url %}
+            <span class="Button Button--action issue__label--modify">edit</span>
+          <% } else { %>
+            <span class="Button Button--action issue__label--modify">add</span>
+            {% endif %}
+          <% }%>
+        </script>
+        <script type="text/template" id="label-editor-tmpl">
+          <div>
+            <input class="issue__label--filter" placeholder="filter label"><button>Save &amp; Close</button>
+          </div>
+          <% _.each(labels, function(label) { %>
+            <label class="issue__label_item" style="background-color:#<%=label.color%>">
+            <%= label.name %>
+            <input type="checkbox" name="<%= label.name %>" class="wc-float-left" data-color="<%=label.color%>">
+          </label>
+          <% }); %>
+        </script>
+        </div>
+        <!-- Issue Comments -->
         <div class="issue__comment">
           <script type="text/template" id="comment-tmpl">
             <div class="comment__avatar">
@@ -72,7 +95,7 @@
           </div>
         </div>
         {% else %}
-        <p class="issue__login_link">Please <a href="{{ url_for('login') }}">login</a> to leave a comment.</p>
+        <p class="issue__login_link">Please <a href="{{ url_for('login') }}">login</a> to leave a comment or add/edit labels.</p>
         {% endif %}
        </div>
     </div>
@@ -80,5 +103,11 @@
 {% endblock %}
 {% block extrascripts %}
 <script>var issueNumber={{ number }};</script>
+{%- if config.PRODUCTION %}
+<script src="{{ url_for('static', filename='js/issues.min.js') }}"></script>
+{% else %}
+<script src="{{ url_for('static', filename='js/lib/comments.js') }}"></script>
+<script src="{{ url_for('static', filename='js/lib/labels.js') }}"></script>
 <script src="{{ url_for('static', filename='js/lib/issues.js') }}"></script>
+{%- endif %}
 {% endblock %}

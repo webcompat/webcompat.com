@@ -50,41 +50,34 @@ issues.Issue = Backbone.Model.extend({
       reporter: response.user.login,
       title: response.title
     });
-  }
-});
-
-issues.Comment = Backbone.Model.extend({
-  url: function() {
-    return '/api/issues/' + issueNumber + '/comments';
   },
-  parse: function(response) {
-    this.set({
-      avatarUrl: response.user.avatar_url,
-      body: marked(response.body),
-      commenter: response.user.login,
-      commentLinkId: 'issuecomment-' + response.id,
-      createdAt: moment(response.created_at).fromNow(),
-      rawBody: response.body
+  updateLabels: function(labelsArray) {
+    var self = this;
+    if (!$.isArray(labelsArray)) {
+      return;
+    }
+
+    $.ajax({
+      contentType: 'application/json',
+      data: JSON.stringify(labelsArray),
+      type: 'POST',
+      url: '/api/issues/' + this.get('number') + '/labels',
+      success: function(response) {
+        //update model after success
+        self.set('labels', JSON.parse(response));
+      },
+      error: function() {
+        $('<div></div>', {
+          'class': 'flash error',
+          'text': 'There was an error setting labels.'
+        }).appendTo('body');
+
+        setTimeout(function(){
+          var __flashmsg = $('.flash');
+          if (__flashmsg.length) {__flashmsg.fadeOut();}
+        }, 2000);
+      }
     });
-  }
-});
-
-issues.CommentsCollection = Backbone.Collection.extend({
-  model: issues.Comment,
-  url: function() {
-    return '/api/issues/' + issueNumber + '/comments';
-  }
-});
-
-issues.CommentView = Backbone.View.extend({
-  className: 'comment',
-  id: function() {
-    return this.model.get('commentLinkId');
-  },
-  template: _.template($('#comment-tmpl').html()),
-  render: function() {
-    this.$el.html(this.template(this.model.toJSON()));
-    return this;
   }
 });
 
@@ -132,17 +125,20 @@ issues.MainView = Backbone.View.extend({
     this.title = new issues.TitleView({model: this.issue});
     this.metadata = new issues.MetaDataView({model: this.issue});
     this.body = new issues.BodyView({model: this.issue});
+    this.labels = new issues.LabelsView({model: this.issue});
   },
   fetchModels: function() {
     var self = this;
     var headersBag = {headers: {'Accept': 'application/json'}};
     this.issue.fetch(headersBag).success(function() {
-      _.each([self.title, self.metadata, self.body, self], function(elm) {
-        elm.render();
-        _.each($('.issue__details code'), function(elm){
-          Prism.highlightElement(elm);
-        });
-      });
+      _.each([self.title, self.metadata, self.body, self.labels, self],
+        function(elm) {
+          elm.render();
+          _.each($('.issue__details code'), function(elm) {
+            Prism.highlightElement(elm);
+          });
+        }
+      );
 
       // If there are any comments, go fetch the model data
       if (self.issue.get('commentNumber') > 0) {
