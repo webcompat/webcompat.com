@@ -128,6 +128,10 @@ Note: If you get a `TypeError: unhashable type` page when loading `http://127.0.
 
 * `BOT_OAUTH_TOKEN`: https://github.com/webcompat/webcompat.com/blob/master/config.py.example#L64
 
+Note: If you get a 404 at GitHub when clicking "Login", it means you haven't filled in the `GITHUB_CLIENT_ID` or `GITHUB_CLIENT_SECRET` at https://github.com/webcompat/webcompat.com/blob/master/config.py.example#L47-L49.
+
+![Auth 404](https://i.cloudup.com/8FDA5bVc7l.png)
+
 
 ## Installing Grunt
 
