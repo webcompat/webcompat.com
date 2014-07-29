@@ -101,5 +101,11 @@
 {% endblock %}
 {% block extrascripts %}
 <script>var issueNumber={{ number }};</script>
+{%- if config.PRODUCTION %}
+<script src="{{ url_for('static', filename='js/issues.min.js') }}"></script>
+{% else %}
+<script src="{{ url_for('static', filename='js/lib/comments.js') }}"></script>
+<script src="{{ url_for('static', filename='js/lib/labels.js') }}"></script>
 <script src="{{ url_for('static', filename='js/lib/issues.js') }}"></script>
+{%- endif %}
 {% endblock %}
