@@ -4,6 +4,7 @@
 
 define([
   './lib/index',
+  './lib/issues',
 ], function () {
   'use strict';
 });
