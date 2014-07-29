@@ -39,9 +39,11 @@
                 <%= label.name %>
               </span>
             <% }); %>
+            {% if session.user_id and session.avatar_url %}
             <span class="Button Button--action issue__label--modify">edit</span>
           <% } else { %>
             <span class="Button Button--action issue__label--modify">add</span>
+            {% endif %}
           <% }%>
         </script>
         <script type="text/template" id="label-editor-tmpl">
@@ -93,7 +95,7 @@
           </div>
         </div>
         {% else %}
-        <p class="issue__login_link">Please <a href="{{ url_for('login') }}">login</a> to leave a comment.</p>
+        <p class="issue__login_link">Please <a href="{{ url_for('login') }}">login</a> to leave a comment or add/edit labels.</p>
         {% endif %}
        </div>
     </div>
