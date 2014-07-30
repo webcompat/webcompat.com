@@ -8,27 +8,27 @@
     </span>
     {% if session.user_id %}
     <div id="my-issues" class="row">
+      <script type="text/template" id="my-issues-tmpl">
       <h3 class="h5">Submitted by Me</h3>
-      {% if user_issues|length %}
-        {% for issue in user_issues %}
-        <div class="col-md-6">
-        <div class="issues {{ issue.status_class }}">
+      <% if (userIssues.length) { %>
+        <% _.each(userIssues, function(issue) { %>
+        <div class="col-md-6"><div class="issues issue-<%= issue.state %>">
           <p class="issue-title">
-            <a href="/issues/{{ issue.number }}"><span class="issue-number">Issue {{ issue.number }}</span>: {{ issue.title }}</a>
+            <a href="/issues/<%= issue.number %>"><span class="issue-number">Issue <%= issue.number %></span>: <%- issue.title %></a>
           </p>
-          <p class="issue-metadata">Opened: <time>{{ issue.created_at|format_date }}</time>, comments: {{ issue.comments }}</p>
-        </div>
-        </div>
-        {% endfor %}
-      {% else %}
+          <p class="issue-metadata">Opened: <time><%= issue.createdAt %></time>, comments: <%= issue.commentsNumber %></p>
+        </div></div>
+        <% }); %>
+      <% } else { %>
       <p>Nothing reported yet!</p>
-      {% endif %}
+      <% } %>
+      </script>
     </div>
     {% endif %}
     <div class="row">
       <div id="needs-diagnosis" class="col-md-6">
       <h3 class="h5">Needs Diagnosis</h3>
-      {% if needs_diagnosis|length %}
+      {% if false and needs_diagnosis|length %}
         {% for issue in needs_diagnosis %}
         <div class="issues issue-needs-diagnosis">
           <p class="issue-title">
@@ -43,7 +43,7 @@
     </div>
     <div id="ready-for-outreach" class="col-md-6">
       <h3 class="h5">Ready for Outreach</h3>
-      {% if contact_ready|length %}
+      {% if false and contact_ready|length %}
         {% for issue in contact_ready %}
         <div class="issues issue-contactready">
           <p class="issue-title">

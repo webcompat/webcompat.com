@@ -11,7 +11,7 @@ import json
 from flask import abort, Blueprint, g, request, session
 from flask.ext.github import GitHubError
 from webcompat import github, app
-from ..issues import proxy_request
+from ..issues import proxy_request, REPO_URI
 from ..helpers import get_user_info
 
 api = Blueprint('api', __name__, url_prefix='/api')
@@ -48,7 +48,7 @@ def proxy_issue(number):
 
 
 @api.route('/issues/mine')
-def user_issues(username):
+def user_issues():
     '''API endpoint to return issues filed by the logged in user.'''
     if request.is_xhr and request.headers.get('accept') == JSON_MIME:
         get_user_info()

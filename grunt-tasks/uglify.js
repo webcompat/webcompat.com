@@ -11,6 +11,10 @@ module.exports = function(grunt) {
       issues: {
         src: '<%= concat.issues.dest %>',
         dest: '<%= jsPath %>/issues.min.js'
+      },
+      diagnose: {
+        src: '<%= jsPath %>/lib/diagnose.js',
+        dest: '<%= jsPath %>/diagnose.min.js'
       }
    });
 };
