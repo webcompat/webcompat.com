@@ -45,6 +45,18 @@ def user_issues(username):
     return issues
 
 
+@api.route('/issues/contactready')
+def get_contactready():
+    '''Return all issues with a "contactready" label.'''
+    if g.user:
+        uri = 'repos/{0}?labels=contactready'.format(REPO_URI)
+        issues = github.get(uri)
+        return issues
+    else:
+        issues = proxy_request('get', '?labels=contactready')
+        return issues
+
+
 @api.route('/issues/<int:number>/comments', methods=['GET', 'POST'])
 def proxy_comments(number):
     '''XHR endpoint to get issues comments from GitHub, either as an authed

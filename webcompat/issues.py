@@ -57,19 +57,6 @@ def add_status_class(issues):
     return issues
 
 
-def get_contact_ready():
-    '''Return all issues with a "contactready" label.'''
-    uri = 'repos/{0}?labels=contactready'.format(REPO_URI)
-    issues = github.get(uri)
-    return issues[0:4]
-
-
-def proxy_get_contact_ready():
-    '''Return a proxied request for all issues with a "contactready" label.'''
-    issues = proxy_request('get', '?labels=contactready')
-    return issues[0:4]
-
-
 def filter_needs_diagnosis(issues):
     '''For our purposes, "needs diagnosis" means anything that isn't an issue
     with a "contactready" label.'''

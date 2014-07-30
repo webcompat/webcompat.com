@@ -13,7 +13,6 @@ from hashlib import md5
 from .form import get_browser, get_os, IssueForm, AUTH_REPORT, PROXY_REPORT
 from .helpers import get_user_info
 from .issues import (report_issue, proxy_report_issue,
-                     get_contact_ready, proxy_get_contact_ready,
                      get_needs_diagnosis, proxy_get_needs_diagnosis,
                      get_issue)
 from .models import db_session, User
@@ -122,11 +121,9 @@ def index():
     # GET means you want to file a report.
     if request.method == 'GET':
         if g.user:
-            contact_ready = get_contact_ready()
             needs_diagnosis = get_needs_diagnosis()
         else:
             user_issues = []
-            contact_ready = proxy_get_contact_ready()
             needs_diagnosis = proxy_get_needs_diagnosis()
         return render_template('index.html', form=bug_form,
                                user_issues=user_issues,
