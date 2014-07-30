@@ -90,11 +90,3 @@ def get_issue(number):
     issue_uri = 'repos/{0}/{1}'.format(REPO_URI, number)
     issue = github.get(issue_uri)
     return issue
-
-
-def add_comment(number, data):
-    '''Add a comment to an existing issue.'''
-    comment_data = json.loads(data)
-    body = {"body": comment_data['rawBody']}
-    return github.post('repos/{0}/{1}/comments'.format(REPO_URI, number),
-                       body)

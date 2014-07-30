@@ -11,7 +11,7 @@ import json
 from flask import abort, Blueprint, g, request, session
 from flask.ext.github import GitHubError
 from webcompat import github, app
-from ..issues import proxy_request, add_comment
+from ..issues import proxy_request
 from ..helpers import get_user_info
 
 api = Blueprint('api', __name__, url_prefix='/api')
@@ -63,7 +63,10 @@ def proxy_comments(number):
     user, or as one of our proxy bots.'''
     if request.method == 'POST':
         try:
-            add_comment(number, request.data)
+            comment_data = json.loads(request.data)
+            body = {"body": comment_data['rawBody']}
+            github.post('repos/{0}/{1}/comments'.format(
+                REPO_URI, number), body)
             return ':)'
         except GitHubError as e:
             print('GitHubError: ', e.response.status_code)
