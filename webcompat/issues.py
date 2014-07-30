@@ -57,15 +57,6 @@ def add_status_class(issues):
     return issues
 
 
-def get_user_issues(username):
-    '''Return 8 issues in the repo reported by `username` (the creator
-    in the JSON response.'''
-    user_issues_uri = 'repos/{0}?creator={1}&state=all'.format(REPO_URI,
-                                                               username)
-    issues = github.get(user_issues_uri)
-    return add_status_class(issues)[0:8]
-
-
 def get_contact_ready():
     '''Return all issues with a "contactready" label.'''
     uri = 'repos/{0}?labels=contactready'.format(REPO_URI)

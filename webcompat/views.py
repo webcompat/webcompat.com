@@ -12,7 +12,7 @@ from flask.ext.github import GitHubError
 from hashlib import md5
 from .form import get_browser, get_os, IssueForm, AUTH_REPORT, PROXY_REPORT
 from .helpers import get_user_info
-from .issues import (report_issue, proxy_report_issue, get_user_issues,
+from .issues import (report_issue, proxy_report_issue,
                      get_contact_ready, proxy_get_contact_ready,
                      get_needs_diagnosis, proxy_get_needs_diagnosis,
                      get_issue)
@@ -122,12 +122,6 @@ def index():
     # GET means you want to file a report.
     if request.method == 'GET':
         if g.user:
-            try:
-                get_user_info()
-                user_issues = get_user_issues(session['username'])
-            except GitHubError:
-                e = sys.exc_info()
-                print('GitHubError: ', e)
             contact_ready = get_contact_ready()
             needs_diagnosis = get_needs_diagnosis()
         else:

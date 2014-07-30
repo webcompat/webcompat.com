@@ -8,10 +8,11 @@
 back to GitHub'''
 
 import json
-from flask import abort, Blueprint, g, request
+from flask import abort, Blueprint, g, request, session
 from flask.ext.github import GitHubError
 from webcompat import github, app
 from ..issues import proxy_request, add_comment
+from ..helpers import get_user_info
 
 api = Blueprint('api', __name__, url_prefix='/api')
 
@@ -31,6 +32,17 @@ def proxy_issue(number):
         return json.dumps(issue)
     else:
         abort(406)
+
+
+@api.route('/issues/mine')
+def user_issues(username):
+    '''API endpoint to return issues filed by the logged in user.'''
+    get_user_info()
+    issues = github.get('repos/{0}?creator={1}&state=all'.format(
+        REPO_URI, session['username']))
+    #return add_status_class(issues)[0:8]
+    # in backbone, need to add the status class and limit the result
+    return issues
 
 
 @api.route('/issues/<int:number>/comments', methods=['GET', 'POST'])
