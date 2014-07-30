@@ -10,11 +10,9 @@ from flask import (flash, g, redirect, request, render_template, session,
                    url_for)
 from flask.ext.github import GitHubError
 from hashlib import md5
-from .form import get_browser, get_os, IssueForm, AUTH_REPORT, PROXY_REPORT
+from .form import get_browser, get_os, IssueForm
 from .helpers import get_user_info
-from .issues import (report_issue, proxy_report_issue,
-                     get_needs_diagnosis, proxy_get_needs_diagnosis,
-                     get_issue)
+from .issues import report_issue, get_issue
 from .models import db_session, User
 from webcompat import github, app
 
@@ -114,36 +112,15 @@ def index():
     '''Main view where people come to report issues.'''
     bug_form = IssueForm(request.form)
     # add browser and version to bug_form object data
-    bug_form.browser.data = get_browser(
-        request.headers.get('User-Agent'))
-    bug_form.os.data = get_os(
-        request.headers.get('User-Agent'))
+    bug_form.browser.data = get_browser(request.headers.get('User-Agent'))
+    bug_form.os.data = get_os(request.headers.get('User-Agent'))
     # GET means you want to file a report.
     if request.method == 'GET':
-        if g.user:
-            needs_diagnosis = get_needs_diagnosis()
-        else:
-            user_issues = []
-            needs_diagnosis = proxy_get_needs_diagnosis()
-        return render_template('index.html', form=bug_form,
-                               user_issues=user_issues,
-                               contact_ready=contact_ready,
-                               needs_diagnosis=needs_diagnosis)
+        return render_template('index.html', form=bug_form)
     # Form submission.
     elif request.method == 'POST' and bug_form.validate():
-        if request.form.get('submit-type') == AUTH_REPORT:
-            if g.user:  # If you're already authed, submit the bug.
-                response = report_issue(request.form)
-                return redirect(url_for('thanks',
-                                number=response.get('number')))
-            else:  # Stash form data into session, go do GitHub auth
-                session['form_data'] = request.form
-                return redirect(url_for('login'))
-        elif request.form.get('submit-type') == PROXY_REPORT:
-            # `response` here is a Requests Response object, because
-            # the proxy_report_issue crafts a manual request with Requests
-            response = proxy_report_issue(request.form)
-            return redirect(url_for('thanks', number=response.get('number')))
+        response = report_issue(request.form)
+        return redirect(url_for('thanks', number=response.get('number')))
     else:
         # Validation failed, re-render the form with the errors.
         return render_template('index.html', form=bug_form)
@@ -151,6 +128,7 @@ def index():
 
 @app.route('/issues')
 def show_issues():
+    '''Temporarily useless.'''
     return redirect(url_for('index'), code=307)
 
 
@@ -186,6 +164,7 @@ def thanks(number):
 
 @app.route('/about')
 def about():
+    '''Route to display about page.'''
     if g.user:
         get_user_info()
     return render_template('about.html')
@@ -193,6 +172,7 @@ def about():
 
 @app.route('/privacy')
 def privacy():
+    '''Route to display privacy page.'''
     if g.user:
         get_user_info()
     return render_template('privacy.html')
@@ -201,6 +181,7 @@ def privacy():
 if not app.config['PRODUCTION']:
     @app.route('/contributors')
     def contributors():
+        '''Route to display contributors page.'''
         if g.user:
             get_user_info()
         return render_template('contributors.html')

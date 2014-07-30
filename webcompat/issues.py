@@ -9,12 +9,12 @@ authed user and the proxy case.'''
 
 import json
 import requests
-from webcompat.form import build_formdata
+from flask import g, session
+from webcompat.form import build_formdata, AUTH_REPORT, PROXY_REPORT
 from webcompat import github, app
 
 REPO_URI = app.config['ISSUES_REPO_URI']
 TOKEN = app.config['BOT_OAUTH_TOKEN']
-
 
 def proxy_request(method, path_mod='', data=None, uri=None):
     '''Make a GitHub API request with a bot's OAuth token, for non-logged in
@@ -34,55 +34,16 @@ def proxy_request(method, path_mod='', data=None, uri=None):
 
 
 def report_issue(form):
-    '''Report an issue, as a logged in user.'''
-    return github.post('repos/{0}'.format(REPO_URI), build_formdata(form))
-
-
-def proxy_report_issue(form):
-    '''Report an issue, on behalf of a user.'''
-    return proxy_request('post', data=json.dumps(build_formdata(form)))
-
-
-def add_status_class(issues):
-    '''Add a "status_class" property to each issue to be used by CSS.'''
-    for issue in issues:
-        # default is needs-diagnosis
-        issue['status_class'] = u'issue-needs-diagnosis'
-        for label in issue.get('labels'):
-            if 'contactready' in label.get('name'):
-                issue['status_class'] = u'issue-contactready'
-                break
-        if issue.get('closed_at'):
-            issue['status_class'] = u'issue-closed'
-    return issues
-
-
-def filter_needs_diagnosis(issues):
-    '''For our purposes, "needs diagnosis" means anything that isn't an issue
-    with a "contactready" label.'''
-    def not_contactready(issue):
-        match = True
-        if issue.get('labels') == []:
-            match = True
-        else:
-            for label in issue.get('labels'):
-                if 'contactready' in label.get('name'):
-                    match = False
-        return match
-
-    return [issue for issue in issues if not_contactready(issue)]
-
-
-def get_needs_diagnosis():
-    '''Return the first 4 issues that need diagnosis.'''
-    issues = github.get('repos/{0}'.format(REPO_URI))
-    return filter_needs_diagnosis(issues)[0:4]
-
-
-def proxy_get_needs_diagnosis():
-    '''Return the first 4 issues that need diagnosis.'''
-    issues = proxy_request('get')
-    return filter_needs_diagnosis(issues)[0:4]
+    '''Report an issue, as a logged in user or anonymously.'''
+    if form.get('submit-type') == AUTH_REPORT:
+        if g.user:  # If you're already authed, submit the bug.
+            response = github.post('repos/{0}'.format(REPO_URI), build_formdata(form))
+            return response
+        else:  # Stash form data into session, go do GitHub auth
+            session['form_data'] = request.form
+            return redirect(url_for('login'))
+    elif form.get('submit-type') == PROXY_REPORT:
+        return proxy_request('post', data=json.dumps(build_formdata(form)))
 
 
 def get_issue(number):
