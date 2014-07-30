@@ -19,6 +19,19 @@ api = Blueprint('api', __name__, url_prefix='/api')
 JSON_MIME = 'application/json'
 
 
+@api.route('/issues')
+def proxy_issues():
+    '''API endpoint to list all issues from GitHub.'''
+    if request.is_xhr and request.headers.get('accept') == JSON_MIME:
+        if g.user:
+            issues = github.get('repos/{0}'.format(REPO_URI))
+        else:
+            issues = proxy_request('get')
+        return json.dumps(issues)
+    else:
+        abort(406)
+
+
 @api.route('/issues/<int:number>')
 def proxy_issue(number):
     '''XHR endpoint to get issue data from GitHub, either as an authed
