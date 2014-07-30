@@ -11,7 +11,7 @@ import json
 from flask import abort, Blueprint, g, request, session
 from flask.ext.github import GitHubError
 from webcompat import github, app
-from ..issues import proxy_request, REPO_URI
+from ..issues import proxy_request, filter_needs_diagnosis, REPO_URI
 from ..helpers import get_user_info
 
 api = Blueprint('api', __name__, url_prefix='/api')
@@ -27,7 +27,10 @@ def proxy_issues():
             issues = github.get('repos/{0}'.format(REPO_URI))
         else:
             issues = proxy_request('get')
-        return json.dumps(issues)
+        if request.args.get('needsdiagnosis') == '1':
+            return json.dumps(filter_needs_diagnosis(issues))
+        else:
+            return json.dumps(issues)
     else:
         abort(406)
 
