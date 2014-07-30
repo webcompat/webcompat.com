@@ -36,7 +36,7 @@ def proxy_issues():
 def proxy_issue(number):
     '''XHR endpoint to get issue data from GitHub, either as an authed
     user, or as one of our proxy bots.'''
-    if request.is_xhr and request.headers.get('accept') == 'application/json':
+    if request.is_xhr and request.headers.get('accept') == JSON_MIME:
         if g.user:
             issue = github.get('repos/{0}/{1}'.format(
                 app.config['ISSUES_REPO_URI'], number))
@@ -50,24 +50,29 @@ def proxy_issue(number):
 @api.route('/issues/mine')
 def user_issues(username):
     '''API endpoint to return issues filed by the logged in user.'''
-    get_user_info()
-    issues = github.get('repos/{0}?creator={1}&state=all'.format(
-        REPO_URI, session['username']))
-    #return add_status_class(issues)[0:8]
-    # in backbone, need to add the status class and limit the result
-    return issues
+    if request.is_xhr and request.headers.get('accept') == JSON_MIME:
+        get_user_info()
+        issues = github.get('repos/{0}?creator={1}&state=all'.format(
+            REPO_URI, session['username']))
+        #return add_status_class(issues)[0:8]
+        # in backbone, need to add the status class and limit the result
+        return json.dumps(issues)
+    else:
+        abort(406)
 
 
 @api.route('/issues/contactready')
 def get_contactready():
     '''Return all issues with a "contactready" label.'''
-    if g.user:
-        uri = 'repos/{0}?labels=contactready'.format(REPO_URI)
-        issues = github.get(uri)
-        return issues
+    if request.is_xhr and request.headers.get('accept') == JSON_MIME:
+        if g.user:
+            uri = 'repos/{0}?labels=contactready'.format(REPO_URI)
+            issues = github.get(uri)
+        else:
+            issues = proxy_request('get', '?labels=contactready')
+        return json.dumps(issues)
     else:
-        issues = proxy_request('get', '?labels=contactready')
-        return issues
+        abort(406)
 
 
 @api.route('/issues/<int:number>/comments', methods=['GET', 'POST'])
