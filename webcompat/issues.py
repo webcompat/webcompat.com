@@ -9,7 +9,7 @@ authed user and the proxy case.'''
 
 import json
 import requests
-from flask import g, session
+from flask import g, session, url_for, redirect, request
 from webcompat.form import build_formdata, AUTH_REPORT, PROXY_REPORT
 from webcompat import github, app
 
@@ -37,7 +37,8 @@ def report_issue(form):
     '''Report an issue, as a logged in user or anonymously.'''
     if form.get('submit-type') == AUTH_REPORT:
         if g.user:  # If you're already authed, submit the bug.
-            response = github.post('repos/{0}'.format(REPO_URI), build_formdata(form))
+            response = github.post('repos/{0}'.format(REPO_URI),
+                                   build_formdata(form))
             return response
         else:  # Stash form data into session, go do GitHub auth
             session['form_data'] = request.form
@@ -57,6 +58,7 @@ def filter_needs_diagnosis(issues):
     '''For our purposes, "needs diagnosis" means anything that isn't an issue
     with a "contactready" label.'''
     def not_contactready(issue):
+        '''Filter function.'''
         match = True
         if issue.get('labels') == []:
             match = True
@@ -72,6 +74,7 @@ def filter_needs_diagnosis(issues):
 def filter_contactready(issues):
     '''Essentially the opposite of filter_needs_diagnosis.'''
     def is_contactready(issue):
+        '''Filter function.'''
         match = False
         if issue.get('labels') == []:
             match = False

@@ -11,7 +11,8 @@ import json
 from flask import abort, Blueprint, g, request, session
 from flask.ext.github import GitHubError
 from webcompat import github, app
-from ..issues import (proxy_request, filter_needs_diagnosis, filter_contactready, REPO_URI)
+from ..issues import (proxy_request, filter_needs_diagnosis,
+                      filter_contactready, REPO_URI)
 from ..helpers import get_user_info
 
 api = Blueprint('api', __name__, url_prefix='/api')
