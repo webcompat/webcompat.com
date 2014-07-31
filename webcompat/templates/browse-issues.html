@@ -44,20 +44,22 @@
       </script>
       </div>
       <div id="ready-for-outreach" class="col-md-6">
+        <script type="text/template" id="contactready-tmpl">
         <h3 class="h5">Ready for Outreach</h3>
-        {% if false and contact_ready|length %}
-          {% for issue in contact_ready %}
+        <% if (contactReady.length) { %>
+          <% _.each(contactReady, function(issue) { %>
           <div class="issues issue-contactready">
             <p class="issue-title">
-              <a href="/issues/{{ issue.number }}"><span class="issue-number">Issue {{ issue.number }}</span>: {{ issue.title }}</a>
+              <a href="/issues/<%= issue.number %>"><span class="issue-number">Issue <%= issue.number %></span>: <%- issue.title %></a>
             </p>
-            <p class="issue-metadata">Opened: <time>{{ issue.created_at|format_date }}</time>, comments: {{ issue.comments }}</p>
+            <p class="issue-metadata">Opened: <time><%= issue.createdAt %></time>, comments: <%= issue.commentsNumber %></p>
           </div>
-          {% endfor %}
-        {% else %}
+          <% }); %>
+        <% } else { %>
         <p>Nothing here currently, please help <a href="https://github.com/webcompat/web-bugs/issues?state=open">triage issues!</a></p>
-        {% endif %}
+        <% } %>
       </div>
+      </script>
     </div>
     <div class="row">
       <p class="more-issues"><a href="https://github.com/webcompat/web-bugs/issues?state=open">See More</a></p>
