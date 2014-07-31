@@ -7,6 +7,7 @@
 from flask import session
 from models import db_session, User
 from webcompat import github
+from ua_parser import user_agent_parser
 
 
 def get_user_info():
@@ -21,3 +22,41 @@ def get_user_info():
         db_session.commit()
         session['username'] = user.username
         session['avatar_url'] = user.avatar_url
+
+
+def get_browser_name(user_agent_string):
+    '''Return just the browser name.'''
+    ua_dict = user_agent_parser.Parse(user_agent_string)
+    return ua_dict.get('user_agent').get('family')
+
+
+def get_browser(user_agent_string):
+    '''Return browser name (i.e., "user agent family") and version for
+    pre-populating the bug reporting form.'''
+    ua_dict = user_agent_parser.Parse(user_agent_string)
+    ua = ua_dict.get('user_agent')
+    name = ua.get('family')
+    version = ua.get('major', u'Unknown')
+    # Add on the minor and patch version numbers if they exist
+    if version != u'Unknown' and ua.get('minor'):
+        version = version + "." + ua.get('minor')
+        if ua.get('patch'):
+            version = version + "." + ua.get('patch')
+    else:
+        version = ''
+    return '{0} {1}'.format(name, version)
+
+
+def get_os(user_agent_string):
+    '''Return operating system name for pre-populating the bug reporting
+    form.'''
+    ua_dict = user_agent_parser.Parse(user_agent_string)
+    os = ua_dict.get('os')
+    version = os.get('major', u'Unknown')
+    if version != u'Unknown' and os.get('major'):
+        version = version + "." + os.get('minor')
+        if os.get('patch'):
+            version = version + "." + os.get('patch')
+    else:
+        version = ''
+    return '{0} {1}'.format(os.get('family'), version)

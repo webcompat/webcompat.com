@@ -10,8 +10,8 @@ from flask import (flash, g, redirect, request, render_template, session,
                    url_for)
 from flask.ext.github import GitHubError
 from hashlib import md5
-from .form import get_browser, get_os, IssueForm
-from .helpers import get_user_info
+from .form import IssueForm
+from .helpers import get_user_info, get_browser, get_browser_name, get_os
 from .issues import report_issue, get_issue
 from .models import db_session, User
 from webcompat import github, app
