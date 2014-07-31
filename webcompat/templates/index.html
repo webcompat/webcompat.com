@@ -51,12 +51,12 @@
 </div>
 {% endblock %}
 {%- block extrascripts -%}
-{%- if session.user_id -%}
-<script>var loggedIn=true;</script>
-{% endif %}
 {%- if config.PRODUCTION -%}
 <script src="{{ url_for('static', filename='js/diagnose.min.js') }}"></script>
 {%- else -%}
 <script src="{{ url_for('static', filename='js/lib/diagnose.js') }}"></script>
 {%- endif -%}
+{%- if session.user_id %}
+<script>new diagnose.MyIssuesView();</script>
+{% endif %}
 {%- endblock %}

@@ -6,7 +6,6 @@
       <span class="issue-contactready">Ready&nbsp;for&nbsp;Outreach</span>
       <span class="issue-closed">Closed</span>
     </span>
-    {% if session.user_id %}
     <div id="my-issues" class="row">
       <script type="text/template" id="my-issues-tmpl">
       <h3 class="h5">Submitted by Me</h3>
@@ -24,7 +23,6 @@
       <% } %>
       </script>
     </div>
-    {% endif %}
     <div class="row">
       <div id="needs-diagnosis" class="col-md-6">
       <script type="text/template" id="needs-diagnosis-tmpl">
