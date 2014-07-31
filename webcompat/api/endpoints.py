@@ -60,8 +60,6 @@ def user_issues():
         get_user_info()
         issues = github.get('repos/{0}?creator={1}&state=all'.format(
             REPO_URI, session['username']))
-        #return add_status_class(issues)[0:8]
-        # in backbone, need to add the status class and limit the result
         return json.dumps(issues)
     else:
         abort(406)
