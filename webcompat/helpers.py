@@ -28,7 +28,11 @@ def get_browser_name(user_agent_string):
     '''Return just the browser name, unknown user agents will be reported as
     "other".'''
     ua_dict = user_agent_parser.Parse(user_agent_string)
-    return ua_dict.get('user_agent').get('family').lower()
+    name = ua_dict.get('user_agent').get('family').lower()
+    if (name == 'firefox mobile' and
+            ua_dict.get('os').get('family') == 'Firefox OS'):
+        name = 'other'
+    return name
 
 
 def get_browser(user_agent_string):
