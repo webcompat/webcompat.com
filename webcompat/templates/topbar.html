@@ -1,7 +1,15 @@
 <header class="header">
   <nav class="wc-content">
-    <div class="nav__section">
-      <a class="nav__link" href="https://github.com/webcompat/webcompat.com/issues?state=open">Give Feedback</a>
+    <div class="nav__section">{%- if browser == 'firefox' %}
+      <a class="nav__link" href="https://addons.mozilla.org/en-US/firefox/addon/webcompatcom-reporter/">Download our Firefox Add-on</a>
+      {%- elif browser == 'chrome' -%}
+      <a class="nav__link" href="https://chrome.google.com/webstore/detail/webcompatcom-reporter/ffnnhckjcpbbjlmgfjigknkoffakclol">Download our Chrome Extension</a>
+      {%- elif browser == 'opera' -%}
+      <a class="nav__link" href="https://addons.opera.com/en/extensions/details/webcompatcom-reporter/?display=en">Download our Opera Extension</a>
+      {%- elif browser == 'safari' -%}
+      <a class="nav__link" href="webcompat.com/addons/webcompat-reporter.safariextz">Download our Safari Extension</a>
+      {% else %}
+      <a class="nav__link" href="https://github.com/webcompat/webcompat.com/issues?state=open">Give Feedback</a>{%- endif -%}
     </div><!--
     --><div class="nav__section nav__section--right">
     {% if not session.user_id %}

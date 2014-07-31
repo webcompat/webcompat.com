@@ -112,11 +112,14 @@ def index():
     '''Main view where people come to report issues.'''
     bug_form = IssueForm(request.form)
     # add browser and version to bug_form object data
-    bug_form.browser.data = get_browser(request.headers.get('User-Agent'))
-    bug_form.os.data = get_os(request.headers.get('User-Agent'))
+    ua_header = request.headers.get('User-Agent')
+    bug_form.browser.data = get_browser(ua_header)
+    bug_form.os.data = get_os(ua_header)
+    browser_name = get_browser_name(ua_header)
     # GET means you want to file a report.
     if request.method == 'GET':
-        return render_template('index.html', form=bug_form)
+        return render_template('index.html', form=bug_form,
+                               browser=browser_name)
     # Form submission.
     elif request.method == 'POST' and bug_form.validate():
         response = report_issue(request.form)
