@@ -25,6 +25,16 @@ define([
         .end();
     },
 
+    'reporter addon link is shown': function () {
+      return this.remote
+        .get(require.toUrl(url))
+        .findByCssSelector('.nav__link').getVisibleText()
+        .then(function (text) {
+          assert.include(text, 'Download our Firefox');
+        })
+        .end();
+    },
+
     'form toggles open then closed': function () {
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
