@@ -18,13 +18,17 @@ issues.LabelsView = Backbone.View.extend({
   el: $('.issue__label'),
   editorButton: null,
   events: {
-    'click .issue__label--modify:not(.is-active)': 'editLabels'
+    'click .issue__label--modify:not(.is-active)': 'editLabels',
+    'click .issue__label--modify.is-active': 'closeEditor'
   },
   template: _.template($('#issue-labels-tmpl').html()),
   render: function() {
     this.$el.html(this.template(this.model.toJSON()));
     this.fetchLabels();
     return this;
+  },
+  closeEditor: function() {
+    this.labelEditor.closeEditor();
   },
   renderLabels: function() {
     this.$el.html(this.template(this.model.toJSON()));
