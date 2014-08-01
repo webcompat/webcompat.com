@@ -28,6 +28,9 @@ button::-moz-focus-inner {
   border: 0;
   padding: 0;
 }
+/*outline chrome */
+button:focus {outline:none;}
+
 .Button:hover:not(.is-disabled),
 .Button:focus:not(.is-disabled),
 .Button:active:not(.is-disabled) {
