@@ -18,7 +18,7 @@ issues.LabelsView = Backbone.View.extend({
   el: $('.issue__label'),
   editorButton: null,
   events: {
-    'click .issue__label--modify:not(.is-disabled)': 'editLabels'
+    'click .issue__label--modify:not(.is-active)': 'editLabels'
   },
   template: _.template($('#issue-labels-tmpl').html()),
   render: function() {
@@ -45,7 +45,7 @@ issues.LabelsView = Backbone.View.extend({
     });
   },
   editLabels: function() {
-    this.editorButton.addClass('is-disabled');
+    this.editorButton.addClass('is-active');
     this.$el.after(this.labelEditor.render().el);
     var toBeChecked = _.intersection(this.issueLabels, this.repoLabels);
     _.each(toBeChecked, function(labelName) {
@@ -71,7 +71,7 @@ issues.LabelEditorView = Backbone.View.extend({
   },
   reRender: function(data) {
     this.issueView.$el.html(this.issueView.template(data));
-    this.issueView.$el.find('.issue__label--modify').addClass('is-disabled');
+    this.issueView.$el.find('.issue__label--modify').addClass('is-active');
   },
   updateView: function() {
     // we do the "real" save when you close the editor.
@@ -90,7 +90,7 @@ issues.LabelEditorView = Backbone.View.extend({
   closeEditor: function() {
     var checked = $('input[type=checkbox]:checked');
     var labelsArray = _.pluck(checked, 'name');
-    this.issueView.editorButton.removeClass('is-disabled');
+    this.issueView.editorButton.removeClass('is-active');
     this.issueView.model.updateLabels(labelsArray);
     // detach() (vs remove()) here because we don't want to lose events if the
     // user reopens the editor.
