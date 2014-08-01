@@ -32,9 +32,9 @@
         <!-- Issue Labels -->
         <div class="issue__label">
         <script type="text/template" id="issue-labels-tmpl">
-          <span class="issue__label_item issue__label_item--title">Labels</span><!--
+          <span class="issue__label_item issue__label_item--title">Labels</span>
           {% if session.user_id and session.avatar_url %}
-            --><button class="issue__label--modify icon"></button>
+            <button class="issue__label--modify icon"></button>
           {% endif %}
           <span class="labels__wrapper">
           <% _.each(labels, function(label) { %>

@@ -181,10 +181,9 @@
 .issue__label--modify {
   display: none;
   border:none;
-  width:20px;
-  height:20px;
-  font-size:20px;
-  margin-left:0.2em;
+  width:26px;
+  height:26px;
+  font-size:22px;
 }
 .issue__label--modify {
   opacity:.8;
