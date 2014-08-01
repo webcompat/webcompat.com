@@ -59,7 +59,7 @@ issues.LabelEditorView = Backbone.View.extend({
   events: {
     'change input[type=checkbox]': 'updateView',
     'click button': 'closeEditor',
-    'keyup .issue__label--filter': 'filterLabels'
+    'keyup .label_editor__search': 'filterLabels'
   },
   initialize: function(options) {
     this.issueView = options.issueView;
@@ -103,12 +103,12 @@ issues.LabelEditorView = Backbone.View.extend({
     }), 'name');
 
     // make sure everything is showing
-    $('.issue__label_item').show();
+    $('.label_item').show();
 
     // hide the non-filter matches
     var hidden = _.difference(_.pluck(this.model.get('labels'), 'name'), matches);
     _.each(hidden, function(name) {
-      $('input[name='+name+']').parent().hide();
+      $('input[name='+name+']').closest('.label_item').hide();
     });
   }, 100)
 });
