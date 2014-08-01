@@ -159,6 +159,12 @@
   padding-right: 0;
   margin-right: -5px;
 }
+.issue__label_item--badge {
+  margin-left:1em;
+}
+.issue__label_item--badge + .issue__label_item--badge {
+  margin-left:0;
+}
 /* btn add label */
 .issue__label__btn {
   float: left;
@@ -174,5 +180,4 @@
 
 .issue__label--modify {
   display: none;
-  margin-right:1em;
 }
