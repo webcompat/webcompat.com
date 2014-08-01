@@ -34,7 +34,7 @@
         <script type="text/template" id="issue-labels-tmpl">
           <span class="issue__label_item issue__label_item--title">Labels</span>
           {% if session.user_id and session.avatar_url %}
-            <button class="issue__label--modify icon icon-plus"></button>
+            <button class="issue__label--modify icon"></button>
           {% endif %}
           <% _.each(labels, function(label) { %>
             <span class="issue__label_item issue__label_item--badge" style="background-color:#<%=label.color%>">

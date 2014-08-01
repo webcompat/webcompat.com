@@ -180,4 +180,27 @@
 
 .issue__label--modify {
   display: none;
+  border:none;
+}
+/*btn */
+.issue__label--modify.icon {
+  height:20px;
+  font-size:20px;
+}
+.issue__label--modify {
+  opacity:.8;
+}
+.issue__label--modify:hover {
+  opacity:1;
+}
+.issue__label--modify:before {
+  content: "\f013";
+}
+.is-active.issue__label--modify:before {
+  content: "\f00d";
+}
+/* list label */
+.label_list {
+  background-color: #FFF;
+  color: #333;
 }

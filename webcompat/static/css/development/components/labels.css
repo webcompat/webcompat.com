@@ -41,23 +41,15 @@
   display:inline-block;
   width:auto;
 }
-.label_editor__btn,
-.issue__label--modify {
+/* btn */
+.label_editor__btn {
   border:none;
-}
-.issue__label--modify.icon {
-  height:20px;
-  font-size:20px;
 }
 /* hover btn */
 .label_editor__btn:hover {
   text-decoration:underline;
 }
-/* list label */
-.label_list {
-  background-color: #FFF;
-  color: #333;
-}
+
 
 /* item label */
 .label_item {
