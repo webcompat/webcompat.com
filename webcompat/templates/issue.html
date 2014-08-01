@@ -36,11 +36,13 @@
           {% if session.user_id and session.avatar_url %}
             --><button class="issue__label--modify icon"></button>
           {% endif %}
+          <span class="labels__wrapper">
           <% _.each(labels, function(label) { %>
             <span class="issue__label_item issue__label_item--badge" style="background-color:#<%=label.color%>">
               <%= label.name %>
             </span>
           <% }); %>
+          </span>
         </script>
         </div>
         <!-- Issue Comments -->

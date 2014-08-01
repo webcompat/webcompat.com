@@ -22,6 +22,14 @@ issues.LabelsView = Backbone.View.extend({
     'click .issue__label--modify.is-active': 'closeEditor'
   },
   template: _.template($('#issue-labels-tmpl').html()),
+  // this subTemplate will need to be kept in sync with
+  // relavant parts in $('#issue-labels-tmpl')
+  subTemplate: _.template([
+    '<% _.each(labels, function(label) { %>',
+      '<span class="issue__label_item issue__label_item--badge" style="background-color:#<%=label.color%>">',
+        '<%= label.name %>',
+      '</span>',
+    '<% }); %>'].join('')),
   render: function() {
     this.$el.html(this.template(this.model.toJSON()));
     this.fetchLabels();
@@ -74,7 +82,8 @@ issues.LabelEditorView = Backbone.View.extend({
     return this;
   },
   reRender: function(data) {
-    this.issueView.$el.html(this.issueView.template(data));
+    //only re-render the labels into the labels wrapper
+    this.issueView.$el.find('.labels__wrapper').html(this.issueView.subTemplate(data));
     this.issueView.$el.find('.issue__label--modify').addClass('is-active');
   },
   updateView: function() {
