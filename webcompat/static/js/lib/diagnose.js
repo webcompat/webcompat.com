@@ -106,7 +106,6 @@ diagnose.ContactReadyView = Backbone.View.extend({
   }
 });
 
-//logged out throws an error...?
 $(function(){
   new diagnose.NeedsDiagnosisView();
   new diagnose.ContactReadyView();
