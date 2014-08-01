@@ -34,30 +34,36 @@
         <script type="text/template" id="issue-labels-tmpl">
           <span class="issue__label_item issue__label_item--title">Labels</span>
           <% if (labels.length) { %>
-            <% _.each(labels, function(label) { %>
-              <span class="issue__label_item" style="background-color:#<%=label.color%>">
-                <%= label.name %>
-              </span>
-            <% }); %>
-            {% if session.user_id and session.avatar_url %}
-            <span class="Button Button--action issue__label--modify">edit</span>
-          <% } else { %>
-            <span class="Button Button--action issue__label--modify">add</span>
-            {% endif %}
+             {% if session.user_id and session.avatar_url %}
+               <button class="issue__label--modify icon icon-plus"></button>
+             <% } else { %>
+                <button class="issue__label--modify icon icon-plus"></button>
+              {% endif %}
           <% }%>
-        </script>
-        <script type="text/template" id="label-editor-tmpl">
-          <div>
-            <input class="issue__label--filter" placeholder="filter label"><button>Save &amp; Close</button>
-          </div>
           <% _.each(labels, function(label) { %>
-            <label class="issue__label_item" style="background-color:#<%=label.color%>">
-            <%= label.name %>
-            <input type="checkbox" name="<%= label.name %>" class="wc-float-left" data-color="<%=label.color%>">
-          </label>
+            <span class="issue__label_item" style="background-color:#<%=label.color%>">
+              <%= label.name %>
+            </span>
           <% }); %>
         </script>
         </div>
+        <script type="text/template" id="label-editor-tmpl">
+          <div class="label_editor label_editor--caret">
+            <div class="label_editor__header">
+              <input class="form-control label_editor__search" placeholder="filter label"><button class="label_editor__btn">Save &amp; Close</button>
+            </div>
+            <div class="label_list">
+              <% _.each(labels, function(label) { %>
+                <label class="label_item">
+                  <span class="label_color" style="background-color:#<%=label.color%>">
+                    <input class="label_checkbox" type="checkbox" name="<%= label.name %>" data-color="<%=label.color%>">
+                  </span>
+                  <span class="label_name"><%= label.name %></span>
+                </label>
+              <% }); %>
+            </div>
+          </div>
+        </script>
         <!-- Issue Comments -->
         <div class="issue__comment">
           <script type="text/template" id="comment-tmpl">

@@ -136,9 +136,6 @@
   clear: both;
 }
 
-.issue__label {
-  position: relative;
-}
 /* value of label */
 /*.issue__label__value {
   font-size: 1.2em;
@@ -158,8 +155,9 @@
 /* Labels */
 .issue__label_item--title {
   font-size: 1.2em;
-  margin-right:.3em;
   color:#000;
+  padding-right: 0;
+  margin-right: -5px;
 }
 /* btn add label */
 .issue__label__btn {
@@ -176,13 +174,5 @@
 
 .issue__label--modify {
   display: none;
-}
-
-/* Labels editor */
-.issue__label_editor {
-  background-color: gray;
-  width: 250px;
-  position: absolute;
-  bottom: 0;
-  right: 0;
+  margin-right:1em;
 }
