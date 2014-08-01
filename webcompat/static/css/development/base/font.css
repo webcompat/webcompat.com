@@ -30,17 +30,17 @@
 }
 
 .icon-arrow-up:before {
-	content: "\e600";
+  content: "\e600";
 }
 .icon-arrow-right:before {
-	content: "\e601";
+  content: "\e601";
 }
 .icon-arrow-down:before {
-	content: "\e602";
+  content: "\e602";
 }
 .icon-arrow-left:before {
-	content: "\e603";
+  content: "\e603";
 }
 .icon-plus:before {
-	content: "\f067";
+  content: "\f067";
 }
