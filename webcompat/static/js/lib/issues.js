@@ -57,6 +57,11 @@ issues.Issue = Backbone.Model.extend({
       return;
     }
 
+    // save ourselves a request if nothing has changed.
+    if (_.isEqual(labelsArray, _.pluck(this.get('labels'), 'name'))) {
+      return;
+    }
+
     $.ajax({
       contentType: 'application/json',
       data: JSON.stringify(labelsArray),
