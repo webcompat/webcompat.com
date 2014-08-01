@@ -33,13 +33,9 @@
         <div class="issue__label">
         <script type="text/template" id="issue-labels-tmpl">
           <span class="issue__label_item issue__label_item--title">Labels</span>
-          <% if (labels.length) { %>
-             {% if session.user_id and session.avatar_url %}
-               <button class="issue__label--modify icon icon-plus"></button>
-             <% } else { %>
-                <button class="issue__label--modify icon icon-plus"></button>
-              {% endif %}
-          <% }%>
+          {% if session.user_id and session.avatar_url %}
+            <button class="issue__label--modify icon icon-plus"></button>
+          {% endif %}
           <% _.each(labels, function(label) { %>
             <span class="issue__label_item" style="background-color:#<%=label.color%>">
               <%= label.name %>
