@@ -5,8 +5,12 @@
     <div class="wc-content wc-content--body">
       <h2>Thank you.</h2>
       <p>You're helping us make the web a better place to work and play.</p>
+      {% if config['PRODUCTION'] %}
       <p>Check the status of your bug here: <a href="http://webcompat.com/issues/{{ number }}">http://webcompat.com/issues/{{ number }}</a></p>
-      <p>Return back <a href="{{ url_for("index") }}">home</a>.</p>
+      {% else %}
+      <p>Check the status of your bug here: <a href="http://github.com/{{ config['ISSUES_REPO_URI'] }}/{{ number }}">http://github.com/{{ config['ISSUES_REPO_URI'] }}/{{ number }}</a></p>
+      {% endif %}
+      <p><a href="{{ url_for("index") }}">Return back home</a>.</p>
       <a class="Button Button--action" id="twittershare" href="https://twitter.com/intent/tweet?text={{ encoded_text }}&url={{ encoded_issue }}&via=webcompat" target="_blank">Share on Twitter</a>
     </div>
   </div>
