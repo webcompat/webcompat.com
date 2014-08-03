@@ -1,7 +1,20 @@
 /*----------add/remove labels----------*/
 
-.issue__label_editor {
+/* Wrapper label editor */
+.label_editor__wrapper {
   position:relative;
+  display:inline-block;
+}
+@media (--viewport-375px) {
+  .label_editor__wrapper {
+    position:static; /* position of label editor not depend of this class */
+  }
+}
+
+/* list label */
+.label_list {
+  background-color: #FFF;
+  color: #333;
 }
 
 /* Label editor */
@@ -9,14 +22,27 @@
 {
   z-index:2;
   position: absolute;
-  top:7px;
-  left:58px;
+  white-space:nowrap;
+  top: 100%;
+  left: 0;
+  /* caret */
+  margin-left: -11px;
+  margin-top: 18px;
   box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.25);
   border-radius: 6px;
   background:  #fff;
 }
+@media (--viewport-375px) {
+  .label_editor {
+    top:75%;
+    left:50%;
+    transform:translateX(-50%);
+    margin:0;
+  }
+}
 /* Caret */
-.label_editor--caret:after {
+.label_editor:after {
+  display: none;
   position: absolute;
   content: "";
   width: 18px;
@@ -29,6 +55,12 @@
   border-width: 1px 0px 0px 1px;
   transform: rotate(45deg);
 }
+@media (--viewport-375px) {
+  .label_editor:after {
+    left:26%;
+  }
+}
+
 
 /* Label header */
 .label_editor__header {

@@ -34,7 +34,7 @@
         <script type="text/template" id="issue-labels-tmpl">
           <span class="issue__label_item issue__label_item--title">Labels</span>
           {% if session.user_id and session.avatar_url %}
-            <span class="issue__label_editor"><button class="issue__label--modify icon"></button></span>
+            <span class="label_editor__wrapper"><button class="issue__label--modify icon"></button></span>
           {% endif %}
           <span class="labels__wrapper">
           <% _.each(labels, function(label) { %>
@@ -89,7 +89,6 @@
   </div>
 
   <script type="text/template" id="label-editor-tmpl">
-    <div class="label_editor label_editor--caret">
       <div class="label_editor__header">
         <input class="form-control label_editor__search" placeholder="filter label"><button class="label_editor__btn">Save &amp; Close</button>
       </div>
@@ -103,7 +102,6 @@
           </label>
         <% }); %>
       </div>
-    </div>
   </script>
 
 {% endblock %}

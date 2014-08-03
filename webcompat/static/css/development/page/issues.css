@@ -135,6 +135,11 @@
   content: "";
   clear: both;
 }
+@media (--viewport-375px) {
+  .issue__label {
+    position:relative;
+  }
+}
 
 /* value of label */
 /*.issue__label__value {
@@ -185,6 +190,10 @@
   height:26px;
   font-size:22px;
 }
+/* display carey only if button is-active*/
+.issue__label--modify.is-active + .label_editor:after {
+  display:block;
+}
 .issue__label--modify {
   opacity:.8;
 }
@@ -196,9 +205,4 @@
 }
 .is-active.issue__label--modify:before {
   content: "\f00d";
-}
-/* list label */
-.label_list {
-  background-color: #FFF;
-  color: #333;
 }

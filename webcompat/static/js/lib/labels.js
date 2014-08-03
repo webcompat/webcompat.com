@@ -67,7 +67,7 @@ issues.LabelsView = Backbone.View.extend({
 });
 
 issues.LabelEditorView = Backbone.View.extend({
-  className: 'issue__label_editor',
+  className: 'label_editor',
   events: {
     'change input[type=checkbox]': 'updateView',
     'click button': 'closeEditor',
