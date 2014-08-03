@@ -58,7 +58,7 @@ issues.LabelsView = Backbone.View.extend({
   },
   editLabels: function() {
     this.editorButton.addClass('is-active');
-    this.$el.after(this.labelEditor.render().el);
+    this.$el.find('.issue__label--modify').after(this.labelEditor.render().el);
     var toBeChecked = _.intersection(this.issueLabels, this.repoLabels);
     _.each(toBeChecked, function(labelName) {
       $('[name=' + labelName + ']').prop("checked", true);
