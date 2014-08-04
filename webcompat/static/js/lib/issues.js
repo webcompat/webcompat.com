@@ -150,6 +150,13 @@ issues.MainView = Backbone.View.extend({
         self.comments.fetch(headersBag).success(function() {
           self.addExistingComments();
           self.comments.bind("add", self.addComment);
+
+          // If there's a #hash pointing to a comment (or elsewhere)
+          // scrollTo it.
+          if (location.hash !== "") {
+            var _id = $(location.hash);
+            window.scrollTo(0, _id.offset().top);
+          }
         }).error(function() {
           $('<div></div>', {
             'class': 'flash error',
