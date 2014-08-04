@@ -41,7 +41,7 @@ if PRODUCTION:
     GITHUB_CLIENT_ID = ""
     GITHUB_CLIENT_SECRET = ""
     GITHUB_CALLBACK_URL = ""
-# Development = dev.webcompat.com
+# Development = staging.webcompat.com
 elif DEVELOPMENT:
     GITHUB_CLIENT_ID = ""
     GITHUB_CLIENT_SECRET = ""
