@@ -15,6 +15,9 @@
 .label_list {
   background-color: #FFF;
   color: #333;
+  max-height:300px;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 /* Label editor */
