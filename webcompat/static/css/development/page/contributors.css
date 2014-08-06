@@ -1,1 +1,45 @@
 /*------Contributors view------*/
+
+.contributors {}
+.wc-content--contributor_item {
+
+}
+/* Main page title*/
+.contributors__main_title {
+  margin-top:2em;
+  margin-bottom:2em;
+}
+/* list of item contributors */
+.contributors__list {
+  padding-bottom:2em;
+}
+
+/* item contributors */
+.contributors__item{}
+.contributors__item + .contributors__item {
+  margin-top:.2em;
+}
+
+/* header of item contributor */
+.contributors__item__header {
+  /*border-top: solid 1px #979797;*/
+  background-color: #F0F0F0;
+  line-height:5em;
+  font-weight:bold;
+}
+.contributors__item__title h3 {
+  font-size:1.4em;
+  cursor:pointer;
+}
+.contributors__item__title button {
+  border:none;
+}
+
+/* content of item contributors, close by default */
+.contributors__item__content {
+  display:none;
+}
+/* content of item contributors open */
+.contributors__item__content.is-open {
+
+}

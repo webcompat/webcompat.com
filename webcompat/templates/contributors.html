@@ -1,75 +1,47 @@
 {% extends "layout.html" %}
 {% block body %}
-<div class="page page--contributors">
+<div class="contributors">
 {% include "shared/nav.html" %}
-  <div class="wc-content wc-content--body">
-   <h2>Contributors</h2>
-    <h4>Get Involved</h4>
-    <p>Dive right in with the resources below.</p>
-    <h4>How to Replicate a Bug</h4>
-    <ol>
-      <li>Find a bug that "Needs Diagnosis"</li>
-      <li>Make sure you have the same browser/OS running</li>
-      <li>See if you can replicate</li>
-      <li>Write a comment on the issue confirming or denying that you can replicate</li>
-    </ol>
-    <h4>How to Diagnose a Bug</h4>
-    <ol>
-      <li>Find a bug that "Needs Diagnosis"</li>
-      <li>Check to see if bug has been replicated already</li>
-      <li>If not, try to replicate the bug</li>
-      <li>If bug is NOT reproducible, write a comment on the issue</li>
-      <li>If bug is reproducible, try to reproduce on other browsers/OS</li>
-      <li>Check the console to see if there are errors</li>
-      <li>Google any errors</li>
-      <li>Write a comment with your findings on the issue</li>
-      <li>If you find a fix, post your fix on the issue!</li>
-      <li>If you not, post what you tried on the issue</li>
-      <li>(more tips coming!)</li>
-    </ol>
-    <h4>Resources</h4>
-    <p>If you have resource suggestions, post them here (open an issue for this)</p>
-    <h4>How to do Site Outreach</h4>
-    <ol>
-      <li>Find a bug that is labeled "Ready for Outreach"</li>
-      <li>Now it's time to track down someone to help get the fix implemented, but first a few tips on doing outreach:
-          <ul>
-           <li><strong>Be always tactful</strong> People we are trying to join have their own set of constraints, bosses, economic choices, etc. "Your Web site sucks" will not lead anywhere, except NOT getting the site fixed.</li>
-           <li><strong>Be humble:</strong> We are no better, we also do mistakes in our own practices. We recommend things which might change one day because of the technical/economical circumstances.</li>
-           <li><strong>Let it go</strong> Sometimes it just doesn't work. The person at the end of the other line will say "no" or worse not answering. It can be very frustrating. Accept it and move on.</li>
-           <li><strong>Be passionate</strong> The passion is in being able to find the right contact in a company without harassing them, to be happy when something move forward. There is plenty to do.</li>
-          <li><strong>Share with consideration</strong> Any actions someone's do is better when it's collectively recorded. Basically you did a specific action say in the comments of the bug. It helps everyone to know the status. And it helps to not make yourself a strong dependency. That said be careful to not disclose private information such as names and emails, when the contact didn't allow it. You may simply say: "I contacted someone at $COMPANY", "Someone from $COMPANY said that… blah"</li>
-        </ul>
-      </li>
-      <li>If it is a browser bug, post it to their forms:</li>
-            <ul>
-                <li>Chrome bug reports</li>
-                <li>Firefox bug reports</li>
-                <li>Safari bug reports</li>
-                <li>Opera bug reports</li>
-            </ul>
-      <li>If it's a web site, track down the site owner.  Try:</li>
-            <ul>
-               <li><strong>Does the web site have a Twitter account?</strong> If the Twitter account seems to be run by a person, it can be a good start for initial contact.  Ask who you should contact with the fix.  If the Twitter account is just broadcasting information, move on.</li>
-               <li><strong>Does the web site have a support email or an issue tracker?</strong>  This is a simple one, but there's no guarantee that your request will be addressed.  Most of the time the responses are automatic but it's better than nothing. If in return you get an ID and/or a URI, put it in the bug/issue comments.</li>
-               <li><strong>Search for someone working there, a human.</strong> There are different techniques.
-                    <ul>
-                      <li><strong>Linkedin.</strong> This doesn't necessary work with all countries, but worth trying. You can start for example in your favorite search engine with:Web developer $COMPANY_NAME site:linkedin.com. This will list names of people who are likely to work there, some of them in their profile will have contact information and often Twitter accounts, personal web sites or emails.</li>
-                      <li><strong>Twitter.</strong> Some people put their company affiliation in Twitter.  Tweet or DM them if possible and ask who to contact. Always check if the Twitter account is active. Some people haven't used their account for ages. If so, move on.</li>
-                      <li><strong>Slideshare.</strong> When you can't find the information about a developer, you might want to try to search something such as $COMPANY_NAME site:slideshare.net or any appropriate keywords that will make you closer to a contact. Some companies have their developers speaking at conferences about issues with performances, etc. Be careful of talks related to sales or marketing. In the slides, there is often the contact information of the developer.</li>
-                      <li><strong>Github, etc.</strong> Search by individual person or by company names. Many developers have either company projects online and/or their personal projects. As usual be careful to not abuse or harass people with your requests.</li>
-                      <li><strong>Web designer</strong> Sometimes when you can't reach a web developer, you may try to reach web designers who have also their own type of social networks such as dribbble.com. Usually they have contacts with web developers and may be able to give an introduction. In some web agencies, the web designer will be a good initial contact. Again, be tactful and don't make the life of the web designer harder in his/her own company.</li>
-                    </ul>
-              </li>
-              <li><strong>Corporate emails</strong> This may work time to time. When you know the person is working in a specific company (You have last and first name), but you have been unable to find any contacts at all through twitter and so on. You might want to find out through search engines and/or people working at this company how the email addresses have been created. You may find that the pattern is firstname.lastname@company.example.org or lastnameF@ etc. You can try to send an email. The person will be probably surprised on how did you get the email address. So there is a risk to anger the person. Be gentle and explain.</li>
-              <li><strong>whois</strong>Some Web sites have their contact information in the whois of the Web site. It's becoming rarer and rarer, because people receive spams because of it.</li>
-              <li><strong>Friend of a friend</strong> You are likely well connected in the industry. And it's why, if you are a Mozilla contributor in a specific country, you are a very important asset for the work we are doing. Local social networks in between companies is a lot denser. Search your LinkedIn, Twitter and Github for connections who might be connected to that company.</li>
-            </ul>
-
-      <li></li>
-    </ol>
-    <h4>Resources</h4>
-    <p>If you have resource suggestions, post them here (open an issue for this)</p>
+  <div class="wc-content">
+   <h2 class="contributors__main_title">Webcompat team!<br/>Dive into the resources below to learn how.</h2>
+  </div>
+  <div class="contributors__list">
+    <div class="contributors__item">
+      <div class="contributors__item__header">
+        <div class="wc-content contributors__item__title">
+          <h3><button>How to Replicate a Bug</button></h3>
+        </div>
+      </div>
+      <div class="contributors__item__content wc-content is-open">
+         plein de contenu pour voir<br/>
+         hjfdhjf
+         <h4>test pour voir</h4>
+      </div>
+    </div>
+    <div class="contributors__item">
+      <div class="contributors__item__header">
+        <div class="wc-content contributors__item__title">
+          <h3><button>How to Diagnose a Bug</button></h3>
+        </div>
+      </div>
+      <div class="contributors__item__content wc-content">contenu</div>
+    </div>
+    <div class="contributors__item">
+      <div class="contributors__item__header">
+        <div class="wc-content contributors__item__title">
+            <h3><button>How to Do Site Outreach</button></h3>
+        </div>
+      </div>
+      <div class="contributors__item__content wc-content">contenu</div>
+    </div>
+    <div class="contributors__item">
+      <div class="contributors__item__header">
+        <div class="wc-content contributors__item__title">
+          <h3><button>Contribute to this site</button></h3>
+        </div>
+      </div>
+      <div class="contributors__item__content wc-content">contenu</div>
+    </div>
   </div>
 </div>
 {% endblock %}
