@@ -83,16 +83,11 @@
 .contributors__item__btn.is-active .icon--contributors:before {
   content: "\f068";
 }
-
 /* content of item contributors, close by default */
 .contributors__item__content {
   max-height:0;
   overflow:hidden;
   transition: max-height .3s linear 0s;
-}
-/* temp */
-.contributors__item__header:hover + .contributors__item__content {
-  max-height:100px;
 }
 /* content of item contributors open */
 .contributors__item__content.is-open {
