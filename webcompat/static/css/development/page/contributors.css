@@ -88,9 +88,15 @@
   font-size:1.4em;
   cursor:pointer;
 }
+@media (--viewport-375px) {
+  .contributors__item__title h3 {
+    font-size:1.2em;
+  }
+}
 /* btn header */
 .contributors__item__btn {
   border:none;
+  padding:0;
 }
 /* icon header, default state */
 .icon--contributors {
