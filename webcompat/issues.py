@@ -10,11 +10,12 @@ authed user and the proxy case.'''
 import json
 import requests
 from flask import g, session, url_for, redirect, request
-from webcompat.form import build_formdata, AUTH_REPORT, PROXY_REPORT
+from webcompat.form import build_formdata
 from webcompat import github, app
 
 REPO_URI = app.config['ISSUES_REPO_URI']
 TOKEN = app.config['BOT_OAUTH_TOKEN']
+
 
 def proxy_request(method, path_mod='', data=None, uri=None):
     '''Make a GitHub API request with a bot's OAuth token, for non-logged in
@@ -33,18 +34,12 @@ def proxy_request(method, path_mod='', data=None, uri=None):
         return req(req_uri, headers=headers).json()
 
 
-def report_issue(form):
+def report_issue(form, proxy=False):
     '''Report an issue, as a logged in user or anonymously.'''
-    if form.get('submit-type') == AUTH_REPORT:
-        if g.user:  # If you're already authed, submit the bug.
-            response = github.post('repos/{0}'.format(REPO_URI),
-                                   build_formdata(form))
-            return response
-        else:  # Stash form data into session, go do GitHub auth
-            session['form_data'] = request.form
-            return redirect(url_for('login'))
-    elif form.get('submit-type') == PROXY_REPORT:
+    if proxy:
         return proxy_request('post', data=json.dumps(build_formdata(form)))
+    else:
+        return github.post('repos/{0}'.format(REPO_URI), build_formdata(form))
 
 
 def get_issue(number):
