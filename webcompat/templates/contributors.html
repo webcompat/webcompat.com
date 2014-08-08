@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
 {% block body %}
-<div class="contributors">
+<div>
 {% include "shared/nav.html" %}
   <div class="wc-content">
     <div class="contributors__header">
@@ -10,22 +10,22 @@
       </div>
   </div>
   </div>
-  <div class="contributors__list">
+  <div class="contributors">
     <div class="contributors__item">
       <div class="contributors__item__header">
         <div class="wc-content contributors__item__title">
-          <h3><button class="contributors__item__btn is-active" type="button">How to Replicate a Bug<span class="icon icon--contributors"></span></button></h3>
+          <h3><button class="contributors__item__btn" type="button">How to Replicate a Bug<span class="icon icon--contributors"></span></button></h3>
         </div>
       </div>
-      <div class="contributors__item__content wc-content is-open">{% include "contributors/replicate-bug.html" %}</div>
+      <div class="contributors__item__content wc-content">{% include "contributors/replicate-bug.html" %}</div>
     </div>
     <div class="contributors__item">
       <div class="contributors__item__header">
         <div class="wc-content contributors__item__title">
-          <h3><button class="contributors__item__btn is-active" type="button">How to Diagnose a Bug<span class="icon icon--contributors"></span></button></h3>
+          <h3><button class="contributors__item__btn" type="button">How to Diagnose a Bug<span class="icon icon--contributors"></span></button></h3>
         </div>
       </div>
-      <div class="contributors__item__content wc-content is-open">{% include "contributors/diagnose-bug.html" %}</div>
+      <div class="contributors__item__content wc-content">{% include "contributors/diagnose-bug.html" %}</div>
     </div>
     <div class="contributors__item">
       <div class="contributors__item__header">
@@ -41,7 +41,7 @@
           <h3><button class="contributors__item__btn" type="button">Contribute to this site<span class="icon icon--contributors"></span></button></h3>
         </div>
       </div>
-      <div class="contributors__item__content wc-content">{% include "contributors/contribute.html" %}</div>
+      <div class="contributors__item__content page wc-content">{% include "contributors/contribute.html" %}</div>
     </div>
   </div>
 </div>
