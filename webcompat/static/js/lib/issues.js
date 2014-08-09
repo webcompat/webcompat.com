@@ -3,6 +3,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 var issues = issues || {};
+issues.events = _.extend({},Backbone.Events);
 
 marked.setOptions({
   breaks: true,
@@ -111,6 +112,20 @@ issues.BodyView = Backbone.View.extend({
     this.$el.html(this.template(this.model.toJSON()));
     return this;
   }
+});
+
+issues.TextAreaView = Backbone.View.extend({
+  el: $('.comment__text'),
+  events: {
+    'keydown': 'broadcastChange'
+  },
+  broadcastChange: _.debounce(function() {
+    if ($.trim(this.$el.val())) {
+      issues.events.trigger('textarea:content');
+    } else {
+      issues.events.trigger('textarea:empty');
+    }
+  }, 250, {maxWait: 1500})
 });
 
 issues.MainView = Backbone.View.extend({
