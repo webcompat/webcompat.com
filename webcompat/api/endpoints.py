@@ -59,6 +59,14 @@ def proxy_issue(number):
 
 
 @ensure_xhr
+@api.route('/issues/<int:number>/edit', methods=['PATCH'])
+def edit_issue(number):
+    '''XHR endpoint to push back edits to GitHub for a single issue.'''
+    edit = proxy_request('patch', '/{0}'.format(number), data=request.data)
+    return json.dumps(edit)
+
+
+@ensure_xhr
 @api.route('/issues/mine')
 def user_issues():
     '''API endpoint to return issues filed by the logged in user.'''
