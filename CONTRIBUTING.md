@@ -128,6 +128,10 @@ Note: If you get a `TypeError: unhashable type` page when loading `http://127.0.
 
 * `BOT_OAUTH_TOKEN`: https://github.com/webcompat/webcompat.com/blob/master/config.py.example#L64
 
+Note: If you get a 404 at GitHub when clicking "Login", it means you haven't filled in the `GITHUB_CLIENT_ID` or `GITHUB_CLIENT_SECRET` at https://github.com/webcompat/webcompat.com/blob/master/config.py.example#L47-L49.
+
+![Auth 404](https://i.cloudup.com/8FDA5bVc7l.png)
+
 
 ## Installing Grunt
 
@@ -148,6 +152,35 @@ You can then use the `grunt` command to run grunt tasks. `grunt --help` will lis
 ## Running Tests
 
 You can run tests from the project root with the `nosetests` command.
+
+### Functional Tests
+
+We use [Intern](http://theintern.io/) to run functional tests.
+
+To run them, make sure you download the Selenium standalone server from the repo root:
+
+``` bash
+wget http://selenium-release.storage.googleapis.com/2.42/selenium-server-standalone-2.42.2.jar
+```
+
+The `firefox` binary will also need to be in your `PATH`. Here's how this can be done on OS X:
+
+``` bash
+export PATH="/Applications/Firefox.app/Contents/MacOS/:$PATH"
+```
+
+Start the Selenium and application servers (in separate terminal tabs or windows):
+
+``` bash
+java -jar selenium-server-standalone-2.42.2.jar
+source env/bin/activate && python run.py
+```
+
+And to run the tests (in a new tab or terminal window):
+
+``` bash
+node_modules/.bin/intern-runner config=tests/functional/intern
+```
 
 ## Acknowledgements
 A lot of this document was inspired directly by the excellent [Backbone.LayoutManager](https://github.com/tbranyen/backbone.layoutmanager/blob/master/CONTRIBUTING.md), [CouchDB](https://github.com/apache/couchdb/blob/master/src/fauxton/CONTRIBUTING.md), and [Angular.js](https://github.com/angular/angular.js/blob/master/CONTRIBUTING.md#issue) CONTRIBUTING files.

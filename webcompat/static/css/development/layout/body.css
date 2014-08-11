@@ -27,6 +27,12 @@ html {
    font-family: var(--base-font);
    font-weight: 300;
    color: var(--wc-variant-background-dark);
+   box-sizing:border-box;
+}
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
 }
 /* min max class */
 .wc-viewport {

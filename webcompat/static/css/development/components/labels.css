@@ -1,0 +1,117 @@
+/*----------add/remove labels----------*/
+
+/* Wrapper label editor */
+.label_editor__wrapper {
+  position:relative;
+  display:inline-block;
+}
+@media (--viewport-375px) {
+  .label_editor__wrapper {
+    position:static; /* position of label editor not depend of this class */
+  }
+}
+
+/* list label */
+.label_list {
+  background-color: #FFF;
+  color: #333;
+  max-height:300px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Label editor */
+.label_editor
+{
+  z-index:2;
+  position: absolute;
+  white-space:nowrap;
+  top: 100%;
+  left: 0;
+  /* caret */
+  margin-left: -11px;
+  margin-top: 18px;
+  box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.25);
+  border-radius: 6px;
+  background:  #fff;
+}
+@media (--viewport-375px) {
+  .label_editor {
+    top:75%;
+    left:50%;
+    transform:translateX(-50%);
+    margin:0;
+  }
+}
+/* Caret */
+.label_editor:after {
+  display: none;
+  position: absolute;
+  content: "";
+  width: 18px;
+  height: 18px;
+  top: -10px;
+  left: 15px;
+  background-color: #ffffff;
+  border-color: var(--wc-variant-background-light);
+  border-style: solid;
+  border-width: 1px 0px 0px 1px;
+  transform: rotate(45deg);
+}
+@media (--viewport-375px) {
+  .label_editor:after {
+    left:26%;
+  }
+}
+
+
+/* Label header */
+.label_editor__header {
+  background-color:#fff;
+  border-radius: 6px 6px 0px 0px;
+  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.1), 0px 2px 3px rgba(0, 0, 0, 0.05);
+  padding: 10px;
+}
+.label_editor__search {
+  display:inline-block;
+  width:auto;
+}
+/* btn */
+.label_editor__btn {
+  border:none;
+}
+/* hover btn */
+.label_editor__btn:hover {
+  text-decoration:underline;
+}
+
+
+/* item label */
+.label_item {
+  display:block;
+  float:none;
+  pointer:cursor;
+  border-top: 1px solid #DDD;
+  margin:0;
+}
+.label_color {
+  display: inline-block;
+  margin: 8px 5px 8px 5px;
+  width: 24px;
+  height: 24px;
+  line-height: 20px;
+  text-align: center;
+  border-radius: 3px;
+}
+.label_checkbox {
+  margin:0;
+  padding:0;
+}
+.label_name {
+  display:inline-block;
+  font-size: 12px;
+  font-weight: 500;
+  margin: 8px 52px 8px 0;;
+  line-height: 15px;
+}

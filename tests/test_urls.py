@@ -55,6 +55,16 @@ class TestURLs(unittest.TestCase):
         self.assertEqual(rv.status_code, 302)
         self.assertIn('github.com/login/oauth/', rv.headers['Location'])
 
+    def test_issue_int(self):
+        '''Test that an issue only displays if <number> is an integer.'''
+        '''Test that the /issues/<number> exists, and does not redirect.'''
+        rv = self.app.get('/issues/3')
+        self.assertEqual(rv.status_code, 200)
+        self.assertNotEqual(rv.status_code, 404)
+        rv = self.app.get('/issues/three')
+        self.assertEqual(rv.status_code, 404)
+        self.assertNotEqual(rv.status_code, 200)
+
     def test_issue_redirect(self):
         '''Test that the /issues/<number> exists, and does not redirect.'''
         rv = self.app.get('/issues/3')
@@ -66,6 +76,11 @@ class TestURLs(unittest.TestCase):
         rv = self.app.get('/issues')
         self.assertEqual(rv.status_code, 307)
         self.assertIn('localhost', rv.headers['Location'])
+
+    def test_api_endpoint(self):
+        '''Test that GET of /api/foo returns a 406.'''
+        rv = self.app.get('/api/issues/22')
+        self.assertEqual(rv.status_code, 406)
 
 
 if __name__ == '__main__':

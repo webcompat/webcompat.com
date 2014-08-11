@@ -4,23 +4,16 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-import json
-import os
 import sys
-import time
 import urllib
 from flask import (flash, g, redirect, request, render_template, session,
-                   url_for, abort)
+                   url_for)
 from flask.ext.github import GitHubError
-from form import (build_formdata, get_browser, get_os,
-                  IssueForm, AUTH_REPORT, PROXY_REPORT)
 from hashlib import md5
-from helpers import get_user_info
-from issues import (report_issue, proxy_report_issue, get_user_issues,
-                    get_contact_ready, proxy_get_contact_ready,
-                    get_needs_diagnosis, proxy_get_needs_diagnosis,
-                    proxy_request, get_issue, add_comment)
-from models import db_session, User
+from .form import IssueForm, AUTH_REPORT, PROXY_REPORT
+from .helpers import get_user_info, get_browser, get_browser_name, get_os
+from .issues import report_issue, get_issue, proxy_request
+from .models import db_session, User
 from webcompat import github, app
 
 
@@ -119,29 +112,14 @@ def index():
     '''Main view where people come to report issues.'''
     bug_form = IssueForm(request.form)
     # add browser and version to bug_form object data
-    bug_form.browser.data = get_browser(
-        request.headers.get('User-Agent'))
-    bug_form.os.data = get_os(
-        request.headers.get('User-Agent'))
+    ua_header = request.headers.get('User-Agent')
+    bug_form.browser.data = get_browser(ua_header)
+    bug_form.os.data = get_os(ua_header)
+    browser_name = get_browser_name(ua_header)
     # GET means you want to file a report.
     if request.method == 'GET':
-        if g.user:
-            try:
-                get_user_info()
-                user_issues = get_user_issues(session['username'])
-            except GitHubError:
-                e = sys.exc_info()
-                print('GitHubError: ', e)
-            contact_ready = get_contact_ready()
-            needs_diagnosis = get_needs_diagnosis()
-        else:
-            user_issues = []
-            contact_ready = proxy_get_contact_ready()
-            needs_diagnosis = proxy_get_needs_diagnosis()
         return render_template('index.html', form=bug_form,
-                               user_issues=user_issues,
-                               contact_ready=contact_ready,
-                               needs_diagnosis=needs_diagnosis)
+                               browser=browser_name)
     # Form submission.
     elif request.method == 'POST' and bug_form.validate():
         if request.form.get('submit-type') == AUTH_REPORT:
@@ -153,9 +131,7 @@ def index():
                 session['form_data'] = request.form
                 return redirect(url_for('login'))
         elif request.form.get('submit-type') == PROXY_REPORT:
-            # `response` here is a Requests Response object, because
-            # the proxy_report_issue crafts a manual request with Requests
-            response = proxy_report_issue(request.form)
+            response = report_issue(request.form, proxy=True)
             return redirect(url_for('thanks', number=response.get('number')))
     else:
         # Validation failed, re-render the form with the errors.
@@ -164,14 +140,13 @@ def index():
 
 @app.route('/issues')
 def show_issues():
+    '''Temporarily useless.'''
     return redirect(url_for('index'), code=307)
 
 
-@app.route('/issues/<number>')
+@app.route('/issues/<int:number>')
 def show_issue(number):
     '''Route to display a single issue.'''
-    if not number.isdigit():
-        abort(404)
     if g.user:
         get_user_info()
     try:
@@ -181,61 +156,18 @@ def show_issue(number):
         print('GitHubError: ', e)
         title = 'Web bug'
     # temporarily provide a link to github (until we can modify issues)
-    uri = 'https://github.com/{0}/{1}'.format(app.config['ISSUES_REPO_URI'], number)
+    uri = 'https://github.com/{0}/{1}'.format(app.config['ISSUES_REPO_URI'],
+                                              number)
     return render_template('issue.html', number=number, uri=uri, title=title)
 
 
-@app.route('/api/issues/<number>')
-def proxy_issue(number):
-    '''XHR endpoint to get issue data from GitHub, either as an authed
-    user, or as one of our proxy bots.'''
-    if not number.isdigit():
-        abort(404)
-    if request.is_xhr and request.headers.get('accept') == 'application/json':
-        if g.user:
-            issue = github.get('repos/{0}/{1}'.format(
-                app.config['ISSUES_REPO_URI'], number))
-        else:
-            issue = proxy_request('get', '/{0}'.format(number))
-        return json.dumps(issue)
-    else:
-        abort(406)
-
-
-@app.route('/api/issues/<number>/comments', methods=['GET', 'POST'])
-def proxy_comments(number):
-    '''XHR endpoint to get issues comments from GitHub, either as an authed
-    user, or as one of our proxy bots.'''
-    if not number.isdigit():
-        abort(404)
-    if request.method == 'POST':
-        try:
-            add_comment(number, request.data)
-            return ':)'
-        except GitHubError as e:
-            print('GitHubError: ', e.response.status_code)
-            return (':(', e.response.status_code)
-    elif request.is_xhr and request.headers.get('accept') == 'application/json':
-        if g.user:
-            comments = github.get('repos/{0}/{1}/comments'.format(
-                app.config['ISSUES_REPO_URI'], number))
-        else:
-            comments = proxy_request('get', '/{0}/comments'.format(number))
-        return json.dumps(comments)
-    else:
-        abort(406)
-
-
-@app.route('/thanks/<number>')
+@app.route('/thanks/<int:number>')
 def thanks(number):
-    if number.isdigit():
-        issue = number
-        uri = u"http://webcompat.com/issues/{0}".format(number)
-        text = u"I just filed a bug on the internet: "
-        encoded_issue = urllib.quote(uri.encode("utf-8"))
-        encoded_text = urllib.quote(text.encode("utf-8"))
-    else:
-        abort(404)
+    issue = number
+    uri = u"http://webcompat.com/issues/{0}".format(number)
+    text = u"I just filed a bug on the internet: "
+    encoded_issue = urllib.quote(uri.encode("utf-8"))
+    encoded_text = urllib.quote(text.encode("utf-8"))
     if g.user:
         get_user_info()
     return render_template('thanks.html', number=issue,
@@ -245,6 +177,7 @@ def thanks(number):
 
 @app.route('/about')
 def about():
+    '''Route to display about page.'''
     if g.user:
         get_user_info()
     return render_template('about.html')
@@ -252,6 +185,7 @@ def about():
 
 @app.route('/privacy')
 def privacy():
+    '''Route to display privacy page.'''
     if g.user:
         get_user_info()
     return render_template('privacy.html')
@@ -260,6 +194,7 @@ def privacy():
 if not app.config['PRODUCTION']:
     @app.route('/contributors')
     def contributors():
+        '''Route to display contributors page.'''
         if g.user:
             get_user_info()
         return render_template('contributors.html')
@@ -282,7 +217,7 @@ def not_found(err):
 
 
 @app.errorhandler(500)
-def not_found(err):
+def this_is_not_good(err):
     message = "Internal Server Error"
     return render_template('error.html',
                            error_code=500,

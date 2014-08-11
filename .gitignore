@@ -9,9 +9,12 @@ fabfile.py
 # these are our 'dist' files
 # checking them into the repo is silly
 webcompat/**/webcompat.js
-webcompat/**/webcompat.min.js
+webcompat/**/issues.js
+webcompat/**/*.min.js
 webcompat/**/*.min.css
 webcompat/**/*.dev.css
 
 #selenium server
 *.jar
+*.pid
+nohup.out

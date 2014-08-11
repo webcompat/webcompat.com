@@ -18,6 +18,19 @@ dist:
 	@ echo "❯ Distribution..."
 	@ grunt
 
-run:
+start:
 	@ echo "❯ Starting..."
 	@ sh -c '. env/bin/activate; python run.py'
+
+serv:
+	@ echo "❯ Launching server..."
+	@ nohup ./webcompat.sh $
+
+run:
+	@ node_modules/.bin/intern-runner config=tests/functional/intern
+
+end:
+	kill `cat env.pid`
+	kill `cat pythonserver.pid`
+	kill `cat selenium.pid`
+	(rm  nohup.out)

@@ -18,8 +18,8 @@
           <div class="issue__state issue__state--<%= stateClass %>"><%= issueState %></div>
           <div class="issue__date">Opened <%= createdAt %> by
             <span class="issue__reporter">
-              <a href="https://github.com/<%= reporter %>"><%= reporter %></a>
-            </span>. <%= commentNumber %> comments
+              <a href="https://github.com/<%= reporter %>"><%= reporter %></a><!--
+         --></span>. <%= commentNumber %> comments
           </div>
         </script>
         </div>
@@ -27,15 +27,25 @@
         <!-- Issue Info -->
         <script type="text/template" id="issue-info-tmpl">
           <%= body %>
-          <div class="issue__label">
-            <span class="issue__label_item issue__label_item--title">Labels</span>
-              <% _.each(labels, function(label) { %>
-              <span class="issue__label_item" style="background-color:#<%=label.color%>"><%= label.name %></span>
-              <% }); %>
-          </div>
         </script>
         </div>
-        <!-- Issue comment -->
+        <!-- Issue Labels -->
+        <div class="issue__label">
+        <script type="text/template" id="issue-labels-tmpl">
+          <span class="issue__label_item issue__label_item--title">Labels</span>
+          {% if session.user_id and session.avatar_url %}
+            <span class="label_editor__wrapper"><button class="issue__label--modify icon"></button></span>
+          {% endif %}
+          <span class="labels__wrapper">
+          <% _.each(labels, function(label) { %>
+            <span class="issue__label_item issue__label_item--badge" style="background-color:#<%=label.color%>">
+              <%= label.name %>
+            </span>
+          <% }); %>
+          </span>
+        </script>
+        </div>
+        <!-- Issue Comments -->
         <div class="issue__comment">
           <script type="text/template" id="comment-tmpl">
             <div class="comment__avatar">
@@ -46,7 +56,7 @@
                 <div class="comment__header">
                   <span class="comment__owner">
                     <a href="https://github.com/<%= commenter %>"><%= commenter %></a>
-                  </span> commented <a href="#issuecomment-<%= id %>"><%= createdAt %></a>
+                  </span> commented <a href="#<%= commentLinkId %>"><%= createdAt %></a>
                 </div>
                 <div class="comment__content"><%= body %></div>
               </div>
@@ -66,19 +76,46 @@
               <textarea class="comment__wrapper comment__text" placeholder="Leave a comment"></textarea>
             </div>
             <div class="comment__button">
-              <!-- TODO(miket) <a class="Button Button--action" href="{{ url_for('index') }}">Close</a> -->
+              <button class="Button Button--action">
+              <script type="text/template" id="state-button-tmpl">
+                <%= state %>
+              </script>
+              </button>
               <button value="comment" class="Button Button--default" type="submit">Comment</button>
             </div>
           </div>
         </div>
         {% else %}
-        <p>Please <a class="issue__login_link" href="{{ url_for('login') }}">login</a> to leave a comment.</p>
+        <p class="issue__login_link">Please <a href="{{ url_for('login') }}">login</a> to leave a comment or add/edit labels.</p>
         {% endif %}
        </div>
     </div>
   </div>
+
+  <script type="text/template" id="label-editor-tmpl">
+      <div class="label_editor__header">
+        <input class="form-control label_editor__search" placeholder="filter label"><button class="label_editor__btn">Save &amp; Close</button>
+      </div>
+      <div class="label_list">
+        <% _.each(labels, function(label) { %>
+          <label class="label_item">
+            <span class="label_color" style="background-color:#<%=label.color%>">
+              <input class="label_checkbox" type="checkbox" name="<%= label.name %>" data-color="<%=label.color%>">
+            </span>
+            <span class="label_name"><%= label.name %></span>
+          </label>
+        <% }); %>
+      </div>
+  </script>
+
 {% endblock %}
 {% block extrascripts %}
 <script>var issueNumber={{ number }};</script>
+{%- if config.PRODUCTION %}
+<script src="{{ url_for('static', filename='js/issues.min.js') }}"></script>
+{% else %}
+<script src="{{ url_for('static', filename='js/lib/comments.js') }}"></script>
+<script src="{{ url_for('static', filename='js/lib/labels.js') }}"></script>
 <script src="{{ url_for('static', filename='js/lib/issues.js') }}"></script>
+{%- endif %}
 {% endblock %}

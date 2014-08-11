@@ -93,8 +93,13 @@
 
 /* container details issue */
 .issue__details {
-    word-wrap: break-word;
-    overflow: hidden;
+  word-wrap: break-word;
+  overflow: hidden;
+  position: relative;
+}
+/* force font-size */
+.issue__details * {
+  font-size:1em !important;
 }
 .issue__details strong {
     font-weight: bold !important;
@@ -122,6 +127,7 @@
 
 .issue__login_link {
   margin-top: 2.5em;
+  text-align:center;
 }
 
 .issue__label:after {
@@ -129,6 +135,12 @@
   content: "";
   clear: both;
 }
+@media (--viewport-375px) {
+  .issue__label {
+    position:relative;
+  }
+}
+
 /* value of label */
 /*.issue__label__value {
   font-size: 1.2em;
@@ -148,8 +160,15 @@
 /* Labels */
 .issue__label_item--title {
   font-size: 1.2em;
-  margin-right:.3em;
   color:#000;
+  padding-right: 0;
+  margin-right: 0.1em;
+}
+.issue__label_item--badge {
+  margin-left:1em;
+}
+.issue__label_item--badge + .issue__label_item--badge {
+  margin-left:.7em;
 }
 /* btn add label */
 .issue__label__btn {
@@ -162,4 +181,29 @@
 /*wrapper list comment */
 .issue__comment {
   margin:4em 0 0;
+}
+/*btn */
+.issue__label--modify {
+  display: none;
+  border:none;
+  width:1.3em;
+  height:1.3em;
+  font-size:1.4em;
+  padding:0;
+}
+/* display carey only if button is-active*/
+.issue__label--modify.is-active + .label_editor:after {
+  display:block;
+}
+.issue__label--modify {
+  opacity:.8;
+}
+.issue__label--modify:hover {
+  opacity:1;
+}
+.issue__label--modify:before {
+  content: "\f013";
+}
+.is-active.issue__label--modify:before {
+  content: "\f00d";
 }

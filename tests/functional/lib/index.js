@@ -16,14 +16,115 @@ define([
     name: 'index',
 
     'front page loads': function () {
-
       return this.remote
         .get(require.toUrl(url))
         .findByCssSelector('#maintitle h1').getVisibleText()
         .then(function (text) {
           assert.equal(text, 'Bug reporting\nfor the internet.');
         })
+        .end();
+    },
+
+    'reporter addon link is shown': function () {
+      return this.remote
+        .get(require.toUrl(url))
+        .findByCssSelector('.nav__link').getVisibleText()
+        .then(function (text) {
+          assert.include(text, 'Download our Firefox');
+        })
+        .end();
+    },
+
+    'form toggles open then closed': function () {
+      return this.remote
+        .setFindTimeout(intern.config.wc.pageLoadTimeout)
+        .get(require.toUrl(url))
+        .findByCssSelector('#report-bug.closed').click()
+        .end()
+        .findByCssSelector('.form-opened')
+        .end()
+        .findByCssSelector('#report-bug.opened').click()
+        .end()
+        .findByCssSelector('.form-closed').isDisplayed()
+        .then(function (isDisplayed) {
+          assert.equal(isDisplayed, false);
+        });
+    },
+
+    //TODO: browse issues (reported by me): requires login
+
+    'browse issues (needs diagnosis)': function() {
+      return this.remote
+        .get(require.toUrl(url))
+        .findByCssSelector('#needs-diagnosis h3').getVisibleText()
+        .then(function (text) {
+          assert.equal(text, 'Needs Diagnosis');
+        })
+        .end()
+        .findAllByCssSelector('.issues.issue-needs-diagnosis')
+        .then(function (elms) {
+          assert.equal(elms.length, 4, '4 issues should be displayed');
+        })
+        .end()
+        .findByCssSelector('.issue-needs-diagnosis .issue-number').getVisibleText()
+        .then(function (text) {
+          assert.match(text, /^Issue\s(\d+)$/, 'Issue should have a number');
+        })
+        .end()
+        .findByCssSelector('.issue-needs-diagnosis .issue-title a').getAttribute('href')
+        .then(function (text) {
+          assert.match(text, /^\/issues\/\d+$/, 'Link should have a number');
+        })
+        .end()
+        .findByCssSelector('.issue-needs-diagnosis .issue-title').getVisibleText()
+        .then(function (text) {
+          assert.match(text, /^Issue\s\d+:\s.+$/, 'Issue should have a non-empty title');
+        })
+        .end()
+        .findByCssSelector('.issue-needs-diagnosis .issue-metadata').getVisibleText()
+        .then(function (text) {
+          assert.match(text, /comments:\s\d+$/, 'Issue should display number of comments');
+          assert.match(text, /^Opened:\s\d{4}\-\d{2}\-\d{2}/, 'Issue should display creation date');
+        })
+        .end()
+    },
+
+    'browse issues (ready for outreach)': function() {
+      return this.remote
+        .get(require.toUrl(url))
+        .findByCssSelector('#ready-for-outreach h3').getVisibleText()
+        .then(function (text) {
+          assert.equal(text, 'Ready for Outreach');
+        })
+        .end()
+        .findAllByCssSelector('.issues.issue-contactready')
+        .then(function (elms) {
+          assert.equal(elms.length, 4, '4 issues should be displayed');
+        })
+        .end()
+        .end()
+        .findByCssSelector('.issue-contactready .issue-number').getVisibleText()
+        .then(function (text) {
+          assert.match(text, /^Issue\s(\d+)$/, 'Issue should have a number');
+        })
+        .end()
+        .findByCssSelector('.issue-contactready .issue-title a').getAttribute('href')
+        .then(function (text) {
+          assert.match(text, /^\/issues\/\d+$/, 'Link should have a number');
+        })
+        .end()
+        .findByCssSelector('.issue-contactready .issue-title').getVisibleText()
+        .then(function (text) {
+          assert.match(text, /^Issue\s\d+:\s.+$/, 'Issue should have a non-empty title');
+        })
+        .end()
+        .findByCssSelector('.issue-contactready .issue-metadata').getVisibleText()
+        .then(function (text) {
+          assert.match(text, /comments:\s\d+$/, 'Issue should display number of comments');
+          assert.match(text, /^Opened:\s\d{4}\-\d{2}\-\d{2}/, 'Issue should display creation date');
+        })
         .end()
     }
+
   });
 });

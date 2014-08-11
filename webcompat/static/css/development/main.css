@@ -8,11 +8,13 @@
 /*----------Component----------*/
 @import "components/button.css";
 @import "components/comment.css";
+@import "components/labels.css";
 
 /*----------Layout----------*/
 @import "layout/body.css";
 @import "layout/header.css";
 @import "layout/footer.css";
+@import "layout/utilities.css";
 
 /*----------page----------*/
 @import "page/home.css";

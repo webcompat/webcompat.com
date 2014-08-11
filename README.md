@@ -41,6 +41,10 @@ http://thenounproject.com/term/light-switch/2235/
 ### Fonts:
 `Helvetica Neue`
 
+### Assets
+
+See the [design](https://github.com/webcompat/design) repo.
+
 
 ### License
 

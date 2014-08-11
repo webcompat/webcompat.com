@@ -7,7 +7,7 @@ module.exports = function(grunt) {
       dist: {
         src: [
             '<%= jsPath %>/vendor/jquery-1.11.0.min.js',
-            '<%= jsPath %>/vendor/underscore-min.js',
+            '<%= jsPath %>/vendor/lodash.underscore-min.js',
             '<%= jsPath %>/vendor/backbone-min.js',
             '<%= jsPath %>/vendor/moment-min.js',
             '<%= jsPath %>/vendor/prism.js',
@@ -17,6 +17,14 @@ module.exports = function(grunt) {
             '<%= jsPath %>/lib/shared.js'
         ],
         dest: '<%= jsPath %>/<%= pkg.name %>.js'
+      },
+      issues: {
+        src: [
+            '<%= jsPath %>/lib/comments.js',
+            '<%= jsPath %>/lib/labels.js',
+            '<%= jsPath %>/lib/issues.js'
+        ],
+        dest: '<%= jsPath %>/issues.js'
       }
    });
 };

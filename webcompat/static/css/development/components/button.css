@@ -1,7 +1,6 @@
 /*----------Button----------*/
 .Button {
   display: inline-block;
-  background-color: transparent;
   margin-bottom: .5em;
   padding: .5em 2em;
   text-decoration: none !important;
@@ -11,38 +10,45 @@
   text-align: center;
   vertical-align: middle;
   cursor: pointer;
-  background-image: none;
   white-space: nowrap;
   font-size: .8;
   line-height: normal;
+
+}
+button {
+  background-color: transparent;
+  background-image: none;
   user-select: none;
   -webkit-appearance: none;
 }
 /**
 * Remove excess padding and border in Firefox 4+
 */
-.Button::-moz-focus-inner {
+button::-moz-focus-inner {
   border: 0;
   padding: 0;
 }
-.Button:hover,
-.Button:focus,
-.Button:active {
+/*outline chrome */
+button:focus {outline:none;}
+
+.Button:hover:not(.is-disabled),
+.Button:focus:not(.is-disabled),
+.Button:active:not(.is-disabled) {
   text-decoration: none;
 }
-.Button:hover {
+.Button:hover:not(.is-disabled) {
   color:#fff;
 }
 .Button--default {
-  border: solid 4px var(--wb-background-dark);
+  border: solid 4px var(--wc-background-dark);
 }
-.Button--default:hover {
-  background-color: var(--wb-background-dark);
+.Button--default:hover:not(.is-disabled) {
+  background-color: var(--wc-background-dark);
 }
 .Button--action {
   border: solid 4px var(--wc-variant-background-light);
 }
-.Button--action:hover {
+.Button--action:hover:not(.is-disabled) {
   background-color: var(--wc-variant-background-light);
 }
 .Button:disabled,

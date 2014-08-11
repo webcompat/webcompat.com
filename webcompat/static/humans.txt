@@ -1,9 +1,11 @@
 webcompat.com is brought to you by:
 
+               Twitter         Email
+               -------         -----
 Adam Stevenson @adamopenweb
 Alexa Roman    @calexity
 Karl Dubost    @karlpro
-Mike Taylor    @miketaylr
+Mike Taylor    @miketaylr      miket@mozilla.com
 
 
       ,'``.._   ,'``.
@@ -25,3 +27,11 @@ Mike Taylor    @miketaylr
     `-. `.`.``-----``--,  .'
       |/`.\`'        ,',');
           `         (/  (/
+
+
+Contact Us
+----------
+
+You can find us on Twitter or email or at the public mailing list
+compatibility@lists.mozilla.org.  These are public forums, so please
+minimize any personal information you choose to share.
