@@ -56,7 +56,7 @@ issues.Issue = Backbone.Model.extend({
       title: response.title
     });
   },
-  toggleState: function() {
+  toggleState: function(callback) {
     var self = this;
     var newState = this.get('state') === 'open' ? 'closed' : 'open';
     $.ajax({
@@ -66,6 +66,9 @@ issues.Issue = Backbone.Model.extend({
       url: '/api/issues/' + this.get('number') + '/edit',
       success: function() {
         self.set('state', newState);
+        if (callback) {
+          callback();
+        }
       },
       error: function() {
         $('<div></div>', {
@@ -168,9 +171,14 @@ issues.StateButtonView = Backbone.View.extend({
   events: {
     'click': 'toggleState'
   },
-  initialize: function() {
+  hasComment: false,
+  mainView: null,
+  initialize: function(options) {
     var self = this;
+    this.mainView = options.mainView;
+
     issues.events.on('textarea:content', function() {
+      self.hasComment = true;
       if (self.model.get('state') === 'open') {
         self.$el.text(self.template({state: "Close and comment"}));
       } else {
@@ -199,7 +207,11 @@ issues.StateButtonView = Backbone.View.extend({
     return this;
   },
   toggleState: function() {
-    this.model.toggleState();
+    if (this.hasComment) {
+      this.model.toggleState(_.bind(this.mainView.addNewComment, this.mainView));
+    } else {
+      this.model.toggleState();
+    }
   }
 });
 
@@ -223,7 +235,7 @@ issues.MainView = Backbone.View.extend({
     this.body = new issues.BodyView(issueModel);
     this.labels = new issues.LabelsView(issueModel);
     this.textArea = new issues.TextAreaView();
-    this.stateButton = new issues.StateButtonView(issueModel);
+    this.stateButton = new issues.StateButtonView(_.extend(issueModel, {mainView: this}));
   },
   fetchModels: function() {
     var self = this;
