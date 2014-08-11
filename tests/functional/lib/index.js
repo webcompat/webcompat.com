@@ -25,7 +25,7 @@ define([
         .end();
     },
 
-    'logging in takes you to GitHub and back': function() {
+    'logging in on the homepage': function() {
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url))
@@ -45,7 +45,12 @@ define([
         .then(function (text) {
           assert.equal(text, "Logout");
         })
-        .end();
+        .end()
+        .findByCssSelector('#my-issues h3').getVisibleText()
+        .then(function (text) {
+          assert.equal(text, 'Submitted by Me');
+        })
+        .end()
     },
 
     'reporter addon link is shown': function () {
@@ -73,8 +78,6 @@ define([
           assert.equal(isDisplayed, false);
         });
     },
-
-    //TODO: browse issues (reported by me): requires login
 
     'browse issues (needs diagnosis)': function() {
       return this.remote
