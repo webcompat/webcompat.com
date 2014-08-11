@@ -25,6 +25,29 @@ define([
         .end();
     },
 
+    'logging in takes you to GitHub and back': function() {
+      return this.remote
+        .setFindTimeout(intern.config.wc.pageLoadTimeout)
+        .get(require.toUrl(url))
+        .findByCssSelector('.nav__section--right .nav__link').click()
+        .end()
+        .findByCssSelector('#login_field').click()
+        .type(intern.config.wc.user)
+        .end()
+        .findByCssSelector('#password').click()
+        .type(intern.config.wc.pw)
+        .end()
+        .findByCssSelector('input[type=submit]').submit()
+        .end()
+        .findByCssSelector('button').submit()
+        .end()
+        .findByCssSelector('.nav__section--right .nav__link').getVisibleText()
+        .then(function (text) {
+          assert.equal(text, "Logout");
+        })
+        .end();
+    },
+
     'reporter addon link is shown': function () {
       return this.remote
         .get(require.toUrl(url))
