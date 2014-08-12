@@ -73,13 +73,13 @@
   transition: all 0.3s linear 0s;
 }
 /* hover a icon */
-#report-bug:hover .icon {
+.no-touch #report-bug:hover .icon {
   background-color: var(--wc-background-dark);
   color: #fff;
   transition: all 0.3s linear 0s;
 }
 /* hover a - icon down */
-#report-bug:hover .icon:before {
+.no-touch #report-bug:hover .icon:before {
   content: "\e602";
 }
 /* open a - icon down*/
@@ -88,7 +88,7 @@
   content: "\e602";
 }
 /* hover open a - icon up */
-#report-bug.opened:hover .icon:before {
+.no-touch #report-bug.opened:hover .icon:before {
   /*transform:rotate(90deg);*/
   content: "\e600";
 }
