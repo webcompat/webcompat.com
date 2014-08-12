@@ -162,6 +162,7 @@
   font-size: 1.2em;
   color:#000;
   padding-right: 0;
+  padding-left:0;
   margin-right: 0.1em;
 }
 .issue__label_item--badge {
@@ -191,10 +192,12 @@
   font-size:1.4em;
   padding:0;
 }
-/* display carey only if button is-active*/
-.issue__label--modify.is-active + .label_editor:after {
+/* display caret and label only if button is-active*/
+.issue__label--modify.is-active + .label_editor:after,
+.issue__label--modify.is-active + .label_editor {
   display:block;
 }
+
 .issue__label--modify {
   opacity:.8;
 }
@@ -206,4 +209,8 @@
 }
 .is-active.issue__label--modify:before {
   content: "\f00d";
+}
+.test_label-table-row {
+  display:table-row;
+  width:100%;
 }
