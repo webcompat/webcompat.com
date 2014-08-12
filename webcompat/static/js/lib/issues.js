@@ -44,6 +44,19 @@ issues.Issue = Backbone.Model.extend({
     return 'Needs Diagnosis';
   },
   parse: function(response) {
+    if (response.message === "Not Found") {
+      // "empty out" the model properties and bail.
+      var emptyProps = {};
+      var props = ['body', 'commentNumber', 'createdAt', 'issueState',
+                   'labels', 'number', 'reporter', 'state', 'stateClass', 'title'];
+      _.forEach(props, function(item) {
+        emptyProps[item] = '';
+      });
+      this.set(emptyProps);
+      location.href = "/404";
+      return;
+    }
+
     this.set({
       body: marked(response.body),
       commentNumber: response.comments,
