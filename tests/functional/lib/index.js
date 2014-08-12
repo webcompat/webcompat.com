@@ -25,6 +25,29 @@ define([
         .end();
     },
 
+    'logging in on the homepage': function() {
+      return this.remote
+        .setFindTimeout(intern.config.wc.pageLoadTimeout)
+        .get(require.toUrl(url))
+        .findByCssSelector('.nav__section--right .nav__link').click()
+        .end()
+        .findByCssSelector('#login_field').click()
+        .type(intern.config.wc.user)
+        .end()
+        .findByCssSelector('#password').click()
+        .type(intern.config.wc.pw)
+        .end()
+        .findByCssSelector('input[type=submit]').submit()
+        .end()
+        .findByCssSelector('button').submit()
+        .end()
+        .findByCssSelector('.nav__section--right .nav__link').getVisibleText()
+        .then(function (text) {
+          assert.equal(text, "Logout");
+        })
+        .end()
+    },
+
     'reporter addon link is shown': function () {
       return this.remote
         .get(require.toUrl(url))
@@ -51,7 +74,18 @@ define([
         });
     },
 
-    //TODO: browse issues (reported by me): requires login
+    'browse issues (my issues)': function() {
+      return this.remote
+        .setFindTimeout(intern.config.wc.pageLoadTimeout)
+        .get(require.toUrl(url))
+        .findByCssSelector('.nav__section--right .nav__link').click()
+        .end()
+        .findByCssSelector('#my-issues h3').getVisibleText()
+        .then(function (text) {
+          assert.equal(text, 'Submitted by Me');
+        })
+        .end()
+    },
 
     'browse issues (needs diagnosis)': function() {
       return this.remote
