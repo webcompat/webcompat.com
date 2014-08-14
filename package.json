@@ -21,6 +21,10 @@
     "grunt-combine-media-queries": "~1.0.19",
     "load-grunt-tasks": "~0.6.0",
     "intern": "2.0.1",
-    "grunt-contrib-imagemin": "~0.7.1"
+    "grunt-contrib-imagemin": "~0.7.1",
+    "imagemin-gifsicle": "~0.1.1",
+    "imagemin-jpegtran": "~0.1.0",
+    "imagemin-optipng": "~0.1.0",
+    "imagemin-pngquant": "~0.1.3"
   }
 }
