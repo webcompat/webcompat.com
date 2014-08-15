@@ -10,9 +10,9 @@ from flask import (flash, g, redirect, request, render_template, session,
                    url_for)
 from flask.ext.github import GitHubError
 from hashlib import md5
-from .form import IssueForm
+from .form import IssueForm, AUTH_REPORT, PROXY_REPORT
 from .helpers import get_user_info, get_browser, get_browser_name, get_os
-from .issues import report_issue, get_issue
+from .issues import report_issue, get_issue, proxy_request
 from .models import db_session, User
 from webcompat import github, app
 
@@ -122,8 +122,17 @@ def index():
                                browser=browser_name)
     # Form submission.
     elif request.method == 'POST' and bug_form.validate():
-        response = report_issue(request.form)
-        return redirect(url_for('thanks', number=response.get('number')))
+        if request.form.get('submit-type') == AUTH_REPORT:
+            if g.user:  # If you're already authed, submit the bug.
+                response = report_issue(request.form)
+                return redirect(url_for('thanks',
+                                number=response.get('number')))
+            else:  # Stash form data into session, go do GitHub auth
+                session['form_data'] = request.form
+                return redirect(url_for('login'))
+        elif request.form.get('submit-type') == PROXY_REPORT:
+            response = report_issue(request.form, proxy=True)
+            return redirect(url_for('thanks', number=response.get('number')))
     else:
         # Validation failed, re-render the form with the errors.
         return render_template('index.html', form=bug_form)
@@ -147,7 +156,8 @@ def show_issue(number):
         print('GitHubError: ', e)
         title = 'Web bug'
     # temporarily provide a link to github (until we can modify issues)
-    uri = 'https://github.com/{0}/{1}'.format(app.config['ISSUES_REPO_URI'], number)
+    uri = 'https://github.com/{0}/{1}'.format(app.config['ISSUES_REPO_URI'],
+                                              number)
     return render_template('issue.html', number=number, uri=uri, title=title)
 
 

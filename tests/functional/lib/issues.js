@@ -10,7 +10,9 @@ define([
 ], function (intern, registerSuite, assert, require) {
   'use strict';
 
-  var url = intern.config.siteRoot + '/issues/100';
+  var url = function(num) {
+    return intern.config.siteRoot + '/issues/' + num;
+  }
 
   registerSuite({
     name: 'issues',
@@ -18,7 +20,7 @@ define([
     'issue page loads': function () {
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url))
+        .get(require.toUrl(url(100)))
         .sleep(1000)
         .findByCssSelector('h2.issue__main_title').getVisibleText()
         .then(function (text) {
@@ -39,7 +41,7 @@ define([
     'issue comments load': function () {
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url))
+        .get(require.toUrl(url(100)))
         .sleep(1000)
         .findByCssSelector('.issue__comment').isDisplayed()
         .then(function (isDisplayed) {
@@ -54,10 +56,22 @@ define([
         .then(function (isDisplayed) {
           assert.equal(isDisplayed, true, 'Comment ID is set properly');
         })
+        .sleep(1000)
         .findByCssSelector('.comment__content').getVisibleText()
         .then(function (text) {
           assert.equal(text, '1', 'Comment is displayed.');
         });
+    },
+
+    'non-existant issues go to 404': function() {
+      return this.remote
+        .setFindTimeout(intern.config.wc.pageLoadTimeout)
+        // TODO: uh, update this in the future
+        .get(require.toUrl(url(999999)))
+        .findByCssSelector('#pageerror h2').getVisibleText()
+        .then(function (text) {
+          assert.include(text, "(404)", "We\'re at the 404.");
+        })
     }
 
   });
