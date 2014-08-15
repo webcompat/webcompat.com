@@ -99,6 +99,7 @@ def domain_name(url):
         domain = None
     return domain
 
+
 def build_formdata(form_object):
     '''Translate the form data that comes from our form into something that
     the GitHub API is expecting.

@@ -5,23 +5,19 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 from flask import session
-from models import db_session, User
 from webcompat import github
 from ua_parser import user_agent_parser
 
 
 def get_user_info():
-    user = User.query.get(session['user_id'])
-    if user.avatar_url and user.username:
-        session['username'] = user.username
-        session['avatar_url'] = user.avatar_url
+    '''Grab the username and avatar URL from GitHub and stash it
+    in the session.'''
+    if session.get('username') and session.get('avatar_url'):
+        return
     else:
         gh_user = github.get('user')
-        user.username = gh_user.get('login')
-        user.avatar_url = gh_user.get('avatar_url')
-        db_session.commit()
-        session['username'] = user.username
-        session['avatar_url'] = user.avatar_url
+        session['username'] = gh_user.get('login')
+        session['avatar_url'] = gh_user.get('avatar_url')
 
 
 def get_browser_name(user_agent_string):
