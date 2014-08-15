@@ -29,6 +29,7 @@ html {
    color: var(--wc-variant-background-dark);
    box-sizing:border-box;
 }
+
 *, *:before, *:after {
   box-sizing: inherit;
 }

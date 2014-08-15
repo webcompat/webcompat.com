@@ -3,6 +3,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 var issues = issues || {};
+issues.events = _.extend({},Backbone.Events);
 
 marked.setOptions({
   breaks: true,
@@ -16,8 +17,11 @@ issues.Issue = Backbone.Model.extend({
   urlRoot: function() {
     return '/api/issues/' + this.get('number');
   },
-  defaults: {
-    stateClass: 'need'
+  initialize: function() {
+    var self = this;
+    this.on('change:state', function() {
+      self.set('issueState', self.getState(self.get('state'), self.get('labels')));
+    });
   },
   getState: function(state, labels) {
     if (state === 'closed') {
@@ -36,10 +40,23 @@ issues.Issue = Backbone.Model.extend({
       return 'Ready for Outreach';
     }
     //Needs Diagnosis is the default value.
-    //stateClass is set in this.defaults
+    this.set('stateClass', 'need');
     return 'Needs Diagnosis';
   },
   parse: function(response) {
+    if (response.message === "Not Found") {
+      // "empty out" the model properties and bail.
+      var emptyProps = {};
+      var props = ['body', 'commentNumber', 'createdAt', 'issueState',
+                   'labels', 'number', 'reporter', 'state', 'stateClass', 'title'];
+      _.forEach(props, function(item) {
+        emptyProps[item] = '';
+      });
+      this.set(emptyProps);
+      location.href = "/404";
+      return;
+    }
+
     this.set({
       body: marked(response.body),
       commentNumber: response.comments,
@@ -48,7 +65,35 @@ issues.Issue = Backbone.Model.extend({
       labels: response.labels,
       number: response.number,
       reporter: response.user.login,
+      state: response.state,
       title: response.title
+    });
+  },
+  toggleState: function(callback) {
+    var self = this;
+    var newState = this.get('state') === 'open' ? 'closed' : 'open';
+    $.ajax({
+      contentType: 'application/json',
+      data: JSON.stringify({'state': newState}),
+      type: 'PATCH',
+      url: '/api/issues/' + this.get('number') + '/edit',
+      success: function() {
+        self.set('state', newState);
+        if (callback) {
+          callback();
+        }
+      },
+      error: function() {
+        $('<div></div>', {
+          'class': 'flash error',
+          'text': 'There was an error editing this issues\'s status.'
+        }).appendTo('body');
+
+        setTimeout(function(){
+          var __flashmsg = $('.flash');
+          if (__flashmsg.length) {__flashmsg.fadeOut();}
+        }, 2000);
+      }
     });
   },
   updateLabels: function(labelsArray) {
@@ -97,6 +142,12 @@ issues.TitleView = Backbone.View.extend({
 
 issues.MetaDataView = Backbone.View.extend({
   el: $('.issue__create'),
+  initialize: function() {
+    var self = this;
+    this.model.on('change:issueState', function() {
+      self.render();
+    });
+  },
   template: _.template($('#metadata-tmpl').html()),
   render: function() {
     this.$el.html(this.template(this.model.toJSON()));
@@ -113,6 +164,70 @@ issues.BodyView = Backbone.View.extend({
   }
 });
 
+issues.TextAreaView = Backbone.View.extend({
+  el: $('.comment__text'),
+  events: {
+    'keydown': 'broadcastChange'
+  },
+  broadcastChange: _.debounce(function() {
+    if ($.trim(this.$el.val())) {
+      issues.events.trigger('textarea:content');
+    } else {
+      issues.events.trigger('textarea:empty');
+    }
+  }, 250, {maxWait: 1500})
+});
+
+// TODO: add comment before closing if there's a comment.
+issues.StateButtonView = Backbone.View.extend({
+  el: $('.Button--action'),
+  events: {
+    'click': 'toggleState'
+  },
+  hasComment: false,
+  mainView: null,
+  initialize: function(options) {
+    var self = this;
+    this.mainView = options.mainView;
+
+    issues.events.on('textarea:content', function() {
+      self.hasComment = true;
+      if (self.model.get('state') === 'open') {
+        self.$el.text(self.template({state: "Close and comment"}));
+      } else {
+        self.$el.text(self.template({state: "Reopen and comment"}));
+      }
+    });
+
+    issues.events.on('textarea:empty', function() {
+      // Remove the "and comment" text if there's no comment.
+      self.render();
+    });
+
+    this.model.on('change:state', function() {
+      self.render();
+    });
+  },
+  template: _.template($('#state-button-tmpl').html()),
+  render: function() {
+    var buttonText;
+    if (this.model.get('state') === 'open') {
+      buttonText = "Close Issue";
+    } else {
+      buttonText = "Reopen Issue";
+    }
+    this.$el.text(this.template({state: buttonText}));
+    return this;
+  },
+  toggleState: function() {
+    if (this.hasComment) {
+      this.model.toggleState(_.bind(this.mainView.addNewComment, this.mainView));
+    } else {
+      this.model.toggleState();
+    }
+  }
+});
+
 issues.MainView = Backbone.View.extend({
   el: $('.issue'),
   events: {
@@ -126,22 +241,30 @@ issues.MainView = Backbone.View.extend({
     this.initSubViews();
     this.fetchModels();
   },
+  githubWarp: function() {
+    var warpPipe = "http://github.com/" + repoPath + "/" + this.issue.get('number');
+    return location.href = warpPipe;
+  },
   initSubViews: function() {
-    this.title = new issues.TitleView({model: this.issue});
-    this.metadata = new issues.MetaDataView({model: this.issue});
-    this.body = new issues.BodyView({model: this.issue});
-    this.labels = new issues.LabelsView({model: this.issue});
+    var issueModel = {model: this.issue};
+    this.title = new issues.TitleView(issueModel);
+    this.metadata = new issues.MetaDataView(issueModel);
+    this.body = new issues.BodyView(issueModel);
+    this.labels = new issues.LabelsView(issueModel);
+    this.textArea = new issues.TextAreaView();
+    this.stateButton = new issues.StateButtonView(_.extend(issueModel, {mainView: this}));
   },
   fetchModels: function() {
     var self = this;
     var headersBag = {headers: {'Accept': 'application/json'}};
     this.issue.fetch(headersBag).success(function() {
-      _.each([self.title, self.metadata, self.body, self.labels, self],
+      _.each([self.title, self.metadata, self.body, self.labels, self.stateButton, self],
         function(elm) {
           elm.render();
           _.each($('.issue__details code'), function(elm) {
             Prism.highlightElement(elm);
           });
+          Mousetrap.bind('g', _.bind(self.githubWarp, self));
         }
       );
 

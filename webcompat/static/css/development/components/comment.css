@@ -29,6 +29,11 @@
   margin-left:.8em;
   position: relative;
 }
+@media (--viewport-990px) {
+  .comment__body {
+    margin-left:0;
+  }
+}
 /* Caret */
 .comment__body--caret:after {
   position: absolute;
@@ -172,6 +177,7 @@ comment__wrapper:-ms-input-placeholder {
 @media (--viewport-770px) {
  .comment__button {
    text-align: center;
+   font-size:.9em;
   }
 }
 .comment__button .button {

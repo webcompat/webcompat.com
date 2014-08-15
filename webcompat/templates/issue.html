@@ -76,13 +76,17 @@
               <textarea class="comment__wrapper comment__text" placeholder="Leave a comment"></textarea>
             </div>
             <div class="comment__button">
-              <!-- TODO(miket) <a class="Button Button--action" href="{{ url_for('index') }}">Close</a> -->
+              <button class="Button Button--action">
+              <script type="text/template" id="state-button-tmpl">
+                <%= state %>
+              </script>
+              </button>
               <button value="comment" class="Button Button--default" type="submit">Comment</button>
             </div>
           </div>
         </div>
         {% else %}
-        <p class="issue__login_link">Please <a href="{{ url_for('login') }}">login</a> to leave a comment or add/edit labels.</p>
+        <p class="issue__login_link">Please <a href="{{ url_for('login') }}">login</a> to edit issues.</p>
         {% endif %}
        </div>
     </div>
@@ -106,7 +110,8 @@
 
 {% endblock %}
 {% block extrascripts %}
-<script>var issueNumber={{ number }};</script>
+<script>var issueNumber={{ number }};
+var repoPath="{{config['ISSUES_REPO_URI']}}"</script>
 {%- if config.PRODUCTION %}
 <script src="{{ url_for('static', filename='js/issues.min.js') }}"></script>
 {% else %}

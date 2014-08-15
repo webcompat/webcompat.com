@@ -13,7 +13,10 @@ define(['intern/lib/args'], function (args) {
   return {
     // Configuration object for webcompat
     wc: {
-      pageLoadTimeout: args.wcPageLoadTimeout ? parseInt(args.wcPageLoadTimeout, 10) : 10000
+      pageLoadTimeout: args.wcPageLoadTimeout ? parseInt(args.wcPageLoadTimeout, 10) : 10000,
+      // user and pw need to be passed in as command-line arguments. See CONTRIBUTING.md
+      user: args.user || "some username",
+      pw: args.pw || "some password"
     },
 
     // The port on which the instrumenting proxy will listen

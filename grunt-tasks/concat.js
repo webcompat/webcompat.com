@@ -12,6 +12,7 @@ module.exports = function(grunt) {
             '<%= jsPath %>/vendor/moment-min.js',
             '<%= jsPath %>/vendor/prism.js',
             '<%= jsPath %>/vendor/marked-min.js',
+            '<%= jsPath %>/vendor/mousetrap-min.js',
             '<%= jsPath %>/lib/homepage.js',
             '<%= jsPath %>/lib/bugform.js',
             '<%= jsPath %>/lib/shared.js'

@@ -182,6 +182,12 @@ And to run the tests (in a new tab or terminal window):
 node_modules/.bin/intern-runner config=tests/functional/intern
 ```
 
+Many tests require the ability to log in with GitHub OAuth. This is achieved by passing in a GitHub username: `user` and password: `pw` as command-line arguments:
+
+``` bash
+node_modules/.bin/intern-runner config=tests/functional/intern user=testusername pw=testpassword
+```
+
 ## Acknowledgements
 A lot of this document was inspired directly by the excellent [Backbone.LayoutManager](https://github.com/tbranyen/backbone.layoutmanager/blob/master/CONTRIBUTING.md), [CouchDB](https://github.com/apache/couchdb/blob/master/src/fauxton/CONTRIBUTING.md), and [Angular.js](https://github.com/angular/angular.js/blob/master/CONTRIBUTING.md#issue) CONTRIBUTING files.
 

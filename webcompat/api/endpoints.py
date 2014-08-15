@@ -16,67 +16,78 @@ from ..issues import (proxy_request, filter_needs_diagnosis,
 from ..helpers import get_user_info
 
 api = Blueprint('api', __name__, url_prefix='/api')
-
 JSON_MIME = 'application/json'
 
 
+def ensure_xhr(fn):
+    '''Decorator to restrict requests to XHR.'''
+    def check(*args, **kwargs):
+        if request.is_xhr and request.headers.get('accept') == JSON_MIME:
+            return fn(*args, **kwargs)
+        else:
+            abort(406)
+    return check
+
+
+@ensure_xhr
 @api.route('/issues')
 def proxy_issues():
     '''API endpoint to list all issues from GitHub.'''
-    if request.is_xhr and request.headers.get('accept') == JSON_MIME:
-        if g.user:
-            issues = github.get('repos/{0}'.format(REPO_URI))
-        else:
-            issues = proxy_request('get')
-        if request.args.get('needsdiagnosis') == '1':
-            return json.dumps(filter_needs_diagnosis(issues))
-        elif request.args.get('contactready') == '1':
-            return json.dumps(filter_contactready(issues))
-        else:
-            return json.dumps(issues)
+    if g.user:
+        issues = github.get('repos/{0}'.format(REPO_URI))
     else:
-        abort(406)
+        issues = proxy_request('get')
+    if request.args.get('needsdiagnosis') == '1':
+        return json.dumps(filter_needs_diagnosis(issues))
+    elif request.args.get('contactready') == '1':
+        return json.dumps(filter_contactready(issues))
+    else:
+        return json.dumps(issues)
 
 
+@ensure_xhr
 @api.route('/issues/<int:number>')
 def proxy_issue(number):
     '''XHR endpoint to get issue data from GitHub, either as an authed
     user, or as one of our proxy bots.'''
-    if request.is_xhr and request.headers.get('accept') == JSON_MIME:
-        if g.user:
-            issue = github.get('repos/{0}/{1}'.format(
-                app.config['ISSUES_REPO_URI'], number))
-        else:
-            issue = proxy_request('get', '/{0}'.format(number))
-        return json.dumps(issue)
+    if g.user:
+        issue = github.get('repos/{0}/{1}'.format(
+            app.config['ISSUES_REPO_URI'], number))
     else:
-        abort(406)
+        issue = proxy_request('get', '/{0}'.format(number))
+    return json.dumps(issue)
 
 
+@ensure_xhr
+@api.route('/issues/<int:number>/edit', methods=['PATCH'])
+def edit_issue(number):
+    '''XHR endpoint to push back edits to GitHub for a single issue.
+    Note: this is always proxied to allow any logged in user to be able to
+    edit issues.'''
+    edit = proxy_request('patch', '/{0}'.format(number), data=request.data)
+    return json.dumps(edit)
+
+
+@ensure_xhr
 @api.route('/issues/mine')
 def user_issues():
     '''API endpoint to return issues filed by the logged in user.'''
-    if request.is_xhr and request.headers.get('accept') == JSON_MIME:
-        get_user_info()
-        issues = github.get('repos/{0}?creator={1}&state=all'.format(
-            REPO_URI, session['username']))
-        return json.dumps(issues)
-    else:
-        abort(406)
+    get_user_info()
+    issues = github.get('repos/{0}?creator={1}&state=all'.format(
+        REPO_URI, session['username']))
+    return json.dumps(issues)
 
 
+@ensure_xhr
 @api.route('/issues/contactready')
 def get_contactready():
     '''Return all issues with a "contactready" label.'''
-    if request.is_xhr and request.headers.get('accept') == JSON_MIME:
-        if g.user:
-            uri = 'repos/{0}?labels=contactready'.format(REPO_URI)
-            issues = github.get(uri)
-        else:
-            issues = proxy_request('get', '?labels=contactready')
-        return json.dumps(issues)
+    if g.user:
+        uri = 'repos/{0}?labels=contactready'.format(REPO_URI)
+        issues = github.get(uri)
     else:
-        abort(406)
+        issues = proxy_request('get', '?labels=contactready')
+    return json.dumps(issues)
 
 
 @api.route('/issues/<int:number>/comments', methods=['GET', 'POST'])
@@ -104,6 +115,7 @@ def proxy_comments(number):
         abort(406)
 
 
+@ensure_xhr
 @api.route('/issues/<int:number>/labels', methods=['POST'])
 def modify_labels(number):
     '''XHR endpoint to modify issue labels. Sending in an empty array removes
@@ -118,14 +130,14 @@ def modify_labels(number):
         return (':(', e.response.status_code)
 
 
+@ensure_xhr
 @api.route('/issues/labels')
 def get_repo_labels():
     '''XHR endpoint to get all possible labels in a repo.'''
     # Chop off /issues. Someone feel free to refactor the ISSUES_REPO_URI.
     labels_uri = app.config['ISSUES_REPO_URI'][:-7]
-    if request.is_xhr and request.headers.get('accept') == JSON_MIME:
-        if g.user:
-            labels = github.get('repos/{0}/labels'.format(labels_uri))
-        else:
-            labels = proxy_request('get', '/labels', uri=labels_uri)
-        return json.dumps(labels)
+    if g.user:
+        labels = github.get('repos/{0}/labels'.format(labels_uri))
+    else:
+        labels = proxy_request('get', '/labels', uri=labels_uri)
+    return json.dumps(labels)
