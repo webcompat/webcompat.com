@@ -103,7 +103,8 @@ issues.Issue = Backbone.Model.extend({
     }
 
     // save ourselves a request if nothing has changed.
-    if (_.isEqual(labelsArray, _.pluck(this.get('labels'), 'name'))) {
+    if (_.isEqual(labelsArray.sort(),
+                  _.pluck(this.get('labels'), 'name').sort())) {
       return;
     }
 
