@@ -73,6 +73,9 @@ issues.LabelEditorView = Backbone.View.extend({
     'click button': 'closeEditor',
     'keyup .label_editor__search': 'filterLabels'
   },
+  keyboardEvents: {
+    'esc': 'closeEditor'
+  },
   initialize: function(options) {
     this.issueView = options.issueView;
   },
