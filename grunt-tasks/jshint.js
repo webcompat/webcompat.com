@@ -22,7 +22,9 @@ module.exports = function(grunt) {
           issueNumber: true,
           marked: true,
           moment: true,
-          Prism: true
+          Mousetrap: true,
+          Prism: true,
+          repoPath: true
         }
       },
       beforeconcat: [

@@ -241,6 +241,10 @@ issues.MainView = Backbone.View.extend({
     this.initSubViews();
     this.fetchModels();
   },
+  githubWarp: function() {
+    var warpPipe = "http://github.com/" + repoPath + "/" + this.issue.get('number');
+    return location.href = warpPipe;
+  },
   initSubViews: function() {
     var issueModel = {model: this.issue};
     this.title = new issues.TitleView(issueModel);
@@ -260,6 +264,7 @@ issues.MainView = Backbone.View.extend({
           _.each($('.issue__details code'), function(elm) {
             Prism.highlightElement(elm);
           });
+          Mousetrap.bind('g', _.bind(self.githubWarp, self));
         }
       );
 
