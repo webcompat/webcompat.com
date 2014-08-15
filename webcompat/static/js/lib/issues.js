@@ -233,6 +233,9 @@ issues.MainView = Backbone.View.extend({
   events: {
     'click .Button--default': 'addNewComment'
   },
+  keyboardEvents: {
+    'g': 'githubWarp'
+  },
   initialize: function() {
     $(document.body).addClass('language-html');
     var issueNum = {number: issueNumber};
@@ -264,7 +267,6 @@ issues.MainView = Backbone.View.extend({
           _.each($('.issue__details code'), function(elm) {
             Prism.highlightElement(elm);
           });
-          Mousetrap.bind('g', _.bind(self.githubWarp, self));
         }
       );
 
