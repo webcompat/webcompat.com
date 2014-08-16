@@ -2,6 +2,7 @@
 .header {
   background: var(--wc-background-light);
   padding: 0.5em 0;
+  font-size:var(--base-font-size);
 }
 .nav {}
 .nav__logo {

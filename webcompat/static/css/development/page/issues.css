@@ -2,6 +2,7 @@
 
 .issue {
   display: none;
+  font-size:var(--base-font-size);
 }
 /* Wrapper title and date issue */
 .issue__main_title {

@@ -24,22 +24,33 @@ time, mark, audio, video {
 
 /*----------Global Styles----------*/
 html {
-   font-family: var(--base-font);
-   font-weight: 300;
-   color: var(--wc-variant-background-dark);
-   box-sizing:border-box;
+  font-family: var(--base-font);
+  font-weight: 300;
+  color: var(--wc-variant-background-dark);
+  box-sizing:border-box;
+  font-size:62.5%;
+  font-size:calcl(1em * 0.625);
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
 }
 *,
 *:before,
 *:after {
   box-sizing: inherit;
 }
+body {
+
+}
+/*viewport */
+@viewport {
+  width: device-width;
+}
 /* min max class */
 .wc-viewport {
   min-width: var(--base-min-width);
-  min-width: 20rem;
+  min-width: 32rem;
   max-width: var(--base-max-width);
-  max-width: 120rem;
+  max-width: 192rem;
   margin:0 auto;
 }
 
@@ -49,6 +60,7 @@ html {
   margin: 0 auto;
   padding-left:5em;
   padding-right:5em;
+  font-size:var(--base-font-size);
 }
 .wc-content--body {
   padding-top:2em;

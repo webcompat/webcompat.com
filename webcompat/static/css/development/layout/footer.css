@@ -4,6 +4,7 @@
   background-color: #ffffff;
   border-top: 5px solid var(--wc-background-dark);
   clear: both;
+  font-size:var(--base-font-size);
 }
 
 @media (--viewport-450px) {
