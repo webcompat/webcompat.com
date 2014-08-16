@@ -9,6 +9,11 @@
   margin-bottom: .5em;
   word-wrap: break-word;
 }
+@media (--viewport-450px) {
+  .issue__main_title {
+    font-size:1.2em;
+  }
+}
 .issue__title {
   display: inline-block;
   vertical-align: middle;
@@ -67,6 +72,11 @@
   padding: 7px 23px;
   color: #fff;
 }
+@media (--viewport-450px) {
+  .issue__state {
+    font-size:.8em;
+  }
+}
 /*Needs Diagnosis*/
 .issue__state--need {
   background-color: var(--wc-state-need);
@@ -83,8 +93,14 @@
 .issue__state--close {
   background-color: var(--wc-stat-close);
 }
+/* Date of issue */
 .issue__date {
   display: inline-block;
+}
+@media (--viewport-450px) {
+  .issue_date {
+    font-size:.9em;
+  }
 }
 
 .issue__reporter {
