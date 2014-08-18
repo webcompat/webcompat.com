@@ -232,7 +232,8 @@ issues.StateButtonView = Backbone.View.extend({
 issues.MainView = Backbone.View.extend({
   el: $('.issue'),
   events: {
-    'click .Button--default': 'addNewComment'
+    'click .Button--default': 'addNewComment',
+    'click': 'closeLabelEditor'
   },
   keyboardEvents: {
     'g': 'githubWarp'
@@ -244,6 +245,19 @@ issues.MainView = Backbone.View.extend({
     this.comments = new issues.CommentsCollection([]);
     this.initSubViews();
     this.fetchModels();
+  },
+  closeLabelEditor: function(e) {
+    var target = $(e.target);
+    // early return if the editor is closed,
+    if (!this.$el.find('.label_editor').is(':visible') ||
+          // or we've clicked on the button to open it,
+         (target[0].nodeName === 'BUTTON' && target.hasClass('issue__label--modify')) ||
+           // or clicked anywhere inside the label editor
+           target.parents('.label_editor').length) {
+      return;
+    } else {
+      this.labels.closeEditor();
+    }
   },
   githubWarp: function() {
     var warpPipe = "http://github.com/" + repoPath + "/" + this.issue.get('number');
