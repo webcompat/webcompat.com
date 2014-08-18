@@ -21,6 +21,9 @@ issues.LabelsView = Backbone.View.extend({
     'click .issue__label--modify:not(.is-active)': 'editLabels',
     'click .issue__label--modify.is-active': 'closeEditor'
   },
+  keyboardEvents: {
+    'e': 'editLabels'
+  },
   template: _.template($('#issue-labels-tmpl').html()),
   // this subTemplate will need to be kept in sync with
   // relavant parts in $('#issue-labels-tmpl')
