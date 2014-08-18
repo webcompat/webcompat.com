@@ -82,6 +82,9 @@ issues.LabelEditorView = Backbone.View.extend({
   template: _.template($('#label-editor-tmpl').html()),
   render: function() {
     this.$el.html(this.template(this.model.toJSON()));
+    _.defer(_.bind(function() {
+      this.$el.find('.label_editor__search').focus();
+    }, this));
     return this;
   },
   reRender: function(data) {
