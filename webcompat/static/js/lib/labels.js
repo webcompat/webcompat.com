@@ -54,15 +54,18 @@ issues.LabelsView = Backbone.View.extend({
       issueView: this,
     });
     this.allLabels.fetch(headersBag).success(function(){
-      self.issueLabels = _.pluck(self.model.get('labels'), 'name');
+      self.issueLabels = _.bind(self.getIssueLabels, self);
       self.repoLabels = _.pluck(self.labelEditor.model.get('labels'), 'name');
       self.editorButton.show();
     });
   },
+  getIssueLabels: function() {
+    return _.pluck(this.model.get('labels'), 'name');
+  },
   editLabels: function() {
     this.editorButton.addClass('is-active');
     this.$el.find('.issue__label--modify').after(this.labelEditor.render().el);
-    var toBeChecked = _.intersection(this.issueLabels, this.repoLabels);
+    var toBeChecked = _.intersection(this.getIssueLabels(), this.repoLabels);
     _.each(toBeChecked, function(labelName) {
       $('[name=' + labelName + ']').prop("checked", true);
     });
