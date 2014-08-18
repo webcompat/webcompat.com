@@ -137,11 +137,6 @@
   padding: 0.25em;
 }
 
-/* temp hack to hide <!-- browser info --> */
-.issue__details > p:first-child {
-  display: none;
-}
-
 .issue__login_link {
   margin-top: 2.5em;
   text-align:center;

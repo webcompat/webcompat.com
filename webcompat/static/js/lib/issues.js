@@ -161,6 +161,8 @@ issues.BodyView = Backbone.View.extend({
   template: _.template($('#issue-info-tmpl').html()),
   render: function() {
     this.$el.html(this.template(this.model.toJSON()));
+    // hide metadata
+    $('.issue__details > p:first-child:contains(-- @browser)').hide();
     return this;
   }
 });
