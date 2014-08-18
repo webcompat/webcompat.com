@@ -79,12 +79,16 @@ issues.LabelEditorView = Backbone.View.extend({
   template: _.template($('#label-editor-tmpl').html()),
   render: function() {
     this.$el.html(this.template(this.model.toJSON()));
+    this.resizeEditorHeight();
     return this;
   },
   reRender: function(data) {
     //only re-render the labels into the labels wrapper
     this.issueView.$el.find('.labels__wrapper').html(this.issueView.subTemplate(data));
     this.issueView.$el.find('.issue__label--modify').addClass('is-active');
+  },
+  resizeEditorHeight: function() {
+    console.log('resize editor height');
   },
   updateView: function() {
     // we do the "real" save when you close the editor.
