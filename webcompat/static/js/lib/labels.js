@@ -122,7 +122,10 @@ issues.LabelEditorView = Backbone.View.extend({
     this.$el.children().detach();
   },
   filterLabels: _.debounce(function(e) {
-    var re = new RegExp('^' + e.target.value, 'i');
+    var escape = function(s) {
+      return s.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+    };
+    var re = new RegExp('^' + escape(e.target.value), 'i');
     var matches = _.pluck(_.filter(this.model.get('labels'), function(label) {
       return re.test(label.name);
     }), 'name');
