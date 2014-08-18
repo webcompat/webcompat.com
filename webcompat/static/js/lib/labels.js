@@ -123,7 +123,7 @@ issues.LabelEditorView = Backbone.View.extend({
   },
   filterLabels: _.debounce(function(e) {
     var escape = function(s) {
-      return s.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+      return s.replace(/[-\/\\^$*+?:.()|[\]{}]/g, '\\$&');
     };
     var re = new RegExp('^' + escape(e.target.value), 'i');
     var matches = _.pluck(_.filter(this.model.get('labels'), function(label) {
@@ -136,7 +136,7 @@ issues.LabelEditorView = Backbone.View.extend({
     // hide the non-filter matches
     var hidden = _.difference(_.pluck(this.model.get('labels'), 'name'), matches);
     _.each(hidden, function(name) {
-      $('input[name='+name+']').closest('.label_item').hide();
+      $('input[name=' + escape(name) + ']').closest('.label_item').hide();
     });
   }, 100)
 });
