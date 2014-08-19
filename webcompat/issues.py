@@ -14,14 +14,18 @@ from webcompat.form import build_formdata
 from webcompat import github, app
 
 REPO_URI = app.config['ISSUES_REPO_URI']
-TOKEN = app.config['BOT_OAUTH_TOKEN']
+DEFAULT_TOKEN = app.config['BOT_OAUTH_TOKEN']
+TOKEN_MAP = app.config['TOKEN_MAP']
 
 
-def proxy_request(method, path_mod='', data=None, uri=None):
+def proxy_request(method, path_mod='', data=None, uri=None, token=None):
     '''Make a GitHub API request with a bot's OAuth token, for non-logged in
     users. `path`, if included, will be appended to the end of the URI.
     Optionally pass in POST data via the `data` arg.'''
-    headers = {'Authorization': 'token {0}'.format(TOKEN)}
+    headers = {
+        'Authorization': 'token {0}'.format(TOKEN_MAP.get(token,
+                                                          DEFAULT_TOKEN))
+    }
     req = getattr(requests, method)
     if uri:
         req_uri = 'https://api.github.com/repos/{0}{1}'.format(uri, path_mod)
