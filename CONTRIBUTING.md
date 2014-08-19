@@ -130,6 +130,8 @@ Note: If you get a `TypeError: unhashable type` page when loading `http://127.0.
 
 Note: If you get a 404 at GitHub when clicking "Login", it means you haven't filled in the `GITHUB_CLIENT_ID` or `GITHUB_CLIENT_SECRET` at https://github.com/webcompat/webcompat.com/blob/master/config.py.example#L47-L49.
 
+You don't need to worry about the `TOKEN_MAP`&mdash;it's implemented in such a way to always fall back to the `BOT_OAUTH_TOKEN` token.
+
 ![Auth 404](https://i.cloudup.com/8FDA5bVc7l.png)
 
 
