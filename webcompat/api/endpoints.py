@@ -123,7 +123,7 @@ def modify_labels(number):
     can't normally edit labels for an issue.'''
     try:
         labels = proxy_request('put', '/{0}/labels'.format(number),
-                               data=request.data)
+                               data=request.data, token='labelbot')
         return json.dumps(labels)
     except GitHubError as e:
         print('GitHubError: ', e.response.status_code)
@@ -139,5 +139,6 @@ def get_repo_labels():
     if g.user:
         labels = github.get('repos/{0}/labels'.format(labels_uri))
     else:
-        labels = proxy_request('get', '/labels', uri=labels_uri)
+        labels = proxy_request('get', '/labels', uri=labels_uri,
+                               token='labelbot')
     return json.dumps(labels)
