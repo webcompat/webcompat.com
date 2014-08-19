@@ -110,7 +110,8 @@ def proxy_comments(number):
             comments = github.get('repos/{0}/{1}/comments'.format(
                 app.config['ISSUES_REPO_URI'], number))
         else:
-            comments = proxy_request('get', '/{0}/comments'.format(number))
+            comments = proxy_request('get', '/{0}/comments'.format(number),
+                                     token='commentbot')
         return json.dumps(comments)
     else:
         abort(406)
