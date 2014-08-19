@@ -67,12 +67,8 @@ else:
 BOT_OAUTH_TOKEN = ""
 
 # MULTIPLE_BOTs isn't required for local testing, a single
-# BOT_OAUTH_TOKEN will suffice
-MULTIPLE_BOTS = False
-if MULTIPLE_BOTS:
-    TOKEN_MAP = {
-      "labelbot": ""
-    }
+# BOT_OAUTH_TOKEN will suffice, you can ignore this.
+TOKEN_MAP = dict()
 
 # Email addresses of those who want to receive notifications of 500s
 # (only in production, so this can be ignored in development)
