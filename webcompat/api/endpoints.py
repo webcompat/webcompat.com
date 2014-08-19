@@ -64,7 +64,8 @@ def edit_issue(number):
     '''XHR endpoint to push back edits to GitHub for a single issue.
     Note: this is always proxied to allow any logged in user to be able to
     edit issues.'''
-    edit = proxy_request('patch', '/{0}'.format(number), data=request.data)
+    edit = proxy_request('patch', '/{0}'.format(number), data=request.data,
+                         token='closerbot')
     return json.dumps(edit)
 
 
