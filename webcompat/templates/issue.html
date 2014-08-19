@@ -94,14 +94,14 @@
 
   <script type="text/template" id="label-editor-tmpl">
       <div class="label_editor__header">
-        <input class="form-control label_editor__search" placeholder="filter label">
+        <input class="form-control label_editor__search mousetrap" placeholder="filter label">
         <button class="label_editor__btn">Save &amp; Close</button>
       </div>
       <div class="label_list">
         <% _.each(labels, function(label) { %>
           <label class="label_item">
             <span class="label_color" style="background-color:#<%=label.color%>">
-              <input class="label_checkbox" type="checkbox" name="<%= label.name %>" data-color="<%=label.color%>">
+              <input class="label_checkbox mousetrap" type="checkbox" name="<%= label.name %>" data-color="<%=label.color%>">
             </span>
             <span class="label_name"><%= label.name %></span>
           </label>
