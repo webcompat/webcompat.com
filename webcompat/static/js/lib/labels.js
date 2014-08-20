@@ -93,7 +93,7 @@ issues.LabelEditorView = Backbone.View.extend({
             string = string.replace(/^['"]+|\s+|\\|(;\s?})+|['"]$/g, '');
         }
         return string;
-    }
+    };
     var getBreakpoint = function() {
         var style;
         if (window.getComputedStyle &&
@@ -102,7 +102,8 @@ issues.LabelEditorView = Backbone.View.extend({
             style = style.content;
         }
         return JSON.parse( removeQuotes(style) );
-    }
+    };
+
     var breakpoint = getBreakpoint();
     if (breakpoint.resizeEditorHeight) {
       var el = document.querySelector('.label_list');
