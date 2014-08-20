@@ -88,8 +88,23 @@ issues.LabelEditorView = Backbone.View.extend({
     this.issueView.$el.find('.issue__label--modify').addClass('is-active');
   },
   resizeEditorHeight: function() {
+    var removeQuotes = function(string) {
+        if (typeof string === 'string' || string instanceof String) {
+            string = string.replace(/^['"]+|\s+|\\|(;\s?})+|['"]$/g, '');
+        }
+        return string;
+    }
+    var getBreakpoint = function() {
+        var style;
+        if (window.getComputedStyle &&
+              window.getComputedStyle(document.body, '::after')) {
+            style = window.getComputedStyle(document.body, '::after');
+            style = style.content;
+        }
+        return JSON.parse( removeQuotes(style) );
+    }
     var breakpoint = getBreakpoint();
-    if(breakpoint.resizeEditorHeight) {
+    if (breakpoint.resizeEditorHeight) {
       var el = document.querySelector('.label_list');
       var parent = el.parentNode;
       el.style.maxHeight = parent.offsetHeight + 'px';
