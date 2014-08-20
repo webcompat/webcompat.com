@@ -8,6 +8,7 @@
   --base-min-width:	320px;
   --base-max-width: 1920px;
   --base-width-content : 1180px;
+  --base-font-size:1.6rem;
 }
 /* theme */
 :root {

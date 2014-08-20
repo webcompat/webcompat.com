@@ -14,6 +14,7 @@ from wtforms.validators import Optional, Required, Length
 
 AUTH_REPORT = 'github-auth-report'
 PROXY_REPORT = 'github-proxy-report'
+SCHEMES = ('http://', 'https://')
 
 owner_choices = [(u'True', u'Yes'), (u'False', u'No')]
 problem_choices = [(u'browser_bug', u'Looks like the browser has a bug'),
@@ -88,16 +89,26 @@ def get_labels(browser_name):
     return result
 
 
+def normalize_url(url):
+    '''normalize URL for consistency'''
+    url = url.strip()
+    if not url.startswith(SCHEMES):
+        # We assume that http is missing not https
+        url = 'http://%s' % (url)
+    return url
+
+
 def domain_name(url):
     '''Extract the domain name of a sanitized version of the submitted URL'''
     # Removing leading spaces
     url = url.lstrip()
     # testing if it's an http URL
-    if url.startswith('http://') or url.startswith('https://'):
+    if url.startswith(SCHEMES):
         domain = urlparse(url).netloc
     else:
         domain = None
     return domain
+
 
 def build_formdata(form_object):
     '''Translate the form data that comes from our form into something that
@@ -130,8 +141,11 @@ def build_formdata(form_object):
     For now, we'll put them in the body so they're visible. But as soon as we
     have a bot set up to parse the label comments (see wrap_label), we'll stop
     doing that.'''
-    # We want to normalize the title of the issue with the domain name.
-    domain = domain_name(form_object.get('url'))
+    # URL normalization
+    url = form_object.get('url')
+    normalized_url = normalize_url(url)
+    # Domain extraction
+    domain = domain_name(normalized_url)
     if domain:
         summary = '{0} - {1}'.format(domain, form_object.get('summary'))
     else:

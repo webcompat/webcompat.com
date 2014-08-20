@@ -15,7 +15,7 @@
 .label_list {
   background-color: #FFF;
   color: #333;
-  max-height:300px;
+  max-height:18.75em;
   overflow-x: hidden;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
@@ -27,6 +27,7 @@
   z-index:2;
   position: absolute;
   white-space:nowrap;
+  font-size:var(--base-font-size);
   top: 100%;
   left: 0;
   /* caret */
@@ -49,10 +50,10 @@
   display: none;
   position: absolute;
   content: "";
-  width: 18px;
-  height: 18px;
-  top: -10px;
-  left: 15px;
+  width: 1.125em;
+  height: 1.125em;
+  top: -0.625em;
+  left: 1.06em;
   background-color: #ffffff;
   border-color: var(--wc-variant-background-light);
   border-style: solid;
@@ -71,7 +72,7 @@
   background-color:#fff;
   border-radius: 6px 6px 0px 0px;
   box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.1), 0px 2px 3px rgba(0, 0, 0, 0.05);
-  padding: 10px;
+  padding: 0.625em;
 }
 .label_editor__search {
   display:inline-block;
@@ -94,13 +95,14 @@
   pointer:cursor;
   border-top: 1px solid #DDD;
   margin:0;
+  font-size:1em;
 }
 .label_color {
   display: inline-block;
-  margin: 8px 5px 8px 5px;
-  width: 24px;
-  height: 24px;
-  line-height: 20px;
+  margin: .5em .3125em .5em .3125em;
+  width: 1.5em;
+  height: 1.5em;
+  line-height: 1.25em;
   text-align: center;
   border-radius: 3px;
 }
@@ -110,8 +112,8 @@
 }
 .label_name {
   display:inline-block;
-  font-size: 12px;
+  font-size: .75em;
   font-weight: 500;
-  margin: 8px 52px 8px 0;;
-  line-height: 15px;
+  margin: .67em 4.33em .67em 0;
+  line-height: .1.25em;
 }

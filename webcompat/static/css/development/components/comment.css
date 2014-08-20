@@ -1,4 +1,7 @@
 /*------Comment------*/
+.comment {
+  font-size:var(--base-font-size);
+}
 
 /* wrapper comment issue */
 .comment + .comment {

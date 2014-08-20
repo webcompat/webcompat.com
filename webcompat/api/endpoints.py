@@ -64,7 +64,8 @@ def edit_issue(number):
     '''XHR endpoint to push back edits to GitHub for a single issue.
     Note: this is always proxied to allow any logged in user to be able to
     edit issues.'''
-    edit = proxy_request('patch', '/{0}'.format(number), data=request.data)
+    edit = proxy_request('patch', '/{0}'.format(number), data=request.data,
+                         token='closerbot')
     return json.dumps(edit)
 
 
@@ -109,7 +110,8 @@ def proxy_comments(number):
             comments = github.get('repos/{0}/{1}/comments'.format(
                 app.config['ISSUES_REPO_URI'], number))
         else:
-            comments = proxy_request('get', '/{0}/comments'.format(number))
+            comments = proxy_request('get', '/{0}/comments'.format(number),
+                                     token='commentbot')
         return json.dumps(comments)
     else:
         abort(406)
@@ -123,7 +125,7 @@ def modify_labels(number):
     can't normally edit labels for an issue.'''
     try:
         labels = proxy_request('put', '/{0}/labels'.format(number),
-                               data=request.data)
+                               data=request.data, token='labelbot')
         return json.dumps(labels)
     except GitHubError as e:
         print('GitHubError: ', e.response.status_code)
@@ -139,5 +141,6 @@ def get_repo_labels():
     if g.user:
         labels = github.get('repos/{0}/labels'.format(labels_uri))
     else:
-        labels = proxy_request('get', '/labels', uri=labels_uri)
+        labels = proxy_request('get', '/labels', uri=labels_uri,
+                               token='labelbot')
     return json.dumps(labels)

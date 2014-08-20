@@ -2,12 +2,18 @@
 
 .issue {
   display: none;
+  font-size:var(--base-font-size);
 }
 /* Wrapper title and date issue */
 .issue__main_title {
   line-height: 1em;
   margin-bottom: .5em;
   word-wrap: break-word;
+}
+@media (--viewport-450px) {
+  .issue__main_title {
+    font-size:1.2em;
+  }
 }
 .issue__title {
   display: inline-block;
@@ -67,6 +73,11 @@
   padding: 7px 23px;
   color: #fff;
 }
+@media (--viewport-450px) {
+  .issue__state {
+    font-size:.8em;
+  }
+}
 /*Needs Diagnosis*/
 .issue__state--need {
   background-color: var(--wc-state-need);
@@ -83,8 +94,14 @@
 .issue__state--close {
   background-color: var(--wc-stat-close);
 }
+/* Date of issue */
 .issue__date {
   display: inline-block;
+}
+@media (--viewport-450px) {
+  .issue_date {
+    font-size:.9em;
+  }
 }
 
 .issue__reporter {
@@ -118,11 +135,6 @@
   color: inherit;
   background-color: #F5F5F5;
   padding: 0.25em;
-}
-
-/* temp hack to hide <!-- browser info --> */
-.issue__details > p:first-child {
-  display: none;
 }
 
 .issue__login_link {

@@ -21,6 +21,9 @@ issues.LabelsView = Backbone.View.extend({
     'click .issue__label--modify:not(.is-active)': 'editLabels',
     'click .issue__label--modify.is-active': 'closeEditor'
   },
+  keyboardEvents: {
+    'e': 'editLabels'
+  },
   template: _.template($('#issue-labels-tmpl').html()),
   // this subTemplate will need to be kept in sync with
   // relavant parts in $('#issue-labels-tmpl')
@@ -51,15 +54,18 @@ issues.LabelsView = Backbone.View.extend({
       issueView: this,
     });
     this.allLabels.fetch(headersBag).success(function(){
-      self.issueLabels = _.pluck(self.model.get('labels'), 'name');
+      self.issueLabels = _.bind(self.getIssueLabels, self);
       self.repoLabels = _.pluck(self.labelEditor.model.get('labels'), 'name');
       self.editorButton.show();
     });
   },
+  getIssueLabels: function() {
+    return _.pluck(this.model.get('labels'), 'name');
+  },
   editLabels: function() {
     this.editorButton.addClass('is-active');
     this.$el.find('.issue__label--modify').after(this.labelEditor.render().el);
-    var toBeChecked = _.intersection(this.issueLabels, this.repoLabels);
+    var toBeChecked = _.intersection(this.getIssueLabels(), this.repoLabels);
     _.each(toBeChecked, function(labelName) {
       $('[name=' + labelName + ']').prop("checked", true);
     });
@@ -73,12 +79,18 @@ issues.LabelEditorView = Backbone.View.extend({
     'click button': 'closeEditor',
     'keyup .label_editor__search': 'filterLabels'
   },
+  keyboardEvents: {
+    'esc': 'closeEditor'
+  },
   initialize: function(options) {
     this.issueView = options.issueView;
   },
   template: _.template($('#label-editor-tmpl').html()),
   render: function() {
     this.$el.html(this.template(this.model.toJSON()));
+    _.defer(_.bind(function() {
+      this.$el.find('.label_editor__search').focus();
+    }, this));
     return this;
   },
   reRender: function(data) {
@@ -110,7 +122,10 @@ issues.LabelEditorView = Backbone.View.extend({
     this.$el.children().detach();
   },
   filterLabels: _.debounce(function(e) {
-    var re = new RegExp('^' + e.target.value, 'i');
+    var escape = function(s) {
+      return s.replace(/[-\/\\^$*+?:.()|[\]{}]/g, '\\$&');
+    };
+    var re = new RegExp('^' + escape(e.target.value), 'i');
     var matches = _.pluck(_.filter(this.model.get('labels'), function(label) {
       return re.test(label.name);
     }), 'name');
@@ -121,7 +136,7 @@ issues.LabelEditorView = Backbone.View.extend({
     // hide the non-filter matches
     var hidden = _.difference(_.pluck(this.model.get('labels'), 'name'), matches);
     _.each(hidden, function(name) {
-      $('input[name='+name+']').closest('.label_item').hide();
+      $('input[name=' + escape(name) + ']').closest('.label_item').hide();
     });
   }, 100)
 });
