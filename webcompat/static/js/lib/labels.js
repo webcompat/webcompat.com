@@ -88,6 +88,7 @@ issues.LabelEditorView = Backbone.View.extend({
   template: _.template($('#label-editor-tmpl').html()),
   render: function() {
     this.$el.html(this.template(this.model.toJSON()));
+    this.resizeEditorHeight();
     _.defer(_.bind(function() {
       this.$el.find('.label_editor__search').focus();
     }, this));
@@ -97,6 +98,33 @@ issues.LabelEditorView = Backbone.View.extend({
     //only re-render the labels into the labels wrapper
     this.issueView.$el.find('.labels__wrapper').html(this.issueView.subTemplate(data));
     this.issueView.$el.find('.issue__label--modify').addClass('is-active');
+  },
+  resizeEditorHeight: function() {
+    var removeQuotes = function(string) {
+      if (typeof string === 'string' || string instanceof String) {
+          string = string.replace(/^['"]+|\s+|\\|(;\s?})+|['"]$/g, '');
+      }
+      return string;
+    };
+    var getBreakpoint = function() {
+      var style;
+      if (window.getComputedStyle &&
+            window.getComputedStyle(document.body, '::after')) {
+          style = window.getComputedStyle(document.body, '::after');
+          style = style.content;
+      }
+      return JSON.parse(removeQuotes(style));
+    };
+
+    var breakpoint = getBreakpoint();
+    if (breakpoint.resizeEditorHeight) {
+      _.defer(function(){
+        var el = document.querySelector('.label_list');
+        console.log('hi', el);
+        var parent = el.parentNode;
+        el.style.maxHeight = parent.offsetHeight + 'px';
+      });
+    }
   },
   updateView: function() {
     // we do the "real" save when you close the editor.

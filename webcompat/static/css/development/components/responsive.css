@@ -1,0 +1,24 @@
+/*------Responsive------*/
+
+body:after {
+  display:none;
+  content:'{"device":"wide","resizeEditorHeight":false}';
+}
+
+
+@media (--viewport-1180px) {
+  body:after {
+    content:'{"device":"desktop","resizeEditorHeight" : false}';
+  }
+}
+@media (--viewport-990px) {
+  body:after {
+    content:'{"device":"tablet","resizeEditorHeight" : false}';
+  }
+}
+
+@media (--viewport-450px) {
+  body:after {
+    content:'{"device":"phone","resizeEditorHeight" : true}';
+  }
+}
