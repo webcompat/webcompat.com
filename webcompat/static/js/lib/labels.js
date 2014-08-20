@@ -88,7 +88,12 @@ issues.LabelEditorView = Backbone.View.extend({
     this.issueView.$el.find('.issue__label--modify').addClass('is-active');
   },
   resizeEditorHeight: function() {
-    console.log('resize editor height');
+    var breakpoint = getBreakpoint();
+    if(breakpoint.resizeEditorHeight) {
+      var el = document.querySelector('.label_list');
+      var parent = el.parentNode;
+      el.style.maxHeight = parent.offsetHeight + 'px';
+    }
   },
   updateView: function() {
     // we do the "real" save when you close the editor.
