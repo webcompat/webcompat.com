@@ -89,26 +89,29 @@ issues.LabelEditorView = Backbone.View.extend({
   },
   resizeEditorHeight: function() {
     var removeQuotes = function(string) {
-        if (typeof string === 'string' || string instanceof String) {
-            string = string.replace(/^['"]+|\s+|\\|(;\s?})+|['"]$/g, '');
-        }
-        return string;
+      if (typeof string === 'string' || string instanceof String) {
+          string = string.replace(/^['"]+|\s+|\\|(;\s?})+|['"]$/g, '');
+      }
+      return string;
     };
     var getBreakpoint = function() {
-        var style;
-        if (window.getComputedStyle &&
-              window.getComputedStyle(document.body, '::after')) {
-            style = window.getComputedStyle(document.body, '::after');
-            style = style.content;
-        }
-        return JSON.parse( removeQuotes(style) );
+      var style;
+      if (window.getComputedStyle &&
+            window.getComputedStyle(document.body, '::after')) {
+          style = window.getComputedStyle(document.body, '::after');
+          style = style.content;
+      }
+      return JSON.parse(removeQuotes(style));
     };
 
     var breakpoint = getBreakpoint();
     if (breakpoint.resizeEditorHeight) {
-      var el = document.querySelector('.label_list');
-      var parent = el.parentNode;
-      el.style.maxHeight = parent.offsetHeight + 'px';
+      _.defer(function(){
+        var el = document.querySelector('.label_list');
+        console.log('hi', el);
+        var parent = el.parentNode;
+        el.style.maxHeight = parent.offsetHeight + 'px';
+      });
     }
   },
   updateView: function() {
