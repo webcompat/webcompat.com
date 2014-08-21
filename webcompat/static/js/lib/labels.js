@@ -119,10 +119,10 @@ issues.LabelEditorView = Backbone.View.extend({
     var breakpoint = getBreakpoint();
     if (breakpoint.resizeEditorHeight) {
       _.defer(function(){
-        var el = document.querySelector('.label_list');
-        console.log('hi', el);
-        var parent = el.parentNode;
-        el.style.maxHeight = parent.offsetHeight + 'px';
+        var labelList         = document.querySelector('.label_list'),
+            labelEditorHeight = document.querySelector('.label_editor').offsetHeight,
+            firstRowHeight    = document.querySelector('.label_editor_row:first-child').offsetHeight;
+        labelList.style.maxHeight = (labelEditorHeight - firstRowHeight) + 'px';
       });
     }
   },
