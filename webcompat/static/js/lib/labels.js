@@ -116,8 +116,7 @@ issues.LabelEditorView = Backbone.View.extend({
       try {
           return JSON.parse(removeQuotes(style));
       } catch(e) {
-          // Default to behavior for desktop devices
-          return {device: "wide", resizeEditorHeight: false};
+          return false;
       }
     };
 
