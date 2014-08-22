@@ -113,7 +113,12 @@ issues.LabelEditorView = Backbone.View.extend({
           style = window.getComputedStyle(document.body, '::after');
           style = style.content;
       }
-      return JSON.parse(removeQuotes(style));
+      try {
+          return JSON.parse(removeQuotes(style));
+      } catch(e) {
+          // Default to behavior for desktop devices
+          return {device: "wide", resizeEditorHeight: false};
+      }
     };
 
     var breakpoint = getBreakpoint();
