@@ -354,6 +354,5 @@ issues.MainView = Backbone.View.extend({
   }
 });
 
-jQuery.ajaxSetup({timeout: 5000});
 //Not using a router, so kick off things manually
 new issues.MainView();
