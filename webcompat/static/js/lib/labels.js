@@ -121,7 +121,7 @@ issues.LabelEditorView = Backbone.View.extend({
     };
 
     var breakpoint = getBreakpoint();
-    if (breakpoint.resizeEditorHeight) {
+    if (breakpoint && breakpoint.resizeEditorHeight) {
       _.defer(function(){
         var labelList         = document.querySelector('.label_list'),
             labelEditorHeight = document.querySelector('.label_editor').offsetHeight,
