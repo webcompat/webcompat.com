@@ -1,8 +1,6 @@
 Flask==0.10.1
 Flask-Cache==0.13.1
 Flask-SQLAlchemy==1.0
-Flask-ErrorMail==0.2.2
-Flask-Mail==0.9.0
 GitHub-Flask==0.3.4
 WTForms==1.0.5
 ua-parser==0.3.4

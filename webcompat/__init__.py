@@ -24,9 +24,6 @@ github = GitHub(app)
 
 cache = Cache(app)
 
-mail = Mail(app)
-mail_on_500(app, app.config['ADMINS'])
-
 # import views after we initialize our github object
 import webcompat.views
 
