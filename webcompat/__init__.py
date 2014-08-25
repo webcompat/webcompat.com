@@ -9,8 +9,6 @@
 from flask import Flask, render_template
 from flask.ext.cache import Cache
 from flask.ext.github import GitHub
-from flask.ext.mail import Mail
-from flask_errormail import mail_on_500
 
 from sqlalchemy import create_engine
 import os
