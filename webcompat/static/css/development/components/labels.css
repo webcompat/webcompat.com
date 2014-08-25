@@ -7,7 +7,7 @@
 }
 @media (--viewport-375px) {
   .label_editor__wrapper {
-    position:static; /* position of label editor not depend of this class */
+    position:static; /* position of label_editor not depend of this class */
   }
 }
 
@@ -24,6 +24,7 @@
 /* Label editor */
 .label_editor
 {
+  display:none;
   z-index:2;
   position: absolute;
   white-space:nowrap;
@@ -39,10 +40,24 @@
 }
 @media (--viewport-375px) {
   .label_editor {
-    top:75%;
-    left:50%;
-    transform:translateX(-50%);
+    position:fixed;
+    width:100%;
+    height:100%;
+    top:0;
+    left:0;
+    transform:none;
     margin:0;
+    overflow-y:auto;
+    overflow-x:hidden;
+  }
+  .label_editor_table {
+    display:table;
+    /*height:100%;*/
+    width:100%;
+  }
+  .label_editor_row {
+    display:table-row;
+    width:100%;
   }
 }
 /* Caret */
@@ -61,11 +76,9 @@
 }
 @media (--viewport-375px) {
   .label_editor:after {
-    left:26%;
+    display:none;
   }
 }
-
-
 /* Label header */
 .label_editor__header {
   background-color:#fff;
@@ -85,16 +98,26 @@
 .label_editor__btn:hover {
   text-decoration:underline;
 }
-
-
+/* list label */
+.label_list {
+  background-color: #FFF;
+  color: #333;
+  max-height:300px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
 /* item label */
 .label_item {
   display:block;
   float:none;
-  pointer:cursor;
-  border-top: 1px solid #DDD;
+  cursor:pointer;
+  border-top: 1px solid #ddd;
   margin:0;
   font-size:1em;
+}
+.label_item:last-child {
+    border-bottom:1px solid #ddd;
 }
 .label_color {
   display: inline-block;

@@ -1,5 +1,5 @@
 module.exports = function(grunt) {
-  grunt.config('myth', {
+  grunt.config('cssnext', {
      options:{
         sourcemap: true,
         browsers: ['ff >= 4', 'ie >= 8', 'safari >= 5.1', 'opera >= 12', 'chrome >=10']

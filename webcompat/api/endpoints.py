@@ -10,7 +10,7 @@ back to GitHub'''
 import json
 from flask import abort, Blueprint, g, request, session
 from flask.ext.github import GitHubError
-from webcompat import github, app
+from webcompat import github, app, cache
 from ..issues import (proxy_request, filter_needs_diagnosis,
                       filter_contactready, REPO_URI)
 from ..helpers import get_user_info
@@ -29,10 +29,10 @@ def ensure_xhr(fn):
     return check
 
 
-@ensure_xhr
 @api.route('/issues')
+@cache.cached(timeout=300)
 def proxy_issues():
-    '''API endpoint to list all issues from GitHub.'''
+    '''API endpoint to list all issues from GitHub. Cached for 5 minutes.'''
     if g.user:
         issues = github.get('repos/{0}'.format(REPO_URI))
     else:
@@ -69,20 +69,22 @@ def edit_issue(number):
     return json.dumps(edit)
 
 
-@ensure_xhr
 @api.route('/issues/mine')
+@cache.cached(timeout=300)
 def user_issues():
-    '''API endpoint to return issues filed by the logged in user.'''
+    '''API endpoint to return issues filed by the logged in user. Cached
+    for five minutes.'''
     get_user_info()
     issues = github.get('repos/{0}?creator={1}&state=all'.format(
         REPO_URI, session['username']))
     return json.dumps(issues)
 
 
-@ensure_xhr
 @api.route('/issues/contactready')
+@cache.cached(timeout=300)
 def get_contactready():
-    '''Return all issues with a "contactready" label.'''
+    '''Return all issues with a "contactready" label. Cached for five 
+    minutes.'''
     if g.user:
         uri = 'repos/{0}?labels=contactready'.format(REPO_URI)
         issues = github.get(uri)
@@ -132,10 +134,11 @@ def modify_labels(number):
         return (':(', e.response.status_code)
 
 
-@ensure_xhr
 @api.route('/issues/labels')
+@cache.cached(timeout=600)
 def get_repo_labels():
-    '''XHR endpoint to get all possible labels in a repo.'''
+    '''XHR endpoint to get all possible labels in a repo. Cached for ten
+    minutes.'''
     # Chop off /issues. Someone feel free to refactor the ISSUES_REPO_URI.
     labels_uri = app.config['ISSUES_REPO_URI'][:-7]
     if g.user:
