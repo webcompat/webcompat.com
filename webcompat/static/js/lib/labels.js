@@ -100,33 +100,23 @@ issues.LabelEditorView = Backbone.View.extend({
     this.issueView.$el.find('.issue__label--modify').addClass('is-active');
   },
   resizeEditorHeight: function() {
-    var removeQuotes = function(string) {
-      if (typeof string === 'string' || string instanceof String) {
-          string = string.replace(/^['"]+|\s+|\\|(;\s?})+|['"]$/g, '');
-      }
-      return string;
-    };
     var getBreakpoint = function() {
       var style;
+      var doResize = false;
       if (window.getComputedStyle &&
             window.getComputedStyle(document.body, '::after')) {
-          style = window.getComputedStyle(document.body, '::after');
-          style = style.content;
+            style = window.getComputedStyle(document.body, '::after').content;
       }
-      try {
-          return JSON.parse(removeQuotes(style));
-      } catch(e) {
-          return false;
+      if (style.match(/resizeEditor/)) {
+        doResize = true;
       }
+      return doResize;
     };
 
-    var breakpoint = getBreakpoint();
-    if (breakpoint && breakpoint.resizeEditorHeight) {
+    if (getBreakpoint()) {
       _.defer(function(){
-        var labelList         = document.querySelector('.label_list'),
-            labelEditorHeight = document.querySelector('.label_editor').offsetHeight,
-            firstRowHeight    = document.querySelector('.label_editor_row:first-child').offsetHeight;
-        labelList.style.maxHeight = (labelEditorHeight - firstRowHeight) + 'px';
+        $(document.body).scrollTo(0);
+        $('.label_list').css('max-height', '100%');
       });
     }
   },
