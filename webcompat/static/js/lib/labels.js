@@ -139,7 +139,7 @@ issues.LabelEditorView = Backbone.View.extend({
     var modelUpdate = [];
     _.each(checked, function(item) {
       //item already has a .name property
-      item.color = item.dataset.color;
+      item.color = $(item).data('color');
       modelUpdate.push(item);
     });
     this.reRender({labels: modelUpdate});
