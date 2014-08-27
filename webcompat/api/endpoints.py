@@ -104,6 +104,17 @@ def get_contactready():
     return json.dumps(issues)
 
 
+@api.route('/issues/needsdiagnosis')
+@cache.cached(timeout=300)
+def get_needsdiagnosis():
+    '''Return all issues with a "needsdiagnosis" label. Cached for five
+    minutes.'''
+    if g.user:
+        uri = 'repos/{0}?labels=needsdiagnosis'.format(REPO_URI)
+        issues = github.get(uri)
+    else:
+        issues = proxy_request('get', '?labels=needsdiagnosis')
+    return json.dumps(issues)
 @api.route('/issues/<int:number>/comments', methods=['GET', 'POST'])
 def proxy_comments(number):
     '''XHR endpoint to get issues comments from GitHub, either as an authed
