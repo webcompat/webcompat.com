@@ -53,21 +53,21 @@ def get_issue(number):
     return issue
 
 
-def filter_needs_diagnosis(issues):
-    '''For our purposes, "needs diagnosis" means anything that isn't an issue
-    with a "contactready" label.'''
-    def not_contactready(issue):
+def filter_untriaged(issues):
+    '''For our purposes, "untriaged" means anything that isn't an issue
+    with a "contactready", "sitewait", or "needsdiagnsis" label.'''
+    def is_untriaged(issue):
         '''Filter function.'''
         match = True
         if issue.get('labels') == []:
             match = True
         else:
             for label in issue.get('labels'):
-                if 'contactready' in label.get('name'):
+                if 'contactready' or 'needsdiagnosis' or 'sitewait' in label.get('name'):
                     match = False
         return match
 
-    return [issue for issue in issues if not_contactready(issue)]
+    return [issue for issue in issues if is_untriaged(issue)]
 
 
 def filter_contactready(issues):
