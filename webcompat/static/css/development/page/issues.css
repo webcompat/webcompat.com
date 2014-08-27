@@ -78,6 +78,10 @@
     font-size:.8em;
   }
 }
+/*Untriaged*/
+.issue__state--need {
+  background-color: var(--wc-state-untriaged);
+}
 /*Needs Diagnosis*/
 .issue__state--need {
   background-color: var(--wc-state-need);
@@ -92,7 +96,7 @@
 }
 /*Close*/
 .issue__state--close {
-  background-color: var(--wc-stat-close);
+  background-color: var(--wc-state-close);
 }
 /* Date of issue */
 .issue__date {
