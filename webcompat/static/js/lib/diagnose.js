@@ -13,8 +13,14 @@ diagnose.Issue = Backbone.Model.extend({
     } else if (labelsNames.indexOf('contactready') > -1) {
       this.set('state', 'contactready');
       return;
-    } else {
+    } else if (labelsNames.indexOf('sitewait') > -1) {
+      this.set('state', 'sitewait');
+      return;
+    } else if (labelsNames.indexOf('needsdiagnosis') > -1) {
       this.set('state', 'needs-diagnosis');
+      return;
+    } else {
+      this.set('state', 'untriaged');
     }
   },
   parse: function(response) {
@@ -95,6 +101,48 @@ diagnose.NeedsDiagnosisView = Backbone.View.extend({
   }
 });
 
+diagnose.UntriagedView = Backbone.View.extend({
+  el: $('#untriaged'),
+  initialize: function() {
+    var self = this;
+    var headersBag = {headers: {'Accept': 'application/json'}};
+    this.issues = new diagnose.UntriagedCollection();
+    this.issues.fetch(headersBag).success(function() {
+      self.render();
+    }).error(function(){});
+  },
+  template: _.template($('#untriaged-tmpl').html()),
+  render: function() {
+    this.$el.html(this.template({
+      // manually slice out the latest 4.
+      // in the future we'll allow the user to "scroll" these.
+      untriaged: this.issues.toJSON().slice(0,4)
+    }));
+    return this;
+  }
+});
+
+diagnose.SiteWaitView = Backbone.View.extend({
+  el: $('#sitewait'),
+  initialize: function() {
+    var self = this;
+    var headersBag = {headers: {'Accept': 'application/json'}};
+    this.issues = new diagnose.SiteWaitCollection();
+    this.issues.fetch(headersBag).success(function() {
+      self.render();
+    }).error(function(){});
+  },
+  template: _.template($('#sitewait-tmpl').html()),
+  render: function() {
+    this.$el.html(this.template({
+      // manually slice out the latest 4.
+      // in the future we'll allow the user to "scroll" these.
+      sitewait: this.issues.toJSON().slice(0,4)
+    }));
+    return this;
+  }
+});
+
 diagnose.ContactReadyView = Backbone.View.extend({
   el: $('#ready-for-outreach'),
   initialize: function() {
@@ -119,4 +167,6 @@ diagnose.ContactReadyView = Backbone.View.extend({
 $(function(){
   new diagnose.NeedsDiagnosisView();
   new diagnose.ContactReadyView();
+  new diagnose.UntriagedView();
+  new diagnose.SiteWaitView();
 });

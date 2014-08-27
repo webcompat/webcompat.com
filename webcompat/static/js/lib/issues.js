@@ -39,9 +39,14 @@ issues.Issue = Backbone.Model.extend({
       this.set('stateClass', 'ready');
       return 'Ready for Outreach';
     }
-    //Needs Diagnosis is the default value.
-    this.set('stateClass', 'need');
-    return 'Needs Diagnosis';
+
+    if (labelsNames.indexOf('needsdiagnosis') > -1) {
+      this.set('stateClass', 'need');
+      return 'Needs Diagnosis';
+    }
+    //Untriaged is the default value.
+    this.set('stateClass', 'untriaged');
+    return 'Untriaged Issue';
   },
   parse: function(response) {
     if (response.message === "Not Found") {
