@@ -115,6 +115,21 @@ def get_needsdiagnosis():
     else:
         issues = proxy_request('get', '?labels=needsdiagnosis')
     return json.dumps(issues)
+
+
+@api.route('/issues/sitewait')
+@cache.cached(timeout=300)
+def get_sitewait():
+    '''Return all issues with a "sitewait" label. Cached for five
+    minutes.'''
+    if g.user:
+        uri = 'repos/{0}?labels=sitewait'.format(REPO_URI)
+        issues = github.get(uri)
+    else:
+        issues = proxy_request('get', '?labels=sitewait')
+    return json.dumps(issues)
+
+
 @api.route('/issues/<int:number>/comments', methods=['GET', 'POST'])
 def proxy_comments(number):
     '''XHR endpoint to get issues comments from GitHub, either as an authed
