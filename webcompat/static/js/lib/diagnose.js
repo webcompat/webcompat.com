@@ -72,9 +72,9 @@ diagnose.MyIssuesView = Backbone.View.extend({
   template: _.template($('#my-issues-tmpl').html()),
   render: function() {
     this.$el.html(this.template({
-      // manually slice out the latest 8.
+      // manually slice out the latest 6.
       // in the future we'll allow the user to "scroll" these.
-      userIssues: this.issues.toJSON().slice(0,8)
+      userIssues: this.issues.toJSON().slice(0,6)
     }));
     return this;
   }
