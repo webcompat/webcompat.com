@@ -11,8 +11,7 @@ import json
 from flask import abort, Blueprint, g, request, session
 from flask.ext.github import GitHubError
 from webcompat import github, app, cache
-from ..issues import (proxy_request, filter_needs_diagnosis,
-                      filter_contactready, REPO_URI)
+from ..issues import REPO_URI, proxy_request, filter_untriaged
 from ..helpers import get_user_info
 
 api = Blueprint('api', __name__, url_prefix='/api')
@@ -78,6 +77,18 @@ def user_issues():
     issues = github.get('repos/{0}?creator={1}&state=all'.format(
         REPO_URI, session['username']))
     return json.dumps(issues)
+
+
+@api.route('/issues/untriaged')
+@cache.cached(timeout=300)
+def get_untriaged():
+    '''Return all issues that are "untriaged". Essentially all unclosed issues
+    with no activity. Cached for five minutes.'''
+    if g.user:
+        issues = github.get('repos/{0}'.format(REPO_URI))
+    else:
+        issues = proxy_request('get')
+    return json.dumps(filter_untriaged(issues))
 
 
 @api.route('/issues/contactready')
