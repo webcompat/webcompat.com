@@ -36,12 +36,7 @@ def proxy_issues():
         issues = github.get('repos/{0}'.format(REPO_URI))
     else:
         issues = proxy_request('get')
-    if request.args.get('needsdiagnosis') == '1':
-        return json.dumps(filter_needs_diagnosis(issues))
-    elif request.args.get('contactready') == '1':
-        return json.dumps(filter_contactready(issues))
-    else:
-        return json.dumps(issues)
+    return json.dumps(issues)
 
 
 @ensure_xhr
@@ -94,7 +89,7 @@ def get_untriaged():
 @api.route('/issues/contactready')
 @cache.cached(timeout=300)
 def get_contactready():
-    '''Return all issues with a "contactready" label. Cached for five 
+    '''Return all issues with a "contactready" label. Cached for five
     minutes.'''
     if g.user:
         uri = 'repos/{0}?labels=contactready'.format(REPO_URI)

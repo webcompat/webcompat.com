@@ -35,12 +35,22 @@ diagnose.MyIssuesCollection = Backbone.Collection.extend({
 
 diagnose.NeedsDiagnosisCollection = Backbone.Collection.extend({
   model: diagnose.Issue,
-  url: '/api/issues?needsdiagnosis=1'
+  url: '/api/issues/needsdiagnosis'
 });
 
 diagnose.ContactReadyCollection = Backbone.Collection.extend({
   model: diagnose.Issue,
-  url: '/api/issues?contactready=1'
+  url: '/api/issues/contactready'
+});
+
+diagnose.UntriagedCollection = Backbone.Collection.extend({
+  model: diagnose.Issue,
+  url: '/api/issues/untriaged'
+});
+
+diagnose.SiteWaitCollection = Backbone.Collection.extend({
+  model: diagnose.Issue,
+  url: '/api/issues/sitewait'
 });
 
 diagnose.MyIssuesView = Backbone.View.extend({
