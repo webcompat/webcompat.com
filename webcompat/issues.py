@@ -68,19 +68,3 @@ def filter_untriaged(issues):
         return match
 
     return [issue for issue in issues if is_untriaged(issue)]
-
-
-def filter_contactready(issues):
-    '''Essentially the opposite of filter_needs_diagnosis.'''
-    def is_contactready(issue):
-        '''Filter function.'''
-        match = False
-        if issue.get('labels') == []:
-            match = False
-        else:
-            for label in issue.get('labels'):
-                if 'contactready' in label.get('name'):
-                    match = True
-        return match
-
-    return [issue for issue in issues if is_contactready(issue)]
