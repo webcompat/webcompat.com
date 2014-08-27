@@ -79,7 +79,7 @@
   }
 }
 /*Untriaged*/
-.issue__state--need {
+.issue__state--untriaged {
   background-color: var(--wc-state-untriaged);
 }
 /*Needs Diagnosis*/
