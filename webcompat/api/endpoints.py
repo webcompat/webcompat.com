@@ -141,23 +141,26 @@ def proxy_comments(number):
     if request.method == 'POST':
         try:
             comment_data = json.loads(request.data)
-            body = {"body": comment_data['rawBody']}
-            comment = github.post('repos/{0}/{1}/comments'.format(
-                REPO_URI, number), body)
-            return json.dumps(comment)
+            body = json.dumps({"body": comment_data['rawBody']})
+            path = 'repos/{0}/{1}/comments'.format(REPO_URI, number)
+            comment = github.raw_request('POST', path, data=body)
+            return (json.dumps(comment.json()), comment.status_code,
+                    {'content-type': JSON_MIME})
         except GitHubError as e:
             print('GitHubError: ', e.response.status_code)
             return (':(', e.response.status_code)
-    elif request.is_xhr and request.headers.get('accept') == JSON_MIME:
+    else:
         if g.user:
-            comments = github.get('repos/{0}/{1}/comments'.format(
+            comments = github.raw_request('GET', 'repos/{0}/{1}/comments'.format(
                 app.config['ISSUES_REPO_URI'], number))
         else:
             comments = proxy_request('get', '/{0}/comments'.format(number),
                                      token='commentbot')
-        return json.dumps(comments)
-    else:
-        abort(406)
+        response = make_response(json.dumps(comments.json()))
+        response.headers['etag'] = comments.headers.get('etag')
+        response.headers['cache-control'] = comments.headers.get('cache-control')
+        response.headers['content-type'] = JSON_MIME
+        return response
 
 
 @api.route('/issues/<int:number>/labels', methods=['POST'])
