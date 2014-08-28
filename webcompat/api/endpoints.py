@@ -53,7 +53,7 @@ def edit_issue(number):
     edit issues.'''
     edit = proxy_request('patch', '/{0}'.format(number), data=request.data,
                          token='closerbot')
-    return json.dumps(edit)
+    return json.dumps(edit.json())
 
 
 @api.route('/issues/mine')
@@ -73,10 +73,14 @@ def get_untriaged():
     '''Return all issues that are "untriaged". Essentially all unclosed issues
     with no activity. Cached for five minutes.'''
     if g.user:
-        issues = github.get('repos/{0}'.format(REPO_URI))
+        issues = github.raw_request('GET', 'repos/{0}'.format(REPO_URI))
     else:
         issues = proxy_request('get')
-    return json.dumps(filter_untriaged(issues))
+    response = make_response(json.dumps(filter_untriaged(issues.json())))
+    response.headers['etag'] = issues.headers.get('etag')
+    response.headers['cache-control'] = issues.headers.get('cache-control')
+    response.headers['content-type'] = JSON_MIME
+    return response
 
 
 @api.route('/issues/contactready')
@@ -86,10 +90,14 @@ def get_contactready():
     minutes.'''
     if g.user:
         uri = 'repos/{0}?labels=contactready'.format(REPO_URI)
-        issues = github.get(uri)
+        issues = github.raw_request('GET', uri)
     else:
         issues = proxy_request('get', '?labels=contactready')
-    return json.dumps(issues)
+    response = make_response(json.dumps(issues.json()))
+    response.headers['etag'] = issues.headers.get('etag')
+    response.headers['cache-control'] = issues.headers.get('cache-control')
+    response.headers['content-type'] = JSON_MIME
+    return response
 
 
 @api.route('/issues/needsdiagnosis')
@@ -99,10 +107,14 @@ def get_needsdiagnosis():
     minutes.'''
     if g.user:
         uri = 'repos/{0}?labels=needsdiagnosis'.format(REPO_URI)
-        issues = github.get(uri)
+        issues = github.raw_request('GET', uri)
     else:
         issues = proxy_request('get', '?labels=needsdiagnosis')
-    return json.dumps(issues)
+    response = make_response(json.dumps(issues.json()))
+    response.headers['etag'] = issues.headers.get('etag')
+    response.headers['cache-control'] = issues.headers.get('cache-control')
+    response.headers['content-type'] = JSON_MIME
+    return response
 
 
 @api.route('/issues/sitewait')
@@ -112,10 +124,14 @@ def get_sitewait():
     minutes.'''
     if g.user:
         uri = 'repos/{0}?labels=sitewait'.format(REPO_URI)
-        issues = github.get(uri)
+        issues = github.raw_request('GET', uri)
     else:
         issues = proxy_request('get', '?labels=sitewait')
-    return json.dumps(issues)
+    response = make_response(json.dumps(issues.json()))
+    response.headers['etag'] = issues.headers.get('etag')
+    response.headers['cache-control'] = issues.headers.get('cache-control')
+    response.headers['content-type'] = JSON_MIME
+    return response
 
 
 @api.route('/issues/<int:number>/comments', methods=['GET', 'POST'])
