@@ -45,11 +45,16 @@ def proxy_issue(number):
     '''XHR endpoint to get issue data from GitHub, either as an authed
     user, or as one of our proxy bots.'''
     if g.user:
-        issue = github.get('repos/{0}/{1}'.format(
+        issue = github.raw_request('GET', 'repos/{0}/{1}'.format(
             app.config['ISSUES_REPO_URI'], number))
     else:
         issue = proxy_request('get', '/{0}'.format(number))
-    return json.dumps(issue)
+    response = make_response(json.dumps(issue.json()))
+    response.headers['etag'] = issue.headers.get('etag')
+    response.headers['cache-control'] = issue.headers.get('cache-control')
+    response.headers['last-modified'] = issue.headers.get('last-modified')
+    response.headers['content-type'] = JSON_MIME
+    return response
 
 
 @ensure_xhr
@@ -178,7 +183,7 @@ def get_repo_labels():
         response = make_response(json.dumps(labels.json()))
         response.headers['etag'] = labels.headers.get('etag')
         response.headers['cache-control'] = labels.headers.get('cache-control')
-        response.headers['content-type'] = 'application/json'
+        response.headers['content-type'] = JSON_MIME
         return response
     else:
         # only authed users should be hitting this endpoint
