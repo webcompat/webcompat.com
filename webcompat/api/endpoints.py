@@ -8,7 +8,7 @@
 back to GitHub'''
 
 import json
-from flask import abort, Blueprint, g, request, session
+from flask import abort, Blueprint, g, request, session, make_response
 from flask.ext.github import GitHubError
 from webcompat import github, app, cache
 from ..issues import REPO_URI, proxy_request, filter_untriaged
@@ -174,8 +174,12 @@ def get_repo_labels():
     # Chop off /issues. Someone feel free to refactor the ISSUES_REPO_URI.
     labels_uri = app.config['ISSUES_REPO_URI'][:-7]
     if g.user:
-        labels = github.get('repos/{0}/labels'.format(labels_uri))
+        labels = github.raw_request('GET', 'repos/{0}/labels'.format(labels_uri))
+        response = make_response(json.dumps(labels.json()))
+        response.headers['etag'] = labels.headers.get('etag')
+        response.headers['cache-control'] = labels.headers.get('cache-control')
+        response.headers['content-type'] = 'application/json'
+        return response
     else:
-        labels = proxy_request('get', '/labels', uri=labels_uri,
-                               token='labelbot')
-    return json.dumps(labels)
+        # only authed users should be hitting this endpoint
+        abort(401)
