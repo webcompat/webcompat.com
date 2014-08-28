@@ -63,7 +63,11 @@ def filter_untriaged(issues):
             match = True
         else:
             for label in issue.get('labels'):
-                if 'contactready' or 'needsdiagnosis' or 'sitewait' in label.get('name'):
+                if 'contactready' in label.get('name'):
+                    match = False
+                elif 'needsdiagnsis' in label.get('name'):
+                    match = False
+                elif 'sitewait' in label.get('name'):
                     match = False
         return match
 
