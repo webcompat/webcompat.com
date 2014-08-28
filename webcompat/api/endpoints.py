@@ -53,8 +53,8 @@ def edit_issue(number):
     edit issues.'''
     edit = proxy_request('patch', '/{0}'.format(number), data=request.data,
                          token='closerbot')
-    return json.dumps(edit.json())
-
+    return (json.dumps(edit.json()), edit.status_code,
+            {'content-type': JSON_MIME})
 
 @api.route('/issues/mine')
 @cache.cached(timeout=300)
