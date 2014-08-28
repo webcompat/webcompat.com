@@ -33,9 +33,9 @@ def proxy_request(method, path_mod='', data=None, uri=None, token=None):
         req_uri = 'https://api.github.com/repos/{0}{1}'.format(REPO_URI,
                                                                path_mod)
     if data:
-        return req(req_uri, data=data, headers=headers).json()
+        return req(req_uri, data=data, headers=headers)
     else:
-        return req(req_uri, headers=headers).json()
+        return req(req_uri, headers=headers)
 
 
 def report_issue(form, proxy=False):
