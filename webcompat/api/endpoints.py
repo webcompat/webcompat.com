@@ -18,16 +18,6 @@ api = Blueprint('api', __name__, url_prefix='/api')
 JSON_MIME = 'application/json'
 
 
-def ensure_xhr(fn):
-    '''Decorator to restrict requests to XHR.'''
-    def check(*args, **kwargs):
-        if request.is_xhr and request.headers.get('accept') == JSON_MIME:
-            return fn(*args, **kwargs)
-        else:
-            abort(406)
-    return check
-
-
 @api.route('/issues')
 @cache.cached(timeout=300)
 def proxy_issues():
@@ -39,7 +29,6 @@ def proxy_issues():
     return json.dumps(issues)
 
 
-@ensure_xhr
 @api.route('/issues/<int:number>')
 def proxy_issue(number):
     '''XHR endpoint to get issue data from GitHub, either as an authed
@@ -57,7 +46,6 @@ def proxy_issue(number):
     return response
 
 
-@ensure_xhr
 @api.route('/issues/<int:number>/edit', methods=['PATCH'])
 def edit_issue(number):
     '''XHR endpoint to push back edits to GitHub for a single issue.
@@ -156,7 +144,6 @@ def proxy_comments(number):
         abort(406)
 
 
-@ensure_xhr
 @api.route('/issues/<int:number>/labels', methods=['POST'])
 def modify_labels(number):
     '''XHR endpoint to modify issue labels. Sending in an empty array removes
