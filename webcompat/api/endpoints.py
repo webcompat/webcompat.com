@@ -142,9 +142,9 @@ def proxy_comments(number):
         try:
             comment_data = json.loads(request.data)
             body = {"body": comment_data['rawBody']}
-            github.post('repos/{0}/{1}/comments'.format(
+            comment = github.post('repos/{0}/{1}/comments'.format(
                 REPO_URI, number), body)
-            return ':)'
+            return json.dumps(comment)
         except GitHubError as e:
             print('GitHubError: ', e.response.status_code)
             return (':(', e.response.status_code)
@@ -168,7 +168,8 @@ def modify_labels(number):
     try:
         labels = proxy_request('put', '/{0}/labels'.format(number),
                                data=request.data, token='labelbot')
-        return json.dumps(labels)
+        response = make_response(json.dumps(labels.json()), labels.status_code)
+        return response
     except GitHubError as e:
         print('GitHubError: ', e.response.status_code)
         return (':(', e.response.status_code)
