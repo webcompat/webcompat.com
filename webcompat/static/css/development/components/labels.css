@@ -11,17 +11,7 @@
   }
 }
 
-/* list label */
-.label_list {
-  background-color: #FFF;
-  color: #333;
-  max-height:18.75em;
-  overflow-x: hidden;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-}
-
-/* Label editor */
+* Label editor */
 .label_editor
 {
   display:none;
@@ -52,7 +42,6 @@
   }
   .label_editor_table {
     display:table;
-    /*height:100%;*/
     width:100%;
   }
   .label_editor_row {
@@ -102,7 +91,7 @@
 .label_list {
   background-color: #FFF;
   color: #333;
-  max-height:300px;
+  max-height:18.75em;
   overflow-x: hidden;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
