@@ -116,9 +116,8 @@
 }
 /* content of item contributors, close by default */
 .contributors__item__content {
-  max-height:0;
+  display:none;
   overflow:hidden;
-  transition: max-height .3s linear 0s;
 }
 /*list first level */
 .contributors__list {
@@ -128,7 +127,14 @@
 .contributors__list--lvl_down {
   margin-left:2em;
   margin-top:-1em;
+  border-top:solid 1px transparent;
 }
+@media (--viewport-450px) {
+  .contributors__list--lvl_down {
+    margin-left:0;
+  }
+}
+
 .contributors__list__item {
   position:relative;
   margin-bottom:1em;
@@ -141,8 +147,6 @@
   width: 1.2em;
   text-align: right;
   left:-0.5em;
-  top:50%;
-  transform:translateY(-50%);
   content: counter(contributors);
   font-size:44px;
   font-weight:bold;
@@ -158,15 +162,19 @@
   counter-increment: contributors-lvl;
   line-height:25px;
 }
+.contributors__list__item--lvl_down:first-child {
+  margin-top:1em;
+}
 .contributors__list__item--lvl_down:before {
   content: counter(contributors-lvl);
   font-size:25px;
 }
 .contributors__list__item--lvl_down span {
   font-size:15px;
+  line-height:22px;
 }
 
 /* content of item contributors open */
 .contributors__item__content.is-open {
-  max-height:2000px;
+  display:block;
 }
