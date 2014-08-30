@@ -80,6 +80,11 @@
   display:inline-block;
   width:auto;
 }
+@media (--viewport-375px) {
+  .label_editor__search {
+    font-size:16px;
+  }
+}
 /* btn */
 .label_editor__btn {
   border:none;
