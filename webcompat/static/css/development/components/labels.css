@@ -11,7 +11,7 @@
   }
 }
 
-* Label editor */
+/* Label editor */
 .label_editor
 {
   display:none;
@@ -48,6 +48,7 @@
     display:table-row;
     width:100%;
   }
+
 }
 /* Caret */
 .label_editor:after {
@@ -95,6 +96,11 @@
   overflow-x: hidden;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
+}
+@media (--viewport-375px) {
+  .label_list {
+     max-height:inherit;
+  }
 }
 /* item label */
 .label_item {
