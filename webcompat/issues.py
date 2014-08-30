@@ -9,19 +9,23 @@ authed user and the proxy case.'''
 
 import json
 import requests
-from flask import g, session, url_for, redirect, request
+from flask import g, url_for, redirect, request
 from webcompat.form import build_formdata
 from webcompat import github, app
 
 REPO_URI = app.config['ISSUES_REPO_URI']
-TOKEN = app.config['BOT_OAUTH_TOKEN']
+DEFAULT_TOKEN = app.config['BOT_OAUTH_TOKEN']
+TOKEN_MAP = app.config['TOKEN_MAP']
 
 
-def proxy_request(method, path_mod='', data=None, uri=None):
+def proxy_request(method, path_mod='', data=None, uri=None, token=None):
     '''Make a GitHub API request with a bot's OAuth token, for non-logged in
     users. `path`, if included, will be appended to the end of the URI.
     Optionally pass in POST data via the `data` arg.'''
-    headers = {'Authorization': 'token {0}'.format(TOKEN)}
+    headers = {
+        'Authorization': 'token {0}'.format(TOKEN_MAP.get(token,
+                                                          DEFAULT_TOKEN))
+    }
     req = getattr(requests, method)
     if uri:
         req_uri = 'https://api.github.com/repos/{0}{1}'.format(uri, path_mod)
@@ -29,9 +33,9 @@ def proxy_request(method, path_mod='', data=None, uri=None):
         req_uri = 'https://api.github.com/repos/{0}{1}'.format(REPO_URI,
                                                                path_mod)
     if data:
-        return req(req_uri, data=data, headers=headers).json()
+        return req(req_uri, data=data, headers=headers)
     else:
-        return req(req_uri, headers=headers).json()
+        return req(req_uri, headers=headers)
 
 
 def report_issue(form, proxy=False):
@@ -49,10 +53,10 @@ def get_issue(number):
     return issue
 
 
-def filter_needs_diagnosis(issues):
-    '''For our purposes, "needs diagnosis" means anything that isn't an issue
-    with a "contactready" label.'''
-    def not_contactready(issue):
+def filter_untriaged(issues):
+    '''For our purposes, "untriaged" means anything that isn't an issue
+    with a "contactready", "sitewait", or "needsdiagnsis" label.'''
+    def is_untriaged(issue):
         '''Filter function.'''
         match = True
         if issue.get('labels') == []:
@@ -61,22 +65,10 @@ def filter_needs_diagnosis(issues):
             for label in issue.get('labels'):
                 if 'contactready' in label.get('name'):
                     match = False
+                elif 'needsdiagnsis' in label.get('name'):
+                    match = False
+                elif 'sitewait' in label.get('name'):
+                    match = False
         return match
 
-    return [issue for issue in issues if not_contactready(issue)]
-
-
-def filter_contactready(issues):
-    '''Essentially the opposite of filter_needs_diagnosis.'''
-    def is_contactready(issue):
-        '''Filter function.'''
-        match = False
-        if issue.get('labels') == []:
-            match = False
-        else:
-            for label in issue.get('labels'):
-                if 'contactready' in label.get('name'):
-                    match = True
-        return match
-
-    return [issue for issue in issues if is_contactready(issue)]
+    return [issue for issue in issues if is_untriaged(issue)]

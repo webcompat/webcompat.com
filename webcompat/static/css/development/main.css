@@ -9,6 +9,7 @@
 @import "components/button.css";
 @import "components/comment.css";
 @import "components/labels.css";
+@import "components/responsive.css";
 
 /*----------Layout----------*/
 @import "layout/body.css";

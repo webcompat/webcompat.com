@@ -39,9 +39,14 @@ issues.Issue = Backbone.Model.extend({
       this.set('stateClass', 'ready');
       return 'Ready for Outreach';
     }
-    //Needs Diagnosis is the default value.
-    this.set('stateClass', 'need');
-    return 'Needs Diagnosis';
+
+    if (labelsNames.indexOf('needsdiagnosis') > -1) {
+      this.set('stateClass', 'need');
+      return 'Needs Diagnosis';
+    }
+    //Untriaged is the default value.
+    this.set('stateClass', 'untriaged');
+    return 'Untriaged Issue';
   },
   parse: function(response) {
     if (response.message === "Not Found") {
@@ -103,7 +108,8 @@ issues.Issue = Backbone.Model.extend({
     }
 
     // save ourselves a request if nothing has changed.
-    if (_.isEqual(labelsArray, _.pluck(this.get('labels'), 'name'))) {
+    if (_.isEqual(labelsArray.sort(),
+                  _.pluck(this.get('labels'), 'name').sort())) {
       return;
     }
 
@@ -160,6 +166,8 @@ issues.BodyView = Backbone.View.extend({
   template: _.template($('#issue-info-tmpl').html()),
   render: function() {
     this.$el.html(this.template(this.model.toJSON()));
+    // hide metadata
+    $('.issue__details > p:first-child:contains(-- @browser)').hide();
     return this;
   }
 });
@@ -231,7 +239,11 @@ issues.StateButtonView = Backbone.View.extend({
 issues.MainView = Backbone.View.extend({
   el: $('.issue'),
   events: {
-    'click .Button--default': 'addNewComment'
+    'click .Button--default': 'addNewComment',
+    'click': 'closeLabelEditor'
+  },
+  keyboardEvents: {
+    'g': 'githubWarp'
   },
   initialize: function() {
     $(document.body).addClass('language-html');
@@ -240,6 +252,19 @@ issues.MainView = Backbone.View.extend({
     this.comments = new issues.CommentsCollection([]);
     this.initSubViews();
     this.fetchModels();
+  },
+  closeLabelEditor: function(e) {
+    var target = $(e.target);
+    // early return if the editor is closed,
+    if (!this.$el.find('.label_editor').is(':visible') ||
+          // or we've clicked on the button to open it,
+         (target[0].nodeName === 'BUTTON' && target.hasClass('issue__label--modify')) ||
+           // or clicked anywhere inside the label editor
+           target.parents('.label_editor').length) {
+      return;
+    } else {
+      this.labels.closeEditor();
+    }
   },
   githubWarp: function() {
     var warpPipe = "http://github.com/" + repoPath + "/" + this.issue.get('number');
@@ -264,7 +289,6 @@ issues.MainView = Backbone.View.extend({
           _.each($('.issue__details code'), function(elm) {
             Prism.highlightElement(elm);
           });
-          Mousetrap.bind('g', _.bind(self.githubWarp, self));
         }
       );
 
@@ -335,6 +359,5 @@ issues.MainView = Backbone.View.extend({
   }
 });
 
-jQuery.ajaxSetup({timeout: 5000});
 //Not using a router, so kick off things manually
 new issues.MainView();

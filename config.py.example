@@ -23,6 +23,14 @@ SECRET_KEY = "meow"
 PRODUCTION = os.environ.get('PRODUCTION')
 DEVELOPMENT = os.environ.get('DEVELOPMENT')
 
+# Cache settings
+if PRODUCTION:
+    CACHE_TYPE = 'filesystem'
+    CACHE_DIR = '/tmp/cache/webcompat'
+else:
+    CACHE_TYPE = 'filesystem'
+    CACHE_DIR = '/tmp/cache/staging.webcompat'
+
 DEBUG = False
 
 if not PRODUCTION:
@@ -66,16 +74,6 @@ else:
 # help.github.com/articles/creating-an-access-token-for-command-line-use
 BOT_OAUTH_TOKEN = ""
 
-# Email addresses of those who want to receive notifications of 500s
-# (only in production, so this can be ignored in development)
-ADMINS = ("")
-
-# Email server setup (leave blank in development)
-MAIL_SERVER = ''
-MAIL_PORT = 465
-MAIL_USE_TLS = False
-MAIL_USE_SSL = True
-MAIL_USERNAME = ''
-MAIL_PASSWORD = ''
-if not PRODUCTION:
-  MAIL_SUPPRESS_SEND = True
+# MULTIPLE_BOTs isn't required for local testing, a single
+# BOT_OAUTH_TOKEN will suffice, you can ignore this.
+TOKEN_MAP = dict()

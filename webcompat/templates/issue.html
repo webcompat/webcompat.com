@@ -93,19 +93,26 @@
   </div>
 
   <script type="text/template" id="label-editor-tmpl">
-      <div class="label_editor__header">
-        <input class="form-control label_editor__search" placeholder="filter label"><button class="label_editor__btn">Save &amp; Close</button>
+    <div class="label_editor_table">
+      <div class="label_editor_row label_editor_row--header">
+        <div class="label_editor__header">
+          <input class="form-control label_editor__search" placeholder="filter label">
+          <button class="label_editor__btn">Save &amp; Close</button>
+        </div>
       </div>
-      <div class="label_list">
-        <% _.each(labels, function(label) { %>
-          <label class="label_item">
-            <span class="label_color" style="background-color:#<%=label.color%>">
-              <input class="label_checkbox" type="checkbox" name="<%= label.name %>" data-color="<%=label.color%>">
-            </span>
-            <span class="label_name"><%= label.name %></span>
-          </label>
-        <% }); %>
-      </div>
+      <div class="label_editor_row">
+        <div class="label_list">
+          <% _.each(labels, function(label) { %>
+            <label class="label_item">
+              <span class="label_color" style="background-color:#<%=label.color%>">
+                <input class="label_checkbox" type="checkbox" name="<%= label.name %>" data-color="<%=label.color%>">
+              </span>
+              <span class="label_name"><%= label.name %></span>
+              </label>
+            <% }); %>
+          </div>
+        </div>
+    </div>
   </script>
 
 {% endblock %}

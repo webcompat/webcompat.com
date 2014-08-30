@@ -2,12 +2,18 @@
 
 .issue {
   display: none;
+  font-size:var(--base-font-size);
 }
 /* Wrapper title and date issue */
 .issue__main_title {
   line-height: 1em;
   margin-bottom: .5em;
   word-wrap: break-word;
+}
+@media (--viewport-450px) {
+  .issue__main_title {
+    font-size:1.2em;
+  }
 }
 .issue__title {
   display: inline-block;
@@ -67,6 +73,15 @@
   padding: 7px 23px;
   color: #fff;
 }
+@media (--viewport-450px) {
+  .issue__state {
+    font-size:.8em;
+  }
+}
+/*Untriaged*/
+.issue__state--untriaged {
+  background-color: var(--wc-state-untriaged);
+}
 /*Needs Diagnosis*/
 .issue__state--need {
   background-color: var(--wc-state-need);
@@ -81,10 +96,16 @@
 }
 /*Close*/
 .issue__state--close {
-  background-color: var(--wc-stat-close);
+  background-color: var(--wc-state-close);
 }
+/* Date of issue */
 .issue__date {
   display: inline-block;
+}
+@media (--viewport-450px) {
+  .issue_date {
+    font-size:.9em;
+  }
 }
 
 .issue__reporter {
@@ -118,11 +139,6 @@
   color: inherit;
   background-color: #F5F5F5;
   padding: 0.25em;
-}
-
-/* temp hack to hide <!-- browser info --> */
-.issue__details > p:first-child {
-  display: none;
 }
 
 .issue__login_link {
@@ -162,6 +178,7 @@
   font-size: 1.2em;
   color:#000;
   padding-right: 0;
+  padding-left:0;
   margin-right: 0.1em;
 }
 .issue__label_item--badge {
@@ -191,10 +208,12 @@
   font-size:1.4em;
   padding:0;
 }
-/* display carey only if button is-active*/
-.issue__label--modify.is-active + .label_editor:after {
+/* display caret and label only if button is-active*/
+.issue__label--modify.is-active + .label_editor:after,
+.issue__label--modify.is-active + .label_editor {
   display:block;
 }
+
 .issue__label--modify {
   opacity:.8;
 }
@@ -206,4 +225,8 @@
 }
 .is-active.issue__label--modify:before {
   content: "\f00d";
+}
+.test_label-table-row {
+  display:table-row;
+  width:100%;
 }
