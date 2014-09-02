@@ -4,7 +4,6 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-import sys
 import urllib
 from flask import (flash, g, redirect, request, render_template, session,
                    url_for)
@@ -12,7 +11,7 @@ from flask.ext.github import GitHubError
 from hashlib import md5
 from .form import IssueForm, AUTH_REPORT, PROXY_REPORT
 from .helpers import get_user_info, get_browser, get_browser_name, get_os
-from .issues import report_issue, proxy_request
+from .issues import report_issue
 from .models import db_session, User
 from webcompat import github, app
 
