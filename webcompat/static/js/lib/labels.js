@@ -115,12 +115,10 @@ issues.LabelEditorView = Backbone.View.extend({
 
     if (getBreakpoint()) {
       _.defer(function(){
-        /*$(document.body).scrollTo(0);*/
-      /*  $('.label_list').css('max-height', '100%');*/
         var labelEditorheight = parseInt($('.label_editor').css( "height" ), 10),
-            labelHeaderheight = parseInt($('.label_editor_row--header').css("height"),10);
-
+            labelHeaderheight = parseInt($('.label_editor_row--header').css("height"), 10);
         $('.label_list').height(labelEditorheight -labelHeaderheight );
+        $("html, body").animate({ scrollTop: 0 }, 0);
       });
     }
   },
