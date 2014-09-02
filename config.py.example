@@ -15,6 +15,10 @@ THREADS_PER_PAGE = 8
 # ~3 months-ish expires for static junk
 SEND_FILE_MAX_AGE_DEFAULT = 9000000
 
+# Cache settings
+CACHE_TYPE = 'filesystem'
+CACHE_DIR = '/tmp/cache/webcompat'
+
 # Secret key for signing cookies.
 # Doesn't really matter for local testing.
 SECRET_KEY = "meow"
@@ -22,14 +26,6 @@ SECRET_KEY = "meow"
 # the PRODUCTION and DEVELOPMENT env var is set in uwsgi.conf
 PRODUCTION = os.environ.get('PRODUCTION')
 DEVELOPMENT = os.environ.get('DEVELOPMENT')
-
-# Cache settings
-if PRODUCTION:
-    CACHE_TYPE = 'filesystem'
-    CACHE_DIR = '/tmp/cache/webcompat'
-else:
-    CACHE_TYPE = 'filesystem'
-    CACHE_DIR = '/tmp/cache/staging.webcompat'
 
 DEBUG = False
 
