@@ -12,7 +12,7 @@ from flask.ext.github import GitHubError
 from hashlib import md5
 from .form import IssueForm, AUTH_REPORT, PROXY_REPORT
 from .helpers import get_user_info, get_browser, get_browser_name, get_os
-from .issues import report_issue, get_issue, proxy_request
+from .issues import report_issue, get_issue
 from .models import db_session, User
 from webcompat import github, app
 
