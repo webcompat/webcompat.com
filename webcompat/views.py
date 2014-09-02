@@ -4,6 +4,7 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
+import sys
 import urllib
 from flask import (flash, g, redirect, request, render_template, session,
                    url_for)
@@ -11,7 +12,7 @@ from flask.ext.github import GitHubError
 from hashlib import md5
 from .form import IssueForm, AUTH_REPORT, PROXY_REPORT
 from .helpers import get_user_info, get_browser, get_browser_name, get_os
-from .issues import report_issue
+from .issues import report_issue, get_issue
 from .models import db_session, User
 from webcompat import github, app
 
@@ -148,7 +149,16 @@ def show_issue(number):
     '''Route to display a single issue.'''
     if g.user:
         get_user_info()
-    return render_template('issue.html', number=number)
+    try:
+        title = get_issue(number)['title']
+    except GitHubError:
+        e = sys.exc_info()
+        print('GitHubError: ', e)
+        title = 'Web bug'
+    # temporarily provide a link to github (until we can modify issues)
+    uri = 'https://github.com/{0}/{1}'.format(app.config['ISSUES_REPO_URI'],
+                                              number)
+    return render_template('issue.html', number=number, uri=uri, title=title)
 
 
 @app.route('/thanks/<int:number>')

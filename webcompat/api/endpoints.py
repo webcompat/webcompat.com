@@ -8,14 +8,25 @@
 back to GitHub'''
 
 import json
-from flask import abort, Blueprint, g, request, session, make_response
+from flask import abort, Blueprint, g, request, session
 from flask.ext.github import GitHubError
 from webcompat import github, app, cache
-from ..issues import REPO_URI, proxy_request, filter_untriaged
+from ..issues import (proxy_request, filter_needs_diagnosis,
+                      filter_contactready, REPO_URI)
 from ..helpers import get_user_info
 
 api = Blueprint('api', __name__, url_prefix='/api')
 JSON_MIME = 'application/json'
+
+
+def ensure_xhr(fn):
+    '''Decorator to restrict requests to XHR.'''
+    def check(*args, **kwargs):
+        if request.is_xhr and request.headers.get('accept') == JSON_MIME:
+            return fn(*args, **kwargs)
+        else:
+            abort(406)
+    return check
 
 
 @api.route('/issues')
@@ -26,26 +37,28 @@ def proxy_issues():
         issues = github.get('repos/{0}'.format(REPO_URI))
     else:
         issues = proxy_request('get')
-    return json.dumps(issues)
+    if request.args.get('needsdiagnosis') == '1':
+        return json.dumps(filter_needs_diagnosis(issues))
+    elif request.args.get('contactready') == '1':
+        return json.dumps(filter_contactready(issues))
+    else:
+        return json.dumps(issues)
 
 
+@ensure_xhr
 @api.route('/issues/<int:number>')
 def proxy_issue(number):
     '''XHR endpoint to get issue data from GitHub, either as an authed
     user, or as one of our proxy bots.'''
     if g.user:
-        issue = github.raw_request('GET', 'repos/{0}/{1}'.format(
+        issue = github.get('repos/{0}/{1}'.format(
             app.config['ISSUES_REPO_URI'], number))
     else:
         issue = proxy_request('get', '/{0}'.format(number))
-    response = make_response(json.dumps(issue.json()))
-    response.headers['etag'] = issue.headers.get('etag')
-    response.headers['cache-control'] = issue.headers.get('cache-control')
-    response.headers['last-modified'] = issue.headers.get('last-modified')
-    response.headers['content-type'] = JSON_MIME
-    return response
+    return json.dumps(issue)
 
 
+@ensure_xhr
 @api.route('/issues/<int:number>/edit', methods=['PATCH'])
 def edit_issue(number):
     '''XHR endpoint to push back edits to GitHub for a single issue.
@@ -53,8 +66,8 @@ def edit_issue(number):
     edit issues.'''
     edit = proxy_request('patch', '/{0}'.format(number), data=request.data,
                          token='closerbot')
-    return (json.dumps(edit.json()), edit.status_code,
-            {'content-type': JSON_MIME})
+    return json.dumps(edit)
+
 
 @api.route('/issues/mine')
 @cache.cached(timeout=300)
@@ -67,71 +80,17 @@ def user_issues():
     return json.dumps(issues)
 
 
-@api.route('/issues/untriaged')
-@cache.cached(timeout=300)
-def get_untriaged():
-    '''Return all issues that are "untriaged". Essentially all unclosed issues
-    with no activity. Cached for five minutes.'''
-    if g.user:
-        issues = github.raw_request('GET', 'repos/{0}'.format(REPO_URI))
-    else:
-        issues = proxy_request('get')
-    response = make_response(json.dumps(filter_untriaged(issues.json())))
-    response.headers['etag'] = issues.headers.get('etag')
-    response.headers['cache-control'] = issues.headers.get('cache-control')
-    response.headers['content-type'] = JSON_MIME
-    return response
-
-
 @api.route('/issues/contactready')
 @cache.cached(timeout=300)
 def get_contactready():
-    '''Return all issues with a "contactready" label. Cached for five
+    '''Return all issues with a "contactready" label. Cached for five 
     minutes.'''
     if g.user:
         uri = 'repos/{0}?labels=contactready'.format(REPO_URI)
-        issues = github.raw_request('GET', uri)
+        issues = github.get(uri)
     else:
         issues = proxy_request('get', '?labels=contactready')
-    response = make_response(json.dumps(issues.json()))
-    response.headers['etag'] = issues.headers.get('etag')
-    response.headers['cache-control'] = issues.headers.get('cache-control')
-    response.headers['content-type'] = JSON_MIME
-    return response
-
-
-@api.route('/issues/needsdiagnosis')
-@cache.cached(timeout=300)
-def get_needsdiagnosis():
-    '''Return all issues with a "needsdiagnosis" label. Cached for five
-    minutes.'''
-    if g.user:
-        uri = 'repos/{0}?labels=needsdiagnosis'.format(REPO_URI)
-        issues = github.raw_request('GET', uri)
-    else:
-        issues = proxy_request('get', '?labels=needsdiagnosis')
-    response = make_response(json.dumps(issues.json()))
-    response.headers['etag'] = issues.headers.get('etag')
-    response.headers['cache-control'] = issues.headers.get('cache-control')
-    response.headers['content-type'] = JSON_MIME
-    return response
-
-
-@api.route('/issues/sitewait')
-@cache.cached(timeout=300)
-def get_sitewait():
-    '''Return all issues with a "sitewait" label. Cached for five
-    minutes.'''
-    if g.user:
-        uri = 'repos/{0}?labels=sitewait'.format(REPO_URI)
-        issues = github.raw_request('GET', uri)
-    else:
-        issues = proxy_request('get', '?labels=sitewait')
-    response = make_response(json.dumps(issues.json()))
-    response.headers['etag'] = issues.headers.get('etag')
-    response.headers['cache-control'] = issues.headers.get('cache-control')
-    response.headers['content-type'] = JSON_MIME
-    return response
+    return json.dumps(issues)
 
 
 @api.route('/issues/<int:number>/comments', methods=['GET', 'POST'])
@@ -141,28 +100,26 @@ def proxy_comments(number):
     if request.method == 'POST':
         try:
             comment_data = json.loads(request.data)
-            body = json.dumps({"body": comment_data['rawBody']})
-            path = 'repos/{0}/{1}/comments'.format(REPO_URI, number)
-            comment = github.raw_request('POST', path, data=body)
-            return (json.dumps(comment.json()), comment.status_code,
-                    {'content-type': JSON_MIME})
+            body = {"body": comment_data['rawBody']}
+            github.post('repos/{0}/{1}/comments'.format(
+                REPO_URI, number), body)
+            return ':)'
         except GitHubError as e:
             print('GitHubError: ', e.response.status_code)
             return (':(', e.response.status_code)
-    else:
+    elif request.is_xhr and request.headers.get('accept') == JSON_MIME:
         if g.user:
-            comments = github.raw_request('GET', 'repos/{0}/{1}/comments'.format(
+            comments = github.get('repos/{0}/{1}/comments'.format(
                 app.config['ISSUES_REPO_URI'], number))
         else:
             comments = proxy_request('get', '/{0}/comments'.format(number),
                                      token='commentbot')
-        response = make_response(json.dumps(comments.json()))
-        response.headers['etag'] = comments.headers.get('etag')
-        response.headers['cache-control'] = comments.headers.get('cache-control')
-        response.headers['content-type'] = JSON_MIME
-        return response
+        return json.dumps(comments)
+    else:
+        abort(406)
 
 
+@ensure_xhr
 @api.route('/issues/<int:number>/labels', methods=['POST'])
 def modify_labels(number):
     '''XHR endpoint to modify issue labels. Sending in an empty array removes
@@ -171,8 +128,7 @@ def modify_labels(number):
     try:
         labels = proxy_request('put', '/{0}/labels'.format(number),
                                data=request.data, token='labelbot')
-        response = make_response(json.dumps(labels.json()), labels.status_code)
-        return response
+        return json.dumps(labels)
     except GitHubError as e:
         print('GitHubError: ', e.response.status_code)
         return (':(', e.response.status_code)
@@ -186,12 +142,8 @@ def get_repo_labels():
     # Chop off /issues. Someone feel free to refactor the ISSUES_REPO_URI.
     labels_uri = app.config['ISSUES_REPO_URI'][:-7]
     if g.user:
-        labels = github.raw_request('GET', 'repos/{0}/labels'.format(labels_uri))
-        response = make_response(json.dumps(labels.json()))
-        response.headers['etag'] = labels.headers.get('etag')
-        response.headers['cache-control'] = labels.headers.get('cache-control')
-        response.headers['content-type'] = JSON_MIME
-        return response
+        labels = github.get('repos/{0}/labels'.format(labels_uri))
     else:
-        # only authed users should be hitting this endpoint
-        abort(401)
+        labels = proxy_request('get', '/labels', uri=labels_uri,
+                               token='labelbot')
+    return json.dumps(labels)

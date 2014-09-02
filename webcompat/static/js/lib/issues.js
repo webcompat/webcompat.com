@@ -39,14 +39,9 @@ issues.Issue = Backbone.Model.extend({
       this.set('stateClass', 'ready');
       return 'Ready for Outreach';
     }
-
-    if (labelsNames.indexOf('needsdiagnosis') > -1) {
-      this.set('stateClass', 'need');
-      return 'Needs Diagnosis';
-    }
-    //Untriaged is the default value.
-    this.set('stateClass', 'untriaged');
-    return 'Untriaged Issue';
+    //Needs Diagnosis is the default value.
+    this.set('stateClass', 'need');
+    return 'Needs Diagnosis';
   },
   parse: function(response) {
     if (response.message === "Not Found") {
@@ -141,9 +136,6 @@ issues.TitleView = Backbone.View.extend({
   el: $('.issue__main_title'),
   template: _.template($('#title-tmpl').html()),
   render: function() {
-    document.title = "Issue " + this.model.get('number') +
-                     ": " + this.model.get('title') +
-                     " - webcompat.com";
     this.$el.html(this.template(this.model.toJSON()));
     return this;
   }
