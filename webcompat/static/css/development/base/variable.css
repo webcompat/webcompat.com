@@ -16,10 +16,11 @@
   --wc-background-light: #FBC55F; /* Light Yellow */
   --wc-variant-background-dark: #404040; /* Dark Gray */
   --wc-variant-background-light: #c2c2c2; /* Dark Light */
-  --wc-state-need : #ff8364;   /* Light red */
-  --wc-state-ready : #a1ebbf; /* Light green */
-  --wc-state-sitewait : #006B75; /* Dark green */
-  --wc-stat-close: #6FC7FA;   /* Light blue */
+  --wc-state-untriaged: #6fc7fa; /* Light blue */
+  --wc-state-need: #ff8364;   /* Light red */
+  --wc-state-ready: #a1ebbf; /* Light green */
+  --wc-state-sitewait: #006B75; /* Dark green */
+  --wc-state-close: #799299;   /* Light Gray */
 }
 
 /* link */

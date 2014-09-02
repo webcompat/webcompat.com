@@ -77,11 +77,6 @@ class TestURLs(unittest.TestCase):
         self.assertEqual(rv.status_code, 307)
         self.assertIn('localhost', rv.headers['Location'])
 
-    def test_api_endpoint(self):
-        '''Test that GET of /api/foo returns a 406.'''
-        rv = self.app.get('/api/issues/22')
-        self.assertEqual(rv.status_code, 406)
-
 
 if __name__ == '__main__':
     unittest.main()

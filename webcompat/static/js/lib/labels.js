@@ -100,33 +100,25 @@ issues.LabelEditorView = Backbone.View.extend({
     this.issueView.$el.find('.issue__label--modify').addClass('is-active');
   },
   resizeEditorHeight: function() {
-    var removeQuotes = function(string) {
-      if (typeof string === 'string' || string instanceof String) {
-          string = string.replace(/^['"]+|\s+|\\|(;\s?})+|['"]$/g, '');
-      }
-      return string;
-    };
     var getBreakpoint = function() {
       var style;
+      var doResize = false;
       if (window.getComputedStyle &&
             window.getComputedStyle(document.body, '::after')) {
-          style = window.getComputedStyle(document.body, '::after');
-          style = style.content;
+            style = window.getComputedStyle(document.body, '::after').content;
       }
-      try {
-          return JSON.parse(removeQuotes(style));
-      } catch(e) {
-          return false;
+      if (style.match(/resizeEditor/)) {
+        doResize = true;
       }
+      return doResize;
     };
 
-    var breakpoint = getBreakpoint();
-    if (breakpoint && breakpoint.resizeEditorHeight) {
+    if (getBreakpoint()) {
       _.defer(function(){
-        var labelList         = document.querySelector('.label_list'),
-            labelEditorHeight = document.querySelector('.label_editor').offsetHeight,
-            firstRowHeight    = document.querySelector('.label_editor_row:first-child').offsetHeight;
-        labelList.style.maxHeight = (labelEditorHeight - firstRowHeight) + 'px';
+        var labelEditorheight = parseInt($('.label_editor').css( "height" ), 10),
+            labelHeaderheight = parseInt($('.label_editor_row--header').css("height"), 10);
+        $('.label_list').height(labelEditorheight -labelHeaderheight );
+        $("html, body").animate({ scrollTop: 0 }, 0);
       });
     }
   },
@@ -139,7 +131,7 @@ issues.LabelEditorView = Backbone.View.extend({
     var modelUpdate = [];
     _.each(checked, function(item) {
       //item already has a .name property
-      item.color = item.dataset.color;
+      item.color = $(item).data('color');
       modelUpdate.push(item);
     });
     this.reRender({labels: modelUpdate});
