@@ -148,7 +148,7 @@
   text-align: right;
   left:-0.5em;
   content: counter(contributors);
-  font-size:44px;
+  font-size:32px;
   font-weight:bold;
 }
 .contributors__list__item span {
