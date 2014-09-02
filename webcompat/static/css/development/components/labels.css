@@ -11,16 +11,6 @@
   }
 }
 
-/* list label */
-.label_list {
-  background-color: #FFF;
-  color: #333;
-  max-height:18.75em;
-  overflow-x: hidden;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-}
-
 /* Label editor */
 .label_editor
 {
@@ -52,13 +42,13 @@
   }
   .label_editor_table {
     display:table;
-    /*height:100%;*/
     width:100%;
   }
   .label_editor_row {
     display:table-row;
     width:100%;
   }
+
 }
 /* Caret */
 .label_editor:after {
@@ -90,6 +80,11 @@
   display:inline-block;
   width:auto;
 }
+@media (--viewport-375px) {
+  .label_editor__search {
+    font-size:16px;
+  }
+}
 /* btn */
 .label_editor__btn {
   border:none;
@@ -102,10 +97,15 @@
 .label_list {
   background-color: #FFF;
   color: #333;
-  max-height:300px;
+  max-height:18.75em;
   overflow-x: hidden;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
+}
+@media (--viewport-375px) {
+  .label_list {
+     max-height:inherit;
+  }
 }
 /* item label */
 .label_item {
