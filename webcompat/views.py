@@ -130,7 +130,7 @@ def index():
                 session['form_data'] = request.form
                 return redirect(url_for('login'))
         elif request.form.get('submit-type') == PROXY_REPORT:
-            response = report_issue(request.form, proxy=True)
+            response = report_issue(request.form, proxy=True).json()
             return redirect(url_for('thanks', number=response.get('number')))
     else:
         # Validation failed, re-render the form with the errors.
