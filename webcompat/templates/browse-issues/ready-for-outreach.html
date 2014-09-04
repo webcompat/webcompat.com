@@ -1,0 +1,17 @@
+<div id="ready-for-outreach" class="Grid-cell u-size1of2">
+  <script type="text/template" id="sitewait-tmpl">
+  <h3 class="h5">Site Contacted</h3>
+  <% if (sitewait.length) { %>
+    <% _.each(sitewait, function(issue) { %>
+    <div class="issues issue-sitewait">
+      <p class="issue-title">
+        <a href="/issues/<%= issue.number %>"><span class="issue-number">Issue <%= issue.number %></span>: <%- issue.title %></a>
+      </p>
+      <p class="issue-metadata">Opened: <time><%= issue.createdAt %></time>, comments: <%= issue.commentsNumber %></p>
+    </div>
+    <% }); %>
+  <% } else { %>
+  <p>Nothing here currently, please help <a href="https://github.com/webcompat/web-bugs/issues?labels=contactready">reach out to sites!</a></p>
+  <% } %>
+  </script>
+</div>
