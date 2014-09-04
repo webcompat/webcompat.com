@@ -251,13 +251,6 @@ input[type=search] {
     padding-bottom: 0;
   }
 }
-#join img {
-  float: left;
-}
-.Threeways img + p {
-  padding: 0.6em;
-  display: table-cell;
-}
 
 .maincontent {
   text-align: left;
