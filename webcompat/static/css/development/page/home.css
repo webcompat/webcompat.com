@@ -381,14 +381,6 @@ form .button {
   .flourish {
     display: none;
   }
-
-  .submit {
-    float: left;
-    margin: 0 0 1em;
-  }
-  .col-md-6.submit, .col-md-6 button {
-    width: 100%;
-  }
   .has-error .help-inline {
     float: none;
     display: block;
