@@ -10,7 +10,8 @@
 @import "components/comment.css";
 @import "components/labels.css";
 @import "components/responsive.css";
-
+@import "../../../../node_modules/suitcss-components-grid/index.css";
+@import "../../../../node_modules/suitcss-utils-size/index.css";
 /*----------Layout----------*/
 @import "layout/body.css";
 @import "layout/header.css";
