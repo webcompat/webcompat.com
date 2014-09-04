@@ -309,13 +309,6 @@ form .button {
   color: #fff;
   display: block;
 }
-.row {
-  padding: .5em;
-}
-.row:last-child p:not(.issue-metadata) {
-  margin-bottom: 0.5em;
-  color: #000;
-}
 
 /* bootstrap overrides */
 .radio-inline, .checkbox-inline {
