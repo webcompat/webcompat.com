@@ -8,97 +8,15 @@
       <span class="issue-sitewait">Site&nbsp;Contacted</span>
       <span class="issue-closed">Closed</span>
     </span>
-    <div id="my-issues" class="row">
-      <script type="text/template" id="my-issues-tmpl">
-      <h3 class="h5">Submitted by Me</h3>
-      <% if (userIssues.length) { %>
-        <% _.each(userIssues, function(issue) { %>
-        <div class="col-md-6"><div class="issues issue-<%= issue.state %>">
-          <p class="issue-title">
-            <a href="/issues/<%= issue.number %>"><span class="issue-number">Issue <%= issue.number %></span>: <%- issue.title %></a>
-          </p>
-          <p class="issue-metadata">Opened: <time><%= issue.createdAt %></time>, comments: <%= issue.commentsNumber %></p>
-        </div></div>
-        <% }); %>
-      <% } else { %>
-      <p>Nothing reported yet!</p>
-      <% } %>
-      </script>
+    {% include "browse-issues/my-issues.html" %}
+    <div class="row">
+      {% include "browse-issues/untriaged.html" %}
+      {% include "browse-issues/needs-diagnosis.html" %}
     </div>
     <div class="row">
-      <div id="untriaged" class="col-md-6">
-        <script type="text/template" id="untriaged-tmpl">
-        <h3 class="h5">Untriaged Issues</h3>
-        <% if (untriaged.length) { %>
-          <% _.each(untriaged, function(issue) { %>
-          <div class="issues issue-untriaged">
-            <p class="issue-title">
-              <a href="/issues/<%= issue.number %>"><span class="issue-number">Issue <%= issue.number %></span>: <%- issue.title %></a>
-            </p>
-            <p class="issue-metadata">Opened: <time><%= issue.createdAt %></time>, comments: <%= issue.commentsNumber %></p>
-          </div>
-          <% }); %>
-        <% } else { %>
-        <p>Nothing here currently, cool!</p>
-        <% } %>
-        </script>
-      </div>
-      <div id="needs-diagnosis" class="col-md-6">
-        <script type="text/template" id="needs-diagnosis-tmpl">
-        <h3 class="h5">Needs Diagnosis</h3>
-        <% if (needsDiagnosis.length) { %>
-          <% _.each(needsDiagnosis, function(issue) { %>
-          <div class="issues issue-needs-diagnosis">
-            <p class="issue-title">
-              <a href="/issues/<%= issue.number %>"><span class="issue-number">Issue <%= issue.number %></span>: <%- issue.title %></a>
-            </p>
-            <p class="issue-metadata">Opened: <time><%= issue.createdAt %></time>, comments: <%= issue.commentsNumber %></p>
-          </div>
-          <% }); %>
-        <% } else { %>
-        <p>Nothing here currently, please help <a href="https://github.com/webcompat/web-bugs/issues?labels=contactready">reach out to sites!</a></p>
-        <% } %>
-        </script>
-      </div>
+     {% include "browse-issues/needs-diagnosis.html" %}
+     {% include "browse-issues/ready-for-outreach.html" %}
     </div>
-    <div class="row">
-      <div id="ready-for-outreach" class="col-md-6">
-        <script type="text/template" id="contactready-tmpl">
-        <h3 class="h5">Ready for Outreach</h3>
-        <% if (contactReady.length) { %>
-          <% _.each(contactReady, function(issue) { %>
-          <div class="issues issue-contactready">
-            <p class="issue-title">
-              <a href="/issues/<%= issue.number %>"><span class="issue-number">Issue <%= issue.number %></span>: <%- issue.title %></a>
-            </p>
-            <p class="issue-metadata">Opened: <time><%= issue.createdAt %></time>, comments: <%= issue.commentsNumber %></p>
-          </div>
-          <% }); %>
-        <% } else { %>
-        <p>Nothing here currently, please help <a href="https://github.com/webcompat/web-bugs/issues?state=needsdiagnosis">diagnose issues!</a></p>
-        <% } %>
-      </div>
-      </script>
-    </div>
-    <div id="sitewait" class="col-md-6">
-      <script type="text/template" id="sitewait-tmpl">
-      <h3 class="h5">Site Contacted</h3>
-      <% if (sitewait.length) { %>
-        <% _.each(sitewait, function(issue) { %>
-        <div class="issues issue-sitewait">
-          <p class="issue-title">
-            <a href="/issues/<%= issue.number %>"><span class="issue-number">Issue <%= issue.number %></span>: <%- issue.title %></a>
-          </p>
-          <p class="issue-metadata">Opened: <time><%= issue.createdAt %></time>, comments: <%= issue.commentsNumber %></p>
-        </div>
-        <% }); %>
-      <% } else { %>
-      <p>Nothing here currently, please help <a href="https://github.com/webcompat/web-bugs/issues?labels=contactready">reach out to sites!</a></p>
-      <% } %>
-      </script>
-    </div>
-    <div class="row">
-      <p class="more-issues"><a href="https://github.com/webcompat/web-bugs/issues?state=open">See More</a></p>
-    </div>
+    <p class="more-issues"><a href="https://github.com/webcompat/web-bugs/issues?state=open">See More</a></p>
   </div>
 </div>
