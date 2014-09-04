@@ -211,7 +211,7 @@ input[type=search] {
 #browse-issues {
   padding-bottom: 2em;
 }
-#threesteps {
+.Threesteps {
   padding: 1em 0;
 }
 #join p {
@@ -238,7 +238,6 @@ input[type=search] {
   font-size: 2em;
   font-weight: 700;
   padding: 0.2em 0.75em 0.5em 0.5em;
-  display: table-cell;
 }
 
 @media (--viewport-950px) {
@@ -252,10 +251,10 @@ input[type=search] {
     padding-bottom: 0;
   }
 }
-#join img, .bignumber {
+#join img {
   float: left;
 }
-.bignumber + p, #threeways img + p {
+#threeways img + p {
   padding: 0.6em;
   display: table-cell;
 }
