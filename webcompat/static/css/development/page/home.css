@@ -231,7 +231,7 @@ input[type=search] {
     padding: 2em 1em;
   }
 }
-#threeways {
+.Threeways {
   vertical-align: top;
 }
 .bignumber {
@@ -254,7 +254,7 @@ input[type=search] {
 #join img {
   float: left;
 }
-#threeways img + p {
+.Threeways img + p {
   padding: 0.6em;
   display: table-cell;
 }
