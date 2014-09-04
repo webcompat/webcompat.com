@@ -14,7 +14,6 @@
 @import "components/Grid.css";
 @import "../../../../node_modules/suitcss-utils-size/index.css";
 @import "../../../../node_modules/suitcss-utils-display/index.css";
-@import "../../../../node_modules/suitcss-components-arrange/index.css";
 @import "../../../../node_modules/suitcss-utils-align/index.css";
 /*----------Layout----------*/
 @import "layout/body.css";

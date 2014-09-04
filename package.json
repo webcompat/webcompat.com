@@ -23,7 +23,6 @@
     "suitcss-components-grid" : "*",
     "suitcss-utils-size" : "*",
     "suitcss-utils-display" : "*",
-    "suitcss-components-arrange" : "*",
     "suitcss-utils-align" : "*"
   }
 }
