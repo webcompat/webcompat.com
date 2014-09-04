@@ -274,9 +274,6 @@ label, .label {
   font-weight: 700;
   font-size: inherit;
 }
-label {
-  float: left;
-}
 
 @media (--viewport-990px) {
   label {
@@ -361,8 +358,11 @@ form .button {
   text-align: left;
 }
 /* `ruby -e 'puts "skcah top yenoh".reverse'` */
-.col-dm-12 {
+.u-hidden {
   display: none !important;
+}
+.u-formGroup {
+  margin-bottom:15px;
 }
 /*------Form Validation------*/
 .has-error .form-control {
