@@ -21,6 +21,7 @@
     "grunt-contrib-imagemin": "~0.7.1",
     "grunt-cssnext" : "^0.1.1",
     "suitcss-components-grid" : "*",
-    "suitcss-utils-size" : "*"
+    "suitcss-utils-size" : "*",
+    "suitcss-utils-display" : "*"
   }
 }

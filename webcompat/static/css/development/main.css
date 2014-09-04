@@ -13,6 +13,7 @@
 @import "../../../../node_modules/suitcss-components-grid/index.css";
 @import "components/Grid.css";
 @import "../../../../node_modules/suitcss-utils-size/index.css";
+@import "../../../../node_modules/suitcss-utils-display/index.css";
 /*----------Layout----------*/
 @import "layout/body.css";
 @import "layout/header.css";
