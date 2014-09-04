@@ -30,6 +30,12 @@
   --Button-disabled-opacity : 0.5; /* button opacity disabled*/
 }
 
+/* Grid configuration */
+:root {
+  --Grid-font-size : 1.6rem;
+  --Grid-gutter-size : 2%;
+}
+
 /* Custom media queries */
 @custom-media --viewport-330px all and (max-width: 20.615em);
 @custom-media --viewport-375px all and (max-width: 23.4275em);
