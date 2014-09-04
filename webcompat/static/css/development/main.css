@@ -15,6 +15,7 @@
 @import "../../../../node_modules/suitcss-utils-size/index.css";
 @import "../../../../node_modules/suitcss-utils-display/index.css";
 @import "../../../../node_modules/suitcss-utils-align/index.css";
+@import "components/form.css";
 /*----------Layout----------*/
 @import "layout/body.css";
 @import "layout/header.css";

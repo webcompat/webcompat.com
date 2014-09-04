@@ -125,6 +125,10 @@
 .form-closed {
   display: none;
 }
+.has-error .help-inline {
+  color: #F00;
+  float: right;
+}
 /*-------Browse Issues------*/
 #browse-issues-wrapper {
   background-color: #f0f0f0;
@@ -189,10 +193,17 @@
   text-align: center;
   clear: left;
 }
-#my-issues h3 {
+#my-issues .wc-titleIssue {
   padding-left: 15px;
   padding-right: 15px;
 }
+.wc-titleIssue {
+  font-size:14px;
+  margin-top:10px;
+  margin-bottom:10px;
+  font-weight:500;
+}
+
 /*---Search on Github---*/
 input[type=search] {
   float: left;
@@ -260,7 +271,8 @@ input[type=search] {
 textarea {
   overflow: auto;
 }
-label, .label {
+.label {
+  display:inline-block;
   color: #000;
   margin-bottom: 5px;
   font-weight: 700;
@@ -283,7 +295,7 @@ form.cf {
   margin-left: 0;
   margin-bottom: 1em;
 }
-.form-control {
+.u-formInput {
   border-radius: 20px;
   padding: 0.5em;
 }
@@ -295,10 +307,12 @@ form .button {
 }
 #submitanon {
   float: left;
+  font-size:14px;
 }
 #submitgithub {
   float: right;
   margin: 0 auto;
+  font-size:14px;
 }
 #submitdiv {
   display: block;
@@ -317,26 +331,20 @@ form .button {
   white-space: nowrap;
 }
 .radio, .radio-inline {
-  padding-left: 15px;
-  margin-right: 8px;
-  margin-left: 8px;
   width:100%;
   height: 34px;
   position: relative;
+  display: inline-block;
+  margin-bottom: 0px;
+  vertical-align: middle;
+  font-weight: 400;
+  cursor: pointer;
 }
-.radio label, .radio-inline label {
+.radio label,
+.radio-inline label {
+  display: inline-block;
+  vertical-align: middle;
   font-weight: 300;
-  float: none;
-}
-.radio input,
-.radio-inline input {
-  position: absolute;
-  left: 10px;
-  top: 0px;
-}
-/* bootstrap override */
-.radio-inline + .radio-inline {
-  margin-left: 8px;
 }
 #site-owner {
   display:block;
@@ -350,10 +358,10 @@ form .button {
   margin-bottom:1.6em;
 }
 /*------Form Validation------*/
-.has-error .form-control {
+.has-error .u-formInput {
   border-color: #ff0000;
 }
-.has-error .form-control:focus{
+.has-error .u-formInput:focus{
   border-color: #ff0000;
   box-shadow:none;
 }
@@ -399,10 +407,10 @@ form .button {
 .no-error .help-inline {
   display: none;
 }
-.no-error .form-control {
+.no-error .u-formInput {
   border-color: var(--wc-background-dark);
 }
-.no-error .form-control:focus{
+.no-error .u-formInput:focus{
   border-color: var(--wc-background-dark);
   box-shadow:none;
 }
