@@ -104,6 +104,7 @@ p {
 /*----------Link Styles----------*/
 a {
   color: var(--base-link-color);
+  text-decoration:none;
 }
 a:hover, a:focus {
   color: var(--base-link-color);
