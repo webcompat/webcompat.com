@@ -20,6 +20,7 @@
     "intern": "2.0.1",
     "grunt-contrib-imagemin": "~0.7.1",
     "grunt-cssnext" : "^0.1.1",
-    "suitcss-components-grid" : "*"
+    "suitcss-components-grid" : "*",
+    "suitcss-utils-size" : "*"
   }
 }
