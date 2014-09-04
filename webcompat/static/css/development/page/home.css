@@ -362,7 +362,7 @@ form .button {
   display: none !important;
 }
 .u-formGroup {
-  margin-bottom:15px;
+  margin-bottom:1.6em;
 }
 /*------Form Validation------*/
 .has-error .form-control {
