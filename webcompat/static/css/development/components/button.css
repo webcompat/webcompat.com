@@ -11,7 +11,7 @@
   vertical-align: middle;
   cursor: pointer;
   white-space: nowrap;
-  font-size: .8;
+  font-size: inherit;
   line-height: normal;
 
 }
