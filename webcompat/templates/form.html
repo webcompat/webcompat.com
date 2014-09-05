@@ -29,7 +29,7 @@
     <div class="Grid Grid--withGutter">
       <div class="Grid-cell u-size1of2 u-md-sizeFull">
         <div class="u-formGroup">
-          <p id="site-owner" class="label">Is this your site?</p>
+          <label id="site-owner" class="u-formLabel">Is this your site?</label>
           {% for subradio in form.site_owner %}
           <div class="radio-inline">
             {{ subradio }} {{ subradio.label }}
@@ -39,7 +39,7 @@
       </div>
       <div class="Grid-cell u-size1of2 u-md-sizeFull">
         <div class="u-formGroup">
-          <p class="label">What seems to be the trouble?</p>
+          <label class="u-formLabel">What seems to be the trouble?</label>
           {% for subradio in form.problem_category %}
           <div class="radio">
             {{ subradio }} {{ subradio.label }}
