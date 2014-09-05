@@ -29,11 +29,13 @@ define([
         .end()
         .findByCssSelector('.wc-content--body h2').getVisibleText()
         .then(function (text) {
+          // Make sure we got to the /thanks/<number> route
           assert.equal(text, 'Thank you.');
         })
         .end()
         .findByCssSelector('.wc-content--body a').getVisibleText()
         .then(function (text) {
+          // Grab the issue number from the end of the URL link
           issueNumber = text.split('/').pop();
         })
         .end()
@@ -41,14 +43,16 @@ define([
         .end()
         .findByCssSelector('.js-issue-title').getVisibleText()
         .then(function (text) {
+          // Make sure GitHub has the correct title
           assert.equal(text, 'miketaylr.com - Hello from Intern');
         })
         .end()
         .findByCssSelector('.gh-header-number').getVisibleText()
         .then(function (text) {
+          // Make sure GitHub has the correct issue number
           assert.equal(text, '#' + issueNumber);
         })
-    },
+    }
 
   });
 });
