@@ -1,71 +1,83 @@
 <div id="new-report" class="form {% if form.errors %}form-opened{% else %}form-closed{% endif %}">
   <div class="wc-content wc-content--body">
   <form method="post" class="cf" action="/">
-    <div class="row">
-      <div class="form-group col-md-6 {% if form.url.errors %}has-error{% endif %}">
-        {{ form.url.label }}
-        {% if form.url.errors %}{% for error in form.url.errors %}
-        <span class="help-inline wc-bold">{{ error }}</span>
-        {% endfor %}{% endif %}
-        <span class="validation-wrapper">
-          {{ form.url(class_='form-control required',
-                      placeholder='e.g., http://www.example.com', required=True) }}
-        </span>
+    <div class="Grid Grid--withGutter">
+      <div class="Grid-cell u-size1of2 u-md-sizeFull {% if form.url.errors %}has-error{% endif %}">
+        <div class="u-formGroup">
+          {{ form.url.label(class_='u-formLabel') }}
+          {% if form.url.errors %}{% for error in form.url.errors %}
+          <span class="help-inline wc-bold">{{ error }}</span>
+          {% endfor %}{% endif %}
+          <span class="validation-wrapper">
+            {{ form.url(class_='u-formInput required',
+                        placeholder='e.g., http://www.example.com', required=True) }}
+          </span>
+        </div>
       </div>
-      <div class="form-group col-md-6 {% if form.summary.errors %}has-error{% endif %}">
-        {{ form.summary.label }}{% if form.summary.errors %}{% for error in form.summary.errors %}
-        <span class="help-inline wc-bold">{{ error }}</span>
-        {% endfor %}{% endif %}
-        <span class="validation-wrapper">
-          {{ form.summary(class_='form-control required',
+      <div class="Grid-cell u-size1of2 u-md-sizeFull {% if form.summary.errors %}has-error{% endif %}">
+        <div class="u-formGroup">
+          {{ form.summary.label(class_='u-formLabel') }}{% if form.summary.errors %}{% for error in form.summary.errors %}
+          <span class="help-inline wc-bold">{{ error }}</span>
+          {% endfor %}{% endif %}
+          <span class="validation-wrapper">
+            {{ form.summary(class_='u-formInput required',
                           placeholder='e.g., Website images are upside down', required=True) }}
-        </span>
-      </div>
-    </div>
-    <div class="row">
-      <div class="form-group col-md-6">
-        <p id="site-owner" class="label">Is this your site?</p>
-        {% for subradio in form.site_owner %}
-        <div class="radio-inline">
-          {{ subradio.label }} {{ subradio }}
+          </span>
         </div>
-        {% endfor %}
       </div>
-      <div class="form-group col-md-6">
-        <p class="label">What seems to be the trouble?</p>
-        {% for subradio in form.problem_category %}
-        <div class="radio">
-          {{ subradio.label }} {{ subradio }}
+    </div>
+    <div class="Grid Grid--withGutter">
+      <div class="Grid-cell u-size1of2 u-md-sizeFull">
+        <div class="u-formGroup">
+          <label id="site-owner" class="u-formLabel">Is this your site?</label>
+          {% for subradio in form.site_owner %}
+          <div class="radio-inline">
+            {{ subradio }} {{ subradio.label }}
+          </div>
+          {% endfor %}
         </div>
-        {% endfor %}
+      </div>
+      <div class="Grid-cell u-size1of2 u-md-sizeFull">
+        <div class="u-formGroup">
+          <label class="u-formLabel">What seems to be the trouble?</label>
+          {% for subradio in form.problem_category %}
+          <div class="radio">
+            {{ subradio }} {{ subradio.label }}
+          </div>
+          {% endfor %}
+        </div>
       </div>
     </div>
-    <div class="row">
-      <div class="form-group col-md-6">
-        {{ form.browser.label }} {{ form.browser(class_='form-control') }}
+    <div class="Grid Grid--withGutter">
+      <div class="Grid-cell u-size1of2 u-md-sizeFull">
+        <div class="u-formGroup">
+          {{ form.browser.label(class_='u-formLabel') }} {{ form.browser(class_='u-formInput') }}
+        </div>
       </div>
-      <div class="form-group col-md-6">
-        {{ form.os.label }} {{ form.os(class_='form-control') }}
+      <div class="Grid-cell u-size1of2 u-md-sizeFull">
+        <div class="u-formGroup">
+          {{ form.os.label(class_='u-formLabel') }} {{ form.os(class_='u-formInput') }}
+        </div>
       </div>
     </div>
-    <div class="row">
-      <div class="form-group col-md-12">
-        {{ form.description.label }} {{ form.description(class_='form-control', rows=7) }}
+    <div>
+      <div class="u-formGroup">
+        {{ form.description.label(class_='u-formLabel ') }} {{ form.description(class_='u-formInput u-formInput-heightAuto', rows=7) }}
       </div>
     </div>
-    <div class="row col-dm-12" aria-hidden="true">
-      <div class="form-group col-md-12 {% if form.summary.errors %}has-error{% endif %}">
+    <div class="u-hidden" aria-hidden="true">
+      <div class="u-formGroup {% if form.summary.errors %}has-error{% endif %}">
         {{ form.username.label }}{% if form.username.errors %}{% for error in form.username.errors %}
         <span class="help-inline wc-bold">{{ error }}</span>
         {% endfor %}{% endif %}
-        {{ form.username(class_='form-control') }}
+        {{ form.username(class_='u-formInput') }}
       </div>
     </div>
-    <div class="row">
-      <div class="col-md-6 submit">
+    <div class="Grid Grid--withGutter">
+      <div class="Grid-cell u-size1of2 u-md-sizeFull">
           <button name="submit-type" value="github-auth-report" class="btn Button Button--default" id="submitgithub" type="submit">Report via Github</button>
       </div>
-      <div class="col-md-6 submit">
+      <div class="Grid-cell u-size1of2 u-md-sizeFull">
           <button name="submit-type" value="github-proxy-report" class="btn Button Button--action" id="submitanon">Report Anonymously</button>
       </div>
     </div>

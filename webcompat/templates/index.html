@@ -12,18 +12,38 @@
 {% include "form.html" %}
   <div id="howitworks" class="wc-content">
     <h2>How It Works</h2>
-    <div class="row" id="threesteps">
-      <div class="col-md-4 col-sm-4 col-xs-12">
-        <span class="bignumber">1</span>
-        <p>Report a bug for any website or browser.</p>
-      </div>
-      <div class="col-md-4 col-sm-4 col-xs-12">
-        <span class="bignumber">2</span>
-        <p>Our team of volunteers diagnoses the bug.</p>
-      </div>
-      <div class="col-md-4 col-sm-4 col-xs-12">
-        <span class="bignumber">3</span>
-        <p>We send a fix to the site owner or browser.</p>
+    <div class="Threesteps">
+      <div class="Grid Grid--withGutter">
+        <div class="Grid-cell u-size4of12 u-md-sizeFull">
+          <div class="u-table">
+            <div class="u-tableCell u-alignMiddle">
+             <span class="bignumber">1</span>
+            </div>
+              <div class="u-tableCell u-alignMiddle">
+                <p>Report a bug for any website or browser.</p>
+              </div>
+          </div>
+        </div>
+        <div class="Grid-cell u-size4of12 u-md-sizeFull">
+          <div class="u-table">
+            <div class="u-tableCell u-alignMiddle">
+              <span class="bignumber">2</span>
+            </div>
+            <div class="u-tableCell u-alignMiddle">
+              <p>Our team of volunteers diagnoses the bug.</p>
+            </div>
+          </div>
+        </div>
+        <div class="Grid-cell u-size4of12 u-md-sizeFull">
+          <div class="u-table">
+            <div class="u-tableCell u-alignMiddle">
+              <span class="bignumber">3</span>
+            </div>
+            <div class="u-tableCell u-alignMiddle">
+              <p>We send a fix to the site owner or browser.</p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -34,20 +54,40 @@
     <h2>Join The Team</h2>
     <p>Webcompat.com is a gathering place for the web compatibility community.  This site is a place to report bugs from any website across the web - whether you are a developer or not.  Started by the Mozilla Web Compatibility team, this initiative is a global task force on a mission to improve the web one bug at a time.  Join us!  Let&#39;s work together to make the web a better place to work and play. <a href="{{ url_for("about") }}">Learn More.</a></p>
     <p class="wc-bold">Three Ways to Contribute \o/</p>
-    <div class="row" id="threeways">
-      <div class="col-md-4 col-sm-4 col-xs-12">
-        <img src="../img/step1icon.png" alt="Report bugs">
-        <p><a id="report-bug-link" href="{{ url_for("index") }}">Report bugs</a></p>
+    <div class="Threeways">
+      <div class="Grid Grid--withGutter">
+        <div class="Grid-cell u-size4of12 u-sm-sizeFull">
+          <div class="u-table">
+            <div class="u-tableCell u-alignMiddle">
+              <img src="../img/step1icon.png" alt="Report bugs">
+            </div>
+            <div class="u-tableCell u-alignMiddle">
+              <p><a id="report-bug-link" href="{{ url_for("index") }}">Report bugs</a></p>
+            </div>
+          </div>
+        </div>
+        <div class="Grid-cell u-size4of12 u-sm-sizeFull">
+          <div class="u-table">
+            <div class="u-tableCell u-alignMiddle">
+              <img src="../img/step2icon.png" alt="Diagnose bugs">
+            </div>
+            <div class="u-tableCell u-alignMiddle">
+              <p><a href="https://github.com/webcompat/web-bugs/issues?state=open">Diagnose bugs</a></p>
+            </div>
+          </div>
+        </div>
+        <div class="Grid-cell u-size4of12 u-sm-sizeFull">
+          <div class="u-table">
+            <div class="u-tableCell u-alignMiddle">
+              <img src="../img/step3icon.png" alt="Reach out to sites">
+            </div>
+            <div class="u-tableCell u-alignMiddle">
+              <p><a href="https://github.com/webcompat/web-bugs/issues?labels=contactready">Reach out to sites</a></p>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="col-md-4 col-sm-4 col-xs-12">
-        <img src="../img/step2icon.png" alt="Diagnose bugs">
-        <p><a href="https://github.com/webcompat/web-bugs/issues?state=open">Diagnose bugs</a></p>
-      </div>
-      <div class="col-md-4 col-sm-4 col-xs-12">
-        <img src="../img/step3icon.png" alt="Reach out to sites">
-        <p><a href="https://github.com/webcompat/web-bugs/issues?labels=contactready">Reach out to sites</a></p>
-      </div>
-    </div>
+  </div>
 </div>
 {% endblock %}
 {%- block extrascripts -%}

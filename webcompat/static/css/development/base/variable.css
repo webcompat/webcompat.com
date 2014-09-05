@@ -39,3 +39,7 @@
 @custom-media --viewport-950px all and (max-width: 59.365em);
 @custom-media --viewport-990px all and (max-width: 61.865em);
 @custom-media --viewport-1180px all and (max-width: 73.74em);
+/* */
+@custom-media --sm-viewport all and (max-width: 37.49em);
+@custom-media --md-viewport all and (max-width: 48.115em);
+@custom-media --lg-viewport all and (max-width: 73.74em);

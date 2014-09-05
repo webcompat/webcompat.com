@@ -1,0 +1,17 @@
+<div id="untriaged" class="Grid-cell u-size1of2 u-md-sizeFull">
+  <script type="text/template" id="untriaged-tmpl">
+  <h3 class="wc-titleIssue">Untriaged Issues</h3>
+  <% if (untriaged.length) { %>
+    <% _.each(untriaged, function(issue) { %>
+    <div class="issues issue-untriaged">
+      <p class="issue-title">
+        <a href="/issues/<%= issue.number %>"><span class="issue-number">Issue <%= issue.number %></span>: <%- issue.title %></a>
+      </p>
+      <p class="issue-metadata">Opened: <time><%= issue.createdAt %></time>, comments: <%= issue.commentsNumber %></p>
+    </div>
+    <% }); %>
+  <% } else { %>
+  <p>Nothing here currently, cool!</p>
+  <% } %>
+  </script>
+</div>

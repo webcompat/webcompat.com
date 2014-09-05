@@ -2,11 +2,12 @@
 
 
 .divider {
+  display: block;
   font-weight: 700;
   border-top: 5px solid var(--wc-background-dark);
   width: 30px;
-  margin-left: 5em;
   color: #fff;
+  margin: 1em 0 0;
 }
 
 /*--------Homepage Styles--------*/
@@ -119,12 +120,7 @@
   height: 1.15em;
   vertical-align: middle;
 }
-.form-opened {
-  display: block;
-}
-.form-closed {
-  display: none;
-}
+
 /*-------Browse Issues------*/
 #browse-issues-wrapper {
   background-color: #f0f0f0;
@@ -186,23 +182,21 @@
   font-size: 12px;
 }
 .more-issues {
-  margin-bottom: -23em;
   text-align: center;
   clear: left;
+  margin-top:25px;
 }
-#my-issues h3 {
+#my-issues .wc-titleIssue {
   padding-left: 15px;
   padding-right: 15px;
 }
-/*---Search on Github---*/
-input[type=search] {
-  float: left;
-  padding: 2em 3em;
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
-  color: #fdf3dd;
+.wc-titleIssue {
+  font-size:14px;
+  margin-top:10px;
+  margin-bottom:10px;
+  font-weight:500;
 }
+
 #howitworks,
 #join,
 #browse-issues {
@@ -212,7 +206,7 @@ input[type=search] {
 #browse-issues {
   padding-bottom: 2em;
 }
-#threesteps {
+.Threesteps {
   padding: 1em 0;
 }
 #join p {
@@ -232,14 +226,13 @@ input[type=search] {
     padding: 2em 1em;
   }
 }
-#threeways {
+.Threeways {
   vertical-align: top;
 }
 .bignumber {
   font-size: 2em;
   font-weight: 700;
   padding: 0.2em 0.75em 0.5em 0.5em;
-  display: table-cell;
 }
 
 @media (--viewport-950px) {
@@ -253,142 +246,28 @@ input[type=search] {
     padding-bottom: 0;
   }
 }
-#join img, .bignumber {
-  float: left;
-}
-.bignumber + p, #threeways img + p {
-  padding: 0.6em;
-  display: table-cell;
-}
 
 .maincontent {
   text-align: left;
   padding: 2em 5em;
-}
-/*------Forms-------*/
-textarea {
-  overflow: auto;
-}
-label, .label {
-  color: #000;
-  margin-bottom: 5px;
-  font-weight: 700;
-  font-size: inherit;
-}
-label {
-  float: left;
-}
-
-@media (--viewport-990px) {
-  label {
-    float: none;
-  }
-}
-.label {
-  padding-left: 0;
-}
-form.cf {
-
 }
 #new-report h2 {
   font: #fff;
   margin-left: 0;
   margin-bottom: 1em;
 }
-.form-control {
-  border-radius: 20px;
-  padding: 0.5em;
-}
-form .button {
-  margin-top: 0.25em;
-  margin-bottom: 0.5em;
-  padding-top: 0.25em;
-  padding-bottom: 0.25em;
-}
 #submitanon {
   float: left;
+  font-size:14px;
 }
 #submitgithub {
   float: right;
   margin: 0 auto;
+  font-size:14px;
 }
-#submitdiv {
-  display: block;
-  font-weight: 700;
-  border-top: 5px solid var(--wc-background-dark);
-  width: 30px;
-  margin: 1em 0 0;
-  color: #fff;
-  display: block;
-}
-.row {
-  padding: .5em;
-}
-.row:last-child p:not(.issue-metadata) {
-  margin-bottom: 0.5em;
-  color: #000;
-}
-
-/* bootstrap overrides */
-.radio-inline, .checkbox-inline {
-  /* Hack to get Chrome 24+ to behave.
-  See https://github.com/twbs/bootstrap/issues/6599 */
-  white-space: nowrap;
-}
-.radio, .radio-inline {
-  padding-left: 15px;
-  margin-right: 8px;
-  margin-left: 8px;
-  width:100%;
-  height: 34px;
-  position: relative;
-}
-.radio label, .radio-inline label {
-  font-weight: 300;
-  float: none;
-}
-.radio input,
-.radio-inline input {
-  position: absolute;
-  left: 10px;
-  top: 0px;
-}
-/* bootstrap override */
-.radio-inline + .radio-inline {
-  margin-left: 8px;
-}
-#site-owner {
-  display:block;
-  text-align: left;
-}
-/* `ruby -e 'puts "skcah top yenoh".reverse'` */
-.col-dm-12 {
-  display: none !important;
-}
-/*------Form Validation------*/
-.has-error .form-control {
-  border-color: #ff0000;
-}
-.has-error .form-control:focus{
-  border-color: #ff0000;
-  box-shadow:none;
-}
-.has-error .help-inline {
-  color: #ff0000;
-  float: right;
-}
-
 @media (--viewport-600px) {
   .flourish {
     display: none;
-  }
-
-  .submit {
-    float: left;
-    margin: 0 0 1em;
-  }
-  .col-md-6.submit, .col-md-6 button {
-    width: 100%;
   }
   .has-error .help-inline {
     float: none;
@@ -423,10 +302,10 @@ form .button {
 .no-error .help-inline {
   display: none;
 }
-.no-error .form-control {
+.no-error .u-formInput {
   border-color: var(--wc-background-dark);
 }
-.no-error .form-control:focus{
+.no-error .u-formInput:focus{
   border-color: var(--wc-background-dark);
   box-shadow:none;
 }

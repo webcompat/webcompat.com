@@ -65,7 +65,7 @@ function BugForm() {
       }
 
       inputMap[id].valid = false;
-      inputMap[id].elm.parents('.form-group')
+      inputMap[id].elm.parents('.u-formGroup')
                       .removeClass('no-error')
                       .addClass('has-error');
 
@@ -77,7 +77,7 @@ function BugForm() {
     },
     makeValid: function(id) {
       inputMap[id].valid = true;
-      inputMap[id].elm.parents('.form-group')
+      inputMap[id].elm.parents('.u-formGroup')
                       .removeClass('has-error')
                       .addClass('no-error');
       inputMap[id].elm.prev('.help-inline').remove();

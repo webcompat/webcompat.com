@@ -26,7 +26,6 @@
   <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon/favicon-196x196.png') }}" sizes="196x196">
   <meta name="msapplication-TileColor" content="#e4bc05">
   <meta name="msapplication-TileImage" content="{{ url_for('static', filename='favicon/mstile-144x144.png') }}">
-  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
 {%- if config.PRODUCTION -%}
   <link href="{{ url_for('static', filename='css/webcompat.min.css') }}?{{ bust_cache() }}" type="text/css" rel="stylesheet">
 {%- else %}
