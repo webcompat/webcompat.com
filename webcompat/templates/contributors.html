@@ -53,8 +53,8 @@ $(function(){
   var sections = $('.contributors__item__content');
   var ACTIVE_CLASS = 'is-active';
   var OPEN_CLASS = 'is-open';
-  $('.contributors__item__btn').click(function(){
-    $(this).toggleClass(ACTIVE_CLASS)
+  $('.contributors__item__title').click(function(){
+    $(this).find('.contributors__item__btn').toggleClass(ACTIVE_CLASS)
            .closest('.contributors__item').find('.contributors__item__content')
            .toggleClass(OPEN_CLASS)
     lightElm.toggleClass(ACTIVE_CLASS, sections.hasClass('is-open'));
