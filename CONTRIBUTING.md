@@ -2,15 +2,24 @@
 
 You are welcome to contribute to this project. Here are the guidelines we try to stick to in this project.
 
- * [Question or Problem?](#question-or-problem)
- * [Issues and Bugs](#filing-an-issue)
- * [Triaging Issues](#triaging-issues)
- * [Feature Requests](#feature-requests)
- * [Submission Guidelines](#submission-guidelines)
- * [Coding Style](#coding-style)
- * [Working Environment setup](#working-environment-setup)
- * [Installing Grunt](#installing-grunt)
- * [Running Tests](#running-tests)
+
+* [Question or Problem](#question-or-problem)
+* [Filing an Issue](#filing-an-issue)
+* [Triaging Issues](#triaging-issues)
+* [Feature Requests](#feature-requests)
+* [Submission Guidelines](#submission-guidelines)
+* [Coding Style](#coding-style)
+* [Working Environment setup](#working-environment-setup)
+  * [Simple setup](#simple-setup)
+  * [Detailed setup](#detailed-setup)
+    * [Installing virtualenv](#installing-virtualenv)
+    * [Installing Project source code](#installing-project-source-code)
+    * [Installing Grunt](#installing-grunt)
+    * [Configuring The Server](#configuring-the-server)
+    * [Starting The Server](#starting-the-server)
+* [Running Tests](#running-tests)
+  * [Functional Tests](#functional-tests)
+* [Acknowledgements](#acknowledgements)
 
 
 ## Question or Problem
@@ -93,16 +102,25 @@ When in doubt, follow the conventions you see used in the source already.
 
 ## Working Environment setup
 
-If you'd like to run the site locally, here's how you can get set up (which should work on Mac and Linux operating systems&mdash;instructions for Windows would make a great first contribution to this project!)
+For testing code locally, you will need a very basic setup. There are a few requirements. These instructions have been made for working with Linux and MacOSX. If you install it successfully on Windows, we will appreciate a pull request on this documentation.
 
-The only requirement is having [pip installed](http://pip.readthedocs.org/en/latest/installing.html) and, of course Python. If you want to test issue submission, you need to [get the secrets](https://github.com/webcompat/webcompat.com/blob/dev.webcompat.com/config.py.example#L24-L38) for config.py and provide pointers to [repo issues URIs](https://github.com/webcompat/webcompat.com/blob/dev.webcompat.com/config.py.example#L40-L44).
+* Python 2.7
+* node 0.10.0
+* Github account with a fake repo
+
+### Simple setup
+
+@@to write simple doc that would be using the Makefile@@
+
+### Detailed setup
+#### Installing virtualenv
 
 ``` bash
 # Install virtualenv
 [sudo] pip install virtualenv
 ```
 
-Now let's move on to the steps to grab the source code locally and work in a protected environment of python.
+#### Installing Project source code
 
 ``` bash
 # clone the repo
@@ -114,42 +132,57 @@ virtualenv env
 source env/bin/activate
 # install dependencies
 pip install -r requirements.txt
+```
+
+#### Installing Grunt
+
+We use [Grunt](http://gruntjs.com/) as a task runner to perform certain things (minify + concat JS assets, for example). You need to have [Node.js](http://nodejs.org/download/) installed to be able to run Grunt. Once that's done, use `npm` to install the grunt dependencies. Version 0.10.0 or above is required.
+
+First install the `grunt-cli` tool:
+
+``` bash
+[sudo] npm install -g grunt-cli
+[sudo] npm install
+grunt
+```
+
+#### Configuring The Server
+
+To test issue submission, you need to create a fake repo on github. Let's assume your username is `miketaylr`. Create a new repository called `nobody-look-at-this` (or the name of your choice).
+
+
+``` bash
 # set up config.py, filling in appropriate secrets and pointers to repos
 cp config.py.example config.py
+```
+
+You can now edit `config.py` and
+
+1. provide pointers to [repo issues URIs](https://github.com/webcompat/webcompat.com/blob/dev.webcompat.com/config.py.example#L40-L44). `ISSUES_REPO_URI = "<user>/<repo>/issues"`. With the example, we chose it would be `ISSUES_REPO_URI = "miketaylr/nobody-look-at-this/issues"`
+2. [get the secrets](https://github.com/webcompat/webcompat.com/blob/dev.webcompat.com/config.py.example#L24-L38) for config.py
+
+
+#### Starting The Server
+
+``` bash
 # start local server
 python run.py
 ```
 
 You should now have a local instance of the site running at `http://127.0.0.1:5000/`. Please [file bugs](https://github.com/webcompat/webcompat.com/issues/new) if something went wrong!
 
-Note: If you get a `TypeError: unhashable type` page when loading `http://127.0.0.1:5000/`, it means you've forgotten one of two (or both!) of the bare minimum config.py requirements:
+**Note**: If you get a `TypeError: unhashable type` page when loading `http://127.0.0.1:5000/`, it means you've forgotten one of two (or both!) of the bare minimum config.py requirements:
 
-* A non-production `ISSUES_REPO_URI`: https://github.com/webcompat/webcompat.com/blob/master/config.py.example#L57, e.g., "miketaylr/nobody-look-at-this/issues"
+* A non-production [`ISSUES_REPO_URI`](https://github.com/webcompat/webcompat.com/blob/master/config.py.example#L57) e.g., `miketaylr/nobody-look-at-this/issues`
+* [`BOT_OAUTH_TOKEN`](https://github.com/webcompat/webcompat.com/blob/master/config.py.example#L70)
 
-* `BOT_OAUTH_TOKEN`: https://github.com/webcompat/webcompat.com/blob/master/config.py.example#L64
+This is the oauth token we use to report issues on behalf of people who don't want to give GitHub oauth access (or don't have GitHub accounts). If you don't want to create another user for testing, you could put in your own access token.
 
-Note: If you get a 404 at GitHub when clicking "Login", it means you haven't filled in the `GITHUB_CLIENT_ID` or `GITHUB_CLIENT_SECRET` at https://github.com/webcompat/webcompat.com/blob/master/config.py.example#L47-L49.
+**Note**: If you get a 404 at GitHub when clicking "Login", it means you haven't [filled in the `GITHUB_CLIENT_ID` or `GITHUB_CLIENT_SECRET`](https://github.com/webcompat/webcompat.com/blob/master/config.py.example#L47-L49).
 
-You don't need to worry about the `TOKEN_MAP`&mdash;it's implemented in such a way to always fall back to the `BOT_OAUTH_TOKEN` token.
+You can ignore `TOKEN_MAP`—it's implemented in such a way to always fall back to the `BOT_OAUTH_TOKEN` token.
 
 ![Auth 404](https://i.cloudup.com/8FDA5bVc7l.png)
-
-
-## Installing Grunt
-
-We use [Grunt](http://gruntjs.com/) as a task runner to perform certain things (minify + concat JS assets, for example).
-
-You need to have [Node.js](http://nodejs.org/download/) installed to be able to run Grunt. Once that's done, use `npm` to install the grunt dependencies. Version 0.10.0 or above is required.
-
-First install the `grunt-cli` tool:
-
-`[sudo] npm install -g grunt-cli`
-
-Then, from the project root:
-
-`npm install`
-
-You can then use the `grunt` command to run grunt tasks. `grunt --help` will list all the tasks.
 
 ## Running Tests
 
