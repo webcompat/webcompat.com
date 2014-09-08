@@ -5,7 +5,8 @@
 define([
   './lib/index',
   './lib/issues',
-  './lib/reporting'
+  './lib/reporting',
+  './lib/contributors'
 ], function () {
   'use strict';
 });
