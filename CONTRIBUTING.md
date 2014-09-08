@@ -2,15 +2,24 @@
 
 You are welcome to contribute to this project. Here are the guidelines we try to stick to in this project.
 
- * [Question or Problem?](#question-or-problem)
- * [Issues and Bugs](#filing-an-issue)
- * [Triaging Issues](#triaging-issues)
- * [Feature Requests](#feature-requests)
- * [Submission Guidelines](#submission-guidelines)
- * [Coding Style](#coding-style)
- * [Working Environment setup](#working-environment-setup)
- * [Installing Grunt](#installing-grunt)
- * [Running Tests](#running-tests)
+
+* [Question or Problem](#question-or-problem)
+* [Filing an Issue](#filing-an-issue)
+* [Triaging Issues](#triaging-issues)
+* [Feature Requests](#feature-requests)
+* [Submission Guidelines](#submission-guidelines)
+* [Coding Style](#coding-style)
+* [Working Environment setup](#working-environment-setup)
+  * [Simple setup](#simple-setup)
+  * [Detailed setup](#detailed-setup)
+    * [Installing virtualenv](#installing-virtualenv)
+    * [Installing Project source code](#installing-project-source-code)
+    * [Installing Grunt](#installing-grunt)
+    * [Configuring The Server](#configuring-the-server)
+    * [Starting The Server](#starting-the-server)
+* [Running Tests](#running-tests)
+  * [Functional Tests](#functional-tests)
+* [Acknowledgements](#acknowledgements)
 
 
 ## Question or Problem
@@ -165,7 +174,9 @@ You should now have a local instance of the site running at `http://127.0.0.1:50
 **Note**: If you get a `TypeError: unhashable type` page when loading `http://127.0.0.1:5000/`, it means you've forgotten one of two (or both!) of the bare minimum config.py requirements:
 
 * A non-production [`ISSUES_REPO_URI`](https://github.com/webcompat/webcompat.com/blob/master/config.py.example#L57) e.g., `miketaylr/nobody-look-at-this/issues`
-* [`BOT_OAUTH_TOKEN`](https://github.com/webcompat/webcompat.com/blob/master/config.py.example#L64)
+* [`BOT_OAUTH_TOKEN`](https://github.com/webcompat/webcompat.com/blob/master/config.py.example#L70)
+
+This is the oauth token we use to report issues on behalf of people who don't want to give GitHub oauth access (or don't have GitHub accounts). If you don't want to create another user for testing, you could put in your own access token.
 
 **Note**: If you get a 404 at GitHub when clicking "Login", it means you haven't [filled in the `GITHUB_CLIENT_ID` or `GITHUB_CLIENT_SECRET`](https://github.com/webcompat/webcompat.com/blob/master/config.py.example#L47-L49).
 
