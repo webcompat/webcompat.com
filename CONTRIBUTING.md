@@ -147,7 +147,7 @@ First install the `grunt-cli` tool:
 
 Then, from the project root:
 
-`npm install`
+`[sudo] npm install`
 
 You can then use the `grunt` command to run grunt tasks. `grunt --help` will list all the tasks.
 
