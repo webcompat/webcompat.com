@@ -1,6 +1,6 @@
 init:
 	echo "❯ Initializing..."
-	(sudo pip install virtualenv)
+	(pip install virtualenv)
 	(virtualenv env)
 	sh -c '. env/bin/activate; pip install -r requirements.txt'
 	(cp config.py.example config.py)
