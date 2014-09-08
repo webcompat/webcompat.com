@@ -101,7 +101,7 @@ For testing code locally, you will need a very basic setup. There are a few requ
 
 ### Simple setup
 
-@@to write@@
+@@to write simple doc that would be using the Makefile@@
 
 ### Detailed setup
 #### Installing virtualenv
@@ -139,7 +139,7 @@ grunt
 
 #### Configuring The Server
 
-To test issue submission, you need to create a fake repo on github. Let's assume your username is `tamalaSpaceCat`. Create a new repository called `spacepunk` (or the name of your choice).
+To test issue submission, you need to create a fake repo on github. Let's assume your username is `miketaylr`. Create a new repository called `nobody-look-at-this` (or the name of your choice).
 
 
 ``` bash
@@ -149,7 +149,7 @@ cp config.py.example config.py
 
 You can now edit `config.py` and
 
-1. provide pointers to [repo issues URIs](https://github.com/webcompat/webcompat.com/blob/dev.webcompat.com/config.py.example#L40-L44). `ISSUES_REPO_URI = "<user>/<repo>/issues"`. With the example, we chose it would be `ISSUES_REPO_URI = "tamalaSpaceCat/spacepunk/issues"`
+1. provide pointers to [repo issues URIs](https://github.com/webcompat/webcompat.com/blob/dev.webcompat.com/config.py.example#L40-L44). `ISSUES_REPO_URI = "<user>/<repo>/issues"`. With the example, we chose it would be `ISSUES_REPO_URI = "miketaylr/nobody-look-at-this/issues"`
 2. [get the secrets](https://github.com/webcompat/webcompat.com/blob/dev.webcompat.com/config.py.example#L24-L38) for config.py
 
 
@@ -162,15 +162,14 @@ python run.py
 
 You should now have a local instance of the site running at `http://127.0.0.1:5000/`. Please [file bugs](https://github.com/webcompat/webcompat.com/issues/new) if something went wrong!
 
-Note: If you get a `TypeError: unhashable type` page when loading `http://127.0.0.1:5000/`, it means you've forgotten one of two (or both!) of the bare minimum config.py requirements:
+**Note**: If you get a `TypeError: unhashable type` page when loading `http://127.0.0.1:5000/`, it means you've forgotten one of two (or both!) of the bare minimum config.py requirements:
 
-* A non-production `ISSUES_REPO_URI`: https://github.com/webcompat/webcompat.com/blob/master/config.py.example#L57, e.g., "miketaylr/nobody-look-at-this/issues"
+* A non-production [`ISSUES_REPO_URI`](https://github.com/webcompat/webcompat.com/blob/master/config.py.example#L57) e.g., `miketaylr/nobody-look-at-this/issues`
+* [`BOT_OAUTH_TOKEN`](https://github.com/webcompat/webcompat.com/blob/master/config.py.example#L64)
 
-* `BOT_OAUTH_TOKEN`: https://github.com/webcompat/webcompat.com/blob/master/config.py.example#L64
+**Note**: If you get a 404 at GitHub when clicking "Login", it means you haven't [filled in the `GITHUB_CLIENT_ID` or `GITHUB_CLIENT_SECRET`](https://github.com/webcompat/webcompat.com/blob/master/config.py.example#L47-L49).
 
-Note: If you get a 404 at GitHub when clicking "Login", it means you haven't filled in the `GITHUB_CLIENT_ID` or `GITHUB_CLIENT_SECRET` at https://github.com/webcompat/webcompat.com/blob/master/config.py.example#L47-L49.
-
-You don't need to worry about the `TOKEN_MAP`&mdash;it's implemented in such a way to always fall back to the `BOT_OAUTH_TOKEN` token.
+You can ignore `TOKEN_MAP`—it's implemented in such a way to always fall back to the `BOT_OAUTH_TOKEN` token.
 
 ![Auth 404](https://i.cloudup.com/8FDA5bVc7l.png)
 
