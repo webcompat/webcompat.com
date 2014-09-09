@@ -97,6 +97,7 @@
 .contributors__item__btn {
   border:none;
   padding:0;
+  font-size:1em;
 }
 /* icon header, default state */
 .icon--contributors {
