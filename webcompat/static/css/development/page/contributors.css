@@ -102,7 +102,7 @@
 /* icon header, default state */
 .icon--contributors {
   margin-left:.3em;
-  opacity:.8;
+  opacity:.5;
 }
 .icon--contributors:before {
   content: "\f067";
