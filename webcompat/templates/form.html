@@ -1,6 +1,6 @@
 <div id="new-report" class="form {% if form.errors %}form-opened{% else %}form-closed{% endif %}">
   <div class="wc-content wc-content--body">
-  <form method="post" class="cf" action="/">
+  <form method="post" class="Report-form" action="/">
     <div class="Grid Grid--withGutter">
       <div class="Grid-cell u-size1of2 u-md-sizeFull {% if form.url.errors %}has-error{% endif %}">
         <div class="u-formGroup">
@@ -73,12 +73,12 @@
         {{ form.username(class_='u-formInput') }}
       </div>
     </div>
-    <div class="Grid Grid--withGutter">
-      <div class="Grid-cell u-size1of2 u-md-sizeFull">
-          <button name="submit-type" value="github-auth-report" class="btn Button Button--default" id="submitgithub" type="submit">Report via Github</button>
+    <div class="Grid Grid--withGutter Button-group">
+      <div class="Grid-cell u-size1of2 u-sm-sizeFull Button-github">
+          <button name="submit-type" value="github-auth-report" class="Button Button--default" id="submitgithub" type="submit">Report via Github</button>
       </div>
-      <div class="Grid-cell u-size1of2 u-md-sizeFull">
-          <button name="submit-type" value="github-proxy-report" class="btn Button Button--action" id="submitanon">Report Anonymously</button>
+      <div class="Grid-cell u-size1of2 u-sm-sizeFull Button-anon">
+          <button name="submit-type" value="github-proxy-report" class="Button Button--action" id="submitanon">Report Anonymously</button>
       </div>
     </div>
     <p class="divider" id="submitdiv">___</p>

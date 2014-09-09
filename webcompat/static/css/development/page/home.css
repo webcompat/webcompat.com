@@ -256,14 +256,11 @@
   margin-left: 0;
   margin-bottom: 1em;
 }
-#submitanon {
-  float: left;
-  font-size:14px;
+.Report-form .Button {
+    font-size:14px;
 }
-#submitgithub {
-  float: right;
-  margin: 0 auto;
-  font-size:14px;
+.Report-form .Button-github {
+  text-align:right;
 }
 @media (--viewport-600px) {
   .flourish {
@@ -272,6 +269,9 @@
   .has-error .help-inline {
     float: none;
     display: block;
+  }
+  .Report-form .Button-group .Grid-cell {
+    text-align:center !important;
   }
 }
 .validation-wrapper {
