@@ -11,12 +11,14 @@ You are welcome to contribute to this project. Here are the guidelines we try to
 * [Coding Style](#coding-style)
 * [Working Environment setup](#working-environment-setup)
   * [Simple setup](#simple-setup)
+    * [Installing Project source code](#initializing-project-source-code)
   * [Detailed setup](#detailed-setup)
     * [Installing virtualenv](#installing-virtualenv)
     * [Installing Project source code](#installing-project-source-code)
     * [Installing Grunt](#installing-grunt)
-    * [Configuring The Server](#configuring-the-server)
-    * [Starting The Server](#starting-the-server)
+  * [Configuring The Server](#configuring-the-server)
+  * [Starting The Server](#starting-the-server)
+* [Coding](#coding)
 * [Running Tests](#running-tests)
   * [Functional Tests](#functional-tests)
 * [Acknowledgements](#acknowledgements)
@@ -109,11 +111,23 @@ For testing code locally, you will need a very basic setup. There are a few requ
 * Github account with a fake repo
 
 ### Simple setup
+#### Initializing Project source code
 
-@@to write simple doc that would be using the Makefile@@
+We use [Grunt](http://gruntjs.com/) as a task runner to perform certain things (minify + concat JS assets, for example). You need to have [Node.js](http://nodejs.org/download/) installed to be able to run Grunt.
+
+``` bash
+# clone the repo
+git clone git@github.com:webcompat/webcompat.com.git
+# change to directory
+cd webcompat.com
+# initializing project
+[sudo] make init
+```
 
 ### Detailed setup
 #### Installing virtualenv
+
+
 
 ``` bash
 # Install virtualenv
@@ -146,7 +160,7 @@ First install the `grunt-cli` tool:
 grunt
 ```
 
-#### Configuring The Server
+### Configuring The Server
 
 To test issue submission, you need to create a fake repo on github. Let's assume your username is `miketaylr`. Create a new repository called `nobody-look-at-this` (or the name of your choice).
 
@@ -162,11 +176,18 @@ You can now edit `config.py` and
 2. [get the secrets](https://github.com/webcompat/webcompat.com/blob/dev.webcompat.com/config.py.example#L24-L38) for config.py
 
 
-#### Starting The Server
+### Starting The Server
 
 ``` bash
 # start local server
 python run.py
+```
+
+or 
+
+``` bash
+# start local server
+make start
 ```
 
 You should now have a local instance of the site running at `http://127.0.0.1:5000/`. Please [file bugs](https://github.com/webcompat/webcompat.com/issues/new) if something went wrong!
@@ -183,6 +204,15 @@ This is the oauth token we use to report issues on behalf of people who don't wa
 You can ignore `TOKEN_MAP`—it's implemented in such a way to always fall back to the `BOT_OAUTH_TOKEN` token.
 
 ![Auth 404](https://i.cloudup.com/8FDA5bVc7l.png)
+
+## Coding
+ 
+ 
+ ``` bash
+ # watching CSS and JS
+ make watch
+ ```
+ 
 
 ## Running Tests
 
