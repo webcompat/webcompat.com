@@ -9,7 +9,7 @@ authed user and the proxy case.'''
 
 import json
 import requests
-from flask import g, url_for, redirect, request
+# from flask import g, url_for, redirect, request
 from webcompat.form import build_formdata
 from webcompat import github, app
 
@@ -64,7 +64,7 @@ def get_issue(number):
 
 def filter_untriaged(issues):
     '''For our purposes, "untriaged" means anything that isn't an issue
-    with a "contactready", "sitewait", or "needsdiagnsis" label.'''
+    with a "contactready", "sitewait", or "needsdiagnosis" label.'''
     def is_untriaged(issue):
         '''Filter function.'''
         match = True
@@ -74,7 +74,7 @@ def filter_untriaged(issues):
             for label in issue.get('labels'):
                 if 'contactready' in label.get('name'):
                     match = False
-                elif 'needsdiagnsis' in label.get('name'):
+                elif 'needsdiagnosis' in label.get('name'):
                     match = False
                 elif 'sitewait' in label.get('name'):
                     match = False

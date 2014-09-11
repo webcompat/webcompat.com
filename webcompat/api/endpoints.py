@@ -56,6 +56,7 @@ def edit_issue(number):
     return (json.dumps(edit.json()), edit.status_code,
             {'content-type': JSON_MIME})
 
+
 @api.route('/issues/mine')
 @cache.cached(timeout=300)
 def user_issues():
@@ -151,8 +152,11 @@ def proxy_comments(number):
             return (':(', e.response.status_code)
     else:
         if g.user:
-            comments = github.raw_request('GET', 'repos/{0}/{1}/comments'.format(
-                app.config['ISSUES_REPO_URI'], number))
+            comments = github.raw_request(
+                'GET',
+                'repos/{0}/{1}/comments'.format(
+                    app.config['ISSUES_REPO_URI'], number)
+                )
         else:
             comments = proxy_request('get', '/{0}/comments'.format(number),
                                      token='commentbot')
