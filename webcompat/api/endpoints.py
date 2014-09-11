@@ -77,7 +77,11 @@ def get_untriaged():
         issues = github.raw_request('GET', 'repos/{0}'.format(REPO_URI))
     else:
         issues = proxy_request('get')
-    response = make_response(json.dumps(filter_untriaged(issues.json())))
+    # Do not send random JSON to filter_untriaged
+    if issues.status_code == 200:
+        response = make_response(json.dumps(filter_untriaged(issues.json())))
+    else:
+        response = make_response(json.dumps({}), issues.status_code)
     response.headers['etag'] = issues.headers.get('etag')
     response.headers['cache-control'] = issues.headers.get('cache-control')
     response.headers['content-type'] = JSON_MIME
