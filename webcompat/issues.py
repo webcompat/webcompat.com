@@ -9,7 +9,6 @@ authed user and the proxy case.'''
 
 import json
 import requests
-# from flask import g, url_for, redirect, request
 from webcompat.form import build_formdata
 from webcompat import github, app
 
