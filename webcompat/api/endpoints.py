@@ -56,6 +56,7 @@ def edit_issue(number):
     return (json.dumps(edit.json()), edit.status_code,
             {'content-type': JSON_MIME})
 
+
 @api.route('/issues/mine')
 @cache.cached(timeout=300)
 def user_issues():
@@ -76,7 +77,11 @@ def get_untriaged():
         issues = github.raw_request('GET', 'repos/{0}'.format(REPO_URI))
     else:
         issues = proxy_request('get')
-    response = make_response(json.dumps(filter_untriaged(issues.json())))
+    # Do not send random JSON to filter_untriaged
+    if issues.status_code == 200:
+        response = make_response(json.dumps(filter_untriaged(issues.json())))
+    else:
+        response = make_response(json.dumps({}), issues.status_code)
     response.headers['etag'] = issues.headers.get('etag')
     response.headers['cache-control'] = issues.headers.get('cache-control')
     response.headers['content-type'] = JSON_MIME
@@ -151,8 +156,11 @@ def proxy_comments(number):
             return (':(', e.response.status_code)
     else:
         if g.user:
-            comments = github.raw_request('GET', 'repos/{0}/{1}/comments'.format(
-                app.config['ISSUES_REPO_URI'], number))
+            comments = github.raw_request(
+                'GET',
+                'repos/{0}/{1}/comments'.format(
+                    app.config['ISSUES_REPO_URI'], number)
+                )
         else:
             comments = proxy_request('get', '/{0}/comments'.format(number),
                                      token='commentbot')

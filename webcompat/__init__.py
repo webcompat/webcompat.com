@@ -6,7 +6,7 @@
 
 '''This module powers the webcompat.com Flask application.'''
 
-from flask import Flask, render_template
+from flask import Flask
 from flask.ext.cache import Cache
 from flask.ext.github import GitHub
 
