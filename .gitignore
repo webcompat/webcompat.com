@@ -5,6 +5,7 @@ config.py
 fabfile.py
 *.pyc
 *.db
+screenshots/
 
 # these are our 'dist' files
 # checking them into the repo is silly
