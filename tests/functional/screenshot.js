@@ -2,7 +2,7 @@
 // CONFIGURATION BEGIN
 // ------
 var configPath 	= "./screenshot.json",
-    destPath	= "./screenshots",
+    destPath	= "../../screenshots",
 // ------
 // CONFIGURATION END
 // ------
