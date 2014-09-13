@@ -31,8 +31,8 @@ run:
 	@ node_modules/.bin/intern-runner config=tests/functional/intern
 
 screenshot:
-	(casperjs screenshot.js webkit --engine=phantomjs)
-	(casperjs screenshot.js gecko --engine=slimerjs)
+	(cd tests/functional; casperjs screenshot.js webkit --engine=phantomjs)
+	(cd tests/functional; casperjs screenshot.js gecko --engine=slimerjs)
 
 end:
 	kill `cat env.pid`
