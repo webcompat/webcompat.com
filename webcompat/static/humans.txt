@@ -1,12 +1,13 @@
 webcompat.com is brought to you by:
 
-               Twitter         Email
-               -------         -----
-Adam Stevenson @adamopenweb
-Alexa Roman    @calexity
-Karl Dubost    @karlpro
-Mike Taylor    @miketaylr      miket@mozilla.com
-Daniel Davis   @ourmaninjapan
+                  Twitter         Email
+                  -------         -----
+Adam Stevenson    @adamopenweb
+Alexa Roman       @calexity
+Karl Dubost       @karlpro
+Mike Taylor       @miketaylr      miket@mozilla.com
+Daniel Davis      @ourmaninjapan
+Guillaume Demesy  @magsout        guillaume.demesy@gmail.com
 
 
       ,'``.._   ,'``.
