@@ -24,9 +24,6 @@
     "suitcss-utils-size" : "*",
     "suitcss-utils-display" : "*",
     "suitcss-utils-align" : "*",
-    "time-grunt": "*",
-    "casperjs" : "1.1.0-beta3",
-    "phantomjs" : "*",
-    "slimerjs" : "*"	
+    "time-grunt": "*"
   }
 }
