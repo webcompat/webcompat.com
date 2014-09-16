@@ -6,12 +6,12 @@
 
 '''This module powers the webcompat.com Flask application.'''
 
-from flask import Flask
+import os
+
 from flask.ext.cache import Cache
 from flask.ext.github import GitHub
-
+from flask import Flask
 from sqlalchemy import create_engine
-import os
 
 app = Flask(__name__, static_url_path='')
 app.config.from_object('config')
@@ -26,5 +26,5 @@ cache = Cache(app)
 import webcompat.views
 
 # register API blueprint
-from .api.endpoints import api
+from api.endpoints import api
 app.register_blueprint(api)

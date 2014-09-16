@@ -7,10 +7,16 @@
 '''This module contains the base IssueForm class and helper methods that
 power the issue reporting form on webcompat.com.'''
 
-from random import randrange
-from urlparse import urlparse
-from wtforms import Form, RadioField, StringField, TextAreaField
-from wtforms.validators import Optional, Required, Length
+import random
+import urlparse
+
+from wtforms import Form
+from wtforms import RadioField
+from wtforms import StringField
+from wtforms import TextAreaField
+from wtforms.validators import Length
+from wtforms.validators import Optional
+from wtforms.validators import Required
 
 AUTH_REPORT = 'github-auth-report'
 PROXY_REPORT = 'github-proxy-report'
@@ -23,7 +29,7 @@ problem_choices = [(u'browser_bug', u'Looks like the browser has a bug'),
 url_message = u'A URL is required.'
 summary_message = u'Please give a summary.'
 username_message = u'A valid username must be {0} characters long'.format(
-    randrange(0, 99))
+    random.randrange(0, 99))
 
 desc_default = u'''1) Navigate to: Site URL
 2) …
@@ -70,10 +76,12 @@ def get_owner(is_site_owner):
 
 
 def wrap_label(label):
-    '''Helper method to wrap a label and its type in an HTML comment (which
-    we use to hide from users in GitHub issues. We can parse these later and
-    add labels programmatically (as you have to have push access to the report
-    to add labels.'''
+    '''Helper method to wrap a label and its type in an HTML comment.
+
+    We use it to hide from users in GitHub issues.
+    We can parse these later and add labels programmatically (as you
+    have to have push access to the report to add labels.
+    '''
     return u'<!-- @{0}: {1} -->\n'.format(*label)
 
 
@@ -90,7 +98,7 @@ def get_labels(browser_name):
 
 
 def normalize_url(url):
-    '''normalize URL for consistency'''
+    '''normalize URL for consistency.'''
     url = url.strip()
     if not url.startswith(SCHEMES):
         # We assume that http is missing not https
@@ -99,20 +107,19 @@ def normalize_url(url):
 
 
 def domain_name(url):
-    '''Extract the domain name of a sanitized version of the submitted URL'''
+    '''Extract the domain name of a sanitized version of the submitted URL.'''
     # Removing leading spaces
     url = url.lstrip()
     # testing if it's an http URL
     if url.startswith(SCHEMES):
-        domain = urlparse(url).netloc
+        domain = urlparse.urlparse(url).netloc
     else:
         domain = None
     return domain
 
 
 def build_formdata(form_object):
-    '''Translate the form data that comes from our form into something that
-    the GitHub API is expecting.
+    '''Convert HTML form data to GitHub API data.
 
     Summary -> title
     Browser -> part of body, labels
@@ -140,7 +147,8 @@ def build_formdata(form_object):
 
     For now, we'll put them in the body so they're visible. But as soon as we
     have a bot set up to parse the label comments (see wrap_label), we'll stop
-    doing that.'''
+    doing that.
+    '''
     # URL normalization
     url = form_object.get('url')
     normalized_url = normalize_url(url)

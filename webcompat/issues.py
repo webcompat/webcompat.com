@@ -8,9 +8,12 @@
 authed user and the proxy case.'''
 
 import json
+
 import requests
+
+from webcompat import app
 from webcompat.form import build_formdata
-from webcompat import github, app
+from webcompat import github
 
 REPO_URI = app.config['ISSUES_REPO_URI']
 DEFAULT_TOKEN = app.config['BOT_OAUTH_TOKEN']
@@ -18,9 +21,12 @@ TOKEN_MAP = app.config['TOKEN_MAP']
 
 
 def proxy_request(method, path_mod='', data=None, uri=None, token=None):
-    '''Make a GitHub API request with a bot's OAuth token, for non-logged in
-    users. `path`, if included, will be appended to the end of the URI.
-    Optionally pass in POST data via the `data` arg.'''
+    '''Make a GitHub API request with a bot's OAuth token.
+
+    Necessary for non-logged in users.
+    * `path`, if included, will be appended to the end of the URI.
+    * Optionally pass in POST data via the `data` arg.
+    '''
     # Create a User Agent string depending on the bot name
     if not token:
         user_agent = 'Basic'
@@ -62,8 +68,11 @@ def get_issue(number):
 
 
 def filter_untriaged(issues):
-    '''For our purposes, "untriaged" means anything that isn't an issue
-    with a "contactready", "sitewait", or "needsdiagnosis" label.'''
+    '''Return the list of untriaged issues.
+
+    "untriaged" means anything that isn't an issue with a "contactready",
+    "sitewait", or "needsdiagnosis" label.
+    '''
     def is_untriaged(issue):
         '''Filter function.'''
         match = True

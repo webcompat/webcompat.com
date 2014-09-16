@@ -6,9 +6,9 @@
 
 '''Tests for our URL endpoints.'''
 
-import unittest
 import os.path
 import sys
+import unittest
 
 # Add webcompat module to import path
 sys.path.append(os.path.realpath(os.pardir))
@@ -29,35 +29,37 @@ class TestURLs(unittest.TestCase):
         pass
 
     def test_home(self):
-        '''Test that the home page exists'''
+        '''Test that the home page exists.'''
         rv = self.app.get('/', environ_base=headers)
         self.assertEqual(rv.status_code, 200)
 
     def test_about(self):
-        '''Test that /about exists'''
+        '''Test that /about exists.'''
         rv = self.app.get('/about')
         self.assertEqual(rv.status_code, 200)
 
     def test_privacy(self):
-        '''Test that /privacy exists'''
+        '''Test that /privacy exists.'''
         rv = self.app.get('/privacy')
         self.assertEqual(rv.status_code, 200)
 
-
     def test_thanks(self):
-        '''Test that /thanks/1 exists'''
+        '''Test that /thanks/1 exists.'''
         rv = self.app.get('/thanks/1')
         self.assertEqual(rv.status_code, 200)
 
     def test_login(self):
-        '''Test that the /login route 302s to GitHub'''
+        '''Test that the /login route 302s to GitHub.'''
         rv = self.app.get('/login')
         self.assertEqual(rv.status_code, 302)
         self.assertIn('github.com/login/oauth/', rv.headers['Location'])
 
     def test_issue_int(self):
-        '''Test that an issue only displays if <number> is an integer.'''
-        '''Test that the /issues/<number> exists, and does not redirect.'''
+        '''Test issues and integer for:
+
+        * an issue only displays if <number> is an integer
+        * /issues/<number> exists, and does not redirect.
+        '''
         rv = self.app.get('/issues/3')
         self.assertEqual(rv.status_code, 200)
         self.assertNotEqual(rv.status_code, 404)
@@ -72,7 +74,7 @@ class TestURLs(unittest.TestCase):
         self.assertNotEqual(rv.status_code, 307)
 
     def test_issues_redirect(self):
-        '''Test that the /issues route 307s to /index (for now)'''
+        '''Test that the /issues route 307s to /index (for now).'''
         rv = self.app.get('/issues')
         self.assertEqual(rv.status_code, 307)
         self.assertIn('localhost', rv.headers['Location'])

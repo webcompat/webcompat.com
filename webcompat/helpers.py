@@ -5,13 +5,13 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 from flask import session
-from webcompat import github
 from ua_parser import user_agent_parser
+
+from webcompat import github
 
 
 def get_user_info():
-    '''Grab the username and avatar URL from GitHub and stash it
-    in the session.'''
+    '''Grab the username and avatar URL from GitHub.'''
     if session.get('username') and session.get('avatar_url'):
         return
     else:
@@ -21,8 +21,10 @@ def get_user_info():
 
 
 def get_browser_name(user_agent_string):
-    '''Return just the browser name, unknown user agents will be reported as
-    "other".'''
+    '''Return just the browser name.
+
+    unknown user agents will be reported as "other".
+    '''
     ua_dict = user_agent_parser.Parse(user_agent_string)
     name = ua_dict.get('user_agent').get('family').lower()
     if (name == 'firefox mobile' and
@@ -32,8 +34,10 @@ def get_browser_name(user_agent_string):
 
 
 def get_browser(user_agent_string):
-    '''Return browser name (i.e., "user agent family") and version for
-    pre-populating the bug reporting form.'''
+    '''Return browser name family and version.
+
+    It will pre-populate the bug reporting form.
+    '''
     ua_dict = user_agent_parser.Parse(user_agent_string)
     ua = ua_dict.get('user_agent')
     name = ua.get('family')
@@ -49,8 +53,10 @@ def get_browser(user_agent_string):
 
 
 def get_os(user_agent_string):
-    '''Return operating system name for pre-populating the bug reporting
-    form.'''
+    '''Return operating system name.
+
+    It pre-populates the bug reporting form.
+    '''
     ua_dict = user_agent_parser.Parse(user_agent_string)
     os = ua_dict.get('os')
     version = os.get('major', u'Unknown')
