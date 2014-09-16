@@ -95,12 +95,44 @@ After all that, if you'd like, you can add your name to our humans.txt file.
 * `dev.webcompat.com` is our "development" branch where we can test, experiment, and deploy changes to dev.webcompat.com before merging into `master` and pushing to webcompat.com.
 
 ## Coding Style
-It's still early days for this project, so there are no strict coding guidelines (yet?).
 
-All Python code should pass [pep8](http://pep8.readthedocs.org/en/1.4.6/intro.html).
+### Python
+As we are still very early in the project, we do not have yet that much conventions for naming, routes, APIs. In doubt, ask us or open an issue.  All Python code should pass [pep8](http://pep8.readthedocs.org/en/1.4.6/intro.html).
+
+You can check this by installing the pep8 module.
+
+    sudo pip install pep8
+
+Once at the root of the project you can run it with
+
+    pep8 --show-source --show-pep8 .
+
+That will show you the list of errors and their explanations. Another tool, we have used for checking consistency of the code is `flake8` + `hacking`. [Hacking](https://github.com/openstack-dev/hacking) is a set of [OpenStack guidelines](http://docs.openstack.org/developer/hacking/) which is used by the community for the stability of their projects. You will see that there's nothing really hard about it.
+
+    sudo pip install hacking
+
+will install the relevant flake8 and hacking modules. In the same fashion, if you do
+
+    flake8 .
+
+You will get in return the list of mistakes. Some of the basics recommendations are:
+
+* Modules are sorted by alphabetical order.
+* Do not do relative imports (such as `from .foo import bar`)
+* Import only modules not function name (because of possible name clashes)
+* Group modules by categories (sys, libraries, project)
+* When multilines docstrings are used. The first sentence is short and explains the module. Separated by a blank line.
+* docstrings sentences are finished by a period.
 
 When in doubt, follow the conventions you see used in the source already.
 
+### CSS
+
+@@something to write by magsout@@
+
+### Javascript
+
+@@something to write by miketaylr@@
 
 ## Working Environment setup
 
@@ -183,7 +215,7 @@ You can now edit `config.py` and
 python run.py
 ```
 
-or 
+or
 
 ``` bash
 # start local server
@@ -206,13 +238,13 @@ You can ignore `TOKEN_MAP`—it's implemented in such a way to always fall back 
 ![Auth 404](https://i.cloudup.com/8FDA5bVc7l.png)
 
 ## Coding
- 
- 
+
+
  ``` bash
  # watching CSS and JS
  make watch
  ```
- 
+
 
 ## Running Tests
 
