@@ -4,7 +4,7 @@ This repository hosts the code and design which runs most of the [webcompat.com 
 
 ## Contributing
 
-Contributions in the form of code or issues are welcome. Please check out [CONTRIBUTING.md]( https://github.com/webcompat/webcompat.com/blob/dev.webcompat.com/CONTRIBUTING.md) for more instructions.
+Contributions in the form of code or issues are welcome. Please check out [CONTRIBUTING.md]( https://github.com/webcompat/webcompat.com/blob/master/CONTRIBUTING.md) for more instructions.
 
 ## Design Chart Guidelines
 ### Icons

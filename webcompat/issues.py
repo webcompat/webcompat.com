@@ -8,10 +8,12 @@
 authed user and the proxy case.'''
 
 import json
+
 import requests
-from flask import g, url_for, redirect, request
+
+from webcompat import app
 from webcompat.form import build_formdata
-from webcompat import github, app
+from webcompat import github
 
 REPO_URI = app.config['ISSUES_REPO_URI']
 DEFAULT_TOKEN = app.config['BOT_OAUTH_TOKEN']
@@ -19,13 +21,25 @@ TOKEN_MAP = app.config['TOKEN_MAP']
 
 
 def proxy_request(method, path_mod='', data=None, uri=None, token=None):
-    '''Make a GitHub API request with a bot's OAuth token, for non-logged in
-    users. `path`, if included, will be appended to the end of the URI.
-    Optionally pass in POST data via the `data` arg.'''
-    headers = {
-        'Authorization': 'token {0}'.format(TOKEN_MAP.get(token,
-                                                          DEFAULT_TOKEN))
-    }
+    '''Make a GitHub API request with a bot's OAuth token.
+
+    Necessary for non-logged in users.
+    * `path`, if included, will be appended to the end of the URI.
+    * Optionally pass in POST data via the `data` arg.
+    '''
+    # Create a User Agent string depending on the bot name
+    if not token:
+        user_agent = 'Basic'
+    else:
+        user_agent = token
+    # Add the authorization header only if we have one
+    authorization_token = TOKEN_MAP.get(token, DEFAULT_TOKEN)
+    if authorization_token:
+        headers = {'Authorization': 'token {0}'.format(authorization_token),
+                   'User-Agent': 'WebCompat/{0}'.format(user_agent), }
+    else:
+        headers = {'User-Agent': 'WebCompat/{0}'.format(user_agent), }
+    # Preparing the requests
     req = getattr(requests, method)
     if uri:
         req_uri = 'https://api.github.com/repos/{0}{1}'.format(uri, path_mod)
@@ -54,8 +68,11 @@ def get_issue(number):
 
 
 def filter_untriaged(issues):
-    '''For our purposes, "untriaged" means anything that isn't an issue
-    with a "contactready", "sitewait", or "needsdiagnsis" label.'''
+    '''Return the list of untriaged issues.
+
+    "untriaged" means anything that isn't an issue with a "contactready",
+    "sitewait", or "needsdiagnosis" label.
+    '''
     def is_untriaged(issue):
         '''Filter function.'''
         match = True
@@ -65,7 +82,7 @@ def filter_untriaged(issues):
             for label in issue.get('labels'):
                 if 'contactready' in label.get('name'):
                     match = False
-                elif 'needsdiagnsis' in label.get('name'):
+                elif 'needsdiagnosis' in label.get('name'):
                     match = False
                 elif 'sitewait' in label.get('name'):
                     match = False

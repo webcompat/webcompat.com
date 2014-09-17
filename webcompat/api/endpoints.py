@@ -8,11 +8,23 @@
 back to GitHub'''
 
 import json
-from flask import abort, Blueprint, g, request, session, make_response
+
+from flask import abort
+from flask import Blueprint
 from flask.ext.github import GitHubError
-from webcompat import github, app, cache
-from ..issues import REPO_URI, proxy_request, filter_untriaged
-from ..helpers import get_user_info
+from flask import g
+from flask import make_response
+from flask import request
+from flask import session
+
+from webcompat import app
+from webcompat import cache
+from webcompat import github
+from webcompat.helpers import get_user_info
+from webcompat.issues import filter_untriaged
+from webcompat.issues import proxy_request
+from webcompat.issues import REPO_URI
+
 
 api = Blueprint('api', __name__, url_prefix='/api')
 JSON_MIME = 'application/json'
@@ -21,7 +33,10 @@ JSON_MIME = 'application/json'
 @api.route('/issues')
 @cache.cached(timeout=300)
 def proxy_issues():
-    '''API endpoint to list all issues from GitHub. Cached for 5 minutes.'''
+    '''API endpoint to list all issues from GitHub.
+
+    Cached for 5 minutes.
+    '''
     if g.user:
         issues = github.get('repos/{0}'.format(REPO_URI))
     else:
@@ -31,8 +46,10 @@ def proxy_issues():
 
 @api.route('/issues/<int:number>')
 def proxy_issue(number):
-    '''XHR endpoint to get issue data from GitHub, either as an authed
-    user, or as one of our proxy bots.'''
+    '''XHR endpoint to get issue data from GitHub.
+
+    either as an authed user, or as one of our proxy bots.
+    '''
     if g.user:
         issue = github.raw_request('GET', 'repos/{0}/{1}'.format(
             app.config['ISSUES_REPO_URI'], number))
@@ -49,18 +66,23 @@ def proxy_issue(number):
 @api.route('/issues/<int:number>/edit', methods=['PATCH'])
 def edit_issue(number):
     '''XHR endpoint to push back edits to GitHub for a single issue.
+
     Note: this is always proxied to allow any logged in user to be able to
-    edit issues.'''
+    edit issues.
+    '''
     edit = proxy_request('patch', '/{0}'.format(number), data=request.data,
                          token='closerbot')
     return (json.dumps(edit.json()), edit.status_code,
             {'content-type': JSON_MIME})
 
+
 @api.route('/issues/mine')
 @cache.cached(timeout=300)
 def user_issues():
-    '''API endpoint to return issues filed by the logged in user. Cached
-    for five minutes.'''
+    '''API endpoint to return issues filed by the logged in user.
+
+    Cached for 5 minutes.
+    '''
     get_user_info()
     issues = github.get('repos/{0}?creator={1}&state=all'.format(
         REPO_URI, session['username']))
@@ -70,13 +92,20 @@ def user_issues():
 @api.route('/issues/untriaged')
 @cache.cached(timeout=300)
 def get_untriaged():
-    '''Return all issues that are "untriaged". Essentially all unclosed issues
-    with no activity. Cached for five minutes.'''
+    '''Return all issues that are "untriaged".
+
+    Essentially all unclosed issues with no activity.
+    Cached for 5 minutes.
+    '''
     if g.user:
         issues = github.raw_request('GET', 'repos/{0}'.format(REPO_URI))
     else:
         issues = proxy_request('get')
-    response = make_response(json.dumps(filter_untriaged(issues.json())))
+    # Do not send random JSON to filter_untriaged
+    if issues.status_code == 200:
+        response = make_response(json.dumps(filter_untriaged(issues.json())))
+    else:
+        response = make_response(json.dumps({}), issues.status_code)
     response.headers['etag'] = issues.headers.get('etag')
     response.headers['cache-control'] = issues.headers.get('cache-control')
     response.headers['content-type'] = JSON_MIME
@@ -86,8 +115,10 @@ def get_untriaged():
 @api.route('/issues/contactready')
 @cache.cached(timeout=300)
 def get_contactready():
-    '''Return all issues with a "contactready" label. Cached for five
-    minutes.'''
+    '''Return all issues with a "contactready" label.
+
+    Cached for 5 minutes.
+    '''
     if g.user:
         uri = 'repos/{0}?labels=contactready'.format(REPO_URI)
         issues = github.raw_request('GET', uri)
@@ -103,8 +134,10 @@ def get_contactready():
 @api.route('/issues/needsdiagnosis')
 @cache.cached(timeout=300)
 def get_needsdiagnosis():
-    '''Return all issues with a "needsdiagnosis" label. Cached for five
-    minutes.'''
+    '''Return all issues with a "needsdiagnosis" label.
+
+    Cached for 5 minutes.
+    '''
     if g.user:
         uri = 'repos/{0}?labels=needsdiagnosis'.format(REPO_URI)
         issues = github.raw_request('GET', uri)
@@ -120,8 +153,10 @@ def get_needsdiagnosis():
 @api.route('/issues/sitewait')
 @cache.cached(timeout=300)
 def get_sitewait():
-    '''Return all issues with a "sitewait" label. Cached for five
-    minutes.'''
+    '''Return all issues with a "sitewait" label.
+
+    Cached for 5 minutes.
+    '''
     if g.user:
         uri = 'repos/{0}?labels=sitewait'.format(REPO_URI)
         issues = github.raw_request('GET', uri)
@@ -136,8 +171,10 @@ def get_sitewait():
 
 @api.route('/issues/<int:number>/comments', methods=['GET', 'POST'])
 def proxy_comments(number):
-    '''XHR endpoint to get issues comments from GitHub, either as an authed
-    user, or as one of our proxy bots.'''
+    '''XHR endpoint to get issues comments from GitHub.
+
+    Either as an authed user, or as one of our proxy bots.
+    '''
     if request.method == 'POST':
         try:
             comment_data = json.loads(request.data)
@@ -151,8 +188,11 @@ def proxy_comments(number):
             return (':(', e.response.status_code)
     else:
         if g.user:
-            comments = github.raw_request('GET', 'repos/{0}/{1}/comments'.format(
-                app.config['ISSUES_REPO_URI'], number))
+            comments = github.raw_request(
+                'GET',
+                'repos/{0}/{1}/comments'.format(
+                    app.config['ISSUES_REPO_URI'], number)
+                )
         else:
             comments = proxy_request('get', '/{0}/comments'.format(number),
                                      token='commentbot')
@@ -165,9 +205,12 @@ def proxy_comments(number):
 
 @api.route('/issues/<int:number>/labels', methods=['POST'])
 def modify_labels(number):
-    '''XHR endpoint to modify issue labels. Sending in an empty array removes
-    them all as well. This method is always proxied because non-repo collabs
-    can't normally edit labels for an issue.'''
+    '''XHR endpoint to modify issue labels.
+
+    Sending in an empty array removes them all as well.
+    This method is always proxied because non-repo collabs
+    can't normally edit labels for an issue.
+    '''
     try:
         labels = proxy_request('put', '/{0}/labels'.format(number),
                                data=request.data, token='labelbot')
@@ -181,8 +224,10 @@ def modify_labels(number):
 @api.route('/issues/labels')
 @cache.cached(timeout=600)
 def get_repo_labels():
-    '''XHR endpoint to get all possible labels in a repo. Cached for ten
-    minutes.'''
+    '''XHR endpoint to get all possible labels in a repo.
+
+    Cached for 10 minutes.
+    '''
     # Chop off /issues. Someone feel free to refactor the ISSUES_REPO_URI.
     labels_uri = app.config['ISSUES_REPO_URI'][:-7]
     if g.user:

@@ -4,22 +4,36 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
+import hashlib
 import urllib
-from flask import (flash, g, redirect, request, render_template, session,
-                   url_for)
+
 from flask.ext.github import GitHubError
-from hashlib import md5
-from .form import IssueForm, AUTH_REPORT, PROXY_REPORT
-from .helpers import get_user_info, get_browser, get_browser_name, get_os
-from .issues import report_issue
-from .models import db_session, User
-from webcompat import github, app
+from flask import flash
+from flask import g
+from flask import redirect
+from flask import render_template
+from flask import request
+from flask import session
+from flask import url_for
+from form import AUTH_REPORT
+from form import IssueForm
+from form import PROXY_REPORT
+from helpers import get_browser
+from helpers import get_browser_name
+from helpers import get_os
+from helpers import get_user_info
+from issues import report_issue
+from models import db_session
+from models import User
+
+from webcompat import app
+from webcompat import github
 
 
 @app.context_processor
 def cache_buster():
     def bust_cache():
-        return md5(app.config['STARTUP']).hexdigest()[:14]
+        return hashlib.md5(app.config['STARTUP']).hexdigest()[:14]
     return dict(bust_cache=bust_cache)
 
 
@@ -51,7 +65,7 @@ def token_getter():
 @app.template_filter('format_date')
 def format_date(datestring):
     '''For now, just chops off crap.'''
-    #2014-05-01T02:26:28Z
+    # 2014-05-01T02:26:28Z
     return datestring[0:10]
 
 
