@@ -13,13 +13,13 @@ from flask import abort
 from flask import Blueprint
 from flask.ext.github import GitHubError
 from flask import g
-from flask import make_response
 from flask import request
 from flask import session
 
 from webcompat import app
 from webcompat import cache
 from webcompat import github
+from webcompat.helpers import get_headers
 from webcompat.helpers import get_user_info
 from webcompat.issues import filter_untriaged
 from webcompat.issues import proxy_request
@@ -55,12 +55,7 @@ def proxy_issue(number):
             app.config['ISSUES_REPO_URI'], number))
     else:
         issue = proxy_request('get', '/{0}'.format(number))
-    response = make_response(json.dumps(issue.json()))
-    response.headers['etag'] = issue.headers.get('etag')
-    response.headers['cache-control'] = issue.headers.get('cache-control')
-    response.headers['last-modified'] = issue.headers.get('last-modified')
-    response.headers['content-type'] = JSON_MIME
-    return response
+    return (issue.content, 200, get_headers(issue))
 
 
 @api.route('/issues/<int:number>/edit', methods=['PATCH'])
@@ -72,8 +67,7 @@ def edit_issue(number):
     '''
     edit = proxy_request('patch', '/{0}'.format(number), data=request.data,
                          token='closerbot')
-    return (json.dumps(edit.json()), edit.status_code,
-            {'content-type': JSON_MIME})
+    return (edit.content, edit.status_code, {'content-type': JSON_MIME})
 
 
 @api.route('/issues/mine')
@@ -84,9 +78,11 @@ def user_issues():
     Cached for 5 minutes.
     '''
     get_user_info()
-    issues = github.get('repos/{0}?creator={1}&state=all'.format(
-        REPO_URI, session['username']))
-    return json.dumps(issues)
+    path = 'repos/{0}?creator={1}&state=all'.format(
+        REPO_URI, session['username']
+    )
+    issues = github.raw_request('GET', path)
+    return (issues.content, issues.status_code, get_headers(issues))
 
 
 @api.route('/issues/untriaged')
@@ -103,13 +99,10 @@ def get_untriaged():
         issues = proxy_request('get')
     # Do not send random JSON to filter_untriaged
     if issues.status_code == 200:
-        response = make_response(json.dumps(filter_untriaged(issues.json())))
+        return (filter_untriaged(json.loads(issues.content)),
+                issues.status_code, get_headers(issues))
     else:
-        response = make_response(json.dumps({}), issues.status_code)
-    response.headers['etag'] = issues.headers.get('etag')
-    response.headers['cache-control'] = issues.headers.get('cache-control')
-    response.headers['content-type'] = JSON_MIME
-    return response
+        return ({}, issues.status_code, get_headers(issues))
 
 
 @api.route('/issues/contactready')
@@ -124,11 +117,7 @@ def get_contactready():
         issues = github.raw_request('GET', uri)
     else:
         issues = proxy_request('get', '?labels=contactready')
-    response = make_response(json.dumps(issues.json()))
-    response.headers['etag'] = issues.headers.get('etag')
-    response.headers['cache-control'] = issues.headers.get('cache-control')
-    response.headers['content-type'] = JSON_MIME
-    return response
+    return (issues.content, issues.status_code, get_headers(issues))
 
 
 @api.route('/issues/needsdiagnosis')
@@ -143,11 +132,7 @@ def get_needsdiagnosis():
         issues = github.raw_request('GET', uri)
     else:
         issues = proxy_request('get', '?labels=needsdiagnosis')
-    response = make_response(json.dumps(issues.json()))
-    response.headers['etag'] = issues.headers.get('etag')
-    response.headers['cache-control'] = issues.headers.get('cache-control')
-    response.headers['content-type'] = JSON_MIME
-    return response
+    return (issues.content, issues.status_code, get_headers(issues))
 
 
 @api.route('/issues/sitewait')
@@ -162,11 +147,7 @@ def get_sitewait():
         issues = github.raw_request('GET', uri)
     else:
         issues = proxy_request('get', '?labels=sitewait')
-    response = make_response(json.dumps(issues.json()))
-    response.headers['etag'] = issues.headers.get('etag')
-    response.headers['cache-control'] = issues.headers.get('cache-control')
-    response.headers['content-type'] = JSON_MIME
-    return response
+    return (issues.content, issues.status_code, get_headers(issues))
 
 
 @api.route('/issues/<int:number>/comments', methods=['GET', 'POST'])
@@ -196,11 +177,7 @@ def proxy_comments(number):
         else:
             comments = proxy_request('get', '/{0}/comments'.format(number),
                                      token='commentbot')
-        response = make_response(json.dumps(comments.json()))
-        response.headers['etag'] = comments.headers.get('etag')
-        response.headers['cache-control'] = comments.headers.get('cache-control')
-        response.headers['content-type'] = JSON_MIME
-        return response
+        return (comments.content, comments.status_code, get_headers(comments))
 
 
 @api.route('/issues/<int:number>/labels', methods=['POST'])
@@ -214,8 +191,7 @@ def modify_labels(number):
     try:
         labels = proxy_request('put', '/{0}/labels'.format(number),
                                data=request.data, token='labelbot')
-        response = make_response(json.dumps(labels.json()), labels.status_code)
-        return response
+        return (labels.content, labels.status_code, get_headers(labels))
     except GitHubError as e:
         print('GitHubError: ', e.response.status_code)
         return (':(', e.response.status_code)
@@ -231,12 +207,9 @@ def get_repo_labels():
     # Chop off /issues. Someone feel free to refactor the ISSUES_REPO_URI.
     labels_uri = app.config['ISSUES_REPO_URI'][:-7]
     if g.user:
-        labels = github.raw_request('GET', 'repos/{0}/labels'.format(labels_uri))
-        response = make_response(json.dumps(labels.json()))
-        response.headers['etag'] = labels.headers.get('etag')
-        response.headers['cache-control'] = labels.headers.get('cache-control')
-        response.headers['content-type'] = JSON_MIME
-        return response
+        path = 'repos/{0}/labels'.format(labels_path)
+        labels = github.raw_request('GET', path)
+        return (labels.content, labels.status_code, get_headers(labels))
     else:
         # only authed users should be hitting this endpoint
         abort(401)
