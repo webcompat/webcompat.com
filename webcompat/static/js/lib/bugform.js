@@ -6,7 +6,7 @@ function BugForm() {
   var urlField = $('#url');
   var descField = $('#description');
   var summaryField = $('#summary');
-  var submitButtons = $('button.btn');
+  var submitButtons = $('button.Button');
   var inputMap = {
     'url': {
       'elm': urlField, // elm is a jQuery object
