@@ -1,7 +1,7 @@
 /*---------- Header ----------*/
 .header {
   background: var(--wc-background-light);
-  padding: 0.5em 0;
+  padding: 1.25em 0.5em;
   font-size:var(--base-font-size);
 }
 .nav {}
