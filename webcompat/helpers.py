@@ -6,8 +6,9 @@
 
 from flask import session
 from ua_parser import user_agent_parser
-
 from webcompat import github
+
+JSON_MIME = 'application/json'
 
 
 def get_user_info():
@@ -67,3 +68,14 @@ def get_os(user_agent_string):
     else:
         version = ''
     return '{0} {1}'.format(os.get('family'), version)
+
+
+def get_headers(response):
+    '''Return a dictionary of headers based on a passed in Response object.
+
+    This allows us to proxy response headers from GitHub to our own responses.
+    '''
+    headers = {'etag': response.headers.get('etag'),
+               'cache-control': response.headers.get('cache-control'),
+               'content-type': JSON_MIME}
+    return headers
