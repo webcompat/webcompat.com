@@ -38,7 +38,7 @@ define([
         .end()
         .findByCssSelector('#summary').click()
         .end()
-        .findByCssSelector('.u-formGroup').getAttribute('class')
+        .findByCssSelector('.Report-form > div:nth-child(1) > div:nth-child(1) > div:nth-child(1)').getAttribute('class')
         .then(function (className) {
           assert.include(className, 'has-error');
         })
