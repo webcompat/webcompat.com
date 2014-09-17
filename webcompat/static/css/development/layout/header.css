@@ -18,6 +18,7 @@
 .nav__link {
   display: inline-block;
   color: #fff;
+  font-weight:700;
 }
 .nav__link:hover {
   color: #fff;
