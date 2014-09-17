@@ -113,8 +113,8 @@ def get_contactready():
     Cached for 5 minutes.
     '''
     if g.user:
-        uri = 'repos/{0}?labels=contactready'.format(REPO_URI)
-        issues = github.raw_request('GET', uri)
+        path = 'repos/{0}?labels=contactready'.format(REPO_URI)
+        issues = github.raw_request('GET', path)
     else:
         issues = proxy_request('get', '?labels=contactready')
     return (issues.content, issues.status_code, get_headers(issues))
@@ -128,8 +128,8 @@ def get_needsdiagnosis():
     Cached for 5 minutes.
     '''
     if g.user:
-        uri = 'repos/{0}?labels=needsdiagnosis'.format(REPO_URI)
-        issues = github.raw_request('GET', uri)
+        path = 'repos/{0}?labels=needsdiagnosis'.format(REPO_URI)
+        issues = github.raw_request('GET', path)
     else:
         issues = proxy_request('get', '?labels=needsdiagnosis')
     return (issues.content, issues.status_code, get_headers(issues))
@@ -143,8 +143,8 @@ def get_sitewait():
     Cached for 5 minutes.
     '''
     if g.user:
-        uri = 'repos/{0}?labels=sitewait'.format(REPO_URI)
-        issues = github.raw_request('GET', uri)
+        path = 'repos/{0}?labels=sitewait'.format(REPO_URI)
+        issues = github.raw_request('GET', path)
     else:
         issues = proxy_request('get', '?labels=sitewait')
     return (issues.content, issues.status_code, get_headers(issues))
@@ -205,7 +205,7 @@ def get_repo_labels():
     Cached for 10 minutes.
     '''
     # Chop off /issues. Someone feel free to refactor the ISSUES_REPO_URI.
-    labels_uri = app.config['ISSUES_REPO_URI'][:-7]
+    labels_path = app.config['ISSUES_REPO_URI'][:-7]
     if g.user:
         path = 'repos/{0}/labels'.format(labels_path)
         labels = github.raw_request('GET', path)
