@@ -68,7 +68,7 @@ def get_issue(number):
 
 
 def filter_untriaged(issues):
-    '''Return the list of untriaged issues.
+    '''Return the list of untriaged issues, encoded as JSON.
 
     "untriaged" means anything that isn't an issue with a "contactready",
     "sitewait", or "needsdiagnosis" label.
@@ -88,4 +88,4 @@ def filter_untriaged(issues):
                     match = False
         return match
 
-    return [issue for issue in issues if is_untriaged(issue)]
+    return json.dumps([issue for issue in issues if is_untriaged(issue)])
