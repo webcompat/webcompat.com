@@ -5,13 +5,6 @@
   font-size:var(--base-font-size);
 }
 .nav {}
-.nav__logo {
-  height: 20px;
-  vertical-align: middle;
-}
-.nav--big .nav__logo {
-  height: 55px;
-}
 .nav__section{
   display: inline-block;
   width: 50%;
