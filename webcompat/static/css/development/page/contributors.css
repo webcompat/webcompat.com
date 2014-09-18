@@ -24,7 +24,8 @@
 }
 @media (--viewport-770px) {
   .contributors__header {
-    margin-top:1em;
+    margin-top:3em;
+    margin-bottom:3em;
     line-height:inherit;
   }
   .contributors__main_title {
