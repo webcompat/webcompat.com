@@ -96,6 +96,8 @@
 }
 /* btn header */
 .contributors__item__btn {
+  width:100%;
+  text-align:left;
   border:none;
   padding:0;
   font-size:1em;
@@ -105,6 +107,7 @@
 .icon--contributors {
   margin-left:.3em;
   opacity:.5;
+  float:right;
 }
 .icon--contributors:before {
   content: "\f067";
