@@ -49,19 +49,6 @@ issues.Issue = Backbone.Model.extend({
     return 'Untriaged Issue';
   },
   parse: function(response) {
-    if (response.message === "Not Found") {
-      // "empty out" the model properties and bail.
-      var emptyProps = {};
-      var props = ['body', 'commentNumber', 'createdAt', 'issueState',
-                   'labels', 'number', 'reporter', 'state', 'stateClass', 'title'];
-      _.forEach(props, function(item) {
-        emptyProps[item] = '';
-      });
-      this.set(emptyProps);
-      location.href = "/404";
-      return;
-    }
-
     this.set({
       body: marked(response.body),
       commentNumber: response.comments,
@@ -319,11 +306,16 @@ issues.MainView = Backbone.View.extend({
           }, 2000);
         });
       }
-    }).error(function() {
-      $('<div></div>', {
-        'class': 'flash error',
-        'text': 'There was an error retrieving the issue.'
-      }).appendTo('body');
+    }).error(function(response) {
+      if (response.responseJSON.message === "Not Found") {
+        location.href = "/404";
+        return;
+      } else {
+        $('<div></div>', {
+          'class': 'flash error',
+          'text': 'There was an error retrieving the issue.'
+        }).appendTo('body');
+      }
     });
   },
   addComment: function(comment) {
