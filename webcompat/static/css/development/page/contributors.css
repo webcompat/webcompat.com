@@ -126,6 +126,16 @@
 .contributors__list {
   list-style:none;
 }
+@media (--viewport-1180px) {
+  .contributors__list {
+    padding-left:2em;
+  }
+}
+@media (--viewport-450px) {
+  .contributors__list {
+    padding-left:0;
+  }
+}
 /*list second level */
 .contributors__list--lvl_down {
   margin-left:2em;
