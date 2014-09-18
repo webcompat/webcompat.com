@@ -71,11 +71,10 @@ def edit_issue(number):
 
 
 @api.route('/issues/mine')
-@cache.cached(timeout=300)
 def user_issues():
     '''API endpoint to return issues filed by the logged in user.
 
-    Cached for 5 minutes.
+    Not cached.
     '''
     get_user_info()
     path = 'repos/{0}?creator={1}&state=all'.format(
