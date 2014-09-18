@@ -1,27 +1,24 @@
-// ------
-// CONFIGURATION BEGIN
-// ------
+
+//Config
 var configPath 	= "./screenshot.json",
-	destPath	= "../../screenshots",
-// ------
-// CONFIGURATION END
-// ------
+destPath	= "../../screenshots",
+//var
 	config, configFile;
 
-// Inclue les composants nécessaire
+//Includes components 
 var casper 	= require("casper").create(),
 	fs 		= require('fs');
 
-//engine
+//Engine
 var engine = casper.cli.get(0) || 'default';
-// Lecture du fichier de configuration
+//Try config file
 try {
 	configFile 	= fs.read(configPath);
 	config 		= JSON.parse(configFile);
 } catch(err) {
 	casper.echo(err);
 }
-// Vérification du fichier de configuration
+//Test config file
 if('object' !== typeof(config)) {
 	casper.echo('Configuration file "'+configPath+'" not found');
 	casper.exit(1);
