@@ -110,3 +110,8 @@ a:hover, a:focus {
   outline: none;
   text-decoration: underline;
 }
+
+/*--------tools------------*/
+.u-image {
+  max-width:100%;
+}
