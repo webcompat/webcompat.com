@@ -55,7 +55,7 @@ def proxy_issue(number):
             app.config['ISSUES_REPO_URI'], number))
     else:
         issue = proxy_request('get', '/{0}'.format(number))
-    return (issue.content, 200, get_headers(issue))
+    return (issue.content, issue.status_code, get_headers(issue))
 
 
 @api.route('/issues/<int:number>/edit', methods=['PATCH'])
