@@ -172,15 +172,13 @@
   line-height:normal;
 }
 .contributors__list__item--lvl_down {
-  counter-increment: contributors-lvl;
   line-height:25px;
 }
 .contributors__list__item--lvl_down:first-child {
   margin-top:1em;
 }
 .contributors__list__item--lvl_down:before {
-  content: counter(contributors-lvl);
-  font-size:25px;
+  content: "";
 }
 .contributors__list__item--lvl_down span {
   font-size:15px;
