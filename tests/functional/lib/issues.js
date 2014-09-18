@@ -72,7 +72,7 @@ define([
         .then(function (text) {
           assert.include(text, "(404)", "We\'re at the 404.");
         })
-    }
+    },
 
     'closing an issue': function() {
       return this.remote
@@ -83,6 +83,20 @@ define([
         .findByCssSelector('button.Button.Button--action').getVisibleText()
         .then(function (text) {
           assert.equal(text, "Reopen and comment");
+        })
+        .end();
+        })
+    },
+
+    'reopen an issue': function() {
+      return this.remote
+        .setFindTimeout(intern.config.wc.pageLoadTimeout)
+        .get(require.toUrl(url(1)))
+        .findByCssSelector('button.Button.Button--action').submit()
+        .end()
+        .findByCssSelector('button.Button.Button--action').getVisibleText()
+        .then(function (text) {
+          assert.equal(text, "Close Issue");
         })
         .end();
         })
