@@ -25,7 +25,7 @@ define([
         .end();
     },
 
-    'logging in on the homepage': function() {
+    'my issues (when logged in)': function() {
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url))
@@ -45,6 +45,12 @@ define([
         .then(function (text) {
           assert.equal(text, "Logout");
         })
+        .end()
+        .findByCssSelector('#my-issues h3').getVisibleText()
+        .then(function (text) {
+          assert.equal(text, 'Submitted by Me');
+        })
+        .sleep(5000)
         .end()
     },
 
@@ -72,19 +78,6 @@ define([
         .then(function (isDisplayed) {
           assert.equal(isDisplayed, false);
         });
-    },
-
-    'browse issues (my issues)': function() {
-      return this.remote
-        .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url))
-        .findByCssSelector('.nav__section--right .nav__link').click()
-        .end()
-        .findByCssSelector('#my-issues h3').getVisibleText()
-        .then(function (text) {
-          assert.equal(text, 'Submitted by Me');
-        })
-        .end()
     },
 
     'browse issues (needs diagnosis)': function() {
