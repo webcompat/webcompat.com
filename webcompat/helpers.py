@@ -4,8 +4,11 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
+import urlparse
+
 from flask import session
 from ua_parser import user_agent_parser
+
 from webcompat import github
 
 JSON_MIME = 'application/json'
@@ -79,3 +82,18 @@ def get_headers(response):
                'cache-control': response.headers.get('cache-control'),
                'content-type': JSON_MIME}
     return headers
+
+
+def get_referer(request):
+    '''Return the Referer URI based on the passed in Request object.
+
+    Also validate that it came from our own server. If it didn't, return None.
+    '''
+    host_whitelist = ('webcompat.com', 'staging.webcompat.com',
+                      '127.0.0.1', 'localhost')
+    if request.referrer:
+        host = urlparse.urlparse(request.referrer).hostname
+        if host in host_whitelist:
+            return request.referrer
+    else:
+        return None
