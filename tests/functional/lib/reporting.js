@@ -39,7 +39,7 @@ define([
         .findByCssSelector('#summary').click()
         .end()
         // test fails unless we sleep for a bit :|
-        .sleep(50)
+        .sleep(1000)
         .findByCssSelector('.Report-form > div:nth-child(1) > div:nth-child(1) > div:nth-child(1)').getAttribute('class')
         .then(function (className) {
           assert.include(className, 'has-error');
@@ -82,9 +82,9 @@ define([
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url + "?open=1"))
-        .findByCssSelector('#url').type('http://miketaylr.com')
+        .findByCssSelector('#url').type('some broken URL')
         .end()
-        .findByCssSelector('#summary').type('Hello from Intern')
+        .findByCssSelector('#summary').type('this site doesnt work ' + Math.random())
         .end()
         .findByCssSelector('#submitanon').click()
         .end()
@@ -105,7 +105,7 @@ define([
         .findByCssSelector('.js-issue-title').getVisibleText()
         .then(function (text) {
           // Make sure GitHub has the correct title
-          assert.equal(text, 'miketaylr.com - Hello from Intern');
+          assert.include(text, 'some broken URL - this site doesnt work');
         })
         .end()
         .findByCssSelector('.gh-header-number').getVisibleText()
