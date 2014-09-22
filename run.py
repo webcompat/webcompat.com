@@ -18,6 +18,7 @@ if __name__ == '__main__':
         # disable HttpOnly setting for session cookies so Selenium
         # can interact with them. *ONLY* do this for testing.
         app.config['SESSION_COOKIE_HTTPONLY'] = False
+        print("Starting server in ~*TEST MODE*~")
         app.run()
     else:
         app.run()
