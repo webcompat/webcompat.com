@@ -5,6 +5,7 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 import hashlib
+import json
 import urllib
 
 from flask.ext.github import GitHubError
@@ -180,7 +181,17 @@ def thanks(number):
 
 @app.route('/rate_limit')
 def show_rate_limit():
-    return get_rate_limit()
+    rl = json.loads(get_rate_limit())
+    if g.user:
+        rl.update({"user": "somebody"})
+    else:
+        rl.update({"user": "webcompat-bot"})
+    # The "rate" hash (shown at the bottom of the response above) is
+    # deprecated and is scheduled for removal in the next version of the API.
+    # see https://developer.github.com/v3/rate_limit/
+    if "rate" in rl:
+        rl.pop("rate")
+    return (json.dumps(rl), 200, {"content-type": "text/plain"})
 
 @app.route('/about')
 def about():

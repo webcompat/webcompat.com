@@ -223,4 +223,4 @@ def get_rate_limit():
         rl = github.raw_request('GET', 'rate_limit')
     else:
         rl = proxy_request('get', uri='https://api.github.com/rate_limit')
-    return (rl.content, rl.status_code, {'content-type': 'text/html'})
+    return rl.content
