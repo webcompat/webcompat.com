@@ -183,7 +183,7 @@ def thanks(number):
 def show_rate_limit():
     rl = json.loads(get_rate_limit())
     if g.user:
-        rl.update({"user": "somebody"})
+        rl.update({"user": session.get('username')})
     else:
         rl.update({"user": "webcompat-bot"})
     # The "rate" hash (shown at the bottom of the response above) is
@@ -191,7 +191,8 @@ def show_rate_limit():
     # see https://developer.github.com/v3/rate_limit/
     if "rate" in rl:
         rl.pop("rate")
-    return (json.dumps(rl), 200, {"content-type": "text/plain"})
+    return (render_template('ratelimit.txt', rl=rl), 200,
+            {"content-type": "text/plain"})
 
 @app.route('/about')
 def about():
