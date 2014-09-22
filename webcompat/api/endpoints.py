@@ -210,3 +210,17 @@ def get_repo_labels():
     else:
         # only authed users should be hitting this endpoint
         abort(401)
+
+
+@api.route('/rate_limit')
+def get_rate_limit():
+    '''Endpoint to display the current GitHub API rate limit.
+
+    Will display for the logged in user, or webcompat-bot if not logged in.
+    See https://developer.github.com/v3/rate_limit/.
+    '''
+    if g.user:
+        rl = github.raw_request('GET', 'rate_limit')
+    else:
+        rl = proxy_request('get', uri='https://api.github.com/rate_limit')
+    return (rl.content, rl.status_code, {'content-type': 'text/html'})

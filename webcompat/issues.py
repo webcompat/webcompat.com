@@ -26,16 +26,17 @@ def proxy_request(method, path_mod='', data=None, uri=None):
     Necessary for non-logged in users.
     * `path`, if included, will be appended to the end of the URI.
     * Optionally pass in POST data via the `data` arg.
+    * Optionally point to a different URI via the `uri` arg.
     '''
 
     # Preparing the requests
     req = getattr(requests, method)
     if uri:
-        req_uri = 'https://api.github.com/repos/{0}{1}'.format(uri, path_mod)
+        req_uri = '{0}'.format(uri)
     else:
         req_uri = 'https://api.github.com/repos/{0}{1}'.format(REPO_URI,
                                                                path_mod)
-        return req(req_uri, data=data, headers=headers)
+    return req(req_uri, data=data, headers=headers)
 
 
 def report_issue(form, proxy=False):

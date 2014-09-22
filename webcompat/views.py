@@ -29,6 +29,7 @@ from models import User
 
 from webcompat import app
 from webcompat import github
+from webcompat.api.endpoints import get_rate_limit
 
 
 @app.context_processor
@@ -176,6 +177,10 @@ def thanks(number):
                            encoded_issue=encoded_issue,
                            encoded_text=encoded_text)
 
+
+@app.route('/rate_limit')
+def show_rate_limit():
+    return get_rate_limit()
 
 @app.route('/about')
 def about():
