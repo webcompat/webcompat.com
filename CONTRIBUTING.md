@@ -234,8 +234,6 @@ This is the oauth token we use to report issues on behalf of people who don't wa
 
 **Note**: If you get a 404 at GitHub when clicking "Login", it means you haven't [filled in the `GITHUB_CLIENT_ID` or `GITHUB_CLIENT_SECRET`](https://github.com/webcompat/webcompat.com/blob/master/config.py.example#L47-L49).
 
-You can ignore `TOKEN_MAP`—it's implemented in such a way to always fall back to the `BOT_OAUTH_TOKEN` token.
-
 ![Auth 404](https://i.cloudup.com/8FDA5bVc7l.png)
 
 ## Coding

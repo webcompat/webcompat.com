@@ -38,11 +38,6 @@ define([
         .end()
         .findByCssSelector('#summary').click()
         .end()
-        .findByCssSelector('.Report-form > div:nth-child(1) > div:nth-child(1) > div:nth-child(1)').getAttribute('class')
-        .then(function (className) {
-          assert.include(className, 'has-error');
-        })
-        .end()
         .findByCssSelector('#url').type('hi')
         .end()
         .findByCssSelector('#summary').click()
@@ -74,44 +69,44 @@ define([
         })
     },
 
-    'anonymous report': function () {
-      var issueNumber;
+    // 'anonymous report': function () {
+    //   var issueNumber;
 
-      return this.remote
-        .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url + "?open=1"))
-        .findByCssSelector('#url').type('http://miketaylr.com')
-        .end()
-        .findByCssSelector('#summary').type('Hello from Intern')
-        .end()
-        .findByCssSelector('#submitanon').click()
-        .end()
-        .findByCssSelector('.wc-content--body h2').getVisibleText()
-        .then(function (text) {
-          // Make sure we got to the /thanks/<number> route
-          assert.equal(text, 'Thank you.');
-        })
-        .end()
-        .findByCssSelector('.wc-content--body a').getVisibleText()
-        .then(function (text) {
-          // Grab the issue number from the end of the URL link
-          issueNumber = text.split('/').pop();
-        })
-        .end()
-        .findByCssSelector('.wc-content--body a').getVisibleText().click()
-        .end()
-        .findByCssSelector('.js-issue-title').getVisibleText()
-        .then(function (text) {
-          // Make sure GitHub has the correct title
-          assert.equal(text, 'miketaylr.com - Hello from Intern');
-        })
-        .end()
-        .findByCssSelector('.gh-header-number').getVisibleText()
-        .then(function (text) {
-          // Make sure GitHub has the correct issue number
-          assert.equal(text, '#' + issueNumber);
-        })
-    }
+    //   return this.remote
+    //     .setFindTimeout(intern.config.wc.pageLoadTimeout)
+    //     .get(require.toUrl(url + "?open=1"))
+    //     .findByCssSelector('#url').type('some broken URL')
+    //     .end()
+    //     .findByCssSelector('#summary').type('this site doesnt work ' + Math.random())
+    //     .end()
+    //     .findByCssSelector('#submitanon').click()
+    //     .end()
+    //     .findByCssSelector('.wc-content--body h2').getVisibleText()
+    //     .then(function (text) {
+    //       // Make sure we got to the /thanks/<number> route
+    //       assert.equal(text, 'Thank you.');
+    //     })
+    //     .end()
+    //     .findByCssSelector('.wc-content--body a').getVisibleText()
+    //     .then(function (text) {
+    //       // Grab the issue number from the end of the URL link
+    //       issueNumber = text.split('/').pop();
+    //     })
+    //     .end()
+    //     .findByCssSelector('.wc-content--body a').getVisibleText().click()
+    //     .end()
+    //     .findByCssSelector('.js-issue-title').getVisibleText()
+    //     .then(function (text) {
+    //       // Make sure GitHub has the correct title
+    //       assert.include(text, 'some broken URL - this site doesnt work');
+    //     })
+    //     .end()
+    //     .findByCssSelector('.gh-header-number').getVisibleText()
+    //     .then(function (text) {
+    //       // Make sure GitHub has the correct issue number
+    //       assert.equal(text, '#' + issueNumber);
+    //     })
+    // }
 
   });
 });

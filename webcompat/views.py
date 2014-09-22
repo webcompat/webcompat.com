@@ -21,6 +21,7 @@ from form import PROXY_REPORT
 from helpers import get_browser
 from helpers import get_browser_name
 from helpers import get_os
+from helpers import get_referer
 from helpers import get_user_info
 from issues import report_issue
 from models import db_session
@@ -47,6 +48,7 @@ def before_request():
     g.user = None
     if 'user_id' in session:
         g.user = User.query.get(session['user_id'])
+    g.referer = get_referer(request) or url_for('index')
 
 
 @app.after_request
@@ -71,20 +73,17 @@ def format_date(datestring):
 
 @app.route('/login')
 def login():
-    next_url = request.args.get('next') or url_for('index')
     if session.get('user_id', None) is None:
-        session['next_url'] = next_url
         return github.authorize('public_repo')
     else:
-        return redirect(next_url)
+        return redirect(g.referer)
 
 
 @app.route('/logout')
 def logout():
-    next_url = request.args.get('next') or url_for('index')
     session.clear()
     flash(u'You were successfully logged out.', 'info')
-    return redirect(next_url)
+    return redirect(g.referer)
 
 
 # OAuth2 callback handler that GitHub requires.
@@ -92,10 +91,9 @@ def logout():
 @app.route('/callback')
 @github.authorized_handler
 def authorized(access_token):
-    next_url = session.get('next_url') or url_for('index')
     if access_token is None:
         flash(u'Something went wrong trying to sign into GitHub. :(', 'error')
-        return redirect(next_url)
+        return redirect(g.referer)
     user = User.query.filter_by(github_access_token=access_token).first()
     if user is None:
         user = User(access_token)
@@ -105,7 +103,7 @@ def authorized(access_token):
     if session.get('form_data', None) is not None:
         return redirect(url_for('file_issue'))
     else:
-        return redirect(next_url)
+        return redirect(g.referer)
 
 
 # This route won't ever be viewed by a human being--there's not

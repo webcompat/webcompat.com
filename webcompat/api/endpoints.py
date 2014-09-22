@@ -65,8 +65,7 @@ def edit_issue(number):
     Note: this is always proxied to allow any logged in user to be able to
     edit issues.
     '''
-    edit = proxy_request('patch', '/{0}'.format(number), data=request.data,
-                         token='closerbot')
+    edit = proxy_request('patch', '/{0}'.format(number), data=request.data)
     return (edit.content, edit.status_code, {'content-type': JSON_MIME})
 
 
@@ -174,8 +173,7 @@ def proxy_comments(number):
                     app.config['ISSUES_REPO_URI'], number)
                 )
         else:
-            comments = proxy_request('get', '/{0}/comments'.format(number),
-                                     token='commentbot')
+            comments = proxy_request('get', '/{0}/comments'.format(number))
         return (comments.content, comments.status_code, get_headers(comments))
 
 
@@ -189,7 +187,7 @@ def modify_labels(number):
     '''
     try:
         labels = proxy_request('put', '/{0}/labels'.format(number),
-                               data=request.data, token='labelbot')
+                               data=request.data)
         return (labels.content, labels.status_code, get_headers(labels))
     except GitHubError as e:
         print('GitHubError: ', e.response.status_code)

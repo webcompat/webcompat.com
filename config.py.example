@@ -73,7 +73,3 @@ else:
 # your own access token. See
 # help.github.com/articles/creating-an-access-token-for-command-line-use
 BOT_OAUTH_TOKEN = ""
-
-# MULTIPLE_BOTs isn't required for local testing, a single
-# BOT_OAUTH_TOKEN will suffice, you can ignore this.
-TOKEN_MAP = dict()
