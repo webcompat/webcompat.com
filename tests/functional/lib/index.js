@@ -50,7 +50,7 @@ define([
         .then(function (text) {
           assert.equal(text, 'Submitted by Me');
         })
-        .sleep(5000)
+        .sleep(1000)
         .end()
     },
 
