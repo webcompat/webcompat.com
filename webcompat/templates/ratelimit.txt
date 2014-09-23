@@ -1,7 +1,7 @@
 Hi my name is {{ rl.user }}
 
-My core resources rate limit is currently at {{ rl.resources.core.remaining}} / {{ rl.resources.core.limit }}.
-It resets at {{ rl.resources.core.reset }}.
+My core resources rate limit is currently at {{ rl.resources.core.remaining }} / {{ rl.resources.core.limit }} requests.
+It resets in {{ rl.resources.core.reset|format_delta }}.
 
-My search rate limit is currently at {{ rl.resources.search.remaining }} / {{ rl.resources.search.limit }}.
-It resets at {{ rl.resources.search.reset}}.
+My search rate limit is currently at {{ rl.resources.search.remaining }} / {{ rl.resources.search.limit }} requests.
+It resets in {{ rl.resources.search.reset|format_delta }}.
