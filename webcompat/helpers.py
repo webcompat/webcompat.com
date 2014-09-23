@@ -4,14 +4,24 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
+import datetime
 import urlparse
 
+from babel.dates import format_timedelta
 from flask import session
 from ua_parser import user_agent_parser
 
+from webcompat import app
 from webcompat import github
 
 JSON_MIME = 'application/json'
+
+
+@app.template_filter('format_delta')
+def format_delta_filter(timestamp):
+    '''Jinja2 fiter to format a unix timestamp to a time delta string.'''
+    delta = datetime.datetime.now() - datetime.datetime.fromtimestamp(timestamp)
+    return format_timedelta(delta, locale='en_US')
 
 
 def get_user_info():
