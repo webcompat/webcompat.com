@@ -15,6 +15,7 @@
 .contributors__main_title {
   display:inline-block;
   vertical-align:middle;
+  width:63%;
   margin:0;
 }
 @media (--viewport-950px) {
@@ -64,6 +65,9 @@
 @media (--viewport-770px) {
   .contributors__light {
     display:none;
+  }
+  .contributors__main_title {
+    width:100%;
   }
 }
 
