@@ -206,8 +206,12 @@ cp config.py.example config.py
 You can now edit `config.py` and
 
 1. provide pointers to [repo issues URIs](https://github.com/webcompat/webcompat.com/blob/dev.webcompat.com/config.py.example#L40-L44). `ISSUES_REPO_URI = "<user>/<repo>/issues"`. With the example, we chose it would be `ISSUES_REPO_URI = "miketaylr/nobody-look-at-this/issues"`
-2. [get the secrets](https://github.com/webcompat/webcompat.com/blob/dev.webcompat.com/config.py.example#L24-L38) for config.py
+2. It is **mandatory** to create your own personal bot for local development. The [instructions for creating a bot token](http://help.github.com/articles/creating-an-access-token-for-command-line-use) are given on GitHub. Once you created the token you can add it to the variable `BOT_OAUTH_TOKEN = ""`. This is the oauth token we use to report issues on behalf of people who don't want to give GitHub oauth access (or don't have GitHub accounts).
+3. [get the secrets](https://github.com/webcompat/webcompat.com/blob/dev.webcompat.com/config.py.example#L24-L38) for config.py
 
+**Note**: If you get a 404 at GitHub when clicking "Login", it means you haven't [filled in the `GITHUB_CLIENT_ID` or `GITHUB_CLIENT_SECRET`](https://github.com/webcompat/webcompat.com/blob/master/config.py.example#L47-L49).
+
+![Auth 404](https://i.cloudup.com/8FDA5bVc7l.png)
 
 ### Starting The Server
 
@@ -225,16 +229,6 @@ make start
 
 You should now have a local instance of the site running at `http://127.0.0.1:5000/`. Please [file bugs](https://github.com/webcompat/webcompat.com/issues/new) if something went wrong!
 
-**Note**: If you get a `TypeError: unhashable type` page when loading `http://127.0.0.1:5000/`, it means you've forgotten one of two (or both!) of the bare minimum config.py requirements:
-
-* A non-production [`ISSUES_REPO_URI`](https://github.com/webcompat/webcompat.com/blob/master/config.py.example#L57) e.g., `miketaylr/nobody-look-at-this/issues`
-* [`BOT_OAUTH_TOKEN`](https://github.com/webcompat/webcompat.com/blob/master/config.py.example#L70)
-
-This is the oauth token we use to report issues on behalf of people who don't want to give GitHub oauth access (or don't have GitHub accounts). If you don't want to create another user for testing, you could put in your own access token.
-
-**Note**: If you get a 404 at GitHub when clicking "Login", it means you haven't [filled in the `GITHUB_CLIENT_ID` or `GITHUB_CLIENT_SECRET`](https://github.com/webcompat/webcompat.com/blob/master/config.py.example#L47-L49).
-
-![Auth 404](https://i.cloudup.com/8FDA5bVc7l.png)
 
 ## Coding
 
