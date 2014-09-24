@@ -168,6 +168,13 @@
   font-size:32px;
   font-weight:bold;
 }
+.contributors__list__screenshot {
+  text-align:center;
+  margin-top:1em;
+}
+.contributors__list__screenshot img {
+  max-width:100%;
+}
 .contributors__list__item span {
   display:inline-block;
   font-size:20px;
@@ -187,6 +194,12 @@
 .contributors__list__item--lvl_down span {
   font-size:15px;
   line-height:22px;
+  width:100%;
+}
+@media (--viewport-1180px) {
+  .contributors__list__item--lvl_down span {
+    padding-right:2.2em;
+  }
 }
 
 /* content of item contributors open */
