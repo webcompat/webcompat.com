@@ -1,0 +1,41 @@
+/*------Issue item------*/
+
+
+/* Parent class */
+.issue-item {
+  font-size:var(--base-font-size);
+  background-color: #fff;
+  padding: 0.5em 1em;
+  margin-bottom: 1em;
+}
+.issue--untriaged {
+  border-left: 5px solid var(--wc-state-untriaged);
+}
+.issue--needs-diagnosis {
+  border-left: 5px solid var(--wc-state-need);
+}
+.issue--contactready {
+  border-left: 5px solid var(--wc-state-ready);
+}
+.issue--sitewait {
+  border-left: 5px solid var(--wc-state-sitewait);
+}
+.issue--closed {
+  border-left: 5px solid var(--wc-state-close);
+}
+.issue-item-content {}
+.issue-item-header {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom:0.5em;
+}
+.issue-item-metadata {
+  font-size:.8em;
+}
+.issue-item-count {
+  font-weight: 400;
+}
+.issue-item-label {
+
+}
