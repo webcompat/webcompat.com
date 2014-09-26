@@ -2,7 +2,9 @@
 
 
 /* Main class */
-.IssueList {}
+.IssueList {
+  font-size:var(--base-font-size);
+}
 
 /* Filtering issues */
 .IssueList-filtering {}
@@ -10,7 +12,21 @@
 /*Search issues */
 .IssueList-search {
   background-color:#F7F7F7;
+  padding-top:1em;
+  padding-bottom:1em;
 }
+  .IssueList-search-form {
+    background-color:#F7F7F7;
+    width:100%;
+    font-size:2em;
+    font-weight:400;
+    border:none;
+  }
+    .IssueList-search-form::placeholder {
+      color:#999898;
+      font-weight:400;
+      font-size:0.8em;
+    }
 
 /* Sorting issues */
 .IssueList-sorting {
