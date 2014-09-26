@@ -41,15 +41,24 @@
 /* Dropdown */
 .Dropdown {
   position:relative;
+  font-size:var(--base-font-size);
+}
+.Dropdown--large {
+  font-size:2em;
 }
 .Dropdown-toggle {
   background-image:none;
   border:none;
+  font-family:var(--base-font);
   font-size:1em;
-  padding:.7em;
+  padding:0.7em 0;
   cursor:pointer;
   border:solid 2px transparent;
 }
+  .Dropdown-label {
+    display:inline-block;
+    vertical-align:middle;
+  }
   .Dropdown-content {
     position:absolute;
     min-width:100%;

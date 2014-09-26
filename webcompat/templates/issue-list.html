@@ -2,7 +2,19 @@
 {% block body %}
   <div class="page page--issue-list IssueList">
   {% include "shared/nav.html" %}
-    <div class="wc-content wc-content--body IssueList-filtering"></div>
+    <div class="wc-content wc-content--body IssueList-filtering">
+      <div class="Dropdown Dropdown--large wc-inline-block">
+       <button class="Dropdown-toggle js-dropdown-toggle wc-bold">
+         <span class="Dropdown-label">View all open issues</span> <span class="icon icon-chevron-down"></span>
+        </button>
+        <ul class="Dropdown-content" aria-hidden="false">
+          <li class="Dropdown-item"><a href="#" class="Dropdown-link">All losed issues</a></li>
+          <li class="Dropdown-item"><a href="#" class="Dropdown-link">All issues</a></li>
+          <li class="Dropdown-item"><a href="#" class="Dropdown-link">submmitted by me</a></li>
+          <li class="Dropdown-item"><a href="#" class="Dropdown-link">mentionbing me</a></li>
+        </ul>
+      </div>
+    </div>
     <div class="IssueList-search">
       <div class="wc-content">
         <form action="" method="post">
@@ -13,7 +25,8 @@
     <div class="IssueList-sorting">
       <div class="wc-content">
         <div class="Dropdown wc-inline-block">
-         <button class="Dropdown-toggle js-dropdown-toggle wc-bold"> Show 5 <span class="icon icon-chevron-down"></span></button>
+         <button class="Dropdown-toggle js-dropdown-toggle wc-bold">
+           <span class="Dropdown-label">Show 5</span> <span class="icon icon-chevron-down"></span></button>
           <ul class="Dropdown-content" aria-hidden="false">
             <li class="Dropdown-item"><a href="#" class="Dropdown-link">10</a></li>
             <li class="Dropdown-item"><a href="#" class="Dropdown-link">20</a></li>
@@ -22,7 +35,8 @@
           </ul>
         </div>
         <div class="Dropdown wc-inline-block">
-         <button class="Dropdown-toggle js-dropdown-toggle wc-bold"> Newest <span class="icon icon-chevron-down"></span></button>
+         <button class="Dropdown-toggle js-dropdown-toggle wc-bold">
+           <span class="Dropdown-label">Newest</span> <span class="icon icon-chevron-down"></span></button>
           <ul class="Dropdown-content" aria-hidden="false">
             <li class="Dropdown-item"><a href="#" class="Dropdown-link">Oldest</a></li>
             <li class="Dropdown-item"><a href="#" class="Dropdown-link">Most commented</a></li>
