@@ -34,7 +34,7 @@ function BugForm() {
         if (!location.search.search(/open=1&url=.+$/)) {
           return;
         }
-        var urlParam = location.search.match(/url=(.+)$/);
+        var urlParam = location.search.match(/url=(.+)[&$]/);
         if (urlParam != null) {
           urlField.val(decodeURIComponent(urlParam[1]));
           self.copyURL();
