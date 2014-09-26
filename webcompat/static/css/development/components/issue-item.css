@@ -6,7 +6,7 @@
   font-size:var(--base-font-size);
   background-color: #fff;
   padding: 0.5em 1em;
-  margin-bottom: 1em;
+  margin-bottom: 1em;;
 }
 .issue--untriaged {
   border-left: 5px solid var(--wc-state-untriaged);
@@ -23,6 +23,10 @@
 .issue--closed {
   border-left: 5px solid var(--wc-state-close);
 }
+.issue--large {
+  font-size:1.2em;
+  border-width:8px;
+}
 .issue-item-content {}
 .issue-item-header {
   white-space: nowrap;
@@ -33,6 +37,14 @@
 .issue-item-metadata {
   font-size:.8em;
 }
+  .issue-metadata {
+    margin-right:.8em;
+  }
+  @media (--viewport-450px) {
+    .issue-metadata {
+      display:block;
+    }
+  }
 .issue-item-count {
   font-weight: 400;
 }
