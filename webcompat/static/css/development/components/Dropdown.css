@@ -22,6 +22,7 @@
   padding:0.7em 0;
   cursor:pointer;
   border:solid 2px transparent;
+  font-weight:700;
 }
   .Dropdown-label {
     display:inline-block;
