@@ -1,1 +1,23 @@
 /*------Issue List------*/
+
+
+/* Main class */
+.IssueList {}
+
+/* Filtering issues */
+.IssueList-filtering {}
+
+/*Search issues */
+.IssueList-search {
+  background-color:#F7F7F7;
+}
+
+/* Sorting issues */
+.IssueList-sorting {
+  background-color:#F0F0F0;
+}
+
+/* List of issue */
+.IssueList-displayed {
+  background-color:#F0F0F0;
+}
