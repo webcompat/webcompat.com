@@ -2,7 +2,7 @@
 {% block body %}
   <div class="page page--issue-list IssueList">
   {% include "shared/nav.html" %}
-    <div class="wc-content wc-content--body IssueList-filtering">
+    <div class="wc-content wc-content--body">
       <div class="Dropdown Dropdown--large wc-inline-block">
        <button class="Dropdown-toggle js-dropdown-toggle wc-bold">
          <span class="Dropdown-label">View all open issues</span> <span class="icon icon-chevron-down"></span>
@@ -13,6 +13,23 @@
           <li class="Dropdown-item"><a href="#" class="Dropdown-link">submmitted by me</a></li>
           <li class="Dropdown-item"><a href="#" class="Dropdown-link">mentionbing me</a></li>
         </ul>
+      </div>
+      <div>
+        <button class="IssueList-filtering IssueList-filtering--untriaged">
+          <span class="IssueList-filtering-count">34</span> Untriaged</span>
+        </button>
+        <button class="IssueList-filtering IssueList-filtering--need">
+          <span class="IssueList-filtering-count">40</span> Needs Diagnosis</span>
+        </button>
+        <button class="IssueList-filtering IssueList-filtering--ready">
+          <span class="IssueList-filtering-count">15</span> Ready for outreach</span>
+        </button>
+        <button class="IssueList-filtering IssueList-filtering--sitewait">
+          <span class="IssueList-filtering-count">50</span> Site contacted</span>
+        </button>
+        <button class="IssueList-filtering IssueList-filtering--close">
+          <span class="IssueList-filtering-count">153</span> Closed</span>
+        </button>
       </div>
     </div>
     <div class="IssueList-search">
