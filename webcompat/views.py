@@ -203,6 +203,12 @@ def about():
         get_user_info()
     return render_template('about.html')
 
+@app.route('/issue-list')
+def issueList():
+    '''Route to display about page.'''
+    if g.user:
+        get_user_info()
+    return render_template('issue-list.html')
 
 @app.route('/privacy')
 def privacy():
