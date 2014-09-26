@@ -1,0 +1,10 @@
+{% extends "layout.html" %}
+{% block body %}
+  <div class="page page--issue-list IssueList">
+  {% include "shared/nav.html" %}
+    <div class="wc-content wc-content--body IssueList-filtering"></div>
+    <div class="IssueList-search"></div>
+    <div class="IssueList-sorting"></div>
+    <div class="IssueList-displayed"></div>
+  </div>
+{% endblock %}
