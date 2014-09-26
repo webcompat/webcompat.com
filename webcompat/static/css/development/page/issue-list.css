@@ -31,9 +31,44 @@
 /* Sorting issues */
 .IssueList-sorting {
   background-color:#F0F0F0;
+  padding:1.5em 0;
 }
 
 /* List of issue */
 .IssueList-displayed {
   background-color:#F0F0F0;
 }
+/* Dropdown */
+.Dropdown {
+  position:relative;
+}
+.Dropdown-toggle {
+  background-image:none;
+  border:none;
+  font-size:1em;
+  padding:.7em;
+  cursor:pointer;
+  border:solid 2px transparent;
+}
+  .Dropdown-content {
+    position:absolute;
+    min-width:100%;
+    display: none;
+    padding:0 1em 1em 1em;
+    background-color:rgba(255,255,255,.8);
+    z-index:2;
+    list-style:none;
+  }
+  .Dropdown.open .Dropdown-toggle {
+    border:solid 2px rgba(255,255,255,.8);
+  }
+  .Dropdown.open .Dropdown-content {
+    display: block;
+  }
+  .Dropdown-item {
+    margin:1em 0 0 !important;
+    white-space:nowrap;
+  }
+  .Dropdown-link {
+    font-weight:700;
+  }
