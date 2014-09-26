@@ -17,6 +17,7 @@
 @import "../../../../node_modules/suitcss-utils-align/index.css";
 @import "components/form.css";
 @import "components/issue-item.css";
+@import "components/Dropdown.css";
 /*----------Layout----------*/
 @import "layout/body.css";
 @import "layout/header.css";
