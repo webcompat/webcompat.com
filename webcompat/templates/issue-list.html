@@ -4,7 +4,7 @@
   {% include "shared/nav.html" %}
     <div class="wc-content wc-content--body">
       <div class="Dropdown Dropdown--large">
-       <button class="Dropdown-toggle js-dropdown-toggle">
+       <button type="button" class="Dropdown-toggle js-dropdown-toggle">
          <span class="Dropdown-label">View all open issues</span> <span class="icon icon-chevron-down"></span>
         </button>
         <ul class="Dropdown-content" aria-hidden="false">
@@ -15,26 +15,26 @@
         </ul>
       </div>
       <div>
-        <button class="IssueList-filtering IssueList-filtering--untriaged">
+        <button type="button" class="IssueList-filtering IssueList-filtering--untriaged">
           <span class="IssueList-filtering-count">34</span> Untriaged</span>
         </button>
-        <button class="IssueList-filtering IssueList-filtering--need">
+        <button type="button" class="IssueList-filtering IssueList-filtering--need">
           <span class="IssueList-filtering-count">40</span> Needs Diagnosis</span>
         </button>
-        <button class="IssueList-filtering IssueList-filtering--ready">
+        <button type="button" class="IssueList-filtering IssueList-filtering--ready">
           <span class="IssueList-filtering-count">15</span> Ready for outreach</span>
         </button>
-        <button class="IssueList-filtering IssueList-filtering--sitewait">
+        <button type="button" class="IssueList-filtering IssueList-filtering--sitewait">
           <span class="IssueList-filtering-count">50</span> Site contacted</span>
         </button>
-        <button class="IssueList-filtering IssueList-filtering--close">
+        <button type="button" class="IssueList-filtering IssueList-filtering--close">
           <span class="IssueList-filtering-count">153</span> Closed</span>
         </button>
       </div>
     </div>
     <div class="IssueList-search">
       <div class="wc-content">
-        <form action="" method="post">
+        <form action="" method="post" role="form">
           <input type=="text" class="IssueList-search-form" placeholder="Search by keyword"/>
         </form>
       </div>
@@ -42,7 +42,7 @@
     <div class="IssueList-sorting">
       <div class="wc-content">
         <div class="Dropdown wc-inline-block">
-         <button class="Dropdown-toggle js-dropdown-toggle">
+         <button type="button" class="Dropdown-toggle js-dropdown-toggle">
            <span class="Dropdown-label">Show 5</span> <span class="icon icon-chevron-down"></span></button>
           <ul class="Dropdown-content" aria-hidden="false">
             <li class="Dropdown-item"><a href="#" class="Dropdown-link">10</a></li>
@@ -52,7 +52,7 @@
           </ul>
         </div>
         <div class="Dropdown wc-inline-block">
-         <button class="Dropdown-toggle js-dropdown-toggle wc-bold">
+         <button type="button" class="Dropdown-toggle js-dropdown-toggle wc-bold">
            <span class="Dropdown-label">Newest</span> <span class="icon icon-chevron-down"></span></button>
           <ul class="Dropdown-content" aria-hidden="false">
             <li class="Dropdown-item"><a href="#" class="Dropdown-link">Oldest</a></li>
