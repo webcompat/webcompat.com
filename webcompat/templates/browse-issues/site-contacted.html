@@ -3,11 +3,11 @@
   <h3 class="wc-titleIssue">Site Contacted</h3>
   <% if (sitewait.length) { %>
     <% _.each(sitewait, function(issue) { %>
-    <div class="issue issue--sitewait">
-      <p class="issue-item-header">
-        <a href="/issues/<%= issue.number %>"><span class="issue-item-count">Issue <%= issue.number %></span>: <%- issue.title %></a>
+    <div class="IssueItem IssueItem--sitewait">
+      <p class="IssueItem-header">
+        <a href="/issues/<%= issue.number %>"><span class="IssueItem-count">Issue <%= issue.number %></span>: <%- issue.title %></a>
       </p>
-      <p class="issue-item-metadata">Opened: <time><%= issue.createdAt %></time>, comments: <%= issue.commentsNumber %></p>
+      <p class="IssueItem-metadata">Opened: <time><%= issue.createdAt %></time>, comments: <%= issue.commentsNumber %></p>
     </div>
     <% }); %>
   <% } else { %>

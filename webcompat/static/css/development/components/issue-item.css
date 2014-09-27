@@ -2,58 +2,57 @@
 
 
 /* Parent class */
-.issue-item {
+.IssueItem {
   width:100%;
   font-size:var(--base-font-size);
   background-color: #fff;
   padding: 0.5em 1em;
   margin-bottom: 1em;;
 }
-.issue--untriaged {
+.IssueItem--untriaged {
   border-left: 5px solid var(--wc-state-untriaged);
 }
-.issue--needs-diagnosis {
+.IssueItem--needs-diagnosis {
   border-left: 5px solid var(--wc-state-need);
 }
-.issue--contactready {
+.IssueItem--contactready {
   border-left: 5px solid var(--wc-state-ready);
 }
-.issue--sitewait {
+.IssueItem--sitewait {
   border-left: 5px solid var(--wc-state-sitewait);
 }
-.issue--closed {
+.IssueItem--closed {
   border-left: 5px solid var(--wc-state-close);
 }
-.issue--large {
+.IssueItem--large {
   font-size:1.2em;
   border-width:8px;
 }
-.issue-item-content {}
-.issue-item-header {
+.IssueItem-content {}
+.IssueItem-header {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   margin-bottom:0.5em;
 }
-.issue-item-metadata {
+.IssueItem-metadata {
   font-size:.8em;
   margin-right:.8em;
 }
   @media (--viewport-450px) {
-    .issue-item-metadata {
+    .IssueItem-metadata {
       display:block;
     }
   }
-.issue-item-count {
+.IssueItem-count {
   font-weight: 400;
 }
-.issue-item-label {
+.IssueItem-label {
   display:block;
   text-align:right;
-  font-size:.7em;
-
+  font-size:.8em;
 }
-.issue-item-section {
+.IssueItem-section {
   display:table-cell;
   vertical-align:middle;
 }
