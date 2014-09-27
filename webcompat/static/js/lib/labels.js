@@ -77,7 +77,7 @@ issues.LabelEditorView = Backbone.View.extend({
   events: {
     'change input[type=checkbox]': 'updateView',
     'click button': 'closeEditor',
-    'keyup .label_editor__search': 'filterLabels'
+    'keyup .LabelEditor-search': 'filterLabels'
   },
   keyboardEvents: {
     'esc': 'closeEditor'
@@ -90,7 +90,7 @@ issues.LabelEditorView = Backbone.View.extend({
     this.$el.html(this.template(this.model.toJSON()));
     this.resizeEditorHeight();
     _.defer(_.bind(function() {
-      this.$el.find('.label_editor__search').focus();
+      this.$el.find('.LabelEditor-search').focus();
     }, this));
     return this;
   },
@@ -116,8 +116,8 @@ issues.LabelEditorView = Backbone.View.extend({
     if (getBreakpoint()) {
       _.defer(function(){
         var labelEditorheight = parseInt($('.label_editor').css( "height" ), 10),
-            labelHeaderheight = parseInt($('.label_editor_row--header').css("height"), 10);
-        $('.label_list').height(labelEditorheight -labelHeaderheight );
+            labelHeaderheight = parseInt($('.LabelEditor-row--header').css("height"), 10);
+        $('.LabelEditor-list').height(labelEditorheight -labelHeaderheight );
         $("html, body").animate({ scrollTop: 0 }, 0);
       });
     }
@@ -155,12 +155,12 @@ issues.LabelEditorView = Backbone.View.extend({
     }), 'name');
 
     // make sure everything is showing
-    $('.label_item').show();
+    $('.LabelEditor-item').show();
 
     // hide the non-filter matches
     var hidden = _.difference(_.pluck(this.model.get('labels'), 'name'), matches);
     _.each(hidden, function(name) {
-      $('input[name=' + escape(name) + ']').closest('.label_item').hide();
+      $('input[name=' + escape(name) + ']').closest('.LabelEditor-item').hide();
     });
   }, 100)
 });

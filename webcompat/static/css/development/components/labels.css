@@ -1,12 +1,12 @@
 /*----------add/remove labels----------*/
 
 /* Wrapper label editor */
-.label_editor__wrapper {
+.LabelEditor-wrapper {
   position:relative;
   display:inline-block;
 }
 @media (--viewport-375px) {
-  .label_editor__wrapper {
+  .LabelEditor-wrapper {
     position:static; /* position of label_editor not depend of this class */
   }
 }
@@ -40,11 +40,11 @@
     overflow-y:auto;
     overflow-x:hidden;
   }
-  .label_editor_table {
+  .LabelEditor-table {
     display:table;
     width:100%;
   }
-  .label_editor_row {
+  .LabelEditor-row {
     display:table-row;
     width:100%;
   }
@@ -70,31 +70,31 @@
   }
 }
 /* Label header */
-.label_editor__header {
+.LabelEditor-header {
   background-color:#fff;
   border-radius: 6px 6px 0px 0px;
   box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.1), 0px 2px 3px rgba(0, 0, 0, 0.05);
   padding: 0.625em;
 }
-.label_editor__search {
+.LabelEditor-search {
   display:inline-block;
   width:auto;
 }
 @media (--viewport-375px) {
-  .label_editor__search {
+  .LabelEditor-search {
     font-size:16px;
   }
 }
 /* btn */
-.label_editor__btn {
+.LabelEditor-btn {
   border:none;
 }
 /* hover btn */
-.label_editor__btn:hover {
+.LabelEditor-btn:hover {
   text-decoration:underline;
 }
 /* list label */
-.label_list {
+.LabelEditor-list {
   background-color: #FFF;
   color: #333;
   max-height:18.75em;
@@ -103,12 +103,12 @@
   -webkit-overflow-scrolling: touch;
 }
 @media (--viewport-375px) {
-  .label_list {
+  .LabelEditor-list {
      max-height:inherit;
   }
 }
 /* item label */
-.label_item {
+.LabelEditor-item {
   display:block;
   float:none;
   cursor:pointer;
@@ -116,10 +116,10 @@
   margin:0;
   font-size:1em;
 }
-.label_item:last-child {
+.LabelEditor-item:last-child {
     border-bottom:1px solid #ddd;
 }
-.label_color {
+.LabelEditor-color {
   display: inline-block;
   margin: .5em .3125em .5em .3125em;
   width: 1.5em;
@@ -128,11 +128,11 @@
   text-align: center;
   border-radius: 3px;
 }
-.label_checkbox {
+.LabelEditor-checkbox {
   margin:0;
   padding:0;
 }
-.label_name {
+.LabelEditor-name {
   display:inline-block;
   font-size: .75em;
   font-weight: 500;

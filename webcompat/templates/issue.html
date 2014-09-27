@@ -34,7 +34,7 @@
         <script type="text/template" id="issue-labels-tmpl">
           <span class="issue__label_item issue__label_item--title">Labels</span>
           {% if session.user_id and session.avatar_url %}
-            <span class="label_editor__wrapper"><button class="issue__label--modify icon"></button></span>
+            <span class="LabelEditor-wrapper"><button class="issue__label--modify icon"></button></span>
           {% endif %}
           <span class="labels__wrapper">
           <% _.each(labels, function(label) { %>
@@ -93,21 +93,21 @@
   </div>
 
   <script type="text/template" id="label-editor-tmpl">
-    <div class="label_editor_table">
-      <div class="label_editor_row label_editor_row--header">
-        <div class="label_editor__header">
-          <input class="form-control label_editor__search" placeholder="filter label">
-          <button class="label_editor__btn">Save &amp; Close</button>
+    <div class="LabelEditor-table">
+      <div class="LabelEditor-row LabelEditor-row--header">
+        <div class="LabelEditor-header">
+          <input class="form-control LabelEditor-search" placeholder="filter label">
+          <button class="LabelEditor-btn">Save &amp; Close</button>
         </div>
       </div>
-      <div class="label_editor_row">
-        <div class="label_list">
+      <div class="LabelEditor-row">
+        <div class="LabelEditor-list">
           <% _.each(labels, function(label) { %>
-            <label class="label_item">
-              <span class="label_color" style="background-color:#<%=label.color%>">
-                <input class="label_checkbox" type="checkbox" name="<%= label.name %>" data-color="<%=label.color%>">
+            <label class="LabelEditor-item">
+              <span class="LabelEditor-color" style="background-color:#<%=label.color%>">
+                <input class="LabelEditor-checkbox" type="checkbox" name="<%= label.name %>" data-color="<%=label.color%>">
               </span>
-              <span class="label_name"><%= label.name %></span>
+              <span class="LabelEditor-name"><%= label.name %></span>
               </label>
             <% }); %>
           </div>
