@@ -56,3 +56,14 @@
   display:table-cell;
   vertical-align:middle;
 }
+  @media (--viewport-950px) {
+    .IssueItem-section {
+      display:block;
+    }
+    .IssueItem-section + .IssueItem-section {
+      margin-top:1em;
+    }
+    .IssueItem-label {
+      text-align:center;
+    }
+  }
