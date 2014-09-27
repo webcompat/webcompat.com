@@ -153,8 +153,10 @@ def index():
 
 @app.route('/issues')
 def show_issues():
-    '''Temporarily useless.'''
-    return redirect(url_for('index'), code=307)
+    '''Route to display global issues view.'''
+    if g.user:
+        get_user_info()
+    return render_template('issue-list.html')
 
 
 @app.route('/issues/<int:number>')
@@ -203,12 +205,6 @@ def about():
         get_user_info()
     return render_template('about.html')
 
-@app.route('/issue-list')
-def issueList():
-    '''Route to display about page.'''
-    if g.user:
-        get_user_info()
-    return render_template('issue-list.html')
 
 @app.route('/privacy')
 def privacy():
