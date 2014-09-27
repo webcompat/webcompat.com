@@ -4,11 +4,11 @@
   <% if (userIssues.length) { %>
     <% _.each(userIssues, function(issue) { %>
     <div class="Grid-cell u-size1of2 u-md-sizeFull">
-      <div class="issue-item issue--<%= issue.state %>">
-        <p class="issue-item-header">
-          <a href="/issues/<%= issue.number %>"><span class="issue-item-count">Issue <%= issue.number %></span>: <%- issue.title %></a>
+      <div class="IssueItem IssueItem--<%= issue.state %>">
+        <p class="IssueItem-header">
+          <a href="/issues/<%= issue.number %>"><span class="IssueItem-count">Issue <%= issue.number %></span>: <%- issue.title %></a>
         </p>
-        <p class="issue-item-metadata">Opened: <time><%= issue.createdAt %></time>, comments: <%= issue.commentsNumber %></p>
+        <p class="IssueItem-metadata">Opened: <time><%= issue.createdAt %></time>, comments: <%= issue.commentsNumber %></p>
       </div>
     </div>
     <% }); %>
