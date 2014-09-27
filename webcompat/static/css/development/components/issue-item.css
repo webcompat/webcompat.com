@@ -3,6 +3,7 @@
 
 /* Parent class */
 .issue-item {
+  width:100%;
   font-size:var(--base-font-size);
   background-color: #fff;
   padding: 0.5em 1em;
@@ -36,12 +37,10 @@
 }
 .issue-item-metadata {
   font-size:.8em;
+  margin-right:.8em;
 }
-  .issue-metadata {
-    margin-right:.8em;
-  }
   @media (--viewport-450px) {
-    .issue-metadata {
+    .issue-item-metadata {
       display:block;
     }
   }
@@ -49,5 +48,12 @@
   font-weight: 400;
 }
 .issue-item-label {
+  display:block;
+  text-align:right;
+  font-size:.7em;
 
+}
+.issue-item-section {
+  display:table-cell;
+  vertical-align:middle;
 }
