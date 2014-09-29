@@ -22,40 +22,44 @@
     margin:0 .8em .4em 0;
     color:#404040;
   }
+  .IssueList-filtering:hover,
+  .IssueList-filtering.is-active {
+    color:#fff;
+  }
   .IssueList-filtering--untriaged {
     border-color:var(--wc-state-untriaged);
   }
-  .IssueList-filtering--untriaged:hover {
+  .IssueList-filtering--untriaged:hover,
+  .IssueList-filtering--untriaged.is-active {
     background-color:var(--wc-state-untriaged);
-    color:#fff;
   }
   .IssueList-filtering--need {
     border-color:var(--wc-state-need);
   }
-  .IssueList-filtering--need:hover {
+  .IssueList-filtering--need:hover,
+  .IssueList-filtering--need.is-active {
     background-color:var(--wc-state-need);
-    color:#fff;
   }
   .IssueList-filtering--ready {
     border-color:var(--wc-state-ready);
   }
-  .IssueList-filtering--ready:hover {
+  .IssueList-filtering--ready:hover,
+  .IssueList-filtering--ready.is-active {
     background-color:var(--wc-state-ready);
-    color:#fff;
   }
   .IssueList-filtering--sitewait {
     border-color:var(--wc-state-sitewait);
   }
-  .IssueList-filtering--sitewait:hover {
+  .IssueList-filtering--sitewait:hover
+  .IssueList-filtering--sitewait.is-active {
     background-color:var(--wc-state-sitewait);
-    color:#fff;
   }
   .IssueList-filtering--close {
     border-color:var(--wc-state-close);
   }
-  .IssueList-filtering--close:hover {
+  .IssueList-filtering--close:hover,
+  .IssueList-filtering--close.is-active {
     background-color:var(--wc-state-close);
-    color:#fff;
   }
 /*Search issues */
 .IssueList-search {
