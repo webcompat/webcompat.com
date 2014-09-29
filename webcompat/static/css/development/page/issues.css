@@ -209,8 +209,8 @@
   padding:0;
 }
 /* display caret and label only if button is-active*/
-.issue__label--modify.is-active + .label_editor:after,
-.issue__label--modify.is-active + .label_editor {
+.issue__label--modify.is-active + .LabelEditor:after,
+.issue__label--modify.is-active + .LabelEditor {
   display:block;
 }
 

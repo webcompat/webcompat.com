@@ -8,7 +8,7 @@
 /*----------Component----------*/
 @import "components/button.css";
 @import "components/comment.css";
-@import "components/labels.css";
+@import "components/LabelEditor.css";
 @import "components/responsive.css";
 @import "../../../../node_modules/suitcss-components-grid/index.css";
 @import "components/Grid.css";
