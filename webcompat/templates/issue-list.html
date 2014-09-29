@@ -161,3 +161,10 @@
     </div>
   </div>
 {% endblock %}
+{% block extrascripts %}
+{%- if config.PRODUCTION %}
+<script src="{{ url_for('static', filename='js/issue-list.min.js') }}"></script>
+{% else %}
+<script src="{{ url_for('static', filename='js/lib/issue-list.js') }}"></script>
+{%- endif %}
+{% endblock %}

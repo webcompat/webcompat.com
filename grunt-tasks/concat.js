@@ -23,9 +23,15 @@ module.exports = function(grunt) {
         src: [
             '<%= jsPath %>/lib/comments.js',
             '<%= jsPath %>/lib/labels.js',
-            '<%= jsPath %>/lib/issues.js'
+            '<%= jsPath %>/lib/issues.js',
         ],
         dest: '<%= jsPath %>/issues.js'
+      },
+      issueList: {
+        src: [
+          '<%= jsPath %>/lib/issue-list.js'
+        ],
+        dest: '<%= jsPath %>/issue-list.js'
       }
    });
 };
