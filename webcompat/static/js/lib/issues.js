@@ -246,11 +246,11 @@ issues.MainView = Backbone.View.extend({
   closeLabelEditor: function(e) {
     var target = $(e.target);
     // early return if the editor is closed,
-    if (!this.$el.find('.label_editor').is(':visible') ||
+    if (!this.$el.find('.LabelEditor').is(':visible') ||
           // or we've clicked on the button to open it,
          (target[0].nodeName === 'BUTTON' && target.hasClass('issue__label--modify')) ||
            // or clicked anywhere inside the label editor
-           target.parents('.label_editor').length) {
+           target.parents('.LabelEditor').length) {
       return;
     } else {
       this.labels.closeEditor();
