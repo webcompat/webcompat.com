@@ -37,10 +37,10 @@
     z-index:2;
     list-style:none;
   }
-  .Dropdown.open .Dropdown-toggle {
+  .Dropdown.is-active .Dropdown-toggle {
     border:solid 2px rgba(255,255,255,.8);
   }
-  .Dropdown.open .Dropdown-content {
+  .Dropdown.is-active .Dropdown-content {
     display: block;
   }
   .Dropdown-item {
