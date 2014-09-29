@@ -19,7 +19,7 @@
     border-style:solid;
     cursor:pointer;
     padding:.4em;
-    margin:0 .4em .4em 0;
+    margin:0 .8em .4em 0;
     color:#404040;
   }
   .IssueList-filtering--untriaged {
@@ -60,13 +60,13 @@
 /*Search issues */
 .IssueList-search {
   background-color:#F7F7F7;
-  padding-top:1em;
-  padding-bottom:1em;
+  padding-top:1.5em;
+  padding-bottom:1.5em;
 }
   .IssueList-search-form {
     background-color:#F7F7F7;
     width:100%;
-    font-size:2em;
+    font-size:1.5em;
     font-weight:400;
     border:none;
   }
