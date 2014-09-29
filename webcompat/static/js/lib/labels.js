@@ -73,7 +73,7 @@ issues.LabelsView = Backbone.View.extend({
 });
 
 issues.LabelEditorView = Backbone.View.extend({
-  className: 'label_editor',
+  className: 'LabelEditor',
   events: {
     'change input[type=checkbox]': 'updateView',
     'click button': 'closeEditor',
@@ -115,7 +115,7 @@ issues.LabelEditorView = Backbone.View.extend({
 
     if (getBreakpoint()) {
       _.defer(function(){
-        var labelEditorheight = parseInt($('.label_editor').css( "height" ), 10),
+        var labelEditorheight = parseInt($('.LabelEditor').css( "height" ), 10),
             labelHeaderheight = parseInt($('.LabelEditor-row--header').css("height"), 10);
         $('.LabelEditor-list').height(labelEditorheight -labelHeaderheight );
         $("html, body").animate({ scrollTop: 0 }, 0);
