@@ -94,6 +94,7 @@
 {%- if config.PRODUCTION -%}
 <script src="{{ url_for('static', filename='js/diagnose.min.js') }}"></script>
 {%- else -%}
+<script src="{{ url_for('static', filename='js/lib/models/issue.js') }}"></script>
 <script src="{{ url_for('static', filename='js/lib/diagnose.js') }}"></script>
 {%- endif -%}
 {%- if session.user_id %}
