@@ -38,10 +38,10 @@ def proxy_issues():
     Cached for 5 minutes.
     '''
     if g.user:
-        issues = github.get('repos/{0}'.format(REPO_URI))
+        issues = github.raw_request('GET', 'repos/{0}'.format(REPO_URI))
     else:
         issues = proxy_request('get')
-    return json.dumps(issues)
+    return (issue.content, issue.status_code, get_headers(issue))
 
 
 @api.route('/issues/<int:number>')
