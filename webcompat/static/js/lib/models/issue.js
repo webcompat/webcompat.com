@@ -3,6 +3,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
  var issues = issues || {};
+ var issueList = issueList || {};
 
  issues.Issue = Backbone.Model.extend({
   urlRoot: function() {
@@ -108,6 +109,26 @@
           if (__flashmsg.length) {__flashmsg.fadeOut();}
         }, 2000);
       }
+    });
+  }
+});
+
+issueList.Issue = issues.Issue.extend({
+  getTeam: function() {
+    //TODO: not this.
+    return ["bob", "frrank", "kristin", "jenny"];
+  },
+  parse: function(response) {
+    this.set({
+      commentNumber: response.comments,
+      createdAt: moment(response.created_at).format('L'),
+      issueState: this.getState(response.state, response.labels),
+      labels: response.labels,
+      number: response.number,
+      reporter: response.user.login,
+      state: response.state,
+      team: this.getTeam(response),
+      title: response.title
     });
   }
 });
