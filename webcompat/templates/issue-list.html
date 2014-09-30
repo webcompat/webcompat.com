@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
 {% block body %}
-  <div class="page page--issue-list IssueList">
+  <div class="page page--issue-list IssueList js-issue-page">
   {% include "shared/nav.html" %}
     <div class="wc-content wc-content--body">
       <div class="Dropdown Dropdown--large">
@@ -16,19 +16,19 @@
       </div>
       <div>
         <button type="button" class="IssueList-filtering IssueList-filtering--untriaged">
-          <span class="IssueList-filtering-count">34</span> Untriaged</span>
+          <span class="IssueList-filtering-count">XX</span> Untriaged</span>
         </button>
         <button type="button" class="IssueList-filtering IssueList-filtering--need">
-          <span class="IssueList-filtering-count">40</span> Needs Diagnosis</span>
+          <span class="IssueList-filtering-count">XX</span> Needs Diagnosis</span>
         </button>
         <button type="button" class="IssueList-filtering IssueList-filtering--ready">
-          <span class="IssueList-filtering-count">15</span> Ready for outreach</span>
+          <span class="IssueList-filtering-count">XX</span> Ready for outreach</span>
         </button>
         <button type="button" class="IssueList-filtering IssueList-filtering--sitewait">
-          <span class="IssueList-filtering-count">50</span> Site contacted</span>
+          <span class="IssueList-filtering-count">XX</span> Site contacted</span>
         </button>
         <button type="button" class="IssueList-filtering IssueList-filtering--close">
-          <span class="IssueList-filtering-count">153</span> Closed</span>
+          <span class="IssueList-filtering-count">XX</span> Closed</span>
         </button>
       </div>
     </div>
@@ -65,98 +65,33 @@
         </div>
       </div>
     </div>
+
+    <!-- IssueListView -->
     <div class="IssueList-displayed">
-      <div class="wc-content">
-        <div class="IssueItem IssueItem--untriaged IssueItem--large u-table">
+      <div class="wc-content js-issue-list">
+        <script type="text/template" id="issuelist-issue-tmpl">
+        <% _.each(issues, function(issue) { %>
+        <div class="IssueItem IssueItem--<%= issue.stateClass %> IssueItem--large u-table">
           <div class="IssueItem-section">
             <p class="IssueItem-header">
-              <a href="/issues/10"><span class="IssueItem-count">Issue 10</span>: m;l,kn</a>
+              <a href="/issues/<%= issue.number %>"><span class="IssueItem-count">Issue <%= issue.number %></span>: <%- issue.title %></a>
             </p>
             <p>
-              <span class="IssueItem-metadata">Opened: <time>2014-08-01</time></span>
-              <span class="IssueItem-metadata">Comments: 1</span>
-              <span class="IssueItem-metadata">Team: <a href="" class="wc-bold">@karlcow</a> <a href="#" class="wc-bold">@magsout</a> <a href="#" class="wc-bold">@miketaylr</a></span>
+              <span class="IssueItem-metadata">Opened: <time><%= issue.createdAt %></time></span>
+              <span class="IssueItem-metadata">Comments: <%= issue.commentNumber %></span>
+              <span class="IssueItem-metadata">Team: <% _.each(issue.team, function(member) { %>
+                <a href="#todo-filter-by-person" class="wc-bold"><%= member %></a>
+              <% }); %></span>
             </p>
           </div>
           <div class="IssueItem-section">
-            <span class="IssueItem-label"><a href="" class="wc-bold">Firefox</a> <a href="#" class="wc-bold">mobile</a></span>
+            <span class="IssueItem-label"><% _.each(issue.labels, function(label) { %>
+              <a href="#todo-clickable-filter-uri" class="wc-bold"><%= label.name %></a>
+            <% }); %></span>
           </div>
         </div>
-        <div class="IssueItem IssueItem--untriaged IssueItem--large u-table">
-          <div class="IssueItem-section">
-            <p class="IssueItem-header">
-              <a href="/issues/10"><span class="IssueItem-count">Issue 10</span>: m;l,kn</a>
-            </p>
-            <p>
-              <span class="IssueItem-metadata">Opened: <time>2014-08-01</time></span>
-              <span class="IssueItem-metadata">Comments: 1</span>
-              <span class="IssueItem-metadata">Team: <a href="" class="wc-bold">@karlcow</a> <a href="#" class="wc-bold">@magsout</a> <a href="#" class="wc-bold">@miketaylr</a></span>
-            </p>
-          </div>
-          <div class="IssueItem-section">
-            <span class="IssueItem-label"><a href="" class="wc-bold">Firefox</a> <a href="#" class="wc-bold">mobile</a></span>
-          </div>
-        </div>
-        <div class="IssueItem IssueItem--untriaged IssueItem--large u-table">
-          <div class="IssueItem-section">
-            <p class="IssueItem-header">
-              <a href="/issues/10"><span class="IssueItem-count">Issue 10</span>: m;l,kn</a>
-            </p>
-            <p>
-              <span class="IssueItem-metadata">Opened: <time>2014-08-01</time></span>
-              <span class="IssueItem-metadata">Comments: 1</span>
-              <span class="IssueItem-metadata">Team: <a href="" class="wc-bold">@karlcow</a> <a href="#" class="wc-bold">@magsout</a> <a href="#" class="wc-bold">@miketaylr</a></span>
-            </p>
-          </div>
-          <div class="IssueItem-section">
-            <span class="IssueItem-label"><a href="" class="wc-bold">Firefox</a> <a href="#" class="wc-bold">mobile</a></span>
-          </div>
-        </div>
-        <div class="IssueItem IssueItem--untriaged IssueItem--large u-table">
-          <div class="IssueItem-section">
-            <p class="IssueItem-header">
-              <a href="/issues/10"><span class="IssueItem-count">Issue 10</span>: m;l,kn</a>
-            </p>
-            <p>
-              <span class="IssueItem-metadata">Opened: <time>2014-08-01</time></span>
-              <span class="IssueItem-metadata">Comments: 1</span>
-              <span class="IssueItem-metadata">Team: <a href="" class="wc-bold">@karlcow</a> <a href="#" class="wc-bold">@magsout</a> <a href="#" class="wc-bold">@miketaylr</a></span>
-            </p>
-          </div>
-          <div class="IssueItem-section">
-            <span class="IssueItem-label"><a href="" class="wc-bold">Firefox</a> <a href="#" class="wc-bold">mobile</a></span>
-          </div>
-        </div>
-        <div class="IssueItem IssueItem--untriaged IssueItem--large u-table">
-          <div class="IssueItem-section">
-            <p class="IssueItem-header">
-              <a href="/issues/10"><span class="IssueItem-count">Issue 10</span>: m;l,kn</a>
-            </p>
-            <p>
-              <span class="IssueItem-metadata">Opened: <time>2014-08-01</time></span>
-              <span class="IssueItem-metadata">Comments: 1</span>
-              <span class="IssueItem-metadata">Team: <a href="" class="wc-bold">@karlcow</a> <a href="#" class="wc-bold">@magsout</a> <a href="#" class="wc-bold">@miketaylr</a></span>
-            </p>
-          </div>
-          <div class="IssueItem-section">
-            <span class="IssueItem-label"><a href="" class="wc-bold">Firefox</a> <a href="#" class="wc-bold">mobile</a></span>
-          </div>
-        </div>
-        <div class="IssueItem IssueItem--untriaged IssueItem--large u-table">
-          <div class="IssueItem-section">
-            <p class="IssueItem-header">
-              <a href="/issues/10"><span class="IssueItem-count">Issue 10</span>: m;l,kn</a>
-            </p>
-            <p>
-              <span class="IssueItem-metadata">Opened: <time>2014-08-01</time></span>
-              <span class="IssueItem-metadata">Comments: 1</span>
-              <span class="IssueItem-metadata">Team: <a href="" class="wc-bold">@karlcow</a> <a href="#" class="wc-bold">@magsout</a> <a href="#" class="wc-bold">@miketaylr</a></span>
-            </p>
-          </div>
-          <div class="IssueItem-section">
-            <span class="IssueItem-label"><a href="" class="wc-bold">Firefox</a> <a href="#" class="wc-bold">mobile</a></span>
-          </div>
-        </div>
+        <% }); %>
+        </script>
       </div>
     </div>
   </div>
@@ -165,6 +100,7 @@
 {%- if config.PRODUCTION %}
 <script src="{{ url_for('static', filename='js/issue-list.min.js') }}"></script>
 {% else %}
+<script src="{{ url_for('static', filename='js/lib/models/issue.js') }}"></script>
 <script src="{{ url_for('static', filename='js/lib/issue-list.js') }}"></script>
 {%- endif %}
 {% endblock %}
