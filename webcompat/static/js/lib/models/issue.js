@@ -15,22 +15,19 @@
     });
   },
   getState: function(state, labels) {
+    var labelsNames = _.pluck(labels, 'name');
     if (state === 'closed') {
       this.set('stateClass', 'close');
       return 'Closed';
     }
-
-    var labelsNames = _.pluck(labels, 'name');
     if (labelsNames.indexOf('sitewait') > -1) {
       this.set('stateClass', 'sitewait');
       return 'Site Contacted';
     }
-
     if (labelsNames.indexOf('contactready') > -1) {
       this.set('stateClass', 'ready');
       return 'Ready for Outreach';
     }
-
     if (labelsNames.indexOf('needsdiagnosis') > -1) {
       this.set('stateClass', 'need');
       return 'Needs Diagnosis';
