@@ -4,7 +4,7 @@
   <% if (userIssues.length) { %>
     <% _.each(userIssues, function(issue) { %>
     <div class="Grid-cell u-size1of2 u-md-sizeFull">
-      <div class="IssueItem IssueItem--<%= issue.state %>">
+      <div class="IssueItem IssueItem--<%= issue.stateClass %>">
         <p class="IssueItem-header">
           <a href="/issues/<%= issue.number %>"><span class="IssueItem-count">Issue <%= issue.number %></span>: <%- issue.title %></a>
         </p>

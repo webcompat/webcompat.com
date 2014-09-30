@@ -3,59 +3,30 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 var diagnose = diagnose || {};
-
-diagnose.Issue = Backbone.Model.extend({
-  getStateClass: function(state, labels) {
-    var labelsNames = _.pluck(labels, 'name');
-    if (state === 'closed') {
-      this.set('state', 'closed');
-      return;
-    } else if (labelsNames.indexOf('contactready') > -1) {
-      this.set('state', 'contactready');
-      return;
-    } else if (labelsNames.indexOf('sitewait') > -1) {
-      this.set('state', 'sitewait');
-      return;
-    } else if (labelsNames.indexOf('needsdiagnosis') > -1) {
-      this.set('state', 'needs-diagnosis');
-      return;
-    } else {
-      this.set('state', 'untriaged');
-    }
-  },
-  parse: function(response) {
-    this.getStateClass(response.state, response.labels);
-    this.set({
-      commentsNumber: response.comments,
-      createdAt: response.created_at.slice(0,10),
-      number: response.number,
-      title: response.title,
-    });
-  }
-});
+var issues = issues || {};
 
 diagnose.MyIssuesCollection = Backbone.Collection.extend({
-  model: diagnose.Issue,
+  model: issues.Issue,
   url: '/api/issues/mine'
 });
 
 diagnose.NeedsDiagnosisCollection = Backbone.Collection.extend({
-  model: diagnose.Issue,
+  model: issues.Issue,
   url: '/api/issues/needsdiagnosis'
 });
 
 diagnose.ContactReadyCollection = Backbone.Collection.extend({
-  model: diagnose.Issue,
+  model: issues.Issue,
   url: '/api/issues/contactready'
 });
 
 diagnose.UntriagedCollection = Backbone.Collection.extend({
-  model: diagnose.Issue,
+  model: issues.Issue,
   url: '/api/issues/untriaged'
 });
 
 diagnose.SiteWaitCollection = Backbone.Collection.extend({
-  model: diagnose.Issue,
+  model: issues.Issue,
   url: '/api/issues/sitewait'
 });
 
