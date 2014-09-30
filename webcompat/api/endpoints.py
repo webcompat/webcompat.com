@@ -41,7 +41,7 @@ def proxy_issues():
         issues = github.raw_request('GET', 'repos/{0}'.format(REPO_URI))
     else:
         issues = proxy_request('get')
-    return (issue.content, issue.status_code, get_headers(issue))
+    return (issues.content, issues.status_code, get_headers(issues))
 
 
 @api.route('/issues/<int:number>')
