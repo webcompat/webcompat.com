@@ -7,7 +7,7 @@
       <p class="IssueItem-header">
         <a href="/issues/<%= issue.number %>"><span class="IssueItem-count">Issue <%= issue.number %></span>: <%- issue.title %></a>
       </p>
-      <p class="IssueItem-metadata">Opened: <time><%= issue.createdAt %></time>, comments: <%= issue.commentsNumber %></p>
+      <p class="IssueItem-metadata">Opened: <time><%= issue.createdAt %></time>, comments: <%= issue.commentNumber %></p>
     </div>
     <% }); %>
   <% } else { %>
