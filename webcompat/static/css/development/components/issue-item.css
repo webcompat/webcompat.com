@@ -12,16 +12,16 @@
 .IssueItem--untriaged {
   border-left: 5px solid var(--wc-state-untriaged);
 }
-.IssueItem--needs-diagnosis {
+.IssueItem--need {
   border-left: 5px solid var(--wc-state-need);
 }
-.IssueItem--contactready {
+.IssueItem--ready {
   border-left: 5px solid var(--wc-state-ready);
 }
 .IssueItem--sitewait {
   border-left: 5px solid var(--wc-state-sitewait);
 }
-.IssueItem--closed {
+.IssueItem--close {
   border-left: 5px solid var(--wc-state-close);
 }
 .IssueItem--large {
