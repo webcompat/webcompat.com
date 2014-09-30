@@ -32,6 +32,7 @@ module.exports = function(grunt) {
         '<%= jsPath %>/lib/bugform.js',
         '<%= jsPath %>/lib/comments.js',
         '<%= jsPath %>/lib/labels.js',
+        '<%= jsPath %>/lib/models/issue.js',
         '<%= jsPath %>/lib/issues.js',
         '<%= jsPath %>/lib/issue-list.js',
         '<%= jsPath %>/lib/diagnose.js'
