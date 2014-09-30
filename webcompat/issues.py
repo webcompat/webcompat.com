@@ -32,7 +32,7 @@ def proxy_request(method, path_mod='', data=None, uri=None):
     # Preparing the requests
     req = getattr(requests, method)
     if uri:
-        req_uri = '{0}'.format(uri)
+        req_uri = uri
     else:
         req_uri = 'https://api.github.com/repos/{0}{1}'.format(REPO_URI,
                                                                path_mod)
