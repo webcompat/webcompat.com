@@ -12,6 +12,9 @@ issueList.IssueCollection = Backbone.Collection.extend({
 
 issueList.FilterView = Backbone.View.extend({
   el: $('.js-issuelist-filter'),
+  events: {
+    'click .js-issue-filter': 'applyFilter'
+  },
   initialize: function() {
     this.model = new Backbone.Model();
   },
@@ -19,6 +22,11 @@ issueList.FilterView = Backbone.View.extend({
   render: function() {
     this.$el.html(this.template(this.model.toJSON()));
     return this;
+  },
+  applyFilter: function(e) {
+    var btn = $(e.target);
+    btn.toggleClass('is-active').siblings().removeClass('is-active');
+    // TODO: apply filter to search
   }
 });
 
