@@ -113,22 +113,4 @@
   }
 });
 
-issueList.Issue = issues.Issue.extend({
-  getTeam: function() {
-    //TODO: not this.
-    return ["bob", "frrank", "kristin", "jenny"];
-  },
-  parse: function(response) {
-    this.set({
-      commentNumber: response.comments,
-      createdAt: moment(response.created_at).format('L'),
-      issueState: this.getState(response.state, response.labels),
-      labels: response.labels,
-      number: response.number,
-      reporter: response.user.login,
-      state: response.state,
-      team: this.getTeam(response),
-      title: response.title
-    });
-  }
-});
+issueList.Issue = issues.Issue.extend({});

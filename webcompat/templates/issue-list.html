@@ -79,9 +79,6 @@
             <p>
               <span class="IssueItem-metadata">Opened: <time><%= issue.createdAt %></time></span>
               <span class="IssueItem-metadata">Comments: <%= issue.commentNumber %></span>
-              <span class="IssueItem-metadata">Team: <% _.each(issue.team, function(member) { %>
-                <a href="#todo-filter-by-person" class="wc-bold"><%= member %></a>
-              <% }); %></span>
             </p>
           </div>
           <div class="IssueItem-section">
