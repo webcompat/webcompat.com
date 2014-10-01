@@ -128,8 +128,29 @@ You will get in return the list of mistakes. Some of the basics recommendations 
 When in doubt, follow the conventions you see used in the source already.
 
 ### CSS
+We use cssnext as a tool for compiling css
 
-@@something to write by magsout@@
+````
+This is a CSS transpiler (CSS4+ to CSS3) that allows you to use tomorrow's CSS syntax today. It transforms CSS specs that are not already implemented in popular browsers into more compatible CSS.
+```
+More info here : https://github.com/cssnext/cssnext
+
+#### Naming conventions
+ 
+ We use a very simple syntax based on BEM and it looks like:
+  - ComponentName
+  - ComponentName--modifierName
+  - ComponentName-descendantName
+  - ComponentName.is-stateOfComponent
+
+#### CSS and JS
+All classes that depend on javascript are prefixed by JS-* . These classes are handled by JavaScript, no styles are applied.
+
+#### Folder and file
+The main stylesheet is main.css. There are @import statements to all other files, which are stored in the folder: Components, Page, layout, vendor.
+
+#### Framework, plugin
+We do not use frameworks. However we use libraries, such suitcss-components-grid, suitcss-utils-display.
 
 ### Javascript
 
