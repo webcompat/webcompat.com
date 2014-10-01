@@ -2,35 +2,37 @@
 {% block body %}
   <div class="IssueList js-issue-page">
   {% include "shared/nav.html" %}
-    <div class="wc-content wc-content--body">
+    <div class="wc-content wc-content--body js-issuelist-filter">
+      <script type="text/template" id="issuelist-filter-tmpl">
       <div class="Dropdown Dropdown--large">
        <button type="button" class="Dropdown-toggle js-dropdown-toggle">
          <span class="Dropdown-label">View all open issues</span> <span class="icon icon-chevron-down"></span>
         </button>
         <ul class="Dropdown-content" aria-hidden="false">
-          <li class="Dropdown-item"><a href="#" class="Dropdown-link">All losed issues</a></li>
+          <li class="Dropdown-item"><a href="#" class="Dropdown-link">All closed issues</a></li>
           <li class="Dropdown-item"><a href="#" class="Dropdown-link">All issues</a></li>
-          <li class="Dropdown-item"><a href="#" class="Dropdown-link">submmitted by me</a></li>
-          <li class="Dropdown-item"><a href="#" class="Dropdown-link">mentionbing me</a></li>
+          <li class="Dropdown-item"><a href="#" class="Dropdown-link">Submmitted by me</a></li>
+          <li class="Dropdown-item"><a href="#" class="Dropdown-link">Mentioning me</a></li>
         </ul>
       </div>
       <div>
         <button type="button" class="IssueList-filtering IssueList-filtering--untriaged">
-          <span class="IssueList-filtering-count">XX</span> Untriaged</span>
+          <span class="IssueList-filtering-count"></span> Untriaged</span>
         </button>
         <button type="button" class="IssueList-filtering IssueList-filtering--need">
-          <span class="IssueList-filtering-count">XX</span> Needs Diagnosis</span>
+          <span class="IssueList-filtering-count"></span> Needs Diagnosis</span>
         </button>
         <button type="button" class="IssueList-filtering IssueList-filtering--ready">
-          <span class="IssueList-filtering-count">XX</span> Ready for outreach</span>
+          <span class="IssueList-filtering-count"></span> Ready for outreach</span>
         </button>
         <button type="button" class="IssueList-filtering IssueList-filtering--sitewait">
-          <span class="IssueList-filtering-count">XX</span> Site contacted</span>
+          <span class="IssueList-filtering-count"></span> Site contacted</span>
         </button>
         <button type="button" class="IssueList-filtering IssueList-filtering--close">
-          <span class="IssueList-filtering-count">XX</span> Closed</span>
+          <span class="IssueList-filtering-count"></span> Closed</span>
         </button>
       </div>
+      </script>
     </div>
     <div class="IssueList-search">
       <div class="wc-content">
