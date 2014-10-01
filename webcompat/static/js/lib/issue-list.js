@@ -10,6 +10,18 @@ issueList.IssueCollection = Backbone.Collection.extend({
   url: '/api/issues'
 });
 
+issueList.FilterView = Backbone.View.extend({
+  el: $('.js-issuelist-filter'),
+  initialize: function() {
+    this.model = new Backbone.Model();
+  },
+  template: _.template($('#issuelist-filter-tmpl').html()),
+  render: function() {
+    this.$el.html(this.template(this.model.toJSON()));
+    return this;
+  }
+});
+
 issueList.IssueView = Backbone.View.extend({
   el: $('.js-issue-list'),
   initialize: function() {
@@ -41,10 +53,15 @@ issueList.MainView = Backbone.View.extend({
   },
   initSubViews: function() {
     this.issueList = new issueList.IssueView();
+    this.filter = new issueList.FilterView();
     this.render();
   },
   render: function() {
-    this.$el.fadeIn();
+    //TODO: render filter post-model fetch. See Issue #291.
+    // also bind will explode in old browsers.
+    this.$el.fadeIn(function() {
+      this.filter.render();
+    }.bind(this));
   }
 });
 
