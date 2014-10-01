@@ -13,10 +13,15 @@ issueList.IssueCollection = Backbone.Collection.extend({
 issueList.FilterView = Backbone.View.extend({
   el: $('.js-issuelist-filter'),
   events: {
+    'click .js-dropdown-toggle': 'openDropdown',
+    'click .js-dropdown-options li': 'selectDropdownOption',
     'click .js-issue-filter': 'applyFilter'
   },
   initialize: function() {
+    //TODO: move this model out into its own file once we have
+    //actual data for issues count
     this.model = new Backbone.Model();
+    this.model.set('dropdownTitle', '');
   },
   template: _.template($('#issuelist-filter-tmpl').html()),
   render: function() {
@@ -25,8 +30,34 @@ issueList.FilterView = Backbone.View.extend({
   },
   applyFilter: function(e) {
     var btn = $(e.target);
-    btn.toggleClass('is-active').siblings().removeClass('is-active');
+    btn.addClass('is-active')
+       .siblings().removeClass('is-active');
     // TODO: apply filter to search
+  },
+  openDropdown: function(e) {
+    var btn = $(e.target);
+    btn.parent().toggleClass('is-active');
+  },
+  selectDropdownOption: function(e) {
+    var option = $(e.target);
+    option.addClass('is-active')
+          .siblings().removeClass('is-active');
+    // persist in localStorage for page refreshes?
+    this.updateDropdownTitle(option);
+    issueList.events.trigger('searchinput:update');
+    e.preventDefault();
+
+  },
+  updateDropdownTitle: function(optionElm) {
+    var prefixed = "issues ";
+    var selectedOption = optionElm ?
+        optionElm : $('.js-dropdown-options li.is-active');
+    var title = selectedOption.text().toLowerCase();
+    if (selectedOption.data('prefixTitle')) {
+      title = prefixed + title;
+    }
+    this.model.set('dropdownTitle', title);
+    this.render();
   }
 });
 
@@ -69,6 +100,7 @@ issueList.MainView = Backbone.View.extend({
     // also bind will explode in old browsers.
     this.$el.fadeIn(function() {
       this.filter.render();
+      this.filter.updateDropdownTitle();
     }.bind(this));
   }
 });
