@@ -144,7 +144,7 @@ More info here : https://github.com/cssnext/cssnext
   - ComponentName.is-stateOfComponent
 
 #### CSS and JS
-All classes that depend on javascript are prefixed by JS-* . These classes are handled by JavaScript, no styles are applied.
+All classes that depend on javascript are prefixed by js-* . These classes are handled by JavaScript, no styles are applied.
 
 #### Folder and file
 The main stylesheet is main.css. There are @import statements to all other files, which are stored in the folder: Components, Page, layout, vendor.
