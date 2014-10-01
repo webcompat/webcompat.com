@@ -128,7 +128,7 @@ You will get in return the list of mistakes. Some of the basics recommendations 
 When in doubt, follow the conventions you see used in the source already.
 
 ### CSS
-We use CSSnext as a tool for compiling css
+We use cssnext as a tool for compiling css
 
 ````
 This is a CSS transpiler (CSS4+ to CSS3) that allows you to use tomorrow's CSS syntax today. It transforms CSS specs that are not already implemented in popular browsers into more compatible CSS.
