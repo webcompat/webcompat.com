@@ -22,6 +22,13 @@ issueList.FilterView = Backbone.View.extend({
     //actual data for issues count
     this.model = new Backbone.Model();
     this.model.set('dropdownTitle', '');
+
+    // handle closing dropdown when clicking "outside".
+    $(document).on('click', _.bind(function(e) {
+      if (!$(e.target).closest('.js-dropdown-wrapper').length) {
+        this.closeDropdown();
+      }
+    }, this));
   },
   template: _.template($('#issuelist-filter-tmpl').html()),
   render: function() {
@@ -33,6 +40,9 @@ issueList.FilterView = Backbone.View.extend({
     btn.addClass('is-active')
        .siblings().removeClass('is-active');
     // TODO: apply filter to search
+  },
+  closeDropdown: function() {
+    $('.js-dropdown-wrapper').removeClass('is-active');
   },
   openDropdown: function(e) {
     var btn = $(e.target);
@@ -97,11 +107,10 @@ issueList.MainView = Backbone.View.extend({
   },
   render: function() {
     //TODO: render filter post-model fetch. See Issue #291.
-    // also bind will explode in old browsers.
-    this.$el.fadeIn(function() {
+    this.$el.fadeIn(_.bind(function() {
       this.filter.render();
       this.filter.updateDropdownTitle();
-    }.bind(this));
+    }, this));
   }
 });
 
