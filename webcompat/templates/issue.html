@@ -2,43 +2,43 @@
 {% block body %}
   <div class="page page--issue">
   {% include "shared/nav.html" %}
-    <div class="wc-content wc-content--body issue">
-      <h2 class="issue__main_title">
+    <div class="wc-content wc-content--body Issue">
+      <h2 class="Issue-title">
       <script type="text/template" id="title-tmpl">
-        <a class="issue__back" href="{{ url_for("show_issues") }}" title="All issues">
+        <a class="Issue-back" href="{{ url_for("show_issues") }}" title="All issues">
           <span class="icon icon-arrow-left"></span>
         </a>
         Issue <%= number %>: <%- title %>
       </script>
       </h2>
-      <div class="issue__wrapper">
+      <div class="Issue-wrapper">
         <!-- Issue Date -->
-        <div class="issue__create">
+        <div class="Issue-create">
         <script type="text/template" id="metadata-tmpl">
-          <div class="issue__state issue__state--<%= stateClass %>"><%= issueState %></div>
-          <div class="issue__date">Opened <%= createdAt %> by
-            <span class="issue__reporter">
+          <div class="Issue-state Issue-state--<%= stateClass %>"><%= issueState %></div>
+          <div class="Issue-date">Opened <%= createdAt %> by
+            <span class="Issue-reporter">
               <a href="https://github.com/<%= reporter %>"><%= reporter %></a><!--
          --></span>. <%= commentNumber %> comments
           </div>
         </script>
         </div>
-        <div class="issue__details">
+        <div class="Issue-details">
         <!-- Issue Info -->
         <script type="text/template" id="issue-info-tmpl">
           <%= body %>
         </script>
         </div>
         <!-- Issue Labels -->
-        <div class="issue__label">
+        <div class="Label-wrapper">
         <script type="text/template" id="issue-labels-tmpl">
-          <span class="issue__label_item issue__label_item--title">Labels</span>
+          <span class="Label Label--title">Labels</span>
           {% if session.user_id and session.avatar_url %}
-            <span class="LabelEditor-wrapper"><button class="issue__label--modify icon"></button></span>
+            <span class="LabelEditor-wrapper"><button class="LabelEditor-launcher icon icon-gear"></button></span>
           {% endif %}
-          <span class="labels__wrapper">
+          <span class="Label-list">
           <% _.each(labels, function(label) { %>
-            <span class="issue__label_item issue__label_item--badge" style="background-color:#<%=label.color%>">
+            <span class="Label Label--badge" style="background-color:#<%=label.color%>">
               <%= label.name %>
             </span>
           <% }); %>
@@ -46,7 +46,7 @@
         </script>
         </div>
         <!-- Issue Comments -->
-        <div class="issue__comment">
+        <div class="Issue-comment">
           <script type="text/template" id="comment-tmpl">
             <div class="Comment-avatar">
               <img src="<%= avatarUrl %>" alt="avatar <%= commenter %>"/>
@@ -86,7 +86,7 @@
           </div>
         </div>
         {% else %}
-        <p class="issue__login_link">Please <a href="{{ url_for('login') }}">login</a> to edit issues.</p>
+        <p class="Issue-login">Please <a href="{{ url_for('login') }}">login</a> to edit issues.</p>
         {% endif %}
        </div>
     </div>

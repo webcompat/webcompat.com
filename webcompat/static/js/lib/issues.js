@@ -14,7 +14,7 @@ marked.setOptions({
 });
 
 issues.TitleView = Backbone.View.extend({
-  el: $('.issue__main_title'),
+  el: $('.Issue-title'),
   template: _.template($('#title-tmpl').html()),
   render: function() {
     document.title = "Issue " + this.model.get('number') +
@@ -26,7 +26,7 @@ issues.TitleView = Backbone.View.extend({
 });
 
 issues.MetaDataView = Backbone.View.extend({
-  el: $('.issue__create'),
+  el: $('.Issue-create'),
   initialize: function() {
     var self = this;
     this.model.on('change:issueState', function() {
@@ -41,12 +41,12 @@ issues.MetaDataView = Backbone.View.extend({
 });
 
 issues.BodyView = Backbone.View.extend({
-  el: $('.issue__details'),
+  el: $('.Issue-details'),
   template: _.template($('#issue-info-tmpl').html()),
   render: function() {
     this.$el.html(this.template(this.model.toJSON()));
     // hide metadata
-    $('.issue__details > p:first-child:contains(-- @browser)').hide();
+    $('.Issue-details > p:first-child:contains(-- @browser)').hide();
     return this;
   }
 });
@@ -116,7 +116,7 @@ issues.StateButtonView = Backbone.View.extend({
 });
 
 issues.MainView = Backbone.View.extend({
-  el: $('.issue'),
+  el: $('.Issue'),
   events: {
     'click .Button--default': 'addNewComment',
     'click': 'closeLabelEditor'
@@ -137,7 +137,7 @@ issues.MainView = Backbone.View.extend({
     // early return if the editor is closed,
     if (!this.$el.find('.LabelEditor').is(':visible') ||
           // or we've clicked on the button to open it,
-         (target[0].nodeName === 'BUTTON' && target.hasClass('issue__label--modify')) ||
+         (target[0].nodeName === 'BUTTON' && target.hasClass('LabelEditor-launcher')) ||
            // or clicked anywhere inside the label editor
            target.parents('.LabelEditor').length) {
       return;
@@ -165,7 +165,7 @@ issues.MainView = Backbone.View.extend({
       _.each([self.title, self.metadata, self.body, self.labels, self.stateButton, self],
         function(elm) {
           elm.render();
-          _.each($('.issue__details code'), function(elm) {
+          _.each($('.Issue-details code'), function(elm) {
             Prism.highlightElement(elm);
           });
         }
@@ -210,7 +210,7 @@ issues.MainView = Backbone.View.extend({
   addComment: function(comment) {
     var view = new issues.CommentView({model: comment});
     var commentElm = view.render().el;
-    $(".issue__comment").append(commentElm);
+    $(".Issue-comment").append(commentElm);
     _.each($(commentElm).find('code'), function(elm){
       Prism.highlightElement(elm);
     });

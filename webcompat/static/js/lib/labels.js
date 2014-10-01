@@ -15,11 +15,11 @@ issues.AllLabels = Backbone.Model.extend({
 });
 
 issues.LabelsView = Backbone.View.extend({
-  el: $('.issue__label'),
+  el: $('.Label-wrapper'),
   editorButton: null,
   events: {
-    'click .issue__label--modify:not(.is-active)': 'editLabels',
-    'click .issue__label--modify.is-active': 'closeEditor'
+    'click .LabelEditor-launcher:not(.is-active)': 'editLabels',
+    'click .LabelEditor-launcher.is-active': 'closeEditor'
   },
   keyboardEvents: {
     'e': 'editLabels'
@@ -29,7 +29,7 @@ issues.LabelsView = Backbone.View.extend({
   // relavant parts in $('#issue-labels-tmpl')
   subTemplate: _.template([
     '<% _.each(labels, function(label) { %>',
-      '<span class="issue__label_item issue__label_item--badge" style="background-color:#<%=label.color%>">',
+      '<span class="Label Label--badge" style="background-color:#<%=label.color%>">',
         '<%= label.name %>',
       '</span>',
     '<% }); %>'].join('')),
@@ -47,7 +47,7 @@ issues.LabelsView = Backbone.View.extend({
   fetchLabels: function() {
     var self = this;
     var headersBag = {headers: {'Accept': 'application/json'}};
-    this.editorButton = $('.issue__label--modify');
+    this.editorButton = $('.LabelEditor-launcher');
     this.allLabels = new issues.AllLabels();
     this.labelEditor = new issues.LabelEditorView({
       model: this.allLabels,
@@ -64,7 +64,7 @@ issues.LabelsView = Backbone.View.extend({
   },
   editLabels: function() {
     this.editorButton.addClass('is-active');
-    this.$el.find('.issue__label--modify').after(this.labelEditor.render().el);
+    this.$el.find('.LabelEditor-launcher').after(this.labelEditor.render().el);
     var toBeChecked = _.intersection(this.getIssueLabels(), this.repoLabels);
     _.each(toBeChecked, function(labelName) {
       $('[name=' + labelName + ']').prop("checked", true);
@@ -96,8 +96,8 @@ issues.LabelEditorView = Backbone.View.extend({
   },
   reRender: function(data) {
     //only re-render the labels into the labels wrapper
-    this.issueView.$el.find('.labels__wrapper').html(this.issueView.subTemplate(data));
-    this.issueView.$el.find('.issue__label--modify').addClass('is-active');
+    this.issueView.$el.find('.Label-list').html(this.issueView.subTemplate(data));
+    this.issueView.$el.find('.LabelEditor-launcher').addClass('is-active');
   },
   resizeEditorHeight: function() {
     var getBreakpoint = function() {
