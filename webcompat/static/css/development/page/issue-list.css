@@ -48,7 +48,7 @@
   .IssueList-filtering--sitewait {
     border-color:var(--wc-state-sitewait);
   }
-  .IssueList-filtering--sitewait:hover
+  .IssueList-filtering--sitewait:hover,
   .IssueList-filtering--sitewait.is-active {
     background-color:var(--wc-state-sitewait);
   }
