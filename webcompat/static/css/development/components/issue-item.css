@@ -3,11 +3,13 @@
 
 /* Parent class */
 .IssueItem {
+  display:table;
   width:100%;
   font-size:var(--base-font-size);
   background-color: #fff;
   padding: 0.5em 1em;
-  margin-bottom: 1em;;
+  margin-bottom: 1em;
+  table-layout:fixed;
 }
 .IssueItem--untriaged {
   border-left: 5px solid var(--wc-state-untriaged);
@@ -55,10 +57,12 @@
 .IssueItem-section {
   display:table-cell;
   vertical-align:middle;
+  width:50%;
 }
   @media (--viewport-950px) {
     .IssueItem-section {
       display:block;
+      width:100%;
     }
     .IssueItem-section + .IssueItem-section {
       margin-top:1em;
