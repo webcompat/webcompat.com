@@ -48,17 +48,17 @@
         <!-- Issue Comments -->
         <div class="issue__comment">
           <script type="text/template" id="comment-tmpl">
-            <div class="comment__avatar">
+            <div class="Comment-avatar">
               <img src="<%= avatarUrl %>" alt="avatar <%= commenter %>"/>
             </div>
-            <div class="comment__body comment__body--caret">
-              <div class="comment__wrapper">
-                <div class="comment__header">
-                  <span class="comment__owner">
+            <div class="Comment-body Comment-body--caret">
+              <div class="Comment-wrapper">
+                <div class="Comment-header">
+                  <span class="Comment-owner">
                     <a href="https://github.com/<%= commenter %>"><%= commenter %></a>
                   </span> commented <a href="#<%= commentLinkId %>"><%= createdAt %></a>
                 </div>
-                <div class="comment__content"><%= body %></div>
+                <div class="Comment-content"><%= body %></div>
               </div>
             </div>
           </script>
@@ -66,16 +66,16 @@
 
         {% if session.user_id and session.avatar_url %}
         <!-- Create issue comment -->
-        <div class="comment comment--form" data-username={{ session.username }} data-avatar-url= {{ session.avatar_url }}>
-          <div class="comment__avatar">
+        <div class="Comment Comment--form" data-username={{ session.username }} data-avatar-url= {{ session.avatar_url }}>
+          <div class="Comment-avatar">
             <img class="" src="{{ session.avatar_url }}" alt="Avatar"/>
           </div>
-          <div class="comment__body comment__body--caret">
-            <div class="comment__drag">
+          <div class="Comment-body Comment-body--caret">
+            <!--<div class="Comment-drag">-->
               <!-- TODO(miket) <div class="comment__dd">Attach images by dragging &amp; dropping, <span class="comment__dd__label">selecting them</span> or pasting form the clipboad </div> -->
-              <textarea class="comment__wrapper comment__text" placeholder="Leave a comment"></textarea>
-            </div>
-            <div class="comment__button">
+              <textarea class="Comment-wrapper Comment-text" placeholder="Leave a comment"></textarea>
+            <!--</div>-->
+            <div class="Comment-button">
               <button class="Button Button--action">
               <script type="text/template" id="state-button-tmpl">
                 <%= state %>
