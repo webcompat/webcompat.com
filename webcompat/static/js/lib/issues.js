@@ -52,7 +52,7 @@ issues.BodyView = Backbone.View.extend({
 });
 
 issues.TextAreaView = Backbone.View.extend({
-  el: $('.comment__text'),
+  el: $('.Comment-text'),
   events: {
     'keydown': 'broadcastChange'
   },
@@ -216,8 +216,8 @@ issues.MainView = Backbone.View.extend({
     });
   },
   addNewComment: function() {
-    var form = $('.comment--form');
-    var textarea = $('.comment__text');
+    var form = $('.Comment--form');
+    var textarea = $('.Comment-text');
     // Only bother if the textarea isn't empty
     if ($.trim(textarea.val())) {
       var newComment = new issues.Comment({
