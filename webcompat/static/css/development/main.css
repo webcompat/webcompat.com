@@ -6,18 +6,18 @@
 @import "vendor/prism.css";
 
 /*----------Component----------*/
-@import "components/Button.css";
-@import "components/Comment.css";
-@import "components/LabelEditor.css";
+@import "components/button.css";
+@import "components/comment.css";
+@import "components/label-editor.css";
 @import "components/responsive.css";
 @import "../../../../node_modules/suitcss-components-grid/index.css";
-@import "components/Grid.css";
+@import "components/grid.css";
 @import "../../../../node_modules/suitcss-utils-size/index.css";
 @import "../../../../node_modules/suitcss-utils-display/index.css";
 @import "../../../../node_modules/suitcss-utils-align/index.css";
-@import "components/Form.css";
-@import "components/IssueItem.css";
-@import "components/Dropdown.css";
+@import "components/form.css";
+@import "components/issue-item.css";
+@import "components/dropdown.css";
 /*----------Layout----------*/
 @import "layout/body.css";
 @import "layout/header.css";
