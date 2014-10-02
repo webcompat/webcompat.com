@@ -1,0 +1,73 @@
+/*------Issue item------*/
+
+
+/* Parent class */
+.IssueItem {
+  display:table;
+  width:100%;
+  font-size:var(--base-font-size);
+  background-color: #fff;
+  padding: 0.5em 1em;
+  margin-bottom: 1em;
+  table-layout:fixed;
+}
+.IssueItem--untriaged {
+  border-left: 5px solid var(--wc-state-untriaged);
+}
+.IssueItem--need {
+  border-left: 5px solid var(--wc-state-need);
+}
+.IssueItem--ready {
+  border-left: 5px solid var(--wc-state-ready);
+}
+.IssueItem--sitewait {
+  border-left: 5px solid var(--wc-state-sitewait);
+}
+.IssueItem--close {
+  border-left: 5px solid var(--wc-state-close);
+}
+.IssueItem--large {
+  font-size:1.2em;
+  border-width:8px;
+}
+.IssueItem-content {}
+.IssueItem-header {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom:0.5em;
+}
+.IssueItem-metadata {
+  font-size:.8em;
+  margin-right:.8em;
+}
+  @media (--viewport-450px) {
+    .IssueItem-metadata {
+      display:block;
+    }
+  }
+.IssueItem-count {
+  font-weight: 400;
+}
+.IssueItem-label {
+  display:block;
+  text-align:right;
+  font-size:.8em;
+}
+.IssueItem-section {
+  display:table-cell;
+  vertical-align:middle;
+  width:50%;
+}
+  @media (--viewport-950px) {
+    .IssueItem-section {
+      display:block;
+      width:100%;
+    }
+    .IssueItem-section + .IssueItem-section {
+      margin-top:1em;
+    }
+    .IssueItem-label {
+      text-align:center;
+    }
+  }
