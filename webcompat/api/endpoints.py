@@ -20,6 +20,7 @@ from webcompat import app
 from webcompat import cache
 from webcompat import github
 from webcompat.helpers import get_headers
+from webcompat.helpers import get_request_headers
 from webcompat.helpers import get_user_info
 from webcompat.issues import filter_untriaged
 from webcompat.issues import proxy_request
@@ -51,8 +52,9 @@ def proxy_issue(number):
     either as an authed user, or as one of our proxy bots.
     '''
     if g.user:
+        request_headers = get_request_headers(g.request_headers)
         issue = github.raw_request('GET', 'repos/{0}/{1}'.format(
-            app.config['ISSUES_REPO_URI'], number))
+            app.config['ISSUES_REPO_URI'], number), headers=request_headers)
     else:
         issue = proxy_request('get', '/{0}'.format(number))
     return (issue.content, issue.status_code, get_headers(issue))
@@ -79,7 +81,8 @@ def user_issues():
     path = 'repos/{0}?creator={1}&state=all'.format(
         REPO_URI, session['username']
     )
-    issues = github.raw_request('GET', path)
+    request_headers = get_request_headers(g.request_headers)
+    issues = github.raw_request('GET', path, headers=request_headers)
     return (issues.content, issues.status_code, get_headers(issues))
 
 
@@ -92,7 +95,9 @@ def get_untriaged():
     Cached for 5 minutes.
     '''
     if g.user:
-        issues = github.raw_request('GET', 'repos/{0}'.format(REPO_URI))
+        request_headers = get_request_headers(g.request_headers)
+        issues = github.raw_request('GET', 'repos/{0}'.format(REPO_URI),
+                                    headers=request_headers)
     else:
         issues = proxy_request('get')
     # Do not send random JSON to filter_untriaged
@@ -111,8 +116,9 @@ def get_contactready():
     Cached for 5 minutes.
     '''
     if g.user:
+        request_headers = get_request_headers(g.request_headers)
         path = 'repos/{0}?labels=contactready'.format(REPO_URI)
-        issues = github.raw_request('GET', path)
+        issues = github.raw_request('GET', path, headers=request_headers)
     else:
         issues = proxy_request('get', '?labels=contactready')
     return (issues.content, issues.status_code, get_headers(issues))
@@ -126,8 +132,9 @@ def get_needsdiagnosis():
     Cached for 5 minutes.
     '''
     if g.user:
+        request_headers = get_request_headers(g.request_headers)
         path = 'repos/{0}?labels=needsdiagnosis'.format(REPO_URI)
-        issues = github.raw_request('GET', path)
+        issues = github.raw_request('GET', path, headers=request_headers)
     else:
         issues = proxy_request('get', '?labels=needsdiagnosis')
     return (issues.content, issues.status_code, get_headers(issues))
@@ -141,8 +148,9 @@ def get_sitewait():
     Cached for 5 minutes.
     '''
     if g.user:
+        request_headers = get_request_headers(g.request_headers)
         path = 'repos/{0}?labels=sitewait'.format(REPO_URI)
-        issues = github.raw_request('GET', path)
+        issues = github.raw_request('GET', path, headers=request_headers)
     else:
         issues = proxy_request('get', '?labels=sitewait')
     return (issues.content, issues.status_code, get_headers(issues))
@@ -167,10 +175,12 @@ def proxy_comments(number):
             return (':(', e.response.status_code)
     else:
         if g.user:
+            request_headers = get_request_headers(g.request_headers)
             comments = github.raw_request(
                 'GET',
                 'repos/{0}/{1}/comments'.format(
-                    app.config['ISSUES_REPO_URI'], number)
+                    app.config['ISSUES_REPO_URI'], number),
+                headers=request_headers
                 )
         else:
             comments = proxy_request('get', '/{0}/comments'.format(number))
@@ -204,8 +214,9 @@ def get_repo_labels():
     # Chop off /issues. Someone feel free to refactor the ISSUES_REPO_URI.
     labels_path = app.config['ISSUES_REPO_URI'][:-7]
     if g.user:
+        request_headers = get_request_headers(g.request_headers)
         path = 'repos/{0}/labels'.format(labels_path)
-        labels = github.raw_request('GET', path)
+        labels = github.raw_request('GET', path, headers=request_headers)
         return (labels.content, labels.status_code, get_headers(labels))
     else:
         # only authed users should be hitting this endpoint
@@ -220,7 +231,8 @@ def get_rate_limit():
     See https://developer.github.com/v3/rate_limit/.
     '''
     if g.user:
-        rl = github.raw_request('GET', 'rate_limit')
+        request_headers = get_request_headers(g.request_headers)
+        rl = github.raw_request('GET', 'rate_limit', headers=request_headers)
     else:
         rl = proxy_request('get', uri='https://api.github.com/rate_limit')
     return rl.content
