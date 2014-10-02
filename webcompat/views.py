@@ -51,6 +51,7 @@ def before_request():
     if 'user_id' in session:
         g.user = User.query.get(session['user_id'])
     g.referer = get_referer(request) or url_for('index')
+    g.request_headers = request.headers
 
 
 @app.after_request
