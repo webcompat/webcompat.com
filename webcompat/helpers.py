@@ -94,20 +94,6 @@ def get_headers(response):
     return headers
 
 
-def get_request_headers(headers):
-    '''Return a dictionary of headers based on the client Request.
-
-    This allows us to send back headers to GitHub when we are acting as client.
-    '''
-    client_headers = {'Accept': JSON_MIME}
-    if 'If-None-Match' in headers:
-        etag = headers['If-None-Match'].encode('utf-8')
-        client_headers['If-None-Match'] = etag
-    if 'User-Agent' in headers:
-        client_headers['User-Agent'] = headers['User-Agent']
-    return client_headers
-
-
 def get_referer(request):
     '''Return the Referer URI based on the passed in Request object.
 
