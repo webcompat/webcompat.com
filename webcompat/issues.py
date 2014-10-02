@@ -16,8 +16,10 @@ from webcompat.form import build_formdata
 from webcompat import github
 
 REPO_URI = app.config['ISSUES_REPO_URI']
+JSON_MIME = 'application/json'
 headers = {'Authorization': 'token {0}'.format(app.config['BOT_OAUTH_TOKEN']),
-           'User-Agent': 'webcompat/webcompat-bot'}
+           'User-Agent': 'webcompat/webcompat-bot',
+           'Accept': JSON_MIME}
 
 
 def proxy_request(method, path_mod='', data=None, uri=None):
