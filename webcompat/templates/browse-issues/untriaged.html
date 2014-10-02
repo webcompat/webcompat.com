@@ -5,7 +5,7 @@
     <% _.each(untriaged, function(issue) { %>
     <div class="IssueItem IssueItem--untriaged">
       <p class="IssueItem-header">
-        <a href="/issues/<%= issue.number %>"><span class="IssueItem-counter">Issue <%= issue.number %></span>: <%- issue.title %></a>
+        <a href="/issues/<%= issue.number %>"><span class="IssueItem-count">Issue <%= issue.number %></span>: <%- issue.title %></a>
       </p>
       <p class="IssueItem-metadata">Opened: <time><%= issue.createdAt %></time>, comments: <%= issue.commentNumber %></p>
     </div>
