@@ -3,7 +3,7 @@
   <h3 class="wc-titleIssue">Needs Diagnosis</h3>
   <% if (needsDiagnosis.length) { %>
     <% _.each(needsDiagnosis, function(issue) { %>
-    <div class="IssueItem IssueItem--needs-diagnosis">
+    <div class="IssueItem IssueItem--need">
       <p class="IssueItem-header">
         <a href="/issues/<%= issue.number %>"><span class="IssueItem-count">Issue <%= issue.number %></span>: <%- issue.title %></a>
       </p>

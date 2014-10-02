@@ -3,7 +3,7 @@
   <h3 class="wc-titleIssue">Ready for Outreach</h3>
   <% if (contactReady.length) { %>
     <% _.each(contactReady, function(issue) { %>
-    <div class="IssueItem IssueItem--contactready">
+    <div class="IssueItem IssueItem--ready">
       <p class="IssueItem-header">
         <a href="/issues/<%= issue.number %>"><span class="IssueItem-count">Issue <%= issue.number %></span>: <%- issue.title %></a>
       </p>
