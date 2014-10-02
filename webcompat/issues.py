@@ -9,6 +9,7 @@ authed user and the proxy case.'''
 
 import json
 
+from flask import g
 import requests
 
 from webcompat import app
@@ -31,6 +32,9 @@ def proxy_request(method, path_mod='', data=None, uri=None):
     * Optionally point to a different URI via the `uri` arg.
     '''
 
+    # We capture the etag of the request and sends it back to github
+    etag = g.request_headers['If-None-Match'].encode('utf-8')
+    headers['If-None-Match'] = etag
     # Preparing the requests
     req = getattr(requests, method)
     if uri:
