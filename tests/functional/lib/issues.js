@@ -22,17 +22,17 @@ define([
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url(100)))
         .sleep(1000)
-        .findByCssSelector('h2.issue__main_title').getVisibleText()
+        .findByCssSelector('h2.Issue-title').getVisibleText()
         .then(function (text) {
           assert.include(text, 'Issue 100:', 'Issue title displayed');
         })
         .end()
-        .findByCssSelector('.issue__reporter').getVisibleText()
+        .findByCssSelector('.Issue-reporter').getVisibleText()
         .then(function (text) {
           assert.equal(text, 'miketaylr', 'Issue reporter displayed.');
         })
         .end()
-        .findByCssSelector('.issue__label_item').isDisplayed()
+        .findByCssSelector('.Label--badge').isDisplayed()
         .then(function (isDisplayed) {
           assert.equal(isDisplayed, true);
         });
@@ -43,21 +43,17 @@ define([
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url(100)))
         .sleep(1000)
-        .findByCssSelector('.issue__comment').isDisplayed()
+        .findByCssSelector('.Comment').isDisplayed()
         .then(function (isDisplayed) {
           assert.equal(isDisplayed, true);
         })
-        .findByCssSelector('.comment__owner').getVisibleText()
+        .findByCssSelector('.Comment-owner').getVisibleText()
         .then(function (text) {
           assert.equal(text, 'miketaylr', 'Commenter name displayed.');
         })
         .end()
-        .findByCssSelector('#issuecomment\-46221406').isDisplayed()
-        .then(function (isDisplayed) {
-          assert.equal(isDisplayed, true, 'Comment ID is set properly');
-        })
-        .sleep(1000)
-        .findByCssSelector('.comment__content').getVisibleText()
+        .sleep(500)
+        .findByCssSelector('.Comment-content').getVisibleText()
         .then(function (text) {
           assert.equal(text, '1', 'Comment is displayed.');
         });

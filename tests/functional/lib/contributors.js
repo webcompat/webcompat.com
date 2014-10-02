@@ -20,7 +20,7 @@ define([
         .get(require.toUrl(url))
         .findByCssSelector('.contributors__main_title').getVisibleText()
         .then(function (text) {
-          assert.include(text, 'Join the Webcompat team!');
+          assert.include(text, 'Welcome aboard!');
         })
         .end();
     },

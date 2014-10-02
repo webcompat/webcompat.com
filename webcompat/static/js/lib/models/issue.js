@@ -41,7 +41,7 @@
     this.set({
       body: marked(response.body),
       commentNumber: response.comments,
-      createdAt: moment(response.created_at).format('L'),
+      createdAt: response.created_at.slice(0, 10),
       issueState: this.getState(response.state, response.labels),
       labels: response.labels,
       number: response.number,
