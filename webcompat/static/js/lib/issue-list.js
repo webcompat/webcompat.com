@@ -42,7 +42,8 @@ issueList.DropdownView = Backbone.View.extend({
           .siblings().removeClass('is-active');
     // TODO: persist in localStorage for page refreshes?
     this.updateDropdownTitle(option);
-    issueList.events.trigger('searchinput:update');
+    // trigger update event, passing data-filter
+    issueList.events.trigger('search:update', option.data('filter'));
     e.preventDefault();
   },
   updateDropdownTitle: function(optionElm) {
