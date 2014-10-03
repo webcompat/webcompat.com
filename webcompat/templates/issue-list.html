@@ -71,7 +71,9 @@
 </button>
 <ul class="Dropdown-content js-dropdown-options" aria-hidden="false">
   <% _.each(dropdownOptions, function(option) { %>
-  <li class="Dropdown-item"><a href="#" class="Dropdown-link"><%= option.title %></a></li>
+  <li class="Dropdown-item" data-filter="<%= option.filter %>">
+    <a href="#" class="Dropdown-link"><%= option.title %></a>
+  </li>
   <% }); %>
 </ul>
 </script>
