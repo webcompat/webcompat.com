@@ -4,23 +4,7 @@
   {% include "shared/nav.html" %}
     <div class="wc-content wc-content--body js-issuelist-filter">
       <script type="text/template" id="issuelist-filter-tmpl">
-      <div class="Dropdown Dropdown--large js-dropdown-wrapper">
-       <button type="button" class="Dropdown-toggle js-dropdown-toggle">
-         <span class="Dropdown-label">View <%= dropdownTitle %></span> <span class="icon icon-chevron-down"></span>
-        </button>
-        <ul class="Dropdown-content js-dropdown-options" aria-hidden="false">
-          <li class="Dropdown-item is-active"><a href="#" class="Dropdown-link" data-search="state:open">All open issues</a></li>
-          <li class="Dropdown-item"><a href="#" class="Dropdown-link" data-search="">All issues</a></li>
-          {% if session.user_id and session.avatar_url %}
-          <li class="Dropdown-item">
-            <a href="#" class="Dropdown-link" data-prefix-title="true" data-search="author:{{ session.username }}">Submitted by me</a>
-          </li>
-          <li class="Dropdown-item">
-            <a href="#" class="Dropdown-link" data-prefix-title="true" data-search="mentions:{{ session.username }}">Mentioning me</a>
-          </li>
-          {% endif %}
-        </ul>
-      </div>
+      <div class="Dropdown Dropdown--large js-dropdown-wrapper"></div>
       <div>
         <button type="button" class="IssueList-filtering IssueList-filtering--untriaged js-issue-filter">
           <span class="IssueList-filtering-count"></span> Untriaged</span>
@@ -47,31 +31,13 @@
         </form>
       </div>
     </div>
-    <div class="IssueList-sorting">
+    <div class="IssueList-sorting js-issue-sorting">
+      <script type="text/template" id="issuelist-sorting-tmpl">
       <div class="wc-content">
-        <div class="Dropdown wc-inline-block">
-         <button type="button" class="Dropdown-toggle js-dropdown-toggle">
-           <span class="Dropdown-label">Show 25</span> <span class="icon icon-chevron-down"></span></button>
-          <ul class="Dropdown-content" aria-hidden="false">
-            <li class="Dropdown-item"><a href="#" class="Dropdown-link">50</a></li>
-            <li class="Dropdown-item"><a href="#" class="Dropdown-link">100</a></li>
-          </ul>
-        </div>
-        <div class="Dropdown wc-inline-block">
-         <button type="button" class="Dropdown-toggle js-dropdown-toggle wc-bold">
-           <span class="Dropdown-label">Newest</span> <span class="icon icon-chevron-down"></span></button>
-          <ul class="Dropdown-content" aria-hidden="false">
-            <li class="Dropdown-item"><a href="#" class="Dropdown-link">Oldest</a></li>
-            <li class="Dropdown-item"><a href="#" class="Dropdown-link">Most commented</a></li>
-            <li class="Dropdown-item"><a href="#" class="Dropdown-link">Least commented</a></li>
-            <li class="Dropdown-item"><a href="#" class="Dropdown-link">Recently updated</a></li>
-            <li class="Dropdown-item"><a href="#" class="Dropdown-link">Least updated</a></li>
-            <li class="Dropdown-item"><a href="#" class="Dropdown-link">Earlier stage</a></li>
-          </ul>
-        </div>
-      </div>
+        <div class="Dropdown wc-inline-block js-dropdown-wrapper js-dropdown-pagination"></div>
+        <div class="Dropdown wc-inline-block js-dropdown-wrapper js-dropdown-sort"></div>
+      </script>
     </div>
-
     <div class="IssueList-displayed">
       <div class="wc-content js-issue-list">
         <script type="text/template" id="issuelist-issue-tmpl">
@@ -97,6 +63,18 @@
       </div>
     </div>
   </div>
+
+<script type="text/template" id="dropdown-tmpl">
+<button type="button" class="Dropdown-toggle js-dropdown-toggle">
+   <span class="Dropdown-label"><%= dropdownTitle %></span> <span class="icon icon-chevron-down"></span>
+</button>
+<ul class="Dropdown-content js-dropdown-options" aria-hidden="false">
+  <% _.each(dropdownOptions, function(option) { %>
+  <li class="Dropdown-item"><a href="#" class="Dropdown-link"><%= option.title %></a></li>
+  <% }); %>
+</ul>
+</script>
+
 {% endblock %}
 {% block extrascripts %}
 {%- if config.PRODUCTION %}
