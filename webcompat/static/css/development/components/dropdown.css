@@ -44,6 +44,7 @@
     display: block;
   }
   .Dropdown-item {
+    cursor: pointer;
     margin:1em 0 0 !important;
     white-space:nowrap;
   }
