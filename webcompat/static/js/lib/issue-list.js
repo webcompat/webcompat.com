@@ -104,12 +104,16 @@ issueList.SearchView = Backbone.View.extend({
   el: $('.js-issuelist-search'),
   events: {},
   initialize: function() {
-
+    issueList.events.on('search:update', _.bind(this.updateSearchQuery, this));
   },
   template: _.template($('#issuelist-search-tmpl').html()),
   render: function() {
     this.$el.html(this.template());
+    this.input = this.$el.find('input');
     return this;
+  },
+  updateSearchQuery: function(data) {
+    this.input.val(data);
   }
 });
 
