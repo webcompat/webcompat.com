@@ -100,6 +100,19 @@ issueList.FilterView = Backbone.View.extend({
   }
 });
 
+issueList.SearchView = Backbone.View.extend({
+  el: $('.js-issuelist-search'),
+  events: {},
+  initialize: function() {
+
+  },
+  template: _.template($('#issuelist-search-tmpl').html()),
+  render: function() {
+    this.$el.html(this.template());
+    return this;
+  }
+});
+
 issueList.SortingView = Backbone.View.extend({
   el: $('.js-issue-sorting'),
   events: {},
@@ -175,6 +188,7 @@ issueList.MainView = Backbone.View.extend({
     this.issueList = new issueList.IssueView();
     this.filter = new issueList.FilterView();
     this.issueSorter = new issueList.SortingView();
+    this.search = new issueList.SearchView();
     this.render();
   },
   render: function() {
@@ -182,6 +196,7 @@ issueList.MainView = Backbone.View.extend({
     this.$el.fadeIn(_.bind(function() {
       this.filter.render();
       this.issueSorter.render();
+      this.search.render();
     }, this));
   }
 });
