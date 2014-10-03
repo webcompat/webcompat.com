@@ -28,9 +28,9 @@ from issues import report_issue
 from models import db_session
 from models import User
 
+from webcompat.api.endpoints import get_rate_limit
 from webcompat import app
 from webcompat import github
-from webcompat.api.endpoints import get_rate_limit
 
 
 @app.context_processor
@@ -181,6 +181,7 @@ def thanks(number):
 
 @app.route('/rate_limit')
 def show_rate_limit():
+    '''Request the rate limit from GitHub and dislays it.'''
     rl = json.loads(get_rate_limit())
     if g.user:
         rl.update({"user": session.get('username')})
@@ -193,6 +194,7 @@ def show_rate_limit():
         rl.pop("rate")
     return (render_template('ratelimit.txt', rl=rl), 200,
             {"content-type": "text/plain"})
+
 
 @app.route('/about')
 def about():
