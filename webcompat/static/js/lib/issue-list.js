@@ -60,24 +60,23 @@ issueList.FilterView = Backbone.View.extend({
     var username;
     //TODO: move this model out into its own file once we have
     //actual data for issues count
+    var options = [
+      {title: "View all open issues", filter: "state:open"},
+      {title: "View all issues", filter: ""}
+    ];
+
+    // add the dropdown options for logged in users.
+    if (username = $('body').data('username')) {
+      options.push(
+        {title: "View issues submitted by me", filter: "author:" + username},
+        {title: "View issues mentioning me", filter: "mentions:" + username}
+      )
+    }
+
     this.model = new Backbone.Model({
       dropdownTitle: "View all open issues",
-      dropdownOptions: [
-        {title: "View all open issues", filter: "state:open"},
-        {title: "View all issues", filter: ""}
-      ],
-      authedOptions: null
+      dropdownOptions: options,
     });
-
-    // if we're logged in, set the authenticated dropdown options
-    if (username = $('body').data('username')) {
-      this.model.set('authedOptions',
-        [
-          {title: "View issues submitted by me", filter: "author:" + username},
-          {title: "View issues mentioning me", filter: "mentions:" + username}
-        ]
-      );
-    }
 
     this.initSubViews();
   },
@@ -110,8 +109,7 @@ issueList.SortingView = Backbone.View.extend({
         {title: "Show 25", filter: "blah:25"},
         {title: "Show 50", filter: "blah:50"},
         {title: "Show 100", filter: "blah:100"}
-      ],
-      authedOptions: null
+      ]
     });
 
     this.sortModel = new Backbone.Model({
@@ -121,8 +119,7 @@ issueList.SortingView = Backbone.View.extend({
         {title: "Oldest", filter: "blah:oldest"},
         {title: "Most Commented", filter: "blah:most-commented"},
         {title: "etc.", filter: "todo: fill in details"}
-      ],
-      authedOptions: null
+      ]
     });
 
     this.initSubViews();

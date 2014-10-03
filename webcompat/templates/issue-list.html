@@ -73,11 +73,6 @@
   <% _.each(dropdownOptions, function(option) { %>
   <li class="Dropdown-item"><a href="#" class="Dropdown-link"><%= option.title %></a></li>
   <% }); %>
-  <% if (authedOptions) { %>
-    <% _.each(authedOptions, function(option) { %>
-    <li class="Dropdown-item"><a href="#" class="Dropdown-link"><%= option.title %></a></li>
-    <% }); %>
-  <% } %>
 </ul>
 </script>
 
