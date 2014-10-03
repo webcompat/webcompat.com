@@ -10,29 +10,74 @@ issueList.IssueCollection = Backbone.Collection.extend({
   url: '/api/issues'
 });
 
+issueList.DropdownView = Backbone.View.extend({
+  events: {
+    'click .js-dropdown-toggle': 'openDropdown',
+    'click .js-dropdown-options li': 'selectDropdownOption'
+  },
+  initialize: function() {
+    // this.el is set from parent view via setElement
+    // handles closing dropdown when clicking "outside".
+    $(document).on('click', _.bind(function(e) {
+      if (!$(e.target).closest(this.$el).length) {
+        this.closeDropdown();
+      }
+    }, this));
+  },
+  template: _.template($('#dropdown-tmpl').html()),
+  render: function() {
+    this.$el.html(this.template(this.model.toJSON()));
+    return this;
+  },
+  openDropdown: function(e) {
+    var btn = $(e.target);
+    btn.parent().toggleClass('is-active');
+  },
+  closeDropdown: function() {
+    this.$el.removeClass('is-active');
+  },
+  selectDropdownOption: function(e) {
+    var option = $(e.target);
+    option.addClass('is-active')
+          .siblings().removeClass('is-active');
+    // TODO: persist in localStorage for page refreshes?
+    this.updateDropdownTitle(option);
+    issueList.events.trigger('searchinput:update');
+    e.preventDefault();
+  },
+  updateDropdownTitle: function(optionElm) {
+    this.model.set('dropdownTitle', optionElm.text());
+    this.render();
+  }
+});
+
 issueList.FilterView = Backbone.View.extend({
   el: $('.js-issuelist-filter'),
   events: {
-    'click .js-dropdown-toggle': 'openDropdown',
-    'click .js-dropdown-options li': 'selectDropdownOption',
     'click .js-issue-filter': 'applyFilter'
   },
   initialize: function() {
     //TODO: move this model out into its own file once we have
     //actual data for issues count
-    this.model = new Backbone.Model();
-    this.model.set('dropdownTitle', '');
+    this.model = new Backbone.Model({
+      dropdownTitle: "View all open issues",
+      dropdownOptions: [
+        {title: "View all open issues", filter: "state:open"},
+        {title: "View all issues", filter: ""}
+      ]
+    });
 
-    // handle closing dropdown when clicking "outside".
-    $(document).on('click', _.bind(function(e) {
-      if (!$(e.target).closest('.js-dropdown-wrapper').length) {
-        this.closeDropdown();
-      }
-    }, this));
+    this.initSubViews();
+  },
+  initSubViews: function() {
+    this.dropdown = new issueList.DropdownView({
+      model: this.model
+    });
   },
   template: _.template($('#issuelist-filter-tmpl').html()),
   render: function() {
     this.$el.html(this.template(this.model.toJSON()));
+    this.dropdown.setElement(this.$el.find('.js-dropdown-wrapper')).render();
     return this;
   },
   applyFilter: function(e) {
@@ -40,34 +85,48 @@ issueList.FilterView = Backbone.View.extend({
     btn.addClass('is-active')
        .siblings().removeClass('is-active');
     // TODO: apply filter to search
-  },
-  closeDropdown: function() {
-    $('.js-dropdown-wrapper').removeClass('is-active');
-  },
-  openDropdown: function(e) {
-    var btn = $(e.target);
-    btn.parent().toggleClass('is-active');
-  },
-  selectDropdownOption: function(e) {
-    var option = $(e.target);
-    option.addClass('is-active')
-          .siblings().removeClass('is-active');
-    // persist in localStorage for page refreshes?
-    this.updateDropdownTitle(option);
-    issueList.events.trigger('searchinput:update');
-    e.preventDefault();
+  }
+});
 
+issueList.SortingView = Backbone.View.extend({
+  el: $('.js-issue-sorting'),
+  events: {},
+  initialize: function() {
+    this.paginationModel = new Backbone.Model({
+      dropdownTitle: "Show 25",
+      dropdownOptions: [
+        {title: "Show 25", filter: "blah:25"},
+        {title: "Show 50", filter: "blah:50"},
+        {title: "Show 100", filter: "blah:100"}
+      ]
+    });
+
+    this.sortModel = new Backbone.Model({
+      dropdownTitle: "Newest",
+      dropdownOptions: [
+        {title: "Newest", filter: "blah:newest"},
+        {title: "Oldest", filter: "blah:oldest"},
+        {title: "Most Commented", filter: "blah:most-commented"},
+        {title: "etc.", filter: "todo: fill in details"}
+      ]
+    });
+
+    this.initSubViews();
   },
-  updateDropdownTitle: function(optionElm) {
-    var prefixed = "issues ";
-    var selectedOption = optionElm ?
-        optionElm : $('.js-dropdown-options li.is-active');
-    var title = selectedOption.text().toLowerCase();
-    if (selectedOption.data('prefixTitle')) {
-      title = prefixed + title;
-    }
-    this.model.set('dropdownTitle', title);
-    this.render();
+  initSubViews: function() {
+    this.paginationDropdown = new issueList.DropdownView({
+      model: this.paginationModel
+    });
+    this.sortDropdown = new issueList.DropdownView({
+      model: this.sortModel
+    });
+  },
+  template: _.template($('#issuelist-sorting-tmpl').html()),
+  render: function() {
+    this.$el.html(this.template());
+    this.paginationDropdown.setElement(this.$el.find('.js-dropdown-pagination')).render();
+    this.sortDropdown.setElement(this.$el.find('.js-dropdown-sort')).render();
+    return this;
   }
 });
 
@@ -103,13 +162,14 @@ issueList.MainView = Backbone.View.extend({
   initSubViews: function() {
     this.issueList = new issueList.IssueView();
     this.filter = new issueList.FilterView();
+    this.issueSorter = new issueList.SortingView();
     this.render();
   },
   render: function() {
     //TODO: render filter post-model fetch. See Issue #291.
     this.$el.fadeIn(_.bind(function() {
       this.filter.render();
-      this.filter.updateDropdownTitle();
+      this.issueSorter.render();
     }, this));
   }
 });
