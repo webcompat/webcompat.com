@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
 {% block body %}
-  <div class="IssueList js-issue-page">
+  <div class="IssueList js-issue-page" data-username="{{ session.username }}">
   {% include "shared/nav.html" %}
     <div class="wc-content wc-content--body js-issuelist-filter">
       <script type="text/template" id="issuelist-filter-tmpl">
@@ -36,6 +36,7 @@
       <div class="wc-content">
         <div class="Dropdown wc-inline-block js-dropdown-wrapper js-dropdown-pagination"></div>
         <div class="Dropdown wc-inline-block js-dropdown-wrapper js-dropdown-sort"></div>
+      </div>
       </script>
     </div>
     <div class="IssueList-displayed">
@@ -72,6 +73,11 @@
   <% _.each(dropdownOptions, function(option) { %>
   <li class="Dropdown-item"><a href="#" class="Dropdown-link"><%= option.title %></a></li>
   <% }); %>
+  <% if (authedOptions) { %>
+    <% _.each(authedOptions, function(option) { %>
+    <li class="Dropdown-item"><a href="#" class="Dropdown-link"><%= option.title %></a></li>
+    <% }); %>
+  <% } %>
 </ul>
 </script>
 

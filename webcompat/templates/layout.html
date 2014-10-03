@@ -32,7 +32,7 @@
   <link href="{{ url_for('static', filename='css/webcompat.dev.css') }}" type="text/css" rel="stylesheet">
 {%- endif %}
 </head>
-<body>
+<body data-username="{{ session.username }}">
 <div class="wc-viewport">
   {% block body %}{% endblock %}
   {% include "shared/footer.html" %}
