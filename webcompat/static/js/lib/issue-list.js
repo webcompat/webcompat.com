@@ -96,7 +96,8 @@ issueList.FilterView = Backbone.View.extend({
     var btn = $(e.target);
     btn.addClass('is-active')
        .siblings().removeClass('is-active');
-    // TODO: apply filter to search
+
+    issueList.events.trigger('search:update', btn.data('filter'));
   }
 });
 
