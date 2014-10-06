@@ -71,7 +71,7 @@ issueList.FilterView = Backbone.View.extend({
       options.push(
         {title: "View issues submitted by me", filter: "author:" + username},
         {title: "View issues mentioning me", filter: "mentions:" + username}
-      )
+      );
     }
 
     this.model = new Backbone.Model({
