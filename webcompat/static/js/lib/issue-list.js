@@ -172,12 +172,11 @@ issueList.SortingView = Backbone.View.extend({
 issueList.IssueView = Backbone.View.extend({
   el: $('.js-issue-list'),
   initialize: function() {
-    var self = this;
     var headers = {headers: {'Accept': 'application/json'}};
     this.issues = new issueList.IssueCollection();
-    this.issues.fetch(headers).success(function() {
-      self.render();
-    }).error(function(e){console.log(e);});
+    this.issues.fetch(headers).success(_.bind(function() {
+      this.render();
+    }, this)).error(function(e){console.log(e);});
   },
   template: _.template($('#issuelist-issue-tmpl').html()),
   render: function() {
