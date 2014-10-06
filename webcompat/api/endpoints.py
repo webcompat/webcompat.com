@@ -83,68 +83,39 @@ def user_issues():
     return (issues.content, issues.status_code, get_headers(issues))
 
 
-@api.route('/issues/untriaged')
+@api.route('/issues/<issue_category>')
 @cache.cached(timeout=300)
-def get_untriaged():
-    '''Return all issues that are "untriaged".
+def get_issue_category(issue_category):
+    '''Return all issues for a specific category.
 
-    Essentially all unclosed issues with no activity.
+    issue_category can be of x types:
+    * untriaged (We take care in case there’s no bug)
+    * contactready
+    * needsdiagnosis
+    * sitewait
     Cached for 5 minutes.
     '''
-    if g.user:
-        issues = github.raw_request('GET', 'repos/{0}'.format(REPO_URI))
+    category_list = ['contactready', 'needsdiagnosis', 'sitewait']
+    if issue_category in category_list:
+        if g.user:
+            path = 'repos/{0}?labels={1}'.format(REPO_URI, issue_category)
+            issues = github.raw_request('GET', path)
+        else:
+            issues = proxy_request('get', '?labels={0}'.format(issue_category))
+    elif issue_category == 'untriaged':
+        if g.user:
+            issues = github.raw_request('GET', 'repos/{0}'.format(REPO_URI))
+        else:
+            issues = proxy_request('get')
+        # Do not send random JSON to filter_untriaged
+        if issues.status_code == 200:
+            return (filter_untriaged(json.loads(issues.content)),
+                    issues.status_code, get_headers(issues))
+        else:
+            return ({}, issues.status_code, get_headers(issues))
     else:
-        issues = proxy_request('get')
-    # Do not send random JSON to filter_untriaged
-    if issues.status_code == 200:
-        return (filter_untriaged(json.loads(issues.content)),
-                issues.status_code, get_headers(issues))
-    else:
-        return ({}, issues.status_code, get_headers(issues))
-
-
-@api.route('/issues/contactready')
-@cache.cached(timeout=300)
-def get_contactready():
-    '''Return all issues with a "contactready" label.
-
-    Cached for 5 minutes.
-    '''
-    if g.user:
-        path = 'repos/{0}?labels=contactready'.format(REPO_URI)
-        issues = github.raw_request('GET', path)
-    else:
-        issues = proxy_request('get', '?labels=contactready')
-    return (issues.content, issues.status_code, get_headers(issues))
-
-
-@api.route('/issues/needsdiagnosis')
-@cache.cached(timeout=300)
-def get_needsdiagnosis():
-    '''Return all issues with a "needsdiagnosis" label.
-
-    Cached for 5 minutes.
-    '''
-    if g.user:
-        path = 'repos/{0}?labels=needsdiagnosis'.format(REPO_URI)
-        issues = github.raw_request('GET', path)
-    else:
-        issues = proxy_request('get', '?labels=needsdiagnosis')
-    return (issues.content, issues.status_code, get_headers(issues))
-
-
-@api.route('/issues/sitewait')
-@cache.cached(timeout=300)
-def get_sitewait():
-    '''Return all issues with a "sitewait" label.
-
-    Cached for 5 minutes.
-    '''
-    if g.user:
-        path = 'repos/{0}?labels=sitewait'.format(REPO_URI)
-        issues = github.raw_request('GET', path)
-    else:
-        issues = proxy_request('get', '?labels=sitewait')
+        # The path doesn’t exist. 404 Not Found.
+        abort(404)
     return (issues.content, issues.status_code, get_headers(issues))
 
 
