@@ -103,7 +103,7 @@ issueList.FilterView = Backbone.View.extend({
 
 issueList.SearchView = Backbone.View.extend({
   el: $('.js-issuelist-search'),
-  events: {},
+  keyboardEvents: {},
   initialize: function() {
     issueList.events.on('search:update', _.bind(this.updateSearchQuery, this));
   },
@@ -129,9 +129,9 @@ issueList.SortingView = Backbone.View.extend({
     this.paginationModel = new Backbone.Model({
       dropdownTitle: "Show 25",
       dropdownOptions: [
-        {title: "Show 25", filter: "blah:25"},
-        {title: "Show 50", filter: "blah:50"},
-        {title: "Show 100", filter: "blah:100"}
+        {title: "Show 25", filter: ""},
+        {title: "Show 50", filter: ""},
+        {title: "Show 100", filter: ""}
       ]
     });
 
@@ -189,7 +189,9 @@ issueList.IssueView = Backbone.View.extend({
 issueList.MainView = Backbone.View.extend({
   el: $('.js-issue-page'),
   events: {},
-  keyboardEvents: {},
+  keyboardEvents: {
+    'enter': 'doSearch'
+  },
   initialize: function() {
     this.initSubViews();
   },
@@ -209,6 +211,9 @@ issueList.MainView = Backbone.View.extend({
         issueList.events.trigger('search:update', 'state:open');
       });
     }, this));
+  },
+  doSearch: function(e) {
+    console.log('Search for: ', e.target.value);
   }
 });
 
