@@ -108,9 +108,13 @@ issueList.SearchView = Backbone.View.extend({
     issueList.events.on('search:update', _.bind(this.updateSearchQuery, this));
   },
   template: _.template($('#issuelist-search-tmpl').html()),
-  render: function() {
+  render: function(cb) {
     this.$el.html(this.template());
     this.input = this.$el.find('input');
+
+    if (cb && typeof cb === 'function') {
+      cb();
+    }
     return this;
   },
   updateSearchQuery: function(data) {
@@ -201,7 +205,9 @@ issueList.MainView = Backbone.View.extend({
     this.$el.fadeIn(_.bind(function() {
       this.filter.render();
       this.issueSorter.render();
-      this.search.render();
+      this.search.render(function() {
+        issueList.events.trigger('search:update', 'state:open');
+      });
     }, this));
   }
 });
