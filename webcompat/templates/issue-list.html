@@ -6,19 +6,19 @@
       <script type="text/template" id="issuelist-filter-tmpl">
       <div class="Dropdown Dropdown--large js-dropdown-wrapper"></div>
       <div>
-        <button type="button" class="IssueList-filtering IssueList-filtering--untriaged js-issue-filter">
+        <button type="button" class="IssueList-filtering IssueList-filtering--untriaged" data-filter="-label:contactready -label:sitewait -label:needsdiagnosis">
           <span class="IssueList-filtering-count"></span> Untriaged</span>
         </button>
-        <button type="button" class="IssueList-filtering IssueList-filtering--need js-issue-filter">
+        <button type="button" class="IssueList-filtering IssueList-filtering--need" data-filter="label:needsdiagnosis">
           <span class="IssueList-filtering-count"></span> Needs Diagnosis</span>
         </button>
-        <button type="button" class="IssueList-filtering IssueList-filtering--ready js-issue-filter">
+        <button type="button" class="IssueList-filtering IssueList-filtering--ready" data-filter="label:contactready">
           <span class="IssueList-filtering-count"></span> Ready for outreach</span>
         </button>
-        <button type="button" class="IssueList-filtering IssueList-filtering--sitewait js-issue-filter">
+        <button type="button" class="IssueList-filtering IssueList-filtering--sitewait" data-filter="label:sitewait">
           <span class="IssueList-filtering-count"></span> Site contacted</span>
         </button>
-        <button type="button" class="IssueList-filtering IssueList-filtering--close js-issue-filter">
+        <button type="button" class="IssueList-filtering IssueList-filtering--close" data-filter="state:closed">
           <span class="IssueList-filtering-count"></span> Closed</span>
         </button>
       </div>

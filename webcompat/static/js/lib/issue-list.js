@@ -55,7 +55,7 @@ issueList.DropdownView = Backbone.View.extend({
 issueList.FilterView = Backbone.View.extend({
   el: $('.js-issuelist-filter'),
   events: {
-    'click .js-issue-filter': 'applyFilter'
+    'click button': 'applyFilter'
   },
   initialize: function() {
     var username;
