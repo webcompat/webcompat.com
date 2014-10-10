@@ -71,7 +71,7 @@ All code contributions should come in the form of a [pull request](https://help.
 You'll probably want to [set up a local development environment](#working-environment-setup) to get that far.
 
 * Make your changes in a new branch
-* 
+ 
   `git checkout origin/dev.webcompat.com`
 
   `git checkout -b name-of-fix-branch`
