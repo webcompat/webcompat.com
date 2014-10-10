@@ -60,9 +60,15 @@ project.
 
 ## Submission Guidelines
 
-All code contributions should come in the form of a [pull request](https://help.github.com/articles/creating-a-pull-request), as a topic branch. You'll probably want to [set up a local development environment](#working-environment-setup) to get that far.
+All code contributions should come in the form of a [pull request](https://help.github.com/articles/creating-a-pull-request), as a topic branch. 
 
 * Have a quick search through existing issues and pull requests so you don't waste any of your time.
+* Fork repository 
+
+![master](http://f.cl.ly/items/1E3f0A0I2A2b3T2L2I2c/forked.png)
+
+You'll probably want to [set up a local development environment](#working-environment-setup) to get that far.
+
 * Make your changes in a new branch
 * 
   `git checkout origin/dev.webcompat.com`
