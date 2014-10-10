@@ -64,8 +64,10 @@ All code contributions should come in the form of a [pull request](https://help.
 
 * Have a quick search through existing issues and pull requests so you don't waste any of your time.
 * Make your changes in a new branch
+* 
   `git checkout origin/dev.webcompat.com`
-	`git checkout -b name-of-fix-branch`
+
+  `git checkout -b name-of-fix-branch`
 
 * Create your patch; commit your changes
 
