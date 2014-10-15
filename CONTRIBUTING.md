@@ -60,12 +60,25 @@ project.
 
 ## Submission Guidelines
 
-All code contributions should come in the form of a [pull request](https://help.github.com/articles/creating-a-pull-request), as a topic branch. You'll probably want to [set up a local development environment](#working-environment-setup) to get that far.
+All code contributions should come in the form of a [pull request](https://help.github.com/articles/creating-a-pull-request), as a topic branch. 
 
 * Have a quick search through existing issues and pull requests so you don't waste any of your time.
-* Make your changes in a new branch
 
-	`git checkout -b name-of-fix-branch master`
+* Fork repository 
+
+![master](http://f.cl.ly/items/1E3f0A0I2A2b3T2L2I2c/forked.png)
+
+You'll probably want to [set up a local development environment](#working-environment-setup) to get that far.
+
+* Make your changes in a new branch
+  
+  `git remote add upstream https://github.com/webcompat/webcompat.com.git`
+
+  `git fetch upstream`
+  
+  `git checkout upstream/dev.webcompat.com`
+
+  `git checkout -b name-of-fix-branch`
 
 * Create your patch; commit your changes
 
@@ -171,7 +184,7 @@ We use [Grunt](http://gruntjs.com/) as a task runner to perform certain things (
 
 ``` bash
 # clone the repo
-git clone git@github.com:webcompat/webcompat.com.git
+git clone git@github.com:username/webcompat.com.git
 # change to directory
 cd webcompat.com
 # initializing project
@@ -192,7 +205,7 @@ cd webcompat.com
 
 ``` bash
 # clone the repo
-git clone git@github.com:webcompat/webcompat.com.git
+git clone git@github.com:username/webcompat.com.git
 # change to directory
 cd webcompat.com
 # set up virtual environment
