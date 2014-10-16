@@ -42,8 +42,6 @@ issueList.DropdownView = Backbone.View.extend({
           .siblings().removeClass('is-active');
     // TODO: persist in localStorage for page refreshes?
     this.updateDropdownTitle(option);
-    // trigger update event, passing data-filter
-    issueList.events.trigger('search:update', option.data('filter'));
     e.preventDefault();
   },
   updateDropdownTitle: function(optionElm) {
@@ -97,8 +95,6 @@ issueList.FilterView = Backbone.View.extend({
     var btn = $(e.target);
     btn.addClass('is-active')
        .siblings().removeClass('is-active');
-
-    issueList.events.trigger('search:update', btn.data('filter'));
   }
 });
 
@@ -209,9 +205,7 @@ issueList.MainView = Backbone.View.extend({
     this.$el.fadeIn(_.bind(function() {
       this.filter.render();
       this.issueSorter.render();
-      this.search.render(function() {
-        issueList.events.trigger('search:update', 'state:open');
-      });
+      this.search.render();
     }, this));
   }
 });
