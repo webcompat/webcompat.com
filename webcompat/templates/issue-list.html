@@ -9,16 +9,16 @@
         <button type="button" class="IssueList-filtering IssueList-filtering--untriaged" data-filter="-label:contactready -label:sitewait -label:needsdiagnosis">
           <span class="IssueList-filtering-count"></span> Untriaged</span>
         </button>
-        <button type="button" class="IssueList-filtering IssueList-filtering--need" data-filter="label:needsdiagnosis">
+        <button type="button" class="IssueList-filtering IssueList-filtering--need" data-filter="needsdiagnosis">
           <span class="IssueList-filtering-count"></span> Needs Diagnosis</span>
         </button>
-        <button type="button" class="IssueList-filtering IssueList-filtering--ready" data-filter="label:contactready">
+        <button type="button" class="IssueList-filtering IssueList-filtering--ready" data-filter="contactready">
           <span class="IssueList-filtering-count"></span> Ready for outreach</span>
         </button>
-        <button type="button" class="IssueList-filtering IssueList-filtering--sitewait" data-filter="label:sitewait">
+        <button type="button" class="IssueList-filtering IssueList-filtering--sitewait" data-filter="sitewait">
           <span class="IssueList-filtering-count"></span> Site contacted</span>
         </button>
-        <button type="button" class="IssueList-filtering IssueList-filtering--close" data-filter="state:closed">
+        <button type="button" class="IssueList-filtering IssueList-filtering--close" data-filter="closed">
           <span class="IssueList-filtering-count"></span> Closed</span>
         </button>
       </div>
@@ -72,7 +72,7 @@
 <ul class="Dropdown-content js-dropdown-options" aria-hidden="false">
   <% _.each(dropdownOptions, function(option) { %>
   <li class="Dropdown-item">
-    <a href="#" class="Dropdown-link" data-filter="<%= option.filter %>"><%= option.title %></a>
+    <a href="#" class="Dropdown-link" data-params="<%= option.params %>"><%= option.title %></a>
   </li>
   <% }); %>
 </ul>

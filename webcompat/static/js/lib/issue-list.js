@@ -58,19 +58,20 @@ issueList.FilterView = Backbone.View.extend({
     'click button': 'applyFilter'
   },
   initialize: function() {
-    var username;
     //TODO: move this model out into its own file once we have
     //actual data for issues count
     var options = [
-      {title: "View all open issues", filter: "state:open"},
-      {title: "View all issues", filter: ""}
+      {title: "View all open issues", params: ""},
+      {title: "View all issues", params: "filter=all"}
     ];
 
     // add the dropdown options for logged in users.
-    if (username = $('body').data('username')) {
+    // submitted by me can be
+    if ($('body').data('username')) {
       options.push(
-        {title: "View issues submitted by me", filter: "author:" + username},
-        {title: "View issues mentioning me", filter: "mentions:" + username}
+        {title: "View issues submitted by me", params: "filter=created"},
+        {title: "View issues mentioning me", params: "filter=mentioned"},
+        {title: "View issues assigned to me", params: "filter=assigned"}
       );
     }
 
@@ -134,19 +135,19 @@ issueList.SortingView = Backbone.View.extend({
     this.paginationModel = new Backbone.Model({
       dropdownTitle: "Show 25",
       dropdownOptions: [
-        {title: "Show 25", filter: ""},
-        {title: "Show 50", filter: ""},
-        {title: "Show 100", filter: ""}
+        {title: "Show 25", params: ""},
+        {title: "Show 50", params: ""},
+        {title: "Show 100", params: ""}
       ]
     });
 
     this.sortModel = new Backbone.Model({
       dropdownTitle: "Newest",
       dropdownOptions: [
-        {title: "Newest", filter: "blah:newest"},
-        {title: "Oldest", filter: "blah:oldest"},
-        {title: "Most Commented", filter: "blah:most-commented"},
-        {title: "etc.", filter: "todo: fill in details"}
+        {title: "Newest", params: ""},
+        {title: "Oldest", params: ""},
+        {title: "Most Commented", params: ""},
+        {title: "etc.", params: ""}
       ]
     });
 
