@@ -235,5 +235,9 @@ def get_search_results():
     else:
         results = proxy_request('get', params=params, uri=search_uri)
     # The issues are returned in the items property of the response JSON
-    results_issues = json.dumps(json.loads(results.content)['items'])
-    return (results_issues, results.status_code, get_headers(results))
+    json_response = json.loads(results.content)
+    if 'items' in json_response:
+        results = json.dumps(['items'])
+    else:
+        results = results.content
+    return (results, results.status_code, get_headers(results))
