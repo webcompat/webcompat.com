@@ -214,7 +214,8 @@ def get_rate_limit():
 def get_search_results():
     '''XHR endpoint to get results from GitHub's Search API.
 
-    Note that the rate limit is different for Search: 20 requests per minute
+    We're specifically searching "issues" here, which seems to make the most
+    sense. Note that the rate limit is different for Search: 20 requests per minute
     We may want to restrict search to logged in users.
 
     Not cached by us.
