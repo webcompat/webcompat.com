@@ -105,6 +105,12 @@ def get_issue_category(issue_category):
             issues = github.raw_request('GET', path)
         else:
             issues = proxy_request('get', '?labels={0}'.format(issue_category))
+    elif issue_category == 'closed':
+        if g.user:
+            path = 'repos/{0}?state=closed'.format(REPO_URI)
+            issues = github.raw_request('GET', path)
+        else:
+            issues = proxy_request('get', '?state=closed')
     elif issue_category == 'untriaged':
         if g.user:
             issues = github.raw_request('GET', 'repos/{0}'.format(REPO_URI))
