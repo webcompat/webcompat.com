@@ -95,6 +95,11 @@ issueList.FilterView = Backbone.View.extend({
     var btn = $(e.target);
     btn.addClass('is-active')
        .siblings().removeClass('is-active');
+
+    this.updateResults(btn.data('filter'));
+  },
+  updateResults: function(category) {
+    issueList.events.trigger('issues:update', category);
   }
 });
 
@@ -169,21 +174,37 @@ issueList.SortingView = Backbone.View.extend({
 issueList.IssueView = Backbone.View.extend({
   el: $('.js-issue-list'),
   initialize: function() {
-    var headers = {headers: {'Accept': 'application/json'}};
     this.issues = new issueList.IssueCollection();
-    this.issues.fetch(headers).success(_.bind(function() {
-      this.render();
-    }, this)).error(function(e){console.log(e);});
+    this.fetchAndRenderIssues();
+
+    issueList.events.on('issues:update', _.bind(this.updateIssues, this));
   },
   template: _.template($('#issuelist-issue-tmpl').html()),
-  render: function() {
+  fetchAndRenderIssues: function() {
+    var headers = {headers: {'Accept': 'application/json'}};
+    this.issues.fetch(headers).success(_.bind(function() {
+      this.render(this.issues);
+    }, this)).error(function(e){console.log(e);});
+  },
+  render: function(issues) {
     this.$el.html(this.template({
       //can deal with "show N issues" either manually,
       //or request paginated results with N per page.
       //former more work, latter more API requests
-      issues: this.issues.toJSON()
+      issues: issues.toJSON()
     }));
     return this;
+  },
+  updateIssues: function(category) {
+    // depending on what category was clicked, update the collection instance
+    // url property and fetch the issues.
+    var labelCategories = ['closed', 'contactready', 'needsdiagnosis', 'sitewait'];
+    if (_.contains(labelCategories, category)) {
+      this.issues.url = '/api/issues/' + category;
+      this.fetchAndRenderIssues();
+    } else if (category === "untriaged") {
+      // TODO: get results from search API.
+    }
   }
 });
 
