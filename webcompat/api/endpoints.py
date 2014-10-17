@@ -225,10 +225,12 @@ def get_search_results():
     query = request.args.get('q')
     if query:
         # restrict results to the relevant repo.
-        query += "+repo={0}".format(REPO_PATH)
+        query += " repo={0}".format(REPO_PATH)
+    params = {'q': query}
+
     if g.user:
         request_headers = get_request_headers(g.request_headers)
-        results = github.raw_request('GET', '/search/issues',
+        results = github.raw_request('GET', '/search/issues', params=params,
                                      headers=request_headers)
     else:
         results = proxy_request('get', uri=search_uri)
