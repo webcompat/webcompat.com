@@ -201,10 +201,11 @@ issueList.IssueView = Backbone.View.extend({
     var labelCategories = ['closed', 'contactready', 'needsdiagnosis', 'sitewait'];
     if (_.contains(labelCategories, category)) {
       this.issues.url = '/api/issues/' + category;
-      this.fetchAndRenderIssues();
     } else if (category === "untriaged") {
-      // TODO: get results from search API.
+      //TODO: make a specific endpoint that we can cache for untriaged.
+      this.issues.url = 'api/issues/search?q=-label:contactready+-label:sitewait+-label:needsdiagnosis'
     }
+    this.fetchAndRenderIssues();
   }
 });
 
