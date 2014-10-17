@@ -233,5 +233,7 @@ def get_search_results():
         results = github.raw_request('GET', '/search/issues', params=params,
                                      headers=request_headers)
     else:
-        results = proxy_request('get', uri=search_uri)
-    return (results.content, results.status_code, get_headers(results))
+        results = proxy_request('get', params=params, uri=search_uri)
+    # The issues are returned in the items property of the response JSON
+    results_issues = json.dumps(json.loads(results.content)['items'])
+    return (results_issues, results.status_code, get_headers(results))
