@@ -207,3 +207,27 @@ def get_rate_limit():
     else:
         rl = proxy_request('get', uri='https://api.github.com/rate_limit')
     return rl.content
+
+
+@api.route('/issues/search')
+def get_search_results():
+    '''XHR endpoint to get results from GitHub's Search API.
+
+    Note that the rate limit is different for Search: 20 requests per minute
+    We may want to restrict search to logged in users.
+
+    Not cached by us.
+    '''
+    search_uri = 'https://api.github.com/search/issues'
+    # TODO: handle sort and order parameters.
+    query = request.args.get('q')
+    if query:
+        # restrict results to the relevant repo.
+        query += "+repo={0}".format(REPO_PATH)
+    if g.user:
+        request_headers = get_request_headers(g.request_headers)
+        results = github.raw_request('GET', '/search/issues',
+                                     headers=request_headers)
+    else:
+        results = proxy_request('get', uri=search_uri)
+    return (results.content, results.status_code, get_headers(results))
