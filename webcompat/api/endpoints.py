@@ -24,11 +24,12 @@ from webcompat.helpers import get_request_headers
 from webcompat.helpers import get_user_info
 from webcompat.issues import filter_untriaged
 from webcompat.issues import proxy_request
-from webcompat.issues import REPO_URI
 
 
 api = Blueprint('api', __name__, url_prefix='/api')
 JSON_MIME = 'application/json'
+ISSUES_PATH = app.config['ISSUES_REPO_URI']
+REPO_PATH = ISSUES_PATH[:-7]
 
 
 @api.route('/issues')
@@ -39,7 +40,7 @@ def proxy_issues():
     Cached for 5 minutes.
     '''
     if g.user:
-        issues = github.raw_request('GET', 'repos/{0}'.format(REPO_URI))
+        issues = github.raw_request('GET', 'repos/{0}'.format(ISSUES_PATH))
     else:
         issues = proxy_request('get')
     return (issues.content, issues.status_code, get_headers(issues))
@@ -54,7 +55,7 @@ def proxy_issue(number):
     if g.user:
         request_headers = get_request_headers(g.request_headers)
         issue = github.raw_request('GET', 'repos/{0}/{1}'.format(
-            app.config['ISSUES_REPO_URI'], number), headers=request_headers)
+            ISSUES_PATH, number), headers=request_headers)
     else:
         issue = proxy_request('get', '/{0}'.format(number))
     return (issue.content, issue.status_code, get_headers(issue))
@@ -79,7 +80,7 @@ def user_issues():
     '''
     get_user_info()
     path = 'repos/{0}?creator={1}&state=all'.format(
-        REPO_URI, session['username']
+        ISSUES_PATH, session['username']
     )
     request_headers = get_request_headers(g.request_headers)
     issues = github.raw_request('GET', path, headers=request_headers)
@@ -101,19 +102,19 @@ def get_issue_category(issue_category):
     category_list = ['contactready', 'needsdiagnosis', 'sitewait']
     if issue_category in category_list:
         if g.user:
-            path = 'repos/{0}?labels={1}'.format(REPO_URI, issue_category)
+            path = 'repos/{0}?labels={1}'.format(ISSUES_PATH, issue_category)
             issues = github.raw_request('GET', path)
         else:
             issues = proxy_request('get', '?labels={0}'.format(issue_category))
     elif issue_category == 'closed':
         if g.user:
-            path = 'repos/{0}?state=closed'.format(REPO_URI)
+            path = 'repos/{0}?state=closed'.format(ISSUES_PATH)
             issues = github.raw_request('GET', path)
         else:
             issues = proxy_request('get', '?state=closed')
     elif issue_category == 'untriaged':
         if g.user:
-            issues = github.raw_request('GET', 'repos/{0}'.format(REPO_URI))
+            issues = github.raw_request('GET', 'repos/{0}'.format(ISSUES_PATH))
         else:
             issues = proxy_request('get')
         # Do not send random JSON to filter_untriaged
@@ -138,7 +139,7 @@ def proxy_comments(number):
         try:
             comment_data = json.loads(request.data)
             body = json.dumps({"body": comment_data['rawBody']})
-            path = 'repos/{0}/{1}/comments'.format(REPO_URI, number)
+            path = 'repos/{0}/{1}/comments'.format(ISSUES_PATH, number)
             comment = github.raw_request('POST', path, data=body)
             return (json.dumps(comment.json()), comment.status_code,
                     {'content-type': JSON_MIME})
@@ -151,7 +152,7 @@ def proxy_comments(number):
             comments = github.raw_request(
                 'GET',
                 'repos/{0}/{1}/comments'.format(
-                    app.config['ISSUES_REPO_URI'], number),
+                    ISSUES_PATH, number),
                 headers=request_headers
                 )
         else:
@@ -183,11 +184,9 @@ def get_repo_labels():
 
     Cached for 10 minutes.
     '''
-    # Chop off /issues. Someone feel free to refactor the ISSUES_REPO_URI.
-    labels_path = app.config['ISSUES_REPO_URI'][:-7]
     if g.user:
         request_headers = get_request_headers(g.request_headers)
-        path = 'repos/{0}/labels'.format(labels_path)
+        path = 'repos/{0}/labels'.format(REPO_PATH)
         labels = github.raw_request('GET', path, headers=request_headers)
         return (labels.content, labels.status_code, get_headers(labels))
     else:
