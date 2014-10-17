@@ -201,11 +201,12 @@ def get_rate_limit():
     Will display for the logged in user, or webcompat-bot if not logged in.
     See https://developer.github.com/v3/rate_limit/.
     '''
+    rate_limit_uri = 'https://api.github.com/rate_limit'
     if g.user:
         request_headers = get_request_headers(g.request_headers)
         rl = github.raw_request('GET', 'rate_limit', headers=request_headers)
     else:
-        rl = proxy_request('get', uri='https://api.github.com/rate_limit')
+        rl = proxy_request('get', uri=rate_limit_uri)
     return rl.content
 
 
