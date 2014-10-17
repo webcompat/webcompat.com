@@ -23,7 +23,7 @@ headers = {'Authorization': 'token {0}'.format(app.config['BOT_OAUTH_TOKEN']),
            'Accept': JSON_MIME}
 
 
-def proxy_request(method, path_mod='', data=None, uri=None):
+def proxy_request(method, path_mod='', data=None, params=None, uri=None):
     '''Make a GitHub API request with a bot's OAuth token.
 
     Necessary for non-logged in users.
@@ -42,7 +42,7 @@ def proxy_request(method, path_mod='', data=None, uri=None):
     else:
         req_uri = 'https://api.github.com/repos/{0}{1}'.format(REPO_URI,
                                                                path_mod)
-    return req(req_uri, data=data, headers=headers)
+    return req(req_uri, data=data, params=params, headers=headers)
 
 
 def report_issue(form, proxy=False):
