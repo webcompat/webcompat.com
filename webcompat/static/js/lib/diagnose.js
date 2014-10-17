@@ -7,27 +7,27 @@ var issues = issues || {};
 
 diagnose.MyIssuesCollection = Backbone.Collection.extend({
   model: issues.Issue,
-  url: '/api/issues/mine'
+  url: '/api/issues/category/mine'
 });
 
 diagnose.NeedsDiagnosisCollection = Backbone.Collection.extend({
   model: issues.Issue,
-  url: '/api/issues/needsdiagnosis'
+  url: '/api/issues/category/needsdiagnosis'
 });
 
 diagnose.ContactReadyCollection = Backbone.Collection.extend({
   model: issues.Issue,
-  url: '/api/issues/contactready'
+  url: '/api/issues/category/contactready'
 });
 
 diagnose.UntriagedCollection = Backbone.Collection.extend({
   model: issues.Issue,
-  url: '/api/issues/untriaged'
+  url: '/api/issues/category/untriaged'
 });
 
 diagnose.SiteWaitCollection = Backbone.Collection.extend({
   model: issues.Issue,
-  url: '/api/issues/sitewait'
+  url: '/api/issues/category/sitewait'
 });
 
 diagnose.MyIssuesView = Backbone.View.extend({

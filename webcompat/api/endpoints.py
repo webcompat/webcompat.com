@@ -72,7 +72,7 @@ def edit_issue(number):
     return (edit.content, edit.status_code, {'content-type': JSON_MIME})
 
 
-@api.route('/issues/mine')
+@api.route('/issues/category/mine')
 def user_issues():
     '''API endpoint to return issues filed by the logged in user.
 
@@ -87,7 +87,7 @@ def user_issues():
     return (issues.content, issues.status_code, get_headers(issues))
 
 
-@api.route('/issues/<issue_category>')
+@api.route('/issues/category/<issue_category>')
 @cache.cached(timeout=300)
 def get_issue_category(issue_category):
     '''Return all issues for a specific category.
