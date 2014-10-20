@@ -211,22 +211,26 @@ def get_rate_limit():
 
 
 @api.route('/issues/search')
-def get_search_results():
+def get_search_results(query_string):
     '''XHR endpoint to get results from GitHub's Search API.
 
     We're specifically searching "issues" here, which seems to make the most
-    sense. Note that the rate limit is different for Search: 20 requests per minute
-    We may want to restrict search to logged in users.
+    sense. Note that the rate limit is different for Search: 20 requests per
+    minute. We may want to restrict search to logged in users in the future.
+
+    This method can take a query_string argument, to be called from other
+    endpoints, or the query_string can be passed in via the Request object.
 
     Not cached by us.
     '''
     search_uri = 'https://api.github.com/search/issues'
     # TODO: handle sort and order parameters.
-    query = request.args.get('q')
-    if query:
+    if query_string is None:
+        query_string = request.args.get('q')
+    else:
         # restrict results to the relevant repo.
-        query += " repo={0}".format(REPO_PATH)
-    params = {'q': query}
+        query_string += " repo={0}".format(REPO_PATH)
+    params = {'q': query_string}
 
     if g.user:
         request_headers = get_request_headers(g.request_headers)
