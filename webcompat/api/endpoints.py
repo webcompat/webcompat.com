@@ -13,6 +13,7 @@ from flask import abort
 from flask import Blueprint
 from flask.ext.github import GitHubError
 from flask import g
+from flask import redirect
 from flask import request
 from flask import session
 
@@ -248,3 +249,16 @@ def get_search_results(query_string):
     return (result, results.status_code, get_headers(results))
 
 
+@api.route('/issues/search/untriaged')
+@cache.cached(timeout=120)
+def get_untriaged_from_search():
+    '''XHR endpoint to get "untriaged" issues from GitHub's Search API.
+
+    There is some overlap between /issues/category/untriaged as used on the
+    home page - but this endpoint returns paginated results paginated.
+    TODO: Unify that at some point.
+
+    Cached for 2 minutes, to save on Search API requests.
+    '''
+    query_string = '-label:contactready+-label:sitewait+-label:needsdiagnosis'
+    return get_search_results(query_string)

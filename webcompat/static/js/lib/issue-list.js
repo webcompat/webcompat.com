@@ -203,7 +203,7 @@ issueList.IssueView = Backbone.View.extend({
       this.issues.url = '/api/issues/category/' + category;
     } else if (category === "untriaged") {
       //TODO: make a specific endpoint that we can cache for untriaged.
-      this.issues.url = 'api/issues/search?q=-label:contactready+-label:sitewait+-label:needsdiagnosis'
+      this.issues.url = 'api/issues/search/untriaged';
     }
     this.fetchAndRenderIssues();
   }
