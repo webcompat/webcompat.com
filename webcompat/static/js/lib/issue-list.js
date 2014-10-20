@@ -53,7 +53,7 @@ issueList.DropdownView = Backbone.View.extend({
 issueList.FilterView = Backbone.View.extend({
   el: $('.js-issuelist-filter'),
   events: {
-    'click button': 'applyFilter'
+    'click button': 'toggleFilter'
   },
   initialize: function() {
     //TODO: move this model out into its own file once we have
@@ -91,12 +91,16 @@ issueList.FilterView = Backbone.View.extend({
     this.dropdown.setElement(this.$el.find('.js-dropdown-wrapper')).render();
     return this;
   },
-  applyFilter: function(e) {
+  toggleFilter: function(e) {
     var btn = $(e.target);
-    btn.addClass('is-active')
+    btn.toggleClass('is-active')
        .siblings().removeClass('is-active');
 
-    this.updateResults(btn.data('filter'));
+    if (btn.hasClass('is-active')) {
+      this.updateResults(btn.data('filter'));
+    } else {
+      this.updateResults();
+    }
   },
   updateResults: function(category) {
     issueList.events.trigger('issues:update', category);
@@ -202,8 +206,10 @@ issueList.IssueView = Backbone.View.extend({
     if (_.contains(labelCategories, category)) {
       this.issues.url = '/api/issues/category/' + category;
     } else if (category === "untriaged") {
-      //TODO: make a specific endpoint that we can cache for untriaged.
       this.issues.url = 'api/issues/search/untriaged';
+    } else {
+      // else we've toggled "off" a filter. display everything again.
+      this.issues.url = '/api/issues';
     }
     this.fetchAndRenderIssues();
   }
