@@ -237,7 +237,9 @@ def get_search_results():
     # The issues are returned in the items property of the response JSON
     json_response = json.loads(results.content)
     if 'items' in json_response:
-        results = json.dumps(['items'])
+        result = json.dumps(['items'])
     else:
-        results = results.content
-    return (results, results.status_code, get_headers(results))
+        result = results.content
+    return (result, results.status_code, get_headers(results))
+
+
