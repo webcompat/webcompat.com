@@ -129,7 +129,7 @@ issueList.SearchView = Backbone.View.extend({
     this.input.val(data);
   },
   doSearch: function(e) {
-    console.log('Search for: ', e.target.value);
+    issueList.events.trigger('issues:update', {query: e.target.value});
   }
 });
 
@@ -200,15 +200,20 @@ issueList.IssueView = Backbone.View.extend({
     return this;
   },
   updateIssues: function(category) {
-    // depending on what category was clicked, update the collection instance
-    // url property and fetch the issues.
+    // depending on what category was clicked (or if a search came in),
+    // update the collection instance url property and fetch the issues.
     var labelCategories = ['closed', 'contactready', 'needsdiagnosis', 'sitewait'];
-    if (_.contains(labelCategories, category)) {
+    var query;
+
+    // note: if query is the empty string, it will load all issues from the
+    // '/api/issues' endpoint (which I think we want).
+    if (query = category.query) {
+      this.issues.url = '/api/issues/search?q=' + query;
+    } else if (_.contains(labelCategories, category)) {
       this.issues.url = '/api/issues/category/' + category;
     } else if (category === "untriaged") {
-      this.issues.url = 'api/issues/search/untriaged';
+      this.issues.url = '/api/issues/search/untriaged';
     } else {
-      // else we've toggled "off" a filter. display everything again.
       this.issues.url = '/api/issues';
     }
     this.fetchAndRenderIssues();
