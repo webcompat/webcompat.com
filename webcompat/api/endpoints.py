@@ -212,7 +212,7 @@ def get_rate_limit():
 
 
 @api.route('/issues/search')
-def get_search_results(query_string):
+def get_search_results(query_string=None):
     '''XHR endpoint to get results from GitHub's Search API.
 
     We're specifically searching "issues" here, which seems to make the most
@@ -228,9 +228,8 @@ def get_search_results(query_string):
     # TODO: handle sort and order parameters.
     if query_string is None:
         query_string = request.args.get('q')
-    else:
         # restrict results to the relevant repo.
-        query_string += " repo={0}".format(REPO_PATH)
+    query_string += " repo:{0}".format(REPO_PATH)
     params = {'q': query_string}
 
     if g.user:
