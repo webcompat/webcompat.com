@@ -177,6 +177,9 @@ issueList.SortingView = Backbone.View.extend({
 
 issueList.IssueView = Backbone.View.extend({
   el: $('.js-issue-list'),
+  events: {
+    'click .IssueItem-label': 'labelSearch'
+  },
   initialize: function() {
     this.issues = new issueList.IssueCollection();
     this.fetchAndRenderIssues();
@@ -198,6 +201,12 @@ issueList.IssueView = Backbone.View.extend({
       issues: issues.toJSON()
     }));
     return this;
+  },
+  labelSearch: function(e) {
+    var labelFilter = 'label:' + $(e.target).text();
+    issueList.events.trigger('search:update', labelFilter);
+    issueList.events.trigger('issues:update', {query: labelFilter});
+    e.preventDefault();
   },
   updateIssues: function(category) {
     // depending on what category was clicked (or if a search came in),
