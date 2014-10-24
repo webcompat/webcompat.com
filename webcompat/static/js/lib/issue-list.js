@@ -256,9 +256,11 @@ issueList.MainView = Backbone.View.extend({
   },
   initSubViews: function() {
     this.issueList = new issueList.IssueView();
-    this.filter = new issueList.FilterView();
     this.issueSorter = new issueList.SortingView();
+    this.filter = new issueList.FilterView();
+    this.paginationControls = new issueList.PaginationControlsView();
     this.search = new issueList.SearchView();
+
     this.render();
   },
   render: function() {
