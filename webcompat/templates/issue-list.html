@@ -27,17 +27,27 @@
     <div class="IssueList-search js-issuelist-search">
       <script type="text/template" id="issuelist-search-tmpl">
       <div class="wc-content">
-        <input type=="text" class="IssueList-search-form mousetrap" placeholder="Search by keyword">
+        <input type="text" class="IssueList-search-form mousetrap" placeholder="Search by keyword">
       </div>
       </script>
     </div>
-    <div class="IssueList-sorting js-issue-sorting">
-      <script type="text/template" id="issuelist-sorting-tmpl">
+    <div class="IssueList-sorting">
       <div class="wc-content">
-        <div class="Dropdown wc-inline-block js-dropdown-wrapper js-dropdown-pagination"></div>
-        <div class="Dropdown wc-inline-block js-dropdown-wrapper js-dropdown-sort"></div>
+        <div class="Grid">
+          <div class="Grid-cell u-size1of2 u-sm-sizeFull">
+            <div class="js-issue-sorting">
+              <script type="text/template" id="issuelist-sorting-tmpl">
+                <div class="Dropdown wc-inline-block js-dropdown-wrapper js-dropdown-pagination"></div>
+                <div class="Dropdown wc-inline-block js-dropdown-wrapper js-dropdown-sort"></div>
+              </script>
+            </div>
+          </div>
+          <div class="Grid-cell u-size1of2 u-sm-sizeFull IssueList-pagination">
+            <a class="IssueList-pagination-link" href="#">previous</a>
+            <a class="IssueList-pagination-link" href="#">next</a>
+          </div>
+        </div>
       </div>
-      </script>
     </div>
     <div class="IssueList-displayed">
       <div class="wc-content js-issue-list">
