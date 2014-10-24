@@ -175,6 +175,25 @@ issueList.SortingView = Backbone.View.extend({
   }
 });
 
+// we're just listening for and firing events from this view -
+// no template needed.
+issueList.PaginationControlsView = Backbone.View.extend({
+  el: $('.js-pagination-controls'),
+  events: {
+    'click .js-pagination-previous': 'broadcastPrevious',
+    'click .js-pagination-next': 'broadcastNext',
+  },
+  initialize: function() {
+
+  },
+  broadcastNext: function() {
+    issueList.events.trigger('paginate:next');
+  },
+  broadcastPrevious: function() {
+    issueList.events.trigger('paginate:previous');
+  }
+});
+
 issueList.IssueView = Backbone.View.extend({
   el: $('.js-issue-list'),
   events: {
