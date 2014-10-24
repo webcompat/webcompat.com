@@ -31,10 +31,10 @@ function BugForm() {
     checkParams: function() {
         // Assumes a URI like: /?open=1&url=http://webpy.org/, for use by addons
         // Quick sanity check
-        if (!location.search.search(/open=1&url=.+$/)) {
+        if (!location.search.search(/open=1/) && !location.search.search(/url=/)) {
           return;
         }
-        var urlParam = location.search.match(/url=(.+)[&$]/);
+        var urlParam = location.search.match(/url=(.+)/);
         if (urlParam != null) {
           urlField.val(decodeURIComponent(urlParam[1]));
           self.copyURL();
