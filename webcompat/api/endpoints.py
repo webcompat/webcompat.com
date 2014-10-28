@@ -33,20 +33,6 @@ ISSUES_PATH = app.config['ISSUES_REPO_URI']
 REPO_PATH = ISSUES_PATH[:-7]
 
 
-@api.route('/issues')
-@cache.cached(timeout=300)
-def proxy_issues():
-    '''API endpoint to list all issues from GitHub.
-
-    Cached for 5 minutes.
-    '''
-    if g.user:
-        issues = github.raw_request('GET', 'repos/{0}'.format(ISSUES_PATH))
-    else:
-        issues = proxy_request('get')
-    return (issues.content, issues.status_code, get_headers(issues))
-
-
 @api.route('/issues/<int:number>')
 def proxy_issue(number):
     '''XHR endpoint to get issue data from GitHub.
@@ -71,6 +57,20 @@ def edit_issue(number):
     '''
     edit = proxy_request('patch', '/{0}'.format(number), data=request.data)
     return (edit.content, edit.status_code, {'content-type': JSON_MIME})
+
+
+@api.route('/issues')
+@cache.cached(timeout=300)
+def proxy_issues():
+    '''API endpoint to list all issues from GitHub.
+
+    Cached for 5 minutes.
+    '''
+    if g.user:
+        issues = github.raw_request('GET', 'repos/{0}'.format(ISSUES_PATH))
+    else:
+        issues = proxy_request('get')
+    return (issues.content, issues.status_code, get_headers(issues))
 
 
 @api.route('/issues/category/mine')
