@@ -90,7 +90,8 @@ def get_headers(response):
     '''
     headers = {'etag': response.headers.get('etag'),
                'cache-control': response.headers.get('cache-control'),
-               'content-type': JSON_MIME}
+               'content-type': JSON_MIME,
+               'link': response.headers.get('link')}
     return headers
 
 
