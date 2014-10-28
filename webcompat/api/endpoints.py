@@ -130,6 +130,58 @@ def get_issue_category(issue_category):
     return (issues.content, issues.status_code, get_headers(issues))
 
 
+@api.route('/issues/search')
+def get_search_results(query_string=None):
+    '''XHR endpoint to get results from GitHub's Search API.
+
+    We're specifically searching "issues" here, which seems to make the most
+    sense. Note that the rate limit is different for Search: 20 requests per
+    minute. We may want to restrict search to logged in users in the future.
+
+    This method can take a query_string argument, to be called from other
+    endpoints, or the query_string can be passed in via the Request object.
+
+    Not cached by us.
+    '''
+    search_uri = 'https://api.github.com/search/issues'
+    # TODO: handle sort and order parameters.
+    if query_string is None:
+        query_string = request.args.get('q')
+        # restrict results to the relevant repo.
+    query_string += " repo:{0}".format(REPO_PATH)
+    params = {'q': query_string}
+
+    if g.user:
+        request_headers = get_request_headers(g.request_headers)
+        results = github.raw_request('GET', 'search/issues', params=params,
+                                     headers=request_headers)
+    else:
+        results = proxy_request('get', params=params, uri=search_uri)
+    # The issues are returned in the items property of the response JSON, so
+    # throw everything else away.
+    json_response = json.loads(results.content)
+    if 'items' in json_response:
+        result = json.dumps(json_response['items'])
+    else:
+        result = results.content
+    return (result, results.status_code, get_headers(results))
+
+
+@api.route('/issues/search/untriaged')
+@cache.cached(timeout=120)
+def get_untriaged_from_search():
+    '''XHR endpoint to get "untriaged" issues from GitHub's Search API.
+
+    There is some overlap between /issues/category/untriaged as used on the
+    home page - but this endpoint returns paginated results paginated.
+    TODO: Unify that at some point.
+
+    Cached for 2 minutes, to save on Search API requests.
+    '''
+    query_string = '-label:contactready+-label:sitewait+-label:needsdiagnosis'
+    return get_search_results(query_string)
+
+
 @api.route('/issues/<int:number>/comments', methods=['GET', 'POST'])
 def proxy_comments(number):
     '''XHR endpoint to get issues comments from GitHub.
@@ -209,55 +261,3 @@ def get_rate_limit():
     else:
         rl = proxy_request('get', uri=rate_limit_uri)
     return rl.content
-
-
-@api.route('/issues/search')
-def get_search_results(query_string=None):
-    '''XHR endpoint to get results from GitHub's Search API.
-
-    We're specifically searching "issues" here, which seems to make the most
-    sense. Note that the rate limit is different for Search: 20 requests per
-    minute. We may want to restrict search to logged in users in the future.
-
-    This method can take a query_string argument, to be called from other
-    endpoints, or the query_string can be passed in via the Request object.
-
-    Not cached by us.
-    '''
-    search_uri = 'https://api.github.com/search/issues'
-    # TODO: handle sort and order parameters.
-    if query_string is None:
-        query_string = request.args.get('q')
-        # restrict results to the relevant repo.
-    query_string += " repo:{0}".format(REPO_PATH)
-    params = {'q': query_string}
-
-    if g.user:
-        request_headers = get_request_headers(g.request_headers)
-        results = github.raw_request('GET', 'search/issues', params=params,
-                                     headers=request_headers)
-    else:
-        results = proxy_request('get', params=params, uri=search_uri)
-    # The issues are returned in the items property of the response JSON, so
-    # throw everything else away.
-    json_response = json.loads(results.content)
-    if 'items' in json_response:
-        result = json.dumps(json_response['items'])
-    else:
-        result = results.content
-    return (result, results.status_code, get_headers(results))
-
-
-@api.route('/issues/search/untriaged')
-@cache.cached(timeout=120)
-def get_untriaged_from_search():
-    '''XHR endpoint to get "untriaged" issues from GitHub's Search API.
-
-    There is some overlap between /issues/category/untriaged as used on the
-    home page - but this endpoint returns paginated results paginated.
-    TODO: Unify that at some point.
-
-    Cached for 2 minutes, to save on Search API requests.
-    '''
-    query_string = '-label:contactready+-label:sitewait+-label:needsdiagnosis'
-    return get_search_results(query_string)
