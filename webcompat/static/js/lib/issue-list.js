@@ -198,7 +198,10 @@ issueList.IssueView = Backbone.View.extend({
     this.issues = new issueList.IssueCollection();
     this.fetchAndRenderIssues();
 
+    // set up event listeners.
     issueList.events.on('issues:update', _.bind(this.updateIssues, this));
+    issueList.events.on('paginate:next', _.bind(this.requestNextPage, this));
+    issueList.events.on('paginate:previous', _.bind(this.requestPreviousPage, this));
   },
   template: _.template($('#issuelist-issue-tmpl').html()),
   fetchAndRenderIssues: function() {
@@ -209,18 +212,38 @@ issueList.IssueView = Backbone.View.extend({
   },
   render: function(issues) {
     this.$el.html(this.template({
-      //can deal with "show N issues" either manually,
-      //or request paginated results with N per page.
-      //former more work, latter more API requests
       issues: issues.toJSON()
     }));
     return this;
   },
   labelSearch: function(e) {
+    // clicking on a label in the issues view should trigger a
+    // "search:update" event to populate the view with search results
+    // for the given label.
     var labelFilter = 'label:' + $(e.target).text();
     issueList.events.trigger('search:update', labelFilter);
     issueList.events.trigger('issues:update', {query: labelFilter});
     e.preventDefault();
+  },
+  requestNextPage: function() {
+    var newUrl;
+    if (this.issues.getNextPageNumber()) {
+      // chop off the last character, which is the page number
+      // TODO: this feels gross. ideally we should get the URL from the
+      // link header and send that to an API endpoint which then requests
+      // it from GitHub.
+      newUrl = this.issues.url.slice(0,-1) + this.issues.getNextPageNumber();
+      this.issues.url = newUrl;
+      this.fetchAndRenderIssues();
+    }
+  },
+  requestPreviousPage: function() {
+    var newUrl;
+    if (this.issues.getPreviousPageNumber()) {
+      newUrl = this.issues.url.slice(0,-1) + this.issues.getPreviousPageNumber();
+      this.issues.url = newUrl;
+      this.fetchAndRenderIssues();
+    }
   },
   updateIssues: function(category) {
     // depending on what category was clicked (or if a search came in),
