@@ -61,12 +61,17 @@ def edit_issue(number):
 
 @api.route('/issues')
 def proxy_issues():
-    '''API endpoint to list all issues from GitHub.
+    '''API endpoint to list all issues from GitHub.'''
+    if request.args.get('page'):
+        params = {'page': request.args.get('page')}
+    else:
+        params=None
 
     if g.user:
-        issues = github.raw_request('GET', 'repos/{0}'.format(ISSUES_PATH))
+        issues = github.raw_request('GET', 'repos/{0}'.format(ISSUES_PATH),
+                                    params=params)
     else:
-        issues = proxy_request('get')
+        issues = proxy_request('get', params=params)
     return (issues.content, issues.status_code, get_headers(issues))
 
 
