@@ -5,11 +5,6 @@
 var issueList = issueList || {};
 issueList.events = _.extend({},Backbone.Events);
 
-issueList.IssueCollection = Backbone.Collection.extend({
-  model: issueList.Issue,
-  url: '/api/issues'
-});
-
 issueList.DropdownView = Backbone.View.extend({
   events: {
     'click .js-dropdown-toggle': 'openDropdown',

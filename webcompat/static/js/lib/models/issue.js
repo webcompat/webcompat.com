@@ -114,3 +114,32 @@
 });
 
 issueList.Issue = issues.Issue.extend({});
+
+issueList.IssueCollection = Backbone.Collection.extend({
+  model: issueList.Issue,
+  url: '/api/issues?page=1',
+  parse: function(response, jqXHR) {
+    this.linkHeader = jqXHR.xhr.getResponseHeader('Link');
+    return response;
+  },
+  getRelValue: function(header, relation) {
+    // we only get the page number, rather than the link href, becuase we still
+    // need to proxy requests between our server and GitHub's.
+    var re = new RegExp('&page=(\\d)>;\\srel=\\"' + relation + '\\"');
+    var rel;
+    if (rel = header.match(re)) {
+      return rel[1];
+    } else {
+      return null;
+    }
+  },
+  getLastPageNumber: function() {
+    return this.getRelValue(this.linkHeader, 'last');
+  },
+  getNextPageNumber: function() {
+    return this.getRelValue(this.linkHeader, 'next');
+  },
+  getPreviousPageNumber: function() {
+    return this.getRelValue(this.linkHeader, 'prev');
+  }
+});
