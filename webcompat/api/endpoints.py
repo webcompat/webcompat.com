@@ -60,12 +60,9 @@ def edit_issue(number):
 
 
 @api.route('/issues')
-@cache.cached(timeout=300)
 def proxy_issues():
     '''API endpoint to list all issues from GitHub.
 
-    Cached for 5 minutes.
-    '''
     if g.user:
         issues = github.raw_request('GET', 'repos/{0}'.format(ISSUES_PATH))
     else:
