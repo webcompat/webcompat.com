@@ -208,6 +208,7 @@ issueList.IssueView = Backbone.View.extend({
     var headers = {headers: {'Accept': 'application/json'}};
     this.issues.fetch(headers).success(_.bind(function() {
       this.render(this.issues);
+      this.initPaginationLinks();
     }, this)).error(function(e){console.log(e);});
   },
   render: function(issues) {
@@ -215,6 +216,15 @@ issueList.IssueView = Backbone.View.extend({
       issues: issues.toJSON()
     }));
     return this;
+  },
+  initPaginationLinks: function() {
+    // if either the next or previous page numbers are null
+    // disable the link by setting
+    if (this.issues.getNextPageNumber() == null) {
+      $('.js-pagination-next').toggleClass('is-disabled');
+    } else if (this.issues.getPreviousPageNumber() == null) {
+      $('.js-pagination-previous').toggleClass('is-disabled');
+    }
   },
   labelSearch: function(e) {
     // clicking on a label in the issues view should trigger a
