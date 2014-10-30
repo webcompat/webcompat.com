@@ -18,6 +18,9 @@
 .wc-pos-static {
   position:static;
 }
+.wc-margin-bottom {
+  margin-bottom: 1em;
+}
 
 /*---------- Utilities Layout ----------*/
 
