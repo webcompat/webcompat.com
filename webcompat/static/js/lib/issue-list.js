@@ -76,14 +76,17 @@ issueList.FilterView = Backbone.View.extend({
     this.initSubViews();
   },
   initSubViews: function() {
+    /* Commenting out for now, see Issues #312, #266
     this.dropdown = new issueList.DropdownView({
       model: this.model
     });
+    */
   },
   template: _.template($('#issuelist-filter-tmpl').html()),
   render: function() {
     this.$el.html(this.template(this.model.toJSON()));
-    this.dropdown.setElement(this.$el.find('.js-dropdown-wrapper')).render();
+    /* Commenting out for now, see Issues #312, #266
+    /* this.dropdown.setElement(this.$el.find('.js-dropdown-wrapper')).render(); */
     return this;
   },
   toggleFilter: function(e) {
@@ -154,18 +157,20 @@ issueList.SortingView = Backbone.View.extend({
     this.initSubViews();
   },
   initSubViews: function() {
+    /* Commenting out for now, see Issues #312, #266
     this.paginationDropdown = new issueList.DropdownView({
       model: this.paginationModel
     });
     this.sortDropdown = new issueList.DropdownView({
       model: this.sortModel
-    });
+    }); */
   },
   template: _.template($('#issuelist-sorting-tmpl').html()),
   render: function() {
     this.$el.html(this.template());
+    /* Commenting out for now, see Issues #312, #266
     this.paginationDropdown.setElement(this.$el.find('.js-dropdown-pagination')).render();
-    this.sortDropdown.setElement(this.$el.find('.js-dropdown-sort')).render();
+    this.sortDropdown.setElement(this.$el.find('.js-dropdown-sort')).render(); */
     return this;
   }
 });
