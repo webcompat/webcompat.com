@@ -96,6 +96,11 @@
     font-size:1em;
     margin-top:.2em;
   }
+    .IssueList-pagination-link.is-disabled {
+      cursor:inherit;
+      opacity:.6;
+      text-decoration:none;
+    }
   .IssueList-pagination-link + .IssueList-pagination-link {
     margin-left:1em;
   }
