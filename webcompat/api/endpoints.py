@@ -181,17 +181,14 @@ def get_search_results(query_string=None):
 
 
 @api.route('/issues/search/untriaged')
-@cache.cached(timeout=120)
 def get_untriaged_from_search():
     '''XHR endpoint to get "untriaged" issues from GitHub's Search API.
 
     There is some overlap between /issues/category/untriaged as used on the
     home page - but this endpoint returns paginated results paginated.
     TODO: Unify that at some point.
-
-    Cached for 2 minutes, to save on Search API requests.
     '''
-    query_string = '-label:contactready+-label:sitewait+-label:needsdiagnosis'
+    query_string = 'state:open -label:contactready -label:sitewait -label:needsdiagnosis'
     return get_search_results(query_string)
 
 
