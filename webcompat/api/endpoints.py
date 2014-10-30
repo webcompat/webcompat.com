@@ -102,22 +102,30 @@ def get_issue_category(issue_category):
     * sitewait
     Cached for 5 minutes.
     '''
+    params = {}
     category_list = ['contactready', 'needsdiagnosis', 'sitewait']
+    issues_path = 'repos/{0}'.format(ISSUES_PATH)
+
+    if request.args.get('page'):
+        params.update({'page': request.args.get('page')})
+
     if issue_category in category_list:
+        params.update({'labels': issue_category})
         if g.user:
-            path = 'repos/{0}?labels={1}'.format(ISSUES_PATH, issue_category)
-            issues = github.raw_request('GET', path)
+            issues = github.raw_request('GET', issues_path, params=params)
         else:
-            issues = proxy_request('get', '?labels={0}'.format(issue_category))
+            issues = proxy_request('get', params=params)
     elif issue_category == 'closed':
+        params.update({'state': 'closed'})
         if g.user:
-            path = 'repos/{0}?state=closed'.format(ISSUES_PATH)
-            issues = github.raw_request('GET', path)
+            issues = github.raw_request('GET', issues_path, params=params)
         else:
-            issues = proxy_request('get', '?state=closed')
+            issues = proxy_request('get', params=params)
+    # Note that 'untriaged' here is primarily used on the hompage.
+    # For paginated results on the /issues page, see /issues/search/untriaged.
     elif issue_category == 'untriaged':
         if g.user:
-            issues = github.raw_request('GET', 'repos/{0}'.format(ISSUES_PATH))
+            issues = github.raw_request('GET', issues_path)
         else:
             issues = proxy_request('get')
         # Do not send random JSON to filter_untriaged
