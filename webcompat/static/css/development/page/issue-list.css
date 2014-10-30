@@ -90,6 +90,7 @@
 }
   .IssueList-pagination-link {
     display:inline-block;
+    cursor:pointer;
     vertical-align:middle;
     padding: 0.7em 0px;
     font-weight:700;
