@@ -219,12 +219,20 @@ issueList.IssueView = Backbone.View.extend({
   },
   initPaginationLinks: function() {
     // if either the next or previous page numbers are null
-    // disable the link by setting
-    if (this.issues.getNextPageNumber() == null) {
-      $('.js-pagination-next').toggleClass('is-disabled');
-    } else if (this.issues.getPreviousPageNumber() == null) {
-      $('.js-pagination-previous').toggleClass('is-disabled');
-    }
+    // disable the buttons and add .is-disabled classes.
+    var nextButton = $('.js-pagination-next');
+    var prevButton = $('.js-pagination-previous');
+    var isLastPage = _.bind(function() {
+      return this.issues.getNextPageNumber() == null;
+    }, this);
+    var isFirstPage = _.bind(function() {
+      return this.issues.getPreviousPageNumber() == null;
+    }, this);
+
+    nextButton.prop('disabled', isLastPage())
+              .toggleClass('is-disabled', isLastPage());
+    prevButton.prop('disabled', isFirstPage())
+              .toggleClass('is-disabled', isFirstPage());
   },
   labelSearch: function(e) {
     // clicking on a label in the issues view should trigger a
