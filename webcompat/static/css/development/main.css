@@ -18,6 +18,7 @@
 @import "components/form.css";
 @import "components/issue-item.css";
 @import "components/dropdown.css";
+@import "../../../../node_modules/cssrecipes-reset/index.css";
 /*----------Layout----------*/
 @import "layout/body.css";
 @import "layout/header.css";
