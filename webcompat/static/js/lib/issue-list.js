@@ -276,13 +276,13 @@ issueList.IssueView = Backbone.View.extend({
     // note: if query is the empty string, it will load all issues from the
     // '/api/issues' endpoint (which I think we want).
     if (category && category.query) {
-      this.issues.url = '/api/issues/search?q=' + category.query;
+      this.issues.url = '/api/issues/search?q=' + category.query + '&page=1';
     } else if (_.contains(labelCategories, category)) {
-      this.issues.url = '/api/issues/category/' + category;
+      this.issues.url = '/api/issues/category/' + category + '?page=1';
     } else if (category === "untriaged") {
-      this.issues.url = '/api/issues/search/untriaged';
+      this.issues.url = '/api/issues/search/untriaged?page=1';
     } else {
-      this.issues.url = '/api/issues';
+      this.issues.url = '/api/issues?page=1';
     }
     this.fetchAndRenderIssues();
   }
