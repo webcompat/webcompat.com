@@ -153,11 +153,16 @@ def get_search_results(query_string=None):
     '''
     search_uri = 'https://api.github.com/search/issues'
     # TODO: handle sort and order parameters.
+    params = {}
+
     if query_string is None:
         query_string = request.args.get('q')
-        # restrict results to the relevant repo.
+        # restrict results to our repo.
     query_string += " repo:{0}".format(REPO_PATH)
-    params = {'q': query_string}
+    params.update({'q': query_string})
+
+    if request.args.get('page'):
+        params.update({'page': request.args.get('page')})
 
     if g.user:
         request_headers = get_request_headers(g.request_headers)
