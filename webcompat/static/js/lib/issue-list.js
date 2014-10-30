@@ -267,12 +267,11 @@ issueList.IssueView = Backbone.View.extend({
     // depending on what category was clicked (or if a search came in),
     // update the collection instance url property and fetch the issues.
     var labelCategories = ['closed', 'contactready', 'needsdiagnosis', 'sitewait'];
-    var query;
 
     // note: if query is the empty string, it will load all issues from the
     // '/api/issues' endpoint (which I think we want).
-    if (query = category.query) {
-      this.issues.url = '/api/issues/search?q=' + query;
+    if (category && category.query) {
+      this.issues.url = '/api/issues/search?q=' + category.query;
     } else if (_.contains(labelCategories, category)) {
       this.issues.url = '/api/issues/category/' + category;
     } else if (category === "untriaged") {
