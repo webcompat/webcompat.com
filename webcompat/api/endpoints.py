@@ -91,7 +91,6 @@ def user_issues():
 
 
 @api.route('/issues/category/<issue_category>')
-@cache.cached(timeout=300)
 def get_issue_category(issue_category):
     '''Return all issues for a specific category.
 
@@ -100,7 +99,6 @@ def get_issue_category(issue_category):
     * contactready
     * needsdiagnosis
     * sitewait
-    Cached for 5 minutes.
     '''
     params = {}
     category_list = ['contactready', 'needsdiagnosis', 'sitewait']
