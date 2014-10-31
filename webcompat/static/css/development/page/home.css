@@ -45,7 +45,8 @@
   }
 }
 #maintitle h1 {
-  text-shadow: -1px -1px 0px rgba(0,0,0,.25);
+  /*text-shadow: -1px -1px 0px rgba(0,0,0,.25);*/
+  color:#414042;
 }
 
 @media (--viewport-770px) {
@@ -58,7 +59,7 @@
   position: relative;
   top: 1em;
   font-size: 2em;
-  color: #fff;
+  color: #414042;
   text-decoration: none !important;
   transition: top 100ms ease-out 0ms;
 }
