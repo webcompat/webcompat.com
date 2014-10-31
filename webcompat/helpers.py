@@ -92,6 +92,13 @@ def get_headers(response):
                'cache-control': response.headers.get('cache-control'),
                'content-type': JSON_MIME,
                'link': response.headers.get('link')}
+
+    if 'X-RateLimit-Limit' in response.headers:
+        headers.update({'x-ratelimit-limit': response.headers.get('x-rateLimit-limit')})
+    if 'X-RateLimit-Remaining' in response.headers:
+        headers.update({'x-rateLimit-remaining': response.headers.get('x-rateLimit-remaining')})
+    if 'X-RateLimit-Reset' in response.headers:
+        headers.update({'X-RateLimit-Reset': response.headers.get('x-ratelimit-reset')})
     return headers
 
 
