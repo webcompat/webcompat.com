@@ -1,17 +1,17 @@
-<header id="feedback" class="header">
+<header class="wc-Navbar">
   <nav class="wc-content" role="navigation">
-    <div class="nav__section">
-      <a class="nav__link" href="/">
+    <div class="wc-Navbar-section wc-Navbar-section--left">
+      <a class="wc-Navbar-link" href="/">
         Home
       </a>
-    </div><!--
-    --><div class="nav__section nav__section--right">
+    </div>
+    <div class="wc-Navbar-section wc-Navbar-section--right">
     {% if not session.user_id %}
-      <a class="nav__link" href="{{ url_for('login') }}">Login</a>
+      <a class="wc-Navbar-link" href="{{ url_for('login') }}">Login</a>
     {% else %}
-      <a class="nav__link" href="{{ url_for('logout') }}">Logout</a>
+      <a class="wc-Navbar-link" href="{{ url_for('logout') }}">Logout</a>
       {% if session.user_id and session.avatar_url %}
-      <img class="nav__avatar" src=" {{ session.avatar_url }}s=40">
+      <img class="wc-Navbar-avatar" src=" {{ session.avatar_url }}s=40">
       {% endif %}
     {% endif %}
     </div>

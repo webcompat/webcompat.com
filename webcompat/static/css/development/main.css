@@ -6,6 +6,7 @@
 @import "vendor/prism.css";
 
 /*----------Component----------*/
+@import "components/navbar.css";
 @import "components/button.css";
 @import "components/comment.css";
 @import "components/label-editor.css";
@@ -21,7 +22,6 @@
 @import "../../../../node_modules/cssrecipes-reset/index.css";
 /*----------Layout----------*/
 @import "layout/body.css";
-@import "layout/header.css";
 @import "layout/footer.css";
 @import "layout/utilities.css";
 
