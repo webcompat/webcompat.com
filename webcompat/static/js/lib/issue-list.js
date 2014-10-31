@@ -107,6 +107,9 @@ issueList.FilterView = Backbone.View.extend({
 
 issueList.SearchView = Backbone.View.extend({
   el: $('.js-issuelist-search'),
+  events: {
+    'keydown': 'checkIfEmpty'
+  },
   keyboardEvents: {
     'enter': 'doSearch'
   },
@@ -126,8 +129,24 @@ issueList.SearchView = Backbone.View.extend({
   updateSearchQuery: function(data) {
     this.input.val(data);
   },
+  _isEmpty: true,
+  checkIfEmpty: _.debounce(function(e) {
+    if (e.target.value.length) {
+      this._isEmpty = false;
+    }
+
+    // if the user backspaced to no value, re-render default issues view.
+    if (e.keyCode == 8) {
+      if (!e.target.value) {
+        this._isEmpty = true;
+        issueList.events.trigger('issues:update');
+      }
+    }
+  }, 150),
   doSearch: function(e) {
-    issueList.events.trigger('issues:update', {query: e.target.value});
+    if (!this._isEmpty) {
+      issueList.events.trigger('issues:update', {query: e.target.value});
+    }
   }
 });
 
