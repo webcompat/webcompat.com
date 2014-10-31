@@ -110,9 +110,6 @@ issueList.SearchView = Backbone.View.extend({
   events: {
     'keydown': 'checkIfEmpty'
   },
-  keyboardEvents: {
-    'enter': 'doSearch'
-  },
   initialize: function() {
     issueList.events.on('search:update', _.bind(this.updateSearchQuery, this));
   },
@@ -130,9 +127,16 @@ issueList.SearchView = Backbone.View.extend({
     this.input.val(data);
   },
   _isEmpty: true,
+  _currentSearch: null,
   checkIfEmpty: _.debounce(function(e) {
     if (e.target.value.length) {
       this._isEmpty = false;
+      // don't search if nothing has changed
+      // (or user just added whitespace)
+      if ($.trim(e.target.value) != this._currentSearch) {
+        this._currentSearch = $.trim(e.target.value);
+        this.doSearch(this._currentSearch);
+      }
     }
 
     // if the user backspaced to no value, re-render default issues view.
@@ -142,12 +146,12 @@ issueList.SearchView = Backbone.View.extend({
         issueList.events.trigger('issues:update');
       }
     }
-  }, 150),
-  doSearch: function(e) {
+  }, 250),
+  doSearch: _.debounce(function(value) {
     if (!this._isEmpty) {
-      issueList.events.trigger('issues:update', {query: e.target.value});
+      issueList.events.trigger('issues:update', {query: value});
     }
-  }
+  }, 500)
 });
 
 issueList.SortingView = Backbone.View.extend({
