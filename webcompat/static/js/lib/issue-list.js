@@ -133,14 +133,14 @@ issueList.SearchView = Backbone.View.extend({
       this._isEmpty = false;
       // don't search if nothing has changed
       // (or user just added whitespace)
-      if ($.trim(e.target.value) != this._currentSearch) {
+      if ($.trim(e.target.value) !== this._currentSearch) {
         this._currentSearch = $.trim(e.target.value);
         this.doSearch(this._currentSearch);
       }
     }
 
     // if the user backspaced to no value, re-render default issues view.
-    if (e.keyCode == 8) {
+    if (e.keyCode === 8) {
       if (!e.target.value) {
         this._isEmpty = true;
         issueList.events.trigger('issues:update');
