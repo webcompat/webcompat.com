@@ -56,12 +56,13 @@
 /*--------Flash Messages---------*/
 .flash {
   position: absolute;
+  font-size: var(--base-font-size);
+  padding: 1.25em 0.5em;
   top: 0;
   left:0;
   right: 0;
   opacity: 0.8;
   background-color: white;
-  padding: 0.5em 1em;
   text-align: center;
   color: #000;
 }
