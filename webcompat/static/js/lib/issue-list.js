@@ -237,7 +237,28 @@ issueList.IssueView = Backbone.View.extend({
     this.issues.fetch(headers).success(_.bind(function() {
       this.render(this.issues);
       this.initPaginationLinks();
-    }, this)).error(function(e){console.log(e);});
+    }, this)).error(function(e){
+      var message;
+      var timeout;
+      if (e.responseJSON) {
+        message = e.responseJSON.message;
+        timeout = e.responseJSON.timeout * 1000;
+      } else {
+        message = 'Something went wrong!';
+        timeout = 3000;
+      }
+
+      $('<div></div>', {
+        'class': 'flash error',
+        'text': message
+      }).appendTo('body');
+
+      setTimeout(function(){
+        var __flashmsg = $('.flash');
+        if (__flashmsg.length) {__flashmsg.fadeOut();}
+        // Set the timeout for the length of the API ratelimit reset
+      }, timeout);
+    });
   },
   render: function(issues) {
     this.$el.html(this.template({
