@@ -21,6 +21,7 @@
 @import "components/issue-item.css";
 @import "components/dropdown.css";
 @import "../../../../node_modules/cssrecipes-reset/index.css";
+@import "components/flash-message.css";
 /*----------Layout----------*/
 @import "layout/body.css";
 @import "layout/utilities.css";

@@ -185,12 +185,12 @@ issues.MainView = Backbone.View.extend({
           }
         }).error(function() {
           $('<div></div>', {
-            'class': 'flash error',
+            'class': 'wc-FlashMessage wc-FlashMessage--error',
             'text': 'There was an error retrieving issue comments.'
           }).appendTo('body');
 
           setTimeout(function(){
-            var __flashmsg = $('.flash');
+            var __flashmsg = $('.wc-FlashMessage');
             if (__flashmsg.length) {__flashmsg.fadeOut();}
           }, 2000);
         });
@@ -201,7 +201,7 @@ issues.MainView = Backbone.View.extend({
         return;
       } else {
         $('<div></div>', {
-          'class': 'flash error',
+          'class': 'wc-FlashMessage wc-FlashMessage--error',
           'text': 'There was an error retrieving the issue.'
         }).appendTo('body');
       }
