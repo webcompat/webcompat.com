@@ -65,7 +65,7 @@ def proxy_issues():
     if request.args.get('page'):
         params = {'page': request.args.get('page')}
     else:
-        params=None
+        params = None
 
     if g.user:
         issues = github.raw_request('GET', 'repos/{0}'.format(ISSUES_PATH),
@@ -188,7 +188,8 @@ def get_untriaged_from_search():
     home page - but this endpoint returns paginated results paginated.
     TODO: Unify that at some point.
     '''
-    query_string = 'state:open -label:contactready -label:sitewait -label:needsdiagnosis'
+    query_string = ('state:open -label:contactready '
+                    '-label:sitewait -label:needsdiagnosis')
     return get_search_results(query_string)
 
 
