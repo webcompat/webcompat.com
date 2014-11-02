@@ -22,6 +22,7 @@
 @import "components/dropdown.css";
 @import "../../../../node_modules/cssrecipes-reset/index.css";
 @import "components/flash-message.css";
+@import "components/hero.css";
 /*----------Layout----------*/
 @import "layout/body.css";
 @import "layout/utilities.css";
