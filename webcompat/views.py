@@ -243,6 +243,9 @@ def cool_your_jets(err):
     '''Error handler that comes from hitting our API rate limits.
 
     Sent by Flask Limiter.
+
+    error_data.message is displayed in the flash message
+    error_data.timeout determines how long until flash message disappears
     '''
     # TODO: determine actual time left.
     # TODO: send message with login link.
