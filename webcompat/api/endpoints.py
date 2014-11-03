@@ -13,13 +13,14 @@ from flask import abort
 from flask import Blueprint
 from flask.ext.github import GitHubError
 from flask import g
-from flask import redirect
 from flask import request
 from flask import session
+
 
 from webcompat import app
 from webcompat import cache
 from webcompat import github
+from webcompat import limiter
 from webcompat.helpers import get_headers
 from webcompat.helpers import get_request_headers
 from webcompat.helpers import get_user_info

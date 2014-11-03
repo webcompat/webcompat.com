@@ -31,6 +31,11 @@ else:
     CACHE_TYPE = 'filesystem'
     CACHE_DIR = '/tmp/cache/staging.webcompat'
 
+# Flask Limiter settings
+# See http://flask-limiter.readthedocs.org/en/latest/#configuration
+RATELIMIT_STORAGE_URL = 'memory://'
+RATELIMIT_STRATEGY = 'moving-window'
+
 DEBUG = False
 
 if not PRODUCTION:
