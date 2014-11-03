@@ -186,8 +186,8 @@ def get_search_results(query_string=None):
                                      headers=request_headers)
     else:
         results = proxy_request('get', params=params, uri=search_uri)
-    # The issues are returned in the items property of the response JSON, so
-    # throw everything else away.
+    # The issues are returned in the items property of the response JSON,
+    # so throw everything else away.
     json_response = json.loads(results.content)
     if 'items' in json_response:
         result = json.dumps(json_response['items'])
@@ -281,6 +281,7 @@ def get_rate_limit():
     Will display for the logged in user, or webcompat-bot if not logged in.
     See https://developer.github.com/v3/rate_limit/.
     '''
+
     rate_limit_uri = 'https://api.github.com/rate_limit'
     if g.user:
         request_headers = get_request_headers(g.request_headers)
