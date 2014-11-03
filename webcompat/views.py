@@ -19,6 +19,7 @@ from flask import url_for
 from form import AUTH_REPORT
 from form import IssueForm
 from form import PROXY_REPORT
+from helpers import format_delta_seconds
 from helpers import get_browser
 from helpers import get_browser_name
 from helpers import get_os
@@ -236,6 +237,21 @@ def not_found(err):
     return render_template('error.html',
                            error_code=404,
                            error_message=message), 404
+
+
+@app.errorhandler(429)
+def cool_your_jets(err):
+    '''Error handler that comes from hitting our API rate limits.
+
+    Sent by Flask Limiter.
+    '''
+    # TODO: determine actual time left.
+    # TODO: send message with login link.
+    time_left = 60
+    message = ('Cool your jets! Please wait {0} seconds before making'
+               ' another search.').format(time_left)
+    error_data = {'message': message, 'timeout': 5}
+    return (json.dumps(error_data), 429, {'content-type': 'application/json'})
 
 
 @app.errorhandler(500)
