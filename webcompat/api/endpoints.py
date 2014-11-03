@@ -34,6 +34,11 @@ ISSUES_PATH = app.config['ISSUES_REPO_URI']
 REPO_PATH = ISSUES_PATH[:-7]
 
 
+def get_username():
+  get_user_info()
+  return session.get('username', 'proxy-user')
+
+
 @api.route('/issues/<int:number>')
 def proxy_issue(number):
     '''XHR endpoint to get issue data from GitHub.
@@ -140,17 +145,27 @@ def get_issue_category(issue_category):
 
 
 @api.route('/issues/search')
+@limiter.limit('30/minute',
+               key_func=lambda: get_username())
 def get_search_results(query_string=None):
     '''XHR endpoint to get results from GitHub's Search API.
 
     We're specifically searching "issues" here, which seems to make the most
-    sense. Note that the rate limit is different for Search: 20 requests per
-    minute. We may want to restrict search to logged in users in the future.
+    sense. Note that the rate limit is different for Search: 30 requests per
+    minute. Non-logged in users will probably not have a great experience,
+    so we should find a way to encourage them to log in.
+
+    key_func is used as a filter to determine how to enforce rate limiting,
+    based on username. This is done so we can "share" a rate limit for
+    non-logged in users.
+
+    If a user hits the rate limit, the Flask Limiter extension will send a
+    429. See @app.error_handler(429) in views.py.
 
     This method can take a query_string argument, to be called from other
     endpoints, or the query_string can be passed in via the Request object.
 
-    Not cached by us.
+    Not cached.
     '''
     search_uri = 'https://api.github.com/search/issues'
     # TODO: handle sort and order parameters.
