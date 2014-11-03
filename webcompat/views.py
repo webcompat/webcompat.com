@@ -19,7 +19,6 @@ from flask import url_for
 from form import AUTH_REPORT
 from form import IssueForm
 from form import PROXY_REPORT
-from helpers import format_delta_seconds
 from helpers import get_browser
 from helpers import get_browser_name
 from helpers import get_os
