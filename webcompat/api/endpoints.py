@@ -22,6 +22,7 @@ from webcompat import cache
 from webcompat import github
 from webcompat import limiter
 from webcompat.helpers import get_headers
+from webcompat.helpers import get_request_headers
 from webcompat.helpers import get_user_info
 from webcompat.issues import filter_untriaged
 from webcompat.issues import proxy_request
@@ -45,6 +46,7 @@ def proxy_issue(number):
     either as an authed user, or as one of our proxy bots.
     '''
     if g.user:
+        request_headers = get_request_headers(g.request_headers)
         issue = github.raw_request('GET', 'repos/{0}/{1}'.format(
             ISSUES_PATH, number), headers=request_headers)
     else:
@@ -89,7 +91,8 @@ def user_issues():
     path = 'repos/{0}?creator={1}&state=all'.format(
         ISSUES_PATH, session['username']
     )
-    issues = github.raw_request('GET', path)
+    request_headers = get_request_headers(g.request_headers)
+    issues = github.raw_request('GET', path, headers=request_headers)
     return (issues.content, issues.status_code, get_headers(issues))
 
 
@@ -225,6 +228,7 @@ def proxy_comments(number):
             return (':(', e.response.status_code)
     else:
         if g.user:
+            request_headers = get_request_headers(g.request_headers)
             comments = github.raw_request(
                 'GET',
                 'repos/{0}/{1}/comments'.format(
@@ -280,7 +284,8 @@ def get_rate_limit():
 
     rate_limit_uri = 'https://api.github.com/rate_limit'
     if g.user:
-        rl = github.raw_request('GET', 'rate_limit')
+        request_headers = get_request_headers(g.request_headers)
+        rl = github.raw_request('GET', 'rate_limit', headers=request_headers)
     else:
         rl = proxy_request('get', uri=rate_limit_uri)
     return rl.content
