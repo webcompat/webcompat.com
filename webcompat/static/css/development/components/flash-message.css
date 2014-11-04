@@ -1,0 +1,25 @@
+/*----------Flash message ----------*/
+
+/* main class */
+.wc-FlashMessage {
+  position: absolute;
+  display:none;
+  font-size: var(--base-font-size);
+  padding: 1.25em 0.5em;
+  top: 0;
+  left:0;
+  right: 0;
+  opacity: 0.8;
+  background-color: white;
+  text-align: center;
+  color: #000;
+}
+  /* states */
+  .wc-FlashMessage.is-active {
+    display:block;
+  }
+  /* error */
+  .FlashMessage--error {
+    color: #fff;
+    background-color: rgba(255, 89, 89, 0.92)
+  }

@@ -6,20 +6,25 @@
 @import "vendor/prism.css";
 
 /*----------Component----------*/
+@import "components/navbar.css";
+@import "components/footer.css";
 @import "components/button.css";
 @import "components/comment.css";
-@import "components/labels.css";
+@import "components/label-editor.css";
 @import "components/responsive.css";
 @import "../../../../node_modules/suitcss-components-grid/index.css";
-@import "components/Grid.css";
+@import "components/grid.css";
 @import "../../../../node_modules/suitcss-utils-size/index.css";
 @import "../../../../node_modules/suitcss-utils-display/index.css";
 @import "../../../../node_modules/suitcss-utils-align/index.css";
 @import "components/form.css";
+@import "components/issue-item.css";
+@import "components/dropdown.css";
+@import "../../../../node_modules/cssrecipes-reset/index.css";
+@import "components/flash-message.css";
+@import "components/hero.css";
 /*----------Layout----------*/
 @import "layout/body.css";
-@import "layout/header.css";
-@import "layout/footer.css";
 @import "layout/utilities.css";
 
 /*----------page----------*/
@@ -28,3 +33,4 @@
 @import "page/static.css";
 @import "page/contributors.css";
 @import "page/about.css";
+@import "page/issue-list.css"

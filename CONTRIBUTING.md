@@ -60,12 +60,25 @@ project.
 
 ## Submission Guidelines
 
-All code contributions should come in the form of a [pull request](https://help.github.com/articles/creating-a-pull-request), as a topic branch. You'll probably want to [set up a local development environment](#working-environment-setup) to get that far.
+All code contributions should come in the form of a [pull request](https://help.github.com/articles/creating-a-pull-request), as a topic branch. 
 
 * Have a quick search through existing issues and pull requests so you don't waste any of your time.
-* Make your changes in a new branch
 
-	`git checkout -b name-of-fix-branch master`
+* Fork repository 
+
+![master](http://f.cl.ly/items/1E3f0A0I2A2b3T2L2I2c/forked.png)
+
+You'll probably want to [set up a local development environment](#working-environment-setup) to get that far.
+
+* Make your changes in a new branch
+  
+  `git remote add upstream https://github.com/webcompat/webcompat.com.git`
+
+  `git fetch upstream`
+  
+  `git checkout upstream/dev.webcompat.com`
+
+  `git checkout -b name-of-fix-branch`
 
 * Create your patch; commit your changes
 
@@ -128,8 +141,29 @@ You will get in return the list of mistakes. Some of the basics recommendations 
 When in doubt, follow the conventions you see used in the source already.
 
 ### CSS
+We use cssnext as a tool for compiling css
 
-@@something to write by magsout@@
+````
+This is a CSS transpiler (CSS4+ to CSS3) that allows you to use tomorrow's CSS syntax today. It transforms CSS specs that are not already implemented in popular browsers into more compatible CSS.
+```
+More info here : https://github.com/cssnext/cssnext
+
+#### Naming conventions
+ 
+ We use a very simple syntax based on BEM and it looks like:
+  - ComponentName
+  - ComponentName--modifierName
+  - ComponentName-descendantName
+  - ComponentName.is-stateOfComponent
+
+#### CSS and JS
+All classes that depend on javascript are prefixed by js-* . These classes are handled by JavaScript, no styles are applied.
+
+#### Folder and file
+The main stylesheet is main.css. There are @import statements to all other files, which are stored in the folder: Components, Page, layout, vendor.
+
+#### Framework, plugin
+We do not use frameworks. However we use libraries, such suitcss-components-grid, suitcss-utils-display.
 
 ### Javascript
 
@@ -150,7 +184,7 @@ We use [Grunt](http://gruntjs.com/) as a task runner to perform certain things (
 
 ``` bash
 # clone the repo
-git clone git@github.com:webcompat/webcompat.com.git
+git clone git@github.com:username/webcompat.com.git
 # change to directory
 cd webcompat.com
 # initializing project
@@ -171,7 +205,7 @@ cd webcompat.com
 
 ``` bash
 # clone the repo
-git clone git@github.com:webcompat/webcompat.com.git
+git clone git@github.com:username/webcompat.com.git
 # change to directory
 cd webcompat.com
 # set up virtual environment

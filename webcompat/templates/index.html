@@ -1,11 +1,14 @@
 {%- extends "layout.html" -%}
 {%- block body -%}
 {% include "topbar.html" %}
-<div id="hero">
-  <div class="wc-content wc-home">
-    <div id="maintitle">
-      <h1>Bug reporting <br>for the internet.</h1>
-      <a id="report-bug" class="closed" href="{{ url_for("index") }}">Report bug<span class="icon icon-arrow-right"></span></a>
+<div class="wc-Hero">
+  <div class="wc-content">
+    <div class="wc-Hero-section wc-Hero-section--left wc-Hero-section--home ">
+      <h1 class="wc-Hero-title">Bug reporting <br>for the internet.</h1>
+      <a id="report-bug" class="wc-Hero-link closed" href="{{ url_for("index") }}">Report bug<span class="wc-Hero-link-icon icon icon-arrow-right"></span></a>
+    </div>
+    <div class="wc-Hero-section wc-Hero-section--right">
+      {% include "shared/LightbulbwithBug.html" %}
     </div>
   </div>
 </div>
@@ -94,6 +97,7 @@
 {%- if config.PRODUCTION -%}
 <script src="{{ url_for('static', filename='js/diagnose.min.js') }}"></script>
 {%- else -%}
+<script src="{{ url_for('static', filename='js/lib/models/issue.js') }}"></script>
 <script src="{{ url_for('static', filename='js/lib/diagnose.js') }}"></script>
 {%- endif -%}
 {%- if session.user_id %}

@@ -10,7 +10,7 @@ function HomePage() {
   var self = {
     init: function() {
       reportButton.add(reportLink).on('click', self.toggleForm);
-      document.documentElement.className = 
+      document.documentElement.className =
         ('ontouchstart' in window || 'createTouch' in document) ?
         'touch' : 'no-touch';
       // Open the form if we've got open=1 param in the URL
@@ -25,13 +25,13 @@ function HomePage() {
         scrollTop: reportButton.offset().top + 5
       }, 250);
 
-      if (reportButton.hasClass('opened')) {
+      if (reportButton.hasClass('is-open')) {
         $('html, body').animate({
           scrollTop: 0
         }, 250);
       }
-      reportButton.toggleClass('closed')
-                  .toggleClass('opened');
+      reportButton.toggleClass('is-close')
+                  .toggleClass('is-open');
       formContainer.slideToggle(function() {
         formContainer.toggleClass('form-closed')
                      .toggleClass('form-opened');

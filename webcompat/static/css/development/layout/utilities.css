@@ -18,6 +18,9 @@
 .wc-pos-static {
   position:static;
 }
+.wc-margin-bottom {
+  margin-bottom: 1em;
+}
 
 /*---------- Utilities Layout ----------*/
 
@@ -48,22 +51,4 @@
 }
 .wc-hidden {
   display:none;
-}
-
-/*--------Flash Messages---------*/
-.flash {
-  position: absolute;
-  top: 0;
-  left:0;
-  right: 0;
-  opacity: 0.8;
-  background-color: white;
-  padding: 0.5em 1em;
-  text-align: center;
-  color: #000;
-}
-
-.error {
-  color: #fff;
-  background-color: rgba(255, 89, 89, 0.92)
 }

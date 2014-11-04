@@ -153,8 +153,10 @@ def index():
 
 @app.route('/issues')
 def show_issues():
-    '''Temporarily useless.'''
-    return redirect(url_for('index'), code=307)
+    '''Route to display global issues view.'''
+    if g.user:
+        get_user_info()
+    return render_template('issue-list.html')
 
 
 @app.route('/issues/<int:number>')
@@ -194,6 +196,7 @@ def show_rate_limit():
     return (render_template('ratelimit.txt', rl=rl), 200,
             {"content-type": "text/plain"})
 
+
 @app.route('/about')
 def about():
     '''Route to display about page.'''
@@ -232,6 +235,24 @@ def not_found(err):
     return render_template('error.html',
                            error_code=404,
                            error_message=message), 404
+
+
+@app.errorhandler(429)
+def cool_your_jets(err):
+    '''Error handler that comes from hitting our API rate limits.
+
+    Sent by Flask Limiter.
+
+    error_data.message is displayed in the flash message
+    error_data.timeout determines how long until flash message disappears
+    '''
+    # TODO: determine actual time left.
+    # TODO: send message with login link.
+    time_left = 60
+    message = ('Cool your jets! Please wait {0} seconds before making'
+               ' another search.').format(time_left)
+    error_data = {'message': message, 'timeout': 5}
+    return (json.dumps(error_data), 429, {'content-type': 'application/json'})
 
 
 @app.errorhandler(500)

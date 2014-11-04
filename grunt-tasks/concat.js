@@ -21,11 +21,20 @@ module.exports = function(grunt) {
       },
       issues: {
         src: [
+            '<%= jsPath %>/lib/models/issue.js',
+            '<%= jsPath %>/lib/models/comment.js',
             '<%= jsPath %>/lib/comments.js',
             '<%= jsPath %>/lib/labels.js',
-            '<%= jsPath %>/lib/issues.js'
+            '<%= jsPath %>/lib/issues.js',
         ],
         dest: '<%= jsPath %>/issues.js'
+      },
+      issueList: {
+        src: [
+          '<%= jsPath %>/lib/models/issue.js',
+          '<%= jsPath %>/lib/issue-list.js'
+        ],
+        dest: '<%= jsPath %>/issue-list.js'
       }
    });
 };

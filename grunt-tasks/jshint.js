@@ -30,9 +30,12 @@ module.exports = function(grunt) {
       beforeconcat: [
         '<%= jsPath %>/lib/homepage.js',
         '<%= jsPath %>/lib/bugform.js',
+        '<%= jsPath %>/lib/models/comment.js',
         '<%= jsPath %>/lib/comments.js',
         '<%= jsPath %>/lib/labels.js',
+        '<%= jsPath %>/lib/models/issue.js',
         '<%= jsPath %>/lib/issues.js',
+        '<%= jsPath %>/lib/issue-list.js',
         '<%= jsPath %>/lib/diagnose.js'
       ]
   });

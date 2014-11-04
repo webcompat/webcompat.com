@@ -2,11 +2,11 @@
   <div class="wc-content" id="browse-issues">
     <h2>Browse Issues</h2>
     <span class="key">
-      <span class="issue-untriaged">Untriaged</span>
-      <span class="issue-needs-diagnosis">Needs&nbsp;Diagnosis</span>
-      <span class="issue-contactready">Ready&nbsp;for&nbsp;Outreach</span>
-      <span class="issue-sitewait">Site&nbsp;Contacted</span>
-      <span class="issue-closed">Closed</span>
+      <span class="IssueItem--untriaged">Untriaged</span>
+      <span class="IssueItem--need">Needs&nbsp;Diagnosis</span>
+      <span class="IssueItem--ready">Ready&nbsp;for&nbsp;Outreach</span>
+      <span class="IssueItem--sitewait">Site&nbsp;Contacted</span>
+      <span class="IssueItem--closed">Closed</span>
     </span>
     {% include "browse-issues/my-issues.html" %}
     <div class="Grid Grid--withGutter">
@@ -17,6 +17,6 @@
      {% include "browse-issues/ready-for-outreach.html" %}
      {% include "browse-issues/site-contacted.html" %}
     </div>
-    <p class="more-issues"><a href="https://github.com/webcompat/web-bugs/issues?state=open">See More</a></p>
+    <p class="more-issues"><a href="{{ url_for("show_issues") }}">See More</a></p>
   </div>
 </div>

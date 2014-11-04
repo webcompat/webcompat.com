@@ -32,7 +32,7 @@
   <link href="{{ url_for('static', filename='css/webcompat.dev.css') }}" type="text/css" rel="stylesheet">
 {%- endif %}
 </head>
-<body>
+<body data-username="{{ session.username }}">
 <div class="wc-viewport">
   {% block body %}{% endblock %}
   {% include "shared/footer.html" %}
@@ -60,9 +60,9 @@
 <script src="{{ url_for('static', filename='js/lib/bugform.js') }}"></script>
 {%- endif %}
 {% for category, message in get_flashed_messages(with_categories=True) %}
-<div class="flash {{ category }}">{{ message }}</div>
+<div class="wc-FlashMessage {{ category }}">{{ message }}</div>
 <script>setTimeout(function(){
-  var __flashmsg = $('.flash');
+  var __flashmsg = $('.wc-FlashMessage');
   if (__flashmsg.length) {__flashmsg.fadeOut();}
 }, 1500);</script>
 {% endfor %}

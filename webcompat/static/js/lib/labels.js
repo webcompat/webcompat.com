@@ -15,11 +15,11 @@ issues.AllLabels = Backbone.Model.extend({
 });
 
 issues.LabelsView = Backbone.View.extend({
-  el: $('.issue__label'),
+  el: $('.Label-wrapper'),
   editorButton: null,
   events: {
-    'click .issue__label--modify:not(.is-active)': 'editLabels',
-    'click .issue__label--modify.is-active': 'closeEditor'
+    'click .LabelEditor-launcher:not(.is-active)': 'editLabels',
+    'click .LabelEditor-launcher.is-active': 'closeEditor'
   },
   keyboardEvents: {
     'e': 'editLabels'
@@ -29,7 +29,7 @@ issues.LabelsView = Backbone.View.extend({
   // relavant parts in $('#issue-labels-tmpl')
   subTemplate: _.template([
     '<% _.each(labels, function(label) { %>',
-      '<span class="issue__label_item issue__label_item--badge" style="background-color:#<%=label.color%>">',
+      '<span class="Label Label--badge" style="background-color:#<%=label.color%>">',
         '<%= label.name %>',
       '</span>',
     '<% }); %>'].join('')),
@@ -47,7 +47,7 @@ issues.LabelsView = Backbone.View.extend({
   fetchLabels: function() {
     var self = this;
     var headersBag = {headers: {'Accept': 'application/json'}};
-    this.editorButton = $('.issue__label--modify');
+    this.editorButton = $('.LabelEditor-launcher');
     this.allLabels = new issues.AllLabels();
     this.labelEditor = new issues.LabelEditorView({
       model: this.allLabels,
@@ -64,7 +64,7 @@ issues.LabelsView = Backbone.View.extend({
   },
   editLabels: function() {
     this.editorButton.addClass('is-active');
-    this.$el.find('.issue__label--modify').after(this.labelEditor.render().el);
+    this.$el.find('.LabelEditor-launcher').after(this.labelEditor.render().el);
     var toBeChecked = _.intersection(this.getIssueLabels(), this.repoLabels);
     _.each(toBeChecked, function(labelName) {
       $('[name=' + labelName + ']').prop("checked", true);
@@ -73,11 +73,11 @@ issues.LabelsView = Backbone.View.extend({
 });
 
 issues.LabelEditorView = Backbone.View.extend({
-  className: 'label_editor',
+  className: 'LabelEditor',
   events: {
     'change input[type=checkbox]': 'updateView',
     'click button': 'closeEditor',
-    'keyup .label_editor__search': 'filterLabels'
+    'keyup .LabelEditor-search': 'filterLabels'
   },
   keyboardEvents: {
     'esc': 'closeEditor'
@@ -90,14 +90,14 @@ issues.LabelEditorView = Backbone.View.extend({
     this.$el.html(this.template(this.model.toJSON()));
     this.resizeEditorHeight();
     _.defer(_.bind(function() {
-      this.$el.find('.label_editor__search').focus();
+      this.$el.find('.LabelEditor-search').focus();
     }, this));
     return this;
   },
   reRender: function(data) {
     //only re-render the labels into the labels wrapper
-    this.issueView.$el.find('.labels__wrapper').html(this.issueView.subTemplate(data));
-    this.issueView.$el.find('.issue__label--modify').addClass('is-active');
+    this.issueView.$el.find('.Label-list').html(this.issueView.subTemplate(data));
+    this.issueView.$el.find('.LabelEditor-launcher').addClass('is-active');
   },
   resizeEditorHeight: function() {
     var getBreakpoint = function() {
@@ -115,9 +115,9 @@ issues.LabelEditorView = Backbone.View.extend({
 
     if (getBreakpoint()) {
       _.defer(function(){
-        var labelEditorheight = parseInt($('.label_editor').css( "height" ), 10),
-            labelHeaderheight = parseInt($('.label_editor_row--header').css("height"), 10);
-        $('.label_list').height(labelEditorheight -labelHeaderheight );
+        var labelEditorheight = parseInt($('.LabelEditor').css( "height" ), 10),
+            labelHeaderheight = parseInt($('.LabelEditor-row--header').css("height"), 10);
+        $('.LabelEditor-list').height(labelEditorheight -labelHeaderheight );
         $("html, body").animate({ scrollTop: 0 }, 0);
       });
     }
@@ -155,12 +155,12 @@ issues.LabelEditorView = Backbone.View.extend({
     }), 'name');
 
     // make sure everything is showing
-    $('.label_item').show();
+    $('.LabelEditor-item').show();
 
     // hide the non-filter matches
     var hidden = _.difference(_.pluck(this.model.get('labels'), 'name'), matches);
     _.each(hidden, function(name) {
-      $('input[name=' + escape(name) + ']').closest('.label_item').hide();
+      $('input[name=' + escape(name) + ']').closest('.LabelEditor-item').hide();
     });
   }, 100)
 });

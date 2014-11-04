@@ -10,6 +10,7 @@ import os
 
 from flask.ext.cache import Cache
 from flask.ext.github import GitHub
+from flask.ext.limiter import Limiter
 from flask import Flask
 from sqlalchemy import create_engine
 
@@ -18,9 +19,9 @@ app.config.from_object('config')
 engine = create_engine('sqlite:///' + os.path.join(app.config['BASE_DIR'],
                                                    'session.db'))
 
-github = GitHub(app)
-
 cache = Cache(app)
+github = GitHub(app)
+limiter = Limiter(app)
 
 # import views after we initialize our github object
 import webcompat.views

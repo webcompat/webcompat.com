@@ -16,32 +16,26 @@ from flask import g
 from flask import request
 from flask import session
 
+
 from webcompat import app
 from webcompat import cache
 from webcompat import github
+from webcompat import limiter
 from webcompat.helpers import get_headers
 from webcompat.helpers import get_user_info
 from webcompat.issues import filter_untriaged
 from webcompat.issues import proxy_request
-from webcompat.issues import REPO_URI
 
 
 api = Blueprint('api', __name__, url_prefix='/api')
 JSON_MIME = 'application/json'
+ISSUES_PATH = app.config['ISSUES_REPO_URI']
+REPO_PATH = ISSUES_PATH[:-7]
 
 
-@api.route('/issues')
-@cache.cached(timeout=300)
-def proxy_issues():
-    '''API endpoint to list all issues from GitHub.
-
-    Cached for 5 minutes.
-    '''
-    if g.user:
-        issues = github.get('repos/{0}'.format(REPO_URI))
-    else:
-        issues = proxy_request('get')
-    return json.dumps(issues)
+def get_username():
+  get_user_info()
+  return session.get('username', 'proxy-user')
 
 
 @api.route('/issues/<int:number>')
@@ -52,7 +46,7 @@ def proxy_issue(number):
     '''
     if g.user:
         issue = github.raw_request('GET', 'repos/{0}/{1}'.format(
-            app.config['ISSUES_REPO_URI'], number))
+            ISSUES_PATH, number), headers=request_headers)
     else:
         issue = proxy_request('get', '/{0}'.format(number))
     return (issue.content, issue.status_code, get_headers(issue))
@@ -69,7 +63,23 @@ def edit_issue(number):
     return (edit.content, edit.status_code, {'content-type': JSON_MIME})
 
 
-@api.route('/issues/mine')
+@api.route('/issues')
+def proxy_issues():
+    '''API endpoint to list all issues from GitHub.'''
+    if request.args.get('page'):
+        params = {'page': request.args.get('page')}
+    else:
+        params = None
+
+    if g.user:
+        issues = github.raw_request('GET', 'repos/{0}'.format(ISSUES_PATH),
+                                    params=params)
+    else:
+        issues = proxy_request('get', params=params)
+    return (issues.content, issues.status_code, get_headers(issues))
+
+
+@api.route('/issues/category/mine')
 def user_issues():
     '''API endpoint to return issues filed by the logged in user.
 
@@ -77,75 +87,123 @@ def user_issues():
     '''
     get_user_info()
     path = 'repos/{0}?creator={1}&state=all'.format(
-        REPO_URI, session['username']
+        ISSUES_PATH, session['username']
     )
     issues = github.raw_request('GET', path)
     return (issues.content, issues.status_code, get_headers(issues))
 
 
-@api.route('/issues/untriaged')
-@cache.cached(timeout=300)
-def get_untriaged():
-    '''Return all issues that are "untriaged".
+@api.route('/issues/category/<issue_category>')
+def get_issue_category(issue_category):
+    '''Return all issues for a specific category.
 
-    Essentially all unclosed issues with no activity.
-    Cached for 5 minutes.
+    issue_category can be of x types:
+    * untriaged (We take care in case there’s no bug)
+    * contactready
+    * needsdiagnosis
+    * sitewait
     '''
-    if g.user:
-        issues = github.raw_request('GET', 'repos/{0}'.format(REPO_URI))
-    else:
-        issues = proxy_request('get')
-    # Do not send random JSON to filter_untriaged
-    if issues.status_code == 200:
-        return (filter_untriaged(json.loads(issues.content)),
-                issues.status_code, get_headers(issues))
-    else:
-        return ({}, issues.status_code, get_headers(issues))
+    params = {}
+    category_list = ['contactready', 'needsdiagnosis', 'sitewait']
+    issues_path = 'repos/{0}'.format(ISSUES_PATH)
 
+    if request.args.get('page'):
+        params.update({'page': request.args.get('page')})
 
-@api.route('/issues/contactready')
-@cache.cached(timeout=300)
-def get_contactready():
-    '''Return all issues with a "contactready" label.
-
-    Cached for 5 minutes.
-    '''
-    if g.user:
-        path = 'repos/{0}?labels=contactready'.format(REPO_URI)
-        issues = github.raw_request('GET', path)
+    if issue_category in category_list:
+        params.update({'labels': issue_category})
+        if g.user:
+            issues = github.raw_request('GET', issues_path, params=params)
+        else:
+            issues = proxy_request('get', params=params)
+    elif issue_category == 'closed':
+        params.update({'state': 'closed'})
+        if g.user:
+            issues = github.raw_request('GET', issues_path, params=params)
+        else:
+            issues = proxy_request('get', params=params)
+    # Note that 'untriaged' here is primarily used on the hompage.
+    # For paginated results on the /issues page, see /issues/search/untriaged.
+    elif issue_category == 'untriaged':
+        if g.user:
+            issues = github.raw_request('GET', issues_path)
+        else:
+            issues = proxy_request('get')
+        # Do not send random JSON to filter_untriaged
+        if issues.status_code == 200:
+            return (filter_untriaged(json.loads(issues.content)),
+                    issues.status_code, get_headers(issues))
+        else:
+            return ({}, issues.status_code, get_headers(issues))
     else:
-        issues = proxy_request('get', '?labels=contactready')
+        # The path doesn’t exist. 404 Not Found.
+        abort(404)
     return (issues.content, issues.status_code, get_headers(issues))
 
 
-@api.route('/issues/needsdiagnosis')
-@cache.cached(timeout=300)
-def get_needsdiagnosis():
-    '''Return all issues with a "needsdiagnosis" label.
+@api.route('/issues/search')
+@limiter.limit('30/minute',
+               key_func=lambda: get_username())
+def get_search_results(query_string=None):
+    '''XHR endpoint to get results from GitHub's Search API.
 
-    Cached for 5 minutes.
+    We're specifically searching "issues" here, which seems to make the most
+    sense. Note that the rate limit is different for Search: 30 requests per
+    minute. Non-logged in users will probably not have a great experience,
+    so we should find a way to encourage them to log in.
+
+    key_func is used as a filter to determine how to enforce rate limiting,
+    based on username. This is done so we can "share" a rate limit for
+    non-logged in users.
+
+    If a user hits the rate limit, the Flask Limiter extension will send a
+    429. See @app.error_handler(429) in views.py.
+
+    This method can take a query_string argument, to be called from other
+    endpoints, or the query_string can be passed in via the Request object.
+
+    Not cached.
     '''
+    search_uri = 'https://api.github.com/search/issues'
+    # TODO: handle sort and order parameters.
+    params = {}
+
+    if query_string is None:
+        query_string = request.args.get('q')
+        # restrict results to our repo.
+    query_string += " repo:{0}".format(REPO_PATH)
+    params.update({'q': query_string})
+
+    if request.args.get('page'):
+        params.update({'page': request.args.get('page')})
+
     if g.user:
-        path = 'repos/{0}?labels=needsdiagnosis'.format(REPO_URI)
-        issues = github.raw_request('GET', path)
+        request_headers = get_request_headers(g.request_headers)
+        results = github.raw_request('GET', 'search/issues', params=params,
+                                     headers=request_headers)
     else:
-        issues = proxy_request('get', '?labels=needsdiagnosis')
-    return (issues.content, issues.status_code, get_headers(issues))
+        results = proxy_request('get', params=params, uri=search_uri)
+    # The issues are returned in the items property of the response JSON,
+    # so throw everything else away.
+    json_response = json.loads(results.content)
+    if 'items' in json_response:
+        result = json.dumps(json_response['items'])
+    else:
+        result = results.content
+    return (result, results.status_code, get_headers(results))
 
 
-@api.route('/issues/sitewait')
-@cache.cached(timeout=300)
-def get_sitewait():
-    '''Return all issues with a "sitewait" label.
+@api.route('/issues/search/untriaged')
+def get_untriaged_from_search():
+    '''XHR endpoint to get "untriaged" issues from GitHub's Search API.
 
-    Cached for 5 minutes.
+    There is some overlap between /issues/category/untriaged as used on the
+    home page - but this endpoint returns paginated results paginated.
+    TODO: Unify that at some point.
     '''
-    if g.user:
-        path = 'repos/{0}?labels=sitewait'.format(REPO_URI)
-        issues = github.raw_request('GET', path)
-    else:
-        issues = proxy_request('get', '?labels=sitewait')
-    return (issues.content, issues.status_code, get_headers(issues))
+    query_string = ('state:open -label:contactready '
+                    '-label:sitewait -label:needsdiagnosis')
+    return get_search_results(query_string)
 
 
 @api.route('/issues/<int:number>/comments', methods=['GET', 'POST'])
@@ -158,7 +216,7 @@ def proxy_comments(number):
         try:
             comment_data = json.loads(request.data)
             body = json.dumps({"body": comment_data['rawBody']})
-            path = 'repos/{0}/{1}/comments'.format(REPO_URI, number)
+            path = 'repos/{0}/{1}/comments'.format(ISSUES_PATH, number)
             comment = github.raw_request('POST', path, data=body)
             return (json.dumps(comment.json()), comment.status_code,
                     {'content-type': JSON_MIME})
@@ -170,7 +228,8 @@ def proxy_comments(number):
             comments = github.raw_request(
                 'GET',
                 'repos/{0}/{1}/comments'.format(
-                    app.config['ISSUES_REPO_URI'], number)
+                    ISSUES_PATH, number),
+                headers=request_headers
                 )
         else:
             comments = proxy_request('get', '/{0}/comments'.format(number))
@@ -201,11 +260,10 @@ def get_repo_labels():
 
     Cached for 10 minutes.
     '''
-    # Chop off /issues. Someone feel free to refactor the ISSUES_REPO_URI.
-    labels_path = app.config['ISSUES_REPO_URI'][:-7]
     if g.user:
-        path = 'repos/{0}/labels'.format(labels_path)
-        labels = github.raw_request('GET', path)
+        request_headers = get_request_headers(g.request_headers)
+        path = 'repos/{0}/labels'.format(REPO_PATH)
+        labels = github.raw_request('GET', path, headers=request_headers)
         return (labels.content, labels.status_code, get_headers(labels))
     else:
         # only authed users should be hitting this endpoint
@@ -219,8 +277,10 @@ def get_rate_limit():
     Will display for the logged in user, or webcompat-bot if not logged in.
     See https://developer.github.com/v3/rate_limit/.
     '''
+
+    rate_limit_uri = 'https://api.github.com/rate_limit'
     if g.user:
         rl = github.raw_request('GET', 'rate_limit')
     else:
-        rl = proxy_request('get', uri='https://api.github.com/rate_limit')
+        rl = proxy_request('get', uri=rate_limit_uri)
     return rl.content

@@ -88,30 +88,30 @@ define([
           assert.equal(text, 'Needs Diagnosis');
         })
         .end()
-        .findAllByCssSelector('.issues.issue-needs-diagnosis')
+        .findAllByCssSelector('.IssueItem.IssueItem--need')
         .then(function (elms) {
           assert.equal(elms.length, 4, '4 issues should be displayed');
         })
         .end()
-        .findByCssSelector('.issue-needs-diagnosis .issue-number').getVisibleText()
+        .findByCssSelector('.IssueItem--need .IssueItem-count').getVisibleText()
         .then(function (text) {
           assert.match(text, /^Issue\s(\d+)$/, 'Issue should have a number');
         })
         .end()
-        .findByCssSelector('.issue-needs-diagnosis .issue-title a').getAttribute('href')
+        .findByCssSelector('.IssueItem--need .IssueItem-header a').getAttribute('href')
         .then(function (text) {
           assert.match(text, /^\/issues\/\d+$/, 'Link should have a number');
         })
         .end()
-        .findByCssSelector('.issue-needs-diagnosis .issue-title').getVisibleText()
+        .findByCssSelector('.IssueItem--need .IssueItem-header').getVisibleText()
         .then(function (text) {
           assert.match(text, /^Issue\s\d+:\s.+$/, 'Issue should have a non-empty title');
         })
         .end()
-        .findByCssSelector('.issue-needs-diagnosis .issue-metadata').getVisibleText()
+        .findByCssSelector('.IssueItem--need .IssueItem-metadata').getVisibleText()
         .then(function (text) {
           assert.match(text, /comments:\s\d+$/, 'Issue should display number of comments');
-          assert.match(text, /^Opened:\s\d{4}\-\d{2}\-\d{2}/, 'Issue should display creation date');
+          assert.match(text, /^Opened:\s\d{4}\-\d{2}\-\d{2}.+/, 'Issue should display creation date');
         })
         .end()
     },
@@ -124,30 +124,30 @@ define([
           assert.equal(text, 'Untriaged Issues');
         })
         .end()
-        .findAllByCssSelector('.issues.issue-untriaged')
+        .findAllByCssSelector('.IssueItem.IssueItem--untriaged')
         .then(function (elms) {
           assert.equal(elms.length, 4, '4 issues should be displayed');
         })
         .end()
-        .findByCssSelector('.issue-untriaged .issue-number').getVisibleText()
+        .findByCssSelector('.IssueItem--untriaged .IssueItem-count').getVisibleText()
         .then(function (text) {
           assert.match(text, /^Issue\s(\d+)$/, 'Issue should have a number');
         })
         .end()
-        .findByCssSelector('.issue-untriaged .issue-title a').getAttribute('href')
+        .findByCssSelector('.IssueItem--untriaged .IssueItem-header a').getAttribute('href')
         .then(function (text) {
           assert.match(text, /^\/issues\/\d+$/, 'Link should have a number');
         })
         .end()
-        .findByCssSelector('.issue-untriaged .issue-title').getVisibleText()
+        .findByCssSelector('.IssueItem--untriaged .IssueItem-header').getVisibleText()
         .then(function (text) {
           assert.match(text, /^Issue\s\d+:\s.+$/, 'Issue should have a non-empty title');
         })
         .end()
-        .findByCssSelector('.issue-untriaged .issue-metadata').getVisibleText()
+        .findByCssSelector('.IssueItem--untriaged .IssueItem-metadata').getVisibleText()
         .then(function (text) {
           assert.match(text, /comments:\s\d+$/, 'Issue should display number of comments');
-          assert.match(text, /^Opened:\s\d{4}\-\d{2}\-\d{2}/, 'Issue should display creation date');
+          assert.match(text, /^Opened:\s\d{4}\-\d{2}\-\d{2}.+/, 'Issue should display creation date');
         })
         .end()
     },
@@ -160,30 +160,30 @@ define([
           assert.equal(text, 'Site Contacted');
         })
         .end()
-        .findAllByCssSelector('.issues.issue-sitewait')
+        .findAllByCssSelector('.IssueItem.IssueItem--sitewait')
         .then(function (elms) {
           assert.equal(elms.length, 4, '4 issues should be displayed');
         })
         .end()
-        .findByCssSelector('.issue-sitewait .issue-number').getVisibleText()
+        .findByCssSelector('.IssueItem--sitewait .IssueItem-count').getVisibleText()
         .then(function (text) {
           assert.match(text, /^Issue\s(\d+)$/, 'Issue should have a number');
         })
         .end()
-        .findByCssSelector('.issue-sitewait .issue-title a').getAttribute('href')
+        .findByCssSelector('.IssueItem--sitewait .IssueItem-header a').getAttribute('href')
         .then(function (text) {
           assert.match(text, /^\/issues\/\d+$/, 'Link should have a number');
         })
         .end()
-        .findByCssSelector('.issue-sitewait .issue-title').getVisibleText()
+        .findByCssSelector('.IssueItem--sitewait .IssueItem-header').getVisibleText()
         .then(function (text) {
           assert.match(text, /^Issue\s\d+:\s.+$/, 'Issue should have a non-empty title');
         })
         .end()
-        .findByCssSelector('.issue-sitewait .issue-metadata').getVisibleText()
+        .findByCssSelector('.IssueItem--sitewait .IssueItem-metadata').getVisibleText()
         .then(function (text) {
           assert.match(text, /comments:\s\d+$/, 'Issue should display number of comments');
-          assert.match(text, /^Opened:\s\d{4}\-\d{2}\-\d{2}/, 'Issue should display creation date');
+          assert.match(text, /^Opened:\s\d{4}\-\d{2}\-\d{2}.+/, 'Issue should display creation date');
         })
         .end()
     },
@@ -196,31 +196,31 @@ define([
           assert.equal(text, 'Ready for Outreach');
         })
         .end()
-        .findAllByCssSelector('.issues.issue-contactready')
+        .findAllByCssSelector('.IssueItem.IssueItem--ready')
         .then(function (elms) {
           assert.equal(elms.length, 4, '4 issues should be displayed');
         })
         .end()
         .end()
-        .findByCssSelector('.issue-contactready .issue-number').getVisibleText()
+        .findByCssSelector('.IssueItem--ready .IssueItem-count').getVisibleText()
         .then(function (text) {
           assert.match(text, /^Issue\s(\d+)$/, 'Issue should have a number');
         })
         .end()
-        .findByCssSelector('.issue-contactready .issue-title a').getAttribute('href')
+        .findByCssSelector('.IssueItem--ready .IssueItem-header a').getAttribute('href')
         .then(function (text) {
           assert.match(text, /^\/issues\/\d+$/, 'Link should have a number');
         })
         .end()
-        .findByCssSelector('.issue-contactready .issue-title').getVisibleText()
+        .findByCssSelector('.IssueItem--ready .IssueItem-header').getVisibleText()
         .then(function (text) {
           assert.match(text, /^Issue\s\d+:\s.+$/, 'Issue should have a non-empty title');
         })
         .end()
-        .findByCssSelector('.issue-contactready .issue-metadata').getVisibleText()
+        .findByCssSelector('.IssueItem--ready .IssueItem-metadata').getVisibleText()
         .then(function (text) {
           assert.match(text, /comments:\s\d+$/, 'Issue should display number of comments');
-          assert.match(text, /^Opened:\s\d{4}\-\d{2}\-\d{2}/, 'Issue should display creation date');
+          assert.match(text, /^Opened:\s\d{4}\-\d{2}\-\d{2}.+/, 'Issue should display creation date');
         })
         .end()
     }

@@ -5,6 +5,7 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 import datetime
+import math
 import urlparse
 
 from babel.dates import format_timedelta
@@ -22,6 +23,17 @@ def format_delta_filter(timestamp):
     '''Jinja2 fiter to format a unix timestamp to a time delta string.'''
     delta = datetime.datetime.now() - datetime.datetime.fromtimestamp(timestamp)
     return format_timedelta(delta, locale='en_US')
+
+
+def format_delta_seconds(timestamp):
+    '''Return a timedelta by seconds.
+
+    The timedelta is a negative float, so we round up the absolute value and
+    cast it to an integer to be more human friendly.
+    '''
+    delta = datetime.datetime.now() - datetime.datetime.fromtimestamp(timestamp)
+    seconds = delta.total_seconds()
+    return abs(int(math.ceil(seconds)))
 
 
 def get_user_info():
@@ -90,7 +102,8 @@ def get_headers(response):
     '''
     headers = {'etag': response.headers.get('etag'),
                'cache-control': response.headers.get('cache-control'),
-               'content-type': JSON_MIME}
+               'content-type': JSON_MIME,
+               'link': response.headers.get('link')}
     return headers
 
 

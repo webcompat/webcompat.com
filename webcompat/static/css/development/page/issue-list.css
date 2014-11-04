@@ -1,0 +1,112 @@
+/*------Issue List------*/
+
+
+/* Main class */
+.IssueList {
+  font-size:var(--base-font-size);
+}
+/* Filtering issues */
+.IssueList-filtering {
+  display:inline-block;
+  vertical-align:middle;
+  background-image:none;
+  background-color:transparent;
+  font-family:var(--base-font);
+  font-size:1em;
+  border-width:1px;
+  border-style:solid;
+  cursor:pointer;
+  padding:.4em;
+  margin:0 .8em .4em 0;
+  color:#404040;
+}
+  .IssueList-filtering:hover,
+  .IssueList-filtering.is-active {
+    color:#fff;
+  }
+  .IssueList-filtering--untriaged {
+    border-color:var(--wc-state-untriaged);
+  }
+  .IssueList-filtering--untriaged:hover,
+  .IssueList-filtering--untriaged.is-active {
+    background-color:var(--wc-state-untriaged);
+  }
+  .IssueList-filtering--need {
+    border-color:var(--wc-state-need);
+  }
+  .IssueList-filtering--need:hover,
+  .IssueList-filtering--need.is-active {
+    background-color:var(--wc-state-need);
+  }
+  .IssueList-filtering--ready {
+    border-color:var(--wc-state-ready);
+  }
+  .IssueList-filtering--ready:hover,
+  .IssueList-filtering--ready.is-active {
+    background-color:var(--wc-state-ready);
+  }
+  .IssueList-filtering--sitewait {
+    border-color:var(--wc-state-sitewait);
+  }
+  .IssueList-filtering--sitewait:hover,
+  .IssueList-filtering--sitewait.is-active {
+    background-color:var(--wc-state-sitewait);
+  }
+  .IssueList-filtering--close {
+    border-color:var(--wc-state-close);
+  }
+  .IssueList-filtering--close:hover,
+  .IssueList-filtering--close.is-active {
+    background-color:var(--wc-state-close);
+  }
+/*Search issues */
+.IssueList-search {
+  background-color:#F7F7F7;
+  padding-top:1.5em;
+  padding-bottom:1.5em;
+}
+  .IssueList-search-form {
+    background-color:#F7F7F7;
+    width:100%;
+    font-size:1.5em;
+    font-weight:400;
+    border:none;
+  }
+    .IssueList-search-form::placeholder {
+      color:#999898;
+      font-weight:400;
+      font-size:0.8em;
+    }
+
+/* Sorting issues */
+.IssueList-sorting {
+  background-color:#F0F0F0;
+  padding:3em 0 .5em 0;
+}
+/* Pagniation */
+.IssueList-pagination {
+  text-align:right;
+  font-size:1.6rem;
+}
+  .IssueList-pagination-link {
+    display:inline-block;
+    cursor:pointer;
+    vertical-align:middle;
+    padding: 0.7em 0px;
+    font-weight:700;
+    font-size:1em;
+    margin-top:.2em;
+  }
+    .IssueList-pagination-link.is-disabled {
+      cursor:inherit;
+      opacity:.6;
+      text-decoration:none;
+    }
+  .IssueList-pagination-link + .IssueList-pagination-link {
+    margin-left:1em;
+  }
+
+/* List of issue */
+.IssueList-displayed {
+  background-color:#F0F0F0;
+}

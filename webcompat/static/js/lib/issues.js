@@ -13,119 +13,8 @@ marked.setOptions({
   sanitize: true
 });
 
-issues.Issue = Backbone.Model.extend({
-  urlRoot: function() {
-    return '/api/issues/' + this.get('number');
-  },
-  initialize: function() {
-    var self = this;
-    this.on('change:state', function() {
-      self.set('issueState', self.getState(self.get('state'), self.get('labels')));
-    });
-  },
-  getState: function(state, labels) {
-    if (state === 'closed') {
-      this.set('stateClass', 'close');
-      return 'Closed';
-    }
-
-    var labelsNames = _.pluck(labels, 'name');
-    if (labelsNames.indexOf('sitewait') > -1) {
-      this.set('stateClass', 'sitewait');
-      return 'Site Contacted';
-    }
-
-    if (labelsNames.indexOf('contactready') > -1) {
-      this.set('stateClass', 'ready');
-      return 'Ready for Outreach';
-    }
-
-    if (labelsNames.indexOf('needsdiagnosis') > -1) {
-      this.set('stateClass', 'need');
-      return 'Needs Diagnosis';
-    }
-    //Untriaged is the default value.
-    this.set('stateClass', 'untriaged');
-    return 'Untriaged Issue';
-  },
-  parse: function(response) {
-    this.set({
-      body: marked(response.body),
-      commentNumber: response.comments,
-      createdAt: moment(response.created_at).format('L'),
-      issueState: this.getState(response.state, response.labels),
-      labels: response.labels,
-      number: response.number,
-      reporter: response.user.login,
-      state: response.state,
-      title: response.title
-    });
-  },
-  toggleState: function(callback) {
-    var self = this;
-    var newState = this.get('state') === 'open' ? 'closed' : 'open';
-    $.ajax({
-      contentType: 'application/json',
-      data: JSON.stringify({'state': newState}),
-      type: 'PATCH',
-      url: '/api/issues/' + this.get('number') + '/edit',
-      success: function() {
-        self.set('state', newState);
-        if (callback) {
-          callback();
-        }
-      },
-      error: function() {
-        $('<div></div>', {
-          'class': 'flash error',
-          'text': 'There was an error editing this issues\'s status.'
-        }).appendTo('body');
-
-        setTimeout(function(){
-          var __flashmsg = $('.flash');
-          if (__flashmsg.length) {__flashmsg.fadeOut();}
-        }, 2000);
-      }
-    });
-  },
-  updateLabels: function(labelsArray) {
-    var self = this;
-    if (!$.isArray(labelsArray)) {
-      return;
-    }
-
-    // save ourselves a request if nothing has changed.
-    if (_.isEqual(labelsArray.sort(),
-                  _.pluck(this.get('labels'), 'name').sort())) {
-      return;
-    }
-
-    $.ajax({
-      contentType: 'application/json',
-      data: JSON.stringify(labelsArray),
-      type: 'POST',
-      url: '/api/issues/' + this.get('number') + '/labels',
-      success: function(response) {
-        //update model after success
-        self.set('labels', JSON.parse(response));
-      },
-      error: function() {
-        $('<div></div>', {
-          'class': 'flash error',
-          'text': 'There was an error setting labels.'
-        }).appendTo('body');
-
-        setTimeout(function(){
-          var __flashmsg = $('.flash');
-          if (__flashmsg.length) {__flashmsg.fadeOut();}
-        }, 2000);
-      }
-    });
-  }
-});
-
 issues.TitleView = Backbone.View.extend({
-  el: $('.issue__main_title'),
+  el: $('.Issue-title'),
   template: _.template($('#title-tmpl').html()),
   render: function() {
     document.title = "Issue " + this.model.get('number') +
@@ -137,7 +26,7 @@ issues.TitleView = Backbone.View.extend({
 });
 
 issues.MetaDataView = Backbone.View.extend({
-  el: $('.issue__create'),
+  el: $('.Issue-create'),
   initialize: function() {
     var self = this;
     this.model.on('change:issueState', function() {
@@ -152,18 +41,18 @@ issues.MetaDataView = Backbone.View.extend({
 });
 
 issues.BodyView = Backbone.View.extend({
-  el: $('.issue__details'),
+  el: $('.Issue-details'),
   template: _.template($('#issue-info-tmpl').html()),
   render: function() {
     this.$el.html(this.template(this.model.toJSON()));
     // hide metadata
-    $('.issue__details > p:first-child:contains(-- @browser)').hide();
+    $('.Issue-details > p:first-child:contains(-- @browser)').hide();
     return this;
   }
 });
 
 issues.TextAreaView = Backbone.View.extend({
-  el: $('.comment__text'),
+  el: $('.Comment-text'),
   events: {
     'keydown': 'broadcastChange'
   },
@@ -227,7 +116,7 @@ issues.StateButtonView = Backbone.View.extend({
 });
 
 issues.MainView = Backbone.View.extend({
-  el: $('.issue'),
+  el: $('.Issue'),
   events: {
     'click .Button--default': 'addNewComment',
     'click': 'closeLabelEditor'
@@ -246,11 +135,11 @@ issues.MainView = Backbone.View.extend({
   closeLabelEditor: function(e) {
     var target = $(e.target);
     // early return if the editor is closed,
-    if (!this.$el.find('.label_editor').is(':visible') ||
+    if (!this.$el.find('.LabelEditor').is(':visible') ||
           // or we've clicked on the button to open it,
-         (target[0].nodeName === 'BUTTON' && target.hasClass('issue__label--modify')) ||
+         (target[0].nodeName === 'BUTTON' && target.hasClass('LabelEditor-launcher')) ||
            // or clicked anywhere inside the label editor
-           target.parents('.label_editor').length) {
+           target.parents('.LabelEditor').length) {
       return;
     } else {
       this.labels.closeEditor();
@@ -276,7 +165,7 @@ issues.MainView = Backbone.View.extend({
       _.each([self.title, self.metadata, self.body, self.labels, self.stateButton, self],
         function(elm) {
           elm.render();
-          _.each($('.issue__details code'), function(elm) {
+          _.each($('.Issue-details code'), function(elm) {
             Prism.highlightElement(elm);
           });
         }
@@ -296,12 +185,12 @@ issues.MainView = Backbone.View.extend({
           }
         }).error(function() {
           $('<div></div>', {
-            'class': 'flash error',
+            'class': 'wc-FlashMessage wc-FlashMessage--error',
             'text': 'There was an error retrieving issue comments.'
           }).appendTo('body');
 
           setTimeout(function(){
-            var __flashmsg = $('.flash');
+            var __flashmsg = $('.wc-FlashMessage');
             if (__flashmsg.length) {__flashmsg.fadeOut();}
           }, 2000);
         });
@@ -312,7 +201,7 @@ issues.MainView = Backbone.View.extend({
         return;
       } else {
         $('<div></div>', {
-          'class': 'flash error',
+          'class': 'wc-FlashMessage wc-FlashMessage--error',
           'text': 'There was an error retrieving the issue.'
         }).appendTo('body');
       }
@@ -321,14 +210,14 @@ issues.MainView = Backbone.View.extend({
   addComment: function(comment) {
     var view = new issues.CommentView({model: comment});
     var commentElm = view.render().el;
-    $(".issue__comment").append(commentElm);
+    $(".Issue-comment").append(commentElm);
     _.each($(commentElm).find('code'), function(elm){
       Prism.highlightElement(elm);
     });
   },
   addNewComment: function() {
-    var form = $('.comment--form');
-    var textarea = $('.comment__text');
+    var form = $('.Comment--form');
+    var textarea = $('.Comment-text');
     // Only bother if the textarea isn't empty
     if ($.trim(textarea.val())) {
       var newComment = new issues.Comment({
