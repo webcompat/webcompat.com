@@ -18,7 +18,7 @@ define([
     'page loads': function () {
       return this.remote
         .get(require.toUrl(url))
-        .findByCssSelector('.contributors__main_title').getVisibleText()
+        .findByCssSelector('.wc-Hero-title').getVisibleText()
         .then(function (text) {
           assert.include(text, 'Welcome aboard!');
         })
@@ -36,7 +36,7 @@ define([
           assert.notInclude('is-open', className);
         })
         .end()
-        .findByCssSelector('.contributors__light').getAttribute('class')
+        .findByCssSelector('.wc-Hero-img').getAttribute('class')
         .then(function (className) {
           assert.notEqual('is-active', className);
         })
@@ -52,7 +52,7 @@ define([
           assert.equal(isDisplayed, true);
         })
         .end()
-        .findByCssSelector('.contributors__light.is-active').isDisplayed()
+        .findByCssSelector('.wc-Hero-img.is-active').isDisplayed()
         .then(function (isDisplayed) {
           assert.equal(isDisplayed, true);
         })
@@ -64,7 +64,7 @@ define([
           assert.notInclude('is-open', className);
         })
         .end()
-        .findByCssSelector('.contributors__light').getAttribute('class')
+        .findByCssSelector('.wc-Hero-img').getAttribute('class')
         .then(function (className) {
           assert.notInclude('is-active', className);
         })
@@ -74,14 +74,14 @@ define([
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url))
-        .findByCssSelector('.contributors__light.is-active').isDisplayed()
+        .findByCssSelector('.wc-Hero-img.is-active').isDisplayed()
         .then(function (isDisplayed) {
           assert.equal(isDisplayed, true);
         })
         .end()
         .findByCssSelector('.contributors__item__title').click()
         .end()
-        .findByCssSelector('.contributors__light').getAttribute('class')
+        .findByCssSelector('.wc-Hero-img').getAttribute('class')
         .then(function (className) {
           assert.notInclude('is-active', className);
         })
