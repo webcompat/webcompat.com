@@ -18,7 +18,7 @@ define([
     'front page loads': function () {
       return this.remote
         .get(require.toUrl(url))
-        .findByCssSelector('#maintitle h1').getVisibleText()
+        .findByCssSelector('.wc-Hero-title').getVisibleText()
         .then(function (text) {
           assert.equal(text, 'Bug reporting\nfor the internet.');
         })
@@ -29,7 +29,7 @@ define([
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url))
-        .findByCssSelector('.nav__section--right .nav__link').click()
+        .findByCssSelector('.wc-Navbar-section--right .wc-Navbar-link').click()
         .end()
         .findByCssSelector('#login_field').click()
         .type(intern.config.wc.user)
@@ -41,7 +41,7 @@ define([
         .end()
         .findByCssSelector('button').submit()
         .end()
-        .findByCssSelector('.nav__section--right .nav__link').getVisibleText()
+        .findByCssSelector('.wc-Navbar-section--right .wc-Navbar-link').getVisibleText()
         .then(function (text) {
           assert.equal(text, "Logout");
         })
@@ -57,7 +57,7 @@ define([
     'reporter addon link is shown': function () {
       return this.remote
         .get(require.toUrl(url))
-        .findByCssSelector('.nav__link').getVisibleText()
+        .findByCssSelector('.wc-Navbar-link').getVisibleText()
         .then(function (text) {
           assert.include(text, 'Download our Firefox');
         })
@@ -72,7 +72,7 @@ define([
         .end()
         .findByCssSelector('.form-opened')
         .end()
-        .findByCssSelector('#report-bug.opened').click()
+        .findByCssSelector('#report-bug.is-open').click()
         .end()
         .findByCssSelector('.form-closed').isDisplayed()
         .then(function (isDisplayed) {
