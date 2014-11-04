@@ -60,22 +60,22 @@ project.
 
 ## Submission Guidelines
 
-All code contributions should come in the form of a [pull request](https://help.github.com/articles/creating-a-pull-request), as a topic branch. 
+All code contributions should come in the form of a [pull request](https://help.github.com/articles/creating-a-pull-request), as a topic branch.
 
 * Have a quick search through existing issues and pull requests so you don't waste any of your time.
 
-* Fork repository 
+* Fork repository
 
 ![master](http://f.cl.ly/items/1E3f0A0I2A2b3T2L2I2c/forked.png)
 
 You'll probably want to [set up a local development environment](#working-environment-setup) to get that far.
 
 * Make your changes in a new branch
-  
+
   `git remote add upstream https://github.com/webcompat/webcompat.com.git`
 
   `git fetch upstream`
-  
+
   `git checkout upstream/dev.webcompat.com`
 
   `git checkout -b name-of-fix-branch`
@@ -106,7 +106,7 @@ And you should be good to go.
 
 After all that, if you'd like, you can add your name to our humans.txt file.
 
-* `dev.webcompat.com` is our "development" branch where we can test, experiment, and deploy changes to dev.webcompat.com before merging into `master` and pushing to webcompat.com.
+* `dev.webcompat.com` is our "development" branch where we can test, experiment, and deploy changes to staging.webcompat.com before merging into `master` and pushing to webcompat.com. The "dev" (subdomain) branch name exists for historical reasons.
 
 ## Coding Style
 
@@ -149,7 +149,7 @@ This is a CSS transpiler (CSS4+ to CSS3) that allows you to use tomorrow's CSS s
 More info here : https://github.com/cssnext/cssnext
 
 #### Naming conventions
- 
+
  We use a very simple syntax based on BEM and it looks like:
   - ComponentName
   - ComponentName--modifierName
