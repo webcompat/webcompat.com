@@ -248,16 +248,7 @@ issueList.IssueView = Backbone.View.extend({
         timeout = 3000;
       }
 
-      $('<div></div>', {
-        'class': 'flash error',
-        'text': message
-      }).appendTo('body');
-
-      setTimeout(function(){
-        var __flashmsg = $('.flash');
-        if (__flashmsg.length) {__flashmsg.fadeOut();}
-        // Set the timeout for the length of the API ratelimit reset
-      }, timeout);
+      wcEvents.trigger('flash:error', {message: message, timeout: timeout});
     });
   },
   render: function(issues) {

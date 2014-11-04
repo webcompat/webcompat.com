@@ -14,6 +14,7 @@ module.exports = function(grunt) {
             '<%= jsPath %>/vendor/marked-min.js',
             '<%= jsPath %>/vendor/mousetrap-min.js',
             '<%= jsPath %>/vendor/backbone.mousetrap.js',
+            '<%= jsPath %>/lib/flash-message.js',
             '<%= jsPath %>/lib/homepage.js',
             '<%= jsPath %>/lib/bugform.js'
         ],
