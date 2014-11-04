@@ -184,26 +184,18 @@ issues.MainView = Backbone.View.extend({
             window.scrollTo(0, _id.offset().top);
           }
         }).error(function() {
-          $('<div></div>', {
-            'class': 'wc-FlashMessage wc-FlashMessage--error',
-            'text': 'There was an error retrieving issue comments.'
-          }).appendTo('body');
-
-          setTimeout(function(){
-            var __flashmsg = $('.wc-FlashMessage');
-            if (__flashmsg.length) {__flashmsg.fadeOut();}
-          }, 2000);
+          var msg = 'There was an error retrieving issue comments.';
+          wcEvents.trigger('flash:error', {message: msg, timeout: 2000});
         });
       }
     }).error(function(response) {
+      var msg;
       if (response.responseJSON.message === "Not Found") {
         location.href = "/404";
         return;
       } else {
-        $('<div></div>', {
-          'class': 'wc-FlashMessage wc-FlashMessage--error',
-          'text': 'There was an error retrieving the issue.'
-        }).appendTo('body');
+        msg = 'There was an error retrieving the issue.';
+        wcEvents.trigger('flash:error', {message: msg, timeout: 2000});
       }
     });
   },
