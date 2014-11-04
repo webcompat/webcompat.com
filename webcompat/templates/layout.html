@@ -56,15 +56,12 @@
 <script src="{{ url_for('static', filename='js/vendor/mousetrap-min.js') }}"></script>
 <script src="{{ url_for('static', filename='js/vendor/backbone.mousetrap.js') }}"></script>
 <script src="{{ url_for('static', filename='js/vendor/marked-min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/lib/flash-message.js') }}"></script>
 <script src="{{ url_for('static', filename='js/lib/homepage.js') }}"></script>
 <script src="{{ url_for('static', filename='js/lib/bugform.js') }}"></script>
 {%- endif %}
 {% for category, message in get_flashed_messages(with_categories=True) %}
-<div class="wc-FlashMessage {{ category }}">{{ message }}</div>
-<script>setTimeout(function(){
-  var __flashmsg = $('.wc-FlashMessage');
-  if (__flashmsg.length) {__flashmsg.fadeOut();}
-}, 1500);</script>
+<script>wcEvents.trigger('flash:{{ category }}', {message: "{{ message }}", timeout: 1500});</script>
 {% endfor %}
 {% block extrascripts %}{% endblock %}
 </body>
