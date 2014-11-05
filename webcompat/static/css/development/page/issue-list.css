@@ -65,6 +65,9 @@
   padding-top:1.5em;
   padding-bottom:1.5em;
 }
+  .IssueList-search-content {
+    display:flex; 
+  }
   .IssueList-search-form {
     background-color:#F7F7F7;
     width:100%;
@@ -76,6 +79,16 @@
       color:#999898;
       font-weight:400;
       font-size:0.8em;
+    }
+  /* button */
+  .IssueList-search-button {
+    width: 1.5em;
+    font-size: 1.5em;
+    cursor: pointer;
+    opacity: 0.8;
+  }
+    .IssueList-search-button:hover {
+      opacity:1;
     }
 
 /* Sorting issues */
