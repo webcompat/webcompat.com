@@ -146,7 +146,7 @@ issueList.SearchView = Backbone.View.extend({
 
     // if it's empty and the user searches, show the default results
     // (but only once)
-    if (!searchValue.length && !this._currentSearch == '') {
+    if (!searchValue.length && this._currentSearch !== '') {
       this._currentSearch = '';
       this._isEmpty = true;
       issueList.events.trigger('issues:update');
