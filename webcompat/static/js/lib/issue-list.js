@@ -348,7 +348,10 @@ issueList.MainView = Backbone.View.extend({
     this.issueSorter = new issueList.SortingView();
     this.filter = new issueList.FilterView();
     this.paginationControls = new issueList.PaginationControlsView();
-    this.search = new issueList.SearchView();
+    // only init the SearchView if the user is logged in.
+    if (this.isLoggedIn) {
+      this.search = new issueList.SearchView();
+    }
 
     this.render();
   },
@@ -357,9 +360,13 @@ issueList.MainView = Backbone.View.extend({
     this.$el.fadeIn(_.bind(function() {
       this.filter.render();
       this.issueSorter.render();
-      this.search.render();
+
+      if (this.isLoggedIn) {
+        this.search.render();
+      }
     }, this));
-  }
+  },
+  isLoggedIn: $('body').data('username')
 });
 
 //Not using a router, so kick off things manually

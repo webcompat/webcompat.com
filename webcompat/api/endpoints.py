@@ -152,12 +152,7 @@ def get_search_results(query_string=None):
 
     We're specifically searching "issues" here, which seems to make the most
     sense. Note that the rate limit is different for Search: 30 requests per
-    minute. Non-logged in users will probably not have a great experience,
-    so we should find a way to encourage them to log in.
-
-    key_func is used as a filter to determine how to enforce rate limiting,
-    based on username. This is done so we can "share" a rate limit for
-    non-logged in users.
+    minute.
 
     If a user hits the rate limit, the Flask Limiter extension will send a
     429. See @app.error_handler(429) in views.py.
