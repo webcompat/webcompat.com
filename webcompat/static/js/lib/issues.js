@@ -184,7 +184,7 @@ issues.MainView = Backbone.View.extend({
             window.scrollTo(0, _id.offset().top);
           }
         }).error(function() {
-          var msg = 'There was an error retrieving issue comments.';
+          var msg = 'There was an error retrieving issue comments. Please reload to try again.';
           wcEvents.trigger('flash:error', {message: msg, timeout: 2000});
         });
       }
@@ -194,7 +194,7 @@ issues.MainView = Backbone.View.extend({
         location.href = "/404";
         return;
       } else {
-        msg = 'There was an error retrieving the issue.';
+        msg = 'There was an error retrieving the issue. Please reload to try again.';
         wcEvents.trigger('flash:error', {message: msg, timeout: 2000});
       }
     });
