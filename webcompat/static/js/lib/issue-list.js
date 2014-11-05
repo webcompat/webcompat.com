@@ -108,7 +108,8 @@ issueList.FilterView = Backbone.View.extend({
 issueList.SearchView = Backbone.View.extend({
   el: $('.js-issuelist-search'),
   events: {
-    'keydown': 'checkIfEmpty'
+    'keydown': 'checkIfEmpty',
+    'click .js-search-button': 'checkIfEmpty'
   },
   initialize: function() {
     issueList.events.on('search:update', _.bind(this.updateSearchQuery, this));
@@ -146,7 +147,7 @@ issueList.SearchView = Backbone.View.extend({
         issueList.events.trigger('issues:update');
       }
     }
-  }, 250),
+  }, 350),
   doSearch: _.debounce(function(value) {
     if (!this._isEmpty) {
       issueList.events.trigger('issues:update', {query: value});
