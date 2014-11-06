@@ -2,6 +2,10 @@
 
 This repository hosts the code and design which runs most of the [webcompat.com Web site](http://webcompat.com/). This is mostly a **work in progress**.
 
+## Changelog
+
+See the [changelog](https://github.com/webcompat/webcompat.com/blob/master/CHANGELOG.md) to track updates.
+
 ## Contributing
 
 Contributions in the form of code or issues are welcome. Please check out [CONTRIBUTING.md]( https://github.com/webcompat/webcompat.com/blob/master/CONTRIBUTING.md) for more instructions.
