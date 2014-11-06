@@ -68,45 +68,27 @@ All code contributions should come in the form of a [pull request](https://help.
 
 ![master](http://f.cl.ly/items/1E3f0A0I2A2b3T2L2I2c/forked.png)
 
-You'll probably want to [set up a local development environment](#working-environment-setup) to get that far.
+You'll probably want to [set up a local development environment](#working-environment-setup) to get that far. If you've already been through this process, make sure you've [set the main repo as an upstream remote](https://help.github.com/articles/configuring-a-remote-for-a-fork/) and make sure [your fork is up to date](https://help.github.com/articles/syncing-a-fork/) before sending pull requests.
 
 * Make your changes in a new branch
 
-  `git remote add upstream https://github.com/webcompat/webcompat.com.git`
-
-  `git fetch upstream`
-
-  `git checkout upstream/dev.webcompat.com`
-
   `git checkout -b name-of-fix-branch`
 
-* Create your patch; commit your changes
+* Create your patch; commit your changes. Referencing the issue number you're working on from the message is recommended.
 
-	`git commit -a`
+	`git commit -m 'Issue #123 - Fixes broken layout on mobile browsers`
 
 * Push your branch to GitHub:
 
 	`git push origin name-of-fix-branch`
 
-* In GitHub, send a pull request to `webcompat.com:dev.webcompat.com`*.
+* In GitHub, send a pull request to `webcompat.com:master`, aka the master branch of the repo you forked from. This will be the default choice.
 
-To do this, click on the Edit button at the top of the Pull Request page.
-
-![master](https://i.cloudup.com/tgBan6xVWt-2000x2000.png)
-
-Select the `dev.webcompat.com` branch on the left hand side.
-
-![change](https://i.cloudup.com/TZGd2ze3DL-2000x2000.png)
-
-And you should be good to go.
-
-![ready](https://i.cloudup.com/gE8awVDEyE-2000x2000.png)
+![master](https://cldup.com/YVlLDGItPf-3000x3000.png)
 
 * Continue discussion in the pull request.
 
-After all that, if you'd like, you can add your name to our humans.txt file.
-
-* `dev.webcompat.com` is our "development" branch where we can test, experiment, and deploy changes to staging.webcompat.com before merging into `master` and pushing to webcompat.com. The "dev" (subdomain) branch name exists for historical reasons.
+After all that, if you'd like, you can send a pull request to add your name to our humans.txt file.
 
 ## Coding Style
 
@@ -239,9 +221,9 @@ cp config.py.example config.py
 
 You can now edit `config.py` and
 
-1. provide pointers to [repo issues URIs](https://github.com/webcompat/webcompat.com/blob/dev.webcompat.com/config.py.example#L40-L44). `ISSUES_REPO_URI = "<user>/<repo>/issues"`. With the example, we chose it would be `ISSUES_REPO_URI = "miketaylr/nobody-look-at-this/issues"`
+1. provide pointers to [repo issues URIs](https://github.com/webcompat/webcompat.com/blob/master/config.py.example#L68-L73). `ISSUES_REPO_URI = "<user>/<repo>/issues"`. With the example, we chose it would be `ISSUES_REPO_URI = "miketaylr/nobody-look-at-this/issues"`
 2. It is **mandatory** to create your own personal bot for local development. The [instructions for creating a bot token](http://help.github.com/articles/creating-an-access-token-for-command-line-use) are given on GitHub. Once you created the token you can add it to the variable `BOT_OAUTH_TOKEN = ""`. This is the oauth token we use to report issues on behalf of people who don't want to give GitHub oauth access (or don't have GitHub accounts).
-3. [get the secrets](https://github.com/webcompat/webcompat.com/blob/dev.webcompat.com/config.py.example#L24-L38) for config.py
+3. [get the secrets](https://github.com/webcompat/webcompat.com/blob/master/config.py.example#L46-L66) for config.py
 
 **Note**: If you get a 404 at GitHub when clicking "Login", it means you haven't [filled in the `GITHUB_CLIENT_ID` or `GITHUB_CLIENT_SECRET`](https://github.com/webcompat/webcompat.com/blob/master/config.py.example#L47-L49).
 
@@ -391,7 +373,7 @@ stop on runlevel [06]
 
 respawn
 
-# .ini files for dev.webcompat.com (development.ini) and webcompat.com (production.ini) are in $HOME/vassals
+# .ini files for staging.webcompat.com (staging.ini) and webcompat.com (production.ini) are in $HOME/vassals
 exec /usr/local/bin/uwsgi --emperor $HOME/vassals
 ```
 
