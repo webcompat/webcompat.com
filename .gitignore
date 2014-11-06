@@ -11,6 +11,7 @@ screenshots/
 # these are our 'dist' files
 # checking them into the repo is silly
 webcompat/static/js/webcompat.js
+webcompat/static/js/diagnose.js
 webcompat/static/js/issues.js
 webcompat/static/js/issue-list.js
 webcompat/**/*.min.js

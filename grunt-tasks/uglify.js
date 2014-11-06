@@ -17,7 +17,7 @@ module.exports = function(grunt) {
         dest: '<%= jsPath %>/issue-list.min.js'
       },
       diagnose: {
-        src: '<%= jsPath %>/lib/diagnose.js',
+        src: '<%= concat.diagnose.dest %>',
         dest: '<%= jsPath %>/diagnose.min.js'
       }
    });
