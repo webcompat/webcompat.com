@@ -12,8 +12,6 @@
 @import "components/comment.css";
 @import "components/label-editor.css";
 @import "components/responsive.css";
-@import "../../../../node_modules/suitcss-components-grid/index.css";
-@import "components/grid.css";
 @import "../../../../node_modules/suitcss-utils-size/index.css";
 @import "../../../../node_modules/suitcss-utils-display/index.css";
 @import "../../../../node_modules/suitcss-utils-align/index.css";
@@ -21,6 +19,13 @@
 @import "components/issue-item.css";
 @import "components/dropdown.css";
 @import "../../../../node_modules/cssrecipes-reset/index.css";
+@import "../../../../node_modules/cssrecipes-grid/index.css";
+@import "components/grid.css";
+@import "../../../../node_modules/cssrecipes-utils/lib/all.css";
+@import "../../../../node_modules/cssrecipes-utils/lib/max.css";
+@import "../../../../node_modules/cssrecipes-utils/lib/min.css";
+@import "../../../../node_modules/cssrecipes-custom-media-queries/index.css";
+
 @import "components/flash-message.css";
 @import "components/hero.css";
 /*----------Layout----------*/
