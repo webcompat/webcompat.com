@@ -20,6 +20,13 @@ module.exports = function(grunt) {
         ],
         dest: '<%= jsPath %>/<%= pkg.name %>.js'
       },
+      diagnose: {
+        src: [
+            '<%= jsPath %>/lib/models/issue.js',
+            '<%= jsPath %>/lib/diagnose.js'
+        ],
+        dest: '<%= jsPath %>/diagnose.js'
+      },
       issues: {
         src: [
             '<%= jsPath %>/lib/models/issue.js',
