@@ -24,7 +24,8 @@ module.exports = function(grunt) {
           moment: true,
           Mousetrap: true,
           Prism: true,
-          repoPath: true
+          repoPath: true,
+          wcEvents: true
         }
       },
       beforeconcat: [
