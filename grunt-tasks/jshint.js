@@ -36,7 +36,8 @@ module.exports = function(grunt) {
         '<%= jsPath %>/lib/models/issue.js',
         '<%= jsPath %>/lib/issues.js',
         '<%= jsPath %>/lib/issue-list.js',
-        '<%= jsPath %>/lib/diagnose.js'
+        '<%= jsPath %>/lib/diagnose.js',
+        '<%= jsPath %>/lib/flash-message.js'
       ]
   });
 
