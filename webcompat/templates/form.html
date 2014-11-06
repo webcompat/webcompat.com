@@ -1,8 +1,8 @@
 <div id="new-report" class="form {% if form.errors %}form-opened{% else %}form-closed{% endif %}">
   <div class="wc-content wc-content--body">
   <form method="post" class="Report-form" action="/">
-    <div class="Grid Grid--withGutter">
-      <div class="Grid-cell u-size1of2 u-md-sizeFull {% if form.url.errors %}has-error{% endif %}">
+    <div class="cssr-Grid cssr-Grid--withGutter">
+      <div class="cssr-Grid-cell cssr-all--1of2 cssr-maxM--2of2 {% if form.url.errors %}has-error{% endif %}">
         <div class="u-formGroup">
           {{ form.url.label(class_='u-formLabel') }}
           {% if form.url.errors %}{% for error in form.url.errors %}
@@ -14,7 +14,7 @@
           </span>
         </div>
       </div>
-      <div class="Grid-cell u-size1of2 u-md-sizeFull {% if form.summary.errors %}has-error{% endif %}">
+      <div class="cssr-Grid-cell cssr-all--1of2 cssr-maxM--2of2 {% if form.summary.errors %}has-error{% endif %}">
         <div class="u-formGroup">
           {{ form.summary.label(class_='u-formLabel') }}{% if form.summary.errors %}{% for error in form.summary.errors %}
           <span class="help-inline wc-bold">{{ error }}</span>
@@ -26,8 +26,8 @@
         </div>
       </div>
     </div>
-    <div class="Grid Grid--withGutter">
-      <div class="Grid-cell u-size1of2 u-md-sizeFull">
+    <div class="cssr-Grid cssr-Grid--withGutter">
+      <div class="cssr-Grid-cell cssr-all--1of2 cssr-maxM--2of2">
         <div class="u-formGroup">
           <label id="site-owner" class="u-formLabel">Is this your site?</label>
           {% for subradio in form.site_owner %}
@@ -37,7 +37,7 @@
           {% endfor %}
         </div>
       </div>
-      <div class="Grid-cell u-size1of2 u-md-sizeFull">
+      <div class="cssr-Grid-cell cssr-all--1of2 cssr-maxM--2of2">
         <div class="u-formGroup">
           <label class="u-formLabel">What seems to be the trouble?</label>
           {% for subradio in form.problem_category %}
@@ -48,13 +48,13 @@
         </div>
       </div>
     </div>
-    <div class="Grid Grid--withGutter">
-      <div class="Grid-cell u-size1of2 u-md-sizeFull">
+    <div class="cssr-Grid cssr-Grid--withGutter">
+      <div class="cssr-Grid-cell cssr-all--1of2 cssr-maxM--2of2">
         <div class="u-formGroup">
           {{ form.browser.label(class_='u-formLabel') }} {{ form.browser(class_='u-formInput') }}
         </div>
       </div>
-      <div class="Grid-cell u-size1of2 u-md-sizeFull">
+      <div class="cssr-Grid-cell cssr-all--1of2 cssr-maxM--2of2">
         <div class="u-formGroup">
           {{ form.os.label(class_='u-formLabel') }} {{ form.os(class_='u-formInput') }}
         </div>
@@ -73,11 +73,11 @@
         {{ form.username(class_='u-formInput') }}
       </div>
     </div>
-    <div class="Grid Grid--withGutter Button-group">
-      <div class="Grid-cell u-size1of2 u-sm-sizeFull Button-github">
+    <div class="cssr-Grid cssr-Grid--withGutter Button-group">
+      <div class="cssr-Grid-cell cssr-all--1of2 cssr-maxS--2of2 Button-github">
           <button name="submit-type" value="github-auth-report" class="Button Button--default" id="submitgithub" type="submit">Report via Github</button>
       </div>
-      <div class="Grid-cell u-size1of2 u-sm-sizeFull Button-anon">
+      <div class="cssr-Grid-cell cssr-all--1of2 cssr-maxS--2of2 Button-anon">
           <button name="submit-type" value="github-proxy-report" class="Button Button--action" id="submitanon">Report Anonymously</button>
       </div>
     </div>
