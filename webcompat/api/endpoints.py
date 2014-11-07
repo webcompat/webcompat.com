@@ -35,7 +35,6 @@ REPO_PATH = ISSUES_PATH[:-7]
 
 
 def get_username():
-  get_user_info()
   return session.get('username', 'proxy-user')
 
 
