@@ -262,6 +262,7 @@ issueList.IssueView = Backbone.View.extend({
     }));
     return this;
   },
+  _isLoggedIn: $('body').data('username'),
   initPaginationLinks: function() {
     // if either the next or previous page numbers are null
     // disable the buttons and add .is-disabled classes.
@@ -284,7 +285,9 @@ issueList.IssueView = Backbone.View.extend({
     // "search:update" event to populate the view with search results
     // for the given label.
     var labelFilter = 'label:' + $(e.target).text();
-    issueList.events.trigger('search:update', labelFilter);
+    if (this._isLoggedIn) {
+      issueList.events.trigger('search:update', labelFilter);
+    }
     issueList.events.trigger('issues:update', {query: labelFilter});
     e.preventDefault();
   },
@@ -340,7 +343,7 @@ issueList.MainView = Backbone.View.extend({
     this.filter = new issueList.FilterView();
     this.paginationControls = new issueList.PaginationControlsView();
     // only init the SearchView if the user is logged in.
-    if (this.isLoggedIn) {
+    if (this._isLoggedIn) {
       this.search = new issueList.SearchView();
     }
 
@@ -352,12 +355,12 @@ issueList.MainView = Backbone.View.extend({
       this.filter.render();
       this.issueSorter.render();
 
-      if (this.isLoggedIn) {
+      if (this._isLoggedIn) {
         this.search.render();
       }
     }, this));
   },
-  isLoggedIn: $('body').data('username')
+  _isLoggedIn: $('body').data('username')
 });
 
 //Not using a router, so kick off things manually
