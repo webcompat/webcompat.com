@@ -11,8 +11,8 @@
       <p>Check the status of your bug here: <a href="http://github.com/{{ config['ISSUES_REPO_URI'] }}/{{ number }}">http://github.com/{{ config['ISSUES_REPO_URI'] }}/{{ number }}</a></p>
       {% endif %}
       <p><a href="{{ url_for("index") }}">Return back home</a>.</p>
-      <a class="Button Button--action" id="twittershare" href="https://facebook.com/sharer/sharer.php?&t={{ encoded_text }}&u={{ encoded_issue }}" target="_blank">Share on Facebook</a>
-      <a class="Button Button--action" id="twittershare" href="https://twitter.com/intent/tweet?text={{ encoded_text }}&url={{ encoded_issue }}&via=webcompat" target="_blank">Share on Twitter</a>
+      <a class="Button Button--action" href="https://facebook.com/sharer/sharer.php?u={{ encoded_issue }}" target="_blank">Share on Facebook</a>
+      <a class="Button Button--action" href="https://twitter.com/intent/tweet?text={{ encoded_text }}&url={{ encoded_issue }}&via=webcompat" target="_blank">Share on Twitter</a>
     </div>
   </div>
 {% endblock %}
