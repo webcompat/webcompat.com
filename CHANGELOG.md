@@ -1,8 +1,8 @@
 ## 1.0.1 - 2014-11-10
 
-Update docs with new review process - [Issue #360](https://github.com/webcompat/webcompat.com/issues/360)
-Add experimental Share on Facebook link - [Issue #352](https://github.com/webcompat/webcompat.com/issues/352)
-Bug fix: clicking on label when not logged in shouldn't throw [Issue #345](https://github.com/webcompat/webcompat.com/issues/345)
+* Update docs with new review process - [Issue #360](https://github.com/webcompat/webcompat.com/issues/360)
+* Add experimental Share on Facebook link - [Issue #352](https://github.com/webcompat/webcompat.com/issues/352)
+* Bug fix: clicking on label when not logged in shouldn't throw [Issue #345](https://github.com/webcompat/webcompat.com/issues/345)
 
 ## 1.0.0 - 2014-11-06
 
