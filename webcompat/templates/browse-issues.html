@@ -2,11 +2,21 @@
   <div class="wc-content" id="browse-issues">
     <h2>Browse Issues</h2>
     <span class="key">
-      <span class="IssueItem--untriaged">Untriaged</span>
-      <span class="IssueItem--need">Needs&nbsp;Diagnosis</span>
-      <span class="IssueItem--ready">Ready&nbsp;for&nbsp;Outreach</span>
-      <span class="IssueItem--sitewait">Site&nbsp;Contacted</span>
-      <span class="IssueItem--closed">Closed</span>
+      <span class="IssueItem--untriaged">
+        <a href="{{ url_for('show_issues') }}?untriaged=1">Untriaged</a>
+      </span>
+      <span class="IssueItem--need">
+        <a href="{{ url_for('show_issues') }}?needsdiagnosis=1">Needs&nbsp;Diagnosis</a>
+      </span>
+      <span class="IssueItem--ready">
+        <a href="{{ url_for('show_issues') }}?contactready=1">Ready&nbsp;for&nbsp;Outreach</a>
+      </span>
+      <span class="IssueItem--sitewait">
+        <a href="{{ url_for('show_issues') }}?sitewait=1">Site&nbsp;Contacted</a>
+      </span>
+      <span class="IssueItem--closed">
+        <a href="{{ url_for('show_issues') }}?closed=1">Closed</a>
+      </span>
     </span>
     {% include "browse-issues/my-issues.html" %}
     <div class="cssr-Grid cssr-Grid--withGutter">
