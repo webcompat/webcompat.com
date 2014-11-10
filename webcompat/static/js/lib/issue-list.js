@@ -53,6 +53,9 @@ issueList.FilterView = Backbone.View.extend({
   initialize: function() {
     //TODO: move this model out into its own file once we have
     //actual data for issues count
+
+    issueList.events.on('filter:activate', _.bind(this.toggleFilter, this));
+
     var options = [
       {title: "View all open issues", params: ""},
       {title: "View all issues", params: "filter=all"}
@@ -90,7 +93,15 @@ issueList.FilterView = Backbone.View.extend({
     return this;
   },
   toggleFilter: function(e) {
-    var btn = $(e.target);
+    var btn;
+    // Stringy e comes from triggered filter:activate event
+    if (typeof e === "string") {
+      btn = $('[data-filter=' + e + ']');
+    } else {
+      // We get a regular event object from click events.
+      btn = $(e.target);
+    }
+
     btn.toggleClass('is-active')
        .siblings().removeClass('is-active');
 
@@ -229,7 +240,8 @@ issueList.IssueView = Backbone.View.extend({
   },
   initialize: function() {
     this.issues = new issueList.IssueCollection();
-    this.fetchAndRenderIssues();
+    // check to see if we should pre-filter results
+    this.checkParams();
 
     // set up event listeners.
     issueList.events.on('issues:update', _.bind(this.updateIssues, this));
@@ -237,6 +249,23 @@ issueList.IssueView = Backbone.View.extend({
     issueList.events.on('paginate:previous', _.bind(this.requestPreviousPage, this));
   },
   template: _.template($('#issuelist-issue-tmpl').html()),
+  checkParams: function() {
+    // Assumes a URI like: /?untriaged=1 and activates the untriaged filter,
+    // for example.
+    var category;
+    var filterRegex = /\?(untriaged|needsdiagnosis|contactready|sitewait|closed)=1/;
+    if (category = window.location.search.match(filterRegex)) {
+      // If there was a match, load the relevant results and fire an event
+      // to notify the button to activate.
+      this.updateIssues(category[1]);
+      _.delay(function() {
+        issueList.events.trigger('filter:activate', category[1]);
+      }, 0);
+    } else {
+      // Otherwise, load default issues.
+      this.fetchAndRenderIssues();
+    }
+  },
   fetchAndRenderIssues: function() {
     var headers = {headers: {'Accept': 'application/json'}};
     this.issues.fetch(headers).success(_.bind(function() {
