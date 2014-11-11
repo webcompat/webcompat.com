@@ -1,6 +1,7 @@
 {%- extends "layout.html" -%}
 {%- block body -%}
 {% include "topbar.html" %}
+<main role="main">
 <div class="wc-Hero">
   <div class="wc-content">
     <div class="wc-Hero-section wc-Hero-section--left wc-Hero-section--home ">
@@ -92,6 +93,7 @@
       </div>
   </div>
 </div>
+</main>
 {% endblock %}
 {%- block extrascripts -%}
 {%- if config.PRODUCTION -%}
