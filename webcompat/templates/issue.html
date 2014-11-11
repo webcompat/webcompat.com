@@ -120,7 +120,7 @@
 <script>var issueNumber={{ number }};
 var repoPath="{{config['ISSUES_REPO_URI']}}"</script>
 {%- if config.PRODUCTION %}
-<script src="{{ url_for('static', filename='js/issues.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/issues.min.js') }}?{{ bust_cache() }}"></script>
 {% else %}
 <script src="{{ url_for('static', filename='js/lib/models/issue.js') }}"></script>
 <script src="{{ url_for('static', filename='js/lib/models/comment.js') }}"></script>
