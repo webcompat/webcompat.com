@@ -18,26 +18,6 @@
   display: inline;
   margin-right: 0.5em;
 }
-.key {
-  position: relative;
-  bottom:0.1em;
-}
-
-@media (--viewport-770px) {
-  .key {
-    display: block;
-    margin-top: 1em;
-  }
-}
-.key span {
-  padding: 0.3em 1em;
-}
-
-@media (--viewport-990px) {
-  .key span {
-    padding: 0 0.25em 0 0.5em;
-  }
-}
 .more-issues {
   text-align: center;
   clear: left;

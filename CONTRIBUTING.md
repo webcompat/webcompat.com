@@ -86,7 +86,15 @@ You'll probably want to [set up a local development environment](#working-enviro
 
 ![master](https://cldup.com/YVlLDGItPf-3000x3000.png)
 
+When sending the pull request do not forget to call out someone for review by using the following convention:
+
+`r? @miketaylr`
+
+This will notify the person that your request is waiting for a review for merging. Ask a review only by one person, this will avoid misunderstandings and the ball is dropped. (Python: karlcow, miketaylr. JavaScript: magsout, miketaylr, tagawa CSS: magsout).
+
 * Continue discussion in the pull request.
+
+The discussion might lead to modify or abandon this specific pull request. This is the place where you can have a code review.
 
 After all that, if you'd like, you can send a pull request to add your name to our humans.txt file.
 

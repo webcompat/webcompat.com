@@ -53,6 +53,6 @@
   display:none;
 }
 .wc-sronly {
-	position: absolute;
-	top: -999px;
+  position: absolute;
+  top: -999px;
 }
