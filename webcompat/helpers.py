@@ -6,6 +6,7 @@
 
 import datetime
 import math
+import re
 import urlparse
 
 from babel.dates import format_timedelta
@@ -103,7 +104,7 @@ def get_headers(response):
     headers = {'etag': response.headers.get('etag'),
                'cache-control': response.headers.get('cache-control'),
                'content-type': JSON_MIME,
-               'link': response.headers.get('link')}
+               'link': sanitize_token(response.headers.get('link'))}
     return headers
 
 
@@ -134,3 +135,7 @@ def get_referer(request):
             return request.referrer
     else:
         return None
+
+def sanitize_token(header):
+    '''Strip all access_token parameters, if any, from a passed in header.'''
+    return re.sub(r'(access_token=[a-z0-9]+)&*', '', header)
