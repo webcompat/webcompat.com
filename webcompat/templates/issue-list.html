@@ -95,7 +95,7 @@
 
 {% endblock %}
 {% block extrascripts %}
-{%- if config.PRODUCTION %}
+{%- if config.PRODUCTION or config.DEVELOPMENT -%}
 <script src="{{ url_for('static', filename='js/issue-list.min.js') }}"></script>
 {% else %}
 <script src="{{ url_for('static', filename='js/lib/models/issue.js') }}"></script>
