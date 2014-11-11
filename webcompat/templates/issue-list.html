@@ -57,24 +57,28 @@
     <div class="IssueList-displayed">
       <div class="wc-content js-issue-list">
         <script type="text/template" id="issuelist-issue-tmpl">
-        <% _.each(issues, function(issue) { %>
-        <div class="IssueItem IssueItem--<%= issue.stateClass %> IssueItem--large u-table">
-          <div class="IssueItem-section">
-            <p class="IssueItem-header">
-              <a href="/issues/<%= issue.number %>"><span class="IssueItem-count">Issue <%= issue.number %></span>: <%- issue.title %></a>
-            </p>
-            <p>
-              <span class="IssueItem-metadata">Opened: <time><%= issue.createdAt %></time></span>
-              <span class="IssueItem-metadata">Comments: <%= issue.commentNumber %></span>
-            </p>
+        <% if (issues.length) { %>
+          <% _.each(issues, function(issue) { %>
+          <div class="IssueItem IssueItem--<%= issue.stateClass %> IssueItem--large u-table">
+            <div class="IssueItem-section">
+              <p class="IssueItem-header">
+                <a href="/issues/<%= issue.number %>"><span class="IssueItem-count">Issue <%= issue.number %></span>: <%- issue.title %></a>
+              </p>
+              <p>
+                <span class="IssueItem-metadata">Opened: <time><%= issue.createdAt %></time></span>
+                <span class="IssueItem-metadata">Comments: <%= issue.commentNumber %></span>
+              </p>
+            </div>
+            <div class="IssueItem-section">
+              <span class="IssueItem-label"><% _.each(issue.labels, function(label) { %>
+                <a href="#" class="wc-bold"><%= label.name %></a>
+              <% }); %></span>
+            </div>
           </div>
-          <div class="IssueItem-section">
-            <span class="IssueItem-label"><% _.each(issue.labels, function(label) { %>
-              <a href="#" class="wc-bold"><%= label.name %></a>
-            <% }); %></span>
-          </div>
-        </div>
-        <% }); %>
+          <% }); %>
+        <% } else { %>
+          <p>No results found.</p>
+        <% } %>
         </script>
       </div>
     </div>
