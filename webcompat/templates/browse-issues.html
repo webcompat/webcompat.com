@@ -1,13 +1,23 @@
 <div id="browse-issues-wrapper">
   <div class="wc-content" id="browse-issues">
     <h2>Browse Issues</h2>
-    <span class="key">
-      <span class="IssueItem--untriaged">Untriaged</span>
-      <span class="IssueItem--need">Needs&nbsp;Diagnosis</span>
-      <span class="IssueItem--ready">Ready&nbsp;for&nbsp;Outreach</span>
-      <span class="IssueItem--sitewait">Site&nbsp;Contacted</span>
-      <span class="IssueItem--closed">Closed</span>
-    </span>
+    <ul class="cssr-ResetList u-inlineBlock">
+      <li class="IssueItem IssueItem--list IssueItem--untriaged">
+        <a href="{{ url_for('show_issues') }}?untriaged=1">Untriaged</a>
+      </li>
+      <li class="IssueItem IssueItem--list IssueItem--need">
+        <a href="{{ url_for('show_issues') }}?needsdiagnosis=1">Needs&nbsp;Diagnosis</a>
+      </li>
+      <li class="IssueItem IssueItem--list IssueItem--ready">
+        <a href="{{ url_for('show_issues') }}?contactready=1">Ready&nbsp;for&nbsp;Outreach</a>
+      </li>
+      <li class="IssueItem IssueItem--list IssueItem--sitewait">
+        <a href="{{ url_for('show_issues') }}?sitewait=1">Site&nbsp;Contacted</a>
+      </li>
+      <li class="IssueItem IssueItem--list IssueItem--closed">
+        <a href="{{ url_for('show_issues') }}?closed=1">Closed</a>
+      </li>
+    </ul>
     {% include "browse-issues/my-issues.html" %}
     <div class="cssr-Grid cssr-Grid--withGutter">
       {% include "browse-issues/untriaged.html" %}
