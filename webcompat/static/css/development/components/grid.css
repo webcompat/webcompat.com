@@ -1,5 +1,5 @@
 /* Grid configuration */
 :root {
-  --cssr-Grid-baseFontSize : 1.6rem;
-   --cssr-Grid-gutter : 2%;
+  --r-Grid-baseFontSize : 1.6rem;
+   --r-Grid-gutter : 2%;
 }

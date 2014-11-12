@@ -1,7 +1,7 @@
 <div id="browse-issues-wrapper">
   <div class="wc-content" id="browse-issues">
     <h2>Browse Issues</h2>
-    <ul class="cssr-ResetList u-inlineBlock">
+    <ul class="r-ResetList u-inlineBlock">
       <li class="IssueItem IssueItem--list IssueItem--untriaged">
         <a href="{{ url_for('show_issues') }}?untriaged=1">Untriaged</a>
       </li>
@@ -19,11 +19,11 @@
       </li>
     </ul>
     {% include "browse-issues/my-issues.html" %}
-    <div class="cssr-Grid cssr-Grid--withGutter">
+    <div class="r-Grid r-Grid--withGutter">
       {% include "browse-issues/untriaged.html" %}
       {% include "browse-issues/needs-diagnosis.html" %}
     </div>
-    <div class="cssr-Grid cssr-Grid--withGutter">
+    <div class="r-Grid r-Grid--withGutter">
      {% include "browse-issues/ready-for-outreach.html" %}
      {% include "browse-issues/site-contacted.html" %}
     </div>
