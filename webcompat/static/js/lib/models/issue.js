@@ -129,6 +129,7 @@ issueList.IssueCollection = Backbone.Collection.extend({
     if (header == null) {
       return null;
     }
+    var re = new RegExp('page=(\\d)>;\\s+rel=\\"' + relation + '\\"');
     var rel;
     if (rel = header.match(re)) {
       return rel[1];
