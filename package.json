@@ -20,11 +20,11 @@
     "intern": "2.0.1",
     "grunt-contrib-imagemin": "~0.7.1",
     "grunt-cssnext" : "^0.1.1",
-    "suitcss-utils-display" : "*",
-    "suitcss-utils-align" : "*",
-    "cssrecipes-reset" : "*",
-    "cssrecipes-utils" : "*",
-    "cssrecipes-grid" : "*",
-    "cssrecipes-custom-media-queries" : "*"
+    "suitcss-utils-display" : "^0.4.0",
+    "suitcss-utils-align" : "^0.2.0",
+    "cssrecipes-reset" : "^0.4.0",
+    "cssrecipes-utils" : "^0.4.0",
+    "cssrecipes-grid" : "^0.4.0",
+    "cssrecipes-custom-media-queries" : "0.3.0"
   }
 }
