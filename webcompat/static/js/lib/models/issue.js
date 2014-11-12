@@ -177,9 +177,6 @@ issueList.IssueCollection = Backbone.Collection.extend({
       return null;
     }
   },
-  getLastPageNumber: function() {
-    return this.getRelValue(this.linkHeader, 'last');
-  },
   getNextPageNumber: function() {
     return this.getPageFromRel('next');
   },
