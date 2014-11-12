@@ -24,9 +24,9 @@
 @import "../../../../node_modules/cssrecipes-utils/lib/max.css";
 @import "../../../../node_modules/cssrecipes-utils/lib/min.css";
 @import "../../../../node_modules/cssrecipes-custom-media-queries/index.css";
-
 @import "components/flash-message.css";
 @import "components/hero.css";
+@import "components/pagination.css";
 /*----------Layout----------*/
 @import "layout/body.css";
 @import "layout/utilities.css";
