@@ -26,7 +26,7 @@
   <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon/favicon-196x196.png') }}" sizes="196x196">
   <meta name="msapplication-TileColor" content="#e4bc05">
   <meta name="msapplication-TileImage" content="{{ url_for('static', filename='favicon/mstile-144x144.png') }}">
-{%- if config.PRODUCTION -%}
+{%- if config.PRODUCTION or config.DEVELOPMENT -%}
   <link href="{{ url_for('static', filename='css/webcompat.min.css') }}?{{ bust_cache() }}" type="text/css" rel="stylesheet">
 {%- else %}
   <link href="{{ url_for('static', filename='css/webcompat.dev.css') }}" type="text/css" rel="stylesheet">
@@ -37,7 +37,7 @@
   {% block body %}{% endblock %}
   {% include "shared/footer.html" %}
 </div>
-{%- if config.PRODUCTION %}
+{%- if config.PRODUCTION or config.DEVELOPMENT -%}
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),

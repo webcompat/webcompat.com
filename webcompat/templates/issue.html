@@ -119,7 +119,7 @@
 {% block extrascripts %}
 <script>var issueNumber={{ number }};
 var repoPath="{{config['ISSUES_REPO_URI']}}"</script>
-{%- if config.PRODUCTION %}
+{%- if config.PRODUCTION or config.DEVELOPMENT -%}
 <script src="{{ url_for('static', filename='js/issues.min.js') }}"></script>
 {% else %}
 <script src="{{ url_for('static', filename='js/lib/models/issue.js') }}"></script>
