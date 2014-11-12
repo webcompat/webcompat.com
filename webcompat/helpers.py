@@ -105,7 +105,7 @@ def get_headers(response):
                'content-type': JSON_MIME}
 
     if response.headers.get('link'):
-        headers.update({'link': response.headers.get('link')})
+        headers.update({'link': sanitize_link(response.headers.get('link'))})
     return headers
 
 
@@ -136,3 +136,22 @@ def get_referer(request):
             return request.referrer
     else:
         return None
+
+
+def sanitize_link(link_header):
+    '''Remove any oauth tokens from the Link header that GitHub gives to us.'''
+    links_list = link_header.split(',')
+    clean_links_list = []
+    for link in links_list:
+        uri_info, rel_info = link.split(';')
+        uri_info = uri_info.strip()
+        uri = uri_info[1:-1]
+        uri_group = urlparse.urlparse(uri)
+        parameters = uri_group.query.split('&')
+        clean_parameters_list = [parameter for parameter in parameters
+                                 if not parameter.startswith('access_token=')]
+        clean_parameters = '&'.join(clean_parameters_list)
+        clean_uri = uri_group._replace(query=clean_parameters)
+        clean_links_list.append('<{0}>; {1}'.format(
+            urlparse.urlunparse(clean_uri), rel_info))
+    return ', '.join(clean_links_list)
