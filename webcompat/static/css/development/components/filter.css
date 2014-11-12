@@ -1,0 +1,56 @@
+/*----------wc-Filter ----------*/
+
+/* wc-Filtering issues */
+.wc-Filter {
+  display:inline-block;
+  vertical-align:middle;
+  background-image:none;
+  background-color:transparent;
+  font-family:var(--base-font);
+  font-size:var(--base-font-size);
+  border-width:1px;
+  border-style:solid;
+  cursor:pointer;
+  padding:.4em;
+  margin:0 .8em .4em 0;
+  color:#404040;
+}
+  .wc-Filter:hover,
+  .wc-Filter.is-active {
+    color:#fff;
+  }
+  .wc-Filter--untriaged {
+    border-color:var(--wc-state-untriaged);
+  }
+  .wc-Filter--untriaged:hover,
+  .wc-Filter--untriaged.is-active {
+    background-color:var(--wc-state-untriaged);
+  }
+  .wc-Filter--need {
+    border-color:var(--wc-state-need);
+  }
+  .wc-Filter--need:hover,
+  .wc-Filter--need.is-active {
+    background-color:var(--wc-state-need);
+  }
+  .wc-Filter--ready {
+    border-color:var(--wc-state-ready);
+  }
+  .wc-Filter--ready:hover,
+  .wc-Filter--ready.is-active {
+    background-color:var(--wc-state-ready);
+  }
+  .wc-Filter--sitewait {
+    border-color:var(--wc-state-sitewait);
+  }
+  .wc-Filter--sitewait:hover,
+  .wc-Filter--sitewait.is-active {
+    background-color:var(--wc-state-sitewait);
+  }
+  .wc-Filter--close {
+    border-color:var(--wc-state-close);
+  }
+  .wc-Filter--close:hover,
+  .wc-Filter--close.is-active {
+    background-color:var(--wc-state-close);
+  }
