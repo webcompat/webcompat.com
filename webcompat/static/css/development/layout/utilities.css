@@ -52,3 +52,7 @@
 .wc-hidden {
   display:none;
 }
+.wc-sronly {
+  position: absolute;
+  top: -999px;
+}

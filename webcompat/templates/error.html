@@ -2,12 +2,12 @@
 {% block body %}
 <div class="page page--404">
   {% include "shared/nav.html" %}
-  <div class="wc-content wc-content--body" id="pageerror">
-    <h2>Yikes!  {{ error_message }} ({{ error_code }})</h2>
-    <h3>(sound of broken glass)</h3>
+  <main class="wc-content wc-content--body" id="pageerror" role="main">
+    <h1>Yikes!  {{ error_message }} ({{ error_code }})</h1>
+    <h2>(sound of broken glass)</h2>
     <br>
     <br>
     <a class="Button Button--action" href="/">Return home</a>
-    </div>
+    </main>
 </div>
 {% endblock %}

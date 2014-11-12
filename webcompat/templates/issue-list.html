@@ -2,10 +2,11 @@
 {% block body %}
   <div class="IssueList js-issue-page" data-username="{{ session.username }}">
   {% include "shared/nav.html" %}
+  <main role="main">
     <div class="wc-content wc-content--body js-issuelist-filter">
       <script type="text/template" id="issuelist-filter-tmpl">
       <!-- Temporary Header -->
-      <h2 class="wc-margin-bottom">Issues</h2>
+      <h1 class="wc-margin-bottom">Issues</h1>
       <div class="Dropdown Dropdown--large js-dropdown-wrapper"></div>
       <div>
         <button type="button" class="wc-Filter wc-Filter--untriaged" data-filter="untriaged">
@@ -30,8 +31,9 @@
     <div class="IssueList-search js-issuelist-search">
       <script type="text/template" id="issuelist-search-tmpl">
       <div class="wc-content IssueList-search-content">
-        <input type="text" class="IssueList-search-form mousetrap" placeholder="Search by keyword">
-        <button role="button" type="submit" class="cssr-ResetButton IssueList-search-button js-search-button"><span class="icon icon-search"></span></button>
+          <label for="IssueList-search-input" class="wc-sronly">Search By Keyword</label>
+        <input type="text" id="IssueList-search-input" class="IssueList-search-form mousetrap" placeholder="Search by keyword">
+        <button role="button" type="submit" class="cssr-ResetButton IssueList-search-button js-search-button"><span class="wc-sronly">Search</span><span class="icon icon-search"></span></button>
       </div>
       </script>
     </div>
@@ -85,6 +87,7 @@
         </script>
       </div>
     </div>
+     </main>
   </div>
 
 <script type="text/template" id="dropdown-tmpl">

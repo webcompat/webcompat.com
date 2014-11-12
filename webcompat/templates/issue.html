@@ -2,15 +2,16 @@
 {% block body %}
   <div class="page page--issue">
   {% include "shared/nav.html" %}
-    <div class="wc-content wc-content--body Issue">
-      <h2 class="Issue-title">
+    <main class="wc-content wc-content--body Issue" role="main">
+      <h1 class="Issue-title">
       <script type="text/template" id="title-tmpl">
         <a class="Issue-back" href="{{ url_for("show_issues") }}" title="All issues">
+            <span class="wc-sronly">All Issues</span>
           <span class="icon icon-arrow-left"></span>
         </a>
         Issue <%= number %>: <%- title %>
       </script>
-      </h2>
+      </h1>
       <div class="Issue-wrapper">
         <!-- Issue Date -->
         <div class="Issue-create">
@@ -34,7 +35,7 @@
         <script type="text/template" id="issue-labels-tmpl">
           <span class="Label Label--title">Labels</span>
           {% if session.user_id and session.avatar_url %}
-            <span class="LabelEditor-wrapper"><button class="LabelEditor-launcher icon icon-gear"></button></span>
+            <span class="LabelEditor-wrapper"><button class="LabelEditor-launcher icon icon-gear"><span class="wc-sronly">Edit Labels</span></button></span>
           {% endif %}
           <span class="Label-list">
           <% _.each(labels, function(label) { %>
@@ -73,7 +74,8 @@
           <div class="Comment-body Comment-body--caret">
             <!--<div class="Comment-drag">-->
               <!-- TODO(miket) <div class="comment__dd">Attach images by dragging &amp; dropping, <span class="comment__dd__label">selecting them</span> or pasting form the clipboad </div> -->
-              <textarea class="Comment-wrapper Comment-text" placeholder="Leave a comment"></textarea>
+              <label for="Comment-text" class="wc-sronly">Comment Text</label>
+                 <textarea id="Comment-text" class="Comment-wrapper Comment-text" placeholder="Leave a comment"></textarea>
             <!--</div>-->
             <div class="Comment-button">
               <button class="Button Button--action">
@@ -89,7 +91,7 @@
         <p class="Issue-login">Please <a href="{{ url_for('login') }}">login</a> to edit issues.</p>
         {% endif %}
        </div>
-    </div>
+    </main>
   </div>
 
   <script type="text/template" id="label-editor-tmpl">
