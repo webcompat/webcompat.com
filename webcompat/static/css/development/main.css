@@ -27,7 +27,7 @@
 @import "components/flash-message.css";
 @import "components/hero.css";
 @import "components/filter.css";
-
+@import "components/pagination.css";
 /*----------Layout----------*/
 @import "layout/body.css";
 @import "layout/utilities.css";

@@ -1,0 +1,23 @@
+/* Dropdown */
+.wc-Pagination {
+  font-size:var(--base-font-size);
+  text-align:right;
+}
+
+  .wc-Pagination-link {
+    display:inline-block;
+    cursor:pointer;
+    vertical-align:middle;
+    padding: 0.7em 0px;
+    font-weight:700;
+    font-size:1em;
+    margin-top:.2em;
+  }
+    .wc-Pagination-link.is-disabled {
+      cursor:inherit;
+      opacity:.6;
+      text-decoration:none;
+    }
+  .wc-Pagination-link + .wc-Pagination-link {
+    margin-left:1em;
+  }

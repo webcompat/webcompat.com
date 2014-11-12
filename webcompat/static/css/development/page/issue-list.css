@@ -42,28 +42,6 @@
   background-color:#F0F0F0;
   padding:3em 0 .5em 0;
 }
-/* Pagniation */
-.IssueList-pagination {
-  text-align:right;
-  font-size:1.6rem;
-}
-  .IssueList-pagination-link {
-    display:inline-block;
-    cursor:pointer;
-    vertical-align:middle;
-    padding: 0.7em 0px;
-    font-weight:700;
-    font-size:1em;
-    margin-top:.2em;
-  }
-    .IssueList-pagination-link.is-disabled {
-      cursor:inherit;
-      opacity:.6;
-      text-decoration:none;
-    }
-  .IssueList-pagination-link + .IssueList-pagination-link {
-    margin-left:1em;
-  }
 
 /* List of issue */
 .IssueList-displayed {
