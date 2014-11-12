@@ -10,7 +10,7 @@ dl, dt, dd, ol, ul, li,
 fieldset, form, label, legend,
 table, caption, tbody, tfoot, thead, tr, th, td,
 article, aside, canvas, details, embed,
-figure, figcaption, footer, header, hgroup,
+figure, figcaption, footer, header, hgroup, main
 menu, nav, output, ruby, section, summary,
 time, mark, audio, video {
   margin: 0;
@@ -20,7 +20,9 @@ time, mark, audio, video {
   font: inherit;
   vertical-align: baseline;
 }
-
+main {
+  display: block;
+}
 
 /*----------Global Styles----------*/
 html {
@@ -33,13 +35,10 @@ html {
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
 }
-
 *, *:before, *:after {
   box-sizing: inherit;
 }
-body {
 
-}
 /*viewport */
 @viewport {
   width: device-width;
@@ -100,6 +99,7 @@ h4 {
 p {
   font-size: 1em;
 }
+
 /*----------Link Styles----------*/
 a {
   color: var(--base-link-color);
