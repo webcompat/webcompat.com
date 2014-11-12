@@ -1,9 +1,9 @@
-<div id="my-issues" class="cssr-Grid cssr-Grid--withGutter">
+<div id="my-issues" class="r-Grid r-Grid--withGutter">
   <script type="text/template" id="my-issues-tmpl">
   <h3 class="wc-titleIssue">Submitted by Me</h3>
   <% if (userIssues.length) { %>
     <% _.each(userIssues, function(issue) { %>
-    <div class="cssr-Grid-cell cssr-all--1of2 cssr-maxM--2of2">
+    <div class="r-Grid-cell r-all--1of2 r-maxM--2of2">
       <div class="IssueItem IssueItem--<%= issue.stateClass %>">
         <p class="IssueItem-header">
           <a href="/issues/<%= issue.number %>"><span class="IssueItem-count">Issue <%= issue.number %></span>: <%- issue.title %></a>
