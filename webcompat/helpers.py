@@ -105,7 +105,7 @@ def get_headers(response):
                'content-type': JSON_MIME}
 
     if response.headers.get('link'):
-        headers.update({'link': sanitize_link(response.headers.get('link'))})
+        headers['link'] = sanitize_link(response.headers.get('link'))
     return headers
 
 
