@@ -174,7 +174,7 @@ We use [Grunt](http://gruntjs.com/) as a task runner to perform certain things (
 
 ``` bash
 # clone the repo
-git clone git@github.com:username/webcompat.com.git
+git clone https://github.com/webcompat/webcompat.com.git
 # change to directory
 cd webcompat.com
 # initializing project
