@@ -90,7 +90,7 @@ define([
         .end()
         .findAllByCssSelector('.IssueItem.IssueItem--need')
         .then(function (elms) {
-          assert.equal(elms.length, 4, '4 issues should be displayed');
+          assert.equal(elms.length, 5, '5 issues should be displayed');
         })
         .end()
         .findByCssSelector('.IssueItem--need .IssueItem-count').getVisibleText()
@@ -126,7 +126,7 @@ define([
         .end()
         .findAllByCssSelector('.IssueItem.IssueItem--untriaged')
         .then(function (elms) {
-          assert.equal(elms.length, 4, '4 issues should be displayed');
+          assert.equal(elms.length, 5, '5 issues should be displayed');
         })
         .end()
         .findByCssSelector('.IssueItem--untriaged .IssueItem-count').getVisibleText()
@@ -162,7 +162,7 @@ define([
         .end()
         .findAllByCssSelector('.IssueItem.IssueItem--sitewait')
         .then(function (elms) {
-          assert.equal(elms.length, 4, '4 issues should be displayed');
+          assert.equal(elms.length, 5, '5 issues should be displayed');
         })
         .end()
         .findByCssSelector('.IssueItem--sitewait .IssueItem-count').getVisibleText()
@@ -198,7 +198,7 @@ define([
         .end()
         .findAllByCssSelector('.IssueItem.IssueItem--ready')
         .then(function (elms) {
-          assert.equal(elms.length, 4, '4 issues should be displayed');
+          assert.equal(elms.length, 5, '5 issues should be displayed');
         })
         .end()
         .end()
