@@ -123,9 +123,15 @@ issueList.IssueCollection = Backbone.Collection.extend({
     return response;
   },
   getRelValue: function(header, relation) {
+    // GitHub will only send us a Link header if pagination is possible.
+    // if we return early with null, we'll know that next and prev pagination
+    // should be disabled.
+    if (header == null) {
+      return null;
+    }
     // we only get the page number, rather than the link href, becuase we still
     // need to proxy requests between our server and GitHub's.
-    var re = new RegExp('page=(\\d)>;\\srel=\\"' + relation + '\\"');
+    var re = new RegExp('page=(\\d)>;\\s+rel=\\"' + relation + '\\"');
     var rel;
     if (rel = header.match(re)) {
       return rel[1];
