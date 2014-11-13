@@ -99,7 +99,7 @@
       url: '/api/issues/' + this.get('number') + '/labels',
       success: function(response) {
         //update model after success
-        self.set('labels', JSON.parse(response));
+        self.set('labels', response);
       },
       error: function() {
         $('<div></div>', {
