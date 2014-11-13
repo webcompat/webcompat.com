@@ -152,7 +152,7 @@ issueList.IssueCollection = Backbone.Collection.extend({
         var source = sourceRegExp.exec(entry)[1];
         var k, kLength = keys.length;
         for (k = 0; k < kLength; k += 1) {
-          result[keys[k]] = source
+          result[keys[k]] = source;
         }
       }
     }
