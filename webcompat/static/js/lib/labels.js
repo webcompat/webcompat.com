@@ -15,6 +15,7 @@ issues.AllLabels = Backbone.Model.extend({
 });
 
 issues.LabelsView = Backbone.View.extend({
+  _isLoggedIn: $('body').data('username'),
   el: $('.Label-wrapper'),
   editorButton: null,
   events: {
@@ -45,7 +46,6 @@ issues.LabelsView = Backbone.View.extend({
     this.$el.html(this.template(this.model.toJSON()));
   },
   fetchLabels: function() {
-    var self = this;
     var headersBag = {headers: {'Accept': 'application/json'}};
     this.editorButton = $('.LabelEditor-launcher');
     this.allLabels = new issues.AllLabels();
@@ -53,11 +53,13 @@ issues.LabelsView = Backbone.View.extend({
       model: this.allLabels,
       issueView: this,
     });
-    this.allLabels.fetch(headersBag).success(function(){
-      self.issueLabels = _.bind(self.getIssueLabels, self);
-      self.repoLabels = _.pluck(self.labelEditor.model.get('labels'), 'name');
-      self.editorButton.show();
-    });
+    if (this._isLoggedIn) {
+      this.allLabels.fetch(headersBag).success(_.bind(function(){
+        this.issueLabels = this.getIssueLabels();
+        this.repoLabels = _.pluck(this.labelEditor.model.get('labels'), 'name');
+        this.editorButton.show();
+      }, this));
+    }
   },
   getIssueLabels: function() {
     return _.pluck(this.model.get('labels'), 'name');
