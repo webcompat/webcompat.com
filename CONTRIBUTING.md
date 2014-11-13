@@ -102,7 +102,7 @@ After all that, if you'd like, you can send a pull request to add your name to o
 
 ### Syntax
 
- Try to take care to follow existing conventions. Some of these are defined in an [.editorconfig](https://github.com/webcompat/webcompat.com/blob/master/.editorconfig) file.
+ Try to take care to follow existing conventions. Some of these are defined in an [.editorconfig](https://github.com/webcompat/webcompat.com/blob/master/.editorconfig) file. You can download the plugin for your editor here http://editorconfig.org/#download
 
 ### Python
 As we are still very early in the project, we do not have yet that much conventions for naming, routes, APIs. In doubt, ask us or open an issue.  All Python code should pass [pep8](http://pep8.readthedocs.org/en/1.4.6/intro.html).
