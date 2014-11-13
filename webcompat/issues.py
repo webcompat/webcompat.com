@@ -50,13 +50,6 @@ def report_issue(form, proxy=False):
         return github.post('repos/{0}'.format(REPO_URI), build_formdata(form))
 
 
-def get_issue(number):
-    '''Return a single issue by issue number.'''
-    issue_uri = 'repos/{0}/{1}'.format(REPO_URI, number)
-    issue = github.get(issue_uri)
-    return issue
-
-
 def filter_untriaged(issues):
     '''Return the list of untriaged issues, encoded as JSON.
 
