@@ -1,6 +1,9 @@
 /* This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ *
+ * Contains some code modified from https://github.com/jfromaniello/li
+ * which is released under the MIT license. */
 
  var issues = issues || {};
  var issueList = issueList || {};
@@ -119,33 +122,65 @@ issueList.IssueCollection = Backbone.Collection.extend({
   model: issueList.Issue,
   url: '/api/issues?page=1',
   parse: function(response, jqXHR) {
-    this.linkHeader = jqXHR.xhr.getResponseHeader('Link');
+    if (jqXHR.xhr.getResponseHeader('Link') != null) {
+      //external code can access the parsed header via this.linkHeader
+      this.linkHeader = this.parseHeader(jqXHR.xhr.getResponseHeader('Link'));
+    } else {
+      this.linkHeader = null;
+    }
     return response;
   },
-  getRelValue: function(header, relation) {
+  parseHeader: function(linkHeader) {
+    /* Returns an object like so:
+      {
+        next: "https://api.github.com/repositories/17839063/issues?page=3",
+        last: "https://api.github.com/repositories/17839063/issues?page=4",
+        first: "https://api.github.com/repositories/17839063/issues?page=1",
+        prev: "https://api.github.com/repositories/17839063/issues?page=1"
+      } */
+    var result = {};
+    var entries = linkHeader.split(',');
+    var relsRegExp = /\brel="?([^"]+)"?\s*;?/;
+    var keysRegExp = /(\b[0-9a-z\.-]+\b)/g;
+    var sourceRegExp = /^<(.*)>/;
+
+    for (var i = 0; i < entries.length; i++) {
+      var entry = entries[i].trim();
+      var rels = relsRegExp.exec(entry);
+      if (rels) {
+        var keys = rels[1].match(keysRegExp);
+        var source = sourceRegExp.exec(entry)[1];
+        var k, kLength = keys.length;
+        for (k = 0; k < kLength; k += 1) {
+          result[keys[k]] = source
+        }
+      }
+    }
+
+    return result;
+  },
+  getPageFromRel: function(relation) {
     // GitHub will only send us a Link header if pagination is possible.
     // if we return early with null, we'll know that next and prev pagination
     // should be disabled.
-    if (header == null) {
+    if (this.linkHeader == null) {
       return null;
     }
-    // we only get the page number, rather than the link href, becuase we still
-    // need to proxy requests between our server and GitHub's.
-    var re = new RegExp('page=(\\d)>;\\s+rel=\\"' + relation + '\\"');
-    var rel;
-    if (rel = header.match(re)) {
-      return rel[1];
+    var page;
+    // we only return the page number
+    var re = new RegExp('page=(\\d)');
+
+    if (page = (this.linkHeader.hasOwnProperty(relation) &&
+                this.linkHeader[relation].match(re))) {
+      return page[1];
     } else {
       return null;
     }
   },
-  getLastPageNumber: function() {
-    return this.getRelValue(this.linkHeader, 'last');
-  },
   getNextPageNumber: function() {
-    return this.getRelValue(this.linkHeader, 'next');
+    return this.getPageFromRel('next');
   },
   getPreviousPageNumber: function() {
-    return this.getRelValue(this.linkHeader, 'prev');
+    return this.getPageFromRel('prev');
   }
 });
