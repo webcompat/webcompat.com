@@ -67,25 +67,22 @@ define([
         .then(function (isDisplayed) {
           assert.equal(isDisplayed, true, 'IssueList container is visible.');
         })
-        .sleep(1000)
         .end()
-        .findByCssSelector('.js-pagination-previous').getAttribute('class')
+        .findByCssSelector('.js-pagination-previous.is-disabled').getAttribute('class')
         .then(function (className) {
           assert.include(className, 'is-disabled', 'First page load should have disabled prev button');
         })
         .end()
         .findByCssSelector('.js-pagination-next').click()
-        .sleep(500)
         .end()
-        .findByCssSelector('.js-pagination-previous').getAttribute('class')
+        .findByCssSelector('.js-pagination-previous:not(.is-disabled)').getAttribute('class')
         .then(function (className) {
           assert.notInclude(className, 'is-disabled', 'Clicking next enables prev button');
         })
         .end()
         .findByCssSelector('.js-pagination-previous').click()
-        .sleep(500)
         .end()
-        .findByCssSelector('.js-pagination-previous').getAttribute('class')
+        .findByCssSelector('.js-pagination-previous.is-disabled').getAttribute('class')
         .then(function (className) {
           assert.include(className, 'is-disabled', 'Going back from first next click should have disabled prev button');
         })
