@@ -4,6 +4,7 @@
 
 define([
   './lib/index',
+  './lib/issue-list',
   './lib/issues',
   './lib/reporting',
   './lib/contributors'
