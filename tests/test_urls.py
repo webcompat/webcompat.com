@@ -73,11 +73,11 @@ class TestURLs(unittest.TestCase):
         self.assertEqual(rv.status_code, 200)
         self.assertNotEqual(rv.status_code, 307)
 
-    def test_issues_redirect(self):
-        '''Test that the /issues route 307s to /index (for now).'''
+    def test_issues_list_page(self):
+        '''Test that the /issues route gets 200 and does not redirect.'''
         rv = self.app.get('/issues')
-        self.assertEqual(rv.status_code, 307)
-        self.assertIn('localhost', rv.headers['Location'])
+        self.assertEqual(rv.status_code, 200)
+        self.assertNotEqual(rv.status_code, 307)
 
 
 if __name__ == '__main__':
