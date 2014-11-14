@@ -1,5 +1,7 @@
 # webcompat.com
 
+Build Status: [![Build Status](https://travis-ci.org/webcompat/webcompat.com.svg)](https://travis-ci.org/webcompat/webcompat.com)
+
 This repository hosts the code and design which runs most of the [webcompat.com Web site](http://webcompat.com/). This is mostly a **work in progress**.
 
 ## Changelog
