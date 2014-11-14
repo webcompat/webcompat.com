@@ -278,7 +278,7 @@ We use [Intern](http://theintern.io/) to run functional tests.
 To run them, make sure you download the Selenium standalone server from the repo root:
 
 ``` bash
-wget http://selenium-release.storage.googleapis.com/2.42/selenium-server-standalone-2.42.2.jar
+wget http://selenium-release.storage.googleapis.com/2.43/selenium-server-standalone-2.43.1.jar
 ```
 
 The `firefox` binary will also need to be in your `PATH`. Here's how this can be done on OS X:
