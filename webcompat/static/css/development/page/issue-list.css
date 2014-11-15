@@ -69,4 +69,9 @@
     /* modifier : label */
     .IssueList-noResults-list-item--label {
       list-style: none;
+      padding-top:.8em;
+    }
+    /* labels item */
+    .IssueList-noResults-list-labelsItem {
+      display:inline-block;
     }

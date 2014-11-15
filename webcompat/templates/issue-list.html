@@ -71,7 +71,7 @@
             </div>
             <div class="IssueItem-section">
               <span class="IssueItem-label"><% _.each(issue.labels, function(label) { %>
-                <a href="#" class="wc-bold"><%= label.name %></a>
+                <a href="#" class="wc-Labels" title="Labels : <%= label.name %>"><%= label.name %></a>
               <% }); %></span>
             </div>
           </div>
@@ -83,6 +83,22 @@
                <li class="IssueList-noResults-list-item">Check your spelling</li>
                <li class="IssueList-noResults-list-item">Try a more general search</li>
                <li class="IssueList-noResults-list-item">Filter by popular labels</li>
+               <li class="IssueList-noResults-list-item IssueList-noResults-list-item--label">
+                 <ul class="r-ResetList IssueList-noResults-list-labels">
+                   <li class="IssueList-noResults-list-labelsItem">
+                     <a class="wc-Labels" href="#" title="Labels : android" style="border-color: #48DE20">android</a>
+                    </li>
+                   <li class="IssueList-noResults-list-labelsItem">
+                     <a class="wc-Labels" href="#" title="Labels : chrome" style="border-color: #FFA500">chrome</a>
+                    </li>
+                   <li class="IssueList-noResults-list-labelsItem">
+                     <a class="wc-Labels" href="#" title="Labels : firefox" style="border-color: #E50000">firefox</a>
+                   </li>
+                   <li class="IssueList-noResults-list-labelsItem">
+                     <a class="wc-Labels" href="#" title="Labels : ie" style="border-color: #3E8AE5">ie</a>
+                    </li>
+                 </ul>
+               </li>
              </ul>
           </div>
         <% } %>
