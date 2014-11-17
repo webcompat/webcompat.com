@@ -236,7 +236,7 @@ issueList.PaginationControlsView = Backbone.View.extend({
 issueList.IssueView = Backbone.View.extend({
   el: $('.js-issue-list'),
   events: {
-    'click .IssueItem-label': 'labelSearch'
+    'click .js-issue-label': 'labelSearch',
   },
   initialize: function() {
     this.issues = new issueList.IssueCollection();
