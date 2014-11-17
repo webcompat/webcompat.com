@@ -71,7 +71,7 @@
       height: 1.15em;
       line-height: 1.15em;
       margin-left:.3em;
-      background-color: #fff;
+      background-color: #414042;
       color: var(--wc-background-dark);
       border-radius: 50%;
       transition: all 0.3s linear 0s;
@@ -104,6 +104,12 @@
   /* svg image */
   .wc-Hero-light {
     height:20em;
+  }
+  .wc-Hero-light > * {
+    fill : #414042;
+  }
+  .wc-Hero-lightFilament {
+    fill: #fff;
   }
   /* contributors */
   .wc-Hero--contributors .wc-Hero-light {
