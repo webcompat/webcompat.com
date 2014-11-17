@@ -1,3 +1,10 @@
+## 1.0.4 - 2014-11-17
+
+* Improved No Results for search or filters (with clickable suggested labels) [Issue #382](https://github.com/webcompat/webcompat.com/issues/382)
+* New dark lightbulb and arrow on homepage header [Issue #350](https://github.com/webcompat/webcompat.com/issues/350)
+* Set up [Travis CI](https://travis-ci.org/webcompat/webcompat.com) to run functional and unit tests [Issue #338](https://github.com/webcompat/webcompat.com/issues/338)
+
+
 ## 1.0.3 - 2014-11-12
 
 #### CSS
