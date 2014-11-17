@@ -48,11 +48,25 @@
   background-color:#F0F0F0;
 }
 /* no resultats */
-.IssueList-noResultat {
-  font-size:2.5em;
-  text-align:center;
-  padding:1em 0;
+.IssueList-noResults {
+  font-size:1.5em;
 }
-  .IssueList-noResultat .icon {
-    margin-bottom:.6em;
+  /* title */
+  .IssueList-noResults-title {
+    font-weight:600;
+    margin-bottom:1em;
   }
+  /* list*/
+  .IssueList-noResults-list {
+    list-style-position: inside;
+    margin: 0 0 1em 1em;
+    font-size: 0.7em;
+  }
+    /* list item */
+    .IssueList-noResults-list-item {
+      padding: .3em 0;
+    }
+    /* modifier : label */
+    .IssueList-noResults-list-item--label {
+      list-style: none;
+    }

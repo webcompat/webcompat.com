@@ -77,10 +77,14 @@
           </div>
           <% }); %>
         <% } else { %>
-          <p class="IssueList-noResultat">
-              <span class="icon icon-search"></span>
-              <span class="u-block">No results found.</span>
-          </p>
+          <div class="IssueList-noResults">
+            <div class="IssueList-noResults-title">Sorry, no results were found.</div>
+             <ul class="IssueList-noResults-list">
+               <li class="IssueList-noResults-list-item">Check your spelling</li>
+               <li class="IssueList-noResults-list-item">Try a more general search</li>
+               <li class="IssueList-noResults-list-item">Filter by popular labels</li>
+             </ul>
+          </div>
         <% } %>
         </script>
       </div>
