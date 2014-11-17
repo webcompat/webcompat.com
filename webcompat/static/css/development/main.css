@@ -28,6 +28,7 @@
 @import "components/hero.css";
 @import "components/filter.css";
 @import "components/pagination.css";
+@import "components/labels.css";
 /*----------Layout----------*/
 @import "layout/body.css";
 @import "layout/utilities.css";

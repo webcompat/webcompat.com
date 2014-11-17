@@ -1,0 +1,15 @@
+/*---------- Labels ----------*/
+
+.wc-Labels {
+  display: inline-block;
+  border-width:0 0 3px 0;
+  border-style:solid;
+  font-weight:700;
+  border-color:transparent;
+  opacity:.7;
+}
+  /* state */
+  .wc-Labels:hover {
+    text-decoration:none;
+    opacity:1;
+  }
