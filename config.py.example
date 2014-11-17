@@ -61,20 +61,21 @@ elif DEVELOPMENT:
     GITHUB_CALLBACK_URL = ""
 else:
     # We're running on localhost, use the test application
-    GITHUB_CLIENT_ID = ""
-    GITHUB_CLIENT_SECRET = ""
+    GITHUB_CLIENT_ID = os.environ.get('FAKE_ID') or ""
+    GITHUB_CLIENT_SECRET = os.environ.get('FAKE_SECRET') or  ""
     GITHUB_CALLBACK_URL = "http://localhost:5000/callback"
 
 # GiHub Issues repo URI
 if PRODUCTION:
     ISSUES_REPO_URI = "<user>/<repo>/issues"
 # Development and Local instances use the same test repo
+# Expects a string like "<user>/<repo>/issues"
 else:
-    ISSUES_REPO_URI = "<user>/<repo>/issues"
+    ISSUES_REPO_URI = os.environ.get('ISSUES_REPO_URI') or ""
 
 # This is the oauth token we use to report issues on behalf of people
 # who don't want to give GitHub oauth access (or don't have GitHub accounts)
 # If you don't want to create another user for testing, you could put in
 # your own access token. See
 # help.github.com/articles/creating-an-access-token-for-command-line-use
-BOT_OAUTH_TOKEN = ""
+BOT_OAUTH_TOKEN = os.environ.get('BOT_OAUTH_TOKEN') or ""
