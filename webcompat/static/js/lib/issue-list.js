@@ -270,7 +270,7 @@ issueList.IssueView = Backbone.View.extend({
     var headers = {headers: {'Accept': 'application/json'}};
     this.issues.fetch(headers).success(_.bind(function() {
       this.render(this.issues);
-      this.initPaginationLinks();
+      this.initPaginationLinks(this.issues);
     }, this)).error(function(e){
       var message;
       var timeout;
@@ -292,7 +292,7 @@ issueList.IssueView = Backbone.View.extend({
     return this;
   },
   _isLoggedIn: $('body').data('username'),
-  initPaginationLinks: function() {
+  initPaginationLinks: function(issues) {
     // if either the next or previous page numbers are null
     // disable the buttons and add .is-disabled classes.
     var nextButton = $('.js-pagination-next');
@@ -303,10 +303,21 @@ issueList.IssueView = Backbone.View.extend({
     var isFirstPage = _.bind(function() {
       return this.issues.getPreviousPageNumber() == null;
     }, this);
+    var isSinglePage = isLastPage() && isFirstPage();
 
-    nextButton.prop('disabled', isLastPage())
+    if (!issues.length || isSinglePage) {
+      // hide pagination buttons if there are no results,
+      // or the results are limited to a single page.
+      nextButton.addClass('wc-hidden');
+      prevButton.addClass('wc-hidden');
+      return;
+    }
+
+    nextButton.removeClass('wc-hidden')
+              .prop('disabled', isLastPage())
               .toggleClass('is-disabled', isLastPage());
-    prevButton.prop('disabled', isFirstPage())
+    prevButton.removeClass('wc-hidden')
+              .prop('disabled', isFirstPage())
               .toggleClass('is-disabled', isFirstPage());
   },
   labelSearch: function(e) {
