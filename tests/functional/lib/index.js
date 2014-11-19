@@ -88,9 +88,9 @@ define([
           assert.equal(text, 'Needs Diagnosis');
         })
         .end()
-        .findAllByCssSelector('.IssueItem.IssueItem--need')
+        .findAllByCssSelector('#needs-diagnosis .IssueItem.IssueItem--need')
         .then(function (elms) {
-          assert.equal(elms.length, 5, '5 issues should be displayed');
+          assert.equal(elms.length, 4, '4 issues should be displayed');
         })
         .end()
         .findByCssSelector('.IssueItem--need .IssueItem-count').getVisibleText()
@@ -124,9 +124,9 @@ define([
           assert.equal(text, 'Untriaged Issues');
         })
         .end()
-        .findAllByCssSelector('.IssueItem.IssueItem--untriaged')
+        .findAllByCssSelector('#untriaged .IssueItem.IssueItem--untriaged')
         .then(function (elms) {
-          assert.equal(elms.length, 5, '5 issues should be displayed');
+          assert.equal(elms.length, 4, '4 issues should be displayed');
         })
         .end()
         .findByCssSelector('.IssueItem--untriaged .IssueItem-count').getVisibleText()
@@ -160,9 +160,9 @@ define([
           assert.equal(text, 'Site Contacted');
         })
         .end()
-        .findAllByCssSelector('.IssueItem.IssueItem--sitewait')
+        .findAllByCssSelector('#sitewait .IssueItem.IssueItem--sitewait')
         .then(function (elms) {
-          assert.equal(elms.length, 5, '5 issues should be displayed');
+          assert.equal(elms.length, 4, '4 issues should be displayed');
         })
         .end()
         .findByCssSelector('.IssueItem--sitewait .IssueItem-count').getVisibleText()
@@ -196,9 +196,9 @@ define([
           assert.equal(text, 'Ready for Outreach');
         })
         .end()
-        .findAllByCssSelector('.IssueItem.IssueItem--ready')
+        .findAllByCssSelector('#ready-for-outreach .IssueItem.IssueItem--ready')
         .then(function (elms) {
-          assert.equal(elms.length, 5, '5 issues should be displayed');
+          assert.equal(elms.length, 4, '4 issues should be displayed');
         })
         .end()
         .end()
