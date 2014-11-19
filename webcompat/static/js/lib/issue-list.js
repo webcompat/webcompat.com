@@ -175,11 +175,11 @@ issueList.SortingView = Backbone.View.extend({
   events: {},
   initialize: function() {
     this.paginationModel = new Backbone.Model({
-      dropdownTitle: "Show 25",
+      dropdownTitle: "Show 50",
       dropdownOptions: [
-        {title: "Show 25", params: ""},
-        {title: "Show 50", params: ""},
-        {title: "Show 100", params: ""}
+        {title: "Show 25", params: "per_page=25"},
+        {title: "Show 50", params: "per_page=50"},
+        {title: "Show 100", params: "per_page=100"}
       ]
     });
 
@@ -196,10 +196,10 @@ issueList.SortingView = Backbone.View.extend({
     this.initSubViews();
   },
   initSubViews: function() {
-    /* Commenting out for now, see Issues #312, #266
     this.paginationDropdown = new issueList.DropdownView({
       model: this.paginationModel
     });
+    /* Commenting out for now, see Issues #312, #266
     this.sortDropdown = new issueList.DropdownView({
       model: this.sortModel
     }); */
@@ -207,8 +207,8 @@ issueList.SortingView = Backbone.View.extend({
   template: _.template($('#issuelist-sorting-tmpl').html()),
   render: function() {
     this.$el.html(this.template());
-    /* Commenting out for now, see Issues #312, #266
     this.paginationDropdown.setElement(this.$el.find('.js-dropdown-pagination')).render();
+    /* Commenting out for now, see Issues #312, #266
     this.sortDropdown.setElement(this.$el.find('.js-dropdown-sort')).render(); */
     return this;
   }
