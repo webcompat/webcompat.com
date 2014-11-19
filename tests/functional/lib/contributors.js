@@ -40,7 +40,7 @@ define([
         .then(function (className) {
           assert.notEqual('is-active', className);
         })
-        .end()
+        .end();
     },
 
     'clicking section toggles it': function() {
@@ -67,7 +67,7 @@ define([
         .findByCssSelector('.wc-Hero-img').getAttribute('class')
         .then(function (className) {
           assert.notInclude('is-active', className);
-        })
+        });
     },
 
     'toggling section toggles lightbulb': function() {
@@ -84,7 +84,7 @@ define([
         .findByCssSelector('.wc-Hero-img').getAttribute('class')
         .then(function (className) {
           assert.notInclude('is-active', className);
-        })
+        });
     },
 
   });

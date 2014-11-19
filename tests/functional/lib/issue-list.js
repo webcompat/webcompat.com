@@ -56,7 +56,7 @@ define([
           assert.match(text, /comments:\s\d+$/i, 'Issue should display number of comments');
           assert.match(text, /^Opened:\s\d{4}\-\d{2}\-\d{2}.+/, 'Issue should display creation date');
         })
-        .end()
+        .end();
     },
 
     'PaginationControlsView tests': function() {
@@ -86,7 +86,7 @@ define([
         .then(function (className) {
           assert.include(className, 'is-disabled', 'Going back from first next click should have disabled prev button');
         })
-        .end()
+        .end();
     }
   });
 });

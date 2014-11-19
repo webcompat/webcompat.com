@@ -18,7 +18,7 @@ define([
     'submit buttons are disabled': function() {
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url + "?open=1"))
+        .get(require.toUrl(url + '?open=1'))
         .findByCssSelector('#submitanon').getAttribute('class')
         .then(function (className) {
           assert.include(className, 'is-disabled');
@@ -27,13 +27,13 @@ define([
         .findByCssSelector('#submitgithub').getAttribute('class')
         .then(function (className) {
           assert.include(className, 'is-disabled');
-        })
+        });
     },
 
     'validation works': function() {
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url + "?open=1"))
+        .get(require.toUrl(url + '?open=1'))
         .findByCssSelector('#url').click()
         .end()
         .findByCssSelector('#summary').click()
@@ -66,7 +66,7 @@ define([
         .findByCssSelector('#submitgithub').getAttribute('class')
         .then(function (className) {
           assert.notInclude(className, 'is-disabled');
-        })
+        });
     },
 
     // 'anonymous report': function () {

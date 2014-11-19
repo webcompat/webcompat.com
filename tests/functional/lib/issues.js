@@ -12,7 +12,7 @@ define([
 
   var url = function(num) {
     return intern.config.siteRoot + '/issues/' + num;
-  }
+  };
 
   registerSuite({
     name: 'issues',
@@ -66,8 +66,8 @@ define([
         .get(require.toUrl(url(999999)))
         .findByCssSelector('#pageerror h2').getVisibleText()
         .then(function (text) {
-          assert.include(text, "(404)", "We\'re at the 404.");
-        })
+          assert.include(text, '(404)', 'We\'re at the 404.');
+        });
     }
 
   });

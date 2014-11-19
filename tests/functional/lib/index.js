@@ -43,7 +43,7 @@ define([
         .end()
         .findByCssSelector('.wc-Navbar-section--right .wc-Navbar-link').getVisibleText()
         .then(function (text) {
-          assert.equal(text, "Logout");
+          assert.equal(text, 'Logout');
         })
         .end()
         .findByCssSelector('#my-issues h3').getVisibleText()
@@ -51,7 +51,7 @@ define([
           assert.equal(text, 'Submitted by Me');
         })
         .sleep(1000)
-        .end()
+        .end();
     },
 
     'reporter addon link is shown': function () {
@@ -113,7 +113,7 @@ define([
           assert.match(text, /comments:\s\d+$/, 'Issue should display number of comments');
           assert.match(text, /^Opened:\s\d{4}\-\d{2}\-\d{2}.+/, 'Issue should display creation date');
         })
-        .end()
+        .end();
     },
 
     'browse issues (untriaged)': function() {
@@ -149,7 +149,7 @@ define([
           assert.match(text, /comments:\s\d+$/, 'Issue should display number of comments');
           assert.match(text, /^Opened:\s\d{4}\-\d{2}\-\d{2}.+/, 'Issue should display creation date');
         })
-        .end()
+        .end();
     },
 
     'browse issues (site contacted)': function() {
@@ -185,7 +185,7 @@ define([
           assert.match(text, /comments:\s\d+$/, 'Issue should display number of comments');
           assert.match(text, /^Opened:\s\d{4}\-\d{2}\-\d{2}.+/, 'Issue should display creation date');
         })
-        .end()
+        .end();
     },
 
     'browse issues (ready for outreach)': function() {
@@ -222,7 +222,7 @@ define([
           assert.match(text, /comments:\s\d+$/, 'Issue should display number of comments');
           assert.match(text, /^Opened:\s\d{4}\-\d{2}\-\d{2}.+/, 'Issue should display creation date');
         })
-        .end()
+        .end();
     }
 
   });
