@@ -19,6 +19,7 @@ module.exports = function(grunt) {
           _: true,
           Backbone: true,
           console: true,
+          define: true,
           issueNumber: true,
           marked: true,
           moment: true,
@@ -28,6 +29,9 @@ module.exports = function(grunt) {
           wcEvents: true
         }
       },
+      tests: [
+        'tests/functional/lib/*.js'
+      ],
       beforeconcat: [
         '<%= jsPath %>/lib/homepage.js',
         '<%= jsPath %>/lib/bugform.js',
