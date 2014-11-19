@@ -35,8 +35,12 @@ issueList.DropdownView = Backbone.View.extend({
     var option = $(e.target);
     option.addClass('is-active')
           .siblings().removeClass('is-active');
+
     // TODO: persist in localStorage for page refreshes?
     this.updateDropdownTitle(option);
+
+    // fire an event so other views can react to dropdown changes
+    wcEvents.trigger('dropdown:change', {params: option.data('params')});
     e.preventDefault();
   },
   updateDropdownTitle: function(optionElm) {
@@ -247,6 +251,7 @@ issueList.IssueView = Backbone.View.extend({
     issueList.events.on('issues:update', _.bind(this.updateIssues, this));
     issueList.events.on('paginate:next', _.bind(this.requestNextPage, this));
     issueList.events.on('paginate:previous', _.bind(this.requestPreviousPage, this));
+    wcEvents.on('dropdown:change', _.bind(this.updateModelParams, this));
   },
   template: _.template($('#issuelist-issue-tmpl').html()),
   checkParams: function() {
@@ -367,6 +372,18 @@ issueList.IssueView = Backbone.View.extend({
     } else {
       this.issues.url = '/api/issues?page=1';
     }
+    this.fetchAndRenderIssues();
+  },
+  updateModelParams: function(data) {
+    var modelUrl = this.issues.url.split('?');
+    var modelPath = modelUrl[0];
+    var modelParams = modelUrl[1];
+    // merge old params with passed in param data
+    // $.extend will update existing object keys, and add new ones
+    var newParams = $.extend($.deparam(modelParams), $.deparam(data.params));
+
+    // construct new model URL and re-request issues
+    this.issues.url = modelPath + '?' + $.param(newParams);
     this.fetchAndRenderIssues();
   }
 });
