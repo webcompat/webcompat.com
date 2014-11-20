@@ -300,6 +300,10 @@ issueList.IssueView = Backbone.View.extend({
       wcEvents.trigger('flash:error', {message: message, timeout: timeout});
     });
   },
+  getPageLimit: function() {
+    // slice 5 to get to the N of "Show N"
+    return {'per_page': $('.js-dropdown-pagination .js-dropdown-toggle').text().trim().slice(5)};
+  },
   render: function(issues) {
     this.$el.html(this.template({
       issues: issues.toJSON()
@@ -371,16 +375,21 @@ issueList.IssueView = Backbone.View.extend({
     // update the collection instance url property and fetch the issues.
     var labelCategories = ['closed', 'contactready', 'needsdiagnosis', 'sitewait'];
 
+    //TODO(miket): make generic getModelParams method which can get the latest state
+    var paramsBag = $.extend({page: 1}, this.getPageLimit());
+    var params = $.param(paramsBag);
+
     // note: if query is the empty string, it will load all issues from the
     // '/api/issues' endpoint (which I think we want).
     if (category && category.query) {
-      this.issues.url = '/api/issues/search?q=' + category.query + '&page=1';
+      params = $.param($.extend(paramsBag, {q: category.query}));
+      this.issues.url = '/api/issues/search?' + params;
     } else if (_.contains(labelCategories, category)) {
-      this.issues.url = '/api/issues/category/' + category + '?page=1';
+      this.issues.url = '/api/issues/category/' + category + '?' + params;
     } else if (category === "untriaged") {
-      this.issues.url = '/api/issues/search/untriaged?page=1';
+      this.issues.url = '/api/issues/search/untriaged?' + params;
     } else {
-      this.issues.url = '/api/issues?page=1';
+      this.issues.url = '/api/issues?' + params;
     }
     this.fetchAndRenderIssues();
   },
