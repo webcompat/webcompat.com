@@ -245,7 +245,7 @@ issueList.IssueView = Backbone.View.extend({
   initialize: function() {
     this.issues = new issueList.IssueCollection();
     // check to see if we should pre-filter results
-    this.checkParams();
+    this.checkURLParams();
 
     // set up event listeners.
     issueList.events.on('issues:update', _.bind(this.updateIssues, this));
@@ -254,7 +254,7 @@ issueList.IssueView = Backbone.View.extend({
     wcEvents.on('dropdown:change', _.bind(this.updateModelParams, this));
   },
   template: _.template($('#issuelist-issue-tmpl').html()),
-  checkParams: function() {
+  checkURLParams: function() {
     // Assumes a URI like: /?untriaged=1 and activates the untriaged filter,
     // for example.
     var category;
