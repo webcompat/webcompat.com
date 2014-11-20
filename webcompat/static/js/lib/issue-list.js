@@ -351,23 +351,21 @@ issueList.IssueView = Backbone.View.extend({
     e.preventDefault();
   },
   requestNextPage: function() {
-    var newUrl;
     if (this.issues.getNextPageNumber()) {
       // chop off the last character, which is the page number
       // TODO: this feels gross. ideally we should get the URL from the
       // link header and send that to an API endpoint which then requests
       // it from GitHub.
-      newUrl = this.issues.url.slice(0,-1) + this.issues.getNextPageNumber();
-      this.issues.url = newUrl;
-      this.fetchAndRenderIssues();
+      //TODO fix, this won't work. slice approach is bogus.
+      //need to deparam, update, re-param.
+      //maybe extend update model params to take key, value?
+      //updateModelParams("page", this.issues.getNextPageNumber());
+      this.updateModelParams("page", this.issues.getNextPageNumber());
     }
   },
   requestPreviousPage: function() {
-    var newUrl;
     if (this.issues.getPreviousPageNumber()) {
-      newUrl = this.issues.url.slice(0,-1) + this.issues.getPreviousPageNumber();
-      this.issues.url = newUrl;
-      this.fetchAndRenderIssues();
+      this.updateModelParams("page", this.issues.getPreviousPageNumber());
     }
   },
   updateIssues: function(category) {
