@@ -38,11 +38,15 @@ issueList.DropdownView = Backbone.View.extend({
     option.addClass('is-active')
           .siblings().removeClass('is-active');
 
-    // TODO: persist in localStorage for page refreshes?
     this.updateDropdownTitle(option);
 
+    // persist value of selection to be used on subsequent page loads
+    if ('localStorage' in window) {
+      window.localStorage.setItem(paramKey, paramValue);
+    }
+
     // fire an event so other views can react to dropdown changes
-    wcEvents.trigger('dropdown:change', {params: {key: paramKey, value: paramValue}});
+    wcEvents.trigger('dropdown:change', paramKey, paramValue);
     e.preventDefault();
   },
   updateDropdownTitle: function(optionElm) {
@@ -182,6 +186,7 @@ issueList.SortingView = Backbone.View.extend({
   events: {},
   initialize: function() {
     this.paginationModel = new Backbone.Model({
+      // TODO(miket): persist selected page limit to survive page loads
       dropdownTitle: "Show 50",
       dropdownOptions: [
         {title: "Show 25", paramKey: "per_page", paramValue: "25"},
@@ -276,6 +281,7 @@ issueList.IssueView = Backbone.View.extend({
     }
   },
   fetchAndRenderIssues: function() {
+    //assumes this.issues.url has already been set to something meaninful.
     var headers = {headers: {'Accept': 'application/json'}};
     this.issues.fetch(headers).success(_.bind(function() {
       this.render(this.issues);
