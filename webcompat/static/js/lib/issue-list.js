@@ -33,6 +33,8 @@ issueList.DropdownView = Backbone.View.extend({
   },
   selectDropdownOption: function(e) {
     var option = $(e.target);
+    var paramKey = option.data('paramKey');
+    var paramValue = option.data('paramValue');
     option.addClass('is-active')
           .siblings().removeClass('is-active');
 
@@ -40,7 +42,7 @@ issueList.DropdownView = Backbone.View.extend({
     this.updateDropdownTitle(option);
 
     // fire an event so other views can react to dropdown changes
-    wcEvents.trigger('dropdown:change', {params: option.data('params')});
+    wcEvents.trigger('dropdown:change', {params: {key: paramKey, value: paramValue}});
     e.preventDefault();
   },
   updateDropdownTitle: function(optionElm) {
@@ -60,6 +62,7 @@ issueList.FilterView = Backbone.View.extend({
 
     issueList.events.on('filter:activate', _.bind(this.toggleFilter, this));
 
+    // TODO(miket): update with paramKey & paramValue
     var options = [
       {title: "View all open issues", params: ""},
       {title: "View all issues", params: "filter=all"}
@@ -181,12 +184,13 @@ issueList.SortingView = Backbone.View.extend({
     this.paginationModel = new Backbone.Model({
       dropdownTitle: "Show 50",
       dropdownOptions: [
-        {title: "Show 25", params: "per_page=25"},
-        {title: "Show 50", params: "per_page=50"},
-        {title: "Show 100", params: "per_page=100"}
+        {title: "Show 25", paramKey: "per_page", paramValue: "25"},
+        {title: "Show 50", paramKey: "per_page", paramValue: "50"},
+        {title: "Show 100", paramKey: "per_page", paramValue: "100"}
       ]
     });
 
+    // TODO(miket): update model to have paramKey and paramValue
     this.sortModel = new Backbone.Model({
       dropdownTitle: "Newest",
       dropdownOptions: [
@@ -375,12 +379,14 @@ issueList.IssueView = Backbone.View.extend({
     this.fetchAndRenderIssues();
   },
   updateModelParams: function(data) {
+    var dataParams = data.params.key + '=' + data.params.value;
     var modelUrl = this.issues.url.split('?');
     var modelPath = modelUrl[0];
     var modelParams = modelUrl[1];
+
     // merge old params with passed in param data
     // $.extend will update existing object keys, and add new ones
-    var newParams = $.extend($.deparam(modelParams), $.deparam(data.params));
+    var newParams = $.extend($.deparam(modelParams), $.deparam(dataParams));
 
     // construct new model URL and re-request issues
     this.issues.url = modelPath + '?' + $.param(newParams);
