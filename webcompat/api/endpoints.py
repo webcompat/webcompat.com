@@ -67,10 +67,7 @@ def edit_issue(number):
 @api.route('/issues')
 def proxy_issues():
     '''API endpoint to list all issues from GitHub.'''
-    if request.args.get('page'):
-        params = {'page': request.args.get('page')}
-    else:
-        params = None
+    params = request.args.copy()
 
     if g.user:
         issues = github.raw_request('GET', 'repos/{0}'.format(ISSUES_PATH),
@@ -105,12 +102,9 @@ def get_issue_category(issue_category):
     * needsdiagnosis
     * sitewait
     '''
-    params = {}
     category_list = ['contactready', 'needsdiagnosis', 'sitewait']
     issues_path = 'repos/{0}'.format(ISSUES_PATH)
-
-    if request.args.get('page'):
-        params.update({'page': request.args.get('page')})
+    params = request.args.copy()
 
     if issue_category in category_list:
         params.update({'labels': issue_category})
@@ -128,9 +122,9 @@ def get_issue_category(issue_category):
     # For paginated results on the /issues page, see /issues/search/untriaged.
     elif issue_category == 'untriaged':
         if g.user:
-            issues = github.raw_request('GET', issues_path)
+            issues = github.raw_request('GET', issues_path, params=params)
         else:
-            issues = proxy_request('get')
+            issues = proxy_request('get', params=params)
         # Do not send random JSON to filter_untriaged
         if issues.status_code == 200:
             return (filter_untriaged(json.loads(issues.content)),
@@ -163,16 +157,13 @@ def get_search_results(query_string=None):
     '''
     search_uri = 'https://api.github.com/search/issues'
     # TODO: handle sort and order parameters.
-    params = {}
+    params = request.args.copy()
 
     if query_string is None:
-        query_string = request.args.get('q')
+        query_string = params.get('q')
         # restrict results to our repo.
     query_string += " repo:{0}".format(REPO_PATH)
     params.update({'q': query_string})
-
-    if request.args.get('page'):
-        params.update({'page': request.args.get('page')})
 
     if g.user:
         request_headers = get_request_headers(g.request_headers)
