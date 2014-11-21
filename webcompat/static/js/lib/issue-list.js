@@ -251,6 +251,8 @@ issueList.IssueView = Backbone.View.extend({
   events: {
     'click .js-issue-label': 'labelSearch',
   },
+  _isLoggedIn: $('body').data('username'),
+  _pageLimit: null,
   initialize: function() {
     this.issues = new issueList.IssueCollection();
     // check to see if we should pre-filter results
@@ -301,8 +303,7 @@ issueList.IssueView = Backbone.View.extend({
     });
   },
   getPageLimit: function() {
-    // slice 5 to get to the N of "Show N"
-    return {'per_page': $('.js-dropdown-pagination .js-dropdown-toggle').text().trim().slice(5)};
+    return this._pageLimit;
   },
   render: function(issues) {
     this.$el.html(this.template({
@@ -310,7 +311,6 @@ issueList.IssueView = Backbone.View.extend({
     }));
     return this;
   },
-  _isLoggedIn: $('body').data('username'),
   initPaginationLinks: function(issues) {
     // if either the next or previous page numbers are null
     // disable the buttons and add .is-disabled classes.
@@ -402,6 +402,10 @@ issueList.IssueView = Backbone.View.extend({
     // merge old params with passed in param data
     // $.extend will update existing object keys, and add new ones
     var newParams = $.extend($.deparam(modelParams), updateParams);
+
+    if (paramKey == 'per_page') {
+      this._pageLimit = paramValue;
+    }
 
     // construct new model URL and re-request issues
     this.issues.url = modelPath + '?' + $.param(newParams);
