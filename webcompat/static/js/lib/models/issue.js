@@ -181,7 +181,21 @@ issueList.IssueCollection = Backbone.Collection.extend({
   getNextPageNumber: function() {
     return this.getPageFromRel('next');
   },
+  getNextPage: function() {
+    if (this.linkHeader.hasOwnProperty('next')) {
+      return this.linkHeader.next;
+    } else {
+      return null;
+    }
+  },
   getPreviousPageNumber: function() {
     return this.getPageFromRel('prev');
-  }
+  },
+  getPrevPage: function() {
+    if (this.linkHeader.hasOwnProperty('prev')) {
+      return this.linkHeader.prev;
+    } else {
+      return null;
+    }
+  },
 });
