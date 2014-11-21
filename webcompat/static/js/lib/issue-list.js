@@ -400,7 +400,7 @@ issueList.IssueView = Backbone.View.extend({
     // $.extend will update existing object keys, and add new ones
     var newParams = $.extend($.deparam(modelParams), updateParams);
 
-    if (paramKey == 'per_page') {
+    if (paramKey === 'per_page') {
       this._pageLimit = paramValue;
     }
 
