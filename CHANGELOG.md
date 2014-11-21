@@ -1,3 +1,19 @@
+## 1.0.5 - 2014-11-21
+
+#### Testing
+* Start linting our functional tests [Issue #414](https://github.com/webcompat/webcompat.com/issues/414) [Pull #415](https://github.com/webcompat/webcompat.com/pull/415)
+* Fix "My Issues" functional tests [Issue #412](https://github.com/webcompat/webcompat.com/issues/412) [Pull #413](https://github.com/webcompat/webcompat.com/pull/413)
+* Upgrade to Intern 2.1.1 [Issue #277](https://github.com/webcompat/webcompat.com/issues/277) [Pull #410](https://github.com/webcompat/webcompat.com/pull/410)
+
+#### Issues page updates
+* Add border for labels on issues page (+labels component) [Issue #402](https://github.com/webcompat/webcompat.com/issues/402) [Pull #403](https://github.com/webcompat/webcompat.com/pull/403) [Pull #409](https://github.com/webcompat/webcompat.com/pull/409)
+* Hide pagination from issues page when they don't make sense [Issue #405](https://github.com/webcompat/webcompat.com/issues/405) [Pull #408](https://github.com/webcompat/webcompat.com/pull/408)
+
+#### Bugfixes
+
+* Work around Gecko bug, (trim wysiwyg:// from URL field if it's there)[Issue #391](https://github.com/webcompat/webcompat.com/issues/391) [Pull #392](https://github.com/webcompat/webcompat.com/pull/392)
+* Fix SOP bug preventing us from persisting logins during tests :skull: [Issue #277](https://github.com/webcompat/webcompat.com/issues/277) [Pull #411](https://github.com/webcompat/webcompat.com/pull/411)
+
 ## 1.0.4 - 2014-11-17
 
 * Improved No Results for search or filters (with clickable suggested labels) [Issue #382](https://github.com/webcompat/webcompat.com/issues/382)
