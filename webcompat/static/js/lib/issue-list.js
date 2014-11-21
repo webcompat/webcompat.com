@@ -317,10 +317,10 @@ issueList.IssueView = Backbone.View.extend({
     var nextButton = $('.js-pagination-next');
     var prevButton = $('.js-pagination-previous');
     var isLastPage = _.bind(function() {
-      return this.issues.getNextPageNumber() == null;
+      return this.issues.getNextPage() == null;
     }, this);
     var isFirstPage = _.bind(function() {
-      return this.issues.getPreviousPageNumber() == null;
+      return this.issues.getPrevPage() == null;
     }, this);
     var isSinglePage = isLastPage() && isFirstPage();
 
@@ -351,17 +351,17 @@ issueList.IssueView = Backbone.View.extend({
     e.preventDefault();
   },
   requestNextPage: function() {
-    if (this.issues.getNextPageNumber()) {
-      // chop off the last character, which is the page number
-      // TODO: this feels gross. ideally we should get the URL from the
-      // link header and send that to an API endpoint which then requests
-      // it from GitHub.
-      this.updateModelParams("page", this.issues.getNextPageNumber());
+    var nextPage;
+    if (nextPage = this.issues.getNextPage()) {
+      this.issues.url = nextPage;
+      this.fetchAndRenderIssues();
     }
   },
   requestPreviousPage: function() {
-    if (this.issues.getPreviousPageNumber()) {
-      this.updateModelParams("page", this.issues.getPreviousPageNumber());
+    var prevPage;
+    if (prevPage = this.issues.getPrevPage()) {
+      this.issues.url =  prevPage;
+      this.fetchAndRenderIssues();
     }
   },
   updateIssues: function(category) {
