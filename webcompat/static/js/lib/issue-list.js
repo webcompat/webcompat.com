@@ -356,10 +356,6 @@ issueList.IssueView = Backbone.View.extend({
       // TODO: this feels gross. ideally we should get the URL from the
       // link header and send that to an API endpoint which then requests
       // it from GitHub.
-      //TODO fix, this won't work. slice approach is bogus.
-      //need to deparam, update, re-param.
-      //maybe extend update model params to take key, value?
-      //updateModelParams("page", this.issues.getNextPageNumber());
       this.updateModelParams("page", this.issues.getNextPageNumber());
     }
   },
@@ -374,6 +370,7 @@ issueList.IssueView = Backbone.View.extend({
     var labelCategories = ['closed', 'contactready', 'needsdiagnosis', 'sitewait'];
 
     //TODO(miket): make generic getModelParams method which can get the latest state
+    // merge param objects and serialize
     var paramsBag = $.extend({page: 1}, this.getPageLimit());
     var params = $.param(paramsBag);
 
