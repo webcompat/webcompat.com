@@ -8,7 +8,7 @@
 define(['intern/lib/args'], function (args) {
   'use strict';
 
-  var siteRoot = args.siteRoot ? args.siteRoot : 'http://127.0.0.1:5000';
+  var siteRoot = args.siteRoot ? args.siteRoot : 'http://localhost:5000';
 
   return {
     // Configuration object for webcompat
