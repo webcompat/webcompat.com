@@ -8,6 +8,7 @@
 back to GitHub'''
 
 import json
+import re
 
 from flask import abort
 from flask import Blueprint
@@ -35,7 +36,7 @@ REPO_PATH = ISSUES_PATH[:-7]
 
 
 def get_username():
-  return session.get('username', 'proxy-user')
+    return session.get('username', 'proxy-user')
 
 
 @api.route('/issues/<int:number>')
@@ -75,6 +76,28 @@ def proxy_issues():
     else:
         issues = proxy_request('get', params=params)
     return (issues.content, issues.status_code, get_headers(issues))
+
+
+@api.route('/issues/paginate')
+def get_next_page():
+    '''API endpoint to proxy a request for the next or prev URI
+
+    (parsed from Link header)
+    Expects a link parameter like so:
+        GET /issues/paginate?link=https://api.github.com/repositories/...
+    '''
+    link = request.args.get('link')
+    # only proceed if GitHub's API is passed in.
+    gh_match = re.match(r'https:\/\/api\.github\.com\/(repositories\/.+)', link)
+    if gh_match:
+        if g.user:
+            issues = github.raw_request('GET', gh_match.group(1))
+        else:
+            issues = proxy_request('get', uri=link)
+        return (issues.content, issues.status_code, get_headers(issues))
+    else:
+        # otherwise, we don't allow the request to go through.
+        abort(403)
 
 
 @api.route('/issues/category/mine')
