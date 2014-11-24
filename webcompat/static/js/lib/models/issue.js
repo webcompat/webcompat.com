@@ -120,7 +120,8 @@ issueList.Issue = issues.Issue.extend({});
 
 issueList.IssueCollection = Backbone.Collection.extend({
   model: issueList.Issue,
-  url: '/api/issues?page=1',
+  // TODO(miket): less hard-coding of default params
+  url: '/api/issues?page=1&per_page=50',
   parse: function(response, jqXHR) {
     if (jqXHR.xhr.getResponseHeader('Link') != null) {
       //external code can access the parsed header via this.linkHeader
@@ -168,7 +169,7 @@ issueList.IssueCollection = Backbone.Collection.extend({
     }
     var page;
     // we only return the page number
-    var re = new RegExp('page=(\\d)');
+    var re = new RegExp('[&?]page=(\\d)');
 
     if (page = (this.linkHeader.hasOwnProperty(relation) &&
                 this.linkHeader[relation].match(re))) {
