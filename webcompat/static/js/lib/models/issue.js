@@ -160,36 +160,12 @@ issueList.IssueCollection = Backbone.Collection.extend({
 
     return result;
   },
-  getPageFromRel: function(relation) {
-    // GitHub will only send us a Link header if pagination is possible.
-    // if we return early with null, we'll know that next and prev pagination
-    // should be disabled.
-    if (this.linkHeader == null) {
-      return null;
-    }
-    var page;
-    // we only return the page number
-    var re = new RegExp('[&?]page=(\\d)');
-
-    if (page = (this.linkHeader.hasOwnProperty(relation) &&
-                this.linkHeader[relation].match(re))) {
-      return page[1];
-    } else {
-      return null;
-    }
-  },
-  getNextPageNumber: function() {
-    return this.getPageFromRel('next');
-  },
   getNextPage: function() {
     if (this.linkHeader && this.linkHeader.hasOwnProperty('next')) {
       return encodeURIComponent(this.linkHeader.next);
     } else {
       return null;
     }
-  },
-  getPreviousPageNumber: function() {
-    return this.getPageFromRel('prev');
   },
   getPrevPage: function() {
     if (this.linkHeader && this.linkHeader.hasOwnProperty('prev')) {
