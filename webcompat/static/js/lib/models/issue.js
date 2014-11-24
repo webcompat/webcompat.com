@@ -182,7 +182,7 @@ issueList.IssueCollection = Backbone.Collection.extend({
     return this.getPageFromRel('next');
   },
   getNextPage: function() {
-    if (this.linkHeader.hasOwnProperty('next')) {
+    if (this.linkHeader && this.linkHeader.hasOwnProperty('next')) {
       return encodeURIComponent(this.linkHeader.next);
     } else {
       return null;
@@ -192,7 +192,7 @@ issueList.IssueCollection = Backbone.Collection.extend({
     return this.getPageFromRel('prev');
   },
   getPrevPage: function() {
-    if (this.linkHeader.hasOwnProperty('prev')) {
+    if (this.linkHeader && this.linkHeader.hasOwnProperty('prev')) {
       return encodeURIComponent(this.linkHeader.prev);
     } else {
       return null;
