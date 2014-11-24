@@ -116,36 +116,6 @@ define([
         .then(function (text) {
           assert.include(text, 'Show 100', 'Clicking first option updated dropdown label');
         })
-        .end();
-    },
-
-    'pagination dropdown tests': function() {
-      return this.remote
-        .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url))
-        .findByCssSelector('.js-dropdown-pagination').isDisplayed()
-        .then(function (isDisplayed) {
-          assert.equal(isDisplayed, true, 'pagination dropdown container is visible.');
-        })
-        .end()
-        .findByCssSelector('.js-dropdown-pagination .js-dropdown-toggle').click()
-        .end()
-        .findByCssSelector('.js-dropdown-pagination').getAttribute('class')
-        .then(function (className) {
-          assert.include(className, 'is-active', 'clicking dropdown adds is-active class');
-        })
-        .end()
-        .findByCssSelector('.js-dropdown-pagination .js-dropdown-options').isDisplayed()
-        .then(function (isDisplayed) {
-          assert.equal(isDisplayed, true, 'dropdown options are visible.');
-        })
-        .end()
-        .findByCssSelector('.js-dropdown-pagination li.Dropdown-item:nth-child(3) > a:nth-child(1)').click()
-        .end()
-        .findByCssSelector('.js-dropdown-pagination .Dropdown-label').getVisibleText()
-        .then(function (text) {
-          assert.include(text, 'Show 100', 'Clicking first option updated dropdown label');
-        })
         .end()
         .findByCssSelector('.IssueItem:nth-child(51)').isDisplayed()
         .then(function (isDisplayed) {
@@ -153,6 +123,5 @@ define([
         })
         .end();
     }
-
   });
 });
