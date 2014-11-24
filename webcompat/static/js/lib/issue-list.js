@@ -351,13 +351,19 @@ issueList.IssueView = Backbone.View.extend({
     e.preventDefault();
   },
   requestNextPage: function() {
-    if (this.issues.getNextPage()) {
-      this.updateModelParams("page", this.issues.getNextPageNumber());
+    var nextPage;
+    if (nextPage = this.issues.getNextPage()) {
+      //send URL encoded page link to server.
+      this.issues.url = '/api/issues/paginate?link=' + nextPage;
+      this.fetchAndRenderIssues();
     }
   },
   requestPreviousPage: function() {
-    if (this.issues.getPrevPage()) {
-      this.updateModelParams("page", this.issues.getPreviousPageNumber());
+    var prevPage;
+    if (prevPage = this.issues.getPrevPage()) {
+      //send URL encoded page link to server.
+      this.issues.url = '/api/issues/paginate?link=' + prevPage;
+      this.fetchAndRenderIssues();
     }
   },
   updateIssues: function(category) {
