@@ -8,6 +8,7 @@
 back to GitHub'''
 
 import json
+import re
 
 from flask import abort
 from flask import Blueprint
@@ -35,7 +36,7 @@ REPO_PATH = ISSUES_PATH[:-7]
 
 
 def get_username():
-  return session.get('username', 'proxy-user')
+    return session.get('username', 'proxy-user')
 
 
 @api.route('/issues/<int:number>')
