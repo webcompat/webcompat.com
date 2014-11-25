@@ -24,7 +24,7 @@ from webcompat import limiter
 from webcompat.helpers import get_headers
 from webcompat.helpers import get_request_headers
 from webcompat.helpers import get_user_info
-from webcompat.issues import filter_untriaged
+from webcompat.issues import filter_new
 from webcompat.issues import proxy_request
 
 
@@ -97,7 +97,7 @@ def get_issue_category(issue_category):
     '''Return all issues for a specific category.
 
     issue_category can be of x types:
-    * untriaged (We take care in case there’s no bug)
+    * new (We take care in case there’s no bug)
     * contactready
     * needsdiagnosis
     * sitewait
@@ -118,16 +118,16 @@ def get_issue_category(issue_category):
             issues = github.raw_request('GET', issues_path, params=params)
         else:
             issues = proxy_request('get', params=params)
-    # Note that 'untriaged' here is primarily used on the hompage.
-    # For paginated results on the /issues page, see /issues/search/untriaged.
-    elif issue_category == 'untriaged':
+    # Note that 'new' here is primarily used on the hompage.
+    # For paginated results on the /issues page, see /issues/search/new.
+    elif issue_category == 'new':
         if g.user:
             issues = github.raw_request('GET', issues_path, params=params)
         else:
             issues = proxy_request('get', params=params)
-        # Do not send random JSON to filter_untriaged
+        # Do not send random JSON to filter_new
         if issues.status_code == 200:
-            return (filter_untriaged(json.loads(issues.content)),
+            return (filter_new(json.loads(issues.content)),
                     issues.status_code, get_headers(issues))
         else:
             return ({}, issues.status_code, get_headers(issues))
@@ -181,11 +181,11 @@ def get_search_results(query_string=None):
     return (result, results.status_code, get_headers(results))
 
 
-@api.route('/issues/search/untriaged')
-def get_untriaged_from_search():
-    '''XHR endpoint to get "untriaged" issues from GitHub's Search API.
+@api.route('/issues/search/new')
+def get_new_from_search():
+    '''XHR endpoint to get "new" issues from GitHub's Search API.
 
-    There is some overlap between /issues/category/untriaged as used on the
+    There is some overlap between /issues/category/new as used on the
     home page - but this endpoint returns paginated results paginated.
     TODO: Unify that at some point.
     '''

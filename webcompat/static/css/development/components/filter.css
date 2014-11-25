@@ -19,12 +19,12 @@
   .wc-Filter.is-active {
     color:#fff;
   }
-  .wc-Filter--untriaged {
-    border-color:var(--wc-state-untriaged);
+  .wc-Filter--new {
+    border-color:var(--wc-state-new);
   }
-  .wc-Filter--untriaged:hover,
-  .wc-Filter--untriaged.is-active {
-    background-color:var(--wc-state-untriaged);
+  .wc-Filter--new:hover,
+  .wc-Filter--new.is-active {
+    background-color:var(--wc-state-new);
   }
   .wc-Filter--need {
     border-color:var(--wc-state-need);
