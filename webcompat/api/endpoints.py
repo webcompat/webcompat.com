@@ -171,14 +171,8 @@ def get_search_results(query_string=None):
                                      headers=request_headers)
     else:
         results = proxy_request('get', params=params, uri=search_uri)
-    # The issues are returned in the items property of the response JSON,
-    # so throw everything else away.
-    json_response = json.loads(results.content)
-    if 'items' in json_response:
-        result = json.dumps(json_response['items'])
-    else:
-        result = results.content
-    return (result, results.status_code, get_headers(results))
+    return (results.content, results.status_code, get_headers(results))
+
 
 
 @api.route('/issues/search/untriaged')
