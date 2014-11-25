@@ -197,17 +197,25 @@ def get_search_results(query_string=None):
     return (results.content, results.status_code, get_headers(results))
 
 
+@api.route('/issues/search/<issue_category>')
+def get_category_from_search(issue_category):
+    '''XHR endpoint to get issues categories from GitHub's Search API.
 
-@api.route('/issues/search/untriaged')
-def get_untriaged_from_search():
-    '''XHR endpoint to get "untriaged" issues from GitHub's Search API.
+    There is some overlap between /issues/category/<issue_category> as used on
+    the home page - but this endpoint returns paginated results.
 
-    There is some overlap between /issues/category/untriaged as used on the
-    home page - but this endpoint returns paginated results paginated.
-    TODO: Unify that at some point.
+    Note: until GitHub fixes a bug where requesting issues filtered by labels
+    doesn't return pagination via Link, we get those results from this endpoint.
+    Once it's fixed, we can get "contactready", "needsdiagnosis" and "sitewait"
+    issues from /issues/category/<issue_category>.
     '''
-    query_string = ('state:open -label:contactready '
-                    '-label:sitewait -label:needsdiagnosis')
+    category_list = ['contactready', 'needsdiagnosis', 'sitewait']
+
+    if issue_category in category_list:
+        query_string = 'label:{0}'.format(issue_category)
+    elif issue_category == 'untriaged':
+        query_string = ('state:open -label:contactready '
+                        '-label:sitewait -label:needsdiagnosis')
     return get_search_results(query_string)
 
 
