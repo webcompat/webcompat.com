@@ -370,9 +370,12 @@ issueList.IssueView = Backbone.View.extend({
   updateIssues: function(category) {
     // depending on what category was clicked (or if a search came in),
     // update the collection instance url property and fetch the issues.
-    var labelCategories = ['closed', 'contactready', 'needsdiagnosis', 'sitewait'];
 
-    //TODO(miket): make generic getModelParams method which can get the latest state
+    // note: until GitHub fixes a bug where requesting issues filtered by labels
+    // doesn't return pagination via Link, we get those results via the Search API.
+    var searchCategories = ['untriaged', 'contactready', 'needsdiagnosis', 'sitewait'];
+
+    // TODO(miket): make generic getModelParams method which can get the latest state
     // merge param objects and serialize
     var paramsBag = $.extend({page: 1, per_page: 50}, this.getPageLimit());
     var params = $.param(paramsBag);
@@ -382,10 +385,10 @@ issueList.IssueView = Backbone.View.extend({
     if (category && category.query) {
       params = $.param($.extend(paramsBag, {q: category.query}));
       this.issues.url = '/api/issues/search?' + params;
-    } else if (_.contains(labelCategories, category)) {
+    } else if (_.contains(searchCategories, category)) {
+      this.issues.url = '/api/issues/search/' + category + '?' + params;
+    } else if (category === "closed") {
       this.issues.url = '/api/issues/category/' + category + '?' + params;
-    } else if (category === "untriaged") {
-      this.issues.url = '/api/issues/search/untriaged?' + params;
     } else {
       this.issues.url = '/api/issues?' + params;
     }
