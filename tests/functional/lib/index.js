@@ -116,35 +116,35 @@ define([
         .end();
     },
 
-    'browse issues (untriaged)': function() {
+    'browse issues (new)': function() {
       return this.remote
         .get(require.toUrl(url))
-        .findByCssSelector('#untriaged h3').getVisibleText()
+        .findByCssSelector('#new h3').getVisibleText()
         .then(function (text) {
-          assert.equal(text, 'Untriaged Issues');
+          assert.equal(text, 'New Issues');
         })
         .end()
-        .findAllByCssSelector('#untriaged .IssueItem.IssueItem--untriaged')
+        .findAllByCssSelector('#new .IssueItem.IssueItem--new')
         .then(function (elms) {
           assert.equal(elms.length, 4, '4 issues should be displayed');
         })
         .end()
-        .findByCssSelector('.IssueItem--untriaged .IssueItem-count').getVisibleText()
+        .findByCssSelector('.IssueItem--new .IssueItem-count').getVisibleText()
         .then(function (text) {
           assert.match(text, /^Issue\s(\d+)$/, 'Issue should have a number');
         })
         .end()
-        .findByCssSelector('.IssueItem--untriaged .IssueItem-header a').getAttribute('href')
+        .findByCssSelector('.IssueItem--new .IssueItem-header a').getAttribute('href')
         .then(function (text) {
           assert.match(text, /^\/issues\/\d+$/, 'Link should have a number');
         })
         .end()
-        .findByCssSelector('.IssueItem--untriaged .IssueItem-header').getVisibleText()
+        .findByCssSelector('.IssueItem--new .IssueItem-header').getVisibleText()
         .then(function (text) {
           assert.match(text, /^Issue\s\d+:\s.+$/, 'Issue should have a non-empty title');
         })
         .end()
-        .findByCssSelector('.IssueItem--untriaged .IssueItem-metadata').getVisibleText()
+        .findByCssSelector('.IssueItem--new .IssueItem-metadata').getVisibleText()
         .then(function (text) {
           assert.match(text, /comments:\s\d+$/, 'Issue should display number of comments');
           assert.match(text, /^Opened:\s\d{4}\-\d{2}\-\d{2}.+/, 'Issue should display creation date');

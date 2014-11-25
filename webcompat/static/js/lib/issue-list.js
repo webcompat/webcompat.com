@@ -266,10 +266,10 @@ issueList.IssueView = Backbone.View.extend({
   },
   template: _.template($('#issuelist-issue-tmpl').html()),
   loadIssues: function() {
-    // First checks URL params, e.g., /?untriaged=1 and activates the untriaged filter,
+    // First checks URL params, e.g., /?new=1 and activates the new filter,
     // or loads default unsorted/unfiltered issues
     var category;
-    var filterRegex = /\?(untriaged|needsdiagnosis|contactready|sitewait|closed)=1/;
+    var filterRegex = /\?(new|needsdiagnosis|contactready|sitewait|closed)=1/;
     if (category = window.location.search.match(filterRegex)) {
       // If there was a match, load the relevant results and fire an event
       // to notify the button to activate.
@@ -381,8 +381,8 @@ issueList.IssueView = Backbone.View.extend({
       this.issues.url = '/api/issues/search?' + params;
     } else if (_.contains(labelCategories, category)) {
       this.issues.url = '/api/issues/category/' + category + '?' + params;
-    } else if (category === "untriaged") {
-      this.issues.url = '/api/issues/search/untriaged?' + params;
+    } else if (category === "new") {
+      this.issues.url = '/api/issues/search/new?' + params;
     } else {
       this.issues.url = '/api/issues?' + params;
     }

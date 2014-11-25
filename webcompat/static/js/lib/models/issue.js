@@ -36,9 +36,9 @@
       this.set('stateClass', 'need');
       return 'Needs Diagnosis';
     }
-    //Untriaged is the default value.
-    this.set('stateClass', 'untriaged');
-    return 'Untriaged Issue';
+    //New is the default value.
+    this.set('stateClass', 'new');
+    return 'New Issue';
   },
   parse: function(response) {
     this.set({

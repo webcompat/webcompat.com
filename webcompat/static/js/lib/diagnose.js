@@ -20,9 +20,9 @@ diagnose.ContactReadyCollection = Backbone.Collection.extend({
   url: '/api/issues/category/contactready'
 });
 
-diagnose.UntriagedCollection = Backbone.Collection.extend({
+diagnose.NewCollection = Backbone.Collection.extend({
   model: issues.Issue,
-  url: '/api/issues/category/untriaged'
+  url: '/api/issues/category/new'
 });
 
 diagnose.SiteWaitCollection = Backbone.Collection.extend({
@@ -72,22 +72,22 @@ diagnose.NeedsDiagnosisView = Backbone.View.extend({
   }
 });
 
-diagnose.UntriagedView = Backbone.View.extend({
-  el: $('#untriaged'),
+diagnose.NewView = Backbone.View.extend({
+  el: $('#new'),
   initialize: function() {
     var self = this;
     var headersBag = {headers: {'Accept': 'application/json'}};
-    this.issues = new diagnose.UntriagedCollection();
+    this.issues = new diagnose.NewCollection();
     this.issues.fetch(headersBag).success(function() {
       self.render();
     }).error(function(){});
   },
-  template: _.template($('#untriaged-tmpl').html()),
+  template: _.template($('#new-tmpl').html()),
   render: function() {
     this.$el.html(this.template({
       // manually slice out the latest 4.
       // in the future we'll allow the user to "scroll" these.
-      untriaged: this.issues.toJSON().slice(0,4)
+      newIssues: this.issues.toJSON().slice(0,4)
     }));
     return this;
   }
@@ -138,6 +138,6 @@ diagnose.ContactReadyView = Backbone.View.extend({
 $(function(){
   new diagnose.NeedsDiagnosisView();
   new diagnose.ContactReadyView();
-  new diagnose.UntriagedView();
+  new diagnose.NewView();
   new diagnose.SiteWaitView();
 });

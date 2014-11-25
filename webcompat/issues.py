@@ -50,13 +50,13 @@ def report_issue(form, proxy=False):
         return github.post('repos/{0}'.format(REPO_URI), build_formdata(form))
 
 
-def filter_untriaged(issues):
-    '''Return the list of untriaged issues, encoded as JSON.
+def filter_new(issues):
+    '''Return the list of new issues, encoded as JSON.
 
-    "untriaged" means anything that isn't an issue with a "contactready",
+    "new" means anything that isn't an issue with a "contactready",
     "sitewait", or "needsdiagnosis" label.
     '''
-    def is_untriaged(issue):
+    def is_new(issue):
         '''Filter function.'''
         match = True
         if issue.get('labels') == []:
@@ -71,4 +71,4 @@ def filter_untriaged(issues):
                     match = False
         return match
 
-    return json.dumps([issue for issue in issues if is_untriaged(issue)])
+    return json.dumps([issue for issue in issues if is_new(issue)])
