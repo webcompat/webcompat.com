@@ -256,6 +256,7 @@ issueList.IssueView = Backbone.View.extend({
   initialize: function() {
     this.issues = new issueList.IssueCollection();
     // check to see if we should pre-filter results
+    // otherwise load default (unfiltered "all")
     this.loadIssues();
 
     // set up event listeners.
@@ -373,7 +374,7 @@ issueList.IssueView = Backbone.View.extend({
 
     //TODO(miket): make generic getModelParams method which can get the latest state
     // merge param objects and serialize
-    var paramsBag = $.extend({page: 1}, this.getPageLimit());
+    var paramsBag = $.extend({page: 1, per_page: 50}, this.getPageLimit());
     var params = $.param(paramsBag);
 
     // note: if query is the empty string, it will load all issues from the
