@@ -7,6 +7,7 @@
 import datetime
 import math
 import urlparse
+import re
 
 from babel.dates import format_timedelta
 from flask import session
@@ -105,7 +106,7 @@ def get_headers(response):
                'content-type': JSON_MIME}
 
     if response.headers.get('link'):
-        headers['link'] = sanitize_link(response.headers.get('link'))
+        headers['link'] = rewrite_and_sanitize_link(response.headers.get('link'))
     return headers
 
 
@@ -174,3 +175,7 @@ def sanitize_link(link_header):
         clean_links_list.append('<{0}>; {1}'.format(
             urlparse.urlunparse(clean_uri), rel_info))
     return ', '.join(clean_links_list)
+
+
+def rewrite_and_sanitize_link(link_header):
+    return rewrite_links(sanitize_link(link_header))
