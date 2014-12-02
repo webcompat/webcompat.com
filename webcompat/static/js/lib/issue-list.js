@@ -354,16 +354,14 @@ issueList.IssueView = Backbone.View.extend({
   requestNextPage: function() {
     var nextPage;
     if (nextPage = this.issues.getNextPage()) {
-      //send URL encoded page link to server.
-      this.issues.url = '/api/issues/paginate?link=' + nextPage;
+      this.issues.url = nextPage;
       this.fetchAndRenderIssues();
     }
   },
   requestPreviousPage: function() {
     var prevPage;
     if (prevPage = this.issues.getPrevPage()) {
-      //send URL encoded page link to server.
-      this.issues.url = '/api/issues/paginate?link=' + prevPage;
+      this.issues.url =  prevPage;
       this.fetchAndRenderIssues();
     }
   },
