@@ -5,8 +5,8 @@ You are welcome to contribute to this project. Here are the guidelines we try to
 
 * [Question or Problem](#question-or-problem)
 * [Filing an Issue](#filing-an-issue)
-* [Finding an Issue to Work On](#finding-an-issue-to-work-on)
 * [Triaging Issues](#triaging-issues)
+* [Finding an Issue to Work On](#finding-an-issue-to-work-on)
 * [Feature Requests](#feature-requests)
 * [Submission Guidelines](#submission-guidelines)
 * [Coding Style](#coding-style)
