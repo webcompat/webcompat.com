@@ -47,6 +47,14 @@ If you're using webcompat.com and something is confusing, broken, or you think i
 
 One way to contribute is to triage issues. This could be as simple as confirming a bug, or as complicated as debugging errors and providing fixes. A tiny bit of effort in someone else's issue can go a long way.
 
+## Finding an Issue to Work On
+
+The logic for the issue tracker is this -
+[*Milestones*](https://github.com/webcompat/webcompat.com/milestones) - initiatives in priority order (ignore the dates)
+[*Unprioritized*](https://github.com/webcompat/webcompat.com/milestones/Unprioritized%20issues) - new ideas, cool things, easy issues to tackle
+
+Anything labeled ["Good-first-patch"](https://github.com/webcompat/webcompat.com/labels/good-first-patch) is perfect for getting started!
+
 ## Feature Requests
 
 You can request a new feature by [submitting an issue](#filing-an-issue) to our repo.  If you
