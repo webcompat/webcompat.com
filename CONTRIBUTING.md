@@ -51,8 +51,8 @@ One way to contribute is to triage issues. This could be as simple as confirming
 ## Finding an Issue to Work On
 
 The logic for the issue tracker is this -
-[*Milestones*](https://github.com/webcompat/webcompat.com/milestones) - initiatives in priority order (ignore the dates)
-[*Unprioritized*](https://github.com/webcompat/webcompat.com/milestones/Unprioritized%20issues) - new ideas, cool things, easy issues to tackle
+* [*Milestones*](https://github.com/webcompat/webcompat.com/milestones) - initiatives in priority order (ignore the dates)
+* [*Unprioritized*](https://github.com/webcompat/webcompat.com/milestones/Unprioritized%20issues) - new ideas, cool things, easy issues to tackle
 
 Anything labeled ["Good-first-patch"](https://github.com/webcompat/webcompat.com/labels/good-first-patch) is perfect for getting started!
 
