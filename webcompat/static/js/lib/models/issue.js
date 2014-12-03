@@ -168,14 +168,14 @@ issueList.IssueCollection = Backbone.Collection.extend({
   },
   getNextPage: function() {
     if (this.linkHeader && this.linkHeader.hasOwnProperty('next')) {
-      return encodeURIComponent(this.linkHeader.next);
+      return this.linkHeader.next;
     } else {
       return null;
     }
   },
   getPrevPage: function() {
     if (this.linkHeader && this.linkHeader.hasOwnProperty('prev')) {
-      return encodeURIComponent(this.linkHeader.prev);
+      return this.linkHeader.prev;
     } else {
       return null;
     }
