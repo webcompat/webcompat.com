@@ -68,15 +68,8 @@
         }
       },
       error: function() {
-        $('<div></div>', {
-          'class': 'flash error',
-          'text': 'There was an error editing this issues\'s status.'
-        }).appendTo('body');
-
-        setTimeout(function(){
-          var __flashmsg = $('.flash');
-          if (__flashmsg.length) {__flashmsg.fadeOut();}
-        }, 2000);
+        var msg = 'There was an error editing this issues\'s status.';
+        wcEvents.trigger('flash:error', {message: msg, timeout: 2000});
       }
     });
   },
@@ -102,15 +95,8 @@
         self.set('labels', response);
       },
       error: function() {
-        $('<div></div>', {
-          'class': 'flash error',
-          'text': 'There was an error setting labels.'
-        }).appendTo('body');
-
-        setTimeout(function(){
-          var __flashmsg = $('.flash');
-          if (__flashmsg.length) {__flashmsg.fadeOut();}
-        }, 2000);
+        var msg = 'There was an error setting labels.';
+        wcEvents.trigger('flash:error', {message: msg, timeout: 2000});
       }
     });
   }
