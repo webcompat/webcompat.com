@@ -116,6 +116,9 @@ issueList.FilterView = Backbone.View.extend({
     btn.toggleClass('is-active')
        .siblings().removeClass('is-active');
 
+    // Clear the search field
+    issueList.events.trigger('search:clear');
+
     if (btn.hasClass('is-active')) {
       this.updateResults(btn.data('filter'));
     } else {
@@ -137,6 +140,7 @@ issueList.SearchView = Backbone.View.extend({
   },
   initialize: function() {
     issueList.events.on('search:update', _.bind(this.updateSearchQuery, this));
+    issueList.events.on('search:clear', _.bind(this.clearSearchBox, this));
   },
   template: _.template($('#issuelist-search-tmpl').html()),
   render: function(cb) {
@@ -147,6 +151,9 @@ issueList.SearchView = Backbone.View.extend({
       cb();
     }
     return this;
+  },
+  clearSearchBox: function() {
+    this.input.val('');
   },
   updateSearchQuery: function(data) {
     this.input.val(data);
