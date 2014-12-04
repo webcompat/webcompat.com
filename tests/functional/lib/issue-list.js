@@ -146,7 +146,7 @@ define([
         .findAllByCssSelector('button.wc-Filter--untriaged').getAttribute('class')
         .then(function (className) {
           assert.notInclude(className, 'is-active', 'Searching should clear all filters');
-        })
+        });
     }
   });
 });

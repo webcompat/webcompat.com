@@ -69,22 +69,22 @@ issueList.FilterView = Backbone.View.extend({
 
     // TODO(miket): update with paramKey & paramValue
     var options = [
-      {title: "View all open issues", params: ""},
-      {title: "View all issues", params: "filter=all"}
+      {title: 'View all open issues', params: ''},
+      {title: 'View all issues', params: 'filter=all'}
     ];
 
     // add the dropdown options for logged in users.
     // submitted by me can be
     if ($('body').data('username')) {
       options.push(
-        {title: "View issues submitted by me", params: "filter=created"},
-        {title: "View issues mentioning me", params: "filter=mentioned"},
-        {title: "View issues assigned to me", params: "filter=assigned"}
+        {title: 'View issues submitted by me', params: 'filter=created'},
+        {title: 'View issues mentioning me', params: 'filter=mentioned'},
+        {title: 'View issues assigned to me', params: 'filter=assigned'}
       );
     }
 
     this.model = new Backbone.Model({
-      dropdownTitle: "View all open issues",
+      dropdownTitle: 'View all open issues',
       dropdownOptions: options,
     });
 
@@ -111,7 +111,7 @@ issueList.FilterView = Backbone.View.extend({
   toggleFilter: function(e) {
     var btn;
     // Stringy e comes from triggered filter:activate event
-    if (typeof e === "string") {
+    if (typeof e === 'string') {
       btn = $('[data-filter=' + e + ']');
     } else {
       // We get a regular event object from click events.
@@ -201,22 +201,22 @@ issueList.SortingView = Backbone.View.extend({
   initialize: function() {
     this.paginationModel = new Backbone.Model({
       // TODO(miket): persist selected page limit to survive page loads
-      dropdownTitle: "Show 50",
+      dropdownTitle: 'Show 50',
       dropdownOptions: [
-        {title: "Show 25", paramKey: "per_page", paramValue: "25"},
-        {title: "Show 50", paramKey: "per_page", paramValue: "50"},
-        {title: "Show 100", paramKey: "per_page", paramValue: "100"}
+        {title: 'Show 25',  paramKey: 'per_page', paramValue: '25'},
+        {title: 'Show 50',  paramKey: 'per_page', paramValue: '50'},
+        {title: 'Show 100', paramKey: 'per_page', paramValue: '100'}
       ]
     });
 
     // TODO(miket): update model to have paramKey and paramValue
     this.sortModel = new Backbone.Model({
-      dropdownTitle: "Newest",
+      dropdownTitle: 'Newest',
       dropdownOptions: [
-        {title: "Newest", params: ""},
-        {title: "Oldest", params: ""},
-        {title: "Most Commented", params: ""},
-        {title: "etc.", params: ""}
+        {title: 'Newest', params: ''},
+        {title: 'Oldest', params: ''},
+        {title: 'Most Commented', params: ''},
+        {title: 'etc.', params: ''}
       ]
     });
 
