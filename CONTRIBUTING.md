@@ -9,6 +9,7 @@ You are welcome to contribute to this project. Here are the guidelines we try to
 * [Finding an Issue to Work On](#finding-an-issue-to-work-on)
 * [Feature Requests](#feature-requests)
 * [Submission Guidelines](#submission-guidelines)
+* [Product and Design Contributions](#product-and-design-contributions)
 * [Coding Style](#coding-style)
 * [Working Environment setup](#working-environment-setup)
   * [Simple setup](#simple-setup)
@@ -78,6 +79,14 @@ All code contributions should come in the form of a [pull request](https://help.
 ![master](http://f.cl.ly/items/1E3f0A0I2A2b3T2L2I2c/forked.png)
 
 You'll probably want to [set up a local development environment](#working-environment-setup) to get that far. If you've already been through this process, make sure you've [set the main repo as an upstream remote](https://help.github.com/articles/configuring-a-remote-for-a-fork/) and make sure [your fork is up to date](https://help.github.com/articles/syncing-a-fork/) before sending pull requests.
+
+* Product and Design Contributions
+We store design artifacts in the [Design Repo](https://github.com/webcompat/design) 
+
+You can contribute to the product direction and user interface in a few ways
+1) Write a feature request as described above
+2) Comment on an [existing issue in the backlog](https://github.com/webcompat/webcompat.com/issues?q=is%3Aopen+is%3Aissue)
+3) Tackle one of the issues labeled ["Needs definition"](https://github.com/webcompat/webcompat.com/labels/needs%20definition) or ["Design"](https://github.com/webcompat/webcompat.com/labels/design) 
 
 * Make your changes in a new branch
 
