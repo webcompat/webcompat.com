@@ -122,6 +122,31 @@ define([
           assert.equal(isDisplayed, true, 'More than 50 issues were loaded.');
         })
         .end();
+    },
+
+    'search/filter interaction': function() {
+      return this.remote
+        .setFindTimeout(intern.config.wc.pageLoadTimeout)
+        .get(require.toUrl(url))
+        .findByCssSelector('.IssueList-search-form').click()
+        .type('taco')
+        .end()
+        .findAllByCssSelector('button.wc-Filter--untriaged').click()
+        .end()
+        .findByCssSelector('.IssueList-search-form').getVisibleText()
+        .then(function (text) {
+          assert.equal(text, '', 'Clicking filter should empty search text');
+        })
+        .end()
+        .findAllByCssSelector('button.wc-Filter--untriaged').click()
+        .end()
+        .findByCssSelector('.IssueList-search-form').click()
+        .type('taco')
+        .end()
+        .findAllByCssSelector('button.wc-Filter--untriaged').getAttribute('class')
+        .then(function (className) {
+          assert.notInclude(className, 'is-active', 'Searching should clear all filters');
+        })
     }
   });
 });
