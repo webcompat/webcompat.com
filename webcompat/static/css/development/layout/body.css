@@ -103,12 +103,15 @@ p {
 /*----------Link Styles----------*/
 a {
   color: var(--base-link-color);
-  text-decoration:none;
+  text-decoration: underline;
 }
 a:hover, a:focus {
-  color: var(--base-link-color);
+  color: var(--wc-background-dark);
   outline: none;
-  text-decoration: underline;
+  text-decoration: none;
+}
+.no-underline,.no-underline:hover,.no-underline:focus {
+  text-decoration: none;
 }
 
 /*--------tools------------*/

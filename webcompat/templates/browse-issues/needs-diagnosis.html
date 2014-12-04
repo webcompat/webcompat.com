@@ -1,7 +1,7 @@
 <div id="needs-diagnosis" class="r-Grid-cell r-all--1of2 r-maxM--2of2">
   <script type="text/template" id="needs-diagnosis-tmpl">
   <h3 class="wc-titleIssue">
-    <a href="{{ url_for('show_issues') }}?needsdiagnosis=1">Needs Diagnosis</a>
+    <a class="no-underline" href="{{ url_for('show_issues') }}?needsdiagnosis=1">Needs Diagnosis</a>
   </h3>
   <% if (needsDiagnosis.length) { %>
     <% _.each(needsDiagnosis, function(issue) { %>
