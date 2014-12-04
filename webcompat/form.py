@@ -144,10 +144,6 @@ def build_formdata(form_object):
     NOTE: Only users with push access can set labels for new issues.
     Labels are silently dropped otherwise.
     NOTE: intentionally leaving out `milestone` and `assignee`.
-
-    For now, we'll put them in the body so they're visible. But as soon as we
-    have a bot set up to parse the label comments (see wrap_label), we'll stop
-    doing that.
     '''
     # URL normalization
     url = form_object.get('url')
@@ -159,15 +155,16 @@ def build_formdata(form_object):
     else:
         summary = '{0}'.format(form_object.get('summary'))
     # Preparing the body
-    body = u'''{0}
-**URL**: {1}
-**Browser / Version**: {2}
-**Operating System**: {3}
-**Problem type**: {4}
-**Site owner**: {5}
+    body = u'''{0}{1}
+**URL**: {2}
+**Browser / Version**: {3}
+**Operating System**: {4}
+**Problem type**: {5}
+**Site owner**: {6}
 
 **Steps to Reproduce**
-{6}'''.format(get_labels(form_object.get('browser')),
+{7}'''.format(wrap_label(('ua_header', form_object.get('ua_header'))),
+              get_labels(form_object.get('browser')),
               form_object.get('url'),
               form_object.get('browser'),
               form_object.get('os'),
