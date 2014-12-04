@@ -65,6 +65,7 @@ issueList.FilterView = Backbone.View.extend({
     //actual data for issues count
 
     issueList.events.on('filter:activate', _.bind(this.toggleFilter, this));
+    issueList.events.on('filter:clear', _.bind(this.clearFilter, this));
 
     // TODO(miket): update with paramKey & paramValue
     var options = [
@@ -102,6 +103,10 @@ issueList.FilterView = Backbone.View.extend({
     /* Commenting out for now, see Issues #312, #266
     /* this.dropdown.setElement(this.$el.find('.js-dropdown-wrapper')).render(); */
     return this;
+  },
+  clearFilter: function() {
+    var btns = $('[data-filter]');
+    btns.removeClass('is-active');
   },
   toggleFilter: function(e) {
     var btn;
@@ -170,6 +175,8 @@ issueList.SearchView = Backbone.View.extend({
       if ($.trim(searchValue) !== this._currentSearch) {
         this._currentSearch = $.trim(searchValue);
         this.doSearch(this._currentSearch);
+        // clear any filters that have been set.
+        issueList.events.trigger('filter:clear');
       }
     }
 
