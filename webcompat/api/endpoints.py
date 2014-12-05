@@ -108,13 +108,13 @@ def get_issue_category(issue_category):
     params = request.args.copy()
 
     if issue_category in category_list:
-        params.update({'labels': issue_category})
+        params['labels'] = issue_category
         if g.user:
             issues = github.raw_request('GET', issues_path, params=params)
         else:
             issues = proxy_request('get', params=params)
     elif issue_category == 'closed':
-        params.update({'state': 'closed'})
+        params['state'] = 'closed'
         if g.user:
             issues = github.raw_request('GET', issues_path, params=params)
         else:
@@ -164,7 +164,7 @@ def get_search_results(query_string=None):
         query_string = params.get('q')
         # restrict results to our repo.
     query_string += " repo:{0}".format(REPO_PATH)
-    params.update({'q': query_string})
+    params['q'] = query_string
 
     if g.user:
         request_headers = get_request_headers(g.request_headers)
