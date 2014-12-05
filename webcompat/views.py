@@ -136,16 +136,19 @@ def index():
                                browser=browser_name)
     # Form submission.
     elif request.method == 'POST' and bug_form.validate():
-        if request.form.get('submit-type') == AUTH_REPORT:
+        # copy the form so we can add the full UA string to it.
+        form = request.form.copy()
+        form['ua_header'] = ua_header
+        if form.get('submit-type') == AUTH_REPORT:
             if g.user:  # If you're already authed, submit the bug.
-                response = report_issue(request.form)
+                response = report_issue(form)
                 return redirect(url_for('thanks',
                                 number=response.get('number')))
             else:  # Stash form data into session, go do GitHub auth
-                session['form_data'] = request.form
+                session['form_data'] = form
                 return redirect(url_for('login'))
-        elif request.form.get('submit-type') == PROXY_REPORT:
-            response = report_issue(request.form, proxy=True).json()
+        elif form.get('submit-type') == PROXY_REPORT:
+            response = report_issue(form, proxy=True).json()
             return redirect(url_for('thanks', number=response.get('number')))
     else:
         # Validation failed, re-render the form with the errors.
