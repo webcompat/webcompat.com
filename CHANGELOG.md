@@ -1,3 +1,7 @@
+## 1.1.2 - 2014-12-05
+
+* Regression fix: search results should be scoped to web-bugs repo [Issue #444](https://github.com/webcompat/webcompat.com/issues/444)
+
 ## 1.1.1 - 2014-12-04
 
 * Update to privacy policy (re: [Issue #419](https://github.com/webcompat/webcompat.com/issues/419))
