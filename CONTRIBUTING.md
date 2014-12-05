@@ -79,8 +79,6 @@ All code contributions should come in the form of a [pull request](https://help.
 
 You'll probably want to [set up a local development environment](#working-environment-setup) to get that far. If you've already been through this process, make sure you've [set the main repo as an upstream remote](https://help.github.com/articles/configuring-a-remote-for-a-fork/) and make sure [your fork is up to date](https://help.github.com/articles/syncing-a-fork/) before sending pull requests.
 
-For product and design contributions, check out the [Design Repo](https://github.com/webcompat/design) 
-
 * Make your changes in a new branch
 
   `git checkout -b name-of-fix-branch`
@@ -108,6 +106,8 @@ This will notify the person that your request is waiting for a review for mergin
 The discussion might lead to modify or abandon this specific pull request. This is the place where you can have a code review.
 
 After all that, if you'd like, you can send a pull request to add your name to our humans.txt file.
+
+For product and design contributions, check out the [Design Repo](https://github.com/webcompat/design) 
 
 ## Coding Style
 
