@@ -1,3 +1,7 @@
+## 1.1.1 - 2014-12-04
+
+* Update to privacy policy (re: [Issue #419](https://github.com/webcompat/webcompat.com/issues/419))
+
 ## 1.1.0 - 2014-12-04
 
 * Add full user agent header to report metadata (hidden by default) [Issue #419](https://github.com/webcompat/webcompat.com/issues/419) [Pull #441](https://github.com/webcompat/webcompat.com/pull/441)
