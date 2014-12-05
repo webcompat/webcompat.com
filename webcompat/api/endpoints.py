@@ -163,7 +163,7 @@ def get_search_results(query_string=None):
         query_string = params.get('q')
         # restrict results to our repo.
     query_string += " repo:{0}".format(REPO_PATH)
-    params.update({'q': query_string})
+    params['q'] = query_string
 
     if g.user:
         request_headers = get_request_headers(g.request_headers)
