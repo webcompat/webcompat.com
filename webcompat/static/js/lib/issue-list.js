@@ -65,25 +65,26 @@ issueList.FilterView = Backbone.View.extend({
     //actual data for issues count
 
     issueList.events.on('filter:activate', _.bind(this.toggleFilter, this));
+    issueList.events.on('filter:clear', _.bind(this.clearFilter, this));
 
     // TODO(miket): update with paramKey & paramValue
     var options = [
-      {title: "View all open issues", params: ""},
-      {title: "View all issues", params: "filter=all"}
+      {title: 'View all open issues', params: ''},
+      {title: 'View all issues', params: 'filter=all'}
     ];
 
     // add the dropdown options for logged in users.
     // submitted by me can be
     if ($('body').data('username')) {
       options.push(
-        {title: "View issues submitted by me", params: "filter=created"},
-        {title: "View issues mentioning me", params: "filter=mentioned"},
-        {title: "View issues assigned to me", params: "filter=assigned"}
+        {title: 'View issues submitted by me', params: 'filter=created'},
+        {title: 'View issues mentioning me', params: 'filter=mentioned'},
+        {title: 'View issues assigned to me', params: 'filter=assigned'}
       );
     }
 
     this.model = new Backbone.Model({
-      dropdownTitle: "View all open issues",
+      dropdownTitle: 'View all open issues',
       dropdownOptions: options,
     });
 
@@ -103,10 +104,14 @@ issueList.FilterView = Backbone.View.extend({
     /* this.dropdown.setElement(this.$el.find('.js-dropdown-wrapper')).render(); */
     return this;
   },
+  clearFilter: function() {
+    var btns = $('[data-filter]');
+    btns.removeClass('is-active');
+  },
   toggleFilter: function(e) {
     var btn;
     // Stringy e comes from triggered filter:activate event
-    if (typeof e === "string") {
+    if (typeof e === 'string') {
       btn = $('[data-filter=' + e + ']');
     } else {
       // We get a regular event object from click events.
@@ -115,6 +120,9 @@ issueList.FilterView = Backbone.View.extend({
 
     btn.toggleClass('is-active')
        .siblings().removeClass('is-active');
+
+    // Clear the search field
+    issueList.events.trigger('search:clear');
 
     if (btn.hasClass('is-active')) {
       this.updateResults(btn.data('filter'));
@@ -137,6 +145,7 @@ issueList.SearchView = Backbone.View.extend({
   },
   initialize: function() {
     issueList.events.on('search:update', _.bind(this.updateSearchQuery, this));
+    issueList.events.on('search:clear', _.bind(this.clearSearchBox, this));
   },
   template: _.template($('#issuelist-search-tmpl').html()),
   render: function(cb) {
@@ -147,6 +156,9 @@ issueList.SearchView = Backbone.View.extend({
       cb();
     }
     return this;
+  },
+  clearSearchBox: function() {
+    this.input.val('');
   },
   updateSearchQuery: function(data) {
     this.input.val(data);
@@ -163,6 +175,8 @@ issueList.SearchView = Backbone.View.extend({
       if ($.trim(searchValue) !== this._currentSearch) {
         this._currentSearch = $.trim(searchValue);
         this.doSearch(this._currentSearch);
+        // clear any filters that have been set.
+        issueList.events.trigger('filter:clear');
       }
     }
 
@@ -187,22 +201,22 @@ issueList.SortingView = Backbone.View.extend({
   initialize: function() {
     this.paginationModel = new Backbone.Model({
       // TODO(miket): persist selected page limit to survive page loads
-      dropdownTitle: "Show 50",
+      dropdownTitle: 'Show 50',
       dropdownOptions: [
-        {title: "Show 25", paramKey: "per_page", paramValue: "25"},
-        {title: "Show 50", paramKey: "per_page", paramValue: "50"},
-        {title: "Show 100", paramKey: "per_page", paramValue: "100"}
+        {title: 'Show 25',  paramKey: 'per_page', paramValue: '25'},
+        {title: 'Show 50',  paramKey: 'per_page', paramValue: '50'},
+        {title: 'Show 100', paramKey: 'per_page', paramValue: '100'}
       ]
     });
 
     // TODO(miket): update model to have paramKey and paramValue
     this.sortModel = new Backbone.Model({
-      dropdownTitle: "Newest",
+      dropdownTitle: 'Newest',
       dropdownOptions: [
-        {title: "Newest", params: ""},
-        {title: "Oldest", params: ""},
-        {title: "Most Commented", params: ""},
-        {title: "etc.", params: ""}
+        {title: 'Newest', params: ''},
+        {title: 'Oldest', params: ''},
+        {title: 'Most Commented', params: ''},
+        {title: 'etc.', params: ''}
       ]
     });
 
