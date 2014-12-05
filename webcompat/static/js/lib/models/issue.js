@@ -115,7 +115,13 @@ issueList.IssueCollection = Backbone.Collection.extend({
     } else {
       this.linkHeader = null;
     }
-    return response;
+    if (response.hasOwnProperty('items')) {
+      // Search API results return an Object with the
+      // issues array in the items key
+      return response.items;
+    } else {
+      return response;
+    }
   },
   parseHeader: function(linkHeader) {
     /* Returns an object like so:
@@ -146,28 +152,18 @@ issueList.IssueCollection = Backbone.Collection.extend({
 
     return result;
   },
-  getPageFromRel: function(relation) {
-    // GitHub will only send us a Link header if pagination is possible.
-    // if we return early with null, we'll know that next and prev pagination
-    // should be disabled.
-    if (this.linkHeader == null) {
-      return null;
-    }
-    var page;
-    // we only return the page number
-    var re = new RegExp('[&?]page=(\\d)');
-
-    if (page = (this.linkHeader.hasOwnProperty(relation) &&
-                this.linkHeader[relation].match(re))) {
-      return page[1];
+  getNextPage: function() {
+    if (this.linkHeader && this.linkHeader.hasOwnProperty('next')) {
+      return this.linkHeader.next;
     } else {
       return null;
     }
   },
-  getNextPageNumber: function() {
-    return this.getPageFromRel('next');
+  getPrevPage: function() {
+    if (this.linkHeader && this.linkHeader.hasOwnProperty('prev')) {
+      return this.linkHeader.prev;
+    } else {
+      return null;
+    }
   },
-  getPreviousPageNumber: function() {
-    return this.getPageFromRel('prev');
-  }
 });

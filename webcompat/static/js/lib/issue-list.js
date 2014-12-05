@@ -270,6 +270,7 @@ issueList.IssueView = Backbone.View.extend({
   initialize: function() {
     this.issues = new issueList.IssueCollection();
     // check to see if we should pre-filter results
+    // otherwise load default (unfiltered "all")
     this.loadIssues();
 
     // set up event listeners.
@@ -331,10 +332,10 @@ issueList.IssueView = Backbone.View.extend({
     var nextButton = $('.js-pagination-next');
     var prevButton = $('.js-pagination-previous');
     var isLastPage = _.bind(function() {
-      return this.issues.getNextPageNumber() == null;
+      return this.issues.getNextPage() == null;
     }, this);
     var isFirstPage = _.bind(function() {
-      return this.issues.getPreviousPageNumber() == null;
+      return this.issues.getPrevPage() == null;
     }, this);
     var isSinglePage = isLastPage() && isFirstPage();
 
@@ -365,27 +366,30 @@ issueList.IssueView = Backbone.View.extend({
     e.preventDefault();
   },
   requestNextPage: function() {
-    if (this.issues.getNextPageNumber()) {
-      // chop off the last character, which is the page number
-      // TODO: this feels gross. ideally we should get the URL from the
-      // link header and send that to an API endpoint which then requests
-      // it from GitHub.
-      this.updateModelParams("page", this.issues.getNextPageNumber());
+    var nextPage;
+    if (nextPage = this.issues.getNextPage()) {
+      this.issues.url = nextPage;
+      this.fetchAndRenderIssues();
     }
   },
   requestPreviousPage: function() {
-    if (this.issues.getPreviousPageNumber()) {
-      this.updateModelParams("page", this.issues.getPreviousPageNumber());
+    var prevPage;
+    if (prevPage = this.issues.getPrevPage()) {
+      this.issues.url =  prevPage;
+      this.fetchAndRenderIssues();
     }
   },
   updateIssues: function(category) {
     // depending on what category was clicked (or if a search came in),
     // update the collection instance url property and fetch the issues.
-    var labelCategories = ['closed', 'contactready', 'needsdiagnosis', 'sitewait'];
 
-    //TODO(miket): make generic getModelParams method which can get the latest state
+    // note: until GitHub fixes a bug where requesting issues filtered by labels
+    // doesn't return pagination via Link, we get those results via the Search API.
+    var searchCategories = ['untriaged', 'contactready', 'needsdiagnosis', 'sitewait'];
+
+    // TODO(miket): make generic getModelParams method which can get the latest state
     // merge param objects and serialize
-    var paramsBag = $.extend({page: 1}, this.getPageLimit());
+    var paramsBag = $.extend({page: 1, per_page: 50}, this.getPageLimit());
     var params = $.param(paramsBag);
 
     // note: if query is the empty string, it will load all issues from the
@@ -393,33 +397,48 @@ issueList.IssueView = Backbone.View.extend({
     if (category && category.query) {
       params = $.param($.extend(paramsBag, {q: category.query}));
       this.issues.url = '/api/issues/search?' + params;
-    } else if (_.contains(labelCategories, category)) {
+    } else if (_.contains(searchCategories, category)) {
+      this.issues.url = '/api/issues/search/' + category + '?' + params;
+    } else if (category === "closed") {
       this.issues.url = '/api/issues/category/' + category + '?' + params;
-    } else if (category === "untriaged") {
-      this.issues.url = '/api/issues/search/untriaged?' + params;
     } else {
       this.issues.url = '/api/issues?' + params;
     }
     this.fetchAndRenderIssues();
   },
   updateModelParams: function(paramKey, paramValue) {
-    var modelUrl = this.issues.url.split('?');
-    var modelPath = modelUrl[0];
-    var modelParams = modelUrl[1];
+    var decomposeUrl = function(url) {
+      var _url = url.split('?');
+      return {path: _url[0], params: _url[1]};
+    };
+    var linkUrl;
+    var newParams;
+    var modelUrl = decomposeUrl(this.issues.url);
+    var parsedModelParams = $.deparam(modelUrl.params);
 
     var updateParams = {};
     updateParams[paramKey] = paramValue;
 
+    // do we have a ?link param in the model URL from traversing pagination?
+    if (parsedModelParams.hasOwnProperty('link')) {
+      // if so, decompose link param url, merge updated params, and recompose
+      linkUrl = decomposeUrl(parsedModelParams.link);
+      newParams = $.extend($.deparam(linkUrl.params), updateParams);
+      this.issues.url = modelUrl.path + '?link=' + encodeURIComponent(linkUrl.path + '?' + $.param(newParams));
+      this.fetchAndRenderIssues();
+      return;
+    }
+
     // merge old params with passed in param data
     // $.extend will update existing object keys, and add new ones
-    var newParams = $.extend($.deparam(modelParams), updateParams);
+    newParams = $.extend($.deparam(modelUrl.params), updateParams);
 
     if (paramKey === 'per_page') {
       this._pageLimit = paramValue;
     }
 
     // construct new model URL and re-request issues
-    this.issues.url = modelPath + '?' + $.param(newParams);
+    this.issues.url = modelUrl.path + '?' + $.param(newParams);
     this.fetchAndRenderIssues();
   }
 });

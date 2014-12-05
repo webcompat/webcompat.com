@@ -7,6 +7,7 @@
 import datetime
 import math
 import urlparse
+import re
 
 from babel.dates import format_timedelta
 from flask import session
@@ -105,7 +106,7 @@ def get_headers(response):
                'content-type': JSON_MIME}
 
     if response.headers.get('link'):
-        headers['link'] = sanitize_link(response.headers.get('link'))
+        headers['link'] = rewrite_and_sanitize_link(response.headers.get('link'))
     return headers
 
 
@@ -138,13 +139,37 @@ def get_referer(request):
         return None
 
 
+def rewrite_links(link_header):
+    '''Rewrites Link header Github API endpoints to our own.
+
+    <https://api.github.com/repositories/17839063/issues?per_page=50&page=2>; rel="next",
+    <https://api.github.com/repositories/17839063/issues?per_page=50&page=4>; rel="last"
+
+    is transformed into
+
+    </api/issues?per_page=50&page=2>; rel="next",
+    </api/issues?per_page=50&page=4>; rel="last" etc.
+    '''
+    links = link_header.split(',')
+    new_links = []
+    for link in links:
+        api_path, endpoint_path = link.rsplit('/', 1)
+        if api_path.strip().startswith('<https://api.github.com/repositories'):
+            new_links.append(endpoint_path.replace('issues?', '</api/issues?'))
+        if api_path.strip().startswith('<https://api.github.com/search'):
+            new_links.append(endpoint_path.replace('issues?', '</api/issues/search?'))
+    return ', '.join(new_links)
+
+
 def sanitize_link(link_header):
-    '''Remove any oauth tokens from the Link header that GitHub gives to us.'''
+    '''Remove any oauth tokens from the Link header that GitHub gives to us,
+    and return a rewritten Link header (see rewrite_links)'''
     links_list = link_header.split(',')
     clean_links_list = []
     for link in links_list:
         uri_info, rel_info = link.split(';')
         uri_info = uri_info.strip()
+        rel_info = rel_info.strip()
         uri = uri_info[1:-1]
         uri_group = urlparse.urlparse(uri)
         parameters = uri_group.query.split('&')
@@ -155,3 +180,7 @@ def sanitize_link(link_header):
         clean_links_list.append('<{0}>; {1}'.format(
             urlparse.urlunparse(clean_uri), rel_info))
     return ', '.join(clean_links_list)
+
+
+def rewrite_and_sanitize_link(link_header):
+    return rewrite_links(sanitize_link(link_header))

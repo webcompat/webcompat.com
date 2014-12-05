@@ -8,6 +8,7 @@
 back to GitHub'''
 
 import json
+import re
 
 from flask import abort
 from flask import Blueprint
@@ -35,7 +36,7 @@ REPO_PATH = ISSUES_PATH[:-7]
 
 
 def get_username():
-  return session.get('username', 'proxy-user')
+    return session.get('username', 'proxy-user')
 
 
 @api.route('/issues/<int:number>')
@@ -107,13 +108,13 @@ def get_issue_category(issue_category):
     params = request.args.copy()
 
     if issue_category in category_list:
-        params.update({'labels': issue_category})
+        params['labels'] = issue_category
         if g.user:
             issues = github.raw_request('GET', issues_path, params=params)
         else:
             issues = proxy_request('get', params=params)
     elif issue_category == 'closed':
-        params.update({'state': 'closed'})
+        params['state'] = 'closed'
         if g.user:
             issues = github.raw_request('GET', issues_path, params=params)
         else:
@@ -171,26 +172,28 @@ def get_search_results(query_string=None):
                                      headers=request_headers)
     else:
         results = proxy_request('get', params=params, uri=search_uri)
-    # The issues are returned in the items property of the response JSON,
-    # so throw everything else away.
-    json_response = json.loads(results.content)
-    if 'items' in json_response:
-        result = json.dumps(json_response['items'])
-    else:
-        result = results.content
-    return (result, results.status_code, get_headers(results))
+    return (results.content, results.status_code, get_headers(results))
 
 
-@api.route('/issues/search/untriaged')
-def get_untriaged_from_search():
-    '''XHR endpoint to get "untriaged" issues from GitHub's Search API.
+@api.route('/issues/search/<issue_category>')
+def get_category_from_search(issue_category):
+    '''XHR endpoint to get issues categories from GitHub's Search API.
 
-    There is some overlap between /issues/category/untriaged as used on the
-    home page - but this endpoint returns paginated results paginated.
-    TODO: Unify that at some point.
+    There is some overlap between /issues/category/<issue_category> as used on
+    the home page - but this endpoint returns paginated results.
+
+    Note: until GitHub fixes a bug where requesting issues filtered by labels
+    doesn't return pagination via Link, we get those results from this endpoint.
+    Once it's fixed, we can get "contactready", "needsdiagnosis" and "sitewait"
+    issues from /issues/category/<issue_category>.
     '''
-    query_string = ('state:open -label:contactready '
-                    '-label:sitewait -label:needsdiagnosis')
+    category_list = ['contactready', 'needsdiagnosis', 'sitewait']
+
+    if issue_category in category_list:
+        query_string = 'label:{0}'.format(issue_category)
+    elif issue_category == 'untriaged':
+        query_string = ('state:open -label:contactready '
+                        '-label:sitewait -label:needsdiagnosis')
     return get_search_results(query_string)
 
 
