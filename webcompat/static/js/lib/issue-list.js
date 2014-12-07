@@ -446,8 +446,15 @@ issueList.IssueView = Backbone.View.extend({
 issueList.MainView = Backbone.View.extend({
   el: $('.js-issue-page'),
   events: {},
+  keyboardEvents: {
+    'g': 'githubWarp'
+  },
   initialize: function() {
     this.initSubViews();
+  },
+  githubWarp: function() {
+    var warpPipe = "http://github.com/" + repoPath;
+    return location.href = warpPipe;
   },
   initSubViews: function() {
     this.issueList = new issueList.IssueView();

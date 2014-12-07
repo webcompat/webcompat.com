@@ -126,7 +126,7 @@
 </script>
 
 {% endblock %}
-{% block extrascripts %}
+{% block extrascripts %}<script>var repoPath="{{config['ISSUES_REPO_URI']}}"</script>
 {%- if config.PRODUCTION or config.DEVELOPMENT -%}
 <script src="{{ url_for('static', filename='js/issue-list.min.js') }}"></script>
 {% else %}
