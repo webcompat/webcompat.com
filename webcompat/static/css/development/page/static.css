@@ -2,13 +2,6 @@
 .page {
   background-color: #fff;
 }
-.page h2 {
-    margin-bottom: 1em;
-}
-.page h4 {
-    margin: 0.75em 0 1em;
-    font-weight: 700;
-}
 .page p {
   line-height: 150%;
   margin-bottom: 1em;

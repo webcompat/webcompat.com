@@ -1,0 +1,19 @@
+/*------Title------*/
+
+.wc-Title--xl {
+  font-size: 3.5em;
+  font-weight: 700;
+}
+.wc-Title--l {
+  font-size: 2em;
+  font-weight: 600;
+  margin-bottom: 1em;
+}
+.wc-Title--m {
+  font-size: 1.5em;
+}
+.wc-Title--s {
+  font-size: 1.25em;
+  margin: 0.75em 0 1em;
+  font-weight: 700;
+}
