@@ -315,6 +315,9 @@ Also in a separate terminal window or tab, run the tests. Many tests require the
 ``` bash
 node_modules/.bin/intern-runner config=tests/functional/intern user=testusername pw=testpassword
 ```
+
+Shortly after running this command, you should see the browser open and various pages open automatically for a minute or two. The tests are complete when the browser window closes and you see a report of how many passed or failed in the terminal window.
+
 ## Production Server Setup
 
 The current instance of webcompat.com has a nginx front server in front of the Flask application. These are the few things you need to know if you wanted to replicate the current configuration of the server. You will need to adjust for your own environment.
