@@ -147,6 +147,21 @@ define([
         .then(function (className) {
           assert.notInclude(className, 'is-active', 'Searching should clear all filters');
         });
+    },
+
+    'pressing g goes to github issues': function() {
+      return this.remote
+        .setFindTimeout(intern.config.wc.pageLoadTimeout)
+        .get(require.toUrl(url))
+        .findByCssSelector('body').click()
+        .type('g')
+        .end()
+        // look for the issues container on github.com/foo/bar/issues
+        .findByCssSelector('.repo-container .issues-listing').isDisplayed()
+        .then(function (isDisplayed) {
+          assert.equal(isDisplayed, true, 'We\'re at GitHub now.');
+        })
+        .end();
     }
   });
 });
