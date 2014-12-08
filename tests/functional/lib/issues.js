@@ -22,7 +22,7 @@ define([
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url(100)))
         .sleep(1000)
-        .findByCssSelector('h2.Issue-title').getVisibleText()
+        .findByCssSelector('h1.Issue-title').getVisibleText()
         .then(function (text) {
           assert.include(text, 'Issue 100:', 'Issue title displayed');
         })
@@ -64,7 +64,7 @@ define([
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         // TODO: uh, update this in the future
         .get(require.toUrl(url(999999)))
-        .findByCssSelector('#pageerror h2').getVisibleText()
+        .findByCssSelector('#pageerror h1').getVisibleText()
         .then(function (text) {
           assert.include(text, '(404)', 'We\'re at the 404.');
         });

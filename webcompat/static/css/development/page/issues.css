@@ -6,6 +6,7 @@
 }
 /* Wrapper title and date issue */
 .Issue-title {
+  font-size: 2em;
   line-height: 1em;
   margin-bottom: .5em;
   word-wrap: break-word;

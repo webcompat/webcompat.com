@@ -5,6 +5,10 @@
 .IssueList {
   font-size:var(--base-font-size);
 }
+/* Main page title */
+.IssueList-title {
+  font-size: 2em;
+}
 /*Search issues */
 .IssueList-search {
   background-color:#F7F7F7;

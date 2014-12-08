@@ -19,7 +19,7 @@ define([
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url))
-        .findByCssSelector('h2').getVisibleText()
+        .findByCssSelector('h1').getVisibleText()
         .then(function (text) {
           assert.include(text, 'Issues', 'Page header displayed');
         })
