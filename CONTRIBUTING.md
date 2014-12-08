@@ -298,7 +298,7 @@ The `firefox` binary will also need to be in your `PATH`. Here's how this can be
 export PATH="/Applications/Firefox.app/Contents/MacOS/:$PATH"
 ```
 
-First start Selenium:
+Now start Selenium:
 
 ``` bash
 java -jar selenium-server-standalone-2.44.0.jar
@@ -316,7 +316,7 @@ In another separate terminal window or tab, run the tests. Many tests require th
 node_modules/.bin/intern-runner config=tests/functional/intern user=testusername pw=testpassword
 ```
 
-Shortly after running this command, you should see the browser open and various pages open automatically for a minute or two. The tests are complete when the browser window closes and you see a report of how many passed or failed in the terminal window.
+Shortly after running this command, you should see the browser open and various pages appear and disappear automatically for a minute or two. The tests are complete when the browser window closes and you see a report of how many passed or failed in the terminal window.
 
 ## Production Server Setup
 
