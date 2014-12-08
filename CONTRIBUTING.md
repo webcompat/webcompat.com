@@ -310,7 +310,7 @@ In a separate terminal window or tab, start the application servers:
 source env/bin/activate && python run.py
 ```
 
-Also in a separate terminal window or tab, run the tests. Many tests require the ability to log in with GitHub OAuth. This is achieved by passing in a valid GitHub username: `user` and password: `pw` as command-line arguments:
+In another separate terminal window or tab, run the tests. Many tests require the ability to log in with GitHub OAuth. This is achieved by passing in a valid GitHub username: `user` and password: `pw` as command-line arguments:
 
 ``` bash
 node_modules/.bin/intern-runner config=tests/functional/intern user=testusername pw=testpassword
