@@ -411,23 +411,13 @@ issueList.IssueView = Backbone.View.extend({
       var _url = url.split('?');
       return {path: _url[0], params: _url[1]};
     };
-    var linkUrl;
+
     var newParams;
     var modelUrl = decomposeUrl(this.issues.url);
     var parsedModelParams = $.deparam(modelUrl.params);
 
     var updateParams = {};
     updateParams[paramKey] = paramValue;
-
-    // do we have a ?link param in the model URL from traversing pagination?
-    if (parsedModelParams.hasOwnProperty('link')) {
-      // if so, decompose link param url, merge updated params, and recompose
-      linkUrl = decomposeUrl(parsedModelParams.link);
-      newParams = $.extend($.deparam(linkUrl.params), updateParams);
-      this.issues.url = modelUrl.path + '?link=' + encodeURIComponent(linkUrl.path + '?' + $.param(newParams));
-      this.fetchAndRenderIssues();
-      return;
-    }
 
     // merge old params with passed in param data
     // $.extend will update existing object keys, and add new ones
