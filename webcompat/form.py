@@ -163,8 +163,8 @@ def build_formdata(form_object):
 **Site owner**: {6}
 
 **Steps to Reproduce**
-{7}'''.format(wrap_label(('ua_header', form_object.get('ua_header'))),
-              get_labels(form_object.get('browser')),
+{7}'''.format(get_labels(form_object.get('browser')),
+              wrap_label(('ua_header', form_object.get('ua_header'))),
               form_object.get('url'),
               form_object.get('browser'),
               form_object.get('os'),
