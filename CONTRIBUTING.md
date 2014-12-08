@@ -214,7 +214,7 @@ git clone git@github.com:username/webcompat.com.git
 # change to directory
 cd webcompat.com
 # set up virtual environment
-virtualenv env
+[sudo] virtualenv env
 source env/bin/activate
 # install dependencies
 pip install -r requirements.txt
@@ -298,24 +298,26 @@ The `firefox` binary will also need to be in your `PATH`. Here's how this can be
 export PATH="/Applications/Firefox.app/Contents/MacOS/:$PATH"
 ```
 
-Start the Selenium and application servers (in separate terminal tabs or windows):
+Now start Selenium:
 
 ``` bash
 java -jar selenium-server-standalone-2.44.0.jar
+```
+
+In a separate terminal window or tab, start the application servers:
+
+``` bash
 source env/bin/activate && python run.py
 ```
 
-And to run the tests (in a new tab or terminal window):
-
-``` bash
-node_modules/.bin/intern-runner config=tests/functional/intern
-```
-
-Many tests require the ability to log in with GitHub OAuth. This is achieved by passing in a GitHub username: `user` and password: `pw` as command-line arguments:
+In another separate terminal window or tab, run the tests. Many tests require the ability to log in with GitHub OAuth. This is achieved by passing in a valid GitHub username: `user` and password: `pw` as command-line arguments:
 
 ``` bash
 node_modules/.bin/intern-runner config=tests/functional/intern user=testusername pw=testpassword
 ```
+
+Shortly after running this command, you should see the browser open and various pages appear and disappear automatically for a minute or two. The tests are complete when the browser window closes and you see a report of how many passed or failed in the terminal window.
+
 ## Production Server Setup
 
 The current instance of webcompat.com has a nginx front server in front of the Flask application. These are the few things you need to know if you wanted to replicate the current configuration of the server. You will need to adjust for your own environment.
