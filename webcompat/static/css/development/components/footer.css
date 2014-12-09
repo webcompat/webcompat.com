@@ -36,7 +36,10 @@
     padding-right:0 ;
   }
   /* link */
-  .wc-Footer-item-link:after {
+  .wc-Footer-item-link {
+    text-decoration:none;
+  }
+  .wc-Footer-item-link--separator:after {
     content:"//";
     margin-left:1em;
   }
