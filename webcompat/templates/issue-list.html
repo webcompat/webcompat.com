@@ -117,7 +117,7 @@
 <ul class="Dropdown-content js-dropdown-options" aria-hidden="false">
   <% _.each(dropdownOptions, function(option) { %>
   <li class="Dropdown-item">
-    <a href="#" class="Dropdown-link" data-param-key="<%= option.paramKey %>" data-param-value="<%= option.paramValue %>">
+    <a href="#" class="Dropdown-link" data-params="<%= option.params %>">
       <%= option.title %>
     </a>
   </li>

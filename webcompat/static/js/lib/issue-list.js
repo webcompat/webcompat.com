@@ -33,8 +33,7 @@ issueList.DropdownView = Backbone.View.extend({
   },
   selectDropdownOption: function(e) {
     var option = $(e.target);
-    var paramKey = option.data('paramKey');
-    var paramValue = option.data('paramValue');
+    var params = option.data('params');
     option.addClass('is-active')
           .siblings().removeClass('is-active');
 
@@ -42,11 +41,11 @@ issueList.DropdownView = Backbone.View.extend({
 
     // persist value of selection to be used on subsequent page loads
     if ('localStorage' in window) {
-      window.localStorage.setItem(paramKey, paramValue);
+      window.localStorage.setItem("params", params);
     }
 
     // fire an event so other views can react to dropdown changes
-    wcEvents.trigger('dropdown:change', paramKey, paramValue);
+    wcEvents.trigger('dropdown:change', params);
     e.preventDefault();
   },
   updateDropdownTitle: function(optionElm) {
@@ -203,9 +202,9 @@ issueList.SortingView = Backbone.View.extend({
       // TODO(miket): persist selected page limit to survive page loads
       dropdownTitle: 'Show 50',
       dropdownOptions: [
-        {title: 'Show 25',  paramKey: 'per_page', paramValue: '25'},
-        {title: 'Show 50',  paramKey: 'per_page', paramValue: '50'},
-        {title: 'Show 100', paramKey: 'per_page', paramValue: '100'}
+        {title: 'Show 25',  params: 'per_page=25'},
+        {title: 'Show 50',  params: 'per_page=50'},
+        {title: 'Show 100', params: 'per_page=100'}
       ]
     });
 
@@ -406,7 +405,7 @@ issueList.IssueView = Backbone.View.extend({
     }
     this.fetchAndRenderIssues();
   },
-  updateModelParams: function(paramKey, paramValue) {
+  updateModelParams: function(params) {
     var decomposeUrl = function(url) {
       var _url = url.split('?');
       return {path: _url[0], params: _url[1]};
@@ -414,18 +413,25 @@ issueList.IssueView = Backbone.View.extend({
 
     var newParams;
     var modelUrl = decomposeUrl(this.issues.url);
-    var parsedModelParams = $.deparam(modelUrl.params);
-
+    var paramsArray = params.split('&');
     var updateParams = {};
-    updateParams[paramKey] = paramValue;
+
+    //paramsArray is an array of param 'key=value' string pairs,
+    //iterate over them in case there are multiple pairs
+    _.forEach(paramsArray, function(param) {
+      var split = param.split('=');
+      var key = split[0];
+      var value = split[1];
+      updateParams[key] = value;
+
+      if (key === 'per_page') {
+        this._pageLimit = value;
+      }
+    });
 
     // merge old params with passed in param data
     // $.extend will update existing object keys, and add new ones
     newParams = $.extend($.deparam(modelUrl.params), updateParams);
-
-    if (paramKey === 'per_page') {
-      this._pageLimit = paramValue;
-    }
 
     // construct new model URL and re-request issues
     this.issues.url = modelUrl.path + '?' + $.param(newParams);
