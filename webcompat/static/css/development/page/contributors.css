@@ -17,12 +17,12 @@
   line-height:5em;
   font-weight:bold;
 }
-.contributors__item__title h3 {
+.contributors__item__title h2 {
   font-size:1.4em;
   cursor:pointer;
 }
 @media (--viewport-375px) {
-  .contributors__item__title h3 {
+  .contributors__item__title h2 {
     font-size:1.2em;
   }
 }
