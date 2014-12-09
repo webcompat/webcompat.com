@@ -208,14 +208,15 @@ issueList.SortingView = Backbone.View.extend({
       ]
     });
 
-    // TODO(miket): update model to have paramKey and paramValue
     this.sortModel = new Backbone.Model({
       dropdownTitle: 'Newest',
       dropdownOptions: [
-        {title: 'Newest', params: ''},
-        {title: 'Oldest', params: ''},
-        {title: 'Most Commented', params: ''},
-        {title: 'etc.', params: ''}
+        {title: 'Newest',                 params: 'sort=created&direction=desc'},
+        {title: 'Oldest',                 params: 'sort=created&direction=asc'},
+        {title: 'Most Commented',         params: 'sort=comments&direction=desc'},
+        {title: 'Least Commented',        params: 'sort=comments&direction=asc'},
+        {title: 'Recently Updated',       params: 'sort=updated&direction=desc'},
+        {title: 'Least Recently Updated', params: 'sort=updated&direction=asc'}
       ]
     });
 
@@ -225,17 +226,15 @@ issueList.SortingView = Backbone.View.extend({
     this.paginationDropdown = new issueList.DropdownView({
       model: this.paginationModel
     });
-    /* Commenting out for now, see Issues #312, #266
     this.sortDropdown = new issueList.DropdownView({
       model: this.sortModel
-    }); */
+    });
   },
   template: _.template($('#issuelist-sorting-tmpl').html()),
   render: function() {
     this.$el.html(this.template());
     this.paginationDropdown.setElement(this.$el.find('.js-dropdown-pagination')).render();
-    /* Commenting out for now, see Issues #312, #266
-    this.sortDropdown.setElement(this.$el.find('.js-dropdown-sort')).render(); */
+    this.sortDropdown.setElement(this.$el.find('.js-dropdown-sort')).render();
     return this;
   }
 });
@@ -416,12 +415,12 @@ issueList.IssueView = Backbone.View.extend({
     var paramsArray = params.split('&');
     var updateParams = {};
 
-    //paramsArray is an array of param 'key=value' string pairs,
-    //iterate over them in case there are multiple pairs
+    // paramsArray is an array of param 'key=value' string pairs,
+    // iterate over them in case there are multiple pairs
     _.forEach(paramsArray, function(param) {
-      var split = param.split('=');
-      var key = split[0];
-      var value = split[1];
+      var kvArray = param.split('=');
+      var key = kvArray[0];
+      var value = kvArray[1];
       updateParams[key] = value;
 
       if (key === 'per_page') {
