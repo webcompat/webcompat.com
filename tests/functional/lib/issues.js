@@ -68,6 +68,27 @@ define([
         .then(function (text) {
           assert.include(text, '(404)', 'We\'re at the 404.');
         });
+    },
+
+    'pressing g goes to the github issue page': function() {
+      var issueNumber = 100;
+      return this.remote
+        .setFindTimeout(intern.config.wc.pageLoadTimeout)
+        .get(require.toUrl(url(issueNumber)))
+        .findByCssSelector('body').click()
+        .type('g')
+        .end()
+        // look for the issue container on github.com/foo/bar/issues/N
+        .findByCssSelector('.gh-header.issue').isDisplayed()
+        .then(function (isDisplayed) {
+          assert.equal(isDisplayed, true, 'We\'re at the GitHub issue page now.');
+        })
+        .end()
+        .findByCssSelector('.gh-header-number').getVisibleText()
+        .then(function(text) {
+          var headerNumber = parseInt(text.slice(1), 10);
+          assert.equal(headerNumber, issueNumber, 'GitHub issue number matches.');
+        });
     }
 
   });
