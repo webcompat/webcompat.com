@@ -33,6 +33,10 @@
   margin-bottom:10px;
   font-weight:500;
 }
+  /* link */
+  .wc-titleIssue-link {
+    text-decoration:none;
+  }
 
 #howitworks,
 #join,
