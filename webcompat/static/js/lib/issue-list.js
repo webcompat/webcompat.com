@@ -401,35 +401,22 @@ issueList.IssueView = Backbone.View.extend({
     this.fetchAndRenderIssues();
   },
   updateModelParams: function(params) {
-    var decomposeUrl = function(url) {
-      var _url = url.split('?');
-      return {path: _url[0], params: _url[1]};
-    };
-
-    var newParams;
-    var modelUrl = decomposeUrl(this.issues.url);
+    // convert params string to an array,
+    // splitting on & in case of multiple params
     var paramsArray = params.split('&');
-    var updateParams = {};
 
     // paramsArray is an array of param 'key=value' string pairs,
-    // iterate over them in case there are multiple pairs
-    _.forEach(paramsArray, function(param) {
+    _.forEach(paramsArray, _.bind(function(param) {
       var kvArray = param.split('=');
       var key = kvArray[0];
       var value = kvArray[1];
-      updateParams[key] = value;
+      this.issues.params[key] = value;
 
       if (key === 'per_page') {
         this._pageLimit = value;
       }
-    });
+    }, this));
 
-    // merge old params with passed in param data
-    // $.extend will update existing object keys, and add new ones
-    newParams = $.extend($.deparam(modelUrl.params), updateParams);
-
-    // construct new model URL and re-request issues
-    this.issues.url = modelUrl.path + '?' + $.param(newParams);
     this.fetchAndRenderIssues();
   }
 });
