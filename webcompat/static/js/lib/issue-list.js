@@ -59,48 +59,44 @@ issueList.FilterView = Backbone.View.extend({
   events: {
     'click button': 'toggleFilter'
   },
+  _isLoggedIn: $('body').data('username'),
+  _userName: $('body').data('username'),
   initialize: function() {
     //TODO: move this model out into its own file once we have
     //actual data for issues count
-
     issueList.events.on('filter:activate', _.bind(this.toggleFilter, this));
     issueList.events.on('filter:clear', _.bind(this.clearFilter, this));
 
-    // TODO(miket): update with paramKey & paramValue
     var options = [
-      {title: 'View all open issues', params: ''},
-      {title: 'View all issues', params: 'filter=all'}
+      {title: 'View all Open Issues', params: 'state=open'},
+      {title: 'View all Issues', params: 'state=all'}
     ];
 
     // add the dropdown options for logged in users.
-    // submitted by me can be
-    if ($('body').data('username')) {
+    if (this._isLoggedIn) {
       options.push(
-        {title: 'View issues submitted by me', params: 'filter=created'},
-        {title: 'View issues mentioning me', params: 'filter=mentioned'},
-        {title: 'View issues assigned to me', params: 'filter=assigned'}
+        {title: 'View Issues Submitted by Me', params: 'creator='   + this._userName},
+        {title: 'View Issues Mentioning Me',   params: 'mentioned=' + this._userName}
       );
     }
 
     this.model = new Backbone.Model({
-      dropdownTitle: 'View all open issues',
+      dropdownTitle: 'View all Open Issues',
       dropdownOptions: options,
     });
 
     this.initSubViews();
   },
   initSubViews: function() {
-    /* Commenting out for now, see Issues #312, #266
     this.dropdown = new issueList.DropdownView({
       model: this.model
     });
-    */
+
   },
   template: _.template($('#issuelist-filter-tmpl').html()),
   render: function() {
     this.$el.html(this.template(this.model.toJSON()));
-    /* Commenting out for now, see Issues #312, #266
-    /* this.dropdown.setElement(this.$el.find('.js-dropdown-wrapper')).render(); */
+    this.dropdown.setElement(this.$el.find('.js-dropdown-wrapper')).render();
     return this;
   },
   clearFilter: function() {
