@@ -291,9 +291,13 @@ issueList.IssueView = Backbone.View.extend({
       this.fetchAndRenderIssues();
     }
   },
-  fetchAndRenderIssues: function() {
-    //assumes this.issues.url has already been set to something meaninful.
+  fetchAndRenderIssues: function(options) {
     var headers = {headers: {'Accept': 'application/json'}};
+    if (options && options.url) {
+      this.issues.url = options.url;
+    } else {
+      this.issues.url = this.issues.path + '?' + $.param(this.issues.params);
+    }
     this.issues.fetch(headers).success(_.bind(function() {
       this.render(this.issues);
       this.initPaginationLinks(this.issues);
