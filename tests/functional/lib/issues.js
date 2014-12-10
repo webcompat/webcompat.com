@@ -22,7 +22,7 @@ define([
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url(100)))
         .sleep(1000)
-        .findByCssSelector('h2.Issue-title').getVisibleText()
+        .findByCssSelector('h1.Issue-title').getVisibleText()
         .then(function (text) {
           assert.include(text, 'Issue 100:', 'Issue title displayed');
         })
@@ -64,9 +64,30 @@ define([
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         // TODO: uh, update this in the future
         .get(require.toUrl(url(999999)))
-        .findByCssSelector('#pageerror h2').getVisibleText()
+        .findByCssSelector('#pageerror h1').getVisibleText()
         .then(function (text) {
           assert.include(text, '(404)', 'We\'re at the 404.');
+        });
+    },
+
+    'pressing g goes to the github issue page': function() {
+      var issueNumber = 100;
+      return this.remote
+        .setFindTimeout(intern.config.wc.pageLoadTimeout)
+        .get(require.toUrl(url(issueNumber)))
+        .findByCssSelector('body').click()
+        .type('g')
+        .end()
+        // look for the issue container on github.com/foo/bar/issues/N
+        .findByCssSelector('.gh-header.issue').isDisplayed()
+        .then(function (isDisplayed) {
+          assert.equal(isDisplayed, true, 'We\'re at the GitHub issue page now.');
+        })
+        .end()
+        .findByCssSelector('.gh-header-number').getVisibleText()
+        .then(function(text) {
+          var headerNumber = parseInt(text.slice(1), 10);
+          assert.equal(headerNumber, issueNumber, 'GitHub issue number matches.');
         });
     }
 

@@ -1,3 +1,28 @@
+## 1.2.0 - 2014-12-08
+
+* Better docs around running tests [Pull #461](https://github.com/webcompat/webcompat.com/pull/461)
+* Pressing 'g' from /issues page will navigate to corresponding GitHub issues page (functional bits, UI to come) [Pull #460](https://github.com/webcompat/webcompat.com/pull/460) [Issue #449](https://github.com/webcompat/webcompat.com/issues/449)
+* ARIA + markup a11y fixes [Pull #363](https://github.com/webcompat/webcompat.com/pull/363) [Issue #390](https://github.com/webcompat/webcompat.com/issues/390)
+* Tweaks to search input + filter button UX [Pull #440](https://github.com/webcompat/webcompat.com/pull/440) [Issue #416](https://github.com/webcompat/webcompat.com/issues/416)
+* Follow Link header URIs for pagination [Pull #446](https://github.com/webcompat/webcompat.com/pull/446) [Issue #420](https://github.com/webcompat/webcompat.com/issues/420)
+
+## 1.1.2 - 2014-12-05
+
+* Regression fix: search results should be scoped to web-bugs repo [Issue #444](https://github.com/webcompat/webcompat.com/issues/444)
+
+## 1.1.1 - 2014-12-04
+
+* Update to privacy policy (re: [Issue #419](https://github.com/webcompat/webcompat.com/issues/419))
+
+## 1.1.0 - 2014-12-04
+
+* Add full user agent header to report metadata (hidden by default) [Issue #419](https://github.com/webcompat/webcompat.com/issues/419) [Pull #441](https://github.com/webcompat/webcompat.com/pull/441)
+* Update cssnext dependency to v0.3.0  [Pull #427](https://github.com/webcompat/webcompat.com/pull/427)
+* Align pagination controls with dropdowns [Pull #426](https://github.com/webcompat/webcompat.com/pull/426) [Issue #424](https://github.com/webcompat/webcompat.com/issues/424)
+* Use flash:error events in issue model [Pull #423](https://github.com/webcompat/webcompat.com/pull/423) [Issue #343](https://github.com/webcompat/webcompat.com/issues/343)
+* Enable issue list pagination dropdown [Pull #418](https://github.com/webcompat/webcompat.com/pull/418) [Issue #372](https://github.com/webcompat/webcompat.com/issues/372)
+* Fix "close" class on Browse Issues key item [Pull #417](https://github.com/webcompat/webcompat.com/pull/417)
+
 ## 1.0.5 - 2014-11-21
 
 #### Testing

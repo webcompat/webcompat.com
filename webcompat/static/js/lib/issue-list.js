@@ -33,8 +33,7 @@ issueList.DropdownView = Backbone.View.extend({
   },
   selectDropdownOption: function(e) {
     var option = $(e.target);
-    var paramKey = option.data('paramKey');
-    var paramValue = option.data('paramValue');
+    var params = option.data('params');
     option.addClass('is-active')
           .siblings().removeClass('is-active');
 
@@ -42,11 +41,11 @@ issueList.DropdownView = Backbone.View.extend({
 
     // persist value of selection to be used on subsequent page loads
     if ('localStorage' in window) {
-      window.localStorage.setItem(paramKey, paramValue);
+      window.localStorage.setItem("params", params);
     }
 
     // fire an event so other views can react to dropdown changes
-    wcEvents.trigger('dropdown:change', paramKey, paramValue);
+    wcEvents.trigger('dropdown:change', params);
     e.preventDefault();
   },
   updateDropdownTitle: function(optionElm) {
@@ -65,25 +64,26 @@ issueList.FilterView = Backbone.View.extend({
     //actual data for issues count
 
     issueList.events.on('filter:activate', _.bind(this.toggleFilter, this));
+    issueList.events.on('filter:clear', _.bind(this.clearFilter, this));
 
     // TODO(miket): update with paramKey & paramValue
     var options = [
-      {title: "View all open issues", params: ""},
-      {title: "View all issues", params: "filter=all"}
+      {title: 'View all open issues', params: ''},
+      {title: 'View all issues', params: 'filter=all'}
     ];
 
     // add the dropdown options for logged in users.
     // submitted by me can be
     if ($('body').data('username')) {
       options.push(
-        {title: "View issues submitted by me", params: "filter=created"},
-        {title: "View issues mentioning me", params: "filter=mentioned"},
-        {title: "View issues assigned to me", params: "filter=assigned"}
+        {title: 'View issues submitted by me', params: 'filter=created'},
+        {title: 'View issues mentioning me', params: 'filter=mentioned'},
+        {title: 'View issues assigned to me', params: 'filter=assigned'}
       );
     }
 
     this.model = new Backbone.Model({
-      dropdownTitle: "View all open issues",
+      dropdownTitle: 'View all open issues',
       dropdownOptions: options,
     });
 
@@ -103,10 +103,14 @@ issueList.FilterView = Backbone.View.extend({
     /* this.dropdown.setElement(this.$el.find('.js-dropdown-wrapper')).render(); */
     return this;
   },
+  clearFilter: function() {
+    var btns = $('[data-filter]');
+    btns.removeClass('is-active');
+  },
   toggleFilter: function(e) {
     var btn;
     // Stringy e comes from triggered filter:activate event
-    if (typeof e === "string") {
+    if (typeof e === 'string') {
       btn = $('[data-filter=' + e + ']');
     } else {
       // We get a regular event object from click events.
@@ -115,6 +119,9 @@ issueList.FilterView = Backbone.View.extend({
 
     btn.toggleClass('is-active')
        .siblings().removeClass('is-active');
+
+    // Clear the search field
+    issueList.events.trigger('search:clear');
 
     if (btn.hasClass('is-active')) {
       this.updateResults(btn.data('filter'));
@@ -137,6 +144,7 @@ issueList.SearchView = Backbone.View.extend({
   },
   initialize: function() {
     issueList.events.on('search:update', _.bind(this.updateSearchQuery, this));
+    issueList.events.on('search:clear', _.bind(this.clearSearchBox, this));
   },
   template: _.template($('#issuelist-search-tmpl').html()),
   render: function(cb) {
@@ -147,6 +155,9 @@ issueList.SearchView = Backbone.View.extend({
       cb();
     }
     return this;
+  },
+  clearSearchBox: function() {
+    this.input.val('');
   },
   updateSearchQuery: function(data) {
     this.input.val(data);
@@ -163,6 +174,8 @@ issueList.SearchView = Backbone.View.extend({
       if ($.trim(searchValue) !== this._currentSearch) {
         this._currentSearch = $.trim(searchValue);
         this.doSearch(this._currentSearch);
+        // clear any filters that have been set.
+        issueList.events.trigger('filter:clear');
       }
     }
 
@@ -187,22 +200,23 @@ issueList.SortingView = Backbone.View.extend({
   initialize: function() {
     this.paginationModel = new Backbone.Model({
       // TODO(miket): persist selected page limit to survive page loads
-      dropdownTitle: "Show 50",
+      dropdownTitle: 'Show 50',
       dropdownOptions: [
-        {title: "Show 25", paramKey: "per_page", paramValue: "25"},
-        {title: "Show 50", paramKey: "per_page", paramValue: "50"},
-        {title: "Show 100", paramKey: "per_page", paramValue: "100"}
+        {title: 'Show 25',  params: 'per_page=25'},
+        {title: 'Show 50',  params: 'per_page=50'},
+        {title: 'Show 100', params: 'per_page=100'}
       ]
     });
 
-    // TODO(miket): update model to have paramKey and paramValue
     this.sortModel = new Backbone.Model({
-      dropdownTitle: "Newest",
+      dropdownTitle: 'Newest',
       dropdownOptions: [
-        {title: "Newest", params: ""},
-        {title: "Oldest", params: ""},
-        {title: "Most Commented", params: ""},
-        {title: "etc.", params: ""}
+        {title: 'Newest',                 params: 'sort=created&direction=desc'},
+        {title: 'Oldest',                 params: 'sort=created&direction=asc'},
+        {title: 'Most Commented',         params: 'sort=comments&direction=desc'},
+        {title: 'Least Commented',        params: 'sort=comments&direction=asc'},
+        {title: 'Recently Updated',       params: 'sort=updated&direction=desc'},
+        {title: 'Least Recently Updated', params: 'sort=updated&direction=asc'}
       ]
     });
 
@@ -212,17 +226,15 @@ issueList.SortingView = Backbone.View.extend({
     this.paginationDropdown = new issueList.DropdownView({
       model: this.paginationModel
     });
-    /* Commenting out for now, see Issues #312, #266
     this.sortDropdown = new issueList.DropdownView({
       model: this.sortModel
-    }); */
+    });
   },
   template: _.template($('#issuelist-sorting-tmpl').html()),
   render: function() {
     this.$el.html(this.template());
     this.paginationDropdown.setElement(this.$el.find('.js-dropdown-pagination')).render();
-    /* Commenting out for now, see Issues #312, #266
-    this.sortDropdown.setElement(this.$el.find('.js-dropdown-sort')).render(); */
+    this.sortDropdown.setElement(this.$el.find('.js-dropdown-sort')).render();
     return this;
   }
 });
@@ -256,6 +268,7 @@ issueList.IssueView = Backbone.View.extend({
   initialize: function() {
     this.issues = new issueList.IssueCollection();
     // check to see if we should pre-filter results
+    // otherwise load default (unfiltered "all")
     this.loadIssues();
 
     // set up event listeners.
@@ -353,27 +366,28 @@ issueList.IssueView = Backbone.View.extend({
   requestNextPage: function() {
     var nextPage;
     if (nextPage = this.issues.getNextPage()) {
-      //send URL encoded page link to server.
-      this.issues.url = '/api/issues/paginate?link=' + nextPage;
+      this.issues.url = nextPage;
       this.fetchAndRenderIssues();
     }
   },
   requestPreviousPage: function() {
     var prevPage;
     if (prevPage = this.issues.getPrevPage()) {
-      //send URL encoded page link to server.
-      this.issues.url = '/api/issues/paginate?link=' + prevPage;
+      this.issues.url =  prevPage;
       this.fetchAndRenderIssues();
     }
   },
   updateIssues: function(category) {
     // depending on what category was clicked (or if a search came in),
     // update the collection instance url property and fetch the issues.
-    var labelCategories = ['closed', 'contactready', 'needsdiagnosis', 'sitewait'];
 
-    //TODO(miket): make generic getModelParams method which can get the latest state
+    // note: until GitHub fixes a bug where requesting issues filtered by labels
+    // doesn't return pagination via Link, we get those results via the Search API.
+    var searchCategories = ['untriaged', 'contactready', 'needsdiagnosis', 'sitewait'];
+
+    // TODO(miket): make generic getModelParams method which can get the latest state
     // merge param objects and serialize
-    var paramsBag = $.extend({page: 1}, this.getPageLimit());
+    var paramsBag = $.extend({page: 1, per_page: 50}, this.getPageLimit());
     var params = $.param(paramsBag);
 
     // note: if query is the empty string, it will load all issues from the
@@ -381,27 +395,38 @@ issueList.IssueView = Backbone.View.extend({
     if (category && category.query) {
       params = $.param($.extend(paramsBag, {q: category.query}));
       this.issues.url = '/api/issues/search?' + params;
-    } else if (_.contains(labelCategories, category)) {
+    } else if (_.contains(searchCategories, category)) {
+      this.issues.url = '/api/issues/search/' + category + '?' + params;
+    } else if (category === "closed") {
       this.issues.url = '/api/issues/category/' + category + '?' + params;
-    } else if (category === "untriaged") {
-      this.issues.url = '/api/issues/search/untriaged?' + params;
     } else {
       this.issues.url = '/api/issues?' + params;
     }
     this.fetchAndRenderIssues();
   },
-  updateModelParams: function(paramKey, paramValue) {
+  updateModelParams: function(params) {
     var decomposeUrl = function(url) {
       var _url = url.split('?');
       return {path: _url[0], params: _url[1]};
     };
-    var linkUrl;
+
     var newParams;
     var modelUrl = decomposeUrl(this.issues.url);
-    var parsedModelParams = $.deparam(modelUrl.params);
-
+    var paramsArray = params.split('&');
     var updateParams = {};
-    updateParams[paramKey] = paramValue;
+
+    // paramsArray is an array of param 'key=value' string pairs,
+    // iterate over them in case there are multiple pairs
+    _.forEach(paramsArray, function(param) {
+      var kvArray = param.split('=');
+      var key = kvArray[0];
+      var value = kvArray[1];
+      updateParams[key] = value;
+
+      if (key === 'per_page') {
+        this._pageLimit = value;
+      }
+    });
 
     // do we have a ?link param in the model URL from traversing pagination?
     if (parsedModelParams.hasOwnProperty('link')) {
@@ -417,10 +442,6 @@ issueList.IssueView = Backbone.View.extend({
     // $.extend will update existing object keys, and add new ones
     newParams = $.extend($.deparam(modelUrl.params), updateParams);
 
-    if (paramKey === 'per_page') {
-      this._pageLimit = paramValue;
-    }
-
     // construct new model URL and re-request issues
     this.issues.url = modelUrl.path + '?' + $.param(newParams);
     this.fetchAndRenderIssues();
@@ -430,8 +451,15 @@ issueList.IssueView = Backbone.View.extend({
 issueList.MainView = Backbone.View.extend({
   el: $('.js-issue-page'),
   events: {},
+  keyboardEvents: {
+    'g': 'githubWarp'
+  },
   initialize: function() {
     this.initSubViews();
+  },
+  githubWarp: function() {
+    var warpPipe = "http://github.com/" + repoPath;
+    return location.href = warpPipe;
   },
   initSubViews: function() {
     this.issueList = new issueList.IssueView();

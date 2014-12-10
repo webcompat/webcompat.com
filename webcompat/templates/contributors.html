@@ -2,10 +2,11 @@
 {% block body %}
 <div>
 {% include "shared/nav.html" %}
+<main role="main">
   <div class="wc-Hero wc-Hero--contributors">
     <div class="wc-content">
       <div class="wc-Hero-section wc-Hero-section--left wc-Hero-section--contributors">
-        <h1 class="wc-Hero-title">Welcome aboard!<br/>Get started below...</h1>
+        <h1 class="wc-Hero-title wc-Title--xl">Welcome aboard!<br/>Get started below...</h1>
       </div>
       <div class="wc-Hero-section wc-Hero-section--right">
         <div class="wc-Hero-img is-active">{% include "shared/LightbulbwithBug.html" %}</div>
@@ -46,6 +47,7 @@
       <div class="contributors__item__content page wc-content">{% include "contributors/contribute.html" %}</div>
     </div>
   </div>
+  </main>
 </div>
 {% endblock %}
 {%- block extrascripts -%}

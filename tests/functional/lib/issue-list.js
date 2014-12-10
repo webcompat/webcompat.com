@@ -19,7 +19,7 @@ define([
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url))
-        .findByCssSelector('h2').getVisibleText()
+        .findByCssSelector('h1').getVisibleText()
         .then(function (text) {
           assert.include(text, 'Issues', 'Page header displayed');
         })
@@ -120,6 +120,46 @@ define([
         .findByCssSelector('.IssueItem:nth-child(51)').isDisplayed()
         .then(function (isDisplayed) {
           assert.equal(isDisplayed, true, 'More than 50 issues were loaded.');
+        })
+        .end();
+    },
+
+    'search/filter interaction': function() {
+      return this.remote
+        .setFindTimeout(intern.config.wc.pageLoadTimeout)
+        .get(require.toUrl(url))
+        .findByCssSelector('.IssueList-search-form').click()
+        .type('taco')
+        .end()
+        .findAllByCssSelector('button.wc-Filter--untriaged').click()
+        .end()
+        .findByCssSelector('.IssueList-search-form').getVisibleText()
+        .then(function (text) {
+          assert.equal(text, '', 'Clicking filter should empty search text');
+        })
+        .end()
+        .findAllByCssSelector('button.wc-Filter--untriaged').click()
+        .end()
+        .findByCssSelector('.IssueList-search-form').click()
+        .type('taco')
+        .end()
+        .findAllByCssSelector('button.wc-Filter--untriaged').getAttribute('class')
+        .then(function (className) {
+          assert.notInclude(className, 'is-active', 'Searching should clear all filters');
+        });
+    },
+
+    'pressing g goes to github issues': function() {
+      return this.remote
+        .setFindTimeout(intern.config.wc.pageLoadTimeout)
+        .get(require.toUrl(url))
+        .findByCssSelector('body').click()
+        .type('g')
+        .end()
+        // look for the issues container on github.com/foo/bar/issues
+        .findByCssSelector('.repo-container .issues-listing').isDisplayed()
+        .then(function (isDisplayed) {
+          assert.equal(isDisplayed, true, 'We\'re at GitHub now.');
         })
         .end();
     }

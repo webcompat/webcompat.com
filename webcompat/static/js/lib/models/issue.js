@@ -115,7 +115,13 @@ issueList.IssueCollection = Backbone.Collection.extend({
     } else {
       this.linkHeader = null;
     }
-    return response;
+    if (response.hasOwnProperty('items')) {
+      // Search API results return an Object with the
+      // issues array in the items key
+      return response.items;
+    } else {
+      return response;
+    }
   },
   parseHeader: function(linkHeader) {
     /* Returns an object like so:
@@ -148,14 +154,14 @@ issueList.IssueCollection = Backbone.Collection.extend({
   },
   getNextPage: function() {
     if (this.linkHeader && this.linkHeader.hasOwnProperty('next')) {
-      return encodeURIComponent(this.linkHeader.next);
+      return this.linkHeader.next;
     } else {
       return null;
     }
   },
   getPrevPage: function() {
     if (this.linkHeader && this.linkHeader.hasOwnProperty('prev')) {
-      return encodeURIComponent(this.linkHeader.prev);
+      return this.linkHeader.prev;
     } else {
       return null;
     }

@@ -1,6 +1,6 @@
 <div id="new-report" class="form {% if form.errors %}form-opened{% else %}form-closed{% endif %}">
   <div class="wc-content wc-content--body">
-  <form method="post" class="Report-form" action="/">
+  <form method="post" class="Report-form" action="/" novalidate>
     <div class="r-Grid r-Grid--withGutter">
       <div class="r-Grid-cell r-all--1of2 r-maxM--2of2 {% if form.url.errors %}has-error{% endif %}">
         <div class="u-formGroup">
@@ -10,7 +10,8 @@
           {% endfor %}{% endif %}
           <span class="validation-wrapper">
             {{ form.url(class_='u-formInput required',
-                        placeholder='e.g., http://www.example.com', required=True) }}
+                        placeholder='e.g., http://www.example.com',
+                        required=True, type='url', pattern='') }}
           </span>
         </div>
       </div>

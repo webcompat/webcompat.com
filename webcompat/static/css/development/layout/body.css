@@ -82,20 +82,7 @@ html {
 }
 
 /*----------Global H Styles----------*/
-h1 {
-  font-size: 3.5em;
-  font-weight: 700;
-}
-h2 {
-  font-size: 2em;
-  font-weight: 600;
-}
-h3 {
-  font-size: 1.5em;
-}
-h4 {
-  font-size: 1.25em;
-}
+
 p {
   font-size: 1em;
 }
@@ -103,12 +90,15 @@ p {
 /*----------Link Styles----------*/
 a {
   color: var(--base-link-color);
-  text-decoration:none;
+  text-decoration: underline;
 }
 a:hover, a:focus {
-  color: var(--base-link-color);
+  color: var(--wc-background-dark);
   outline: none;
-  text-decoration: underline;
+  text-decoration: none;
+}
+.no-underline,.no-underline:hover,.no-underline:focus {
+  text-decoration: none;
 }
 
 /*--------tools------------*/

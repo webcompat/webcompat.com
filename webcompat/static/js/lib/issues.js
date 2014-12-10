@@ -46,7 +46,8 @@ issues.BodyView = Backbone.View.extend({
   render: function() {
     this.$el.html(this.template(this.model.toJSON()));
     // hide metadata
-    $('.Issue-details > p:first-child:contains(-- @browser)').hide();
+    $('.Issue-details > p:contains(-- @browser)').hide();
+    $('.Issue-details > p:contains(-- @ua_header)').hide();
     return this;
   }
 });

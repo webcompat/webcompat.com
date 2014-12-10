@@ -6,6 +6,7 @@ You are welcome to contribute to this project. Here are the guidelines we try to
 * [Question or Problem](#question-or-problem)
 * [Filing an Issue](#filing-an-issue)
 * [Triaging Issues](#triaging-issues)
+* [Finding an Issue to Work On](#finding-an-issue-to-work-on)
 * [Feature Requests](#feature-requests)
 * [Submission Guidelines](#submission-guidelines)
 * [Coding Style](#coding-style)
@@ -46,6 +47,14 @@ If you're using webcompat.com and something is confusing, broken, or you think i
 ## Triaging Issues
 
 One way to contribute is to triage issues. This could be as simple as confirming a bug, or as complicated as debugging errors and providing fixes. A tiny bit of effort in someone else's issue can go a long way.
+
+## Finding an Issue to Work On
+
+The logic for the issue tracker is this -
+* [*Milestones*](https://github.com/webcompat/webcompat.com/milestones) - initiatives in priority order (ignore the dates)
+* [*Unprioritized*](https://github.com/webcompat/webcompat.com/milestones/Unprioritized%20issues) - new ideas, cool things, easy issues to tackle
+
+Anything labeled ["Good-first-patch"](https://github.com/webcompat/webcompat.com/labels/good-first-patch) is perfect for getting started!
 
 ## Feature Requests
 
@@ -97,6 +106,8 @@ This will notify the person that your request is waiting for a review for mergin
 The discussion might lead to modify or abandon this specific pull request. This is the place where you can have a code review.
 
 After all that, if you'd like, you can send a pull request to add your name to our humans.txt file.
+
+For product and design contributions, check out the [Design Repo](https://github.com/webcompat/design) 
 
 ## Coding Style
 
@@ -203,7 +214,7 @@ git clone git@github.com:username/webcompat.com.git
 # change to directory
 cd webcompat.com
 # set up virtual environment
-virtualenv env
+[sudo] virtualenv env
 source env/bin/activate
 # install dependencies
 pip install -r requirements.txt
@@ -287,24 +298,28 @@ The `firefox` binary will also need to be in your `PATH`. Here's how this can be
 export PATH="/Applications/Firefox.app/Contents/MacOS/:$PATH"
 ```
 
-Start the Selenium and application servers (in separate terminal tabs or windows):
+Now start Selenium:
 
 ``` bash
 java -jar selenium-server-standalone-2.44.0.jar
+```
+
+In a separate terminal window or tab, start the application servers:
+
+``` bash
 source env/bin/activate && python run.py
 ```
 
-And to run the tests (in a new tab or terminal window):
-
-``` bash
-node_modules/.bin/intern-runner config=tests/functional/intern
-```
-
-Many tests require the ability to log in with GitHub OAuth. This is achieved by passing in a GitHub username: `user` and password: `pw` as command-line arguments:
+In another separate terminal window or tab, run the tests. Many tests require the ability to log in with GitHub OAuth. This is achieved by passing in a valid GitHub username: `user` and password: `pw` as command-line arguments:
 
 ``` bash
 node_modules/.bin/intern-runner config=tests/functional/intern user=testusername pw=testpassword
 ```
+
+Shortly after running this command, you should see the browser open and various pages appear and disappear automatically for a minute or two. The tests are complete when the browser window closes and you see a report of how many passed or failed in the terminal window.
+
+**Note**: It's possible to run the tests without using a GitHub username and password as command-line arguments. In that case, the automatic login will fail and you then have 10 seconds to manually enter a username and password in the GitHub login screen that appears.
+
 ## Production Server Setup
 
 The current instance of webcompat.com has a nginx front server in front of the Flask application. These are the few things you need to know if you wanted to replicate the current configuration of the server. You will need to adjust for your own environment.
