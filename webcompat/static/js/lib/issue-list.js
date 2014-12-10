@@ -366,15 +366,15 @@ issueList.IssueView = Backbone.View.extend({
   requestNextPage: function() {
     var nextPage;
     if (nextPage = this.issues.getNextPage()) {
-      this.issues.url = nextPage;
-      this.fetchAndRenderIssues();
+      // we pass along the entire URL from the Link header
+      this.fetchAndRenderIssues({url: nextPage});
     }
   },
   requestPreviousPage: function() {
     var prevPage;
     if (prevPage = this.issues.getPrevPage()) {
-      this.issues.url =  prevPage;
-      this.fetchAndRenderIssues();
+      // we pass along the entire URL from the Link header
+      this.fetchAndRenderIssues({url: prevPage});
     }
   },
   updateIssues: function(category) {
@@ -384,23 +384,19 @@ issueList.IssueView = Backbone.View.extend({
     // note: until GitHub fixes a bug where requesting issues filtered by labels
     // doesn't return pagination via Link, we get those results via the Search API.
     var searchCategories = ['untriaged', 'contactready', 'needsdiagnosis', 'sitewait'];
-
-    // TODO(miket): make generic getModelParams method which can get the latest state
-    // merge param objects and serialize
-    var paramsBag = $.extend({page: 1, per_page: 50}, this.getPageLimit());
-    var params = $.param(paramsBag);
+    var params = $.extend(this.issues.params, this.getPageLimit());
 
     // note: if query is the empty string, it will load all issues from the
     // '/api/issues' endpoint (which I think we want).
     if (category && category.query) {
-      params = $.param($.extend(paramsBag, {q: category.query}));
-      this.issues.url = '/api/issues/search?' + params;
+      params = $.param($.extend(params, {q: category.query}));
+      this.issues.setURLState('/api/issues/search', params);
     } else if (_.contains(searchCategories, category)) {
-      this.issues.url = '/api/issues/search/' + category + '?' + params;
+      this.issues.setURLState('/api/issues/search/' + category, params);
     } else if (category === "closed") {
-      this.issues.url = '/api/issues/category/' + category + '?' + params;
+      this.issues.setURLState('/api/issues/category/' + category, params);
     } else {
-      this.issues.url = '/api/issues?' + params;
+      this.issues.setURLState('/api/issues', params);
     }
     this.fetchAndRenderIssues();
   },
