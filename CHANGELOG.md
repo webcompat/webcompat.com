@@ -1,3 +1,10 @@
+## 1.2.1 - 2014-12-10
+
+* Fix misaligned report buttons for small viewports [Pull #472](https://github.com/webcompat/webcompat.com/pull/472) [Issue #459](https://github.com/webcompat/webcompat.com/issues/459)
+* Tests for 'g' key warping to GitHub [Pull #463](https://github.com/webcompat/webcompat.com/pull/463)
+* Make links underlined by default [Pull #438](https://github.com/webcompat/webcompat.com/pull/438) [Issue #421](https://github.com/webcompat/webcompat.com/issues/421)
+* Enable issues page "sort" dropdown [Pull #466](https://github.com/webcompat/webcompat.com/pull/466) [Issue #371](https://github.com/webcompat/webcompat.com/issues/371)
+
 ## 1.2.0 - 2014-12-08
 
 * Better docs around running tests [Pull #461](https://github.com/webcompat/webcompat.com/pull/461)
