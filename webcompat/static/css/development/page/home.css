@@ -98,10 +98,25 @@
   margin-bottom: 1em;
 }
 .Report-form .Button {
-    font-size:14px;
+    font-size:.875em;
 }
 .Report-form .Button-github {
   text-align:right;
+}
+@media (--viewport-450px) {
+  .Report-form .Button-github {
+    text-align:center;
+  }
+  .Report-form .Button {
+    font-size:.8em;
+  }
+}
+@media (--viewport-400px) {
+  .Button-github,
+  .Button-anon {
+    width:100%;
+    text-align:center;
+  }
 }
 @media (--viewport-600px) {
   .flourish {
