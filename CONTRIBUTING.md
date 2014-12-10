@@ -318,7 +318,7 @@ node_modules/.bin/intern-runner config=tests/functional/intern user=testusername
 
 Shortly after running this command, you should see the browser open and various pages appear and disappear automatically for a minute or two. The tests are complete when the browser window closes and you see a report of how many passed or failed in the terminal window.
 
-**Note**: It's possible to run the tests without using a GitHub username and password as command-line arguments. In that case, the default username "some username" will be used and when the login fails, you have 10 seconds to manually enter a username and password in the GitHub login screen that appears.
+**Note**: It's possible to run the tests without using a GitHub username and password as command-line arguments. In that case, the automatic login will fail and you then have 10 seconds to manually enter a username and password in the GitHub login screen that appears.
 
 ## Production Server Setup
 
