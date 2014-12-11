@@ -442,7 +442,8 @@ issueList.MainView = Backbone.View.extend({
   el: $('.js-issue-page'),
   events: {},
   keyboardEvents: {
-    'g': 'githubWarp'
+    'g': 'githubWarp',
+    'G': 'githubWarp'
   },
   initialize: function() {
     this.initSubViews();
