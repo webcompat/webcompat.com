@@ -19,7 +19,7 @@
     {% else %}
       <a class="wc-Navbar-link" href="{{ url_for('logout') }}">Logout</a>
       {% if session.user_id and session.avatar_url %}
-      <img class="wc-Navbar-avatar" src=" {{ session.avatar_url }}s=40">
+      <img class="wc-Navbar-avatar" src=" {{ session.avatar_url }}s=40" alt="User Avatar">
       {% endif %}
     {% endif %}
     </div>

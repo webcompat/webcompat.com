@@ -29,24 +29,24 @@
     </div>
     <div class="r-Grid r-Grid--withGutter">
       <div class="r-Grid-cell r-all--1of2 r-maxM--2of2">
-        <div class="u-formGroup">
-          <label id="site-owner" class="u-formLabel">Is this your site?</label>
+        <fieldset class="u-formGroup">
+          <legend id="site-owner" class="u-formLabel">Is this your site?</legend>
           {% for subradio in form.site_owner %}
           <div class="radio-inline">
             {{ subradio }} {{ subradio.label }}
           </div>
           {% endfor %}
-        </div>
+        </fieldset>
       </div>
       <div class="r-Grid-cell r-all--1of2 r-maxM--2of2">
-        <div class="u-formGroup">
-          <label class="u-formLabel">What seems to be the trouble?</label>
+        <fieldset class="u-formGroup">
+          <legend class="u-formLabel">What seems to be the trouble?</legend>
           {% for subradio in form.problem_category %}
           <div class="radio">
             {{ subradio }} {{ subradio.label }}
           </div>
           {% endfor %}
-        </div>
+        </fieldset>
       </div>
     </div>
     <div class="r-Grid r-Grid--withGutter">
