@@ -1,3 +1,8 @@
+## 1.3.0 - 2014-12-12
+
+* Enable "filter" dropdown for /issues page, (which includes a refactor of maintaining model state) [Pull #471](https://github.com/webcompat/webcompat.com/pull/471) [Issue #373](https://github.com/webcompat/webcompat.com/issues/373)
+* A11y fixes Round 2 [Pull #468](https://github.com/webcompat/webcompat.com/pull/468) [Issue #464](https://github.com/webcompat/webcompat.com/issues/464)
+
 ## 1.2.1 - 2014-12-10
 
 * Fix misaligned report buttons for small viewports [Pull #472](https://github.com/webcompat/webcompat.com/pull/472) [Issue #459](https://github.com/webcompat/webcompat.com/issues/459)
