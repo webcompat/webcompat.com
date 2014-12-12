@@ -106,8 +106,12 @@ issueList.Issue = issues.Issue.extend({});
 
 issueList.IssueCollection = Backbone.Collection.extend({
   model: issueList.Issue,
-  // TODO(miket): less hard-coding of default params
-  url: '/api/issues?page=1&per_page=50',
+  /* the url property is set in issueList.IssueView#fetchAndRenderIssues */
+  initialize: function() {
+    // set conservative defaults (first page of all open issues, 50 per page)
+    this.params = {page: 1, per_page: 50};
+    this.path = '/api/issues';
+  },
   parse: function(response, jqXHR) {
     if (jqXHR.xhr.getResponseHeader('Link') != null) {
       //external code can access the parsed header via this.linkHeader
@@ -122,6 +126,10 @@ issueList.IssueCollection = Backbone.Collection.extend({
     } else {
       return response;
     }
+  },
+  setURLState: function(path, params) {
+    this.path = path;
+    this.params = params;
   },
   parseHeader: function(linkHeader) {
     /* Returns an object like so:

@@ -59,48 +59,44 @@ issueList.FilterView = Backbone.View.extend({
   events: {
     'click button': 'toggleFilter'
   },
+  _isLoggedIn: $('body').data('username'),
+  _userName: $('body').data('username'),
   initialize: function() {
     //TODO: move this model out into its own file once we have
     //actual data for issues count
-
     issueList.events.on('filter:activate', _.bind(this.toggleFilter, this));
     issueList.events.on('filter:clear', _.bind(this.clearFilter, this));
 
-    // TODO(miket): update with paramKey & paramValue
     var options = [
-      {title: 'View all open issues', params: ''},
-      {title: 'View all issues', params: 'filter=all'}
+      {title: 'View all Open Issues', params: 'state=open'},
+      {title: 'View all Issues', params: 'state=all'}
     ];
 
     // add the dropdown options for logged in users.
-    // submitted by me can be
-    if ($('body').data('username')) {
+    if (this._isLoggedIn) {
       options.push(
-        {title: 'View issues submitted by me', params: 'filter=created'},
-        {title: 'View issues mentioning me', params: 'filter=mentioned'},
-        {title: 'View issues assigned to me', params: 'filter=assigned'}
+        {title: 'View Issues Submitted by Me', params: 'creator='   + this._userName},
+        {title: 'View Issues Mentioning Me',   params: 'mentioned=' + this._userName}
       );
     }
 
     this.model = new Backbone.Model({
-      dropdownTitle: 'View all open issues',
+      dropdownTitle: 'View all Open Issues',
       dropdownOptions: options,
     });
 
     this.initSubViews();
   },
   initSubViews: function() {
-    /* Commenting out for now, see Issues #312, #266
     this.dropdown = new issueList.DropdownView({
       model: this.model
     });
-    */
+
   },
   template: _.template($('#issuelist-filter-tmpl').html()),
   render: function() {
     this.$el.html(this.template(this.model.toJSON()));
-    /* Commenting out for now, see Issues #312, #266
-    /* this.dropdown.setElement(this.$el.find('.js-dropdown-wrapper')).render(); */
+    this.dropdown.setElement(this.$el.find('.js-dropdown-wrapper')).render();
     return this;
   },
   clearFilter: function() {
@@ -295,9 +291,13 @@ issueList.IssueView = Backbone.View.extend({
       this.fetchAndRenderIssues();
     }
   },
-  fetchAndRenderIssues: function() {
-    //assumes this.issues.url has already been set to something meaninful.
+  fetchAndRenderIssues: function(options) {
     var headers = {headers: {'Accept': 'application/json'}};
+    if (options && options.url) {
+      this.issues.url = options.url;
+    } else {
+      this.issues.url = this.issues.path + '?' + $.param(this.issues.params);
+    }
     this.issues.fetch(headers).success(_.bind(function() {
       this.render(this.issues);
       this.initPaginationLinks(this.issues);
@@ -366,15 +366,15 @@ issueList.IssueView = Backbone.View.extend({
   requestNextPage: function() {
     var nextPage;
     if (nextPage = this.issues.getNextPage()) {
-      this.issues.url = nextPage;
-      this.fetchAndRenderIssues();
+      // we pass along the entire URL from the Link header
+      this.fetchAndRenderIssues({url: nextPage});
     }
   },
   requestPreviousPage: function() {
     var prevPage;
     if (prevPage = this.issues.getPrevPage()) {
-      this.issues.url =  prevPage;
-      this.fetchAndRenderIssues();
+      // we pass along the entire URL from the Link header
+      this.fetchAndRenderIssues({url: prevPage});
     }
   },
   updateIssues: function(category) {
@@ -384,56 +384,39 @@ issueList.IssueView = Backbone.View.extend({
     // note: until GitHub fixes a bug where requesting issues filtered by labels
     // doesn't return pagination via Link, we get those results via the Search API.
     var searchCategories = ['untriaged', 'contactready', 'needsdiagnosis', 'sitewait'];
-
-    // TODO(miket): make generic getModelParams method which can get the latest state
-    // merge param objects and serialize
-    var paramsBag = $.extend({page: 1, per_page: 50}, this.getPageLimit());
-    var params = $.param(paramsBag);
+    var params = $.extend(this.issues.params, this.getPageLimit());
 
     // note: if query is the empty string, it will load all issues from the
     // '/api/issues' endpoint (which I think we want).
     if (category && category.query) {
-      params = $.param($.extend(paramsBag, {q: category.query}));
-      this.issues.url = '/api/issues/search?' + params;
+      params = $.param($.extend(params, {q: category.query}));
+      this.issues.setURLState('/api/issues/search', params);
     } else if (_.contains(searchCategories, category)) {
-      this.issues.url = '/api/issues/search/' + category + '?' + params;
+      this.issues.setURLState('/api/issues/search/' + category, params);
     } else if (category === "closed") {
-      this.issues.url = '/api/issues/category/' + category + '?' + params;
+      this.issues.setURLState('/api/issues/category/' + category, params);
     } else {
-      this.issues.url = '/api/issues?' + params;
+      this.issues.setURLState('/api/issues', params);
     }
     this.fetchAndRenderIssues();
   },
   updateModelParams: function(params) {
-    var decomposeUrl = function(url) {
-      var _url = url.split('?');
-      return {path: _url[0], params: _url[1]};
-    };
-
-    var newParams;
-    var modelUrl = decomposeUrl(this.issues.url);
+    // convert params string to an array,
+    // splitting on & in case of multiple params
     var paramsArray = params.split('&');
-    var updateParams = {};
 
     // paramsArray is an array of param 'key=value' string pairs,
-    // iterate over them in case there are multiple pairs
-    _.forEach(paramsArray, function(param) {
+    _.forEach(paramsArray, _.bind(function(param) {
       var kvArray = param.split('=');
       var key = kvArray[0];
       var value = kvArray[1];
-      updateParams[key] = value;
+      this.issues.params[key] = value;
 
       if (key === 'per_page') {
         this._pageLimit = value;
       }
-    });
+    }, this));
 
-    // merge old params with passed in param data
-    // $.extend will update existing object keys, and add new ones
-    newParams = $.extend($.deparam(modelUrl.params), updateParams);
-
-    // construct new model URL and re-request issues
-    this.issues.url = modelUrl.path + '?' + $.param(newParams);
     this.fetchAndRenderIssues();
   }
 });
