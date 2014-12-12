@@ -7,7 +7,6 @@
 import datetime
 import math
 import urlparse
-import re
 
 from babel.dates import format_timedelta
 from flask import session

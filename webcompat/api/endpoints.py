@@ -8,7 +8,6 @@
 back to GitHub'''
 
 import json
-import re
 
 from flask import abort
 from flask import Blueprint
