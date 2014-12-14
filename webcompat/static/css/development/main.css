@@ -30,6 +30,7 @@
 @import "components/pagination.css";
 @import "components/labels.css";
 @import "components/title.css";
+@import "components/loader.css";
 
 /*----------Layout----------*/
 @import "layout/body.css";
