@@ -1,3 +1,8 @@
+## 1.3.1 - 2014-12-15
+
+* Bug fix: only serialize params once (oops). [Pull #489](https://github.com/webcompat/webcompat.com/pull/489) [Issue #485](https://github.com/webcompat/webcompat.com/issues/485)
+* Update Makefile and docs [Pull #488](https://github.com/webcompat/webcompat.com/pull/488) [Issue #359](https://github.com/webcompat/webcompat.com/pull/488)
+
 ## 1.3.0 - 2014-12-12
 
 * Enable "filter" dropdown for /issues page, (which includes a refactor of maintaining model state) [Pull #471](https://github.com/webcompat/webcompat.com/pull/471) [Issue #373](https://github.com/webcompat/webcompat.com/issues/373)
