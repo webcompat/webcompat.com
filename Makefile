@@ -1,4 +1,4 @@
-init:
+install:
 	echo "❯ Initializing..."
 	(pip install virtualenv)
 	(virtualenv env)
@@ -15,27 +15,10 @@ watch:
 	@ echo "❯ Watching..."
 	@ grunt watch
 
-dist:
-	@ echo "❯ Distribution..."
+build:
+	@ echo "❯ Building..."
 	@ grunt
 
 start:
 	@ echo "❯ Starting..."
 	@ sh -c '. env/bin/activate; python run.py'
-
-serv:
-	@ echo "❯ Launching server..."
-	@ nohup ./webcompat.sh $
-
-run:
-	@ node_modules/.bin/intern-runner config=tests/functional/intern
-
-screenshot:
-	(cd tests/functional; casperjs screenshot.js webkit --engine=phantomjs)
-	(cd tests/functional; casperjs screenshot.js gecko --engine=slimerjs)
-
-end:
-	kill `cat env.pid`
-	kill `cat pythonserver.pid`
-	kill `cat selenium.pid`
-	(rm  nohup.out)

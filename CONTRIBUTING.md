@@ -19,6 +19,7 @@ You are welcome to contribute to this project. Here are the guidelines we try to
     * [Installing Grunt](#installing-grunt)
   * [Configuring The Server](#configuring-the-server)
   * [Starting The Server](#starting-the-server)
+  * [Building Project](#building-project)
 * [Coding](#coding)
 * [Running Tests](#running-tests)
   * [Functional Tests](#functional-tests)
@@ -107,7 +108,7 @@ The discussion might lead to modify or abandon this specific pull request. This 
 
 After all that, if you'd like, you can send a pull request to add your name to our humans.txt file.
 
-For product and design contributions, check out the [Design Repo](https://github.com/webcompat/design) 
+For product and design contributions, check out the [Design Repo](https://github.com/webcompat/design)
 
 ## Coding Style
 
@@ -193,7 +194,7 @@ git clone https://github.com/<username>/webcompat.com.git #replace your github u
 # change to directory
 cd webcompat.com
 # initializing project
-[sudo] make init
+[sudo] make install
 ```
 
 ### Detailed setup
@@ -268,6 +269,13 @@ make start
 
 You should now have a local instance of the site running at `http://127.0.0.1:5000/`. Please [file bugs](https://github.com/webcompat/webcompat.com/issues/new) if something went wrong!
 
+### Building Project
+
+You can build the entire project (CSS and JavaScript files and optimize images) by executing this command:
+
+``` bash
+make build
+```
 
 ## Coding
 
