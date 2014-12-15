@@ -162,6 +162,22 @@ define([
           assert.equal(isDisplayed, true, 'We\'re at GitHub now.');
         })
         .end();
+    },
+
+    'clicking on a label performs a label search': function() {
+      return this.remote
+        .setFindTimeout(intern.config.wc.pageLoadTimeout)
+        .get(require.toUrl(url))
+        .findByCssSelector('div.Dropdown:nth-child(2) > button:nth-child(1)').click()
+        .end()
+        .findByCssSelector('div.Dropdown:nth-child(2) > ul:nth-child(2) > li:nth-child(2) > a:nth-child(1)').click()
+        .end()
+        .findByCssSelector('[title="Labels : there-can-only-be-one"]').click()
+        .end()
+        .findByCssSelector('.js-issue-list .IssueItem:first-of-type .js-issue-label').getVisibleText()
+        .then(function (text) {
+          assert.include(text, 'there-can-only-be-one', 'The shown issue has the right label.');
+        });
     }
   });
 });

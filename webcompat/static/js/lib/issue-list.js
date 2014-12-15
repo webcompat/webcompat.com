@@ -389,7 +389,7 @@ issueList.IssueView = Backbone.View.extend({
     // note: if query is the empty string, it will load all issues from the
     // '/api/issues' endpoint (which I think we want).
     if (category && category.query) {
-      params = $.param($.extend(params, {q: category.query}));
+      params = $.extend(params, {q: category.query});
       this.issues.setURLState('/api/issues/search', params);
     } else if (_.contains(searchCategories, category)) {
       this.issues.setURLState('/api/issues/search/' + category, params);
