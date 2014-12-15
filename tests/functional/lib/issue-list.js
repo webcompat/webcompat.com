@@ -168,8 +168,10 @@ define([
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url))
+        // click on the sort dropdown
         .findByCssSelector('div.Dropdown:nth-child(2) > button:nth-child(1)').click()
         .end()
+        // select "Oldest", because we know Issue #1 has the "there-can-only-be-one" label
         .findByCssSelector('div.Dropdown:nth-child(2) > ul:nth-child(2) > li:nth-child(2) > a:nth-child(1)').click()
         .end()
         .findByCssSelector('[title="Labels : there-can-only-be-one"]').click()
