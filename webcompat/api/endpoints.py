@@ -24,6 +24,7 @@ from webcompat import limiter
 from webcompat.helpers import get_headers
 from webcompat.helpers import get_request_headers
 from webcompat.helpers import get_user_info
+from webcompat.helpers import normalize_api_params
 from webcompat.issues import filter_untriaged
 from webcompat.issues import proxy_request
 
@@ -162,6 +163,9 @@ def get_search_results(query_string=None, params=None):
     # restrict results to our repo.
     query_string += " repo:{0}".format(REPO_PATH)
     params['q'] = query_string
+
+    # convert issues api to search api params here.
+    params = normalize_api_params(params)
 
     if g.user:
         request_headers = get_request_headers(g.request_headers)
