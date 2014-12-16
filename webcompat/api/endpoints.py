@@ -8,7 +8,6 @@
 back to GitHub'''
 
 import json
-import re
 
 from flask import abort
 from flask import Blueprint
@@ -25,6 +24,7 @@ from webcompat import limiter
 from webcompat.helpers import get_headers
 from webcompat.helpers import get_request_headers
 from webcompat.helpers import get_user_info
+from webcompat.helpers import normalize_api_params
 from webcompat.issues import filter_untriaged
 from webcompat.issues import proxy_request
 
@@ -141,7 +141,7 @@ def get_issue_category(issue_category):
 @api.route('/issues/search')
 @limiter.limit('30/minute',
                key_func=lambda: get_username())
-def get_search_results(query_string=None):
+def get_search_results(query_string=None, params=None):
     '''XHR endpoint to get results from GitHub's Search API.
 
     We're specifically searching "issues" here, which seems to make the most
@@ -156,15 +156,16 @@ def get_search_results(query_string=None):
 
     Not cached.
     '''
+    params = params or request.args.copy()
+    query_string = query_string or params.get('q')
     search_uri = 'https://api.github.com/search/issues'
-    # TODO: handle sort and order parameters.
-    params = request.args.copy()
 
-    if query_string is None:
-        query_string = params.get('q')
-        # restrict results to our repo.
+    # restrict results to our repo.
     query_string += " repo:{0}".format(REPO_PATH)
     params['q'] = query_string
+
+    # convert issues api to search api params here.
+    params = normalize_api_params(params)
 
     if g.user:
         request_headers = get_request_headers(g.request_headers)
@@ -188,13 +189,14 @@ def get_category_from_search(issue_category):
     issues from /issues/category/<issue_category>.
     '''
     category_list = ['contactready', 'needsdiagnosis', 'sitewait']
+    params = request.args.copy()
 
     if issue_category in category_list:
         query_string = 'label:{0}'.format(issue_category)
     elif issue_category == 'untriaged':
         query_string = ('state:open -label:contactready '
                         '-label:sitewait -label:needsdiagnosis')
-    return get_search_results(query_string)
+    return get_search_results(query_string, params)
 
 
 @api.route('/issues/<int:number>/comments', methods=['GET', 'POST'])

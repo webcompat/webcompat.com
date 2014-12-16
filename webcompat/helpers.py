@@ -7,7 +7,6 @@
 import datetime
 import math
 import urlparse
-import re
 
 from babel.dates import format_timedelta
 from flask import session
@@ -137,6 +136,36 @@ def get_referer(request):
             return request.referrer
     else:
         return None
+
+
+def normalize_api_params(params):
+    '''Normalize GitHub Issues API params to Search API conventions:
+
+    Issues API params        | Search API converted values
+    -------------------------|---------------------------------------
+    state                    | into q as "state:open", "state:closed"
+    creator                  | into q as "author:username"
+    mentioned                | into q as "mentions:username"
+    direction                | order
+    '''
+    if 'direction' in params:
+        params['order'] = params['direction']
+        del params['direction']
+
+    # these params need to be added to the "q" param as substrings
+    if 'state' in params:
+        state_param = ' state:' + params['state']
+        params['q'] += state_param
+        del params['state']
+    if 'creator' in params:
+        creator_param = ' author:' + params['creator']
+        params['q'] += creator_param
+        del params['creator']
+    if 'mentioned' in params:
+        mentioned_param = ' mentions:' + params['mentioned']
+        params['q'] += mentioned_param
+        del params['mentioned']
+    return params
 
 
 def rewrite_links(link_header):
