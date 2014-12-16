@@ -174,6 +174,7 @@ define([
         // select "Oldest", because we know Issue #1 has the "there-can-only-be-one" label
         .findByCssSelector('div.Dropdown:nth-child(2) > ul:nth-child(2) > li:nth-child(2) > a:nth-child(1)').click()
         .end()
+        .sleep(1000)
         .findByCssSelector('[title="Labels : there-can-only-be-one"]').click()
         .end()
         .findByCssSelector('.js-issue-list .IssueItem:first-of-type .js-issue-label').getVisibleText()
