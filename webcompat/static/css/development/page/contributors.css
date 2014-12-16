@@ -35,23 +35,33 @@
   font-size:1em;
   cursor:pointer;
   font-family: var(--base-font);
+  position:relative;
 }
-/* icon header, default state */
-.icon--contributors {
-  margin-left:.3em;
+/* wc-Icon header, default state */
+.wc-Icon--contributors {
+  position:absolute;
+  right:0;
+  top:50%;
+  transform:translateY(-50%);
   opacity:.5;
-  float:right;
 }
-.icon--contributors:before {
+/*.wc-Icon--contributors:before {
   content: "\f067";
-}
+}*/
 /* hover btn */
-.contributors__item__btn:hover .icon--contributors {
+.contributors__item__btn:hover .wc-Icon {
   opacity:1;
 }
-/* content is open, icon style change */
-.contributors__item__btn.is-active .icon--contributors:before {
-  content: "\f068";
+/* default */
+.wc-Icon--contributors--disabled {
+  display:none;
+}
+/* content is open, wc-Icon style change */
+.contributors__item__btn.is-active .wc-Icon--contributors--disabled {
+  display:inline-block;
+}
+.contributors__item__btn.is-active .wc-Icon--contributors--active {
+  display:none;
 }
 /* content of item contributors, close by default */
 .contributors__item__content {
