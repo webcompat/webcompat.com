@@ -1,64 +1,59 @@
 /*---------- font ----------*/
 
 @font-face {
-  font-family: 'icomoon';
-  src:url('../font/icomoon/icomoon.eot?ccpile');
-  src:url('../font/icomoon/icomoon.eot?#iefixccpile') format('embedded-opentype'),
-      url('../font/icomoon/icomoon.woff?ccpile') format('woff'),
-      url('../font/icomoon/icomoon.ttf?ccpile') format('truetype'),
-      url('../font/icomoon/icomoon.svg?ccpile#icomoon') format('svg');
+  font-family: 'webcompat';
+  src:url('../font/webcompat/webcompat.eot?ccpilf');
+  src:url('../font/webcompat/webcompat.eot?#iefixccpilf') format('embedded-opentype'),
+      url('../font/webcompat/webcompat.woff?ccpilf') format('woff'),
+      url('../font/webcompat/webcompat.ttf?ccpilf') format('truetype'),
+      url('../font/webcompat/webcompat.svg?ccpilf#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
 }
 
-.icon {
+.wc-Icon {
   display: inline-block;
-  font-family: 'icomoon';
-  speak: none;
-  text-align: center;
-  font-style: normal;
-  font-weight: normal;
-  font-variant: normal;
-  text-transform: none;
-  line-height: 1;
-  vertical-align: middle;
-
-
-/* Better Font Rendering =========== */
+  font: normal normal normal 14px/1 webcompat;
+  font-size: inherit;
+  text-rendering: auto;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  vertical-align:middle;
 }
 
-.icon-times:before {
-	content: "\f00d";
+.wc-Icon--times:before {
+  content: "\f00d";
 }
-.icon-gear:before {
-	content: "\f013";
+.wc-Icon--gear:before {
+  content: "\f013";
 }
-.icon-plus:before {
-	content: "\f067";
+.wc-Icon--plus:before {
+  content: "\f067";
 }
-.icon-minus:before {
-	content: "\f068";
+.wc-Icon--minus:before {
+  content: "\f068";
 }
-.icon-chevron-up:before {
-	content: "\f077";
+.wc-Icon--chevron-up:before {
+  content: "\f077";
 }
-.icon-chevron-down:before {
-	content: "\f078";
+.wc-Icon--chevron-down:before {
+  content: "\f078";
 }
-.icon-arrow-up:before {
-	content: "\e600";
+.wc-Icon--search:before {
+  content: "\f002";
 }
-.icon-arrow-right:before {
-	content: "\e601";
+.wc-Icon--home:before {
+  content: "\f015";
 }
-.icon-arrow-down:before {
-	content: "\e602";
+.wc-Icon--list:before {
+  content: "\f03a";
 }
-.icon-arrow-left:before {
-	content: "\e603";
+.wc-Icon--arrow-right:before {
+  content: "\e601";
 }
-.icon-search:before {
-	content: "\e604";
+.wc-Icon--arrow-down:before {
+  content: "\e602";
+}
+.wc-Icon--arrow-left:before {
+  content: "\e603";
 }
