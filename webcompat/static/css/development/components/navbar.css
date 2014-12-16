@@ -22,6 +22,7 @@
     display: inline-block;
     color: #414042;
     font-weight:700;
+    text-decoration:none;
   }
     .wc-Navbar-link:hover {
       color: #fff;
