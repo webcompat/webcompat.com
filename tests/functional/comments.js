@@ -18,22 +18,22 @@ define([
   registerSuite({
     name: 'issues',
 
-    'Comments form visible when logged in': function () {
+    'Comments form visible when logged in': function() {
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url(100)))
+        .sleep(500)
         .findByCssSelector('.Comment--form').isDisplayed()
         .then(function (isDisplayed) {
           assert.equal(isDisplayed, true, 'Comment form visible for logged in users.');
         })
-        .end()
+        .end();
     },
 
     'Comment form not visible for logged out users': function() {
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url(100)))
-        // logout
         .findByCssSelector('.wc-Navbar-section--right .wc-Navbar-link').click()
         .end()
         // make sure the comment form isn't on the page
