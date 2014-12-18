@@ -6,9 +6,8 @@ define([
   'intern',
   'intern!object',
   'intern/chai!assert',
-  'require',
-  'tests/functional/lib/helpers'
-], function (intern, registerSuite, assert, require, FunctionalHelpers) {
+  'require'
+], function (intern, registerSuite, assert, require) {
   'use strict';
 
   var url = function(num) {
