@@ -321,7 +321,7 @@ source env/bin/activate && python run.py
 In another separate terminal window or tab, run the tests. Many tests require the ability to log in with GitHub OAuth. This is achieved by passing in a valid GitHub username: `user` and password: `pw` as command-line arguments:
 
 ``` bash
-node_modules/.bin/intern-runner config=tests/functional/intern user=testusername pw=testpassword
+node_modules/.bin/intern-runner config=tests/intern user=testusername pw=testpassword
 ```
 
 Shortly after running this command, you should see the browser open and various pages appear and disappear automatically for a minute or two. The tests are complete when the browser window closes and you see a report of how many passed or failed in the terminal window.

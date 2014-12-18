@@ -3,11 +3,11 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 define([
-  './lib/index',
-  './lib/issue-list',
-  './lib/issues',
-  './lib/reporting',
-  './lib/contributors'
+  './functional/index',
+  './functional/issue-list',
+  './functional/issues',
+  './functional/reporting',
+  './functional/contributors'
 ], function () {
   'use strict';
 });

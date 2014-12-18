@@ -29,4 +29,4 @@ before_script:
 # now run the tests!
 script:
   - nosetests
-  - node_modules/.bin/intern-runner config=tests/functional/intern user="$USER" pw="$PW"
+  - node_modules/.bin/intern-runner config=tests/intern user="$USER" pw="$PW"
