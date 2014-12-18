@@ -30,7 +30,7 @@ module.exports = function(grunt) {
         }
       },
       tests: [
-        'tests/functional/lib/*.js'
+        'tests/functional/*.js'
       ],
       beforeconcat: [
         '<%= jsPath %>/lib/homepage.js',

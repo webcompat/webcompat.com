@@ -4,6 +4,7 @@
 
 define([
   './functional/index',
+  './functional/comments',
   './functional/issue-list',
   './functional/issues',
   './functional/reporting',
