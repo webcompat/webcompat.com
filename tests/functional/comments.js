@@ -52,6 +52,96 @@ define([
           assert.equal(isDisplayed, true, 'Comment form visible for logged in users.');
         })
         .end();
+    },
+
+    'empty vs non-empty comment button text (open issue)': function() {
+      return this.remote
+        .setFindTimeout(intern.config.wc.pageLoadTimeout)
+        .get(require.toUrl(url(100)))
+        .sleep(500)
+        .findByCssSelector('button.Button:nth-child(1)').getVisibleText()
+        .then(function(text){
+          assert.equal('Close Issue', text);
+          assert.notEqual('Close and comment', text);
+        })
+        .end()
+        .findByCssSelector('textarea.Comment-text')
+        .type('test comment')
+        .end()
+        .sleep(500)
+        .findByCssSelector('button.Button:nth-child(1)').getVisibleText()
+        .then(function(text){
+          assert.equal('Close and comment', text);
+          assert.notEqual('Close Issue', text);
+        });
+    },
+
+    'empty vs non-empty comment button text (closed issue)': function() {
+      return this.remote
+        .setFindTimeout(intern.config.wc.pageLoadTimeout)
+        .get(require.toUrl(url(101)))
+        .sleep(500)
+        .findByCssSelector('button.Button:nth-child(1)').getVisibleText()
+        .then(function(text){
+          assert.equal('Reopen Issue', text);
+          assert.notEqual('Reopen and comment', text);
+        })
+        .end()
+        .findByCssSelector('textarea.Comment-text')
+        .type('test comment')
+        .end()
+        .sleep(500)
+        .findByCssSelector('button.Button:nth-child(1)').getVisibleText()
+        .then(function(text){
+          assert.equal('Reopen and comment', text);
+          assert.notEqual('Reopen Issue', text);
+        });
+    },
+
+    'posting a comment': function() {
+      var originalCommentsLength, allCommentsLength;
+      return this.remote
+        .setFindTimeout(intern.config.wc.pageLoadTimeout)
+        .get(require.toUrl(url(100)))
+        .findAllByCssSelector('.Comment:not(.Comment--form)')
+        .then(function(elms){
+          originalCommentsLength = elms.length;
+        })
+        .end()
+        .findByCssSelector('textarea.Comment-text')
+        .type('Today\'s date is ' + new Date().toDateString())
+        .end()
+        .sleep(500)
+        // click the comment button
+        .findByCssSelector('button.Button:nth-child(2)').click()
+        .end()
+        .sleep(500)
+        .findAllByCssSelector('.Comment:not(.Comment--form)')
+        .then(function(elms){
+          allCommentsLength = elms.length;
+          assert(originalCommentsLength < allCommentsLength, 'Comment was successfully left.');
+        });
+    },
+
+    'posting an empty comment fails': function() {
+      var originalCommentsLength, allCommentsLength;
+      return this.remote
+        .setFindTimeout(intern.config.wc.pageLoadTimeout)
+        .get(require.toUrl(url(100)))
+        .findAllByCssSelector('.Comment:not(.Comment--form)')
+        .then(function(elms){
+          originalCommentsLength = elms.length;
+        })
+        .end()
+        // click the comment button
+        .findByCssSelector('button.Button:nth-child(2)').click()
+        .end()
+        .sleep(500)
+        .findAllByCssSelector('.Comment:not(.Comment--form)')
+        .then(function(elms){
+          allCommentsLength = elms.length;
+          assert(originalCommentsLength === allCommentsLength, 'Comment was not successfully left.');
+        });
     }
 
   });
