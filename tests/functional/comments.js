@@ -36,8 +36,21 @@ define([
         .get(require.toUrl(url(100)))
         .findByCssSelector('.wc-Navbar-section--right .wc-Navbar-link').click()
         .end()
-        // make sure the comment form isn't on the page
-        FunctionalHelpers.noElementByCssSelector(this, '.Comment--form')
+        .findByCssSelector('.Comment--form')
+        .then(function () {
+          assert.fail('comment form should not be present');
+        }, function (err) {
+          assert.strictEqual(err.name, 'NoSuchElement');
+          return true;
+        })
+        .end()
+        .findByCssSelector('.wc-Navbar-section--right .wc-Navbar-link').click()
+        .end()
+        .sleep(500)
+        .findByCssSelector('.Comment--form').isDisplayed()
+        .then(function (isDisplayed) {
+          assert.equal(isDisplayed, true, 'Comment form visible for logged in users.');
+        })
         .end();
     }
 
