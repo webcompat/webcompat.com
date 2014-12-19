@@ -4,6 +4,15 @@
   font-weight: 700;
 }
 
+.wc-keyhint {
+  background-color: var(--wc-variant-background-dark);
+  border-radius: 5px;
+  color: #fff;
+  display: inline-block;
+  padding: 0.2em 0.5em;
+  vertical-align: middle;
+}
+
 /*---------- Utilities Position ----------*/
 
 .wc-pos-absolute {
