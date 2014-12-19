@@ -27,6 +27,16 @@
     .wc-Navbar-link:hover {
       color: #fff;
     }
+    /* label */
+    .wc-Navbar-link-label {
+      display:inline-block;
+      vertical-align:middle;
+      margin-left:.3em;
+    }
+    /*icon */
+    .wc-Navbar-link-icon {
+      font-size:1.2em;
+    }
 
   @media (--viewport-330px) {
     .wc-Navbar-link {

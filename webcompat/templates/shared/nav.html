@@ -2,14 +2,15 @@
   <nav class="wc-content" role="navigation">
     <div class="wc-Navbar-section wc-Navbar-section--left">
       <a class="wc-Navbar-link" href="/">
-        Home
+        <span class="wc-Navbar-link-icon wc-Icon wc-Icon--home"></span><span class="wc-Navbar-link-label">Home</span>
       </a>
     </div>
     <div class="wc-Navbar-section wc-Navbar-section--right">
     {% if not session.user_id %}
       <a class="wc-Navbar-link" href="{{ url_for('login') }}">Login</a>
     {% else %}
-      <a class="wc-Navbar-link" href="{{ url_for('logout') }}">Logout</a>
+      <a class="wc-Navbar-link" href="{{ url_for('logout') }}">
+        <span class="wc-Navbar-link-icon wc-Icon wc-Icon--arrow-circle-right"></span><span class="wc-Navbar-link-label">Logout</span></a>
       {% if session.user_id and session.avatar_url %}
       <img class="wc-Navbar-avatar" src=" {{ session.avatar_url }}s=40" alt="User Avatar">
       {% endif %}
