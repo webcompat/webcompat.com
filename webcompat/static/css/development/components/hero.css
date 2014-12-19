@@ -55,8 +55,11 @@
     transition: top 100ms ease-out 0ms;
     top:1em;
   }
-    .wc-Hero-link:hover,
+
     .wc-Hero-link:focus {
+      color: #414042;
+    }
+    .wc-Hero-link:hover {
       text-decoration:none;
       color: #fff;
     }
@@ -76,6 +79,10 @@
       border-radius: 50%;
       transition: all 0.3s linear 0s;
     }
+      /* modifier */
+      .wc-Hero-link-icon--active {
+        display:none;
+      }
     /* hover  icon */
     .no-touch .wc-Hero-link:hover .wc-Hero-link-icon {
       background-color: var(--wc-background-dark);
@@ -83,16 +90,21 @@
       transition: all 0.3s linear 0s;
     }
     /* hover a - icon down */
-    .no-touch .wc-Hero-link:hover .wc-Hero-link-icon:before {
-      content: "\e602";
+    .no-touch .wc-Hero-link:hover .wc-Hero-link-icon--active,
+    .wc-Hero-link.is-open .wc-Hero-link-icon--active {
+      display:inline-block;
     }
-    /* open a - icon down*/
-    .wc-Hero-link.is-open .wc-Hero-link-icon:before {
-      content: "\e602";
+    .no-touch .wc-Hero-link:hover .wc-Hero-link-icon--default,
+    .wc-Hero-link.is-open .wc-Hero-link-icon--default {
+      display:none;
     }
+
     /* hover open a - icon up */
-    .no-touch .wc-Hero-link.is-open:hover .wc-Hero-link-icon:before {
-      content: "\e600";
+    .no-touch .wc-Hero-link.is-open:hover .wc-Hero-link-icon--default {
+      display:inline-block;
+    }
+    .no-touch .wc-Hero-link.is-open:hover .wc-Hero-link-icon--active {
+      display:none;
     }
 
     @media (--viewport-450px) {

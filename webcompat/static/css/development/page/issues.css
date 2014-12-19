@@ -17,21 +17,21 @@
   }
 }
 /* btn back /index */
-.Issue-back {
+.Issue-linkBack {
   display: inline-block;
   vertical-align: middle;
   margin:0 .8em 0 0;
 }
 @media (--viewport-450px) {
-  .Issue-back {
+  .Issue-linkBack {
     display:block;
     margin-bottom:.3em;
   }
 }
-.Issue-back:hover {
+.Issue-linkBack:hover {
   text-decoration: none;
 }
-.Issue-back .icon {
+.Issue-linkBack-icon {
   display: inline-block;
   width: 1.25em;
   height: 1.25em;
@@ -42,7 +42,7 @@
   border-radius:50%;
   transition: all 0.3s linear 0s;
 }
-.Issue-back:hover .icon {
+.Issue-linkBack:hover .Issue-linkBack-icon {
   background-color: var(--wc-variant-background-dark);
   transition: all 0.3s linear 0s;
 }

@@ -5,9 +5,9 @@
     <main class="wc-content wc-content--body Issue" role="main">
       <h1 class="Issue-title wc-Title--l">
       <script type="text/template" id="title-tmpl">
-        <a class="Issue-back" href="{{ url_for("show_issues") }}" title="All issues">
+        <a class="Issue-linkBack" href="{{ url_for("show_issues") }}" title="All issues">
 		  <span class="wc-sronly">All Issues</span>
-          <span class="icon icon-arrow-left"></span>
+          <span class="Issue-linkBack-icon wc-Icon wc-Icon--arrow-left"></span>
         </a>
         Issue <%= number %>: <%- title %>
       </script>
@@ -35,7 +35,7 @@
         <script type="text/template" id="issue-labels-tmpl">
           <span class="Label Label--title">Labels</span>
           {% if session.user_id and session.avatar_url %}
-            <span class="LabelEditor-wrapper"><button class="LabelEditor-launcher icon icon-gear"><span class="wc-sronly">Edit Labels</span></button></span>
+            <span class="LabelEditor-wrapper"><button class="LabelEditor-launcher wc-Icon wc-Icon--gear"><span class="wc-sronly">Edit Labels</span></button></span>
           {% endif %}
           <span class="Label-list">
           <% _.each(labels, function(label) { %>
