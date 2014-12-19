@@ -27,6 +27,10 @@
     .wc-Navbar-link:hover {
       color: #fff;
     }
+    /* space between */
+    .wc-Navbar-link + .wc-Navbar-link {
+      margin-left:1em;
+    }
     /* label */
     .wc-Navbar-link-label {
       display:inline-block;
