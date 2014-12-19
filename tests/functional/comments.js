@@ -33,7 +33,7 @@ define([
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url(100)))
-        .findByCssSelector('.wc-Navbar-section--right .wc-Navbar-link').click()
+        .findByCssSelector('.js-login-link').click()
         .end()
         .findByCssSelector('.Comment--form')
         .then(function () {
@@ -43,7 +43,7 @@ define([
           return true;
         })
         .end()
-        .findByCssSelector('.wc-Navbar-section--right .wc-Navbar-link').click()
+        .findByCssSelector('.js-login-link').click()
         .end()
         .sleep(500)
         .findByCssSelector('.Comment--form').isDisplayed()
