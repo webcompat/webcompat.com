@@ -31,6 +31,27 @@ define([
         .end();
     },
 
+    'loading image is shown when requesting issues': function() {
+      return this.remote
+        .setFindTimeout(intern.config.wc.pageLoadTimeout)
+        .get(require.toUrl(url))
+        // click next page to trigger loader image
+        .findByCssSelector('.js-pagination-next').click()
+        .end()
+        .findByCssSelector('.js-loader').isDisplayed()
+        .then(function (isDisplayed) {
+          assert.equal(isDisplayed, true, 'Loading image is visible.');
+        })
+        .end()
+        // give it some time to go away
+        .sleep(2500)
+        .findByCssSelector('.js-loader').isDisplayed()
+        .then(function (isDisplayed) {
+          assert.equal(isDisplayed, false, 'Loading image is hidden.');
+        })
+        .end();
+    },
+
     'IssueListView renders': function() {
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)

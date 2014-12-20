@@ -260,6 +260,7 @@ issueList.IssueView = Backbone.View.extend({
     'click .js-issue-label': 'labelSearch',
   },
   _isLoggedIn: $('body').data('username'),
+  _loadingIndicator: $('.js-loader'),
   _pageLimit: null,
   initialize: function() {
     this.issues = new issueList.IssueCollection();
@@ -298,7 +299,9 @@ issueList.IssueView = Backbone.View.extend({
     } else {
       this.issues.url = this.issues.path + '?' + $.param(this.issues.params);
     }
+    this._loadingIndicator.addClass('is-active');
     this.issues.fetch(headers).success(_.bind(function() {
+      this._loadingIndicator.removeClass('is-active');
       this.render(this.issues);
       this.initPaginationLinks(this.issues);
     }, this)).error(function(e){
