@@ -20,6 +20,7 @@
    /* link */
   .wc-Navbar-link {
     display: inline-block;
+    vertical-align: middle;
     color: #414042;
     font-weight:700;
     text-decoration:none;
@@ -37,6 +38,13 @@
       vertical-align:middle;
       margin-left:.3em;
     }
+      @media (--viewport-450px) {
+        .wc-Navbar-link-label {
+          position: absolute;
+          top: -9999px;
+          left: -9999px;
+        }
+      }
     /*icon */
     .wc-Navbar-link-icon {
       font-size:1.2em;
