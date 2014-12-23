@@ -29,7 +29,7 @@ define([
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url))
-        .findByCssSelector('.wc-Navbar-section--right .wc-Navbar-link').click()
+        .findByCssSelector('.js-login-link').click()
         .end()
         .findByCssSelector('#login_field').click()
         .type(intern.config.wc.user)
@@ -41,7 +41,7 @@ define([
         .end()
         .findByCssSelector('button').submit()
         .end()
-        .findByCssSelector('.wc-Navbar-section--right .wc-Navbar-link').getVisibleText()
+        .findByCssSelector('.js-login-link').getVisibleText()
         .then(function (text) {
           assert.equal(text, 'Logout');
         })

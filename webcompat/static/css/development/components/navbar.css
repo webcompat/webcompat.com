@@ -20,11 +20,34 @@
    /* link */
   .wc-Navbar-link {
     display: inline-block;
+    vertical-align: middle;
     color: #414042;
     font-weight:700;
+    text-decoration:none;
   }
     .wc-Navbar-link:hover {
       color: #fff;
+    }
+    /* space between */
+    .wc-Navbar-link + .wc-Navbar-link {
+      margin-left:1em;
+    }
+    /* label */
+    .wc-Navbar-link-label {
+      display:inline-block;
+      vertical-align:middle;
+      margin-left:.3em;
+    }
+      @media (--viewport-450px) {
+        .wc-Navbar-link-label {
+          position: absolute;
+          top: -9999px;
+          left: -9999px;
+        }
+      }
+    /*icon */
+    .wc-Navbar-link-icon {
+      font-size:1.2em;
     }
 
   @media (--viewport-330px) {
