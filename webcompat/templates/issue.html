@@ -7,7 +7,7 @@
       <script type="text/template" id="title-tmpl">
         <a class="Issue-linkBack" href="{{ url_for("show_issues") }}" title="All issues">
 		  <span class="wc-sronly">All Issues</span>
-          <span class="Issue-linkBack-icon wc-Icon wc-Icon--arrow-left aria-hidden="true""></span>
+          <span class="Issue-linkBack-icon wc-Icon wc-Icon--arrow-left" aria-hidden="true"></span>
         </a>
         Issue <%= number %>: <%- title %>
       </script>
@@ -35,7 +35,7 @@
         <script type="text/template" id="issue-labels-tmpl">
           <span class="Label Label--title">Labels</span>
           {% if session.user_id and session.avatar_url %}
-            <span class="LabelEditor-wrapper"><button class="LabelEditor-launcher wc-Icon wc-Icon--gear aria-hidden="true""><span class="wc-sronly">Edit Labels</span></button></span>
+            <span class="LabelEditor-wrapper"><button class="LabelEditor-launcher wc-Icon wc-Icon--gear" aria-hidden="true"><span class="wc-sronly">Edit Labels</span></button></span>
           {% endif %}
           <span class="Label-list">
           <% _.each(labels, function(label) { %>
