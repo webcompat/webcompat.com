@@ -12,11 +12,13 @@ import unittest
 
 # Add webcompat module to import path
 sys.path.append(os.path.realpath(os.pardir))
-import webcompat
 
+import webcompat
+from webcompat.helpers import normalize_api_params
+from webcompat.helpers import rewrite_and_sanitize_link
 from webcompat.helpers import rewrite_links
 from webcompat.helpers import sanitize_link
-from webcompat.helpers import rewrite_and_sanitize_link
+
 
 ACCESS_TOKEN_LINK = '<https://api.github.com/repositories/17839063/issues?per_page=50&page=3&access_token=12345>; rel="next", <https://api.github.com/repositories/17839063/issues?access_token=12345&per_page=50&page=4>; rel="last", <https://api.github.com/repositories/17839063/issues?per_page=50&access_token=12345&page=1>; rel="first", <https://api.github.com/repositories/17839063/issues?per_page=50&page=1&access_token=12345>; rel="prev"'
 GITHUB_ISSUES_LINK_HEADER = '<https://api.github.com/repositories/17839063/issues?per_page=50&page=3>; rel="next", <https://api.github.com/repositories/17839063/issues?per_page=50&page=4>; rel="last", <https://api.github.com/repositories/17839063/issues?per_page=50&page=1>; rel="first", <https://api.github.com/repositories/17839063/issues?per_page=50&page=1>; rel="prev"'
@@ -50,6 +52,47 @@ class TestHelpers(unittest.TestCase):
         self.assertEqual(rewrite_and_sanitize_link(ACCESS_TOKEN_LINK),
                          REWRITTEN_ISSUES_LINK_HEADER)
 
+    def test_normalize_api_params_converts_correctly(self):
+        '''Test that API params are correctly converted to Search API.'''
+        self.assertEqual(normalize_api_params({'direction': u'desc'}),
+                         {'order': u'desc'})
+        self.assertNotIn('direction',
+                         normalize_api_params({'direction': u'desc'}))
+
+        self.assertEqual(normalize_api_params({'state': u'closed', 'q': 'hi'}),
+                         {'q': u'hi state:closed'})
+        self.assertNotIn('state',
+                         normalize_api_params({'state': u'closed', 'q': 'hi'}))
+
+        self.assertEqual(normalize_api_params({'mentioned': u'coolguy',
+                                              'q': 'hi'}),
+                         {'q': u'hi mentions:coolguy'})
+        self.assertNotIn('mentioned',
+                         normalize_api_params({'mentioned': u'coolguy',
+                                              'q': 'hi'}))
+
+        self.assertEqual(normalize_api_params({'creator': u'coolguy',
+                                              'q': 'hi'}),
+                         {'q': u'hi author:coolguy'})
+        self.assertNotIn('creator',
+                         normalize_api_params({'creator': u'coolguy',
+                                              'q': 'hi'}))
+
+        multi_before = {'direction': u'desc', 'state': u'closed',
+                        'mentioned': u'coolguy', 'creator': u'coolguy',
+                        'per_page': u'1', 'q': u'hi'}
+        multi_after = {'order': u'desc',
+                       'q': u'hi state:closed author:coolguy mentions:coolguy',
+                       'per_page': u'1'}
+        self.assertEqual(normalize_api_params(multi_before), multi_after)
+
+    def test_normalize_api_params_ignores_unknown_params(self):
+        '''normalize_api_params shouldn't transform unknown params.'''
+        self.assertEqual({'foo': u'bar'},
+                         normalize_api_params({'foo': u'bar'}))
+        self.assertEqual({'order': u'desc', 'foo': u'bar'},
+                         normalize_api_params({'foo': u'bar',
+                                              'direction': u'desc'}))
 
 if __name__ == '__main__':
     unittest.main()
