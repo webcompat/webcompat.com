@@ -2,22 +2,22 @@
   <nav class="wc-content" role="navigation">
     <div class="wc-Navbar-section wc-Navbar-section--left">
       <a class="wc-Navbar-link" href="/">
-        <span class="wc-Navbar-link-icon wc-Icon wc-Icon--home aria-hidden="true""></span><span class="wc-Navbar-link-label">Home</span>
+        <span class="wc-Navbar-link-icon wc-Icon wc-Icon--home" aria-hidden="true"></span><span class="wc-Navbar-link-label">Home</span>
       </a>
     </div>
     <div class="wc-Navbar-section wc-Navbar-section--right">
       <a class="wc-Navbar-link" href="{{ url_for("show_issues") }}">
-        <span class="wc-Navbar-link-icon wc-Icon wc-Icon--list aria-hidden="true""></span>
+        <span class="wc-Navbar-link-icon wc-Icon wc-Icon--list" aria-hidden="true"></span>
         <span class="wc-Navbar-link-label">All issues</span>
       </a>
     {% if not session.user_id %}
       <a class="wc-Navbar-link js-login-link" href="{{ url_for('login') }}">
-        <span class="wc-Navbar-link-icon wc-Icon wc-Icon--arrow-circle-right aria-hidden="true""></span>
+        <span class="wc-Navbar-link-icon wc-Icon wc-Icon--arrow-circle-right" aria-hidden="true"></span>
         <span class="wc-Navbar-link-label">Log in</span>
       </a>
     {% else %}
       <a class="wc-Navbar-link js-login-link" href="{{ url_for('logout') }}">
-        <span class="wc-Navbar-link-icon wc-Icon wc-Icon--arrow-circle-right aria-hidden="true""></span>
+        <span class="wc-Navbar-link-icon wc-Icon wc-Icon--arrow-circle-right" aria-hidden="true"></span>
         <span class="wc-Navbar-link-label">Logout</span>
       </a>
       {% if session.user_id and session.avatar_url %}
