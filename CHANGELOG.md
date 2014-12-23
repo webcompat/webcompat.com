@@ -3,6 +3,7 @@
 * Add icons to page navigation [Pull #499](https://github.com/webcompat/webcompat.com/pull/499) [Issue #450](https://github.com/webcompat/webcompat.com/issues/450)
 * a11y: Add heading to /issues page [Pull #481](https://github.com/webcompat/webcompat.com/pull/481) [Issue #481](https://github.com/webcompat/webcompat.com/issues/481)
 * a11y: Use empty `alt` for decorative avatars [Pull #494](https://github.com/webcompat/webcompat.com/pull/494) [Issue #483](https://github.com/webcompat/webcompat.com/issues/483)
+* Add tests for comments [Pull #498](https://github.com/webcompat/webcompat.com/pull/498) [Issue #270](https://github.com/webcompat/webcompat.com/issues/270)
 
 ## 1.3.2 - 2014-12-16
 
