@@ -19,7 +19,10 @@
         <span class="wc-Navbar-link-label">All issues</span>
       </a>
       {% if not session.user_id %}
-      <a class="wc-Navbar-link js-login-link" href="{{ url_for('login') }}">Log in</a>
+      <a class="wc-Navbar-link js-login-link" href="{{ url_for('login') }}">
+        <span class="wc-Navbar-link-icon wc-Icon wc-Icon--arrow-circle-right aria-hidden="true""></span>
+        <span class="wc-Navbar-link-label">Log in</span>
+      </a>
       {% else %}
       <a class="wc-Navbar-link js-login-link" href="{{ url_for('logout') }}">
         <span class="wc-Navbar-link-icon wc-Icon wc-Icon--arrow-circle-right aria-hidden="true""></span>
