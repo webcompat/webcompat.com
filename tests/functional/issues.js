@@ -38,6 +38,37 @@ define([
         });
     },
 
+    'closing and reopening an issue': function () {
+      return this.remote
+        .setFindTimeout(intern.config.wc.pageLoadTimeout)
+        .get(require.toUrl(url(69)))
+        .findByCssSelector('.js-issue-state-button').click()
+        .sleep(1000)
+        .end()
+        .findByCssSelector('.Issue-state').getVisibleText()
+        .then(function (text) {
+          assert.equal(text, 'Closed', 'Closed state text is displayed');
+        })
+        .end()
+        .findByCssSelector('.js-issue-state-button').getVisibleText()
+        .then(function (text) {
+          assert.equal(text, 'Reopen Issue', 'Button says Reopen not Close');
+        })
+        .end()
+        .findByCssSelector('.js-issue-state-button').click()
+        .sleep(1000)
+        .end()
+        .findByCssSelector('.Issue-state').getVisibleText()
+        .then(function (text) {
+          assert.equal(text, 'Ready for Outreach', 'Ready for Outreach state is displayed');
+        })
+        .end()
+        .findByCssSelector('.js-issue-state-button').getVisibleText()
+        .then(function (text) {
+          assert.equal(text, 'Close Issue', 'Button says Close not Reopen');
+        });
+    },
+
     'issue comments load': function () {
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
