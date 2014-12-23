@@ -58,7 +58,7 @@ define([
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url(100)))
         .sleep(500)
-        .findByCssSelector('button.Button:nth-child(1)').getVisibleText()
+        .findByCssSelector('.js-issue-state-button').getVisibleText()
         .then(function(text){
           assert.equal('Close Issue', text);
           assert.notEqual('Close and comment', text);
@@ -68,7 +68,7 @@ define([
         .type('test comment')
         .end()
         .sleep(500)
-        .findByCssSelector('button.Button:nth-child(1)').getVisibleText()
+        .findByCssSelector('.js-issue-state-button').getVisibleText()
         .then(function(text){
           assert.equal('Close and comment', text);
           assert.notEqual('Close Issue', text);
@@ -80,7 +80,7 @@ define([
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url(101)))
         .sleep(500)
-        .findByCssSelector('button.Button:nth-child(1)').getVisibleText()
+        .findByCssSelector('.js-issue-state-button').getVisibleText()
         .then(function(text){
           assert.equal('Reopen Issue', text);
           assert.notEqual('Reopen and comment', text);
@@ -90,7 +90,7 @@ define([
         .type('test comment')
         .end()
         .sleep(500)
-        .findByCssSelector('button.Button:nth-child(1)').getVisibleText()
+        .findByCssSelector('.js-issue-state-button').getVisibleText()
         .then(function(text){
           assert.equal('Reopen and comment', text);
           assert.notEqual('Reopen Issue', text);
@@ -112,7 +112,7 @@ define([
         .end()
         .sleep(500)
         // click the comment button
-        .findByCssSelector('button.Button:nth-child(2)').click()
+        .findByCssSelector('.js-issue-comment-button').click()
         .end()
         .sleep(500)
         .findAllByCssSelector('.Comment:not(.Comment--form)')
@@ -133,7 +133,7 @@ define([
         })
         .end()
         // click the comment button
-        .findByCssSelector('button.Button:nth-child(2)').click()
+        .findByCssSelector('.js-issue-comment-button').click()
         .end()
         .sleep(500)
         .findAllByCssSelector('.Comment:not(.Comment--form)')
