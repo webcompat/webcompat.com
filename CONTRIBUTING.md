@@ -288,7 +288,9 @@ make build
 
 ## Running Tests
 
-You can run tests from the project root with the `nosetests` command.
+You can run the Python unit tests from the project root with the `nosetests` command.
+
+Running functional tests is a bit more involved (see the next section).
 
 ### Functional Tests
 
@@ -318,13 +320,21 @@ In a separate terminal window or tab, start the application servers:
 source env/bin/activate && python run.py
 ```
 
-In another separate terminal window or tab, run the tests. Many tests require the ability to log in with GitHub OAuth. This is achieved by passing in a valid GitHub username: `user` and password: `pw` as command-line arguments:
+In another separate terminal window or tab, run the tests:
+
+``` bash
+node_modules/.bin/intern-runner config=tests/intern
+```
+
+Shortly after running this command, you should see the browser open and various pages appear and disappear automatically for a minute or two. The tests are complete when the browser window closes and you see a report of how many passed or failed in the terminal window that you ran the `intern-runner` command in.
+
+Many tests require the ability to log in with GitHub OAuth. This can be achieved by passing in a valid GitHub username: `user` and password: `pw` as command-line arguments:
 
 ``` bash
 node_modules/.bin/intern-runner config=tests/intern user=testusername pw=testpassword
 ```
 
-Shortly after running this command, you should see the browser open and various pages appear and disappear automatically for a minute or two. The tests are complete when the browser window closes and you see a report of how many passed or failed in the terminal window.
+**Note** Be aware that this will add the `testusername` and `testpassword` to your bash history. It is possible to run the tests without using a GitHub username and password as command-line arguments. In that case, the automatic login will fail and you then have 10 seconds to manually enter a username and password in the GitHub login screen that appears.
 
 **Note**: It's possible to run the tests without using a GitHub username and password as command-line arguments. In that case, the automatic login will fail and you then have 10 seconds to manually enter a username and password in the GitHub login screen that appears.
 
