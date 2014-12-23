@@ -26,6 +26,7 @@
 }
   .Dropdown-label {
     display:inline-block;
+    pointer-events: none;
     vertical-align:middle;
   }
   .Dropdown-content {
