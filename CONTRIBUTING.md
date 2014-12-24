@@ -23,6 +23,9 @@ You are welcome to contribute to this project. Here are the guidelines we try to
 * [Coding](#coding)
 * [Running Tests](#running-tests)
   * [Functional Tests](#functional-tests)
+* [Writing Tests](#writing-tests)
+  * [Python Unit Tests](#python-unit-tests)
+  * [JS Functional Tests](#js-functional-tests)
 * [Production Server Setup](#production-server-setup)
 * [Acknowledgements](#acknowledgements)
 
@@ -288,7 +291,9 @@ make build
 
 ## Running Tests
 
-You can run tests from the project root with the `nosetests` command.
+You can run the Python unit tests from the project root with the `nosetests` command.
+
+Running functional tests is a bit more involved (see the next section).
 
 ### Functional Tests
 
@@ -318,15 +323,47 @@ In a separate terminal window or tab, start the application servers:
 source env/bin/activate && python run.py
 ```
 
-In another separate terminal window or tab, run the tests. Many tests require the ability to log in with GitHub OAuth. This is achieved by passing in a valid GitHub username: `user` and password: `pw` as command-line arguments:
+In another separate terminal window or tab, run the tests:
+
+``` bash
+node_modules/.bin/intern-runner config=tests/intern
+```
+
+Shortly after running this command, you should see the browser open and various pages appear and disappear automatically for a minute or two. The tests are complete when the browser window closes and you see a report of how many passed or failed in the terminal window that you ran the `intern-runner` command in.
+
+Many tests require the ability to log in with GitHub OAuth. This can be achieved by passing in a valid GitHub username: `user` and password: `pw` as command-line arguments:
 
 ``` bash
 node_modules/.bin/intern-runner config=tests/intern user=testusername pw=testpassword
 ```
 
-Shortly after running this command, you should see the browser open and various pages appear and disappear automatically for a minute or two. The tests are complete when the browser window closes and you see a report of how many passed or failed in the terminal window.
+**Note** Be aware that this will add the `testusername` and `testpassword` to your bash history. It is possible to run the tests without using a GitHub username and password as command-line arguments. In that case, the automatic login will fail and you then have 10 seconds to manually enter a username and password in the GitHub login screen that appears.
 
-**Note**: It's possible to run the tests without using a GitHub username and password as command-line arguments. In that case, the automatic login will fail and you then have 10 seconds to manually enter a username and password in the GitHub login screen that appears.
+## Writing Tests
+
+Contributions that add or modify major functionality to the project should typically come with tests to ensure we're not breaking things (or won't in the future!). There's always room for more testing, so general contributions in this form are always welcome.
+
+### Python Unit Tests
+
+Our Python unit tests are vanilla flavored [`unittest`](https://docs.python.org/2/library/unittest.html) tests. Unit tests placed in the `tests` directory will be automatically detected by nose&mdash;no manual registration is necessary.
+
+Unit tests are preferred for features or functionality that are independent of the browser front-end, i.e., API responses, application routes, etc.
+
+Important documentation links: 
+* [Writing nose tests](https://nose.readthedocs.org/en/latest/writing_tests.html)
+* [`unittest`](https://docs.python.org/2/library/unittest.html)
+* [Testing Flask](http://flask.pocoo.org/docs/0.10/testing/)
+
+### JS Functional Tests
+
+Functional tests are written in JavaScript, using [Intern](http://theintern.io/). There's a nice [guide on the Intern wiki](https://github.com/theintern/intern/wiki/Writing-Tests-with-Intern#functional-testing) that should explain enough to get you started. 
+
+Important documentation links:
+* [Leadfoot](https://theintern.github.io/leadfoot/): the library that drives the browser (via Selenium).
+* [ChaiJS](http://chaijs.com/api/assert/): the library used for assertions. 
+* [Intern wiki](https://github.com/theintern/intern/wiki): contains useful examples. 
+
+It's also recommended to look at the other test files in the `tests/functional` directory to see how things are commonly done.
 
 ## Production Server Setup
 
