@@ -14,6 +14,7 @@ You are welcome to contribute to this project. Here are the guidelines we try to
   * [Simple setup](#simple-setup)
     * [Installing Project source code](#initializing-project-source-code)
   * [Detailed setup](#detailed-setup)
+    * [Installing pip](#installing-pip)
     * [Installing virtualenv](#installing-virtualenv)
     * [Installing Project source code](#installing-project-source-code)
     * [Installing Grunt](#installing-grunt)
@@ -200,12 +201,34 @@ cd webcompat.com
 [sudo] make install
 ```
 
+**Note**: if you got an error message, you may need to [install pip](#installing-pip) before running `make install` again.
+
 ### Detailed setup
+#### Installing pip
+
+We use `pip` to install other Python packages. You may need to install `pip` if you haven't do so for another project or Python development. 
+
+To determine if you need to, type the following command into the terminal:
+
+```bash
+type pip
+```
+
+If you see something like `pip is /usr/bin/pip`, you can proceed to install `virtualenv` (or go back and use `make install`). The exact path will likely be different.
+
+If you see something like `-bash: type: pip: not found`, you will need to install `pip` like so:
+
+```bash
+sudo easy_install pip
+```
+
+(If `easy_install` isn't installed, you'll need to [install setuptools](https://pypi.python.org/pypi/setuptools#unix-wget).)
+
 #### Installing virtualenv
 
-
-
 ``` bash
+# Install pip (if not already installed)
+
 # Install virtualenv
 [sudo] pip install virtualenv
 ```
