@@ -49,12 +49,6 @@
     .wc-Navbar-link-icon {
       font-size:1.2em;
     }
-
-  @media (--viewport-330px) {
-    .wc-Navbar-link {
-      font-size: .8em;
-    }
-  }
   /* avatar */
   .wc-Navbar-avatar {
     height: 20px;
@@ -62,9 +56,4 @@
     border-radius: 3px;
     vertical-align: middle;
     margin-left: .3em;
-  }
-  @media (--viewport-330px) {
-    .wc-Navbar-avatar {
-      display: none;
-    }
   }
