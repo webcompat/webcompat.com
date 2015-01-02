@@ -31,6 +31,7 @@
 @import "components/labels.css";
 @import "components/title.css";
 @import "components/loader.css";
+@import "components/box.css";
 
 /*----------Layout----------*/
 @import "layout/body.css";
@@ -41,5 +42,4 @@
 @import "page/issues.css";
 @import "page/static.css";
 @import "page/contributors.css";
-@import "page/about.css";
 @import "page/issue-list.css"
