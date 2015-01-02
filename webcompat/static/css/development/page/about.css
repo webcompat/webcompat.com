@@ -10,29 +10,26 @@
     width:auto;
   }
 }
-
+/* main class */
 .about_bug {
   border-style:solid;
   border-width:1px;
   border-radius :10px;
   padding: 1.6em;
   margin:3em 0;
+  background-color: #F7F7F7;
   }
+    /* label */
+    .about_bug_label {
+      color : #000;
+      font-weight:bold;
+    }
 .about_bug--reporting {
   border-color: var(--wc-state-untriaged);
 }
- .about_bug--reporting .about_bug_label {
-   color: var(--wc-state-untriaged)
- }
 .about_bug--analysis {
   border-color: var(--wc-state-need);
-}
-.about_bug--analysis .about_bug_label {
-  color: var(--wc-state-need);
 }
 .about_bug--reaching {
   border-color:var(--wc-state-ready);
 }
-  .about_bug--reaching .about_bug_label {
-    color:var(--wc-state-ready);
-  }
