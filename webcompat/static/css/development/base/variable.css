@@ -16,11 +16,11 @@
   --wc-background-light: var(--wc-background-dark); /* #FBC55F  Light Yellow */
   --wc-variant-background-dark: #404040; /* Dark Gray */
   --wc-variant-background-light: #c2c2c2; /* Dark Light */
-  --wc-state-untriaged: #6fc7fa; /* Light blue */
-  --wc-state-need: #ff8364;   /* Light red */
-  --wc-state-ready: #a1ebbf; /* Light green */
-  --wc-state-sitewait: #006B75; /* Dark green */
-  --wc-state-close: #799299;   /* Light Gray */
+  --wc-state-untriaged: #ff8364; /* Light blue */
+  --wc-state-need: #efce82;   /* Light red */
+  --wc-state-ready: #7abce1; /* Light green */
+  --wc-state-sitewait: #b0daf0; /* Dark green */
+  --wc-state-close: #c5d1d5;   /* Light Gray */
 }
 
 /* link */
