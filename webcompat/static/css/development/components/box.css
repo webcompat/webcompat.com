@@ -1,17 +1,17 @@
 /*------Contributors view------*/
 
 
-.about_media {
+.wc-Box-media {
   margin:30px auto 30px auto;
   width:80%;
 }
 @media (--viewport-770px) {
-  .about_media {
+  .wc-Box-media {
     width:auto;
   }
 }
 /* main class */
-.about_bug {
+.wc-Box {
   border-style:solid;
   border-width:1px;
   border-radius :10px;
@@ -20,16 +20,16 @@
   background-color: #F7F7F7;
   }
     /* label */
-    .about_bug_label {
+    .wc-Box-label {
       color : #000;
       font-weight:bold;
     }
-.about_bug--reporting {
+.wc-Box--reporting {
   border-color: var(--wc-state-untriaged);
 }
-.about_bug--analysis {
+.wc-Box--analysis {
   border-color: var(--wc-state-need);
 }
-.about_bug--reaching {
+.wc-Box--reaching {
   border-color:var(--wc-state-ready);
 }
