@@ -1,3 +1,11 @@
+## 1.3.4 - 2014-01-02
+
+* Display avatar for logged in users with small viewports [Pull #517](https://github.com/webcompat/webcompat.com/pull/517) [Issue #514](https://github.com/webcompat/webcompat.com/issues/514)
+* Fix broken DOM :bomb: [Pull #508](https://github.com/webcompat/webcompat.com/pull/508)
+* Fix missing arrow from dropdown component [Pull #506](https://github.com/webcompat/webcompat.com/pull/506)
+* Unit tests for `normalize_api_params` [Pull #502](https://github.com/webcompat/webcompat.com/issues/502)
+* Add links to resources for remote debugging (no pull, cherry picked) [Issue #406](https://github.com/webcompat/webcompat.com/issues/406)
+
 ## 1.3.3 - 2014-12-23
 
 * Add icons to page navigation [Pull #499](https://github.com/webcompat/webcompat.com/pull/499) [Issue #450](https://github.com/webcompat/webcompat.com/issues/450)
