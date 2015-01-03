@@ -48,7 +48,7 @@ class IssueForm(Form):
                           [Required(message=summary_message)])
     username = StringField(u'Username',
                            [Length(max=0, message=username_message)])
-    description = TextAreaField(u'How can we replicate this?', [Optional()],
+    description = TextAreaField(u'Give more details (optional)', [Optional()],
                                 default=desc_default)
     site_owner = RadioField(u'Is this your website?', [Optional()],
                             choices=owner_choices)
