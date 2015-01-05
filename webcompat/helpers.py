@@ -15,6 +15,8 @@ from ua_parser import user_agent_parser
 from webcompat import app
 from webcompat import github
 
+HOST_WHITELIST = ('webcompat.com', 'staging.webcompat.com',
+                  '127.0.0.1', 'localhost')
 JSON_MIME = 'application/json'
 
 
@@ -126,16 +128,29 @@ def get_request_headers(headers):
 def get_referer(request):
     '''Return the Referer URI based on the passed in Request object.
 
-    Also validate that it came from our own server. If it didn't, return None.
+    Also validate that it came from our own server. If it didn't, check
+    the session for a manually stashed 'referer' key, otherwise return None.
     '''
-    host_whitelist = ('webcompat.com', 'staging.webcompat.com',
-                      '127.0.0.1', 'localhost')
     if request.referrer:
         host = urlparse.urlparse(request.referrer).hostname
-        if host in host_whitelist:
+        if host in HOST_WHITELIST:
             return request.referrer
+        else:
+            return session.pop('referer', None)
     else:
         return None
+
+
+def set_referer(request):
+    '''Helper method to manually set the referer URI.
+
+    We only allow stashing a URI in here if it is whitelisted against
+    the HOST_WHITELIST.
+    '''
+    if request.referrer:
+        host = urlparse.urlparse(request.referrer).hostname
+        if host in HOST_WHITELIST:
+            session['referer'] = request.referrer
 
 
 def normalize_api_params(params):

@@ -24,6 +24,7 @@ from helpers import get_browser_name
 from helpers import get_os
 from helpers import get_referer
 from helpers import get_user_info
+from helpers import set_referer
 from issues import report_issue
 from models import db_session
 from models import User
@@ -77,6 +78,9 @@ def format_date(datestring):
 @app.route('/login')
 def login():
     if session.get('user_id', None) is None:
+        # manually set the referer so we know where to come back to
+        # when we return from GitHub
+        set_referer(request)
         return github.authorize('public_repo')
     else:
         return redirect(g.referer)
