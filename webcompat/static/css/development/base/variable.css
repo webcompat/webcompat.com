@@ -16,7 +16,7 @@
   --wc-background-light: var(--wc-background-dark); /* #FBC55F  Light Yellow */
   --wc-variant-background-dark: #404040; /* Dark Gray */
   --wc-variant-background-light: #c2c2c2; /* Dark Light */
-  --wc-state-untriaged: #ff8364; /* light orange */
+  --wc-state-new: #ff8364; /* light orange */
   --wc-state-need: #efce82;  /* light brown */
   --wc-state-needcontact : #b9edce ; /* light green */
   --wc-state-ready: #7abce1; /* light blue*/

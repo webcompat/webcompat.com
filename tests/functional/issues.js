@@ -43,7 +43,7 @@ define([
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url(69)))
         .findByCssSelector('.js-issue-state-button').click()
-        .sleep(1000)
+        .sleep(2000)
         .end()
         .findByCssSelector('.Issue-state').getVisibleText()
         .then(function (text) {
@@ -56,7 +56,7 @@ define([
         })
         .end()
         .findByCssSelector('.js-issue-state-button').click()
-        .sleep(1000)
+        .sleep(2000)
         .end()
         .findByCssSelector('.Issue-state').getVisibleText()
         .then(function (text) {
