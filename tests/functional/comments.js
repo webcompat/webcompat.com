@@ -79,7 +79,7 @@ define([
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url(101)))
-        .sleep(500)
+        .sleep(2000)
         .findByCssSelector('.js-issue-state-button').getVisibleText()
         .then(function(text){
           assert.equal('Reopen Issue', text);
@@ -89,7 +89,7 @@ define([
         .findByCssSelector('textarea.Comment-text')
         .type('test comment')
         .end()
-        .sleep(500)
+        .sleep(2000)
         .findByCssSelector('.js-issue-state-button').getVisibleText()
         .then(function(text){
           assert.equal('Reopen and comment', text);
@@ -110,11 +110,11 @@ define([
         .findByCssSelector('textarea.Comment-text')
         .type('Today\'s date is ' + new Date().toDateString())
         .end()
-        .sleep(500)
+        .sleep(2000)
         // click the comment button
         .findByCssSelector('.js-issue-comment-button').click()
         .end()
-        .sleep(500)
+        .sleep(2000)
         .findAllByCssSelector('.Comment:not(.Comment--form)')
         .then(function(elms){
           allCommentsLength = elms.length;

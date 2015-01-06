@@ -152,19 +152,19 @@ define([
         .findByCssSelector('.IssueList-search-form').click()
         .type('taco')
         .end()
-        .findAllByCssSelector('button.wc-Filter--untriaged').click()
+        .findAllByCssSelector('button.wc-Filter--new').click()
         .end()
         .findByCssSelector('.IssueList-search-form').getVisibleText()
         .then(function (text) {
           assert.equal(text, '', 'Clicking filter should empty search text');
         })
         .end()
-        .findAllByCssSelector('button.wc-Filter--untriaged').click()
+        .findAllByCssSelector('button.wc-Filter--new').click()
         .end()
         .findByCssSelector('.IssueList-search-form').click()
         .type('taco')
         .end()
-        .findAllByCssSelector('button.wc-Filter--untriaged').getAttribute('class')
+        .findAllByCssSelector('button.wc-Filter--new').getAttribute('class')
         .then(function (className) {
           assert.notInclude(className, 'is-active', 'Searching should clear all filters');
         });

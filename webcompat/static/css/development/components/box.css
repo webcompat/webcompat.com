@@ -25,7 +25,7 @@
       font-weight:bold;
     }
 .wc-Box--reporting {
-  border-color: var(--wc-state-untriaged);
+  border-color: var(--wc-state-new);
 }
 .wc-Box--analysis {
   border-color: var(--wc-state-need);
