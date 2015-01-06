@@ -1,3 +1,11 @@
+## 1.3.5 - 2014-01-06
+
+* Update Intern to 2.2.0 and enable pretty reporter [Pull #528](https://github.com/webcompat/webcompat.com/pull/528) [Issue #527](https://github.com/webcompat/webcompat.com/issues/527)
+* Link remote debugging resources from contributors page [Issue #406](https://github.com/webcompat/webcompat.com/issues/406)
+* Change label borders to gray on /issues page [Pull #525](https://github.com/webcompat/webcompat.com/pull/525)
+* Bugfix: clicking on filter dropdown causes HTTP request [Pull #520](https://github.com/webcompat/webcompat.com/pull/520) [Issue #507](https://github.com/webcompat/webcompat.com/issues/507)
+* Bugfix: logging in from /issues page returned the user to the homepage [Pull #523](https://github.com/webcompat/webcompat.com/pull/523) [Issue #512](https://github.com/webcompat/webcompat.com/issues/512)
+
 ## 1.3.4 - 2014-01-02
 
 * Display avatar for logged in users with small viewports [Pull #517](https://github.com/webcompat/webcompat.com/pull/517) [Issue #514](https://github.com/webcompat/webcompat.com/issues/514)
