@@ -1,8 +1,20 @@
+# use container-based environment
+sudo: false
+
 language: python
+
 python:
   - "2.7"
+
+# cache pip and npm package installations
+cache:
+  directories:
+    - node_modules
+    - $HOME/.pip-cache/
+
 addons:
   firefox: "33.1"
+
 env:
   global:
     - ISSUES_REPO_URI=miketaylr/nobody-look-at-this/issues
@@ -18,12 +30,12 @@ before_install:
 install:
   - travis_retry npm install -g grunt-cli
   - travis_retry npm install
-  - travis_retry pip install -r requirements.txt
+  - travis_retry pip install -r requirements.txt --download-cache $HOME/.pip-cache
   - cp config.py.example config.py
   - python run.py &
 
 before_script:
-  - "sleep 5"
+  - "sleep 2"
   - grunt
 
 # now run the tests!
