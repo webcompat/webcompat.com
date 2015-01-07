@@ -19,10 +19,10 @@
   margin:3em 0;
   }
 .about_bug--reporting {
-  border-color: var(--wc-state-untriaged);
+  border-color: var(--wc-state-new);
 }
  .about_bug--reporting .about_bug_label {
-   color: var(--wc-state-untriaged)
+   color: var(--wc-state-new)
  }
 .about_bug--analysis {
   border-color: var(--wc-state-need);

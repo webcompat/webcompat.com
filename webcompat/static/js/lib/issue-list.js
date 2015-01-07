@@ -276,10 +276,10 @@ issueList.IssueView = Backbone.View.extend({
   },
   template: _.template($('#issuelist-issue-tmpl').html()),
   loadIssues: function() {
-    // First checks URL params, e.g., /?untriaged=1 and activates the untriaged filter,
+    // First checks URL params, e.g., /?new=1 and activates the new filter,
     // or loads default unsorted/unfiltered issues
     var category;
-    var filterRegex = /\?(untriaged|needsdiagnosis|contactready|sitewait|closed)=1/;
+    var filterRegex = /\?(new|needsdiagnosis|contactready|sitewait|closed)=1/;
     if (category = window.location.search.match(filterRegex)) {
       // If there was a match, load the relevant results and fire an event
       // to notify the button to activate.
@@ -386,7 +386,7 @@ issueList.IssueView = Backbone.View.extend({
 
     // note: until GitHub fixes a bug where requesting issues filtered by labels
     // doesn't return pagination via Link, we get those results via the Search API.
-    var searchCategories = ['untriaged', 'contactready', 'needsdiagnosis', 'sitewait'];
+    var searchCategories = ['new', 'contactready', 'needsdiagnosis', 'sitewait'];
     var params = $.extend(this.issues.params, this.getPageLimit());
 
     // note: if query is the empty string, it will load all issues from the

@@ -2,8 +2,8 @@
   <div class="wc-content" id="browse-issues">
     <h2 class="wc-Title--l">Browse Issues</h2>
     <ul class="r-ResetList u-inlineBlock">
-      <li class="IssueItem IssueItem--list IssueItem--untriaged">
-        <a href="{{ url_for('show_issues') }}?untriaged=1">Untriaged</a>
+      <li class="IssueItem IssueItem--list IssueItem--new">
+        <a href="{{ url_for('show_issues') }}?new=1">New</a>
       </li>
       <li class="IssueItem IssueItem--list IssueItem--need">
         <a href="{{ url_for('show_issues') }}?needsdiagnosis=1">Needs&nbsp;Diagnosis</a>
@@ -20,7 +20,7 @@
     </ul>
     {% include "browse-issues/my-issues.html" %}
     <div class="r-Grid r-Grid--withGutter">
-      {% include "browse-issues/untriaged.html" %}
+      {% include "browse-issues/new.html" %}
       {% include "browse-issues/needs-diagnosis.html" %}
     </div>
     <div class="r-Grid r-Grid--withGutter">
