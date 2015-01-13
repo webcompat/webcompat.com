@@ -14,7 +14,7 @@ import unittest
 sys.path.append(os.path.realpath(os.pardir))
 import webcompat
 
-from webcompat.issues import filter_untriaged
+from webcompat.issues import filter_new
 
 # Any request that depends on parsing HTTP Headers (basically anything
 # on the index route, will need to include the following: environ_base=headers
@@ -81,8 +81,8 @@ class TestURLs(unittest.TestCase):
         self.assertEqual(rv.status_code, 200)
         self.assertNotEqual(rv.status_code, 307)
 
-    def test_issues_untriaged(self):
-        '''Test that the untriaged filtering is correct.'''
+    def test_issues_new(self):
+        '''Test that the new filtering is correct.'''
         issues = [
             {u'labels': [{u'name': u'bug'}, {u'name': u'help wanted'}],
              u'title': u"fake bug 0",
@@ -103,7 +103,7 @@ class TestURLs(unittest.TestCase):
              u'title': u"fake bug 5",
              u'id': 5}]
         result = '[{"labels": [{"name": "bug"}, {"name": "help wanted"}], "id": 0, "title": "fake bug 0"}, {"labels": [], "id": 1, "title": "fake bug 1"}]'
-        self.assertEqual(filter_untriaged(issues), result)
+        self.assertEqual(filter_new(issues), result)
 
 
 if __name__ == '__main__':
