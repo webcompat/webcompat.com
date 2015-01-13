@@ -14,6 +14,8 @@ import unittest
 sys.path.append(os.path.realpath(os.pardir))
 import webcompat
 
+from webcompat.issues import filter_untriaged
+
 # Any request that depends on parsing HTTP Headers (basically anything
 # on the index route, will need to include the following: environ_base=headers
 headers = {'HTTP_USER_AGENT': ('Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; '
@@ -78,6 +80,30 @@ class TestURLs(unittest.TestCase):
         rv = self.app.get('/issues')
         self.assertEqual(rv.status_code, 200)
         self.assertNotEqual(rv.status_code, 307)
+
+    def test_issues_untriaged(self):
+        '''Test that the untriaged filtering is correct.'''
+        issues = [
+            {u'labels': [{u'name': u'bug'}, {u'name': u'help wanted'}],
+             u'title': u"fake bug 0",
+             u'id': 0},
+            {u'labels': [],
+             u'title': u"fake bug 1",
+             u'id': 1},
+            {u'labels': [{u'name': u'contactready'}],
+             u'title': u"fake bug 2",
+             u'id': 2},
+            {u'labels': [{u'name': u'needsdiagnosis'}],
+             u'title': u"fake bug 3",
+             u'id': 3},
+            {u'labels': [{u'name': u'needscontact'}],
+             u'title': u"fake bug 4",
+             u'id': 4},
+            {u'labels': [{u'name': u'sitewait'}],
+             u'title': u"fake bug 5",
+             u'id': 5}]
+        result = '[{"labels": [{"name": "bug"}, {"name": "help wanted"}], "id": 0, "title": "fake bug 0"}, {"labels": [], "id": 1, "title": "fake bug 1"}]'
+        self.assertEqual(filter_untriaged(issues), result)
 
 
 if __name__ == '__main__':
