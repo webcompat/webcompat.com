@@ -103,7 +103,8 @@ def get_issue_category(issue_category):
     * needsdiagnosis
     * sitewait
     '''
-    category_list = ['contactready', 'needsdiagnosis', 'sitewait']
+    category_list = ['contactready', 'needscontact',
+                     'needsdiagnosis', 'sitewait']
     issues_path = 'repos/{0}'.format(ISSUES_PATH)
     params = request.args.copy()
 
