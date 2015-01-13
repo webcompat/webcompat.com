@@ -59,16 +59,14 @@ def filter_untriaged(issues):
     def is_untriaged(issue):
         '''Filter function.'''
         match = True
-        if issue.get('labels') == []:
-            match = True
-        else:
-            for label in issue.get('labels'):
-                if 'contactready' in label.get('name'):
-                    match = False
-                elif 'needsdiagnosis' in label.get('name'):
-                    match = False
-                elif 'sitewait' in label.get('name'):
-                    match = False
+        category_list = ['contactready', 'needscontact',
+                         'needsdiagnosis', 'sitewait']
+        labels = [label.get('name') for label in issue.get('labels')]
+        # if the intersection of labels and category_list is not empty
+        # then it's not part of untriaged
+        common_cat = set(labels).intersection(category_list)
+        if common_cat:
+            match = False
         return match
 
     return json.dumps([issue for issue in issues if is_untriaged(issue)])
