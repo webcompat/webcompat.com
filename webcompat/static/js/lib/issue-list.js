@@ -25,8 +25,8 @@ issueList.DropdownView = Backbone.View.extend({
     return this;
   },
   openDropdown: function(e) {
-    var btn = $(e.target);
-    btn.parent().toggleClass('is-active');
+    var target = $(e.target);
+    target.closest('.js-dropdown-wrapper').toggleClass('is-active');
   },
   closeDropdown: function() {
     this.$el.removeClass('is-active');
