@@ -1,3 +1,10 @@
+## 1.4.0 - 2014-01-13
+
+* Rename "Untriaged" to "New" [Pull #531](https://github.com/webcompat/webcompat.com/pull/531) [Issue #286](https://github.com/webcompat/webcompat.com/issues/286)
+* Fix bug where WebKit/Blink users couldn't open dropdown by clicking arrow [Pull #530](https://github.com/webcompat/webcompat.com/pull/530) [Issue #529](https://github.com/webcompat/webcompat.com/issues/529)
+* New color palette [Pull #521](https://github.com/webcompat/webcompat.com/pull/521)
+* Refactoring around "new" filter (and adds notion of "needscontact" label) [Pull #534](https://github.com/webcompat/webcompat.com/pull/534) [Issue #533](https://github.com/webcompat/webcompat.com/issues/533)
+
 ## 1.3.5 - 2014-01-06
 
 * Update Intern to 2.2.0 and enable pretty reporter [Pull #528](https://github.com/webcompat/webcompat.com/pull/528) [Issue #527](https://github.com/webcompat/webcompat.com/issues/527)
