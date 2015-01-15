@@ -7,7 +7,19 @@
 import argparse
 import sys
 
-from webcompat import app
+IMPORT_ERROR = '''
+==============================================
+It seems like you don't have all dependencies.
+Please re-run:
+    pip install -r requirements.txt
+==============================================
+'''
+
+try:
+    from webcompat import app
+except ImportError:
+    raise ImportError(IMPORT_ERROR)
+
 
 BOT_HELP = '''
 The BOT_OAUTH_TOKEN is not configured in your config file.
