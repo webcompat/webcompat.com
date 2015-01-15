@@ -17,6 +17,12 @@ Read Instructions at
 https://github.com/webcompat/webcompat.com/blob/master/CONTRIBUTING.md#configuring-the-server
 '''
 
+START_MESSAGE = '''
+-----------------------------------------------
+| Use http://localhost:5000/ in your browser! |
+-----------------------------------------------
+'''
+
 
 def config_validator():
     '''Make sure the config file is ready.'''
@@ -40,4 +46,5 @@ if __name__ == '__main__':
         print("Starting server in ~*TEST MODE*~")
         app.run()
     else:
+        print("[Use http://localhost:5000/]")
         app.run()
