@@ -380,6 +380,11 @@ issueList.IssueView = Backbone.View.extend({
     }));
     return this;
   },
+  getPageNumberFromURL: function(url) {
+    // takes a string URL and extracts the page param/value pair.
+    var match = /[?&](page=\d+)/i.exec(url);
+    return match[1];
+  },
   initPaginationLinks: function(issues) {
     // if either the next or previous page numbers are null
     // disable the buttons and add .is-disabled classes.
@@ -431,14 +436,24 @@ issueList.IssueView = Backbone.View.extend({
   },
   requestNextPage: function() {
     var nextPage;
+    var pageNum;
+
     if (nextPage = this.issues.getNextPage()) {
+      // update the URL to be in sync with the model
+      pageNum = this.getPageNumberFromURL(nextPage);
+      this.updateModelParams(pageNum);
       // we pass along the entire URL from the Link header
       this.fetchAndRenderIssues({url: nextPage});
     }
   },
   requestPreviousPage: function() {
     var prevPage;
+    var pageNum;
+
     if (prevPage = this.issues.getPrevPage()) {
+      // update the URL to be in sync with the model
+      pageNum = this.getPageNumberFromURL(prevPage);
+      this.updateModelParams(pageNum);
       // we pass along the entire URL from the Link header
       this.fetchAndRenderIssues({url: prevPage});
     }
@@ -536,7 +551,6 @@ issueList.IssueView = Backbone.View.extend({
     // push params from the model back to the URL so it can be used for bookmarks,
     // link sharing, etc.
     // an optional category can be passed in to be added.
-    // TODO: figure out next and prev buttons.
     var serializedParams = $.param(this.issues.params);
 
     if (history.pushState) {
