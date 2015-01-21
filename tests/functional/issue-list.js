@@ -185,6 +185,85 @@ define([
         .end();
     },
 
+    'loading issues page has default params in URL': function() {
+      return this.remote
+        .setFindTimeout(intern.config.wc.pageLoadTimeout)
+        .get(require.toUrl(url))
+        // find something so we know the page has loaded
+        .findByCssSelector('.IssueItem:nth-of-type(1)')
+        .getCurrentUrl()
+        .then(function(currUrl){
+          assert.include(currUrl, 'page=1&per_page=50&state=open', 'Default model params are added to the URL');
+        });
+    },
+
+    'loading partial params results in merge with defaults': function() {
+        var params = '?page=2';
+        return this.remote
+          .setFindTimeout(intern.config.wc.pageLoadTimeout)
+          .get(require.toUrl(url + params))
+          // find something so we know the page has loaded
+          .findByCssSelector('.IssueItem:nth-of-type(1)')
+          .getCurrentUrl()
+          .then(function(currUrl){
+            assert.include(currUrl, 'page=2&per_page=50&state=open', 'Default model params are merged with partial URL params');
+          });
+    },
+
+    'dropdowns reflect state from URL': function() {
+      var params = '?per_page=25&sort=updated&direction=desc&state=all';
+
+      return this.remote
+        .setFindTimeout(intern.config.wc.pageLoadTimeout)
+        .get(require.toUrl(url + params))
+        .findByCssSelector('.js-dropdown-pagination .js-dropdown-toggle h1').getVisibleText()
+        .then(function(text){
+          assert.equal(text, 'Show 25', 'Pagination dropdown label is updated from URL params');
+        })
+        .end()
+        .findAllByCssSelector('.js-issuelist-filter .js-dropdown-toggle h1').getVisibleText()
+        .then(function(text){
+          assert.equal(text, 'View all Issues', 'Filter dropdown label is updated from URL params');
+        })
+        .end()
+        .findAllByCssSelector('.js-dropdown-sort .js-dropdown-toggle h1').getVisibleText()
+        .then(function(text){
+          assert.equal(text, 'Recently Updated', 'Sort dropdown label is updated from URL params');
+        })
+        .end();
+    },
+
+    'going back in history updates issue list and URL state': function() {
+      var params = '?per_page=25';
+
+      return this.remote
+        .setFindTimeout(intern.config.wc.pageLoadTimeout)
+        .get(require.toUrl(url + params))
+        .findByCssSelector('.js-dropdown-pagination .js-dropdown-toggle h1').getVisibleText()
+        .then(function(text){
+          assert.equal(text, 'Show 25', 'Pagination dropdown label is updated from URL params');
+        })
+        .end()
+        // Select "Show 100" from pagination dropdown
+        .findByCssSelector('.js-dropdown-pagination .js-dropdown-toggle').click()
+        .end()
+        .findByCssSelector('.js-dropdown-pagination li.Dropdown-item:nth-child(3) > a:nth-child(1)').click()
+        .end()
+        // find something so we know issues have been loaded
+        .findByCssSelector('.IssueItem:nth-of-type(1)')
+        .goBack()
+        .getCurrentUrl()
+        .then(function(currUrl){
+          assert.include(currUrl, 'per_page=25', 'URL param is back to where we started');
+        })
+        .end()
+        .findByCssSelector('.js-dropdown-pagination .js-dropdown-toggle h1').getVisibleText()
+        .then(function(text){
+          assert.equal(text, 'Show 25', 'Pagination dropdown label is back to where we started');
+        })
+        .end();
+    }
+
     // 'clicking on a label performs a label search': function() {
     //   return this.remote
     //     .setFindTimeout(intern.config.wc.pageLoadTimeout)
