@@ -316,6 +316,7 @@ issueList.IssueView = Backbone.View.extend({
     issueList.events.on('paginate:next', _.bind(this.requestNextPage, this));
     issueList.events.on('paginate:previous', _.bind(this.requestPreviousPage, this));
     wcEvents.on('dropdown:change', _.bind(this.updateModelParams, this));
+    window.addEventListener('popstate', _.bind(this.loadIssues, this));
 
     this.loadIssues();
   },
@@ -324,7 +325,6 @@ issueList.IssueView = Backbone.View.extend({
     // Attemps to load model state from URL params, if present,
     // otherwise grab model defaults and load issues
 
-    // popstate should load this method.
     var category;
     // get params excluding the leading ?
     var urlParams = location.search.slice(1);
@@ -468,7 +468,6 @@ issueList.IssueView = Backbone.View.extend({
     this.fetchAndRenderIssues();
   },
   updateModelParams: function(params, options) {
-    // TODO: profile how many times this gets called and optimize.
     // convert params string to an array,
     // splitting on & in case of multiple params
     // params are merged into issues model
