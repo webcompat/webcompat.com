@@ -527,18 +527,20 @@ issueList.IssueView = Backbone.View.extend({
       });
     });
 
-    // delete the non-current state params from the stateParamsSet
-    var toDelete = _.without(stateParamsSet, currentStateParamName);
-    _.forEach(toDelete, _.bind(function(param) {
-      delete this.issues.params[param];
-    }, this));
+    if (stateParam !== undefined) {
+      // delete the non-current state params from the stateParamsSet
+      var toDelete = _.without(stateParamsSet, currentStateParamName);
+      _.forEach(toDelete, _.bind(function(param) {
+        delete this.issues.params[param];
+      }, this));
 
-    var stateDropdown;
-    if (currentStateParamName in this.issues.params) {
-      stateDropdown = stateParam;
-      _.delay(function(){
-        issueList.events.trigger('dropdown:update', stateDropdown);
-      }, 0);
+      var stateDropdown;
+      if (currentStateParamName in this.issues.params) {
+        stateDropdown = stateParam;
+        _.delay(function(){
+          issueList.events.trigger('dropdown:update', stateDropdown);
+        }, 0);
+      }
     }
 
     this.updateURLParams();
