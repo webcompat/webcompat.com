@@ -79,7 +79,7 @@ issueList.FilterView = Backbone.View.extend({
   events: {
     'click .js-filter-button': 'toggleFilter'
   },
-  _filterRegex: /(new|needsdiagnosis|contactready|sitewait|closed)=1/ig,
+  _filterRegex: /(stage=(?:new|needscontact|needsdiagnosis|contactready|sitewait|closed))/ig,
   _isLoggedIn: $('body').data('username'),
   _userName: $('body').data('username'),
   initialize: function() {
@@ -130,7 +130,7 @@ issueList.FilterView = Backbone.View.extend({
     this.removeFiltersFromModel();
 
     if (history.pushState) {
-      // remove filter from URL
+      // remove filter stage param from URL
       history.pushState({}, '', location.search.replace(this._filterRegex, ''));
     }
   },
@@ -162,7 +162,7 @@ issueList.FilterView = Backbone.View.extend({
     }
 
     if (btn.hasClass('is-active')) {
-      filterParam = btn.data('filter') + "=1";
+      filterParam = 'stage=' + btn.data('filter');
       this.updateResults(btn.data('filter'));
       this.addFilterToModel(filterParam);
     } else {
@@ -303,7 +303,7 @@ issueList.IssueView = Backbone.View.extend({
   events: {
     'click .js-issue-label': 'labelSearch',
   },
-  _filterRegex: /&*(new|needsdiagnosis|contactready|sitewait|closed)=1&*/i,
+  _filterRegex: /&*stage=(new|needscontact|needsdiagnosis|contactready|sitewait|closed)&*/i,
   _isLoggedIn: $('body').data('username'),
   _loadingIndicator: $('.js-loader'),
   initialize: function() {
@@ -425,14 +425,12 @@ issueList.IssueView = Backbone.View.extend({
     e.preventDefault();
   },
   removeAllFiltersFromModel: function() {
-    // We can't have more than one filter at once for the issues model,
-    // and there's no meaningful notion of contactready=0, so remove them all.
-    var filters = ['new', 'needsdiagnosis', 'contactready',
-                   'sitewait', 'closed', 'needscontact', 'q'];
+    // We can't have more than one stage filter at once for the issues model,
+    // so remove them all. We also want to remove 'q' if present as well.
+    var filters = ['stage', 'q'];
     _.forEach(filters, function(filter) {
       delete this.issues.params[filter];
     }, this);
-
   },
   requestNextPage: function() {
     var nextPage;
