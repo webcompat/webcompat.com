@@ -29,12 +29,6 @@ Read Instructions at
 https://github.com/webcompat/webcompat.com/blob/master/CONTRIBUTING.md#configuring-the-server
 '''
 
-START_MESSAGE = '''
------------------------------------------------
-| Use http://localhost:5000/ in your browser! |
------------------------------------------------
-'''
-
 
 def config_validator():
     '''Make sure the config file is ready.'''
