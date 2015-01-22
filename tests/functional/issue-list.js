@@ -262,6 +262,58 @@ define([
           assert.equal(text, 'Show 25', 'Pagination dropdown label is back to where we started');
         })
         .end();
+    },
+
+    'clicking on a stage filter adds the correct param to the URL': function() {
+      return this.remote
+        .setFindTimeout(intern.config.wc.pageLoadTimeout)
+        .get(require.toUrl(url))
+        .findByCssSelector('[data-filter="contactready"]').click()
+        .end()
+        // find something so we know the page has loaded
+        .findByCssSelector('.IssueItem:nth-of-type(1)')
+        .getCurrentUrl()
+        .then(function(currUrl){
+          assert.include(currUrl, 'stage=contactready', 'Stage filter added to URL correctly.');
+        })
+        .end();
+    },
+
+    'toggling a stage filter doesn\'t leave the param in the URL': function() {
+      return this.remote
+        .setFindTimeout(intern.config.wc.pageLoadTimeout)
+        .get(require.toUrl(url))
+        .findByCssSelector('[data-filter="closed"]').click()
+        .end()
+        // find something so we know the page has loaded
+        .findByCssSelector('.IssueItem:nth-of-type(1)')
+        .end()
+        .findByCssSelector('[data-filter="closed"]').click()
+        .end()
+        .getCurrentUrl()
+        .then(function(currUrl){
+          assert.notInclude(currUrl, 'stage=closed', 'Stage filter added then removed from URL.');
+        })
+        .end();
+    },
+
+    'toggling between stage filters results in last param in URL': function() {
+      return this.remote
+        .setFindTimeout(intern.config.wc.pageLoadTimeout)
+        .get(require.toUrl(url))
+        .findByCssSelector('[data-filter="closed"]').click()
+        .end()
+        // find something so we know the page has loaded
+        .findByCssSelector('.IssueItem:nth-of-type(1)')
+        .end()
+        .findByCssSelector('[data-filter="sitewait"]').click()
+        .end()
+        .getCurrentUrl()
+        .then(function(currUrl){
+          assert.include(currUrl, 'stage=sitewait', 'Stage filter added to URL correctly.');
+          assert.notInclude(currUrl, 'stage=closed', 'Stage removed from URL correctly.');
+        })
+        .end();
     }
 
     // 'clicking on a label performs a label search': function() {
