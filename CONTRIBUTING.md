@@ -293,7 +293,7 @@ or
 make start
 ```
 
-You should now have a local instance of the site running at `http://127.0.0.1:5000/`. Please [file bugs](https://github.com/webcompat/webcompat.com/issues/new) if something went wrong!
+You should now have a local instance of the site running at `http://localhost:5000/`. Please [file bugs](https://github.com/webcompat/webcompat.com/issues/new) if something went wrong!
 
 ### Building Project
 
