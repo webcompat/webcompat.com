@@ -247,3 +247,10 @@ def parse_link_header(link_header):
         uri = uri_info[1:-1]
         header_link_data.append({'link': uri, 'rel': rel_value})
     return header_link_data
+
+
+def format_link_header(link_header_data):
+    '''Return a string ready to be used in a Link: header.'''
+    links = ['<{0}>; rel="{1}"'.format(data['link'], data['rel'])
+             for data in link_header_data]
+    return ', '.join(links)
