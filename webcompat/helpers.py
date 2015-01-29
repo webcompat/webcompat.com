@@ -228,3 +228,22 @@ def sanitize_link(link_header):
 
 def rewrite_and_sanitize_link(link_header):
     return rewrite_links(sanitize_link(link_header))
+
+
+def parse_link_header(link_header):
+    '''Return a structured list of objects for an HTTP Link header.
+
+    This is adjusted for github links it will break in a more generic case.
+    Use something like https://pypi.python.org/pypi/LinkHeader/ instead.
+    '''
+    links_list = link_header.split(',')
+    header_link_data = []
+    for link in links_list:
+        uri_info, rel_info = link.split(';')
+        uri_info = uri_info.strip()
+        rel_info = rel_info.strip()
+        rel = rel_info.split('=')
+        rel_value = rel[1][1:-1]
+        uri = uri_info[1:-1]
+        header_link_data.append({'link': uri, 'rel': rel_value})
+    return header_link_data
