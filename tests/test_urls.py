@@ -112,6 +112,11 @@ class TestURLs(unittest.TestCase):
         link_header = '<https://api.github.com/repositories/17914657/issues?page=2>; rel="next", <https://api.github.com/repositories/17914657/issues?page=11>; rel="last"'
         self.assertEqual(parse_link_header(link_header), parsed_headers)
 
+    def test_format_http_link_headers(self):
+        '''Test HTTP Links formating.'''
+        parsed_headers = [{'link': 'https://api.github.com/repositories/17914657/issues?page=2', 'rel': 'next'}, {'link': 'https://api.github.com/repositories/17914657/issues?page=11', 'rel': 'last'}]
+        link_header = '<https://api.github.com/repositories/17914657/issues?page=2>; rel="next", <https://api.github.com/repositories/17914657/issues?page=11>; rel="last"'
+        self.assertEqual(format_link_header(parsed_headers), link_header)
 
 if __name__ == '__main__':
     unittest.main()
