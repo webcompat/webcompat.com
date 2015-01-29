@@ -15,6 +15,7 @@ sys.path.append(os.path.realpath(os.pardir))
 import webcompat
 
 from webcompat.issues import filter_new
+from webcompat.helpers import format_link_header
 from webcompat.helpers import parse_link_header
 
 # Any request that depends on parsing HTTP Headers (basically anything
