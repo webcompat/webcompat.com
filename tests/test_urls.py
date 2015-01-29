@@ -15,6 +15,7 @@ sys.path.append(os.path.realpath(os.pardir))
 import webcompat
 
 from webcompat.issues import filter_new
+from webcompat.helpers import parse_link_header
 
 # Any request that depends on parsing HTTP Headers (basically anything
 # on the index route, will need to include the following: environ_base=headers
@@ -104,6 +105,12 @@ class TestURLs(unittest.TestCase):
              u'id': 5}]
         result = '[{"labels": [{"name": "bug"}, {"name": "help wanted"}], "id": 0, "title": "fake bug 0"}, {"labels": [], "id": 1, "title": "fake bug 1"}]'
         self.assertEqual(filter_new(issues), result)
+
+    def test_parse_http_link_headers(self):
+        '''Test HTTP Links parsing for GitHub only.'''
+        parsed_headers = [{'link': 'https://api.github.com/repositories/17914657/issues?page=2', 'rel': 'next'}, {'link': 'https://api.github.com/repositories/17914657/issues?page=11', 'rel': 'last'}]
+        link_header = '<https://api.github.com/repositories/17914657/issues?page=2>; rel="next", <https://api.github.com/repositories/17914657/issues?page=11>; rel="last"'
+        self.assertEqual(parse_link_header(link_header), parsed_headers)
 
 
 if __name__ == '__main__':
