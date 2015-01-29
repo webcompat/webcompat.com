@@ -17,6 +17,7 @@ import webcompat
 from webcompat.issues import filter_new
 from webcompat.helpers import format_link_header
 from webcompat.helpers import parse_link_header
+from webcompat.helpers import rewrite_links
 
 # Any request that depends on parsing HTTP Headers (basically anything
 # on the index route, will need to include the following: environ_base=headers
@@ -118,6 +119,18 @@ class TestURLs(unittest.TestCase):
         parsed_headers = [{'link': 'https://api.github.com/repositories/17914657/issues?page=2', 'rel': 'next'}, {'link': 'https://api.github.com/repositories/17914657/issues?page=11', 'rel': 'last'}]
         link_header = '<https://api.github.com/repositories/17914657/issues?page=2>; rel="next", <https://api.github.com/repositories/17914657/issues?page=11>; rel="last"'
         self.assertEqual(format_link_header(parsed_headers), link_header)
+
+    def test_rewrite_links(self):
+        '''Test the rewriting is correct.'''
+        link_header_1 = '<https://api.github.com/repositories/17914657/issues?page=2>; rel="next", <https://api.github.com/repositories/17914657/issues?page=11>; rel="last"'
+        rewritten_header_1 = '</api/issues?page=2>; rel="next", </api/issues?page=11>; rel="last"'
+        self.assertEqual(rewrite_links(link_header_1), rewritten_header_1)
+
+    def test_sanitize_link(self):
+        '''Test the sanitization.'''
+        link_header = '<https://api.github.com/repositories/17914657/issues?page=2&access_token=abc123>; rel="next", <https://api.github.com/repositories/17914657/issues?page=11&access_token=abc123>; rel="last"'
+        rewritten_header = '<https://api.github.com/repositories/17914657/issues?page=2>; rel="next", <https://api.github.com/repositories/17914657/issues?page=11>; rel="last"'
+        self.assertEqual(sanitize_link(link_header), rewritten_header)
 
 if __name__ == '__main__':
     unittest.main()
