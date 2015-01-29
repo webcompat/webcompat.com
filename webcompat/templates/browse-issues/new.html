@@ -1,7 +1,7 @@
 <div id="new" class="r-Grid-cell r-all--1of2 r-maxM--2of2">
   <script type="text/template" id="new-tmpl">
   <h3 class="wc-titleIssue">
-    <a class="wc-titleIssue-link" href="{{ url_for('show_issues') }}?new=1">New Issues</a>
+    <a class="wc-titleIssue-link" href="{{ url_for('show_issues') }}?stage=new">New Issues</a>
   </h3>
   <% if (newIssues.length) { %>
     <% _.each(newIssues, function(issue) { %>

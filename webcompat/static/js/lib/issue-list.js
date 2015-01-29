@@ -18,6 +18,8 @@ issueList.DropdownView = Backbone.View.extend({
         this.closeDropdown();
       }
     }, this));
+
+    issueList.events.on('dropdown:update', _.bind(this.selectDropdownOption, this));
   },
   template: _.template($('#dropdown-tmpl').html()),
   render: function() {
@@ -32,21 +34,39 @@ issueList.DropdownView = Backbone.View.extend({
     this.$el.removeClass('is-active');
   },
   selectDropdownOption: function(e) {
-    var option = $(e.target);
-    var params = option.data('params');
-    option.addClass('is-active')
-          .siblings().removeClass('is-active');
+    var option;
+    var params;
 
-    this.updateDropdownTitle(option);
+    if (typeof e === 'string') {
+      // we received a dropdown:update event and want to update the dropdown, but
+      // not broadcast any events (so we don't need "params")
+      // $= because some of these will just be the beginning part (mentioned, creator)
+      option = $('[data-params$="' + e + '"]');
+      this.manuallyUpdateDropdownTitle(option, e);
+    } else if (typeof e.type === 'string') {
+      // we're dealing with a user click event.
+      option = $(e.target);
+      params = option.data('params');
 
-    // persist value of selection to be used on subsequent page loads
-    if ('localStorage' in window) {
-      window.localStorage.setItem("params", params);
+      // fire an event so other views can react to dropdown changes
+      wcEvents.trigger('dropdown:change', params, {update: true});
+      this.updateDropdownTitle(option);
+      e.preventDefault();
     }
 
-    // fire an event so other views can react to dropdown changes
-    wcEvents.trigger('dropdown:change', params);
-    e.preventDefault();
+    option.addClass('is-active')
+          .siblings().removeClass('is-active');
+  },
+  manuallyUpdateDropdownTitle: function(optionElm, e) {
+    // make sure we're only updating the title if we're operating
+    // on the correct model.
+    var modelOpts = this.model.get('dropdownOptions');
+    if (_.find(modelOpts, function(opt) {
+        return opt.params === e;
+      }) !== undefined) {
+      this.model.set('dropdownTitle', optionElm.text());
+      this.render();
+    }
   },
   updateDropdownTitle: function(optionElm) {
     this.model.set('dropdownTitle', optionElm.text());
@@ -59,6 +79,7 @@ issueList.FilterView = Backbone.View.extend({
   events: {
     'click .js-filter-button': 'toggleFilter'
   },
+  _filterRegex: /(stage=(?:new|needscontact|needsdiagnosis|contactready|sitewait|closed))/ig,
   _isLoggedIn: $('body').data('username'),
   _userName: $('body').data('username'),
   initialize: function() {
@@ -99,12 +120,27 @@ issueList.FilterView = Backbone.View.extend({
     this.dropdown.setElement(this.$el.find('.js-dropdown-wrapper')).render();
     return this;
   },
+  addFilterToModel: function(filter) {
+    issueList.events.trigger('filter:add-to-model', filter);
+  },
   clearFilter: function() {
     var btns = $('[data-filter]');
     btns.removeClass('is-active');
+
+    this.removeFiltersFromModel();
+
+    if (history.pushState) {
+      // remove filter stage param from URL
+      history.pushState({}, '', location.search.replace(this._filterRegex, ''));
+    }
+  },
+  removeFiltersFromModel: function() {
+    // Sends a message to remove filter params from the model
+    issueList.events.trigger('filter:remove-from-model');
   },
   toggleFilter: function(e) {
     var btn;
+    var filterParam;
     // Stringy e comes from triggered filter:activate event
     if (typeof e === 'string') {
       btn = $('[data-filter=' + e + ']');
@@ -119,9 +155,18 @@ issueList.FilterView = Backbone.View.extend({
     // Clear the search field
     issueList.events.trigger('search:clear');
 
+    // Remove existing filters from model and URL
+    this.removeFiltersFromModel();
+    if (history.pushState) {
+      history.pushState({}, '', location.search.replace(this._filterRegex, ''));
+    }
+
     if (btn.hasClass('is-active')) {
+      filterParam = 'stage=' + btn.data('filter');
       this.updateResults(btn.data('filter'));
+      this.addFilterToModel(filterParam);
     } else {
+      this.removeFiltersFromModel();
       this.updateResults();
     }
   },
@@ -195,7 +240,6 @@ issueList.SortingView = Backbone.View.extend({
   events: {},
   initialize: function() {
     this.paginationModel = new Backbone.Model({
-      // TODO(miket): persist selected page limit to survive page loads
       dropdownTitle: 'Show 50',
       dropdownOptions: [
         {title: 'Show 25',  params: 'per_page=25'},
@@ -259,36 +303,48 @@ issueList.IssueView = Backbone.View.extend({
   events: {
     'click .js-issue-label': 'labelSearch',
   },
+  _filterRegex: /&*stage=(new|needscontact|needsdiagnosis|contactready|sitewait|closed)&*/i,
   _isLoggedIn: $('body').data('username'),
   _loadingIndicator: $('.js-loader'),
-  _pageLimit: null,
   initialize: function() {
     this.issues = new issueList.IssueCollection();
-    // check to see if we should pre-filter results
-    // otherwise load default (unfiltered "all")
-    this.loadIssues();
 
     // set up event listeners.
     issueList.events.on('issues:update', _.bind(this.updateIssues, this));
+    issueList.events.on('filter:add-to-model', _.bind(this.updateModelParams, this));
+    issueList.events.on('filter:remove-from-model', _.bind(this.removeAllFiltersFromModel, this));
     issueList.events.on('paginate:next', _.bind(this.requestNextPage, this));
     issueList.events.on('paginate:previous', _.bind(this.requestPreviousPage, this));
     wcEvents.on('dropdown:change', _.bind(this.updateModelParams, this));
+    window.addEventListener('popstate', _.bind(this.loadIssues, this));
+
+    this.loadIssues();
   },
   template: _.template($('#issuelist-issue-tmpl').html()),
   loadIssues: function() {
-    // First checks URL params, e.g., /?new=1 and activates the new filter,
-    // or loads default unsorted/unfiltered issues
+    // Attemps to load model state from URL params, if present,
+    // otherwise grab model defaults and load issues
+
     var category;
-    var filterRegex = /\?(new|needsdiagnosis|contactready|sitewait|closed)=1/;
-    if (category = window.location.search.match(filterRegex)) {
-      // If there was a match, load the relevant results and fire an event
-      // to notify the button to activate.
-      this.updateIssues(category[1]);
-      _.delay(function() {
-        issueList.events.trigger('filter:activate', category[1]);
-      }, 0);
+    // get params excluding the leading ?
+    var urlParams = location.search.slice(1);
+
+    if (location.search.length !== 0) {
+      // There are some params in the URL
+      if (category = window.location.search.match(this._filterRegex)) {
+        // If there was a filter match, fire an event which loads results
+        // and notifies the button to activate.
+        this.updateModelParams(urlParams);
+        _.delay(function() {
+          issueList.events.trigger('filter:activate', category[1]);
+        }, 0);
+      } else {
+        this.updateModelParams(urlParams);
+        this.fetchAndRenderIssues();
+      }
     } else {
-      // Otherwise, load default issues.
+      // There are no params in the URL, load the defaults
+      this.updateURLParams();
       this.fetchAndRenderIssues();
     }
   },
@@ -318,14 +374,16 @@ issueList.IssueView = Backbone.View.extend({
       wcEvents.trigger('flash:error', {message: message, timeout: timeout});
     });
   },
-  getPageLimit: function() {
-    return this._pageLimit;
-  },
   render: function(issues) {
     this.$el.html(this.template({
       issues: issues.toJSON()
     }));
     return this;
+  },
+  getPageNumberFromURL: function(url) {
+    // takes a string URL and extracts the page param/value pair.
+    var match = /[?&](page=\d+)/i.exec(url);
+    return match[1];
   },
   initPaginationLinks: function(issues) {
     // if either the next or previous page numbers are null
@@ -366,16 +424,34 @@ issueList.IssueView = Backbone.View.extend({
     issueList.events.trigger('issues:update', {query: labelFilter});
     e.preventDefault();
   },
+  removeAllFiltersFromModel: function() {
+    // We can't have more than one stage filter at once for the issues model,
+    // so remove them all. We also want to remove 'q' if present as well.
+    var filters = ['stage', 'q'];
+    _.forEach(filters, function(filter) {
+      delete this.issues.params[filter];
+    }, this);
+  },
   requestNextPage: function() {
     var nextPage;
+    var pageNum;
+
     if (nextPage = this.issues.getNextPage()) {
+      // update the URL to be in sync with the model
+      pageNum = this.getPageNumberFromURL(nextPage);
+      this.updateModelParams(pageNum);
       // we pass along the entire URL from the Link header
       this.fetchAndRenderIssues({url: nextPage});
     }
   },
   requestPreviousPage: function() {
     var prevPage;
+    var pageNum;
+
     if (prevPage = this.issues.getPrevPage()) {
+      // update the URL to be in sync with the model
+      pageNum = this.getPageNumberFromURL(prevPage);
+      this.updateModelParams(pageNum);
       // we pass along the entire URL from the Link header
       this.fetchAndRenderIssues({url: prevPage});
     }
@@ -387,7 +463,7 @@ issueList.IssueView = Backbone.View.extend({
     // note: until GitHub fixes a bug where requesting issues filtered by labels
     // doesn't return pagination via Link, we get those results via the Search API.
     var searchCategories = ['new', 'contactready', 'needsdiagnosis', 'sitewait'];
-    var params = $.extend(this.issues.params, this.getPageLimit());
+    var params = this.issues.params;
 
     // note: if query is the empty string, it will load all issues from the
     // '/api/issues' endpoint (which I think we want).
@@ -401,26 +477,85 @@ issueList.IssueView = Backbone.View.extend({
     } else {
       this.issues.setURLState('/api/issues', params);
     }
+    this.updateURLParams();
     this.fetchAndRenderIssues();
   },
-  updateModelParams: function(params) {
+  updateModelParams: function(params, options) {
     // convert params string to an array,
     // splitting on & in case of multiple params
-    var paramsArray = params.split('&');
+    // params are merged into issues model
+    // call _.uniq() on it to ignore duplicate values
+    var paramsArray = _.uniq(params.split('&'));
 
-    // paramsArray is an array of param 'key=value' string pairs,
+    // paramsArray is an array of param 'key=value' string pairs
     _.forEach(paramsArray, _.bind(function(param) {
       var kvArray = param.split('=');
       var key = kvArray[0];
       var value = kvArray[1];
       this.issues.params[key] = value;
-
-      if (key === 'per_page') {
-        this._pageLimit = value;
-      }
     }, this));
 
-    this.fetchAndRenderIssues();
+    //broadcast to each of the dropdowns that they need to update
+    var pageDropdown;
+    if ('per_page' in this.issues.params) {
+      pageDropdown = 'per_page=' + this.issues.params.per_page;
+      _.delay(function(){
+        issueList.events.trigger('dropdown:update', pageDropdown);
+      }, 0);
+    }
+
+    var sortDropdown;
+    // all the sort options begin with sort, and end with direction.
+    if ('sort' in this.issues.params) {
+      sortDropdown = 'sort=' + this.issues.params.sort + '&direction=' + this.issues.params.direction;
+      _.delay(function(){
+        issueList.events.trigger('dropdown:update', sortDropdown);
+      }, 0);
+    }
+
+    // make sure we prevent more than one mutually-exclusive state param
+    // in the model, because that's weird. the "last" param will win.
+    var currentStateParamName;
+    var stateParamsSet = ['state', 'creator', 'mentioned'];
+    var stateParam = _.find(paramsArray, function(paramString) {
+      return _.find(stateParamsSet, function(stateParam) {
+        if (paramString.indexOf(stateParam) === 0) {
+          return currentStateParamName = stateParam;
+        }
+      });
+    });
+
+    if (stateParam !== undefined) {
+      // delete the non-current state params from the stateParamsSet
+      var toDelete = _.without(stateParamsSet, currentStateParamName);
+      _.forEach(toDelete, _.bind(function(param) {
+        delete this.issues.params[param];
+      }, this));
+
+      var stateDropdown;
+      if (currentStateParamName in this.issues.params) {
+        stateDropdown = stateParam;
+        _.delay(function(){
+          issueList.events.trigger('dropdown:update', stateDropdown);
+        }, 0);
+      }
+    }
+
+    this.updateURLParams();
+    // only re-request issues if explicitly asked to
+    if (options && options.update === true) {
+      this.fetchAndRenderIssues();
+    }
+  },
+  updateURLParams: function() {
+    // push params from the model back to the URL so it can be used for bookmarks,
+    // link sharing, etc.
+    // an optional category can be passed in to be added.
+    var serializedParams = $.param(this.issues.params);
+
+    if (history.pushState) {
+      history.pushState({}, '', '?' + serializedParams);
+    }
   }
 });
 
