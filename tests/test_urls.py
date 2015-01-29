@@ -18,6 +18,7 @@ from webcompat.issues import filter_new
 from webcompat.helpers import format_link_header
 from webcompat.helpers import parse_link_header
 from webcompat.helpers import rewrite_links
+from webcompat.helpers import sanitize_link
 
 # Any request that depends on parsing HTTP Headers (basically anything
 # on the index route, will need to include the following: environ_base=headers
