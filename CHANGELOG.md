@@ -1,3 +1,9 @@
+## 1.5.0 - 2014-01-29
+
+* Keep track of /issues state via the URL bar [Issue #399](https://github.com/webcompat/webcompat.com/issues/399) [Issue #516](https://github.com/webcompat/webcompat.com/issues/516) [Pull #542](https://github.com/webcompat/webcompat.com/pull/542)
+* Update docs and `run.py` script to recommend using localhost:5000 rather than 127.0.0.1 [Issue #537](https://github.com/webcompat/webcompat.com/issues/537) [Pull #539](https://github.com/webcompat/webcompat.com/pull/539)
+* Introduce concept of "needscontact" label (no UI yet) [Issue #531](https://github.com/webcompat/webcompat.com/issues/531) [Pull #534](https://github.com/webcompat/webcompat.com/pull/534)
+
 ## 1.4.0 - 2014-01-13
 
 * Rename "Untriaged" to "New" [Pull #531](https://github.com/webcompat/webcompat.com/pull/531) [Issue #286](https://github.com/webcompat/webcompat.com/issues/286)
