@@ -14,10 +14,13 @@ import unittest
 sys.path.append(os.path.realpath(os.pardir))
 
 import webcompat
+from webcompat.helpers import format_link_header
 from webcompat.helpers import normalize_api_params
+from webcompat.helpers import parse_link_header
 from webcompat.helpers import rewrite_and_sanitize_link
 from webcompat.helpers import rewrite_links
 from webcompat.helpers import sanitize_link
+
 
 
 ACCESS_TOKEN_LINK = '<https://api.github.com/repositories/17839063/issues?per_page=50&page=3&access_token=12345>; rel="next", <https://api.github.com/repositories/17839063/issues?access_token=12345&per_page=50&page=4>; rel="last", <https://api.github.com/repositories/17839063/issues?per_page=50&access_token=12345&page=1>; rel="first", <https://api.github.com/repositories/17839063/issues?per_page=50&page=1&access_token=12345>; rel="prev"'
@@ -93,6 +96,18 @@ class TestHelpers(unittest.TestCase):
         self.assertEqual({'order': u'desc', 'foo': u'bar'},
                          normalize_api_params({'foo': u'bar',
                                               'direction': u'desc'}))
+
+    def test_parse_http_link_headers(self):
+        '''Test HTTP Links parsing for GitHub only.'''
+        parsed_headers = [{'link': 'https://api.github.com/repositories/17914657/issues?page=2', 'rel': 'next'}, {'link': 'https://api.github.com/repositories/17914657/issues?page=11', 'rel': 'last'}]
+        link_header = '<https://api.github.com/repositories/17914657/issues?page=2>; rel="next", <https://api.github.com/repositories/17914657/issues?page=11>; rel="last"'
+        self.assertEqual(parse_link_header(link_header), parsed_headers)
+
+    def test_format_http_link_headers(self):
+        '''Test HTTP Links formating.'''
+        parsed_headers = [{'link': 'https://api.github.com/repositories/17914657/issues?page=2', 'rel': 'next'}, {'link': 'https://api.github.com/repositories/17914657/issues?page=11', 'rel': 'last'}]
+        link_header = '<https://api.github.com/repositories/17914657/issues?page=2>; rel="next", <https://api.github.com/repositories/17914657/issues?page=11>; rel="last"'
+        self.assertEqual(format_link_header(parsed_headers), link_header)
 
 if __name__ == '__main__':
     unittest.main()
