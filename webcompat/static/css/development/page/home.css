@@ -1,15 +1,5 @@
 /*------Home view------*/
 
-
-.divider {
-  display: block;
-  font-weight: 700;
-  border-top: 5px solid var(--wc-background-dark);
-  width: 30px;
-  color: #fff;
-  margin: 1em 0 0;
-}
-
 /*-------Browse Issues------*/
 #browse-issues-wrapper {
   background-color: #f0f0f0;
