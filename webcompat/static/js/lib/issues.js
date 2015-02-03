@@ -15,6 +15,9 @@ marked.setOptions({
 
 issues.TitleView = Backbone.View.extend({
   el: $('.Issue-title'),
+  events: {
+    'click .js-linkBack': 'goBack'
+  },
   template: _.template($('#title-tmpl').html()),
   render: function() {
     document.title = "Issue " + this.model.get('number') +
@@ -22,6 +25,17 @@ issues.TitleView = Backbone.View.extend({
                      " - webcompat.com";
     this.$el.html(this.template(this.model.toJSON()));
     return this;
+  },
+  goBack: function(e) {
+    if (!('origin' in location)) {
+      location.origin = location.protocol + '//' + location.host;
+    }
+
+    // Only go back in history if we came from the /issues page.
+    if (document.referrer.indexOf(location.origin + '/issues') === 0) {
+      history.back();
+      e.preventDefault();
+    }
   }
 });
 
