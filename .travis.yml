@@ -14,7 +14,7 @@ cache:
     - $HOME/.selenium/
 
 addons:
-  firefox: "33.1"
+  firefox: "34.0"
 
 env:
   global:
