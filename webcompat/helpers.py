@@ -194,15 +194,15 @@ def rewrite_links(link_header):
     </api/issues?per_page=50&page=2>; rel="next",
     </api/issues?per_page=50&page=4>; rel="last" etc.
     '''
-    links = link_header.split(',')
-    new_links = []
-    for link in links:
-        api_path, endpoint_path = link.rsplit('/', 1)
-        if api_path.strip().startswith('<https://api.github.com/repositories'):
-            new_links.append(endpoint_path.replace('issues?', '</api/issues?'))
-        if api_path.strip().startswith('<https://api.github.com/search'):
-            new_links.append(endpoint_path.replace('issues?', '</api/issues/search?'))
-    return ', '.join(new_links)
+    header_link_data = parse_link_header(link_header)
+    for data in header_link_data:
+        uri = data['link']
+        api_path, endpoint_path = uri.rsplit('/', 1)
+        if api_path.strip().startswith('https://api.github.com/repositories'):
+            data['link'] = endpoint_path.replace('issues?', '/api/issues?')
+        if api_path.strip().startswith('https://api.github.com/search'):
+            data['link'] = endpoint_path.replace('issues?', '/api/issues/search?')
+    return format_link_header(header_link_data)
 
 
 def sanitize_link(link_header):
