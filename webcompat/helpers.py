@@ -233,7 +233,7 @@ def remove_oauth(uri):
                              if not parameter.startswith('access_token=')]
     clean_parameters = '&'.join(clean_parameters_list)
     clean_uri = uri_group._replace(query=clean_parameters)
-    return clean_uri
+    return urlparse.urlunparse(clean_uri)
 
 
 def rewrite_and_sanitize_link(link_header):
