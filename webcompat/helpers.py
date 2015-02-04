@@ -208,17 +208,10 @@ def rewrite_links(link_header):
 def sanitize_link(link_header):
     '''Remove any oauth tokens from the Link header that GitHub gives to us,
     and return a rewritten Link header (see rewrite_links)'''
-    links_list = link_header.split(',')
-    clean_links_list = []
-    for link in links_list:
-        uri_info, rel_info = link.split(';')
-        uri_info = uri_info.strip()
-        rel_info = rel_info.strip()
-        uri = uri_info[1:-1]
-        clean_uri = remove_oauth(uri)
-        clean_links_list.append('<{0}>; {1}'.format(
-            urlparse.urlunparse(clean_uri), rel_info))
-    return ', '.join(clean_links_list)
+    header_link_data = parse_link_header(link_header)
+    for data in header_link_data:
+        data['link'] = remove_oauth(data['link'])
+    return format_link_header(header_link_data)
 
 
 def remove_oauth(uri):
