@@ -194,37 +194,68 @@ def rewrite_links(link_header):
     </api/issues?per_page=50&page=2>; rel="next",
     </api/issues?per_page=50&page=4>; rel="last" etc.
     '''
-    links = link_header.split(',')
-    new_links = []
-    for link in links:
-        api_path, endpoint_path = link.rsplit('/', 1)
-        if api_path.strip().startswith('<https://api.github.com/repositories'):
-            new_links.append(endpoint_path.replace('issues?', '</api/issues?'))
-        if api_path.strip().startswith('<https://api.github.com/search'):
-            new_links.append(endpoint_path.replace('issues?', '</api/issues/search?'))
-    return ', '.join(new_links)
+    header_link_data = parse_link_header(link_header)
+    for data in header_link_data:
+        uri = data['link']
+        api_path, endpoint_path = uri.rsplit('/', 1)
+        if api_path.strip().startswith('https://api.github.com/repositories'):
+            data['link'] = endpoint_path.replace('issues?', '/api/issues?')
+        if api_path.strip().startswith('https://api.github.com/search'):
+            data['link'] = endpoint_path.replace('issues?', '/api/issues/search?')
+    return format_link_header(header_link_data)
 
 
 def sanitize_link(link_header):
-    '''Remove any oauth tokens from the Link header that GitHub gives to us,
-    and return a rewritten Link header (see rewrite_links)'''
+    '''Remove any oauth tokens from the Link header from GitHub.
+
+    see Also rewrite_links.'''
+    header_link_data = parse_link_header(link_header)
+    for data in header_link_data:
+        data['link'] = remove_oauth(data['link'])
+    return format_link_header(header_link_data)
+
+
+def remove_oauth(uri):
+    '''Remove Oauth token from a uri.
+
+    Github returns Oauth tokens in some circumstances. We remove it for
+    avoiding to spill it in public as it's not necessary in Link Header.
+    '''
+    uri_group = urlparse.urlparse(uri)
+    parameters = uri_group.query.split('&')
+    clean_parameters_list = [parameter for parameter in parameters
+                             if not parameter.startswith('access_token=')]
+    clean_parameters = '&'.join(clean_parameters_list)
+    clean_uri = uri_group._replace(query=clean_parameters)
+    return urlparse.urlunparse(clean_uri)
+
+
+def rewrite_and_sanitize_link(link_header):
+    '''Sanitize and then rewrite a link header.'''
+    return rewrite_links(sanitize_link(link_header))
+
+
+def parse_link_header(link_header):
+    '''Return a structured list of objects for an HTTP Link header.
+
+    This is adjusted for github links it will break in a more generic case.
+    Use something like https://pypi.python.org/pypi/LinkHeader/ instead.
+    '''
     links_list = link_header.split(',')
-    clean_links_list = []
+    header_link_data = []
     for link in links_list:
         uri_info, rel_info = link.split(';')
         uri_info = uri_info.strip()
         rel_info = rel_info.strip()
+        rel = rel_info.split('=')
+        rel_value = rel[1][1:-1]
         uri = uri_info[1:-1]
-        uri_group = urlparse.urlparse(uri)
-        parameters = uri_group.query.split('&')
-        clean_parameters_list = [parameter for parameter in parameters
-                                 if not parameter.startswith('access_token=')]
-        clean_parameters = '&'.join(clean_parameters_list)
-        clean_uri = uri_group._replace(query=clean_parameters)
-        clean_links_list.append('<{0}>; {1}'.format(
-            urlparse.urlunparse(clean_uri), rel_info))
-    return ', '.join(clean_links_list)
+        header_link_data.append({'link': uri, 'rel': rel_value})
+    return header_link_data
 
 
-def rewrite_and_sanitize_link(link_header):
-    return rewrite_links(sanitize_link(link_header))
+def format_link_header(link_header_data):
+    '''Return a string ready to be used in a Link: header.'''
+    links = ['<{0}>; rel="{1}"'.format(data['link'], data['rel'])
+             for data in link_header_data]
+    return ', '.join(links)
