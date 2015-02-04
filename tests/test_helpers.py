@@ -28,6 +28,7 @@ GITHUB_ISSUES_LINK_HEADER = '<https://api.github.com/repositories/17839063/issue
 GITHUB_SEARCH_LINK_HEADER = '<https://api.github.com/search/issues?q=taco&page=2>; rel="next", <https://api.github.com/search/issues?q=taco&page=26>; rel="last"'
 REWRITTEN_ISSUES_LINK_HEADER = '</api/issues?per_page=50&page=3>; rel="next", </api/issues?per_page=50&page=4>; rel="last", </api/issues?per_page=50&page=1>; rel="first", </api/issues?per_page=50&page=1>; rel="prev"'
 REWRITTEN_SEARCH_LINK_HEADER = '</api/issues/search?q=taco&page=2>; rel="next", </api/issues/search?q=taco&page=26>; rel="last"'
+PARSED_LINKED_HEADERS = [{'link': 'https://api.github.com/repositories/17839063/issues?per_page=50&page=3', 'rel': 'next'}, {'link': 'https://api.github.com/repositories/17839063/issues?per_page=50&page=4', 'rel': 'last'}, {'link': 'https://api.github.com/repositories/17839063/issues?per_page=50&page=1', 'rel': 'first'}, {'link': 'https://api.github.com/repositories/17839063/issues?per_page=50&page=1', 'rel': 'prev'}]
 
 
 class TestHelpers(unittest.TestCase):
@@ -99,14 +100,14 @@ class TestHelpers(unittest.TestCase):
 
     def test_parse_http_link_headers(self):
         '''Test HTTP Links parsing for GitHub only.'''
-        parsed_headers = [{'link': 'https://api.github.com/repositories/17914657/issues?page=2', 'rel': 'next'}, {'link': 'https://api.github.com/repositories/17914657/issues?page=11', 'rel': 'last'}]
-        link_header = '<https://api.github.com/repositories/17914657/issues?page=2>; rel="next", <https://api.github.com/repositories/17914657/issues?page=11>; rel="last"'
+        link_header = GITHUB_ISSUES_LINK_HEADER
+        parsed_headers = PARSED_LINKED_HEADERS
         self.assertEqual(parse_link_header(link_header), parsed_headers)
 
     def test_format_http_link_headers(self):
         '''Test HTTP Links formating.'''
-        parsed_headers = [{'link': 'https://api.github.com/repositories/17914657/issues?page=2', 'rel': 'next'}, {'link': 'https://api.github.com/repositories/17914657/issues?page=11', 'rel': 'last'}]
-        link_header = '<https://api.github.com/repositories/17914657/issues?page=2>; rel="next", <https://api.github.com/repositories/17914657/issues?page=11>; rel="last"'
+        parsed_headers = PARSED_LINKED_HEADERS
+        link_header = GITHUB_ISSUES_LINK_HEADER
         self.assertEqual(format_link_header(parsed_headers), link_header)
 
 if __name__ == '__main__':
