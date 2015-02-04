@@ -226,6 +226,21 @@ def sanitize_link(link_header):
     return ', '.join(clean_links_list)
 
 
+def remove_oauth(uri):
+    '''Remove Oauth token from a uri.
+
+    Github returns Oauth tokens in some circumstances. We remove it for
+    avoiding to spill it in public as it's not necessary in Link Header.
+    '''
+    uri_group = urlparse.urlparse(uri)
+    parameters = uri_group.query.split('&')
+    clean_parameters_list = [parameter for parameter in parameters
+                             if not parameter.startswith('access_token=')]
+    clean_parameters = '&'.join(clean_parameters_list)
+    clean_uri = uri_group._replace(query=clean_parameters)
+    return clean_uri
+
+
 def rewrite_and_sanitize_link(link_header):
     return rewrite_links(sanitize_link(link_header))
 
