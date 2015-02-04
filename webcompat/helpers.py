@@ -215,12 +215,7 @@ def sanitize_link(link_header):
         uri_info = uri_info.strip()
         rel_info = rel_info.strip()
         uri = uri_info[1:-1]
-        uri_group = urlparse.urlparse(uri)
-        parameters = uri_group.query.split('&')
-        clean_parameters_list = [parameter for parameter in parameters
-                                 if not parameter.startswith('access_token=')]
-        clean_parameters = '&'.join(clean_parameters_list)
-        clean_uri = uri_group._replace(query=clean_parameters)
+        clean_uri = remove_oauth(uri)
         clean_links_list.append('<{0}>; {1}'.format(
             urlparse.urlunparse(clean_uri), rel_info))
     return ', '.join(clean_links_list)
