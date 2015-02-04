@@ -206,8 +206,9 @@ def rewrite_links(link_header):
 
 
 def sanitize_link(link_header):
-    '''Remove any oauth tokens from the Link header that GitHub gives to us,
-    and return a rewritten Link header (see rewrite_links)'''
+    '''Remove any oauth tokens from the Link header from GitHub.
+
+    see Also rewrite_links.'''
     header_link_data = parse_link_header(link_header)
     for data in header_link_data:
         data['link'] = remove_oauth(data['link'])
@@ -230,6 +231,7 @@ def remove_oauth(uri):
 
 
 def rewrite_and_sanitize_link(link_header):
+    '''Sanitize and then rewrite a link header.'''
     return rewrite_links(sanitize_link(link_header))
 
 
