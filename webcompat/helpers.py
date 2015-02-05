@@ -249,9 +249,9 @@ def parse_link_header(link_header):
         uri_info, rel_info = link.split(';')
         uri_info = uri_info.strip()
         rel_info = rel_info.strip()
-        rel = rel_info.split('=')
-        rel_value = rel[1][1:-1]
+        rel_keyword, value = rel_info.split('=')
         # rel values have the form `rel="foo"`, we want `foo`.
+        rel_value = value[1:-1]
         # uri have the form `<http://…>`, we want `http://…`.
         uri = uri_info[1:-1]
         header_link_data.append({'link': uri, 'rel': rel_value})
