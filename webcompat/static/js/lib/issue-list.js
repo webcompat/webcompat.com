@@ -569,7 +569,12 @@ issueList.MainView = Backbone.View.extend({
   initialize: function() {
     this.initSubViews();
   },
-  githubWarp: function() {
+  githubWarp: function(e) {
+    // make sure we're not typing in the search input.
+    if (e.target.nodeName === 'INPUT') {
+      return;
+    }
+
     var warpPipe = "http://github.com/" + repoPath;
     return location.href = warpPipe;
   },

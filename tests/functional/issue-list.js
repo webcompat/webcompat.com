@@ -185,6 +185,22 @@ define([
         .end();
     },
 
+    'pressing g inside of search input *doesn\'t* go to github issues': function() {
+      return this.remote
+        // set a short timeout, so we don't have to wait 10 seconds
+        // to realize we're not at GitHub.
+        .setFindTimeout(50)
+        .get(require.toUrl(url))
+        .findByCssSelector('#IssueList-search-input').click()
+        .type('g')
+        .end()
+        .findByCssSelector('.repo-container .issues-listing')
+        .then(assert.fail, function(err) {
+           assert.isTrue(/NoSuchElement/.test(String(err)));
+        })
+        .end();
+    },
+
     'loading issues page has default params in URL': function() {
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
