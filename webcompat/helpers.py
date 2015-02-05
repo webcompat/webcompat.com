@@ -239,16 +239,20 @@ def parse_link_header(link_header):
     '''Return a structured list of objects for an HTTP Link header.
 
     This is adjusted for github links it will break in a more generic case.
+    Do not use this code for your own HTTP Link header parsing.
     Use something like https://pypi.python.org/pypi/LinkHeader/ instead.
     '''
     links_list = link_header.split(',')
     header_link_data = []
     for link in links_list:
+        # Assuming that link is `<uri>; rel="blah"`. Github only.
         uri_info, rel_info = link.split(';')
         uri_info = uri_info.strip()
         rel_info = rel_info.strip()
-        rel = rel_info.split('=')
-        rel_value = rel[1][1:-1]
+        rel_keyword, value = rel_info.split('=')
+        # rel values have the form `rel="foo"`, we want `foo`.
+        rel_value = value[1:-1]
+        # uri have the form `<http://…>`, we want `http://…`.
         uri = uri_info[1:-1]
         header_link_data.append({'link': uri, 'rel': rel_value})
     return header_link_data
