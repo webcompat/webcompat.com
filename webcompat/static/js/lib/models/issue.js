@@ -134,10 +134,10 @@ issueList.IssueCollection = Backbone.Collection.extend({
   parseHeader: function(linkHeader) {
     /* Returns an object like so:
       {
-        next: "https://api.github.com/repositories/17839063/issues?page=3",
-        last: "https://api.github.com/repositories/17839063/issues?page=4",
-        first: "https://api.github.com/repositories/17839063/issues?page=1",
-        prev: "https://api.github.com/repositories/17839063/issues?page=1"
+        next:  "/api/issues?per_page=50&state=open&page=3",
+        last:  "/api/issues?per_page=50&state=open&page=4",
+        first: "/api/issues?per_page=50&state=open&page=1",
+        prev:  "/api/issues?per_page=50&state=open&page=1"
       } */
     var result = {};
     var entries = linkHeader.split(',');
