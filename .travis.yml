@@ -25,7 +25,7 @@ env:
 before_install:
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
-  - "mkdir -p $HOME/.selenium && cd $HOME/.selenium && wget http://selenium-release.storage.googleapis.com/2.44/selenium-server-standalone-2.44.0.jar"
+  - "mkdir -p $HOME/.selenium && cd $HOME/.selenium && wget -nc http://selenium-release.storage.googleapis.com/2.44/selenium-server-standalone-2.44.0.jar"
   - java -jar selenium-server-standalone-2.44.0.jar &> /dev/null &
   - cd -
 
