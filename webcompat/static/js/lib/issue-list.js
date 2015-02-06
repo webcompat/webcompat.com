@@ -290,11 +290,13 @@ issueList.PaginationControlsView = Backbone.View.extend({
   initialize: function() {
 
   },
-  broadcastNext: function() {
+  broadcastNext: function(e) {
     issueList.events.trigger('paginate:next');
+    e.preventDefault();
   },
-  broadcastPrevious: function() {
+  broadcastPrevious: function(e) {
     issueList.events.trigger('paginate:previous');
+    e.preventDefault();
   }
 });
 
@@ -306,6 +308,8 @@ issueList.IssueView = Backbone.View.extend({
   _filterRegex: /&*stage=(new|needscontact|needsdiagnosis|contactready|sitewait|closed)&*/i,
   _isLoggedIn: $('body').data('username'),
   _loadingIndicator: $('.js-loader'),
+  _nextButton: $('.js-pagination-next'),
+  _prevButton: $('.js-pagination-previous'),
   initialize: function() {
     this.issues = new issueList.IssueCollection();
 
@@ -388,30 +392,44 @@ issueList.IssueView = Backbone.View.extend({
   initPaginationLinks: function(issues) {
     // if either the next or previous page numbers are null
     // disable the buttons and add .is-disabled classes.
-    var nextButton = $('.js-pagination-next');
-    var prevButton = $('.js-pagination-previous');
-    var isLastPage = _.bind(function() {
-      return this.issues.getNextPage() == null;
-    }, this);
-    var isFirstPage = _.bind(function() {
-      return this.issues.getPrevPage() == null;
-    }, this);
+    var nextPage = this.issues.getNextPage();
+    var prevPage = this.issues.getPrevPage();
+    var isLastPage = function() {
+      return nextPage == null;
+    };
+    var isFirstPage = function() {
+      return prevPage == null;
+    };
     var isSinglePage = isLastPage() && isFirstPage();
 
     if (!issues.length || isSinglePage) {
       // hide pagination buttons if there are no results,
       // or the results are limited to a single page.
-      nextButton.addClass('wc-hidden');
-      prevButton.addClass('wc-hidden');
+      this._nextButton.addClass('wc-hidden');
+      this._prevButton.addClass('wc-hidden');
       return;
     }
 
-    nextButton.removeClass('wc-hidden')
-              .prop('disabled', isLastPage())
-              .toggleClass('is-disabled', isLastPage());
-    prevButton.removeClass('wc-hidden')
-              .prop('disabled', isFirstPage())
-              .toggleClass('is-disabled', isFirstPage());
+    this._nextButton.removeClass('wc-hidden')
+                    .prop('disabled', isLastPage())
+                    .toggleClass('is-disabled', isLastPage());
+    this._prevButton.removeClass('wc-hidden')
+                    .prop('disabled', isFirstPage())
+                    .toggleClass('is-disabled', isFirstPage());
+
+    if (nextPage) {
+      // chop off leading "/api" and set @href
+      this._nextButton.attr('href', this.issues.getNextPage().slice(4));
+    } else {
+      this._nextButton.attr('href', 'javascript: void(0);');
+    }
+
+    if (prevPage) {
+      // chop off leading "/api" and set @href
+      this._prevButton.attr('href', this.issues.getPrevPage().slice(4));
+    } else {
+      this._prevButton.attr('href', 'javascript: void(0);');
+    }
   },
   labelSearch: function(e) {
     // clicking on a label in the issues view should trigger a
@@ -550,7 +568,7 @@ issueList.IssueView = Backbone.View.extend({
   updateURLParams: function() {
     // push params from the model back to the URL so it can be used for bookmarks,
     // link sharing, etc.
-    // an optional category can be passed in to be added.
+    // also make sure next/prev link @hrefs are in sync
     var serializedParams = $.param(this.issues.params);
 
     if (history.pushState) {
