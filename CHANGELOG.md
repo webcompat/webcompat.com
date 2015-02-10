@@ -1,3 +1,10 @@
+## 1.5.1 - 2014-02-10
+
+* Refactor back end Link header parsing [Pull #550](https://github.com/webcompat/webcompat.com/pull/550) [Issue #451](https://github.com/webcompat/webcompat.com/issues/451) 
+* Refactor back end code handling categories [Pull #534](https://github.com/webcompat/webcompat.com/pull/534) [Issue #533](https://github.com/webcompat/webcompat.com/issues/533)
+* Don't warp to GitHub if you're just searching for a word with the letter g in it (oops) [Pull #552](https://github.com/webcompat/webcompat.com/pull/552) [Issue #549](https://github.com/webcompat/webcompat.com/issues/549) [Issue #555](https://github.com/webcompat/webcompat.com/issues/555)
+* Use history traversal when using the back arrow button from issue -> all isues [Pull #547](https://github.com/webcompat/webcompat.com/pull/547) [Issue #546](https://github.com/webcompat/webcompat.com/issues/546)
+
 ## 1.5.0 - 2014-01-29
 
 * Keep track of /issues state via the URL bar [Issue #399](https://github.com/webcompat/webcompat.com/issues/399) [Issue #516](https://github.com/webcompat/webcompat.com/issues/516) [Pull #542](https://github.com/webcompat/webcompat.com/pull/542)
