@@ -106,13 +106,11 @@ def get_issue_category(issue_category):
     * needsdiagnosis
     * sitewait
     '''
-    category_list = ['contactready', 'needscontact',
-                     'needsdiagnosis', 'sitewait']
     issues_path = 'repos/{0}'.format(ISSUES_PATH)
     params = request.args.copy()
 
-    if issue_category in map(add_status, category_list):
-        params['labels'] = issue_category
+    if issue_category in CATEGORY_LIST:
+        params['labels'] = add_status(issue_category)
         if g.user:
             issues = github.raw_request('GET', issues_path, params=params)
         else:
@@ -192,14 +190,12 @@ def get_category_from_search(issue_category):
     endpoint. Once it's fixed, we can get "contactready", "needsdiagnosis"
     and "sitewait" issues from /issues/category/<issue_category>.
     '''
-    category_list = ['contactready', 'needscontact',
-                     'needsdiagnosis', 'sitewait']
     params = request.args.copy()
 
-    if issue_category in map(add_status, category_list):
-        query_string = 'label:{0}'.format(issue_category)
+    if issue_category in CATEGORY_LIST:
+        query_string = 'label:{0}'.format(add_status(issue_category))
     elif issue_category == 'new':
-        query_string = ' '.join(['-label:%s' % cat for cat in category_list])
+        query_string = ' '.join(['-label:%s' % cat for cat in NS_CAT_LIST])
         query_string += ' state:open '
     return get_search_results(query_string, params)
 
