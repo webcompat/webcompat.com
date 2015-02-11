@@ -34,6 +34,8 @@ api = Blueprint('api', __name__, url_prefix='/api')
 JSON_MIME = 'application/json'
 ISSUES_PATH = app.config['ISSUES_REPO_URI']
 REPO_PATH = ISSUES_PATH[:-7]
+CATEGORY_LIST = ['contactready', 'needscontact', 'needsdiagnosis', 'sitewait']
+NS_CAT_LIST = map(add_status, CATEGORY_LIST)
 
 
 def get_username():
