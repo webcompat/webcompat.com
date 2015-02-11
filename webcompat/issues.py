@@ -13,6 +13,7 @@ import requests
 
 from webcompat import app
 from webcompat.form import build_formdata
+from webcompat.helpers import add_status
 from webcompat import github
 
 REPO_URI = app.config['ISSUES_REPO_URI']
@@ -64,7 +65,7 @@ def filter_new(issues):
         labels = [label.get('name') for label in issue.get('labels')]
         # if the intersection of labels and category_list is not empty
         # then it's not part of untriaged
-        common_cat = set(labels).intersection(category_list)
+        common_cat = set(labels).intersection(map(add_status, category_list))
         if common_cat:
             match = False
         return match

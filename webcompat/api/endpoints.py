@@ -21,6 +21,7 @@ from webcompat import app
 from webcompat import cache
 from webcompat import github
 from webcompat import limiter
+from webcompat.helpers import add_status
 from webcompat.helpers import get_headers
 from webcompat.helpers import get_request_headers
 from webcompat.helpers import get_user_info
@@ -108,7 +109,7 @@ def get_issue_category(issue_category):
     issues_path = 'repos/{0}'.format(ISSUES_PATH)
     params = request.args.copy()
 
-    if issue_category in category_list:
+    if issue_category in map(add_status, category_list):
         params['labels'] = issue_category
         if g.user:
             issues = github.raw_request('GET', issues_path, params=params)
@@ -193,7 +194,7 @@ def get_category_from_search(issue_category):
                      'needsdiagnosis', 'sitewait']
     params = request.args.copy()
 
-    if issue_category in category_list:
+    if issue_category in map(add_status, category_list):
         query_string = 'label:{0}'.format(issue_category)
     elif issue_category == 'new':
         query_string = ' '.join(['-label:%s' % cat for cat in category_list])
