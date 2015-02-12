@@ -144,6 +144,20 @@ haven’t `filled in the ``GITHUB_CLIENT_ID`` or
 
    Auth 404
 
+Configuring The Test Repo Labels
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The user interface of WebCompat is currently highly dependent of the labelling system in the github repo. It means you need to have the right set of labels. At this stage we create them by hand (we should `probably create a script`_ for initializing a repo on github with the right labels). The main labels to create are:
+
+- ``status-needsdiagnosis``
+- ``status-needscontact ``
+- ``status-contactready``
+- ``status-sitewait``
+- ``status-closed-duplicate``
+- ``status-closed-fixed``
+- ``status-closed-invalid``
+
+There are a couple of additional labels with ``browser-`` and ``os-``.
 
 
 Starting The Server
