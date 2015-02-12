@@ -23,8 +23,13 @@ If you feel intimidated by the project, do not forget to check for `good first p
 Contents:
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 3
 
+   installation
+   contributing
+   api/intro
+   tools
+   history
 
 
 Indices and tables

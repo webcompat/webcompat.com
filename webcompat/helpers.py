@@ -263,3 +263,8 @@ def format_link_header(link_header_data):
     links = ['<{0}>; rel="{1}"'.format(data['link'], data['rel'])
              for data in link_header_data]
     return ', '.join(links)
+
+
+def add_status(label):
+    '''Add the `status-` namespace to a label.'''
+    return "status-%s" % (label)
