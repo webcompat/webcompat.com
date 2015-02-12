@@ -448,6 +448,9 @@ issueList.IssueView = Backbone.View.extend({
     _.forEach(filters, function(filter) {
       delete this.issues.params[filter];
     }, this);
+
+    // always go back to page 1 after toggling a stage filter
+    this.updateModelParams('page=1');
   },
   requestNextPage: function() {
     var nextPage;
