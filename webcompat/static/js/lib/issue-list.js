@@ -166,7 +166,6 @@ issueList.FilterView = Backbone.View.extend({
       this.updateResults(btn.data('filter'));
       this.addFilterToModel(filterParam);
     } else {
-      this.removeFiltersFromModel();
       this.updateResults();
     }
   },
