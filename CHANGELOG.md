@@ -1,3 +1,8 @@
+## 1.5.2 - 2014-02-14
+
+* Change pagination buttons to links with meaninful hrefs [Pull #553](https://github.com/webcompat/webcompat.com/pull/553) [Issue #511](https://github.com/webcompat/webcompat.com/issues/511)
+* Fix mis-quoted class attribute [PUll #559](https://github.com/webcompat/webcompat.com/pull/559)
+
 ## 1.5.1 - 2014-02-10
 
 * Refactor back end Link header parsing [Pull #550](https://github.com/webcompat/webcompat.com/pull/550) [Issue #451](https://github.com/webcompat/webcompat.com/issues/451) 
