@@ -136,6 +136,8 @@ def index():
     browser_name = get_browser_name(ua_header)
     # GET means you want to file a report.
     if request.method == 'GET':
+        if g.user:
+            get_user_info()
         return render_template('index.html', form=bug_form,
                                browser=browser_name)
     # Form submission.
