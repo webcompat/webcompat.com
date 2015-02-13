@@ -12,7 +12,11 @@
     font-weight:700;
     font-size:1em;
     margin-top:.2em;
+    text-decoration: none;
   }
+    .wc-Pagination-link:focus {
+      color: inherit;
+    }
     .wc-Pagination-link.is-disabled {
       cursor:inherit;
       opacity:.6;
