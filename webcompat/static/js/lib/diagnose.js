@@ -32,6 +32,7 @@ diagnose.SiteWaitCollection = Backbone.Collection.extend({
 
 diagnose.MyIssuesView = Backbone.View.extend({
   el: $('#my-issues'),
+  _userName: $('body').data('username'),
   initialize: function() {
     var self = this;
     var headersBag = {headers: {'Accept': 'application/json'}};
@@ -45,6 +46,7 @@ diagnose.MyIssuesView = Backbone.View.extend({
     this.$el.html(this.template({
       // manually slice out the latest 6.
       // in the future we'll allow the user to "scroll" these.
+      userName: this._userName,
       userIssues: this.issues.toJSON().slice(0,6)
     }));
     return this;

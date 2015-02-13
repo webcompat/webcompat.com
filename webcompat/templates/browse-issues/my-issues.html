@@ -1,6 +1,8 @@
 <div id="my-issues" class="r-Grid r-Grid--withGutter">
   <script type="text/template" id="my-issues-tmpl">
-  <h3 class="wc-titleIssue">Submitted by Me</h3>
+  <h3 class="wc-titleIssue">
+    <a class="wc-titleIssue-link" href="{{ url_for('show_issues') }}?creator=<%= userName %>">Submitted by Me</a>
+  </h3>
   <% if (userIssues.length) { %>
     <% _.each(userIssues, function(issue) { %>
     <div class="r-Grid-cell r-all--1of2 r-maxM--2of2">
