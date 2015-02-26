@@ -25,7 +25,7 @@ from webcompat.helpers import get_headers
 from webcompat.helpers import get_request_headers
 from webcompat.helpers import get_user_info
 from webcompat.helpers import normalize_api_params
-from webcompat.issues import filter_untriaged
+from webcompat.issues import filter_new
 from webcompat.issues import proxy_request
 
 
@@ -98,12 +98,13 @@ def get_issue_category(issue_category):
     '''Return all issues for a specific category.
 
     issue_category can be of x types:
-    * untriaged (We take care in case there’s no bug)
+    * new
     * contactready
     * needsdiagnosis
     * sitewait
     '''
-    category_list = ['contactready', 'needsdiagnosis', 'sitewait']
+    category_list = ['contactready', 'needscontact',
+                     'needsdiagnosis', 'sitewait']
     issues_path = 'repos/{0}'.format(ISSUES_PATH)
     params = request.args.copy()
 
@@ -119,16 +120,16 @@ def get_issue_category(issue_category):
             issues = github.raw_request('GET', issues_path, params=params)
         else:
             issues = proxy_request('get', params=params)
-    # Note that 'untriaged' here is primarily used on the hompage.
-    # For paginated results on the /issues page, see /issues/search/untriaged.
-    elif issue_category == 'untriaged':
+    # Note that 'new' here is primarily used on the hompage.
+    # For paginated results on the /issues page, see /issues/search/new.
+    elif issue_category == 'new':
         if g.user:
             issues = github.raw_request('GET', issues_path, params=params)
         else:
             issues = proxy_request('get', params=params)
-        # Do not send random JSON to filter_untriaged
+        # Do not send random JSON to filter_new
         if issues.status_code == 200:
-            return (filter_untriaged(json.loads(issues.content)),
+            return (filter_new(json.loads(issues.content)),
                     issues.status_code, get_headers(issues))
         else:
             return ({}, issues.status_code, get_headers(issues))
@@ -184,18 +185,19 @@ def get_category_from_search(issue_category):
     the home page - but this endpoint returns paginated results.
 
     Note: until GitHub fixes a bug where requesting issues filtered by labels
-    doesn't return pagination via Link, we get those results from this endpoint.
-    Once it's fixed, we can get "contactready", "needsdiagnosis" and "sitewait"
-    issues from /issues/category/<issue_category>.
+    doesn't return pagination via Link, we get those results from this
+    endpoint. Once it's fixed, we can get "contactready", "needsdiagnosis"
+    and "sitewait" issues from /issues/category/<issue_category>.
     '''
-    category_list = ['contactready', 'needsdiagnosis', 'sitewait']
+    category_list = ['contactready', 'needscontact',
+                     'needsdiagnosis', 'sitewait']
     params = request.args.copy()
 
     if issue_category in category_list:
         query_string = 'label:{0}'.format(issue_category)
-    elif issue_category == 'untriaged':
-        query_string = ('state:open -label:contactready '
-                        '-label:sitewait -label:needsdiagnosis')
+    elif issue_category == 'new':
+        query_string = ' '.join(['-label:%s' % cat for cat in category_list])
+        query_string += ' state:open '
     return get_search_results(query_string, params)
 
 

@@ -8,19 +8,19 @@
       <script type="text/template" id="issuelist-filter-tmpl">
       <div class="Dropdown Dropdown--large js-dropdown-wrapper"></div>
       <div>
-        <button type="button" class="wc-Filter wc-Filter--untriaged" data-filter="untriaged">
-          <span class="wc-Filter-count"></span> Untriaged</span>
+        <button type="button" class="wc-Filter wc-Filter--new js-filter-button" data-filter="new">
+          <span class="wc-Filter-count"></span> New Issues</span>
         </button>
-        <button type="button" class="wc-Filter wc-Filter--need" data-filter="needsdiagnosis">
+        <button type="button" class="wc-Filter wc-Filter--need js-filter-button" data-filter="needsdiagnosis">
           <span class="wc-Filter-count"></span> Needs Diagnosis</span>
         </button>
-        <button type="button" class="wc-Filter wc-Filter--ready" data-filter="contactready">
+        <button type="button" class="wc-Filter wc-Filter--ready js-filter-button" data-filter="contactready">
           <span class="wc-Filter-count"></span> Ready for outreach</span>
         </button>
-        <button type="button" class="wc-Filter wc-Filter--sitewait" data-filter="sitewait">
+        <button type="button" class="wc-Filter wc-Filter--sitewait js-filter-button" data-filter="sitewait">
           <span class="wc-Filter-count"></span> Site contacted</span>
         </button>
-        <button type="button" class="wc-Filter wc-Filter--close" data-filter="closed">
+        <button type="button" class="wc-Filter wc-Filter--close js-filter-button" data-filter="closed">
           <span class="wc-Filter-count"></span> Closed</span>
         </button>
       </div>
@@ -34,7 +34,7 @@
         <input type="text" id="IssueList-search-input" class="IssueList-search-form mousetrap" placeholder="Search by keyword">
         <button role="button" type="submit" class="r-ResetButton IssueList-search-button js-search-button">
           <span class="wc-sronly">Search</span>
-          <span class="wc-Icon wc-Icon--search aria-hidden="true""></span>
+          <span class="wc-Icon wc-Icon--search" aria-hidden="true"></span>
         </button>
       </div>
       </script>
@@ -52,8 +52,8 @@
             </div>
           </div>
           <div class="r-Grid-cell r-all--1of2 wc-Pagination js-pagination-controls">
-            <button class="r-ResetButton wc-Pagination-link js-pagination-previous">previous</button>
-            <button class="r-ResetButton wc-Pagination-link js-pagination-next">next</button>
+            <a class="wc-Pagination-link js-pagination-previous" href="">previous</a>
+            <a class="wc-Pagination-link js-pagination-next" href="">next</a>
           </div>
         </div>
       </div>
@@ -75,7 +75,7 @@
             </div>
             <div class="IssueItem-section">
               <span class="IssueItem-label js-issue-label"><% _.each(issue.labels, function(label) { %>
-                <a href="#" class="wc-Labels" title="Labels : <%= label.name %>" style="border-color: #<%=label.color%>"><%= label.name %></a>
+                <a href="#" class="wc-Labels" title="Labels : <%= label.name %>"><%= label.name %></a>
               <% }); %></span>
             </div>
           </div>

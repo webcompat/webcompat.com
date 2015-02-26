@@ -152,19 +152,19 @@ define([
         .findByCssSelector('.IssueList-search-form').click()
         .type('taco')
         .end()
-        .findAllByCssSelector('button.wc-Filter--untriaged').click()
+        .findAllByCssSelector('button.wc-Filter--new').click()
         .end()
         .findByCssSelector('.IssueList-search-form').getVisibleText()
         .then(function (text) {
           assert.equal(text, '', 'Clicking filter should empty search text');
         })
         .end()
-        .findAllByCssSelector('button.wc-Filter--untriaged').click()
+        .findAllByCssSelector('button.wc-Filter--new').click()
         .end()
         .findByCssSelector('.IssueList-search-form').click()
         .type('taco')
         .end()
-        .findAllByCssSelector('button.wc-Filter--untriaged').getAttribute('class')
+        .findAllByCssSelector('button.wc-Filter--new').getAttribute('class')
         .then(function (className) {
           assert.notInclude(className, 'is-active', 'Searching should clear all filters');
         });
@@ -184,6 +184,153 @@ define([
         })
         .end();
     },
+
+    'pressing g inside of search input *doesn\'t* go to github issues': function() {
+      return this.remote
+        // set a short timeout, so we don't have to wait 10 seconds
+        // to realize we're not at GitHub.
+        .setFindTimeout(50)
+        .get(require.toUrl(url))
+        .findByCssSelector('#IssueList-search-input').click()
+        .type('g')
+        .end()
+        .findByCssSelector('.repo-container .issues-listing')
+        .then(assert.fail, function(err) {
+           assert.isTrue(/NoSuchElement/.test(String(err)));
+        })
+        .end();
+    },
+
+    'loading issues page has default params in URL': function() {
+      return this.remote
+        .setFindTimeout(intern.config.wc.pageLoadTimeout)
+        .get(require.toUrl(url))
+        // find something so we know the page has loaded
+        .findByCssSelector('.IssueItem:nth-of-type(1)')
+        .getCurrentUrl()
+        .then(function(currUrl){
+          assert.include(currUrl, 'page=1&per_page=50&state=open', 'Default model params are added to the URL');
+        });
+    },
+
+    'loading partial params results in merge with defaults': function() {
+        var params = '?page=2';
+        return this.remote
+          .setFindTimeout(intern.config.wc.pageLoadTimeout)
+          .get(require.toUrl(url + params))
+          // find something so we know the page has loaded
+          .findByCssSelector('.IssueItem:nth-of-type(1)')
+          .getCurrentUrl()
+          .then(function(currUrl){
+            assert.include(currUrl, 'page=2&per_page=50&state=open', 'Default model params are merged with partial URL params');
+          });
+    },
+
+    'dropdowns reflect state from URL': function() {
+      var params = '?per_page=25&sort=updated&direction=desc&state=all';
+
+      return this.remote
+        .setFindTimeout(intern.config.wc.pageLoadTimeout)
+        .get(require.toUrl(url + params))
+        .findByCssSelector('.js-dropdown-pagination .js-dropdown-toggle h1').getVisibleText()
+        .then(function(text){
+          assert.equal(text, 'Show 25', 'Pagination dropdown label is updated from URL params');
+        })
+        .end()
+        .findAllByCssSelector('.js-issuelist-filter .js-dropdown-toggle h1').getVisibleText()
+        .then(function(text){
+          assert.equal(text, 'View all Issues', 'Filter dropdown label is updated from URL params');
+        })
+        .end()
+        .findAllByCssSelector('.js-dropdown-sort .js-dropdown-toggle h1').getVisibleText()
+        .then(function(text){
+          assert.equal(text, 'Recently Updated', 'Sort dropdown label is updated from URL params');
+        })
+        .end();
+    },
+
+    'going back in history updates issue list and URL state': function() {
+      var params = '?per_page=25';
+
+      return this.remote
+        .setFindTimeout(intern.config.wc.pageLoadTimeout)
+        .get(require.toUrl(url + params))
+        .findByCssSelector('.js-dropdown-pagination .js-dropdown-toggle h1').getVisibleText()
+        .then(function(text){
+          assert.equal(text, 'Show 25', 'Pagination dropdown label is updated from URL params');
+        })
+        .end()
+        // Select "Show 100" from pagination dropdown
+        .findByCssSelector('.js-dropdown-pagination .js-dropdown-toggle').click()
+        .end()
+        .findByCssSelector('.js-dropdown-pagination li.Dropdown-item:nth-child(3) > a:nth-child(1)').click()
+        .end()
+        // find something so we know issues have been loaded
+        .findByCssSelector('.IssueItem:nth-of-type(1)')
+        .goBack()
+        .getCurrentUrl()
+        .then(function(currUrl){
+          assert.include(currUrl, 'per_page=25', 'URL param is back to where we started');
+        })
+        .end()
+        .findByCssSelector('.js-dropdown-pagination .js-dropdown-toggle h1').getVisibleText()
+        .then(function(text){
+          assert.equal(text, 'Show 25', 'Pagination dropdown label is back to where we started');
+        })
+        .end();
+    },
+
+    'clicking on a stage filter adds the correct param to the URL': function() {
+      return this.remote
+        .setFindTimeout(intern.config.wc.pageLoadTimeout)
+        .get(require.toUrl(url))
+        .findByCssSelector('[data-filter="contactready"]').click()
+        .end()
+        // find something so we know the page has loaded
+        .findByCssSelector('.IssueItem:nth-of-type(1)')
+        .getCurrentUrl()
+        .then(function(currUrl){
+          assert.include(currUrl, 'stage=contactready', 'Stage filter added to URL correctly.');
+        })
+        .end();
+    },
+
+    'toggling a stage filter doesn\'t leave the param in the URL': function() {
+      return this.remote
+        .setFindTimeout(intern.config.wc.pageLoadTimeout)
+        .get(require.toUrl(url))
+        .findByCssSelector('[data-filter="closed"]').click()
+        .end()
+        // find something so we know the page has loaded
+        .findByCssSelector('.IssueItem:nth-of-type(1)')
+        .end()
+        .findByCssSelector('[data-filter="closed"]').click()
+        .end()
+        .getCurrentUrl()
+        .then(function(currUrl){
+          assert.notInclude(currUrl, 'stage=closed', 'Stage filter added then removed from URL.');
+        })
+        .end();
+    },
+
+    'toggling between stage filters results in last param in URL': function() {
+      return this.remote
+        .setFindTimeout(intern.config.wc.pageLoadTimeout)
+        .get(require.toUrl(url))
+        .findByCssSelector('[data-filter="closed"]').click()
+        .end()
+        // find something so we know the page has loaded
+        .findByCssSelector('.IssueItem:nth-of-type(1)')
+        .end()
+        .findByCssSelector('[data-filter="sitewait"]').click()
+        .end()
+        .getCurrentUrl()
+        .then(function(currUrl){
+          assert.include(currUrl, 'stage=sitewait', 'Stage filter added to URL correctly.');
+          assert.notInclude(currUrl, 'stage=closed', 'Stage removed from URL correctly.');
+        })
+        .end();
+    }
 
     // 'clicking on a label performs a label search': function() {
     //   return this.remote

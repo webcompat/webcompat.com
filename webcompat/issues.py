@@ -50,25 +50,23 @@ def report_issue(form, proxy=False):
         return github.post('repos/{0}'.format(REPO_URI), build_formdata(form))
 
 
-def filter_untriaged(issues):
-    '''Return the list of untriaged issues, encoded as JSON.
+def filter_new(issues):
+    '''Return the list of new issues, encoded as JSON.
 
-    "untriaged" means anything that isn't an issue with a "contactready",
+    "new" means anything that isn't an issue with a "contactready",
     "sitewait", or "needsdiagnosis" label.
     '''
-    def is_untriaged(issue):
+    def is_new(issue):
         '''Filter function.'''
         match = True
-        if issue.get('labels') == []:
-            match = True
-        else:
-            for label in issue.get('labels'):
-                if 'contactready' in label.get('name'):
-                    match = False
-                elif 'needsdiagnosis' in label.get('name'):
-                    match = False
-                elif 'sitewait' in label.get('name'):
-                    match = False
+        category_list = ['contactready', 'needscontact',
+                         'needsdiagnosis', 'sitewait']
+        labels = [label.get('name') for label in issue.get('labels')]
+        # if the intersection of labels and category_list is not empty
+        # then it's not part of untriaged
+        common_cat = set(labels).intersection(category_list)
+        if common_cat:
+            match = False
         return match
 
-    return json.dumps([issue for issue in issues if is_untriaged(issue)])
+    return json.dumps([issue for issue in issues if is_new(issue)])

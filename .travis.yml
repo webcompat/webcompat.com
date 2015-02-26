@@ -1,8 +1,21 @@
+# use container-based environment
+sudo: false
+
 language: python
+
 python:
   - "2.7"
+
+# cache pip and npm package installations
+cache:
+  directories:
+    - node_modules
+    - $HOME/.pip-cache/
+    - $HOME/.selenium/
+
 addons:
-  firefox: "33.1"
+  firefox: "34.0"
+
 env:
   global:
     - ISSUES_REPO_URI=miketaylr/nobody-look-at-this/issues
@@ -12,18 +25,19 @@ env:
 before_install:
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
-  - wget http://selenium-release.storage.googleapis.com/2.44/selenium-server-standalone-2.44.0.jar
+  - "mkdir -p $HOME/.selenium && cd $HOME/.selenium && wget -nc http://selenium-release.storage.googleapis.com/2.44/selenium-server-standalone-2.44.0.jar"
   - java -jar selenium-server-standalone-2.44.0.jar &> /dev/null &
+  - cd -
 
 install:
   - travis_retry npm install -g grunt-cli
   - travis_retry npm install
-  - travis_retry pip install -r requirements.txt
+  - travis_retry pip install -r requirements.txt --download-cache $HOME/.pip-cache
   - cp config.py.example config.py
   - python run.py &
 
 before_script:
-  - "sleep 5"
+  - "sleep 2"
   - grunt
 
 # now run the tests!

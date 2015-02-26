@@ -18,8 +18,8 @@
     margin:0;
     background-color: transparent;
   }
-.IssueItem--untriaged {
-  border-left: 5px solid var(--wc-state-untriaged);
+.IssueItem--new {
+  border-left: 5px solid var(--wc-state-new);
 }
 .IssueItem--need {
   border-left: 5px solid var(--wc-state-need);

@@ -36,9 +36,9 @@
       this.set('stateClass', 'need');
       return 'Needs Diagnosis';
     }
-    //Untriaged is the default value.
-    this.set('stateClass', 'untriaged');
-    return 'Untriaged Issue';
+    //New is the default value.
+    this.set('stateClass', 'new');
+    return 'New Issue';
   },
   parse: function(response) {
     this.set({
@@ -109,7 +109,7 @@ issueList.IssueCollection = Backbone.Collection.extend({
   /* the url property is set in issueList.IssueView#fetchAndRenderIssues */
   initialize: function() {
     // set conservative defaults (first page of all open issues, 50 per page)
-    this.params = {page: 1, per_page: 50};
+    this.params = {page: 1, per_page: 50, state: 'open'};
     this.path = '/api/issues';
   },
   parse: function(response, jqXHR) {
@@ -134,10 +134,10 @@ issueList.IssueCollection = Backbone.Collection.extend({
   parseHeader: function(linkHeader) {
     /* Returns an object like so:
       {
-        next: "https://api.github.com/repositories/17839063/issues?page=3",
-        last: "https://api.github.com/repositories/17839063/issues?page=4",
-        first: "https://api.github.com/repositories/17839063/issues?page=1",
-        prev: "https://api.github.com/repositories/17839063/issues?page=1"
+        next:  "/api/issues?per_page=50&state=open&page=3",
+        last:  "/api/issues?per_page=50&state=open&page=4",
+        first: "/api/issues?per_page=50&state=open&page=1",
+        prev:  "/api/issues?per_page=50&state=open&page=1"
       } */
     var result = {};
     var entries = linkHeader.split(',');

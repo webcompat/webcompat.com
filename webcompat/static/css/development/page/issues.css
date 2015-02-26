@@ -73,9 +73,9 @@
     font-size:.8em;
   }
 }
-/*Untriaged*/
-.Issue-state--untriaged {
-  background-color: var(--wc-state-untriaged);
+/*New*/
+.Issue-state--new {
+  background-color: var(--wc-state-new);
 }
 /*Needs Diagnosis*/
 .Issue-state--need {

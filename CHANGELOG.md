@@ -1,3 +1,44 @@
+## 1.5.2 - 2014-02-14
+
+* Change pagination buttons to links with meaninful hrefs [Pull #553](https://github.com/webcompat/webcompat.com/pull/553) [Issue #511](https://github.com/webcompat/webcompat.com/issues/511)
+* Fix mis-quoted class attribute [PUll #559](https://github.com/webcompat/webcompat.com/pull/559)
+
+## 1.5.1 - 2014-02-10
+
+* Refactor back end Link header parsing [Pull #550](https://github.com/webcompat/webcompat.com/pull/550) [Issue #451](https://github.com/webcompat/webcompat.com/issues/451) 
+* Refactor back end code handling categories [Pull #534](https://github.com/webcompat/webcompat.com/pull/534) [Issue #533](https://github.com/webcompat/webcompat.com/issues/533)
+* Don't warp to GitHub if you're just searching for a word with the letter g in it (oops) [Pull #552](https://github.com/webcompat/webcompat.com/pull/552) [Issue #549](https://github.com/webcompat/webcompat.com/issues/549) [Issue #555](https://github.com/webcompat/webcompat.com/issues/555)
+* Use history traversal when using the back arrow button from issue -> all isues [Pull #547](https://github.com/webcompat/webcompat.com/pull/547) [Issue #546](https://github.com/webcompat/webcompat.com/issues/546)
+
+## 1.5.0 - 2014-01-29
+
+* Keep track of /issues state via the URL bar [Issue #399](https://github.com/webcompat/webcompat.com/issues/399) [Issue #516](https://github.com/webcompat/webcompat.com/issues/516) [Pull #542](https://github.com/webcompat/webcompat.com/pull/542)
+* Update docs and `run.py` script to recommend using localhost:5000 rather than 127.0.0.1 [Issue #537](https://github.com/webcompat/webcompat.com/issues/537) [Pull #539](https://github.com/webcompat/webcompat.com/pull/539)
+* Introduce concept of "needscontact" label (no UI yet) [Issue #531](https://github.com/webcompat/webcompat.com/issues/531) [Pull #534](https://github.com/webcompat/webcompat.com/pull/534)
+
+## 1.4.0 - 2014-01-13
+
+* Rename "Untriaged" to "New" [Pull #531](https://github.com/webcompat/webcompat.com/pull/531) [Issue #286](https://github.com/webcompat/webcompat.com/issues/286)
+* Fix bug where WebKit/Blink users couldn't open dropdown by clicking arrow [Pull #530](https://github.com/webcompat/webcompat.com/pull/530) [Issue #529](https://github.com/webcompat/webcompat.com/issues/529)
+* New color palette [Pull #521](https://github.com/webcompat/webcompat.com/pull/521)
+* Refactoring around "new" filter (and adds notion of "needscontact" label) [Pull #534](https://github.com/webcompat/webcompat.com/pull/534) [Issue #533](https://github.com/webcompat/webcompat.com/issues/533)
+
+## 1.3.5 - 2014-01-06
+
+* Update Intern to 2.2.0 and enable pretty reporter [Pull #528](https://github.com/webcompat/webcompat.com/pull/528) [Issue #527](https://github.com/webcompat/webcompat.com/issues/527)
+* Link remote debugging resources from contributors page [Issue #406](https://github.com/webcompat/webcompat.com/issues/406)
+* Change label borders to gray on /issues page [Pull #525](https://github.com/webcompat/webcompat.com/pull/525)
+* Bugfix: clicking on filter dropdown causes HTTP request [Pull #520](https://github.com/webcompat/webcompat.com/pull/520) [Issue #507](https://github.com/webcompat/webcompat.com/issues/507)
+* Bugfix: logging in from /issues page returned the user to the homepage [Pull #523](https://github.com/webcompat/webcompat.com/pull/523) [Issue #512](https://github.com/webcompat/webcompat.com/issues/512)
+
+## 1.3.4 - 2014-01-02
+
+* Display avatar for logged in users with small viewports [Pull #517](https://github.com/webcompat/webcompat.com/pull/517) [Issue #514](https://github.com/webcompat/webcompat.com/issues/514)
+* Fix broken DOM :bomb: [Pull #508](https://github.com/webcompat/webcompat.com/pull/508)
+* Fix missing arrow from dropdown component [Pull #506](https://github.com/webcompat/webcompat.com/pull/506)
+* Unit tests for `normalize_api_params` [Pull #502](https://github.com/webcompat/webcompat.com/issues/502)
+* Add links to resources for remote debugging (no pull, cherry picked) [Issue #406](https://github.com/webcompat/webcompat.com/issues/406)
+
 ## 1.3.3 - 2014-12-23
 
 * Add icons to page navigation [Pull #499](https://github.com/webcompat/webcompat.com/pull/499) [Issue #450](https://github.com/webcompat/webcompat.com/issues/450)
