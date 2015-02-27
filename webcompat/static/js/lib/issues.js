@@ -31,16 +31,15 @@ issues.TitleView = Backbone.View.extend({
       location.origin = location.protocol + '//' + location.host;
     }
 
-    // Only go back in history if we came from the /issues page.
-    if (document.referrer.indexOf(location.origin + '/issues') === 0) {
+    // Only go back in history if we came from the /issues page and there's
+    // actually some history to go back to
+    if ((document.referrer.indexOf(location.origin + '/issues') === 0) &&
+        (history.length !== 1)) {
       history.back();
-    // If there's nothing to go back to (link opened in new tab, for example)
-    // just go back to /issues.
-    } else if (history.length === 1) {
-      window.location = '/issues';
+      e.preventDefault();
+    } else {
+      location.href = '/issues';
     }
-
-    e.preventDefault();
   }
 });
 
