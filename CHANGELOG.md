@@ -1,3 +1,8 @@
+## 1.5.3 - 2014-02-26
+
+* Add a "Report an Issue" link to the global nav [Pull #568](https://github.com/webcompat/webcompat.com/pull/568) [Issue #565](https://github.com/webcompat/webcompat.com/issues/565)
+* Make "My Issues" a link to filtered Issues page (from the homepage) [Pull #561](https://github.com/webcompat/webcompat.com/pull/561) [Issue #560](https://github.com/webcompat/webcompat.com/pull/561)
+
 ## 1.5.2 - 2014-02-14
 
 * Change pagination buttons to links with meaninful hrefs [Pull #553](https://github.com/webcompat/webcompat.com/pull/553) [Issue #511](https://github.com/webcompat/webcompat.com/issues/511)
