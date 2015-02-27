@@ -60,3 +60,7 @@
 .wc-Icon--arrow-left:before {
   content: "\e603";
 }
+.wc-Icon--bug:before {
+  content: "\f188";
+}
+
