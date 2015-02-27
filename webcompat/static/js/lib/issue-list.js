@@ -317,7 +317,7 @@ issueList.IssueView = Backbone.View.extend({
       // There are some params in the URL
       if (category = window.location.search.match(this._filterRegex)) {
         // If there was a stage filter match, fire an event which loads results
-        this.updateModelParams(urlParams)
+        this.updateModelParams(urlParams);
         _.delay(function() {
           issueList.events.trigger('filter:activate', category[1]);
         }, 0);
@@ -424,7 +424,7 @@ issueList.IssueView = Backbone.View.extend({
     issueList.events.trigger('issues:update', {query: labelFilter});
     e.preventDefault();
   },
-  resetStageFilter: function(options) {
+  resetStageFilter: function() {
     // We also want to remove 'q' if present as well.
     delete this.issues.params['q'];
 
