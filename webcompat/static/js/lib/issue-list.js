@@ -484,6 +484,8 @@ issueList.IssueView = Backbone.View.extend({
     // splitting on & in case of multiple params
     // params are merged into issues model
     // call _.uniq() on it to ignore duplicate values
+    var hasPerPageChange = params.indexOf('per_page') !== -1;
+    var hasSortChange = params.indexOf('sort') !== -1;
     var paramsArray = _.uniq(params.split('&'));
 
     // paramsArray is an array of param 'key=value' string pairs
@@ -496,7 +498,7 @@ issueList.IssueView = Backbone.View.extend({
 
     //broadcast to each of the dropdowns that they need to update
     var pageDropdown;
-    if ('per_page' in this.issues.params) {
+    if (hasPerPageChange) {
       pageDropdown = 'per_page=' + this.issues.params.per_page;
       _.delay(function(){
         issueList.events.trigger('dropdown:update', pageDropdown);
@@ -505,7 +507,7 @@ issueList.IssueView = Backbone.View.extend({
 
     var sortDropdown;
     // all the sort options begin with sort, and end with direction.
-    if ('sort' in this.issues.params) {
+    if (hasSortChange) {
       sortDropdown = 'sort=' + this.issues.params.sort + '&direction=' + this.issues.params.direction;
       _.delay(function(){
         issueList.events.trigger('dropdown:update', sortDropdown);
