@@ -533,11 +533,9 @@ issueList.IssueView = Backbone.View.extend({
         delete this.issues.params[param];
       }, this));
 
-      var stateDropdown;
       if (currentStateParamName in this.issues.params) {
-        stateDropdown = stateParam;
         _.delay(function(){
-          issueList.events.trigger('dropdown:update', stateDropdown);
+          issueList.events.trigger('dropdown:update', stateParam);
         }, 0);
       }
     }
