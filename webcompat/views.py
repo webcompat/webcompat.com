@@ -178,7 +178,7 @@ def show_issue(number):
 @app.route('/thanks/<int:number>')
 def thanks(number):
     issue = number
-    uri = u"http://webcompat.com/issues/{0}".format(number)
+    uri = u"https://webcompat.com/issues/{0}".format(number)
     text = u"I just filed a bug on the internet: "
     encoded_issue = urllib.quote(uri.encode("utf-8"))
     encoded_text = urllib.quote(text.encode("utf-8"))

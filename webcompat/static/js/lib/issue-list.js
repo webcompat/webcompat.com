@@ -575,7 +575,7 @@ issueList.MainView = Backbone.View.extend({
       return;
     }
 
-    var warpPipe = "http://github.com/" + repoPath;
+    var warpPipe = "https://github.com/" + repoPath;
     return location.href = warpPipe;
   },
   initSubViews: function() {
