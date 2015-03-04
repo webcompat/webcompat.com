@@ -31,7 +31,6 @@ problem_choices = [
     (u'unknown_bug',     u'Somethign else - I\'ll add details below')
 ]
 url_message = u'A URL is required.'
-summary_message = u'Please give a summary.'
 username_message = u'A valid username must be {0} characters long'.format(
     random.randrange(0, 99))
 
@@ -48,8 +47,6 @@ class IssueForm(Form):
     url = StringField(u'Site URL*', [Required(message=url_message)])
     browser = StringField(u'Browser / Version', [Optional()])
     os = StringField(u'Operating System', [Optional()])
-    summary = StringField(u'Problem in 5 words*',
-                          [Required(message=summary_message)])
     username = StringField(u'Username',
                            [Length(max=0, message=username_message)])
     description = TextAreaField(u'Give more details (optional)', [Optional()],
@@ -163,6 +160,6 @@ def build_formdata(form_object):
         description=form_object.get('description')
     )
     result = {}
-    result['title'] = summary
+    result['title'] = 'TODO: Get the title from the selected choice'
     result['body'] = body
     return result

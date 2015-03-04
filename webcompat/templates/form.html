@@ -38,7 +38,7 @@
       </div>
     </div>
     <div class="u-hidden" aria-hidden="true">
-      <div class="u-formGroup {% if form.summary.errors %}has-error{% endif %}">
+      <div class="u-formGroup {% if form.username.errors %}has-error{% endif %}">
         {{ form.username.label }}{% if form.username.errors %}{% for error in form.username.errors %}
         <span class="help-inline wc-bold">{{ error }}</span>
         {% endfor %}{% endif %}
