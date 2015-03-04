@@ -22,7 +22,6 @@ AUTH_REPORT = 'github-auth-report'
 PROXY_REPORT = 'github-proxy-report'
 SCHEMES = ('http://', 'https://')
 
-owner_choices = [(u'True', u'Yes'), (u'False', u'No')]
 problem_choices = [
     (u'detection_bug',   u'Desktop site instead of mobile site'),
     (u'mobile_site_bug', u'Mobile site is not usable'),
@@ -55,8 +54,6 @@ class IssueForm(Form):
                            [Length(max=0, message=username_message)])
     description = TextAreaField(u'Give more details (optional)', [Optional()],
                                 default=desc_default)
-    site_owner = RadioField(u'Is this your website?', [Optional()],
-                            choices=owner_choices)
     problem_category = RadioField(u'What seems to be the trouble?',
                                   [Optional()], choices=problem_choices)
 
@@ -68,16 +65,6 @@ def get_problem(category):
             return choice[1]
     # Something probably went wrong. Return something safe.
     return u'Unknown'
-
-
-def get_owner(is_site_owner):
-    '''Return human-readable language (Y/N) for site owner form value.'''
-    if is_site_owner == 'True':
-        return u'Yes'
-    elif is_site_owner == 'False':
-        return u'No'
-    else:
-        return u'Unknown'
 
 
 def wrap_label(label):
@@ -132,7 +119,6 @@ def build_formdata(form_object):
     URL -> part of body
     Description -> part of body
     Category -> labels
-    Owner -> labels
 
     We'll try to parse the Browser and come up with a browser label, as well
     as labels like mobile, desktop, tablet.
@@ -160,22 +146,22 @@ def build_formdata(form_object):
     else:
         summary = '{0}'.format(form_object.get('summary'))
     # Preparing the body
-    body = u'''{0}{1}
-**URL**: {2}
-**Browser / Version**: {3}
-**Operating System**: {4}
-**Problem type**: {5}
-**Site owner**: {6}
+    body = u'''{browser_label}{ua_label}
+**URL**: {url}
+**Browser / Version**: {browser}
+**Operating System**: {os}
+**Problem type**: {problem_type}
 
 **Steps to Reproduce**
-{7}'''.format(get_labels(form_object.get('browser')),
-              wrap_label(('ua_header', form_object.get('ua_header'))),
-              form_object.get('url'),
-              form_object.get('browser'),
-              form_object.get('os'),
-              get_problem(form_object.get('problem_category')),
-              get_owner(form_object.get('site_owner')),
-              form_object.get('description'))
+{description}'''.format(
+        browser_label=get_labels(form_object.get('browser')),
+        ua_label=wrap_label(('ua_header', form_object.get('ua_header'))),
+        url=form_object.get('url'),
+        browser=form_object.get('browser'),
+        os=form_object.get('os'),
+        problem_type=get_problem(form_object.get('problem_category')),
+        description=form_object.get('description')
+    )
     result = {}
     result['title'] = summary
     result['body'] = body
