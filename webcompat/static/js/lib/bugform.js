@@ -5,18 +5,12 @@
 function BugForm() {
   var urlField = $('#url');
   var descField = $('#description');
-  var summaryField = $('#summary');
   var submitButtons = $('.Report-form button.Button');
   var inputMap = {
     'url': {
       'elm': urlField, // elm is a jQuery object
       'valid': false,
       'helpText': 'A URL is required.'
-    },
-    'summary' : {
-      'elm': summaryField,
-      'valid': false,
-      'helpText': 'Please give a summary.'
     }
   };
 
@@ -26,7 +20,6 @@ function BugForm() {
       urlField.on('input', self.copyURL);
       self.disableSubmits();
       urlField.on('blur input', self.checkValidity);
-      summaryField.on('blur input', self.checkValidity);
     },
     checkParams: function() {
         // Assumes a URI like: /?open=1&url=http://webpy.org/, for use by addons
@@ -93,7 +86,7 @@ function BugForm() {
                       .addClass('no-error');
       inputMap[id].elm.prev('.help-inline').remove();
 
-      if (inputMap['url'].valid && inputMap['summary'].valid) {
+      if (inputMap['url'].valid) {
         self.enableSubmits();
       }
     },
