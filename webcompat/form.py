@@ -23,9 +23,14 @@ PROXY_REPORT = 'github-proxy-report'
 SCHEMES = ('http://', 'https://')
 
 owner_choices = [(u'True', u'Yes'), (u'False', u'No')]
-problem_choices = [(u'browser_bug', u'Looks like the browser has a bug'),
-                   (u'site_bug', u'Looks like the website has a bug.'),
-                   (u'unknown_bug', u'Don\'t know but something\'s wrong.')]
+problem_choices = [
+    (u'detection_bug',   u'Desktop site instead of mobile site'),
+    (u'mobile_site_bug', u'Mobile site is not usable'),
+    (u'video_bug',       u'Video does\'nt play'),
+    (u'layout_bug',      u'Layout is messed up'),
+    (u'text_bug',        u'Text is not visible'),
+    (u'unknown_bug',     u'Somethign else - I\'ll add details below')
+]
 url_message = u'A URL is required.'
 summary_message = u'Please give a summary.'
 username_message = u'A valid username must be {0} characters long'.format(
