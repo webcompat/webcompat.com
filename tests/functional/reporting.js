@@ -36,11 +36,7 @@ define([
         .get(require.toUrl(url + '?open=1'))
         .findByCssSelector('#url').click()
         .end()
-        .findByCssSelector('#summary').click()
-        .end()
-        .findByCssSelector('#url').type('hi')
-        .end()
-        .findByCssSelector('#summary').click()
+        .findByCssSelector('#browser').click()
         .end()
         .findByCssSelector('.u-formGroup').getAttribute('class')
         .then(function (className) {
@@ -48,10 +44,10 @@ define([
           assert.notInclude(className, 'has-error');
         })
         .end()
-        .findByCssSelector('#summary').type('sup')
+        .findByCssSelector('#url').type('sup')
         .end()
-        // xpath to the #summary formGroup
-        .findByXpath('//*[@id="new-report"]/div/form/div[1]/div[2]/div').getAttribute('class')
+        // xpath to the #url formGroup
+        .findByXpath('//*[@id="new-report"]/div/form/div[1]/div[2]/div[1]').getAttribute('class')
         .then(function (className) {
           assert.include(className, 'no-error');
           assert.notInclude(className, 'has-error');
