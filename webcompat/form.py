@@ -16,7 +16,7 @@ from wtforms import StringField
 from wtforms import TextAreaField
 from wtforms.validators import Length
 from wtforms.validators import Optional
-from wtforms.validators import Required
+from wtforms.validators import InputRequired
 
 AUTH_REPORT = 'github-auth-report'
 PROXY_REPORT = 'github-proxy-report'
@@ -44,7 +44,7 @@ Actual Behavior:
 
 class IssueForm(Form):
     '''Define form fields and validation for our bug reporting form.'''
-    url = StringField(u'Site URL*', [Required(message=url_message)])
+    url = StringField(u'Site URL*', [InputRequired(message=url_message)])
     browser = StringField(u'Browser / Version', [Optional()])
     os = StringField(u'Operating System', [Optional()])
     username = StringField(u'Username',
@@ -52,7 +52,8 @@ class IssueForm(Form):
     description = TextAreaField(u'Give more details (optional)', [Optional()],
                                 default=desc_default)
     problem_category = RadioField(u'What seems to be the trouble?',
-                                  [Optional()], choices=problem_choices)
+                                  [InputRequired(message=radio_message)],
+                                  choices=problem_choices)
 
 
 def get_problem(category):
