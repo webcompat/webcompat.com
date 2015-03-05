@@ -53,6 +53,25 @@ define([
           assert.notInclude(className, 'has-error');
         })
         .end()
+        // click in the textarea to trigger validation for radios
+        .findByCssSelector('#description').click()
+        .end()
+        .findByXpath('//*[@id="new-report"]/div/form/div[1]/div[1]/fieldset').getAttribute('class')
+        .then(function (className) {
+          assert.include(className, 'has-error');
+          assert.notInclude(className, 'no-error');
+        })
+        .end()
+        // pick a problem type
+        .findByCssSelector('#problem_category-0').click()
+        .end()
+        // validation message should be removed now
+        .findByXpath('//*[@id="new-report"]/div/form/div[1]/div[1]/fieldset').getAttribute('class')
+        .then(function (className) {
+          assert.include(className, 'no-error');
+          assert.notInclude(className, 'has-error');
+        })
+        .end()
         // now make sure the buttons aren't disabled anymore
         .findByCssSelector('#submitanon').getAttribute('class')
         .then(function (className) {
