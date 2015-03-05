@@ -31,6 +31,7 @@ problem_choices = [
     (u'unknown_bug',     u'Somethign else - I\'ll add details below')
 ]
 url_message = u'A URL is required.'
+radio_message = u'Problem type required.'
 username_message = u'A valid username must be {0} characters long'.format(
     random.randrange(0, 99))
 
