@@ -52,7 +52,7 @@ class IssueForm(Form):
                            [Length(max=0, message=username_message)])
     description = TextAreaField(u'Give more details (optional)', [Optional()],
                                 default=desc_default)
-    problem_category = RadioField(u'What seems to be the trouble?',
+    problem_category = RadioField(u'What seems to be the trouble?*',
                                   [InputRequired(message=radio_message)],
                                   choices=problem_choices)
 
