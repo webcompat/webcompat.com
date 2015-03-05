@@ -64,10 +64,8 @@ function BugForm() {
     checkProblemTypeValidity: function() {
       if (!$('[name=problem_category]:checked').length) {
         self.makeInvalid('problem_type');
-        return true;
       } else {
         self.makeValid('problem_type');
-        return false;
       }
     },
     /* Check to see that the URL input element is not empty.
@@ -75,10 +73,8 @@ function BugForm() {
     checkURLValidity: function() {
       if ($.trim(urlField.val()) === "") {
         self.makeInvalid('url');
-        return true;
       } else {
         self.makeValid('url');
-        return false;
       }
     },
     makeInvalid: function(id) {
@@ -95,8 +91,8 @@ function BugForm() {
 
       inputMap[id].valid = false;
       inputMap[id].elm.parents('.u-formGroup')
-                        .removeClass('no-error')
-                        .addClass('has-error');
+                      .removeClass('no-error')
+                      .addClass('has-error');
 
       if (id === 'url') {
         inlineHelp.insertAfter('label[for='+id+']');
