@@ -25,7 +25,7 @@ SCHEMES = ('http://', 'https://')
 problem_choices = [
     (u'detection_bug',   u'Desktop site instead of mobile site'),
     (u'mobile_site_bug', u'Mobile site is not usable'),
-    (u'video_bug',       u'Video does\'nt play'),
+    (u'video_bug',       u'Video doesn\'t play'),
     (u'layout_bug',      u'Layout is messed up'),
     (u'text_bug',        u'Text is not visible'),
     (u'unknown_bug',     u'Somethign else - I\'ll add details below')
@@ -62,6 +62,14 @@ def get_problem(category):
             return choice[1]
     # Something probably went wrong. Return something safe.
     return u'Unknown'
+
+
+def get_problem_summary(category):
+    '''Allows us to special case the "Other" radio choice summary.'''
+    if category == 'unknown_bug':
+        return u'see bug description'
+    else:
+        return get_problem(category).lower()
 
 
 def wrap_label(label):
@@ -138,10 +146,11 @@ def build_formdata(form_object):
     normalized_url = normalize_url(url)
     # Domain extraction
     domain = domain_name(normalized_url)
+    problem_summary = get_problem_summary(form_object.get('problem_category'))
     if domain:
-        summary = '{0} - {1}'.format(domain, form_object.get('summary'))
+        summary = '{0} - {1}'.format(domain, problem_summary)
     else:
-        summary = '{0}'.format(form_object.get('summary'))
+        summary = '{0} - {1}'.format(normalized_url, problem_summary)
     # Preparing the body
     body = u'''{browser_label}{ua_label}
 **URL**: {url}
@@ -160,6 +169,6 @@ def build_formdata(form_object):
         description=form_object.get('description')
     )
     result = {}
-    result['title'] = 'TODO: Get the title from the selected choice'
+    result['title'] = summary
     result['body'] = body
     return result
