@@ -38,10 +38,10 @@ define([
         .end()
         .findByCssSelector('#browser').click()
         .end()
-        .findByCssSelector('.u-formGroup').getAttribute('class')
+        .findByXpath('//*[@id="new-report"]/div/form/div[1]/div[2]/div[1]').getAttribute('class')
         .then(function (className) {
-          assert.include(className, 'no-error');
-          assert.notInclude(className, 'has-error');
+          assert.include(className, 'has-error');
+          assert.notInclude(className, 'no-error');
         })
         .end()
         .findByCssSelector('#url').type('sup')
