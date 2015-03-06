@@ -4,7 +4,7 @@
       <div class="r-Grid r-Grid--withGutter">
         <div class="r-Grid-cell r-all--1of2 r-maxM--2of2">
           <fieldset class="u-formGroup {% if form.problem_category.errors %}has-error{% endif %}">
-            <legend class="u-formLabel">What seems to be the trouble?
+            <legend class="u-formLabel">What seems to be the trouble?*
             {% if form.problem_category.errors %}{% for error in form.problem_category.errors %}
               <span class="help-inline wc-bold">{{ error }}</span>
             {% endfor %}{% endif %}
