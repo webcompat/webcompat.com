@@ -87,74 +87,13 @@
   margin-left: 0;
   margin-bottom: 1em;
 }
-.Report-form .Button {
-    font-size:.875em;
-}
-.Report-form .Button-github {
-  text-align:right;
-}
-@media (--viewport-450px) {
-  .Report-form .Button-github {
-    text-align:center;
-  }
-  .Report-form .Button {
-    font-size:.8em;
-  }
-}
-@media (--viewport-400px) {
-  .Button-github,
-  .Button-anon {
-    width:100%;
-    text-align:center;
-  }
-}
+
 @media (--viewport-600px) {
   .flourish {
     display: none;
   }
-  .has-error .help-inline {
-    float: none;
-    display: block;
-  }
-  .Report-form .Button-group .Grid-cell {
-    text-align:center !important;
-  }
 }
-.validation-wrapper {
-  display: block;
-  clear: both;
-  position: relative;
-}
-.validation-wrapper::after {
-  content: '';
-  display: block;
-  width: 60px;
-  height: 20px;
-  position: absolute;
-  right: 12px;
-  top: 8px;
-  background-repeat: no-repeat;
-  background-size: contain;
-}
-.validation-wrapper input {
-  padding-right: 40px;
-}
-.no-error .validation-wrapper::after {
-  background-image: url(../img/valid.svg);
-}
-.has-error .validation-wrapper::after {
-  background-image: url(../img/invalid.svg);
-}
-.no-error .help-inline {
-  display: none;
-}
-.no-error .u-formInput {
-  border-color: var(--wc-background-dark);
-}
-.no-error .u-formInput:focus{
-  border-color: var(--wc-background-dark);
-  box-shadow:none;
-}
+
 .disabled {
   opacity: 0.5;
 }

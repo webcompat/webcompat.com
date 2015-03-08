@@ -45,7 +45,7 @@ Actual Behavior:
 
 class IssueForm(Form):
     '''Define form fields and validation for our bug reporting form.'''
-    url = StringField(u'Site URL*', [InputRequired(message=url_message)])
+    url = StringField(u'Site URL <span class="wc-Form-required">*</span>', [InputRequired(message=url_message)])
     browser = StringField(u'Browser / Version', [Optional()])
     os = StringField(u'Operating System', [Optional()])
     username = StringField(u'Username',
