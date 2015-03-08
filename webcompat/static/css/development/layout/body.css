@@ -31,11 +31,13 @@ html {
   color: var(--wc-variant-background-dark);
   box-sizing:border-box;
   font-size:62.5%;
-  font-size:calcl(1em * 0.625);
+  font-size:calc(1em * 0.625);
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
 }
-*, *:before, *:after {
+*,
+*:before,
+*:after {
   box-sizing: inherit;
 }
 
