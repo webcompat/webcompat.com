@@ -1,0 +1,26 @@
+/*------Report form------*/
+
+.wc-ReportForm {}
+
+  .wc-ReportForm-button .Button {
+    font-size:.875em;
+  }
+
+  /* Github Button */
+  .wc-ReportForm-button--github {
+    text-align:right;
+  }
+  @media (--viewport-450px) {
+    .wc-ReportForm-button-github {
+      text-align:center;
+    }
+    .wc-ReportForm-button .Button {
+      font-size:.8em;
+    }
+  }
+  @media (--viewport-600px) {
+    .wc-ReportForm-button {
+      width:100%;
+      text-align:center;
+    }
+  }
