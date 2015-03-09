@@ -1,3 +1,15 @@
+## 1.6.0 - 2014-03-09
+
+* Fix bug with Issue back arrow & history [Pull #570](https://github.com/webcompat/webcompat.com/pull/570) [Issue #569](https://github.com/webcompat/webcompat.com/issues/569)
+* Add link to "G takes you to GitHub" note for mobile users [Pull #573](https://github.com/webcompat/webcompat.com/pull/573) [Issue #572](https://github.com/webcompat/webcompat.com/issues/572)
+* Link to HTTPS [Pull #574](https://github.com/webcompat/webcompat.com/pull/574)
+* Add anchors to headings on contributors page [Pull #578](https://github.com/webcompat/webcompat.com/pull/578) [Issue #577](https://github.com/webcompat/webcompat.com/issues/577)
+* Remove text-overflow on titles [Pull #580](https://github.com/webcompat/webcompat.com/pull/580)
+* Provide "Greatest hits" for compat issues in bug form [Pull #579](https://github.com/webcompat/webcompat.com/pull/579) [Issue #432](https://github.com/webcompat/webcompat.com/issues/432)
+* Update some css-related modules (`cssnext`, `cssrecipes-utils`, `cssrecipes-reset`) [Pull #581](https://github.com/webcompat/webcompat.com/pull/581)
+* Update contribution links on homepage [Pull #584](https://github.com/webcompat/webcompat.com/pull/584) [Issue #576](https://github.com/webcompat/webcompat.com/issues/576)
+* Refactor CSS related to new form changes [Pull #585](https://github.com/webcompat/webcompat.com/pull/585)
+
 ## 1.5.3 - 2014-02-26
 
 * Add a "Report an Issue" link to the global nav [Pull #568](https://github.com/webcompat/webcompat.com/pull/568) [Issue #565](https://github.com/webcompat/webcompat.com/issues/565)
