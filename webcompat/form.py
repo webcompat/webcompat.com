@@ -14,20 +14,24 @@ from wtforms import Form
 from wtforms import RadioField
 from wtforms import StringField
 from wtforms import TextAreaField
+from wtforms.validators import InputRequired
 from wtforms.validators import Length
 from wtforms.validators import Optional
-from wtforms.validators import Required
 
 AUTH_REPORT = 'github-auth-report'
 PROXY_REPORT = 'github-proxy-report'
 SCHEMES = ('http://', 'https://')
 
-owner_choices = [(u'True', u'Yes'), (u'False', u'No')]
-problem_choices = [(u'browser_bug', u'Looks like the browser has a bug'),
-                   (u'site_bug', u'Looks like the website has a bug.'),
-                   (u'unknown_bug', u'Don\'t know but something\'s wrong.')]
+problem_choices = [
+    (u'detection_bug',   u'Desktop site instead of mobile site'),
+    (u'mobile_site_bug', u'Mobile site is not usable'),
+    (u'video_bug',       u'Video doesn\'t play'),
+    (u'layout_bug',      u'Layout is messed up'),
+    (u'text_bug',        u'Text is not visible'),
+    (u'unknown_bug',     u'Somethign else - I\'ll add details below')
+]
 url_message = u'A URL is required.'
-summary_message = u'Please give a summary.'
+radio_message = u'Problem type required.'
 username_message = u'A valid username must be {0} characters long'.format(
     random.randrange(0, 99))
 
@@ -41,19 +45,16 @@ Actual Behavior:
 
 class IssueForm(Form):
     '''Define form fields and validation for our bug reporting form.'''
-    url = StringField(u'Site URL*', [Required(message=url_message)])
+    url = StringField(u'Site URL*', [InputRequired(message=url_message)])
     browser = StringField(u'Browser / Version', [Optional()])
     os = StringField(u'Operating System', [Optional()])
-    summary = StringField(u'Problem in 5 words*',
-                          [Required(message=summary_message)])
     username = StringField(u'Username',
                            [Length(max=0, message=username_message)])
-    description = TextAreaField(u'How can we replicate this?', [Optional()],
+    description = TextAreaField(u'Give more details', [Optional()],
                                 default=desc_default)
-    site_owner = RadioField(u'Is this your website?', [Optional()],
-                            choices=owner_choices)
-    problem_category = RadioField(u'What seems to be the trouble?',
-                                  [Optional()], choices=problem_choices)
+    problem_category = RadioField(u'What seems to be the trouble?*',
+                                  [InputRequired(message=radio_message)],
+                                  choices=problem_choices)
 
 
 def get_problem(category):
@@ -65,14 +66,12 @@ def get_problem(category):
     return u'Unknown'
 
 
-def get_owner(is_site_owner):
-    '''Return human-readable language (Y/N) for site owner form value.'''
-    if is_site_owner == 'True':
-        return u'Yes'
-    elif is_site_owner == 'False':
-        return u'No'
+def get_problem_summary(category):
+    '''Allows us to special case the "Other" radio choice summary.'''
+    if category == 'unknown_bug':
+        return u'see bug description'
     else:
-        return u'Unknown'
+        return get_problem(category).lower()
 
 
 def wrap_label(label):
@@ -127,7 +126,6 @@ def build_formdata(form_object):
     URL -> part of body
     Description -> part of body
     Category -> labels
-    Owner -> labels
 
     We'll try to parse the Browser and come up with a browser label, as well
     as labels like mobile, desktop, tablet.
@@ -150,27 +148,28 @@ def build_formdata(form_object):
     normalized_url = normalize_url(url)
     # Domain extraction
     domain = domain_name(normalized_url)
+    problem_summary = get_problem_summary(form_object.get('problem_category'))
     if domain:
-        summary = '{0} - {1}'.format(domain, form_object.get('summary'))
+        summary = '{0} - {1}'.format(domain, problem_summary)
     else:
-        summary = '{0}'.format(form_object.get('summary'))
+        summary = '{0} - {1}'.format(normalized_url, problem_summary)
     # Preparing the body
-    body = u'''{0}{1}
-**URL**: {2}
-**Browser / Version**: {3}
-**Operating System**: {4}
-**Problem type**: {5}
-**Site owner**: {6}
+    body = u'''{browser_label}{ua_label}
+**URL**: {url}
+**Browser / Version**: {browser}
+**Operating System**: {os}
+**Problem type**: {problem_type}
 
 **Steps to Reproduce**
-{7}'''.format(get_labels(form_object.get('browser')),
-              wrap_label(('ua_header', form_object.get('ua_header'))),
-              form_object.get('url'),
-              form_object.get('browser'),
-              form_object.get('os'),
-              get_problem(form_object.get('problem_category')),
-              get_owner(form_object.get('site_owner')),
-              form_object.get('description'))
+{description}'''.format(
+        browser_label=get_labels(form_object.get('browser')),
+        ua_label=wrap_label(('ua_header', form_object.get('ua_header'))),
+        url=form_object.get('url'),
+        browser=form_object.get('browser'),
+        os=form_object.get('os'),
+        problem_type=get_problem(form_object.get('problem_category')),
+        description=form_object.get('description')
+    )
     result = {}
     result['title'] = summary
     result['body'] = body

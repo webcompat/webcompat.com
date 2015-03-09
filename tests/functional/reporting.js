@@ -36,22 +36,37 @@ define([
         .get(require.toUrl(url + '?open=1'))
         .findByCssSelector('#url').click()
         .end()
-        .findByCssSelector('#summary').click()
+        .findByCssSelector('#browser').click()
         .end()
-        .findByCssSelector('#url').type('hi')
+        .findByXpath('//*[@id="new-report"]/div/form/div[1]/div[2]/div[1]').getAttribute('class')
+        .then(function (className) {
+          assert.include(className, 'has-error');
+          assert.notInclude(className, 'no-error');
+        })
         .end()
-        .findByCssSelector('#summary').click()
+        .findByCssSelector('#url').type('sup')
         .end()
-        .findByCssSelector('.u-formGroup').getAttribute('class')
+        // xpath to the #url formGroup
+        .findByXpath('//*[@id="new-report"]/div/form/div[1]/div[2]/div[1]').getAttribute('class')
         .then(function (className) {
           assert.include(className, 'no-error');
           assert.notInclude(className, 'has-error');
         })
         .end()
-        .findByCssSelector('#summary').type('sup')
+        // click in the textarea to trigger validation for radios
+        .findByCssSelector('#description').click()
         .end()
-        // xpath to the #summary formGroup
-        .findByXpath('//*[@id="new-report"]/div/form/div[1]/div[2]/div').getAttribute('class')
+        .findByXpath('//*[@id="new-report"]/div/form/div[1]/div[1]/fieldset').getAttribute('class')
+        .then(function (className) {
+          assert.include(className, 'has-error');
+          assert.notInclude(className, 'no-error');
+        })
+        .end()
+        // pick a problem type
+        .findByCssSelector('#problem_category-0').click()
+        .end()
+        // validation message should be removed now
+        .findByXpath('//*[@id="new-report"]/div/form/div[1]/div[1]/fieldset').getAttribute('class')
         .then(function (className) {
           assert.include(className, 'no-error');
           assert.notInclude(className, 'has-error');

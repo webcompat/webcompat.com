@@ -5,18 +5,18 @@
 function BugForm() {
   var urlField = $('#url');
   var descField = $('#description');
-  var summaryField = $('#summary');
+  var problemType = $('[name=problem_category]');
   var submitButtons = $('.Report-form button.Button');
   var inputMap = {
     'url': {
       'elm': urlField, // elm is a jQuery object
-      'valid': false,
+      'valid': null,
       'helpText': 'A URL is required.'
     },
-    'summary' : {
-      'elm': summaryField,
-      'valid': false,
-      'helpText': 'Please give a summary.'
+    'problem_type': {
+      'elm': problemType,
+      'valid': null,
+      'helpText': 'Problem type required.'
     }
   };
 
@@ -25,8 +25,9 @@ function BugForm() {
       self.checkParams();
       urlField.on('input', self.copyURL);
       self.disableSubmits();
-      urlField.on('blur input', self.checkValidity);
-      summaryField.on('blur input', self.checkValidity);
+      descField.on('focus', self.checkProblemTypeValidity);
+      problemType.on('change', self.checkProblemTypeValidity);
+      urlField.on('blur input', self.checkURLValidity);
     },
     checkParams: function() {
         // Assumes a URI like: /?open=1&url=http://webpy.org/, for use by addons
@@ -60,30 +61,47 @@ function BugForm() {
       submitButtons.prop('disabled', false);
       submitButtons.removeClass('is-disabled');
     },
-    /* Check to see that the form element is not empty.
-       We don't do any other kind of validation yet. */
-    checkValidity: function(e) {
-      if ($.trim(e.target.value) === "") {
-        self.makeInvalid(e.target.id);
+    checkProblemTypeValidity: function() {
+      if (!$('[name=problem_category]:checked').length) {
+        self.makeInvalid('problem_type');
       } else {
-        self.makeValid(e.target.id);
+        self.makeValid('problem_type');
+      }
+    },
+    /* Check to see that the URL input element is not empty.
+       We don't do any other kind of validation yet. */
+    checkURLValidity: function() {
+      if ($.trim(urlField.val()) === "") {
+        self.makeInvalid('url');
+      } else {
+        self.makeValid('url');
       }
     },
     makeInvalid: function(id) {
       // Early return if inline help is already in place.
-      if (inputMap[id].elm.parent().prev('.help-inline').length) {
+      if (inputMap[id].valid === false) {
         return;
       }
+
+      var inlineHelp = $('<span></span>', {
+        'class': 'help-inline wc-bold',
+        'text': inputMap[id].helpText
+      });
+
 
       inputMap[id].valid = false;
       inputMap[id].elm.parents('.u-formGroup')
                       .removeClass('no-error')
                       .addClass('has-error');
 
-      $('<span></span>', {
-        'class': 'help-inline wc-bold',
-        'text': inputMap[id].helpText
-      }).insertAfter('label[for='+id+']');
+      if (id === 'url') {
+        inlineHelp.insertAfter('label[for='+id+']');
+      }
+
+      if (id === 'problem_type') {
+        inlineHelp.appendTo('legend.u-formLabel');
+      }
+
       self.disableSubmits();
     },
     makeValid: function(id) {
@@ -91,9 +109,10 @@ function BugForm() {
       inputMap[id].elm.parents('.u-formGroup')
                       .removeClass('has-error')
                       .addClass('no-error');
-      inputMap[id].elm.prev('.help-inline').remove();
 
-      if (inputMap['url'].valid && inputMap['summary'].valid) {
+      inputMap[id].elm.parents('.u-formGroup').find('.help-inline').remove();
+
+      if (inputMap['url'].valid && inputMap['problem_type'].valid) {
         self.enableSubmits();
       }
     },

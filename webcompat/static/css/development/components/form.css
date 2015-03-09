@@ -57,6 +57,9 @@ input[type="radio"] {
 .u-formGroup {
   margin-bottom:1.6em;
 }
+legend.u-formLabel {
+  width: 100%;
+}
 /* bootstrap overrides */
 .radio-inline, .checkbox-inline {
   /* Hack to get Chrome 24+ to behave.
