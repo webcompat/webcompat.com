@@ -14,9 +14,9 @@ from wtforms import Form
 from wtforms import RadioField
 from wtforms import StringField
 from wtforms import TextAreaField
+from wtforms.validators import InputRequired
 from wtforms.validators import Length
 from wtforms.validators import Optional
-from wtforms.validators import InputRequired
 
 AUTH_REPORT = 'github-auth-report'
 PROXY_REPORT = 'github-proxy-report'
