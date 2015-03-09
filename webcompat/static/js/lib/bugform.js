@@ -91,8 +91,8 @@ function BugForm() {
 
       inputMap[id].valid = false;
       inputMap[id].elm.parents('.wc-Form-group')
-                      .removeClass('wc-Form-noError')
-                      .addClass('wc-Form-error');
+                      .removeClass('wc-Form-noError js-no-error')
+                      .addClass('wc-Form-error js-form-error');
 
       if (id === 'url') {
         inlineHelp.insertAfter('label[for='+id+']');
@@ -107,8 +107,8 @@ function BugForm() {
     makeValid: function(id) {
       inputMap[id].valid = true;
       inputMap[id].elm.parents('.wc-Form-group')
-                      .removeClass('wc-Form-error')
-                      .addClass('wc-Form-noError');
+                      .removeClass('wc-Form-error js-form-error')
+                      .addClass('wc-Form-noError js-no-error');
 
       inputMap[id].elm.parents('.wc-Form-group').find('.wc-Form-helpInline').remove();
 
