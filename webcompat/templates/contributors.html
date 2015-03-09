@@ -17,7 +17,7 @@
     <div class="contributors__item">
       <div class="contributors__item__header">
         <div class="wc-content contributors__item__title">
-          <h2>
+          <h2 id="reproduce">
             <button class="contributors__item__btn is-active" type="button">
               How to Reproduce a Bug
               <span class="wc-Icon wc-Icon--contributors wc-Icon--contributors--disabled wc-Icon--minus" aria-hidden="true"></span>
@@ -31,7 +31,7 @@
     <div class="contributors__item">
       <div class="contributors__item__header">
         <div class="wc-content contributors__item__title">
-          <h2>
+          <h2 id="diagnose">
             <button class="contributors__item__btn" type="button">
               How to Diagnose a Bug
               <span class="wc-Icon wc-Icon--contributors wc-Icon--contributors--disabled wc-Icon--minus" aria-hidden="true"></span>
@@ -45,7 +45,7 @@
     <div class="contributors__item">
       <div class="contributors__item__header">
         <div class="wc-content contributors__item__title">
-          <h2>
+          <h2 id="outreach">
             <button class="contributors__item__btn" type="button">
               How to Do Site Outreach
               <span class="wc-Icon wc-Icon--contributors wc-Icon--contributors--disabled wc-Icon--minus" aria-hidden="true"></span>
@@ -59,7 +59,7 @@
     <div class="contributors__item">
       <div class="contributors__item__header">
         <div class="wc-content contributors__item__title">
-          <h2>
+          <h2 id="contribute">
             <button class="contributors__item__btn" type="button">
               Contribute to this site
               <span class="wc-Icon wc-Icon--contributors wc-Icon--contributors--disabled wc-Icon--minus" aria-hidden="true"></span>
@@ -77,16 +77,26 @@
 {%- block extrascripts -%}
 <script>
 $(function(){
-  var lightElm = $('.wc-Hero-img');
-  var sections = $('.contributors__item__content');
+  var lightElm     = $('.wc-Hero-img');
+  var sections     = $('.contributors__item__content');
   var ACTIVE_CLASS = 'is-active';
-  var OPEN_CLASS = 'is-open';
+  var OPEN_CLASS   = 'is-open';
   $('.contributors__item__title').click(function(){
     $(this).find('.contributors__item__btn').toggleClass(ACTIVE_CLASS)
            .closest('.contributors__item').find('.contributors__item__content')
            .toggleClass(OPEN_CLASS)
     lightElm.toggleClass(ACTIVE_CLASS, sections.hasClass('is-open'));
   });
+
+  // if the page was loaded with a hash, it's probably an id for linking so let's
+  // try to open the right section and scroll there.
+  var id;
+  if (id = location.hash) {
+    if (!$(id).find('.contributors__item__btn').hasClass(ACTIVE_CLASS)) {
+      $(id).parent().trigger('click');
+    }
+    window.scrollTo(0, $(id).offset().top);
+  }
 });
 </script>
 {%- endblock %}
