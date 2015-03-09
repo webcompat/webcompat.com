@@ -30,10 +30,15 @@ problem_choices = [
     (u'text_bug',        u'Text is not visible'),
     (u'unknown_bug',     u'Somethign else - I\'ll add details below')
 ]
+
 url_message = u'A URL is required.'
 radio_message = u'Problem type required.'
 username_message = u'A valid username must be {0} characters long'.format(
     random.randrange(0, 99))
+
+problem_label = (u'What seems to be the trouble?',
+                 '<span class="wc-Form-required">*</span>')
+url_label = u'Site URL <span class="wc-Form-required">*</span>'
 
 desc_default = u'''1) Navigate to: Site URL
 2) …
@@ -45,14 +50,15 @@ Actual Behavior:
 
 class IssueForm(Form):
     '''Define form fields and validation for our bug reporting form.'''
-    url = StringField(u'Site URL*', [InputRequired(message=url_message)])
+    url = StringField(url_label,
+                      [InputRequired(message=url_message)])
     browser = StringField(u'Browser / Version', [Optional()])
     os = StringField(u'Operating System', [Optional()])
     username = StringField(u'Username',
                            [Length(max=0, message=username_message)])
     description = TextAreaField(u'Give more details', [Optional()],
                                 default=desc_default)
-    problem_category = RadioField(u'What seems to be the trouble?*',
+    problem_category = RadioField(problem_label,
                                   [InputRequired(message=radio_message)],
                                   choices=problem_choices)
 

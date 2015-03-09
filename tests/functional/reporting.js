@@ -40,8 +40,8 @@ define([
         .end()
         .findByXpath('//*[@id="new-report"]/div/form/div[1]/div[2]/div[1]').getAttribute('class')
         .then(function (className) {
-          assert.include(className, 'has-error');
-          assert.notInclude(className, 'no-error');
+          assert.include(className, 'js-form-error');
+          assert.notInclude(className, 'js-no-error');
         })
         .end()
         .findByCssSelector('#url').type('sup')
@@ -49,8 +49,8 @@ define([
         // xpath to the #url formGroup
         .findByXpath('//*[@id="new-report"]/div/form/div[1]/div[2]/div[1]').getAttribute('class')
         .then(function (className) {
-          assert.include(className, 'no-error');
-          assert.notInclude(className, 'has-error');
+          assert.include(className, 'js-no-error');
+          assert.notInclude(className, 'js-form-error');
         })
         .end()
         // click in the textarea to trigger validation for radios
@@ -58,8 +58,8 @@ define([
         .end()
         .findByXpath('//*[@id="new-report"]/div/form/div[1]/div[1]/fieldset').getAttribute('class')
         .then(function (className) {
-          assert.include(className, 'has-error');
-          assert.notInclude(className, 'no-error');
+          assert.include(className, 'js-form-error');
+          assert.notInclude(className, 'js-no-error');
         })
         .end()
         // pick a problem type
@@ -68,8 +68,8 @@ define([
         // validation message should be removed now
         .findByXpath('//*[@id="new-report"]/div/form/div[1]/div[1]/fieldset').getAttribute('class')
         .then(function (className) {
-          assert.include(className, 'no-error');
-          assert.notInclude(className, 'has-error');
+          assert.include(className, 'js-no-error');
+          assert.notInclude(className, 'js-form-error');
         })
         .end()
         // now make sure the buttons aren't disabled anymore

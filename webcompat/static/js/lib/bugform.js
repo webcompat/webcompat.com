@@ -6,7 +6,7 @@ function BugForm() {
   var urlField = $('#url');
   var descField = $('#description');
   var problemType = $('[name=problem_category]');
-  var submitButtons = $('.Report-form button.Button');
+  var submitButtons = $('.js-ReporForm button.Button');
   var inputMap = {
     'url': {
       'elm': urlField, // elm is a jQuery object
@@ -84,33 +84,33 @@ function BugForm() {
       }
 
       var inlineHelp = $('<span></span>', {
-        'class': 'help-inline wc-bold',
+        'class': 'wc-Form-helpInline wc-bold',
         'text': inputMap[id].helpText
       });
 
 
       inputMap[id].valid = false;
-      inputMap[id].elm.parents('.u-formGroup')
-                      .removeClass('no-error')
-                      .addClass('has-error');
+      inputMap[id].elm.parents('.wc-Form-group')
+                      .removeClass('wc-Form-noError js-no-error')
+                      .addClass('wc-Form-error js-form-error');
 
       if (id === 'url') {
         inlineHelp.insertAfter('label[for='+id+']');
       }
 
       if (id === 'problem_type') {
-        inlineHelp.appendTo('legend.u-formLabel');
+        inlineHelp.appendTo('legend.wc-Form-label');
       }
 
       self.disableSubmits();
     },
     makeValid: function(id) {
       inputMap[id].valid = true;
-      inputMap[id].elm.parents('.u-formGroup')
-                      .removeClass('has-error')
-                      .addClass('no-error');
+      inputMap[id].elm.parents('.wc-Form-group')
+                      .removeClass('wc-Form-error js-form-error')
+                      .addClass('wc-Form-noError js-no-error');
 
-      inputMap[id].elm.parents('.u-formGroup').find('.help-inline').remove();
+      inputMap[id].elm.parents('.wc-Form-group').find('.wc-Form-helpInline').remove();
 
       if (inputMap['url'].valid && inputMap['problem_type'].valid) {
         self.enableSubmits();

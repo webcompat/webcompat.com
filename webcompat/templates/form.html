@@ -1,59 +1,59 @@
 <div id="new-report" class="form {% if form.errors %}form-opened{% else %}form-closed{% endif %}">
   <div class="wc-content wc-content--body">
-    <form method="post" class="Report-form" action="/" novalidate>
+    <form method="post" class="js-ReporForm wc-ReportForm wc-Form" action="/" novalidate>
       <div class="r-Grid r-Grid--withGutter">
         <div class="r-Grid-cell r-all--1of2 r-maxM--2of2">
-          <fieldset class="u-formGroup {% if form.problem_category.errors %}has-error{% endif %}">
-            <legend class="u-formLabel">What seems to be the trouble?*
+          <fieldset class="wc-Form-group {% if form.problem_category.errors %}wc-Form-error{% endif %}">
+            <legend class="wc-Form-label">What seems to be the trouble? <span class="wc-Form-required">*</span>
             {% if form.problem_category.errors %}{% for error in form.problem_category.errors %}
-              <span class="help-inline wc-bold">{{ error }}</span>
+              <span class="wc-Form-helpInline wc-bold">{{ error }}</span>
             {% endfor %}{% endif %}
             </legend>
             {% for subradio in form.problem_category %}
-            <div class="radio">
+            <div class="wc-Form-radio">
               {{ subradio }} {{ subradio.label }}
             </div>
             {% endfor %}
           </fieldset>
         </div>
         <div class="r-Grid-cell r-all--1of2 r-maxM--2of2">
-          <div class="u-formGroup">
-            {{ form.url.label(class_='u-formLabel') }}
+          <div class="wc-Form-group">
+            {{ form.url.label(class_='wc-Form-label') }}
             {% if form.url.errors %}{% for error in form.url.errors %}
-            <span class="help-inline wc-bold">{{ error }}</span>
+            <span class="wc-Form-helpInline wc-bold">{{ error }}</span>
             {% endfor %}{% endif %}
-            <span class="validation-wrapper">
-              {{ form.url(class_='u-formInput required',
+            <span class="wc-Form-validation">
+              {{ form.url(class_='wc-Form-input required',
               placeholder='e.g., http://www.example.com',
               required=True, type='url', pattern='') }}
             </span>
           </div>
-          <div class="u-formGroup">
-            {{ form.browser.label(class_='u-formLabel') }} {{ form.browser(class_='u-formInput') }}
+          <div class="wc-Form-group">
+            {{ form.browser.label(class_='wc-Form-label') }} {{ form.browser(class_='wc-Form-input') }}
           </div>
-          <div class="u-formGroup">
-            {{ form.os.label(class_='u-formLabel') }} {{ form.os(class_='u-formInput') }}
+          <div class="wc-Form-group">
+            {{ form.os.label(class_='wc-Form-label') }} {{ form.os(class_='wc-Form-input') }}
           </div>
         </div>
     </div>
     <div>
-      <div class="u-formGroup">
-        {{ form.description.label(class_='u-formLabel ') }} {{ form.description(class_='u-formInput u-formInput-heightAuto', rows=7) }}
+      <div class="wc-Form-group">
+        {{ form.description.label(class_='wc-Form-label ') }} {{ form.description(class_='wc-Form-input wc-Form-input--heightAuto', rows=7) }}
       </div>
     </div>
     <div class="u-hidden" aria-hidden="true">
-      <div class="u-formGroup {% if form.username.errors %}has-error{% endif %}">
+      <div class="wc-Form-group {% if form.username.errors %}wc-Form-error{% endif %}">
         {{ form.username.label }}{% if form.username.errors %}{% for error in form.username.errors %}
-        <span class="help-inline wc-bold">{{ error }}</span>
+        <span class="wc-Form-helpInline wc-bold">{{ error }}</span>
         {% endfor %}{% endif %}
         {{ form.username(class_='u-formInput') }}
       </div>
     </div>
-    <div class="r-Grid r-Grid--withGutter Button-group">
-      <div class="r-Grid-cell r-all--1of2 Button-github">
+    <div class="r-Grid r-Grid--withGutter">
+      <div class="r-Grid-cell r-all--1of2 wc-ReportForm-button wc-ReportForm-button--github">
           <button name="submit-type" value="github-auth-report" class="Button Button--default" id="submitgithub" type="submit">Report via Github</button>
       </div>
-      <div class="r-Grid-cell r-all--1of2 Button-anon">
+      <div class="r-Grid-cell r-all--1of2 wc-ReportForm-button wc-ReportForm-button--anon">
           <button name="submit-type" value="github-proxy-report" class="Button Button--action" id="submitanon">Report Anonymously</button>
       </div>
     </div>
