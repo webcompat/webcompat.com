@@ -32,7 +32,7 @@
 @import "components/title.css";
 @import "components/loader.css";
 @import "components/box.css";
-
+@import "components/report-form.css";
 /*----------Layout----------*/
 @import "layout/body.css";
 @import "layout/utilities.css";
