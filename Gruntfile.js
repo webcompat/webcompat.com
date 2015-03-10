@@ -19,5 +19,7 @@ module.exports = function (grunt) {
   require('load-grunt-tasks')(grunt)
 
   // Default task.
-  grunt.registerTask('default', ['jshint', 'concat', 'uglify','cssnext', 'cssmin', 'imagemin']);
+  grunt.registerTask('default', [
+    'checkDependencies', 'jshint', 'concat', 'uglify','cssnext', 'cssmin', 'imagemin'
+  ]);
 };
