@@ -28,7 +28,7 @@ problem_choices = [
     (u'video_bug',       u'Video doesn\'t play'),
     (u'layout_bug',      u'Layout is messed up'),
     (u'text_bug',        u'Text is not visible'),
-    (u'unknown_bug',     u'Somethign else - I\'ll add details below')
+    (u'unknown_bug',     u'Something else - I\'ll add details below')
 ]
 
 url_message = u'A URL is required.'
