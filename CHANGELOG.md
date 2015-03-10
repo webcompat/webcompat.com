@@ -1,3 +1,7 @@
+## 1.6.1 - 2014-03-10
+
+* Typo fix (lol) [Issue #591](https://github.com/webcompat/webcompat.com/issues/591)
+
 ## 1.6.0 - 2014-03-09
 
 * Fix bug with Issue back arrow & history [Pull #570](https://github.com/webcompat/webcompat.com/pull/570) [Issue #569](https://github.com/webcompat/webcompat.com/issues/569)
