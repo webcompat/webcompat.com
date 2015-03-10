@@ -5,6 +5,7 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 import datetime
+import hashlib
 import math
 import urlparse
 
@@ -25,6 +26,11 @@ def format_delta_filter(timestamp):
     '''Jinja2 fiter to format a unix timestamp to a time delta string.'''
     delta = datetime.datetime.now() - datetime.datetime.fromtimestamp(timestamp)
     return format_timedelta(delta, locale='en_US')
+
+
+@app.template_filter('bust_cache')
+def bust_cache(filename):
+    return filename + '?' + hashlib.md5(app.config['STARTUP']).hexdigest()[:14]
 
 
 def format_delta_seconds(timestamp):
