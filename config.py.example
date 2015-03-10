@@ -41,8 +41,6 @@ DEBUG = False
 if not PRODUCTION:
     DEBUG = True
 
-STARTUP = str(datetime.now())
-
 # Get the secrets from [1] if you're part of the webcompat organization.
 # Otherwise, create your own test and production applications.
 #
