@@ -29,6 +29,14 @@ Read Instructions at
 https://github.com/webcompat/webcompat.com/blob/master/CONTRIBUTING.md#configuring-the-server
 '''
 
+DEPS_HELP = '''
+The following required versions do not match your locally installed versions.
+Install the correct versions using the commands below before continuing:
+
+pip uninstall name
+pip install name==1.2.1
+'''
+
 
 def config_validator():
     '''Make sure the config file is ready.'''
