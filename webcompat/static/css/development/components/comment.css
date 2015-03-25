@@ -94,6 +94,10 @@
   word-wrap: break-word;
   padding:.5em 0 0;
 }
+  /* list style */
+  .Comment-content ul {
+    list-style: inside;
+  }
 /* Comment-content img */
 .Comment-content img {
   max-width:100%;
