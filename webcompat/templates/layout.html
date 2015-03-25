@@ -27,7 +27,7 @@
   <meta name="msapplication-TileColor" content="#e4bc05">
   <meta name="msapplication-TileImage" content="{{ url_for('static', filename='favicon/mstile-144x144.png') }}">
 {%- if config.PRODUCTION or config.DEVELOPMENT -%}
-  <link href="{{ url_for('static', filename='css/webcompat.min.css') }}?{{ bust_cache() }}" type="text/css" rel="stylesheet">
+  <link href="{{ url_for('static', filename='css/webcompat.min.css')|bust_cache }}" type="text/css" rel="stylesheet">
 {%- else %}
   <link href="{{ url_for('static', filename='css/webcompat.dev.css') }}" type="text/css" rel="stylesheet">
 {%- endif %}
@@ -46,7 +46,7 @@
   ga('create', 'UA-49507820-1', 'webcompat.com');
   ga('send', 'pageview');
 </script>
-<script src="{{ url_for('static', filename='js/webcompat.min.js') }}?{{ bust_cache() }}"></script>
+<script src="{{ url_for('static', filename='js/webcompat.min.js')|bust_cache }}"></script>
 {% else %}
 <script src="{{ url_for('static', filename='js/vendor/jquery-1.11.2.min.js') }}"></script>
 <script src="{{ url_for('static', filename='js/vendor/lodash.underscore-min.js') }}"></script>

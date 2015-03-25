@@ -4,7 +4,6 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-import hashlib
 import json
 import urllib
 
@@ -32,13 +31,6 @@ from models import User
 from webcompat import app
 from webcompat import github
 from webcompat.api.endpoints import get_rate_limit
-
-
-@app.context_processor
-def cache_buster():
-    def bust_cache():
-        return hashlib.md5(app.config['STARTUP']).hexdigest()[:14]
-    return dict(bust_cache=bust_cache)
 
 
 @app.teardown_appcontext
