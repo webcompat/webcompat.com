@@ -5,6 +5,7 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 import argparse
+import subprocess
 import sys
 
 IMPORT_ERROR = '''
@@ -29,12 +30,42 @@ Read Instructions at
 https://github.com/webcompat/webcompat.com/blob/master/CONTRIBUTING.md#configuring-the-server
 '''
 
+DEPS_HELP = '''
+The following required versions do not match your locally installed versions.
+Install the correct versions using the commands below before continuing:
+
+pip uninstall name
+pip install name==1.2.1
+'''
+
+
+def check_pip_deps():
+    '''Check installed pip dependencies.
+
+    Make sure that the installed pip packages match what is in
+    requirements.txt, prompting the user to upgrade if not.
+    '''
+
+    installed_deps = set(subprocess.check_output(["pip", "freeze"])
+                                   .splitlines())
+    required_deps = set(subprocess.check_output(["cat", "requirements.txt"])
+                                  .splitlines())
+    diff = required_deps.difference(installed_deps)
+
+    # Bail if there are any items in the difference set between installed
+    # and required dependencies
+    if len(diff):
+        sys.exit(DEPS_HELP + '\n'.join(diff))
+    else:
+        return True
+
 
 def config_validator():
     '''Make sure the config file is ready.'''
     # Checking if there is a bot configured
     if app.config['BOT_OAUTH_TOKEN'] == '':
         sys.exit(BOT_HELP)
+
 
 if __name__ == '__main__':
     # testing the config file
@@ -50,7 +81,7 @@ if __name__ == '__main__':
         # can interact with them. *ONLY* do this for testing.
         app.config['SESSION_COOKIE_HTTPONLY'] = False
         print("Starting server in ~*TEST MODE*~")
-        app.run()
+        app.run(host='localhost')
     else:
-        print("[Use http://localhost:5000/]")
-        app.run()
+        if check_pip_deps():
+            app.run(host='localhost')
