@@ -29,13 +29,27 @@ Read Instructions at
 https://github.com/webcompat/webcompat.com/blob/master/CONTRIBUTING.md#configuring-the-server
 '''
 
-DEPS_HELP = '''
-The following required versions do not match your locally installed versions.
+DEPS_VERSION_HELP = '''
+The following required versions do not match your locally installed versions:
+
+  %s
+
 Install the correct versions using the commands below before continuing:
 
 pip uninstall name
 pip install name==1.2.1
 '''
+
+DEPS_NOTFOUND_HELP = '''
+The following required module is missing from your installation.
+
+  %s
+
+Install the module using the command below before continuing:
+
+pip install name==1.2.1
+'''
+
 
 
 def config_validator():
