@@ -91,7 +91,7 @@ if __name__ == '__main__':
         # can interact with them. *ONLY* do this for testing.
         app.config['SESSION_COOKIE_HTTPONLY'] = False
         print("Starting server in ~*TEST MODE*~")
-        app.run()
+        app.run(host='localhost')
     else:
-        print("[Use http://localhost:5000/]")
-        app.run()
+        if check_pip_deps():
+            app.run(host='localhost')
