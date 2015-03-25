@@ -5,6 +5,9 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 import argparse
+import pkg_resources
+from pkg_resources import DistributionNotFound, VersionConflict
+import subprocess
 import sys
 
 IMPORT_ERROR = '''
@@ -29,6 +32,44 @@ Read Instructions at
 https://github.com/webcompat/webcompat.com/blob/master/CONTRIBUTING.md#configuring-the-server
 '''
 
+DEPS_VERSION_HELP = '''
+The following required versions do not match your locally installed versions:
+
+  %s
+
+Install the correct versions using the commands below before continuing:
+
+pip uninstall name
+pip install name==1.2.1
+'''
+
+DEPS_NOTFOUND_HELP = '''
+The following required module is missing from your installation.
+
+  %s
+
+Install the module using the command below before continuing:
+
+pip install name==1.2.1
+'''
+
+
+def check_pip_deps():
+    '''Check installed pip dependencies.
+
+    Make sure that the installed pip packages match what is in
+    requirements.txt, prompting the user to upgrade if not.
+    '''
+    req = subprocess.check_output(["cat", "requirements.txt"]).splitlines()
+    try:
+        pkg_resources.require(req)
+    except VersionConflict as e:
+        print(DEPS_VERSION_HELP % e)
+    except DistributionNotFound as e:
+        print(DEPS_NOTFOUND_HELP % e)
+    else:
+        return True
+
 
 def config_validator():
     '''Make sure the config file is ready.'''
@@ -50,7 +91,7 @@ if __name__ == '__main__':
         # can interact with them. *ONLY* do this for testing.
         app.config['SESSION_COOKIE_HTTPONLY'] = False
         print("Starting server in ~*TEST MODE*~")
-        app.run()
+        app.run(host='localhost')
     else:
-        print("[Use http://localhost:5000/]")
-        app.run()
+        if check_pip_deps():
+            app.run(host='localhost')
