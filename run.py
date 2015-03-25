@@ -5,6 +5,9 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 import argparse
+import pkg_resources
+from pkg_resources import DistributionNotFound, VersionConflict
+import subprocess
 import sys
 
 IMPORT_ERROR = '''
