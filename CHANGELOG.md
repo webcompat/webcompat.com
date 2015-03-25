@@ -1,3 +1,11 @@
+## 1.6.2 - 2014-03-25
+
+* CSS refactor around forms [Pull #585](https://github.com/webcompat/webcompat.com/pull/585)
+* md5 checksum-based cache busting for static assets [Pull #594](https://github.com/webcompat/webcompat.com/pull/594) [Issue #368](https://github.com/webcompat/webcompat.com/issues/368)
+* Better dependency checking for PIP [Pull #597](https://github.com/webcompat/webcompat.com/pull/597) [Issue #583](https://github.com/webcompat/webcompat.com/issues/583)
+* Add a grunt task to check NPM dependencies [Pull #593](https://github.com/webcompat/webcompat.com/pull/593) [Issue #587](https://github.com/webcompat/webcompat.com/issues/587)
+* Update list style [Pull #598](https://github.com/webcompat/webcompat.com/pull/598) [Issue #588](https://github.com/webcompat/webcompat.com/issues/588)
+
 ## 1.6.1 - 2014-03-10
 
 * Typo fix (lol) [Issue #591](https://github.com/webcompat/webcompat.com/issues/591)
