@@ -38,7 +38,7 @@ define([
         .then(function (value) {
           assert.notInclude(value, 'wyciwyg://0/');
         })
-        .end()
+        .end();
     },
 
     'validation works': function() {
