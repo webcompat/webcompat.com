@@ -45,6 +45,8 @@ define([
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url + '?open=1'))
+        // wait a second
+        .sleep(1000)
         .findByCssSelector('#submitgithub').getVisibleText()
         .then(function (text) {
           assert.include(text, 'Report as'); //Report as FooUser (logged in)
@@ -53,6 +55,8 @@ define([
         // log out
         .findByCssSelector('.js-login-link').click()
         .end()
+        // wait a second
+        .sleep(1000)
         .findByCssSelector('#submitgithub').getVisibleText()
         .then(function (text) {
           assert.include(text, 'Report via'); //Report via GitHub (logged out)
@@ -68,6 +72,8 @@ define([
         .end()
         .findByCssSelector('#browser').click()
         .end()
+        // wait a second
+        .sleep(1000)
         .findByXpath('//*[@id="new-report"]/div/form/div[1]/div[2]/div[1]').getAttribute('class')
         .then(function (className) {
           assert.include(className, 'js-form-error');
@@ -76,6 +82,8 @@ define([
         .end()
         .findByCssSelector('#url').type('sup')
         .end()
+        // wait a second
+        .sleep(1000)
         // xpath to the #url formGroup
         .findByXpath('//*[@id="new-report"]/div/form/div[1]/div[2]/div[1]').getAttribute('class')
         .then(function (className) {
@@ -86,6 +94,8 @@ define([
         // click in the textarea to trigger validation for radios
         .findByCssSelector('#description').click()
         .end()
+        // wait a second
+        .sleep(1000)
         .findByXpath('//*[@id="new-report"]/div/form/div[1]/div[1]/fieldset').getAttribute('class')
         .then(function (className) {
           assert.include(className, 'js-form-error');
@@ -95,6 +105,8 @@ define([
         // pick a problem type
         .findByCssSelector('#problem_category-0').click()
         .end()
+        // wait a second
+        .sleep(1000)
         // validation message should be removed now
         .findByXpath('//*[@id="new-report"]/div/form/div[1]/div[1]/fieldset').getAttribute('class')
         .then(function (className) {
