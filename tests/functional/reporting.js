@@ -13,7 +13,7 @@ define([
   var url = intern.config.siteRoot;
 
   registerSuite({
-    name: 'reporting anonymously',
+    name: 'reporting',
 
     'submit buttons are disabled': function() {
       return this.remote
@@ -37,6 +37,25 @@ define([
         .findByCssSelector('#url').getProperty('value')
         .then(function (value) {
           assert.notInclude(value, 'wyciwyg://0/');
+        })
+        .end();
+    },
+
+    'report button shows name when logged in': function() {
+      return this.remote
+        .setFindTimeout(intern.config.wc.pageLoadTimeout)
+        .get(require.toUrl(url + '?open=1'))
+        .findByCssSelector('#submitgithub').getVisibleText()
+        .then(function (text) {
+          assert.include(text, 'Report as'); //Report as FooUser (logged in)
+        })
+        .end()
+        // log out
+        .findByCssSelector('.js-login-link').click()
+        .end()
+        .findByCssSelector('#submitgithub').getVisibleText()
+        .then(function (text) {
+          assert.include(text, 'Report via'); //Report via GitHub (logged out)
         })
         .end();
     },
