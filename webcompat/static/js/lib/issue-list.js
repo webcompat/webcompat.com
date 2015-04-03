@@ -119,11 +119,11 @@ issueList.FilterView = Backbone.View.extend({
     this.dropdown.setElement(this.$el.find('.js-dropdown-wrapper')).render();
     return this;
   },
-  clearFilter: function() {
+  clearFilter: function(options) {
     var btns = $('[data-filter]');
     btns.removeClass('is-active');
 
-    issueList.events.trigger('filter:reset-stage');
+    issueList.events.trigger('filter:reset-stage', options);
     issueList.events.trigger('issues:update');
   },
   toggleFilter: function(e) {
@@ -146,10 +146,10 @@ issueList.FilterView = Backbone.View.extend({
     if (btn.hasClass('is-active')) {
       filterParam = 'stage=' + btn.data('filter');
       issueList.events.trigger('issues:update', btn.data('filter'));
-      issueList.events.trigger('filter:add-to-model', filterParam);
+      issueList.events.trigger('filter:add-to-model', filterParam, {removeQ: true});
     } else {
       // Remove existing filters from model and URL
-      issueList.events.trigger('filter:reset-stage');
+      issueList.events.trigger('filter:reset-stage', {removeQ: true});
       issueList.events.trigger('issues:update');
     }
   }
@@ -196,7 +196,7 @@ issueList.SearchView = Backbone.View.extend({
         this._currentSearch = $.trim(searchValue);
         this.doSearch(this._currentSearch);
         // clear any filters that have been set.
-        issueList.events.trigger('filter:clear');
+        issueList.events.trigger('filter:clear', {removeQ: false});
       }
     }
 
@@ -424,12 +424,8 @@ issueList.IssueView = Backbone.View.extend({
     issueList.events.trigger('issues:update', {query: labelFilter});
     e.preventDefault();
   },
-  resetStageFilter: function() {
-    // We also want to remove 'q' if present as well.
-    delete this.issues.params['q'];
-
-    // Reset stage to 'all' and go back to page 1
-    this.updateModelParams('page=1&stage=all');
+  resetStageFilter: function(options) {
+    this.updateModelParams('page=1&stage=all', options);
   },
   requestNextPage: function() {
     var nextPage;
@@ -480,13 +476,19 @@ issueList.IssueView = Backbone.View.extend({
     this.fetchAndRenderIssues();
   },
   updateModelParams: function(params, options) {
-    // convert params string to an array,
-    // splitting on & in case of multiple params
-    // params are merged into issues model
-    // call _.uniq() on it to ignore duplicate values
+    // we convert the params string into an array, splitting
+    // on '&' in case of multiple params. those are then
+    // merged into the issues model.
+
     var hasPerPageChange = params.indexOf('per_page') !== -1;
     var hasSortChange = params.indexOf('sort') !== -1;
+
+    // call _.uniq() on it to ignore duplicate values
     var paramsArray = _.uniq(params.split('&'));
+
+    if (options && options.removeQ === true) {
+      delete this.issues.params['q'];
+    }
 
     // paramsArray is an array of param 'key=value' string pairs
     _.forEach(paramsArray, _.bind(function(param) {
