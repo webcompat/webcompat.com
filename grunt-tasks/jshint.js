@@ -22,7 +22,6 @@ module.exports = function(grunt) {
           console: true,
           define: true,
           issueNumber: true,
-          marked: true,
           moment: true,
           Mousetrap: true,
           Prism: true,
