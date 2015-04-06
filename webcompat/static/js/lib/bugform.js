@@ -38,19 +38,19 @@ function BugForm() {
         var urlParam = location.search.match(/url=(.+)/);
         if (urlParam != null) {
           // weird Gecko bug. See https://bugzilla.mozilla.org/show_bug.cgi?id=1098037
-          urlParam = self.trimWysiwyg(urlParam[1]);
+          urlParam = self.trimWyciwyg(urlParam[1]);
           urlField.val(decodeURIComponent(urlParam));
           self.copyURL();
           self.makeValid('url');
       }
     },
-    trimWysiwyg: function(url) {
-      //trim wysiwyg://N/ from URL.
-      var wysiwygRe = /(wysiwyg:\/\/\d+\/)/i;
-      if (url.search(wysiwygRe) !== 0) {
+    trimWyciwyg: function(url) {
+      //trim wyciwyg://N/ from URL.
+      var wyciwygRe = /(wyciwyg:\/\/\d+\/)/i;
+      if (url.search(wyciwygRe) !== 0) {
         return url;
       } else {
-        return url.replace(wysiwygRe, '');
+        return url.replace(wyciwygRe, '');
       }
     },
     disableSubmits: function() {

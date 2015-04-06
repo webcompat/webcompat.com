@@ -30,6 +30,17 @@ define([
         });
     },
 
+    'wyciwyg bug workaround': function() {
+      return this.remote
+        .setFindTimeout(intern.config.wc.pageLoadTimeout)
+        .get(require.toUrl(url + '?open=1&url=wyciwyg://0/http://bbs.csdn.net/topics/20282413'))
+        .findByCssSelector('#url').getProperty('value')
+        .then(function (value) {
+          assert.notInclude(value, 'wyciwyg://0/');
+        })
+        .end();
+    },
+
     'validation works': function() {
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
