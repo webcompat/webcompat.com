@@ -51,7 +51,9 @@
     </div>
     <div class="r-Grid r-Grid--withGutter">
       <div class="r-Grid-cell r-all--1of2 wc-ReportForm-button wc-ReportForm-button--github">
-          <button name="submit-type" value="github-auth-report" class="Button Button--default" id="submitgithub" type="submit">Report via Github</button>
+          <button name="submit-type" value="github-auth-report" class="Button Button--default" id="submitgithub" type="submit">
+            {% if session.username %}Report as {{ session.username }}{% else %}Report via Github{% endif %}
+          </button>
       </div>
       <div class="r-Grid-cell r-all--1of2 wc-ReportForm-button wc-ReportForm-button--anon">
           <button name="submit-type" value="github-proxy-report" class="Button Button--action" id="submitanon">Report Anonymously</button>
