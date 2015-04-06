@@ -64,8 +64,13 @@ issues.BodyView = Backbone.View.extend({
   render: function() {
     this.$el.html(this.template(this.model.toJSON()));
     // hide metadata
-    $('.Issue-details > *:contains(-- @browser)').hide();
-    $('.Issue-details > *:contains(-- @ua_header)').hide();
+    $('.Issue-details')
+      .contents()
+      .filter(function() {
+        //find the bare html comment-ish text nodes
+        return this.nodeType === 3 && this.nodeValue.match(/<!--/);
+        //and hide them
+      }).wrap("<p class='wc-hidden'></p>");
     return this;
   }
 });
