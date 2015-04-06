@@ -5,12 +5,13 @@
 var issueList = issueList || {};
 issueList.events = _.extend({},Backbone.Events);
 
-if (!window.$md) {
-  window.$md = window.markdownit({
+if (!window.md) {
+  window.md = window.markdownit({
     breaks: true,
+    html: true,
     linkify: true
-  });
-};
+  }).use(window.markdownitSanitizer);
+}
 
 issueList.DropdownView = Backbone.View.extend({
   events: {

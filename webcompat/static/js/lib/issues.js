@@ -5,12 +5,13 @@
 var issues = issues || {};
 issues.events = _.extend({},Backbone.Events);
 
-if (!window.$md) {
-  window.$md = window.markdownit({
+if (!window.md) {
+  window.md = window.markdownit({
     breaks: true,
+    html: true,
     linkify: true
-  });
-};
+  }).use(window.markdownitSanitizer);
+}
 
 issues.TitleView = Backbone.View.extend({
   el: $('.Issue-title'),
@@ -63,8 +64,8 @@ issues.BodyView = Backbone.View.extend({
   render: function() {
     this.$el.html(this.template(this.model.toJSON()));
     // hide metadata
-    $('.Issue-details > p:contains(-- @browser)').hide();
-    $('.Issue-details > p:contains(-- @ua_header)').hide();
+    $('.Issue-details > *:contains(-- @browser)').hide();
+    $('.Issue-details > *:contains(-- @ua_header)').hide();
     return this;
   }
 });
@@ -232,7 +233,7 @@ issues.MainView = Backbone.View.extend({
     if ($.trim(textarea.val())) {
       var newComment = new issues.Comment({
         avatarUrl: form.data('avatarUrl'),
-        body: $md.render(textarea.val()),
+        body: md.render(textarea.val()),
         commenter: form.data('username'),
         createdAt: moment(new Date().toISOString()).fromNow(),
         commentLinkId: null,

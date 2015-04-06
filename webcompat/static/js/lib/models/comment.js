@@ -4,12 +4,13 @@
 
 var issues = issues || {};
 
-if (!window.$md) {
-  window.$md = window.markdownit({
+if (!window.md) {
+  window.md = window.markdownit({
     breaks: true,
+    html: true,
     linkify: true
-  });
-};
+  }).use(window.markdownitSanitizer);
+}
 
 issues.Comment = Backbone.Model.extend({
   url: function() {
@@ -18,7 +19,7 @@ issues.Comment = Backbone.Model.extend({
   parse: function(response) {
     this.set({
       avatarUrl: response.user.avatar_url,
-      body: $md.render(response.body),
+      body: md.render(response.body),
       commenter: response.user.login,
       commentLinkId: 'issuecomment-' + response.id,
       createdAt: moment(response.created_at).fromNow(),

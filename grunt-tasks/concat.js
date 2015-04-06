@@ -12,6 +12,7 @@ module.exports = function(grunt) {
             '<%= jsPath %>/vendor/moment-min.js',
             '<%= jsPath %>/vendor/prism.js',
             '<%= jsPath %>/vendor/markdown-it.js',
+            '<%= jsPath %>/vendor/markdown-it-sanitizer-0.3.0.js',
             '<%= jsPath %>/vendor/mousetrap-min.js',
             '<%= jsPath %>/vendor/backbone.mousetrap.js',
             '<%= jsPath %>/lib/flash-message.js',

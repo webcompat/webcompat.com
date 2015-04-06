@@ -8,12 +8,13 @@
  var issues = issues || {};
  var issueList = issueList || {};
 
- if (!window.$md) {
-   window.$md = window.markdownit({
+ if (!window.md) {
+   window.md = window.markdownit({
      breaks: true,
+     html: true,
      linkify: true
-   });
- };
+   }).use(window.markdownitSanitizer);
+ }
 
  issues.Issue = Backbone.Model.extend({
   urlRoot: function() {
@@ -49,7 +50,7 @@
   },
   parse: function(response) {
     this.set({
-      body: $md.render(response.body),
+      body: md.render(response.body),
       commentNumber: response.comments,
       createdAt: response.created_at.slice(0, 10),
       issueState: this.getState(response.state, response.labels),
