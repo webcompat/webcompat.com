@@ -5,13 +5,12 @@
 var issues = issues || {};
 issues.events = _.extend({},Backbone.Events);
 
-marked.setOptions({
-  breaks: true,
-  gfm: true,
-  emoji: true,
-  ghUser: true,
-  sanitize: true
-});
+if (!window.$md) {
+  window.$md = window.markdownit({
+    breaks: true,
+    linkify: true
+  });
+};
 
 issues.TitleView = Backbone.View.extend({
   el: $('.Issue-title'),
@@ -233,7 +232,7 @@ issues.MainView = Backbone.View.extend({
     if ($.trim(textarea.val())) {
       var newComment = new issues.Comment({
         avatarUrl: form.data('avatarUrl'),
-        body: marked(textarea.val()),
+        body: $md.render(textarea.val()),
         commenter: form.data('username'),
         createdAt: moment(new Date().toISOString()).fromNow(),
         commentLinkId: null,
