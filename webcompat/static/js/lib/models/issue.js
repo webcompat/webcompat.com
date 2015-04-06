@@ -13,7 +13,7 @@
      breaks: true,
      html: true,
      linkify: true
-   }).use(window.markdownitSanitizer);
+   }).use(window.markdownitSanitizer).use(window.markdownitEmoji);
  }
 
  issues.Issue = Backbone.Model.extend({

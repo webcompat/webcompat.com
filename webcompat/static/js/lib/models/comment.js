@@ -9,7 +9,7 @@ if (!window.md) {
     breaks: true,
     html: true,
     linkify: true
-  }).use(window.markdownitSanitizer);
+  }).use(window.markdownitSanitizer).use(window.markdownitEmoji);
 }
 
 issues.Comment = Backbone.Model.extend({
