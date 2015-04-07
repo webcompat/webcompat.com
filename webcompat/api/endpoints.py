@@ -181,13 +181,9 @@ def get_search_results(query_string=None, params=None):
 def get_category_from_search(issue_category):
     '''XHR endpoint to get issues categories from GitHub's Search API.
 
-    There is some overlap between /issues/category/<issue_category> as used on
-    the home page - but this endpoint returns paginated results.
-
-    Note: until GitHub fixes a bug where requesting issues filtered by labels
-    doesn't return pagination via Link, we get those results from this
-    endpoint. Once it's fixed, we can get "contactready", "needsdiagnosis"
-    and "sitewait" issues from /issues/category/<issue_category>.
+    It's also possible to use /issues/category/<issue_category> for a category
+    that maps to a label. This uses the Issues API, which is less costly than
+    the Search API.
     '''
     category_list = ['contactready', 'needscontact',
                      'needsdiagnosis', 'sitewait']
