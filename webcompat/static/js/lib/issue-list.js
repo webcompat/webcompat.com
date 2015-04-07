@@ -5,6 +5,14 @@
 var issueList = issueList || {};
 issueList.events = _.extend({},Backbone.Events);
 
+if (!window.md) {
+  window.md = window.markdownit({
+    breaks: true,
+    html: true,
+    linkify: true
+  }).use(window.markdownitSanitizer).use(window.markdownitEmoji);
+}
+
 issueList.DropdownView = Backbone.View.extend({
   events: {
     'click .js-dropdown-toggle': 'openDropdown',

@@ -8,6 +8,14 @@
  var issues = issues || {};
  var issueList = issueList || {};
 
+ if (!window.md) {
+   window.md = window.markdownit({
+     breaks: true,
+     html: true,
+     linkify: true
+   }).use(window.markdownitSanitizer).use(window.markdownitEmoji);
+ }
+
  issues.Issue = Backbone.Model.extend({
   urlRoot: function() {
     return '/api/issues/' + this.get('number');
@@ -42,7 +50,7 @@
   },
   parse: function(response) {
     this.set({
-      body: marked(response.body),
+      body: md.render(response.body),
       commentNumber: response.comments,
       createdAt: response.created_at.slice(0, 10),
       issueState: this.getState(response.state, response.labels),

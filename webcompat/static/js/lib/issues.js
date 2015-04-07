@@ -5,13 +5,13 @@
 var issues = issues || {};
 issues.events = _.extend({},Backbone.Events);
 
-marked.setOptions({
-  breaks: true,
-  gfm: true,
-  emoji: true,
-  ghUser: true,
-  sanitize: true
-});
+if (!window.md) {
+  window.md = window.markdownit({
+    breaks: true,
+    html: true,
+    linkify: true
+  }).use(window.markdownitSanitizer).use(window.markdownitEmoji);
+}
 
 issues.TitleView = Backbone.View.extend({
   el: $('.Issue-title'),
@@ -64,8 +64,13 @@ issues.BodyView = Backbone.View.extend({
   render: function() {
     this.$el.html(this.template(this.model.toJSON()));
     // hide metadata
-    $('.Issue-details > p:contains(-- @browser)').hide();
-    $('.Issue-details > p:contains(-- @ua_header)').hide();
+    $('.Issue-details')
+      .contents()
+      .filter(function() {
+        //find the bare html comment-ish text nodes
+        return this.nodeType === 3 && this.nodeValue.match(/<!--/);
+        //and hide them
+      }).wrap("<p class='wc-hidden'></p>");
     return this;
   }
 });
@@ -233,7 +238,7 @@ issues.MainView = Backbone.View.extend({
     if ($.trim(textarea.val())) {
       var newComment = new issues.Comment({
         avatarUrl: form.data('avatarUrl'),
-        body: marked(textarea.val()),
+        body: md.render(textarea.val()),
         commenter: form.data('username'),
         createdAt: moment(new Date().toISOString()).fromNow(),
         commentLinkId: null,
