@@ -1,7 +1,7 @@
 <div id="ready-for-outreach" class="r-Grid-cell r-all--1of2 r-maxM--2of2">
   <script type="text/template" id="contactready-tmpl">
   <h3 class="wc-titleIssue">
-    <a class="wc-titleIssue-link" href="{{ url_for('show_issues') }}?stage=contactready">Ready for Outreach</a>
+    <a class="wc-titleIssue-link" href="{{ url_for('show_issues') }}?page=1&per_page=50&state=open&stage=contactready&sort=created&direction=desc">Ready for Outreach</a>
   </h3>
   <% if (contactReady.length) { %>
     <% _.each(contactReady, function(issue) { %>

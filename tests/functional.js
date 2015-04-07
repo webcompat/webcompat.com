@@ -8,7 +8,8 @@ define([
   './functional/issue-list',
   './functional/issues',
   './functional/reporting',
-  './functional/contributors'
+  './functional/contributors',
+  './functional/history-navigation'
 ], function () {
   'use strict';
 });

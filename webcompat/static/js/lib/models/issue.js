@@ -108,8 +108,9 @@ issueList.IssueCollection = Backbone.Collection.extend({
   model: issueList.Issue,
   /* the url property is set in issueList.IssueView#fetchAndRenderIssues */
   initialize: function() {
-    // set conservative defaults (first page of all open issues, 50 per page)
-    this.params = {page: 1, per_page: 50, state: 'open'};
+    // set defaults
+    this.params = {page: 1, per_page: 50, state: 'open', stage: 'all',
+                   sort: 'created', direction: 'desc'};
     this.path = '/api/issues';
   },
   parse: function(response, jqXHR) {

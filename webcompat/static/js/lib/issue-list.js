@@ -79,7 +79,6 @@ issueList.FilterView = Backbone.View.extend({
   events: {
     'click .js-filter-button': 'toggleFilter'
   },
-  _filterRegex: /(stage=(?:new|needscontact|needsdiagnosis|contactready|sitewait|closed))/ig,
   _isLoggedIn: $('body').data('username'),
   _userName: $('body').data('username'),
   initialize: function() {
@@ -120,23 +119,12 @@ issueList.FilterView = Backbone.View.extend({
     this.dropdown.setElement(this.$el.find('.js-dropdown-wrapper')).render();
     return this;
   },
-  addFilterToModel: function(filter) {
-    issueList.events.trigger('filter:add-to-model', filter);
-  },
-  clearFilter: function() {
+  clearFilter: function(options) {
     var btns = $('[data-filter]');
     btns.removeClass('is-active');
 
-    this.removeFiltersFromModel();
-
-    if (history.pushState) {
-      // remove filter stage param from URL
-      history.pushState({}, '', location.search.replace(this._filterRegex, ''));
-    }
-  },
-  removeFiltersFromModel: function() {
-    // Sends a message to remove filter params from the model
-    issueList.events.trigger('filter:remove-from-model');
+    issueList.events.trigger('filter:reset-stage', options);
+    issueList.events.trigger('issues:update');
   },
   toggleFilter: function(e) {
     var btn;
@@ -155,22 +143,15 @@ issueList.FilterView = Backbone.View.extend({
     // Clear the search field
     issueList.events.trigger('search:clear');
 
-    // Remove existing filters from model and URL
-    this.removeFiltersFromModel();
-    if (history.pushState) {
-      history.pushState({}, '', location.search.replace(this._filterRegex, ''));
-    }
-
     if (btn.hasClass('is-active')) {
       filterParam = 'stage=' + btn.data('filter');
-      this.updateResults(btn.data('filter'));
-      this.addFilterToModel(filterParam);
+      issueList.events.trigger('issues:update', btn.data('filter'));
+      issueList.events.trigger('filter:add-to-model', filterParam, {removeQ: true});
     } else {
-      this.updateResults();
+      // Remove existing filters from model and URL
+      issueList.events.trigger('filter:reset-stage', {removeQ: true});
+      issueList.events.trigger('issues:update');
     }
-  },
-  updateResults: function(category) {
-    issueList.events.trigger('issues:update', category);
   }
 });
 
@@ -215,7 +196,7 @@ issueList.SearchView = Backbone.View.extend({
         this._currentSearch = $.trim(searchValue);
         this.doSearch(this._currentSearch);
         // clear any filters that have been set.
-        issueList.events.trigger('filter:clear');
+        issueList.events.trigger('filter:clear', {removeQ: false});
       }
     }
 
@@ -315,7 +296,7 @@ issueList.IssueView = Backbone.View.extend({
     // set up event listeners.
     issueList.events.on('issues:update', _.bind(this.updateIssues, this));
     issueList.events.on('filter:add-to-model', _.bind(this.updateModelParams, this));
-    issueList.events.on('filter:remove-from-model', _.bind(this.removeAllFiltersFromModel, this));
+    issueList.events.on('filter:reset-stage', _.bind(this.resetStageFilter, this));
     issueList.events.on('paginate:next', _.bind(this.requestNextPage, this));
     issueList.events.on('paginate:previous', _.bind(this.requestPreviousPage, this));
     wcEvents.on('dropdown:change', _.bind(this.updateModelParams, this));
@@ -335,14 +316,16 @@ issueList.IssueView = Backbone.View.extend({
     if (location.search.length !== 0) {
       // There are some params in the URL
       if (category = window.location.search.match(this._filterRegex)) {
-        // If there was a filter match, fire an event which loads results
-        // and notifies the button to activate.
+        // If there was a stage filter match, fire an event which loads results
         this.updateModelParams(urlParams);
         _.delay(function() {
           issueList.events.trigger('filter:activate', category[1]);
         }, 0);
       } else {
-        this.updateModelParams(urlParams);
+        // Only bother to update/merge model params if we're not loading the defaults
+        if (urlParams !== $.param(this.issues.params)) {
+          this.updateModelParams(urlParams);
+        }
         this.fetchAndRenderIssues();
       }
     } else {
@@ -441,16 +424,8 @@ issueList.IssueView = Backbone.View.extend({
     issueList.events.trigger('issues:update', {query: labelFilter});
     e.preventDefault();
   },
-  removeAllFiltersFromModel: function() {
-    // We can't have more than one stage filter at once for the issues model,
-    // so remove them all. We also want to remove 'q' if present as well.
-    var filters = ['stage', 'q'];
-    _.forEach(filters, function(filter) {
-      delete this.issues.params[filter];
-    }, this);
-
-    // always go back to page 1 after toggling a stage filter
-    this.updateModelParams('page=1');
+  resetStageFilter: function(options) {
+    this.updateModelParams('page=1&stage=all', options);
   },
   requestNextPage: function() {
     var nextPage;
@@ -497,15 +472,23 @@ issueList.IssueView = Backbone.View.extend({
     } else {
       this.issues.setURLState('/api/issues', params);
     }
-    this.updateURLParams();
+
     this.fetchAndRenderIssues();
   },
   updateModelParams: function(params, options) {
-    // convert params string to an array,
-    // splitting on & in case of multiple params
-    // params are merged into issues model
+    // we convert the params string into an array, splitting
+    // on '&' in case of multiple params. those are then
+    // merged into the issues model.
+
+    var hasPerPageChange = params.indexOf('per_page') !== -1;
+    var hasSortChange = params.indexOf('sort') !== -1;
+
     // call _.uniq() on it to ignore duplicate values
     var paramsArray = _.uniq(params.split('&'));
+
+    if (options && options.removeQ === true) {
+      delete this.issues.params['q'];
+    }
 
     // paramsArray is an array of param 'key=value' string pairs
     _.forEach(paramsArray, _.bind(function(param) {
@@ -517,7 +500,7 @@ issueList.IssueView = Backbone.View.extend({
 
     //broadcast to each of the dropdowns that they need to update
     var pageDropdown;
-    if ('per_page' in this.issues.params) {
+    if (hasPerPageChange) {
       pageDropdown = 'per_page=' + this.issues.params.per_page;
       _.delay(function(){
         issueList.events.trigger('dropdown:update', pageDropdown);
@@ -526,7 +509,7 @@ issueList.IssueView = Backbone.View.extend({
 
     var sortDropdown;
     // all the sort options begin with sort, and end with direction.
-    if ('sort' in this.issues.params) {
+    if (hasSortChange) {
       sortDropdown = 'sort=' + this.issues.params.sort + '&direction=' + this.issues.params.direction;
       _.delay(function(){
         issueList.events.trigger('dropdown:update', sortDropdown);
@@ -552,11 +535,9 @@ issueList.IssueView = Backbone.View.extend({
         delete this.issues.params[param];
       }, this));
 
-      var stateDropdown;
       if (currentStateParamName in this.issues.params) {
-        stateDropdown = stateParam;
         _.delay(function(){
-          issueList.events.trigger('dropdown:update', stateDropdown);
+          issueList.events.trigger('dropdown:update', stateParam);
         }, 0);
       }
     }
@@ -570,11 +551,14 @@ issueList.IssueView = Backbone.View.extend({
   updateURLParams: function() {
     // push params from the model back to the URL so it can be used for bookmarks,
     // link sharing, etc.
-    // also make sure next/prev link @hrefs are in sync
-    var serializedParams = $.param(this.issues.params);
+    var urlParams = location.search.slice(1);
+    var serializedModelParams = $.param(this.issues.params);
 
-    if (history.pushState) {
-      history.pushState({}, '', '?' + serializedParams);
+    // only do this if there's something to change
+    if (urlParams !== serializedModelParams) {
+      if (history.pushState) {
+        history.pushState({}, '', '?' + serializedModelParams);
+      }
     }
   }
 });
