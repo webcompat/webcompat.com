@@ -10,7 +10,7 @@ if (!window.md) {
     breaks: true,
     html: true,
     linkify: true
-  }).use(window.markdownitSanitizer);
+  }).use(window.markdownitSanitizer).use(window.markdownitEmoji);
 }
 
 issueList.DropdownView = Backbone.View.extend({
