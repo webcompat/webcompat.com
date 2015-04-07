@@ -1,4 +1,4 @@
-## 1.6.2 - 2014-04-07
+## 1.6.3 - 2014-04-07
 
 * Fix bug that broke back button navigation on /issues page [Pull #603](https://github.com/webcompat/webcompat.com/pull/603) [Issue #564](https://github.com/webcompat/webcompat.com/issues/564)
 * Fix "wyciwcg://" bug (uh, actually fix it this time) [Pull #601](https://github.com/webcompat/webcompat.com/pull/601) [Issue #600](https://github.com/webcompat/webcompat.com/issues/600)
