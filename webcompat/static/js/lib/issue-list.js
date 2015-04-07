@@ -463,9 +463,11 @@ issueList.IssueView = Backbone.View.extend({
     // depending on what category was clicked (or if a search came in),
     // update the collection instance url property and fetch the issues.
 
-    // note: until GitHub fixes a bug where requesting issues filtered by labels
-    // doesn't return pagination via Link, we get those results via the Search API.
-    var searchCategories = ['new', 'contactready', 'needsdiagnosis', 'sitewait'];
+    // new is a special category that must be retrieved via the Search API,
+    // rather than the Issues API (which can return results for labels)
+    var searchAPICategories = ['new'];
+    var issuesAPICategories = ['closed', 'contactready', 'needsdiagnosis',
+                               'needscontact', 'sitewait'];
     var params = this.issues.params;
 
     // note: if query is the empty string, it will load all issues from the
@@ -473,9 +475,9 @@ issueList.IssueView = Backbone.View.extend({
     if (category && category.query) {
       params = $.extend(params, {q: category.query});
       this.issues.setURLState('/api/issues/search', params);
-    } else if (_.contains(searchCategories, category)) {
+    } else if (_.contains(searchAPICategories, category)) {
       this.issues.setURLState('/api/issues/search/' + category, params);
-    } else if (category === "closed") {
+    } else if (_.contains(issuesAPICategories, category)) {
       this.issues.setURLState('/api/issues/category/' + category, params);
     } else {
       this.issues.setURLState('/api/issues', params);
