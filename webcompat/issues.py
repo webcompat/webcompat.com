@@ -33,8 +33,9 @@ def proxy_request(method, path_mod='', data=None, params=None, uri=None,
     '''
     # Merge passed in headers with AUTH_HEADERS, and add the etag of the
     # request, if it exists, to be sent back to GitHub.
-    merged_headers = AUTH_HEADERS.copy()
-    merged_headers.update(headers)
+    auth_headers = AUTH_HEADERS.copy()
+    if headers:
+        auth_headers.update(headers)
     # Preparing the requests
     req = getattr(requests, method)
     if uri:
@@ -42,7 +43,7 @@ def proxy_request(method, path_mod='', data=None, params=None, uri=None,
     else:
         req_uri = 'https://api.github.com/repos/{0}{1}'.format(REPO_URI,
                                                                path_mod)
-    return req(req_uri, data=data, params=params, headers=merged_headers)
+    return req(req_uri, data=data, params=params, headers=auth_headers)
 
 
 def report_issue(form, proxy=False):
