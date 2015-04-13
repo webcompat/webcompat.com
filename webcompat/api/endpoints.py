@@ -45,12 +45,13 @@ def proxy_issue(number):
 
     either as an authed user, or as one of our proxy bots.
     '''
+    request_headers = get_request_headers(g.request_headers)
     if g.user:
-        request_headers = get_request_headers(g.request_headers)
         issue = github.raw_request('GET', 'repos/{0}/{1}'.format(
             ISSUES_PATH, number), headers=request_headers)
     else:
-        issue = proxy_request('get', '/{0}'.format(number))
+        issue = proxy_request('get', '/{0}'.format(number),
+                              headers=request_headers)
     return (issue.content, issue.status_code, get_headers(issue))
 
 
@@ -167,13 +168,14 @@ def get_search_results(query_string=None, params=None):
 
     # convert issues api to search api params here.
     params = normalize_api_params(params)
+    request_headers = get_request_headers(g.request_headers)
 
     if g.user:
-        request_headers = get_request_headers(g.request_headers)
         results = github.raw_request('GET', 'search/issues', params=params,
                                      headers=request_headers)
     else:
-        results = proxy_request('get', params=params, uri=search_uri)
+        results = proxy_request('get', params=params, uri=search_uri,
+                                headers=request_headers)
     return (results.content, results.status_code, get_headers(results))
 
 
@@ -215,8 +217,9 @@ def proxy_comments(number):
             print('GitHubError: ', e.response.status_code)
             return (':(', e.response.status_code)
     else:
+        request_headers = get_request_headers(g.request_headers)
+
         if g.user:
-            request_headers = get_request_headers(g.request_headers)
             comments = github.raw_request(
                 'GET',
                 'repos/{0}/{1}/comments'.format(
@@ -224,7 +227,8 @@ def proxy_comments(number):
                 headers=request_headers
                 )
         else:
-            comments = proxy_request('get', '/{0}/comments'.format(number))
+            comments = proxy_request('get', '/{0}/comments'.format(number),
+                                     headers=request_headers)
         return (comments.content, comments.status_code, get_headers(comments))
 
 
@@ -271,9 +275,9 @@ def get_rate_limit():
     '''
 
     rate_limit_uri = 'https://api.github.com/rate_limit'
+    request_headers = get_request_headers(g.request_headers)
     if g.user:
-        request_headers = get_request_headers(g.request_headers)
         rl = github.raw_request('GET', 'rate_limit', headers=request_headers)
     else:
-        rl = proxy_request('get', uri=rate_limit_uri)
+        rl = proxy_request('get', uri=rate_limit_uri, headers=request_headers)
     return rl.content

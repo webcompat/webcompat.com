@@ -16,22 +16,26 @@ from webcompat.form import build_formdata
 from webcompat import github
 
 REPO_URI = app.config['ISSUES_REPO_URI']
-headers = {'Authorization': 'token {0}'.format(app.config['BOT_OAUTH_TOKEN']),
-           'User-Agent': 'webcompat/webcompat-bot'}
+BOT_TOKEN = app.config['BOT_OAUTH_TOKEN']
+AUTH_HEADERS = {'Authorization': 'token {0}'.format(BOT_TOKEN),
+                'User-Agent': 'webcompat/webcompat-bot'}
 
 
-def proxy_request(method, path_mod='', data=None, params=None, uri=None):
+def proxy_request(method, path_mod='', data=None, params=None, uri=None,
+                  headers=None):
     '''Make a GitHub API request with a bot's OAuth token.
 
     Necessary for non-logged in users.
     * `path`, if included, will be appended to the end of the URI.
     * Optionally pass in POST data via the `data` arg.
     * Optionally point to a different URI via the `uri` arg.
+    * Optionally pass in HTTP headers to forward.
     '''
-    # We capture the etag of the request and sends it back to github
-    if 'If-None-Match' in headers:
-        etag = g.request_headers['If-None-Match'].encode('utf-8')
-        headers['If-None-Match'] = etag
+    # Merge passed in headers with AUTH_HEADERS, and add the etag of the
+    # request, if it exists, to be sent back to GitHub.
+    auth_headers = AUTH_HEADERS.copy()
+    if headers:
+        auth_headers.update(headers)
     # Preparing the requests
     req = getattr(requests, method)
     if uri:
@@ -39,7 +43,7 @@ def proxy_request(method, path_mod='', data=None, params=None, uri=None):
     else:
         req_uri = 'https://api.github.com/repos/{0}{1}'.format(REPO_URI,
                                                                path_mod)
-    return req(req_uri, data=data, params=params, headers=headers)
+    return req(req_uri, data=data, params=params, headers=auth_headers)
 
 
 def report_issue(form, proxy=False):
