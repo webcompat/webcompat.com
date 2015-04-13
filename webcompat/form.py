@@ -44,6 +44,7 @@ desc_default = u'''1) Navigate to: Site URL
 2) …
 
 Expected Behavior:
+
 Actual Behavior:
 '''
 
