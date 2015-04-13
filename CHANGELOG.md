@@ -1,3 +1,11 @@
+## 1.6.4 - 2014-04-13
+
+* Add line break to bug form to increase readability[Pull #610](https://github.com/webcompat/webcompat.com/pull/610)
+* Fix conditional requests (i.e., smarter HTTP caching) for non-authed users [Pull #608](https://github.com/webcompat/webcompat.com/pull/608) [Issue #590](https://github.com/webcompat/webcompat.com/issues/590)
+* Nicer images on /contributors [Pull #607](https://github.com/webcompat/webcompat.com/pull/607) [Issue #428](https://github.com/webcompat/webcompat.com/issues/428)
+* Go back to using the Issues API for label filters [Pull #606](https://github.com/webcompat/webcompat.com/pull/606) [Issue #592](https://github.com/webcompat/webcompat.com/pull/592)
+* Get rid of marked.js and switch to markdown-it.js for clientside Markdown rendering (for now @name linking won't work, to be fixed in a later update!). [Pull #605](https://github.com/webcompat/webcompat.com/pull/605) [Issue #604](https://github.com/webcompat/webcompat.com/issues/604)
+
 ## 1.6.3 - 2014-04-07
 
 * Fix bug that broke back button navigation on /issues page [Pull #603](https://github.com/webcompat/webcompat.com/pull/603) [Issue #564](https://github.com/webcompat/webcompat.com/issues/564)
