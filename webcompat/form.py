@@ -150,16 +150,27 @@ def build_formdata(form_object):
     Labels are silently dropped otherwise.
     NOTE: intentionally leaving out `milestone` and `assignee`.
     '''
-    # URL normalization
+    # Do domain extraction for adding to the summary/title
     url = form_object.get('url')
     normalized_url = normalize_url(url)
-    # Domain extraction
     domain = domain_name(normalized_url)
     problem_summary = get_problem_summary(form_object.get('problem_category'))
+
     if domain:
         summary = '{0} - {1}'.format(domain, problem_summary)
     else:
         summary = '{0} - {1}'.format(normalized_url, problem_summary)
+
+    formdata = {
+        'browser_label': get_labels(form_object.get('browser')),
+        'ua_label': wrap_label(('ua_header', form_object.get('ua_header'))),
+        'url': form_object.get('url'),
+        'browser': form_object.get('browser'),
+        'os': form_object.get('os'),
+        'problem_type': get_problem(form_object.get('problem_category')),
+        'description': form_object.get('description')
+    }
+
     # Preparing the body
     body = u'''{browser_label}{ua_label}
 **URL**: {url}
@@ -168,15 +179,7 @@ def build_formdata(form_object):
 **Problem type**: {problem_type}
 
 **Steps to Reproduce**
-{description}'''.format(
-        browser_label=get_labels(form_object.get('browser')),
-        ua_label=wrap_label(('ua_header', form_object.get('ua_header'))),
-        url=form_object.get('url'),
-        browser=form_object.get('browser'),
-        os=form_object.get('os'),
-        problem_type=get_problem(form_object.get('problem_category')),
-        description=form_object.get('description')
-    )
+{description}'''.format(**formdata)
     result = {}
     result['title'] = summary
     result['body'] = body
