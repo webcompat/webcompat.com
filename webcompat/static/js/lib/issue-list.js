@@ -131,8 +131,8 @@ issueList.FilterView = Backbone.View.extend({
     var btns = $('[data-filter]');
     btns.removeClass('is-active');
 
+    // Remove existing filters from model and URL
     issueList.events.trigger('filter:reset-stage', options);
-    issueList.events.trigger('issues:update');
   },
   toggleFilter: function(e) {
     var btn;
