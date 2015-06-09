@@ -95,8 +95,12 @@
   padding:.5em 0 0;
 }
   /* list style */
-  .Comment-content ul {
+  .Comment-content ul,
+  .Comment-content ol {
     list-style: inside;
+  }
+  .Comment-content ol {
+    list-style-type: decimal;
   }
   /* pre / code */
   .Comment-content pre,
