@@ -98,6 +98,11 @@
   .Comment-content ul {
     list-style: inside;
   }
+  /* pre / code */
+  .Comment-content pre,
+  .Comment-content code {
+    white-space: normal;
+  }
 /* Comment-content img */
 .Comment-content img {
   max-width:100%;
