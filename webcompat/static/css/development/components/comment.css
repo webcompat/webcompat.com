@@ -95,8 +95,33 @@
   padding:.5em 0 0;
 }
   /* list style */
-  .Comment-content ul {
+  .Comment-content ul,
+  .Comment-content ol {
     list-style: inside;
+  }
+  .Comment-content ol {
+    list-style-type: decimal;
+  }
+  /* pre / code */
+  .Comment-content pre,
+  .Comment-content code {
+    white-space: normal;
+  }
+  /* title */
+  .Comment-content h1 {
+    font-size: 2em;
+    font-weight: 600;
+    margin: 1em 0;
+  }
+  .Comment-content h2 {
+    font-size: 1.5em;
+    font-weight: 600;
+    margin: 1em 0;
+  }
+  .Comment-content h3 {
+    font-size: 1.2em;
+    font-weight: 600;
+    margin: 1em 0;
   }
 /* Comment-content img */
 .Comment-content img {
