@@ -103,6 +103,22 @@
   .Comment-content code {
     white-space: normal;
   }
+  /* title */
+  .Comment-content h1 {
+    font-size: 2em;
+    font-weight: 600;
+    margin: 1em 0;
+  }
+  .Comment-content h2 {
+    font-size: 1.5em;
+    font-weight: 600;
+    margin: 1em 0;
+  }
+  .Comment-content h3 {
+    font-size: 1.2em;
+    font-weight: 600;
+    margin: 1em 0;
+  }
 /* Comment-content img */
 .Comment-content img {
   max-width:100%;
