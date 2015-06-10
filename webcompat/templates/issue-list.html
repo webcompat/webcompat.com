@@ -6,7 +6,7 @@
     <div class="wc-Loader js-loader"></div>
     <div class="wc-content wc-content--body js-issuelist-filter">
       <script type="text/template" id="issuelist-filter-tmpl">
-      <div class="Dropdown Dropdown--large js-dropdown-wrapper"></div>
+      <div class="wc-Dropdown wc-Dropdown--large js-dropdown-wrapper"></div>
       <div>
         <button type="button" class="wc-Filter wc-Filter--new js-filter-button" data-filter="new">
           <span class="wc-Filter-count"></span> New Issues</span>
@@ -46,8 +46,8 @@
           <div class="r-Grid-cell r-all--1of2">
             <div class="js-issue-sorting">
               <script type="text/template" id="issuelist-sorting-tmpl">
-                <div class="Dropdown wc-inline-block js-dropdown-wrapper js-dropdown-pagination"></div>
-                <div class="Dropdown wc-inline-block js-dropdown-wrapper js-dropdown-sort"></div>
+                <div class="wc-Dropdown wc-inline-block js-dropdown-wrapper js-dropdown-pagination"></div>
+                <div class="wc-Dropdown wc-inline-block js-dropdown-wrapper js-dropdown-sort"></div>
               </script>
             </div>
           </div>
@@ -114,13 +114,13 @@
   </div>
 
 <script type="text/template" id="dropdown-tmpl">
-<button type="button" class="Dropdown-toggle js-dropdown-toggle">
-   <h1 class="Dropdown-label"><%= dropdownTitle %></h1> <span class="wc-Icon wc-Icon--chevron-down"></span>
+<button type="button" class="wc-Dropdown-toggle js-dropdown-toggle">
+   <h1 class="wc-Dropdown-label"><%= dropdownTitle %></h1> <span class="wc-Icon wc-Icon--chevron-down"></span>
 </button>
-<ul class="Dropdown-content js-dropdown-options" aria-hidden="false">
+<ul class="wc-Dropdown-content js-dropdown-options" aria-hidden="false">
   <% _.each(dropdownOptions, function(option) { %>
-  <li class="Dropdown-item">
-    <a href="#" class="Dropdown-link" data-params="<%= option.params %>">
+  <li class="wc-Dropdown-item">
+    <a href="#" class="wc-Dropdown-link" data-params="<%= option.params %>">
       <%= option.title %>
     </a>
   </li>

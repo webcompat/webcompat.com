@@ -19,7 +19,7 @@ define([
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url))
-        .findByCssSelector('.js-issuelist-filter .Dropdown--large .Dropdown-label').getVisibleText()
+        .findByCssSelector('.js-issuelist-filter .wc-Dropdown--large .wc-Dropdown-label').getVisibleText()
         .then(function (text) {
           assert.include(text, 'Issues', 'Page header displayed');
         })
@@ -131,9 +131,9 @@ define([
           assert.equal(isDisplayed, true, 'dropdown options are visible.');
         })
         .end()
-        .findByCssSelector('.js-dropdown-pagination li.Dropdown-item:nth-child(3) > a:nth-child(1)').click()
+        .findByCssSelector('.js-dropdown-pagination li.wc-Dropdown-item:nth-child(3) > a:nth-child(1)').click()
         .end()
-        .findByCssSelector('.js-dropdown-pagination .Dropdown-label').getVisibleText()
+        .findByCssSelector('.js-dropdown-pagination .wc-Dropdown-label').getVisibleText()
         .then(function (text) {
           assert.include(text, 'Show 100', 'Clicking first option updated dropdown label');
         })
@@ -337,10 +337,10 @@ define([
     //     .setFindTimeout(intern.config.wc.pageLoadTimeout)
     //     .get(require.toUrl(url))
     //     // click on the sort dropdown
-    //     .findByCssSelector('div.Dropdown:nth-child(2) > button:nth-child(1)').click()
+    //     .findByCssSelector('div.wc-Dropdown:nth-child(2) > button:nth-child(1)').click()
     //     .end()
     //     // select "Oldest", because we know Issue #1 has the "there-can-only-be-one" label
-    //     .findByCssSelector('div.Dropdown:nth-child(2) > ul:nth-child(2) > li:nth-child(2) > a:nth-child(1)').click()
+    //     .findByCssSelector('div.wc-Dropdown:nth-child(2) > ul:nth-child(2) > li:nth-child(2) > a:nth-child(1)').click()
     //     .end()
     //     .findByCssSelector('[href$="there-can-only-be-one"]').click()
     //     .end()
