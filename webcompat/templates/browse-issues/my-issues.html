@@ -6,11 +6,11 @@
   <% if (userIssues.length) { %>
     <% _.each(userIssues, function(issue) { %>
     <div class="r-Grid-cell r-all--1of2 r-maxM--2of2">
-      <div class="IssueItem IssueItem--<%= issue.stateClass %>">
-        <p class="IssueItem-header">
-          <a href="/issues/<%= issue.number %>"><span class="IssueItem-count">Issue <%= issue.number %></span>: <%- issue.title %></a>
+      <div class="wc-IssueItem wc-IssueItem--<%= issue.stateClass %>">
+        <p class="wc-IssueItem-header">
+          <a href="/issues/<%= issue.number %>"><span class="wc-IssueItem-count">Issue <%= issue.number %></span>: <%- issue.title %></a>
         </p>
-        <p class="IssueItem-metadata">Opened: <time><%= issue.createdAt %></time>, comments: <%= issue.commentNumber %></p>
+        <p class="wc-IssueItem-metadata">Opened: <time><%= issue.createdAt %></time>, comments: <%= issue.commentNumber %></p>
       </div>
     </div>
     <% }); %>

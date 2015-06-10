@@ -5,11 +5,11 @@
   </h3>
   <% if (sitewait.length) { %>
     <% _.each(sitewait, function(issue) { %>
-    <div class="IssueItem IssueItem--sitewait">
-      <p class="IssueItem-header">
-        <a href="/issues/<%= issue.number %>"><span class="IssueItem-count">Issue <%= issue.number %></span>: <%- issue.title %></a>
+    <div class="wc-IssueItem wc-IssueItem--sitewait">
+      <p class="wc-IssueItem-header">
+        <a href="/issues/<%= issue.number %>"><span class="wc-IssueItem-count">Issue <%= issue.number %></span>: <%- issue.title %></a>
       </p>
-      <p class="IssueItem-metadata">Opened: <time><%= issue.createdAt %></time>, comments: <%= issue.commentNumber %></p>
+      <p class="wc-IssueItem-metadata">Opened: <time><%= issue.createdAt %></time>, comments: <%= issue.commentNumber %></p>
     </div>
     <% }); %>
   <% } else { %>
