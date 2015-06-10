@@ -263,7 +263,7 @@ define([
         // Select "Show 100" from pagination dropdown
         .findByCssSelector('.js-dropdown-pagination .js-dropdown-toggle').click()
         .end()
-        .findByCssSelector('.js-dropdown-pagination li.Dropdown-item:nth-child(3) > a:nth-child(1)').click()
+        .findByCssSelector('.js-dropdown-pagination li.wc-Dropdown-item:nth-child(3) > a:nth-child(1)').click()
         .end()
         // find something so we know issues have been loaded
         .findByCssSelector('.wc-IssueItem:nth-of-type(1)')

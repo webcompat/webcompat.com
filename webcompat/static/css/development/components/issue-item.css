@@ -2,7 +2,7 @@
 
 
 /* Parent class */
-.wc-wc-IssueItem {
+.wc-IssueItem {
   display:table;
   width:100%;
   font-size:var(--base-font-size);
