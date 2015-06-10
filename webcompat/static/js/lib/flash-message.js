@@ -36,7 +36,7 @@ var flashMessageView = Backbone.View.extend({
     setTimeout(_.bind(this.hide, this), timeout);
   },
   showError: function(data) {
-    this.$el.addClass('FlashMessage--error');
+    this.$el.addClass('wc-FlashMessage--error');
     this.show(data);
   },
   hide: function() {
