@@ -14,7 +14,7 @@ if (!window.md) {
 }
 
 issues.TitleView = Backbone.View.extend({
-  el: $('.Issue-title'),
+  el: $('.wc-IssueDetail-title'),
   events: {
     'click .js-linkBack': 'goBack'
   },
@@ -44,7 +44,7 @@ issues.TitleView = Backbone.View.extend({
 });
 
 issues.MetaDataView = Backbone.View.extend({
-  el: $('.Issue-create'),
+  el: $('.wc-IssueDetail-create'),
   initialize: function() {
     var self = this;
     this.model.on('change:issueState', function() {
@@ -59,12 +59,12 @@ issues.MetaDataView = Backbone.View.extend({
 });
 
 issues.BodyView = Backbone.View.extend({
-  el: $('.Issue-details'),
+  el: $('.wc-IssueDetail-details'),
   template: _.template($('#issue-info-tmpl').html()),
   render: function() {
     this.$el.html(this.template(this.model.toJSON()));
     // hide metadata
-    $('.Issue-details')
+    $('.wc-IssueDetail-details')
       .contents()
       .filter(function() {
         //find the bare html comment-ish text nodes
@@ -140,7 +140,7 @@ issues.StateButtonView = Backbone.View.extend({
 });
 
 issues.MainView = Backbone.View.extend({
-  el: $('.Issue'),
+  el: $('.js-issue'),
   events: {
     'click .Button--default': 'addNewComment',
     'click': 'closeLabelEditor'
@@ -189,7 +189,7 @@ issues.MainView = Backbone.View.extend({
       _.each([self.title, self.metadata, self.body, self.labels, self.stateButton, self],
         function(elm) {
           elm.render();
-          _.each($('.Issue-details code'), function(elm) {
+          _.each($('.wc-IssueDetail-details code'), function(elm) {
             Prism.highlightElement(elm);
           });
         }
@@ -226,7 +226,7 @@ issues.MainView = Backbone.View.extend({
   addComment: function(comment) {
     var view = new issues.CommentView({model: comment});
     var commentElm = view.render().el;
-    $(".Issue-comment").append(commentElm);
+    $(".wc-IssueDetail-comment").append(commentElm);
     _.each($(commentElm).find('code'), function(elm){
       Prism.highlightElement(elm);
     });

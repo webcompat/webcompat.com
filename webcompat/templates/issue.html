@@ -1,41 +1,31 @@
 {% extends "layout.html" %}
 {% block body %}
-  <div class="page page--issue">
   {% include "shared/nav.html" %}
-    <main class="wc-content wc-content--body Issue" role="main">
-      <h1 class="Issue-title wc-Title--l">
-      <script type="text/template" id="title-tmpl">
-        <a class="Issue-linkBack js-linkBack" href="{{ url_for("show_issues") }}" title="All issues">
-          <span class="wc-sronly">All Issues</span>
-          <span class="Issue-linkBack-icon wc-Icon wc-Icon--arrow-left" aria-hidden="true"></span>
-        </a>
-        Issue <%= number %>: <%- title %>
-      </script>
-      </h1>
-      <div class="Issue-wrapper">
+    <main class="wc-content wc-content--body js-issue wc-hidden" role="main">
+      <div class="wc-IssueDetail">
+        <h1 class="wc-IssueDetail-title wc-Title--l">
+          <script type="text/template" id="title-tmpl">
+          Issue <%= number %>: <%- title %>
+          </script>
+        </h1>
         <!-- Issue Date -->
-        <div class="Issue-create">
-        <script type="text/template" id="metadata-tmpl">
-          <div class="Issue-state Issue-state--<%= stateClass %>"><%= issueState %></div>
-          <div class="Issue-date">Opened <%= createdAt %> by
-            <span class="Issue-reporter">
+        <div class="wc-IssueDetail-create">
+          <script type="text/template" id="metadata-tmpl">
+          <div class="wc-IssueDetail-state wc-IssueDetail-state--<%= stateClass %>"><%= issueState %></div>
+          <div class="wc-IssueDetail-date">Opened <%= createdAt %> by
+            <span class="wc-IssueDetail-reporter">
               <a href="https://github.com/<%= reporter %>"><%= reporter %></a><!--
          --></span>. <%= commentNumber %> comments
           </div>
-        </script>
+          </script>
         </div>
-        <div class="Issue-details">
-        <!-- Issue Info -->
-        <script type="text/template" id="issue-info-tmpl">
-          <%= body %>
-        </script>
-        </div>
-        <!-- Issue Labels -->
-        <div class="Label-wrapper">
+      </div>
+      <!-- Issue Labels -->
+      <div class="Label-wrapper">
         <script type="text/template" id="issue-labels-tmpl">
           <span class="Label Label--title">Labels</span>
           {% if session.user_id and session.avatar_url %}
-            <span class="LabelEditor-wrapper"><button class="LabelEditor-launcher wc-Icon wc-Icon--gear" aria-hidden="true"><span class="wc-sronly">Edit Labels</span></button></span>
+          <span class="LabelEditor-wrapper"><button class="LabelEditor-launcher wc-Icon wc-Icon--gear" aria-hidden="true"><span class="wc-sronly">Edit Labels</span></button></span>
           {% endif %}
           <span class="Label-list">
           <% _.each(labels, function(label) { %>
@@ -45,55 +35,71 @@
           <% }); %>
           </span>
         </script>
+      </div>
+      <div class="wc-Comment js-issue-comment">
+        <div class="wc-Comment-avatar">
+          <img src="https://avatars.githubusercontent.com/u/67283?v=3" alt="">
         </div>
-        <!-- Issue Comments -->
-        <div class="Issue-comment">
-          <script type="text/template" id="comment-tmpl">
-            <div class="wc-Comment-avatar">
-              <img src="<%= avatarUrl %>" alt="">
+        <div class="wc-Comment-body wc-Comment-body--caret">
+          <div class="wc-Comment-wrapper">
+            <div class="wc-Comment-header">
+              <span class="wc-Comment-owner">
+                <a href="https://github.com/magsout">@todo autor</a>
+              </span> commented <a href="#@todo url">@todo time</a>
             </div>
-            <div class="wc-Comment-body wc-Comment-body--caret">
-              <div class="wc-Comment-wrapper">
-                <div class="wc-Comment-header">
-                  <span class="wc-Comment-owner">
-                    <a href="https://github.com/<%= commenter %>"><%= commenter %></a>
-                  </span> commented <a href="#<%= commentLinkId %>"><%= createdAt %></a>
-                </div>
-                <div class="wc-Comment-content"><%= body %></div>
+            <div class="wc-Comment-content">
+              <div class="wc-IssueDetail-details">
+                <script type="text/template" id="issue-info-tmpl"><%= body %></script>
               </div>
             </div>
-          </script>
-        </div>
-
-        {% if session.user_id and session.avatar_url %}
-        <!-- Create issue comment -->
-        <div class="wc-Comment wc-Comment--form" data-username={{ session.username }} data-avatar-url= {{ session.avatar_url }}>
-          <div class="wc-Comment-avatar">
-            <img class="" src="{{ session.avatar_url }}" alt="Avatar"/>
           </div>
-          <div class="wc-Comment-body wc-Comment-body--caret">
-            <!--<div class="Comment-drag">-->
-              <!-- TODO(miket) <div class="comment__dd">Attach images by dragging &amp; dropping, <span class="comment__dd__label">selecting them</span> or pasting form the clipboad </div> -->
-              <label for="wc-Comment-text" class="wc-sronly">Comment Text</label>
-              <textarea id="Comment-text" class="wc-Comment-wrapper wc-Comment-text" placeholder="Leave a comment"></textarea>
-            <!--</div>-->
-            <div class="wc-Comment-button">
-              <button class="Button Button--action js-issue-state-button">
-              <script type="text/template" id="state-button-tmpl">
-                <%= state %>
-              </script>
-              </button>
-              <button value="comment" class="Button Button--default js-issue-comment-button" type="submit">Comment</button>
+        </div>
+      </div>
+      <!-- Issue Comments -->
+      <div class="wc-IssueDetail-comment">
+        <script type="text/template" id="comment-tmpl">
+        <div class="wc-Comment-avatar">
+          <img src="<%= avatarUrl %>" alt="">
+        </div>
+        <div class="wc-Comment-body wc-Comment-body--caret">
+          <div class="wc-Comment-wrapper">
+            <div class="wc-Comment-header">
+              <span class="wc-Comment-owner">
+                <a href="https://github.com/<%= commenter %>"><%= commenter %></a>
+              </span> commented <a href="#<%= commentLinkId %>"><%= createdAt %></a>
             </div>
+            <div class="wc-Comment-content"><%= body %></div>
           </div>
         </div>
-        {% else %}
-        <p class="Issue-login">Please <a href="{{ url_for('login') }}">login</a> to edit issues.</p>
-        {% endif %}
-        <p class="wc-margin-bottom"><span class="wc-keyhint">G</span> takes you to the <a href="https://github.com/{{ config['ISSUES_REPO_URI'] }}/{{ number }}">GitHub view</a> of this page.</p>
-       </div>
+        </script>
+      </div>
+      {% if session.user_id and session.avatar_url %}
+      <!-- Create issue comment -->
+      <div class="wc-Comment wc-Comment--form" data-username={{ session.username }} data-avatar-url= {{ session.avatar_url }}>
+        <div class="wc-Comment-avatar">
+          <img class="" src="{{ session.avatar_url }}" alt="Avatar"/>
+        </div>
+        <div class="wc-Comment-body wc-Comment-body--caret">
+        <!--<div class="Comment-drag">-->
+        <!-- TODO(miket) <div class="comment__dd">Attach images by dragging &amp; dropping, <span class="comment__dd__label">selecting them</span> or pasting form the clipboad </div> -->
+        <label for="wc-Comment-text" class="wc-sronly">Comment Text</label>
+          <textarea id="Comment-text" class="wc-Comment-wrapper wc-Comment-text" placeholder="Leave a comment"></textarea>
+        <!--</div>-->
+          <div class="wc-Comment-button">
+            <button class="Button Button--action js-issue-state-button">
+              <script type="text/template" id="state-button-tmpl">
+              <%= state %>
+              </script>
+            </button>
+            <button value="comment" class="Button Button--default js-issue-comment-button" type="submit">Comment</button>
+          </div>
+        </div>
+      </div>
+      {% else %}
+      <p class="wc-IssueDetail-login">Please <a href="{{ url_for('login') }}">login</a> to edit issues.</p>
+      {% endif %}
+      <p class="wc-margin-bottom"><span class="wc-keyhint">G</span> takes you to the <a href="https://github.com/{{ config['ISSUES_REPO_URI'] }}/{{ number }}">GitHub view</a> of this page.</p>
     </main>
-  </div>
 
   <script type="text/template" id="label-editor-tmpl">
     <div class="LabelEditor-table">

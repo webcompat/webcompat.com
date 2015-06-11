@@ -22,12 +22,12 @@ define([
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url(100)))
         .sleep(1000)
-        .findByCssSelector('h1.Issue-title').getVisibleText()
+        .findByCssSelector('h1.wc-IssueDetail-title').getVisibleText()
         .then(function (text) {
           assert.include(text, 'Issue 100:', 'Issue title displayed');
         })
         .end()
-        .findByCssSelector('.Issue-reporter').getVisibleText()
+        .findByCssSelector('.wc-IssueDetail-reporter').getVisibleText()
         .then(function (text) {
           assert.equal(text, 'miketaylr', 'Issue reporter displayed.');
         })
@@ -45,7 +45,7 @@ define([
         .findByCssSelector('.js-issue-state-button').click()
         .sleep(2000)
         .end()
-        .findByCssSelector('.Issue-state').getVisibleText()
+        .findByCssSelector('.wc-IssueDetail-state').getVisibleText()
         .then(function (text) {
           assert.equal(text, 'Closed', 'Closed state text is displayed');
         })
@@ -58,7 +58,7 @@ define([
         .findByCssSelector('.js-issue-state-button').click()
         .sleep(2000)
         .end()
-        .findByCssSelector('.Issue-state').getVisibleText()
+        .findByCssSelector('.wc-IssueDetail-state').getVisibleText()
         .then(function (text) {
           assert.equal(text, 'Ready for Outreach', 'Ready for Outreach state is displayed');
         })
@@ -74,7 +74,7 @@ define([
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url(100)))
         .sleep(1000)
-        .findByCssSelector('.wc-Comment').isDisplayed()
+        .findByCssSelector('.js-issue-comment').isDisplayed()
         .then(function (isDisplayed) {
           assert.equal(isDisplayed, true);
         })
