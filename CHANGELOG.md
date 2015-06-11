@@ -1,3 +1,12 @@
+## 1.6.5 - 2014-06-11
+
+
+* Fix issues search (which apparently was broken oops) [Pull #618](https://github.com/webcompat/webcompat.com/pull/618) [Issue #612](https://github.com/webcompat/webcompat.com/issues/612)
+* Add a Comment CSS component [Pull #625](https://github.com/webcompat/webcompat.com/pull/625)
+* Add some `wc-` CSS namespaceing [Pull #626](https://github.com/webcompat/webcompat.com/pull/626)
+* Optimize SVG (and fix filename extension) [Issue #627](https://github.com/webcompat/webcompat.com/pull/627)
+* Add webapp manifest [Pull #628](https://github.com/webcompat/webcompat.com/pull/628) [Issue #624](https://github.com/webcompat/webcompat.com/issues/624)
+
 ## 1.6.4 - 2014-04-13
 
 * Add line break to bug form to increase readability[Pull #610](https://github.com/webcompat/webcompat.com/pull/610)
