@@ -1,0 +1,17 @@
+{
+  "lang": "en",
+  "name": "webcompat.com",
+  "short_name": "WebCompat",
+  "icons": [
+    {
+      "src": "/favicon/favicon-32x32.png",
+      "sizes": "32x32"
+    }, {
+      "src": "/favicon/favicon-96x96.png",
+      "sizes": "96x96",
+    }
+  ],
+  "start_url": "/?open=1",
+  "display": "minimal-ui",
+  "orientation": "portrait"
+}

@@ -105,7 +105,10 @@
   /* pre / code */
   .wc-Comment-content pre,
   .wc-Comment-content code {
-    white-space: normal;
+    padding: 1em;
+    margin: 0.5em 0px;
+    overflow: auto;
+    background: #F5F2F0;
   }
   /* title */
   .wc-Comment-content h1 {
