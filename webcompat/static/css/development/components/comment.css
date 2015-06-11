@@ -110,6 +110,9 @@
     overflow: auto;
     background: #F5F2F0;
   }
+  .wc-Comment-content code {
+    padding: 0;
+  }
   /* title */
   .wc-Comment-content h1 {
     font-size: 2em;
