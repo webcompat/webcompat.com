@@ -103,9 +103,11 @@
     list-style-type: decimal;
   }
   /* pre / code */
-  .Comment-content pre,
-  .Comment-content code {
-    white-space: normal;
+  .Comment-content pre {
+    padding: 1em;
+    margin: 0.5em 0px;
+    overflow: auto;
+    background: #F5F2F0;
   }
   /* title */
   .Comment-content h1 {
