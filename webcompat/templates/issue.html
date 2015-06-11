@@ -49,17 +49,17 @@
         <!-- Issue Comments -->
         <div class="Issue-comment">
           <script type="text/template" id="comment-tmpl">
-            <div class="Comment-avatar">
+            <div class="wc-Comment-avatar">
               <img src="<%= avatarUrl %>" alt="">
             </div>
-            <div class="Comment-body Comment-body--caret">
-              <div class="Comment-wrapper">
-                <div class="Comment-header">
-                  <span class="Comment-owner">
+            <div class="wc-Comment-body wc-Comment-body--caret">
+              <div class="wc-Comment-wrapper">
+                <div class="wc-Comment-header">
+                  <span class="wc-Comment-owner">
                     <a href="https://github.com/<%= commenter %>"><%= commenter %></a>
                   </span> commented <a href="#<%= commentLinkId %>"><%= createdAt %></a>
                 </div>
-                <div class="Comment-content"><%= body %></div>
+                <div class="wc-Comment-content"><%= body %></div>
               </div>
             </div>
           </script>
@@ -67,17 +67,17 @@
 
         {% if session.user_id and session.avatar_url %}
         <!-- Create issue comment -->
-        <div class="Comment Comment--form" data-username={{ session.username }} data-avatar-url= {{ session.avatar_url }}>
-          <div class="Comment-avatar">
+        <div class="wc-Comment wc-Comment--form" data-username={{ session.username }} data-avatar-url= {{ session.avatar_url }}>
+          <div class="wc-Comment-avatar">
             <img class="" src="{{ session.avatar_url }}" alt="Avatar"/>
           </div>
-          <div class="Comment-body Comment-body--caret">
+          <div class="wc-Comment-body wc-Comment-body--caret">
             <!--<div class="Comment-drag">-->
               <!-- TODO(miket) <div class="comment__dd">Attach images by dragging &amp; dropping, <span class="comment__dd__label">selecting them</span> or pasting form the clipboad </div> -->
-              <label for="Comment-text" class="wc-sronly">Comment Text</label>
-              <textarea id="Comment-text" class="Comment-wrapper Comment-text" placeholder="Leave a comment"></textarea>
+              <label for="wc-Comment-text" class="wc-sronly">Comment Text</label>
+              <textarea id="Comment-text" class="wc-Comment-wrapper wc-Comment-text" placeholder="Leave a comment"></textarea>
             <!--</div>-->
-            <div class="Comment-button">
+            <div class="wc-Comment-button">
               <button class="Button Button--action js-issue-state-button">
               <script type="text/template" id="state-button-tmpl">
                 <%= state %>

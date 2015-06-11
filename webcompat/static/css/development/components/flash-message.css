@@ -19,7 +19,7 @@
     display:block;
   }
   /* error */
-  .FlashMessage--error {
+  .wc-FlashMessage--error {
     color: #fff;
     background-color: rgba(255, 89, 89, 0.92)
   }

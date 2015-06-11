@@ -74,17 +74,17 @@ define([
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url(100)))
         .sleep(1000)
-        .findByCssSelector('.Comment').isDisplayed()
+        .findByCssSelector('.wc-Comment').isDisplayed()
         .then(function (isDisplayed) {
           assert.equal(isDisplayed, true);
         })
-        .findByCssSelector('.Comment-owner').getVisibleText()
+        .findByCssSelector('.wc-Comment-owner').getVisibleText()
         .then(function (text) {
           assert.equal(text, 'miketaylr', 'Commenter name displayed.');
         })
         .end()
         .sleep(500)
-        .findByCssSelector('.Comment-content').getVisibleText()
+        .findByCssSelector('.wc-Comment-content').getVisibleText()
         .then(function (text) {
           assert.equal(text, '1', 'Comment is displayed.');
         });

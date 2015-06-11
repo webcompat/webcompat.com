@@ -2,51 +2,51 @@
 
 
 /* Main Class */
-.Comment {
+.wc-Comment {
   font-size:var(--base-font-size);
 }
 
 /*Comment + Comment */
-.Comment + .Comment {
+.wc-Comment + .wc-Comment {
     margin-top:1em;
 }
-.Comment:after {
+.wc-Comment:after {
     content: "";
     display: table;
     clear: both
 }
 
 /* Avatar */
-.Comment-avatar {
+.wc-Comment-avatar {
   float: left;
 }
-.Comment-avatar img {
+.wc-Comment-avatar img {
   width: 59px;
   height: 56px;
 }
 @media (--viewport-990px) {
-  .Comment-avatar {
+  .wc-Comment-avatar {
     display: none;
   }
 }
 /* Body */
-.Comment-body {
+.wc-Comment-body {
   float:left;
   margin-left:.8em;
   position: relative;
 }
 @media (--viewport-990px) {
-  .Comment-body {
+  .wc-Comment-body {
     margin-left:0;
   }
 }
 @media (--viewport-770px) {
-  .Comment-body {
+  .wc-Comment-body {
     width: 100%;
   }
 }
 /* Body Caret */
-.Comment-body--caret:after {
+.wc-Comment-body--caret:after {
   position: absolute;
   content: "";
   width: 18px;
@@ -60,7 +60,7 @@
   transform: rotate(45deg);
 }
 /* Wrapper Comment-header Comment-content */
-.Comment-wrapper {
+.wc-Comment-wrapper {
   position: relative;
   width: 650px;
   /*last 256px*/
@@ -72,86 +72,87 @@
   background : #fff;
 }
 @media (--viewport-770px) {
-  .Comment-wrapper {
+  .wc-Comment-wrapper {
     width: 100%;
   }
 }
 /* Comment Header */
-.Comment-header {
+.wc-Comment-header {
   border-radius: 10px 10px 0 0;
   background-color: #F0F0F0;
   padding:.8em 1em;
   margin: 0 -1em;
 }
 /* Name of owner */
-.Comment-owner {
+.wc-Comment-owner {
   font-weight: bold;
 }
 
 /* Comment texte */
-.Comment-content {
+.wc-Comment-content {
   overflow: hidden;
   word-wrap: break-word;
   padding:.5em 0 0;
 }
   /* list style */
-  .Comment-content ul,
-  .Comment-content ol {
+  .wc-Comment-content ul,
+  .wc-Comment-content ol {
     list-style: inside;
   }
-  .Comment-content ol {
+  .wc-Comment-content ol {
     list-style-type: decimal;
   }
   /* pre / code */
-  .Comment-content pre {
+  .wc-Comment-content pre,
+  .wc-Comment-content code {
     padding: 1em;
     margin: 0.5em 0px;
     overflow: auto;
     background: #F5F2F0;
   }
   /* title */
-  .Comment-content h1 {
+  .wc-Comment-content h1 {
     font-size: 2em;
     font-weight: 600;
     margin: 1em 0;
   }
-  .Comment-content h2 {
+  .wc-Comment-content h2 {
     font-size: 1.5em;
     font-weight: 600;
     margin: 1em 0;
   }
-  .Comment-content h3 {
+  .wc-Comment-content h3 {
     font-size: 1.2em;
     font-weight: 600;
     margin: 1em 0;
   }
 /* Comment-content img */
-.Comment-content img {
+.wc-Comment-content img {
   max-width:100%;
   max-height:100%;
 }
 /* blockquote */
-.Comment-content blockquote {
+.wc-Comment-content blockquote {
   border-left: 4px solid var(--wc-background-light);
   padding: 0px 1em;
   margin: 1em 0px;
   color: #6a6a6a;
 }
 /* GitHub username */
-.Comment-content .github__username {
+.wc-Comment-content .github__username {
   font-weight: bold;
 }
 
 /* Form submit */
-.Comment--form {
+.wc-Comment--form {
   padding-top:2em;
   margin:2em 0 0 ;
 }
-.Comment--form .Comment-body--caret:after {
+.wc-Comment--form .wc-Comment-body--caret:after {
    background-color: #fff;
 }
 /* img attach file */
-.Comment-attach {
+.wc-Comment-attach {
   display: block;
   margin:.8em 0 0 0;
   padding: .4em;
@@ -159,11 +160,11 @@
   overflow: hidden /* prevent overflow */
 }
 /* prevent width of img */
-.Comment-attach img {
+.wc-Comment-attach img {
   width: 100%;
   max-width: 100%;
 }
-.Comment--form  .Comment-wrapper {
+.wc-Comment--form  .Comment-wrapper {
   padding-top: 1em;
 }
 /* drag and drop */
@@ -184,7 +185,7 @@
   color: #e6bf04;
 }*/
 /* Textarea Placeholder style */
-.Comment-wrapper::placeholder {
+.wc-Comment-wrapper::placeholder {
   color: var(--wc-variant-background-light);
   opacity: 1;
   font-size: 1.2em;
@@ -193,17 +194,17 @@
 
 
 /* Button */
-.Comment-button {
+.wc-Comment-button {
   text-align: right;
   margin:1.2em 0 0;
 }
 
 @media (--viewport-770px) {
- .Comment-button {
+ .wc-Comment-button {
    text-align: center;
    font-size:.9em;
   }
 }
-.Comment-button .button {
+.wc-Comment-button .button {
   text-align: center;
 }

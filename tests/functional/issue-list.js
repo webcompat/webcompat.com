@@ -19,7 +19,7 @@ define([
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url))
-        .findByCssSelector('.js-issuelist-filter .Dropdown--large .Dropdown-label').getVisibleText()
+        .findByCssSelector('.js-issuelist-filter .wc-Dropdown--large .wc-Dropdown-label').getVisibleText()
         .then(function (text) {
           assert.include(text, 'Issues', 'Page header displayed');
         })
@@ -62,17 +62,17 @@ define([
         })
         .sleep(1000)
         .end()
-        .findByCssSelector('.js-issue-list .IssueItem').isDisplayed()
+        .findByCssSelector('.js-issue-list .wc-IssueItem').isDisplayed()
         .then(function (isDisplayed) {
           assert.equal(isDisplayed, true, 'IssueList item is visible.');
         })
         .end()
-        .findByCssSelector('.IssueItem .IssueItem-header').getVisibleText()
+        .findByCssSelector('.wc-IssueItem .wc-IssueItem-header').getVisibleText()
         .then(function(text){
           assert.match(text, /^Issue\s\d+:\s.+$/, 'Issue should have a non-empty title');
         })
         .end()
-        .findByCssSelector('.IssueItem:nth-child(1) > div:nth-child(1) > p:nth-child(2)').getVisibleText()
+        .findByCssSelector('.wc-IssueItem:nth-child(1) > div:nth-child(1) > p:nth-child(2)').getVisibleText()
         .then(function (text) {
           assert.match(text, /comments:\s\d+$/i, 'Issue should display number of comments');
           assert.match(text, /^Opened:\s\d{4}\-\d{2}\-\d{2}.+/, 'Issue should display creation date');
@@ -131,14 +131,14 @@ define([
           assert.equal(isDisplayed, true, 'dropdown options are visible.');
         })
         .end()
-        .findByCssSelector('.js-dropdown-pagination li.Dropdown-item:nth-child(3) > a:nth-child(1)').click()
+        .findByCssSelector('.js-dropdown-pagination li.wc-Dropdown-item:nth-child(3) > a:nth-child(1)').click()
         .end()
-        .findByCssSelector('.js-dropdown-pagination .Dropdown-label').getVisibleText()
+        .findByCssSelector('.js-dropdown-pagination .wc-Dropdown-label').getVisibleText()
         .then(function (text) {
           assert.include(text, 'Show 100', 'Clicking first option updated dropdown label');
         })
         .end()
-        .findByCssSelector('.IssueItem:nth-child(51)').isDisplayed()
+        .findByCssSelector('.wc-IssueItem:nth-child(51)').isDisplayed()
         .then(function (isDisplayed) {
           assert.equal(isDisplayed, true, 'More than 50 issues were loaded.');
         })
@@ -206,7 +206,7 @@ define([
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url))
         // find something so we know the page has loaded
-        .findByCssSelector('.IssueItem:nth-of-type(1)')
+        .findByCssSelector('.wc-IssueItem:nth-of-type(1)')
         .getCurrentUrl()
         .then(function(currUrl){
           assert.include(currUrl, 'page=1&per_page=50&state=open', 'Default model params are added to the URL');
@@ -219,7 +219,7 @@ define([
           .setFindTimeout(intern.config.wc.pageLoadTimeout)
           .get(require.toUrl(url + params))
           // find something so we know the page has loaded
-          .findByCssSelector('.IssueItem:nth-of-type(1)')
+          .findByCssSelector('.wc-IssueItem:nth-of-type(1)')
           .getCurrentUrl()
           .then(function(currUrl){
             assert.include(currUrl, 'page=2&per_page=50&state=open', 'Default model params are merged with partial URL params');
@@ -263,10 +263,10 @@ define([
         // Select "Show 100" from pagination dropdown
         .findByCssSelector('.js-dropdown-pagination .js-dropdown-toggle').click()
         .end()
-        .findByCssSelector('.js-dropdown-pagination li.Dropdown-item:nth-child(3) > a:nth-child(1)').click()
+        .findByCssSelector('.js-dropdown-pagination li.wc-Dropdown-item:nth-child(3) > a:nth-child(1)').click()
         .end()
         // find something so we know issues have been loaded
-        .findByCssSelector('.IssueItem:nth-of-type(1)')
+        .findByCssSelector('.wc-IssueItem:nth-of-type(1)')
         .goBack()
         .getCurrentUrl()
         .then(function(currUrl){
@@ -287,7 +287,7 @@ define([
         .findByCssSelector('[data-filter="contactready"]').click()
         .end()
         // find something so we know the page has loaded
-        .findByCssSelector('.IssueItem:nth-of-type(1)')
+        .findByCssSelector('.wc-IssueItem:nth-of-type(1)')
         .getCurrentUrl()
         .then(function(currUrl){
           assert.include(currUrl, 'stage=contactready', 'Stage filter added to URL correctly.');
@@ -302,7 +302,7 @@ define([
         .findByCssSelector('[data-filter="closed"]').click()
         .end()
         // find something so we know the page has loaded
-        .findByCssSelector('.IssueItem:nth-of-type(1)')
+        .findByCssSelector('.wc-IssueItem:nth-of-type(1)')
         .end()
         .findByCssSelector('[data-filter="closed"]').click()
         .end()
@@ -320,7 +320,7 @@ define([
         .findByCssSelector('[data-filter="closed"]').click()
         .end()
         // find something so we know the page has loaded
-        .findByCssSelector('.IssueItem:nth-of-type(1)')
+        .findByCssSelector('.wc-IssueItem:nth-of-type(1)')
         .end()
         .findByCssSelector('[data-filter="sitewait"]').click()
         .end()
@@ -337,14 +337,14 @@ define([
     //     .setFindTimeout(intern.config.wc.pageLoadTimeout)
     //     .get(require.toUrl(url))
     //     // click on the sort dropdown
-    //     .findByCssSelector('div.Dropdown:nth-child(2) > button:nth-child(1)').click()
+    //     .findByCssSelector('div.wc-Dropdown:nth-child(2) > button:nth-child(1)').click()
     //     .end()
     //     // select "Oldest", because we know Issue #1 has the "there-can-only-be-one" label
-    //     .findByCssSelector('div.Dropdown:nth-child(2) > ul:nth-child(2) > li:nth-child(2) > a:nth-child(1)').click()
+    //     .findByCssSelector('div.wc-Dropdown:nth-child(2) > ul:nth-child(2) > li:nth-child(2) > a:nth-child(1)').click()
     //     .end()
     //     .findByCssSelector('[href$="there-can-only-be-one"]').click()
     //     .end()
-    //     .findByCssSelector('.js-issue-list .IssueItem:first-of-type .js-issue-label').getVisibleText()
+    //     .findByCssSelector('.js-issue-list .wc-IssueItem:first-of-type .js-issue-label').getVisibleText()
     //     .then(function (text) {
     //       assert.include(text, 'there-can-only-be-one', 'The shown issue has the right label.');
     //     });

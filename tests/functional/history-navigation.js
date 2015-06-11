@@ -21,7 +21,7 @@ define([
         .findByCssSelector('.js-issues-link').click()
         .end()
         //find an issue so we know the page has loaded
-        .findByCssSelector('div.IssueItem:nth-child(1)')
+        .findByCssSelector('div.wc-IssueItem:nth-child(1)')
         .end()
         .goBack()
         // now check that we're back at the home page.
