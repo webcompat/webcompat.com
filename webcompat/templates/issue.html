@@ -36,24 +36,28 @@
           </span>
         </script>
       </div>
-      <div class="wc-Comment js-issue-comment">
-        <div class="wc-Comment-avatar">
-          <img src="https://avatars.githubusercontent.com/u/67283?v=3" alt="">
-        </div>
-        <div class="wc-Comment-body wc-Comment-body--caret">
-          <div class="wc-Comment-wrapper">
-            <div class="wc-Comment-header">
-              <span class="wc-Comment-owner">
-                <a href="https://github.com/magsout">@todo autor</a>
-              </span> commented <a href="#@todo url">@todo time</a>
-            </div>
-            <div class="wc-Comment-content">
-              <div class="wc-IssueDetail-details">
-                <script type="text/template" id="issue-info-tmpl"><%= body %></script>
+      <div class="wc-IssueDetail-report">
+        <script type="text/template" id="issue-info-tmpl">
+        <div class="wc-Comment js-issue-comment">
+          <div class="wc-Comment-avatar">
+            <img src="<%= reporterAvatar %>" alt="">
+          </div>
+          <div class="wc-Comment-body wc-Comment-body--caret">
+            <div class="wc-Comment-wrapper">
+              <div class="wc-Comment-header">
+                <span class="wc-Comment-owner">
+                  <a href="https://github.com/<%= reporter %>"><%= reporter %></a>
+                </span> commented on <a href="https://webcompat.com/issues/<%= number %>"><%= createdAt %></a>
+              </div>
+              <div class="wc-Comment-content">
+                <div class="wc-IssueDetail-details">
+                  <%= body %>
+                </div>
               </div>
             </div>
           </div>
         </div>
+        </script>
       </div>
       <!-- Issue Comments -->
       <div class="wc-IssueDetail-comment">
