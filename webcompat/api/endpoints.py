@@ -71,6 +71,12 @@ def proxy_issues():
     '''API endpoint to list all issues from GitHub.'''
     params = request.args.copy()
 
+    # If there's a q param, then we need to use the Search API
+    # and load those results. Unfortunately, we restrict search requests
+    # to logged in users.
+    if g.user and params.get('q'):
+        return get_search_results(params.get('q'), params)
+
     if g.user:
         issues = github.raw_request('GET', 'repos/{0}'.format(ISSUES_PATH),
                                     params=params)
