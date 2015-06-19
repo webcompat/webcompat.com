@@ -2,7 +2,7 @@
 
 **Build Status**: [![Build Status](https://travis-ci.org/webcompat/webcompat.com.svg?branch=master)](https://travis-ci.org/webcompat/webcompat.com)
 
-This repository hosts the code and design which powers the [webcompat.com Web site](http://webcompat.com/).
+This repository hosts the code which powers the [webcompat.com Web site](http://webcompat.com/).
 
 ## Changelog
 
