@@ -102,7 +102,7 @@ define([
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url(100)))
-        .findAllByCssSelector('.wc-Comment:not(.wc-Comment--form)')
+        .findAllByCssSelector('.js-issue-comment:not(.wc-Comment--form)')
         .then(function(elms){
           originalCommentsLength = elms.length;
         })
@@ -115,7 +115,7 @@ define([
         .findByCssSelector('.js-issue-comment-button').click()
         .end()
         .sleep(2000)
-        .findAllByCssSelector('.wc-Comment:not(.wc-Comment--form)')
+        .findAllByCssSelector('.js-issue-comment:not(.wc-Comment--form)')
         .then(function(elms){
           allCommentsLength = elms.length;
           assert(originalCommentsLength < allCommentsLength, 'Comment was successfully left.');
@@ -127,7 +127,7 @@ define([
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url(100)))
-        .findAllByCssSelector('.wc-Comment:not(.wc-Comment--form)')
+        .findAllByCssSelector('.js-issue-comment:not(.wc-Comment--form)')
         .then(function(elms){
           originalCommentsLength = elms.length;
         })
@@ -136,7 +136,7 @@ define([
         .findByCssSelector('.js-issue-comment-button').click()
         .end()
         .sleep(500)
-        .findAllByCssSelector('.wc-Comment:not(.wc-Comment--form)')
+        .findAllByCssSelector('.js-issue-comment:not(.wc-Comment--form)')
         .then(function(elms){
           allCommentsLength = elms.length;
           assert(originalCommentsLength === allCommentsLength, 'Comment was not successfully left.');

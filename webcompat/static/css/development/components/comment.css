@@ -167,7 +167,7 @@
   width: 100%;
   max-width: 100%;
 }
-.wc-Comment--form  .Comment-wrapper {
+.wc-Comment--form  .wc-Comment-wrapper {
   padding-top: 1em;
 }
 /* drag and drop */

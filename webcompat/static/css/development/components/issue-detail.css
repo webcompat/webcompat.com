@@ -1,139 +1,120 @@
 /*------Issues view------*/
 
-.Issue {
-  display: none;
+.wc-IssueDetail {
   font-size:var(--base-font-size);
 }
 /* Wrapper title and date issue */
-.Issue-title {
-  font-size: 2em;
+.wc-IssueDetail-title {
+  font-size: 1.6em;
   line-height: 1em;
   margin-bottom: .5em;
   word-wrap: break-word;
 }
 @media (--viewport-450px) {
-  .Issue-title {
+  .wc-IssueDetail-title {
     font-size:1.2em;
   }
 }
-/* btn back /index */
-.Issue-linkBack {
-  display: inline-block;
-  vertical-align: middle;
-  margin:0 .8em 0 0;
-}
-@media (--viewport-450px) {
-  .Issue-linkBack {
-    display:block;
-    margin-bottom:.3em;
-  }
-}
-.Issue-linkBack:hover {
-  text-decoration: none;
-}
-.Issue-linkBack-icon {
-  display: inline-block;
-  width: 1.25em;
-  height: 1.25em;
-  line-height: 1.25em;
-  text-align: center;
-  background-color: var(--wc-variant-background-light);
-  color: #fff;;
-  border-radius:50%;
-  transition: all 0.3s linear 0s;
-}
-.Issue-linkBack:hover .Issue-linkBack-icon {
-  background-color: var(--wc-variant-background-dark);
-  transition: all 0.3s linear 0s;
-}
-
 /* Issue wrapper */
-.Issue-wrapper {
+.wc-IssueDetail-wrapper {
   margin:0 0 0 4.2em;
 }
 @media (--viewport-1180px) {
-  .Issue-wrapper {
+  .wc-IssueDetail-wrapper {
     margin:0;
   }
 }
 
 /* information issue : date / author / number of comment */
-.Issue-create {
-  font-size: 1.2em;
+.wc-IssueDetail-create {
+  font-size: 1em;
   margin:0 0 2em
 }
 /* State issue */
-.Issue-state {
+.wc-IssueDetail-state {
   display: inline-block;
-  padding: 7px 23px;
+  padding: .36458333em 1.19791667em;
   color: #fff;
 }
 @media (--viewport-450px) {
-  .Issue-state {
+  .wc-IssueDetail-state {
     font-size:.8em;
   }
 }
 /*New*/
-.Issue-state--new {
+.wc-IssueDetail-state--new {
   background-color: var(--wc-state-new);
 }
 /*Needs Diagnosis*/
-.Issue-state--need {
+.wc-IssueDetail-state--need {
   background-color: var(--wc-state-need);
 }
 /*Ready for Outreach*/
-.Issue-state--ready {
+.wc-IssueDetail-state--ready {
   background-color: var(--wc-state-ready);
 }
 /*Site wait*/
-.Issue-state--sitewait {
+.wc-IssueDetail-state--sitewait {
     background-color: var(--wc-state-sitewait);
 }
 /*Close*/
-.Issue-state--close {
+.wc-IssueDetail-state--close {
   background-color: var(--wc-state-close);
 }
 /* Date of issue */
-.Issue-date {
+.wc-IssueDetail-date {
   display: inline-block;
 }
 @media (--viewport-450px) {
-  .Issue-date {
+  .wc-IssueDetail-date {
     font-size:.9em;
   }
 }
 /* Author */
-.Issue-reporter {
+.wc-IssueDetail-reporter {
   font-weight: bold;
 }
 
 /* container details issue */
-.Issue-details {
+.wc-IssueDetail-details {
   word-wrap: break-word;
   overflow: hidden;
   position: relative;
+  line-height: 1.5em;
 }
 /* force font-size */
-.Issue-details * {
+.wc-IssueDetail-details * {
   font-size:1em !important;
 }
-.Issue-details strong {
+.wc-IssueDetail-details strong {
     font-weight: bold !important;
 }
-.Issue-details img {
+.wc-IssueDetail-details img {
     max-width: 100%;
     max-height: 100%;
 }
-.Issue-details code,
-.Comment-content code {
+.wc-IssueDetail-details code,
+.wc-Comment-content code {
   font-family: monospace;
   font-size: 90%;
 }
-.Issue-details p > code,
-.Comment-content p > code {
+.wc-IssueDetail-details p > code,
+.wc-Comment-content p > code {
   color: inherit;
   background-color: #F5F5F5;
   padding: 0.25em;
+}
+.wc-IssueDetail-details li {
+  margin-bottom: 1em;
+}
+.wc-IssueDetail-details p {
+  margin-bottom: 1em;
+}
+.wc-IssueDetail-comment {
+  margin-top:2em;
+}
+.Label-wrapper {
+  margin-bottom: 2em;
 }
 /* FullScreen LabelEditor*/
 @media (--viewport-375px) {
@@ -192,12 +173,12 @@
 }
 
 /* Link to log in */
-.Issue-login {
+.wc-IssueDetail-login {
   margin-top: 2.5em;
   text-align:center;
 }
 
 /*wrapper list comment */
-.Issue-comment {
+.wc-IssueDetail-comment {
   margin:4em 0 0;
 }

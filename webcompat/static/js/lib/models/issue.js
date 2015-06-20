@@ -57,6 +57,7 @@
       labels: response.labels,
       number: response.number,
       reporter: response.user.login,
+      reporterAvatar: response.user.avatar_url,
       state: response.state,
       title: response.title
     });

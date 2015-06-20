@@ -33,13 +33,14 @@
 @import "components/loader.css";
 @import "components/box.css";
 @import "components/report-form.css";
+@import "components/issue-detail.css";
+
 /*----------Layout----------*/
 @import "layout/body.css";
 @import "layout/utilities.css";
 
 /*----------page----------*/
 @import "page/home.css";
-@import "page/issues.css";
 @import "page/static.css";
 @import "page/contributors.css";
 @import "page/issue-list.css"
