@@ -31,7 +31,7 @@ issues.LabelsView = Backbone.View.extend({
   subTemplate: _.template([
     '<% _.each(labels, function(label) { %>',
       '<span class="Label Label--badge" style="background-color:#<%=label.color%>">',
-        '<%= label.name %>',
+        '<%= label.name.replace(/(browser|status)-/, "") %>',
       '</span>',
     '<% }); %>'].join('')),
   render: function() {

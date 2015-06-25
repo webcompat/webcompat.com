@@ -30,7 +30,7 @@
           <span class="Label-list">
           <% _.each(labels, function(label) { %>
             <span class="Label Label--badge" style="background-color:#<%=label.color%>">
-              <%= label.name %>
+              <%= label.name.replace(/(browser|status)-/, '') %>
             </span>
           <% }); %>
           </span>
@@ -118,9 +118,9 @@
           <% _.each(labels, function(label) { %>
             <label class="LabelEditor-item">
               <span class="LabelEditor-color" style="background-color:#<%=label.color%>">
-                <input class="LabelEditor-checkbox" type="checkbox" name="<%= label.name %>" data-color="<%=label.color%>">
+                <input class="LabelEditor-checkbox" type="checkbox" name="<%= label.name.replace(/(browser|status)-/, '') %>" data-color="<%=label.color%>">
               </span>
-              <span class="LabelEditor-name"><%= label.name %></span>
+              <span class="LabelEditor-name"><%= label.name.replace(/(browser|status)-/, '') %></span>
               </label>
             <% }); %>
           </div>

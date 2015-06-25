@@ -83,6 +83,21 @@
     });
   },
   updateLabels: function(labelsArray) {
+    // maybe this should be in a shared config file outside of python/JS
+    var statusLabels = ['contactready', 'needscontact', 'needsdiagnosis', 'sitewait', ' closed-duplicate', 'closed-fixed', 'closed-invalid'];
+    var browserLabels = ['chrome', 'firefox', 'ie', 'opera', 'safari', 'vivaldi'];
+    var osLabels = ['android', 'fxos', 'ios', 'linux', 'mac', 'win']
+    // we check if we need to append the correct string before sending stuff back
+    for (var i = labelsArray.length - 1; i >= 0; i--) {
+      if (statusLabels.indexOf(labelsArray[i]) != -1) {
+        labelsArray[i] = 'status-'.concat(labelsArray[i])
+      } else if (browserLabels.indexOf(labelsArray[i]) != -1) {
+        labelsArray[i] = 'browser-'.concat(labelsArray[i])
+      } else if (osLabels.indexOf(labelsArray[i]) != -1) {
+        labelsArray[i] = 'os-'.concat(labelsArray[i])
+      };
+    };
+    console.log(labelsArray);
     var self = this;
     if (!$.isArray(labelsArray)) {
       return;
