@@ -63,4 +63,6 @@
 .wc-Icon--bug:before {
   content: "\f188";
 }
-
+.wc-Icon--qrcode:before {
+  content: "\f029";
+}
