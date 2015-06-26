@@ -226,6 +226,22 @@ define([
           });
     },
 
+    'results are loaded from the query params': function() {
+        var params = '?q=vladvlad';
+        return this.remote
+          .setFindTimeout(intern.config.wc.pageLoadTimeout)
+          .get(require.toUrl(url + params))
+          .findByCssSelector('.wc-IssueItem:nth-of-type(1) a').getVisibleText()
+          .then(function(text){
+            assert.include(text, 'vladvlad', 'The search query results show up on the page.');
+          })
+          .end()
+          .getCurrentUrl()
+          .then(function(currUrl){
+            assert.include(currUrl, 'q=vladvlad', 'Our params didn\'t go anywhere.');
+          });
+    },
+
     'dropdowns reflect state from URL': function() {
       var params = '?per_page=25&sort=updated&direction=desc&state=all';
 
