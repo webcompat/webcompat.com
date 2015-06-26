@@ -1,3 +1,8 @@
+## 1.6.6
+
+* Layout and visual design improvements to issue page [Pull #630](https://github.com/webcompat/webcompat.com/pull/630)
+* Load search result from URL param for logged in users [Pull #638](https://github.com/webcompat/webcompat.com/pull/638) [Issue #634](https://github.com/webcompat/webcompat.com/issues/634)
+
 ## 1.6.5 - 2014-06-11
 
 
