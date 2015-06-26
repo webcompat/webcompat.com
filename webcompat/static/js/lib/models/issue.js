@@ -97,7 +97,6 @@
         labelsArray[i] = 'os-'.concat(labelsArray[i])
       };
     };
-    console.log(labelsArray);
     var self = this;
     if (!$.isArray(labelsArray)) {
       return;
