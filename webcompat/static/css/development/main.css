@@ -11,7 +11,6 @@
 @import "components/button.css";
 @import "components/comment.css";
 @import "components/label-editor.css";
-@import "components/qrcode.css";
 @import "components/responsive.css";
 @import "suitcss-utils-display/index.css";
 @import "suitcss-utils-align/index.css";
@@ -35,6 +34,7 @@
 @import "components/box.css";
 @import "components/report-form.css";
 @import "components/issue-detail.css";
+@import "components/qrcode.css";
 
 /*----------Layout----------*/
 @import "layout/body.css";

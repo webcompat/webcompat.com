@@ -1,6 +1,6 @@
 /*----------add/remove labels----------*/
 
-/* Wrapper label editor */
+/* Wrapper QR code */
 .QrImage-wrapper {
   position:relative;
   display:inline-block;
@@ -11,7 +11,7 @@
   }
 }
 
-/* Label editor */
+/* QR code */
 .QrImage
 {
   display:none;
@@ -39,9 +39,9 @@
     overflow-y:auto;
     overflow-x:hidden;
   }
-
 }
-/* Label header */
+
+/* QR code header */
 .QrImage-header {
   background-color:#fff;
   border-radius: 6px 6px 0px 0px;
@@ -58,4 +58,33 @@
 }
 .QrImage-main {
   margin:18px;
+}
+
+/* QR code launcher */
+.Qr-wrapper {
+  float:right;
+  position:relative;
+}
+.QrImage-launcher {
+  display: none;
+  border:none;
+  width:1.3em;
+  height:1.3em;
+  font-size:1.4em !important;
+  padding:0;
+  opacity:.8;
+}
+/* display QR code only if button is-active*/
+.QrImage-launcher.is-active + .QrImage:after,
+.QrImage-launcher.is-active + .QrImage {
+  display:block;
+}
+.QrImage-launcher:hover {
+  opacity:1;
+}
+.QrImage-launcher:before {
+  content: "\f029";
+}
+.QrImage-launcher.is-active:before {
+  content: "\f00d";
 }
