@@ -1,12 +1,12 @@
 /*----------add/remove labels----------*/
 
 /* Wrapper QR code */
-.QrImage-wrapper {
+.wc-QrImage-wrapper {
   position:relative;
   display:inline-block;
 }
 @media (--viewport-375px) {
-  .QrImage-wrapper {
+  .wc-QrImage-wrapper {
     position:static; /* position of label_editor not depend of this class */
   }
 }
@@ -42,30 +42,30 @@
 }
 
 /* QR code header */
-.QrImage-header {
+.wc-QrImage-header {
   background-color:#fff;
   border-radius: 6px 6px 0px 0px;
   box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.1), 0px 2px 3px rgba(0, 0, 0, 0.05);
   padding: 0.625em;
 }
 /* btn */
-.QrImage-btn {
+.wc-QrImage-btn {
   border:none;
 }
 /* hover btn */
-.QrImage-btn:hover {
+.wc-QrImage-btn:hover {
   text-decoration:underline;
 }
-.QrImage-main {
+.wc-QrImage-main {
   margin:18px;
 }
 
 /* QR code launcher */
-.Qr-wrapper {
+.wc-Qr-wrapper {
   float:right;
   position:relative;
 }
-.QrImage-launcher {
+.wc-QrImage-launcher {
   display: none;
   border:none;
   width:1.3em;
@@ -75,16 +75,16 @@
   opacity:.8;
 }
 /* display QR code only if button is-active*/
-.QrImage-launcher.is-active + .QrImage:after,
-.QrImage-launcher.is-active + .QrImage {
+.wc-QrImage-launcher.is-active + .QrImage:after,
+.wc-QrImage-launcher.is-active + .QrImage {
   display:block;
 }
-.QrImage-launcher:hover {
+.wc-QrImage-launcher:hover {
   opacity:1;
 }
-.QrImage-launcher:before {
+.wc-QrImage-launcher:before {
   content: "\f029";
 }
-.QrImage-launcher.is-active:before {
+.wc-QrImage-launcher.is-active:before {
   content: "\f00d";
 }

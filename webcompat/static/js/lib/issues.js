@@ -76,7 +76,7 @@ issues.BodyView = Backbone.View.extend({
         return this.nodeType === 3 && this.nodeValue.match(/<!--/);
         //and hide them
       }).wrap("<p class='wc-hidden'></p>");
-    this.QrView.setElement('.Qr-wrapper').render();
+    this.QrView.setElement('.wc-Qr-wrapper').render();
     return this;
   }
 });
@@ -185,7 +185,6 @@ issues.MainView = Backbone.View.extend({
     this.metadata = new issues.MetaDataView(issueModel);
     this.body = new issues.BodyView(issueModel);
     this.labels = new issues.LabelsView(issueModel);
-    //this.qr = new issues.QrView(issueModel);
     this.textArea = new issues.TextAreaView();
     this.stateButton = new issues.StateButtonView(_.extend(issueModel, {mainView: this}));
   },

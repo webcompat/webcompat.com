@@ -53,8 +53,8 @@
               <div class="wc-Comment-content">
                 <div class="wc-IssueDetail-details">
                   <!-- QR Code -->
-                  <span class="Qr-wrapper">
-                    <span class="QrImage-wrapper"><button class="QrImage-launcher wc-Icon wc-Icon--qrcode" aria-hidden="true"><span class="wc-sronly">Show QR code</span></button></span>
+                  <span class="wc-Qr-wrapper">
+                    <span class="wc-QrImage-wrapper"><button class="wc-QrImage-launcher wc-Icon wc-Icon--qrcode" aria-hidden="true"><span class="wc-sronly">Show QR code</span></button></span>
                   </span>
                   <%= body %>
                 </div>
@@ -134,12 +134,10 @@
   </script>
   
   <script type="text/template" id="qr-image-tmpl">
-    <div class="QrImage-container">
-      <div class="QrImage-header">
-        <button class="QrImage-btn">Close</button>
-      </div>
-      <div class="QrImage-main"><img src="<%= qrDataUrl %>" alt="QR code"></div>
+    <div class="wc-QrImage-header">
+      <button class="wc-QrImage-btn">Close</button>
     </div>
+    <div class="wc-QrImage-main"><img src="<%= qrDataUrl %>" alt="QR code"></div>
   </script>
   
 {% endblock %}
