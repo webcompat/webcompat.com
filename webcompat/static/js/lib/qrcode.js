@@ -61,7 +61,7 @@ issues.QrImageView = Backbone.View.extend({
   closeQr: function() {
     this.issueView.qrButton.removeClass('is-active');
     // detach() (vs remove()) here because we don't want to lose events if the
-    // user reopens the editor.
+    // user reopens the QR code.
     this.$el.children().detach();
   }
 });
