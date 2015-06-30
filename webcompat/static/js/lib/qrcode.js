@@ -15,7 +15,7 @@ issues.QrView = Backbone.View.extend({
   },
   render: function() {
     // Extract page URL from bug description
-    var body = this.model.attributes.body;
+    var body = this.model.get('body');
     var regex = /[^]*?href\=\"(.*?)\"/ig;
     var urlMatch = regex.exec(body);
     
