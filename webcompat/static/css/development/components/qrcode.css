@@ -75,8 +75,8 @@
   opacity:.8;
 }
 /* display QR code only if button is-active*/
-.wc-QrImage-launcher.is-active + .QrImage:after,
-.wc-QrImage-launcher.is-active + .QrImage {
+.wc-QrImage-launcher.is-active + .wc-QrImage:after,
+.wc-QrImage-launcher.is-active + .wc-QrImage {
   display:block;
 }
 .wc-QrImage-launcher:hover {
