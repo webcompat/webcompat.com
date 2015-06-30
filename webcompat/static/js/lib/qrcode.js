@@ -41,7 +41,7 @@ issues.QrView = Backbone.View.extend({
 });
 
 issues.QrImageView = Backbone.View.extend({
-  className: 'QrImage',
+  className: 'wc-QrImage',
   events: {
     'click button': 'closeQr'
   },
