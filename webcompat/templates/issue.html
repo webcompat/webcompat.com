@@ -142,12 +142,12 @@
   
 {% endblock %}
 {% block extrascripts %}
-<script src="{{ url_for('static', filename='js/vendor/qr.min.js')|bust_cache }}"></script>
 <script>var issueNumber={{ number }};
 var repoPath="{{config['ISSUES_REPO_URI']}}";</script>
 {%- if config.PRODUCTION or config.DEVELOPMENT -%}
 <script src="{{ url_for('static', filename='js/issues.min.js')|bust_cache }}"></script>
 {% else %}
+<script src="{{ url_for('static', filename='js/vendor/qr.min.js') }}"></script>
 <script src="{{ url_for('static', filename='js/lib/models/issue.js') }}"></script>
 <script src="{{ url_for('static', filename='js/lib/models/comment.js') }}"></script>
 <script src="{{ url_for('static', filename='js/lib/comments.js') }}"></script>
