@@ -70,7 +70,10 @@ define([
         .get(require.toUrl(url))
         .findByCssSelector('#report-bug.closed').click()
         .end()
-        .findByCssSelector('.form-opened')
+        .findByCssSelector('.form-opened').isDisplayed()
+        .then(function (isDisplayed) {
+          assert.equal(isDisplayed, true);
+        })
         .end()
         .findByCssSelector('#report-bug.is-open').click()
         .end()
