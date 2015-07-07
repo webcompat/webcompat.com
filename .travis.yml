@@ -14,7 +14,7 @@ cache:
     - $HOME/.selenium/
 
 addons:
-  firefox: "34.0"
+  firefox: "39.0"
 
 env:
   global:
@@ -25,8 +25,8 @@ env:
 before_install:
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
-  - "mkdir -p $HOME/.selenium && cd $HOME/.selenium && wget -nc http://selenium-release.storage.googleapis.com/2.44/selenium-server-standalone-2.44.0.jar"
-  - java -jar selenium-server-standalone-2.44.0.jar &> /dev/null &
+  - "mkdir -p $HOME/.selenium && cd $HOME/.selenium && wget -nc http://selenium-release.storage.googleapis.com/2.46/selenium-server-standalone-2.46.0.jar"
+  - java -jar selenium-server-standalone-2.46.0.jar &> /dev/null &
   - cd -
 
 install:

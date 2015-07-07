@@ -327,7 +327,7 @@ We use [Intern](http://theintern.io/) to run functional tests.
 To run them, make sure you download the Selenium standalone server from the repo root:
 
 ``` bash
-wget http://selenium-release.storage.googleapis.com/2.44/selenium-server-standalone-2.44.0.jar
+wget http://selenium-release.storage.googleapis.com/2.46/selenium-server-standalone-2.46.0.jar
 ```
 
 The `firefox` binary will also need to be in your `PATH`. Here's how this can be done on OS X:
@@ -339,7 +339,7 @@ export PATH="/Applications/Firefox.app/Contents/MacOS/:$PATH"
 Now start Selenium:
 
 ``` bash
-java -jar selenium-server-standalone-2.44.0.jar
+java -jar selenium-server-standalone-2.46.0.jar
 ```
 
 In a separate terminal window or tab, start the application servers:
