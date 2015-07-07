@@ -34,6 +34,7 @@
 @import "components/box.css";
 @import "components/report-form.css";
 @import "components/issue-detail.css";
+@import "components/qrcode.css";
 
 /*----------Layout----------*/
 @import "layout/body.css";

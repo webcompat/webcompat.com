@@ -31,10 +31,12 @@ module.exports = function(grunt) {
       },
       issues: {
         src: [
+            '<%= jsPath %>/vendor/qr.min.js',
             '<%= jsPath %>/lib/models/issue.js',
             '<%= jsPath %>/lib/models/comment.js',
             '<%= jsPath %>/lib/comments.js',
             '<%= jsPath %>/lib/labels.js',
+            '<%= jsPath %>/lib/qrcode.js',
             '<%= jsPath %>/lib/issues.js',
         ],
         dest: '<%= jsPath %>/issues.js'

@@ -36,6 +36,7 @@
           </span>
         </script>
       </div>
+      
       <div class="wc-IssueDetail-report">
         <script type="text/template" id="issue-info-tmpl">
         <div class="wc-Comment">
@@ -47,10 +48,14 @@
               <div class="wc-Comment-header">
                 <span class="wc-Comment-owner">
                   <a href="https://github.com/<%= reporter %>"><%= reporter %></a>
-                </span> commented on <a href="https://webcompat.com/issues/<%= number %>"><%= createdAt %></a>
+                </span> reported on <a href="https://webcompat.com/issues/<%= number %>"><%= createdAt %></a>
               </div>
               <div class="wc-Comment-content">
                 <div class="wc-IssueDetail-details">
+                  <!-- QR Code -->
+                  <span class="wc-Qr-wrapper">
+                    <span class="wc-QrImage-wrapper"><button class="wc-QrImage-launcher wc-Icon wc-Icon--qrcode" aria-hidden="true"><span class="wc-sronly">Show QR code</span></button></span>
+                  </span>
                   <%= body %>
                 </div>
               </div>
@@ -127,7 +132,14 @@
         </div>
     </div>
   </script>
-
+  
+  <script type="text/template" id="qr-image-tmpl">
+    <div class="wc-QrImage-header">
+      <button class="wc-QrImage-btn">Close</button>
+    </div>
+    <div class="wc-QrImage-main"><img src="<%= qrDataUrl %>" alt="QR code"></div>
+  </script>
+  
 {% endblock %}
 {% block extrascripts %}
 <script>var issueNumber={{ number }};
@@ -135,10 +147,12 @@ var repoPath="{{config['ISSUES_REPO_URI']}}";</script>
 {%- if config.PRODUCTION or config.DEVELOPMENT -%}
 <script src="{{ url_for('static', filename='js/issues.min.js')|bust_cache }}"></script>
 {% else %}
+<script src="{{ url_for('static', filename='js/vendor/qr.min.js') }}"></script>
 <script src="{{ url_for('static', filename='js/lib/models/issue.js') }}"></script>
 <script src="{{ url_for('static', filename='js/lib/models/comment.js') }}"></script>
 <script src="{{ url_for('static', filename='js/lib/comments.js') }}"></script>
 <script src="{{ url_for('static', filename='js/lib/labels.js') }}"></script>
+<script src="{{ url_for('static', filename='js/lib/qrcode.js') }}"></script>
 <script src="{{ url_for('static', filename='js/lib/issues.js') }}"></script>
 {%- endif %}
 {% endblock %}

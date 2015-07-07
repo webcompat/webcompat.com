@@ -120,6 +120,40 @@ define([
           var headerNumber = parseInt(text.slice(1), 10);
           assert.equal(headerNumber, issueNumber, 'GitHub issue number matches.');
         });
+    },
+
+    'Opening and closing QR code image': function() {
+      var issueNumber = 252;
+      return this.remote
+        .setFindTimeout(intern.config.wc.pageLoadTimeout)
+        .get(require.toUrl(url(issueNumber)))
+        // Click on QR code button to open
+        .findByCssSelector('.wc-QrImage-launcher').click()
+        .sleep(500)
+        .end()
+        .findByCssSelector('.wc-QrImage-main').isDisplayed()
+        .then(function (isDisplayed) {
+          assert.equal(isDisplayed, true);
+        })
+        .end()
+        // Click on QR code button to close
+        .findByCssSelector('.wc-QrImage-launcher').click()
+        .sleep(500)
+        .end()
+        .findByCssSelector('.wc-QrImage-main').isDisplayed()
+        .then(function (isDisplayed) {
+          assert.equal(isDisplayed, false);
+        })
+        .end()
+        // Press q to open
+        .findByCssSelector('body').click()
+        .type('q')
+        .sleep(500)
+        .end()
+        .findByCssSelector('.wc-QrImage-main').isDisplayed()
+        .then(function (isDisplayed) {
+          assert.equal(isDisplayed, true);
+        });
     }
 
   });
