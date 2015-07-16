@@ -120,7 +120,83 @@ define([
           var headerNumber = parseInt(text.slice(1), 10);
           assert.equal(headerNumber, issueNumber, 'GitHub issue number matches.');
         });
-    }
+    },
 
+    'Opening the QR code image (via button)': function() {
+      var issueNumber = 252;
+      return this.remote
+        .setFindTimeout(intern.config.wc.pageLoadTimeout)
+        .get(require.toUrl(url(issueNumber)))
+        // Click on QR code button to open
+        .findByCssSelector('.wc-QrImage-launcher').click()
+        .end()
+        .findByCssSelector('.wc-QrImage').isDisplayed()
+        .then(function (isDisplayed) {
+          assert.equal(isDisplayed, true);
+        })
+        .end();
+    },
+
+    'Closing the QR code image (via button)': function() {
+      var issueNumber = 252;
+      return this.remote
+        .setFindTimeout(intern.config.wc.pageLoadTimeout)
+        .get(require.toUrl(url(issueNumber)))
+        // Click on QR code button to open
+        .findByCssSelector('.wc-QrImage-launcher').click()
+        .end()
+        .findByCssSelector('.wc-QrImage').isDisplayed()
+        .then(function (isDisplayed) {
+          assert.equal(isDisplayed, true);
+        })
+        .end()
+        // Click on QR code button again to close
+        .findByCssSelector('.wc-QrImage-launcher.is-active').click()
+        .end()
+        .findByCssSelector('.wc-QrImage').isDisplayed()
+        .then(function (isDisplayed) {
+          assert.equal(isDisplayed, false);
+        })
+        .end();
+    },
+
+    'Opening the QR code image (via keyboard shortcut)': function() {
+      var issueNumber = 252;
+      return this.remote
+        .setFindTimeout(intern.config.wc.pageLoadTimeout)
+        .get(require.toUrl(url(issueNumber)))
+        // Click on QR code button to open
+        .findByCssSelector('body').click()
+        .type('q')
+        .end()
+        .findByCssSelector('.wc-QrImage').isDisplayed()
+        .then(function (isDisplayed) {
+          assert.equal(isDisplayed, true);
+        })
+        .end();
+    },
+
+    'Closing the QR code image (via link)': function() {
+      var issueNumber = 252;
+      return this.remote
+        .setFindTimeout(intern.config.wc.pageLoadTimeout)
+        .get(require.toUrl(url(issueNumber)))
+        // Click on QR code button to open
+        .findByCssSelector('.wc-QrImage-launcher').click()
+        .end()
+        .findByCssSelector('.wc-QrImage').isDisplayed()
+        .then(function (isDisplayed) {
+          assert.equal(isDisplayed, true);
+        })
+        .end()
+        // Click on QR code Close link to close
+        .findByCssSelector('.wc-QrImage-btn').click()
+        .end()
+        .findByCssSelector('.wc-QrImage').isDisplayed()
+        .then(function (isDisplayed) {
+          assert.equal(isDisplayed, false);
+        })
+        .end();
+    }
   });
 });

@@ -61,6 +61,11 @@ issues.MetaDataView = Backbone.View.extend({
 issues.BodyView = Backbone.View.extend({
   el: $('.wc-IssueDetail-report'),
   template: _.template($('#issue-info-tmpl').html()),
+  initialize: function() {
+    this.QrView = new issues.QrView({
+      model: this.model
+    });
+  },
   render: function() {
     this.$el.html(this.template(this.model.toJSON()));
     // hide metadata
@@ -71,6 +76,7 @@ issues.BodyView = Backbone.View.extend({
         return this.nodeType === 3 && this.nodeValue.match(/<!--/);
         //and hide them
       }).wrap("<p class='wc-hidden'></p>");
+    this.QrView.setElement('.wc-Qr-wrapper').render();
     return this;
   }
 });
