@@ -122,39 +122,81 @@ define([
         });
     },
 
-    'Opening and closing QR code image': function() {
+    'Opening the QR code image (via button)': function() {
       var issueNumber = 252;
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url(issueNumber)))
         // Click on QR code button to open
         .findByCssSelector('.wc-QrImage-launcher').click()
-        .sleep(500)
         .end()
-        .findByCssSelector('.wc-QrImage-main').isDisplayed()
+        .findByCssSelector('.wc-QrImage').isDisplayed()
+        .then(function (isDisplayed) {
+          assert.equal(isDisplayed, true);
+        })
+        .end();
+    },
+
+    'Closing the QR code image (via button)': function() {
+      var issueNumber = 252;
+      return this.remote
+        .setFindTimeout(intern.config.wc.pageLoadTimeout)
+        .get(require.toUrl(url(issueNumber)))
+        // Click on QR code button to open
+        .findByCssSelector('.wc-QrImage-launcher').click()
+        .end()
+        .findByCssSelector('.wc-QrImage').isDisplayed()
         .then(function (isDisplayed) {
           assert.equal(isDisplayed, true);
         })
         .end()
-        // Click on QR code button to close
-        .findByCssSelector('.wc-QrImage-launcher').click()
-        .sleep(500)
+        // Click on QR code button again to close
+        .findByCssSelector('.wc-QrImage-launcher.is-active').click()
         .end()
-        .findByCssSelector('.wc-QrImage-main').isDisplayed()
+        .findByCssSelector('.wc-QrImage').isDisplayed()
         .then(function (isDisplayed) {
           assert.equal(isDisplayed, false);
         })
-        .end()
-        // Press q to open
+        .end();
+    },
+
+    'Opening the QR code image (via keyboard shortcut)': function() {
+      var issueNumber = 252;
+      return this.remote
+        .setFindTimeout(intern.config.wc.pageLoadTimeout)
+        .get(require.toUrl(url(issueNumber)))
+        // Click on QR code button to open
         .findByCssSelector('body').click()
         .type('q')
-        .sleep(500)
         .end()
-        .findByCssSelector('.wc-QrImage-main').isDisplayed()
+        .findByCssSelector('.wc-QrImage').isDisplayed()
         .then(function (isDisplayed) {
           assert.equal(isDisplayed, true);
-        });
-    }
+        })
+        .end();
+    },
 
+    'Closing the QR code image (via link)': function() {
+      var issueNumber = 252;
+      return this.remote
+        .setFindTimeout(intern.config.wc.pageLoadTimeout)
+        .get(require.toUrl(url(issueNumber)))
+        // Click on QR code button to open
+        .findByCssSelector('.wc-QrImage-launcher').click()
+        .end()
+        .findByCssSelector('.wc-QrImage').isDisplayed()
+        .then(function (isDisplayed) {
+          assert.equal(isDisplayed, true);
+        })
+        .end()
+        // Click on QR code Close link to close
+        .findByCssSelector('.wc-QrImage-btn').click()
+        .end()
+        .findByCssSelector('.wc-QrImage').isDisplayed()
+        .then(function (isDisplayed) {
+          assert.equal(isDisplayed, false);
+        })
+        .end();
+    }
   });
 });
