@@ -1,3 +1,7 @@
+## 1.6.7
+
+* Add QR code modal thingy to the issues page. [Pull #643](https://github.com/webcompat/webcompat.com/pull/643) [Issue #636](https://github.com/webcompat/webcompat.com/issues/636)
+
 ## 1.6.6
 
 * Layout and visual design improvements to issue page [Pull #630](https://github.com/webcompat/webcompat.com/pull/630)
