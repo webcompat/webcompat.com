@@ -38,16 +38,20 @@ define([
         // click next page to trigger loader image
         .findByCssSelector('.js-pagination-next').click()
         .end()
-        .findByCssSelector('.js-loader').isDisplayed()
-        .then(function (isDisplayed) {
-          assert.equal(isDisplayed, true, 'Loading image is visible.');
+        .findByCssSelector('.js-loader').getAttribute('class')
+        .then(function (className) {
+          assert.include(className, 'is-active', 'Loading image is visible');
         })
         .end()
-        // give it some time to go away
-        .sleep(2500)
-        .findByCssSelector('.js-loader').isDisplayed()
-        .then(function (isDisplayed) {
-          assert.equal(isDisplayed, false, 'Loading image is hidden.');
+        // this looks nonsensical, because it kind of is. basically we're
+        // checking that the .is-active class has been removed from the loader
+        // image. this way we can remove sleep(): http://v14d.com/i/55ad533d89b39.png
+        // other than waiting a really long time, the surest way to make sure
+        // it's been removed is to wait to find it. it's removed after the issues
+        // are rendered.
+        .findByCssSelector('.js-loader:not(.is-active)').getAttribute('class')
+        .then(function (className) {
+          assert.notInclude(className, 'is-active', 'Loading image is not visible');
         })
         .end();
     },
