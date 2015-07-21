@@ -198,4 +198,47 @@ issueList.IssueCollection = Backbone.Collection.extend({
       return null;
     }
   },
+  normalizeAPIParams: function(paramsArray) {
+    /* ported version of normalize_api_params from helpers.py
+    Normalize GitHub Issues API params to Search API conventions:
+
+    Issues API params        | Search API converted values
+    -------------------------|---------------------------------------
+    state                    | into q as "state:open", "state:closed"
+    creator                  | into q as "author:username"
+    mentioned                | into q as "mentions:username"
+    direction                | order
+    */
+    var params = {};
+    var qMap = {
+      state:     'state',
+      creator:   'author',
+      mentioned: 'mentions'
+    };
+
+    _.forEach(paramsArray, _.bind(function(param) {
+      var kvArray = param.split('=');
+      var key = kvArray[0];
+      var value = kvArray[1];
+      params[key] = value;
+    }, this));
+
+    if ('direction' in params) {
+      params.order = params.direction;
+      delete params.direction;
+    }
+
+    // The rest need to be added to the "q" param as substrings
+    _.forEach(qMap, function(val, key) {
+      if (key in params) {
+        params.q += ' ' + val + ':' + params[key];
+        delete params[key];
+      }
+    });
+
+    // Finally, scope this to our issues repo.
+    params.q += ' repo:' + repoPath.slice(0,-7);
+
+    return params;
+  }
 });
