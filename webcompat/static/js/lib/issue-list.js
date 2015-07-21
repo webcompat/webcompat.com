@@ -485,6 +485,16 @@ issueList.IssueView = Backbone.View.extend({
 
     this.fetchAndRenderIssues();
   },
+  addParamsToModel: function(paramsArray) {
+    // this method just puts the params in the model's params property.
+    // paramsArray is an array of param 'key=value' string pairs
+    _.forEach(paramsArray, _.bind(function(param) {
+      var kvArray = param.split('=');
+      var key = kvArray[0];
+      var value = kvArray[1];
+      this.issues.params[key] = value;
+    }, this));
+  },
   updateModelParams: function(params, options) {
     // we convert the params string into an array, splitting
     // on '&' in case of multiple params. those are then
@@ -500,13 +510,7 @@ issueList.IssueView = Backbone.View.extend({
       delete this.issues.params['q'];
     }
 
-    // paramsArray is an array of param 'key=value' string pairs
-    _.forEach(paramsArray, _.bind(function(param) {
-      var kvArray = param.split('=');
-      var key = kvArray[0];
-      var value = kvArray[1];
-      this.issues.params[key] = value;
-    }, this));
+    this.addParamsToModel(paramsArray);
 
     //broadcast to each of the dropdowns that they need to update
     var pageDropdown;
