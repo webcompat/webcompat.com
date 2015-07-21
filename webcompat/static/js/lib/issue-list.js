@@ -294,6 +294,7 @@ issueList.IssueView = Backbone.View.extend({
     'click .js-issue-label': 'labelSearch',
   },
   _filterRegex: /(stage=(?:new|status-needscontact|status-needsdiagnosis|status-contactready|status-sitewait|status-closed))/ig,
+  _searchRegex: /&*q=&*/i,
   _isLoggedIn: $('body').data('username'),
   _loadingIndicator: $('.js-loader'),
   _nextButton: $('.js-pagination-next'),
@@ -321,9 +322,18 @@ issueList.IssueView = Backbone.View.extend({
     // get params excluding the leading ?
     var urlParams = location.search.slice(1);
 
-    if (location.search.length !== 0) {
-      // There are some params in the URL
-      if (category = window.location.search.match(this._filterRegex)) {
+    // There are some params in the URL
+    if (urlParams.length !== 0) {
+      if (!this._isLoggedIn && urlParams.match(this._searchRegex)) {
+        // We're dealing with an un-authed user, with a q param.
+        // So we bypass our server and request from GitHub to avoid
+        // being penalized for anauthed Search API requests.
+        var githubSearchAPI = "https://api.github.com/search/issues";
+        var paramsArray = _.uniq(urlParams.split('&'));
+        var normalizedParams = this.issues.normalizeAPIParams(paramsArray);
+        this.issues.setURLState(githubSearchAPI, normalizedParams);
+        this.fetchAndRenderIssues();
+      } else if (category = window.location.search.match(this._filterRegex)) {
         // If there was a stage filter match, fire an event which loads results
         this.updateModelParams(urlParams);
         _.delay(function() {
