@@ -54,7 +54,7 @@ issues.QrImageView = Backbone.View.extend({
   },
   template: _.template($('#qr-image-tmpl').html()),
   render: function() {
-    var qrDataUrl = qr.toDataURL({value: this.url, size: 8});
+    var qrDataUrl = qr.toDataURL({value: this.url, size: 7});
     this.$el.html(this.template({'qrDataUrl': qrDataUrl}));
     return this;
   },
