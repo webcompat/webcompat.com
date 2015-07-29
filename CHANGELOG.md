@@ -1,3 +1,7 @@
+## 1.6.8
+
+Add namespaces for statuses and browsers to labels. [Pull #640](https://github.com/webcompat/webcompat.com/pull/640) [Issue #436](https://github.com/webcompat/webcompat.com/issues/436)
+
 ## 1.6.7
 
 * Add QR code modal thingy to the issues page. [Pull #643](https://github.com/webcompat/webcompat.com/pull/643) [Issue #636](https://github.com/webcompat/webcompat.com/issues/636)
