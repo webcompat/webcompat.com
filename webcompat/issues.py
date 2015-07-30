@@ -63,8 +63,8 @@ def filter_new(issues):
     def is_new(issue):
         '''Filter function.'''
         match = True
-        category_list = ['contactready', 'needscontact',
-                         'needsdiagnosis', 'sitewait']
+        category_list = ['status-contactready', 'status-needscontact',
+                         'status-needsdiagnosis', 'status-sitewait']
         labels = [label.get('name') for label in issue.get('labels')]
         # if the intersection of labels and category_list is not empty
         # then it's not part of untriaged
