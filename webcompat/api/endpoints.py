@@ -79,7 +79,7 @@ def proxy_issues():
     # Non-authed users should never get here--the request is made to
     # GitHub client-side)--but return out of paranoia anyways.
     elif params.get('q'):
-        return
+        abort(404)
 
     if g.user:
         issues = github.raw_request('GET', 'repos/{0}'.format(ISSUES_PATH),
