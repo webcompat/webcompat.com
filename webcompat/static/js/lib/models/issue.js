@@ -32,15 +32,15 @@
       this.set('stateClass', 'close');
       return 'Closed';
     }
-    if (labelsNames.indexOf('sitewait') > -1) {
+    if (labelsNames.indexOf('status-sitewait') > -1) {
       this.set('stateClass', 'sitewait');
       return 'Site Contacted';
     }
-    if (labelsNames.indexOf('contactready') > -1) {
+    if (labelsNames.indexOf('status-contactready') > -1) {
       this.set('stateClass', 'ready');
       return 'Ready for Outreach';
     }
-    if (labelsNames.indexOf('needsdiagnosis') > -1) {
+    if (labelsNames.indexOf('status-needsdiagnosis') > -1) {
       this.set('stateClass', 'need');
       return 'Needs Diagnosis';
     }

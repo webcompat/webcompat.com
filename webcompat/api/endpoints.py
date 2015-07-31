@@ -120,7 +120,9 @@ def get_issue_category(issue_category):
     params = request.args.copy()
 
     if issue_category in category_list:
-        params['labels'] = issue_category
+        # add "status-" before the filter param to match the naming scheme
+        # of the repo labels.
+        params['labels'] = 'status-' + issue_category
         if g.user:
             issues = github.raw_request('GET', issues_path, params=params)
         else:
@@ -202,7 +204,9 @@ def get_category_from_search(issue_category):
     params = request.args.copy()
 
     if issue_category in category_list:
-        query_string = 'label:{0}'.format(issue_category)
+        # add "status-" before the issue_category to match the naming scheme
+        # of the repo labels.
+        query_string = 'label:{0}'.format('status-' + issue_category)
     elif issue_category == 'new':
         query_string = ' '.join(['-label:%s' % cat for cat in category_list])
         query_string += ' state:open '
