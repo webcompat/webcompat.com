@@ -327,7 +327,7 @@ issueList.IssueView = Backbone.View.extend({
       if (!this._isLoggedIn && urlParams.match(this._searchRegex)) {
         // We're dealing with an un-authed user, with a q param.
         // So we bypass our server and request from GitHub to avoid
-        // being penalized for anauthed Search API requests.
+        // being penalized for unauthed Search API requests.
         var githubSearchAPI = "https://api.github.com/search/issues";
         var paramsArray = _.uniq(urlParams.split('&'));
         var normalizedParams = this.issues.normalizeAPIParams(paramsArray);
