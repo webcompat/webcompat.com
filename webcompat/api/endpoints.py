@@ -72,10 +72,14 @@ def proxy_issues():
     params = request.args.copy()
 
     # If there's a q param, then we need to use the Search API
-    # and load those results. Unfortunately, we restrict search requests
-    # to logged in users.
+    # and load those results. For logged in users, we handle this at the
+    # server level.
     if g.user and params.get('q'):
         return get_search_results(params.get('q'), params)
+    # Non-authed users should never get here--the request is made to
+    # GitHub client-side)--but return out of paranoia anyways.
+    elif params.get('q'):
+        abort(404)
 
     if g.user:
         issues = github.raw_request('GET', 'repos/{0}'.format(ISSUES_PATH),
