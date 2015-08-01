@@ -1,3 +1,8 @@
+## 1.6.9
+
+* Allow non-logged in users to load search results from URL params [Pull #650](https://github.com/webcompat/webcompat.com/pull/650) [Issue #639](https://github.com/webcompat/webcompat.com/issues/639)
+* Fix a few bugs related to moving to `status-` labels. [Pull #653](https://github.com/webcompat/webcompat.com/pull/653) [Issue #652](https://github.com/webcompat/webcompat.com/issues/652)
+
 ## 1.6.8
 
 Add namespaces for statuses and browsers to labels. [Pull #640](https://github.com/webcompat/webcompat.com/pull/640) [Issue #436](https://github.com/webcompat/webcompat.com/issues/436)
