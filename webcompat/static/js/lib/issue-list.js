@@ -293,7 +293,8 @@ issueList.IssueView = Backbone.View.extend({
   events: {
     'click .js-issue-label': 'labelSearch',
   },
-  _filterRegex: /(stage=(?:new|status-needscontact|status-needsdiagnosis|status-contactready|status-sitewait|status-closed))/ig,
+  // NOTE: these filters don't need "status-" prefixes because appear in URL params
+  _filterRegex: /&*stage=(new|needscontact|needsdiagnosis|contactready|sitewait|closed)&*/i,
   _searchRegex: /&*q=&*/i,
   _isLoggedIn: $('body').data('username'),
   _loadingIndicator: $('.js-loader'),
