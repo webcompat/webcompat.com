@@ -322,6 +322,24 @@ define([
         .end();
     },
 
+    'loading URL with stage param loads issues': function() {
+      // this also tests the Browse Issues links on the home page
+      return this.remote
+        .setFindTimeout(intern.config.wc.pageLoadTimeout)
+        // load the home page
+        .get(require.toUrl(intern.config.siteRoot))
+        .findByCssSelector('.wc-IssueItem--list.wc-IssueItem--new a').click()
+        .end()
+        // Did an issue load?
+        .findByCssSelector('.wc-IssueItem:nth-of-type(1)')
+        .end()
+        .findByCssSelector('.js-filter-button.is-active').getVisibleText()
+        .then(function(text){
+          assert.equal('New Issues', text, 'New Issues filter is selected.');
+        })
+        .end();
+    },
+
     'clicking on a stage filter adds the correct param to the URL': function() {
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
