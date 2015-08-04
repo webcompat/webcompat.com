@@ -59,12 +59,13 @@
     });
   },
   parse: function(response) {
+    var labels = this.removeNamespaces(response.labels);
     this.set({
       body: md.render(response.body),
       commentNumber: response.comments,
       createdAt: response.created_at.slice(0, 10),
-      issueState: this.getState(response.state, response.labels),
-      labels: response.labels,
+      issueState: this.getState(response.state, labels),
+      labels: labels,
       number: response.number,
       reporter: response.user.login,
       reporterAvatar: response.user.avatar_url,

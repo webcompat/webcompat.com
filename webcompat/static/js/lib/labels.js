@@ -20,7 +20,12 @@ issues.AllLabels = Backbone.Model.extend({
     });
   },
   parse: function(response) {
-    this.set({labels: response});
+    this.set({
+      // Store a copy of the original response, so we can reconstruct
+      // the labels before talking back to the API.
+      namespacedLabels: response,
+      labels: this.removeNamespaces(response)
+    });
   }
 });
 
@@ -63,6 +68,8 @@ issues.LabelsView = Backbone.View.extend({
       model: this.allLabels,
       issueView: this,
     });
+    // Stash the allLabels model so we can get it from Issue model later
+    this.model.set('repoLabels', this.allLabels);
     if (this._isLoggedIn) {
       this.allLabels.fetch(headersBag).success(_.bind(function(){
         this.issueLabels = this.getIssueLabels();
