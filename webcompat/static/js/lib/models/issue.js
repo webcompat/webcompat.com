@@ -94,34 +94,31 @@
     });
   },
   updateLabels: function(labelsArray) {
-    // maybe this should be in a shared config file outside of python/JS
-    var statusLabels = ['contactready', 'needscontact', 'needsdiagnosis', 'sitewait', ' closed-duplicate', 'closed-fixed', 'closed-invalid'];
-    var browserLabels = ['chrome', 'firefox', 'ie', 'opera', 'safari', 'vivaldi'];
-    var osLabels = ['android', 'fxos', 'ios', 'linux', 'mac', 'win'];
-    // we check if we need to append the correct string before sending stuff back
-    for (var i = labelsArray.length - 1; i >= 0; i--) {
-      if (statusLabels.indexOf(labelsArray[i]) !== -1) {
-        labelsArray[i] = 'status-'.concat(labelsArray[i]);
-      } else if (browserLabels.indexOf(labelsArray[i]) !== -1) {
-        labelsArray[i] = 'browser-'.concat(labelsArray[i]);
-      } else if (osLabels.indexOf(labelsArray[i]) !== -1) {
-        labelsArray[i] = 'os-'.concat(labelsArray[i]);
-      }
-    }
-    var self = this;
-    if (!$.isArray(labelsArray)) {
+    var namespaceRegex = '^(browser|closed|os|status)-';
+    var repoLabelsArray = _.pluck(this.get('repoLabels').get('namespacedLabels'),
+                                  'name');
+
+    // Save ourselves some requests in case nothing has changed.
+    if (!$.isArray(labelsArray) ||
+        _.isEqual(labelsArray.sort(), _.pluck(this.get('labels'), 'name').sort())) {
       return;
     }
 
-    // save ourselves a request if nothing has changed.
-    if (_.isEqual(labelsArray.sort(),
-                  _.pluck(this.get('labels'), 'name').sort())) {
-      return;
-    }
+    // for each label in labels array
+    //   filter over each repoLabel in repoLabelsArray
+    //     if a regex from namespaceRegex + label matches against repoLabel
+    //       return that (and flatten the result because it's now an array of 3 arrays)
+    var labelsToUpdate = _.flatten(_.map(labelsArray, function(label) {
+      return _.filter(repoLabelsArray, function(repoLabel) {
+        if (new RegExp(namespaceRegex + label + '$', 'i').test(repoLabel)) {
+          return repoLabel;
+        }
+      });
+    }));
 
     $.ajax({
       contentType: 'application/json',
-      data: JSON.stringify(labelsArray),
+      data: JSON.stringify(labelsToUpdate),
       type: 'POST',
       url: '/api/issues/' + this.get('number') + '/labels',
       success: function(response) {
