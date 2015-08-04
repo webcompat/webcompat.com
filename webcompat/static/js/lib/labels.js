@@ -41,7 +41,7 @@ issues.LabelsView = Backbone.View.extend({
   subTemplate: _.template([
     '<% _.each(labels, function(label) { %>',
       '<span class="Label Label--badge" style="background-color:#<%=label.color%>">',
-        '<%= label.name.replace(/(browser|status)-/, "") %>',
+        '<%= label.name %>',
       '</span>',
     '<% }); %>'].join('')),
   render: function() {
@@ -79,7 +79,7 @@ issues.LabelsView = Backbone.View.extend({
     this.$el.find('.LabelEditor-launcher').after(this.labelEditor.render().el);
     var toBeChecked = _.intersection(this.getIssueLabels(), this.repoLabels);
     _.each(toBeChecked, function(labelName) {
-      $('[name=' + labelName.replace(/(browser|status)-/, '') + ']').prop('checked', true);
+      $('[name=' + labelName + ']').prop('checked', true);
     });
   }
 });
