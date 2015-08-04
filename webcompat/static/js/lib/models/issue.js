@@ -104,10 +104,13 @@
       return;
     }
 
-    // for each label in labels array
-    //   filter over each repoLabel in repoLabelsArray
+    // Reconstruct the namespaced labels by comparing the "new" labels
+    // against the original namespaced labels from the repo.
+    // 
+    // for each label in the labels array
+    //   filter over each repoLabel in the repoLabelsArray
     //     if a regex from namespaceRegex + label matches against repoLabel
-    //       return that (and flatten the result because it's now an array of 3 arrays)
+    //       return that (and flatten the result because it's now an array of N arrays)
     var labelsToUpdate = _.flatten(_.map(labelsArray, function(label) {
       return _.filter(repoLabelsArray, function(repoLabel) {
         if (new RegExp(namespaceRegex + label + '$', 'i').test(repoLabel)) {
