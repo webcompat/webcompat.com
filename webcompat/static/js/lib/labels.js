@@ -9,6 +9,16 @@ issues.AllLabels = Backbone.Model.extend({
   url: function() {
     return '/api/issues/labels';
   },
+  // See also issues.Issue#removeNamespaces
+  removeNamespaces: function(labelsArray) {
+    // Return a copy of labelsArray with the namespaces removed.
+    var namespaceRegex = /(browser|closed|os|status)-/i;
+    var labelsCopy = _.cloneDeep(labelsArray);
+    return _.map(labelsCopy, function(labelObject) {
+      labelObject.name = labelObject.name.replace(namespaceRegex, '');
+      return labelObject;
+    });
+  },
   parse: function(response) {
     this.set({labels: response});
   }
