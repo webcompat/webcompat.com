@@ -1,3 +1,7 @@
+## 1.6.10
+
+Fix a regression related to namespaced labels. [Pull #659](https://github.com/webcompat/webcompat.com/pull/659) [Issue #658](https://github.com/webcompat/webcompat.com/issues/658)
+
 ## 1.6.9
 
 * Allow non-logged in users to load search results from URL params [Pull #650](https://github.com/webcompat/webcompat.com/pull/650) [Issue #639](https://github.com/webcompat/webcompat.com/issues/639)
