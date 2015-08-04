@@ -121,10 +121,10 @@
       data: JSON.stringify(labelsToUpdate),
       type: 'POST',
       url: '/api/issues/' + this.get('number') + '/labels',
-      success: function(response) {
+      success: _.bind(function(response) {
         //update model after success
-        self.set('labels', response);
-      },
+        this.set('labels', response);
+      }, this),
       error: function() {
         var msg = 'There was an error setting labels.';
         wcEvents.trigger('flash:error', {message: msg, timeout: 2000});
