@@ -69,7 +69,7 @@ issues.LabelsView = Backbone.View.extend({
     this.$el.find('.LabelEditor-launcher').after(this.labelEditor.render().el);
     var toBeChecked = _.intersection(this.getIssueLabels(), this.repoLabels);
     _.each(toBeChecked, function(labelName) {
-      $('[name=' + labelName + ']').prop("checked", true);
+      $('[name=' + labelName.replace(/(browser|status)-/, '') + ']').prop('checked', true);
     });
   }
 });
