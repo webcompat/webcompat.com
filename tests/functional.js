@@ -3,13 +3,13 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 define([
-  './functional/index',
-  './functional/comments',
-  './functional/issue-list',
-  './functional/issues',
-  './functional/reporting',
-  './functional/contributors',
-  './functional/history-navigation',
+  // './functional/index',
+  // './functional/comments',
+  // './functional/issue-list',
+  // './functional/issues',
+  // './functional/reporting',
+  // './functional/contributors',
+  // './functional/history-navigation',
   './functional/labels'
 ], function () {
   'use strict';
