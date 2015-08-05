@@ -21,8 +21,8 @@ define([
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url(100)))
-        .sleep(60000)
-        .findByCssSelector('.LabelEditor-launcher')
+        .sleep(10000)
+        .findByCssSelector('.LabelEditor-launcher span.wc-sronly')
         .getVisibleText()
         .then(function (text) {
           assert.strictEqual(text, 'Edit Labels', 'The label gear text is available');
