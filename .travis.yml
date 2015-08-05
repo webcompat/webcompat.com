@@ -18,7 +18,7 @@ addons:
 
 env:
   global:
-    - ISSUES_REPO_URI=miketaylr/nobody-look-at-this/issues
+    - ISSUES_REPO_URI=webcompat/webcompat-tests/issues
     - FAKE_ID=e80a666fbf1fa9ea18db
     - FAKE_SECRET=688c4546f09624f8c44773b22268064dfca19a59
 
