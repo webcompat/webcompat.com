@@ -17,8 +17,8 @@ define([
   registerSuite({
     name: 'labels',
 
-    'log in': function () {
-      // for testing labels we need to be logged.
+    setup: function () {
+      // We should be logged before starting the labels test.
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url(100)))
@@ -54,11 +54,14 @@ define([
         .get(require.toUrl(url(100)))
         .findByCssSelector('.LabelEditor-launcher').click()
         .end()
-        .findByCssSelector('label.LabelEditor-item input[name="status-contactready"]').click()
+        .findByCssSelector('label.LabelEditor-item input[name="contactready"]').click()
         .end()
-        .findByCssSelector('span.Label')
+        .findByCssSelector('.form-control').click()
+        .end()
+        .findByCssSelector('.Label--badge')
+        .getVisibleText()
         .then(function (text) {
-          assert.include(text, 'status-contactready', 'Label contactready has been set');
+          assert.include(text, 'contactready', 'Label contactready has been set');
         })
         .end();
     }
