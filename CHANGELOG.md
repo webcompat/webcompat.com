@@ -1,3 +1,7 @@
+## 1.6.11
+
+Move all label namespacing operations to happen at the model level. [Pull #661](https://github.com/webcompat/webcompat.com/pull/661) [Issue #660](https://github.com/webcompat/webcompat.com/issues/660)
+
 ## 1.6.10
 
 Fix a regression related to namespaced labels. [Pull #659](https://github.com/webcompat/webcompat.com/pull/659) [Issue #658](https://github.com/webcompat/webcompat.com/issues/658)
