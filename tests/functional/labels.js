@@ -14,6 +14,26 @@ define([
     return intern.config.siteRoot + '/issues/' + num;
   };
 
-// labels tests to come here
+  registerSuite({
+    name: 'labels',
 
+    'log in': function () {
+      // for testing labels we need to be logged.
+      return this.remote
+        .setFindTimeout(intern.config.wc.pageLoadTimeout)
+        .get(require.toUrl(url(100)))
+        .findByCssSelector('.js-login-link').click()
+        .end()
+        .findByCssSelector('#login_field').click()
+        .type(intern.config.wc.user)
+        .end()
+        .findByCssSelector('#password').click()
+        .type(intern.config.wc.pw)
+        .end()
+        .findByCssSelector('input[type=submit]').submit()
+        .end()
+        .findByCssSelector('button').submit()
+        .end();
+    },
+  });
 });
