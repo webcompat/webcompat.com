@@ -8,7 +8,7 @@
 define(['intern/lib/args'], function (args) {
   'use strict';
 
-  var siteRoot = args.siteRoot ? args.siteRoot : 'http://localhost:5000';
+  var siteRoot = args.siteRoot || 'http://localhost:5000';
 
   return {
     // Configuration object for webcompat
@@ -37,7 +37,7 @@ define(['intern/lib/args'], function (args) {
     functionalSuites: [ 'tests/functional' ],
 
     // A regular expression matching URLs to files that should not be included in code coverage analysis
-    excludeInstrumentation: /./
+    excludeInstrumentation: /\./
   };
 
 });
