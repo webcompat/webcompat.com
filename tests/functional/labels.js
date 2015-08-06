@@ -36,7 +36,7 @@ define([
         .end();
     },
 
-        'label gear is visible': function () {
+    'label gear is visible': function () {
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url(100)))
@@ -44,6 +44,21 @@ define([
         .isDisplayed()
         .then(function (displayed) {
           assert.isTrue(displayed, 'The label gear icon is visible once logged');
+        })
+        .end();
+    },
+
+    'setting the contactready': function () {
+      return this.remote
+        .setFindTimeout(intern.config.wc.pageLoadTimeout)
+        .get(require.toUrl(url(100)))
+        .findByCssSelector('.LabelEditor-launcher').click()
+        .end()
+        .findByCssSelector('label.LabelEditor-item input[name="status-contactready"]').click()
+        .end()
+        .findByCssSelector('span.Label')
+        .then(function (text) {
+          assert.include(text, 'status-contactready', 'Label contactready has been set');
         })
         .end();
     }
