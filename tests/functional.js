@@ -9,7 +9,8 @@ define([
   './functional/issues',
   './functional/reporting',
   './functional/contributors',
-  './functional/history-navigation'
+  './functional/history-navigation',
+  './functional/labels'
 ], function () {
   'use strict';
 });
