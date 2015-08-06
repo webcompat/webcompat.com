@@ -35,5 +35,17 @@ define([
         .findByCssSelector('button').submit()
         .end();
     },
+
+        'label gear is visible': function () {
+      return this.remote
+        .setFindTimeout(intern.config.wc.pageLoadTimeout)
+        .get(require.toUrl(url(100)))
+        .findByCssSelector('.LabelEditor-wrapper')
+        .isDisplayed()
+        .then(function (displayed) {
+          assert.isTrue(displayed, 'The label gear icon is visible once logged');
+        })
+        .end();
+    }
   });
 });
