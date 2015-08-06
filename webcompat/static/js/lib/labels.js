@@ -9,8 +9,23 @@ issues.AllLabels = Backbone.Model.extend({
   url: function() {
     return '/api/issues/labels';
   },
+  // See also issues.Issue#removeNamespaces
+  removeNamespaces: function(labelsArray) {
+    // Return a copy of labelsArray with the namespaces removed.
+    var namespaceRegex = /(browser|closed|os|status)-/i;
+    var labelsCopy = _.cloneDeep(labelsArray);
+    return _.map(labelsCopy, function(labelObject) {
+      labelObject.name = labelObject.name.replace(namespaceRegex, '');
+      return labelObject;
+    });
+  },
   parse: function(response) {
-    this.set({labels: response});
+    this.set({
+      // Store a copy of the original response, so we can reconstruct
+      // the labels before talking back to the API.
+      namespacedLabels: response,
+      labels: this.removeNamespaces(response)
+    });
   }
 });
 
@@ -31,7 +46,7 @@ issues.LabelsView = Backbone.View.extend({
   subTemplate: _.template([
     '<% _.each(labels, function(label) { %>',
       '<span class="Label Label--badge" style="background-color:#<%=label.color%>">',
-        '<%= label.name.replace(/(browser|status)-/, "") %>',
+        '<%= label.name %>',
       '</span>',
     '<% }); %>'].join('')),
   render: function() {
@@ -53,6 +68,8 @@ issues.LabelsView = Backbone.View.extend({
       model: this.allLabels,
       issueView: this,
     });
+    // Stash the allLabels model so we can get it from Issue model later
+    this.model.set('repoLabels', this.allLabels);
     if (this._isLoggedIn) {
       this.allLabels.fetch(headersBag).success(_.bind(function(){
         this.issueLabels = this.getIssueLabels();
@@ -69,7 +86,7 @@ issues.LabelsView = Backbone.View.extend({
     this.$el.find('.LabelEditor-launcher').after(this.labelEditor.render().el);
     var toBeChecked = _.intersection(this.getIssueLabels(), this.repoLabels);
     _.each(toBeChecked, function(labelName) {
-      $('[name=' + labelName.replace(/(browser|status)-/, '') + ']').prop('checked', true);
+      $('[name=' + labelName + ']').prop('checked', true);
     });
   }
 });

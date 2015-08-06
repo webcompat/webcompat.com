@@ -32,15 +32,15 @@
       this.set('stateClass', 'close');
       return 'Closed';
     }
-    if (labelsNames.indexOf('status-sitewait') > -1) {
+    if (labelsNames.indexOf('sitewait') > -1) {
       this.set('stateClass', 'sitewait');
       return 'Site Contacted';
     }
-    if (labelsNames.indexOf('status-contactready') > -1) {
+    if (labelsNames.indexOf('contactready') > -1) {
       this.set('stateClass', 'ready');
       return 'Ready for Outreach';
     }
-    if (labelsNames.indexOf('status-needsdiagnosis') > -1) {
+    if (labelsNames.indexOf('needsdiagnosis') > -1) {
       this.set('stateClass', 'need');
       return 'Needs Diagnosis';
     }
@@ -48,13 +48,24 @@
     this.set('stateClass', 'new');
     return 'New Issue';
   },
+  // See also issues.AllLabels#removeNamespaces
+  removeNamespaces: function(labelsArray) {
+    // Return a copy of labelsArray with the namespaces removed.
+    var namespaceRegex = /(browser|closed|os|status)-/i;
+    var labelsCopy = _.cloneDeep(labelsArray);
+    return _.map(labelsCopy, function(labelObject) {
+      labelObject.name = labelObject.name.replace(namespaceRegex, '');
+      return labelObject;
+    });
+  },
   parse: function(response) {
+    var labels = this.removeNamespaces(response.labels);
     this.set({
       body: md.render(response.body),
       commentNumber: response.comments,
       createdAt: response.created_at.slice(0, 10),
-      issueState: this.getState(response.state, response.labels),
-      labels: response.labels,
+      issueState: this.getState(response.state, labels),
+      labels: labels,
       number: response.number,
       reporter: response.user.login,
       reporterAvatar: response.user.avatar_url,
@@ -83,40 +94,40 @@
     });
   },
   updateLabels: function(labelsArray) {
-    // maybe this should be in a shared config file outside of python/JS
-    var statusLabels = ['contactready', 'needscontact', 'needsdiagnosis', 'sitewait', ' closed-duplicate', 'closed-fixed', 'closed-invalid'];
-    var browserLabels = ['chrome', 'firefox', 'ie', 'opera', 'safari', 'vivaldi'];
-    var osLabels = ['android', 'fxos', 'ios', 'linux', 'mac', 'win'];
-    // we check if we need to append the correct string before sending stuff back
-    for (var i = labelsArray.length - 1; i >= 0; i--) {
-      if (statusLabels.indexOf(labelsArray[i]) !== -1) {
-        labelsArray[i] = 'status-'.concat(labelsArray[i]);
-      } else if (browserLabels.indexOf(labelsArray[i]) !== -1) {
-        labelsArray[i] = 'browser-'.concat(labelsArray[i]);
-      } else if (osLabels.indexOf(labelsArray[i]) !== -1) {
-        labelsArray[i] = 'os-'.concat(labelsArray[i]);
-      }
-    }
-    var self = this;
-    if (!$.isArray(labelsArray)) {
+    var namespaceRegex = '^(browser|closed|os|status)-';
+    var repoLabelsArray = _.pluck(this.get('repoLabels').get('namespacedLabels'),
+                                  'name');
+
+    // Save ourselves some requests in case nothing has changed.
+    if (!$.isArray(labelsArray) ||
+        _.isEqual(labelsArray.sort(), _.pluck(this.get('labels'), 'name').sort())) {
       return;
     }
 
-    // save ourselves a request if nothing has changed.
-    if (_.isEqual(labelsArray.sort(),
-                  _.pluck(this.get('labels'), 'name').sort())) {
-      return;
-    }
+    // Reconstruct the namespaced labels by comparing the "new" labels
+    // against the original namespaced labels from the repo.
+    // 
+    // for each label in the labels array
+    //   filter over each repoLabel in the repoLabelsArray
+    //     if a regex from namespaceRegex + label matches against repoLabel
+    //       return that (and flatten the result because it's now an array of N arrays)
+    var labelsToUpdate = _.flatten(_.map(labelsArray, function(label) {
+      return _.filter(repoLabelsArray, function(repoLabel) {
+        if (new RegExp(namespaceRegex + label + '$', 'i').test(repoLabel)) {
+          return repoLabel;
+        }
+      });
+    }));
 
     $.ajax({
       contentType: 'application/json',
-      data: JSON.stringify(labelsArray),
+      data: JSON.stringify(labelsToUpdate),
       type: 'POST',
       url: '/api/issues/' + this.get('number') + '/labels',
-      success: function(response) {
+      success: _.bind(function(response) {
         //update model after success
-        self.set('labels', response);
-      },
+        this.set('labels', response);
+      }, this),
       error: function() {
         var msg = 'There was an error setting labels.';
         wcEvents.trigger('flash:error', {message: msg, timeout: 2000});
