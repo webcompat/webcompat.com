@@ -21,7 +21,8 @@ Please re-run:
 try:
     from webcompat import app
 except ImportError:
-    raise ImportError(IMPORT_ERROR)
+    print(IMPORT_ERROR)
+    raise
 
 
 BOT_HELP = '''
