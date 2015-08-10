@@ -1,6 +1,6 @@
 <div id="new-report" class="form {% if form.errors %}form-opened{% else %}form-closed{% endif %}">
   <div class="wc-content wc-content--body">
-    <form method="post" class="js-ReporForm wc-ReportForm wc-Form" action="/" novalidate>
+    <form method="post" enctype="multipart/form-data" class="js-ReporForm wc-ReportForm wc-Form" action="/" novalidate>
       <div class="r-Grid r-Grid--withGutter">
         <div class="r-Grid-cell r-all--1of2 r-maxM--2of2">
           <fieldset class="wc-Form-group {% if form.problem_category.errors %}wc-Form-error{% endif %}">
@@ -39,6 +39,9 @@
     <div>
       <div class="wc-Form-group">
         {{ form.description.label(class_='wc-Form-label ') }} {{ form.description(class_='wc-Form-input wc-Form-input--heightAuto', rows=7) }}
+      </div>
+      <div class="wc-Form-group">
+        {{ form.image }}
       </div>
     </div>
     <div class="u-hidden" aria-hidden="true">

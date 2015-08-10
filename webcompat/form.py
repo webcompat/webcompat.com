@@ -11,6 +11,7 @@ import random
 import urlparse
 
 from wtforms import Form
+from wtforms import FileField
 from wtforms import RadioField
 from wtforms import StringField
 from wtforms import TextAreaField
@@ -62,6 +63,8 @@ class IssueForm(Form):
     problem_category = RadioField(problem_label,
                                   [InputRequired(message=radio_message)],
                                   choices=problem_choices)
+    # TODO: image (filename?) validation here.
+    image = FileField(u'Image upload')
 
 
 def get_problem(category):
@@ -132,6 +135,7 @@ def build_formdata(form_object):
     Version -> part of body
     URL -> part of body
     Description -> part of body
+    Image Upload -> part of body
     Category -> labels
 
     We'll try to parse the Browser and come up with a browser label, as well
@@ -168,7 +172,9 @@ def build_formdata(form_object):
         'browser': form_object.get('browser'),
         'os': form_object.get('os'),
         'problem_type': get_problem(form_object.get('problem_category')),
-        'description': form_object.get('description')
+        'description': form_object.get('description'),
+        'image_name': form_object.get('image_upload')[0],
+        'image_url': form_object.get('image_upload')[1]
     }
 
     # Preparing the body
@@ -180,6 +186,8 @@ def build_formdata(form_object):
 
 **Steps to Reproduce**
 {description}
+
+![{image_name}]({image_url})
 '''.format(**formdata)
     # Add the image, if there was one.
     if form_object.get('image_upload') is not None:
