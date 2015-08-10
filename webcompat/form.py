@@ -179,7 +179,13 @@ def build_formdata(form_object):
 **Problem type**: {problem_type}
 
 **Steps to Reproduce**
-{description}'''.format(**formdata)
+{description}
+'''.format(**formdata)
+    # Add the image, if there was one.
+    if form_object.get('image_upload') is not None:
+        body += '\n\n![{image_name}]({image_url})'.format(
+            image_name=form_object.get('image_upload').get('filename'),
+            image_url=form_object.get('image_upload').get('url'))
     result = {}
     result['title'] = summary
     result['body'] = body
