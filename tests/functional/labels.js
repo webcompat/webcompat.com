@@ -48,6 +48,20 @@ define([
         .end();
     },
 
+    'label widget is opening on click': function () {
+      return this.remote
+        .setFindTimeout(intern.config.wc.pageLoadTimeout)
+        .get(require.toUrl(url(100)))
+        .findByCssSelector('.LabelEditor-launcher').click()
+        .end()
+        .findByCssSelector('.LabelEditor')
+        .isDisplayed()
+        .then(function (displayed) {
+          assert.isTrue(displayed, 'The label editor widget is open');
+        })
+        .end();
+    },
+
     'setting the contactready': function () {
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
@@ -65,5 +79,6 @@ define([
         })
         .end();
     }
+
   });
 });
