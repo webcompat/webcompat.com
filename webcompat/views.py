@@ -14,6 +14,7 @@ from flask import redirect
 from flask import render_template
 from flask import request
 from flask import session
+from flask import send_from_directory
 from flask import url_for
 from form import AUTH_REPORT
 from form import IssueForm
@@ -202,6 +203,17 @@ def show_rate_limit():
         rl.pop("rate")
     return (render_template('ratelimit.txt', rl=rl), 200,
             {"content-type": "text/plain"})
+
+if app.config['LOCALHOST']:
+    @app.route('/uploads/<path:filename>')
+    def download_file(filename):
+        '''Route just for local environments to send uploaded images.
+
+        In production, nginx handles this without needing to touch the
+        Python app.
+        '''
+        return send_from_directory(
+            app.config['UPLOADS_DEFAULT_DEST'] + 'uploads/', filename)
 
 
 @app.route('/about')
