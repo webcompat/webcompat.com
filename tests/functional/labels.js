@@ -62,7 +62,7 @@ define([
         .end();
     },
 
-    'setting the contactready': function () {
+    'Label appears once selected': function () {
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url(100)))
@@ -75,9 +75,10 @@ define([
         .findByCssSelector('.Label--badge')
         .getVisibleText()
         .then(function (text) {
-          assert.include(text, 'contactready', 'Label contactready has been set');
+          assert.include(text, 'contactready', 'Label appears once it has been selected');
         })
         .end();
     }
+
   });
 });
