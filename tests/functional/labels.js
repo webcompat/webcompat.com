@@ -19,6 +19,7 @@ define([
 
     setup: function () {
       // We should be logged before starting the labels test.
+      // The setup function should make sure we are not logged.
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url(100)))
