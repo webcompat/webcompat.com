@@ -38,10 +38,10 @@
     </div>
     <div>
       <div class="wc-Form-group">
-        {{ form.description.label(class_='wc-Form-label ') }} {{ form.description(class_='wc-Form-input wc-Form-input--heightAuto', rows=7) }}
+        {{ form.description.label(class_='wc-Form-label') }} {{ form.description(class_='wc-Form-input wc-Form-input--heightAuto', rows=7) }}
       </div>
       <div class="wc-Form-group">
-        {{ form.image }}
+        {{ form.image.label(class_='wc-Form-label') }} {{ form.image(accept='image/*') }}
       </div>
     </div>
     <div class="u-hidden" aria-hidden="true">

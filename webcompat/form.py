@@ -64,7 +64,7 @@ class IssueForm(Form):
                                   [InputRequired(message=radio_message)],
                                   choices=problem_choices)
     # TODO: image (filename?) validation here.
-    image = FileField(u'Image upload')
+    image = FileField(u'Attach a screenshot')
 
 
 def get_problem(category):
