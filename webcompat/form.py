@@ -177,9 +177,7 @@ def build_formdata(form_object):
         'browser': form_object.get('browser'),
         'os': form_object.get('os'),
         'problem_type': get_problem(form_object.get('problem_category')),
-        'description': form_object.get('description'),
-        'image_name': form_object.get('image_upload')[0],
-        'image_url': form_object.get('image_upload')[1]
+        'description': form_object.get('description')
     }
 
     # Preparing the body
@@ -191,8 +189,6 @@ def build_formdata(form_object):
 
 **Steps to Reproduce**
 {description}
-
-![{image_name}]({image_url})
 '''.format(**formdata)
     # Add the image, if there was one.
     if form_object.get('image_upload') is not None:
