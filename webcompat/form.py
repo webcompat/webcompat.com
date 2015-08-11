@@ -34,7 +34,7 @@ problem_choices = [
 ]
 
 url_message = u'A URL is required.'
-image_message = (u'Please select an image of the following type:',
+image_message = (u'Please select an image of the following type:'
                   ' jpg, png, gif, or bmp.')
 radio_message = u'Problem type required.'
 username_message = u'A valid username must be {0} characters long'.format(
@@ -68,8 +68,8 @@ class IssueForm(Form):
                                   choices=problem_choices)
     # TODO: image (filename?) validation here.
     image = FileField(u'Attach a screenshot image',
-                      [Regexp(r'^.+[^/\\]\.(jpe|jpeg|jpg|png|gif|bmp)$',
-                      message=image_message)])
+        [Optional(), Regexp(r'^.+[^/\\]\.(jpe|jpeg|jpg|png|gif|bmp)$',
+        message=image_message)])
 
 
 def get_problem(category):
