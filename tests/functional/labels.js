@@ -22,7 +22,7 @@ define([
       // The setup function should make sure we are not logged.
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url(100)))
+        .get(require.toUrl(url(2)))
         .findByCssSelector('.js-login-link').click()
         .end()
         .findByCssSelector('#login_field').click()
@@ -40,7 +40,7 @@ define([
     'label gear is visible': function () {
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url(100)))
+        .get(require.toUrl(url(2)))
         .findByCssSelector('.LabelEditor-wrapper')
         .isDisplayed()
         .then(function (displayed) {
@@ -52,7 +52,7 @@ define([
     'label widget is opening on click': function () {
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url(100)))
+        .get(require.toUrl(url(2)))
         .findByCssSelector('.LabelEditor-launcher').click()
         .end()
         .findByCssSelector('.LabelEditor')
@@ -66,7 +66,7 @@ define([
     'Label appears once selected': function () {
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url(100)))
+        .get(require.toUrl(url(2)))
         .findByCssSelector('.LabelEditor-launcher').click()
         .end()
         .findByCssSelector('label.LabelEditor-item input[name="contactready"]').click()
