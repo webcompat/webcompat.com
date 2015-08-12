@@ -6,7 +6,8 @@ function BugForm() {
   this.urlField = $('#url');
   this.descField = $('#description');
   this.problemType = $('[name=problem_category]');
-  this.submitButtons = $('.js-ReporForm button.Button');
+  this.submitButtons = $('.js-ReportForm button.Button');
+  this.loadingIndicator = $('.js-loader');
   this.inputMap = {
     'url': {
       'elm': this.urlField, // elm is a jQuery object
@@ -27,6 +28,9 @@ function BugForm() {
     this.urlField.on('blur input', _.bind(this.checkURLValidity, this));
     this.descField.on('focus',     _.bind(this.checkProblemTypeValidity, this));
     this.problemType.on('change',  _.bind(this.checkProblemTypeValidity, this));
+    this.submitButtons.on('click', _.bind(function() {
+      this.loadingIndicator.show();
+    }, this));
   };
 
   this.checkParams = function() {
