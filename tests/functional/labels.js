@@ -119,6 +119,22 @@ define([
           .end();
       },
 
+      teardown: function () {
+        // We need to remove all labels so we are sure that
+        // the next tests will not fail.
+        return this.remote
+          .setFindTimeout(intern.config.wc.pageLoadTimeout)
+          .get(require.toUrl(url(2)))
+          .findByCssSelector('.LabelEditor-launcher').click()
+          .end()
+          .findByCssSelector('.form-control').click()
+          .type(' ')
+          .end()
+          .findByCssSelector('.LabelEditor-btn').click()
+          .end();
+      }
+
+
     };
   });
 });
