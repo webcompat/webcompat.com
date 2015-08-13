@@ -16,51 +16,29 @@ define([
       return intern.config.siteRoot + '/issues/' + num;
     };
 
-    setup: function () {
-      // We should be logged before starting the labels test.
-      // The setup function should make sure we are not logged.
-      return this.remote
-        .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url(2)))
-        .findByCssSelector('.js-login-link').click()
-        .end()
-        .findByCssSelector('#login_field').click()
-        .type(intern.config.wc.user)
-        .end()
-        .findByCssSelector('#password').click()
-        .type(intern.config.wc.pw)
-        .end()
-        .findByCssSelector('input[type=submit]').submit()
-        .end()
-        .findByCssSelector('button').submit()
-        .end();
-    },
+    return {
+      name: 'labels',
 
-    'label gear is visible': function () {
-      return this.remote
-        .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url(2)))
-        .findByCssSelector('.LabelEditor-wrapper')
-        .isDisplayed()
-        .then(function (displayed) {
-          assert.isTrue(displayed, 'The label gear icon is visible once logged');
-        })
-        .end();
-    },
+      setup: function () {
+        // We should be logged before starting the labels test.
+        // The setup function should make sure we are not logged.
+        return this.remote
+          .setFindTimeout(intern.config.wc.pageLoadTimeout)
+          .get(require.toUrl(url(2)))
+          .findByCssSelector('.js-login-link').click()
+          .end()
+          .findByCssSelector('#login_field').click()
+          .type(intern.config.wc.user)
+          .end()
+          .findByCssSelector('#password').click()
+          .type(intern.config.wc.pw)
+          .end()
+          .findByCssSelector('input[type=submit]').submit()
+          .end()
+          .findByCssSelector('button').submit()
+          .end();
+      },
 
-    'label widget is opening on click': function () {
-      return this.remote
-        .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url(2)))
-        .findByCssSelector('.LabelEditor-launcher').click()
-        .end()
-        .findByCssSelector('.LabelEditor')
-        .isDisplayed()
-        .then(function (displayed) {
-          assert.isTrue(displayed, 'The label editor widget is open');
-        })
-        .end();
-    },
 
     'Label appears once selected': function () {
       return this.remote
