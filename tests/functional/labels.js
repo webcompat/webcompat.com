@@ -51,6 +51,20 @@ define([
           .end();
       },
 
+      'label widget is opening on click': function () {
+        return this.remote
+          .setFindTimeout(intern.config.wc.pageLoadTimeout)
+          .get(require.toUrl(url(2)))
+          .findByCssSelector('.LabelEditor-launcher').click()
+          .end()
+          .findByCssSelector('.LabelEditor')
+          .isDisplayed()
+          .then(function (displayed) {
+            assert.isTrue(displayed, 'The label editor widget is open');
+          })
+          .end();
+      },
+
       'Label appears once selected': function () {
         return this.remote
           .setFindTimeout(intern.config.wc.pageLoadTimeout)
