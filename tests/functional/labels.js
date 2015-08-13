@@ -100,6 +100,25 @@ define([
           .end();
       },
 
+      'Removes a label': function () {
+        return this.remote
+          .setFindTimeout(intern.config.wc.pageLoadTimeout)
+          .get(require.toUrl(url(2)))
+          .findByCssSelector('.LabelEditor-launcher').click()
+          .end()
+          .findByCssSelector('label.LabelEditor-item input[name="contactready"]').click()
+          .end()
+          .findByCssSelector('.LabelEditor-btn').click()
+          .end()
+          .get(require.toUrl(url(2)))
+          .findByCssSelector('.Label--badge')
+          .getVisibleText()
+          .then(function (label_text) {
+            assert.include(label_text, 'contactready', 'Label has been removed');
+          })
+          .end();
+      },
+
     };
   });
 });
