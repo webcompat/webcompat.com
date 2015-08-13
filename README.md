@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/webcompat/webcompat.com.png?label=ready&title=Ready)](https://waffle.io/webcompat/webcompat.com)
 # webcompat.com
 
 **Build Status**: [![Build Status](https://travis-ci.org/webcompat/webcompat.com.svg?branch=master)](https://travis-ci.org/webcompat/webcompat.com)
