@@ -10,12 +10,11 @@ define([
 ], function (intern, registerSuite, assert, require) {
   'use strict';
 
-  var url = function (num) {
-    return intern.config.siteRoot + '/issues/' + num;
-  };
+  registerSuite(function () {
 
-  registerSuite({
-    name: 'labels',
+    var url = function (num) {
+      return intern.config.siteRoot + '/issues/' + num;
+    };
 
     setup: function () {
       // We should be logged before starting the labels test.
@@ -81,5 +80,6 @@ define([
         .end();
     }
 
+    };
   });
 });
