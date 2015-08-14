@@ -37,6 +37,7 @@ define([
           // log in
           .findByCssSelector('.js-login-link').click()
           .end()
+          .sleep(500)
           .findByCssSelector('.LabelEditor-wrapper')
           .isDisplayed()
           .then(function (displayed) {
