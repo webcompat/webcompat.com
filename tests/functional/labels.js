@@ -37,7 +37,10 @@ define([
           // log in
           .findByCssSelector('.js-login-link').click()
           .end()
+          // find something so we know the page has rendered
+          .findByCssSelector('.wc-Comment')
           .sleep(500)
+          .end()
           .findByCssSelector('.LabelEditor-wrapper')
           .isDisplayed()
           .then(function (displayed) {
