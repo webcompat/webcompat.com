@@ -11,6 +11,7 @@ import os
 import urlparse
 
 from babel.dates import format_timedelta
+from flask import jsonify
 from flask import session
 from ua_parser import user_agent_parser
 
@@ -298,3 +299,14 @@ def format_link_header(link_header_data):
     links = ['<{0}>; rel="{1}"'.format(data['link'], data['rel'])
              for data in link_header_data]
     return ', '.join(links)
+
+
+@app.errorhandler(404)
+def json_not_found(error=None):
+    message = {
+        'status': 404,
+        'message': 'Not Found',
+        }
+    resp = jsonify(message)
+    resp.status_code = 404
+    return resp
