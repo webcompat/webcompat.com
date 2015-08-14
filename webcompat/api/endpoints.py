@@ -24,6 +24,7 @@ from webcompat import limiter
 from webcompat.helpers import get_headers
 from webcompat.helpers import get_request_headers
 from webcompat.helpers import get_user_info
+from webcompat.helpers import json_not_found
 from webcompat.helpers import normalize_api_params
 from webcompat.issues import filter_new
 from webcompat.issues import proxy_request
@@ -204,13 +205,17 @@ def get_category_from_search(issue_category):
     params = request.args.copy()
 
     if issue_category in category_list:
-        # add "status-" before the issue_category to match the naming scheme
-        # of the repo labels.
+        # add "status-" before the issue_category to match
+        # the naming scheme of the repo labels.
         query_string = 'label:{0}'.format('status-' + issue_category)
+        return get_search_results(query_string, params)
     elif issue_category == 'new':
         query_string = ' '.join(['-label:%s' % cat for cat in category_list])
         query_string += ' state:open '
-    return get_search_results(query_string, params)
+        return get_search_results(query_string, params)
+    else:
+        # no known keyword we send not found
+        return json_not_found()
 
 
 @api.route('/issues/<int:number>/comments', methods=['GET', 'POST'])
