@@ -61,7 +61,11 @@ define([
         .then(function (text) {
           assert.include(text, 'Report via'); //Report via GitHub (logged out)
         })
-        .end();
+        .end()
+        // log in
+        .findByCssSelector('.js-login-link').click()
+        .end()
+        .sleep(2000);
     },
 
     'validation works': function() {
