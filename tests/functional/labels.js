@@ -59,7 +59,7 @@ define([
           .end();
       },
 
-      'Label appears once selected': function () {
+      'label appears once selected': function () {
         return this.remote
           .setFindTimeout(intern.config.wc.pageLoadTimeout)
           .get(require.toUrl(url(2)))
@@ -67,15 +67,15 @@ define([
           .end()
           .findByCssSelector('label.LabelEditor-item input[name="contactready"]').click()
           .end()
-          .findByCssSelector('.Label--badge')
-          .getVisibleText()
-          .then(function (label_text) {
-            assert.include(label_text, 'contactready', 'Label appears once it has been selected');
+          .sleep(500)
+          .findByCssSelector('.Label--badge').getVisibleText()
+          .then(function (labelText) {
+            assert.include(labelText, 'contactready', 'Label appears once it has been selected');
           })
           .end();
       },
 
-      'Label has been sent to GitHub': function () {
+      'label has been sent to GitHub': function () {
         return this.remote
           .setFindTimeout(intern.config.wc.pageLoadTimeout)
           .get(require.toUrl(url(2)))
@@ -88,13 +88,13 @@ define([
           .refresh()
           .findByCssSelector('.Label--badge')
           .getVisibleText()
-          .then(function (label_text) {
-            assert.include(label_text, 'contactready', 'Label has been set on Github');
+          .then(function (labelText) {
+            assert.include(labelText, 'contactready', 'Label has been set on Github');
           })
           .end();
       },
 
-      'Removes a label': function () {
+      'removes a label': function () {
         return this.remote
           .setFindTimeout(intern.config.wc.pageLoadTimeout)
           .get(require.toUrl(url(2)))
@@ -107,8 +107,8 @@ define([
           .get(require.toUrl(url(2)))
           .findByCssSelector('.Label--badge')
           .getVisibleText()
-          .then(function (label_text) {
-            assert.include(label_text, 'contactready', 'Label has been removed');
+          .then(function (labelText) {
+            assert.include(labelText, 'contactready', 'Label has been removed');
           })
           .end();
       }
