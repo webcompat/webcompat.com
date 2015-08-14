@@ -28,6 +28,18 @@ define([
         // The teardown should remove all labels which would have
         // been put during the process, specifically if it fails
         // in the middle of testing.
+      },
+
+      'label gear is visible': function () {
+        return this.remote
+          .setFindTimeout(intern.config.wc.pageLoadTimeout)
+          .get(require.toUrl(url(2)))
+          .findByCssSelector('.LabelEditor-wrapper')
+          .isDisplayed()
+          .then(function (displayed) {
+            assert.isTrue(displayed, 'The label gear icon is visible once logged');
+          })
+          .end();
       }
     };
   });
