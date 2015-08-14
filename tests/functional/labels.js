@@ -34,6 +34,9 @@ define([
         return this.remote
           .setFindTimeout(intern.config.wc.pageLoadTimeout)
           .get(require.toUrl(url(2)))
+          // log in
+          .findByCssSelector('.js-login-link').click()
+          .end()
           .findByCssSelector('.LabelEditor-wrapper')
           .isDisplayed()
           .then(function (displayed) {
