@@ -32,24 +32,15 @@ define([
     'Comment form not visible for logged out users': function() {
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url(100)))
+        .get(require.toUrl(url(200)))
         .findByCssSelector('.js-login-link').click()
         .end()
         .findByCssSelector('.wc-Comment--form')
-        .then(function () {
-          assert.fail('comment form should not be present');
-        }, function (err) {
-          assert.strictEqual(err.name, 'NoSuchElement');
-          return true;
+        .then(assert.fail, function(err) {
+           assert.isTrue(/NoSuchElement/.test(String(err)));
         })
         .end()
         .findByCssSelector('.js-login-link').click()
-        .end()
-        .sleep(500)
-        .findByCssSelector('.wc-Comment--form').isDisplayed()
-        .then(function (isDisplayed) {
-          assert.equal(isDisplayed, true, 'Comment form visible for logged in users.');
-        })
         .end();
     },
 

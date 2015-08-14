@@ -238,6 +238,7 @@ define([
           // log out
           .findByCssSelector('.js-login-link').click()
           .end()
+          .sleep(2000)
           .findByCssSelector('.wc-IssueItem:nth-of-type(1) a').getVisibleText()
           .then(function(text){
             assert.include(text, 'vladvlad', 'The search query results show up on the page.');

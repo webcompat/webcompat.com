@@ -210,7 +210,7 @@ def get_category_from_search(issue_category):
         query_string = 'label:{0}'.format('status-' + issue_category)
         return get_search_results(query_string, params)
     elif issue_category == 'new':
-        query_string = ' '.join(['-label:%s' % cat for cat in category_list])
+        query_string = ' '.join(['-label:status-%s' % cat for cat in category_list])
         query_string += ' state:open '
         return get_search_results(query_string, params)
     else:

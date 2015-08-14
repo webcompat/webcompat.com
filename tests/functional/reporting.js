@@ -72,6 +72,8 @@ define([
         .end()
         .findByCssSelector('#browser').click()
         .end()
+        .findByCssSelector('#url').click()
+        .end()
         // wait a second
         .sleep(1000)
         .findByXpath('//*[@id="new-report"]/div/form/div[1]/div[2]/div[1]').getAttribute('class')
