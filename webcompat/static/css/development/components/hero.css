@@ -73,6 +73,7 @@
       width: 1.15em;
       height: 1.15em;
       line-height: 1.15em;
+      text-align: center;
       margin-left:.3em;
       background-color: #414042;
       color: var(--wc-background-dark);
