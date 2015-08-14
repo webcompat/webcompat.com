@@ -230,11 +230,20 @@ define([
           });
     },
 
-    'results are loaded from the query params (logged out)': function() {
+    'results are loaded from the query params (logged in)': function() {
         var params = '?q=vladvlad';
         return this.remote
           .setFindTimeout(intern.config.wc.pageLoadTimeout)
           .get(require.toUrl(url + params))
+          .findByCssSelector('.wc-IssueItem:nth-of-type(1) a').getVisibleText()
+          .then(function(text){
+            assert.include(text, 'vladvlad', 'The search query results show up on the page.');
+          })
+          .end()
+          .getCurrentUrl()
+          .then(function(currUrl){
+            assert.include(currUrl, 'q=vladvlad', 'Our params didn\'t go anywhere.');
+          })
           // log out
           .findByCssSelector('.js-login-link').click()
           .end()
@@ -247,26 +256,10 @@ define([
           .getCurrentUrl()
           .then(function(currUrl){
             assert.include(currUrl, 'q=vladvlad', 'Our params didn\'t go anywhere.');
-          });
-    },
-
-    'results are loaded from the query params (logged in)': function() {
-        var params = '?q=vladvlad';
-        return this.remote
-          .setFindTimeout(intern.config.wc.pageLoadTimeout)
-          .get(require.toUrl(url + params))
-           // log in
-          .findByCssSelector('.js-login-link').click()
-          .end()
-          .findByCssSelector('.wc-IssueItem:nth-of-type(1) a').getVisibleText()
-          .then(function(text){
-            assert.include(text, 'vladvlad', 'The search query results show up on the page.');
           })
-          .end()
-          .getCurrentUrl()
-          .then(function(currUrl){
-            assert.include(currUrl, 'q=vladvlad', 'Our params didn\'t go anywhere.');
-          });
+          // log back in
+          .findByCssSelector('.js-login-link').click()
+          .end();
     },
 
     'dropdowns reflect state from URL': function() {
