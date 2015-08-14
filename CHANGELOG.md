@@ -1,6 +1,12 @@
+## 1.6.12
+
+* Handle unknown category keywords at API level [Pull #676](https://github.com/webcompat/webcompat.com/pull/676) [Issue #669](https://github.com/webcompat/webcompat.com/issues/669)
+* Add tests for labels [Pull #675](https://github.com/webcompat/webcompat.com/pull/675) [Issue #272](https://github.com/webcompat/webcompat.com/issues/272)
+* Add status- prefix to new query params [Pull #674](https://github.com/webcompat/webcompat.com/pull/674) [Issue #668](https://github.com/webcompat/webcompat.com/issues/668)
+
 ## 1.6.11
 
-Move all label namespacing operations to happen at the model level. [Pull #661](https://github.com/webcompat/webcompat.com/pull/661) [Issue #660](https://github.com/webcompat/webcompat.com/issues/660)
+* Move all label namespacing operations to happen at the model level. [Pull #661](https://github.com/webcompat/webcompat.com/pull/661) [Issue #660](https://github.com/webcompat/webcompat.com/issues/660)
 
 ## 1.6.10
 
@@ -83,7 +89,7 @@ Add namespaces for statuses and browsers to labels. [Pull #640](https://github.c
 
 ## 1.5.1 - 2014-02-10
 
-* Refactor back end Link header parsing [Pull #550](https://github.com/webcompat/webcompat.com/pull/550) [Issue #451](https://github.com/webcompat/webcompat.com/issues/451) 
+* Refactor back end Link header parsing [Pull #550](https://github.com/webcompat/webcompat.com/pull/550) [Issue #451](https://github.com/webcompat/webcompat.com/issues/451)
 * Refactor back end code handling categories [Pull #534](https://github.com/webcompat/webcompat.com/pull/534) [Issue #533](https://github.com/webcompat/webcompat.com/issues/533)
 * Don't warp to GitHub if you're just searching for a word with the letter g in it (oops) [Pull #552](https://github.com/webcompat/webcompat.com/pull/552) [Issue #549](https://github.com/webcompat/webcompat.com/issues/549) [Issue #555](https://github.com/webcompat/webcompat.com/issues/555)
 * Use history traversal when using the back arrow button from issue -> all isues [Pull #547](https://github.com/webcompat/webcompat.com/pull/547) [Issue #546](https://github.com/webcompat/webcompat.com/issues/546)
