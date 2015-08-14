@@ -54,6 +54,22 @@ define([
             assert.isTrue(displayed, 'The label editor widget is open');
           })
           .end();
+      },
+
+      'Label appears once selected': function () {
+        return this.remote
+          .setFindTimeout(intern.config.wc.pageLoadTimeout)
+          .get(require.toUrl(url(2)))
+          .findByCssSelector('.LabelEditor-launcher').click()
+          .end()
+          .findByCssSelector('label.LabelEditor-item input[name="contactready"]').click()
+          .end()
+          .findByCssSelector('.Label--badge')
+          .getVisibleText()
+          .then(function (label_text) {
+            assert.include(label_text, 'contactready', 'Label appears once it has been selected');
+          })
+          .end();
       }
     };
   });
