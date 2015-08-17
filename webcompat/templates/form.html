@@ -18,7 +18,7 @@
           </fieldset>
         </div>
         <div class="r-Grid-cell r-all--1of2 r-maxM--2of2">
-          <div class="wc-Form-group">
+          <div class="wc-Form-group {% if form.url.errors %}wc-Form-error{% endif %}">
             {{ form.url.label(class_='wc-Form-label') }}
             {% if form.url.errors %}{% for error in form.url.errors %}
             <span class="wc-Form-helpInline wc-bold">{{ error }}</span>
