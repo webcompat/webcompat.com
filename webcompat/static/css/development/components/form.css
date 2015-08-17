@@ -139,6 +139,7 @@ legend.wc-Form-label {
 /* upload */
 .wc-Form-upload {
   text-align: center;
+  position: relative;
 }
   .wc-Form-upload-icon {
     font-size: 1.2em;
