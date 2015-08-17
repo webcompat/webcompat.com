@@ -29,6 +29,11 @@ class TestAPIURLs(unittest.TestCase):
     def tearDown(self):
         pass
 
+    def test_api_issues_search(self):
+        '''test that the API issue search of unknown keywords'''
+        rv = self.app.get('/api/issues/search/foobar', environ_base=headers)
+        self.assertEqual(rv.status_code, 404)
+        self.assertEqual(rv.content_type, 'application/json')
 
 if __name__ == '__main__':
     unittest.main()
