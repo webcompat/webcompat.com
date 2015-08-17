@@ -6,6 +6,7 @@
 
 '''Tests for our API URL endpoints.'''
 
+import json
 import os.path
 import sys
 import unittest
@@ -34,6 +35,15 @@ class TestAPIURLs(unittest.TestCase):
         rv = self.app.get('/api/issues/search/foobar', environ_base=headers)
         self.assertEqual(rv.status_code, 404)
         self.assertEqual(rv.content_type, 'application/json')
+
+    def test_api_issues_out_of_range(self):
+        '''test that the API issue for a non existent number'''
+        # If we reach 1,000,000 webcompat issues we can celebrate
+        rv = self.app.get('/api/issues/1000000', environ_base=headers)
+        json_body = json.loads(rv.data)
+        self.assertEqual(rv.status_code, 404)
+        self.assertEqual(rv.content_type, 'application/json')
+        self.assertEqual(json_body['status'], '404')
 
 if __name__ == '__main__':
     unittest.main()
