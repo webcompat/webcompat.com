@@ -122,7 +122,7 @@ def file_issue():
 @app.route('/', methods=['GET', 'POST'])
 def index():
     '''Main view where people come to report issues.'''
-    bug_form = IssueForm(request.form)
+    bug_form = IssueForm()
     # add browser and version to bug_form object data
     ua_header = request.headers.get('User-Agent')
     bug_form.browser.data = get_browser(ua_header)
@@ -135,7 +135,7 @@ def index():
         return render_template('index.html', form=bug_form,
                                browser=browser_name)
     # Form submission.
-    elif request.method == 'POST' and bug_form.validate():
+    elif bug_form.validate_on_submit():
         # copy the form so we can add the full UA string to it.
         form = request.form.copy()
         form['ua_header'] = ua_header
