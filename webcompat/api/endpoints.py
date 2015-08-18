@@ -24,7 +24,6 @@ from webcompat import limiter
 from webcompat.helpers import get_headers
 from webcompat.helpers import get_request_headers
 from webcompat.helpers import get_user_info
-from webcompat.helpers import json_not_found
 from webcompat.helpers import normalize_api_params
 from webcompat.issues import filter_new
 from webcompat.issues import proxy_request
@@ -57,7 +56,7 @@ def proxy_issue(number):
         return (issue.content, issue.status_code, get_headers(issue))
     else:
         # we might want to be less tolerant here.
-        return json_not_found()
+        abort(404)
 
 
 @api.route('/issues/<int:number>/edit', methods=['PATCH'])
@@ -219,7 +218,7 @@ def get_category_from_search(issue_category):
         return get_search_results(query_string, params)
     else:
         # no known keyword we send not found
-        return json_not_found()
+        abort(404)
 
 
 @api.route('/issues/<int:number>/comments', methods=['GET', 'POST'])
