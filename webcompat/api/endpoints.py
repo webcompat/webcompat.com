@@ -53,7 +53,11 @@ def proxy_issue(number):
     else:
         issue = proxy_request('get', '/{0}'.format(number),
                               headers=request_headers)
-    return (issue.content, issue.status_code, get_headers(issue))
+    if issue.status_code == 200:
+        return (issue.content, issue.status_code, get_headers(issue))
+    else:
+        # we might want to be less tolerant here.
+        return json_not_found()
 
 
 @api.route('/issues/<int:number>/edit', methods=['PATCH'])
