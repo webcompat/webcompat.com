@@ -5,6 +5,7 @@
 function BugForm() {
   this.urlField = $('#url');
   this.descField = $('#description');
+  this.uploadField = $('#image');
   this.problemType = $('[name=problem_category]');
   this.submitButtons = $('.js-ReportForm button.Button');
   this.loadingIndicator = $('.js-loader');
@@ -18,6 +19,12 @@ function BugForm() {
       'elm': this.problemType,
       'valid': null,
       'helpText': 'Problem type required.'
+    },
+    'image': {
+      'elm': this.uploadField,
+      // image should be valid by default because it's optional
+      'valid': true,
+      'helpText': 'Please select an image of the following type: jpg, png, gif, or bmp.'
     }
   };
 
@@ -28,6 +35,7 @@ function BugForm() {
     this.urlField.on('blur input', _.bind(this.checkURLValidity, this));
     this.descField.on('focus',     _.bind(this.checkProblemTypeValidity, this));
     this.problemType.on('change',  _.bind(this.checkProblemTypeValidity, this));
+    this.uploadField.on('change',  _.bind(this.checkImageTypeValidity, this));
     this.submitButtons.on('click', _.bind(function() {
       this.loadingIndicator.show();
     }, this));
@@ -76,6 +84,18 @@ function BugForm() {
       this.makeValid('problem_type');
     }
   };
+
+  this.checkImageTypeValidity = function() {
+    var splitImg = this.uploadField.val().split('.');
+    var ext = splitImg[splitImg.length - 1];
+    var allowed = ['jpg', 'jpeg', 'jpe', 'png', 'gif', 'bmp'];
+    if (!_.includes(allowed, ext)) {
+      this.makeInvalid('image');
+    } else {
+      this.makeValid('image');
+    }
+  };
+
   /* Check to see that the URL input element is not empty.
      We don't do any other kind of validation yet. */
   this.checkURLValidity = function() {
@@ -110,6 +130,10 @@ function BugForm() {
       inlineHelp.appendTo('legend.wc-Form-label');
     }
 
+    if (id === 'image') {
+      inlineHelp.insertAfter('.wc-Form-label--upload');
+    }
+
     this.disableSubmits();
   };
 
@@ -121,7 +145,9 @@ function BugForm() {
 
     this.inputMap[id].elm.parents('.wc-Form-group').find('.wc-Form-helpInline').remove();
 
-    if (this.inputMap['url'].valid && this.inputMap['problem_type'].valid) {
+    if (this.inputMap['url'].valid &&
+        this.inputMap['problem_type'].valid &&
+        this.inputMap['image'].valid) {
       this.enableSubmits();
     }
   };
