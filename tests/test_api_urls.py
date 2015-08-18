@@ -78,5 +78,13 @@ class TestAPIURLs(unittest.TestCase):
         self.assertEqual(rv.content_type, 'application/json')
         self.assertEqual(json_body['status'], 404)
 
+    def test_api_category_mine(self):
+        '''API access category/mine without auth returns JSON 401.'''
+        rv = self.app.get('/api/issues/category/mine', environ_base=headers)
+        json_body = json.loads(rv.data)
+        self.assertEqual(rv.status_code, 401)
+        self.assertEqual(rv.content_type, 'application/json')
+        self.assertEqual(json_body['status'], 401)
+
 if __name__ == '__main__':
     unittest.main()
