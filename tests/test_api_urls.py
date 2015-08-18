@@ -32,13 +32,13 @@ class TestAPIURLs(unittest.TestCase):
         pass
 
     def test_api_issues_search(self):
-        '''test that the API issue search of unknown keywords'''
+        '''API issue search with bad keywords returns JSON 404.'''
         rv = self.app.get('/api/issues/search/foobar', environ_base=headers)
         self.assertEqual(rv.status_code, 404)
         self.assertEqual(rv.content_type, 'application/json')
 
     def test_api_issues_out_of_range(self):
-        '''test that the API issue for a non existent number'''
+        '''API issue for a non existent number returns JSON 404.'''
         # If we reach 1,000,000 webcompat issues we can celebrate
         rv = self.app.get('/api/issues/1000000', environ_base=headers)
         json_body = json.loads(rv.data)
@@ -47,7 +47,7 @@ class TestAPIURLs(unittest.TestCase):
         self.assertEqual(json_body['status'], 404)
 
     def test_api_wrong_route(self):
-        '''test that the API with wrong route returns JSON 404.'''
+        '''API with wrong route returns JSON 404.'''
         rv = self.app.get('/api/foobar', environ_base=headers)
         json_body = json.loads(rv.data)
         self.assertEqual(rv.status_code, 404)
