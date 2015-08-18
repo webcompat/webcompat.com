@@ -19,7 +19,8 @@ import webcompat
 # Any request that depends on parsing HTTP Headers (basically anything
 # on the index route, will need to include the following: environ_base=headers
 headers = {'HTTP_USER_AGENT': ('Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; '
-                               'rv:31.0) Gecko/20100101 Firefox/31.0')}
+                               'rv:31.0) Gecko/20100101 Firefox/31.0'),
+           'HTTP_ACCEPT': 'application/json'}
 
 
 class TestAPIURLs(unittest.TestCase):
