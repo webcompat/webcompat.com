@@ -19,7 +19,6 @@ from wtforms import TextAreaField
 from wtforms.validators import InputRequired
 from wtforms.validators import Length
 from wtforms.validators import Optional
-from wtforms.validators import Regexp
 
 from webcompat.api.uploads import images
 
