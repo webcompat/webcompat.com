@@ -46,5 +46,13 @@ class TestAPIURLs(unittest.TestCase):
         self.assertEqual(rv.content_type, 'application/json')
         self.assertEqual(json_body['status'], 404)
 
+    def test_api_wrong_route(self):
+        '''test that the API with wrong route returns JSON 404.'''
+        rv = self.app.get('/api/foobar', environ_base=headers)
+        json_body = json.loads(rv.data)
+        self.assertEqual(rv.status_code, 404)
+        self.assertEqual(rv.content_type, 'application/json')
+        self.assertEqual(json_body['status'], 404)
+
 if __name__ == '__main__':
     unittest.main()
