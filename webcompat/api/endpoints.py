@@ -99,14 +99,17 @@ def user_issues():
 
     Not cached.
     '''
-    get_user_info()
-    path = 'repos/{0}?creator={1}&state=all'.format(
-        ISSUES_PATH, session['username']
-    )
-    request_headers = get_request_headers(g.request_headers)
-    issues = github.raw_request('GET', path, headers=request_headers)
-    return (issues.content, issues.status_code, get_headers(issues))
-
+    if g.user:
+        get_user_info()
+        path = 'repos/{0}?creator={1}&state=all'.format(
+            ISSUES_PATH, session['username']
+        )
+        request_headers = get_request_headers(g.request_headers)
+        issues = github.raw_request('GET', path, headers=request_headers)
+        return (issues.content, issues.status_code, get_headers(issues))
+    else:
+        # Credentials are need to be able to get the issues
+        abort(401)
 
 @api.route('/issues/category/<issue_category>')
 def get_issue_category(issue_category):
