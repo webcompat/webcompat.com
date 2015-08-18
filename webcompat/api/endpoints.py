@@ -176,6 +176,9 @@ def get_search_results(query_string=None, params=None):
     '''
     params = params or request.args.copy()
     query_string = query_string or params.get('q')
+    # Fail early if no appropriate query_string
+    if not query_string:
+        abort(404)
     search_uri = 'https://api.github.com/search/issues'
 
     # restrict results to our repo.
