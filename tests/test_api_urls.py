@@ -43,7 +43,7 @@ class TestAPIURLs(unittest.TestCase):
         json_body = json.loads(rv.data)
         self.assertEqual(rv.status_code, 404)
         self.assertEqual(rv.content_type, 'application/json')
-        self.assertEqual(json_body['status'], '404')
+        self.assertEqual(json_body['status'], 404)
 
 if __name__ == '__main__':
     unittest.main()
