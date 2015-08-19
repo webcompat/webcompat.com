@@ -38,8 +38,10 @@ class TestUploads(unittest.TestCase):
 
     def testBadUploads(self):
         # Loop over some files and the status codes that we are expecting
-        for filename, status_code in \
-                (('foo.xxx', 415), ('foo', 415), ('foo.rb', 415)):
+        for filename, status_code in (
+                ('foo.xxx', 415),
+                ('foo', 415),
+                ('foo.rb', 415)):
 
             # The reason why we are defining it in here and not outside
             # this method is that we are setting the filename of the
@@ -67,9 +69,13 @@ class TestUploads(unittest.TestCase):
 
     def testGoodUploads(self):
         # Loop over some files and the URLs that we are expecting back
-        for filename, status_code in \
-                (('foo.png', 201), ('foo.jpg', 201), ('foo.gif', 201),
-                 ('foo.jpe', 201), ('foo.jpeg', 201), ('foo.bmp', 201)):
+        for filename, status_code in (
+                ('foo.png', 201),
+                ('foo.jpg', 201),
+                ('foo.gif', 201),
+                ('foo.jpe', 201),
+                ('foo.jpeg', 201),
+                ('foo.bmp', 201)):
 
             class TestingRequest(Request):
                 """A testing request to use that will return a
