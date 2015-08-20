@@ -24,7 +24,6 @@ from webcompat import limiter
 from webcompat.helpers import get_headers
 from webcompat.helpers import get_request_headers
 from webcompat.helpers import get_user_info
-from webcompat.helpers import json_not_found
 from webcompat.helpers import normalize_api_params
 from webcompat.issues import filter_new
 from webcompat.issues import proxy_request
@@ -53,7 +52,11 @@ def proxy_issue(number):
     else:
         issue = proxy_request('get', '/{0}'.format(number),
                               headers=request_headers)
-    return (issue.content, issue.status_code, get_headers(issue))
+    if issue.status_code == 200:
+        return (issue.content, issue.status_code, get_headers(issue))
+    else:
+        # we might want to be less tolerant here.
+        abort(404)
 
 
 @api.route('/issues/<int:number>/edit', methods=['PATCH'])
@@ -96,14 +99,17 @@ def user_issues():
 
     Not cached.
     '''
-    get_user_info()
-    path = 'repos/{0}?creator={1}&state=all'.format(
-        ISSUES_PATH, session['username']
-    )
-    request_headers = get_request_headers(g.request_headers)
-    issues = github.raw_request('GET', path, headers=request_headers)
-    return (issues.content, issues.status_code, get_headers(issues))
-
+    if g.user:
+        get_user_info()
+        path = 'repos/{0}?creator={1}&state=all'.format(
+            ISSUES_PATH, session['username']
+        )
+        request_headers = get_request_headers(g.request_headers)
+        issues = github.raw_request('GET', path, headers=request_headers)
+        return (issues.content, issues.status_code, get_headers(issues))
+    else:
+        # Credentials are need to be able to get the issues
+        abort(401)
 
 @api.route('/issues/category/<issue_category>')
 def get_issue_category(issue_category):
@@ -173,6 +179,9 @@ def get_search_results(query_string=None, params=None):
     '''
     params = params or request.args.copy()
     query_string = query_string or params.get('q')
+    # Fail early if no appropriate query_string
+    if not query_string:
+        abort(404)
     search_uri = 'https://api.github.com/search/issues'
 
     # restrict results to our repo.
@@ -215,7 +224,7 @@ def get_category_from_search(issue_category):
         return get_search_results(query_string, params)
     else:
         # no known keyword we send not found
-        return json_not_found()
+        abort(404)
 
 
 @api.route('/issues/<int:number>/comments', methods=['GET', 'POST'])
