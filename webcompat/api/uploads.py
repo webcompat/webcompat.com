@@ -17,6 +17,7 @@ from flaskext.uploads import patch_request_class
 from flaskext.uploads import UploadSet
 from flaskext.uploads import UploadNotAllowed
 from werkzeug import secure_filename
+from uuid import uuid4
 
 from webcompat import app
 
@@ -29,6 +30,7 @@ configure_uploads(app, images)
 # limit image uploads to 4MB
 patch_request_class(app, 4 * 1024 * 1024)
 
+#TODO dated namespace
 
 @uploads.route('/', methods=['POST'])
 def upload():
@@ -39,10 +41,11 @@ def upload():
     if request.method == 'POST' and 'image' in request.files:
         try:
             file = request.files['image']
-            filename = images.save(file, name=unicode(
-                secure_filename(file.filename), 'utf-8'))
+            file_ext = file.filename.split('.')[-1]
+            filename = str(uuid4()) + '.' + file_ext
+            images.save(file, name=filename)
             data = {
-                'filename': request.files['image'].filename,
+                'filename': filename,
                 'url': images.url(filename)
             }
             return (json.dumps(data), 201, {'content-type': JSON_MIME})
