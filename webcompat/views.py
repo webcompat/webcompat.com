@@ -213,7 +213,7 @@ if app.config['LOCALHOST']:
         Python app.
         '''
         return send_from_directory(
-            app.config['UPLOADS_DEFAULT_DEST'] + 'uploads/', filename)
+            app.config['UPLOADS_DEFAULT_DEST'] + '/uploads', filename)
 
 
 @app.route('/about')
