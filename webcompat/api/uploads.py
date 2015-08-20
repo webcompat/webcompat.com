@@ -10,7 +10,6 @@ import json
 
 from flask import abort
 from flask import Blueprint
-from flask import render_template
 from flask import request
 from flaskext.uploads import configure_uploads
 from flaskext.uploads import IMAGES
