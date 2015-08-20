@@ -7,7 +7,9 @@
 '''Flask Blueprint for image uploads.'''
 
 import json
+import os
 
+from datetime import date
 from flask import abort
 from flask import Blueprint
 from flask import request
@@ -30,11 +32,13 @@ configure_uploads(app, images)
 # limit image uploads to 4MB
 patch_request_class(app, 4 * 1024 * 1024)
 
-#TODO dated namespace
 
 @uploads.route('/', methods=['POST'])
 def upload():
     '''Endpoint to upload an image.
+
+    If the image asset passes validation, it's saved as:
+        UPLOADS_DEFAULT_DEST + /year/month/random-uuid.ext
 
     Returns a JSON string that contains the filename and url.
     '''
@@ -42,7 +46,10 @@ def upload():
         try:
             file = request.files['image']
             file_ext = file.filename.split('.')[-1]
-            filename = str(uuid4()) + '.' + file_ext
+            today = date.today()
+            filename = os.path.join(str(today.year),
+                                    str(today.month),
+                                    str(uuid4()) + '.' + file_ext)
             images.save(file, name=filename)
             data = {
                 'filename': filename,
