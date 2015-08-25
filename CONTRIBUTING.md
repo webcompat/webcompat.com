@@ -497,6 +497,7 @@ master = true
 module = webcompat
 callable = app
 logto = $LOGS/uwsgi.log
+buffer-size = 8192
 ```
 
 and `staging.ini`
@@ -511,6 +512,7 @@ env = DEVELOPMENT=1
 module = webcompat
 callable = app
 logto = $LOGS/staging-uwsgi.log
+buffer-size = 8192
 ```
 
 Hopefully this will help you to clear up a few struggles.
