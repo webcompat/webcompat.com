@@ -26,6 +26,9 @@ limiter = Limiter(app)
 # import views after we initialize our github object
 import webcompat.views
 
-# register API blueprint
+# register blueprints
 from api.endpoints import api
+from api.uploads import uploads
+
 app.register_blueprint(api)
+app.register_blueprint(uploads)

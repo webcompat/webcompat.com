@@ -20,8 +20,8 @@ Please re-run:
 
 try:
     from webcompat import app
-except ImportError:
-    raise ImportError(IMPORT_ERROR)
+except ImportError, e:
+    raise ImportError('{0}\n\n{1}'.format(e, IMPORT_ERROR))
 
 
 BOT_HELP = '''

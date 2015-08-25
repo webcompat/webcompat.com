@@ -39,6 +39,11 @@
   color:#000;
   font-weight:700;
 }
+  .wc-Form-label--upload {
+    position: relative;
+    cursor: pointer;
+    text-decoration: underline;
+  }
 /*------Form Validation------*/
 .wc-Form-error .wc-Form-input {
   border-color: #ff0000;
@@ -110,7 +115,7 @@ legend.wc-Form-label {
       background-repeat: no-repeat;
       background-size: contain;
     }
-    
+
 .wc-Form-validation .wc-Form-input {
   padding-right: 40px;
 }
@@ -130,3 +135,13 @@ legend.wc-Form-label {
   border-color: var(--wc-background-dark);
   box-shadow:none;
 }
+
+/* upload */
+.wc-Form-upload {
+  text-align: center;
+  position: relative;
+}
+  .wc-Form-upload-icon {
+    font-size: 1.2em;
+    margin: 0 .4em 0 0;
+  }

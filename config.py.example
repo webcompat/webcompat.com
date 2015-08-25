@@ -22,6 +22,8 @@ SECRET_KEY = "meow"
 # the PRODUCTION and DEVELOPMENT env var is set in uwsgi.conf
 PRODUCTION = os.environ.get('PRODUCTION')
 DEVELOPMENT = os.environ.get('DEVELOPMENT')
+# Are we serving the app from localhost?
+LOCALHOST = not PRODUCTION and not DEVELOPMENT
 
 # Cache settings
 if PRODUCTION:
@@ -35,6 +37,18 @@ else:
 # See http://flask-limiter.readthedocs.org/en/latest/#configuration
 RATELIMIT_STORAGE_URL = 'memory://'
 RATELIMIT_STRATEGY = 'moving-window'
+
+# Image uploading settings
+# See http://pythonhosted.org/Flask-Uploads/#configuration
+if PRODUCTION:
+    UPLOADS_DEFAULT_DEST = ''
+    UPLOADS_DEFAULT_URL = ''
+elif DEVELOPMENT:
+    UPLOADS_DEFAULT_DEST = ''
+    UPLOADS_DEFAULT_URL = ''
+elif LOCALHOST:
+    UPLOADS_DEFAULT_DEST = BASE_DIR
+    UPLOADS_DEFAULT_URL = 'http://localhost:5000/'
 
 DEBUG = False
 

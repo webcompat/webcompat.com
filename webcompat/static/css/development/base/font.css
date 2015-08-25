@@ -2,11 +2,11 @@
 
 @font-face {
   font-family: 'webcompat';
-  src:url('../font/webcompat/webcompat.eot?ccpila');
-  src:url('../font/webcompat/webcompat.eot?#iefixccpila') format('embedded-opentype'),
-      url('../font/webcompat/webcompat.woff?ccpila') format('woff'),
-      url('../font/webcompat/webcompat.ttf?ccpila') format('truetype'),
-      url('../font/webcompat/webcompat.svg?ccpila#icomoon') format('svg');
+  src:url('../font/webcompat/webcompat.eot?ccpilb');
+  src:url('../font/webcompat/webcompat.eot?#iefixccpilb') format('embedded-opentype'),
+      url('../font/webcompat/webcompat.woff?ccpilb') format('woff'),
+      url('../font/webcompat/webcompat.ttf?ccpilb') format('truetype'),
+      url('../font/webcompat/webcompat.svg?ccpilb#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -21,6 +21,21 @@
   vertical-align:middle;
 }
 
+.wc-Icon--arrow-right:before {
+  content: "\e601";
+}
+.wc-Icon--arrow-down:before {
+  content: "\e602";
+}
+.wc-Icon--arrow-left:before {
+  content: "\e603";
+}
+.wc-Icon--arrow-circle-right:before {
+  content: "\f0a9";
+}
+.wc-Icon--bug:before {
+  content: "\f188";
+}
 .wc-Icon--times:before {
   content: "\f00d";
 }
@@ -48,21 +63,9 @@
 .wc-Icon--list:before {
   content: "\f03a";
 }
-.wc-Icon--arrow-circle-right:before {
-  content: "\f0a9";
-}
-.wc-Icon--arrow-right:before {
-  content: "\e601";
-}
-.wc-Icon--arrow-down:before {
-  content: "\e602";
-}
-.wc-Icon--arrow-left:before {
-  content: "\e603";
-}
-.wc-Icon--bug:before {
-  content: "\f188";
-}
 .wc-Icon--qrcode:before {
   content: "\f029";
+}
+.wc-Icon--cloud-upload:before {
+  content: "\f0ee";
 }

@@ -206,7 +206,7 @@ cd webcompat.com
 ### Detailed setup
 #### Installing pip
 
-We use `pip` to install other Python packages. You may need to install `pip` if you haven't do so for another project or Python development. 
+We use `pip` to install other Python packages. You may need to install `pip` if you haven't do so for another project or Python development.
 
 To determine if you need to, type the following command into the terminal:
 
@@ -278,6 +278,14 @@ You can now edit `config.py` and
 **Note**: If you get a 404 at GitHub when clicking "Login", it means you haven't [filled in the `GITHUB_CLIENT_ID` or `GITHUB_CLIENT_SECRET`](https://github.com/webcompat/webcompat.com/blob/master/config.py.example#L47-L49).
 
 ![Auth 404](https://i.cloudup.com/8FDA5bVc7l.png)
+
+**Note**: If you see the following error,
+
+```
+RuntimeError: no destination for set uploads
+```
+
+That means your `config.py` is out of sync with `config.py.example`. You can copy over the `Image uploading settings` from config.py.example, as well as the `LOCALHOST = not PRODUCTION and not DEVELOPMENT` line.
 
 ### Starting The Server
 
@@ -374,19 +382,19 @@ Our Python unit tests are vanilla flavored [`unittest`](https://docs.python.org/
 
 Unit tests are preferred for features or functionality that are independent of the browser front-end, i.e., API responses, application routes, etc.
 
-Important documentation links: 
+Important documentation links:
 * [Writing nose tests](https://nose.readthedocs.org/en/latest/writing_tests.html)
 * [`unittest`](https://docs.python.org/2/library/unittest.html)
 * [Testing Flask](http://flask.pocoo.org/docs/0.10/testing/)
 
 ### JS Functional Tests
 
-Functional tests are written in JavaScript, using [Intern](http://theintern.io/). There's a nice [guide on the Intern wiki](https://github.com/theintern/intern/wiki/Writing-Tests-with-Intern#functional-testing) that should explain enough to get you started. 
+Functional tests are written in JavaScript, using [Intern](http://theintern.io/). There's a nice [guide on the Intern wiki](https://github.com/theintern/intern/wiki/Writing-Tests-with-Intern#functional-testing) that should explain enough to get you started.
 
 Important documentation links:
 * [Leadfoot](https://theintern.github.io/leadfoot/): the library that drives the browser (via Selenium).
-* [ChaiJS](http://chaijs.com/api/assert/): the library used for assertions. 
-* [Intern wiki](https://github.com/theintern/intern/wiki): contains useful examples. 
+* [ChaiJS](http://chaijs.com/api/assert/): the library used for assertions.
+* [Intern wiki](https://github.com/theintern/intern/wiki): contains useful examples.
 
 It's also recommended to look at the other test files in the `tests/functional` directory to see how things are commonly done.
 

@@ -10,13 +10,17 @@ power the issue reporting form on webcompat.com.'''
 import random
 import urlparse
 
-from wtforms import Form
+from flask_wtf.file import FileField
+from flask_wtf.file import FileAllowed
+from flask_wtf import Form
 from wtforms import RadioField
 from wtforms import StringField
 from wtforms import TextAreaField
 from wtforms.validators import InputRequired
 from wtforms.validators import Length
 from wtforms.validators import Optional
+
+from webcompat.api.uploads import images
 
 AUTH_REPORT = 'github-auth-report'
 PROXY_REPORT = 'github-proxy-report'
@@ -32,6 +36,8 @@ problem_choices = [
 ]
 
 url_message = u'A URL is required.'
+image_message = (u'Please select an image of the following type:'
+                 ' jpg, png, gif, or bmp.')
 radio_message = u'Problem type required.'
 username_message = u'A valid username must be {0} characters long'.format(
     random.randrange(0, 99))
@@ -62,6 +68,9 @@ class IssueForm(Form):
     problem_category = RadioField(problem_label,
                                   [InputRequired(message=radio_message)],
                                   choices=problem_choices)
+    # we filter allowed type in uploads.py
+    image = FileField(u'Attach a screenshot image',
+                      [Optional(), FileAllowed(images, image_message)])
 
 
 def get_problem(category):
@@ -132,6 +141,7 @@ def build_formdata(form_object):
     Version -> part of body
     URL -> part of body
     Description -> part of body
+    Image Upload -> part of body
     Category -> labels
 
     We'll try to parse the Browser and come up with a browser label, as well
@@ -179,7 +189,13 @@ def build_formdata(form_object):
 **Problem type**: {problem_type}
 
 **Steps to Reproduce**
-{description}'''.format(**formdata)
+{description}
+'''.format(**formdata)
+    # Add the image, if there was one.
+    if form_object.get('image_upload') is not None:
+        body += '\n\n![{image_name}]({image_url})'.format(
+            image_name=form_object.get('image_upload').get('filename'),
+            image_url=form_object.get('image_upload').get('url'))
     result = {}
     result['title'] = summary
     result['body'] = body

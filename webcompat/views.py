@@ -15,6 +15,7 @@ from flask import redirect
 from flask import render_template
 from flask import request
 from flask import session
+from flask import send_from_directory
 from flask import url_for
 from form import AUTH_REPORT
 from form import IssueForm
@@ -32,6 +33,7 @@ from models import User
 from webcompat import app
 from webcompat import github
 from webcompat.api.endpoints import get_rate_limit
+from webcompat.api.uploads import upload
 
 
 @app.teardown_appcontext
@@ -121,7 +123,7 @@ def file_issue():
 @app.route('/', methods=['GET', 'POST'])
 def index():
     '''Main view where people come to report issues.'''
-    bug_form = IssueForm(request.form)
+    bug_form = IssueForm()
     # add browser and version to bug_form object data
     ua_header = request.headers.get('User-Agent')
     bug_form.browser.data = get_browser(ua_header)
@@ -134,10 +136,14 @@ def index():
         return render_template('index.html', form=bug_form,
                                browser=browser_name)
     # Form submission.
-    elif request.method == 'POST' and bug_form.validate():
+    elif bug_form.validate_on_submit():
         # copy the form so we can add the full UA string to it.
         form = request.form.copy()
         form['ua_header'] = ua_header
+        # Do we have an image ready to be uploaded?
+        image = request.files['image']
+        if image:
+            form['image_upload'] = json.loads(upload()[0])
         if form.get('submit-type') == AUTH_REPORT:
             if g.user:  # If you're already authed, submit the bug.
                 response = report_issue(form)
@@ -198,6 +204,17 @@ def show_rate_limit():
         rl.pop("rate")
     return (render_template('ratelimit.txt', rl=rl), 200,
             {"content-type": "text/plain"})
+
+if app.config['LOCALHOST']:
+    @app.route('/uploads/<path:filename>')
+    def download_file(filename):
+        '''Route just for local environments to send uploaded images.
+
+        In production, nginx handles this without needing to touch the
+        Python app.
+        '''
+        return send_from_directory(
+            app.config['UPLOADS_DEFAULT_DEST'] + '/uploads', filename)
 
 
 @app.route('/about')

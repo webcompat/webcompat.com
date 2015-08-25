@@ -1,6 +1,7 @@
+<div class="wc-Loader js-loader"></div>
 <div id="new-report" class="form {% if form.errors %}form-opened{% else %}form-closed{% endif %}">
   <div class="wc-content wc-content--body">
-    <form method="post" class="js-ReporForm wc-ReportForm wc-Form" action="/" novalidate>
+    <form method="post" enctype="multipart/form-data" class="js-ReportForm wc-ReportForm wc-Form" action="/" novalidate>
       <div class="r-Grid r-Grid--withGutter">
         <div class="r-Grid-cell r-all--1of2 r-maxM--2of2">
           <fieldset class="wc-Form-group {% if form.problem_category.errors %}wc-Form-error{% endif %}">
@@ -17,7 +18,7 @@
           </fieldset>
         </div>
         <div class="r-Grid-cell r-all--1of2 r-maxM--2of2">
-          <div class="wc-Form-group">
+          <div class="wc-Form-group {% if form.url.errors %}wc-Form-error{% endif %}">
             {{ form.url.label(class_='wc-Form-label') }}
             {% if form.url.errors %}{% for error in form.url.errors %}
             <span class="wc-Form-helpInline wc-bold">{{ error }}</span>
@@ -38,7 +39,18 @@
     </div>
     <div>
       <div class="wc-Form-group">
-        {{ form.description.label(class_='wc-Form-label ') }} {{ form.description(class_='wc-Form-input wc-Form-input--heightAuto', rows=7) }}
+        {{ form.description.label(class_='wc-Form-label') }} {{ form.description(class_='wc-Form-input wc-Form-input--heightAuto', rows=7) }}
+      </div>
+      <div class="wc-Form-group {% if form.image.errors %}wc-Form-error{% endif %}">
+        <div class="wc-Form-upload">
+          <span class="wc-Form-upload-icon" aria-hidden="true">
+            <span class="wc-Icon wc-Icon--cloud-upload"></span>
+          </span>
+          {{ form.image.label(class_='wc-Form-label wc-Form-label--upload') }}{% if form.image.errors %}{% for error in form.image.errors %}
+          <span class="wc-Form-helpInline wc-bold">{{ error }}</span>
+          {% endfor %}{% endif %}
+          {{ form.image(class_='ButtonUpload', accept='.jpe,.jpg,.jpeg,.gif,.png,.bmp') }}
+        </div>
       </div>
     </div>
     <div class="u-hidden" aria-hidden="true">
@@ -59,6 +71,7 @@
           <button name="submit-type" value="github-proxy-report" class="Button Button--action" id="submitanon">Report Anonymously</button>
       </div>
     </div>
+    {{ form.hidden_tag() }}
   </form>
   </div>
 </div>
