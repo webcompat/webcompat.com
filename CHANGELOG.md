@@ -1,3 +1,9 @@
+## 1.7
+
+* Add ability to upload and embed images in a new bug report [Pull #679](https://github.com/webcompat/webcompat.com/pull/679) [Issue #24](https://github.com/webcompat/webcompat.com/issues/24)
+* Fix centering of home arrow icon [Pull #677](https://github.com/webcompat/webcompat.com/pull/677)
+* Improvements to API error handling [Pull #678](https://github.com/webcompat/webcompat.com/pull/678) [Issue #667](https://github.com/webcompat/webcompat.com/issues/667)
+
 ## 1.6.12
 
 * Handle unknown category keywords at API level [Pull #676](https://github.com/webcompat/webcompat.com/pull/676) [Issue #669](https://github.com/webcompat/webcompat.com/issues/669)
