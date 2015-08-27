@@ -193,8 +193,7 @@ def build_formdata(form_object):
 '''.format(**formdata)
     # Add the image, if there was one.
     if form_object.get('image_upload') is not None:
-        body += '\n\n![{image_name}]({image_url})'.format(
-            image_name=form_object.get('image_upload').get('filename'),
+        body += '\n\n![Screenshot of the site issue]({image_url})'.format(
             image_url=form_object.get('image_upload').get('url'))
     result = {}
     result['title'] = summary
