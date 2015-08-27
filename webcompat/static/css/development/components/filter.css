@@ -26,12 +26,12 @@
   .wc-Filter--new.is-active {
     background-color:var(--wc-state-new);
   }
-  .wc-Filter--need {
-    border-color:var(--wc-state-need);
+  .wc-Filter--needsdiagnosis {
+    border-color:var(--wc-state-needsdiagnosis);
   }
-  .wc-Filter--need:hover,
-  .wc-Filter--need.is-active {
-    background-color:var(--wc-state-need);
+  .wc-Filter--needsdiagnosis:hover,
+  .wc-Filter--needsdiagnosis.is-active {
+    background-color:var(--wc-state-needsdiagnosis);
   }
   .wc-Filter--ready {
     border-color:var(--wc-state-ready);

@@ -46,8 +46,8 @@
   background-color: var(--wc-state-new);
 }
 /*Needs Diagnosis*/
-.wc-IssueDetail-state--need {
-  background-color: var(--wc-state-need);
+.wc-IssueDetail-state--needsdiagnosis {
+  background-color: var(--wc-state-needsdiagnosis);
 }
 /*Ready for Outreach*/
 .wc-IssueDetail-state--ready {

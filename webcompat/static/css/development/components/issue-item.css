@@ -21,8 +21,8 @@
 .wc-IssueItem--new {
   border-left: 5px solid var(--wc-state-new);
 }
-.wc-IssueItem--need {
-  border-left: 5px solid var(--wc-state-need);
+.wc-IssueItem--needsdiagnosis {
+  border-left: 5px solid var(--wc-state-needsdiagnosis);
 }
 .wc-IssueItem--ready {
   border-left: 5px solid var(--wc-state-ready);

@@ -28,7 +28,7 @@
   border-color: var(--wc-state-new);
 }
 .wc-Box--analysis {
-  border-color: var(--wc-state-need);
+  border-color: var(--wc-state-needsdiagnosis);
 }
 .wc-Box--reaching {
   border-color:var(--wc-state-ready);

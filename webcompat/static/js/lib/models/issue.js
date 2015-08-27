@@ -41,7 +41,7 @@
       return 'Ready for Outreach';
     }
     if (labelsNames.indexOf('needsdiagnosis') > -1) {
-      this.set('stateClass', 'need');
+      this.set('stateClass', 'needsdiagnosis');
       return 'Needs Diagnosis';
     }
     //New is the default value.
@@ -106,7 +106,7 @@
 
     // Reconstruct the namespaced labels by comparing the "new" labels
     // against the original namespaced labels from the repo.
-    // 
+    //
     // for each label in the labels array
     //   filter over each repoLabel in the repoLabelsArray
     //     if a regex from namespaceRegex + label matches against repoLabel
