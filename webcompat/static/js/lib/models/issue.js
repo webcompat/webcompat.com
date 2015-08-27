@@ -44,6 +44,10 @@
       this.set('stateClass', 'needsdiagnosis');
       return 'Needs Diagnosis';
     }
+    if (labelsNames.indexOf('needscontact') > -1) {
+      this.set('stateClass', 'needscontact');
+      return 'Needs Contact';
+    }
     //New is the default value.
     this.set('stateClass', 'new');
     return 'New Issue';
