@@ -49,6 +49,10 @@
 .wc-IssueDetail-state--needsdiagnosis {
   background-color: var(--wc-state-needsdiagnosis);
 }
+/*Needs Contact*/
+.wc-IssueDetail-state--needscontact {
+  background-color: var(--wc-state-needscontact);
+}
 /*Ready for Outreach*/
 .wc-IssueDetail-state--ready {
   background-color: var(--wc-state-ready);

@@ -33,6 +33,13 @@
   .wc-Filter--needsdiagnosis.is-active {
     background-color:var(--wc-state-needsdiagnosis);
   }
+  .wc-Filter--needscontact {
+    border-color:var(--wc-state-needscontact);
+  }
+  .wc-Filter--needscontact:hover,
+  .wc-Filter--needscontact.is-active {
+    background-color:var(--wc-state-needscontact);
+  }
   .wc-Filter--ready {
     border-color:var(--wc-state-ready);
   }

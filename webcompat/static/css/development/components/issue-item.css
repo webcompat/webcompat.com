@@ -24,6 +24,9 @@
 .wc-IssueItem--needsdiagnosis {
   border-left: 5px solid var(--wc-state-needsdiagnosis);
 }
+.wc-IssueItem--needscontact {
+  border-left: 5px solid var(--wc-state-needscontact);
+}
 .wc-IssueItem--ready {
   border-left: 5px solid var(--wc-state-ready);
 }
