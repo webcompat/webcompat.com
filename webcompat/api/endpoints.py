@@ -52,7 +52,7 @@ def proxy_issue(number):
     else:
         issue = proxy_request('get', '/{0}'.format(number),
                               headers=request_headers)
-    if issue.status_code == 200:
+    if issue.status_code != 404:
         return (issue.content, issue.status_code, get_headers(issue))
     else:
         # we might want to be less tolerant here.
