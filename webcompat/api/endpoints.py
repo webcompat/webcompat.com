@@ -55,7 +55,8 @@ def proxy_issue(number):
     if issue.status_code != 404:
         return (issue.content, issue.status_code, get_headers(issue))
     else:
-        # we might want to be less tolerant here.
+        # We may want in the future handle 500 type of errors.
+        # This will return the JSON version of 404
         abort(404)
 
 
