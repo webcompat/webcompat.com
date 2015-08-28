@@ -1,3 +1,8 @@
+## 1.7.1
+
+* More useful alt text for image uploads [Pull #684](https://github.com/webcompat/webcompat.com/pull/684) [Issue #682](https://github.com/webcompat/webcompat.com/issues/682)
+* Fix bug where we sent 404 when receiving cached responses from GitHub [Pull #686](https://github.com/webcompat/webcompat.com/pull/686) [Issue #683](https://github.com/webcompat/webcompat.com/issues/683)
+
 ## 1.7
 
 * Add ability to upload and embed images in a new bug report [Pull #679](https://github.com/webcompat/webcompat.com/pull/679) [Issue #24](https://github.com/webcompat/webcompat.com/issues/24)
