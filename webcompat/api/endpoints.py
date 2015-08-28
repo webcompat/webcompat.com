@@ -52,10 +52,11 @@ def proxy_issue(number):
     else:
         issue = proxy_request('get', '/{0}'.format(number),
                               headers=request_headers)
-    if issue.status_code == 200:
+    if issue.status_code != 404:
         return (issue.content, issue.status_code, get_headers(issue))
     else:
-        # we might want to be less tolerant here.
+        # We may want in the future handle 500 type of errors.
+        # This will return the JSON version of 404
         abort(404)
 
 
@@ -110,6 +111,7 @@ def user_issues():
     else:
         # Credentials are need to be able to get the issues
         abort(401)
+
 
 @api.route('/issues/category/<issue_category>')
 def get_issue_category(issue_category):
@@ -219,7 +221,8 @@ def get_category_from_search(issue_category):
         query_string = 'label:{0}'.format('status-' + issue_category)
         return get_search_results(query_string, params)
     elif issue_category == 'new':
-        query_string = ' '.join(['-label:status-%s' % cat for cat in category_list])
+        query_string = ' '.join(
+            ['-label:status-%s' % cat for cat in category_list])
         query_string += ' state:open '
         return get_search_results(query_string, params)
     else:
