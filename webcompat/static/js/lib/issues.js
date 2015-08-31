@@ -46,10 +46,9 @@ issues.TitleView = Backbone.View.extend({
 issues.MetaDataView = Backbone.View.extend({
   el: $('.wc-IssueDetail-create'),
   initialize: function() {
-    var self = this;
-    this.model.on('change:issueState', function() {
-      self.render();
-    });
+    this.model.on('change:issueState', _.bind(function() {
+      this.render();
+    }, this));
   },
   template: _.template($('#metadata-tmpl').html()),
   render: function() {
@@ -114,26 +113,25 @@ issues.StateButtonView = Backbone.View.extend({
   hasComment: false,
   mainView: null,
   initialize: function(options) {
-    var self = this;
     this.mainView = options.mainView;
 
-    issues.events.on('textarea:content', function() {
-      self.hasComment = true;
-      if (self.model.get('state') === 'open') {
-        self.$el.text(self.template({state: "Close and comment"}));
+    issues.events.on('textarea:content', _.bind(function() {
+      this.hasComment = true;
+      if (this.model.get('state') === 'open') {
+        this.$el.text(this.template({state: "Close and comment"}));
       } else {
-        self.$el.text(self.template({state: "Reopen and comment"}));
+        this.$el.text(this.template({state: "Reopen and comment"}));
       }
-    });
+    }, this));
 
-    issues.events.on('textarea:empty', function() {
+    issues.events.on('textarea:empty', _.bind(function() {
       // Remove the "and comment" text if there's no comment.
-      self.render();
-    });
+      this.render();
+    }, this));
 
-    this.model.on('change:state', function() {
-      self.render();
-    });
+    this.model.on('change:state', _.bind(function() {
+      this.render();
+    }, this));
   },
   template: _.template($('#state-button-tmpl').html()),
   render: function() {
@@ -201,13 +199,12 @@ issues.MainView = Backbone.View.extend({
     this.stateButton = new issues.StateButtonView(_.extend(issueModel, {mainView: this}));
   },
   fetchModels: function() {
-    var self = this;
     var headersBag = {headers: {'Accept': 'application/json'}};
-    this.issue.fetch(headersBag).success(function() {
-      _.each([self.title, self.metadata, self.body, self.labels,
-              self.stateButton, self.imageUpload, self],
+    this.issue.fetch(headersBag).success(_.bind(function() {
+      _.each([this.title, this.metadata, this.body, this.labels,
+              this.stateButton, this.imageUpload, this],
         function(elm) {
-          if (elm == self.imageUpload && .self_supportsFormData) {
+          if (elm === this.imageUpload && this._supportsFormData) {
             elm.render();
           } else {
             elm.render();
@@ -219,10 +216,10 @@ issues.MainView = Backbone.View.extend({
       );
 
       // If there are any comments, go fetch the model data
-      if (self.issue.get('commentNumber') > 0) {
-        self.comments.fetch(headersBag).success(function() {
-          self.addExistingComments();
-          self.comments.bind("add", self.addComment);
+      if (this.issue.get('commentNumber') > 0) {
+        this.comments.fetch(headersBag).success(_.bind(function() {
+          this.addExistingComments();
+          this.comments.bind("add", _.bind(this.addComment, this));
 
           // If there's a #hash pointing to a comment (or elsewhere)
           // scrollTo it.
@@ -230,12 +227,12 @@ issues.MainView = Backbone.View.extend({
             var _id = $(location.hash);
             window.scrollTo(0, _id.offset().top);
           }
-        }).error(function() {
+        }, this)).error(function() {
           var msg = 'There was an error retrieving issue comments. Please reload to try again.';
           wcEvents.trigger('flash:error', {message: msg, timeout: 2000});
         });
       }
-    }).error(function(response) {
+    }, this)).error(function(response) {
       var msg;
       if (response.responseJSON.message === "API call. Not Found") {
         location.href = "/404";
