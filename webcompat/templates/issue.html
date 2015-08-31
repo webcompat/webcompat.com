@@ -36,7 +36,7 @@
           </span>
         </script>
       </div>
-      
+
       <div class="wc-IssueDetail-report">
         <script type="text/template" id="issue-info-tmpl">
         <div class="wc-Comment">
@@ -89,11 +89,18 @@
           <img class="" src="{{ session.avatar_url }}" alt="Avatar"/>
         </div>
         <div class="wc-Comment-body wc-Comment-body--caret">
-        <!--<div class="Comment-drag">-->
-        <!-- TODO(miket) <div class="comment__dd">Attach images by dragging &amp; dropping, <span class="comment__dd__label">selecting them</span> or pasting form the clipboad </div> -->
         <label for="wc-Comment-text" class="wc-sronly">Comment Text</label>
           <textarea id="Comment-text" class="wc-Comment-wrapper wc-Comment-text" placeholder="Leave a comment"></textarea>
-        <!--</div>-->
+          <script type="text/template" id="upload-input-tmpl">
+          <!-- div class="wc-Form-group" parent created by BackBone -->
+          <div class="wc-Form-upload">
+            <span class="wc-Form-upload-icon" aria-hidden="true">
+              <span class="wc-Icon wc-Icon--cloud-upload"></span>
+            </span>
+            <label class="wc-Form-label wc-Form-label--upload" for="image">Attach a screenshot image</label>
+            <input accept=".jpe,.jpg,.jpeg,.gif,.png,.bmp" class="ButtonUpload" id="image" name="image" type="file">
+          </div>
+          </script>
           <div class="wc-Comment-button">
             <button class="Button Button--action js-issue-state-button">
               <script type="text/template" id="state-button-tmpl">
@@ -132,14 +139,14 @@
         </div>
     </div>
   </script>
-  
+
   <script type="text/template" id="qr-image-tmpl">
     <div class="wc-QrImage-header">
       <button class="wc-QrImage-btn">Close</button>
     </div>
     <div class="wc-QrImage-main"><img src="<%= qrDataUrl %>" alt="QR code"></div>
   </script>
-  
+
 {% endblock %}
 {% block extrascripts %}
 <script>var issueNumber={{ number }};

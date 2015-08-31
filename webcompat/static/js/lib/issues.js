@@ -95,6 +95,16 @@ issues.TextAreaView = Backbone.View.extend({
   }, 250, {maxWait: 1500})
 });
 
+issues.ImageUploadView = Backbone.View.extend({
+  tagName: 'div',
+  className: 'wc-Form-group',
+  template: _.template($('#upload-input-tmpl').html()),
+  render: function() {
+    this.$el.html(this.template()).insertAfter($('textarea'));
+    return this;
+  },
+});
+
 // TODO: add comment before closing if there's a comment.
 issues.StateButtonView = Backbone.View.extend({
   el: $('.Button--action'),
@@ -154,6 +164,7 @@ issues.MainView = Backbone.View.extend({
   keyboardEvents: {
     'g': 'githubWarp'
   },
+  _supportsFormData: 'FormData' in window,
   initialize: function() {
     $(document.body).addClass('language-html');
     var issueNum = {number: issueNumber};
@@ -186,18 +197,24 @@ issues.MainView = Backbone.View.extend({
     this.body = new issues.BodyView(issueModel);
     this.labels = new issues.LabelsView(issueModel);
     this.textArea = new issues.TextAreaView();
+    this.imageUpload = new issues.ImageUploadView();
     this.stateButton = new issues.StateButtonView(_.extend(issueModel, {mainView: this}));
   },
   fetchModels: function() {
     var self = this;
     var headersBag = {headers: {'Accept': 'application/json'}};
     this.issue.fetch(headersBag).success(function() {
-      _.each([self.title, self.metadata, self.body, self.labels, self.stateButton, self],
+      _.each([self.title, self.metadata, self.body, self.labels,
+              self.stateButton, self.imageUpload, self],
         function(elm) {
-          elm.render();
-          _.each($('.wc-IssueDetail-details code'), function(elm) {
-            Prism.highlightElement(elm);
-          });
+          if (elm == self.imageUpload && .self_supportsFormData) {
+            elm.render();
+          } else {
+            elm.render();
+            _.each($('.wc-IssueDetail-details code'), function(elm) {
+              Prism.highlightElement(elm);
+            });
+          }
         }
       );
 
