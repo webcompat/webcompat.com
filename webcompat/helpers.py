@@ -5,6 +5,7 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 import datetime
+import json
 import hashlib
 import math
 import os
@@ -298,3 +299,12 @@ def format_link_header(link_header_data):
     links = ['<{0}>; rel="{1}"'.format(data['link'], data['rel'])
              for data in link_header_data]
     return ', '.join(links)
+
+
+def get_comment_data(request_data):
+    '''Returns a comment ready to send to GitHub.
+
+    We do this by JSON-encoding the rawBody property
+    of a request's data object.'''
+    comment_data = json.loads(request_data)
+    return json.dumps({"body": comment_data['rawBody']})
