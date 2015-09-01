@@ -1,5 +1,14 @@
 /*----------add/remove labels----------*/
 
+
+/* Main Class */
+.wc-Qr-wrapper {
+  font-size:var(--base-font-size);
+  position:absolute;
+  z-index: 1;
+  right: 0;
+}
+
 /* Wrapper QR code */
 .wc-QrImage-wrapper {
   position:relative;
@@ -12,17 +21,16 @@
 }
 
 /* QR code */
-.wc-QrImage
-{
+.wc-QrImage {
   display:none;
   z-index:2;
   position: absolute;
   white-space:nowrap;
   font-size:var(--base-font-size);
   top: 100%;
-  right: 8px;
+  right: .5em;
   /* caret */
-  margin-top: 18px;
+  margin-top: 1.125em;
   box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.25);
   border-radius: 6px;
   background:  #fff;
@@ -50,21 +58,16 @@
 }
 /* btn */
 .wc-QrImage-btn {
-  border:none;
+  font-size: 1em;
 }
 /* hover btn */
 .wc-QrImage-btn:hover {
   text-decoration:underline;
 }
 .wc-QrImage-main {
-  margin:18px;
+  padding:1.125em;
 }
 
-/* QR code launcher */
-.wc-Qr-wrapper {
-  float:right;
-  position:relative;
-}
 .wc-QrImage-launcher {
   display: none;
   border:none;
@@ -73,18 +76,22 @@
   font-size:1.4em !important;
   padding:0;
   opacity:.8;
+  cursor: pointer;
 }
 /* display QR code only if button is-active*/
-.wc-QrImage-launcher.is-active + .wc-QrImage:after,
 .wc-QrImage-launcher.is-active + .wc-QrImage {
   display:block;
 }
 .wc-QrImage-launcher:hover {
   opacity:1;
 }
-.wc-QrImage-launcher:before {
-  content: "\f029";
+
+.wc-Qr-iconPressed {
+  display: none;
 }
-.wc-QrImage-launcher.is-active:before {
-  content: "\f00d";
+.wc-QrImage-launcher.is-active .wc-Qr-iconPressed {
+  display: inline-block;
+}
+.wc-QrImage-launcher.is-active .wc-Qr-icon {
+  display: none;
 }

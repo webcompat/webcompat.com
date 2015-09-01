@@ -90,9 +90,9 @@
 
 /* Comment texte */
 .wc-Comment-content {
-  overflow: hidden;
+  position: relative;
   word-wrap: break-word;
-  padding:.5em 0 0;
+  padding:.5em .5em 0;
 }
   /* list style */
   .wc-Comment-content ul,

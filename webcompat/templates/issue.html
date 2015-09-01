@@ -25,7 +25,10 @@
         <script type="text/template" id="issue-labels-tmpl">
           <span class="Label Label--title">Labels</span>
           {% if session.user_id and session.avatar_url %}
-          <span class="LabelEditor-wrapper"><button class="LabelEditor-launcher wc-Icon wc-Icon--gear" aria-hidden="true"><span class="wc-sronly">Edit Labels</span></button></span>
+          <span class="LabelEditor-wrapper">
+            <button class="LabelEditor-launcher wc-Icon wc-Icon--gear" aria-hidden="true">
+              <span class="wc-sronly">Edit Labels</span></button>
+            </span>
           {% endif %}
           <span class="Label-list">
           <% _.each(labels, function(label) { %>
@@ -36,7 +39,7 @@
           </span>
         </script>
       </div>
-      
+
       <div class="wc-IssueDetail-report">
         <script type="text/template" id="issue-info-tmpl">
         <div class="wc-Comment">
@@ -51,11 +54,21 @@
                 </span> reported on <a href="https://webcompat.com/issues/<%= number %>"><%= createdAt %></a>
               </div>
               <div class="wc-Comment-content">
-                <div class="wc-IssueDetail-details">
-                  <!-- QR Code -->
-                  <span class="wc-Qr-wrapper">
-                    <span class="wc-QrImage-wrapper"><button class="wc-QrImage-launcher wc-Icon wc-Icon--qrcode" aria-hidden="true"><span class="wc-sronly">Show QR code</span></button></span>
+                <!-- QR Code -->
+                <div class="wc-Qr-wrapper">
+                  <span class="wc-QrImage-wrapper">
+                    <button class="wc-QrImage-launcher"
+                            aria-pressed="false"
+                            role="button"
+                    >
+                      <span class="wc-Qr-icon wc-Icon wc-Icon--qrcode" aria-hidden="true"></span>
+                      <span class="wc-Qr-iconPressed wc-Icon wc-Icon--times" aria-hidden="true"></span>
+                      <span class="wc-sronly">Show QR code</span>
+                    </button>
                   </span>
+                </div>
+                <div class="wc-IssueDetail-details">
+
                   <%= body %>
                 </div>
               </div>
@@ -132,14 +145,14 @@
         </div>
     </div>
   </script>
-  
+
   <script type="text/template" id="qr-image-tmpl">
     <div class="wc-QrImage-header">
-      <button class="wc-QrImage-btn">Close</button>
+      <button class="wc-QrImage-btn r-ResetButton">Close</button>
     </div>
     <div class="wc-QrImage-main"><img src="<%= qrDataUrl %>" alt="QR code"></div>
   </script>
-  
+
 {% endblock %}
 {% block extrascripts %}
 <script>var issueNumber={{ number }};
