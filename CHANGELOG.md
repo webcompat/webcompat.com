@@ -1,3 +1,7 @@
+## 1.7.2
+
+* Temporarily disable anonymous reporting for Facebook.com issues (lolwat) [Pull #689](https://github.com/webcompat/webcompat.com/pull/689) [Issue #688](https://github.com/webcompat/webcompat.com/issues/688)
+
 ## 1.7.1
 
 * More useful alt text for image uploads [Pull #684](https://github.com/webcompat/webcompat.com/pull/684) [Issue #682](https://github.com/webcompat/webcompat.com/issues/682)
