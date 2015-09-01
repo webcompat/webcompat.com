@@ -56,6 +56,9 @@
   color: #ff0000;
   float: right;
 }
+.wc-Comment--form .wc-Form-error .wc-Form-helpInline {
+  float: none;
+}
 .wc-Form-group {
   margin-bottom:1.6em;
 }

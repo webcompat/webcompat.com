@@ -97,11 +97,85 @@ issues.TextAreaView = Backbone.View.extend({
 issues.ImageUploadView = Backbone.View.extend({
   tagName: 'div',
   className: 'wc-Form-group',
+  events: {
+    'change .ButtonUpload': 'validateAndUpload'
+  },
+  _submitButton: $('.js-issue-comment-button'),
   template: _.template($('#upload-input-tmpl').html()),
   render: function() {
     this.$el.html(this.template()).insertAfter($('textarea'));
     return this;
   },
+  inputMap: {
+    'image': {
+      'elm': '.ButtonUpload',
+      // image should be valid by default because it's optional
+      'valid': true,
+      'helpText': 'Please select an image of the following type: jpg, png, gif, or bmp.'
+    }
+  },
+  validateAndUpload: function(e) {
+    if (this.checkImageTypeValidity(e.target)) {
+      // TODO: uploading here.
+    }
+  },
+  // Adapted from bugform.js
+  checkImageTypeValidity: function(input) {
+    var splitImg = $(input).val().split('.');
+    var ext = splitImg[splitImg.length - 1];
+    var allowed = ['jpg', 'jpeg', 'jpe', 'png', 'gif', 'bmp'];
+    if (!_.includes(allowed, ext)) {
+      this.makeInvalid('image');
+      return false;
+    } else {
+      this.makeValid('image');
+      return true;
+    }
+  },
+  makeInvalid: function(id) {
+    // Early return if inline help is already in place.
+    if (this.inputMap[id].valid === false) {
+      return;
+    }
+
+    var inlineHelp = $('<span></span>', {
+      'class': 'wc-Form-helpInline',
+      'text': this.inputMap[id].helpText
+    });
+
+    this.inputMap[id].valid = false;
+    $(this.inputMap[id].elm).parents('.wc-Form-group')
+                            .removeClass('wc-Form-noError js-no-error')
+                            .addClass('wc-Form-error js-form-error');
+
+    if (id === 'image') {
+      inlineHelp.insertAfter('.wc-Form-label--upload');
+    }
+
+    this.disableSubmits();
+  },
+  makeValid:function(id) {
+    this.inputMap[id].valid = true;
+    $(this.inputMap[id].elm).parents('.wc-Form-group')
+                            .removeClass('wc-Form-error js-form-error')
+                            .addClass('wc-Form-noError js-no-error');
+
+    $(this.inputMap[id].elm).parents('.wc-Form-group')
+                            .find('.wc-Form-helpInline')
+                            .remove();
+
+    if (this.inputMap[id].valid) {
+      this.enableSubmits();
+    }
+  },
+  disableSubmits: function() {
+    this._submitButton.prop('disabled', true);
+    this._submitButton.addClass('is-disabled');
+  },
+  enableSubmits: function() {
+    this._submitButton.prop('disabled', false);
+    this._submitButton.removeClass('is-disabled');
+  }
 });
 
 // TODO: add comment before closing if there's a comment.
