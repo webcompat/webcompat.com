@@ -19,6 +19,7 @@ var flashMessageView = Backbone.View.extend({
   className: 'wc-FlashMessage js-flashmessage',
   initialize: function() {
     wcEvents.on('flash:info', _.bind(this.show, this));
+    wcEvents.on('flash:notimeout', _.bind(this.showForever, this));
     wcEvents.on('flash:error', _.bind(this.showError, this));
   },
   render: function(message) {
@@ -34,6 +35,10 @@ var flashMessageView = Backbone.View.extend({
 
     this.render(message);
     setTimeout(_.bind(this.hide, this), timeout);
+  },
+  showForever: function(opts) {
+    var message = opts.message;
+    this.render(message);
   },
   showError: function(data) {
     this.$el.addClass('wc-FlashMessage--error');
