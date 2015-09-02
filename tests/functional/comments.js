@@ -21,7 +21,23 @@ define([
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url(100)))
-        .sleep(500)
+        .findByCssSelector('.js-login-link').click()
+        .end()
+        .findByCssSelector('#login_field').click()
+        .type(intern.config.wc.user)
+        .end()
+        .findByCssSelector('#password').click()
+        .type(intern.config.wc.pw)
+        .end()
+        .findByCssSelector('input[type=submit]').submit()
+        .end()
+        .findByCssSelector('button').submit()
+        .end()
+        .findByCssSelector('.js-login-link').getVisibleText()
+        .then(function (text) {
+          assert.equal(text, 'Logout');
+        })
+        .end()
         .findByCssSelector('.wc-Comment--form').isDisplayed()
         .then(function (isDisplayed) {
           assert.equal(isDisplayed, true, 'Comment form visible for logged in users.');
