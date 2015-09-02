@@ -116,7 +116,40 @@ issues.ImageUploadView = Backbone.View.extend({
   },
   validateAndUpload: function(e) {
     if (this.checkImageTypeValidity(e.target)) {
-      // TODO: uploading here.
+      // The assumption here is that FormData is supported, otherwise
+      // the upload view is not shown to the user.
+      var formdata = new FormData($('form').get(0));
+      $.ajax({
+        // File upload will fail if we pass contentType: multipart/form-data
+        // to jQuery (because it won't have the boundary string and then all
+        // hell breaks loose and you're like 10 stackoverflow posts deep).
+        contentType: false,
+        processData: false,
+        data: formdata,
+        method: 'POST',
+        url: '/upload/',
+        success: _.bind(function(response) {
+          this.addImageUploadComment(response);
+        }, this),
+        error: function() {
+          var msg = 'There was an error trying to upload the image.';
+          wcEvents.trigger('flash:error', {message: msg, timeout: 3000});
+        }
+      });
+    }
+  },
+  addImageUploadComment: function(response) {
+    // reponse looks like {filename: "blah", url: "http...blah"}
+    var DELIMITER = '\n\n';
+    var textarea = $('.wc-Comment-text');
+    var textareaVal = textarea.val();
+    var imageURL = _.template('![Screenshot of the site issue](<%= url %>)');
+    var compiledImageURL = imageURL({url: response.url});
+
+    if (!$.trim(textarea.val())) {
+      textarea.val(compiledImageURL);
+    } else {
+      textarea.val(textareaVal + DELIMITER + compiledImageURL);
     }
   },
   // Adapted from bugform.js
