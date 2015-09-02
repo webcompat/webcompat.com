@@ -106,7 +106,4 @@
 <script src="{{ url_for('static', filename='js/lib/models/issue.js') }}"></script>
 <script src="{{ url_for('static', filename='js/lib/diagnose.js') }}"></script>
 {%- endif -%}
-{%- if session.user_id %}
-<script>new diagnose.MyIssuesView();</script>
-{% endif %}
 {%- endblock %}

@@ -123,7 +123,7 @@ def get_issue_category(issue_category):
             issues = github.raw_request('GET', issues_path, params=params)
         else:
             issues = proxy_request('get', params=params)
-    # Note that 'new' here is primarily used on the hompage.
+    # Note that 'new' here is primarily used on the homepage.
     # For paginated results on the /issues page, see /issues/search/new.
     elif issue_category == 'new':
         if g.user:

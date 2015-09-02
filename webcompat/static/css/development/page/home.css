@@ -4,29 +4,11 @@
 #browse-issues-wrapper {
   background-color: #f0f0f0;
 }
-#browse-issues h2 {
-  display: inline;
-  margin-right: 0.5em;
-}
 .more-issues {
   text-align: center;
   clear: left;
   margin-top:25px;
 }
-#my-issues .wc-titleIssue {
-  padding-left: 15px;
-  padding-right: 15px;
-}
-.wc-titleIssue {
-  font-size:14px;
-  margin-top:10px;
-  margin-bottom:10px;
-  font-weight:500;
-}
-  /* link */
-  .wc-titleIssue-link {
-    text-decoration:none;
-  }
 
 #howitworks,
 #join,
@@ -81,11 +63,6 @@
 .maincontent {
   text-align: left;
   padding: 2em 5em;
-}
-#new-report h2 {
-  font: #fff;
-  margin-left: 0;
-  margin-bottom: 1em;
 }
 
 @media (--viewport-600px) {
