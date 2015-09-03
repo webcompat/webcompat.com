@@ -33,11 +33,7 @@ define([
         .end()
         .findByCssSelector('button').submit()
         .end()
-        .findByCssSelector('.js-login-link').getVisibleText()
-        .then(function (text) {
-          assert.equal(text, 'Logout');
-        })
-        .end()
+        .get(require.toUrl(url(100)))
         .findByCssSelector('.wc-Comment--form').isDisplayed()
         .then(function (isDisplayed) {
           assert.equal(isDisplayed, true, 'Comment form visible for logged in users.');

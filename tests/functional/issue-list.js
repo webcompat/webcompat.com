@@ -317,13 +317,11 @@ define([
     },
 
     'loading URL with stage param loads issues': function() {
-      // this also tests the Browse Issues links on the home page
+      var params = "?page=1&per_page=50&state=open&stage=new&sort=created&direction=desc";
+
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        // load the home page
-        .get(require.toUrl(intern.config.siteRoot))
-        .findByCssSelector('.wc-IssueItem--list.wc-IssueItem--new a').click()
-        .end()
+        .get(require.toUrl(url + params))
         // Did an issue load?
         .findByCssSelector('.wc-IssueItem:nth-of-type(1)')
         .end()
