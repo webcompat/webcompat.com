@@ -23,8 +23,8 @@ diagnose.NewView = Backbone.View.extend({
   template: _.template($('#new-tmpl').html()),
   render: function() {
     this.$el.html(this.template({
-      // manually slice out the latest 5.
-      newIssues: this.issues.toJSON().slice(0,5)
+      // Just display the first 10.
+      newIssues: this.issues.toJSON().slice(0, 10)
     }));
     return this;
   }

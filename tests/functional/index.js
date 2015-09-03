@@ -59,7 +59,7 @@ define([
         .get(require.toUrl(url))
         .findAllByCssSelector('#new .wc-IssueItem.wc-IssueItem--new')
         .then(function (elms) {
-          assert.equal(elms.length, 5, '5 issues should be displayed');
+          assert.equal(elms.length, 10, '10 issues should be displayed');
         })
         .end()
         .findByCssSelector('.wc-IssueItem--new .wc-IssueItem-count').getVisibleText()
