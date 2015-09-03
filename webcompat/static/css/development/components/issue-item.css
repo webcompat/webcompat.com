@@ -21,8 +21,11 @@
 .wc-IssueItem--new {
   border-left: 5px solid var(--wc-state-new);
 }
-.wc-IssueItem--need {
-  border-left: 5px solid var(--wc-state-need);
+.wc-IssueItem--needsDiagnosis {
+  border-left: 5px solid var(--wc-state-needsDiagnosis);
+}
+.wc-IssueItem--needsContact {
+  border-left: 5px solid var(--wc-state-needsContact);
 }
 .wc-IssueItem--ready {
   border-left: 5px solid var(--wc-state-ready);

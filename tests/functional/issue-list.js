@@ -26,7 +26,7 @@ define([
         .end()
         .findAllByCssSelector('button.wc-Filter')
         .then(function (elms) {
-          assert.equal(elms.length, 5, 'All filter buttons are displayed');
+          assert.equal(elms.length, 6, 'All filter buttons are displayed');
         })
         .end();
     },
