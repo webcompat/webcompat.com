@@ -139,6 +139,13 @@ def index():
     elif bug_form.validate_on_submit():
         # copy the form so we can add the full UA string to it.
         form = request.form.copy()
+        # see https://github.com/webcompat/webcompat.com/issues/688
+        if 'facebook' in form.get('url'):
+            msg = (u'Anonymous reporting for Facebook.com is temporarily '
+                    'disabled. Please see https://github.com/webcompat/we'
+                    'bcompat.com/issues/688 for more details.')
+            flash(msg, 'notimeout')
+            return redirect(url_for('index'))
         form['ua_header'] = ua_header
         # Do we have an image ready to be uploaded?
         image = request.files['image']
@@ -153,13 +160,6 @@ def index():
                 session['form_data'] = form
                 return redirect(url_for('login'))
         elif form.get('submit-type') == PROXY_REPORT:
-            # see https://github.com/webcompat/webcompat.com/issues/688
-            if 'facebook' in form.get('url'):
-                msg = (u'Anonymous reporting for Facebook.com is temporarily '
-                        'disabled. Please see https://github.com/webcompat/we'
-                        'bcompat.com/issues/688 for more details.')
-                flash(msg, 'notimeout')
-                return redirect(url_for('index'))
             response = report_issue(form, proxy=True).json()
             return redirect(url_for('thanks', number=response.get('number')))
     else:
