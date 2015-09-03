@@ -28,6 +28,7 @@ module.exports = function(grunt) {
           moment: true,
           Mousetrap: true,
           Prism: true,
+          qr: true,
           repoPath: true,
           wcEvents: true
         }
@@ -36,16 +37,17 @@ module.exports = function(grunt) {
         'tests/functional/*.js'
       ],
       beforeconcat: [
-        '<%= jsPath %>/lib/homepage.js',
         '<%= jsPath %>/lib/bugform.js',
-        '<%= jsPath %>/lib/models/comment.js',
         '<%= jsPath %>/lib/comments.js',
-        '<%= jsPath %>/lib/labels.js',
-        '<%= jsPath %>/lib/models/issue.js',
+        '<%= jsPath %>/lib/diagnose.js',
+        '<%= jsPath %>/lib/flash-message.js',
+        '<%= jsPath %>/lib/homepage.js',
         '<%= jsPath %>/lib/issues.js',
         '<%= jsPath %>/lib/issue-list.js',
-        '<%= jsPath %>/lib/diagnose.js',
-        '<%= jsPath %>/lib/flash-message.js'
+        '<%= jsPath %>/lib/labels.js',
+        '<%= jsPath %>/lib/models/comment.js',
+        '<%= jsPath %>/lib/models/issue.js',
+        '<%= jsPath %>/lib/qrCode.js',
       ]
   });
 

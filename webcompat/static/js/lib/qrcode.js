@@ -36,7 +36,7 @@ issues.QrView = Backbone.View.extend({
   },
   showQr: function() {
     this.qrButton.addClass('is-active');
-    this.qrButton[0].setAttribute("aria-pressed", "true")
+    this.qrButton[0].setAttribute("aria-pressed", "true");
     this.$el.find('.wc-QrImage-launcher').after(this.qrImage.render().el);
   }
 });
@@ -61,7 +61,7 @@ issues.QrImageView = Backbone.View.extend({
   },
   closeQr: function() {
     this.issueView.qrButton.removeClass('is-active');
-    this.issueView.qrButton[0].setAttribute("aria-pressed", "false")
+    this.issueView.qrButton[0].setAttribute("aria-pressed", "false");
     // detach() (vs remove()) here because we don't want to lose events if the
     // user reopens the QR code.
     this.$el.children().detach();
