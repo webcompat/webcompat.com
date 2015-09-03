@@ -41,11 +41,11 @@
       return 'Ready for Outreach';
     }
     if (labelsNames.indexOf('needsdiagnosis') > -1) {
-      this.set('stateClass', 'needsdiagnosis');
+      this.set('stateClass', 'needsDiagnosis');
       return 'Needs Diagnosis';
     }
     if (labelsNames.indexOf('needscontact') > -1) {
-      this.set('stateClass', 'needscontact');
+      this.set('stateClass', 'needsContact');
       return 'Needs Contact';
     }
     //New is the default value.
