@@ -1,3 +1,10 @@
+## 1.7.3
+
+* Homepage now shows 10 of the latest bugs, rather than all categories. [Pull #692](https://github.com/webcompat/webcompat.com/pull/692) [Issue #571](https://github.com/webcompat/webcompat.com/issues/571)
+* Expose NeedsContact UI on all issues page. [Pull #685](https://github.com/webcompat/webcompat.com/pull/685) [Issue #434](https://github.com/webcompat/webcompat.com/issues/434)
+* Temporarily disable **all** reporting for Facebook.com issues [No issue](https://github.com/webcompat/webcompat.com/commit/2fc80ef90a8265c03c23e6347735d0e3e1464165)
+* Update Prism.js version [Issue #614](https://github.com/webcompat/webcompat.com/issues/614)
+
 ## 1.7.2
 
 * Temporarily disable anonymous reporting for Facebook.com issues (lolwat) [Pull #689](https://github.com/webcompat/webcompat.com/pull/689) [Issue #688](https://github.com/webcompat/webcompat.com/issues/688)
