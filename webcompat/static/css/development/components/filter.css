@@ -26,19 +26,19 @@
   .wc-Filter--new.is-active {
     background-color:var(--wc-state-new);
   }
-  .wc-Filter--needsdiagnosis {
-    border-color:var(--wc-state-needsdiagnosis);
+  .wc-Filter--needsDiagnosis {
+    border-color:var(--wc-state-needsDiagnosis);
   }
-  .wc-Filter--needsdiagnosis:hover,
-  .wc-Filter--needsdiagnosis.is-active {
-    background-color:var(--wc-state-needsdiagnosis);
+  .wc-Filter--needsDiagnosis:hover,
+  .wc-Filter--needsDiagnosis.is-active {
+    background-color:var(--wc-state-needsDiagnosis);
   }
-  .wc-Filter--needscontact {
-    border-color:var(--wc-state-needscontact);
+  .wc-Filter--needsContact {
+    border-color:var(--wc-state-needsContact);
   }
-  .wc-Filter--needscontact:hover,
-  .wc-Filter--needscontact.is-active {
-    background-color:var(--wc-state-needscontact);
+  .wc-Filter--needsContact:hover,
+  .wc-Filter--needsContact.is-active {
+    background-color:var(--wc-state-needsContact);
   }
   .wc-Filter--ready {
     border-color:var(--wc-state-ready);

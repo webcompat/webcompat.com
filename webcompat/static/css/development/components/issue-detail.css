@@ -46,12 +46,12 @@
   background-color: var(--wc-state-new);
 }
 /*Needs Diagnosis*/
-.wc-IssueDetail-state--needsdiagnosis {
-  background-color: var(--wc-state-needsdiagnosis);
+.wc-IssueDetail-state--needsDiagnosis {
+  background-color: var(--wc-state-needsDiagnosis);
 }
 /*Needs Contact*/
-.wc-IssueDetail-state--needscontact {
-  background-color: var(--wc-state-needscontact);
+.wc-IssueDetail-state--needsContact {
+  background-color: var(--wc-state-needsContact);
 }
 /*Ready for Outreach*/
 .wc-IssueDetail-state--ready {

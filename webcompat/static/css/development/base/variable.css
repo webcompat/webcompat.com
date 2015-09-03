@@ -17,8 +17,8 @@
   --wc-variant-background-dark: #404040; /* Dark Gray */
   --wc-variant-background-light: #c2c2c2; /* Dark Light */
   --wc-state-new: #ff8364; /* light orange */
-  --wc-state-needsdiagnosis: #efce82;  /* light brown */
-  --wc-state-needscontact : #b9edce ; /* light green */
+  --wc-state-needsDiagnosis: #efce82;  /* light brown */
+  --wc-state-needsContact : #b9edce ; /* light green */
   --wc-state-ready: #7abce1; /* light blue*/
   --wc-state-sitewait: #b0daf0; /* light blue */
   --wc-state-close: #c5d1d5; /* light gray */

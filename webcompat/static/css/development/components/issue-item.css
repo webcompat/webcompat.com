@@ -21,11 +21,11 @@
 .wc-IssueItem--new {
   border-left: 5px solid var(--wc-state-new);
 }
-.wc-IssueItem--needsdiagnosis {
-  border-left: 5px solid var(--wc-state-needsdiagnosis);
+.wc-IssueItem--needsDiagnosis {
+  border-left: 5px solid var(--wc-state-needsDiagnosis);
 }
-.wc-IssueItem--needscontact {
-  border-left: 5px solid var(--wc-state-needscontact);
+.wc-IssueItem--needsContact {
+  border-left: 5px solid var(--wc-state-needsContact);
 }
 .wc-IssueItem--ready {
   border-left: 5px solid var(--wc-state-ready);
