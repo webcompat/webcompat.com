@@ -60,7 +60,7 @@ def after_request(response):
 def token_getter():
     user = g.user
     if user is not None:
-        return user.github_access_token
+        return user.access_token
 
 
 @app.template_filter('format_date')
@@ -96,12 +96,12 @@ def authorized(access_token):
     if access_token is None:
         flash(u'Something went wrong trying to sign into GitHub. :(', 'error')
         return redirect(g.referer)
-    user = User.query.filter_by(github_access_token=access_token).first()
+    user = User.query.filter_by(access_token=access_token).first()
     if user is None:
         user = User(access_token)
         db_session.add(user)
     db_session.commit()
-    session['user_id'] = user.id
+    session['user_id'] = user.user_id
     if session.get('form_data', None) is not None:
         return redirect(url_for('file_issue'))
     else:
