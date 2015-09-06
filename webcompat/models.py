@@ -4,13 +4,14 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
+from hashlib import sha512
 from sqlalchemy import Column
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Integer
 from sqlalchemy.orm import scoped_session
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import String
-
+from uuid import uuid4
 from webcompat import engine
 
 db_session = scoped_session(sessionmaker(autocommit=False,
@@ -24,11 +25,15 @@ Base.query = db_session.query_property()
 class User(Base):
     __tablename__ = 'users'
 
-    id = Column(Integer, primary_key=True)
-    github_access_token = Column(String(128), unique=True)
+    user_id = Column(String(128), unique=True, primary_key=True)
+    access_token = Column(String(128), unique=True)
 
-    def __init__(self, github_access_token):
-        self.github_access_token = github_access_token
+    def __init__(self, access_token):
+        self.access_token = access_token
+        # We use the user_id in the session cookie to identify auth'd users.
+        # Here we salt and hash the GitHub access token so you can't get
+        # back to the auth token if the session cookie was ever compromised.
+        self.user_id = sha512(access_token + uuid4().hex).hexdigest()[0:128]
 
 
 Base.metadata.create_all(bind=engine)
