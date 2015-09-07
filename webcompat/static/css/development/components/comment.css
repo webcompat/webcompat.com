@@ -134,6 +134,11 @@
   max-width:100%;
   max-height:100%;
 }
+/* paragraph */
+.wc-Comment-content p + p {
+  font-size: 1em;
+  margin-top: 2em;
+}
 /* blockquote */
 .wc-Comment-content blockquote {
   border-left: 4px solid var(--wc-background-light);
