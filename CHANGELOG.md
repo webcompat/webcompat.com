@@ -1,3 +1,8 @@
+## 1.7.4
+
+* Add more breathing room for comments [Pull #699](https://github.com/webcompat/webcompat.com/pull/699)
+* Change how we compute `user_id` in Session.db [Pull #696](https://github.com/webcompat/webcompat.com/pull/696)
+
 ## 1.7.3
 
 * Homepage now shows 10 of the latest bugs, rather than all categories. [Pull #692](https://github.com/webcompat/webcompat.com/pull/692) [Issue #571](https://github.com/webcompat/webcompat.com/issues/571)
