@@ -77,7 +77,8 @@
               </p>
             </div>
             <div class="wc-IssueItem-section">
-              <span class="wc-IssueItem-label js-issue-label"><% _.each(issue.labels, function(label) { %>
+              <span data-labels-map='<%= JSON.stringify(issue.labelsMap) %>' class="wc-IssueItem-label js-issue-label">
+              <% _.each(issue.labels, function(label) { %>
                 <a href="#" class="wc-Labels" title="Labels : <%= label.name %>"><%= label.name %></a>
               <% }); %></span>
             </div>
