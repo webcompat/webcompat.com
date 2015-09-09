@@ -22,10 +22,10 @@
     return '/api/issues/' + this.get('number');
   },
   initialize: function() {
-    var self = this;
-    this.on('change:state', function() {
-      self.set('issueState', self.getState(self.get('state'), self.get('labels')));
-    });
+    this.on('change:state', _.bind(function() {
+      this.set('issueState', this.getState(this.get('state'),
+                                           this.get('labels')));
+    }, this));
   },
   getState: function(state, labels) {
     var labelsNames = _.pluck(labels, 'name');
@@ -94,19 +94,18 @@
     });
   },
   toggleState: function(callback) {
-    var self = this;
     var newState = this.get('state') === 'open' ? 'closed' : 'open';
     $.ajax({
       contentType: 'application/json',
       data: JSON.stringify({'state': newState}),
       type: 'PATCH',
       url: '/api/issues/' + this.get('number') + '/edit',
-      success: function() {
-        self.set('state', newState);
+      success: _.bind(function() {
+        this.set('state', newState);
         if (callback) {
           callback();
         }
-      },
+      }, this),
       error: function() {
         var msg = 'There was an error editing this issues\'s status.';
         wcEvents.trigger('flash:error', {message: msg, timeout: 2000});
