@@ -17,6 +17,7 @@
  }
 
  issues.Issue = Backbone.Model.extend({
+  _namespaceRegex: /(browser|closed|os|status)-/i,
   urlRoot: function() {
     return '/api/issues/' + this.get('number');
   },
@@ -55,12 +56,26 @@
   // See also issues.AllLabels#removeNamespaces
   removeNamespaces: function(labelsArray) {
     // Return a copy of labelsArray with the namespaces removed.
-    var namespaceRegex = /(browser|closed|os|status)-/i;
     var labelsCopy = _.cloneDeep(labelsArray);
-    return _.map(labelsCopy, function(labelObject) {
-      labelObject.name = labelObject.name.replace(namespaceRegex, '');
+    return _.map(labelsCopy, _.bind(function(labelObject) {
+      labelObject.name = labelObject.name.replace(this._namespaceRegex, '');
       return labelObject;
+    }, this));
+  },
+  getLabelsMap: function(labelsArray) {
+    /* Create a mapping between a unnamespaced labels and namespaced labels,
+       i.e., {'contactready': 'status-contactready'} */
+    var labelsMap = {};
+    var tmp = _.groupBy(labelsArray, function(labelObj) {
+      return labelObj.name;
     });
+
+    _.forEach(tmp, _.bind(function(val, key) {
+      labelsMap[val[0].name.replace(this._namespaceRegex, '')] = key;
+    }, this));
+
+    tmp = null;
+    return labelsMap;
   },
   parse: function(response) {
     var labels = this.removeNamespaces(response.labels);
@@ -70,6 +85,7 @@
       createdAt: response.created_at.slice(0, 10),
       issueState: this.getState(response.state, labels),
       labels: labels,
+      labelsMap: this.getLabelsMap(response.labels),
       number: response.number,
       reporter: response.user.login,
       reporterAvatar: response.user.avatar_url,
