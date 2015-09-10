@@ -17,14 +17,15 @@
  }
 
  issues.Issue = Backbone.Model.extend({
+  _namespaceRegex: /(browser|closed|os|status)-/i,
   urlRoot: function() {
     return '/api/issues/' + this.get('number');
   },
   initialize: function() {
-    var self = this;
-    this.on('change:state', function() {
-      self.set('issueState', self.getState(self.get('state'), self.get('labels')));
-    });
+    this.on('change:state', _.bind(function() {
+      this.set('issueState', this.getState(this.get('state'),
+                                           this.get('labels')));
+    }, this));
   },
   getState: function(state, labels) {
     var labelsNames = _.pluck(labels, 'name');
@@ -55,12 +56,26 @@
   // See also issues.AllLabels#removeNamespaces
   removeNamespaces: function(labelsArray) {
     // Return a copy of labelsArray with the namespaces removed.
-    var namespaceRegex = /(browser|closed|os|status)-/i;
     var labelsCopy = _.cloneDeep(labelsArray);
-    return _.map(labelsCopy, function(labelObject) {
-      labelObject.name = labelObject.name.replace(namespaceRegex, '');
+    return _.map(labelsCopy, _.bind(function(labelObject) {
+      labelObject.name = labelObject.name.replace(this._namespaceRegex, '');
       return labelObject;
+    }, this));
+  },
+  getLabelsMap: function(labelsArray) {
+    /* Create a mapping between a unnamespaced labels and namespaced labels,
+       i.e., {'contactready': 'status-contactready'} */
+    var labelsMap = {};
+    var tmp = _.groupBy(labelsArray, function(labelObj) {
+      return labelObj.name;
     });
+
+    _.forEach(tmp, _.bind(function(val, key) {
+      labelsMap[val[0].name.replace(this._namespaceRegex, '')] = key;
+    }, this));
+
+    tmp = null;
+    return labelsMap;
   },
   parse: function(response) {
     var labels = this.removeNamespaces(response.labels);
@@ -70,6 +85,7 @@
       createdAt: response.created_at.slice(0, 10),
       issueState: this.getState(response.state, labels),
       labels: labels,
+      labelsMap: this.getLabelsMap(response.labels),
       number: response.number,
       reporter: response.user.login,
       reporterAvatar: response.user.avatar_url,
@@ -78,19 +94,18 @@
     });
   },
   toggleState: function(callback) {
-    var self = this;
     var newState = this.get('state') === 'open' ? 'closed' : 'open';
     $.ajax({
       contentType: 'application/json',
       data: JSON.stringify({'state': newState}),
       type: 'PATCH',
       url: '/api/issues/' + this.get('number') + '/edit',
-      success: function() {
-        self.set('state', newState);
+      success: _.bind(function() {
+        this.set('state', newState);
         if (callback) {
           callback();
         }
-      },
+      }, this),
       error: function() {
         var msg = 'There was an error editing this issues\'s status.';
         wcEvents.trigger('flash:error', {message: msg, timeout: 2000});

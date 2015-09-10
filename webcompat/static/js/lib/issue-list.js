@@ -436,7 +436,10 @@ issueList.IssueView = Backbone.View.extend({
     // clicking on a label in the issues view should trigger a
     // "search:update" event to populate the view with search results
     // for the given label.
-    var labelFilter = 'label:' + $(e.target).text();
+    var target = $(e.target);
+    var labelsMap = target.parent().data('labelsMap');
+    var clickedLabel = target.text();
+    var labelFilter = 'label:' + labelsMap[clickedLabel];
     if (this._isLoggedIn) {
       issueList.events.trigger('search:update', labelFilter);
     }
