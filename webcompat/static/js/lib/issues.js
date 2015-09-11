@@ -312,18 +312,18 @@ issues.MainView = Backbone.View.extend({
     var headersBag = {headers: {'Accept': 'application/json'}};
     this.issue.fetch(headersBag).success(_.bind(function() {
       _.each([this.title, this.metadata, this.body, this.labels,
-              this.stateButton, this.imageUpload, this],
+              this.stateButton, this],
         function(elm) {
-          if (elm === this.imageUpload && this._supportsFormData) {
-            elm.render();
-          } else {
-            elm.render();
-            _.each($('.wc-IssueDetail-details code'), function(elm) {
-              Prism.highlightElement(elm);
-            });
-          }
+          elm.render();
+          _.each($('.wc-IssueDetail-details code'), function(elm) {
+            Prism.highlightElement(elm);
+          });
         }
       );
+
+      if (this._supportsFormData) {
+        this.imageUpload.render();
+      }
 
       // If there are any comments, go fetch the model data
       if (this.issue.get('commentNumber') > 0) {
