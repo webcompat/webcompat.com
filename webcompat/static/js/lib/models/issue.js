@@ -285,12 +285,12 @@ issueList.IssueCollection = Backbone.Collection.extend({
       mentioned: 'mentions'
     };
 
-    _.forEach(paramsArray, _.bind(function(param) {
+    _.forEach(paramsArray, function(param) {
       var kvArray = param.split('=');
       var key = kvArray[0];
       var value = kvArray[1];
       params[key] = value;
-    }, this));
+    });
 
     if ('direction' in params) {
       params.order = params.direction;
