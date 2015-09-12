@@ -300,6 +300,7 @@ issueList.IssueView = Backbone.View.extend({
   _loadingIndicator: $('.js-loader'),
   _nextButton: $('.js-pagination-next'),
   _prevButton: $('.js-pagination-previous'),
+  _urlParams: location.search.slice(1),
   initialize: function() {
     this.issues = new issueList.IssueCollection();
 
@@ -321,7 +322,7 @@ issueList.IssueView = Backbone.View.extend({
 
     var category;
     // get params excluding the leading ?
-    var urlParams = location.search.slice(1);
+    var urlParams = this._urlParams;
 
     // There are some params in the URL
     if (urlParams.length !== 0) {
@@ -579,11 +580,12 @@ issueList.IssueView = Backbone.View.extend({
   updateURLParams: function() {
     // push params from the model back to the URL so it can be used for bookmarks,
     // link sharing, etc.
-    var urlParams = location.search.slice(1);
+    var urlParams = this._urlParams;
     var serializedModelParams = $.param(this.issues.params);
 
     // only do this if there's something to change
     if (urlParams !== serializedModelParams) {
+      this._urlParams = serializedModelParams;
       if (history.pushState) {
         history.pushState({}, '', '?' + serializedModelParams);
       }
