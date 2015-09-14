@@ -142,8 +142,8 @@ def index():
         # see https://github.com/webcompat/webcompat.com/issues/688
         if 'facebook' in form.get('url'):
             msg = (u'Anonymous reporting for Facebook.com is temporarily '
-                    'disabled. Please see https://github.com/webcompat/we'
-                    'bcompat.com/issues/688 for more details.')
+                   'disabled. Please see https://github.com/webcompat/we'
+                   'bcompat.com/issues/688 for more details.')
             flash(msg, 'notimeout')
             return redirect(url_for('index'))
         form['ua_header'] = ua_header
