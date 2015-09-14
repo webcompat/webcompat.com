@@ -6,6 +6,7 @@
 
 '''This module powers the webcompat.com Flask application.'''
 
+import logging
 import os
 
 from flask.ext.cache import Cache
@@ -32,3 +33,10 @@ from api.uploads import uploads
 
 app.register_blueprint(api)
 app.register_blueprint(uploads)
+
+# Start Logging Handlers
+# See config.py for parameters
+file_handler = logging.FileHandler(app.config['LOG_FILE'])
+file_handler.setLevel(logging.INFO)
+file_handler.setFormatter(logging.Formatter(app.config['LOG_FMT']))
+app.logger.addHandler(file_handler)
