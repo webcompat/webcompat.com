@@ -55,6 +55,14 @@ DEBUG = False
 if not PRODUCTION:
     DEBUG = True
 
+# Logging Capabilities
+# To benefit from the logging, you may want to add:
+#   app.logger.info(Thing_To_Log)
+# it will create a line with the following format
+# 2015-09-14 20:50:19,185 INFO: Thing_To_Log [in /codepath/views.py:127]
+LOG_FILE = '/tmp/webcompat.log'
+LOG_FMT = '%(asctime)s %(levelname)s: %(message)s [in %(pathname)s:%(lineno)d]'
+
 # Get the secrets from [1] if you're part of the webcompat organization.
 # Otherwise, create your own test and production applications.
 #
