@@ -441,9 +441,7 @@ issueList.IssueView = Backbone.View.extend({
     var labelsMap = target.parent().data('labelsMap');
     var clickedLabel = target.text();
     var labelFilter = 'label:' + labelsMap[clickedLabel];
-    if (this._isLoggedIn) {
-      issueList.events.trigger('search:update', labelFilter);
-    }
+    issueList.events.trigger('search:update', labelFilter);
     issueList.events.trigger('issues:update', {query: labelFilter});
     e.preventDefault();
   },
@@ -617,10 +615,7 @@ issueList.MainView = Backbone.View.extend({
     this.issueSorter = new issueList.SortingView();
     this.filter = new issueList.FilterView();
     this.paginationControls = new issueList.PaginationControlsView();
-    // only init the SearchView if the user is logged in.
-    if (this._isLoggedIn) {
-      this.search = new issueList.SearchView();
-    }
+    this.search = new issueList.SearchView();
 
     this.render();
   },
@@ -629,13 +624,9 @@ issueList.MainView = Backbone.View.extend({
     this.$el.fadeIn(_.bind(function() {
       this.filter.render();
       this.issueSorter.render();
-
-      if (this._isLoggedIn) {
-        this.search.render();
-      }
+      this.search.render();
     }, this));
-  },
-  _isLoggedIn: $('body').data('username')
+  }
 });
 
 //Not using a router, so kick off things manually
