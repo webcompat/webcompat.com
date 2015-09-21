@@ -24,7 +24,6 @@ from webcompat import limiter
 from webcompat.helpers import get_comment_data
 from webcompat.helpers import get_headers
 from webcompat.helpers import get_request_headers
-from webcompat.helpers import get_user_info
 from webcompat.helpers import normalize_api_params
 from webcompat.issues import filter_new
 from webcompat.issues import proxy_request
