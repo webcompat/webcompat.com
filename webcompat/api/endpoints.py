@@ -222,7 +222,7 @@ def proxy_comments(number):
             path = 'repos/{0}/{1}/comments'.format(ISSUES_PATH, number)
             comment = github.raw_request('POST', path,
                                          data=get_comment_data(request.data))
-            return (json.dumps(comment.json()), comment.status_code,
+            return (comment.content, comment.status_code,
                     {'content-type': JSON_MIME})
         except GitHubError as e:
             print('GitHubError: ', e.response.status_code)
