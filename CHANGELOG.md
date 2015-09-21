@@ -1,3 +1,10 @@
+## 1.8.0
+
+* Fix some inconsistent quoting [Pull #709](https://github.com/webcompat/webcompat.com/pull/709)
+* Add simple logging ability to the Flask app [Pull #704](https://github.com/webcompat/webcompat.com/pull/704) [Issue #245](https://github.com/webcompat/webcompat.com/issues/245)
+* Add ability to upload images for an issue (in a comment) [Pull #703](https://github.com/webcompat/webcompat.com/pull/703) [Issue #687](https://github.com/webcompat/webcompat.com/issues/687)
+* Fix bug when clicking a label to perform a search [Pull #700](https://github.com/webcompat/webcompat.com/pull/700) [Issue #693](https://github.com/webcompat/webcompat.com/pull/693)
+
 ## 1.7.4
 
 * Add more breathing room for comments [Pull #699](https://github.com/webcompat/webcompat.com/pull/699)
