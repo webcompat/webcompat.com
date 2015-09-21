@@ -84,7 +84,7 @@
       </div>
       {% if session.user_id and session.avatar_url %}
       <!-- Create issue comment -->
-      <div class="wc-Comment wc-Comment--form" data-username={{ session.username }} data-avatar-url= {{ session.avatar_url }}>
+      <div class="wc-Comment wc-Comment--form" data-username="{{ session.username }}" data-avatar-url="{{ session.avatar_url }}">
         <div class="wc-Comment-avatar">
           <img class="" src="{{ session.avatar_url }}" alt="Avatar"/>
         </div>
