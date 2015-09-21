@@ -91,16 +91,17 @@
         <div class="wc-Comment-body wc-Comment-body--caret">
         <label for="wc-Comment-text" class="wc-sronly">Comment Text</label>
           <textarea id="Comment-text" class="wc-Comment-wrapper wc-Comment-text" placeholder="Leave a comment"></textarea>
+          <div class="wc-Form-group js-ImageUploadView">
           <script type="text/template" id="upload-input-tmpl">
-          <!-- div class="wc-Form-group" parent created by BackBone -->
           <form><div class="wc-Form-upload">
             <span class="wc-Form-upload-icon" aria-hidden="true">
               <span class="wc-Icon wc-Icon--cloud-upload"></span>
             </span>
             <label class="wc-Form-label wc-Form-label--upload" for="image">Attach a screenshot image</label>
-            <input accept=".jpe,.jpg,.jpeg,.gif,.png,.bmp" class="ButtonUpload" id="image" name="image" type="file">
+            <input accept=".jpe,.jpg,.jpeg,.gif,.png,.bmp" class="ButtonUpload js-buttonUpload" id="image" name="image" type="file">
           </div></form>
           </script>
+          </div>
           <div class="wc-Loader js-loader"></div>
           <div class="wc-Comment-button">
             <button class="Button Button--action js-issue-state-button">

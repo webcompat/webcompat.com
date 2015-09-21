@@ -95,10 +95,9 @@ issues.TextAreaView = Backbone.View.extend({
 });
 
 issues.ImageUploadView = Backbone.View.extend({
-  tagName: 'div',
-  className: 'wc-Form-group',
+  el: $('.js-ImageUploadView'),
   events: {
-    'change .ButtonUpload': 'validateAndUpload'
+    'change .js-buttonUpload': 'validateAndUpload'
   },
   _submitButton: $('.js-issue-comment-button'),
   _loaderImage: $('.js-loader'),
