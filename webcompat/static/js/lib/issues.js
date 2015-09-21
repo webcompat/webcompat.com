@@ -46,10 +46,9 @@ issues.TitleView = Backbone.View.extend({
 issues.MetaDataView = Backbone.View.extend({
   el: $('.wc-IssueDetail-create'),
   initialize: function() {
-    var self = this;
-    this.model.on('change:issueState', function() {
-      self.render();
-    });
+    this.model.on('change:issueState', _.bind(function() {
+      this.render();
+    }, this));
   },
   template: _.template($('#metadata-tmpl').html()),
   render: function() {
@@ -95,6 +94,125 @@ issues.TextAreaView = Backbone.View.extend({
   }, 250, {maxWait: 1500})
 });
 
+issues.ImageUploadView = Backbone.View.extend({
+  el: $('.js-ImageUploadView'),
+  events: {
+    'change .js-buttonUpload': 'validateAndUpload'
+  },
+  _submitButton: $('.js-issue-comment-button'),
+  _loaderImage: $('.js-loader'),
+  template: _.template($('#upload-input-tmpl').html()),
+  render: function() {
+    this.$el.html(this.template()).insertAfter($('textarea'));
+    return this;
+  },
+  inputMap: {
+    'image': {
+      'elm': '.ButtonUpload',
+      // image should be valid by default because it's optional
+      'valid': true,
+      'helpText': 'Please select an image of the following type: jpg, png, gif, or bmp.'
+    }
+  },
+  validateAndUpload: function(e) {
+    if (this.checkImageTypeValidity(e.target)) {
+      // The assumption here is that FormData is supported, otherwise
+      // the upload view is not shown to the user.
+      var formdata = new FormData($('form').get(0));
+      this._loaderImage.show();
+      $.ajax({
+        // File upload will fail if we pass contentType: multipart/form-data
+        // to jQuery (because it won't have the boundary string and then all
+        // hell breaks loose and you're like 10 stackoverflow posts deep).
+        contentType: false,
+        processData: false,
+        data: formdata,
+        method: 'POST',
+        url: '/upload/',
+        success: _.bind(function(response) {
+          this.addImageUploadComment(response);
+          this._loaderImage.hide();
+        }, this),
+        error: function() {
+          var msg = 'There was an error trying to upload the image.';
+          wcEvents.trigger('flash:error', {message: msg, timeout: 3000});
+        }
+      });
+    }
+  },
+  addImageUploadComment: function(response) {
+    // reponse looks like {filename: "blah", url: "http...blah"}
+    var DELIMITER = '\n\n';
+    var textarea = $('.wc-Comment-text');
+    var textareaVal = textarea.val();
+    var imageURL = _.template('![Screenshot of the site issue](<%= url %>)');
+    var compiledImageURL = imageURL({url: response.url});
+
+    if (!$.trim(textareaVal)) {
+      textarea.val(compiledImageURL);
+    } else {
+      textarea.val(textareaVal + DELIMITER + compiledImageURL);
+    }
+  },
+  // Adapted from bugform.js
+  checkImageTypeValidity: function(input) {
+    var splitImg = $(input).val().split('.');
+    var ext = splitImg[splitImg.length - 1];
+    var allowed = ['jpg', 'jpeg', 'jpe', 'png', 'gif', 'bmp'];
+    if (!_.includes(allowed, ext)) {
+      this.makeInvalid('image');
+      return false;
+    } else {
+      this.makeValid('image');
+      return true;
+    }
+  },
+  makeInvalid: function(id) {
+    // Early return if inline help is already in place.
+    if (this.inputMap[id].valid === false) {
+      return;
+    }
+
+    var inlineHelp = $('<span></span>', {
+      'class': 'wc-Form-helpInline',
+      'text': this.inputMap[id].helpText
+    });
+
+    this.inputMap[id].valid = false;
+    $(this.inputMap[id].elm).parents('.wc-Form-group')
+                            .removeClass('wc-Form-noError js-no-error')
+                            .addClass('wc-Form-error js-form-error');
+
+    if (id === 'image') {
+      inlineHelp.insertAfter('.wc-Form-label--upload');
+    }
+
+    this.disableSubmits();
+  },
+  makeValid:function(id) {
+    this.inputMap[id].valid = true;
+    $(this.inputMap[id].elm).parents('.wc-Form-group')
+                            .removeClass('wc-Form-error js-form-error')
+                            .addClass('wc-Form-noError js-no-error');
+
+    $(this.inputMap[id].elm).parents('.wc-Form-group')
+                            .find('.wc-Form-helpInline')
+                            .remove();
+
+    if (this.inputMap[id].valid) {
+      this.enableSubmits();
+    }
+  },
+  disableSubmits: function() {
+    this._submitButton.prop('disabled', true);
+    this._submitButton.addClass('is-disabled');
+  },
+  enableSubmits: function() {
+    this._submitButton.prop('disabled', false);
+    this._submitButton.removeClass('is-disabled');
+  }
+});
+
 // TODO: add comment before closing if there's a comment.
 issues.StateButtonView = Backbone.View.extend({
   el: $('.Button--action'),
@@ -104,26 +222,25 @@ issues.StateButtonView = Backbone.View.extend({
   hasComment: false,
   mainView: null,
   initialize: function(options) {
-    var self = this;
     this.mainView = options.mainView;
 
-    issues.events.on('textarea:content', function() {
-      self.hasComment = true;
-      if (self.model.get('state') === 'open') {
-        self.$el.text(self.template({state: "Close and comment"}));
+    issues.events.on('textarea:content', _.bind(function() {
+      this.hasComment = true;
+      if (this.model.get('state') === 'open') {
+        this.$el.text(this.template({state: "Close and comment"}));
       } else {
-        self.$el.text(self.template({state: "Reopen and comment"}));
+        this.$el.text(this.template({state: "Reopen and comment"}));
       }
-    });
+    }, this));
 
-    issues.events.on('textarea:empty', function() {
+    issues.events.on('textarea:empty', _.bind(function() {
       // Remove the "and comment" text if there's no comment.
-      self.render();
-    });
+      this.render();
+    }, this));
 
-    this.model.on('change:state', function() {
-      self.render();
-    });
+    this.model.on('change:state', _.bind(function() {
+      this.render();
+    }, this));
   },
   template: _.template($('#state-button-tmpl').html()),
   render: function() {
@@ -154,6 +271,7 @@ issues.MainView = Backbone.View.extend({
   keyboardEvents: {
     'g': 'githubWarp'
   },
+  _supportsFormData: 'FormData' in window,
   initialize: function() {
     $(document.body).addClass('language-html');
     var issueNum = {number: issueNumber};
@@ -186,13 +304,14 @@ issues.MainView = Backbone.View.extend({
     this.body = new issues.BodyView(issueModel);
     this.labels = new issues.LabelsView(issueModel);
     this.textArea = new issues.TextAreaView();
+    this.imageUpload = new issues.ImageUploadView();
     this.stateButton = new issues.StateButtonView(_.extend(issueModel, {mainView: this}));
   },
   fetchModels: function() {
-    var self = this;
     var headersBag = {headers: {'Accept': 'application/json'}};
-    this.issue.fetch(headersBag).success(function() {
-      _.each([self.title, self.metadata, self.body, self.labels, self.stateButton, self],
+    this.issue.fetch(headersBag).success(_.bind(function() {
+      _.each([this.title, this.metadata, this.body, this.labels,
+              this.stateButton, this],
         function(elm) {
           elm.render();
           _.each($('.wc-IssueDetail-details code'), function(elm) {
@@ -201,11 +320,15 @@ issues.MainView = Backbone.View.extend({
         }
       );
 
+      if (this._supportsFormData) {
+        this.imageUpload.render();
+      }
+
       // If there are any comments, go fetch the model data
-      if (self.issue.get('commentNumber') > 0) {
-        self.comments.fetch(headersBag).success(function() {
-          self.addExistingComments();
-          self.comments.bind("add", self.addComment);
+      if (this.issue.get('commentNumber') > 0) {
+        this.comments.fetch(headersBag).success(_.bind(function() {
+          this.addExistingComments();
+          this.comments.bind("add", _.bind(this.addComment, this));
 
           // If there's a #hash pointing to a comment (or elsewhere)
           // scrollTo it.
@@ -213,12 +336,12 @@ issues.MainView = Backbone.View.extend({
             var _id = $(location.hash);
             window.scrollTo(0, _id.offset().top);
           }
-        }).error(function() {
+        }, this)).error(function() {
           var msg = 'There was an error retrieving issue comments. Please reload to try again.';
           wcEvents.trigger('flash:error', {message: msg, timeout: 2000});
         });
       }
-    }).error(function(response) {
+    }, this)).error(function(response) {
       var msg;
       if (response.responseJSON.message === "API call. Not Found") {
         location.href = "/404";

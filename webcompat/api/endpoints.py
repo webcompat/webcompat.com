@@ -21,6 +21,7 @@ from webcompat import app
 from webcompat import cache
 from webcompat import github
 from webcompat import limiter
+from webcompat.helpers import get_comment_data
 from webcompat.helpers import get_headers
 from webcompat.helpers import get_request_headers
 from webcompat.helpers import normalize_api_params
@@ -218,11 +219,10 @@ def proxy_comments(number):
     '''
     if request.method == 'POST':
         try:
-            comment_data = json.loads(request.data)
-            body = json.dumps({"body": comment_data['rawBody']})
             path = 'repos/{0}/{1}/comments'.format(ISSUES_PATH, number)
-            comment = github.raw_request('POST', path, data=body)
-            return (json.dumps(comment.json()), comment.status_code,
+            comment = github.raw_request('POST', path,
+                                         data=get_comment_data(request.data))
+            return (comment.content, comment.status_code,
                     {'content-type': JSON_MIME})
         except GitHubError as e:
             print('GitHubError: ', e.response.status_code)
@@ -232,11 +232,8 @@ def proxy_comments(number):
 
         if g.user:
             comments = github.raw_request(
-                'GET',
-                'repos/{0}/{1}/comments'.format(
-                    ISSUES_PATH, number),
-                headers=request_headers
-                )
+                'GET', 'repos/{0}/{1}/comments'.format(ISSUES_PATH, number),
+                headers=request_headers)
         else:
             comments = proxy_request('get', '/{0}/comments'.format(number),
                                      headers=request_headers)

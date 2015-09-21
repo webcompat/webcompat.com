@@ -42,7 +42,7 @@ def upload():
 
     Returns a JSON string that contains the filename and url.
     '''
-    if request.method == 'POST' and 'image' in request.files:
+    if 'image' in request.files:
         try:
             file = request.files['image']
             file_ext = file.filename.split('.')[-1]
