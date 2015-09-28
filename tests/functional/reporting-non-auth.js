@@ -15,7 +15,7 @@ define([
   registerSuite({
     name: 'reporting',
 
-    'submit buttons are disabled': function() {
+    'Submit buttons are disabled': function() {
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url + '?open=1'))
@@ -30,7 +30,7 @@ define([
         });
     },
 
-    'wyciwyg bug workaround': function() {
+    'Wyciwyg bug workaround': function() {
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url + '?open=1&url=wyciwyg://0/http://bbs.csdn.net/topics/20282413'))
@@ -41,7 +41,7 @@ define([
         .end();
     },
 
-    'report button shows name when logged in': function() {
+    'Report button shows via GitHub': function() {
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url + '?open=1'))
@@ -49,23 +49,9 @@ define([
         .sleep(1000)
         .findByCssSelector('#submitgithub').getVisibleText()
         .then(function (text) {
-          assert.include(text, 'Report as'); //Report as FooUser (logged in)
-        })
-        .end()
-        // log out
-        .findByCssSelector('.js-login-link').click()
-        .end()
-        // wait a second
-        .sleep(1000)
-        .findByCssSelector('#submitgithub').getVisibleText()
-        .then(function (text) {
           assert.include(text, 'Report via'); //Report via GitHub (logged out)
         })
-        .end()
-        // log in
-        .findByCssSelector('.js-login-link').click()
-        .end()
-        .sleep(2000);
+        .end();
     },
 
     'URL validation': function() {

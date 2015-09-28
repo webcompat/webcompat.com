@@ -30,7 +30,7 @@ define([
         // in the middle of testing.
       },
 
-      'label gear is visible': function () {
+      'Label gear is visible': function () {
         return this.remote
           .setFindTimeout(intern.config.wc.pageLoadTimeout)
           .get(require.toUrl(url(2)))
@@ -42,7 +42,7 @@ define([
           .end();
       },
 
-      'label widget is opening on click': function () {
+      'Label widget is opening on click': function () {
         return this.remote
           .setFindTimeout(intern.config.wc.pageLoadTimeout)
           .get(require.toUrl(url(2)))
@@ -56,7 +56,7 @@ define([
           .end();
       },
 
-      'label appears once selected': function () {
+      'Label appears once selected': function () {
         return this.remote
           .setFindTimeout(intern.config.wc.pageLoadTimeout)
           .get(require.toUrl(url(2)))
@@ -72,7 +72,7 @@ define([
           .end();
       },
 
-      'label has been sent to GitHub': function () {
+      'Label has been sent to GitHub': function () {
         return this.remote
           .setFindTimeout(intern.config.wc.pageLoadTimeout)
           .get(require.toUrl(url(2)))
@@ -91,7 +91,7 @@ define([
           .end();
       },
 
-      'removes a label': function () {
+      'Removes a label': function () {
         return this.remote
           .setFindTimeout(intern.config.wc.pageLoadTimeout)
           .get(require.toUrl(url(2)))

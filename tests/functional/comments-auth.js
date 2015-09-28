@@ -41,22 +41,8 @@ define([
         .end();
     },
 
-    'Comment form not visible for logged out users': function() {
-      return this.remote
-        .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url(200)))
-        .findByCssSelector('.js-login-link').click()
-        .end()
-        .findByCssSelector('.wc-Comment--form')
-        .then(assert.fail, function(err) {
-           assert.isTrue(/NoSuchElement/.test(String(err)));
-        })
-        .end()
-        .findByCssSelector('.js-login-link').click()
-        .end();
-    },
 
-    'empty vs non-empty comment button text (open issue)': function() {
+    'Empty vs non-empty comment button text (open issue)': function() {
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url(100)))
@@ -78,7 +64,7 @@ define([
         });
     },
 
-    'empty vs non-empty comment button text (closed issue)': function() {
+    'Empty vs non-empty comment button text (closed issue)': function() {
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url(101)))
@@ -100,7 +86,7 @@ define([
         });
     },
 
-    'posting a comment': function() {
+    'Posting a comment': function() {
       var originalCommentsLength, allCommentsLength;
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
@@ -125,7 +111,7 @@ define([
         });
     },
 
-    'posting an empty comment fails': function() {
+    'Posting an empty comment fails': function() {
       var originalCommentsLength, allCommentsLength;
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)

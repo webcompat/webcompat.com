@@ -3,14 +3,18 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 define([
-  './functional/index',
-  './functional/comments',
-  './functional/issue-list',
-  './functional/issues',
-  './functional/reporting',
-  './functional/contributors',
-  './functional/history-navigation',
-  './functional/labels'
+  './functional/comments-auth.js',
+  './functional/comments-non-auth.js',
+  './functional/contributors-non-auth.js',
+  './functional/history-navigation-non-auth.js',
+  './functional/index-non-auth.js',
+  './functional/issue-list-auth.js',
+  './functional/issue-list-non-auth.js',
+  './functional/issues-auth.js',
+  './functional/issues-non-auth.js',
+  './functional/labels-auth.js',
+  './functional/reporting-auth.js',
+  './functional/reporting-non-auth.js'
 ], function () {
   'use strict';
 });

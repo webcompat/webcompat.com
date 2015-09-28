@@ -31,7 +31,7 @@ define([
         .end();
     },
 
-    'loading image is shown when requesting issues': function() {
+    'Loading image is shown when requesting issues': function() {
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url))
@@ -114,7 +114,7 @@ define([
         .end();
     },
 
-    'pagination dropdown tests': function() {
+    'Pagination dropdown tests': function() {
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url))
@@ -149,32 +149,7 @@ define([
         .end();
     },
 
-    'search/filter interaction': function() {
-      return this.remote
-        .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url))
-        .findByCssSelector('.IssueList-search-form').click()
-        .type('taco')
-        .end()
-        .findAllByCssSelector('button.wc-Filter--new').click()
-        .end()
-        .findByCssSelector('.IssueList-search-form').getVisibleText()
-        .then(function (text) {
-          assert.equal(text, '', 'Clicking filter should empty search text');
-        })
-        .end()
-        .findAllByCssSelector('button.wc-Filter--new').click()
-        .end()
-        .findByCssSelector('.IssueList-search-form').click()
-        .type('taco')
-        .end()
-        .findAllByCssSelector('button.wc-Filter--new').getAttribute('class')
-        .then(function (className) {
-          assert.notInclude(className, 'is-active', 'Searching should clear all filters');
-        });
-    },
-
-    'pressing g goes to github issues': function() {
+    'Pressing g goes to github issues': function() {
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url))
@@ -189,7 +164,7 @@ define([
         .end();
     },
 
-    'pressing g inside of search input *doesn\'t* go to github issues': function() {
+    'Pressing g inside of search input *doesn\'t* go to github issues': function() {
       return this.remote
         // set a short timeout, so we don't have to wait 10 seconds
         // to realize we're not at GitHub.
@@ -205,7 +180,7 @@ define([
         .end();
     },
 
-    'loading issues page has default params in URL': function() {
+    'Loading issues page has default params in URL': function() {
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url))
@@ -217,7 +192,7 @@ define([
         });
     },
 
-    'loading partial params results in merge with defaults': function() {
+    'Loading partial params results in merge with defaults': function() {
         var params = '?page=2';
         return this.remote
           .setFindTimeout(intern.config.wc.pageLoadTimeout)
@@ -230,39 +205,7 @@ define([
           });
     },
 
-    'results are loaded from the query params (logged in)': function() {
-        var params = '?q=vladvlad';
-        return this.remote
-          .setFindTimeout(intern.config.wc.pageLoadTimeout)
-          .get(require.toUrl(url + params))
-          .findByCssSelector('.wc-IssueItem:nth-of-type(1) a').getVisibleText()
-          .then(function(text){
-            assert.include(text, 'vladvlad', 'The search query results show up on the page.');
-          })
-          .end()
-          .getCurrentUrl()
-          .then(function(currUrl){
-            assert.include(currUrl, 'q=vladvlad', 'Our params didn\'t go anywhere.');
-          })
-          // log out
-          .findByCssSelector('.js-login-link').click()
-          .end()
-          .sleep(2000)
-          .findByCssSelector('.wc-IssueItem:nth-of-type(1) a').getVisibleText()
-          .then(function(text){
-            assert.include(text, 'vladvlad', 'The search query results show up on the page.');
-          })
-          .end()
-          .getCurrentUrl()
-          .then(function(currUrl){
-            assert.include(currUrl, 'q=vladvlad', 'Our params didn\'t go anywhere.');
-          })
-          // log back in
-          .findByCssSelector('.js-login-link').click()
-          .end();
-    },
-
-    'dropdowns reflect state from URL': function() {
+    'Dropdowns reflect state from URL': function() {
       var params = '?per_page=25&sort=updated&direction=desc&state=all';
 
       return this.remote
@@ -285,7 +228,7 @@ define([
         .end();
     },
 
-    'going back in history updates issue list and URL state': function() {
+    'Going back in history updates issue list and URL state': function() {
       var params = '?per_page=25';
 
       return this.remote
@@ -316,7 +259,7 @@ define([
         .end();
     },
 
-    'loading URL with stage param loads issues': function() {
+    'Loading URL with stage param loads issues': function() {
       var params = "?page=1&per_page=50&state=open&stage=new&sort=created&direction=desc";
 
       return this.remote
@@ -332,7 +275,7 @@ define([
         .end();
     },
 
-    'clicking on a stage filter adds the correct param to the URL': function() {
+    'Clicking on a stage filter adds the correct param to the URL': function() {
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url))
@@ -347,7 +290,7 @@ define([
         .end();
     },
 
-    'toggling a stage filter doesn\'t leave the param in the URL': function() {
+    'Toggling a stage filter doesn\'t leave the param in the URL': function() {
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url))
@@ -365,7 +308,7 @@ define([
         .end();
     },
 
-    'toggling between stage filters results in last param in URL': function() {
+    'Toggling between stage filters results in last param in URL': function() {
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url))

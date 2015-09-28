@@ -17,59 +17,7 @@ define([
   registerSuite({
     name: 'issues',
 
-    'issue page loads': function () {
-      return this.remote
-        .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url(100)))
-        .sleep(1000)
-        .findByCssSelector('h1.wc-IssueDetail-title').getVisibleText()
-        .then(function (text) {
-          assert.include(text, 'Issue 100:', 'Issue title displayed');
-        })
-        .end()
-        .findByCssSelector('.wc-IssueDetail-reporter').getVisibleText()
-        .then(function (text) {
-          assert.equal(text, 'miketaylr', 'Issue reporter displayed.');
-        })
-        .end()
-        .findByCssSelector('.Label--badge').isDisplayed()
-        .then(function (isDisplayed) {
-          assert.equal(isDisplayed, true);
-        });
-    },
-
-    'closing and reopening an issue': function () {
-      return this.remote
-        .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url(69)))
-        .findByCssSelector('.js-issue-state-button').click()
-        .sleep(2000)
-        .end()
-        .findByCssSelector('.wc-IssueDetail-state').getVisibleText()
-        .then(function (text) {
-          assert.equal(text, 'Closed', 'Closed state text is displayed');
-        })
-        .end()
-        .findByCssSelector('.js-issue-state-button').getVisibleText()
-        .then(function (text) {
-          assert.equal(text, 'Reopen Issue', 'Button says Reopen not Close');
-        })
-        .end()
-        .findByCssSelector('.js-issue-state-button').click()
-        .sleep(2000)
-        .end()
-        .findByCssSelector('.wc-IssueDetail-state').getVisibleText()
-        .then(function (text) {
-          assert.equal(text, 'Ready for Outreach', 'Ready for Outreach state is displayed');
-        })
-        .end()
-        .findByCssSelector('.js-issue-state-button').getVisibleText()
-        .then(function (text) {
-          assert.equal(text, 'Close Issue', 'Button says Close not Reopen');
-        });
-    },
-
-    'issue comments load': function () {
+    'Issue comments load': function () {
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url(100)))
@@ -90,7 +38,7 @@ define([
         });
     },
 
-    'non-existant issues go to 404': function() {
+    'Non-existant issues go to 404': function() {
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         // TODO: uh, update this in the future
@@ -101,7 +49,7 @@ define([
         });
     },
 
-    'pressing g goes to the github issue page': function() {
+    'Pressing g goes to the github issue page': function() {
       var issueNumber = 100;
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
