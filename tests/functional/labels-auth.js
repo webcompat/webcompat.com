@@ -12,28 +12,48 @@ define([
 
   registerSuite(function () {
 
-    var url = function (num) {
-      return intern.config.siteRoot + '/issues/' + num;
+    var url = function (path) {
+      return intern.config.siteRoot + path;
     };
 
     return {
       name: 'labels',
 
       setup: function () {
-        // We should be logged before starting the labels test.
-        // The setup function should make sure we are not logged.
-      },
+      return this.remote
+        .setFindTimeout(intern.config.wc.pageLoadTimeout)
+        .get(require.toUrl(url('/issues/2')))
+        .findByCssSelector('.js-login-link').click()
+        .end()
+        .findByCssSelector('#login_field').click()
+        .type(intern.config.wc.user)
+        .end()
+        .findByCssSelector('#password').click()
+        .type(intern.config.wc.pw)
+        .end()
+        .findByCssSelector('input[type=submit]').submit()
+        .end()
+        .findByCssSelector('button').submit()
+        .end();
+    },
 
-      teardown: function () {
-        // The teardown should remove all labels which would have
-        // been put during the process, specifically if it fails
-        // in the middle of testing.
-      },
+    teardown: function () {
+      return this.remote
+        .setFindTimeout(intern.config.wc.pageLoadTimeout)
+        .get(require.toUrl(url('/issues/100')))
+        .findByCssSelector('.js-login-link').click()
+        .end()
+        .clearCookies()
+        .end()
+        .get(require.toUrl('https://github.com/logout'))
+        .findByCssSelector('.auth-form-body input.btn').click()
+        .end();
+    },
 
       'Label gear is visible': function () {
         return this.remote
           .setFindTimeout(intern.config.wc.pageLoadTimeout)
-          .get(require.toUrl(url(2)))
+          .get(require.toUrl(url('/issues/2')))
           .findByCssSelector('.LabelEditor-wrapper')
           .isDisplayed()
           .then(function (displayed) {
@@ -45,7 +65,7 @@ define([
       'Label widget is opening on click': function () {
         return this.remote
           .setFindTimeout(intern.config.wc.pageLoadTimeout)
-          .get(require.toUrl(url(2)))
+          .get(require.toUrl(url('/issues/2')))
           .findByCssSelector('.LabelEditor-launcher').click()
           .end()
           .findByCssSelector('.LabelEditor')
@@ -59,7 +79,7 @@ define([
       'Label appears once selected': function () {
         return this.remote
           .setFindTimeout(intern.config.wc.pageLoadTimeout)
-          .get(require.toUrl(url(2)))
+          .get(require.toUrl(url('/issues/2')))
           .findByCssSelector('.LabelEditor-launcher').click()
           .end()
           .findByCssSelector('label.LabelEditor-item input[name="contactready"]').click()
@@ -75,7 +95,7 @@ define([
       'Label has been sent to GitHub': function () {
         return this.remote
           .setFindTimeout(intern.config.wc.pageLoadTimeout)
-          .get(require.toUrl(url(2)))
+          .get(require.toUrl(url('/issues/2')))
           .findByCssSelector('.LabelEditor-launcher').click()
           .end()
           .findByCssSelector('label.LabelEditor-item input[name="contactready"]').click()
@@ -94,14 +114,14 @@ define([
       'Removes a label': function () {
         return this.remote
           .setFindTimeout(intern.config.wc.pageLoadTimeout)
-          .get(require.toUrl(url(2)))
+          .get(require.toUrl(url('/issues/2')))
           .findByCssSelector('.LabelEditor-launcher').click()
           .end()
           .findByCssSelector('label.LabelEditor-item input[name="contactready"]').click()
           .end()
           .findByCssSelector('.LabelEditor-btn').click()
           .end()
-          .get(require.toUrl(url(2)))
+          .get(require.toUrl(url('/issues/2')))
           .findByCssSelector('.Label--badge')
           .getVisibleText()
           .then(function (labelText) {

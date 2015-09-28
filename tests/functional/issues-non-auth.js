@@ -10,17 +10,38 @@ define([
 ], function (intern, registerSuite, assert, require) {
   'use strict';
 
-  var url = function(num) {
-    return intern.config.siteRoot + '/issues/' + num;
+  var url = function(path) {
+    return intern.config.siteRoot + path;
   };
 
   registerSuite({
     name: 'issues',
 
+    'Issue page loads': function () {
+      return this.remote
+        .setFindTimeout(intern.config.wc.pageLoadTimeout)
+        .get(require.toUrl(url('/issues/100')))
+        .sleep(1000)
+        .findByCssSelector('h1.wc-IssueDetail-title').getVisibleText()
+        .then(function (text) {
+          assert.include(text, 'Issue 100:', 'Issue title displayed');
+        })
+        .end()
+        .findByCssSelector('.wc-IssueDetail-reporter').getVisibleText()
+        .then(function (text) {
+          assert.equal(text, 'miketaylr', 'Issue reporter displayed.');
+        })
+        .end()
+        .findByCssSelector('.Label--badge').isDisplayed()
+        .then(function (isDisplayed) {
+          assert.equal(isDisplayed, true);
+        });
+    },
+
     'Issue comments load': function () {
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url(100)))
+        .get(require.toUrl(url('/issues/100')))
         .sleep(1000)
         .findByCssSelector('.js-issue-comment').isDisplayed()
         .then(function (isDisplayed) {
@@ -42,7 +63,7 @@ define([
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         // TODO: uh, update this in the future
-        .get(require.toUrl(url(999999)))
+        .get(require.toUrl(url('/issues/999999')))
         .findByCssSelector('#pageerror h1').getVisibleText()
         .then(function (text) {
           assert.include(text, '(404)', 'We\'re at the 404.');
@@ -53,7 +74,7 @@ define([
       var issueNumber = 100;
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url(issueNumber)))
+        .get(require.toUrl(url('/issues/' + issueNumber)))
         .findByCssSelector('body').click()
         .type('g')
         .end()
@@ -71,10 +92,9 @@ define([
     },
 
     'Opening the QR code image (via button)': function() {
-      var issueNumber = 252;
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url(issueNumber)))
+        .get(require.toUrl(url('/issues/252')))
         // Click on QR code button to open
         .findByCssSelector('.wc-QrImage-launcher').click()
         .end()
@@ -86,10 +106,9 @@ define([
     },
 
     'Closing the QR code image (via button)': function() {
-      var issueNumber = 252;
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url(issueNumber)))
+        .get(require.toUrl(url('/issues/252')))
         // Click on QR code button to open
         .findByCssSelector('.wc-QrImage-launcher').click()
         .end()
@@ -109,10 +128,9 @@ define([
     },
 
     'Opening the QR code image (via keyboard shortcut)': function() {
-      var issueNumber = 252;
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url(issueNumber)))
+        .get(require.toUrl(url('/issues/252')))
         // Click on QR code button to open
         .findByCssSelector('body').click()
         .type('q')
@@ -125,10 +143,9 @@ define([
     },
 
     'Closing the QR code image (via link)': function() {
-      var issueNumber = 252;
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url(issueNumber)))
+        .get(require.toUrl(url('/issues/252')))
         // Click on QR code button to open
         .findByCssSelector('.wc-QrImage-launcher').click()
         .end()

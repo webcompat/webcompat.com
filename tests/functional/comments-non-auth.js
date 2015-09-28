@@ -10,8 +10,8 @@ define([
 ], function (intern, registerSuite, assert, require) {
   'use strict';
 
-  var url = function(num) {
-    return intern.config.siteRoot + '/issues/' + num;
+  var url = function(path) {
+    return intern.config.siteRoot + path;
   };
 
   registerSuite({
@@ -20,15 +20,11 @@ define([
     'Comment form not visible for logged out users': function() {
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url(200)))
-        .findByCssSelector('.js-login-link').click()
-        .end()
+        .get(require.toUrl(url('/issues/200')))
         .findByCssSelector('.wc-Comment--form')
         .then(assert.fail, function(err) {
            assert.isTrue(/NoSuchElement/.test(String(err)));
         })
-        .end()
-        .findByCssSelector('.js-login-link').click()
         .end();
     }
 

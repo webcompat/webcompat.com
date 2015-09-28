@@ -10,17 +10,17 @@ define([
 ], function (intern, registerSuite, assert, require) {
   'use strict';
 
-  var url = function(num) {
-    return intern.config.siteRoot + '/issues/' + num;
+  var url = function(path) {
+    return intern.config.siteRoot + path;
   };
 
   registerSuite({
     name: 'issues',
 
-    'Comments form visible when logged in': function() {
+    setup: function () {
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url(100)))
+        .get(require.toUrl(url('/')))
         .findByCssSelector('.js-login-link').click()
         .end()
         .findByCssSelector('#login_field').click()
@@ -32,8 +32,27 @@ define([
         .findByCssSelector('input[type=submit]').submit()
         .end()
         .findByCssSelector('button').submit()
+        .end();
+    },
+
+    teardown: function () {
+      return this.remote
+        .setFindTimeout(intern.config.wc.pageLoadTimeout)
+        .get(require.toUrl(url('/')))
+        .findByCssSelector('.js-login-link').click()
         .end()
-        .get(require.toUrl(url(100)))
+        .clearCookies()
+        .end()
+        .get(require.toUrl('https://github.com/logout'))
+        .findByCssSelector('.auth-form-body input.btn').click()
+        .end();
+    },
+
+    'Comments form visible when logged in': function() {
+      return this.remote
+        .setFindTimeout(intern.config.wc.pageLoadTimeout)
+        .get(require.toUrl(url('/issues/100')))
+        .sleep(2000)
         .findByCssSelector('.wc-Comment--form').isDisplayed()
         .then(function (isDisplayed) {
           assert.equal(isDisplayed, true, 'Comment form visible for logged in users.');
@@ -45,7 +64,7 @@ define([
     'Empty vs non-empty comment button text (open issue)': function() {
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url(100)))
+        .get(require.toUrl(url('/issues/100')))
         .sleep(500)
         .findByCssSelector('.js-issue-state-button').getVisibleText()
         .then(function(text){
@@ -67,7 +86,7 @@ define([
     'Empty vs non-empty comment button text (closed issue)': function() {
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url(101)))
+        .get(require.toUrl(url('/issues/101')))
         .sleep(2000)
         .findByCssSelector('.js-issue-state-button').getVisibleText()
         .then(function(text){
@@ -90,7 +109,7 @@ define([
       var originalCommentsLength, allCommentsLength;
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url(100)))
+        .get(require.toUrl(url('/issues/100')))
         .findAllByCssSelector('.js-issue-comment:not(.wc-Comment--form)')
         .then(function(elms){
           originalCommentsLength = elms.length;
@@ -115,7 +134,7 @@ define([
       var originalCommentsLength, allCommentsLength;
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url(100)))
+        .get(require.toUrl(url('/issues/100')))
         .findAllByCssSelector('.js-issue-comment:not(.wc-Comment--form)')
         .then(function(elms){
           originalCommentsLength = elms.length;

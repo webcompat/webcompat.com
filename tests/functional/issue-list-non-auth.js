@@ -10,7 +10,9 @@ define([
 ], function (intern, registerSuite, assert, require) {
   'use strict';
 
-  var url = intern.config.siteRoot + '/issues';
+  var url = function (path) {
+    return intern.config.siteRoot + path;
+  };
 
   registerSuite({
     name: 'issue-list',
@@ -18,7 +20,7 @@ define([
     'FilterView renders': function () {
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url))
+        .get(require.toUrl(url('/issues')))
         .findByCssSelector('.js-issuelist-filter .wc-Dropdown--large .wc-Dropdown-label').getVisibleText()
         .then(function (text) {
           assert.include(text, 'Issues', 'Page header displayed');
@@ -34,7 +36,7 @@ define([
     'Loading image is shown when requesting issues': function() {
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url))
+        .get(require.toUrl(url('/issues')))
         // click next page to trigger loader image
         .findByCssSelector('.js-pagination-next').click()
         .end()
@@ -59,7 +61,7 @@ define([
     'IssueListView renders': function() {
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url))
+        .get(require.toUrl(url('/issues')))
         .findByCssSelector('.js-issue-list').isDisplayed()
         .then(function (isDisplayed) {
           assert.equal(isDisplayed, true, 'IssueList container is visible.');
@@ -87,7 +89,7 @@ define([
     'PaginationControlsView tests': function() {
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url))
+        .get(require.toUrl(url('/issues')))
         .findByCssSelector('.js-pagination-controls').isDisplayed()
         .then(function (isDisplayed) {
           assert.equal(isDisplayed, true, 'IssueList container is visible.');
@@ -117,7 +119,7 @@ define([
     'Pagination dropdown tests': function() {
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url))
+        .get(require.toUrl(url('/issues')))
         .findByCssSelector('.js-dropdown-pagination').isDisplayed()
         .then(function (isDisplayed) {
           assert.equal(isDisplayed, true, 'pagination dropdown container is visible.');
@@ -152,7 +154,7 @@ define([
     'Pressing g goes to github issues': function() {
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url))
+        .get(require.toUrl(url('/issues')))
         .findByCssSelector('body').click()
         .type('g')
         .end()
@@ -169,7 +171,7 @@ define([
         // set a short timeout, so we don't have to wait 10 seconds
         // to realize we're not at GitHub.
         .setFindTimeout(50)
-        .get(require.toUrl(url))
+        .get(require.toUrl(url('/issues')))
         .findByCssSelector('#IssueList-search-input').click()
         .type('g')
         .end()
@@ -183,7 +185,7 @@ define([
     'Loading issues page has default params in URL': function() {
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url))
+        .get(require.toUrl(url('/issues')))
         // find something so we know the page has loaded
         .findByCssSelector('.wc-IssueItem:nth-of-type(1)')
         .getCurrentUrl()
@@ -196,7 +198,7 @@ define([
         var params = '?page=2';
         return this.remote
           .setFindTimeout(intern.config.wc.pageLoadTimeout)
-          .get(require.toUrl(url + params))
+          .get(require.toUrl(url('/issues') + params))
           // find something so we know the page has loaded
           .findByCssSelector('.wc-IssueItem:nth-of-type(1)')
           .getCurrentUrl()
@@ -210,7 +212,7 @@ define([
 
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url + params))
+        .get(require.toUrl(url('/issues') + params))
         .findByCssSelector('.js-dropdown-pagination .js-dropdown-toggle h1').getVisibleText()
         .then(function(text){
           assert.equal(text, 'Show 25', 'Pagination dropdown label is updated from URL params');
@@ -233,7 +235,7 @@ define([
 
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url + params))
+        .get(require.toUrl(url('/issues') + params))
         .findByCssSelector('.js-dropdown-pagination .js-dropdown-toggle h1').getVisibleText()
         .then(function(text){
           assert.equal(text, 'Show 25', 'Pagination dropdown label is updated from URL params');
@@ -264,7 +266,7 @@ define([
 
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url + params))
+        .get(require.toUrl(url('/issues') + params))
         // Did an issue load?
         .findByCssSelector('.wc-IssueItem:nth-of-type(1)')
         .end()
@@ -278,7 +280,7 @@ define([
     'Clicking on a stage filter adds the correct param to the URL': function() {
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url))
+        .get(require.toUrl(url('/issues')))
         .findByCssSelector('[data-filter="contactready"]').click()
         .end()
         // find something so we know the page has loaded
@@ -293,7 +295,7 @@ define([
     'Toggling a stage filter doesn\'t leave the param in the URL': function() {
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url))
+        .get(require.toUrl(url('/issues')))
         .findByCssSelector('[data-filter="closed"]').click()
         .end()
         // find something so we know the page has loaded
@@ -311,7 +313,7 @@ define([
     'Toggling between stage filters results in last param in URL': function() {
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url))
+        .get(require.toUrl(url('/issues')))
         .findByCssSelector('[data-filter="closed"]').click()
         .end()
         // find something so we know the page has loaded
@@ -325,6 +327,24 @@ define([
           assert.notInclude(currUrl, 'stage=closed', 'Stage removed from URL correctly.');
         })
         .end();
+    },
+
+    'Results are loaded from the query params': function() {
+      var params = '?q=vladvlad';
+      return this.remote
+        .setFindTimeout(intern.config.wc.pageLoadTimeout)
+        .get(require.toUrl(url('/issues') + params))
+        .findByCssSelector('.wc-IssueItem:nth-of-type(1) a').getVisibleText()
+        .then(function(text){
+          assert.include(text, 'vladvlad', 'The search query results show up on the page.');
+        })
+        .end()
+        .getCurrentUrl()
+        .then(function(currUrl){
+          assert.include(currUrl, 'q=vladvlad', 'Our params didn\'t go anywhere.');
+        })
+        .end();
     }
+
   });
 });

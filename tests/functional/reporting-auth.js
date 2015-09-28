@@ -10,15 +10,48 @@ define([
 ], function (intern, registerSuite, assert, require) {
   'use strict';
 
-  var url = intern.config.siteRoot;
+  var url = function(path) {
+    return intern.config.siteRoot + path;
+  };
 
   registerSuite({
     name: 'reporting',
 
+    setup: function () {
+      return this.remote
+        .setFindTimeout(intern.config.wc.pageLoadTimeout)
+        .get(require.toUrl(url('/')))
+        .findByCssSelector('.js-login-link').click()
+        .end()
+        .findByCssSelector('#login_field').click()
+        .type(intern.config.wc.user)
+        .end()
+        .findByCssSelector('#password').click()
+        .type(intern.config.wc.pw)
+        .end()
+        .findByCssSelector('input[type=submit]').submit()
+        .end()
+        .findByCssSelector('button').submit()
+        .end();
+    },
+
+    teardown: function () {
+      return this.remote
+        .setFindTimeout(intern.config.wc.pageLoadTimeout)
+        .get(require.toUrl(url('/')))
+        .findByCssSelector('.js-login-link').click()
+        .end()
+        .clearCookies()
+        .end()
+        .get(require.toUrl('https://github.com/logout'))
+        .findByCssSelector('.auth-form-body input.btn').click()
+        .end();
+    },
+
     'Report button shows name': function() {
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url + '?open=1'))
+        .get(require.toUrl(url('/') + '?open=1'))
         // wait a second
         .sleep(1000)
         .findByCssSelector('#submitgithub').getVisibleText()

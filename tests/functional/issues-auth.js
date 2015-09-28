@@ -10,38 +10,48 @@ define([
 ], function (intern, registerSuite, assert, require) {
   'use strict';
 
-  var url = function(num) {
-    return intern.config.siteRoot + '/issues/' + num;
+  var url = function(path) {
+    return intern.config.siteRoot + path;
   };
 
   registerSuite({
     name: 'issues',
 
-    'Issue page loads': function () {
+    setup: function () {
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url(100)))
-        .sleep(1000)
-        .findByCssSelector('h1.wc-IssueDetail-title').getVisibleText()
-        .then(function (text) {
-          assert.include(text, 'Issue 100:', 'Issue title displayed');
-        })
+        .get(require.toUrl(url('/issues/69')))
+        .findByCssSelector('.js-login-link').click()
         .end()
-        .findByCssSelector('.wc-IssueDetail-reporter').getVisibleText()
-        .then(function (text) {
-          assert.equal(text, 'miketaylr', 'Issue reporter displayed.');
-        })
+        .findByCssSelector('#login_field').click()
+        .type(intern.config.wc.user)
         .end()
-        .findByCssSelector('.Label--badge').isDisplayed()
-        .then(function (isDisplayed) {
-          assert.equal(isDisplayed, true);
-        });
+        .findByCssSelector('#password').click()
+        .type(intern.config.wc.pw)
+        .end()
+        .findByCssSelector('input[type=submit]').submit()
+        .end()
+        .findByCssSelector('button').submit()
+        .end();
+    },
+
+    teardown: function () {
+      return this.remote
+        .setFindTimeout(intern.config.wc.pageLoadTimeout)
+        .get(require.toUrl(url('/issues/100')))
+        .findByCssSelector('.js-login-link').click()
+        .end()
+        .clearCookies()
+        .end()
+        .get(require.toUrl('https://github.com/logout'))
+        .findByCssSelector('.auth-form-body input.btn').click()
+        .end();
     },
 
     'Closing and reopening an issue': function () {
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url(69)))
+        .get(require.toUrl(url('/issues/69')))
         .findByCssSelector('.js-issue-state-button').click()
         .sleep(2000)
         .end()
