@@ -65,7 +65,8 @@ define([
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url('/issues/100')))
-        .sleep(500)
+        .findByCssSelector('.js-issue-comment:nth-of-type(3)')
+        .end()
         .findByCssSelector('.js-issue-state-button').getVisibleText()
         .then(function(text){
           assert.equal('Close Issue', text);
@@ -75,7 +76,7 @@ define([
         .findByCssSelector('textarea.wc-Comment-text')
         .type('test comment')
         .end()
-        .sleep(500)
+        .sleep(1000)
         .findByCssSelector('.js-issue-state-button').getVisibleText()
         .then(function(text){
           assert.equal('Close and comment', text);
@@ -87,7 +88,8 @@ define([
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url('/issues/101')))
-        .sleep(2000)
+        .findByCssSelector('.js-issue-comment:nth-of-type(3)')
+        .end()
         .findByCssSelector('.js-issue-state-button').getVisibleText()
         .then(function(text){
           assert.equal('Reopen Issue', text);
@@ -97,7 +99,7 @@ define([
         .findByCssSelector('textarea.wc-Comment-text')
         .type('test comment')
         .end()
-        .sleep(2000)
+        .sleep(1000)
         .findByCssSelector('.js-issue-state-button').getVisibleText()
         .then(function(text){
           assert.equal('Reopen and comment', text);

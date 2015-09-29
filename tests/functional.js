@@ -10,18 +10,18 @@ node_modules/.bin/intern-runner config=tests/intern functionalSuites=tests/funct
 */
 
 define([
-  './functional/comments-auth.js',
+  './functional/reporting-non-auth.js',
   './functional/comments-non-auth.js',
   './functional/contributors-non-auth.js',
-  './functional/history-navigation-non-auth.js',
+  './functional/comments-auth.js',
   './functional/index-non-auth.js',
-  './functional/issue-list-auth.js',
   './functional/issue-list-non-auth.js',
-  './functional/issues-auth.js',
   './functional/issues-non-auth.js',
+  './functional/history-navigation-non-auth.js',
+  './functional/issue-list-auth.js',
+  './functional/issues-auth.js',
   './functional/labels-auth.js',
   './functional/reporting-auth.js',
-  './functional/reporting-non-auth.js'
 ], function () {
   'use strict';
 });

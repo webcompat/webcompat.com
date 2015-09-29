@@ -52,6 +52,7 @@ define([
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url('/issues')))
+        .sleep(2000)
         .findByCssSelector('.IssueList-search-form').click()
         .type('taco')
         .end()

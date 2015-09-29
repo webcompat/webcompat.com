@@ -49,13 +49,13 @@ define([
         })
         .findByCssSelector('.wc-Comment-owner').getVisibleText()
         .then(function (text) {
-          assert.equal(text, 'miketaylr', 'Commenter name displayed.');
+          assert.equal(text, 'GIGANTOR', 'Commenter name displayed.');
         })
         .end()
         .sleep(500)
         .findByCssSelector('.wc-Comment-content').getVisibleText()
         .then(function (text) {
-          assert.equal(text, '1', 'Comment is displayed.');
+          assert.equal(text, 'Today\'s date is Mon Sep 28 2015', 'Comment is displayed.');
         });
     },
 

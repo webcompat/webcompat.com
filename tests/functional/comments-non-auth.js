@@ -19,7 +19,7 @@ define([
 
     'Comment form not visible for logged out users': function() {
       return this.remote
-        .setFindTimeout(intern.config.wc.pageLoadTimeout)
+        .setFindTimeout(1000)
         .get(require.toUrl(url('/issues/200')))
         .findByCssSelector('.wc-Comment--form')
         .then(assert.fail, function(err) {
