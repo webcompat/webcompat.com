@@ -10,14 +10,16 @@ define([
 ], function (intern, registerSuite, assert, require) {
   'use strict';
 
-  var url = intern.config.siteRoot + '/contributors';
+  var url = function (path) {
+    return intern.config.siteRoot + path;
+  };
 
   registerSuite({
     name: 'contributors',
 
     'page loads': function () {
       return this.remote
-        .get(require.toUrl(url))
+        .get(require.toUrl(url('/contributors')))
         .findByCssSelector('.wc-Hero-title').getVisibleText()
         .then(function (text) {
           assert.include(text, 'Welcome aboard!');
@@ -28,7 +30,7 @@ define([
     'clicking first section closes it': function() {
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url))
+        .get(require.toUrl(url('/contributors')))
         .findByCssSelector('.contributors__item__title').click()
         .end()
         .findByCssSelector('.contributors__item__content').getAttribute('class')
@@ -46,7 +48,7 @@ define([
     'clicking section toggles it': function() {
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url))
+        .get(require.toUrl(url('/contributors')))
         .findByCssSelector('.contributors__item__content.is-open').isDisplayed()
         .then(function (isDisplayed) {
           assert.equal(isDisplayed, true);
@@ -73,7 +75,7 @@ define([
     'toggling section toggles lightbulb': function() {
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url))
+        .get(require.toUrl(url('/contributors')))
         .findByCssSelector('.wc-Hero-img.is-active').isDisplayed()
         .then(function (isDisplayed) {
           assert.equal(isDisplayed, true);

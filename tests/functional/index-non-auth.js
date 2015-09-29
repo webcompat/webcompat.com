@@ -10,14 +10,16 @@ define([
 ], function (intern, registerSuite, assert, require) {
   'use strict';
 
-  var url = intern.config.siteRoot;
+  var url = function (path) {
+    return intern.config.siteRoot + path;
+  };
 
   registerSuite({
     name: 'index',
 
     'front page loads': function () {
       return this.remote
-        .get(require.toUrl(url))
+        .get(require.toUrl(url('/')))
         .findByCssSelector('.wc-Hero-title').getVisibleText()
         .then(function (text) {
           assert.equal(text, 'Bug reporting\nfor the internet.');
@@ -27,7 +29,7 @@ define([
 
     'reporter addon link is shown': function () {
       return this.remote
-        .get(require.toUrl(url))
+        .get(require.toUrl(url('/')))
         .findByCssSelector('.wc-Navbar-link').getVisibleText()
         .then(function (text) {
           assert.include(text, 'Download our Firefox');
@@ -38,7 +40,7 @@ define([
     'form toggles open then closed': function () {
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url))
+        .get(require.toUrl(url('/')))
         .findByCssSelector('#report-bug.closed').click()
         .end()
         .findByCssSelector('.form-opened').isDisplayed()
@@ -56,7 +58,7 @@ define([
 
     'browse issues (new)': function() {
       return this.remote
-        .get(require.toUrl(url))
+        .get(require.toUrl(url('/')))
         .findAllByCssSelector('#new .wc-IssueItem.wc-IssueItem--new')
         .then(function (elms) {
           assert.equal(elms.length, 10, '10 issues should be displayed');

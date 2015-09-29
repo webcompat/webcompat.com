@@ -10,14 +10,16 @@ define([
 ], function (intern, registerSuite, assert, require) {
   'use strict';
 
-  var url = intern.config.siteRoot;
+  var url = function (path) {
+    return intern.config.siteRoot + path;
+  };
 
   registerSuite({
     name: 'history navigation',
 
     'Back button works from issues page': function () {
       return this.remote
-        .get(require.toUrl(url))
+        .get(require.toUrl(url('/')))
         .findByCssSelector('.js-issues-link').click()
         .end()
         //find an issue so we know the page has loaded

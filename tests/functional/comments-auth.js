@@ -10,17 +10,17 @@ define([
 ], function (intern, registerSuite, assert, require) {
   'use strict';
 
-  var url = function(num) {
-    return intern.config.siteRoot + '/issues/' + num;
+  var url = function(path) {
+    return intern.config.siteRoot + path;
   };
 
   registerSuite({
     name: 'issues',
 
-    'Comments form visible when logged in': function() {
+    setup: function () {
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url(100)))
+        .get(require.toUrl(url('/')))
         .findByCssSelector('.js-login-link').click()
         .end()
         .findByCssSelector('#login_field').click()
@@ -32,8 +32,27 @@ define([
         .findByCssSelector('input[type=submit]').submit()
         .end()
         .findByCssSelector('button').submit()
+        .end();
+    },
+
+    teardown: function () {
+      return this.remote
+        .setFindTimeout(intern.config.wc.pageLoadTimeout)
+        .get(require.toUrl(url('/')))
+        .findByCssSelector('.js-login-link').click()
         .end()
-        .get(require.toUrl(url(100)))
+        .clearCookies()
+        .end()
+        .get(require.toUrl('https://github.com/logout'))
+        .findByCssSelector('.auth-form-body input.btn').click()
+        .end();
+    },
+
+    'Comments form visible when logged in': function() {
+      return this.remote
+        .setFindTimeout(intern.config.wc.pageLoadTimeout)
+        .get(require.toUrl(url('/issues/100')))
+        .sleep(2000)
         .findByCssSelector('.wc-Comment--form').isDisplayed()
         .then(function (isDisplayed) {
           assert.equal(isDisplayed, true, 'Comment form visible for logged in users.');
@@ -41,26 +60,13 @@ define([
         .end();
     },
 
-    'Comment form not visible for logged out users': function() {
-      return this.remote
-        .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url(200)))
-        .findByCssSelector('.js-login-link').click()
-        .end()
-        .findByCssSelector('.wc-Comment--form')
-        .then(assert.fail, function(err) {
-           assert.isTrue(/NoSuchElement/.test(String(err)));
-        })
-        .end()
-        .findByCssSelector('.js-login-link').click()
-        .end();
-    },
 
-    'empty vs non-empty comment button text (open issue)': function() {
+    'Empty vs non-empty comment button text (open issue)': function() {
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url(100)))
-        .sleep(500)
+        .get(require.toUrl(url('/issues/100')))
+        .findByCssSelector('.js-issue-comment:nth-of-type(3)')
+        .end()
         .findByCssSelector('.js-issue-state-button').getVisibleText()
         .then(function(text){
           assert.equal('Close Issue', text);
@@ -70,7 +76,7 @@ define([
         .findByCssSelector('textarea.wc-Comment-text')
         .type('test comment')
         .end()
-        .sleep(500)
+        .sleep(1000)
         .findByCssSelector('.js-issue-state-button').getVisibleText()
         .then(function(text){
           assert.equal('Close and comment', text);
@@ -78,11 +84,12 @@ define([
         });
     },
 
-    'empty vs non-empty comment button text (closed issue)': function() {
+    'Empty vs non-empty comment button text (closed issue)': function() {
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url(101)))
-        .sleep(2000)
+        .get(require.toUrl(url('/issues/101')))
+        .findByCssSelector('.js-issue-comment:nth-of-type(3)')
+        .end()
         .findByCssSelector('.js-issue-state-button').getVisibleText()
         .then(function(text){
           assert.equal('Reopen Issue', text);
@@ -92,7 +99,7 @@ define([
         .findByCssSelector('textarea.wc-Comment-text')
         .type('test comment')
         .end()
-        .sleep(2000)
+        .sleep(1000)
         .findByCssSelector('.js-issue-state-button').getVisibleText()
         .then(function(text){
           assert.equal('Reopen and comment', text);
@@ -100,11 +107,11 @@ define([
         });
     },
 
-    'posting a comment': function() {
+    'Posting a comment': function() {
       var originalCommentsLength, allCommentsLength;
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url(100)))
+        .get(require.toUrl(url('/issues/100')))
         .findAllByCssSelector('.js-issue-comment:not(.wc-Comment--form)')
         .then(function(elms){
           originalCommentsLength = elms.length;
@@ -125,11 +132,11 @@ define([
         });
     },
 
-    'posting an empty comment fails': function() {
+    'Posting an empty comment fails': function() {
       var originalCommentsLength, allCommentsLength;
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url(100)))
+        .get(require.toUrl(url('/issues/100')))
         .findAllByCssSelector('.js-issue-comment:not(.wc-Comment--form)')
         .then(function(elms){
           originalCommentsLength = elms.length;

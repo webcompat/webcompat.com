@@ -10,17 +10,17 @@ define([
 ], function (intern, registerSuite, assert, require) {
   'use strict';
 
-  var url = function(num) {
-    return intern.config.siteRoot + '/issues/' + num;
+  var url = function(path) {
+    return intern.config.siteRoot + path;
   };
 
   registerSuite({
     name: 'issues',
 
-    'issue page loads': function () {
+    'Issue page loads': function () {
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url(100)))
+        .get(require.toUrl(url('/issues/100')))
         .sleep(1000)
         .findByCssSelector('h1.wc-IssueDetail-title').getVisibleText()
         .then(function (text) {
@@ -38,41 +38,10 @@ define([
         });
     },
 
-    'closing and reopening an issue': function () {
+    'Issue comments load': function () {
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url(69)))
-        .findByCssSelector('.js-issue-state-button').click()
-        .sleep(2000)
-        .end()
-        .findByCssSelector('.wc-IssueDetail-state').getVisibleText()
-        .then(function (text) {
-          assert.equal(text, 'Closed', 'Closed state text is displayed');
-        })
-        .end()
-        .findByCssSelector('.js-issue-state-button').getVisibleText()
-        .then(function (text) {
-          assert.equal(text, 'Reopen Issue', 'Button says Reopen not Close');
-        })
-        .end()
-        .findByCssSelector('.js-issue-state-button').click()
-        .sleep(2000)
-        .end()
-        .findByCssSelector('.wc-IssueDetail-state').getVisibleText()
-        .then(function (text) {
-          assert.equal(text, 'Ready for Outreach', 'Ready for Outreach state is displayed');
-        })
-        .end()
-        .findByCssSelector('.js-issue-state-button').getVisibleText()
-        .then(function (text) {
-          assert.equal(text, 'Close Issue', 'Button says Close not Reopen');
-        });
-    },
-
-    'issue comments load': function () {
-      return this.remote
-        .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url(100)))
+        .get(require.toUrl(url('/issues/100')))
         .sleep(1000)
         .findByCssSelector('.js-issue-comment').isDisplayed()
         .then(function (isDisplayed) {
@@ -80,32 +49,32 @@ define([
         })
         .findByCssSelector('.wc-Comment-owner').getVisibleText()
         .then(function (text) {
-          assert.equal(text, 'miketaylr', 'Commenter name displayed.');
+          assert.equal(text, 'GIGANTOR', 'Commenter name displayed.');
         })
         .end()
         .sleep(500)
         .findByCssSelector('.wc-Comment-content').getVisibleText()
         .then(function (text) {
-          assert.equal(text, '1', 'Comment is displayed.');
+          assert.equal(text, 'Today\'s date is Mon Sep 28 2015', 'Comment is displayed.');
         });
     },
 
-    'non-existant issues go to 404': function() {
+    'Non-existant issues go to 404': function() {
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         // TODO: uh, update this in the future
-        .get(require.toUrl(url(999999)))
+        .get(require.toUrl(url('/issues/999999')))
         .findByCssSelector('#pageerror h1').getVisibleText()
         .then(function (text) {
           assert.include(text, '(404)', 'We\'re at the 404.');
         });
     },
 
-    'pressing g goes to the github issue page': function() {
+    'Pressing g goes to the github issue page': function() {
       var issueNumber = 100;
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url(issueNumber)))
+        .get(require.toUrl(url('/issues/' + issueNumber)))
         .findByCssSelector('body').click()
         .type('g')
         .end()
@@ -123,10 +92,9 @@ define([
     },
 
     'Opening the QR code image (via button)': function() {
-      var issueNumber = 252;
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url(issueNumber)))
+        .get(require.toUrl(url('/issues/252')))
         // Click on QR code button to open
         .findByCssSelector('.wc-QrImage-launcher').click()
         .end()
@@ -138,10 +106,9 @@ define([
     },
 
     'Closing the QR code image (via button)': function() {
-      var issueNumber = 252;
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url(issueNumber)))
+        .get(require.toUrl(url('/issues/252')))
         // Click on QR code button to open
         .findByCssSelector('.wc-QrImage-launcher').click()
         .end()
@@ -161,10 +128,9 @@ define([
     },
 
     'Opening the QR code image (via keyboard shortcut)': function() {
-      var issueNumber = 252;
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url(issueNumber)))
+        .get(require.toUrl(url('/issues/252')))
         // Click on QR code button to open
         .findByCssSelector('body').click()
         .type('q')
@@ -177,10 +143,9 @@ define([
     },
 
     'Closing the QR code image (via link)': function() {
-      var issueNumber = 252;
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url(issueNumber)))
+        .get(require.toUrl(url('/issues/252')))
         // Click on QR code button to open
         .findByCssSelector('.wc-QrImage-launcher').click()
         .end()
