@@ -5,16 +5,55 @@
  * Contains some code modified from https://github.com/jfromaniello/li
  * which is released under the MIT license. */
 
- var issues = issues || {};
- var issueList = issueList || {};
+var issues = issues || {};
+var issueList = issueList || {};
 
- if (!window.md) {
-   window.md = window.markdownit({
-     breaks: true,
-     html: true,
-     linkify: true
-   }).use(window.markdownitSanitizer).use(window.markdownitEmoji);
- }
+if (!window.md) {
+  window.md = window.markdownit({
+    breaks: true,
+    html: true,
+    linkify: true
+  }).use(window.markdownitSanitizer).use(window.markdownitEmoji);
+}
+// Add links to @usernames and #issues
+md.linkify.add('@', {
+  validate: function (text, pos, self) {
+    var tail = text.slice(pos);
+
+    if (!self.re.gh_user) {
+      self.re.gh_user =  new RegExp(
+        '^([a-zA-Z0-9_-]){1,30}(?=$|' + self.re.src_ZPCc + ')'
+      );
+    }
+    if (self.re.gh_user.test(tail)) {
+      return tail.match(self.re.gh_user)[0].length;
+    }
+    return 0;
+  },
+  normalize: function (match) {
+    match.url = 'https://github.com/' + match.url.replace(/^@/, '');
+  }
+});
+
+md.linkify.add('#', {
+  validate: function (text, pos, self) {
+    var tail = text.slice(pos);
+
+    if (!self.re.hash_bug) {
+      self.re.hash_bug =  new RegExp(
+        '^([0-9])+(?=$|' + self.re.src_ZPCc + ')'
+      );
+    }
+    if (self.re.hash_bug.test(tail)) {
+      return tail.match(self.re.hash_bug)[0].length;
+    }
+    return 0;
+  },
+  normalize: function (match) {
+    match.url = '/issues/' + match.url.replace(/^#/, '');
+  }
+});
+
 
  issues.Issue = Backbone.Model.extend({
   _namespaceRegex: /(browser|closed|os|status)-/i,
