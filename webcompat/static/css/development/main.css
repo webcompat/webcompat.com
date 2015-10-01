@@ -4,6 +4,15 @@
 
 /*----------Vendor----------*/
 @import "vendor/prism.css";
+@import "suitcss-utils-display/index.css";
+@import "suitcss-utils-align/index.css";
+@import "cssrecipes-reset/index.css";
+@import "cssrecipes-grid/index.css";
+@import "components/grid.css";
+@import "cssrecipes-utils/lib/all.css";
+@import "cssrecipes-utils/lib/max.css";
+@import "cssrecipes-utils/lib/min.css";
+@import "cssrecipes-custom-media-queries/index.css";
 
 /*----------Component----------*/
 @import "components/navbar.css";
@@ -12,18 +21,9 @@
 @import "components/comment.css";
 @import "components/label-editor.css";
 @import "components/responsive.css";
-@import "suitcss-utils-display/index.css";
-@import "suitcss-utils-align/index.css";
 @import "components/form.css";
 @import "components/issue-item.css";
 @import "components/dropdown.css";
-@import "cssrecipes-reset/index.css";
-@import "cssrecipes-grid/index.css";
-@import "components/grid.css";
-@import "cssrecipes-utils/lib/all.css";
-@import "cssrecipes-utils/lib/max.css";
-@import "cssrecipes-utils/lib/min.css";
-@import "cssrecipes-custom-media-queries/index.css";
 @import "components/flash-message.css";
 @import "components/hero.css";
 @import "components/filter.css";
@@ -35,6 +35,7 @@
 @import "components/report-form.css";
 @import "components/issue-detail.css";
 @import "components/qrcode.css";
+@import "components/search-bar.css";
 
 /*----------Layout----------*/
 @import "layout/body.css";

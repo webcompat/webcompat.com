@@ -1,0 +1,42 @@
+/*------Search Bar------*/
+
+.wc-SearchBar {
+  position: relative;
+  transform-style: preserve-3d;
+}
+  .wc-SearchBar-face {
+    position: absolute;
+    top:0;
+    left: 0;
+    width: 100%;
+    transition: all 0.5s ease 0s;
+    backface-visibility: hidden;
+  }
+  .wc-SearchBar-face--front {
+    z-index: 2;
+  }
+    /* state */
+    .wc-SearchBar.is-active .wc-SearchBar-face--front {
+      transform: rotateX(180deg);
+    }
+  .wc-SearchBar-face--back {
+    backface-visibility: hidden;
+    transform: rotateX(-180deg);
+    z-index: 3;
+    display: flex;
+    flex-direction: row;
+  }
+    .wc-SearchBar-input {
+      flex: 1;
+      margin: 0 1em;
+      background-color: transparent;
+      border: none;
+      font-size: var(--base-font-size);
+    }
+    .wc-SearchBar-icon--button {
+      cursor: pointer;
+    }
+    /* state */
+    .wc-SearchBar.is-active .wc-SearchBar-face--back {
+      transform: rotateX(0);
+    }
