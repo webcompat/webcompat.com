@@ -372,6 +372,12 @@ node_modules/.bin/intern-runner config=tests/intern user=testusername pw=testpas
 
 **Note** Be aware that this will add the `testusername` and `testpassword` to your bash history. It is possible to run the tests without using a GitHub username and password as command-line arguments. In that case, the automatic login will fail and you then have 10 seconds to manually enter a username and password in the GitHub login screen that appears.
 
+To run a single test suite, where foo.js is the file found in the `tests/functional` directory:
+
+```bash
+node_modules/.bin/intern-runner config=tests/intern functionalSuites=tests/functional/foo.js user=testusername pw=testpassword
+```
+
 ## Writing Tests
 
 Contributions that add or modify major functionality to the project should typically come with tests to ensure we're not breaking things (or won't in the future!). There's always room for more testing, so general contributions in this form are always welcome.
