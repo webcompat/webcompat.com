@@ -15,7 +15,7 @@ define([
   };
 
   registerSuite({
-    name: 'issue-list',
+    name: 'search (auth)',
 
     setup: function () {
       return this.remote
