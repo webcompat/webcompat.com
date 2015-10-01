@@ -332,6 +332,7 @@ issueList.IssueView = Backbone.View.extend({
       if (!this._isLoggedIn && queryMatch) {
         // We're dealing with an un-authed user, with a q param.
         this.doGitHubSearch(urlParams);
+        this.updateModelParams(urlParams);
         _.delay(function() {
           // TODO: update search input from query param for authed users.
           issueList.events.trigger('search:update', queryMatch[1]);
