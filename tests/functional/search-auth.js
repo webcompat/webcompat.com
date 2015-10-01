@@ -7,8 +7,9 @@ define([
   'intern!object',
   'intern/chai!assert',
   'require',
+  'tests/functional/lib/helpers',
   'intern/dojo/node!leadfoot/keys'
-], function (intern, registerSuite, assert, require, keys) {
+], function (intern, registerSuite, assert, require, FunctionalHelpers, keys) {
   'use strict';
 
   var url = function(path) {
@@ -16,37 +17,14 @@ define([
   };
 
   registerSuite({
-    name: 'search (auth)',
+    name: 'Search (auth)',
 
     setup: function () {
-      return this.remote
-        .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url('/')))
-        .findByCssSelector('.js-login-link').click()
-        .end()
-        .findByCssSelector('#login_field').click()
-        .type(intern.config.wc.user)
-        .end()
-        .findByCssSelector('#password').click()
-        .type(intern.config.wc.pw)
-        .end()
-        .findByCssSelector('input[type=submit]').submit()
-        .end()
-        .findByCssSelector('button').submit()
-        .end();
+      return FunctionalHelpers.login(this);
     },
 
     teardown: function () {
-      return this.remote
-        .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url('/')))
-        .findByCssSelector('.js-login-link').click()
-        .end()
-        .clearCookies()
-        .end()
-        .get(require.toUrl('https://github.com/logout'))
-        .findByCssSelector('.auth-form-body input.btn').click()
-        .end();
+      return FunctionalHelpers.logout(this);
     },
 
     'Search/filter interaction': function() {

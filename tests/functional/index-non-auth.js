@@ -15,7 +15,7 @@ define([
   };
 
   registerSuite({
-    name: 'index',
+    name: 'Index',
 
     'front page loads': function () {
       return this.remote

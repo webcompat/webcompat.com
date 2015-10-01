@@ -15,7 +15,7 @@ define([
   };
 
   registerSuite({
-    name: 'issue-list',
+    name: 'Issue-list',
 
     'FilterView renders': function () {
       return this.remote
