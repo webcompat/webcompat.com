@@ -1,3 +1,16 @@
+## 1.9.0
+
+* Improve the QR code layout [Pull #691](https://github.com/webcompat/webcompat.com/pull/691)
+* Reorg tests and add setup and tearDown methods for logging in and out [Pull #714](https://github.com/webcompat/webcompat.com/pull/714) [Issue #711](https://github.com/webcompat/webcompat.com/issues/711)
+* Linkify GitHub usernames and issues [Pull #721](https://github.com/webcompat/webcompat.com/pull/721)
+* Add search bar to homepage [Pull #725](https://github.com/webcompat/webcompat.com/pull/725)
+* Make search visible and usable by all users [Pull #726](https://github.com/webcompat/webcompat.com/pull/726) [Issue #563](https://github.com/webcompat/webcompat.com/issues/563)
+* Focus search input when opened [Pull #732](https://github.com/webcompat/webcompat.com/pull/732) [Issue #730](https://github.com/webcompat/webcompat.com/pull/732)
+* Fancy bug tracker markdown links [Pull #733](https://github.com/webcompat/webcompat.com/pull/733)
+* Set IssueView._urlParams each time we call loadIssues [Pull #734](https://github.com/webcompat/webcompat.com/pull/734) [Issue #728](https://github.com/webcompat/webcompat.com/issues/728)
+* Fix height of search bar [Pull 737](https://github.com/webcompat/webcompat.com/pull/737)
+* Non-logged in searches from home page should have all params in URL bar [Pull #739](https://github.com/webcompat/webcompat.com/pull/739) [Issue #729](https://github.com/webcompat/webcompat.com/pull/729)
+
 ## 1.8.0
 
 * Fix some inconsistent quoting [Pull #709](https://github.com/webcompat/webcompat.com/pull/709)
