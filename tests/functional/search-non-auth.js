@@ -16,7 +16,7 @@ define([
   };
 
   registerSuite({
-    name: 'search (non-auth)',
+    name: 'Search (non-auth)',
 
     'Pressing g inside of search input *doesnt* go to github issues': function() {
       return this.remote

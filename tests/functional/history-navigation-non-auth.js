@@ -15,7 +15,7 @@ define([
   };
 
   registerSuite({
-    name: 'history navigation',
+    name: 'History navigation',
 
     'Back button works from issues page': function () {
       return this.remote

@@ -13,7 +13,7 @@ define([
   var url = intern.config.siteRoot;
 
   registerSuite({
-    name: 'reporting',
+    name: 'Reporting (non-auth)',
 
     'Submit buttons are disabled': function() {
       return this.remote

@@ -15,7 +15,7 @@ define([
   };
 
   registerSuite({
-    name: 'contributors',
+    name: 'Contributors',
 
     'page loads': function () {
       return this.remote

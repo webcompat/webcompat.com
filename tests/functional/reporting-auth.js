@@ -6,8 +6,9 @@ define([
   'intern',
   'intern!object',
   'intern/chai!assert',
-  'require'
-], function (intern, registerSuite, assert, require) {
+  'require',
+  'tests/functional/lib/helpers'
+], function (intern, registerSuite, assert, require, FunctionalHelpers) {
   'use strict';
 
   var url = function(path) {
@@ -15,37 +16,14 @@ define([
   };
 
   registerSuite({
-    name: 'reporting',
+    name: 'Reporting (auth)',
 
     setup: function () {
-      return this.remote
-        .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url('/')))
-        .findByCssSelector('.js-login-link').click()
-        .end()
-        .findByCssSelector('#login_field').click()
-        .type(intern.config.wc.user)
-        .end()
-        .findByCssSelector('#password').click()
-        .type(intern.config.wc.pw)
-        .end()
-        .findByCssSelector('input[type=submit]').submit()
-        .end()
-        .findByCssSelector('button').submit()
-        .end();
+      return FunctionalHelpers.login(this);
     },
 
     teardown: function () {
-      return this.remote
-        .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url('/')))
-        .findByCssSelector('.js-login-link').click()
-        .end()
-        .clearCookies()
-        .end()
-        .get(require.toUrl('https://github.com/logout'))
-        .findByCssSelector('.auth-form-body input.btn').click()
-        .end();
+      return FunctionalHelpers.logout(this);
     },
 
     'Report button shows name': function() {

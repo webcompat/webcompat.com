@@ -15,7 +15,7 @@ define([
   };
 
   registerSuite({
-    name: 'issues',
+    name: 'Comments (non-auth)',
 
     'Comment form not visible for logged out users': function() {
       return this.remote
