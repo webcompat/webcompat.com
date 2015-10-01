@@ -53,7 +53,16 @@ md.linkify.add('#', {
     match.url = '/issues/' + match.url.replace(/^#/, '');
   }
 });
+// Add rel=nofollow to links
+var defaultLinkOpenRender = md.renderer.rules.link_open || function(tokens, idx, options, env, self) {
+  return self.renderToken(tokens, idx, options);
+};
 
+md.renderer.rules.link_open = function (tokens, idx, options, env, self) {
+  tokens[idx].attrPush(['rel', 'nofollow']);
+  // pass token to default renderer.
+  return defaultLinkOpenRender(tokens, idx, options, env, self);
+};
 
  issues.Issue = Backbone.Model.extend({
   _namespaceRegex: /(browser|closed|os|status)-/i,
