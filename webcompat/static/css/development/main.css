@@ -35,6 +35,7 @@
 @import "components/report-form.css";
 @import "components/issue-detail.css";
 @import "components/qrcode.css";
+@import "components/search-bar.css";
 
 /*----------Layout----------*/
 @import "layout/body.css";
