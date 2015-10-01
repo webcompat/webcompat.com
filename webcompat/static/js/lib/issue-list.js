@@ -295,11 +295,14 @@ issueList.IssueView = Backbone.View.extend({
   },
   // NOTE: these filters don't need "status-" prefixes because appear in URL params
   _filterRegex: /&*stage=(new|needscontact|needsdiagnosis|contactready|sitewait|closed)&*/i,
-  _searchRegex: /&*q=&*/i,
+  _searchRegex: /&*q=(?:(.+)?)&*/i,
+  _githubSearchEndpoint: "https://api.github.com/search/issues",
   _isLoggedIn: $('body').data('username'),
   _loadingIndicator: $('.js-loader'),
   _nextButton: $('.js-pagination-next'),
   _prevButton: $('.js-pagination-previous'),
+  // get params excluding the leading ?
+  _urlParams: location.search.slice(1),
   initialize: function() {
     this.issues = new issueList.IssueCollection();
 
@@ -318,22 +321,20 @@ issueList.IssueView = Backbone.View.extend({
   loadIssues: function() {
     // Attemps to load model state from URL params, if present,
     // otherwise grab model defaults and load issues
-
     var category;
-    // get params excluding the leading ?
-    var urlParams = location.search.slice(1);
+    var queryMatch;
+    var urlParams = this._urlParams;
 
     // There are some params in the URL
     if (urlParams.length !== 0) {
-      if (!this._isLoggedIn && urlParams.match(this._searchRegex)) {
+      queryMatch = urlParams.match(this._searchRegex);
+      if (!this._isLoggedIn && queryMatch) {
         // We're dealing with an un-authed user, with a q param.
-        // So we bypass our server and request from GitHub to avoid
-        // being penalized for unauthed Search API requests.
-        var githubSearchAPI = "https://api.github.com/search/issues";
-        var paramsArray = _.uniq(urlParams.split('&'));
-        var normalizedParams = this.issues.normalizeAPIParams(paramsArray);
-        this.issues.setURLState(githubSearchAPI, normalizedParams);
-        this.fetchAndRenderIssues();
+        this.doGitHubSearch(urlParams);
+        _.delay(function() {
+          // TODO: update search input from query param for authed users.
+          issueList.events.trigger('search:update', queryMatch[1]);
+        }, 0);
       } else if (category = window.location.search.match(this._filterRegex)) {
         // If there was a stage filter match, fire an event which loads results
         this.updateModelParams(urlParams);
@@ -353,6 +354,13 @@ issueList.IssueView = Backbone.View.extend({
       this.fetchAndRenderIssues();
     }
   },
+  doGitHubSearch: function(params) {
+    // Bypass our server and request GitHub search results (from the client)
+    // to avoid being penalized for unauthed Search API requests.
+    var gitHubSearchURL = this._githubSearchEndpoint + '?' +
+                          $.param(this.issues.normalizeAPIParams(params));
+    this.fetchAndRenderIssues({url: gitHubSearchURL});
+  },
   fetchAndRenderIssues: function(options) {
     var headers = {headers: {'Accept': 'application/json'}};
     if (options && options.url) {
@@ -360,24 +368,35 @@ issueList.IssueView = Backbone.View.extend({
     } else {
       this.issues.url = this.issues.path + '?' + $.param(this.issues.params);
     }
+
     this._loadingIndicator.addClass('is-active');
     this.issues.fetch(headers).success(_.bind(function() {
       this._loadingIndicator.removeClass('is-active');
       this.render(this.issues);
       this.initPaginationLinks(this.issues);
-    }, this)).error(function(e){
+    }, this)).error(_.bind(function(e){
       var message;
       var timeout;
       if (e.responseJSON) {
-        message = e.responseJSON.message;
-        timeout = e.responseJSON.timeout * 1000;
+        if (_.startsWith(e.responseJSON), 'API rate limit') {
+          // If we get a client-side Rate Limit error, prompt the
+          // user to login and display the message for 60 seconds (by the
+          // time it goes away, they can do more requests)
+          message = "Search rate limit exceeded! Please " +
+                    "<a href='/login'>login</a> or wait 60 seconds to search again.";
+          timeout = 60 * 1000;
+        } else {
+          message = e.responseJSON.message;
+          timeout = e.responseJSON.timeout * 1000;
+        }
       } else {
         message = 'Something went wrong!';
         timeout = 3000;
       }
 
+      this._loadingIndicator.removeClass('is-active');
       wcEvents.trigger('flash:error', {message: message, timeout: timeout});
-    });
+    }, this));
   },
   render: function(issues) {
     this.$el.html(this.template({
@@ -440,9 +459,7 @@ issueList.IssueView = Backbone.View.extend({
     var labelsMap = target.parent().data('labelsMap');
     var clickedLabel = target.text();
     var labelFilter = 'label:' + labelsMap[clickedLabel];
-    if (this._isLoggedIn) {
-      issueList.events.trigger('search:update', labelFilter);
-    }
+    issueList.events.trigger('search:update', labelFilter);
     issueList.events.trigger('issues:update', {query: labelFilter});
     e.preventDefault();
   },
@@ -483,12 +500,20 @@ issueList.IssueView = Backbone.View.extend({
     var issuesAPICategories = ['closed', 'contactready', 'needsdiagnosis',
                                'needscontact', 'sitewait'];
     var params = this.issues.params;
-
+    var paramsCopy;
     // note: if query is the empty string, it will load all issues from the
     // '/api/issues' endpoint (which I think we want).
     if (category && category.query) {
-      params = $.extend(params, {q: category.query});
-      this.issues.setURLState('/api/issues/search', params);
+      // first, add the query to the underlying model, then make a copy of that
+      // which can be manipulated by doGitHubSearch without affecting the params
+      // that are pushed back to the URL bar.
+      paramsCopy = _.cloneDeep($.extend(params, {q: category.query}));
+      if (!this._isLoggedIn) {
+        this.doGitHubSearch(paramsCopy);
+        return;
+      } else {
+        this.issues.setURLState('/api/issues/search', paramsCopy);
+      }
     } else if (_.contains(searchAPICategories, category)) {
       this.issues.setURLState('/api/issues/search/' + category, params);
     } else if (_.contains(issuesAPICategories, category)) {
@@ -579,11 +604,12 @@ issueList.IssueView = Backbone.View.extend({
   updateURLParams: function() {
     // push params from the model back to the URL so it can be used for bookmarks,
     // link sharing, etc.
-    var urlParams = location.search.slice(1);
+    var urlParams = this._urlParams;
     var serializedModelParams = $.param(this.issues.params);
 
     // only do this if there's something to change
     if (urlParams !== serializedModelParams) {
+      this._urlParams = serializedModelParams;
       if (history.pushState) {
         history.pushState({}, '', '?' + serializedModelParams);
       }
@@ -615,10 +641,7 @@ issueList.MainView = Backbone.View.extend({
     this.issueSorter = new issueList.SortingView();
     this.filter = new issueList.FilterView();
     this.paginationControls = new issueList.PaginationControlsView();
-    // only init the SearchView if the user is logged in.
-    if (this._isLoggedIn) {
-      this.search = new issueList.SearchView();
-    }
+    this.search = new issueList.SearchView();
 
     this.render();
   },
@@ -627,13 +650,9 @@ issueList.MainView = Backbone.View.extend({
     this.$el.fadeIn(_.bind(function() {
       this.filter.render();
       this.issueSorter.render();
-
-      if (this._isLoggedIn) {
-        this.search.render();
-      }
+      this.search.render();
     }, this));
-  },
-  _isLoggedIn: $('body').data('username')
+  }
 });
 
 //Not using a router, so kick off things manually

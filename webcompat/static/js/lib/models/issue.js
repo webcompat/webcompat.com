@@ -267,7 +267,7 @@ issueList.IssueCollection = Backbone.Collection.extend({
       return null;
     }
   },
-  normalizeAPIParams: function(paramsArray) {
+  normalizeAPIParams: function(paramsArg) {
     /* ported version of normalize_api_params from helpers.py
     Normalize GitHub Issues API params to Search API conventions:
 
@@ -285,12 +285,17 @@ issueList.IssueCollection = Backbone.Collection.extend({
       mentioned: 'mentions'
     };
 
-    _.forEach(paramsArray, _.bind(function(param) {
-      var kvArray = param.split('=');
-      var key = kvArray[0];
-      var value = kvArray[1];
-      params[key] = value;
-    }, this));
+    if (_.isString(paramsArg)) {
+      var paramsArray = _.uniq(paramsArg.split('&'));
+      _.forEach(paramsArray, function(param) {
+        var kvArray = param.split('=');
+        var key = kvArray[0];
+        var value = kvArray[1];
+        params[key] = value;
+      });
+    } else {
+      params = paramsArg;
+    }
 
     if ('direction' in params) {
       params.order = params.direction;
