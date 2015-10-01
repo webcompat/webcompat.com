@@ -14,14 +14,21 @@
     justify-content: space-between;
     align-items: center;
   }
-  .wc-Navbar-link {
+  .wc-Navbar-link,
+  .wc-Navbar-linkDropdown {
     color: #414042;
     font-weight:700;
     text-decoration:none;
     cursor: pointer;
   }
+  .wc-Navbar-linkDropdown {
+    display: block;
+  }
     .wc-Navbar-link:hover {
       color: #fff;
+    }
+    .wc-Navbar-linkDropdown:hover {
+      text-decoration: underline;
     }
     /* space between */
     .wc-Navbar-link + .wc-Navbar-link {

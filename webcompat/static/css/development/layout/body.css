@@ -70,11 +70,7 @@ html {
   padding-top:1em;
   padding-bottom: 1em;
 }
-.wc-content:after {
-  content :"";
-  display:table;
-  clear:both;
-}
+
 @media (--viewport-1180px) {
   .wc-content {
     width:auto;

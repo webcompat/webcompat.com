@@ -32,12 +32,17 @@
               <span class="wc-Navbar-link-label">Log in</span>
             </a>
             {% else %}
-            <a class="wc-Navbar-link js-login-link" href="{{ url_for('logout') }}">
-              <span class="wc-Navbar-link-icon wc-Icon wc-Icon--arrow-circle-right" aria-hidden="true"></span>
-              <span class="wc-Navbar-link-label">Logout</span>
-            </a>
+            <button class="r-ResetButton wc-Navbar-link js-login-link wc-DropdownHeader">
+              <div class="r-ResetButton" aria-pressed="false">
+                <img class="wc-Navbar-avatar" src="{{ session.avatar_url }}s=50" alt="User Avatar">
+                <span class="wc-Navbar-link-icon wc-Icon wc-Icon--chevron-down" aria-hidden="true"></span>
+              </div>
+              <div class="wc-DropdownHeader-content">
+                <a class="wc-Navbar-linkDropdown" href="#">just a test</a>
+                <a class="wc-Navbar-linkDropdown" href="#">just a test</a>
+              </div>
+            </button>
             {% if session.user_id and session.avatar_url %}
-            <img class="wc-Navbar-avatar" src="{{ session.avatar_url }}s=40" alt="User Avatar">
             {% endif %}
             {% endif %}
           </div>

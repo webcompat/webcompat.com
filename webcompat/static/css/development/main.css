@@ -36,6 +36,7 @@
 @import "components/issue-detail.css";
 @import "components/qrcode.css";
 @import "components/search-bar.css";
+@import "components/dropdown-header.css";
 
 /*----------Layout----------*/
 @import "layout/body.css";
