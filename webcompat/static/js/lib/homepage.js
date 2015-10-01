@@ -24,10 +24,12 @@ function HomePage() {
 
       searchBarOpen.click(function() {
         searchBar.addClass('is-active');
+        searchBar.find('input').focus();
       });
 
       searchBarClose.click(function(){
         searchBar.removeClass('is-active');
+        searchBar.find('input').blur();
       });
     },
     toggleForm: function(e) {
