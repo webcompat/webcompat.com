@@ -1,12 +1,21 @@
 {% extends "layout.html" %}
 {% block body %}
   {% include "shared/nav.html" %}
-    <main class="wc-content wc-content--body js-issue wc-hidden" role="main">
-      {% include "issue-detail/IssueDetail-header.html" %}
-      {% include "issue-detail/IssueDetail-labels.html" %}
-      {% include "issue-detail/IssueDetail-report.html" %}
-      {% include "issue-detail/IssueDetail-comment.html" %}
-      {% include "issue-detail/IssueDetail-form.html" %}
+    <main class="wc-content wc-content--issue js-issue wc-hidden" role="main">
+      <div class="wc-IssueDetail">
+        <div class="wc-IssueDetail-information">
+          {% include "issue-detail/IssueDetail-header.html" %}
+          {% include "issue-detail/IssueDetail-report.html" %}
+          {% include "issue-detail/IssueDetail-comment.html" %}
+          {% include "issue-detail/IssueDetail-form.html" %}
+          </div>
+          <div class="wc-IssueDetail-configuration">
+              <div class="wc-IssueDetail-configuration-wrapper">
+            {% include "issue-detail/IssueDetail-state.html" %}
+            {% include "issue-detail/IssueDetail-labels.html" %}
+          </div>
+          </div>
+      </div>
     </main>
 {% endblock %}
 {% block extrascripts %}

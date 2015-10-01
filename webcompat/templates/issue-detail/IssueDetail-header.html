@@ -1,18 +1,5 @@
-<div class="wc-IssueDetail">
-  <h1 class="wc-IssueDetail-title wc-Title--l">
-    <script type="text/template" id="title-tmpl">
-    Issue <%= number %>: <%- title %>
-    </script>
-  </h1>
-  <!-- Issue Date -->
-  <div class="wc-IssueDetail-create">
-    <script type="text/template" id="metadata-tmpl">
-    <div class="wc-IssueDetail-state wc-IssueDetail-state--<%= stateClass %>"><%= issueState %></div>
-    <div class="wc-IssueDetail-date">Opened <%= createdAt %> by
-      <span class="wc-IssueDetail-reporter">
-        <a href="https://github.com/<%= reporter %>"><%= reporter %></a><!--
-   --></span>. <%= commentNumber %> comments
-    </div>
-    </script>
-  </div>
-</div>
+<h1 class="wc-IssueDetail-title wc-Title--l">
+  <script type="text/template" id="title-tmpl">
+    <%- title %> <span class="wc-IssueDetail-id">#<%= number %></span>
+  </script>
+</h1>
