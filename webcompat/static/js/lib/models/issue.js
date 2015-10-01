@@ -60,6 +60,29 @@ var defaultLinkOpenRender = md.renderer.rules.link_open || function(tokens, idx,
 
 md.renderer.rules.link_open = function (tokens, idx, options, env, self) {
   tokens[idx].attrPush(['rel', 'nofollow']);
+  // Transform link text for some well-known sites
+  if (tokens[idx].attrIndex('href')>-1) {
+    var link = tokens[idx].attrs[tokens[idx].attrIndex('href')][1];
+    var transformations = {
+      'https://bugzilla.mozilla.org/show_bug': 'Mozilla',
+      'https://bugs.webkit.org/show_bug': 'WebKit',
+      'https://code.google.com/p/chromium/issues/detail?': 'Chromium',
+      'https://github.com/': 'GitHub'
+    };
+    for (var bugtracker in transformations){
+      if (link.indexOf(bugtracker) > -1) {
+        var bugNumRx = /(\?id=|\/issues\/)(\d+)/, matches;
+        if (matches = link.match(bugNumRx)) {
+          for (var i = idx, theToken; theToken = tokens[i]; i++) { // find the token for link text
+            if (theToken.content === link) {
+              theToken.content = '#' + matches[2] + ' (' + transformations[bugtracker] + ')';
+              break;
+            }
+          }
+        }
+      }
+    }
+  }
   // pass token to default renderer.
   return defaultLinkOpenRender(tokens, idx, options, env, self);
 };
