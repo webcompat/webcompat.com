@@ -301,8 +301,7 @@ issueList.IssueView = Backbone.View.extend({
   _loadingIndicator: $('.js-loader'),
   _nextButton: $('.js-pagination-next'),
   _prevButton: $('.js-pagination-previous'),
-  // get params excluding the leading ?
-  _urlParams: location.search.slice(1),
+  _urlParams: undefined,
   initialize: function() {
     this.issues = new issueList.IssueCollection();
 
@@ -323,6 +322,8 @@ issueList.IssueView = Backbone.View.extend({
     // otherwise grab model defaults and load issues
     var category;
     var queryMatch;
+
+    this._urlParams = location.search.slice(1);
     var urlParams = this._urlParams;
 
     // There are some params in the URL
