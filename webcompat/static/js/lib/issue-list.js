@@ -374,19 +374,29 @@ issueList.IssueView = Backbone.View.extend({
       this._loadingIndicator.removeClass('is-active');
       this.render(this.issues);
       this.initPaginationLinks(this.issues);
-    }, this)).error(function(e){
+    }, this)).error(_.bind(function(e){
       var message;
       var timeout;
       if (e.responseJSON) {
-        message = e.responseJSON.message;
-        timeout = e.responseJSON.timeout * 1000;
+        if (_.startsWith(e.responseJSON), 'API rate limit') {
+          // If we get a client-side Rate Limit error, prompt the
+          // user to login and display the message for 60 seconds (by the
+          // time it goes away, they can do more requests)
+          message = "Search rate limit exceeded! Please " +
+                    "<a href='/login'>login</a> or wait 60 seconds to search again.";
+          timeout = 60 * 1000;
+        } else {
+          message = e.responseJSON.message;
+          timeout = e.responseJSON.timeout * 1000;
+        }
       } else {
         message = 'Something went wrong!';
         timeout = 3000;
       }
 
+      this._loadingIndicator.removeClass('is-active');
       wcEvents.trigger('flash:error', {message: message, timeout: timeout});
-    });
+    }, this));
   },
   render: function(issues) {
     this.$el.html(this.template({
