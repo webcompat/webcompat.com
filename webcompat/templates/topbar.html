@@ -1,37 +1,40 @@
 <header class="wc-Navbar" role="banner">
   <nav class="wc-content" role="navigation">
-    <div class="wc-Navbar-section wc-Navbar-section--left">{%- if browser == 'firefox' %}
-      <a class="wc-Navbar-link" href="https://addons.mozilla.org/en-US/firefox/addon/webcompatcom-reporter/">Download our Firefox Add-on</a>
-      {%- elif browser == 'firefox mobile' -%}
-      <a class="wc-Navbar-link" href="https://addons.mozilla.org/en-US/android/addon/webcompatcom-mobile-reporter/">Download our Firefox for Android Add-on</a>
-      {%- elif browser == 'chrome' -%}
-      <a class="wc-Navbar-link" href="https://chrome.google.com/webstore/detail/webcompatcom-reporter/ffnnhckjcpbbjlmgfjigknkoffakclol">Download our Chrome Extension</a>
-      {%- elif browser == 'opera' -%}
-      <a class="wc-Navbar-link" href="https://addons.opera.com/en/extensions/details/webcompatcom-reporter/?display=en">Download our Opera Extension</a>
-      {%- elif browser == 'safari' -%}
-      <a class="wc-Navbar-link" href="https://webcompat.com/addons/webcompat-reporter.safariextz">Download our Safari Extension</a>
-      {% else %}
-      <a class="wc-Navbar-link" href="https://github.com/webcompat/webcompat.com/issues?state=open">Give Feedback</a>{%- endif -%}
-    </div>
-    <div class="wc-Navbar-section wc-Navbar-section--right">
-      <a class="wc-Navbar-link js-issues-link" href="{{ url_for('show_issues') }}?page=1&per_page=50&state=open&stage=all&sort=created&direction=desc">
-        <span class="wc-Navbar-link-icon wc-Icon wc-Icon--list" aria-hidden="true"></span>
-        <span class="wc-Navbar-link-label">All issues</span>
-      </a>
-      {% if not session.user_id %}
-      <a class="wc-Navbar-link js-login-link" href="{{ url_for('login') }}">
-        <span class="wc-Navbar-link-icon wc-Icon wc-Icon--arrow-circle-right" aria-hidden="true"></span>
-        <span class="wc-Navbar-link-label">Log in</span>
-      </a>
-      {% else %}
-      <a class="wc-Navbar-link js-login-link" href="{{ url_for('logout') }}">
-        <span class="wc-Navbar-link-icon wc-Icon wc-Icon--arrow-circle-right" aria-hidden="true"></span>
-        <span class="wc-Navbar-link-label">Logout</span>
-      </a>
-      {% if session.user_id and session.avatar_url %}
-      <img class="wc-Navbar-avatar" src="{{ session.avatar_url }}s=40" alt="User Avatar">
-      {% endif %}
-      {% endif %}
+    <div class="wc-Navbar-container">
+      <div class="wc-Navbar-section">
+        {%- if browser == 'firefox' %}
+        <a class="wc-Navbar-link" href="https://addons.mozilla.org/en-US/firefox/addon/webcompatcom-reporter/">Download our Firefox Add-on</a>
+        {%- elif browser == 'firefox mobile' -%}
+        <a class="wc-Navbar-link" href="https://addons.mozilla.org/en-US/android/addon/webcompatcom-mobile-reporter/">Download our Firefox for Android Add-on</a>
+        {%- elif browser == 'chrome' -%}
+        <a class="wc-Navbar-link" href="https://chrome.google.com/webstore/detail/webcompatcom-reporter/ffnnhckjcpbbjlmgfjigknkoffakclol">Download our Chrome Extension</a>
+        {%- elif browser == 'opera' -%}
+        <a class="wc-Navbar-link" href="https://addons.opera.com/en/extensions/details/webcompatcom-reporter/?display=en">Download our Opera Extension</a>
+        {%- elif browser == 'safari' -%}
+        <a class="wc-Navbar-link" href="https://webcompat.com/addons/webcompat-reporter.safariextz">Download our Safari Extension</a>
+        {% else %}
+        <a class="wc-Navbar-link" href="https://github.com/webcompat/webcompat.com/issues?state=open">Give Feedback</a>{%- endif -%}
+      </div>
+      <div class="wc-Navbar-section">
+        <a class="wc-Navbar-link js-issues-link" href="{{ url_for('show_issues') }}?page=1&per_page=50&state=open&stage=all&sort=created&direction=desc">
+          <span class="wc-Navbar-link-icon wc-Icon wc-Icon--list" aria-hidden="true"></span>
+          <span class="wc-Navbar-link-label">All issues</span>
+        </a>
+        {% if not session.user_id %}
+        <a class="wc-Navbar-link js-login-link" href="{{ url_for('login') }}">
+          <span class="wc-Navbar-link-icon wc-Icon wc-Icon--arrow-circle-right" aria-hidden="true"></span>
+          <span class="wc-Navbar-link-label">Log in</span>
+        </a>
+        {% else %}
+        <a class="wc-Navbar-link js-login-link" href="{{ url_for('logout') }}">
+          <span class="wc-Navbar-link-icon wc-Icon wc-Icon--arrow-circle-right" aria-hidden="true"></span>
+          <span class="wc-Navbar-link-label">Logout</span>
+        </a>
+        {% if session.user_id and session.avatar_url %}
+        <img class="wc-Navbar-avatar" src="{{ session.avatar_url }}s=40" alt="User Avatar">
+        {% endif %}
+        {% endif %}
+      </div>
     </div>
   </nav>
 </header>
