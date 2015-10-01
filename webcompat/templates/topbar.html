@@ -38,8 +38,8 @@
                 <span class="wc-Navbar-link-icon wc-Icon wc-Icon--chevron-down" aria-hidden="true"></span>
               </button>
               <div class="wc-DropdownHeader-content">
-                <a class="wc-Navbar-linkDropdown" href="#">just a test</a>
-                <a class="wc-Navbar-linkDropdown" href="#">just a test</a>
+                <a class="wc-Navbar-linkDropdown" href="{{ url_for('logout') }}">My activities</a>
+                <a class="wc-Navbar-linkDropdown" href="{{ url_for('logout') }}">Logout</a>
               </div>
             </div>
             {% if session.user_id and session.avatar_url %}
