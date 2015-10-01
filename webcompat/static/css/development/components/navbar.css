@@ -4,11 +4,6 @@
   padding: 1.25em 0.5em;
   font-size:var(--base-font-size);
 }
-  .wc-Navbar-wrapper {
-    position: relative;
-    transform-style: preserve-3d;
-    transition: all 0.5s ease 0s;
-  }
   .wc-Navbar-container {
     display: flex;
     justify-content: space-between;
@@ -16,6 +11,7 @@
   }
   .wc-Navbar-link,
   .wc-Navbar-linkDropdown {
+    display: inline-block;
     color: #414042;
     font-weight:700;
     text-decoration:none;

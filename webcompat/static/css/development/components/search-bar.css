@@ -3,7 +3,7 @@
 .wc-SearchBar {
   position: relative;
   min-height: 1.4375em;
-  transform-style: preserve-3d;
+  /*transform-style: preserve-3d;*/
 }
   .wc-SearchBar-face {
     position: absolute;
