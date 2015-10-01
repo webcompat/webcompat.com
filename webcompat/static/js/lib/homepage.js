@@ -6,6 +6,9 @@ function HomePage() {
   var reportButton = $('#report-bug');
   var reportLink = $('#report-bug-link');
   var formContainer = $('#new-report');
+  var searchBar = $('.js-SearchBar');
+  var searchBarOpen = $('.js-SearchBarOpen');
+  var searchBarClose = $('.js-SearchBarClose');
 
   var self = {
     init: function() {
@@ -18,6 +21,14 @@ function HomePage() {
           location.search.search(/open=1/) > -1) {
         reportButton.click();
       }
+
+      searchBarOpen.click(function() {
+        searchBar.addClass('is-active');
+      });
+
+      searchBarClose.click(function(){
+        searchBar.removeClass('is-active');
+      });
     },
     toggleForm: function(e) {
       e.preventDefault();
