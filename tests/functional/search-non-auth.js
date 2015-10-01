@@ -6,8 +6,9 @@ define([
   'intern',
   'intern!object',
   'intern/chai!assert',
-  'require'
-], function (intern, registerSuite, assert, require) {
+  'require',
+  'intern/dojo/node!leadfoot/keys'
+], function (intern, registerSuite, assert, require, keys) {
   'use strict';
 
   var url = function (path) {
@@ -76,6 +77,29 @@ define([
           assert.include(text, 'vladvlad', 'The search results show up on the page.');
         })
         .end();
-    }
+    },
+
+    'Search from the homepage': function() {
+      return this.remote
+        .setFindTimeout(intern.config.wc.pageLoadTimeout)
+        .get(require.toUrl(url('/')))
+        .findByCssSelector('.js-SearchBarOpen').click()
+        .end()
+        .findByCssSelector('.js-SearchBar input').click()
+        .type('vladvlad')
+        .type(keys.ENTER)
+        .end()
+        .sleep(3000)
+        .findByCssSelector('.wc-IssueItem:nth-of-type(1) a').getVisibleText()
+        .then(function(text){
+          assert.include(text, 'vladvlad', 'The search query results show up on the page.');
+        })
+        .end()
+        .getCurrentUrl()
+        .then(function(currUrl){
+          assert.include(currUrl, 'page=1', 'Default params got merged.');
+        })
+        .end();
+      }
   });
 });
