@@ -3,21 +3,15 @@
   font-size:var(--base-font-size);
   background-color: var(--wc-background-dark);
 }
-  .wc-Hero:after {
-    content:"";
-    display:table;
-    clear:both;
-  }
+.wc-Hero-wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
   /* section */
   .wc-Hero-section {}
-    .wc-Hero-section--left {
-      float:left;
-      text-align:left;
-    }
-    .wc-Hero-section--right {
-      float:right;
-      text-align:right;
-    }
+    .wc-Hero-section--left {}
+    .wc-Hero-section--right {}
     /* home */
     .wc-Hero-section--home {
       padding:6em 0 7.25em 0;
