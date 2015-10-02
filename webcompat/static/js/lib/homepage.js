@@ -9,6 +9,7 @@ function HomePage() {
   var searchBar = $('.js-SearchBar');
   var searchBarOpen = $('.js-SearchBarOpen');
   var searchBarClose = $('.js-SearchBarClose');
+  var navDropDown = $('.wc-Navbar-link.wc-DropdownHeader')
 
   var self = {
     init: function() {
@@ -31,6 +32,22 @@ function HomePage() {
         searchBar.removeClass('is-active');
         searchBar.find('input').blur();
       });
+
+      navDropDown.click(function() {
+        var $this = $(this);
+        $this.toggleClass('is-active');
+        $this.attr('aria-pressed', function() {
+          return $this.hasClass('is-active') ? 'true' : 'false';
+        });
+      });
+
+      // close dropdown if you click "outside"
+      $(document).on('click', _.bind(function(e) {
+        if (!$(e.target).closest(navDropDown).length) {
+          navDropDown.toggleClass('is-active');
+        }
+      }, this));
+
     },
     toggleForm: function(e) {
       e.preventDefault();
