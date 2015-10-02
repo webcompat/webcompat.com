@@ -16,9 +16,7 @@ define([
   function login(context) {
     return context.remote
       .setFindTimeout(intern.config.wc.pageLoadTimeout)
-      .get(require.toUrl(url('/issues/2')))
-      .findByCssSelector('.js-login-link').click()
-      .end()
+      .get(require.toUrl(url('/login')))
       .findByCssSelector('#login_field').click()
       .type(intern.config.wc.user)
       .end()
