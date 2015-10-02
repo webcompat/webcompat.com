@@ -55,7 +55,7 @@ function HomePage() {
     // close dropdown if you click "outside"
     $(document).on('click', function(e) {
       if (!$(e.target).closest(navDropDown).length) {
-        navDropDown.toggleClass('is-active');
+        navDropDown.removeClass('is-active');
       }
     });
   };
