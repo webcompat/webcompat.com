@@ -261,7 +261,7 @@ grunt
 
 ### Configuring The Server
 
-To test issue submission, you need to create a repository on github. Let's assume your username is `miketaylr`. Create a new repository make note of the name. For example, the user `miketaylr` has created a repository called "[test-repo](https://github.com/miketaylr/test-repo)" for this purpose.
+To test issue submission, you need to create a repository on GitHub. Create a new repository make note of the name. For example, the user `miketaylr` has created a repository called "[test-repo](https://github.com/miketaylr/test-repo)" for this purpose.
 
 ``` bash
 # set up config.py, filling in appropriate secrets and pointers to repos
@@ -270,7 +270,7 @@ cp config.py.example config.py
 
 You can now edit `config.py` and
 
-1. provide pointers to [repo issues URIs](https://github.com/webcompat/webcompat.com/blob/master/config.py.example#L68-L73). `ISSUES_REPO_URI = "<user>/<repo>/issues"`. For example, miketaylr's setup needs to say `ISSUES_REPO_URI = "miketaylr/test-repo/issues"`
+1. Add the right values to the [repo issues URIs](https://github.com/webcompat/webcompat.com/blob/master/config.py.example#L68-L73). `ISSUES_REPO_URI = "<user>/<repo>/issues"`. For example, miketaylr's setup needs to say `ISSUES_REPO_URI = "miketaylr/test-repo/issues"`
 
 2. You have the option of creating a "bot account" (a dummy account for the purpose of testing), or using your own account for local development. Either way, you'll need a personal access token to procede&mdash;this is the oauth token we use to report issues on behalf of people who don't want to give GitHub oauth access (or don't have GitHub accounts).
 
