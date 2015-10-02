@@ -185,7 +185,7 @@ For testing code locally, you will need a very basic setup. There are a few requ
 
 * Python 2.7
 * node 0.10.0
-* Github account with a fake repo
+* Github account
 
 ### Simple setup
 #### Initializing Project source code
@@ -261,8 +261,7 @@ grunt
 
 ### Configuring The Server
 
-To test issue submission, you need to create a fake repo on github. Let's assume your username is `miketaylr`. Create a new repository called `nobody-look-at-this` (or the name of your choice).
-
+To test issue submission, you need to create a repository on github. Let's assume your username is `miketaylr`. Create a new repository make note of the name. For example, the user `miketaylr` has created a repository called "[test-repo](https://github.com/miketaylr/test-repo)" for this purpose.
 
 ``` bash
 # set up config.py, filling in appropriate secrets and pointers to repos
@@ -271,9 +270,23 @@ cp config.py.example config.py
 
 You can now edit `config.py` and
 
-1. provide pointers to [repo issues URIs](https://github.com/webcompat/webcompat.com/blob/master/config.py.example#L68-L73). `ISSUES_REPO_URI = "<user>/<repo>/issues"`. With the example, we chose it would be `ISSUES_REPO_URI = "miketaylr/nobody-look-at-this/issues"`
-2. It is **mandatory** to create your own personal bot for local development. The [instructions for creating a bot token](http://help.github.com/articles/creating-an-access-token-for-command-line-use) are given on GitHub. Once you created the token you can add it to the variable `BOT_OAUTH_TOKEN = ""`. This is the oauth token we use to report issues on behalf of people who don't want to give GitHub oauth access (or don't have GitHub accounts).
-3. [get the secrets](https://github.com/webcompat/webcompat.com/blob/master/config.py.example#L66-L86) for config.py
+1. provide pointers to [repo issues URIs](https://github.com/webcompat/webcompat.com/blob/master/config.py.example#L68-L73). `ISSUES_REPO_URI = "<user>/<repo>/issues"`. For example, miketaylr's setup needs to say `ISSUES_REPO_URI = "miketaylr/test-repo/issues"`
+
+2. You have the option of creating a "bot account" (a dummy account for the purpose of testing), or using your own account for local development. Either way, you'll need a personal access token to procede&mdash;this is the oauth token we use to report issues on behalf of people who don't want to give GitHub oauth access (or don't have GitHub accounts).
+
+The [instructions for creating a personal access token](http://help.github.com/articles/creating-an-access-token-for-command-line-use) are given on GitHub. Once you have created the token you can add it in the variable `BOT_OAUTH_TOKEN = ""` (yes, even if you're using your own credentials we still refer to it as a bot). More advanced users might want to create an environment variable called `BOT_OAUTH_TOKEN`. Either way is fine.
+
+3. [Add the client id and client secret](https://github.com/webcompat/webcompat.com/blob/master/config.py.example#L66-L86) to config.py. If you're part of the webcompat GitHub organization, you can [get the client id and client secret from GitHub](https://github.com/organizations/webcompat/settings/applications/). Otherwise, create your own test and production applications ((instructions here)[https://github.com/settings/applications/new])&mdahs;when prompted for a "Authorization callback URL", use `http://localhost:5000/callback`, and take note of the client id and client secret GitHub gives you.
+
+When you have the client id and client secret put them in the corresponding lines in config.py for the localhost application:
+
+```
+# We're running on localhost, use the test application
+GITHUB_CLIENT_ID = os.environ.get('FAKE_ID') or "<client id goes here>"
+GITHUB_CLIENT_SECRET = os.environ.get('FAKE_SECRET') or  "<client secret goes here>"
+```
+
+Note: You can ignore the `FAKE_ID` and `FAKE_SECRET` environment variables, we use that as a hack for automated tests.
 
 **Note**: If you get a 404 at GitHub when clicking "Login", it means you haven't [filled in the `GITHUB_CLIENT_ID` or `GITHUB_CLIENT_SECRET`](https://github.com/webcompat/webcompat.com/blob/master/config.py.example#L84-L86).
 
