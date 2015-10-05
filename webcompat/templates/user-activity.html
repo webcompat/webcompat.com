@@ -1,0 +1,77 @@
+{% extends "layout.html" %}
+{% block body %}
+{% include "shared/nav.html" %}
+<div id="browse-issues-wrapper">
+  <div class="wc-content" id="user-reported-issues">
+    <h2 class="wc-Title--l">Issues reported by {{user}}</h2>
+    <div class="r-Grid r-Grid--withGutter">
+      <div id="my-issues" class="r-Grid-cell">
+        <script type="text/template" id="my-issues-tmpl">
+        <% if (myIssues.length) { %>
+          <% _.each(myIssues, function(issue) { %>
+          <div class="wc-IssueItem wc-IssueItem--<%= issue.stateClass %> wc-IssueItem--large u-table">
+            <div class="wc-IssueItem-section">
+              <p class="wc-IssueItem-header">
+                <a href="/issues/<%= issue.number %>"><span class="wc-IssueItem-count">Issue <%= issue.number %></span>: <%- issue.title %></a>
+              </p>
+              <p>
+                <span class="wc-IssueItem-metadata">Opened: <time><%= issue.createdAt %></time></span>
+                <span class="wc-IssueItem-metadata">Comments: <%= issue.commentNumber %></span>
+              </p>
+            </div>
+            <div class="wc-IssueItem-section">
+              <span class="wc-IssueItem-label js-issue-label"><% _.each(issue.labels, function(label) { %>
+                <a href="#" class="wc-Labels" title="Labels : <%= label.name %>"><%= label.name %></a>
+              <% }); %></span>
+            </div>
+          </div>
+          <% }); %>
+        <% } else { %>
+        <p>Nothing here currently, go report something!</p>
+        <% } %>
+        </script>
+      </div>
+    </div>
+  </div>
+  <div class="wc-content" id="user-mentioned-issues">
+    <h2 class="wc-Title--l">Issues mentioning {{user}}</h2>
+    <div class="r-Grid r-Grid--withGutter">
+      <div id="issue-mentions" class="r-Grid-cell">
+        <script type="text/template" id="issue-mentions-tmpl">
+        <% if (issueMentions.length) { %>
+          <% _.each(issueMentions, function(issue) { %>
+          <div class="wc-IssueItem wc-IssueItem--<%= issue.stateClass %> wc-IssueItem--large u-table">
+            <div class="wc-IssueItem-section">
+              <p class="wc-IssueItem-header">
+                <a href="/issues/<%= issue.number %>"><span class="wc-IssueItem-count">Issue <%= issue.number %></span>: <%- issue.title %></a>
+              </p>
+              <p>
+                <span class="wc-IssueItem-metadata">Opened: <time><%= issue.createdAt %></time></span>
+                <span class="wc-IssueItem-metadata">Comments: <%= issue.commentNumber %></span>
+              </p>
+            </div>
+            <div class="wc-IssueItem-section">
+              <span class="wc-IssueItem-label js-issue-label"><% _.each(issue.labels, function(label) { %>
+                <a href="#" class="wc-Labels" title="Labels : <%= label.name %>"><%= label.name %></a>
+              <% }); %></span>
+            </div>
+          </div>
+          <% }); %>
+        <% } else { %>
+        <p>Nothing here currently.</p>
+        <% } %>
+        </script>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block extrascripts %}
+<script>var repoPath="{{config['ISSUES_REPO_URI']}}";</script>
+{%- if config.PRODUCTION or config.DEVELOPMENT -%}
+<script src="{{ url_for('static', filename='js/user-activity.min.js')|bust_cache }}"></script>
+{% else %}
+<script src="{{ url_for('static', filename='js/lib/models/issue.js') }}"></script>
+<script src="{{ url_for('static', filename='js/lib/user-activity.js') }}"></script>
+{%- endif %}
+{% endblock %}
