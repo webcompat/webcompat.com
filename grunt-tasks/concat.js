@@ -47,6 +47,13 @@ module.exports = function(grunt) {
           '<%= jsPath %>/lib/issue-list.js'
         ],
         dest: '<%= jsPath %>/issue-list.js'
+      },
+      userActivity: {
+        src: [
+          '<%= jsPath %>/lib/models/issue.js',
+          '<%= jsPath %>/lib/user-activity.js'
+        ],
+        dest: '<%= jsPath %>/user-activity.js'
       }
    });
 };
