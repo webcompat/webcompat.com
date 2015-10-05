@@ -4,178 +4,186 @@
 /* Main Class */
 .wc-Comment {
   font-size:var(--base-font-size);
+  display: flex;
+  flex-direction: row;
 }
 
-/*Comment + Comment */
-.wc-Comment + .wc-Comment {
-    margin-top:1em;
-}
-.wc-Comment:after {
-    content: "";
-    display: table;
-    clear: both
-}
+  /* Avatar */
+  .wc-Comment-avatar {}
 
-/* Avatar */
-.wc-Comment-avatar {
-  float: left;
-}
-.wc-Comment-avatar img {
-  width: 59px;
-  height: 56px;
-}
-@media (--viewport-990px) {
-  .wc-Comment-avatar {
-    display: none;
+    .wc-Comment-avatar img {
+      width: 59px;
+      height: 56px;
+    }
+
+  @media (--viewport-990px) {
+    .wc-Comment-avatar {
+      display: none;
+    }
   }
-}
-/* Body */
-.wc-Comment-body {
-  float:left;
-  margin-left:.8em;
-  position: relative;
-}
-@media (--viewport-990px) {
+
+  /* Body */
   .wc-Comment-body {
-    margin-left:0;
+    position: relative;
+    margin-left:.8em;
   }
-}
-@media (--viewport-770px) {
-  .wc-Comment-body {
-    width: 100%;
+  @media (--viewport-990px) {
+    .wc-Comment-body {
+      margin-left:0;
+    }
   }
-}
-/* Body Caret */
-.wc-Comment-body--caret:after {
-  position: absolute;
-  content: "";
-  width: 18px;
-  height: 18px;
-  top: 15px;
-  left: -9px;
-  background-color: #f0f0f0;
-  border-color: var(--wc-variant-background-light);
-  border-style: solid;
-  border-width: 0px 0px 1px 1px;
-  transform: rotate(45deg);
-}
-/* Wrapper Comment-header Comment-content */
-.wc-Comment-wrapper {
-  position: relative;
-  width: 650px;
-  /*last 256px*/
-  min-height: 128px;
-  border: solid 1px var(--wc-variant-background-light);
-  border-radius: 10px;
-  padding: 0 1em 2em 1em;
-  word-wrap: break-word;
-  background : #fff;
-}
-@media (--viewport-770px) {
+  @media (--viewport-770px) {
+    .wc-Comment-body {
+      width: 100%;
+    }
+  }
+
+    /* Body Caret */
+    .wc-Comment-body--caret:after {
+      position: absolute;
+      content: "";
+      width: 18px;
+      height: 18px;
+      top: 15px;
+      left: -9px;
+      background-color: #f0f0f0;
+      border-color: var(--wc-variant-background-light);
+      border-style: solid;
+      border-width: 0px 0px 1px 1px;
+      transform: rotate(45deg);
+    }
+
+  /* Wrapper Comment-header Comment-content */
   .wc-Comment-wrapper {
-    width: 100%;
+    position: relative;
+    width: 650px;
+    min-height: 128px;
+    border: solid 1px var(--wc-variant-background-light);
+    border-radius: 10px;
+    padding: 0 1em 2em 1em;
+    word-wrap: break-word;
+    background : #fff;
   }
-}
-/* Comment Header */
-.wc-Comment-header {
-  border-radius: 10px 10px 0 0;
-  background-color: #F0F0F0;
-  padding:.8em 1em;
-  margin: 0 -1em;
-}
-/* Name of owner */
-.wc-Comment-owner {
-  font-weight: bold;
-}
 
-/* Comment texte */
-.wc-Comment-content {
-  position: relative;
-  word-wrap: break-word;
-  padding:.5em .5em 0;
-}
-  /* list style */
-  .wc-Comment-content ul,
-  .wc-Comment-content ol {
-    list-style: inside;
-  }
-  .wc-Comment-content ol {
-    list-style-type: decimal;
-  }
-  /* pre / code */
-  .wc-Comment-content pre,
-  .wc-Comment-content code {
-    padding: 1em;
-    margin: 0.5em 0px;
-    overflow: auto;
-    background: #F5F2F0;
-  }
-  .wc-Comment-content code {
-    padding: 0;
-  }
-  /* title */
-  .wc-Comment-content h1 {
-    font-size: 2em;
-    font-weight: 600;
-    margin: 1em 0;
-  }
-  .wc-Comment-content h2 {
-    font-size: 1.5em;
-    font-weight: 600;
-    margin: 1em 0;
-  }
-  .wc-Comment-content h3 {
+  /* Textarea Placeholder style */
+  .wc-Comment-wrapper::placeholder {
+    color: var(--wc-variant-background-light);
+    opacity: 1;
     font-size: 1.2em;
-    font-weight: 600;
-    margin: 1em 0;
+    font-weight: 500;
   }
-/* Comment-content img */
-.wc-Comment-content img {
-  max-width:100%;
-  max-height:100%;
-}
-/* paragraph */
-.wc-Comment-content p + p {
-  font-size: 1em;
-  margin-top: 2em;
-}
-/* blockquote */
-.wc-Comment-content blockquote {
-  border-left: 4px solid var(--wc-background-light);
-  padding: 0px 1em;
-  margin: 1em 0px;
-  color: #6a6a6a;
-}
-/* GitHub username */
-.wc-Comment-content .github__username {
-  font-weight: bold;
-}
 
-/* Form submit */
-.wc-Comment--form {
-  padding-top:2em;
-  margin:2em 0 0 ;
-}
-.wc-Comment--form .wc-Comment-body--caret:after {
-   background-color: #fff;
-}
-/* img attach file */
-.wc-Comment-attach {
-  display: block;
-  margin:.8em 0 0 0;
-  padding: .4em;
-  text-align: center;
-  overflow: hidden /* prevent overflow */
-}
-/* prevent width of img */
-.wc-Comment-attach img {
-  width: 100%;
-  max-width: 100%;
-}
-.wc-Comment--form  .wc-Comment-wrapper {
-  padding-top: 1em;
-  margin-bottom: 1.5em;
-}
+  @media (--viewport-770px) {
+    .wc-Comment-wrapper {
+      width: 100%;
+    }
+  }
+  /* Comment Header */
+  .wc-Comment-header {
+    border-radius: 10px 10px 0 0;
+    background-color: #f0f0f0;
+    padding:.8em 1em;
+    margin: 0 -1em;
+  }
+  /* Name of owner */
+  .wc-Comment-owner {
+    font-weight: bold;
+  }
+
+  /* Comment texte */
+  .wc-Comment-content {
+    position: relative;
+    word-wrap: break-word;
+    padding:.5em .5em 0;
+  }
+    /* list style */
+    .wc-Comment-content ul,
+    .wc-Comment-content ol {
+      list-style: inside;
+    }
+    .wc-Comment-content ol {
+      list-style-type: decimal;
+    }
+    /* pre / code */
+    .wc-Comment-content pre,
+    .wc-Comment-content code {
+      padding: 1em;
+      margin: 0.5em 0px;
+      overflow: auto;
+      background: #F5F2F0;
+    }
+    .wc-Comment-content code {
+      padding: 0;
+    }
+    /* title */
+    .wc-Comment-content h1 {
+      font-size: 2em;
+      font-weight: 600;
+      margin: 1em 0;
+    }
+    .wc-Comment-content h2 {
+      font-size: 1.5em;
+      font-weight: 600;
+      margin: 1em 0;
+    }
+    .wc-Comment-content h3 {
+      font-size: 1.2em;
+      font-weight: 600;
+      margin: 1em 0;
+    }
+  /* Comment-content img */
+  .wc-Comment-content img {
+    max-width:100%;
+    max-height:100%;
+  }
+  /* paragraph */
+  .wc-Comment-content p + p {
+    font-size: 1em;
+    margin-top: 2em;
+  }
+  /* blockquote */
+  .wc-Comment-content blockquote {
+    border-left: 4px solid var(--wc-background-light);
+    padding: 0px 1em;
+    margin: 1em 0px;
+    color: #6a6a6a;
+  }
+  /* GitHub username */
+  .wc-Comment-content .github__username {
+    font-weight: bold;
+  }
+
+  /* Form submit */
+  .wc-Comment--form {
+    padding-top:2em;
+    margin:2em 0 0 ;
+  }
+  .wc-Comment--form .wc-Comment-body--caret:after {
+     background-color: #fff;
+  }
+  /* img attach file */
+  .wc-Comment-attach {
+    display: block;
+    margin:.8em 0 0 0;
+    padding: .4em;
+    text-align: center;
+    overflow: hidden /* prevent overflow */
+  }
+  /* prevent width of img */
+  .wc-Comment-attach img {
+    width: 100%;
+    max-width: 100%;
+  }
+  .wc-Comment--form  .wc-Comment-wrapper {
+    padding-top: 1em;
+    margin-bottom: 1.5em;
+  }
+
+  /*Comment + Comment */
+  .wc-Comment + .wc-Comment {
+    margin-top: 1em;
+  }
+
 /* drag and drop */
 /*.Comment-drag{
     position: relative;
@@ -193,27 +201,20 @@
 .Comment-dd-label {
   color: #e6bf04;
 }*/
-/* Textarea Placeholder style */
-.wc-Comment-wrapper::placeholder {
-  color: var(--wc-variant-background-light);
-  opacity: 1;
-  font-size: 1.2em;
-  font-weight: 500;
-}
 
-
-/* Button */
-.wc-Comment-button {
-  text-align: right;
-  margin:1.2em 0 0;
-}
-
-@media (--viewport-770px) {
- .wc-Comment-button {
-   text-align: center;
-   font-size:.9em;
+  /* Button */
+  .wc-Comment-button {
+    text-align: right;
+    margin:1.2em 0 0;
   }
-}
-.wc-Comment-button .button {
-  text-align: center;
-}
+
+  @media (--viewport-770px) {
+   .wc-Comment-button {
+     text-align: center;
+     font-size:.9em;
+    }
+  }
+
+  .wc-Comment-button .button {
+    text-align: center;
+  }
