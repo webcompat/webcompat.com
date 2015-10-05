@@ -70,6 +70,14 @@ class TestAPIURLs(unittest.TestCase):
         self.assertEqual(rv.content_type, 'application/json')
         self.assertEqual(json_body['status'], 401)
 
+    def test_api_user_activity_without_auth(self):
+        '''API access to user activity without auth returns JSON 401.'''
+        rv = self.app.get('/api/issues/miketaylr/creator', environ_base=headers)
+        json_body = json.loads(rv.data)
+        self.assertEqual(rv.status_code, 401)
+        self.assertEqual(rv.content_type, 'application/json')
+        self.assertEqual(json_body['status'], 401)
+
     def test_api_search_wrong_parameter(self):
         '''API with wrong parameter returns JSON 404.'''
         rv = self.app.get('/api/issues/search?z=foobar', environ_base=headers)
