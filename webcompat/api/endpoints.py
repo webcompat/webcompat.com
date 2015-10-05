@@ -94,6 +94,26 @@ def proxy_issues():
     return (issues.content, issues.status_code, get_headers(issues))
 
 
+@api.route('/issues/<username>/<parameter>')
+def get_user_activity_issues(username, parameter):
+    '''API endpoint to return all issues that given user reported.
+
+    cf. https://developer.github.com/v3/issues/#list-issues-for-a-repository
+    This is only used for "creator" and "mentioned" right now.
+
+    Any logged in user can see details for any other logged in user. We can
+    extend this to non-logged in users in the future if we want.
+    '''
+    if not g.user:
+        abort(401)
+    path = 'repos/{path}?{param}={user}&state=all'.format(path=ISSUES_PATH,
+                                                          param=parameter,
+                                                          user=username)
+    request_headers = get_request_headers(g.request_headers)
+    issues = github.raw_request('GET', path, headers=request_headers)
+    return (issues.content, issues.status_code, get_headers(issues))
+
+
 @api.route('/issues/category/<issue_category>')
 def get_issue_category(issue_category):
     '''Return all issues for a specific category.
