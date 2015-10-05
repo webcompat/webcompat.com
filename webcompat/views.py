@@ -205,6 +205,20 @@ def thanks(number):
                            encoded_text=encoded_text)
 
 
+@app.route('/me')
+def me_redirect():
+    '''This route redirects to /activity/<username>, for logged in users.'''
+    if not g.user:
+        return redirect(url_for('login'))
+    get_user_info()
+    return redirect(url_for('show_user_page', username=session['username']))
+
+
+@app.route('/activity/<username>')
+def show_user_page(username):
+    return render_template('user-activity.html', user=username)
+
+
 @app.route('/rate_limit')
 def show_rate_limit():
     rl = json.loads(get_rate_limit())
