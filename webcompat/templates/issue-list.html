@@ -64,7 +64,7 @@
         <script type="text/template" id="issuelist-issue-tmpl">
         <% if (issues.length) { %>
           <% _.each(issues, function(issue) { %>
-          <div class="wc-IssueItem wc-IssueItem--<%= issue.stateClass %> wc-IssueItem--large u-table">
+          <div class="wc-IssueItem wc-IssueItem--<%= issue.stateClass %> wc-IssueItem--large">
             <div class="wc-IssueItem-section">
               <p class="wc-IssueItem-header">
                 <a href="/issues/<%= issue.number %>"><span class="wc-IssueItem-count">Issue <%= issue.number %></span>: <%- issue.title %></a>
