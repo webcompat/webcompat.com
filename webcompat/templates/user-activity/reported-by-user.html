@@ -1,0 +1,31 @@
+<div class="wc-Issue">
+  <div class="wc-content" id="user-reported-issues">
+    <h2 class="wc-Title--l">Issues reported by {{user}}</h2>
+    <div id="my-issues" class="wc-Issue-content">
+      <script type="text/template" id="my-issues-tmpl">
+        <% if (myIssues.length) { %>
+          <% _.each(myIssues, function(issue) { %>
+          <div class="wc-IssueItem wc-IssueItem--<%= issue.stateClass %> wc-IssueItem--large">
+            <div class="wc-IssueItem-section">
+              <p class="wc-IssueItem-header">
+                <a href="/issues/<%= issue.number %>"><span class="wc-IssueItem-count">Issue <%= issue.number %></span>: <%- issue.title %></a>
+              </p>
+              <p>
+                <span class="wc-IssueItem-metadata">Opened: <time><%= issue.createdAt %></time></span>
+                <span class="wc-IssueItem-metadata">Comments: <%= issue.commentNumber %></span>
+              </p>
+            </div>
+            <div class="wc-IssueItem-section">
+              <span class="wc-IssueItem-label js-issue-label"><% _.each(issue.labels, function(label) { %>
+                <a href="#" class="wc-Labels" title="Labels : <%= label.name %>"><%= label.name %></a>
+              <% }); %></span>
+            </div>
+          </div>
+          <% }); %>
+        <% } else { %>
+        <p>Nothing here currently, go report something!</p>
+        <% } %>
+      </script>
+    </div>
+  </div>
+</div>
