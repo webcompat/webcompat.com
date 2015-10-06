@@ -30,9 +30,9 @@ import webcompat.views
 # register blueprints
 from api.endpoints import api
 from api.uploads import uploads
-from webhooks import webhook
+from webhooks import webhooks
 
-for blueprint in [api, uploads, webhook]:
+for blueprint in [api, uploads, webhooks]:
     app.register_blueprint(blueprint)
 
 

@@ -17,10 +17,10 @@ from flask import request
 
 from helpers import parse_and_set_label
 
-webhook = Blueprint('webhook', __name__, url_prefix='/webhook')
+webhooks = Blueprint('webhooks', __name__, url_prefix='/webhooks')
 
 
-@webhook.route('/labeler', methods=['GET', 'POST'])
+@webhooks.route('/labeler', methods=['GET', 'POST'])
 def hooklistener():
     '''Listen for the "issues" webhook event, parse the body,
        post back labels. But only do that for the 'opened' action.'''
