@@ -1,34 +1,41 @@
 <div id="browse-issues-wrapper">
   <div class="wc-content" id="browse-issues">
-    <h2 class="wc-Title--l">Latest Bugs</h2>
-    <div class="r-Grid r-Grid--withGutter">
-      <div id="new" class="r-Grid-cell">
+    <div class="wc-Issue">
+      <h2 class="wc-Title--l">Latest Bugs</h2>
+      <div id="new" class="wc-Issue-content">
         <script type="text/template" id="new-tmpl">
-        <% if (newIssues.length) { %>
-          <% _.each(newIssues, function(issue) { %>
-          <div class="wc-IssueItem wc-IssueItem--<%= issue.stateClass %> wc-IssueItem--large u-table">
-            <div class="wc-IssueItem-section">
-              <p class="wc-IssueItem-header">
-                <a href="/issues/<%= issue.number %>"><span class="wc-IssueItem-count">Issue <%= issue.number %></span>: <%- issue.title %></a>
-              </p>
-              <p>
-                <span class="wc-IssueItem-metadata">Opened: <time><%= issue.createdAt %></time></span>
-                <span class="wc-IssueItem-metadata">Comments: <%= issue.commentNumber %></span>
-              </p>
+          <% if (newIssues.length) { %>
+            <% _.each(newIssues, function(issue) { %>
+            <div class="wc-IssueItem wc-IssueItem--<%= issue.stateClass %> wc-IssueItem--large">
+              <div class="wc-IssueItem-section">
+                <p class="wc-IssueItem-header">
+                  <a href="/issues/<%= issue.number %>"><span class="wc-IssueItem-count">Issue <%= issue.number %></span>: <%- issue.title %></a>
+                </p>
+                <p>
+                  <span class="wc-IssueItem-metadata">Opened: <time><%= issue.createdAt %></time></span>
+                  <span class="wc-IssueItem-metadata">Comments: <%= issue.commentNumber %></span>
+                </p>
+              </div>
+              <div class="wc-IssueItem-section">
+                <span class="wc-IssueItem-label js-issue-label"><% _.each(issue.labels, function(label) { %>
+                  <a href="#" class="wc-Labels" title="Labels : <%= label.name %>"><%= label.name %></a>
+                <% }); %></span>
+              </div>
             </div>
             <div class="wc-IssueItem-section">
               <span class="wc-IssueItem-label js-issue-label"><% _.each(issue.labels, function(label) { %>
-                <a href="/issues?labels=<%= issues.allLabels.toPrefixed(label.name) %>" class="wc-Labels" title="Labels : <%= label.name %>"><%= label.name %></a>
+                <a href="/issues?labels=<%= issues.allLabels.toPrefixed(label.name) %>"
+                   class="wc-Labels" title="Labels : <%= label.name %>"><%= label.name %></a>
               <% }); %></span>
             </div>
           </div>
           <% }); %>
         <% } else { %>
-        <p>Nothing here currently, cool!</p>
+          <p>Nothing here currently, cool!</p>
         <% } %>
         </script>
-      </div>
+        </div>
+      <p class="more-issues"><a href="{{ url_for("show_issues") }}">View All</a></p>
     </div>
-    <p class="more-issues"><a href="{{ url_for("show_issues") }}">View All</a></p>
   </div>
 </div>

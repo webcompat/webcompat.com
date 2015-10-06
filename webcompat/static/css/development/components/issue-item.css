@@ -1,16 +1,31 @@
 /*------Issue item------*/
 
+.wc-Issue {
+  padding-top: 3em;
+  padding-bottom: 2em;
+}
+  .wc-Issue-content {
+    padding: 0 8px;
+  }
 
 /* Parent class */
 .wc-IssueItem {
-  display:table;
-  width:100%;
-  font-size:var(--base-font-size);
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  width: 100%;
+  font-size: var(--base-font-size);
   background-color: #fff;
   padding: 0.5em 1em;
   margin-bottom: 1em;
-  table-layout:fixed;
 }
+
+  @media (--viewport-950px) {
+    .wc-IssueItem {
+      flex-direction: column;
+    }
+  }
+
   /* list */
   .wc-IssueItem--list {
     display:inline-block;
@@ -18,63 +33,76 @@
     margin:0;
     background-color: transparent;
   }
-.wc-IssueItem--new {
-  border-left: 5px solid var(--wc-state-new);
-}
-.wc-IssueItem--needsDiagnosis {
-  border-left: 5px solid var(--wc-state-needsDiagnosis);
-}
-.wc-IssueItem--needsContact {
-  border-left: 5px solid var(--wc-state-needsContact);
-}
-.wc-IssueItem--ready {
-  border-left: 5px solid var(--wc-state-ready);
-}
-.wc-IssueItem--sitewait {
-  border-left: 5px solid var(--wc-state-sitewait);
-}
-.wc-IssueItem--close {
-  border-left: 5px solid var(--wc-state-close);
-}
-.wc-IssueItem--large {
-  font-size:1.2em;
-  border-width:8px;
-}
-.wc-IssueItem-content {}
-.wc-IssueItem-header {
-  margin-bottom:0.5em;
-}
-.wc-IssueItem-metadata {
-  font-size:.8em;
-  margin-right:.8em;
-}
-  @media (--viewport-450px) {
-    .wc-IssueItem-metadata {
-      display:block;
-    }
+
+  /* modifier */
+  .wc-IssueItem--new {
+    border-left: 5px solid var(--wc-state-new);
   }
-.wc-IssueItem-count {
-  font-weight: 400;
-}
-.wc-IssueItem-label {
-  display:block;
-  text-align:right;
-  font-size:.8em;
-}
-.wc-IssueItem-section {
-  display:table-cell;
-  vertical-align:middle;
-  width:50%;
-}
+
+  .wc-IssueItem--needsDiagnosis {
+    border-left: 5px solid var(--wc-state-needsDiagnosis);
+  }
+
+  .wc-IssueItem--needsContact {
+    border-left: 5px solid var(--wc-state-needsContact);
+  }
+
+  .wc-IssueItem--ready {
+    border-left: 5px solid var(--wc-state-ready);
+  }
+
+  .wc-IssueItem--sitewait {
+    border-left: 5px solid var(--wc-state-sitewait);
+  }
+
+  .wc-IssueItem--close {
+    border-left: 5px solid var(--wc-state-close);
+  }
+
+  .wc-IssueItem--large {
+    font-size:1.2em;
+    border-width:8px;
+  }
+
+  .wc-IssueItem-content {}
+  .wc-IssueItem-header {
+    margin-bottom:0.5em;
+  }
+
+  .wc-IssueItem-metadata {
+    font-size:.8em;
+    margin-right:.8em;
+  }
+
+    @media (--viewport-450px) {
+      .wc-IssueItem-metadata {
+        display:block;
+      }
+    }
+
+  .wc-IssueItem-count {
+    font-weight: 400;
+  }
+
+  .wc-IssueItem-label {
+    display:block;
+    text-align:right;
+    font-size:.8em;
+  }
   @media (--viewport-950px) {
-    .wc-IssueItem-section {
-      display:block;
-      width:100%;
-    }
-    .wc-IssueItem-section + .wc-IssueItem-section {
-      margin-top:1em;
-    }
     .wc-IssueItem-label {
       text-align:left;
     }
   }
+
+  .wc-IssueItem-section {
+    width:50%;
+  }
+    @media (--viewport-950px) {
+      .wc-IssueItem-section {
+        width:100%;
+      }
+      .wc-IssueItem-section + .wc-IssueItem-section {
+        margin-top:1em;
+      }
+    }
