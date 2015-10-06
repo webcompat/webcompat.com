@@ -66,3 +66,23 @@
   top: -9999px;
   left: -9999px;
 }
+
+/*---------- Utilities Offset ----------*/
+
+.wc-ResetOffset {
+  margin: 0;
+}
+
+.wc-ResetOffsetBottom {
+  margin-bottom: 0;
+}
+
+.wc-ResetOffsetTop {
+  margin-top: 0;
+}
+
+/*---------- Utilities Text ----------*/
+
+.wc-TextCenter {
+  text-align: center;
+}
