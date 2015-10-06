@@ -105,6 +105,13 @@ class TestURLs(unittest.TestCase):
         result = '[{"labels": [{"name": "bug"}, {"name": "help wanted"}], "id": 0, "title": "fake bug 0"}, {"labels": [], "id": 1, "title": "fake bug 1"}]'
         self.assertEqual(filter_new(issues), result)
 
+    def test_labeler_webhook(self):
+        '''Test that the labeler webhook can respond to ping event.'''
+        headers = {'X-GitHub-Event': 'ping'}
+        rv = self.app.get('/webhooks/labeler', headers=headers)
+        self.assertEqual(rv.status_code, 403)
+        rv = self.app.post('/webhooks/labeler', headers=headers)
+        self.assertEqual(rv.data, 'pong')
 
 if __name__ == '__main__':
     unittest.main()
