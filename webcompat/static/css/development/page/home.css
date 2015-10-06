@@ -11,14 +11,11 @@
 }
 
 #howitworks,
-#join,
-#browse-issues {
+#join {
   padding-top: 3em;
   padding-bottom:3em;
 }
-#browse-issues {
-  padding-bottom: 2em;
-}
+
 .Threesteps {
   padding: 1em 0;
 }
