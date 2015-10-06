@@ -25,7 +25,7 @@ def hooklistener():
     '''Listen for the "issues" webhook event, parse the body,
        post back labels. But only do that for the 'opened' action.'''
     if request.method == 'GET':
-        return abort(403)
+        abort(403)
     elif (request.method == 'POST' and
             request.headers.get('X-GitHub-Event') == 'issues'):
         payload = json.loads(request.data)
@@ -33,9 +33,11 @@ def hooklistener():
             issue_body = payload.get('issue')['body']
             issue_number = payload.get('issue')['number']
             parse_and_set_label(issue_body, issue_number)
-            return 'gracias, amigo.'
+            return ('gracias, amigo.', 200)
         else:
-            return 'cool story, bro.'
+            return ('cool story, bro.', 200)
     elif (request.method == 'POST' and
             request.headers.get('X-GitHub-Event') == 'ping'):
-        return 'pong'
+        return ('pong', 200)
+    else:
+        abort(403)
