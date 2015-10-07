@@ -34,10 +34,6 @@ ISSUES_PATH = app.config['ISSUES_REPO_URI']
 REPO_PATH = ISSUES_PATH[:-7]
 
 
-def get_username():
-    return session.get('username', 'proxy-user')
-
-
 @api.route('/issues/<int:number>')
 def proxy_issue(number):
     '''XHR endpoint to get issue data from GitHub.
@@ -143,7 +139,7 @@ def get_issue_category(issue_category):
 
 @api.route('/issues/search')
 @limiter.limit('30/minute',
-               key_func=lambda: get_username())
+               key_func=lambda: session.get('username', 'proxy-user'))
 def get_search_results(query_string=None, params=None):
     '''XHR endpoint to get results from GitHub's Search API.
 
