@@ -140,12 +140,14 @@ def index():
         # copy the form so we can add the full UA string to it.
         form = request.form.copy()
         # see https://github.com/webcompat/webcompat.com/issues/688
-        if ('facebook' or 'fb.com') in form.get('url'):
-            msg = (u'Anonymous reporting for Facebook.com is temporarily '
-                   'disabled. Please see https://github.com/webcompat/we'
-                   'bcompat.com/issues/688 for more details.')
-            flash(msg, 'notimeout')
-            return redirect(url_for('index'))
+        spamlist = ['facebook', 'fb.com']
+        for spam in spamlist:
+            if spam in form.get('url'):
+                msg = (u'Anonymous reporting for Facebook.com is temporarily '
+                       'disabled. Please see https://github.com/webcompat/we'
+                       'bcompat.com/issues/688 for more details.')
+                flash(msg, 'notimeout')
+                return redirect(url_for('index'))
         form['ua_header'] = ua_header
         # Do we have an image ready to be uploaded?
         image = request.files['image']
