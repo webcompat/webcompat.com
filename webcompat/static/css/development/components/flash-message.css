@@ -17,6 +17,7 @@
   /* states */
   .wc-FlashMessage.is-active {
     display:block;
+    z-index: 2;
   }
   /* error */
   .wc-FlashMessage--error {
