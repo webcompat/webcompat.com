@@ -1,3 +1,11 @@
+## 1.9.1
+
+* Block fb.com as a spam domain. No issue.
+* Fix code comment overflow [Pull #748](https://github.com/webcompat/webcompat.com/pull/748)
+* Fix autofocus issue in homepage search on iOS [Pull #744](https://github.com/webcompat/webcompat.com/pull/744) [Issue #743](https://github.com/webcompat/webcompat.com/issues/743)
+* Add dropdown to user avatar for navbar [Pull #738](https://github.com/webcompat/webcompat.com/pull/738)
+* Make some helper login/logout methods for functional testing [Pull #735](https://github.com/webcompat/webcompat.com/pull/735) [Issue #718](https://github.com/webcompat/webcompat.com/issues/718)
+
 ## 1.9.0
 
 * Improve the QR code layout [Pull #691](https://github.com/webcompat/webcompat.com/pull/691)
