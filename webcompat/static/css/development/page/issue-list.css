@@ -2,78 +2,78 @@
 
 
 /* Main class */
-.IssueList {
+.wc-IssueList {
   font-size:var(--base-font-size);
 }
 /* Main page title */
-.IssueList-title {}
+.wc-IssueList-title {}
 /*Search issues */
-.IssueList-search {
+.wc-IssueSearch {
   background-color:#F7F7F7;
   padding-top:1.5em;
   padding-bottom:1.5em;
 }
-  .IssueList-search-content {
+  .wc-IssueSearch-content {
     display:flex;
   }
-  .IssueList-search-form {
+  .wc-IssueSearch-form {
     background-color:#F7F7F7;
     width:100%;
     font-size:1.5em;
     font-weight:400;
     border:none;
   }
-    .IssueList-search-form::placeholder {
+    .wc-IssueSearch-form::placeholder {
       color:#999898;
       font-weight:400;
       font-size:0.8em;
     }
   /* button */
-  .IssueList-search-button {
+  .wc-IssueSearch-button {
     width: 1.5em;
     font-size: 1.5em;
     cursor: pointer;
     opacity: 0.8;
   }
-    .IssueList-search-button:hover {
+    .wc-IssueSearch-button:hover {
       opacity:1;
     }
 
 /* Sorting issues */
-.IssueList-sorting {
+.wc-IssueSorting {
   background-color:#F0F0F0;
   padding:3em 0 .5em 0;
 }
 
 /* List of issue */
-.IssueList-displayed {
+.wc-IssueList-displayed {
   background-color:#F0F0F0;
 }
 /* no resultats */
-.IssueList-noResults {
+.wc-IssueList-noResults {
   font-size:1.5em;
 }
   /* title */
-  .IssueList-noResults-title {
+  .wc-IssueList-noResults-title {
     font-weight:600;
     margin-bottom:1em;
   }
   /* list*/
-  .IssueList-noResults-list {
+  .wc-IssueList-noResults-list {
     list-style-position: inside;
     margin: 0 0 1em 1em;
     font-size: 0.7em;
   }
     /* list item */
-    .IssueList-noResults-list-item {
+    .wc-IssueList-noResults-list-item {
       padding: .3em 0;
     }
     /* modifier : label */
-    .IssueList-noResults-list-item--label {
+    .wc-IssueList-noResults-list-item--label {
       list-style: none;
       padding-top:.8em;
     }
     /* labels item */
-    .IssueList-noResults-list-labelsItem {
+    .wc-IssueList-noResults-list-labelsItem {
       display:inline-block;
     }

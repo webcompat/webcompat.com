@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
 {% block body %}
-  <div class="IssueList js-issue-page" data-username="{{ session.username }}">
+  <div class="wc-IssueList js-issue-page" data-username="{{ session.username }}">
   {% include "shared/nav.html" %}
   <main role="main">
     <div class="wc-Loader js-loader"></div>
@@ -29,19 +29,19 @@
       </div>
       </script>
     </div>
-    <div class="IssueList-search js-issuelist-search">
+    <div class="wc-IssueSearch js-issuelist-search">
       <script type="text/template" id="issuelist-search-tmpl">
-      <div class="wc-content IssueList-search-content">
+      <div class="wc-content wc-IssueSearch-content">
         <label for="IssueList-search-input" class="wc-sronly">Search By Keyword</label>
-        <input type="text" id="IssueList-search-input" class="IssueList-search-form mousetrap" placeholder="Search by keyword">
-        <button role="button" type="submit" class="r-ResetButton IssueList-search-button js-search-button">
+        <input type="text" id="IssueList-search-input" class="wc-IssueSearch-form mousetrap" placeholder="Search by keyword">
+        <button role="button" type="submit" class="r-ResetButton wc-IssueSearch-button js-search-button">
           <span class="wc-sronly">Search</span>
           <span class="wc-Icon wc-Icon--search" aria-hidden="true"></span>
         </button>
       </div>
       </script>
     </div>
-    <div class="IssueList-sorting">
+    <div class="wc-IssueSorting">
       <div class="wc-content">
         <div class="r-Grid">
           <div class="r-Grid-cell r-all--1of2">
@@ -59,7 +59,7 @@
         </div>
       </div>
     </div>
-    <div class="IssueList-displayed">
+    <div class="wc-IssueList-displayed">
       <div class="wc-content js-issue-list">
         <script type="text/template" id="issuelist-issue-tmpl">
         <% if (issues.length) { %>
@@ -83,24 +83,24 @@
           </div>
           <% }); %>
         <% } else { %>
-          <div class="IssueList-noResults">
-            <div class="IssueList-noResults-title">Sorry, no results were found.</div>
-             <ul class="IssueList-noResults-list">
-               <li class="IssueList-noResults-list-item">Check your spelling</li>
-               <li class="IssueList-noResults-list-item">Try a more general search</li>
-               <li class="IssueList-noResults-list-item">Filter by popular labels</li>
-               <li class="IssueList-noResults-list-item IssueList-noResults-list-item--label">
-                 <ul class="r-ResetList IssueList-noResults-list-labels">
-                   <li class="IssueList-noResults-list-labelsItem js-issue-label" >
+          <div class="wc-IssueList-noResults">
+            <div class="wc-IssueList-noResults-title">Sorry, no results were found.</div>
+             <ul class="wc-IssueList-noResults-list">
+               <li class="wc-IssueList-noResults-list-item">Check your spelling</li>
+               <li class="wc-IssueList-noResults-list-item">Try a more general search</li>
+               <li class="wc-IssueList-noResults-list-item">Filter by popular labels</li>
+               <li class="wc-IssueList-noResults-list-item wc-IssueList-noResults-list-item--label">
+                 <ul class="r-ResetList wc-IssueList-noResults-list-labels">
+                   <li class="wc-IssueList-noResults-list-labelsItem js-issue-label" >
                      <a class="wc-Labels" href="#" title="Labels : android" style="border-color: #48DE20">android</a>
                     </li>
-                   <li class="IssueList-noResults-list-labelsItem js-issue-label">
+                   <li class="wc-IssueList-noResults-list-labelsItem js-issue-label">
                      <a class="wc-Labels" href="#" title="Labels : chrome" style="border-color: #FFA500">chrome</a>
                     </li>
-                   <li class="IssueList-noResults-list-labelsItem js-issue-label">
+                   <li class="wc-IssueList-noResults-list-labelsItem js-issue-label">
                      <a class="wc-Labels" href="#" title="Labels : firefox" style="border-color: #E50000">firefox</a>
                    </li>
-                   <li class="IssueList-noResults-list-labelsItem js-issue-label">
+                   <li class="wc-IssueList-noResults-list-labelsItem js-issue-label">
                      <a class="wc-Labels" href="#" title="Labels : ie" style="border-color: #3E8AE5">ie</a>
                     </li>
                  </ul>
