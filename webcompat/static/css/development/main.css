@@ -38,6 +38,8 @@
 @import "components/search-bar.css";
 @import "components/dropdown-header.css";
 @import "components/issue-list.css";
+@import "components/issue-search.css";
+
 
 /*----------Layout----------*/
 @import "layout/body.css";
