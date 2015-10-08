@@ -1,135 +1,43 @@
 {% extends "layout.html" %}
 {% block body %}
-  <div class="wc-IssueList js-issue-page" data-username="{{ session.username }}">
+<div class="wc-IssueList js-issue-page" data-username="{{ session.username }}">
   {% include "shared/nav.html" %}
   <main role="main">
+
     <div class="wc-Loader js-loader"></div>
+    
     <div class="wc-content wc-content--body js-issuelist-filter">
-      <script type="text/template" id="issuelist-filter-tmpl">
-      <div class="wc-Dropdown wc-Dropdown--large js-dropdown-wrapper"></div>
-      <div>
-        <button type="button" class="wc-Filter wc-Filter--new js-filter-button" data-filter="new">
-          <span class="wc-Filter-count"></span> New Issues</span>
-        </button>
-        <button type="button" class="wc-Filter wc-Filter--needsDiagnosis js-filter-button" data-filter="needsdiagnosis">
-          <span class="wc-Filter-count"></span> Needs Diagnosis</span>
-        </button>
-        <button type="button" class="wc-Filter wc-Filter--needsContact js-filter-button" data-filter="needscontact">
-          <span class="wc-Filter-count"></span> Needs Contact</span>
-        </button>
-        <button type="button" class="wc-Filter wc-Filter--ready js-filter-button" data-filter="contactready">
-          <span class="wc-Filter-count"></span> Ready for outreach</span>
-        </button>
-        <button type="button" class="wc-Filter wc-Filter--sitewait js-filter-button" data-filter="sitewait">
-          <span class="wc-Filter-count"></span> Site contacted</span>
-        </button>
-        <button type="button" class="wc-Filter wc-Filter--close js-filter-button" data-filter="closed">
-          <span class="wc-Filter-count"></span> Closed</span>
-        </button>
-      </div>
-      </script>
+      {% include "issue-list/issue-filter.html" %}
     </div>
-    <div class="wc-IssueSearch js-issuelist-search">
-      <script type="text/template" id="issuelist-search-tmpl">
-      <div class="wc-content wc-IssueSearch-content">
-        <label for="IssueList-search-input" class="wc-sronly">Search By Keyword</label>
-        <input type="text" id="IssueList-search-input" class="wc-IssueSearch-form mousetrap" placeholder="Search by keyword">
-        <button role="button" type="submit" class="r-ResetButton wc-IssueSearch-button js-search-button">
-          <span class="wc-sronly">Search</span>
-          <span class="wc-Icon wc-Icon--search" aria-hidden="true"></span>
-        </button>
-      </div>
-      </script>
+
+    <div class="wc-IssueList-search js-issuelist-search">
+      {% include "issue-list/issue-search.html" %}
     </div>
-    <div class="wc-IssueSorting">
-      <div class="wc-content">
-        <div class="r-Grid">
-          <div class="r-Grid-cell r-all--1of2">
-            <div class="js-issue-sorting">
-              <script type="text/template" id="issuelist-sorting-tmpl">
-                <div class="wc-Dropdown js-dropdown-wrapper js-dropdown-pagination"></div>
-                <div class="wc-Dropdown js-dropdown-wrapper js-dropdown-sort"></div>
-              </script>
-            </div>
-          </div>
-          <div class="r-Grid-cell r-all--1of2">
-            <div class="wc-Pagination js-pagination-controls">
-              <a class="wc-Pagination-link js-pagination-previous" href="">previous</a>
-              <a class="wc-Pagination-link js-pagination-next" href="">next</a>
-            </div>
-          </div>
-        </div>
-      </div>
+
+    <div class="wc-IssueList-sorting">
+      {% include "issue-list/issue-sorting.html" %}
     </div>
+
     <div class="wc-IssueList-displayed">
-      <div class="wc-content js-issue-list">
-        <script type="text/template" id="issuelist-issue-tmpl">
-        <% if (issues.length) { %>
-          <% _.each(issues, function(issue) { %>
-          <div class="wc-IssueItem wc-IssueItem--<%= issue.stateClass %> wc-IssueItem--large">
-            <div class="wc-IssueItem-section">
-              <p class="wc-IssueItem-header">
-                <a href="/issues/<%= issue.number %>"><span class="wc-IssueItem-count">Issue <%= issue.number %></span>: <%- issue.title %></a>
-              </p>
-              <p>
-                <span class="wc-IssueItem-metadata">Opened: <time><%= issue.createdAt %></time></span>
-                <span class="wc-IssueItem-metadata">Comments: <%= issue.commentNumber %></span>
-              </p>
-            </div>
-            <div class="wc-IssueItem-section">
-              <span data-labels-map='<%= JSON.stringify(issue.labelsMap) %>' class="wc-IssueItem-label js-issue-label">
-              <% _.each(issue.labels, function(label) { %>
-                <a href="#" class="wc-Labels" title="Labels : <%= label.name %>"><%= label.name %></a>
-              <% }); %></span>
-            </div>
-          </div>
-          <% }); %>
-        <% } else { %>
-          <div class="wc-IssueList-noResults">
-            <div class="wc-IssueList-noResults-title">Sorry, no results were found.</div>
-             <ul class="wc-IssueList-noResults-list">
-               <li class="wc-IssueList-noResults-list-item">Check your spelling</li>
-               <li class="wc-IssueList-noResults-list-item">Try a more general search</li>
-               <li class="wc-IssueList-noResults-list-item">Filter by popular labels</li>
-               <li class="wc-IssueList-noResults-list-item wc-IssueList-noResults-list-item--label">
-                 <ul class="r-ResetList wc-IssueList-noResults-list-labels">
-                   <li class="wc-IssueList-noResults-list-labelsItem js-issue-label" >
-                     <a class="wc-Labels" href="#" title="Labels : android" style="border-color: #48DE20">android</a>
-                    </li>
-                   <li class="wc-IssueList-noResults-list-labelsItem js-issue-label">
-                     <a class="wc-Labels" href="#" title="Labels : chrome" style="border-color: #FFA500">chrome</a>
-                    </li>
-                   <li class="wc-IssueList-noResults-list-labelsItem js-issue-label">
-                     <a class="wc-Labels" href="#" title="Labels : firefox" style="border-color: #E50000">firefox</a>
-                   </li>
-                   <li class="wc-IssueList-noResults-list-labelsItem js-issue-label">
-                     <a class="wc-Labels" href="#" title="Labels : ie" style="border-color: #3E8AE5">ie</a>
-                    </li>
-                 </ul>
-               </li>
-             </ul>
-          </div>
-        <% } %>
-        <p class="wc-float-right wc-margin-bottom"><span class="wc-keyhint">G</span> takes you to the <a href="https://github.com/{{ config['ISSUES_REPO_URI'] }}">GitHub view</a> of this page.</p>
-        </script>
-      </div>
+      {% include "issue-list/issue-displayed.html" %}
     </div>
+
   </main>
-  </div>
+</div>
 
 <script type="text/template" id="dropdown-tmpl">
-<button type="button" class="wc-Dropdown-toggle js-dropdown-toggle">
-   <h1 class="wc-Dropdown-label"><%= dropdownTitle %></h1> <span class="wc-Icon wc-Icon--chevron-down"></span>
-</button>
-<ul class="wc-Dropdown-content js-dropdown-options" aria-hidden="false">
-  <% _.each(dropdownOptions, function(option) { %>
-  <li class="wc-Dropdown-item">
-    <a href="#" class="wc-Dropdown-link" data-params="<%= option.params %>">
-      <%= option.title %>
-    </a>
-  </li>
-  <% }); %>
-</ul>
+  <button type="button" class="wc-Dropdown-toggle js-dropdown-toggle">
+     <h1 class="wc-Dropdown-label"><%= dropdownTitle %></h1> <span class="wc-Icon wc-Icon--chevron-down"></span>
+  </button>
+  <ul class="wc-Dropdown-content js-dropdown-options" aria-hidden="false">
+    <% _.each(dropdownOptions, function(option) { %>
+    <li class="wc-Dropdown-item">
+      <a href="#" class="wc-Dropdown-link" data-params="<%= option.params %>">
+        <%= option.title %>
+      </a>
+    </li>
+    <% }); %>
+  </ul>
 </script>
 
 {% endblock %}

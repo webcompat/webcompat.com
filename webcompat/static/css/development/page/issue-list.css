@@ -8,7 +8,7 @@
 /* Main page title */
 .wc-IssueList-title {}
 /*Search issues */
-.wc-IssueSearch {
+.wc-IssueList-search {
   background-color:#F7F7F7;
   padding-top:1.5em;
   padding-bottom:1.5em;
@@ -40,7 +40,7 @@
     }
 
 /* Sorting issues */
-.wc-IssueSorting {
+.wc-IssueList-sorting {
   background-color:#F0F0F0;
   padding:3em 0 .5em 0;
 }
