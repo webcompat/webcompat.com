@@ -30,9 +30,11 @@ import webcompat.views
 # register blueprints
 from api.endpoints import api
 from api.uploads import uploads
+from webhooks import webhooks
 
-app.register_blueprint(api)
-app.register_blueprint(uploads)
+for blueprint in [api, uploads, webhooks]:
+    app.register_blueprint(blueprint)
+
 
 # Start Logging Handlers
 # See config.py for parameters
