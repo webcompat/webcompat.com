@@ -25,7 +25,7 @@ def api_post(endpoint, payload, issue):
 def parse_and_set_label(body, issue_number):
     '''Parse the labels from the body in comments like so:
     <!-- @browser: value -->. Currently this only handles a single label,
-    becuase that's all that we set in webcompat.com.
+    because that's all that we set in webcompat.com.
     '''
     match_list = re.search(r'<!--\s@(\w+):\s([^\d]+?)\s[\d\.]+\s-->', body)
     if match_list:
