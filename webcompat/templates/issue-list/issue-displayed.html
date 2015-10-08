@@ -1,0 +1,51 @@
+<div class="wc-content js-issue-list">
+  <script type="text/template" id="issuelist-issue-tmpl">
+  <% if (issues.length) { %>
+    <% _.each(issues, function(issue) { %>
+    <div class="wc-IssueItem wc-IssueItem--<%= issue.stateClass %> wc-IssueItem--large">
+      <div class="wc-IssueItem-section">
+        <p class="wc-IssueItem-header">
+          <a href="/issues/<%= issue.number %>"><span class="wc-IssueItem-count">Issue <%= issue.number %></span>: <%- issue.title %></a>
+        </p>
+        <p>
+          <span class="wc-IssueItem-metadata">Opened: <time><%= issue.createdAt %></time></span>
+          <span class="wc-IssueItem-metadata">Comments: <%= issue.commentNumber %></span>
+        </p>
+      </div>
+      <div class="wc-IssueItem-section">
+        <span class="wc-IssueItem-label js-issue-label">
+        <% _.each(issue.labels, function(label) { %>
+          <a href="#" class="wc-Labels" data-remotename="<%= label.remoteName %>" title="Labels : <%= label.name %>"><%= label.name %></a>
+        <% }); %></span>
+      </div>
+    </div>
+    <% }); %>
+  <% } else { %>
+    <div class="wc-IssueList-noResults">
+      <div class="wc-IssueList-noResults-title">Sorry, no results were found.</div>
+       <ul class="wc-IssueList-noResults-list">
+         <li class="wc-IssueList-noResults-list-item">Check your spelling</li>
+         <li class="wc-IssueList-noResults-list-item">Try a more general search</li>
+         <li class="wc-IssueList-noResults-list-item">Filter by popular labels</li>
+         <li class="wc-IssueList-noResults-list-item wc-IssueList-noResults-list-item--label">
+           <ul class="r-ResetList wc-IssueList-noResults-list-labels">
+             <li class="wc-IssueList-noResults-list-labelsItem js-issue-label" >
+               <a class="wc-Labels" href="#" title="Labels : android" style="border-color: #48DE20">android</a>
+              </li>
+             <li class="wc-IssueList-noResults-list-labelsItem js-issue-label">
+               <a class="wc-Labels" href="#" title="Labels : chrome" style="border-color: #FFA500">chrome</a>
+              </li>
+             <li class="wc-IssueList-noResults-list-labelsItem js-issue-label">
+               <a class="wc-Labels" href="#" title="Labels : firefox" style="border-color: #E50000">firefox</a>
+             </li>
+             <li class="wc-IssueList-noResults-list-labelsItem js-issue-label">
+               <a class="wc-Labels" href="#" title="Labels : ie" style="border-color: #3E8AE5">ie</a>
+              </li>
+           </ul>
+         </li>
+       </ul>
+    </div>
+  <% } %>
+  <p class="wc-float-right wc-margin-bottom"><span class="wc-keyhint">G</span> takes you to the <a href="https://github.com/{{ config['ISSUES_REPO_URI'] }}">GitHub view</a> of this page.</p>
+  </script>
+</div>
