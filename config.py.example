@@ -100,4 +100,4 @@ else:
 # If you don't want to create another user for testing, you could put in
 # your own access token. See
 # help.github.com/articles/creating-an-access-token-for-command-line-use
-BOT_OAUTH_TOKEN = os.environ.get('BOT_OAUTH_TOKEN') or ""
+OAUTH_TOKEN = os.environ.get('OAUTH_TOKEN') or ""
