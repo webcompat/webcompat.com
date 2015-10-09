@@ -2,7 +2,7 @@
   <script type="text/template" id="issuelist-issue-tmpl">
   <% if (issues.length) { %>
     <% _.each(issues, function(issue) { %>
-      {% include "shared/issue-item.html" %}
+      {% include "web_modules/issue-item.html" %}
     <% }); %>
   <% } else { %>
     <div class="wc-IssueList-noResults">
