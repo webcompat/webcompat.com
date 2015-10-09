@@ -1,26 +1,13 @@
+{% from "web_modules/dropdown.html" import dropdown with context %}
+
 <script type="text/template" id="issuelist-filter-tmpl">
     <div class="wc-IssueList-Dropdown">
-      <div class="wc-Dropdown wc-Dropdown--large js-dropdown-wrapper"></div>
+       {{ dropdown('large', 'js-dropdown-wrapper') }}
     </div>
     <div class="wc-IssueList-filter">
-      <button type="button" class="wc-Filter wc-Filter--new js-filter-button" data-filter="new">
-        <span class="wc-Filter-count"></span> New Issues</span>
-      </button>
-      <button type="button" class="wc-Filter wc-Filter--needsDiagnosis js-filter-button" data-filter="needsdiagnosis">
-        <span class="wc-Filter-count"></span> Needs Diagnosis</span>
-      </button>
-      <button type="button" class="wc-Filter wc-Filter--needsContact js-filter-button" data-filter="needscontact">
-        <span class="wc-Filter-count"></span> Needs Contact</span>
-      </button>
-      <button type="button" class="wc-Filter wc-Filter--ready js-filter-button" data-filter="contactready">
-        <span class="wc-Filter-count"></span> Ready for outreach</span>
-      </button>
-      <button type="button" class="wc-Filter wc-Filter--sitewait js-filter-button" data-filter="sitewait">
-        <span class="wc-Filter-count"></span> Site contacted</span>
-      </button>
-      <button type="button" class="wc-Filter wc-Filter--close js-filter-button" data-filter="closed">
-        <span class="wc-Filter-count"></span> Closed</span>
-      </button>
+      {% for Filter in Filters %}
+        {% include "web_modules/filter.html" %}
+      {% endfor %}
     </div>
 </script>
 

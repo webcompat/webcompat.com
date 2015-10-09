@@ -5,7 +5,7 @@
       <script type="text/template" id="issue-mentions-tmpl">
         <% if (issueMentions.length) { %>
           <% _.each(issueMentions, function(issue) { %>
-            {% include "shared/issue-item.html" %}
+            {% include "web_modules/issue-item.html" %}
           <% }); %>
         <% } else { %>
         <p>Nothing here currently.</p>
