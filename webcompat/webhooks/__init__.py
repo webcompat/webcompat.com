@@ -16,6 +16,7 @@ from flask import abort
 from flask import request
 
 from helpers import parse_and_set_label
+from helpers import dump_to_db
 
 webhooks = Blueprint('webhooks', __name__, url_prefix='/webhooks')
 
@@ -32,7 +33,9 @@ def hooklistener():
         if payload.get('action') == 'opened':
             issue_body = payload.get('issue')['body']
             issue_number = payload.get('issue')['number']
+            issue_title = payload.get('issue')['title']
             parse_and_set_label(issue_body, issue_number)
+            dump_to_db(issue_title, issue_body, issue_number)
             return ('gracias, amigo.', 200)
         else:
             return ('cool story, bro.', 200)

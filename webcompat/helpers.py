@@ -308,3 +308,20 @@ def get_comment_data(request_data):
     of a request's data object.'''
     comment_data = json.loads(request_data)
     return json.dumps({"body": comment_data['rawBody']})
+
+
+def extract_url(issue_body):
+    '''Extract the URL for an issue from WebCompat.
+
+    URL in webcompat.com bugs follow this pattern:
+    **URL**: https://example.com/foobar
+    '''
+    url_pattern = re.compile('\*\*URL\*\*\: (.*)\n')
+    url_match = re.search(url_pattern, issue_body)
+    if url_match:
+        url = url_match.group(1).strip()
+        if not url.startswith(('http://', 'https://')):
+            url = "http://%s" % url
+    else:
+        url = ""
+    return url
