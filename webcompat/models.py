@@ -12,11 +12,7 @@ from sqlalchemy.orm import scoped_session
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import String
 from uuid import uuid4
-from webcompat import engine
-
-db_session = scoped_session(sessionmaker(autocommit=False,
-                                         autoflush=False,
-                                         bind=engine))
+from db import db_session, engine
 
 Base = declarative_base()
 Base.query = db_session.query_property()

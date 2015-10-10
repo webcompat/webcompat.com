@@ -13,12 +13,9 @@ from flask.ext.cache import Cache
 from flask.ext.github import GitHub
 from flask.ext.limiter import Limiter
 from flask import Flask
-from sqlalchemy import create_engine
 
 app = Flask(__name__, static_url_path='')
 app.config.from_object('config')
-engine = create_engine('sqlite:///' + os.path.join(app.config['BASE_DIR'],
-                                                   'session.db'))
 
 cache = Cache(app)
 github = GitHub(app)
