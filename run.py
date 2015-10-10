@@ -60,15 +60,15 @@ def check_pip_deps():
     Make sure that the installed pip packages match what is in
     requirements.txt, prompting the user to upgrade if not.
     '''
-    req = subprocess.check_output(["cat", "requirements.txt"]).splitlines()
-    try:
-        pkg_resources.require(req)
-    except VersionConflict as e:
-        print(DEPS_VERSION_HELP % e)
-    except DistributionNotFound as e:
-        print(DEPS_NOTFOUND_HELP % e)
-    else:
-        return True
+    for req in open("requirements.txt"):
+        try:
+            pkg_resources.require(req)
+        except VersionConflict as e:
+            print(DEPS_VERSION_HELP % e)
+        except DistributionNotFound as e:
+            print(DEPS_NOTFOUND_HELP % e)
+        else:
+            return True
 
 
 def config_validator():
