@@ -8,8 +8,6 @@ from hashlib import sha512
 from sqlalchemy import Column
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Integer
-from sqlalchemy.orm import scoped_session
-from sqlalchemy.orm import sessionmaker
 from sqlalchemy import String
 from uuid import uuid4
 from db import db_session, engine
