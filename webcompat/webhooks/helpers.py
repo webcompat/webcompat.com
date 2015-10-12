@@ -15,7 +15,7 @@ from webcompat import app
 def api_post(endpoint, payload, issue):
     '''Helper method to post junk to GitHub.'''
     headers = {
-        'Authorization': 'token {0}'.format(app.config['BOT_OAUTH_TOKEN'])
+        'Authorization': 'token {0}'.format(app.config['OAUTH_TOKEN'])
     }
     uri = 'https://api.github.com/repos/{0}/{1}/{2}'.format(
         app.config['ISSUES_REPO_URI'], issue, endpoint)
