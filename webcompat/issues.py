@@ -16,7 +16,7 @@ from webcompat.form import build_formdata
 from webcompat import github
 
 REPO_URI = app.config['ISSUES_REPO_URI']
-BOT_TOKEN = app.config['BOT_OAUTH_TOKEN']
+OAUTH_TOKEN = app.config['OAUTH_TOKEN']
 AUTH_HEADERS = {'Authorization': 'token {0}'.format(BOT_TOKEN),
                 'User-Agent': 'webcompat/webcompat-bot'}
 
