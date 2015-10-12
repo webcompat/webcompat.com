@@ -24,8 +24,8 @@ except ImportError, e:
     raise ImportError('{0}\n\n{1}'.format(e, IMPORT_ERROR))
 
 
-BOT_HELP = '''
-The BOT_OAUTH_TOKEN is not configured in your config file.
+TOKEN_HELP = '''
+The OAUTH_TOKEN is not configured in your config file.
 You will need to set up one on github for testing your
 local developments.
 Read Instructions at
@@ -73,9 +73,9 @@ def check_pip_deps():
 
 def config_validator():
     '''Make sure the config file is ready.'''
-    # Checking if there is a bot configured
-    if app.config['BOT_OAUTH_TOKEN'] == '':
-        sys.exit(BOT_HELP)
+    # Checking if oauth token is configured
+    if app.config['OAUTH_TOKEN'] == '':
+        sys.exit(TOKEN_HELP)
 
 if __name__ == '__main__':
     # testing the config file
