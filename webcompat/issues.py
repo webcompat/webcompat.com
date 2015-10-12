@@ -17,7 +17,7 @@ from webcompat import github
 
 REPO_URI = app.config['ISSUES_REPO_URI']
 OAUTH_TOKEN = app.config['OAUTH_TOKEN']
-AUTH_HEADERS = {'Authorization': 'token {0}'.format(BOT_TOKEN),
+AUTH_HEADERS = {'Authorization': 'token {0}'.format(OAUTH_TOKEN),
                 'User-Agent': 'webcompat/webcompat-bot'}
 
 
