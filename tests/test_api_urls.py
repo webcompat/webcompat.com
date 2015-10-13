@@ -25,7 +25,9 @@ headers = {'HTTP_USER_AGENT': ('Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; '
 
 class TestAPIURLs(unittest.TestCase):
     def setUp(self):
-        webcompat.app.config['TESTING'] = True
+        # Switch to False here because we don't want to send the mocked
+        # Fixture data. Which is OK because these don't touch GitHub API data.
+        webcompat.app.config['TESTING'] = False
         self.app = webcompat.app.test_client()
 
     def tearDown(self):
