@@ -1,6 +1,9 @@
 <div class="wc-Issue">
   <div class="wc-content" id="user-mentioned-issues">
     <h2 class="wc-Title--l">Issues mentioning {{user}}</h2>
+    <div class="wc-IssueList-sorting">
+      {% include "issue-list/issue-sorting.html" %}
+    </div>
     <div id="issue-mentions" class="wc-Issue-content">
       <script type="text/template" id="issue-mentions-tmpl">
         <% if (issueMentions.length) { %>
