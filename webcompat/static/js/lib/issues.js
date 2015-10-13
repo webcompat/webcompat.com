@@ -12,6 +12,77 @@ if (!window.md) {
     linkify: true
   }).use(window.markdownitSanitizer).use(window.markdownitEmoji);
 }
+// Add links to @usernames and #issues
+md.linkify.add('@', {
+  validate: function (text, pos, self) {
+    var tail = text.slice(pos);
+
+    if (!self.re.gh_user) {
+      self.re.gh_user =  new RegExp(
+        '^([a-zA-Z0-9_-]){1,30}(?=$|' + self.re.src_ZPCc + ')'
+      );
+    }
+    if (self.re.gh_user.test(tail)) {
+      return tail.match(self.re.gh_user)[0].length;
+    }
+    return 0;
+  },
+  normalize: function (match) {
+    match.url = 'https://github.com/' + match.url.replace(/^@/, '');
+  }
+});
+
+md.linkify.add('#', {
+  validate: function (text, pos, self) {
+    var tail = text.slice(pos);
+
+    if (!self.re.hash_bug) {
+      self.re.hash_bug =  new RegExp(
+        '^([0-9])+(?=$|' + self.re.src_ZPCc + ')'
+      );
+    }
+    if (self.re.hash_bug.test(tail)) {
+      return tail.match(self.re.hash_bug)[0].length;
+    }
+    return 0;
+  },
+  normalize: function (match) {
+    match.url = '/issues/' + match.url.replace(/^#/, '');
+  }
+});
+// Add rel=nofollow to links
+var defaultLinkOpenRender = md.renderer.rules.link_open || function(tokens, idx, options, env, self) {
+  return self.renderToken(tokens, idx, options);
+};
+
+md.renderer.rules.link_open = function (tokens, idx, options, env, self) {
+  tokens[idx].attrPush(['rel', 'nofollow']);
+  // Transform link text for some well-known sites
+  if (tokens[idx].attrIndex('href')>-1) {
+    var link = tokens[idx].attrs[tokens[idx].attrIndex('href')][1];
+    var transformations = {
+      'https://bugzilla.mozilla.org/show_bug': 'Mozilla',
+      'https://bugs.webkit.org/show_bug': 'WebKit',
+      'https://code.google.com/p/chromium/issues/detail?': 'Chromium',
+      'https://github.com/': 'GitHub'
+    };
+    for (var bugtracker in transformations){
+      if (link.indexOf(bugtracker) > -1) {
+        var bugNumRx = /(\?id=|\/issues\/)(\d+)/, matches;
+        if (matches = link.match(bugNumRx)) {
+          for (var i = idx, theToken; theToken = tokens[i]; i++) { // find the token for link text
+            if (theToken.content === link) {
+              theToken.content = '#' + matches[2] + ' (' + transformations[bugtracker] + ')';
+              break;
+            }
+          }
+        }
+      }
+    }
+  }
+  // pass token to default renderer.
+  return defaultLinkOpenRender(tokens, idx, options, env, self);
+};
 
 issues.TitleView = Backbone.View.extend({
   el: $('.wc-IssueDetail-title'),
