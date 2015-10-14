@@ -27,7 +27,7 @@ from helpers import get_referer
 from helpers import get_user_info
 from helpers import set_referer
 from issues import report_issue
-from models import db_session
+from models import session_db
 from models import User
 
 from webcompat import app
@@ -38,7 +38,7 @@ from webcompat.api.uploads import upload
 
 @app.teardown_appcontext
 def shutdown_session(exception=None):
-    db_session.remove()
+    session_db.remove()
 
 
 @app.before_request
@@ -52,7 +52,7 @@ def before_request():
 
 @app.after_request
 def after_request(response):
-    db_session.remove()
+    session_db.remove()
     return response
 
 
@@ -99,8 +99,8 @@ def authorized(access_token):
     user = User.query.filter_by(access_token=access_token).first()
     if user is None:
         user = User(access_token)
-        db_session.add(user)
-    db_session.commit()
+        session_db.add(user)
+    session_db.commit()
     session['user_id'] = user.user_id
     if session.get('form_data', None) is not None:
         return redirect(url_for('file_issue'))

@@ -14,7 +14,7 @@ from sqlalchemy import String
 from uuid import uuid4
 
 Base = declarative_base()
-Base.query = db_session.query_property()
+Base.query = session_db.query_property()
 
 
 class User(Base):
