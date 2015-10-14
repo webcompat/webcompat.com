@@ -13,11 +13,6 @@ from db import issue_db
 from db import WCIssue
 from webcompat import app
 from webcompat.helpers import extract_url
-<<<<<<< HEAD
-=======
-from db import db_session, WCIssue
->>>>>>> Code for backing up incoming issues to a local db
-
 
 
 def api_post(endpoint, payload, issue):
