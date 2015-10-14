@@ -11,9 +11,9 @@ from sqlalchemy.orm import sessionmaker
 
 from webcompat import app
 
-engine = create_engine('sqlite:///' + os.path.join(app.config['BASE_DIR'],
+session_engine = create_engine('sqlite:///' + os.path.join(app.config['BASE_DIR'],
                                                    'session.db'))
 
-db_session = scoped_session(sessionmaker(autocommit=False,
+session_db = scoped_session(sessionmaker(autocommit=False,
                                          autoflush=False,
-                                         bind=engine))
+                                         bind=session_engine))

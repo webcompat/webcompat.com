@@ -4,13 +4,14 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
+from db import session_db
+from db import session_engine
 from hashlib import sha512
 from sqlalchemy import Column
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Integer
 from sqlalchemy import String
 from uuid import uuid4
-from db import db_session, engine
 
 Base = declarative_base()
 Base.query = db_session.query_property()
