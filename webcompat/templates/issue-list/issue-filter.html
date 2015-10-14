@@ -5,7 +5,7 @@
        {{ dropdown('large', 'js-dropdown-wrapper') }}
     </div>
     <div class="wc-IssueList-filter">
-      {% for Filter in Filters %}
+      {% for category in categories %}
         {% include "web_modules/filter.html" %}
       {% endfor %}
     </div>
