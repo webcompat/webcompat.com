@@ -9,9 +9,10 @@ import os
 import re
 import requests
 
+from db import issue_db
+from db import WCIssue
 from webcompat import app
 from webcompat.helpers import extract_url
-from db import db_session, WCIssue
 
 
 
@@ -52,5 +53,5 @@ def set_label(label, issue_number):
 
 def dump_to_db(title, body, issue_number):
     url = extract_url(body)
-    db_session.add(WCIssue(issue_number, title, url, body))
-    db_session.commit()
+    issue_db.add(WCIssue(issue_number, title, url, body))
+    issue_db.commit()
