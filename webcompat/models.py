@@ -31,4 +31,4 @@ class User(Base):
         self.user_id = sha512(access_token + uuid4().hex).hexdigest()[0:128]
 
 
-Base.metadata.create_all(bind=engine)
+Base.metadata.create_all(bind=session_engine)
