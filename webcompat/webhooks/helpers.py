@@ -9,7 +9,11 @@ import os
 import re
 import requests
 
+from db import issue_db
+from db import WCIssue
 from webcompat import app
+from webcompat.helpers import extract_url
+
 
 
 def api_post(endpoint, payload, issue):
@@ -45,3 +49,9 @@ def set_label(label, issue_number):
     # ['Label1', 'Label2']
     payload = [label]
     api_post('labels', payload, issue_number)
+
+
+def dump_to_db(title, body, issue_number):
+    url = extract_url(body)
+    issue_db.add(WCIssue(issue_number, title, url, body))
+    issue_db.commit()
