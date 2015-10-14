@@ -1,3 +1,11 @@
+## 1.9.2
+
+* Don't depend on POSIX `cat` to check dependencies. [Pull #759](https://github.com/webcompat/webcompat.com/pull/759) [Issue #758](https://github.com/webcompat/webcompat.com/issues/758)
+* Move db connection to dedicated module [Pull #757](https://github.com/webcompat/webcompat.com/pull/757)
+* Change `BOT_OAUTH_TOKEN` to `OAUTH_TOKEN` [Pull #756](https://github.com/webcompat/webcompat.com/pull/756) [Issue #754](https://github.com/webcompat/webcompat.com/issues/754)
+* Import issue labeler into webcompat app [Pull #752](https://github.com/webcompat/webcompat.com/pull/752) [Issue #751](https://github.com/webcompat/webcompat.com/issues/751)
+* Write helper methods for logging in and out for func tests [Pull #735](https://github.com/webcompat/webcompat.com/pull/735) [Issue #718](https://github.com/webcompat/webcompat.com/issues/718)
+
 ## 1.9.1
 
 * Block fb.com as a spam domain. No issue.
