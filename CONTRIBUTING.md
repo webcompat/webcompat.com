@@ -100,7 +100,7 @@ You'll probably want to [set up a local development environment](#working-enviro
 
 * If you want to discuss your code or ask questions, please comment in the corresponding issue. You can link to the code you have pushed to your repository to ask for code review.
 
-* When your code is ready to be integrated into the site, use the GitHub site to send a pull request to `webcompat.com:master`, aka the master branch of the repo you forked from. This will be the default choice.
+* When your code is ready to be integrated into the project, use the GitHub site to send a pull request to `webcompat.com:master`, aka the master branch of the repo you forked from. This will be the default choice.
 
 ![master](https://cldup.com/YVlLDGItPf-3000x3000.png)
 
