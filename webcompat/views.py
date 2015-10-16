@@ -135,35 +135,10 @@ def index():
             get_user_info()
         return render_template('index.html', form=bug_form,
                                browser=browser_name)
-    # Form submission.
+    # Validate, then create issue.
     elif bug_form.validate_on_submit():
-        # copy the form so we can add the full UA string to it.
-        form = request.form.copy()
-        # see https://github.com/webcompat/webcompat.com/issues/688
-        spamlist = ['facebook', 'fb.com']
-        for spam in spamlist:
-            if spam in form.get('url'):
-                msg = (u'Anonymous reporting for Facebook.com is temporarily '
-                       'disabled. Please see https://github.com/webcompat/we'
-                       'bcompat.com/issues/688 for more details.')
-                flash(msg, 'notimeout')
-                return redirect(url_for('index'))
-        form['ua_header'] = ua_header
-        # Do we have an image ready to be uploaded?
-        image = request.files['image']
-        if image:
-            form['image_upload'] = json.loads(upload()[0])
-        if form.get('submit-type') == AUTH_REPORT:
-            if g.user:  # If you're already authed, submit the bug.
-                response = report_issue(form)
-                return redirect(url_for('thanks',
-                                number=response.get('number')))
-            else:  # Stash form data into session, go do GitHub auth
-                session['form_data'] = form
-                return redirect(url_for('login'))
-        elif form.get('submit-type') == PROXY_REPORT:
-            response = report_issue(form, proxy=True).json()
-            return redirect(url_for('thanks', number=response.get('number')))
+        return create_issue()
+
     else:
         # Validation failed, re-render the form with the errors.
         return render_template('index.html', form=bug_form)
@@ -175,6 +150,37 @@ def show_issues():
     if g.user:
         get_user_info()
     return render_template('issue-list.html')
+
+
+@app.route('/issues/new', methods=['POST'])
+def create_issue():
+    # copy the form so we can add the full UA string to it.
+    form = request.form.copy()
+    # see https://github.com/webcompat/webcompat.com/issues/688
+    spamlist = ['facebook', 'fb.com']
+    for spam in spamlist:
+        if spam in form.get('url'):
+            msg = (u'Anonymous reporting for Facebook.com is temporarily '
+                   'disabled. Please see https://github.com/webcompat/we'
+                   'bcompat.com/issues/688 for more details.')
+            flash(msg, 'notimeout')
+            return redirect(url_for('index'))
+    form['ua_header'] = request.headers.get('User-Agent')
+    # Do we have an image ready to be uploaded?
+    image = request.files['image']
+    if image:
+        form['image_upload'] = json.loads(upload()[0])
+    if form.get('submit-type') == AUTH_REPORT:
+        if g.user:  # If you're already authed, submit the bug.
+            response = report_issue(form)
+            return redirect(url_for('thanks',
+                            number=response.get('number')))
+        else:  # Stash form data into session, go do GitHub auth
+            session['form_data'] = form
+            return redirect(url_for('login'))
+    elif form.get('submit-type') == PROXY_REPORT:
+        response = report_issue(form, proxy=True).json()
+        return redirect(url_for('thanks', number=response.get('number')))
 
 
 @app.route('/issues/<int:number>')
