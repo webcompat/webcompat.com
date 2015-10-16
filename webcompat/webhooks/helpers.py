@@ -9,10 +9,10 @@ import os
 import re
 import requests
 
-from db import issue_db
-from db import WCIssue
 from webcompat import app
 from webcompat.helpers import extract_url
+from webcompat.db import issue_db
+from webcompat.db import WCIssue
 
 
 def api_post(endpoint, payload, issue):
