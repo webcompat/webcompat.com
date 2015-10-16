@@ -78,6 +78,8 @@ All code contributions should come in the form of a [pull request](https://help.
 
 * Have a quick search through existing issues and pull requests so you don't waste any of your time.
 
+* If no existing issue covers the change you want to make, please [open a new issue](https://github.com/webcompat/webcompat.com/issues/new) before you start coding.
+
 * Fork repository
 
 ![master](http://f.cl.ly/items/1E3f0A0I2A2b3T2L2I2c/forked.png)
@@ -96,7 +98,9 @@ You'll probably want to [set up a local development environment](#working-enviro
 
 	`git push origin name-of-fix-branch`
 
-* In GitHub, send a pull request to `webcompat.com:master`, aka the master branch of the repo you forked from. This will be the default choice.
+* If you want to discuss your code or ask questions, please comment in the corresponding issue. You can link to the code you have pushed to your repository to ask for code review.
+
+* When your code is ready to be integrated into the project, use the GitHub site to send a pull request to `webcompat.com:master`, aka the master branch of the repo you forked from. This will be the default choice.
 
 ![master](https://cldup.com/YVlLDGItPf-3000x3000.png)
 
