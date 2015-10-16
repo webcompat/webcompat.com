@@ -1,0 +1,70 @@
+{
+  "_fixture": true,
+  "url": "https://api.github.com/repos/webcompat/webcompat-tests/issues/69",
+  "labels_url": "https://api.github.com/repos/webcompat/webcompat-tests/issues/69/labels{/name}",
+  "comments_url": "https://api.github.com/repos/webcompat/webcompat-tests/issues/69/comments",
+  "events_url": "https://api.github.com/repos/webcompat/webcompat-tests/issues/69/events",
+  "html_url": "https://github.com/webcompat/webcompat-tests/issues/69",
+  "id": 35330507,
+  "number": 69,
+  "title": "Upgrade browser message",
+  "user": {
+    "login": "miketaylr",
+    "id": 67283,
+    "avatar_url": "https://avatars.githubusercontent.com/u/67283?v=3",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/miketaylr",
+    "html_url": "https://github.com/miketaylr",
+    "followers_url": "https://api.github.com/users/miketaylr/followers",
+    "following_url": "https://api.github.com/users/miketaylr/following{/other_user}",
+    "gists_url": "https://api.github.com/users/miketaylr/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/miketaylr/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/miketaylr/subscriptions",
+    "organizations_url": "https://api.github.com/users/miketaylr/orgs",
+    "repos_url": "https://api.github.com/users/miketaylr/repos",
+    "events_url": "https://api.github.com/users/miketaylr/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/miketaylr/received_events",
+    "type": "User",
+    "site_admin": false
+  },
+  "labels": [
+    {
+      "url": "https://api.github.com/repos/webcompat/webcompat-tests/labels/status-contactready",
+      "name": "status-contactready",
+      "color": "d4c5f9"
+    },
+    {
+      "url": "https://api.github.com/repos/webcompat/webcompat-tests/labels/status-tacos",
+      "name": "status-tacos",
+      "color": "ededed"
+    }
+  ],
+  "state": "open",
+  "locked": true,
+  "assignee": null,
+  "milestone": null,
+  "comments": 0,
+  "created_at": "2014-06-09T22:17:03Z",
+  "updated_at": "2015-10-12T18:11:27Z",
+  "closed_at": null,
+  "body": "\r\n**URL**: www.💩.com\r\n**Browser**: Firefox\r\n**Version**: 30\r\n\r\nNote, I use this issue in my functional tests. So it looks spammy but isn't. :poodle: ",
+  "closed_by": {
+    "login": "webcompat-bot",
+    "id": 8862693,
+    "avatar_url": "https://avatars.githubusercontent.com/u/8862693?v=3",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/webcompat-bot",
+    "html_url": "https://github.com/webcompat-bot",
+    "followers_url": "https://api.github.com/users/webcompat-bot/followers",
+    "following_url": "https://api.github.com/users/webcompat-bot/following{/other_user}",
+    "gists_url": "https://api.github.com/users/webcompat-bot/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/webcompat-bot/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/webcompat-bot/subscriptions",
+    "organizations_url": "https://api.github.com/users/webcompat-bot/orgs",
+    "repos_url": "https://api.github.com/users/webcompat-bot/repos",
+    "events_url": "https://api.github.com/users/webcompat-bot/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/webcompat-bot/received_events",
+    "type": "User",
+    "site_admin": false
+  }
+}
