@@ -2,21 +2,30 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-var userActivity = userActivity || {};
 var issues = issues || {};
-userActivity.user = $('body').data('username');
+var issueList = issueList || {};
+issueList.user = $('body').data('username');
 
-userActivity.MyIssuesCollection = Backbone.Collection.extend({
-  model: issues.Issue,
-  url: '/api/issues/' + userActivity.user + '/creator?per_page=10'
+
+// UserActivityCollection inherits from IssueCollection, which doesn't set
+// its url property directly. So we need to be sure to construct that from
+// path and params manually.
+issueList.UserActivityCollection = issueList.IssueCollection.extend({
+  initialize: function(options) {
+    this.url = '/api/issues/' + issueList.user + options.path +
+               '?' + options.params;
+  }
 });
 
-userActivity.MyIssuesView = Backbone.View.extend({
+issueList.MyIssuesView = Backbone.View.extend({
   el: $('#my-issues'),
   initialize: function() {
     var self = this;
     var headersBag = {headers: {'Accept': 'application/json'}};
-    this.issues = new userActivity.MyIssuesCollection();
+    this.issues = new issueList.UserActivityCollection({
+      path: '/creator',
+      params: 'per_page=10'
+    });
     this.issues.fetch(headersBag).success(function() {
       self.render();
     }).error(function(){});
@@ -30,17 +39,15 @@ userActivity.MyIssuesView = Backbone.View.extend({
   }
 });
 
-userActivity.IssueMentionsCollection = Backbone.Collection.extend({
-  model: issues.Issue,
-  url: '/api/issues/' + userActivity.user + '/mentioned?per_page=10'
-});
-
-userActivity.IssueMentionsView = Backbone.View.extend({
+issueList.IssueMentionsView = Backbone.View.extend({
   el: $('#issue-mentions'),
   initialize: function() {
     var self = this;
     var headersBag = {headers: {'Accept': 'application/json'}};
-    this.issues = new userActivity.IssueMentionsCollection();
+    this.issues = new issueList.UserActivityCollection({
+      path: '/mentioned',
+      params: 'per_page=10'
+    });
     this.issues.fetch(headersBag).success(function() {
       self.render();
     }).error(function(){});
@@ -56,6 +63,6 @@ userActivity.IssueMentionsView = Backbone.View.extend({
 
 
 $(function(){
-  new userActivity.MyIssuesView();
-  new userActivity.IssueMentionsView();
+  new issueList.MyIssuesView();
+  new issueList.IssueMentionsView();
 });
