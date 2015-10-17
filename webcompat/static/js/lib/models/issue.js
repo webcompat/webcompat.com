@@ -160,11 +160,11 @@ issueList.Issue = issues.Issue.extend({});
 issueList.IssueCollection = Backbone.Collection.extend({
   model: issueList.Issue,
   /* the url property is set in issueList.IssueView#fetchAndRenderIssues */
-  initialize: function() {
+  initialize: function(options) {
     // set defaults
-    this.params = {page: 1, per_page: 50, state: 'open', stage: 'all',
-                   sort: 'created', direction: 'desc'};
-    this.path = '/api/issues';
+    this.params = options && options.params || {page: 1, per_page: 50,
+      state: 'open', stage: 'all', sort: 'created', direction: 'desc'};
+    this.path = options && options.path || '/api/issues';
   },
   parse: function(response, jqXHR) {
     if (jqXHR.xhr.getResponseHeader('Link') != null) {
