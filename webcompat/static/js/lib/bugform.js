@@ -95,6 +95,11 @@ function BugForm() {
     var splitImg = this.uploadField.val().split('.');
     var ext = splitImg[splitImg.length - 1];
     var allowed = ['jpg', 'jpeg', 'jpe', 'png', 'gif', 'bmp'];
+    // Bail if there's no image.
+    if (!this.uploadField.val()) {
+      return;
+    }
+
     if (!_.includes(allowed, ext)) {
       this.makeInvalid('image');
     } else {
