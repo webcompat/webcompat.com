@@ -9,6 +9,8 @@ function BugForm() {
   this.problemType = $('[name=problem_category]');
   this.submitButtons = $('.js-ReportForm button.Button');
   this.loadingIndicator = $('.js-loader');
+  this.reportButton = $('#report-bug');
+
   this.inputMap = {
     'url': {
       'elm': this.urlField, // elm is a jQuery object
@@ -39,6 +41,10 @@ function BugForm() {
     this.submitButtons.on('click', _.bind(function() {
       this.loadingIndicator.show();
     }, this));
+
+    // See if the user already has a valid form
+    // (after a page refresh, back button, etc.)
+    this.checkForm();
   };
 
   this.checkParams = function() {
@@ -103,6 +109,23 @@ function BugForm() {
       this.makeInvalid('url');
     } else {
       this.makeValid('url');
+    }
+  };
+
+  this.checkForm = function() {
+    var hasInput = false;
+    // Run through and see if there's any user input in the
+    // required inputs
+    var inputs = [this.problemType.filter(':checked').length,
+                  this.urlField.val(),
+                  this.uploadField.val()];
+    if (_.some(inputs, Boolean)) {
+      // then, check validity
+      this.checkURLValidity();
+      this.checkProblemTypeValidity();
+      this.checkImageTypeValidity();
+      // and open the form
+      this.reportButton.click();
     }
   };
 
