@@ -8,7 +8,7 @@ userActivity.user = $('body').data('username');
 
 userActivity.MyIssuesCollection = Backbone.Collection.extend({
   model: issues.Issue,
-  url: '/api/issues/' + userActivity.user + '/creator'
+  url: '/api/issues/' + userActivity.user + '/creator?per_page=10'
 });
 
 userActivity.MyIssuesView = Backbone.View.extend({
@@ -32,7 +32,7 @@ userActivity.MyIssuesView = Backbone.View.extend({
 
 userActivity.IssueMentionsCollection = Backbone.Collection.extend({
   model: issues.Issue,
-  url: '/api/issues/' + userActivity.user + '/mentioned'
+  url: '/api/issues/' + userActivity.user + '/mentioned?per_page=10'
 });
 
 userActivity.IssueMentionsView = Backbone.View.extend({

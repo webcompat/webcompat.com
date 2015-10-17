@@ -96,7 +96,7 @@ def proxy_issues():
 
 @api.route('/issues/<username>/<parameter>')
 def get_user_activity_issues(username, parameter):
-    '''API endpoint to return all issues that given user reported.
+    '''API endpoint to return issues related to a user.
 
     cf. https://developer.github.com/v3/issues/#list-issues-for-a-repository
     This is only used for "creator" and "mentioned" right now.
