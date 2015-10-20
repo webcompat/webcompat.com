@@ -44,6 +44,7 @@ module.exports = function(grunt) {
       issueList: {
         src: [
           '<%= jsPath %>/lib/models/issue.js',
+          '<%= jsPath %>/lib/mixins/pagination.js',
           '<%= jsPath %>/lib/issue-list.js'
         ],
         dest: '<%= jsPath %>/issue-list.js'

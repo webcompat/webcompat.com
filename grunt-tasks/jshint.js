@@ -27,6 +27,7 @@ module.exports = function(grunt) {
           md: true,
           moment: true,
           Mousetrap: true,
+          PaginationMixin: true,
           Prism: true,
           qr: true,
           repoPath: true,
