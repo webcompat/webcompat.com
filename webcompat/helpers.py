@@ -44,7 +44,8 @@ def bust_cache(file_path):
 
     Uses a simple cache_dict to we don't have to hash each file for every
     request. This is kept in-memory so it will be blown away when the app
-    is restarted (which is when file changes would have been deployed).'''
+    is restarted (which is when file changes would have been deployed).
+    '''
     def get_checksum(file_path):
         try:
             checksum = cache_dict[file_path]

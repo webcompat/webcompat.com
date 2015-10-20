@@ -11,8 +11,8 @@ See https://developer.github.com/webhooks/ for what is possible.'''
 
 import json
 
-from flask import Blueprint
 from flask import abort
+from flask import Blueprint
 from flask import request
 
 from helpers import dump_to_db
@@ -23,8 +23,11 @@ webhooks = Blueprint('webhooks', __name__, url_prefix='/webhooks')
 
 @webhooks.route('/labeler', methods=['GET', 'POST'])
 def hooklistener():
-    '''Listen for the "issues" webhook event, parse the body,
-       post back labels. But only do that for the 'opened' action.'''
+    '''Listen for the "issues" webhook event, parse the body
+
+       Method posts back labels and dumps data to a local db.
+       Only in response to the 'opened' action, though.
+    '''
     if request.method == 'GET':
         abort(403)
     elif (request.method == 'POST' and
