@@ -49,11 +49,11 @@ class WCIssue(Base):
 
 Base.metadata.create_all(bind=issue_engine)
 
-Base = declarative_base()
-Base.query = session_db.query_property()
+Base2 = declarative_base()
+Base2.query = session_db.query_property()
 
 
-class User(Base):
+class User(Base2):
     __tablename__ = 'users'
 
     user_id = Column(String(128), unique=True, primary_key=True)
@@ -67,4 +67,4 @@ class User(Base):
         self.user_id = sha512(access_token + uuid4().hex).hexdigest()[0:128]
 
 
-Base.metadata.create_all(bind=session_engine)
+Base2.metadata.create_all(bind=session_engine)
