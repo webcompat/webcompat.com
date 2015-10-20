@@ -36,13 +36,13 @@ Base.query = issue_db.query_property()
 class WCIssue(Base):
     __tablename__ = 'webcompat_issues'
 
-    id = Column(String(128), unique=True, primary_key=True)
+    issue_id = Column(String(128), unique=True, primary_key=True)
     summary = Column(String(256))
     url = Column(String(1024))
     body = Column(String(2048))
 
-    def __init__(self, id, summary, url, body):
-        self.id = id
+    def __init__(self, issue_id, summary, url, body):
+        self.issue_id = issue_id
         self.summary = summary
         self.url = url
         self.body = body
