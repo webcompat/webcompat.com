@@ -106,11 +106,13 @@ def get_user_activity_issues(username, parameter):
     '''
     if not g.user:
         abort(401)
-    path = 'repos/{path}?{param}={user}&state=all'.format(path=ISSUES_PATH,
-                                                          param=parameter,
-                                                          user=username)
+    # copy the params so we can add to the dict.
+    params = request.args.copy()
+    params['state'] = 'all'
+    params['{0}'.format(parameter)] = '{0}'.format(username)
     request_headers = get_request_headers(g.request_headers)
-    issues = github.raw_request('GET', path, headers=request_headers)
+    issues = github.raw_request('GET', 'repos/{path}'.format(path=ISSUES_PATH),
+                                headers=request_headers, params=params)
     return (issues.content, issues.status_code, get_headers(issues))
 
 
