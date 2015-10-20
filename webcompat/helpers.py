@@ -5,10 +5,11 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 import datetime
-import json
 import hashlib
+import json
 import math
 import os
+import re
 import urlparse
 
 from babel.dates import format_timedelta
