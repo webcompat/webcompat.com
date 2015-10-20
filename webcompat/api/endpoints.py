@@ -18,7 +18,6 @@ from flask import session
 
 
 from webcompat import app
-from webcompat import cache
 from webcompat import github
 from webcompat import limiter
 from webcompat.helpers import get_comment_data
@@ -157,8 +156,6 @@ def get_search_results(query_string=None, params=None):
 
     This method can take a query_string argument, to be called from other
     endpoints, or the query_string can be passed in via the Request object.
-
-    Not cached.
     '''
     params = params or request.args.copy()
     query_string = query_string or params.get('q')
@@ -258,12 +255,8 @@ def modify_labels(number):
 
 
 @api.route('/issues/labels')
-@cache.cached(timeout=600)
 def get_repo_labels():
-    '''XHR endpoint to get all possible labels in a repo.
-
-    Cached for 10 minutes.
-    '''
+    '''XHR endpoint to get all possible labels in a repo.'''
     if g.user:
         request_headers = get_request_headers(g.request_headers)
         path = 'repos/{0}/labels'.format(REPO_PATH)
