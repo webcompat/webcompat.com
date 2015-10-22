@@ -1,3 +1,10 @@
+## 1.9.3
+
+* Add `/issues/new` route for issue creation. [Pull #770](https://github.com/webcompat/webcompat.com/pull/770) [Issue #317](https://github.com/webcompat/webcompat.com/issues/317)
+* Remove caching for labels (and Flask-Cache) [Pull #782](https://github.com/webcompat/webcompat.com/pull/782) [Issue #773](https://github.com/webcompat/webcompat.com/issues/773)
+* Perform form validation on page load [Pull #779](https://github.com/webcompat/webcompat.com/pull/779) [Issue #769](https://github.com/webcompat/webcompat.com/issues/769)
+* Escape label names [Pull #790](https://github.com/webcompat/webcompat.com/pull/790) [Issue #789](https://github.com/webcompat/webcompat.com/issues/789)
+
 ## 1.9.2
 
 * Don't depend on POSIX `cat` to check dependencies. [Pull #759](https://github.com/webcompat/webcompat.com/pull/759) [Issue #758](https://github.com/webcompat/webcompat.com/issues/758)
