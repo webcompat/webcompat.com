@@ -52,7 +52,7 @@ issues.LabelList = Backbone.Model.extend({
     var namespaceMap = {};
     for(var i = 0, matches, theLabel; i < labelsArray.length; i++){
       // We assume we either have an object with .name or an array of strings
-      var theLabel = labelsArray[i].name || labelsArray[i];
+      theLabel = labelsArray[i].name || labelsArray[i];
       matches = theLabel.match(this.get('namespaceRegex'));
       if(matches) {
         namespaceMap[matches[2]] = matches[1];
@@ -67,10 +67,10 @@ issues.LabelList = Backbone.Model.extend({
           list[i] = labelsArray[i];
           list[i].remoteName = list[i].name;
         } else {
-          list[i] = {'name': theLabel}
+          list[i] = {'name': theLabel};
         }
       }
-    };
+    }
     this.set('labels', list);
     this.set('namespaceMap', namespaceMap);
   },
@@ -149,7 +149,6 @@ issues.LabelsView = Backbone.View.extend({
     this.$el.html(this.template(this.model.toJSON()));
   },
   fetchLabels: function() {
-    var headersBag = {headers: {'Accept': 'application/json'}};
     this.editorButton = $('.LabelEditor-launcher');
     this.labelEditor = new issues.LabelEditorView({
       model: issues.allLabels,
