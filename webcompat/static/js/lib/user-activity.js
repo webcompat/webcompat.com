@@ -58,11 +58,7 @@ issueList.MyIssuesView = Backbone.View.extend(
       params: 'per_page=10'
     });
     PaginationMixin.initMixin(this, this.issues);
-    this._loadingIndicator.addClass('is-active');
-    this.issues.fetch(headersBag).success(_.bind(function() {
-      this._loadingIndicator.removeClass('is-active');
-      this.render();
-    }, this)).error(function(){});
+    this.fetchAndRenderIssues({url:this.issues.url});
   },
   template: _.template($('#my-issues-tmpl').html()),
   render: function() {
@@ -89,10 +85,7 @@ issueList.IssueMentionsView = Backbone.View.extend({
     });
 
     this._loadingIndicator.addClass('is-active');
-    this.issues.fetch(headersBag).success(_.bind(function() {
-      this._loadingIndicator.removeClass('is-active');
-      this.render();
-    }, this)).error(function(){});
+    this.fetchAndRenderIssues({url:this.issues.url});
   },
   template: _.template($('#issue-mentions-tmpl').html()),
   render: function() {
