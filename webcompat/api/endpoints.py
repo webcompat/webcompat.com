@@ -250,7 +250,7 @@ def modify_labels(number):
     '''
     try:
         labels = proxy_request('put', '/{0}/labels'.format(number),
-                               data=request.data)
+           data=request.data)
         return (labels.content, labels.status_code, get_headers(labels))
     except GitHubError as e:
         print('GitHubError: ', e.response.status_code)

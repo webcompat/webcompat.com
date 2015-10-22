@@ -164,8 +164,9 @@ md.renderer.rules.link_open = function (tokens, idx, options, env, self) {
     url: '/api/issues/' + this.get('number') + '/labels'});
    labels.save(null, {
       success: _.bind(function(response) {
-        //update model after success
-        this.set('labels', response);
+        // update model after success
+        var updatedLabels = new issues.LabelList({'labels': response.get('labels')});
+        this.set('labels', updatedLabels.get('labels'));
       }, this),
       error: function() {
         var msg = 'There was an error setting labels.';
