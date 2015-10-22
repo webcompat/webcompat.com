@@ -4,8 +4,38 @@
 
 var issues = issues || {};
 var issueList = issueList || {};
+var loadingIndicator =  $('.js-loader');
 issueList.user = $('body').data('username');
 
+// TODO: Put this in some kind of shared module
+function fetchAndRenderIssues(options) {
+  var headers = {headers: {'Accept': 'application/json'}};
+  if (options && options.url) {
+    this.issues.url = options.url;
+  } else {
+    this.issues.url = this.issues.path + '?' + $.param(this.issues.params);
+  }
+
+  this._loadingIndicator.addClass('is-active');
+  this.issues.fetch(headers).success(_.bind(function() {
+    this._loadingIndicator.removeClass('is-active');
+    this.render(this.issues);
+    this.initPaginationLinks(this.issues);
+  }, this)).error(_.bind(function(e){
+    var message;
+    var timeout;
+    if (e.responseJSON) {
+      message = e.responseJSON.message;
+      timeout = e.responseJSON.timeout * 1000;
+    } else {
+      message = 'Something went wrong!';
+      timeout = 3000;
+    }
+
+    this._loadingIndicator.removeClass('is-active');
+    wcEvents.trigger('flash:error', {message: message, timeout: timeout});
+  }, this));
+}
 
 // UserActivityCollection inherits from IssueCollection, which doesn't set
 // its url property directly. So we need to be sure to construct that from
@@ -20,16 +50,19 @@ issueList.UserActivityCollection = issueList.IssueCollection.extend({
 issueList.MyIssuesView = Backbone.View.extend(
   _.extend({}, PaginationMixin, {
   el: $('#my-issues'),
+  _loadingIndicator: loadingIndicator,
   initialize: function() {
-    var self = this;
     var headersBag = {headers: {'Accept': 'application/json'}};
     this.issues = new issueList.UserActivityCollection({
       path: '/creator',
       params: 'per_page=10'
     });
-    this.issues.fetch(headersBag).success(function() {
-      self.render();
-    }).error(function(){});
+    PaginationMixin.initMixin(this, this.issues);
+    this._loadingIndicator.addClass('is-active');
+    this.issues.fetch(headersBag).success(_.bind(function() {
+      this._loadingIndicator.removeClass('is-active');
+      this.render();
+    }, this)).error(function(){});
   },
   template: _.template($('#my-issues-tmpl').html()),
   render: function() {
@@ -38,21 +71,28 @@ issueList.MyIssuesView = Backbone.View.extend(
     }));
 
     return this;
-  }
+  },
+  updateModelParams: function() {
+    //no-op for now, (if?) until we manage state in the URL
+  },
+  fetchAndRenderIssues: _.extend(fetchAndRenderIssues, this)
 }));
 
 issueList.IssueMentionsView = Backbone.View.extend({
   el: $('#issue-mentions'),
+  _loadingIndicator: loadingIndicator,
   initialize: function() {
-    var self = this;
     var headersBag = {headers: {'Accept': 'application/json'}};
     this.issues = new issueList.UserActivityCollection({
       path: '/mentioned',
       params: 'per_page=10'
     });
-    this.issues.fetch(headersBag).success(function() {
-      self.render();
-    }).error(function(){});
+
+    this._loadingIndicator.addClass('is-active');
+    this.issues.fetch(headersBag).success(_.bind(function() {
+      this._loadingIndicator.removeClass('is-active');
+      this.render();
+    }, this)).error(function(){});
   },
   template: _.template($('#issue-mentions-tmpl').html()),
   render: function() {
@@ -60,7 +100,11 @@ issueList.IssueMentionsView = Backbone.View.extend({
       issueMentions: this.issues.toJSON()
     }));
     return this;
-  }
+  },
+  updateModelParams: function() {
+    //no-op for now, (if?) until we manage state in the URL
+  },
+  fetchAndRenderIssues: _.extend(fetchAndRenderIssues, this)
 });
 
 
