@@ -15,7 +15,6 @@ from babel.dates import format_timedelta
 from flask import g
 from flask import request
 from flask import session
-from flask import send_from_directory
 from functools import wraps
 from ua_parser import user_agent_parser
 
