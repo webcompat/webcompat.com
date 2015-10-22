@@ -72,8 +72,8 @@ var PaginationMixin = {
   initPaginationLinks: function(issues) {
     // if either the next or previous page numbers are null
     // disable the buttons and add .is-disabled classes.
-    var nextPage = this.issues.getNextPage();
-    var prevPage = this.issues.getPrevPage();
+    var nextPage = issues.getNextPage();
+    var prevPage = issues.getPrevPage();
     var isLastPage = function() {
       return nextPage == null;
     };
@@ -99,14 +99,14 @@ var PaginationMixin = {
 
     if (nextPage) {
       // chop off leading "/api" and set @href
-      this._nextButton.attr('href', this.issues.getNextPage().slice(4));
+      this._nextButton.attr('href', issues.getNextPage().slice(4));
     } else {
       this._nextButton.attr('href', 'javascript: void(0);');
     }
 
     if (prevPage) {
       // chop off leading "/api" and set @href
-      this._prevButton.attr('href', this.issues.getPrevPage().slice(4));
+      this._prevButton.attr('href', issues.getPrevPage().slice(4));
     } else {
       this._prevButton.attr('href', 'javascript: void(0);');
     }
