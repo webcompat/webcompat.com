@@ -24,6 +24,7 @@ You are welcome to contribute to this project. Here are the guidelines we try to
 * [Coding](#coding)
 * [Running Tests](#running-tests)
   * [Functional Tests](#functional-tests)
+  * [Functional Tests using Fixture Data](#functional-tests-using-fixture-data)
 * [Writing Tests](#writing-tests)
   * [Python Unit Tests](#python-unit-tests)
   * [JS Functional Tests](#js-functional-tests)
@@ -394,6 +395,33 @@ To run a single test suite, where foo.js is the file found in the `tests/functio
 ```bash
 node_modules/.bin/intern-runner config=tests/intern functionalSuites=tests/functional/foo.js user=testusername pw=testpassword
 ```
+
+## Functional Tests using Fixture Data
+
+It's possible to mock the communications with GitHub API servers using local fixture data. To run tests using these mocked repsonses, run the server in "test mode":
+
+```bash
+python run.py -t
+```
+
+You can then run intern tests or do local development and the files in the `/tests/fixtures/` directory will be served as responses.
+
+## Adding Fixtures
+
+To indicate that the app should send fixture data, use the `@mockable_response` decorator for an API endpoint.
+
+If the endpoint you are trying to mock has `GET` parameters, you will need to create a file that has the `GET` parameters encoded in the filename. The source of `@mockable_repsonse` explains how this is done:
+
+```python
+if get_args:
+    # if there are GET args, encode them as a hash so we can
+    # have different fixture files for different response states
+    checksum = hashlib.md5(json.dumps(get_args)).hexdigest()
+    file_path = FIXTURES_PATH + request.path + "." + checksum
+    print('Expected fixture file: ' + file_path + '.json')
+```
+
+You can look at the server console's `Expected fixture file:` message to know what file it is expecting.
 
 ## Writing Tests
 
