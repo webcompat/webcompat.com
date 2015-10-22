@@ -6,6 +6,7 @@
 
 import os
 from datetime import datetime
+from collections import namedtuple
 
 # Define the application directory
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
@@ -101,3 +102,19 @@ else:
 # your own access token. See
 # help.github.com/articles/creating-an-access-token-for-command-line-use
 OAUTH_TOKEN = os.environ.get('OAUTH_TOKEN') or ""
+
+# Status categories used in the project
+# 'new', 'needsdiagnosis', 'needscontact', 'contactready' , 'sitewait', 'close'
+# Creating the model
+Category = namedtuple('Category', ['name', 'dataAttribute', 'label'])
+CATEGORIES = []
+cat_labels = [('new', 'new', 'New Issues'),
+              ('needsDiagnosis', 'needsdiagnosis', 'Needs Diagnosis'),
+              ('needsContact', 'needscontact', 'Needs Contact'),
+              ('sitewait', 'sitewait', 'Site Contacted'),
+              ('close', 'closed', 'Closed')]
+# populating the categories for issues status
+for cat_label in cat_labels:
+    CATEGORIES.append(Category(name=cat_label[0],
+                               dataAttribute=cat_label[1],
+                               label=cat_label[2]))
