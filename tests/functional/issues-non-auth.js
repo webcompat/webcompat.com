@@ -59,17 +59,6 @@ define([
         });
     },
 
-    'Non-existant issues go to 404': function() {
-      return this.remote
-        .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        // TODO: uh, update this in the future
-        .get(require.toUrl(url('/issues/999999')))
-        .findByCssSelector('#pageerror h1').getVisibleText()
-        .then(function (text) {
-          assert.include(text, '(404)', 'We\'re at the 404.');
-        });
-    },
-
     'Pressing g goes to the github issue page': function() {
       var issueNumber = 100;
       return this.remote

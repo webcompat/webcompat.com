@@ -16,10 +16,10 @@ from flask import g
 from flask import request
 from flask import session
 
-
 from webcompat import app
 from webcompat import github
 from webcompat import limiter
+from webcompat.helpers import mockable_response
 from webcompat.helpers import get_comment_data
 from webcompat.helpers import get_headers
 from webcompat.helpers import get_request_headers
@@ -34,11 +34,8 @@ ISSUES_PATH = app.config['ISSUES_REPO_URI']
 REPO_PATH = ISSUES_PATH[:-7]
 
 
-def get_username():
-    return session.get('username', 'proxy-user')
-
-
 @api.route('/issues/<int:number>')
+@mockable_response
 def proxy_issue(number):
     '''XHR endpoint to get issue data from GitHub.
 
@@ -71,6 +68,7 @@ def edit_issue(number):
 
 
 @api.route('/issues')
+@mockable_response
 def proxy_issues():
     '''API endpoint to list all issues from GitHub.'''
     params = request.args.copy()
@@ -94,12 +92,15 @@ def proxy_issues():
 
 
 @api.route('/issues/category/<issue_category>')
+@mockable_response
 def get_issue_category(issue_category):
     '''Return all issues for a specific category.
 
     issue_category can be of x types:
     * new
+    * closed
     * contactready
+    * needscontact
     * needsdiagnosis
     * sitewait
     '''
@@ -142,8 +143,9 @@ def get_issue_category(issue_category):
 
 
 @api.route('/issues/search')
+@mockable_response
 @limiter.limit('30/minute',
-               key_func=lambda: get_username())
+               key_func=lambda: session.get('username', 'proxy-user'))
 def get_search_results(query_string=None, params=None):
     '''XHR endpoint to get results from GitHub's Search API.
 
@@ -209,6 +211,7 @@ def get_category_from_search(issue_category):
 
 
 @api.route('/issues/<int:number>/comments', methods=['GET', 'POST'])
+@mockable_response
 def proxy_comments(number):
     '''XHR endpoint to get issues comments from GitHub.
 
@@ -253,8 +256,8 @@ def modify_labels(number):
         print('GitHubError: ', e.response.status_code)
         return (':(', e.response.status_code)
 
-
 @api.route('/issues/labels')
+@mockable_response
 def get_repo_labels():
     '''XHR endpoint to get all possible labels in a repo.'''
     if g.user:

@@ -34,7 +34,7 @@ install:
   - travis_retry npm install
   - travis_retry pip install -r requirements.txt --download-cache $HOME/.pip-cache
   - cp config.py.example config.py
-  - python run.py &
+  - python run.py -t &
 
 before_script:
   - "sleep 2"

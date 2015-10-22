@@ -1,0 +1,53 @@
+{
+  "_fixture": true,
+  "total_count": 1,
+  "incomplete_results": false,
+  "items": [
+    {
+      "url": "https://api.github.com/repos/webcompat/webcompat-tests/issues/114",
+      "labels_url": "https://api.github.com/repos/webcompat/webcompat-tests/issues/114/labels{/name}",
+      "comments_url": "https://api.github.com/repos/webcompat/webcompat-tests/issues/114/comments",
+      "events_url": "https://api.github.com/repos/webcompat/webcompat-tests/issues/114/events",
+      "html_url": "https://github.com/webcompat/webcompat-tests/issues/114",
+      "id": 37931436,
+      "number": 114,
+      "title": "vladvlad",
+      "user": {
+        "login": "testerbuddy2",
+        "id": 8173975,
+        "avatar_url": "https://avatars.githubusercontent.com/u/8173975?v=3",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/testerbuddy2",
+        "html_url": "https://github.com/testerbuddy2",
+        "followers_url": "https://api.github.com/users/testerbuddy2/followers",
+        "following_url": "https://api.github.com/users/testerbuddy2/following{/other_user}",
+        "gists_url": "https://api.github.com/users/testerbuddy2/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/testerbuddy2/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/testerbuddy2/subscriptions",
+        "organizations_url": "https://api.github.com/users/testerbuddy2/orgs",
+        "repos_url": "https://api.github.com/users/testerbuddy2/repos",
+        "events_url": "https://api.github.com/users/testerbuddy2/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/testerbuddy2/received_events",
+        "type": "User",
+        "site_admin": false
+      },
+      "labels": [
+        {
+          "url": "https://api.github.com/repos/webcompat/webcompat-tests/labels/closed-duplicate",
+          "name": "closed-duplicate",
+          "color": "cccccc"
+        }
+      ],
+      "state": "open",
+      "locked": true,
+      "assignee": null,
+      "milestone": null,
+      "comments": 9,
+      "created_at": "2014-07-15T22:14:21Z",
+      "updated_at": "2014-07-21T14:56:05Z",
+      "closed_at": null,
+      "body": "<!-- @browser: Chrome 35.0.1916 -->\r\n\r\n**URL**: test.com\r\n**Browser / Version**: Chrome 35.0.1916\r\n**Operating System**: Mac OS X 10.9.2\r\n**Problem type**: Unknown\r\n**Site owner**: Unknown\r\n\r\n**Steps to Reproduce**\r\n1) Navigate to: test.com\r\n2) …\r\n\r\nExpected Behavior:\r\nActual Behavior:\r\n\r\n```css\r\nfloat: left\r\n```\r\n",
+      "score": 31.452122
+    }
+  ]
+}

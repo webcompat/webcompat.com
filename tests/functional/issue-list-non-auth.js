@@ -33,31 +33,6 @@ define([
         .end();
     },
 
-    'Loading image is shown when requesting issues': function() {
-      return this.remote
-        .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url('/issues')))
-        // click next page to trigger loader image
-        .findByCssSelector('.js-pagination-next').click()
-        .end()
-        .findByCssSelector('.js-loader').getAttribute('class')
-        .then(function (className) {
-          assert.include(className, 'is-active', 'Loading image is visible');
-        })
-        .end()
-        // this looks nonsensical, because it kind of is. basically we're
-        // checking that the .is-active class has been removed from the loader
-        // image. this way we can remove sleep(): http://v14d.com/i/55ad533d89b39.png
-        // other than waiting a really long time, the surest way to make sure
-        // it's been removed is to wait to find it. it's removed after the issues
-        // are rendered.
-        .findByCssSelector('.js-loader:not(.is-active)').getAttribute('class')
-        .then(function (className) {
-          assert.notInclude(className, 'is-active', 'Loading image is not visible');
-        })
-        .end();
-    },
-
     'IssueListView renders': function() {
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)

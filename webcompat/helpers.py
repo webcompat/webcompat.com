@@ -12,7 +12,10 @@ import os
 import urlparse
 
 from babel.dates import format_timedelta
+from flask import g
+from flask import request
 from flask import session
+from functools import wraps
 from ua_parser import user_agent_parser
 
 from webcompat import app
@@ -21,7 +24,9 @@ from webcompat import github
 HOST_WHITELIST = ('webcompat.com', 'staging.webcompat.com',
                   '127.0.0.1', 'localhost')
 JSON_MIME = 'application/json'
+FIXTURES_PATH = os.getcwd() +'/tests/fixtures'
 STATIC_PATH = os.getcwd() + '/webcompat/static'
+
 cache_dict = {}
 
 
@@ -308,3 +313,39 @@ def get_comment_data(request_data):
     of a request's data object.'''
     comment_data = json.loads(request_data)
     return json.dumps({"body": comment_data['rawBody']})
+
+
+def get_fixture_headers(file_data):
+    '''Return headers to be served with a fixture file.'''
+    headers = {'content-type': JSON_MIME}
+    data = json.loads(file_data)
+    for item in data:
+        if '_fixtureLinkHeader' in item:
+            headers.update({'link': item['_fixtureLinkHeader']})
+            break
+    return headers
+
+
+def mockable_response(func):
+    '''Decorator for mocking out API reponses
+
+    This allows us to send back fixture files when in TESTING mode, rather
+    than making API requests over the network. See /api/endponts.py
+    for usage.'''
+    @wraps(func)
+    def wrapped_func(*args, **kwargs):
+        if app.config['TESTING']:
+            get_args = request.args.copy()
+            if get_args:
+                # if there are GET args, encode them as a hash so we can
+                # have different fixture files for different response states
+                checksum = hashlib.md5(json.dumps(get_args)).hexdigest()
+                file_path = FIXTURES_PATH + request.path + "." + checksum
+                print('Expected fixture file: ' + file_path + '.json')
+            else:
+                file_path = FIXTURES_PATH + request.path
+            with open(file_path + '.json', 'r') as f:
+                data = f.read()
+                return (data, 200, get_fixture_headers(data))
+        return func(*args, **kwargs)
+    return wrapped_func

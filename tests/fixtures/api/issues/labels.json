@@ -1,0 +1,108 @@
+[
+  {
+    "_fixture": "true",
+    "url": "https://api.github.com/repos/webcompat/webcompat-tests/labels/status-bug",
+    "name": "status-bug",
+    "color": "fc2929"
+  },
+  {
+    "url": "https://api.github.com/repos/webcompat/webcompat-tests/labels/closed-duplicate",
+    "name": "closed-duplicate",
+    "color": "cccccc"
+  },
+  {
+    "url": "https://api.github.com/repos/webcompat/webcompat-tests/labels/status-enhancement",
+    "name": "status-enhancement",
+    "color": "84b6eb"
+  },
+  {
+    "url": "https://api.github.com/repos/webcompat/webcompat-tests/labels/closed-invalid",
+    "name": "closed-invalid",
+    "color": "e6e6e6"
+  },
+  {
+    "url": "https://api.github.com/repos/webcompat/webcompat-tests/labels/browser-firefoxy",
+    "name": "browser-firefoxy",
+    "color": "e11d21"
+  },
+  {
+    "url": "https://api.github.com/repos/webcompat/webcompat-tests/labels/browser-chrome",
+    "name": "browser-chrome",
+    "color": "006b75"
+  },
+  {
+    "url": "https://api.github.com/repos/webcompat/webcompat-tests/labels/status-imported",
+    "name": "status-imported",
+    "color": "bfd4f2"
+  },
+  {
+    "url": "https://api.github.com/repos/webcompat/webcompat-tests/labels/browser-ie",
+    "name": "browser-ie",
+    "color": "ededed"
+  },
+  {
+    "url": "https://api.github.com/repos/webcompat/webcompat-tests/labels/browser-opera",
+    "name": "browser-opera",
+    "color": "ededed"
+  },
+  {
+    "url": "https://api.github.com/repos/webcompat/webcompat-tests/labels/browser-android",
+    "name": "browser-android",
+    "color": "f7c6c7"
+  },
+  {
+    "url": "https://api.github.com/repos/webcompat/webcompat-tests/labels/there-can-only-be-one",
+    "name": "there-can-only-be-one",
+    "color": "fbca04"
+  },
+  {
+    "url": "https://api.github.com/repos/webcompat/webcompat-tests/labels/browser-firefox",
+    "name": "browser-firefox",
+    "color": "d4c5f9"
+  },
+  {
+    "url": "https://api.github.com/repos/webcompat/webcompat-tests/labels/status-contactready",
+    "name": "status-contactready",
+    "color": "d4c5f9"
+  },
+  {
+    "url": "https://api.github.com/repos/webcompat/webcompat-tests/labels/status-new",
+    "name": "status-new",
+    "color": "006b75"
+  },
+  {
+    "url": "https://api.github.com/repos/webcompat/webcompat-tests/labels/status-needsdiagnosis",
+    "name": "status-needsdiagnosis",
+    "color": "009800"
+  },
+  {
+    "url": "https://api.github.com/repos/webcompat/webcompat-tests/labels/status-needscontact",
+    "name": "status-needscontact",
+    "color": "fef2c0"
+  },
+  {
+    "url": "https://api.github.com/repos/webcompat/webcompat-tests/labels/status-tacos",
+    "name": "status-tacos",
+    "color": "ededed"
+  },
+  {
+    "url": "https://api.github.com/repos/webcompat/webcompat-tests/labels/internet-explorer",
+    "name": "internet-explorer",
+    "color": "ededed"
+  },
+  {
+    "url": "https://api.github.com/repos/webcompat/webcompat-tests/labels/lol-butts",
+    "name": "lol-butts",
+    "color": "ededed"
+  },
+  {
+    "url": "https://api.github.com/repos/webcompat/webcompat-tests/labels/status-sitewait",
+    "name": "status-sitewait",
+    "color": "bfd4f2"
+  },
+  {
+    "url": "https://api.github.com/repos/webcompat/webcompat-tests/labels/new",
+    "name": "new",
+    "color": "ededed"
+  }
+]
