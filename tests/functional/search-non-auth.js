@@ -34,6 +34,21 @@ define([
         .end();
     },
 
+    'Clicking on label search suggestion works': function() {
+      var params = '?q=dfjdkfjdkfjkdfjdkjf';
+      return this.remote
+        .setFindTimeout(intern.config.wc.pageLoadTimeout)
+        .get(require.toUrl(url('/issues') + params))
+        .findByCssSelector('.IssueList-noResults-list-labelsItem:nth-child(1) > a:nth-child(1)').click()
+        .end()
+        // click the first suggestion, which is "android"
+        .findByCssSelector('.wc-IssueItem:nth-child(1) > div:nth-child(2) > span:nth-child(1) > a:nth-child(1)').getVisibleText()
+        .then(function(text){
+          assert.include(text, 'android', 'Clicking on a suggested label gets you results.');
+        })
+        .end();
+    },
+
     'Results are loaded from the query params': function() {
       var params = '?q=vladvlad';
       return this.remote
