@@ -6,6 +6,32 @@ var issueList = issueList || {};
 issueList.events = _.extend({},Backbone.Events);
 
 /*
+PaginationControlsView Usage:
+This assumes there is an element with a .js-dropdown-pagination class, e.g.:
+
+{{ dropdown('default', 'js-dropdown-wrapper js-dropdown-pagination') }}
+
+We just listen for and fire events from this view -
+no template needed. It gets constructed in PaginationMixin.initMixin()
+*/
+
+issueList.PaginationControlsView = Backbone.View.extend({
+  el: $('.js-pagination-controls'),
+  events: {
+    'click .js-pagination-previous': 'broadcastPrevious',
+    'click .js-pagination-next': 'broadcastNext',
+  },
+  broadcastNext: function(e) {
+    issueList.events.trigger('paginate:next');
+    e.preventDefault();
+  },
+  broadcastPrevious: function(e) {
+    issueList.events.trigger('paginate:previous');
+    e.preventDefault();
+  }
+});
+
+/*
 Pagination Mixin Usage:
 issueList.IssueView = Backbone.View.extend(
   _.extend({}, PaginationMixin, {
@@ -26,8 +52,15 @@ updateModelParams()
 Check out issueList.IssueView for an example.
 */
 
+// issueList.PaginationControlsView = Backbone.View.extend({
+//   el: $('.js-pagination-controls'),
+//   ,
+
+// });
+
 var PaginationMixin = {
   initMixin: function(hostView, hostModel) {
+    this.paginationControls = new issueList.PaginationControlsView();
     this.view = hostView;
     this.model = hostModel;
 

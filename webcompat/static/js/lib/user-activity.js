@@ -17,7 +17,8 @@ issueList.UserActivityCollection = issueList.IssueCollection.extend({
   }
 });
 
-issueList.MyIssuesView = Backbone.View.extend({
+issueList.MyIssuesView = Backbone.View.extend(
+  _.extend({}, PaginationMixin, {
   el: $('#my-issues'),
   initialize: function() {
     var self = this;
@@ -35,9 +36,10 @@ issueList.MyIssuesView = Backbone.View.extend({
     this.$el.html(this.template({
       myIssues: this.issues.toJSON()
     }));
+
     return this;
   }
-});
+}));
 
 issueList.IssueMentionsView = Backbone.View.extend({
   el: $('#issue-mentions'),
