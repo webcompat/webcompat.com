@@ -264,14 +264,10 @@ def get_repo_labels():
 
     Cached for 10 minutes.
     '''
-    if g.user:
-        request_headers = get_request_headers(g.request_headers)
-        path = 'repos/{0}/labels'.format(REPO_PATH)
-        labels = github.raw_request('GET', path, headers=request_headers)
-        return (labels.content, labels.status_code, get_headers(labels))
-    else:
-        # only authed users should be hitting this endpoint
-        abort(401)
+    request_headers = get_request_headers(g.request_headers)
+    path = 'repos/{0}/labels'.format(REPO_PATH)
+    labels = github.raw_request('GET', path, headers=request_headers)
+    return (labels.content, labels.status_code, get_headers(labels))
 
 
 @api.route('/rate_limit')
