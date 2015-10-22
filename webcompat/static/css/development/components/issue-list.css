@@ -4,46 +4,62 @@
 /* Main class */
 .wc-IssueList {
   font-size:var(--base-font-size);
+  padding: 0 0 1em 0;
 }
 
   /* Main page title */
   .wc-IssueList-title {}
 
-/* Sorting issues */
-.wc-IssueList-sorting {
-  background-color:#F0F0F0;
-  padding:3em 0 .5em 0;
-}
+  .wc-IssueList-subtitle {
+    padding: 3em 0 0 ;
+  }
 
-/* List of issue */
-.wc-IssueList-displayed {
-  background-color:#F0F0F0;
-}
-/* no resultats */
-.wc-IssueList-noResults {
-  font-size:1.5em;
-}
-  /* title */
-  .wc-IssueList-noResults-title {
-    font-weight:600;
-    margin-bottom:1em;
+  /* Sorting issues */
+  .wc-IssueList-sorting {
+    background-color:#F0F0F0;
+    padding:3em 0 .5em 0;
   }
-  /* list*/
-  .wc-IssueList-noResults-list {
-    list-style-position: inside;
-    margin: 0 0 1em 1em;
-    font-size: 0.7em;
+
+  /* drodpown */
+  .wc-IssueList-pagination {
+    padding: 0 0 .5em 0;
   }
-    /* list item */
-    .wc-IssueList-noResults-list-item {
-      padding: .3em 0;
+
+  /* List of issue */
+  .wc-IssueList-displayed {
+    background-color:#F0F0F0;
+  }
+
+  /* no resultats */
+  .wc-IssueList-noResults {
+    font-size:1.5em;
+  }
+
+    /* title */
+    .wc-IssueList-noResults-title {
+      font-weight:600;
+      margin-bottom:1em;
     }
-    /* modifier : label */
-    .wc-IssueList-noResults-list-item--label {
-      list-style: none;
-      padding-top:.8em;
+
+    /* list*/
+    .wc-IssueList-noResults-list {
+      list-style-position: inside;
+      margin: 0 0 1em 1em;
+      font-size: 0.7em;
     }
-    /* labels item */
-    .wc-IssueList-noResults-list-labelsItem {
-      display:inline-block;
-    }
+
+      /* list item */
+      .wc-IssueList-noResults-list-item {
+        padding: .3em 0;
+      }
+
+      /* modifier : label */
+      .wc-IssueList-noResults-list-item--label {
+        list-style: none;
+        padding-top:.8em;
+      }
+
+      /* labels item */
+      .wc-IssueList-noResults-list-labelsItem {
+        display:inline-block;
+      }
