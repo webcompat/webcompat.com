@@ -75,9 +75,9 @@
               </p>
             </div>
             <div class="wc-IssueItem-section">
-              <span data-labels-map='<%= JSON.stringify(issue.labelsMap) %>' class="wc-IssueItem-label js-issue-label">
-              <% _.each(issue.labels, function(label) { %>
-                <a href="#" class="wc-Labels" title="Labels : <%= label.name %>"><%= label.name %></a>
+              <span class="wc-IssueItem-label js-issue-label">
+              <% _.each(issue.labels, function(label) { console.log(label); %>
+                <a href="#" class="wc-Labels" data-remotename="<%= label.remoteName %>" title="Labels : <%= label.name %>"><%= label.name %></a>
               <% }); %></span>
             </div>
           </div>
@@ -136,6 +136,7 @@
 {%- if config.PRODUCTION or config.DEVELOPMENT -%}
 <script src="{{ url_for('static', filename='js/issue-list.min.js')|bust_cache }}"></script>
 {% else %}
+<script src="{{ url_for('static', filename='js/lib/labels.js') }}"></script>
 <script src="{{ url_for('static', filename='js/lib/models/issue.js') }}"></script>
 <script src="{{ url_for('static', filename='js/lib/issue-list.js') }}"></script>
 {%- endif %}
