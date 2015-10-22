@@ -174,41 +174,8 @@ def show_issues():
     '''Route to display global issues view.'''
     if g.user:
         get_user_info()
-    Filter = [
-        {
-            'name': 'new',
-            'dataAttribute': 'new' ,
-            'label': 'New Issues'
-        },
-        {
-            'name': 'needsDiagnosis',
-            'dataAttribute': 'needsdiagnosis' ,
-            'label': 'Needs Diagnosis'
-        },
-        {
-            'name': 'needsContact',
-            'dataAttribute': 'needscontact' ,
-            'label': 'Needs Contact'
-        },
-        {
-            'name': 'ready',
-            'dataAttribute': 'contactready' ,
-            'label': 'Ready for outreach'
-        },
-        {
-            'name': 'sitewait',
-            'dataAttribute': 'sitewait' ,
-            'label': 'Site contacted'
-        },
-        {
-            'name': 'close',
-            'dataAttribute': 'closed' ,
-            'label': 'Closed'
-        },
-    ]
-    return render_template('issue-list.html',
-                            Filters= Filter
-                          )
+    categories = app.config['CATEGORIES'] 
+    return render_template('issue-list.html',categories=categories)
 
 
 @app.route('/issues/<int:number>')
