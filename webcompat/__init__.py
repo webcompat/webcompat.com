@@ -9,7 +9,6 @@
 import logging
 import os
 
-from flask.ext.cache import Cache
 from flask.ext.github import GitHub
 from flask.ext.limiter import Limiter
 from flask import Flask
@@ -17,7 +16,6 @@ from flask import Flask
 app = Flask(__name__, static_url_path='')
 app.config.from_object('config')
 
-cache = Cache(app)
 github = GitHub(app)
 limiter = Limiter(app)
 

@@ -167,7 +167,7 @@ issues.LabelsView = Backbone.View.extend({
     this.$el.find('.LabelEditor-launcher').after(this.labelEditor.render().el);
     var toBeChecked = _.intersection(this.getIssueLabels(), issues.allLabels.toArray());
     _.each(toBeChecked, function(labelName) {
-      $('[name=' + labelName + ']').prop('checked', true);
+      $('[name="' + labelName + '"]').prop('checked', true);
     });
   }
 });
@@ -260,6 +260,7 @@ issues.LabelEditorView = Backbone.View.extend({
     // hide the non-filter matches
     _.each(toHide, function(name) {
       $('input[name=' + escape(name) + ']').closest('.LabelEditor-item').hide();
+
     });
   }, 100)
 });
