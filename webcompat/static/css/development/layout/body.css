@@ -66,6 +66,9 @@ html {
   padding-top:2em;
   padding-bottom:2em;
 }
+.wc-content--issue {
+  padding-bottom: 2em;
+}
 .wc-content--footer {
   padding-top:1em;
   padding-bottom: 1em;
