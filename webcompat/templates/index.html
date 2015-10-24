@@ -105,6 +105,7 @@
 {%- if config.PRODUCTION or config.DEVELOPMENT -%}
 <script src="{{ url_for('static', filename='js/diagnose.min.js')|bust_cache }}"></script>
 {%- else -%}
+<script src="{{ url_for('static', filename='js/lib/models/label-list.js') }}"></script>
 <script src="{{ url_for('static', filename='js/lib/labels.js') }}"></script>
 <script src="{{ url_for('static', filename='js/lib/models/issue.js') }}"></script>
 <script src="{{ url_for('static', filename='js/lib/diagnose.js') }}"></script>
