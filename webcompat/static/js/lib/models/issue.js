@@ -160,9 +160,14 @@ md.renderer.rules.link_open = function (tokens, idx, options, env, self) {
     });
   },
   updateLabels: function(labelsArray) {
-   var labels = new issues.LabelList({'labels':labelsArray,
-    url: '/api/issues/' + this.get('number') + '/labels'});
-   labels.save(null, {
+    // Save ourselves some requests in case nothing has changed.
+    if (!$.isArray(labelsArray) ||
+        _.isEqual(labelsArray.sort(), _.pluck(this.get('labels'), 'name').sort())) {
+      return;
+    }
+    var labels = new issues.LabelList({'labels':labelsArray,
+      url: '/api/issues/' + this.get('number') + '/labels'});
+    labels.save(null, {
       success: _.bind(function(response) {
         // update model after success
         var updatedLabels = new issues.LabelList({'labels': response.get('labels')});
