@@ -71,7 +71,7 @@ class TestAPIURLs(unittest.TestCase):
 
     def test_api_set_labels_without_auth(self):
         '''API setting labels without auth returns JSON 403 error code.'''
-        rv = self.app.post('/api/issues/1/labels', environ_base=headers, body='[]')
+        rv = self.app.post('/api/issues/1/labels', environ_base=headers, data='[]')
         self.assertEqual(rv.status_code, 403)
 
     def test_api_search_wrong_parameter(self):
