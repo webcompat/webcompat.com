@@ -69,6 +69,11 @@ class TestAPIURLs(unittest.TestCase):
         self.assertEqual(rv.status_code, 200)
         self.assertEqual(rv.content_type, 'application/json')
 
+    def test_api_set_labels_without_auth(self):
+        '''API setting labels without auth returns JSON 403 error code.'''
+        rv = self.app.post('/api/issues/1/labels', environ_base=headers, body='[]')
+        self.assertEqual(rv.status_code, 403)
+
     def test_api_search_wrong_parameter(self):
         '''API with wrong parameter returns JSON 404.'''
         rv = self.app.get('/api/issues/search?z=foobar', environ_base=headers)

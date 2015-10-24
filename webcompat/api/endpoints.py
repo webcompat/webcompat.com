@@ -246,9 +246,12 @@ def modify_labels(number):
     can't normally edit labels for an issue.
     '''
     try:
-        labels = proxy_request('put', '/{0}/labels'.format(number),
-                               data=request.data)
-        return (labels.content, labels.status_code, get_headers(labels))
+        if g.user:
+            labels = proxy_request('put', '/{0}/labels'.format(number),
+                                   data=request.data)
+            return (labels.content, labels.status_code, get_headers(labels))
+        else:
+            abort(403)
     except GitHubError as e:
         print('GitHubError: ', e.response.status_code)
         return (':(', e.response.status_code)
