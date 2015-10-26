@@ -1,3 +1,8 @@
+## 2.0.0
+
+* Re-write label handling model and UI code [Pull #796](https://github.com/webcompat/webcompat.com/pull/796) [Issue #783](https://github.com/webcompat/webcompat.com/issues/783) [Issue #784](https://github.com/webcompat/webcompat.com/issues/784) [Issue #797](https://github.com/webcompat/webcompat.com/issues/797) [Issue #799](https://github.com/webcompat/webcompat.com/issues/799)
+* Mock some of the GitHub interactions for functional tests [Pull #774](https://github.com/webcompat/webcompat.com/pull/774) [Issue #712](https://github.com/webcompat/webcompat.com/pull/712)
+
 ## 1.9.3
 
 * Add `/issues/new` route for issue creation. [Pull #770](https://github.com/webcompat/webcompat.com/pull/770) [Issue #317](https://github.com/webcompat/webcompat.com/issues/317)
