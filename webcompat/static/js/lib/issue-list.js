@@ -267,8 +267,10 @@ issueList.SortingView = Backbone.View.extend({
   }
 });
 
+var issuesPagination = new PaginationMixin();
+
 issueList.IssueView = Backbone.View.extend(
-  _.extend({}, PaginationMixin, {
+  _.extend({}, issuesPagination, {
   el: $('.js-issue-list'),
   events: {
     'click .js-issue-label': 'labelSearch',
@@ -290,7 +292,7 @@ issueList.IssueView = Backbone.View.extend(
     wcEvents.on('dropdown:change', _.bind(this.updateModelParams, this));
     window.addEventListener('popstate', _.bind(this.loadIssues, this));
 
-    PaginationMixin.initMixin(this, this.issues);
+    issuesPagination.initMixin(this, this.issues, $('main'));
     this.loadIssues();
   },
   template: _.template($('#issuelist-issue-tmpl').html()),
@@ -352,7 +354,7 @@ issueList.IssueView = Backbone.View.extend(
     this.issues.fetch(headers).success(_.bind(function() {
       this._loadingIndicator.removeClass('is-active');
       this.render(this.issues);
-      this.initPaginationLinks(this.issues);
+      issuesPagination.initPaginationLinks(this.issues);
     }, this)).error(_.bind(function(e){
       var message;
       var timeout;
@@ -547,7 +549,6 @@ issueList.MainView = Backbone.View.extend({
     this.issueList = new issueList.IssueView();
     this.issueSorter = new issueList.SortingView();
     this.filter = new issueList.FilterView();
-    this.paginationControls = new issueList.PaginationControlsView();
     this.search = new issueList.SearchView();
 
     this.render();
