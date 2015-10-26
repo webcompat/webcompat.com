@@ -9,7 +9,6 @@
 import logging
 import os
 
-from flask.ext.cache import Cache
 from flask.ext.github import GitHub
 from flask.ext.limiter import Limiter
 from flask import Flask
