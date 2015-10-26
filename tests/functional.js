@@ -23,6 +23,7 @@ define([
   './functional/issues-auth.js',
   './functional/labels-auth.js',
   './functional/reporting-auth.js',
+  './functional/user-activity-auth.js',
 ], function () {
   'use strict';
 });
