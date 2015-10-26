@@ -7,35 +7,8 @@ var issueList = issueList || {};
 var loadingIndicator =  $('.js-loader');
 issueList.user = $('body').data('username');
 
-// TODO: Put this in some kind of shared module
-function fetchAndRenderIssues(options) {
-  var headers = {headers: {'Accept': 'application/json'}};
-  if (options && options.url) {
-    this.issues.url = options.url;
-  } else {
-    this.issues.url = this.issues.path + '?' + $.param(this.issues.params);
-  }
-
-  this._loadingIndicator.addClass('is-active');
-  this.issues.fetch(headers).success(_.bind(function() {
-    this._loadingIndicator.removeClass('is-active');
-    this.render(this.issues);
-    this.initPaginationLinks(this.issues);
-  }, this)).error(_.bind(function(e){
-    var message;
-    var timeout;
-    if (e.responseJSON) {
-      message = e.responseJSON.message;
-      timeout = e.responseJSON.timeout * 1000;
-    } else {
-      message = 'Something went wrong!';
-      timeout = 3000;
-    }
-
-    this._loadingIndicator.removeClass('is-active');
-    wcEvents.trigger('flash:error', {message: message, timeout: timeout});
-  }, this));
-}
+var myIssuesPagination = new PaginationMixin();
+var mentionsPagination = new PaginationMixin();
 
 // UserActivityCollection inherits from IssueCollection, which doesn't set
 // its url property directly. So we need to be sure to construct that from
@@ -47,17 +20,17 @@ issueList.UserActivityCollection = issueList.IssueCollection.extend({
   }
 });
 
+
 issueList.MyIssuesView = Backbone.View.extend(
-  _.extend({}, PaginationMixin, {
+  _.extend({}, myIssuesPagination, {
   el: $('#my-issues'),
   _loadingIndicator: loadingIndicator,
   initialize: function() {
-    var headersBag = {headers: {'Accept': 'application/json'}};
     this.issues = new issueList.UserActivityCollection({
       path: '/creator',
       params: 'per_page=10'
     });
-    PaginationMixin.initMixin(this, this.issues);
+    myIssuesPagination.initMixin(this, this.issues, $('#user-reported-issues'));
     this.fetchAndRenderIssues({url:this.issues.url});
   },
   template: _.template($('#my-issues-tmpl').html()),
@@ -71,20 +44,47 @@ issueList.MyIssuesView = Backbone.View.extend(
   updateModelParams: function() {
     //no-op for now, (if?) until we manage state in the URL
   },
-  fetchAndRenderIssues: _.extend(fetchAndRenderIssues, this)
+  fetchAndRenderIssues: function(options) {
+    var headers = {headers: {'Accept': 'application/json'}};
+    if (options && options.url) {
+      this.issues.url = options.url;
+    } else {
+      this.issues.url = this.issues.path + '?' + $.param(this.issues.params);
+    }
+
+    this._loadingIndicator.addClass('is-active');
+    this.issues.fetch(headers).success(_.bind(function() {
+      this._loadingIndicator.removeClass('is-active');
+      this.render(this.issues);
+      myIssuesPagination.initPaginationLinks(this.issues);
+    }, this)).error(_.bind(function(e){
+      var message;
+      var timeout;
+      if (e.responseJSON) {
+        message = e.responseJSON.message;
+        timeout = e.responseJSON.timeout * 1000;
+      } else {
+        message = 'Something went wrong!';
+        timeout = 3000;
+      }
+
+      this._loadingIndicator.removeClass('is-active');
+      wcEvents.trigger('flash:error', {message: message, timeout: timeout});
+    }, this));
+  }
 }));
 
-issueList.IssueMentionsView = Backbone.View.extend({
+issueList.IssueMentionsView = Backbone.View.extend(
+  _.extend({}, mentionsPagination, {
   el: $('#issue-mentions'),
   _loadingIndicator: loadingIndicator,
   initialize: function() {
-    var headersBag = {headers: {'Accept': 'application/json'}};
     this.issues = new issueList.UserActivityCollection({
       path: '/mentioned',
       params: 'per_page=10'
     });
 
-    this._loadingIndicator.addClass('is-active');
+    mentionsPagination.initMixin(this, this.issues, $('#user-mentioned-issues'));
     this.fetchAndRenderIssues({url:this.issues.url});
   },
   template: _.template($('#issue-mentions-tmpl').html()),
@@ -97,8 +97,35 @@ issueList.IssueMentionsView = Backbone.View.extend({
   updateModelParams: function() {
     //no-op for now, (if?) until we manage state in the URL
   },
-  fetchAndRenderIssues: _.extend(fetchAndRenderIssues, this)
-});
+  fetchAndRenderIssues: function(options) {
+    var headers = {headers: {'Accept': 'application/json'}};
+    if (options && options.url) {
+      this.issues.url = options.url;
+    } else {
+      this.issues.url = this.issues.path + '?' + $.param(this.issues.params);
+    }
+
+    this._loadingIndicator.addClass('is-active');
+    this.issues.fetch(headers).success(_.bind(function() {
+      this._loadingIndicator.removeClass('is-active');
+      this.render(this.issues);
+      mentionsPagination.initPaginationLinks(this.issues);
+    }, this)).error(_.bind(function(e){
+      var message;
+      var timeout;
+      if (e.responseJSON) {
+        message = e.responseJSON.message;
+        timeout = e.responseJSON.timeout * 1000;
+      } else {
+        message = 'Something went wrong!';
+        timeout = 3000;
+      }
+
+      this._loadingIndicator.removeClass('is-active');
+      wcEvents.trigger('flash:error', {message: message, timeout: timeout});
+    }, this));
+  }
+}));
 
 
 $(function(){

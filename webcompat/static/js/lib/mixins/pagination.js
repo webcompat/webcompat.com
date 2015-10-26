@@ -16,7 +16,9 @@ no template needed. It gets constructed in PaginationMixin.initMixin()
 */
 
 issueList.PaginationControlsView = Backbone.View.extend({
-  el: $('.js-pagination-controls'),
+  initialize: function(options) {
+    this.el = options.el;
+  },
   events: {
     'click .js-pagination-previous': 'broadcastPrevious',
     'click .js-pagination-next': 'broadcastNext',
@@ -39,11 +41,14 @@ issueList.IssueView = Backbone.View.extend(
   // ...
 });
 
-The mixin is initalized like so:
+The mixin is initialized like so:
 
-PaginationMixin.initMixin(hostView, hostModel);
+PaginationMixin.initMixin(hostView, hostModel, parentContainerEl);
 
-One other things, the PaginationMixin requires the "host view" to
+parentContainerEl: a jQuery object that refers to a parent container of both
+the hostView *and* the pagination controls.
+
+The PaginationMixin requires the "host view" to
 implement the following two methods:
 
 fetchAndRenderIssues()
@@ -52,28 +57,26 @@ updateModelParams()
 Check out issueList.IssueView for an example.
 */
 
-// issueList.PaginationControlsView = Backbone.View.extend({
-//   el: $('.js-pagination-controls'),
-//   ,
+function PaginationMixin() {
+  this.initMixin = function(hostView, hostModel, parentContainerEl) {
+    this.paginationControls = new issueList.PaginationControlsView(
+      {el: parentContainerEl}
+    );
 
-// });
-
-var PaginationMixin = {
-  initMixin: function(hostView, hostModel) {
-    this.paginationControls = new issueList.PaginationControlsView();
     this.view = hostView;
     this.model = hostModel;
 
     issueList.events.on('paginate:next', _.bind(this.requestNextPage, this));
     issueList.events.on('paginate:previous', _.bind(this.requestPreviousPage, this));
-  },
-  _nextButton: $('.js-pagination-next'),
-  _prevButton: $('.js-pagination-previous'),
-  initPaginationLinks: function(issues) {
+  };
+
+  this.initPaginationLinks = function(issuesCollection) {
     // if either the next or previous page numbers are null
     // disable the buttons and add .is-disabled classes.
-    var nextPage = issues.getNextPage();
-    var prevPage = issues.getPrevPage();
+    var nextButton = this.paginationControls.el.find('.js-pagination-next');
+    var prevButton = this.paginationControls.el.find('.js-pagination-previous');
+    var nextPage = issuesCollection.getNextPage();
+    var prevPage = issuesCollection.getPrevPage();
     var isLastPage = function() {
       return nextPage == null;
     };
@@ -82,36 +85,38 @@ var PaginationMixin = {
     };
     var isSinglePage = isLastPage() && isFirstPage();
 
-    if (!issues.length || isSinglePage) {
+    if (!issuesCollection.length || isSinglePage) {
       // hide pagination buttons if there are no results,
       // or the results are limited to a single page.
-      this._nextButton.addClass('wc-hidden');
-      this._prevButton.addClass('wc-hidden');
+      nextButton.addClass('wc-hidden');
+      prevButton.addClass('wc-hidden');
       return;
     }
 
-    this._nextButton.removeClass('wc-hidden')
-                    .prop('disabled', isLastPage())
-                    .toggleClass('is-disabled', isLastPage());
-    this._prevButton.removeClass('wc-hidden')
-                    .prop('disabled', isFirstPage())
-                    .toggleClass('is-disabled', isFirstPage());
+    nextButton.removeClass('wc-hidden')
+              .prop('disabled', isLastPage())
+              .toggleClass('is-disabled', isLastPage());
+    prevButton.removeClass('wc-hidden')
+              .prop('disabled', isFirstPage())
+              .toggleClass('is-disabled', isFirstPage());
 
     if (nextPage) {
       // chop off leading "/api" and set @href
-      this._nextButton.attr('href', issues.getNextPage().slice(4));
+      nextButton.attr('href', issuesCollection.getNextPage().slice(4));
     } else {
-      this._nextButton.attr('href', 'javascript: void(0);');
+      nextButton.attr('href', 'javascript: void(0);');
     }
 
     if (prevPage) {
       // chop off leading "/api" and set @href
-      this._prevButton.attr('href', issues.getPrevPage().slice(4));
+      prevButton.attr('href', issuesCollection.getPrevPage().slice(4));
     } else {
-      this._prevButton.attr('href', 'javascript: void(0);');
+      prevButton.attr('href', 'javascript: void(0);');
     }
-  },
-  requestNextPage: function() {
+  };
+
+  this.requestNextPage = function(e) {
+    console.log('requestNextPage: ', this.model);
     var nextPage;
     var pageNum;
 
@@ -122,8 +127,9 @@ var PaginationMixin = {
       // we pass along the entire URL from the Link header
       this.view.fetchAndRenderIssues({url: nextPage});
     }
-  },
-  requestPreviousPage: function() {
+  };
+
+  this.requestPreviousPage = function() {
     var prevPage;
     var pageNum;
 
@@ -134,10 +140,13 @@ var PaginationMixin = {
       // we pass along the entire URL from the Link header
       this.view.fetchAndRenderIssues({url: prevPage});
     }
-  },
-  getPageNumberFromURL: function(url) {
+  };
+
+  this.getPageNumberFromURL = function(url) {
     // takes a string URL and extracts the page param/value pair.
     var match = /[?&](page=\d+)/i.exec(url);
     return match[1];
-  }
+  };
+
+  return this;
 };
