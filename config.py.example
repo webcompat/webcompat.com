@@ -111,6 +111,7 @@ CATEGORIES = []
 cat_labels = [('new', 'new', 'New Issues'),
               ('needsDiagnosis', 'needsdiagnosis', 'Needs Diagnosis'),
               ('needsContact', 'needscontact', 'Needs Contact'),
+              ('ready', 'contactready', 'Ready for Outreach'),
               ('sitewait', 'sitewait', 'Site Contacted'),
               ('close', 'closed', 'Closed')]
 # populating the categories for issues status
