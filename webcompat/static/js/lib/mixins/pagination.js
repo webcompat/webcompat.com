@@ -24,11 +24,11 @@ issueList.PaginationControlsView = Backbone.View.extend({
     'click .js-pagination-next': 'broadcastNext',
   },
   broadcastNext: function(e) {
-    issueList.events.trigger('paginate:next');
+    issueList.events.trigger('paginate:next', e);
     e.preventDefault();
   },
   broadcastPrevious: function(e) {
-    issueList.events.trigger('paginate:previous');
+    issueList.events.trigger('paginate:previous', e);
     e.preventDefault();
   }
 });
@@ -59,12 +59,13 @@ Check out issueList.IssueView for an example.
 
 function PaginationMixin() {
   this.initMixin = function(hostView, hostModel, parentContainerEl) {
-    this.paginationControls = new issueList.PaginationControlsView(
-      {el: parentContainerEl}
-    );
-
     this.view = hostView;
     this.model = hostModel;
+    this.parentContainerEl = parentContainerEl;
+
+    this.paginationControls = new issueList.PaginationControlsView(
+      {el: this.parentContainerEl}
+    );
 
     issueList.events.on('paginate:next', _.bind(this.requestNextPage, this));
     issueList.events.on('paginate:previous', _.bind(this.requestPreviousPage, this));
@@ -116,9 +117,13 @@ function PaginationMixin() {
   };
 
   this.requestNextPage = function(e) {
-    console.log('requestNextPage: ', this.model);
     var nextPage;
     var pageNum;
+
+    // don't try to paginate someone else's model.
+    if (!$(e.target).parents(this.parentContainerEl.selector).length) {
+      return;
+    }
 
     if (nextPage = this.model.getNextPage()) {
       // update the URL to be in sync with the model
@@ -129,9 +134,14 @@ function PaginationMixin() {
     }
   };
 
-  this.requestPreviousPage = function() {
+  this.requestPreviousPage = function(e) {
     var prevPage;
     var pageNum;
+
+    // don't try to paginate someone else's model.
+    if (!$(e.target).parents(this.parentContainerEl.selector).length) {
+      return;
+    }
 
     if (prevPage = this.model.getPrevPage()) {
       // update the URL to be in sync with the model
