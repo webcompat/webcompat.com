@@ -65,12 +65,16 @@ class TestAPIURLs(unittest.TestCase):
         self.assertEqual(json_body['status'], 404)
 
     def test_api_labels_without_auth(self):
-        '''API access to labels without auth returns JSON 401.'''
+        '''API access to labels without auth returns JSON 200.'''
         rv = self.app.get('/api/issues/labels', environ_base=headers)
         json_body = json.loads(rv.data)
-        self.assertEqual(rv.status_code, 401)
+        self.assertEqual(rv.status_code, 200)
         self.assertEqual(rv.content_type, 'application/json')
-        self.assertEqual(json_body['status'], 401)
+
+    def test_api_set_labels_without_auth(self):
+        '''API setting labels without auth returns JSON 403 error code.'''
+        rv = self.app.post('/api/issues/1/labels', environ_base=headers, data='[]')
+        self.assertEqual(rv.status_code, 403)
 
     def test_api_search_wrong_parameter(self):
         '''API with wrong parameter returns JSON 404.'''

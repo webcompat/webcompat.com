@@ -33,7 +33,7 @@
           <span class="Label-list">
           <% _.each(labels, function(label) { %>
             <span class="Label Label--badge" style="background-color:#<%=label.color%>">
-              <%= label.name.replace(/(browser|status)-/, '') %>
+              <%= label.name %>
             </span>
           <% }); %>
           </span>
@@ -145,9 +145,9 @@
           <% _.each(labels, function(label) { %>
             <label class="LabelEditor-item">
               <span class="LabelEditor-color" style="background-color:#<%=label.color%>">
-                <input class="LabelEditor-checkbox" type="checkbox" name="<%= label.name.replace(/(browser|status)-/, '') %>" data-color="<%=label.color%>">
+                <input class="LabelEditor-checkbox" type="checkbox" name="<%= label.name %>" data-color="<%=label.color%>">
               </span>
-              <span class="LabelEditor-name"><%= label.name.replace(/(browser|status)-/, '') %></span>
+              <span class="LabelEditor-name"><%= label.name %></span>
               </label>
             <% }); %>
           </div>
@@ -170,10 +170,11 @@ var repoPath="{{config['ISSUES_REPO_URI']}}";</script>
 <script src="{{ url_for('static', filename='js/issues.min.js')|bust_cache }}"></script>
 {% else %}
 <script src="{{ url_for('static', filename='js/vendor/qr.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/lib/models/label-list.js') }}"></script>
+<script src="{{ url_for('static', filename='js/lib/labels.js') }}"></script>
 <script src="{{ url_for('static', filename='js/lib/models/issue.js') }}"></script>
 <script src="{{ url_for('static', filename='js/lib/models/comment.js') }}"></script>
 <script src="{{ url_for('static', filename='js/lib/comments.js') }}"></script>
-<script src="{{ url_for('static', filename='js/lib/labels.js') }}"></script>
 <script src="{{ url_for('static', filename='js/lib/qrcode.js') }}"></script>
 <script src="{{ url_for('static', filename='js/lib/issues.js') }}"></script>
 {%- endif %}

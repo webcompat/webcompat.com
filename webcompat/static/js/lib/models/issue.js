@@ -124,39 +124,15 @@ md.renderer.rules.link_open = function (tokens, idx, options, env, self) {
     this.set('stateClass', 'new');
     return 'New Issue';
   },
-  // See also issues.AllLabels#removeNamespaces
-  removeNamespaces: function(labelsArray) {
-    // Return a copy of labelsArray with the namespaces removed.
-    var labelsCopy = _.cloneDeep(labelsArray);
-    return _.map(labelsCopy, _.bind(function(labelObject) {
-      labelObject.name = labelObject.name.replace(this._namespaceRegex, '');
-      return labelObject;
-    }, this));
-  },
-  getLabelsMap: function(labelsArray) {
-    /* Create a mapping between a unnamespaced labels and namespaced labels,
-       i.e., {'contactready': 'status-contactready'} */
-    var labelsMap = {};
-    var tmp = _.groupBy(labelsArray, function(labelObj) {
-      return labelObj.name;
-    });
-
-    _.forEach(tmp, _.bind(function(val, key) {
-      labelsMap[val[0].name.replace(this._namespaceRegex, '')] = key;
-    }, this));
-
-    tmp = null;
-    return labelsMap;
-  },
   parse: function(response) {
-    var labels = this.removeNamespaces(response.labels);
+    var labelList = new issues.LabelList({'labels':response.labels});
+    var labels = labelList.get('labels');
     this.set({
       body: md.render(response.body),
       commentNumber: response.comments,
       createdAt: response.created_at.slice(0, 10),
       issueState: this.getState(response.state, labels),
       labels: labels,
-      labelsMap: this.getLabelsMap(response.labels),
       number: response.number,
       reporter: response.user.login,
       reporterAvatar: response.user.avatar_url,
@@ -184,39 +160,18 @@ md.renderer.rules.link_open = function (tokens, idx, options, env, self) {
     });
   },
   updateLabels: function(labelsArray) {
-    var namespaceRegex = '^(browser|closed|os|status)-';
-    var repoLabelsArray = _.pluck(this.get('repoLabels').get('namespacedLabels'),
-                                  'name');
-
     // Save ourselves some requests in case nothing has changed.
     if (!$.isArray(labelsArray) ||
         _.isEqual(labelsArray.sort(), _.pluck(this.get('labels'), 'name').sort())) {
       return;
     }
-
-    // Reconstruct the namespaced labels by comparing the "new" labels
-    // against the original namespaced labels from the repo.
-    //
-    // for each label in the labels array
-    //   filter over each repoLabel in the repoLabelsArray
-    //     if a regex from namespaceRegex + label matches against repoLabel
-    //       return that (and flatten the result because it's now an array of N arrays)
-    var labelsToUpdate = _.flatten(_.map(labelsArray, function(label) {
-      return _.filter(repoLabelsArray, function(repoLabel) {
-        if (new RegExp(namespaceRegex + label + '$', 'i').test(repoLabel)) {
-          return repoLabel;
-        }
-      });
-    }));
-
-    $.ajax({
-      contentType: 'application/json',
-      data: JSON.stringify(labelsToUpdate),
-      type: 'POST',
-      url: '/api/issues/' + this.get('number') + '/labels',
+    var labels = new issues.LabelList({'labels':labelsArray,
+      url: '/api/issues/' + this.get('number') + '/labels'});
+    labels.save(null, {
       success: _.bind(function(response) {
-        //update model after success
-        this.set('labels', response);
+        // update model after success
+        var updatedLabels = new issues.LabelList({'labels': response.get('labels')});
+        this.set('labels', updatedLabels.get('labels'));
       }, this),
       error: function() {
         var msg = 'There was an error setting labels.';

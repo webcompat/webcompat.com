@@ -249,9 +249,12 @@ def modify_labels(number):
     can't normally edit labels for an issue.
     '''
     try:
-        labels = proxy_request('put', '/{0}/labels'.format(number),
-                               data=request.data)
-        return (labels.content, labels.status_code, get_headers(labels))
+        if g.user:
+            labels = proxy_request('put', '/{0}/labels'.format(number),
+                                   data=request.data)
+            return (labels.content, labels.status_code, get_headers(labels))
+        else:
+            abort(403)
     except GitHubError as e:
         print('GitHubError: ', e.response.status_code)
         return (':(', e.response.status_code)
@@ -259,15 +262,16 @@ def modify_labels(number):
 @api.route('/issues/labels')
 @mockable_response
 def get_repo_labels():
-    '''XHR endpoint to get all possible labels in a repo.'''
+    '''XHR endpoint to get all possible labels in a repo.
+    '''
+    request_headers = get_request_headers(g.request_headers)
     if g.user:
-        request_headers = get_request_headers(g.request_headers)
         path = 'repos/{0}/labels'.format(REPO_PATH)
         labels = github.raw_request('GET', path, headers=request_headers)
-        return (labels.content, labels.status_code, get_headers(labels))
     else:
-        # only authed users should be hitting this endpoint
-        abort(401)
+        path = 'https://api.github.com/repos/{0}/labels'.format(REPO_PATH)
+        labels = proxy_request('get', uri=path, headers=request_headers)
+    return (labels.content, labels.status_code, get_headers(labels))
 
 
 @api.route('/rate_limit')
