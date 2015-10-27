@@ -93,7 +93,7 @@ function BugForm() {
 
   this.checkImageTypeValidity = function() {
     var splitImg = this.uploadField.val().split('.');
-    var ext = splitImg[splitImg.length - 1];
+    var ext = splitImg[splitImg.length - 1].toLowerCase();
     var allowed = ['jpg', 'jpeg', 'jpe', 'png', 'gif', 'bmp'];
     // Bail if there's no image.
     if (!this.uploadField.val()) {
