@@ -264,13 +264,16 @@ def modify_labels(number):
 def get_repo_labels():
     '''XHR endpoint to get all possible labels in a repo.
     '''
+    params = request.args.copy()
     request_headers = get_request_headers(g.request_headers)
     if g.user:
         path = 'repos/{0}/labels'.format(REPO_PATH)
-        labels = github.raw_request('GET', path, headers=request_headers)
+        labels = github.raw_request('GET', path, params=params,
+                                    headers=request_headers)
     else:
         path = 'https://api.github.com/repos/{0}/labels'.format(REPO_PATH)
-        labels = proxy_request('get', uri=path, headers=request_headers)
+        labels = proxy_request('get', uri=path, params=params,
+                               headers=request_headers)
     return (labels.content, labels.status_code, get_headers(labels))
 
 
