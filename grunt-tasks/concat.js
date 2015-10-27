@@ -56,6 +56,7 @@ module.exports = function(grunt) {
       },
       userActivity: {
         src: [
+          '<%= jsPath %>/lib/models/label-list.js',
           '<%= jsPath %>/lib/models/issue.js',
           '<%= jsPath %>/lib/user-activity.js'
         ],
