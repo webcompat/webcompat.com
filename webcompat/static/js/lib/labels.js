@@ -125,9 +125,10 @@ issues.LabelEditorView = Backbone.View.extend({
     // If the change event comes from a "status"-type label,
     // enumerate all checked "status"-type labels and uncheck
     // the others.
+    var checked;
     if($(evt.target).data('remotename').match(/^status/) &&
           evt.target.checked) {
-      var checked = $('input[type=checkbox][data-remotename^="status"]:checked');
+      checked = $('input[type=checkbox][data-remotename^="status"]:checked');
       _.each(checked, function(item) {
         if(item !== evt.target) {
           item.checked = false;
