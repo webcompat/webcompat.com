@@ -97,6 +97,10 @@ md.renderer.rules.link_open = function (tokens, idx, options, env, self) {
       this.set('issueState', this.getState(this.get('state'),
                                            this.get('labels')));
     }, this));
+    this.on('change:labels', _.bind(function() {
+      this.set('issueState', this.getState(this.get('state'),
+                                           this.get('labels')));
+    }, this));
   },
   getState: function(state, labels) {
     var labelsNames = _.pluck(labels, 'name');
