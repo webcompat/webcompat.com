@@ -121,7 +121,7 @@ issues.LabelList = Backbone.Model.extend({
       if(!this.has(newLabels[i])) {
         existingLabels.push(newLabels[i]);
       }
-    };
+    }
     var existingMap = this.get('namespaceMap');
     var newMap = inputArray.get('namespaceMap');
     for(var property in newMap) {
