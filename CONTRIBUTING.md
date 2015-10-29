@@ -186,13 +186,17 @@ We do not use frameworks. However we use libraries, such suitcss-components-grid
 
 ## Working Environment setup
 
-For testing code locally, you will need a very basic setup. There are a few requirements. These instructions have been made for working with Linux and MacOSX. If you install it successfully on Windows, we will appreciate a pull request on this documentation.
+For testing code locally, you will need a very basic setup. There are a few requirements. These instructions have been made for working with Linux, Windows and MacOSX. You need:
 
-* Python 2.7
-* node 0.10.0
-* Github account
+* [Python](https://www.python.org/) 2.7
+* [node](http://nodejs.org/download/) 0.10.0
+* [Github](https://github.com) account
 
-### Simple setup
+Note: If you install Python on Windows using the MSI installer, it is highly recommended to check the "Add to path"-box during installation. If you have not done so, see if one of the answers to the StackOverflow post [Adding Python path on Windows 7](http://stackoverflow.com/questions/6318156/adding-python-path-on-windows-7) can help you - it should also work fine for later versions of Windows.
+
+Windows typically doesn't have the *make* tool installed. Windows users without *make* should look at the "detailed setup" section below.
+
+### Simple setup (Mac OS and Linux)
 #### Initializing Project source code
 
 We use [Grunt](http://gruntjs.com/) as a task runner to perform certain things (minify + concat JS assets, for example). You need to have [Node.js](http://nodejs.org/download/) installed to be able to run Grunt.
@@ -208,7 +212,7 @@ cd webcompat.com
 
 **Note**: if you got an error message, you may need to [install pip](#installing-pip) before running `make install` again.
 
-### Detailed setup
+### Detailed setup (All platforms)
 #### Installing pip
 
 We use `pip` to install other Python packages. You may need to install `pip` if you haven't do so for another project or Python development.
@@ -216,24 +220,23 @@ We use `pip` to install other Python packages. You may need to install `pip` if 
 To determine if you need to, type the following command into the terminal:
 
 ```bash
-type pip
+pip --version
 ```
 
-If you see something like `pip is /usr/bin/pip`, you can proceed to install `virtualenv` (or go back and use `make install`). The exact path will likely be different.
-
-If you see something like `-bash: type: pip: not found`, you will need to install `pip` like so:
+If you get an error message, Mac/Linux users can try to install `pip` with this command:
 
 ```bash
+# (Mac/Linux)
 sudo easy_install pip
 ```
 
 (If `easy_install` isn't installed, you'll need to [install setuptools](https://pypi.python.org/pypi/setuptools#unix-wget).)
 
+Windows users should simply download the most recent Python 2.7 installer and run it again, it installs `pip` by default.
+
 #### Installing virtualenv
 
 ``` bash
-# Install pip (if not already installed)
-
 # Install virtualenv
 [sudo] pip install virtualenv
 ```
@@ -241,7 +244,7 @@ sudo easy_install pip
 #### Installing Project source code
 
 ``` bash
-# clone the repo
+# clone the repo. Change username to your Github user
 git clone git@github.com:username/webcompat.com.git
 # change to directory
 cd webcompat.com
@@ -270,14 +273,17 @@ To test issue submission, you need to create a repository on GitHub. Create a ne
 
 ``` bash
 # set up config.py, filling in appropriate secrets and pointers to repos
+# Mac / Linux
 cp config.py.example config.py
+# Windows
+copy config.py.example config.py
 ```
 
 You can now edit `config.py` and
 
 1. Add the right values to the [repo issues URIs](https://github.com/webcompat/webcompat.com/blob/master/config.py.example#L68-L73). `ISSUES_REPO_URI = "<user>/<repo>/issues"`. For example, miketaylr's setup needs to say `ISSUES_REPO_URI = "miketaylr/test-repo/issues"`
 
-2. You have the option of creating a "bot account" (a dummy account for the purpose of testing), or using your own account for local development. Either way, you'll need a personal access token to procede&mdash;this is the oauth token we use to report issues on behalf of people who don't want to give GitHub oauth access (or don't have GitHub accounts).
+2. You have the option of creating a "bot account" (a dummy account for the purpose of testing), or using your own account for local development. Either way, you'll need a personal access token to proceed &mdash; this is the oauth token we use to report issues on behalf of people who don't want to give GitHub oauth access (or don't have GitHub accounts).
 
 The [instructions for creating a personal access token](http://help.github.com/articles/creating-an-access-token-for-command-line-use) are given on GitHub. Once you have created the token you can add it in the variable `OAUTH_TOKEN = ""` (yes, even if you're using your own credentials we still refer to it as a bot). More advanced users might want to create an environment variable called `OAUTH_TOKEN`. Either way is fine.
 
@@ -323,10 +329,16 @@ You should now have a local instance of the site running at `http://localhost:50
 
 ### Building Project
 
-You can build the entire project (CSS and JavaScript files and optimize images) by executing this command:
+You can build the entire project (CSS and JavaScript files and optimize images) by executing this command on Mac/Linux:
 
 ``` bash
 make build
+```
+
+and this on Window:
+
+``` bash
+grunt
 ```
 
 ## Coding
