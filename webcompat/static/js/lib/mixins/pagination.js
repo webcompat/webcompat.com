@@ -103,14 +103,14 @@ function PaginationMixin() {
 
     if (nextPage) {
       // chop off leading "/api" and set @href
-      nextButton.attr('href', issuesCollection.getNextPage().slice(4));
+      nextButton.attr('href', issuesCollection.getNextPage().substring(4));
     } else {
       nextButton.attr('href', 'javascript: void(0);');
     }
 
     if (prevPage) {
       // chop off leading "/api" and set @href
-      prevButton.attr('href', issuesCollection.getPrevPage().slice(4));
+      prevButton.attr('href', issuesCollection.getPrevPage().substring(4));
     } else {
       prevButton.attr('href', 'javascript: void(0);');
     }
