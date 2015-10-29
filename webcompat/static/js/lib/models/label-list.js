@@ -103,5 +103,32 @@ issues.LabelList = Backbone.Model.extend({
   toJSON: function(){
     var labelsArray = _.pluck(this.get('labels'), 'name');
     return issues.allLabels.toPrefixed(labelsArray);
+  },
+  has: function(label) {
+    if(typeof label === 'string') {
+      return this.toArray().indexOf(label) > -1;
+    } else { // we assume this is an object
+      return this.toArray().indexOf(label.name) > -1;
+    }
+  },
+  merge: function(inputArray){
+    if(!(inputArray instanceof issues.LabelList)) {
+      inputArray = new issues.LabelList({labels:inputArray});
+    }
+    var existingLabels = this.get('labels');
+    var newLabels = inputArray.get('labels');
+    for (var i = 0; i < newLabels.length; i++) {
+      if(!this.has(newLabels[i])) {
+        existingLabels.push(newLabels[i]);
+      }
+    };
+    var existingMap = this.get('namespaceMap');
+    var newMap = inputArray.get('namespaceMap');
+    for(var property in newMap) {
+      // we assume that the "old" map may have better data than the "new"
+      existingMap[property] = existingMap[property] || newMap[property];
+    }
+    this.set('labels', existingLabels);
+    this.set('namespaceMap', existingMap);
   }
 });
