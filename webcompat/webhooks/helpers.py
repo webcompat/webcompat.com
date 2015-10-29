@@ -50,6 +50,5 @@ def set_label(label, issue_number):
 
 def dump_to_db(title, body, issue_number):
     url = extract_url(body)
-    print('URL: %s' % url)
     issue_db.add(WCIssue(issue_number, title, url, body))
     issue_db.commit()
