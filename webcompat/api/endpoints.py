@@ -266,7 +266,7 @@ def get_repo_labels():
     '''XHR endpoint to get all possible labels in a repo.
     '''
     with open( STATIC_PATH + '/config_data/labels.json') as f:
-        return (f.read(), 200, {'content-type': 'application/json'})
+        return (f.read(), 200, {'content-type': JSON_MIME})
 
 
 @api.route('/rate_limit')
