@@ -1,3 +1,10 @@
+## 2.0.1
+
+* Make labels on frontpage clickable [Pull #809](https://github.com/webcompat/webcompat.com/pull/809) [Issue #787](https://github.com/webcompat/webcompat.com/issues/787)
+* Bug status should be mutually exclusive [Pull #808](https://github.com/webcompat/webcompat.com/pull/808) [Issue #448](https://github.com/webcompat/webcompat.com/issues/448)
+* Update isse state when changing bug status [Pull #807](https://github.com/webcompat/webcompat.com/pull/807) [Issue #806](https://github.com/webcompat/webcompat.com/issues/806)
+* Do case-insensitive file extension checking [Pull #804](https://github.com/webcompat/webcompat.com/pull/804) [Issue #802](https://github.com/webcompat/webcompat.com/issues/802)
+
 ## 2.0.0
 
 * Re-write label handling model and UI code [Pull #796](https://github.com/webcompat/webcompat.com/pull/796) [Issue #783](https://github.com/webcompat/webcompat.com/issues/783) [Issue #784](https://github.com/webcompat/webcompat.com/issues/784) [Issue #797](https://github.com/webcompat/webcompat.com/issues/797) [Issue #799](https://github.com/webcompat/webcompat.com/issues/799)
