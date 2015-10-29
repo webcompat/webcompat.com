@@ -145,7 +145,7 @@
           <% _.each(labels, function(label) { %>
             <label class="LabelEditor-item">
               <span class="LabelEditor-color" style="background-color:#<%=label.color%>">
-                <input class="LabelEditor-checkbox" type="checkbox" name="<%= label.name %>" data-color="<%=label.color%>">
+                <input class="LabelEditor-checkbox" type="checkbox" name="<%= label.name %>" data-color="<%=label.color%>" data-remotename="<%= label.remoteName %>">
               </span>
               <span class="LabelEditor-name"><%= label.name %></span>
               </label>

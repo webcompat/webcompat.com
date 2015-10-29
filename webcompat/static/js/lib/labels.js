@@ -120,10 +120,23 @@ issues.LabelEditorView = Backbone.View.extend({
       });
     }
   },
-  updateView: function() {
+  updateView: function(evt) {
+    // We try to make sure only one "status"-type label is set
+    // If the change event comes from a "status"-type label,
+    // enumerate all checked "status"-type labels and uncheck
+    // the others.
+    if($(evt.target).data('remotename').match(/^status/) &&
+          evt.target.checked) {
+      var checked = $('input[type=checkbox][data-remotename^="status"]:checked');
+      _.each(checked, function(item) {
+        if(item !== evt.target) {
+          item.checked = false;
+        }
+      });
+    }
     // we do the "real" save when you close the editor.
     // this just updates the UI responsively
-    var checked = $('input[type=checkbox]:checked');
+    checked = $('input[type=checkbox]:checked');
     // build up an array of objects that have
     // .name and .color props that the templates expect
     var modelUpdate = [];
