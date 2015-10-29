@@ -25,7 +25,9 @@
 issues.LabelList = Backbone.Model.extend({
   initialize: function() {
     this.set('namespaceRegex', /(browser|closed|os|status)-(.+)/i);
-    this.set('defaultLabelURL', '/api/issues/labels');
+    // Temporarily set pagination to 100 labels per page, until
+    // we fix Issue #781
+    this.set('defaultLabelURL', '/api/issues/labels?per_page=100');
     // The templating engine needs objects that have JS properties, it won't call
     // get('labels'). Setting a property here makes sure we can pass the model
     // directly to a template() method
