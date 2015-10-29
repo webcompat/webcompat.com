@@ -30,10 +30,10 @@ issue_engine = create_engine('sqlite:///' + os.path.join(app.config['BASE_DIR'],
 issue_db = scoped_session(sessionmaker(autocommit=False,
                                          autoflush=False,
                                          bind=issue_engine))
-Base = declarative_base()
-Base.query = issue_db.query_property()
+IssueBase = declarative_base()
+IssueBase.query = issue_db.query_property()
 
-class WCIssue(Base):
+class WCIssue(IssueBase):
     __tablename__ = 'webcompat_issues'
 
     issue_id = Column(String(128), unique=True, primary_key=True)
@@ -47,13 +47,13 @@ class WCIssue(Base):
         self.url = url
         self.body = body
 
-Base.metadata.create_all(bind=issue_engine)
+IssueBase.metadata.create_all(bind=issue_engine)
 
-Base2 = declarative_base()
-Base2.query = session_db.query_property()
+UsersBase = declarative_base()
+UsersBase.query = session_db.query_property()
 
 
-class User(Base2):
+class User(UsersBase):
     __tablename__ = 'users'
 
     user_id = Column(String(128), unique=True, primary_key=True)
@@ -67,4 +67,4 @@ class User(Base2):
         self.user_id = sha512(access_token + uuid4().hex).hexdigest()[0:128]
 
 
-Base2.metadata.create_all(bind=session_engine)
+UsersBase.metadata.create_all(bind=session_engine)
