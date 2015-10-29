@@ -24,6 +24,7 @@ from webcompat.helpers import get_comment_data
 from webcompat.helpers import get_headers
 from webcompat.helpers import get_request_headers
 from webcompat.helpers import normalize_api_params
+from webcompat.helpers import STATIC_PATH
 from webcompat.issues import filter_new
 from webcompat.issues import proxy_request
 
@@ -264,14 +265,8 @@ def modify_labels(number):
 def get_repo_labels():
     '''XHR endpoint to get all possible labels in a repo.
     '''
-    request_headers = get_request_headers(g.request_headers)
-    if g.user:
-        path = 'repos/{0}/labels'.format(REPO_PATH)
-        labels = github.raw_request('GET', path, headers=request_headers)
-    else:
-        path = 'https://api.github.com/repos/{0}/labels'.format(REPO_PATH)
-        labels = proxy_request('get', uri=path, headers=request_headers)
-    return (labels.content, labels.status_code, get_headers(labels))
+    with open( STATIC_PATH + '/config_data/labels.json') as f:
+        return (f.read(), 200, {'content-type': JSON_MIME})
 
 
 @api.route('/rate_limit')

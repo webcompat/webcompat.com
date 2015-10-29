@@ -1,0 +1,182 @@
+[
+  {
+    "url": "https://api.github.com/repos/webcompat/web-bugs/labels/status-duplicate",
+    "name": "status-duplicate",
+    "color": "cccccc"
+  },
+  {
+    "url": "https://api.github.com/repos/webcompat/web-bugs/labels/status-invalid",
+    "name": "status-invalid",
+    "color": "e6e6e6"
+  },
+  {
+    "url": "https://api.github.com/repos/webcompat/web-bugs/labels/status-wontfix",
+    "name": "status-wontfix",
+    "color": "000000"
+  },
+  {
+    "url": "https://api.github.com/repos/webcompat/web-bugs/labels/status-needsinfo",
+    "name": "status-needsinfo",
+    "color": "fbca04"
+  },
+  {
+    "url": "https://api.github.com/repos/webcompat/web-bugs/labels/browser-chrome",
+    "name": "browser-chrome",
+    "color": "F16A5A"
+  },
+  {
+    "url": "https://api.github.com/repos/webcompat/web-bugs/labels/browser-firefox",
+    "name": "browser-firefox",
+    "color": "FF4E00"
+  },
+  {
+    "url": "https://api.github.com/repos/webcompat/web-bugs/labels/browser-ie",
+    "name": "browser-ie",
+    "color": "00B9EC"
+  },
+  {
+    "url": "https://api.github.com/repos/webcompat/web-bugs/labels/browser-opera",
+    "name": "browser-opera",
+    "color": "AC090A"
+  },
+  {
+    "url": "https://api.github.com/repos/webcompat/web-bugs/labels/browser-safari",
+    "name": "browser-safari",
+    "color": "1B9BF6"
+  },
+  {
+    "url": "https://api.github.com/repos/webcompat/web-bugs/labels/browser-android",
+    "name": "browser-android",
+    "color": "28ACBB"
+  },
+  {
+    "url": "https://api.github.com/repos/webcompat/web-bugs/labels/mobile",
+    "name": "mobile",
+    "color": "009800"
+  },
+  {
+    "url": "https://api.github.com/repos/webcompat/web-bugs/labels/status-contactready",
+    "name": "status-contactready",
+    "color": "A1EBBF"
+  },
+  {
+    "url": "https://api.github.com/repos/webcompat/web-bugs/labels/status-sitewait",
+    "name": "status-sitewait",
+    "color": "006b75"
+  },
+  {
+    "url": "https://api.github.com/repos/webcompat/web-bugs/labels/ios",
+    "name": "ios",
+    "color": "0bd318"
+  },
+  {
+    "url": "https://api.github.com/repos/webcompat/web-bugs/labels/browser-iceweasel",
+    "name": "browser-iceweasel",
+    "color": "0052cc"
+  },
+  {
+    "url": "https://api.github.com/repos/webcompat/web-bugs/labels/browser-ucweb",
+    "name": "browser-ucweb",
+    "color": "f7c6c7"
+  },
+  {
+    "url": "https://api.github.com/repos/webcompat/web-bugs/labels/status-fixed",
+    "name": "status-fixed",
+    "color": "009800"
+  },
+  {
+    "url": "https://api.github.com/repos/webcompat/web-bugs/labels/status-imported",
+    "name": "status-imported",
+    "color": "5319e7"
+  },
+  {
+    "url": "https://api.github.com/repos/webcompat/web-bugs/labels/status-worksforme",
+    "name": "status-worksforme",
+    "color": "d4c5f9"
+  },
+  {
+    "url": "https://api.github.com/repos/webcompat/web-bugs/labels/status-needsdiagnosis",
+    "name": "status-needsdiagnosis",
+    "color": "FF8364"
+  },
+  {
+    "url": "https://api.github.com/repos/webcompat/web-bugs/labels/browser-ie11",
+    "name": "browser-ie11",
+    "color": "ededed"
+  },
+  {
+    "url": "https://api.github.com/repos/webcompat/web-bugs/labels/browser-chromium",
+    "name": "browser-chromium",
+    "color": "ededed"
+  },
+  {
+    "url": "https://api.github.com/repos/webcompat/web-bugs/labels/status-needscontact",
+    "name": "status-needscontact",
+    "color": "e11d21"
+  },
+  {
+    "url": "https://api.github.com/repos/webcompat/web-bugs/labels/browser-all",
+    "name": "browser-all",
+    "color": "ededed"
+  },
+  {
+    "url": "https://api.github.com/repos/webcompat/web-bugs/labels/browser-vivaldi",
+    "name": "browser-vivaldi",
+    "color": "ededed"
+  },
+  {
+    "url": "https://api.github.com/repos/webcompat/web-bugs/labels/browser-midori",
+    "name": "browser-midori",
+    "color": "ededed"
+  },
+  {
+    "url": "https://api.github.com/repos/webcompat/web-bugs/labels/windows",
+    "name": "windows",
+    "color": "ededed"
+  },
+  {
+    "url": "https://api.github.com/repos/webcompat/web-bugs/labels/browser-seamonkey",
+    "name": "browser-seamonkey",
+    "color": "ededed"
+  },
+  {
+    "url": "https://api.github.com/repos/webcompat/web-bugs/labels/browser-lynx",
+    "name": "browser-lynx",
+    "color": "ededed"
+  },
+  {
+    "url": "https://api.github.com/repos/webcompat/web-bugs/labels/browser-blackberry",
+    "name": "browser-blackberry",
+    "color": "ededed"
+  },
+  {
+    "url": "https://api.github.com/repos/webcompat/web-bugs/labels/browser-firefox-mobile",
+    "name": "browser-firefox-mobile",
+    "color": "fbca04"
+  },
+  {
+    "url": "https://api.github.com/repos/webcompat/web-bugs/labels/os-android",
+    "name": "os-android",
+    "color": "ededed"
+  },
+  {
+    "url": "https://api.github.com/repos/webcompat/web-bugs/labels/browser-edge",
+    "name": "browser-edge",
+    "color": "fef2c0"
+  },
+  {
+    "url": "https://api.github.com/repos/webcompat/web-bugs/labels/status-ie-bugbar",
+    "name": "status-ie-bugbar",
+    "color": "bfdadc"
+  },
+  {
+    "url": "https://api.github.com/repos/webcompat/web-bugs/labels/browser-chrome-mobile",
+    "name": "browser-chrome-mobile",
+    "color": "ededed"
+  },
+  {
+    "url": "https://api.github.com/repos/webcompat/web-bugs/labels/browser-uc-browser",
+    "name": "browser-uc-browser",
+    "color": "ededed"
+  }
+]

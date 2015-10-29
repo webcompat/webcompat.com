@@ -85,6 +85,9 @@ issues.LabelEditorView = Backbone.View.extend({
   },
   template: _.template($('#label-editor-tmpl').html()),
   render: function() {
+    // make sure no labels from this issue are lost
+    // even if they are not (yet) in our labels.json file
+    issues.allLabels.merge(this.issueView.issueLabels);
     this.$el.html(this.template(this.model));
     this.resizeEditorHeight();
     _.defer(_.bind(function() {
