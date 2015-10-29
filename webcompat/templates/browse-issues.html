@@ -18,7 +18,7 @@
             </div>
             <div class="wc-IssueItem-section">
               <span class="wc-IssueItem-label js-issue-label"><% _.each(issue.labels, function(label) { %>
-                <a href="#" class="wc-Labels" title="Labels : <%= label.name %>"><%= label.name %></a>
+                <a href="/issues?labels=<%= issues.allLabels.toPrefixed(label.name) %>" class="wc-Labels" title="Labels : <%= label.name %>"><%= label.name %></a>
               <% }); %></span>
             </div>
           </div>
