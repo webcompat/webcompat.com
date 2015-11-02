@@ -128,8 +128,10 @@ function BugForm() {
       this.checkURLValidity();
       this.checkProblemTypeValidity();
       this.checkImageTypeValidity();
-      // and open the form
-      this.reportButton.click();
+      // and open the form, if it's not already open
+      if (!this.reportButton.hasClass('is-open')) {
+        this.reportButton.click();
+      }
     }
   };
 

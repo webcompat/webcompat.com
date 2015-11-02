@@ -71,7 +71,7 @@ function HomePage() {
         scrollTop: 0
       }, 250);
     }
-    reportButton.toggleClass('is-close')
+    reportButton.toggleClass('is-closed')
                 .toggleClass('is-open');
     formContainer.slideToggle(function() {
       formContainer.toggleClass('form-closed')

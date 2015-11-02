@@ -41,7 +41,7 @@ define([
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url('/')))
-        .findByCssSelector('#report-bug.closed').click()
+        .findByCssSelector('#report-bug.is-closed').click()
         .end()
         .findByCssSelector('.form-opened').isDisplayed()
         .then(function (isDisplayed) {
