@@ -1,0 +1,27 @@
+{% from "web_modules/dropdown.html" import dropdown with context %}
+
+<script type="text/template" id="issuelist-filter-tmpl">
+    <div class="wc-IssueList-Dropdown">
+       {{ dropdown('large', 'js-dropdown-wrapper') }}
+    </div>
+    <div class="wc-IssueList-filter">
+      {% for category in categories %}
+        {% include "web_modules/filter.html" %}
+      {% endfor %}
+    </div>
+</script>
+
+<script type="text/template" id="dropdown-tmpl">
+  <button type="button" class="wc-Dropdown-toggle js-dropdown-toggle">
+     <h1 class="wc-Dropdown-label"><%= dropdownTitle %></h1> <span class="wc-Icon wc-Icon--chevron-down"></span>
+  </button>
+  <ul class="wc-Dropdown-content js-dropdown-options" aria-hidden="false">
+    <% _.each(dropdownOptions, function(option) { %>
+    <li class="wc-Dropdown-item">
+      <a href="#" class="wc-Dropdown-link" data-params="<%= option.params %>">
+        <%= option.title %>
+      </a>
+    </li>
+    <% }); %>
+  </ul>
+</script>

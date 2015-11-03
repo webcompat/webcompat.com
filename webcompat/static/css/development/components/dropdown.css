@@ -2,6 +2,7 @@
 .wc-Dropdown {
   position:relative;
   font-size:var(--base-font-size);
+  display: inline-block;
 }
 .wc-Dropdown--large {
   font-size:2em;

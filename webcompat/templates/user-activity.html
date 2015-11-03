@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+{% block body %}
+{% include "shared/nav.html" %}
+<main role="main">
+  <div class="wc-Loader js-loader"></div>
+  <div class="wc-content wc-content--body">
+    <div class="wc-TextCenter">
+      <h1 class="wc-Title wc-Title--l wc-ResetOffsetBottom">{{user}}'s activity</h1>
+    </div>
+  </div>
+  <div id="browse-issues-wrapper">
+    {% include "user-activity/reported-by-user.html" %}
+    {% include "user-activity/user-mentions.html" %}
+  </div>
+</div>
+{% endblock %}
+{% block extrascripts %}
+<script>var repoPath="{{config['ISSUES_REPO_URI']}}";</script>
+{%- if config.PRODUCTION or config.DEVELOPMENT -%}
+<script src="{{ url_for('static', filename='js/user-activity.min.js')|bust_cache }}"></script>
+{% else %}
+<script src="{{ url_for('static', filename='js/lib/models/label-list.js') }}"></script>
+<script src="{{ url_for('static', filename='js/lib/models/issue.js') }}"></script>
+<script src="{{ url_for('static', filename='js/lib/mixins/pagination.js') }}"></script>
+<script src="{{ url_for('static', filename='js/lib/user-activity.js') }}"></script>
+{%- endif %}
+{% endblock %}

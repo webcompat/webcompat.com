@@ -267,28 +267,10 @@ issueList.SortingView = Backbone.View.extend({
   }
 });
 
-// we're just listening for and firing events from this view -
-// no template needed.
-issueList.PaginationControlsView = Backbone.View.extend({
-  el: $('.js-pagination-controls'),
-  events: {
-    'click .js-pagination-previous': 'broadcastPrevious',
-    'click .js-pagination-next': 'broadcastNext',
-  },
-  initialize: function() {
+var issuesPagination = new PaginationMixin();
 
-  },
-  broadcastNext: function(e) {
-    issueList.events.trigger('paginate:next');
-    e.preventDefault();
-  },
-  broadcastPrevious: function(e) {
-    issueList.events.trigger('paginate:previous');
-    e.preventDefault();
-  }
-});
-
-issueList.IssueView = Backbone.View.extend({
+issueList.IssueView = Backbone.View.extend(
+  _.extend({}, issuesPagination, {
   el: $('.js-issue-list'),
   events: {
     'click .js-issue-label': 'labelSearch',
@@ -299,8 +281,6 @@ issueList.IssueView = Backbone.View.extend({
   _githubSearchEndpoint: "https://api.github.com/search/issues",
   _isLoggedIn: $('body').data('username'),
   _loadingIndicator: $('.js-loader'),
-  _nextButton: $('.js-pagination-next'),
-  _prevButton: $('.js-pagination-previous'),
   _urlParams: undefined,
   initialize: function() {
     this.issues = new issueList.IssueCollection();
@@ -309,11 +289,10 @@ issueList.IssueView = Backbone.View.extend({
     issueList.events.on('issues:update', _.bind(this.updateIssues, this));
     issueList.events.on('filter:add-to-model', _.bind(this.updateModelParams, this));
     issueList.events.on('filter:reset-stage', _.bind(this.resetStageFilter, this));
-    issueList.events.on('paginate:next', _.bind(this.requestNextPage, this));
-    issueList.events.on('paginate:previous', _.bind(this.requestPreviousPage, this));
     wcEvents.on('dropdown:change', _.bind(this.updateModelParams, this));
     window.addEventListener('popstate', _.bind(this.loadIssues, this));
 
+    issuesPagination.initMixin(this, this.issues, $('main'));
     this.loadIssues();
   },
   template: _.template($('#issuelist-issue-tmpl').html()),
@@ -375,7 +354,7 @@ issueList.IssueView = Backbone.View.extend({
     this.issues.fetch(headers).success(_.bind(function() {
       this._loadingIndicator.removeClass('is-active');
       this.render(this.issues);
-      this.initPaginationLinks(this.issues);
+      issuesPagination.initPaginationLinks(this.issues);
     }, this)).error(_.bind(function(e){
       var message;
       var timeout;
@@ -406,53 +385,6 @@ issueList.IssueView = Backbone.View.extend({
     }));
     return this;
   },
-  getPageNumberFromURL: function(url) {
-    // takes a string URL and extracts the page param/value pair.
-    var match = /[?&](page=\d+)/i.exec(url);
-    return match[1];
-  },
-  initPaginationLinks: function(issues) {
-    // if either the next or previous page numbers are null
-    // disable the buttons and add .is-disabled classes.
-    var nextPage = this.issues.getNextPage();
-    var prevPage = this.issues.getPrevPage();
-    var isLastPage = function() {
-      return nextPage == null;
-    };
-    var isFirstPage = function() {
-      return prevPage == null;
-    };
-    var isSinglePage = isLastPage() && isFirstPage();
-
-    if (!issues.length || isSinglePage) {
-      // hide pagination buttons if there are no results,
-      // or the results are limited to a single page.
-      this._nextButton.addClass('wc-hidden');
-      this._prevButton.addClass('wc-hidden');
-      return;
-    }
-
-    this._nextButton.removeClass('wc-hidden')
-                    .prop('disabled', isLastPage())
-                    .toggleClass('is-disabled', isLastPage());
-    this._prevButton.removeClass('wc-hidden')
-                    .prop('disabled', isFirstPage())
-                    .toggleClass('is-disabled', isFirstPage());
-
-    if (nextPage) {
-      // chop off leading "/api" and set @href
-      this._nextButton.attr('href', this.issues.getNextPage().slice(4));
-    } else {
-      this._nextButton.attr('href', 'javascript: void(0);');
-    }
-
-    if (prevPage) {
-      // chop off leading "/api" and set @href
-      this._prevButton.attr('href', this.issues.getPrevPage().slice(4));
-    } else {
-      this._prevButton.attr('href', 'javascript: void(0);');
-    }
-  },
   labelSearch: function(e) {
     // clicking on a label in the issues view should trigger a
     // "search:update" event to populate the view with search results
@@ -466,30 +398,6 @@ issueList.IssueView = Backbone.View.extend({
   },
   resetStageFilter: function(options) {
     this.updateModelParams('page=1&stage=all', options);
-  },
-  requestNextPage: function() {
-    var nextPage;
-    var pageNum;
-
-    if (nextPage = this.issues.getNextPage()) {
-      // update the URL to be in sync with the model
-      pageNum = this.getPageNumberFromURL(nextPage);
-      this.updateModelParams(pageNum);
-      // we pass along the entire URL from the Link header
-      this.fetchAndRenderIssues({url: nextPage});
-    }
-  },
-  requestPreviousPage: function() {
-    var prevPage;
-    var pageNum;
-
-    if (prevPage = this.issues.getPrevPage()) {
-      // update the URL to be in sync with the model
-      pageNum = this.getPageNumberFromURL(prevPage);
-      this.updateModelParams(pageNum);
-      // we pass along the entire URL from the Link header
-      this.fetchAndRenderIssues({url: prevPage});
-    }
   },
   updateIssues: function(category) {
     // depending on what category was clicked (or if a search came in),
@@ -616,7 +524,7 @@ issueList.IssueView = Backbone.View.extend({
       }
     }
   }
-});
+}));
 
 issueList.MainView = Backbone.View.extend({
   el: $('.js-issue-page'),
@@ -641,7 +549,6 @@ issueList.MainView = Backbone.View.extend({
     this.issueList = new issueList.IssueView();
     this.issueSorter = new issueList.SortingView();
     this.filter = new issueList.FilterView();
-    this.paginationControls = new issueList.PaginationControlsView();
     this.search = new issueList.SearchView();
 
     this.render();

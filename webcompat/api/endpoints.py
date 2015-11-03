@@ -91,6 +91,28 @@ def proxy_issues():
     return (issues.content, issues.status_code, get_headers(issues))
 
 
+@api.route('/issues/<username>/<parameter>')
+def get_user_activity_issues(username, parameter):
+    '''API endpoint to return issues related to a user.
+
+    cf. https://developer.github.com/v3/issues/#list-issues-for-a-repository
+    This is only used for "creator" and "mentioned" right now.
+
+    Any logged in user can see details for any other logged in user. We can
+    extend this to non-logged in users in the future if we want.
+    '''
+    if not g.user:
+        abort(401)
+    # copy the params so we can add to the dict.
+    params = request.args.copy()
+    params['state'] = 'all'
+    params['{0}'.format(parameter)] = '{0}'.format(username)
+    request_headers = get_request_headers(g.request_headers)
+    issues = github.raw_request('GET', 'repos/{path}'.format(path=ISSUES_PATH),
+                                headers=request_headers, params=params)
+    return (issues.content, issues.status_code, get_headers(issues))
+
+
 @api.route('/issues/category/<issue_category>')
 @mockable_response
 def get_issue_category(issue_category):

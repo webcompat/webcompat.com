@@ -49,9 +49,19 @@ module.exports = function(grunt) {
           '<%= jsPath %>/lib/models/label-list.js',
           '<%= jsPath %>/lib/labels.js',
           '<%= jsPath %>/lib/models/issue.js',
+          '<%= jsPath %>/lib/mixins/pagination.js',
           '<%= jsPath %>/lib/issue-list.js'
         ],
         dest: '<%= jsPath %>/issue-list.js'
+      },
+      userActivity: {
+        src: [
+          '<%= jsPath %>/lib/models/label-list.js',
+          '<%= jsPath %>/lib/models/issue.js',
+          '<%= jsPath %>/lib/mixins/pagination.js',
+          '<%= jsPath %>/lib/user-activity.js'
+        ],
+        dest: '<%= jsPath %>/user-activity.js'
       }
    });
 };

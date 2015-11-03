@@ -8,6 +8,7 @@ fabfile.py
 docs/build/
 screenshots/
 uploads/
+.idea/
 
 # these are our 'dist' files
 # checking them into the repo is silly
@@ -15,6 +16,7 @@ webcompat/static/js/webcompat.js
 webcompat/static/js/diagnose.js
 webcompat/static/js/issues.js
 webcompat/static/js/issue-list.js
+webcompat/static/js/user-activity.js
 webcompat/**/*.min.js
 webcompat/**/*.min.css
 webcompat/**/*.dev.css
