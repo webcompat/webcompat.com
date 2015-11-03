@@ -11,7 +11,7 @@
   <div class="wc-IssueItem-section">
     <span class="wc-IssueItem-label js-issue-label">
     <% _.each(issue.labels, function(label) { %>
-      <a href="/issues?labels=<%= issues.allLabels.toPrefixed(label.name) %>"
+      <a href="/issues?labels=<%= label.remoteName %>"
          class="wc-Labels" data-remotename="<%= label.remoteName %>"
          title="Labels : <%= label.name %>"><%= label.name %></a>
     <% }); %></span>
