@@ -27,8 +27,8 @@ from helpers import get_referer
 from helpers import get_user_info
 from helpers import set_referer
 from issues import report_issue
-from models import session_db
-from models import User
+from webcompat.db import session_db
+from webcompat.db import User
 
 from webcompat import app
 from webcompat import github

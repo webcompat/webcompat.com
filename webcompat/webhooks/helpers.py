@@ -5,12 +5,13 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 import json
-import os
 import re
 import requests
 
 from webcompat import app
-
+from webcompat.db import issue_db
+from webcompat.db import WCIssue
+from webcompat.helpers import extract_url
 
 def api_post(endpoint, payload, issue):
     '''Helper method to post junk to GitHub.'''
@@ -23,7 +24,8 @@ def api_post(endpoint, payload, issue):
 
 
 def parse_and_set_label(body, issue_number):
-    '''Parse the labels from the body in comments like so:
+    '''Parse the labels from the body in comment:
+
     <!-- @browser: value -->. Currently this only handles a single label,
     because that's all that we set in webcompat.com.
     '''
@@ -39,9 +41,14 @@ def parse_and_set_label(body, issue_number):
 
 
 def set_label(label, issue_number):
-    '''Do a GitHub POST request using one of our bots, which has push access
-    and set a label for the issue.'''
+    '''Do a GitHub POST request to set a label for the issue.'''
     # POST /repos/:owner/:repo/issues/:number/labels
     # ['Label1', 'Label2']
     payload = [label]
     api_post('labels', payload, issue_number)
+
+
+def dump_to_db(title, body, issue_number):
+    url = extract_url(body)
+    issue_db.add(WCIssue(issue_number, title, url, body))
+    issue_db.commit()

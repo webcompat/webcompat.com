@@ -11,10 +11,11 @@ See https://developer.github.com/webhooks/ for what is possible.'''
 
 import json
 
-from flask import Blueprint
 from flask import abort
+from flask import Blueprint
 from flask import request
 
+from helpers import dump_to_db
 from helpers import parse_and_set_label
 
 webhooks = Blueprint('webhooks', __name__, url_prefix='/webhooks')
@@ -22,8 +23,11 @@ webhooks = Blueprint('webhooks', __name__, url_prefix='/webhooks')
 
 @webhooks.route('/labeler', methods=['GET', 'POST'])
 def hooklistener():
-    '''Listen for the "issues" webhook event, parse the body,
-       post back labels. But only do that for the 'opened' action.'''
+    '''Listen for the "issues" webhook event, parse the body
+
+       Method posts back labels and dumps data to a local db.
+       Only in response to the 'opened' action, though.
+    '''
     if request.method == 'GET':
         abort(403)
     elif (request.method == 'POST' and
@@ -31,8 +35,10 @@ def hooklistener():
         payload = json.loads(request.data)
         if payload.get('action') == 'opened':
             issue_body = payload.get('issue')['body']
+            issue_title = payload.get('issue')['title']
             issue_number = payload.get('issue')['number']
             parse_and_set_label(issue_body, issue_number)
+            dump_to_db(issue_title, issue_body, issue_number)
             return ('gracias, amigo.', 200)
         else:
             return ('cool story, bro.', 200)

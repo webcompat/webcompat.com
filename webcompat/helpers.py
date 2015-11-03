@@ -5,10 +5,11 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 import datetime
-import json
 import hashlib
+import json
 import math
 import os
+import re
 import urlparse
 
 from babel.dates import format_timedelta
@@ -43,7 +44,8 @@ def bust_cache(file_path):
 
     Uses a simple cache_dict to we don't have to hash each file for every
     request. This is kept in-memory so it will be blown away when the app
-    is restarted (which is when file changes would have been deployed).'''
+    is restarted (which is when file changes would have been deployed).
+    '''
     def get_checksum(file_path):
         try:
             checksum = cache_dict[file_path]
@@ -349,3 +351,20 @@ def mockable_response(func):
                 return (data, 200, get_fixture_headers(data))
         return func(*args, **kwargs)
     return wrapped_func
+
+
+def extract_url(issue_body):
+    '''Extract the URL for an issue from WebCompat.
+
+    URL in webcompat.com bugs follow this pattern:
+    **URL**: https://example.com/foobar
+    '''
+    url_pattern = re.compile('\*\*URL\*\*\: (.*)\n')
+    url_match = re.search(url_pattern, issue_body)
+    if url_match:
+        url = url_match.group(1).strip()
+        if not url.startswith(('http://', 'https://')):
+            url = "http://%s" % url
+    else:
+        url = ""
+    return url
