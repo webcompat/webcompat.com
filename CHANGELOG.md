@@ -1,3 +1,8 @@
+## 2.0.2
+
+* Fix bug in validation code that would close the form [Pull #816](https://github.com/webcompat/webcompat.com/pull/816) [Issue #815](https://github.com/webcompat/webcompat.com/issues/815)
+* Create a local database of issues (on creation) [Pull #780](https://github.com/webcompat/webcompat.com/pull/780) [Issue #165](https://github.com/webcompat/webcompat.com/issues/165)
+
 ## 2.0.1
 
 * Make labels on frontpage clickable [Pull #809](https://github.com/webcompat/webcompat.com/pull/809) [Issue #787](https://github.com/webcompat/webcompat.com/issues/787)
