@@ -23,7 +23,7 @@ define([
         .get(require.toUrl(url('/issues/200')))
         .findByCssSelector('.wc-Comment--form')
         .then(assert.fail, function(err) {
-           assert.isTrue(/NoSuchElement/.test(String(err)));
+          assert.isTrue(/NoSuchElement/.test(String(err)));
         })
         .end();
     }

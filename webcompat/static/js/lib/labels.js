@@ -2,7 +2,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
- var issues = issues || {};
+var issues = issues || {};
 
 // We need a complete list of labels for certain operations,
 // especially namespace mapping. If the list we're handling
@@ -31,9 +31,9 @@ issues.LabelsView = Backbone.View.extend({
   // relavant parts in $('#issue-labels-tmpl')
   subTemplate: _.template([
     '<% _.each(labels, function(label) { %>',
-      '<span class="Label Label--badge" style="background-color:#<%=label.color%>">',
-        '<%= label.name %>',
-      '</span>',
+    '<span class="Label Label--badge" style="background-color:#<%=label.color%>">',
+    '<%= label.name %>',
+    '</span>',
     '<% }); %>'].join('')),
   render: function() {
     this.$el.html(this.template(this.model.toJSON()));
@@ -103,7 +103,7 @@ issues.LabelEditorView = Backbone.View.extend({
       var doResize = false;
       if (window.getComputedStyle &&
             window.getComputedStyle(document.body, '::after')) {
-            style = window.getComputedStyle(document.body, '::after').content;
+        style = window.getComputedStyle(document.body, '::after').content;
       }
       if (style.match(/resizeEditor/)) {
         doResize = true;
@@ -113,10 +113,10 @@ issues.LabelEditorView = Backbone.View.extend({
 
     if (getBreakpoint()) {
       _.defer(function(){
-        var labelEditorheight = parseInt($('.LabelEditor').css( "height" ), 10),
-            labelHeaderheight = parseInt($('.LabelEditor-row--header').css("height"), 10);
+        var labelEditorheight = parseInt($('.LabelEditor').css('height'), 10),
+          labelHeaderheight = parseInt($('.LabelEditor-row--header').css('height'), 10);
         $('.LabelEditor-list').height(labelEditorheight -labelHeaderheight );
-        $("html, body").animate({ scrollTop: 0 }, 0);
+        $('html, body').animate({ scrollTop: 0 }, 0);
       });
     }
   },

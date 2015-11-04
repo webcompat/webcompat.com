@@ -152,7 +152,7 @@ define([
         .end()
         .findByCssSelector('.repo-container .issues-listing')
         .then(assert.fail, function(err) {
-           assert.isTrue(/NoSuchElement/.test(String(err)));
+          assert.isTrue(/NoSuchElement/.test(String(err)));
         })
         .end();
     },
@@ -170,8 +170,8 @@ define([
     },
 
     'Loading partial params results in merge with defaults': function() {
-        var params = '?page=2';
-        return this.remote
+      var params = '?page=2';
+      return this.remote
           .setFindTimeout(intern.config.wc.pageLoadTimeout)
           .get(require.toUrl(url('/issues') + params))
           // find something so we know the page has loaded
@@ -237,7 +237,7 @@ define([
     },
 
     'Loading URL with stage param loads issues': function() {
-      var params = "?page=1&per_page=50&state=open&stage=new&sort=created&direction=desc";
+      var params = '?page=1&per_page=50&state=open&stage=new&sort=created&direction=desc';
 
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)

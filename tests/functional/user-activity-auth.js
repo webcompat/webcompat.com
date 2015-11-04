@@ -33,7 +33,7 @@ define([
         .get(require.toUrl(url('/me')))
         .findByCssSelector('.wc-content--body .wc-Title--l').getVisibleText()
         .then(function(text){
-          var usernameEnd = text.indexOf("'s activity");
+          var usernameEnd = text.indexOf('\'s activity');
           username = text.slice(0, usernameEnd);
         })
         .getCurrentUrl()

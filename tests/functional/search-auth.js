@@ -92,6 +92,6 @@ define([
           assert.include(currUrl, 'page=1', 'Default params got merged.');
         })
         .end();
-      }
+    }
   });
 });

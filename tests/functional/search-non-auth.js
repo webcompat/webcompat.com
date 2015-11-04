@@ -29,7 +29,7 @@ define([
         .end()
         .findByCssSelector('.repo-container .issues-listing')
         .then(assert.fail, function(err) {
-           assert.isTrue(/NoSuchElement/.test(String(err)));
+          assert.isTrue(/NoSuchElement/.test(String(err)));
         })
         .end();
     },
@@ -100,6 +100,6 @@ define([
           assert.include(currUrl, 'page=1', 'Default params got merged.');
         })
         .end();
-      }
+    }
   });
 });
