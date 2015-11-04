@@ -11,7 +11,7 @@ var issues = issues || {};
 // unseen namespaces are added in their local name form.
 // Hence, we set up a single, globally accessible "all labels" model
 // This is set up as early as possible to avoid timing issues
-if(!issues.allLabels) {
+if (!issues.allLabels) {
   issues.allLabels = new issues.LabelList();
 }
 
@@ -112,10 +112,10 @@ issues.LabelEditorView = Backbone.View.extend({
     };
 
     if (getBreakpoint()) {
-      _.defer(function(){
-        var labelEditorheight = parseInt($('.LabelEditor').css('height'), 10),
-          labelHeaderheight = parseInt($('.LabelEditor-row--header').css('height'), 10);
-        $('.LabelEditor-list').height(labelEditorheight -labelHeaderheight );
+      _.defer(function() {
+        var labelEditorheight = parseInt($('.LabelEditor').css('height'), 10);
+        var labelHeaderheight = parseInt($('.LabelEditor-row--header').css('height'), 10);
+        $('.LabelEditor-list').height(labelEditorheight - labelHeaderheight );
         $('html, body').animate({ scrollTop: 0 }, 0);
       });
     }
@@ -126,11 +126,11 @@ issues.LabelEditorView = Backbone.View.extend({
     // enumerate all checked "status"-type labels and uncheck
     // the others.
     var checked;
-    if($(evt.target).data('remotename').match(/^status/) &&
+    if ($(evt.target).data('remotename').match(/^status/) &&
           evt.target.checked) {
       checked = $('input[type=checkbox][data-remotename^="status"]:checked');
       _.each(checked, function(item) {
-        if(item !== evt.target) {
+        if (item !== evt.target) {
           item.checked = false;
         }
       });

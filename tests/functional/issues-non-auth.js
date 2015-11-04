@@ -7,7 +7,7 @@ define([
   'intern!object',
   'intern/chai!assert',
   'require'
-], function (intern, registerSuite, assert, require) {
+], function(intern, registerSuite, assert, require) {
   'use strict';
 
   var url = function(path) {
@@ -17,44 +17,44 @@ define([
   registerSuite({
     name: 'issues',
 
-    'Issue page loads': function () {
+    'Issue page loads': function() {
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url('/issues/100')))
         .sleep(1000)
         .findByCssSelector('h1.wc-IssueDetail-title').getVisibleText()
-        .then(function (text) {
+        .then(function(text) {
           assert.include(text, 'Issue 100:', 'Issue title displayed');
         })
         .end()
         .findByCssSelector('.wc-IssueDetail-reporter').getVisibleText()
-        .then(function (text) {
+        .then(function(text) {
           assert.equal(text, 'miketaylr', 'Issue reporter displayed.');
         })
         .end()
         .findByCssSelector('.Label--badge').isDisplayed()
-        .then(function (isDisplayed) {
+        .then(function(isDisplayed) {
           assert.equal(isDisplayed, true);
         });
     },
 
-    'Issue comments load': function () {
+    'Issue comments load': function() {
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url('/issues/100')))
         .sleep(1000)
         .findByCssSelector('.js-issue-comment').isDisplayed()
-        .then(function (isDisplayed) {
+        .then(function(isDisplayed) {
           assert.equal(isDisplayed, true);
         })
         .findByCssSelector('.wc-Comment-owner').getVisibleText()
-        .then(function (text) {
+        .then(function(text) {
           assert.equal(text, 'GIGANTOR', 'Commenter name displayed.');
         })
         .end()
         .sleep(500)
         .findByCssSelector('.wc-Comment-content').getVisibleText()
-        .then(function (text) {
+        .then(function(text) {
           assert.equal(text, 'Today\'s date is Mon Sep 28 2015', 'Comment is displayed.');
         });
     },
@@ -69,7 +69,7 @@ define([
         .end()
         // look for the issue container on github.com/foo/bar/issues/N
         .findByCssSelector('.gh-header.issue').isDisplayed()
-        .then(function (isDisplayed) {
+        .then(function(isDisplayed) {
           assert.equal(isDisplayed, true, 'We\'re at the GitHub issue page now.');
         })
         .end()
@@ -88,7 +88,7 @@ define([
         .findByCssSelector('.wc-QrImage-launcher').click()
         .end()
         .findByCssSelector('.wc-QrImage').isDisplayed()
-        .then(function (isDisplayed) {
+        .then(function(isDisplayed) {
           assert.equal(isDisplayed, true);
         })
         .end();
@@ -102,7 +102,7 @@ define([
         .findByCssSelector('.wc-QrImage-launcher').click()
         .end()
         .findByCssSelector('.wc-QrImage').isDisplayed()
-        .then(function (isDisplayed) {
+        .then(function(isDisplayed) {
           assert.equal(isDisplayed, true);
         })
         .end()
@@ -110,7 +110,7 @@ define([
         .findByCssSelector('.wc-QrImage-launcher.is-active').click()
         .end()
         .findByCssSelector('.wc-QrImage').isDisplayed()
-        .then(function (isDisplayed) {
+        .then(function(isDisplayed) {
           assert.equal(isDisplayed, false);
         })
         .end();
@@ -125,7 +125,7 @@ define([
         .type('q')
         .end()
         .findByCssSelector('.wc-QrImage').isDisplayed()
-        .then(function (isDisplayed) {
+        .then(function(isDisplayed) {
           assert.equal(isDisplayed, true);
         })
         .end();
@@ -139,7 +139,7 @@ define([
         .findByCssSelector('.wc-QrImage-launcher').click()
         .end()
         .findByCssSelector('.wc-QrImage').isDisplayed()
-        .then(function (isDisplayed) {
+        .then(function(isDisplayed) {
           assert.equal(isDisplayed, true);
         })
         .end()
@@ -147,7 +147,7 @@ define([
         .findByCssSelector('.wc-QrImage-btn').click()
         .end()
         .findByCssSelector('.wc-QrImage').isDisplayed()
-        .then(function (isDisplayed) {
+        .then(function(isDisplayed) {
           assert.equal(isDisplayed, false);
         })
         .end();

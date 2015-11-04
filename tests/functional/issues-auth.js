@@ -8,7 +8,7 @@ define([
   'intern/chai!assert',
   'require',
   'tests/functional/lib/helpers'
-], function (intern, registerSuite, assert, require, FunctionalHelpers) {
+], function(intern, registerSuite, assert, require, FunctionalHelpers) {
   'use strict';
 
   var url = function(path) {
@@ -18,15 +18,15 @@ define([
   registerSuite({
     name: 'Issues (auth)',
 
-    setup: function () {
+    setup: function() {
       return FunctionalHelpers.login(this);
     },
 
-    teardown: function () {
+    teardown: function() {
       return FunctionalHelpers.logout(this);
     },
 
-    'Closing and reopening an issue': function () {
+    'Closing and reopening an issue': function() {
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url('/issues/69')))
@@ -34,12 +34,12 @@ define([
         .sleep(2000)
         .end()
         .findByCssSelector('.wc-IssueDetail-state').getVisibleText()
-        .then(function (text) {
+        .then(function(text) {
           assert.equal(text, 'Closed', 'Closed state text is displayed');
         })
         .end()
         .findByCssSelector('.js-issue-state-button').getVisibleText()
-        .then(function (text) {
+        .then(function(text) {
           assert.equal(text, 'Reopen Issue', 'Button says Reopen not Close');
         })
         .end()
@@ -47,12 +47,12 @@ define([
         .sleep(2000)
         .end()
         .findByCssSelector('.wc-IssueDetail-state').getVisibleText()
-        .then(function (text) {
+        .then(function(text) {
           assert.equal(text, 'Ready for Outreach', 'Ready for Outreach state is displayed');
         })
         .end()
         .findByCssSelector('.js-issue-state-button').getVisibleText()
-        .then(function (text) {
+        .then(function(text) {
           assert.equal(text, 'Close Issue', 'Button says Close not Reopen');
         });
     }

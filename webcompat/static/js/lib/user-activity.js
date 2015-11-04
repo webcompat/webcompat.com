@@ -58,7 +58,7 @@ issueList.MyIssuesView = Backbone.View.extend(
         this._loadingIndicator.removeClass('is-active');
         this.render(this.issues);
         myIssuesPagination.initPaginationLinks(this.issues);
-      }, this)).error(_.bind(function(e){
+      }, this)).error(_.bind(function(e) {
         var message;
         var timeout;
         if (e.responseJSON) {
@@ -111,7 +111,7 @@ issueList.IssueMentionsView = Backbone.View.extend(
         this._loadingIndicator.removeClass('is-active');
         this.render(this.issues);
         mentionsPagination.initPaginationLinks(this.issues);
-      }, this)).error(_.bind(function(e){
+      }, this)).error(_.bind(function(e) {
         var message;
         var timeout;
         if (e.responseJSON) {
@@ -128,7 +128,7 @@ issueList.IssueMentionsView = Backbone.View.extend(
     }
   }));
 
-$(function(){
+$(function() {
   new issueList.MyIssuesView();
   new issueList.IssueMentionsView();
 });

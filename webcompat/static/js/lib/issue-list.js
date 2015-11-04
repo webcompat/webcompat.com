@@ -355,7 +355,7 @@ issueList.IssueView = Backbone.View.extend(
         this._loadingIndicator.removeClass('is-active');
         this.render(this.issues);
         issuesPagination.initPaginationLinks(this.issues);
-      }, this)).error(_.bind(function(e){
+      }, this)).error(_.bind(function(e) {
         var message;
         var timeout;
         if (e.responseJSON) {
@@ -464,7 +464,7 @@ issueList.IssueView = Backbone.View.extend(
       var pageDropdown;
       if (hasPerPageChange) {
         pageDropdown = 'per_page=' + this.issues.params.per_page;
-        _.delay(function(){
+        _.delay(function() {
           issueList.events.trigger('dropdown:update', pageDropdown);
         }, 0);
       }
@@ -473,7 +473,7 @@ issueList.IssueView = Backbone.View.extend(
     // all the sort options begin with sort, and end with direction.
       if (hasSortChange) {
         sortDropdown = 'sort=' + this.issues.params.sort + '&direction=' + this.issues.params.direction;
-        _.delay(function(){
+        _.delay(function() {
           issueList.events.trigger('dropdown:update', sortDropdown);
         }, 0);
       }
@@ -498,7 +498,7 @@ issueList.IssueView = Backbone.View.extend(
         }, this));
 
         if (currentStateParamName in this.issues.params) {
-          _.delay(function(){
+          _.delay(function() {
             issueList.events.trigger('dropdown:update', stateParam);
           }, 0);
         }

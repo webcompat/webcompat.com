@@ -8,10 +8,10 @@ define([
   'intern/chai!assert',
   'require',
   'intern/dojo/node!leadfoot/keys'
-], function (intern, registerSuite, assert, require, keys) {
+], function(intern, registerSuite, assert, require, keys) {
   'use strict';
 
-  var url = function (path) {
+  var url = function(path) {
     return intern.config.siteRoot + path;
   };
 
@@ -40,12 +40,12 @@ define([
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url('/issues') + params))
         .findByCssSelector('.wc-IssueItem:nth-of-type(1) a').getVisibleText()
-        .then(function(text){
+        .then(function(text) {
           assert.include(text, 'vladvlad', 'The search query results show up on the page.');
         })
         .end()
         .getCurrentUrl()
-        .then(function(currUrl){
+        .then(function(currUrl) {
           assert.include(currUrl, 'q=vladvlad', 'Our params didn\'t go anywhere.');
         })
         .end();
@@ -55,7 +55,7 @@ define([
       return this.remote
         .get(require.toUrl(url('/issues')))
         .findByCssSelector('.js-issuelist-search').isDisplayed()
-        .then(function (isDisplayed) {
+        .then(function(isDisplayed) {
           assert.equal(isDisplayed, true, 'Search input is visible for non-authed users.');
         })
         .end();
@@ -73,7 +73,7 @@ define([
         // this is lame, but we gotta wait on search results.
         .sleep(3000)
         .findByCssSelector('.wc-IssueItem:nth-of-type(1) a').getVisibleText()
-        .then(function(text){
+        .then(function(text) {
           assert.include(text, 'vladvlad', 'The search results show up on the page.');
         })
         .end();
@@ -91,12 +91,12 @@ define([
         .end()
         .sleep(3000)
         .findByCssSelector('.wc-IssueItem:nth-of-type(1) a').getVisibleText()
-        .then(function(text){
+        .then(function(text) {
           assert.include(text, 'vladvlad', 'The search query results show up on the page.');
         })
         .end()
         .getCurrentUrl()
-        .then(function(currUrl){
+        .then(function(currUrl) {
           assert.include(currUrl, 'page=1', 'Default params got merged.');
         })
         .end();

@@ -7,7 +7,7 @@ define([
   'intern!object',
   'intern/chai!assert',
   'require'
-], function (intern, registerSuite, assert, require) {
+], function(intern, registerSuite, assert, require) {
   'use strict';
 
   var url = function(path) {

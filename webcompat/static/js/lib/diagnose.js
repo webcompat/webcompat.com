@@ -18,7 +18,7 @@ diagnose.NewView = Backbone.View.extend({
     this.issues = new diagnose.NewCollection();
     this.issues.fetch(headersBag).success(function() {
       self.render();
-    }).error(function(){});
+    }).error(function() {});
   },
   template: _.template($('#new-tmpl').html()),
   render: function() {
@@ -30,6 +30,6 @@ diagnose.NewView = Backbone.View.extend({
   }
 });
 
-$(function(){
+$(function() {
   new diagnose.NewView();
 });

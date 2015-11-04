@@ -152,7 +152,7 @@ function BugForm() {
                      .addClass('wc-Form-error js-form-error');
 
     if (id === 'url') {
-      inlineHelp.insertAfter('label[for='+id+']');
+      inlineHelp.insertAfter('label[for=' + id + ']');
     }
 
     if (id === 'problem_type') {
@@ -187,7 +187,7 @@ function BugForm() {
   */
   this.copyURL = function() {
     var firstLine = /^1\)\sNavigate.*\n/;
-    this.descField.val(_.bind(function(idx, value){
+    this.descField.val(_.bind(function(idx, value) {
       var prefix = '1) Navigate to: ';
       if (!firstLine.test(value)) {
         return value;
@@ -200,6 +200,6 @@ function BugForm() {
   return this.init();
 }
 
-$(function(){
+$(function() {
   new BugForm();
 });

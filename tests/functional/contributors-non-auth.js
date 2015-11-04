@@ -7,21 +7,21 @@ define([
   'intern!object',
   'intern/chai!assert',
   'require'
-], function (intern, registerSuite, assert, require) {
+], function(intern, registerSuite, assert, require) {
   'use strict';
 
-  var url = function (path) {
+  var url = function(path) {
     return intern.config.siteRoot + path;
   };
 
   registerSuite({
     name: 'Contributors',
 
-    'page loads': function () {
+    'page loads': function() {
       return this.remote
         .get(require.toUrl(url('/contributors')))
         .findByCssSelector('.wc-Hero-title').getVisibleText()
-        .then(function (text) {
+        .then(function(text) {
           assert.include(text, 'Welcome aboard!');
         })
         .end();
@@ -34,12 +34,12 @@ define([
         .findByCssSelector('.contributors__item__title').click()
         .end()
         .findByCssSelector('.contributors__item__content').getAttribute('class')
-        .then(function (className) {
+        .then(function(className) {
           assert.notInclude('is-open', className);
         })
         .end()
         .findByCssSelector('.wc-Hero-img').getAttribute('class')
-        .then(function (className) {
+        .then(function(className) {
           assert.notEqual('is-active', className);
         })
         .end();
@@ -50,24 +50,24 @@ define([
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url('/contributors')))
         .findByCssSelector('.contributors__item__content.is-open').isDisplayed()
-        .then(function (isDisplayed) {
+        .then(function(isDisplayed) {
           assert.equal(isDisplayed, true);
         })
         .end()
         .findByCssSelector('.wc-Hero-img.is-active').isDisplayed()
-        .then(function (isDisplayed) {
+        .then(function(isDisplayed) {
           assert.equal(isDisplayed, true);
         })
         .end()
         .findByCssSelector('.contributors__item__title').click()
         .end()
         .findByCssSelector('.contributors__item__content').getAttribute('class')
-        .then(function (className) {
+        .then(function(className) {
           assert.notInclude('is-open', className);
         })
         .end()
         .findByCssSelector('.wc-Hero-img').getAttribute('class')
-        .then(function (className) {
+        .then(function(className) {
           assert.notInclude('is-active', className);
         });
     },
@@ -77,14 +77,14 @@ define([
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url('/contributors')))
         .findByCssSelector('.wc-Hero-img.is-active').isDisplayed()
-        .then(function (isDisplayed) {
+        .then(function(isDisplayed) {
           assert.equal(isDisplayed, true);
         })
         .end()
         .findByCssSelector('.contributors__item__title').click()
         .end()
         .findByCssSelector('.wc-Hero-img').getAttribute('class')
-        .then(function (className) {
+        .then(function(className) {
           assert.notInclude('is-active', className);
         });
     },

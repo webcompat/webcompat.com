@@ -8,7 +8,7 @@ define([
   'intern/chai!assert',
   'require',
   'tests/functional/lib/helpers'
-], function (intern, registerSuite, assert, require, FunctionalHelpers) {
+], function(intern, registerSuite, assert, require, FunctionalHelpers) {
   'use strict';
 
   var url = function(path) {
@@ -18,11 +18,11 @@ define([
   registerSuite({
     name: 'Comments (auth)',
 
-    setup: function () {
+    setup: function() {
       return FunctionalHelpers.login(this);
     },
 
-    teardown: function () {
+    teardown: function() {
       return FunctionalHelpers.logout(this);
     },
 
@@ -32,7 +32,7 @@ define([
         .get(require.toUrl(url('/issues/100')))
         .sleep(2000)
         .findByCssSelector('.wc-Comment--form').isDisplayed()
-        .then(function (isDisplayed) {
+        .then(function(isDisplayed) {
           assert.equal(isDisplayed, true, 'Comment form visible for logged in users.');
         })
         .end();
@@ -46,7 +46,7 @@ define([
         .findByCssSelector('.js-issue-comment:nth-of-type(3)')
         .end()
         .findByCssSelector('.js-issue-state-button').getVisibleText()
-        .then(function(text){
+        .then(function(text) {
           assert.equal('Close Issue', text);
           assert.notEqual('Close and comment', text);
         })
@@ -56,7 +56,7 @@ define([
         .end()
         .sleep(1000)
         .findByCssSelector('.js-issue-state-button').getVisibleText()
-        .then(function(text){
+        .then(function(text) {
           assert.equal('Close and comment', text);
           assert.notEqual('Close Issue', text);
         });
@@ -69,7 +69,7 @@ define([
         .findByCssSelector('.js-issue-comment:nth-of-type(3)')
         .end()
         .findByCssSelector('.js-issue-state-button').getVisibleText()
-        .then(function(text){
+        .then(function(text) {
           assert.equal('Reopen Issue', text);
           assert.notEqual('Reopen and comment', text);
         })
@@ -79,19 +79,20 @@ define([
         .end()
         .sleep(1000)
         .findByCssSelector('.js-issue-state-button').getVisibleText()
-        .then(function(text){
+        .then(function(text) {
           assert.equal('Reopen and comment', text);
           assert.notEqual('Reopen Issue', text);
         });
     },
 
     'Posting a comment': function() {
-      var originalCommentsLength, allCommentsLength;
+      var originalCommentsLength;
+      var allCommentsLength;
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url('/issues/100')))
         .findAllByCssSelector('.js-issue-comment:not(.wc-Comment--form)')
-        .then(function(elms){
+        .then(function(elms) {
           originalCommentsLength = elms.length;
         })
         .end()
@@ -104,19 +105,20 @@ define([
         .end()
         .sleep(2000)
         .findAllByCssSelector('.js-issue-comment:not(.wc-Comment--form)')
-        .then(function(elms){
+        .then(function(elms) {
           allCommentsLength = elms.length;
           assert(originalCommentsLength < allCommentsLength, 'Comment was successfully left.');
         });
     },
 
     'Posting an empty comment fails': function() {
-      var originalCommentsLength, allCommentsLength;
+      var originalCommentsLength;
+      var allCommentsLength;
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url('/issues/100')))
         .findAllByCssSelector('.js-issue-comment:not(.wc-Comment--form)')
-        .then(function(elms){
+        .then(function(elms) {
           originalCommentsLength = elms.length;
         })
         .end()
@@ -125,7 +127,7 @@ define([
         .end()
         .sleep(500)
         .findAllByCssSelector('.js-issue-comment:not(.wc-Comment--form)')
-        .then(function(elms){
+        .then(function(elms) {
           allCommentsLength = elms.length;
           assert(originalCommentsLength === allCommentsLength, 'Comment was not successfully left.');
         });

@@ -14,7 +14,7 @@ if (!window.md) {
 }
 // Add links to @usernames and #issues
 md.linkify.add('@', {
-  validate: function (text, pos, self) {
+  validate: function(text, pos, self) {
     var tail = text.slice(pos);
 
     if (!self.re.gh_user) {
@@ -27,13 +27,13 @@ md.linkify.add('@', {
     }
     return 0;
   },
-  normalize: function (match) {
+  normalize: function(match) {
     match.url = 'https://github.com/' + match.url.replace(/^@/, '');
   }
 });
 
 md.linkify.add('#', {
-  validate: function (text, pos, self) {
+  validate: function(text, pos, self) {
     var tail = text.slice(pos);
 
     if (!self.re.hash_bug) {
@@ -46,7 +46,7 @@ md.linkify.add('#', {
     }
     return 0;
   },
-  normalize: function (match) {
+  normalize: function(match) {
     match.url = '/issues/' + match.url.replace(/^#/, '');
   }
 });
@@ -55,10 +55,10 @@ var defaultLinkOpenRender = md.renderer.rules.link_open || function(tokens, idx,
   return self.renderToken(tokens, idx, options);
 };
 
-md.renderer.rules.link_open = function (tokens, idx, options, env, self) {
+md.renderer.rules.link_open = function(tokens, idx, options, env, self) {
   tokens[idx].attrPush(['rel', 'nofollow']);
   // Transform link text for some well-known sites
-  if (tokens[idx].attrIndex('href')>-1) {
+  if (tokens[idx].attrIndex('href') > -1) {
     var link = tokens[idx].attrs[tokens[idx].attrIndex('href')][1];
     var transformations = {
       'https://bugzilla.mozilla.org/show_bug': 'Mozilla',
@@ -66,9 +66,10 @@ md.renderer.rules.link_open = function (tokens, idx, options, env, self) {
       'https://code.google.com/p/chromium/issues/detail?': 'Chromium',
       'https://github.com/': 'GitHub'
     };
-    for (var bugtracker in transformations){
+    for (var bugtracker in transformations) {
       if (link.indexOf(bugtracker) > -1) {
-        var bugNumRx = /(\?id=|\/issues\/)(\d+)/, matches;
+        var bugNumRx = /(\?id=|\/issues\/)(\d+)/;
+        var matches;
         if (matches = link.match(bugNumRx)) {
           for (var i = idx, theToken; theToken = tokens[i]; i++) { // find the token for link text
             if (theToken.content === link) {
@@ -260,7 +261,7 @@ issues.ImageUploadView = Backbone.View.extend({
 
     this.disableSubmits();
   },
-  makeValid:function(id) {
+  makeValid: function(id) {
     this.inputMap[id].valid = true;
     $(this.inputMap[id].elm).parents('.wc-Form-group')
                             .removeClass('wc-Form-error js-form-error')
@@ -427,7 +428,7 @@ issues.MainView = Backbone.View.extend({
     var view = new issues.CommentView({model: comment});
     var commentElm = view.render().el;
     $('.wc-IssueDetail-comment').append(commentElm);
-    _.each($(commentElm).find('code'), function(elm){
+    _.each($(commentElm).find('code'), function(elm) {
       Prism.highlightElement(elm);
     });
   },

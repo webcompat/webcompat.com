@@ -8,7 +8,7 @@ define([
   'intern/chai!assert',
   'require',
   'tests/functional/lib/helpers'
-], function (intern, registerSuite, assert, require, FunctionalHelpers) {
+], function(intern, registerSuite, assert, require, FunctionalHelpers) {
   'use strict';
 
   var url = function(path) {
@@ -18,11 +18,11 @@ define([
   registerSuite({
     name: 'Reporting (auth)',
 
-    setup: function () {
+    setup: function() {
       return FunctionalHelpers.login(this);
     },
 
-    teardown: function () {
+    teardown: function() {
       return FunctionalHelpers.logout(this);
     },
 
@@ -33,7 +33,7 @@ define([
         // wait a second
         .sleep(1000)
         .findByCssSelector('#submitgithub').getVisibleText()
-        .then(function (text) {
+        .then(function(text) {
           assert.include(text, 'Report as'); //Report as FooUser (logged in)
         })
         .end();
