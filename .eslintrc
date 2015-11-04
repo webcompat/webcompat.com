@@ -1,33 +1,37 @@
 {
-    "rules": {
-        "indent": [2, 2],
-        "quotes": [2, "single"],
-        "linebreak-style": [2, "unix"],
-        "semi": [2, "always"],
-        "comma-dangle": 0,
-        "no-cond-assign": 0
-    },
-    "env": {
-        "browser": true
-    },
-    "extends": "eslint:recommended",
-    "globals": {
-          jQuery: true,
-          $: true,
-          _: true,
-          Backbone: true,
-          console: true,
-          define: true,
-          issueNumber: true,
-          markdownitEmoji: true,
-          markdownitSanitizer: true,
-          md: true,
-          moment: true,
-          Mousetrap: true,
-          PaginationMixin: true,
-          Prism: true,
-          qr: true,
-          repoPath: true,
-          wcEvents: true
-    }
+  "env": {
+    "browser": true
+  },
+  "extends": "eslint:recommended",
+  "globals": {
+    jQuery: true,
+    $: true,
+    _: true,
+    Backbone: true,
+    console: true,
+    define: true,
+    issueNumber: true,
+    markdownitEmoji: true,
+    markdownitSanitizer: true,
+    md: true,
+    moment: true,
+    Mousetrap: true,
+    PaginationMixin: true,
+    Prism: true,
+    qr: true,
+    repoPath: true,
+    wcEvents: true
+  },
+  "rules": {
+    "comma-dangle": 0,
+    "curly": [2, "all"],
+    "eqeqeq": [2, "smart"],
+    "indent": [2, 2],
+    "linebreak-style": [2, "unix"],
+    "new-cap": 2,
+    "no-cond-assign": 0,
+    "no-use-before-define": 2,
+    "quotes": [2, "single"],
+    "semi": [2, "always"]
+  }
 }

@@ -14,7 +14,7 @@ eventBus.trigger('flash:error', {message: 'hi', timeout: 1000});
 */
 var wcEvents = _.extend({},Backbone.Events);
 
-var flashMessageView = Backbone.View.extend({
+var FlashMessageView = Backbone.View.extend({
   tagName: 'div',
   className: 'wc-FlashMessage js-flashmessage',
   initialize: function() {
@@ -49,4 +49,4 @@ var flashMessageView = Backbone.View.extend({
   }
 });
 
-new flashMessageView();
+new FlashMessageView();
