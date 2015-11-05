@@ -9,7 +9,7 @@ define([
   'require',
   'tests/functional/lib/helpers',
   'intern/dojo/node!leadfoot/keys'
-], function (intern, registerSuite, assert, require, FunctionalHelpers, keys) {
+], function(intern, registerSuite, assert, require, FunctionalHelpers, keys) {
   'use strict';
 
   var url = function(path) {
@@ -19,11 +19,11 @@ define([
   registerSuite({
     name: 'Search (auth)',
 
-    setup: function () {
+    setup: function() {
       return FunctionalHelpers.login(this);
     },
 
-    teardown: function () {
+    teardown: function() {
       return FunctionalHelpers.logout(this);
     },
 
@@ -38,7 +38,7 @@ define([
         .findAllByCssSelector('button.wc-Filter--new').click()
         .end()
         .findByCssSelector('.wc-IssueSearch-form').getVisibleText()
-        .then(function (text) {
+        .then(function(text) {
           assert.equal(text, '', 'Clicking filter should empty search text');
         })
         .end()
@@ -48,7 +48,7 @@ define([
         .type('taco')
         .end()
         .findAllByCssSelector('button.wc-Filter--new').getAttribute('class')
-        .then(function (className) {
+        .then(function(className) {
           assert.notInclude(className, 'is-active', 'Searching should clear all filters');
         })
         .end();
@@ -60,12 +60,12 @@ define([
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url('/issues') + params))
         .findByCssSelector('.wc-IssueItem:nth-of-type(1) a').getVisibleText()
-        .then(function(text){
+        .then(function(text) {
           assert.include(text, 'vladvlad', 'The search query results show up on the page.');
         })
         .end()
         .getCurrentUrl()
-        .then(function(currUrl){
+        .then(function(currUrl) {
           assert.include(currUrl, 'q=vladvlad', 'Our params didn\'t go anywhere.');
         })
         .end();
@@ -83,15 +83,15 @@ define([
         .end()
         .sleep(3000)
         .findByCssSelector('.wc-IssueItem:nth-of-type(1) a').getVisibleText()
-        .then(function(text){
+        .then(function(text) {
           assert.include(text, 'vladvlad', 'The search query results show up on the page.');
         })
         .end()
         .getCurrentUrl()
-        .then(function(currUrl){
+        .then(function(currUrl) {
           assert.include(currUrl, 'page=1', 'Default params got merged.');
         })
         .end();
-      }
+    }
   });
 });

@@ -37,7 +37,7 @@ function HomePage() {
       searchBar.find('input').focus();
     });
 
-    searchBarClose.click(function(){
+    searchBarClose.click(function() {
       searchBar.removeClass('is-active');
       searchBar.find('input').blur();
     });
@@ -82,6 +82,6 @@ function HomePage() {
   return this.init();
 }
 
-$(function(){
+$(function() {
   new HomePage();
 });

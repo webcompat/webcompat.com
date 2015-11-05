@@ -14,7 +14,7 @@ if (!window.md) {
 }
 // Add links to @usernames and #issues
 md.linkify.add('@', {
-  validate: function (text, pos, self) {
+  validate: function(text, pos, self) {
     var tail = text.slice(pos);
 
     if (!self.re.gh_user) {
@@ -27,13 +27,13 @@ md.linkify.add('@', {
     }
     return 0;
   },
-  normalize: function (match) {
+  normalize: function(match) {
     match.url = 'https://github.com/' + match.url.replace(/^@/, '');
   }
 });
 
 md.linkify.add('#', {
-  validate: function (text, pos, self) {
+  validate: function(text, pos, self) {
     var tail = text.slice(pos);
 
     if (!self.re.hash_bug) {
@@ -46,7 +46,7 @@ md.linkify.add('#', {
     }
     return 0;
   },
-  normalize: function (match) {
+  normalize: function(match) {
     match.url = '/issues/' + match.url.replace(/^#/, '');
   }
 });
@@ -55,10 +55,10 @@ var defaultLinkOpenRender = md.renderer.rules.link_open || function(tokens, idx,
   return self.renderToken(tokens, idx, options);
 };
 
-md.renderer.rules.link_open = function (tokens, idx, options, env, self) {
+md.renderer.rules.link_open = function(tokens, idx, options, env, self) {
   tokens[idx].attrPush(['rel', 'nofollow']);
   // Transform link text for some well-known sites
-  if (tokens[idx].attrIndex('href')>-1) {
+  if (tokens[idx].attrIndex('href') > -1) {
     var link = tokens[idx].attrs[tokens[idx].attrIndex('href')][1];
     var transformations = {
       'https://bugzilla.mozilla.org/show_bug': 'Mozilla',
@@ -66,9 +66,10 @@ md.renderer.rules.link_open = function (tokens, idx, options, env, self) {
       'https://code.google.com/p/chromium/issues/detail?': 'Chromium',
       'https://github.com/': 'GitHub'
     };
-    for (var bugtracker in transformations){
+    for (var bugtracker in transformations) {
       if (link.indexOf(bugtracker) > -1) {
-        var bugNumRx = /(\?id=|\/issues\/)(\d+)/, matches;
+        var bugNumRx = /(\?id=|\/issues\/)(\d+)/;
+        var matches;
         if (matches = link.match(bugNumRx)) {
           for (var i = idx, theToken; theToken = tokens[i]; i++) { // find the token for link text
             if (theToken.content === link) {
@@ -91,9 +92,9 @@ issues.TitleView = Backbone.View.extend({
   },
   template: _.template($('#title-tmpl').html()),
   render: function() {
-    document.title = "Issue " + this.model.get('number') +
-                     ": " + this.model.get('title') +
-                     " - webcompat.com";
+    document.title = 'Issue ' + this.model.get('number') +
+                     ': ' + this.model.get('title') +
+                     ' - webcompat.com';
     this.$el.html(this.template(this.model.toJSON()));
     return this;
   },
@@ -145,7 +146,7 @@ issues.BodyView = Backbone.View.extend({
         //find the bare html comment-ish text nodes
         return this.nodeType === 3 && this.nodeValue.match(/<!--/);
         //and hide them
-      }).wrap("<p class='wc-hidden'></p>");
+      }).wrap('<p class="wc-hidden"></p>');
     this.QrView.setElement('.wc-Qr-wrapper').render();
     return this;
   }
@@ -260,7 +261,7 @@ issues.ImageUploadView = Backbone.View.extend({
 
     this.disableSubmits();
   },
-  makeValid:function(id) {
+  makeValid: function(id) {
     this.inputMap[id].valid = true;
     $(this.inputMap[id].elm).parents('.wc-Form-group')
                             .removeClass('wc-Form-error js-form-error')
@@ -298,9 +299,9 @@ issues.StateButtonView = Backbone.View.extend({
     issues.events.on('textarea:content', _.bind(function() {
       this.hasComment = true;
       if (this.model.get('state') === 'open') {
-        this.$el.text(this.template({state: "Close and comment"}));
+        this.$el.text(this.template({state: 'Close and comment'}));
       } else {
-        this.$el.text(this.template({state: "Reopen and comment"}));
+        this.$el.text(this.template({state: 'Reopen and comment'}));
       }
     }, this));
 
@@ -317,9 +318,9 @@ issues.StateButtonView = Backbone.View.extend({
   render: function() {
     var buttonText;
     if (this.model.get('state') === 'open') {
-      buttonText = "Close Issue";
+      buttonText = 'Close Issue';
     } else {
-      buttonText = "Reopen Issue";
+      buttonText = 'Reopen Issue';
     }
     this.$el.text(this.template({state: buttonText}));
     return this;
@@ -365,7 +366,7 @@ issues.MainView = Backbone.View.extend({
     }
   },
   githubWarp: function() {
-    var warpPipe = "https://github.com/" + repoPath + "/" + this.issue.get('number');
+    var warpPipe = 'https://github.com/' + repoPath + '/' + this.issue.get('number');
     return location.href = warpPipe;
   },
   initSubViews: function() {
@@ -399,11 +400,11 @@ issues.MainView = Backbone.View.extend({
       if (this.issue.get('commentNumber') > 0) {
         this.comments.fetch(headersBag).success(_.bind(function() {
           this.addExistingComments();
-          this.comments.bind("add", _.bind(this.addComment, this));
+          this.comments.bind('add', _.bind(this.addComment, this));
 
           // If there's a #hash pointing to a comment (or elsewhere)
           // scrollTo it.
-          if (location.hash !== "") {
+          if (location.hash !== '') {
             var _id = $(location.hash);
             window.scrollTo(0, _id.offset().top);
           }
@@ -414,8 +415,8 @@ issues.MainView = Backbone.View.extend({
       }
     }, this)).error(function(response) {
       var msg;
-      if (response.responseJSON.message === "API call. Not Found") {
-        location.href = "/404";
+      if (response.responseJSON.message === 'API call. Not Found') {
+        location.href = '/404';
         return;
       } else {
         msg = 'There was an error retrieving the issue. Please reload to try again.';
@@ -426,8 +427,8 @@ issues.MainView = Backbone.View.extend({
   addComment: function(comment) {
     var view = new issues.CommentView({model: comment});
     var commentElm = view.render().el;
-    $(".wc-IssueDetail-comment").append(commentElm);
-    _.each($(commentElm).find('code'), function(elm){
+    $('.wc-IssueDetail-comment').append(commentElm);
+    _.each($(commentElm).find('code'), function(elm) {
       Prism.highlightElement(elm);
     });
   },

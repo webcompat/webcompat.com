@@ -7,17 +7,17 @@ define([
   'intern!object',
   'intern/chai!assert',
   'require'
-], function (intern, registerSuite, assert, require) {
+], function(intern, registerSuite, assert, require) {
   'use strict';
 
-  var url = function (path) {
+  var url = function(path) {
     return intern.config.siteRoot + path;
   };
 
   registerSuite({
     name: 'History navigation',
 
-    'Back button works from issues page': function () {
+    'Back button works from issues page': function() {
       return this.remote
         .get(require.toUrl(url('/')))
         .findByCssSelector('.js-issues-link').click()
@@ -28,7 +28,7 @@ define([
         .goBack()
         // now check that we're back at the home page.
         .findByCssSelector('.wc-Hero-title').getVisibleText()
-        .then(function (text) {
+        .then(function(text) {
           assert.equal(text, 'Bug reporting\nfor the internet.');
         })
         .end();

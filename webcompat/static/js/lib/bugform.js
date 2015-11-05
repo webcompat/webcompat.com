@@ -50,16 +50,16 @@ function BugForm() {
   this.checkParams = function() {
       // Assumes a URI like: /?open=1&url=http://webpy.org/, for use by addons
       // Quick sanity check
-      if (!location.search.search(/open=1/) && !location.search.search(/url=/)) {
-        return;
-      }
-      var urlParam = location.search.match(/url=(.+)/);
-      if (urlParam != null) {
+    if (!location.search.search(/open=1/) && !location.search.search(/url=/)) {
+      return;
+    }
+    var urlParam = location.search.match(/url=(.+)/);
+    if (urlParam != null) {
         // weird Gecko bug. See https://bugzilla.mozilla.org/show_bug.cgi?id=1098037
-        urlParam = this.trimWyciwyg(urlParam[1]);
-        this.urlField.val(decodeURIComponent(urlParam));
-        this.copyURL();
-        this.makeValid('url');
+      urlParam = this.trimWyciwyg(urlParam[1]);
+      this.urlField.val(decodeURIComponent(urlParam));
+      this.copyURL();
+      this.makeValid('url');
     }
   };
 
@@ -110,7 +110,7 @@ function BugForm() {
   /* Check to see that the URL input element is not empty.
      We don't do any other kind of validation yet. */
   this.checkURLValidity = function() {
-    if ($.trim(this.urlField.val()) === "") {
+    if ($.trim(this.urlField.val()) === '') {
       this.makeInvalid('url');
     } else {
       this.makeValid('url');
@@ -152,7 +152,7 @@ function BugForm() {
                      .addClass('wc-Form-error js-form-error');
 
     if (id === 'url') {
-      inlineHelp.insertAfter('label[for='+id+']');
+      inlineHelp.insertAfter('label[for=' + id + ']');
     }
 
     if (id === 'problem_type') {
@@ -187,7 +187,7 @@ function BugForm() {
   */
   this.copyURL = function() {
     var firstLine = /^1\)\sNavigate.*\n/;
-    this.descField.val(_.bind(function(idx, value){
+    this.descField.val(_.bind(function(idx, value) {
       var prefix = '1) Navigate to: ';
       if (!firstLine.test(value)) {
         return value;
@@ -200,6 +200,6 @@ function BugForm() {
   return this.init();
 }
 
-$(function(){
+$(function() {
   new BugForm();
 });

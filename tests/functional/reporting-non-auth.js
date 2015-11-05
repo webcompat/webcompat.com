@@ -7,7 +7,7 @@ define([
   'intern!object',
   'intern/chai!assert',
   'require'
-], function (intern, registerSuite, assert, require) {
+], function(intern, registerSuite, assert, require) {
   'use strict';
 
   var url = intern.config.siteRoot;
@@ -20,12 +20,12 @@ define([
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url + '?open=1'))
         .findByCssSelector('#submitanon').getAttribute('class')
-        .then(function (className) {
+        .then(function(className) {
           assert.include(className, 'is-disabled');
         })
         .end()
         .findByCssSelector('#submitgithub').getAttribute('class')
-        .then(function (className) {
+        .then(function(className) {
           assert.include(className, 'is-disabled');
         });
     },
@@ -35,7 +35,7 @@ define([
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url + '?open=1&url=wyciwyg://0/http://bbs.csdn.net/topics/20282413'))
         .findByCssSelector('#url').getProperty('value')
-        .then(function (value) {
+        .then(function(value) {
           assert.notInclude(value, 'wyciwyg://0/');
         })
         .end();
@@ -48,7 +48,7 @@ define([
         // wait a second
         .sleep(1000)
         .findByCssSelector('#submitgithub').getVisibleText()
-        .then(function (text) {
+        .then(function(text) {
           assert.include(text, 'Report via'); //Report via GitHub (logged out)
         })
         .end();
@@ -67,7 +67,7 @@ define([
         // wait a bit
         .sleep(100)
         .findByXpath('//*[@id="new-report"]/div/form/div[1]/div[2]/div[1]').getAttribute('class')
-        .then(function (className) {
+        .then(function(className) {
           assert.include(className, 'js-form-error');
           assert.notInclude(className, 'js-no-error');
         })
@@ -78,7 +78,7 @@ define([
         .sleep(100)
         // xpath to the #url formGroup
         .findByXpath('//*[@id="new-report"]/div/form/div[1]/div[2]/div[1]').getAttribute('class')
-        .then(function (className) {
+        .then(function(className) {
           assert.include(className, 'js-no-error');
           assert.notInclude(className, 'js-form-error');
         })
@@ -94,7 +94,7 @@ define([
         // wait a bit
         .sleep(100)
         .findByXpath('//*[@id="new-report"]/div/form/div[1]/div[1]/fieldset').getAttribute('class')
-        .then(function (className) {
+        .then(function(className) {
           assert.include(className, 'js-form-error');
           assert.notInclude(className, 'js-no-error');
         })
@@ -106,7 +106,7 @@ define([
         .sleep(100)
         // validation message should be removed now
         .findByXpath('//*[@id="new-report"]/div/form/div[1]/div[1]/fieldset').getAttribute('class')
-        .then(function (className) {
+        .then(function(className) {
           assert.include(className, 'js-no-error');
           assert.notInclude(className, 'js-form-error');
         })
@@ -122,7 +122,7 @@ define([
         // wait a bit
         .sleep(100)
         .findByXpath('//*[@id="new-report"]/div/form/div[2]/div[2]').getAttribute('class')
-        .then(function (className) {
+        .then(function(className) {
           assert.include(className, 'js-form-error');
           assert.notInclude(className, 'js-no-error');
         })
@@ -134,7 +134,7 @@ define([
         .sleep(100)
         // validation message should be removed now
         .findByXpath('//*[@id="new-report"]/div/form/div[2]/div[2]').getAttribute('class')
-        .then(function (className) {
+        .then(function(className) {
           assert.include(className, 'js-no-error');
           assert.notInclude(className, 'js-form-error');
         })
@@ -159,13 +159,13 @@ define([
         .sleep(100)
          // now make sure the buttons aren't disabled anymore
         .findByCssSelector('#submitanon').getAttribute('class')
-        .then(function (className) {
+        .then(function(className) {
           assert.notInclude(className, 'is-disabled');
         })
         .end()
          // now make sure the buttons aren't disabled anymore
         .findByCssSelector('#submitgithub').getAttribute('class')
-        .then(function (className) {
+        .then(function(className) {
           assert.notInclude(className, 'is-disabled');
         })
         .end();

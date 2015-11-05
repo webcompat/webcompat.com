@@ -7,7 +7,7 @@ define([
   'intern!object',
   'intern/chai!assert',
   'require'
-], function (intern, registerSuite, assert, require) {
+], function(intern, registerSuite, assert, require) {
   'use strict';
 
   var url = function(path) {
@@ -23,7 +23,7 @@ define([
         .get(require.toUrl(url('/issues/200')))
         .findByCssSelector('.wc-Comment--form')
         .then(assert.fail, function(err) {
-           assert.isTrue(/NoSuchElement/.test(String(err)));
+          assert.isTrue(/NoSuchElement/.test(String(err)));
         })
         .end();
     }

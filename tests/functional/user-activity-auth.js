@@ -8,7 +8,7 @@ define([
   'intern/chai!assert',
   'require',
   'tests/functional/lib/helpers'
-], function (intern, registerSuite, assert, require, FunctionalHelpers) {
+], function(intern, registerSuite, assert, require, FunctionalHelpers) {
   'use strict';
 
   var url = function(path) {
@@ -18,11 +18,11 @@ define([
   registerSuite({
     name: 'User Activity (auth)',
 
-    setup: function () {
+    setup: function() {
       return FunctionalHelpers.login(this);
     },
 
-    teardown: function () {
+    teardown: function() {
       return FunctionalHelpers.logout(this);
     },
 
@@ -32,12 +32,12 @@ define([
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url('/me')))
         .findByCssSelector('.wc-content--body .wc-Title--l').getVisibleText()
-        .then(function(text){
-          var usernameEnd = text.indexOf("'s activity");
+        .then(function(text) {
+          var usernameEnd = text.indexOf('\'s activity');
           username = text.slice(0, usernameEnd);
         })
         .getCurrentUrl()
-        .then(function(currURL){
+        .then(function(currURL) {
           assert.include(currURL, username, 'The redirected URL has our username in it.');
         })
         .end();
@@ -48,23 +48,23 @@ define([
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url('/me')))
         .findByCssSelector('.wc-IssueList').isDisplayed()
-        .then(function (isDisplayed) {
+        .then(function(isDisplayed) {
           assert.equal(isDisplayed, true, 'IssueList container is visible.');
         })
         .sleep(1000)
         .end()
         .findByCssSelector('.wc-IssueList .wc-IssueItem').isDisplayed()
-        .then(function (isDisplayed) {
+        .then(function(isDisplayed) {
           assert.equal(isDisplayed, true, 'IssueList item is visible.');
         })
         .end()
         .findByCssSelector('.wc-IssueItem .wc-IssueItem-header').getVisibleText()
-        .then(function(text){
+        .then(function(text) {
           assert.match(text, /^Issue\s\d+:\s.+$/, 'Issue should have a non-empty title');
         })
         .end()
         .findByCssSelector('.wc-IssueItem:nth-child(1) > div:nth-child(1) > p:nth-child(2)').getVisibleText()
-        .then(function (text) {
+        .then(function(text) {
           assert.match(text, /comments:\s\d+$/i, 'Issue should display number of comments');
           assert.match(text, /^Opened:\s\d{4}\-\d{2}\-\d{2}.+/, 'Issue should display creation date');
         })
