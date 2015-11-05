@@ -1,3 +1,10 @@
+## 2.1.0 - 2015-11-05
+
+* [Pull #780](https://github.com/webcompat/webcompat.com/pull/780) [Issue #788](https://github.com/webcompat/webcompat.com/issues/788)
+* Add a "My Activity" page and refactor a ton of things in the process [Pull #801](https://github.com/webcompat/webcompat.com/pull/801) [Issue #749](https://github.com/webcompat/webcompat.com/issues/749)
+* Replace JSHint with ESLint (and add some style linting rules) [Pull #817](https://github.com/webcompat/webcompat.com/pull/817) [Issue #813](https://github.com/webcompat/webcompat.com/issues/813)
+* Update ua-parser to 0.5.0 [Pull #820](https://github.com/webcompat/webcompat.com/pull/820) [Issue #819](https://github.com/webcompat/webcompat.com/issues/819)
+
 ## 2.0.2
 
 * Fix bug in validation code that would close the form [Pull #816](https://github.com/webcompat/webcompat.com/pull/816) [Issue #815](https://github.com/webcompat/webcompat.com/issues/815)
