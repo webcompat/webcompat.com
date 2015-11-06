@@ -67,6 +67,7 @@
   .wc-IssueItem-content {}
   .wc-IssueItem-header {
     margin-bottom:0.5em;
+    word-wrap: break-word;
   }
 
   .wc-IssueItem-metadata {
