@@ -51,6 +51,21 @@ define([
         .end();
     },
 
+    'Clicking on label search suggestion works': function() {
+      var params = '?q=dfjdkfjdkfjkdfjdkjf';
+      return this.remote
+        .setFindTimeout(intern.config.wc.pageLoadTimeout)
+        .get(require.toUrl(url('/issues') + params))
+        .findByCssSelector('[data-remotename=browser-android]').click()
+        .end()
+        // click the first suggestion, which is "android"
+        .findByCssSelector('.wc-IssueItem:nth-child(1) > div:nth-child(2) > span:nth-child(1) > a:nth-child(1)').getVisibleText()
+        .then(function(text) {
+          assert.include(text, 'android', 'Clicking on a suggested label gets you results.');
+        })
+        .end();
+    },
+
     'Search input is visible': function() {
       return this.remote
         .get(require.toUrl(url('/issues')))
