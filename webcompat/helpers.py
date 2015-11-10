@@ -140,7 +140,7 @@ def get_os(user_agent_string):
     return '{0} {1}'.format(os.get('family'), version)
 
 
-def get_headers(response):
+def get_response_headers(response):
     '''Return a dictionary of headers based on a passed in Response object.
 
     This allows us to proxy response headers from GitHub to our own responses.

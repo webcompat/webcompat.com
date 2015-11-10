@@ -21,7 +21,7 @@ from webcompat import github
 from webcompat import limiter
 from webcompat.helpers import mockable_response
 from webcompat.helpers import get_comment_data
-from webcompat.helpers import get_headers
+from webcompat.helpers import get_response_headers
 from webcompat.helpers import get_request_headers
 from webcompat.helpers import normalize_api_params
 from webcompat.issues import filter_new
@@ -49,7 +49,7 @@ def proxy_issue(number):
         issue = proxy_request('get', '/{0}'.format(number),
                               headers=request_headers)
     if issue.status_code != 404:
-        return (issue.content, issue.status_code, get_headers(issue))
+        return (issue.content, issue.status_code, get_response_headers(issue))
     else:
         # We may want in the future handle 500 type of errors.
         # This will return the JSON version of 404
@@ -88,7 +88,7 @@ def proxy_issues():
                                     params=params)
     else:
         issues = proxy_request('get', params=params)
-    return (issues.content, issues.status_code, get_headers(issues))
+    return (issues.content, issues.status_code, get_response_headers(issues))
 
 
 @api.route('/issues/<username>/<parameter>')
@@ -110,7 +110,7 @@ def get_user_activity_issues(username, parameter):
     request_headers = get_request_headers(g.request_headers)
     issues = github.raw_request('GET', 'repos/{path}'.format(path=ISSUES_PATH),
                                 headers=request_headers, params=params)
-    return (issues.content, issues.status_code, get_headers(issues))
+    return (issues.content, issues.status_code, get_response_headers(issues))
 
 
 @api.route('/issues/category/<issue_category>')
@@ -153,15 +153,16 @@ def get_issue_category(issue_category):
         else:
             issues = proxy_request('get', params=params)
         # Do not send random JSON to filter_new
+        # what about cached responses?
         if issues.status_code == 200:
             return (filter_new(json.loads(issues.content)),
-                    issues.status_code, get_headers(issues))
+                    issues.status_code, get_response_headers(issues))
         else:
-            return ({}, issues.status_code, get_headers(issues))
+            return ({}, issues.status_code, get_response_headers(issues))
     else:
         # The path doesn’t exist. 404 Not Found.
         abort(404)
-    return (issues.content, issues.status_code, get_headers(issues))
+    return (issues.content, issues.status_code, get_response_headers(issues))
 
 
 @api.route('/issues/search')
@@ -202,7 +203,7 @@ def get_search_results(query_string=None, params=None):
     else:
         results = proxy_request('get', params=params, uri=search_uri,
                                 headers=request_headers)
-    return (results.content, results.status_code, get_headers(results))
+    return (results.content, results.status_code, get_response_headers(results))
 
 
 @api.route('/issues/search/<issue_category>')
@@ -259,7 +260,7 @@ def proxy_comments(number):
         else:
             comments = proxy_request('get', '/{0}/comments'.format(number),
                                      headers=request_headers)
-        return (comments.content, comments.status_code, get_headers(comments))
+        return (comments.content, comments.status_code, get_response_headers(comments))
 
 
 @api.route('/issues/<int:number>/labels', methods=['POST'])
@@ -274,7 +275,7 @@ def modify_labels(number):
         if g.user:
             labels = proxy_request('put', '/{0}/labels'.format(number),
                                    data=request.data)
-            return (labels.content, labels.status_code, get_headers(labels))
+            return (labels.content, labels.status_code, get_response_headers(labels))
         else:
             abort(403)
     except GitHubError as e:
@@ -296,7 +297,7 @@ def get_repo_labels():
         path = 'https://api.github.com/repos/{0}/labels'.format(REPO_PATH)
         labels = proxy_request('get', uri=path, params=params,
                                headers=request_headers)
-    return (labels.content, labels.status_code, get_headers(labels))
+    return (labels.content, labels.status_code, get_response_headers(labels))
 
 
 @api.route('/rate_limit')
