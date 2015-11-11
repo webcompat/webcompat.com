@@ -4,8 +4,10 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-'''Flask Blueprint for our "API" module, which is used to proxy API calls
-back to GitHub'''
+'''Flask Blueprint for our "API" module
+
+This is used to make API calls to GitHub, either via a logged-in users
+credentials or as a proxy on behalf of anonymous or unauthenticated users.'''
 
 import json
 
@@ -19,14 +21,13 @@ from flask import session
 from webcompat import app
 from webcompat import github
 from webcompat import limiter
-from webcompat.helpers import mockable_response
+from webcompat.helpers import api_request
 from webcompat.helpers import get_comment_data
-from webcompat.helpers import get_response_headers
 from webcompat.helpers import get_request_headers
+from webcompat.helpers import mockable_response
 from webcompat.helpers import normalize_api_params
+from webcompat.helpers import proxy_request
 from webcompat.issues import filter_new
-from webcompat.issues import proxy_request
-
 
 api = Blueprint('api', __name__, url_prefix='/api')
 JSON_MIME = 'application/json'
@@ -118,7 +119,7 @@ def get_user_activity_issues(username, parameter):
 def get_issue_category(issue_category):
     '''Return all issues for a specific category.
 
-    issue_category can be of x types:
+    issue_category can be of N types:
     * new
     * closed
     * contactready
