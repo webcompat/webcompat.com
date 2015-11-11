@@ -9,49 +9,22 @@ authed user and the proxy case.'''
 
 import json
 
-import requests
-
 from webcompat import app
-from webcompat.form import build_formdata
 from webcompat import github
-
-REPO_URI = app.config['ISSUES_REPO_URI']
-OAUTH_TOKEN = app.config['OAUTH_TOKEN']
-AUTH_HEADERS = {'Authorization': 'token {0}'.format(OAUTH_TOKEN),
-                'User-Agent': 'webcompat/webcompat-bot'}
-
-
-def proxy_request(method, path_mod='', data=None, params=None, uri=None,
-                  headers=None):
-    '''Make a GitHub API request with a bot's OAuth token.
-
-    Necessary for non-logged in users.
-    * `path`, if included, will be appended to the end of the URI.
-    * Optionally pass in POST data via the `data` arg.
-    * Optionally point to a different URI via the `uri` arg.
-    * Optionally pass in HTTP headers to forward.
-    '''
-    # Merge passed in headers with AUTH_HEADERS, and add the etag of the
-    # request, if it exists, to be sent back to GitHub.
-    auth_headers = AUTH_HEADERS.copy()
-    if headers:
-        auth_headers.update(headers)
-    # Preparing the requests
-    req = getattr(requests, method)
-    if uri:
-        req_uri = uri
-    else:
-        req_uri = 'https://api.github.com/repos/{0}{1}'.format(REPO_URI,
-                                                               path_mod)
-    return req(req_uri, data=data, params=params, headers=auth_headers)
+from webcompat.form import build_formdata
+from webcompat.helpers import proxy_request
+from webcompat.helpers import REPO_URI
 
 
 def report_issue(form, proxy=False):
     '''Report an issue, as a logged in user or anonymously.'''
+    # /repos/:owner/:repo/issues
+    path = 'repos/{0}'.format(REPO_URI)
     if proxy:
-        return proxy_request('post', data=json.dumps(build_formdata(form)))
+        return proxy_request('post', path,
+                              data=json.dumps(build_formdata(form)))
     else:
-        return github.post('repos/{0}'.format(REPO_URI), build_formdata(form))
+        return github.post(path, build_formdata(form))
 
 
 def filter_new(issues):
