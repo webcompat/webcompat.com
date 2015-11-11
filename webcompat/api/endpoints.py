@@ -43,18 +43,8 @@ def proxy_issue(number):
     either as an authed user, or as one of our proxy bots.
     '''
     request_headers = get_request_headers(g.request_headers)
-    if g.user:
-        issue = github.raw_request('GET', 'repos/{0}/{1}'.format(
-            ISSUES_PATH, number), headers=request_headers)
-    else:
-        issue = proxy_request('get', '/{0}'.format(number),
-                              headers=request_headers)
-    if issue.status_code != 404:
-        return (issue.content, issue.status_code, get_response_headers(issue))
-    else:
-        # We may want in the future handle 500 type of errors.
-        # This will return the JSON version of 404
-        abort(404)
+    path = 'repos/{0}/{1}'.format(ISSUES_PATH, number)
+    return api_request('get', path)
 
 
 @api.route('/issues/<int:number>/edit', methods=['PATCH'])
@@ -64,7 +54,8 @@ def edit_issue(number):
     Note: this is always proxied to allow any logged in user to be able to
     edit issues.
     '''
-    edit = proxy_request('patch', '/{0}'.format(number), data=request.data)
+    path = 'repos/{0}/{1}'.format(ISSUES_PATH, number)
+    edit = proxy_request('patch', path, data=request.data)
     return (edit.content, edit.status_code, {'content-type': JSON_MIME})
 
 
@@ -83,13 +74,8 @@ def proxy_issues():
     # GitHub client-side)--but return out of paranoia anyways.
     elif params.get('q'):
         abort(404)
-
-    if g.user:
-        issues = github.raw_request('GET', 'repos/{0}'.format(ISSUES_PATH),
-                                    params=params)
-    else:
-        issues = proxy_request('get', params=params)
-    return (issues.content, issues.status_code, get_response_headers(issues))
+    path = 'repos/{0}'.format(ISSUES_PATH)
+    return api_request('get', path, params=params)
 
 
 @api.route('/issues/<username>/<parameter>')
@@ -108,10 +94,8 @@ def get_user_activity_issues(username, parameter):
     params = request.args.copy()
     params['state'] = 'all'
     params['{0}'.format(parameter)] = '{0}'.format(username)
-    request_headers = get_request_headers(g.request_headers)
-    issues = github.raw_request('GET', 'repos/{path}'.format(path=ISSUES_PATH),
-                                headers=request_headers, params=params)
-    return (issues.content, issues.status_code, get_response_headers(issues))
+    path = 'repos/{path}'.format(path=ISSUES_PATH)
+    return api_request('get', path, params=params)
 
 
 @api.route('/issues/category/<issue_category>')
@@ -136,34 +120,23 @@ def get_issue_category(issue_category):
         # add "status-" before the filter param to match the naming scheme
         # of the repo labels.
         params['labels'] = 'status-' + issue_category
-        if g.user:
-            issues = github.raw_request('GET', issues_path, params=params)
-        else:
-            issues = proxy_request('get', params=params)
+        return api_request('get', issues_path, params=params)
     elif issue_category == 'closed':
         params['state'] = 'closed'
-        if g.user:
-            issues = github.raw_request('GET', issues_path, params=params)
-        else:
-            issues = proxy_request('get', params=params)
+        return api_request('get', issues_path, params=params)
     # Note that 'new' here is primarily used on the homepage.
     # For paginated results on the /issues page, see /issues/search/new.
     elif issue_category == 'new':
-        if g.user:
-            issues = github.raw_request('GET', issues_path, params=params)
-        else:
-            issues = proxy_request('get', params=params)
+        issues = api_request('get', issues_path, params=params)
         # Do not send random JSON to filter_new
-        # what about cached responses?
-        if issues.status_code == 200:
-            return (filter_new(json.loads(issues.content)),
-                    issues.status_code, get_response_headers(issues))
+        # issues is a tuple of format: (content, status_code, response_headers)
+        if issues[1] == 200:
+            return (filter_new(json.loads(issues[0])), issues[1], issues[2])
         else:
-            return ({}, issues.status_code, get_response_headers(issues))
+            return ({}, issues[1], issues[2])
     else:
         # The path doesn’t exist. 404 Not Found.
         abort(404)
-    return (issues.content, issues.status_code, get_response_headers(issues))
 
 
 @api.route('/issues/search')
@@ -188,7 +161,6 @@ def get_search_results(query_string=None, params=None):
     # Fail early if no appropriate query_string
     if not query_string:
         abort(404)
-    search_uri = 'https://api.github.com/search/issues'
 
     # restrict results to our repo.
     query_string += " repo:{0}".format(REPO_PATH)
@@ -196,15 +168,8 @@ def get_search_results(query_string=None, params=None):
 
     # convert issues api to search api params here.
     params = normalize_api_params(params)
-    request_headers = get_request_headers(g.request_headers)
-
-    if g.user:
-        results = github.raw_request('GET', 'search/issues', params=params,
-                                     headers=request_headers)
-    else:
-        results = proxy_request('get', params=params, uri=search_uri,
-                                headers=request_headers)
-    return (results.content, results.status_code, get_response_headers(results))
+    path = 'search/issues'
+    return api_request('get', path, params=params)
 
 
 @api.route('/issues/search/<issue_category>')
@@ -242,26 +207,11 @@ def proxy_comments(number):
     Either as an authed user, or as one of our proxy bots.
     '''
     if request.method == 'POST':
-        try:
-            path = 'repos/{0}/{1}/comments'.format(ISSUES_PATH, number)
-            comment = github.raw_request('POST', path,
-                                         data=get_comment_data(request.data))
-            return (comment.content, comment.status_code,
-                    {'content-type': JSON_MIME})
-        except GitHubError as e:
-            print('GitHubError: ', e.response.status_code)
-            return (':(', e.response.status_code)
+        path = 'repos/{0}/{1}/comments'.format(ISSUES_PATH, number)
+        return api_request('post', path, data=get_comment_data(request.data))
     else:
-        request_headers = get_request_headers(g.request_headers)
-
-        if g.user:
-            comments = github.raw_request(
-                'GET', 'repos/{0}/{1}/comments'.format(ISSUES_PATH, number),
-                headers=request_headers)
-        else:
-            comments = proxy_request('get', '/{0}/comments'.format(number),
-                                     headers=request_headers)
-        return (comments.content, comments.status_code, get_response_headers(comments))
+        path = 'repos/{0}/{1}/comments'.format(ISSUES_PATH, number)
+        return api_request('get', path)
 
 
 @api.route('/issues/<int:number>/labels', methods=['POST'])
@@ -272,16 +222,14 @@ def modify_labels(number):
     This method is always proxied because non-repo collabs
     can't normally edit labels for an issue.
     '''
-    try:
-        if g.user:
-            labels = proxy_request('put', '/{0}/labels'.format(number),
-                                   data=request.data)
-            return (labels.content, labels.status_code, get_response_headers(labels))
-        else:
-            abort(403)
-    except GitHubError as e:
-        print('GitHubError: ', e.response.status_code)
-        return (':(', e.response.status_code)
+    if g.user:
+        path = 'repos/{0}/{1}/labels'.format(ISSUES_PATH, number)
+        labels = proxy_request('put', path, data=request.data)
+        return (labels.content, labels.status_code,
+                get_response_headers(labels))
+    else:
+        abort(403)
+
 
 @api.route('/issues/labels')
 @mockable_response
@@ -289,16 +237,8 @@ def get_repo_labels():
     '''XHR endpoint to get all possible labels in a repo.
     '''
     params = request.args.copy()
-    request_headers = get_request_headers(g.request_headers)
-    if g.user:
-        path = 'repos/{0}/labels'.format(REPO_PATH)
-        labels = github.raw_request('GET', path, params=params,
-                                    headers=request_headers)
-    else:
-        path = 'https://api.github.com/repos/{0}/labels'.format(REPO_PATH)
-        labels = proxy_request('get', uri=path, params=params,
-                               headers=request_headers)
-    return (labels.content, labels.status_code, get_response_headers(labels))
+    path = 'repos/{0}/labels'.format(REPO_PATH)
+    return api_request('get', path, params=params)
 
 
 @api.route('/rate_limit')
@@ -308,11 +248,4 @@ def get_rate_limit():
     Will display for the logged in user, or webcompat-bot if not logged in.
     See https://developer.github.com/v3/rate_limit/.
     '''
-
-    rate_limit_uri = 'https://api.github.com/rate_limit'
-    request_headers = get_request_headers(g.request_headers)
-    if g.user:
-        rl = github.raw_request('GET', 'rate_limit', headers=request_headers)
-    else:
-        rl = proxy_request('get', uri=rate_limit_uri, headers=request_headers)
-    return rl.content
+    return api_request('get', 'rate_limit')
