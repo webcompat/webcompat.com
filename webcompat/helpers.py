@@ -10,9 +10,11 @@ import json
 import math
 import os
 import re
+import requests
 import urlparse
 
 from babel.dates import format_timedelta
+from flask import abort
 from flask import g
 from flask import request
 from flask import session
@@ -22,11 +24,15 @@ from ua_parser import user_agent_parser
 from webcompat import app
 from webcompat import github
 
+API_URI = 'https://api.github.com/'
+AUTH_HEADERS = {'Authorization': 'token {0}'.format(app.config['OAUTH_TOKEN']),
+                'User-Agent': 'webcompat/webcompat-bot'}
 HOST_WHITELIST = ('webcompat.com', 'staging.webcompat.com',
                   '127.0.0.1', 'localhost')
-JSON_MIME = 'application/json'
 FIXTURES_PATH = os.getcwd() +'/tests/fixtures'
 STATIC_PATH = os.getcwd() + '/webcompat/static'
+JSON_MIME = 'application/json'
+REPO_URI = app.config['ISSUES_REPO_URI']
 
 cache_dict = {}
 
@@ -140,7 +146,7 @@ def get_os(user_agent_string):
     return '{0} {1}'.format(os.get('family'), version)
 
 
-def get_headers(response):
+def get_response_headers(response):
     '''Return a dictionary of headers based on a passed in Response object.
 
     This allows us to proxy response headers from GitHub to our own responses.
@@ -368,3 +374,49 @@ def extract_url(issue_body):
     else:
         url = ""
     return url
+
+
+def proxy_request(method, path, params=None, headers=None, data=None):
+    '''Make a GitHub API request with a bot's OAuth token.
+
+    Necessary for non-logged in users.
+    * `path` will be appended to the end of the API_URI.
+    * Optionally pass in POST data via the `data` arg.
+    * Optionally point to a different URI via the `uri` arg.
+    * Optionally pass in HTTP headers to forward.
+    '''
+    # Merge passed in headers with AUTH_HEADERS, and add the etag of the
+    # request, if it exists, to be sent back to GitHub.
+    auth_headers = AUTH_HEADERS.copy()
+    if headers:
+        auth_headers.update(headers)
+    # Grab the correct Requests request method
+    req = getattr(requests, method)
+    # It's expected that path *won't* start with a leading /
+    # https://api.github.com/repos/{0}
+    resource_uri = API_URI + path
+    return req(resource_uri, data=data, params=params, headers=auth_headers)
+
+
+def api_request(method, path, params=None, data=None):
+    '''Helper to abstract talking to the  GitHub API.
+
+    This method handles both logged-in and proxied requests.
+
+    This returns a tuple for the convenience of being able to do:
+    `return api_request('get', path, params=params)` directly from a view
+    function. Flask will turn a tuple of the format
+    (content, status_code, response_headers) into a Response object.
+    '''
+    request_headers = get_request_headers(g.request_headers)
+    if g.user:
+        request_method = github.raw_request
+    else:
+        request_method = proxy_request
+    resource = request_method(method, path, headers=request_headers,
+                              params=params, data=data)
+    if resource.status_code != 404:
+        return (resource.content, resource.status_code,
+                get_response_headers(resource))
+    else:
+        abort(404)
