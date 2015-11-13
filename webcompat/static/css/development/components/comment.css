@@ -9,7 +9,10 @@
 }
 
   /* Avatar */
-  .wc-Comment-avatar {}
+  .wc-Comment-avatar {
+      width: 59px;
+      height: 56px;
+  }
 
     .wc-Comment-avatar img {
       width: 59px;
