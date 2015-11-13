@@ -128,12 +128,20 @@ def get_issue_category(issue_category):
     # For paginated results on the /issues page, see /issues/search/new.
     elif issue_category == 'new':
         issues = api_request('get', issues_path, params=params)
-        # Do not send random JSON to filter_new
-        # issues is a tuple of format: (content, status_code, response_headers)
-        if issues[1] == 200:
-            return (filter_new(json.loads(issues[0])), issues[1], issues[2])
+        # api_request returns a tuple of format:
+        #       (content, status_code, response_headers)
+        # So we make a dict here for improved readability
+        new_issues = {
+            'content': filter_new(json.loads(issues[0])),
+            'status_code': issues[1],
+            'response_headers': issues[2]
+        }
+        if new_issues['status_code'] != 404:
+            return (new_issues['content'], new_issues['status_code'],
+                    new_issues['response_headers'])
         else:
-            return ({}, issues[1], issues[2])
+            return ({}, new_issues['status_code'],
+                    new_issues['response_headers'])
     else:
         # The path doesn’t exist. 404 Not Found.
         abort(404)

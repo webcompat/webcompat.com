@@ -401,10 +401,12 @@ def proxy_request(method, path, params=None, headers=None, data=None):
 def api_request(method, path, params=None, data=None):
     '''Helper to abstract talking to the  GitHub API.
 
-    This handles both logged-in and proxied requests.
-    This returns a tuple, which if returned from a view function will
-    be automatically turned into a response. But if you return it elsewhere,
-    pay attention.
+    This method handles both logged-in and proxied requests.
+
+    This returns a tuple for the convenience of being able to do:
+    `return api_request('get', path, params=params)` directly from a view
+    function. Flask will turn a tuple of the format
+    (content, status_code, response_headers) into a Response object.
     '''
     request_headers = get_request_headers(g.request_headers)
     if g.user:
