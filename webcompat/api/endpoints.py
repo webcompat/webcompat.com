@@ -136,12 +136,8 @@ def get_issue_category(issue_category):
             'status_code': issues[1],
             'response_headers': issues[2]
         }
-        if new_issues['status_code'] != 404:
-            return (new_issues['content'], new_issues['status_code'],
-                    new_issues['response_headers'])
-        else:
-            return ({}, new_issues['status_code'],
-                    new_issues['response_headers'])
+        return (new_issues['content'], new_issues['status_code'],
+                new_issues['response_headers'])
     else:
         # The path doesn’t exist. 404 Not Found.
         abort(404)
