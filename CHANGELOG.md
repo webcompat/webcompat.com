@@ -1,3 +1,10 @@
+## 2.1.1 - 2015-11-19
+
+* Update Markdown sanitizer lib [Pull #830](https://github.com/webcompat/webcompat.com/pull/830) [Issue #764](https://github.com/webcompat/webcompat.com/issues/764)
+* Fix UI if gravatar images are blocked [Pull #820](https://github.com/webcompat/webcompat.com/pull/829) [Issue #822](https://github.com/webcompat/webcompat.com/issues/822)
+* Refactor GitHub API communication [Pull #828](https://github.com/webcompat/webcompat.com/pull/828) [Issue #827](https://github.com/webcompat/webcompat.com/issues/827)
+* Fix title overflow for small devices [Pull #823](https://github.com/webcompat/webcompat.com/pull/823) [Related to Issue #818](https://github.com/webcompat/webcompat.com/issues/818)
+
 ## 2.1.0 - 2015-11-05
 
 * [Pull #780](https://github.com/webcompat/webcompat.com/pull/780) [Issue #788](https://github.com/webcompat/webcompat.com/issues/788)
