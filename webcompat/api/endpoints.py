@@ -187,14 +187,21 @@ def get_category_from_search(issue_category):
     category_list = ['contactready', 'needscontact',
                      'needsdiagnosis', 'sitewait']
     params = request.args.copy()
+    query_string = ''
+
+    # restrict results to our repo.
+    query_string += " repo:{0} ".format(REPO_PATH)
 
     if issue_category in category_list:
         # add "status-" before the issue_category to match
         # the naming scheme of the repo labels.
-        query_string = 'label:{0}'.format('status-' + issue_category)
+        query_string += 'label:{0}'.format('status-' + issue_category)
+        return get_search_results(query_string, params)
+    elif issue_category == 'closed':
+        query_string += ' state:closed '
         return get_search_results(query_string, params)
     elif issue_category == 'new':
-        query_string = ' '.join(
+        query_string += ' '.join(
             ['-label:status-%s' % cat for cat in category_list])
         query_string += ' state:open '
         return get_search_results(query_string, params)
