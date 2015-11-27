@@ -147,13 +147,14 @@ issueList.QueryParams = Backbone.Model.extend({
     };
 
     // labels is an array that needs some special care
-    var label = this.get('label'); console.log(issues.allLabels.attributes.labels.length)
+    var label = this.get('label');
     if(label && label.length) {
-      label.forEach(function(label){ console.log('label:' + label)
+      label.forEach(function(label){
         paramsToSend.q += ' label:' + issues.allLabels.toPrefixed(label);
       });
     }
-
+    // TODO: clarify rules for when to use GitHub directly and when Webcompat
+    // Perhaps also write a fallback
     var backendPrefix = '';
     if (paramsToSend.q) {
       if (!loggedIn) {
@@ -176,15 +177,19 @@ issueList.QueryParams = Backbone.Model.extend({
       } else {
         backendPrefix = '/api/issues/search';
       }
-    } else if (_.contains(searchAPICategories, this.get('stage'))) {
-      backendPrefix = '/api/issues/search/' + this.get('stage');
-    } else if (_.contains(issuesAPICategories, this.get('stage'))) {
-      backendPrefix = '/api/issues/category/' + this.get('stage');
-    } else {
-      backendPrefix = '/api/issues';
     }
 
-    console.log(backendPrefix + '?' + $.param(paramsToSend));
+    if (loggedIn) {
+      if (_.contains(searchAPICategories, this.get('stage'))) {
+        backendPrefix = '/api/issues/search/' + this.get('stage');
+      } else if (_.contains(issuesAPICategories, this.get('stage'))) {
+        backendPrefix = '/api/issues/category/' + this.get('stage');
+      } else {
+        backendPrefix = '/api/issues';
+      }
+    }
+
+    //console.log(backendPrefix + '?' + $.param(paramsToSend));
     return backendPrefix + '?' + $.param(paramsToSend);
 
   },
