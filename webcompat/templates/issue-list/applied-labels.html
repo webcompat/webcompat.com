@@ -1,0 +1,11 @@
+<div class="wc-AppliedLabels">
+  <div class="wc-content">
+    <script type="text/template" id="issuelist-appliedlabels-tmpl">
+      <% _.each(labels, function(label){ %>
+          <button type="button" class="wc-Filter wc-Filter-appliedlabel js-filter-button wc-label-<%= label %>">
+            <%= label %>
+          </button>
+      <% }); %>
+    </script>
+  </div>
+</div>
