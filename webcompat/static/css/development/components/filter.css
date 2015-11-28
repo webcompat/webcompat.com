@@ -61,3 +61,10 @@
   .wc-Filter--close.is-active {
     background-color:var(--wc-state-close);
   }
+  .wc-Filter--appliedlabel{
+    padding-right: 40px;
+    background-image: url(/img/invalid.svg);
+    background-repeat: no-repeat;
+    background-position: right top;
+
+  }

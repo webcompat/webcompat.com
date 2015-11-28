@@ -204,7 +204,7 @@ issueList.AppliedLabelsView = Backbone.View.extend({
   mainView: null,
   el: $('.wc-AppliedLabels .wc-content'),
   events: {
-    'click .wc-Filter-appliedlabel': 'deleteLabel'
+    'click .wc-Filter--appliedlabel': 'deleteLabel'
   },
   keyboardEvents: {
     'delete': 'deleteLabel'
