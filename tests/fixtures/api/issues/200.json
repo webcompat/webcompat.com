@@ -1,0 +1,47 @@
+{
+  "_fixture": true,
+  "url": "https://api.github.com/repos/webcompat/webcompat-tests/issues/200",
+  "labels_url": "https://api.github.com/repos/webcompat/webcompat-tests/issues/200/labels{/name}",
+  "comments_url": "https://api.github.com/repos/webcompat/webcompat-tests/issues/200/comments",
+  "events_url": "https://api.github.com/repos/webcompat/webcompat-tests/issues/200/events",
+  "html_url": "https://github.com/webcompat/webcompat-tests/issues/200",
+  "id": 43027946,
+  "number": 200,
+  "title": "miketaylr.com - Hello from Intern",
+  "user": {
+    "login": "anonymousbot",
+    "id": 8493563,
+    "avatar_url": "https://avatars.githubusercontent.com/u/8493563?v=3",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/anonymousbot",
+    "html_url": "https://github.com/anonymousbot",
+    "followers_url": "https://api.github.com/users/anonymousbot/followers",
+    "following_url": "https://api.github.com/users/anonymousbot/following{/other_user}",
+    "gists_url": "https://api.github.com/users/anonymousbot/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/anonymousbot/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/anonymousbot/subscriptions",
+    "organizations_url": "https://api.github.com/users/anonymousbot/orgs",
+    "repos_url": "https://api.github.com/users/anonymousbot/repos",
+    "events_url": "https://api.github.com/users/anonymousbot/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/anonymousbot/received_events",
+    "type": "User",
+    "site_admin": false
+  },
+  "labels": [
+    {
+      "url": "https://api.github.com/repos/webcompat/webcompat-tests/labels/status-contactready",
+      "name": "status-contactready",
+      "color": "d4c5f9"
+    }
+  ],
+  "state": "open",
+  "locked": false,
+  "assignee": null,
+  "milestone": null,
+  "comments": 0,
+  "created_at": "2014-09-17T15:44:37Z",
+  "updated_at": "2015-07-30T19:19:46Z",
+  "closed_at": null,
+  "body": "<!-- @browser: Firefox 31.0 -->\n\n**URL**: http://miketaylr.com\n**Browser / Version**: Firefox 31.0\n**Operating System**: Mac OS X 10.10\n**Problem type**: Unknown\n**Site owner**: Unknown\n\n**Steps to Reproduce**\n1) Navigate to: http://miketaylr.com\r\n2) …\r\n\r\nExpected Behavior:\r\nActual Behavior:\r\n",
+  "closed_by": null
+}
