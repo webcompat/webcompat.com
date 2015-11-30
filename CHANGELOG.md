@@ -1,3 +1,8 @@
+## 2.1.2 - 2015-11-30
+
+* Update imagemin version  [Pull #836](https://github.com/webcompat/webcompat.com/pull/836)[Issue #833](https://github.com/webcompat/webcompat.com/issues/833)
+* Add missing import for endpoints.py [Pull #837](https://github.com/webcompat/webcompat.com/pull/837)
+
 ## 2.1.1 - 2015-11-19
 
 * Update Markdown sanitizer lib [Pull #830](https://github.com/webcompat/webcompat.com/pull/830) [Issue #764](https://github.com/webcompat/webcompat.com/issues/764)
