@@ -189,7 +189,10 @@ issueList.QueryParams = Backbone.Model.extend({
       }
     }
 
-    //console.log(backendPrefix + '?' + $.param(paramsToSend));
+    // Ignore q param if empty. This simplifies the URL sent to the backend
+    if(!paramsToSend.q) {
+      delete paramsToSend.q;
+    }
     return backendPrefix + '?' + $.param(paramsToSend);
 
   },
