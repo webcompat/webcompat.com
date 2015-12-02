@@ -312,9 +312,9 @@ issueList.IssueView = Backbone.View.extend(
       if (this._urlParams.length !== 0) {
         if (this._urlParams !== this.mainView.params.toDisplayURLQuery()) {
           this.updateModelParams(this._urlParams);
-          this.fetchAndRenderIssues();
         }
       }
+      this.fetchAndRenderIssues();
     },
     fetchAndRenderIssues: function() {
       var headers = {headers: {'Accept': 'application/json'}};
