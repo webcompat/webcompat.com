@@ -90,21 +90,21 @@ issueList.FilterView = Backbone.View.extend({
   },
   _isLoggedIn: $('body').data('username'),
   _userName: $('body').data('username'),
-  initialize: function(theOptions) {
-    this.mainView = theOptions.mainView;
+  initialize: function(options) {
+    this.mainView = options.mainView;
     //TODO: move this model out into its own file once we have
     //actual data for issues count
     issueList.events.on('filter:activate', _.bind(this.toggleFilter, this));
     issueList.events.on('filter:clear', _.bind(this.clearFilter, this));
 
-    var options = [
+    var optionElms = [
       {title: 'View all Open Issues', params: 'state=open'},
       {title: 'View all Issues', params: 'state=all'}
     ];
 
     // add the dropdown options for logged in users.
     if (this._isLoggedIn) {
-      options.push(
+      optionElms.push(
         {title: 'View Issues Submitted by Me', params: 'creator='   + this._userName},
         {title: 'View Issues Mentioning Me',   params: 'mentioned=' + this._userName}
       );
@@ -112,7 +112,7 @@ issueList.FilterView = Backbone.View.extend({
 
     this.model = new Backbone.Model({
       dropdownTitle: 'View all Open Issues',
-      dropdownOptions: options,
+      dropdownOptions: optionElms,
     });
 
     this.initSubViews();
