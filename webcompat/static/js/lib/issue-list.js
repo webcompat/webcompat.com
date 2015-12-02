@@ -212,7 +212,6 @@ issueList.AppliedLabelsView = Backbone.View.extend({
   initialize: function(options) {
     this.mainView = options.mainView;
     issueList.events.on('appliedlabels:update', _.bind(this.updateAppliedLabels, this));
-
   },
   template: _.template($('#issuelist-appliedlabels-tmpl').html()),
   updateAppliedLabels: function() {
