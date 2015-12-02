@@ -167,7 +167,7 @@ def get_search_results(query_string=None, params=None):
         abort(404)
 
     # restrict results to our repo.
-    query_string += " repo:{0}".format(REPO_PATH)
+    query_string += ' repo:{0}'.format(REPO_PATH)
     params['q'] = query_string
 
     # convert issues api to search api params here.
@@ -188,9 +188,6 @@ def get_category_from_search(issue_category):
                      'needsdiagnosis', 'sitewait']
     params = request.args.copy()
     query_string = ''
-
-    # restrict results to our repo.
-    query_string += " repo:{0} ".format(REPO_PATH)
 
     if issue_category in category_list:
         # add "status-" before the issue_category to match
