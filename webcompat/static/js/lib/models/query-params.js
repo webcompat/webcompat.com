@@ -76,7 +76,7 @@ issueList.QueryParams = Backbone.Model.extend({
         } else if (change === 'sort' || change === 'direction') {
           issueList.events.trigger('dropdown:update', 'sort=' +
               this.attributes.sort + '&direction=' + this.attributes.direction);
-        } else if (change === 'search') {
+        } else if (change === 'q') {
           issueList.events.trigger('search:update', newvalue);
         } else if (change === 'label') {
           issueList.events.trigger('appliedlabels:update');
@@ -226,6 +226,25 @@ issueList.QueryParams = Backbone.Model.extend({
     if(name === 'order') {
       name = 'direction';
     }
+    // if the q parameter is set, the value might contain name:value params
+    // for consistency, we should do a bit of parsing and extract those..
+    // Both API and UI will be more confusing if we allow both labels:foo inside search
+    // AND labels: ['bar'] internally.
+    if(name === 'q') {
+      var namevalues = value.match(/\b\w+(%3A|:)\w+\b/g);
+      if(namevalues) {
+        for(var thisValue, parts, i=0; thisValue = namevalues[i]; i++) {
+          parts = thisValue.split(/%3A|:/);
+          // If the name part is a keyword we know about, we set it in the API
+          // and remove it from the eventual q string.
+          // Otherwise, we just leave it as-is 
+          if(this.has(parts[0])) {
+            this.setParam(parts[0], parts[1]);
+            value = value.replace(thisValue, '');
+          }
+        }
+      }
+    } 
     if(this.has(name)) {
       var currentValue = this.get(name);
       if(currentValue instanceof Array) {
@@ -254,6 +273,8 @@ issueList.QueryParams = Backbone.Model.extend({
     } else {
       // if it's not a known property, stuff it into search
       // append name:value to existing search
+      // TODO: we should never get here. Is it OK to stuff it into search, 
+      // or should we throw?
       this.set('q', this.get('q') + ' ' + name + ':' + value);
     }
   },
