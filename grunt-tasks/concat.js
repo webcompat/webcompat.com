@@ -30,6 +30,7 @@ module.exports = function(grunt) {
         src: [
             '<%= jsPath %>/lib/models/label-list.js',
             '<%= jsPath %>/lib/labels.js',
+            '<%= jsPath %>/lib/models/query-params.js',
             '<%= jsPath %>/lib/models/issue.js',
             '<%= jsPath %>/lib/diagnose.js'
         ],
@@ -40,6 +41,7 @@ module.exports = function(grunt) {
             '<%= jsPath %>/vendor/qr.min.js',
             '<%= jsPath %>/lib/models/label-list.js',
             '<%= jsPath %>/lib/labels.js',
+            '<%= jsPath %>/lib/models/query-params.js',
             '<%= jsPath %>/lib/models/issue.js',
             '<%= jsPath %>/lib/models/comment.js',
             '<%= jsPath %>/lib/comments.js',
@@ -52,6 +54,7 @@ module.exports = function(grunt) {
         src: [
           '<%= jsPath %>/lib/models/label-list.js',
           '<%= jsPath %>/lib/labels.js',
+          '<%= jsPath %>/lib/models/query-params.js',
           '<%= jsPath %>/lib/models/issue.js',
           '<%= jsPath %>/lib/mixins/pagination.js',
           '<%= jsPath %>/lib/issue-list.js'
@@ -61,6 +64,7 @@ module.exports = function(grunt) {
       userActivity: {
         src: [
           '<%= jsPath %>/lib/models/label-list.js',
+          '<%= jsPath %>/lib/models/query-params.js',
           '<%= jsPath %>/lib/models/issue.js',
           '<%= jsPath %>/lib/mixins/pagination.js',
           '<%= jsPath %>/lib/user-activity.js'

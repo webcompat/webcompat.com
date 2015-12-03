@@ -121,8 +121,6 @@ issueList.IssueCollection = Backbone.Collection.extend({
   /* the url property is set in issueList.IssueView#fetchAndRenderIssues */
   initialize: function(options) {
     // set defaults
-    this.params = options && options.params || {page: 1, per_page: 50,
-      state: 'open', stage: 'all', sort: 'created', direction: 'desc'};
     this.path = options && options.path || '/api/issues';
   },
   parse: function(response, jqXHR) {
@@ -135,14 +133,12 @@ issueList.IssueCollection = Backbone.Collection.extend({
     if (response.hasOwnProperty('items')) {
       // Search API results return an Object with the
       // issues array in the items key
+      response.items.test = 'foo'
       return response.items;
     } else {
+      response.test='foo'
       return response;
     }
-  },
-  setURLState: function(path, params) {
-    this.path = path;
-    this.params = params;
   },
   parseHeader: function(linkHeader) {
     /* Returns an object like so:
@@ -186,53 +182,6 @@ issueList.IssueCollection = Backbone.Collection.extend({
     } else {
       return null;
     }
-  },
-  normalizeAPIParams: function(paramsArg) {
-    /* ported version of normalize_api_params from helpers.py
-    Normalize GitHub Issues API params to Search API conventions:
-
-    Issues API params        | Search API converted values
-    -------------------------|---------------------------------------
-    state                    | into q as "state:open", "state:closed"
-    creator                  | into q as "author:username"
-    mentioned                | into q as "mentions:username"
-    direction                | order
-    */
-    var params = {};
-    var qMap = {
-      state:     'state',
-      creator:   'author',
-      mentioned: 'mentions'
-    };
-
-    if (_.isString(paramsArg)) {
-      var paramsArray = _.uniq(paramsArg.split('&'));
-      _.forEach(paramsArray, function(param) {
-        var kvArray = param.split('=');
-        var key = kvArray[0];
-        var value = kvArray[1];
-        params[key] = value;
-      });
-    } else {
-      params = paramsArg;
-    }
-
-    if ('direction' in params) {
-      params.order = params.direction;
-      delete params.direction;
-    }
-
-    // The rest need to be added to the "q" param as substrings
-    _.forEach(qMap, function(val, key) {
-      if (key in params) {
-        params.q += ' ' + val + ':' + params[key];
-        delete params[key];
-      }
-    });
-
-    // Finally, scope this to our issues repo.
-    params.q += ' repo:' + repoPath.slice(0,-7);
-
-    return params;
   }
+
 });

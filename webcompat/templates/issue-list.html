@@ -12,6 +12,8 @@
 
     {% include "issue-list/issue-search.html" %}
 
+    {% include "issue-list/applied-labels.html" %}
+
     <div class="wc-IssueList-sorting">
       {% include "issue-list/issue-sorting.html" %}
     </div>
@@ -31,6 +33,7 @@
 {% else %}
 <script src="{{ url_for('static', filename='js/lib/models/label-list.js') }}"></script>
 <script src="{{ url_for('static', filename='js/lib/labels.js') }}"></script>
+<script src="{{ url_for('static', filename='js/lib/models/query-params.js') }}"></script>
 <script src="{{ url_for('static', filename='js/lib/models/issue.js') }}"></script>
 <script src="{{ url_for('static', filename='js/lib/mixins/pagination.js') }}"></script>
 <script src="{{ url_for('static', filename='js/lib/issue-list.js') }}"></script>
