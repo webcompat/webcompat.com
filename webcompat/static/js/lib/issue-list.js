@@ -191,7 +191,7 @@ issueList.SearchView = Backbone.View.extend({
   doSearch: _.debounce(function(e) {
     var searchValue = e.type === 'click' ? $(e.target).prev().val() :
                       e.target.value;
-    this.mainView.params.setParam('search', searchValue);
+    this.mainView.params.setParam('q', searchValue);
   }, 250),
 });
 

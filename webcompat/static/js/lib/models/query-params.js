@@ -44,7 +44,7 @@ issueList.QueryParams = Backbone.Model.extend({
     per_page:50,
     sort:'created',
     direction: 'desc',
-    search: '',
+    q: '',
     creator: '',
     mentioned: '',
     label: [] // Using 'labels' plural form would be nice, but needs to be
@@ -128,9 +128,8 @@ issueList.QueryParams = Backbone.Model.extend({
     */
     var paramsToSend = {q:''};
     // These are added to the query string as name=value (but some names change)
-    var urlKeywords = ['direction', 'search', 'sort', 'page', 'per_page']
+    var urlKeywords = ['direction', 'q', 'sort', 'page', 'per_page']
     var urlKeywordTransforms = {
-      search:'q',
       direction:'order'
     };
     // These properties must end up in the ?q=name:value
@@ -230,6 +229,7 @@ issueList.QueryParams = Backbone.Model.extend({
     if(this.has(name)) {
       var currentValue = this.get(name);
       if(currentValue instanceof Array) {
+        // Likely a 'labels' array..
         // We don't want to consider status- labels as labels
         // in this API although they are at the backend.
         // We should special-case label:status-* updates and set the
@@ -253,14 +253,8 @@ issueList.QueryParams = Backbone.Model.extend({
       return;
     } else {
       // if it's not a known property, stuff it into search
-      // if "name" is q it *is* the search phrase (from query string), set it directly
-      if(name === 'q') {
-        this.set('search', value);
-      } else {
-        // append name:value to existing search
-        this.set('search', this.get('search') + ' ' + name + ':' + value);
-      }
-      
+      // append name:value to existing search
+      this.set('q', this.get('q') + ' ' + name + ':' + value);
     }
   },
   deleteLabel: function(labelStr){
