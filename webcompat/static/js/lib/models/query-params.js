@@ -8,15 +8,15 @@ issueList.configUrls = {
 * QueryParams is a model for keeping track of all parameters
 * we need to fetch the list of issues.
 *
-* Dropdown, filter, search and sorting views will update the params, 
+* Dropdown, filter, search and sorting views will update the params,
 * typically by calling
 * this.mainView.params.setParam(name, value).
 * The QueryParams model will observe itself and trigger relevant
 * updates to the various views through firing events.
 *
-* The model can serialize its params to generate URLs. Queries are 
+* The model can serialize its params to generate URLs. Queries are
 * either proxied through webcompat.com or go directly to GitHub.
-* 
+*
 * If the request is a simple query (no search terms / ?q= parameter),
 * it is always proxied through webcompat and the backend uses GitHub's
 * Issues API - https://developer.github.com/v3/issues/
@@ -25,14 +25,14 @@ issueList.configUrls = {
 * /api/issues/needsdiagnosis?page=1&per_page=50&sort=created&direction=desc
 *
 * If the request has a search query, and the user is logged in,
-* it is also proxied through webcompat and the backend uses GitHub's 
+* it is also proxied through webcompat and the backend uses GitHub's
 * Search API - https://developer.github.com/v3/search/#search-issues
 *
 * If the request has a search query and the user is *not* logged in,
 * we send the query directly to GitHub's CORS-enabled Search API.
 * Generated URLs are for example
 * https://api.github.com/search/issues?q=foo&sort=created&order=desc
-* 
+*
 * The query itself can contain name:value parts like label:state-needsdiagnosis
 * but we have no control over paging and number of results when querying
 * GitHub directly.
@@ -237,14 +237,14 @@ issueList.QueryParams = Backbone.Model.extend({
           parts = thisValue.split(/%3A|:/);
           // If the name part is a keyword we know about, we set it in the API
           // and remove it from the eventual q string.
-          // Otherwise, we just leave it as-is 
+          // Otherwise, we just leave it as-is
           if(this.has(parts[0])) {
             this.setParam(parts[0], parts[1]);
             value = value.replace(thisValue, '');
           }
         }
       }
-    } 
+    }
     if(this.has(name)) {
       var currentValue = this.get(name);
       if(currentValue instanceof Array) {
@@ -273,7 +273,7 @@ issueList.QueryParams = Backbone.Model.extend({
     } else {
       // if it's not a known property, stuff it into search
       // append name:value to existing search
-      // TODO: we should never get here. Is it OK to stuff it into search, 
+      // TODO: we should never get here. Is it OK to stuff it into search,
       // or should we throw?
       this.set('q', this.get('q') + ' ' + name + ':' + value);
     }
