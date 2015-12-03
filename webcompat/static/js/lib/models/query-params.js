@@ -197,6 +197,11 @@ issueList.QueryParams = Backbone.Model.extend({
 
   },
   setParam: function(name, value) {
+    // Because we query two separate GitHub APIs, which use slightly different keywords,
+    // we have two names for some of the params - let's limit it to one name internally
+    if(name === 'order') {
+      name = 'direction';
+    }
     if(this.has(name)) {
       var currentValue = this.get(name);
       if(currentValue instanceof Array) {
@@ -221,9 +226,17 @@ issueList.QueryParams = Backbone.Model.extend({
         this.set(name, value);
       }
       return;
+    } else {
+      // if it's not a known property, stuff it into search
+      // if "name" is q it *is* the search phrase (from query string), set it directly
+      if(name === 'q') {
+        this.set('search', value);
+      } else {
+        // append name:value to existing search
+        this.set('search', this.get('search') + ' ' + name + ':' + value);
+      }
+      
     }
-    // if it's not a known property, stuff it into search
-    this.set('search', this.get('search') + ' ' + name + ':' + value);
   },
   deleteLabel: function(labelStr){
     var currentLabels = this.get('label');
