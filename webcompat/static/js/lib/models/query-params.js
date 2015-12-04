@@ -1,9 +1,5 @@
 var issueList = issueList || {};
 
-issueList.configUrls = {
-  _githubSearchEndpoint: 'https://api.github.com/search/issues'
-}
-
 /*
 * QueryParams is a model for keeping track of all parameters
 * we need to fetch the list of issues.
@@ -40,6 +36,7 @@ issueList.configUrls = {
 issueList.QueryParams = Backbone.Model.extend({
   defaults:{
     stage:'all',
+    state: 'open',
     page:1,
     per_page:50,
     sort:'created',
@@ -49,6 +46,9 @@ issueList.QueryParams = Backbone.Model.extend({
     mentioned: '',
     label: [] // Using 'labels' plural form would be nice, but needs to be
               // singular for the backend - or we'd have to translate name on send
+  },
+  configUrls: {
+    _githubSearch: 'https://api.github.com/search/issues'
   },
   bugstatuses: ['contactready', 'needsdiagnosis', 'needscontact', 'sitewait'],
   initialize: function(){
@@ -70,9 +70,18 @@ issueList.QueryParams = Backbone.Model.extend({
         if(newvalue.toString().trim() === oldvalue.toString().trim()) {
           continue; // just whitespace change, let's ignore this
         }
+        // If a user clicks a label we're already filtering by, we can likewise ignore it
+        if(change === 'label') {
+          if (this.get('label').indexOf(newvalue)>-1) {
+            continue;
+          }
+        }
+        // End of "ignore insignificant updates" logic
+        // so, we think this change matters and want to send update notifications to
+        // the UI
         significant = true;
-        if (change === 'per_page') {
-          issueList.events.trigger('dropdown:update', 'per_page=' + newvalue);
+        if (change === 'per_page' || change === 'state') {
+          issueList.events.trigger('dropdown:update', change + '=' + newvalue);
         } else if (change === 'sort' || change === 'direction') {
           issueList.events.trigger('dropdown:update', 'sort=' +
               this.attributes.sort + '&direction=' + this.attributes.direction);
@@ -119,107 +128,107 @@ issueList.QueryParams = Backbone.Model.extend({
     *   * Stage: client-side this is added to the pathname. On the backend it's
     *     transformed to a label:status-foo string and added to q
     *     (a bit complex but I hope the API vainly loves the prettier URLs)
-    *     The backend also knows that "new" and "closed" are special values
-    *     that map to the state= keyword, not directly to a label.
     *
     *   * Keywords that go into separate URL arguments - direction, sort, page, per_page
     *
-    *   * Certain others need to go into q= field, as name:value
+    *   * Certain others need to go into q= field, as name:value - this is more common for the
+    *     search API than the issues API
     */
-    var paramsToSend = {q:''};
-    // These are added to the query string as name=value (but some names change)
-    var urlKeywords = ['direction', 'q', 'sort', 'page', 'per_page']
-    var urlKeywordTransforms = {
-      direction:'order'
-    };
-    // These properties must end up in the ?q=name:value
-    var qMap = {
-      creator:   'author',
-      mentioned: 'mentions'
-    };
+    var url;
+
     // new is a special category that must be retrieved via the Search API,
     // rather than the Issues API (which can return results for label)
     var searchAPICategories = ['new'];
     var issuesAPICategories = ['closed'].concat(this.bugstatuses);
 
-    // Now we're ready to start populating paramsToSend
-    // urlKeywords simply get copied over
-    for(var i=0, kw; kw = urlKeywords[i]; i++) {
-      if (this.attributes[kw]) {
-        if (urlKeywordTransforms[kw]) {
-          paramsToSend[urlKeywordTransforms[kw]] = this.attributes[kw];
-        } else {
-          paramsToSend[kw] = this.attributes[kw];
-        }
-      }
-    }
-    /* ported version of normalize_api_params from helpers.py
-    Normalize GitHub Issues API params to Search API conventions:
-
-    Issues API params        | Search API converted values
-    -------------------------|---------------------------------------
-    state                    | into q as "state:open", "state:closed"
-    creator                  | into q as "author:username"
-    mentioned                | into q as "mentions:username"
-    direction                | order
-    */
-    // Any qMap properties need to be added to the "q" param as name:value
-    for(key in qMap) {
-      if (key in this.attributes && this.attributes[key]) {
-        params.q += ' ' + val + ':' + this.attributes[key];
-      }
-    };
-
-    // labels is an array that needs some special care
-    var label = this.get('label');
-    if(label && label.length) {
-      label.forEach(function(label){
-        paramsToSend.q += ' label:' + issues.allLabels.toPrefixed(label);
-      });
-    }
-    // TODO: clarify rules for when to use GitHub directly and when Webcompat
-    // Perhaps also write a fallback
-    var backendPrefix = '';
-    if (paramsToSend.q) {
-      if (!loggedIn) {
-        backendPrefix = issueList.configUrls._githubSearchEndpoint;
-        // Scope this to our issues repo. (Our backend proxy handles this but
-        // when sending the request directly to GitHub it must happen here)
-        paramsToSend.q += ' repo:' + repoPath.slice(0,-7);
-        // stage=new translates to "not one of these labels"..
-        // This is handled in our backend - except when we query Github directly
-        if (this.get('stage') === 'new') {
-          issuesAPICategories.forEach(function(label) {
-            paramsToSend.q += ' -label:' + label;
-          });
-          paramsToSend.q += ' state:open';
-        } else if (this.get('stage') && !(this.get('stage') in {all:1,closed:1})) {
-          paramsToSend.q += ' label:status-' + this.get('stage');
-        }else if (this.get('stage') === 'closed') {
-          paramsToSend.q += ' state:closed';
-        }
+    // Rules for when to use GitHub directly and when Webcompat
+    if (this.get('q') || searchAPICategories.indexOf(this.get('stage')) > -1) { // We have a query that needs search API
+      if ('withCredentials' in XMLHttpRequest.prototype && !loggedIn) { // CORS support, not logged in - talk directly to GH
+        url = this.configUrls._githubSearch + '?' + this.toSearchAPIParams(false);
       } else {
-        backendPrefix = '/api/issues/search';
+        url = '/api/issues/search' + '?' + this.toSearchAPIParams(true);
       }
-    }
-
-    if (loggedIn) {
-      if (_.contains(searchAPICategories, this.get('stage'))) {
-        backendPrefix = '/api/issues/search/' + this.get('stage');
-      } else if (_.contains(issuesAPICategories, this.get('stage'))) {
-        backendPrefix = '/api/issues/category/' + this.get('stage');
+    }else { // Seems like this query is so simple we only need the issues API..
+      if (_.contains(issuesAPICategories, this.get('stage'))) {
+        url = '/api/issues/category/' + this.get('stage') + '?' + this.toIssueAPIParams();
       } else {
-        backendPrefix = '/api/issues';
+        url = '/api/issues' + '?' + this.toIssueAPIParams();
       }
     }
-
-    // Ignore q param if empty. This simplifies the URL sent to the backend
-    if(!paramsToSend.q) {
-      delete paramsToSend.q;
-    }
-    return backendPrefix + '?' + $.param(paramsToSend);
-
+    return url;
   },
+  toIssueAPIParams: function(){
+    /* Serializes the parameters for the GitHub issues API.
+    *
+    * https://developer.github.com/v3/issues/
+    */
+    // Simple: serialize our attributes, remove any empty values
+    // Note: this method works best for webcompat-proxied URLs,
+    // especially since we make no attempt at translating stage
+    // property to labels - this happens at the backend..
+    var paramsToSend = _.clone(this.attributes);
+    for(var property in paramsToSend) { // we want to ignore empty values
+      if (!(paramsToSend[property])) {
+        delete paramsToSend[property];
+      }
+    }
+    // also drop label= if we don't filter by label
+    if(!paramsToSend.label.length) {
+      delete paramsToSend.label;
+    }
+    return $.param(paramsToSend);
+  },
+  toSearchAPIParams: function(viaProxy){
+    /* Serializes the parameters for the GitHub search API.
+    *
+    * The viaProxy argument tells us whether the query goes through webcompat.com backend.
+    * If viaProxy is false, we're querying GitHub directly.
+    *
+    * The GitHub search API is documented here:
+    * https://developer.github.com/v3/search/
+    *
+    * Here we only have the arguments ?q= &sort= &order=
+    * but within the q string we can add several name:value parts, in particular
+    *   author, mentions, state, label (several), repo
+    * We can also negate by prefixing these with -.
+    */
+    var paramsToSend = _.pick(this.attributes, 'q', 'sort');
+    // Some names are different for the search API..
+    if (this.get('direction')) {
+      paramsToSend.order = this.get('direction');
+    };
+    // These properties must end up as ?q=name:value with name slightly translated
+    var qMap = {
+      creator:   'author',
+      mentioned: 'mentions'
+    };
+    for(key in qMap) {
+      if (this.get(key)) {
+        paramsToSend.q += ' ' + qMap[key] + ':' + this.get('key');
+      }
+    }
+    if(this.get('label').length) {
+      paramsToSend.q += ' label:' + this.get('label').join(' label:');
+    }
+    // Following logic is handled in our backend - except when we query Github directly
+    if(!viaProxy) {
+      // The "stage" needs to be translated into the right combination of labels and state
+      if (this.get('stage') === 'new') {
+        // stage=new translates to "not one of these labels"..
+        this.bugstatuses.forEach(function(label) {
+          paramsToSend.q += ' -label:status-' + label;
+        });
+      } else if (this.get('stage') && !(this.get('stage') in {all:1,closed:1})) {
+        paramsToSend.q += ' label:status-' + this.get('stage');
+      }
+      paramsToSend.q += ' state:' + this.get('state');
+      // Scope this to our issues repo.
+      paramsToSend.q += ' repo:' + repoPath.slice(0,-7);
+    }
+
+    return $.param(paramsToSend);
+  },
+
   setParam: function(name, value) {
     // Because we query two separate GitHub APIs, which use slightly different keywords,
     // we have two names for some of the params - let's limit it to one name internally
@@ -228,8 +237,8 @@ issueList.QueryParams = Backbone.Model.extend({
     }
     // if the q parameter is set, the value might contain name:value params
     // for consistency, we should do a bit of parsing and extract those..
-    // Both API and UI will be more confusing if we allow both labels:foo inside search
-    // AND labels: ['bar'] internally.
+    // Both API and UI will be more confusing if we allow both label:foo inside search
+    // AND label: ['bar'] internally.
     if(name === 'q') {
       var namevalues = value.match(/\b\w+(%3A|:)\w+\b/g);
       if(namevalues) {
@@ -251,16 +260,16 @@ issueList.QueryParams = Backbone.Model.extend({
         // Likely a 'labels' array..
         // We don't want to consider status- labels as labels
         // in this API although they are at the backend.
-        // We should special-case label:status-* updates and set the
+        // We special-case label:status-* updates and set the
         // corresponding stage value instead.
         if(name === 'label' &&
            (value.indexOf('status-') === 0 || this.bugstatuses.indexOf(value) > -1)) {
           return this.setParam('stage', value.replace(/^status-/,''));
         }
         if(value && currentValue.indexOf(value) === -1) {
-          if(value instanceof Array) {
+          if(value instanceof Array) { // Presumably a brand new array of values - we take all of them without merging
             this.set(name, value);
-          } else {
+          } else { // We add the new value to the existing array
             this.set(name, currentValue.concat([value]));
           }
         } else {
@@ -283,9 +292,11 @@ issueList.QueryParams = Backbone.Model.extend({
     if(currentLabels.indexOf(labelStr) > -1) {
       currentLabels.splice(currentLabels.indexOf(labelStr), 1);
       this.set('label', {}, {silent:true}); // hack: to trigger change event on *next* set..
-      // hack explained: currentLabels is a reference to the array, so updating
-      // it causes an immediate change. But because we're just manipulating the array
-      // directly, it does not fire any change events..
+      // hack explained: currentLabels is a reference to an array, so updates cause immediate change.
+      // However, when we're manipulating the array directly, the model does not fire any change events
+      // because JS gives Backbone no way to observe changes to an array. If we set label to a reference
+      // to the array it already references, it won't fire change events either, even if array content
+      // was updated in the meantime. Hence the workaround sets it to {} and then back to the array.
       this.setParam('label', currentLabels);
     }
   },
