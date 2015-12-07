@@ -18,10 +18,24 @@ Please re-run:
 ==============================================
 '''
 
+NO_CONF_ERROR = '''
+==============================================
+The config.py file seems to be missing. 
+
+Please create a copy of config.py.example and customize it accordingly.
+For details, please see 
+https://github.com/webcompat/webcompat.com/blob/master/CONTRIBUTING.md#configuring-the-server
+==============================================
+'''
+
 try:
     from webcompat import app
 except ImportError, e:
-    raise ImportError('{0}\n\n{1}'.format(e, IMPORT_ERROR))
+    if e.import_name == 'config':
+        # config not found, somebody forgot to make a copy of config.py.example and modify?
+        raise ImportError('{0}\n\n{1}'.format(e, NO_CONF_ERROR))
+    else:
+        raise ImportError('{0}\n\n{1}'.format(e, IMPORT_ERROR))
 
 
 TOKEN_HELP = '''
