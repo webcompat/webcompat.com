@@ -21,14 +21,8 @@
   vertical-align:middle;
 }
 
-.wc-Icon--arrow-right:before {
-  content: "\e601";
-}
-.wc-Icon--arrow-down:before {
-  content: "\e602";
-}
-.wc-Icon--arrow-left:before {
-  content: "\e603";
+.wc-Icon--cloud-download:before {
+  content: "\f0ed";
 }
 .wc-Icon--arrow-circle-right:before {
   content: "\f0a9";
@@ -68,4 +62,13 @@
 }
 .wc-Icon--cloud-upload:before {
   content: "\f0ee";
+}
+.wc-Icon--arrow-right:before {
+  content: "\e601";
+}
+.wc-Icon--arrow-down:before {
+  content: "\e602";
+}
+.wc-Icon--arrow-left:before {
+  content: "\e603";
 }
