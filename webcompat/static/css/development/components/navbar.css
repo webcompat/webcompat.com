@@ -36,7 +36,7 @@
       vertical-align:middle;
       margin-left:.3em;
     }
-      @media (--viewport-450px) {
+      @media all and (max-width: 36.25em) {
         .wc-Navbar-link-label {
           position: absolute;
           top: -9999px;
@@ -54,4 +54,21 @@
     border-radius: 3px;
     vertical-align: middle;
     margin-left: .3em;
+  }
+
+  /* link download addon browser */
+  .wc-Navbar-linkDownload-label {
+    vertical-align: middle;
+  }
+
+  @media all and (max-width: 30em) {
+    .wc-Navbar-linkDownload-label-word {
+      display: none;
+    }
+  }
+
+  @media all and (min-width: 30em) {
+    .wc-Navbar-linkDownload-icon {
+        display: none;
+    }
   }
