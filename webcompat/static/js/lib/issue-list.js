@@ -224,7 +224,7 @@ issueList.AppliedLabelsView = Backbone.View.extend({
   },
   template: _.template($('#issuelist-appliedlabels-tmpl').html()),
   updateAppliedLabels: function() {
-    var labels = this.mainView.params.get('label');
+    var labels = this.mainView.params.get('labels');
     this.render({labels:labels});
   },
   render: function(options) {
@@ -373,7 +373,7 @@ issueList.IssueView = Backbone.View.extend(
     // clicking on a label in the issues view should trigger an update
     // listing issues for the given label.
       var target = $(e.target);
-      this.mainView.params.setParam('label', target.text());
+      this.mainView.params.setParam('labels', target.text());
       e.preventDefault();
     },
     resetStageFilter: function(options) {

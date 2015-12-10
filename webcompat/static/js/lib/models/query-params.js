@@ -44,7 +44,7 @@ issueList.QueryParams = Backbone.Model.extend({
     q: '',
     creator: '',
     mentioned: '',
-    label: [] // Using 'labels' plural form would be nice, but needs to be
+    labels: [] // Using 'labels' plural form would be nice, but needs to be
               // singular for the backend - or we'd have to translate name on send
   },
   configUrls: {
@@ -71,8 +71,8 @@ issueList.QueryParams = Backbone.Model.extend({
           continue; // just whitespace change, let's ignore this
         }
         // If a user clicks a label we're already filtering by, we can likewise ignore it
-        if(change === 'label') {
-          if (this.get('label').indexOf(newvalue)>-1) {
+        if(change === 'labels') {
+          if (this.get('labels').indexOf(newvalue)>-1) {
             continue;
           }
         }
@@ -87,7 +87,7 @@ issueList.QueryParams = Backbone.Model.extend({
               this.attributes.sort + '&direction=' + this.attributes.direction);
         } else if (change === 'q') {
           issueList.events.trigger('search:update', newvalue);
-        } else if (change === 'label') {
+        } else if (change === 'labels') {
           issueList.events.trigger('appliedlabels:update');
         } else if (!(change in {page:1,stage:1})) {
           issueList.events.trigger('search:update', change + ':' + newvalue);
@@ -174,11 +174,11 @@ issueList.QueryParams = Backbone.Model.extend({
       }
     }
     // also drop label= if we don't filter by label
-    if(!paramsToSend.label.length) {
-      delete paramsToSend.label;
-    } else {
+    if(paramsToSend.labels.length) {
       // gotcha: issues API needs labels in plural, search API in singular.. :-/
-      paramsToSend.labels = issues.allLabels.toPrefixed(paramsToSend.label);
+      paramsToSend.labels = issues.allLabels.toPrefixed(paramsToSend.labels);
+    } else {
+      delete paramsToSend.labels;
     }
     return $.param(paramsToSend, true);
   },
@@ -211,8 +211,8 @@ issueList.QueryParams = Backbone.Model.extend({
         paramsToSend.q += ' ' + qMap[key] + ':' + this.get('key');
       }
     }
-    if(this.get('label').length) {
-      var theLabels = issues.allLabels.toPrefixed(this.get('label'));
+    if(this.get('labels').length) {
+      var theLabels = issues.allLabels.toPrefixed(this.get('labels'));
       // gotcha: issues API needs labels in plural, search API in singular.. :-/
       paramsToSend.q += ' label:' + theLabels.join(' label:');
     }
@@ -268,7 +268,7 @@ issueList.QueryParams = Backbone.Model.extend({
         // in this API although they are at the backend.
         // We special-case label:status-* updates and set the
         // corresponding stage value instead.
-        if(name === 'label' &&
+        if(name === 'labels' &&
            (value.indexOf('status-') === 0 || this.bugstatuses.indexOf(value) > -1)) {
           return this.setParam('stage', value.replace(/^status-/,''));
         }
@@ -294,16 +294,16 @@ issueList.QueryParams = Backbone.Model.extend({
     }
   },
   deleteLabel: function(labelStr){
-    var currentLabels = this.get('label');
+    var currentLabels = this.get('labels');
     if(currentLabels.indexOf(labelStr) > -1) {
       currentLabels.splice(currentLabels.indexOf(labelStr), 1);
-      this.set('label', {}, {silent:true}); // hack: to trigger change event on *next* set..
+      this.set('labels', {}, {silent:true}); // hack: to trigger change event on *next* set..
       // hack explained: currentLabels is a reference to an array, so updates cause immediate change.
       // However, when we're manipulating the array directly, the model does not fire any change events
       // because JS gives Backbone no way to observe changes to an array. If we set label to a reference
       // to the array it already references, it won't fire change events either, even if array content
       // was updated in the meantime. Hence the workaround sets it to {} and then back to the array.
-      this.setParam('label', currentLabels);
+      this.setParam('labels', currentLabels);
     }
   },
   fromQueryString: function(str){
@@ -314,6 +314,10 @@ issueList.QueryParams = Backbone.Model.extend({
     var namevalues = str.split(/&/g);
     namevalues.forEach(function(namevalue){
       var pair = namevalue.split('=');
+      // just in case..
+      if(pair[0] === 'label') {
+        pair[0] = 'labels';
+      }
       self.setParam(pair[0], pair[1]);
     });
   }
