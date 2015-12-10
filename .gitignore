@@ -18,6 +18,7 @@ webcompat/static/js/diagnose.js
 webcompat/static/js/issues.js
 webcompat/static/js/issue-list.js
 webcompat/static/js/user-activity.js
+webcompat/static/js/cssfixme/cssfixme.js
 webcompat/**/*.min.js
 webcompat/**/*.min.css
 webcompat/**/*.dev.css
