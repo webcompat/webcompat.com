@@ -87,15 +87,13 @@ issueList.QueryParams = Backbone.Model.extend({
               this.attributes.sort + '&direction=' + this.attributes.direction);
         } else if (change === 'q') {
           issueList.events.trigger('search:update', newvalue);
-        } else if (change === 'labels') {
-          issueList.events.trigger('appliedlabels:update');
+        }/* else if (change === 'labels') {
         } else if (!(change in {page:1,stage:1})) {
           issueList.events.trigger('search:update', change + ':' + newvalue);
-        }
+        }*/
       }
       if (significant) {
         issueList.events.trigger('issues:update');
-        issueList.events.trigger('url:update');
       }
     });
   },
@@ -145,9 +143,9 @@ issueList.QueryParams = Backbone.Model.extend({
     // Rules for when to use GitHub directly and when Webcompat
     if (this.get('q') || searchAPICategories.indexOf(this.get('stage')) > -1) { // We have a query that needs search API
       if ('withCredentials' in XMLHttpRequest.prototype && !loggedIn) { // CORS support, not logged in - talk directly to GH
-        url = this.configUrls._githubSearch + '?' + this.toSearchAPIParams(false);
+        url = this.configUrls._githubSearch + '?' + this.toSearchAPIParams();
       } else {
-        url = '/api/issues/search' + '?' + this.toSearchAPIParams(true);
+        url = '/api/issues/search' + '?' + this.toSearchAPIParams();
       }
     }else { // Seems like this query is so simple we only need the issues API..
       if (_.contains(issuesAPICategories, this.get('stage'))) {
@@ -182,11 +180,8 @@ issueList.QueryParams = Backbone.Model.extend({
     }
     return $.param(paramsToSend, true);
   },
-  toSearchAPIParams: function(viaProxy){
+  toSearchAPIParams: function(){
     /* Serializes the parameters for the GitHub search API.
-    *
-    * The viaProxy argument tells us whether the query goes through webcompat.com backend.
-    * If viaProxy is false, we're querying GitHub directly.
     *
     * The GitHub search API is documented here:
     * https://developer.github.com/v3/search/
@@ -216,21 +211,18 @@ issueList.QueryParams = Backbone.Model.extend({
       // gotcha: issues API needs labels in plural, search API in singular.. :-/
       paramsToSend.q += ' label:' + theLabels.join(' label:');
     }
-    // Following logic is handled in our backend - except when we query Github directly
-    if(!viaProxy) {
-      // The "stage" needs to be translated into the right combination of labels and state
-      if (this.get('stage') === 'new') {
-        // stage=new translates to "not one of these labels"..
-        this.bugstatuses.forEach(function(label) {
-          paramsToSend.q += ' -label:status-' + label;
-        });
-      } else if (this.get('stage') && !(this.get('stage') in {all:1,closed:1})) {
-        paramsToSend.q += ' label:status-' + this.get('stage');
-      }
-      paramsToSend.q += ' state:' + this.get('state');
-      // Scope this to our issues repo.
-      paramsToSend.q += ' repo:' + repoPath.slice(0,-7);
+    // The "stage" needs to be translated into the right combination of labels and state
+    if (this.get('stage') === 'new') {
+      // stage=new translates to "not one of these labels"..
+      this.bugstatuses.forEach(function(label) {
+        paramsToSend.q += ' -label:status-' + label;
+      });
+    } else if (this.get('stage') && !(this.get('stage') in {all:1,closed:1})) {
+      paramsToSend.q += ' label:status-' + this.get('stage');
     }
+    paramsToSend.q += ' state:' + this.get('state');
+    // Scope this to our issues repo.
+    paramsToSend.q += ' repo:' + repoPath.slice(0,-7);
 
     return $.param(paramsToSend, true);
   },
