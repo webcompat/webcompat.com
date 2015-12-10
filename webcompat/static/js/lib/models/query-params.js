@@ -176,7 +176,7 @@ issueList.QueryParams = Backbone.Model.extend({
     if(!paramsToSend.label.length) {
       delete paramsToSend.label;
     }
-    return $.param(paramsToSend);
+    return $.param(paramsToSend, true);
   },
   toSearchAPIParams: function(viaProxy){
     /* Serializes the parameters for the GitHub search API.
@@ -226,7 +226,7 @@ issueList.QueryParams = Backbone.Model.extend({
       paramsToSend.q += ' repo:' + repoPath.slice(0,-7);
     }
 
-    return $.param(paramsToSend);
+    return $.param(paramsToSend, true);
   },
 
   setParam: function(name, value) {
