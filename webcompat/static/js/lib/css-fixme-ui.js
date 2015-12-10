@@ -14,10 +14,10 @@ addEventListener('load', function() {
     do_fixup();
   }
 
-  document.getElementById('fixedcss')[0].addEventListener('dblclick', function(e) {
+  document.getElementById('fixedcss').addEventListener('dblclick', function(e) {
     window.getSelection().removeAllRanges();
     var rng = document.createRange();
-    rng.selectNodeContents(document.getElementById('fixedcss')[0]);
+    rng.selectNodeContents(document.getElementById('fixedcss'));
     window.getSelection().addRange(rng);
     e.preventDefault();
   }, false);
