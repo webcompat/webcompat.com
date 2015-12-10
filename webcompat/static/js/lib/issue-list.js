@@ -128,6 +128,7 @@ issueList.FilterView = Backbone.View.extend({
   render: function() {
     this.$el.html(this.template(this.model.toJSON()));
     this.dropdown.setElement(this.$el.find('.js-dropdown-wrapper')).render();
+    issueList.events.on('filter:stage-update', _.bind(this.updateFilterUI, this));
     return this;
   },
   clearFilter: function(options) {
@@ -136,6 +137,17 @@ issueList.FilterView = Backbone.View.extend({
 
     // Remove existing filters from model and URL
     issueList.events.trigger('filter:reset-stage', options);
+  },
+  updateFilterUI: function(e) {
+    var btn;
+    // Reset all 'is active' elements
+    $('div.wc-IssueList-filter .is-active').removeClass('is-active');
+    try{ // if filter is 'all' or the empty string, the CSS query is invalid and
+         // jQuery will throw. We don't care because the UI ends up in the right state.
+      btn = $('[data-filter=' + e + ']');
+      btn.toggleClass('is-active')
+         .siblings().removeClass('is-active');
+    }catch(e){}
   },
   toggleFilter: function(e) {
     var btn;
@@ -147,13 +159,10 @@ issueList.FilterView = Backbone.View.extend({
       btn = $(e.target);
     }
 
-    btn.toggleClass('is-active')
-       .siblings().removeClass('is-active');
-
-    if (btn.hasClass('is-active')) {
+    if ( !btn.hasClass('is-active')) { // we're activating the filter
       this.mainView.params.setParam('stage', btn.data('filter'));
     } else {
-      this.mainView.params.setParam('stage', '');
+      this.mainView.params.setParam('stage', 'all');
     }
   }
 });
