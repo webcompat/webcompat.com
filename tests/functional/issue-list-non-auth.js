@@ -134,7 +134,7 @@ define([
         .type('g')
         .end()
         // look for the issues container on github.com/foo/bar/issues
-        .findByCssSelector('.repo-container .issues-listing').isDisplayed()
+        .findByCssSelector('.issues-listing').isDisplayed()
         .then(function(isDisplayed) {
           assert.equal(isDisplayed, true, 'We\'re at GitHub now.');
         })
