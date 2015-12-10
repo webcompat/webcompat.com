@@ -107,6 +107,7 @@ issueList.QueryParams = Backbone.Model.extend({
     _.each(this.attributes, function(value, key){
       urlParams.push(key + '=' + value);
     });
+    console.log('display URL: ' + urlParams.join('&'));
     return urlParams.join('&');
   },
   toBackendURL: function(loggedIn){
@@ -175,6 +176,9 @@ issueList.QueryParams = Backbone.Model.extend({
     // also drop label= if we don't filter by label
     if(!paramsToSend.label.length) {
       delete paramsToSend.label;
+    } else {
+      // gotcha: issues API needs labels in plural, search API in singular.. :-/
+      paramsToSend.labels = issues.allLabels.toPrefixed(paramsToSend.label);
     }
     return $.param(paramsToSend, true);
   },
@@ -208,7 +212,9 @@ issueList.QueryParams = Backbone.Model.extend({
       }
     }
     if(this.get('label').length) {
-      paramsToSend.q += ' label:' + this.get('label').join(' label:');
+      var theLabels = issues.allLabels.toPrefixed(this.get('label'));
+      // gotcha: issues API needs labels in plural, search API in singular.. :-/
+      paramsToSend.q += ' label:' + theLabels.join(' label:');
     }
     // Following logic is handled in our backend - except when we query Github directly
     if(!viaProxy) {
