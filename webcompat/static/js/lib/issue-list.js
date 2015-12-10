@@ -335,6 +335,9 @@ issueList.IssueView = Backbone.View.extend(
         this._loadingIndicator.removeClass('is-active');
         this.render(this.issues);
         issuesPagination.initPaginationLinks(this.issues);
+        issueList.events.trigger('url:update');
+        issueList.events.trigger('appliedlabels:update');
+        issueList.events.trigger('filter:stage-update', this.mainView.params.get('stage'));
       }, this)).error(_.bind(function(e) {
         var message;
         var timeout;
