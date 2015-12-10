@@ -142,12 +142,14 @@ issueList.FilterView = Backbone.View.extend({
     var btn;
     // Reset all 'is active' elements
     $('div.wc-IssueList-filter .is-active').removeClass('is-active');
-    try{ // if filter is 'all' or the empty string, the CSS query is invalid and
+    try { // if filter is 'all' or the empty string, the CSS query is invalid and
          // jQuery will throw. We don't care because the UI ends up in the right state.
       btn = $('[data-filter=' + e + ']');
       btn.toggleClass('is-active')
          .siblings().removeClass('is-active');
-    }catch(e){}
+    } catch(e) {
+      void(e); // silly eslint disallows empty blocks..
+    }
   },
   toggleFilter: function(e) {
     var btn;
@@ -446,7 +448,7 @@ issueList.MainView = Backbone.View.extend({
   }
 });
 
-issueList.events.once('labels:onload', function starters(){
+issueList.events.once('labels:onload', function starters() {
   //Not using a router, so kick off things manually
   new issueList.MainView();
 });
