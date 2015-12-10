@@ -87,10 +87,7 @@ issueList.QueryParams = Backbone.Model.extend({
               this.attributes.sort + '&direction=' + this.attributes.direction);
         } else if (change === 'q') {
           issueList.events.trigger('search:update', newvalue);
-        }/* else if (change === 'labels') {
-        } else if (!(change in {page:1,stage:1})) {
-          issueList.events.trigger('search:update', change + ':' + newvalue);
-        }*/
+        }
       }
       if (significant) {
         issueList.events.trigger('issues:update');
