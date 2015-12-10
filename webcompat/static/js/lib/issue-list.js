@@ -398,9 +398,9 @@ issueList.IssueView = Backbone.View.extend(
         this._urlParams = serializedModelParams;
         if (history.pushState && history.replaceState) {
           if (location.href === '/issues') {
-            history.replaceState({}, '', '?' + serializedModelParams);
+            history.replaceState({params:serializedModelParams}, '', '?' + serializedModelParams);
           } else {
-            history.pushState({}, '', '?' + serializedModelParams);
+            history.pushState({params:serializedModelParams}, '', '?' + serializedModelParams);
           }
         }
       }
