@@ -1,5 +1,6 @@
 env/
 node_modules/
+git_modules/
 .DS_Store
 config.py
 fabfile.py
