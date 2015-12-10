@@ -271,6 +271,12 @@ def contributors():
     return render_template('contributors.html')
 
 
+@app.route('/tools/cssfixme')
+def cssfixme():
+    '''Route for CSS Fix me tool'''
+    return render_template('cssfixme.html')
+
+
 @app.errorhandler(GitHubError)
 def jumpship(e):
     print('jumpship! ', e)
