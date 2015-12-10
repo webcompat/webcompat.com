@@ -124,7 +124,7 @@ def get_issue_category(issue_category):
         params['labels'] = ','.join(params.getlist('labels'))
         return api_request('get', issues_path, params=params)
     elif issue_category == 'closed':
-        params.add('state', 'closed')
+        params['state'] = 'closed'
         return api_request('get', issues_path, params=params)
     # Note that 'new' here is primarily used on the homepage.
     # For paginated results on the /issues page, see /issues/search/new.
