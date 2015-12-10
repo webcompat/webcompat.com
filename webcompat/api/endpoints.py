@@ -115,14 +115,16 @@ def get_issue_category(issue_category):
                      'needsdiagnosis', 'sitewait']
     issues_path = 'repos/{0}'.format(ISSUES_PATH)
     params = request.args.copy()
-
     if issue_category in category_list:
         # add "status-" before the filter param to match the naming scheme
         # of the repo labels.
-        params['labels'] = 'status-' + issue_category
+        params.add('labels', 'status-'+issue_category)
+        # Turns out the GitHub API considers &labels=x&labels=y an OR query
+        # &labels=x,y is an AND query. So we need to join the labels with a comma
+        params['labels'] = ','.join(params.getlist('labels'))
         return api_request('get', issues_path, params=params)
     elif issue_category == 'closed':
-        params['state'] = 'closed'
+        params.add('state', 'closed')
         return api_request('get', issues_path, params=params)
     # Note that 'new' here is primarily used on the homepage.
     # For paginated results on the /issues page, see /issues/search/new.
