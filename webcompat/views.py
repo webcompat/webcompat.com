@@ -149,8 +149,8 @@ def show_issues():
     '''Route to display global issues view.'''
     if g.user:
         get_user_info()
-    categories = app.config['CATEGORIES'] 
-    return render_template('issue-list.html',categories=categories)
+    categories = app.config['CATEGORIES']
+    return render_template('issue-list.html', categories=categories)
 
 
 @app.route('/issues/new', methods=['POST'])
@@ -269,6 +269,12 @@ def contributors():
     if g.user:
         get_user_info()
     return render_template('contributors.html')
+
+
+@app.route('/tools/cssfixme')
+def cssfixme():
+    '''Route for CSS Fix me tool'''
+    return render_template('cssfixme.html')
 
 
 @app.errorhandler(GitHubError)
