@@ -118,5 +118,11 @@ class TestURLs(unittest.TestCase):
         rv = self.app.post('/webhooks/labeler', headers=headers)
         self.assertEqual(rv.data, 'pong')
 
+    def test_tools_cssfixme(self):
+        '''Test that the /tools/cssfixme route gets 200.'''
+        rv = self.app.get('/tools/cssfixme')
+        self.assertEqual(rv.status_code, 200)
+
+
 if __name__ == '__main__':
     unittest.main()
