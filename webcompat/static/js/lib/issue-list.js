@@ -305,6 +305,7 @@ issueList.IssueView = Backbone.View.extend(
     // set up event listeners.
       issueList.events.on('issues:update', _.bind(this.updateIssues, this));
       issueList.events.on('filter:reset-stage', _.bind(this.resetStageFilter, this));
+      issueList.events.on('url:update', _.bind(this.updateURLParams, this));
       wcEvents.on('dropdown:change', _.bind(this.updateModelParams, this));
       window.addEventListener('popstate', _.bind(this.loadIssues, this));
 
@@ -392,7 +393,6 @@ issueList.IssueView = Backbone.View.extend(
     // link sharing, etc.
       var urlParams = this._urlParams;
       var serializedModelParams = this.mainView.params.toDisplayURLQuery();
-
     // only do this if there's something to change
       if (urlParams !== serializedModelParams) {
         this._urlParams = serializedModelParams;
@@ -404,7 +404,6 @@ issueList.IssueView = Backbone.View.extend(
           }
         }
       }
-      issueList.events.on('url:update', _.bind(this.updateURLParams, this));
     }
   }));
 
