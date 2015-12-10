@@ -206,6 +206,9 @@ We use [Grunt](http://gruntjs.com/) as a task runner to perform certain things (
 git clone https://github.com/<username>/webcompat.com.git #replace your github username
 # change to directory
 cd webcompat.com
+# check out submodules
+git submodule init
+git submodule update
 # initializing project
 [sudo] make install
 ```
@@ -248,6 +251,9 @@ Windows users should simply download the most recent Python 2.7 installer and ru
 git clone git@github.com:username/webcompat.com.git
 # change to directory
 cd webcompat.com
+# check out submodules
+git submodule init
+git submodule update
 # set up virtual environment
 [sudo] virtualenv env
 source env/bin/activate
