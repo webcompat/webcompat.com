@@ -149,8 +149,8 @@ def show_issues():
     '''Route to display global issues view.'''
     if g.user:
         get_user_info()
-    categories = app.config['CATEGORIES'] 
-    return render_template('issue-list.html',categories=categories)
+    categories = app.config['CATEGORIES']
+    return render_template('issue-list.html', categories=categories)
 
 
 @app.route('/issues/new', methods=['POST'])
