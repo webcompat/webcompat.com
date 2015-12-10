@@ -7,6 +7,8 @@
 import json
 import urllib
 
+import requests
+
 from flask.ext.github import GitHubError
 from flask import flash
 from flask import g
@@ -275,7 +277,25 @@ def contributors():
 @app.route('/tools/cssfixme')
 def cssfixme():
     '''Route for CSS Fix me tool'''
-    return render_template('cssfixme.html')
+
+    url = request.args.get('url')
+    csscode = ''
+    req = None
+    if url:
+        try:
+            req = requests.get(url)
+        except requests.exceptions.MissingSchema:
+            # Somebody gave us an URL not prefixed by http(s)://
+            try:
+                req = requests.get('http://{0}'.format(url))
+            except Exception:
+                pass  # Still broken.. anyway, we can't load this URL, the TEXTAREA loads empty.
+        except Exception:
+            pass  # If we can't load this URL, the TEXTAREA loads empty. No big deal.
+        if req:
+            # No escaping of HTML is required here, render_template takes care of it
+            csscode = req.text
+    return render_template('cssfixme.html', csscode=csscode)
 
 
 @app.errorhandler(GitHubError)
