@@ -75,6 +75,7 @@ issues.LabelList = Backbone.Model.extend({
     }
     this.set('labels', list);
     this.set('namespaceMap', namespaceMap);
+    issueList.events.trigger('labels:onload');
   },
   // toPrefixed takes a local label name and maps it
   // to the prefixed repository form. Also handles an array

@@ -446,5 +446,7 @@ issueList.MainView = Backbone.View.extend({
   }
 });
 
-//Not using a router, so kick off things manually
-new issueList.MainView();
+issueList.events.once('labels:onload', function starters(){
+  //Not using a router, so kick off things manually
+  new issueList.MainView();
+});
