@@ -147,8 +147,8 @@ issueList.FilterView = Backbone.View.extend({
       btn = $('[data-filter=' + e + ']');
       btn.toggleClass('is-active')
          .siblings().removeClass('is-active');
-    } catch(e) {
-      void(e); // silly eslint disallows empty blocks..
+    } catch (e) {
+      void (e); // silly eslint disallows empty blocks..
     }
   },
   toggleFilter: function(e) {
