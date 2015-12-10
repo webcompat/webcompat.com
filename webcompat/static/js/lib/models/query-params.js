@@ -103,9 +103,10 @@ issueList.QueryParams = Backbone.Model.extend({
   toDisplayURLQuery: function(){
     var urlParams = [];
     _.each(this.attributes, function(value, key){
-      urlParams.push(key + '=' + value);
+      if(value) {
+        urlParams.push(key + '=' + value);
+      }
     });
-    console.log('display URL: ' + urlParams.join('&'));
     return urlParams.join('&');
   },
   toBackendURL: function(loggedIn){
@@ -254,6 +255,13 @@ issueList.QueryParams = Backbone.Model.extend({
     }
     if(this.has(name)) {
       var currentValue = this.get(name);
+      // 'stage=closed' is actually an alias for state=closed
+      if(name === 'stage' && (value === 'closed' || currentValue === 'closed')){
+        // Also, the default value for state is 'open'
+        this.setParam('state', value === 'all' ? 'open' : value);
+        // We don't return here - stage=closed or =all must be set too to match the
+        // state we want the filter UI to be in.. Yeah, hack.
+      }
       if(currentValue instanceof Array) {
         // Likely a 'labels' array..
         // We don't want to consider status- labels as labels
