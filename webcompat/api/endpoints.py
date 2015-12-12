@@ -120,7 +120,10 @@ def get_issue_category(issue_category):
     if issue_category in category_list:
         # add "status-" before the filter param to match the naming scheme
         # of the repo labels.
-        params['labels'] = 'status-' + issue_category
+        params.add('labels', 'status-' + issue_category)
+        # Turns out the GitHub API considers &labels=x&labels=y an OR query
+        # &labels=x,y is an AND query. Join the labels with a comma
+        params['labels'] = ','.join(params.getlist('labels'))
         return api_request('get', issues_path, params=params)
     elif issue_category == 'closed':
         params['state'] = 'closed'
@@ -188,14 +191,18 @@ def get_category_from_search(issue_category):
     category_list = ['contactready', 'needscontact',
                      'needsdiagnosis', 'sitewait']
     params = request.args.copy()
+    query_string = ''
 
     if issue_category in category_list:
         # add "status-" before the issue_category to match
         # the naming scheme of the repo labels.
-        query_string = 'label:{0}'.format('status-' + issue_category)
+        query_string += 'label:{0}'.format('status-' + issue_category)
+        return get_search_results(query_string, params)
+    elif issue_category == 'closed':
+        query_string += ' state:closed '
         return get_search_results(query_string, params)
     elif issue_category == 'new':
-        query_string = ' '.join(
+        query_string += ' '.join(
             ['-label:status-%s' % cat for cat in category_list])
         query_string += ' state:open '
         return get_search_results(query_string, params)
