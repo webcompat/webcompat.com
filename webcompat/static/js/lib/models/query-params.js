@@ -250,7 +250,9 @@ issueList.QueryParams = Backbone.Model.extend({
           // Otherwise, we just leave it as-is
           if(this.has(parts[0])) {
             this.setParam(parts[0], parts[1]);
-            value = value.replace(thisValue, '');
+            // TODO: if AppliedLabels view is brought back, we want this line
+            // enabled again:
+            // value = value.replace(thisValue, '');
           }
         }
       }
