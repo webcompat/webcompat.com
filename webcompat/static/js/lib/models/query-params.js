@@ -139,7 +139,12 @@ issueList.QueryParams = Backbone.Model.extend({
     var issuesAPICategories = ['closed'].concat(this.bugstatuses);
 
     // Rules for when to use GitHub directly and when Webcompat
-    if (this.get('q') || searchAPICategories.indexOf(this.get('stage')) > -1) { // We have a query that needs search API
+    var q = this.get('q');
+    // TODO: can be simplified if we bring back AppliedLabels view, this next line should go
+    // we know that the issue API can handle queries with labels in, we don't want a labels:foo
+    // in the search field to force the search API.
+    q = q.replace(/labels:[^ ]+/g, '');
+    if (q || searchAPICategories.indexOf(this.get('stage')) > -1) { // We have a query that needs search API
       if ('withCredentials' in XMLHttpRequest.prototype && !loggedIn) { // CORS support, not logged in - talk directly to GH
         url = this.configUrls._githubSearch + '?' + this.toSearchAPIParams();
       } else {
