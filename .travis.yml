@@ -34,10 +34,13 @@ install:
   - travis_retry npm install
   - travis_retry pip install -r requirements.txt --download-cache $HOME/.pip-cache
   - cp config.py.example config.py
+  # lint python
+  - pep8 --ignore=E402 webcompat/ tests/ config.py.example
   - python run.py -t &
 
 before_script:
   - "sleep 2"
+  # lint JS in default eslint task
   - grunt
 
 # now run the tests!
