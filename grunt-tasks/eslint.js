@@ -4,9 +4,10 @@
 
 module.exports = function(grunt) {
   grunt.config('eslint', {
-      target: [
-        '<%= jsPath %>/lib/*.js',
-        'tests/functional/*.js'
-      ]
-   });
+    target: [
+      '<%= jsPath %>/lib/*.js',
+      'grunt-tasks/*.js',
+      'tests/functional/*.js'
+    ]
+  });
 };
