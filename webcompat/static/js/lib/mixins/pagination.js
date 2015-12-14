@@ -57,6 +57,7 @@ updateModelParams()
 Check out issueList.IssueView for an example.
 */
 
+/* exported PaginationMixin */
 function PaginationMixin() {
   this.initMixin = function(hostView, hostModel, parentContainerEl) {
     this.view = hostView;
@@ -159,4 +160,4 @@ function PaginationMixin() {
   };
 
   return this;
-};
+}

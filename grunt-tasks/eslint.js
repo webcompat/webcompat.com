@@ -6,6 +6,7 @@ module.exports = function(grunt) {
   grunt.config('eslint', {
     target: [
       '<%= jsPath %>/lib/*.js',
+      '<%= jsPath %>/lib/mixins/*.js',
       'grunt-tasks/*.js',
       'tests/functional/*.js'
     ]
