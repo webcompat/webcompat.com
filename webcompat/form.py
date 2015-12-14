@@ -27,12 +27,12 @@ PROXY_REPORT = 'github-proxy-report'
 SCHEMES = ('http://', 'https://')
 
 problem_choices = [
-    (u'detection_bug',   u'Desktop site instead of mobile site'),
+    (u'detection_bug', u'Desktop site instead of mobile site'),
     (u'mobile_site_bug', u'Mobile site is not usable'),
-    (u'video_bug',       u'Video doesn\'t play'),
-    (u'layout_bug',      u'Layout is messed up'),
-    (u'text_bug',        u'Text is not visible'),
-    (u'unknown_bug',     u'Something else - I\'ll add details below')
+    (u'video_bug', u'Video doesn\'t play'),
+    (u'layout_bug', u'Layout is messed up'),
+    (u'text_bug', u'Text is not visible'),
+    (u'unknown_bug', u'Something else - I\'ll add details below')
 ]
 
 url_message = u'A URL is required.'

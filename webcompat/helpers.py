@@ -4,7 +4,7 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-import datetime
+from datetime import datetime
 import hashlib
 import json
 import math
@@ -29,7 +29,7 @@ AUTH_HEADERS = {'Authorization': 'token {0}'.format(app.config['OAUTH_TOKEN']),
                 'User-Agent': 'webcompat/webcompat-bot'}
 HOST_WHITELIST = ('webcompat.com', 'staging.webcompat.com',
                   '127.0.0.1', 'localhost')
-FIXTURES_PATH = os.getcwd() +'/tests/fixtures'
+FIXTURES_PATH = os.getcwd() + '/tests/fixtures'
 STATIC_PATH = os.getcwd() + '/webcompat/static'
 JSON_MIME = 'application/json'
 REPO_URI = app.config['ISSUES_REPO_URI']
@@ -40,7 +40,7 @@ cache_dict = {}
 @app.template_filter('format_delta')
 def format_delta_filter(timestamp):
     '''Jinja2 fiter to format a unix timestamp to a time delta string.'''
-    delta = datetime.datetime.now() - datetime.datetime.fromtimestamp(timestamp)
+    delta = datetime.now() - datetime.fromtimestamp(timestamp)
     return format_timedelta(delta, locale='en_US')
 
 
@@ -82,7 +82,7 @@ def format_delta_seconds(timestamp):
     The timedelta is a negative float, so we round up the absolute value and
     cast it to an integer to be more human friendly.
     '''
-    delta = datetime.datetime.now() - datetime.datetime.fromtimestamp(timestamp)
+    delta = datetime.now() - datetime.fromtimestamp(timestamp)
     seconds = delta.total_seconds()
     return abs(int(math.ceil(seconds)))
 
@@ -156,7 +156,8 @@ def get_response_headers(response):
                'content-type': JSON_MIME}
 
     if response.headers.get('link'):
-        headers['link'] = rewrite_and_sanitize_link(response.headers.get('link'))
+        headers['link'] = rewrite_and_sanitize_link(
+            response.headers.get('link'))
     return headers
 
 
@@ -235,8 +236,8 @@ def normalize_api_params(params):
 def rewrite_links(link_header):
     '''Rewrites Link header Github API endpoints to our own.
 
-    <https://api.github.com/repositories/17839063/issues?per_page=50&page=2>; rel="next",
-    <https://api.github.com/repositories/17839063/issues?per_page=50&page=4>; rel="last"
+    <https://api.github.com/repositories/17839063/iss...&page=2>; rel="next",
+    <https://api.github.com/repositories/17839063/iss...&page=4>; rel="last"
 
     is transformed into
 
@@ -250,7 +251,8 @@ def rewrite_links(link_header):
         if api_path.strip().startswith('https://api.github.com/repositories'):
             data['link'] = endpoint_path.replace('issues?', '/api/issues?')
         if api_path.strip().startswith('https://api.github.com/search'):
-            data['link'] = endpoint_path.replace('issues?', '/api/issues/search?')
+            data['link'] = endpoint_path.replace('issues?',
+                                                 '/api/issues/search?')
     return format_link_header(header_link_data)
 
 

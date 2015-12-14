@@ -107,7 +107,7 @@ class TestURLs(unittest.TestCase):
             {u'labels': [{u'name': u'status-sitewait'}],
              u'title': u"fake bug 5",
              u'id': 5}]
-        result = '[{"labels": [{"name": "bug"}, {"name": "help wanted"}], "id": 0, "title": "fake bug 0"}, {"labels": [], "id": 1, "title": "fake bug 1"}]'
+        result = '[{"labels": [{"name": "bug"}, {"name": "help wanted"}], "id": 0, "title": "fake bug 0"}, {"labels": [], "id": 1, "title": "fake bug 1"}]'  # nopep8
         self.assertEqual(filter_new(issues), result)
 
     def test_labeler_webhook(self):
