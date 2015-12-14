@@ -164,7 +164,8 @@ issueList.IssueCollection = Backbone.Collection.extend({
       if (rels) {
         var keys = rels[1].match(keysRegExp);
         var source = sourceRegExp.exec(entry)[1];
-        var k, kLength = keys.length;
+        var k;
+        var kLength = keys.length;
         for (k = 0; k < kLength; k += 1) {
           result[keys[k]] = source;
         }

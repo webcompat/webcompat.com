@@ -7,6 +7,7 @@ module.exports = function(grunt) {
     target: [
       '<%= jsPath %>/lib/*.js',
       '<%= jsPath %>/lib/mixins/*.js',
+      '<%= jsPath %>/lib/models/*.js',
       'grunt-tasks/*.js',
       'tests/functional/*.js'
     ]
