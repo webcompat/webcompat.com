@@ -13,7 +13,13 @@
       <label>
         <input type="checkbox" name="compact">Compact output (whitespace only after closing brace)</label>
       <pre id="fixedcss"></pre>
-      <script src="/js/cssfixme.min.js"></script>
+      {%- block extrascripts -%}
+      {%- if config.PRODUCTION or config.DEVELOPMENT -%}
+      <script src="{{ url_for('static', filename='js/cssfixme.min.js')|bust_cache }}"></script>
+      {%- else -%}
+      <script src="{{ url_for('static', filename='js/lib/css-fixme.js') }}"></script>
+      {%- endif -%}
+      {%- endblock %}
     </main>
   </div>
 {% endblock %}
