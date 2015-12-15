@@ -14,12 +14,14 @@
     markdownitEmoji: true,
     markdownitSanitizer: true,
     md: true,
+    module: true,
     moment: true,
     Mousetrap: true,
     PaginationMixin: true,
     Prism: true,
     qr: true,
     repoPath: true,
+    require: true,
     wcEvents: true
   },
   "rules": {

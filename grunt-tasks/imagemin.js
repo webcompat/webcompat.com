@@ -24,7 +24,7 @@ module.exports = function(grunt) {
         cwd:    '<%= imgPath %>/',
         src:    ['*.jpg'],
         dest:   '<%= imgPath %>/'
-        }]
-      }
+      }]
+    }
   });
 };

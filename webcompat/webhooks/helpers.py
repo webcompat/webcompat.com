@@ -13,6 +13,7 @@ from webcompat.db import issue_db
 from webcompat.db import WCIssue
 from webcompat.helpers import extract_url
 
+
 def api_post(endpoint, payload, issue):
     '''Helper method to post junk to GitHub.'''
     headers = {

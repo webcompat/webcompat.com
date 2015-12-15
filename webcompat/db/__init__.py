@@ -18,20 +18,20 @@ from uuid import uuid4
 
 from webcompat import app
 
-session_engine = create_engine('sqlite:///' + os.path.join(app.config['BASE_DIR'],
-                                                   'session.db'))
-
+session_engine = create_engine('sqlite:///' + os.path.join(
+    app.config['BASE_DIR'], 'session.db'))
 session_db = scoped_session(sessionmaker(autocommit=False,
                                          autoflush=False,
                                          bind=session_engine))
-issue_engine = create_engine('sqlite:///' + os.path.join(app.config['BASE_DIR'],
-                                                   'issues.db'))
 
+issue_engine = create_engine('sqlite:///' + os.path.join(
+    app.config['BASE_DIR'], 'issues.db'))
 issue_db = scoped_session(sessionmaker(autocommit=False,
-                                         autoflush=False,
-                                         bind=issue_engine))
+                                       autoflush=False,
+                                       bind=issue_engine))
 IssueBase = declarative_base()
 IssueBase.query = issue_db.query_property()
+
 
 class WCIssue(IssueBase):
     __tablename__ = 'webcompat_issues'

@@ -73,12 +73,14 @@ class TestAPIURLs(unittest.TestCase):
 
     def test_api_set_labels_without_auth(self):
         '''API setting labels without auth returns JSON 403 error code.'''
-        rv = self.app.post('/api/issues/1/labels', environ_base=headers, data='[]')
+        rv = self.app.post('/api/issues/1/labels',
+                           environ_base=headers, data='[]')
         self.assertEqual(rv.status_code, 403)
 
     def test_api_user_activity_without_auth(self):
         '''API access to user activity without auth returns JSON 401.'''
-        rv = self.app.get('/api/issues/miketaylr/creator', environ_base=headers)
+        rv = self.app.get('/api/issues/miketaylr/creator',
+                          environ_base=headers)
         json_body = json.loads(rv.data)
         self.assertEqual(rv.status_code, 401)
         self.assertEqual(rv.content_type, 'application/json')

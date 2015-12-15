@@ -23,7 +23,7 @@ from webcompat import app
 
 
 class TestUploads(unittest.TestCase):
-    # modified from http://prschmid.blogspot.com/2013/05/unit-testing-flask-file-uploads-without.html
+    # modified from http://prschmid.blogspot.com/2013/05/unit-testing-flask-file-uploads-without.html  # nopep8
     def setUp(self):
         app.config['TESTING'] = True
         self.app = app

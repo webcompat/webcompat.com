@@ -2,7 +2,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
- var issues = issues || {};
+var issues = issues || {};
 
 /**
 * A LabelList is a list of labels.
@@ -31,17 +31,17 @@ issues.LabelList = Backbone.Model.extend({
     // The templating engine needs objects that have JS properties, it won't call
     // get('labels'). Setting a property here makes sure we can pass the model
     // directly to a template() method
-    this.on('change:labels', function(){
+    this.on('change:labels', function() {
       this.labels = this.get('labels');
     });
     // if we're initialized with {labels:array-of-objects}, process the data
     var inputLabelData = this.get('labels');
     this.set('labels', []);
-    if(inputLabelData) {
+    if (inputLabelData) {
       this.parse(inputLabelData);
     } else {
       // No input data, let's fetch it from a URL
-      if(!this.get('url')) {
+      if (!this.get('url')) {
         // default to "all labels" URL
         this.set('url', this.get('defaultLabelURL'));
       }
@@ -49,23 +49,23 @@ issues.LabelList = Backbone.Model.extend({
       this.fetch(headersBag); // This will trigger parse() on response
     }
   },
-  parse: function(labelsArray){
+  parse: function(labelsArray) {
     var list = [];
     var namespaceMap = {};
-    for(var i = 0, matches, theLabel; i < labelsArray.length; i++){
+    for (var i = 0, matches, theLabel; i < labelsArray.length; i++) {
       // We assume we either have an object with .name or an array of strings
       theLabel = labelsArray[i].name || labelsArray[i];
       matches = theLabel.match(this.get('namespaceRegex'));
-      if(matches) {
+      if (matches) {
         namespaceMap[matches[2]] = matches[1];
         list[i] = {
           'name': matches[2],
           'url': labelsArray[i].url,
           'color': labelsArray[i].color,
           'remoteName': matches[0]
-         };
-      }else {
-        if(typeof theLabel === 'object') {
+        };
+      } else {
+        if (typeof theLabel === 'object') {
           list[i] = labelsArray[i];
           list[i].remoteName = list[i].name;
         } else {
@@ -79,15 +79,15 @@ issues.LabelList = Backbone.Model.extend({
   // toPrefixed takes a local label name and maps it
   // to the prefixed repository form. Also handles an array
   // of label names (Note: not arrays of objects)
-  toPrefixed: function (input) {
+  toPrefixed: function(input) {
     if (typeof input === 'string') {
-      if(issues.allLabels.get('namespaceMap')[input]) {
+      if (issues.allLabels.get('namespaceMap')[input]) {
         return issues.allLabels.get('namespaceMap')[input] + '-' + input;
       }
       return input;
     } else {
       // This is not a string, we assume it's an array
-      return input.map(function(label){
+      return input.map(function(label) {
         return issues.allLabels.toPrefixed(label);
       });
     }
@@ -96,13 +96,13 @@ issues.LabelList = Backbone.Model.extend({
     return this.get('url');
   },
   // Returns a simple array of unprefixed labels - strings only
-  toArray: function(){
+  toArray: function() {
     return _.pluck(this.get('labels'), 'name');
   },
   // To save the model to the server, we need to make
   // sure we apply the prefixes the server expects.
   // The JSON serialization will take care of it.
-  toJSON: function(){
+  toJSON: function() {
     var labelsArray = _.pluck(this.get('labels'), 'name');
     return issues.allLabels.toPrefixed(labelsArray);
   }

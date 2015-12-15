@@ -64,8 +64,8 @@ if not PRODUCTION:
 LOG_FILE = '/tmp/webcompat.log'
 LOG_FMT = '%(asctime)s %(levelname)s: %(message)s [in %(pathname)s:%(lineno)d]'
 
-# Get the client id and client secret from GitHub if you're part of the webcompat
-# organization. Otherwise, create your own test and production applications,
+# Get the client id and client secret from GitHub if you're part of the
+# webcompat org. Otherwise, create your own test and production applications,
 # and take note of the client id and client secret GitHub gives you.
 #
 # [1]<https://github.com/organizations/webcompat/settings/applications/>
@@ -84,7 +84,7 @@ elif DEVELOPMENT:
 else:
     # We're running on localhost, use the test application
     GITHUB_CLIENT_ID = os.environ.get('FAKE_ID') or ""
-    GITHUB_CLIENT_SECRET = os.environ.get('FAKE_SECRET') or  ""
+    GITHUB_CLIENT_SECRET = os.environ.get('FAKE_SECRET') or ""
     GITHUB_CALLBACK_URL = "http://localhost:5000/callback"
 
 # GiHub Issues repo URI
@@ -93,7 +93,7 @@ if PRODUCTION:
 else:
     # Development and Local instances use the same test repo
     # Expects a string like "<user>/<repo>/issues", e.g.,
-    # ISSUES_REPO_URI = os.environ.get('ISSUES_REPO_URI') or "miketaylr/test-repo/issues"
+    # ISSUES_REPO_URI = os.environ.get('ISSUES_REPO_URI') or "foo/bar/issues"
     ISSUES_REPO_URI = os.environ.get('ISSUES_REPO_URI') or ""
 
 # This is the oauth token we use to report issues on behalf of people

@@ -22,7 +22,7 @@ def report_issue(form, proxy=False):
     path = 'repos/{0}'.format(REPO_URI)
     if proxy:
         return proxy_request('post', path,
-                              data=json.dumps(build_formdata(form)))
+                             data=json.dumps(build_formdata(form)))
     else:
         return github.post(path, build_formdata(form))
 
