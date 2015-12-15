@@ -362,6 +362,7 @@ grunt
  make watch
  ```
 
+By default, a build will *not* optimize images (which is done before deploys). If you'd like to do that, you can run `grunt imagemin`.
 
 ## Running Tests
 
