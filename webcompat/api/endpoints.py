@@ -131,7 +131,13 @@ def get_issue_category(issue_category):
         issues = api_request('get', issues_path, params=params)
         # api_request returns a tuple of format:
         #       (content, status_code, response_headers)
-        # So we make a dict here for improved readability
+        #
+        # If we get a 304, send it back to the browser
+        # (and avoid sending an empty string to filter_new)
+        if issues[1] == 304:
+            return (issues[0], issues[1], issues[2])
+
+        # Make a dict here for improved readability
         new_issues = {
             'content': filter_new(json.loads(issues[0])),
             'status_code': issues[1],
