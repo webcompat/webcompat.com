@@ -1,0 +1,3 @@
+[submodule "git_modules/css-fixme"]
+	path = git_modules/css-fixme
+	url = https://github.com/webcompat/css-fixme/

@@ -27,6 +27,10 @@ module.exports = function(grunt) {
     diagnose: {
       src: '<%= concat.diagnose.dest %>',
       dest: '<%= jsPath %>/diagnose.min.js'
+    },
+    cssFixmeLibs: {
+      src: '<%= concat.cssFixmeLibs.dest %>',
+      dest: '<%= jsPath %>/cssfixme.min.js'
     }
   });
 };
