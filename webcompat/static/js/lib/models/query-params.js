@@ -34,39 +34,37 @@ var issueList = issueList || {};
 * GitHub directly.
 */
 issueList.QueryParams = Backbone.Model.extend({
-  defaults:{
-    stage:'all',
+  defaults: {
+    stage: 'all',
     state: 'open',
-    page:1,
-    per_page:50,
-    sort:'created',
+    page: 1,
+    per_page: 50,
+    sort: 'created',
     direction: 'desc',
     q: '',
     creator: '',
     mentioned: '',
-    labels: [] // Using 'labels' plural form would be nice, but needs to be
-              // singular for the backend - or we'd have to translate name on send
+    labels: []
   },
   configUrls: {
     _githubSearch: 'https://api.github.com/search/issues'
   },
   bugstatuses: ['contactready', 'needsdiagnosis', 'needscontact', 'sitewait'],
   initialize: function(){
-    var self = this;
     this.on('change', function(e){
       // When the query/parameters change, we want to
       // * update the drop-down menu if required
       // * update the URL and push a history entry
       // * update the relevant views (list of issues, search box)
       // To do so, this method will fire various events.
-      // However, first we want to check if the change is significant..
+      // However, first we want to check if the change is significant.
       var significant = false;
       var changelist = Object.keys(e.changed);
       for(var i=0, change; change = changelist[i]; i++) {
         // I think we only get notified of one property at a time so looping is
-        // maybe not necessary here. However..
+        // maybe not necessary here.
         var newvalue = e.changed[change];
-        var oldvalue = e._previousAttributes[change];
+        var oldvalue = e.previousAttributes()[change];
         if(newvalue.toString().trim() === oldvalue.toString().trim()) {
           continue; // just whitespace change, let's ignore this
         }
@@ -150,7 +148,7 @@ issueList.QueryParams = Backbone.Model.extend({
       } else {
         url = '/api/issues/search' + '?' + this.toSearchAPIParams();
       }
-    }else { // Seems like this query is so simple we only need the issues API..
+    }else { // Seems like this query is so simple we only need the issues API.
       if (_.contains(issuesAPICategories, this.get('stage'))) {
         url = '/api/issues/category/' + this.get('stage') + '?' + this.toIssueAPIParams();
       } else {
@@ -195,6 +193,7 @@ issueList.QueryParams = Backbone.Model.extend({
     * We can also negate by prefixing these with -.
     */
     var paramsToSend = _.pick(this.attributes, 'q', 'sort');
+    var key;
     // Some names are different for the search API..
     if (this.get('direction')) {
       paramsToSend.order = this.get('direction');
@@ -334,7 +333,11 @@ issueList.QueryParams = Backbone.Model.extend({
     }
   },
   fromQueryString: function(str, silent){
-    var self = this, namevalues, pair, name, value;
+    var self = this;
+    var namevalues;
+    var pair;
+    var name;
+    var value;
     if(str.substr(0,1) === '?') {
       str = str.substr(1);
     }
