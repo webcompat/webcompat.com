@@ -128,13 +128,10 @@ def get_issue_category(issue_category):
         # api_request returns a tuple of format:
         #       (content, status_code, response_headers)
         # So we make a dict here for improved readability
-        new_issues = {
-            'content': filter_new(json.loads(issues[0])),
-            'status_code': issues[1],
-            'response_headers': issues[2]
-        }
-        return (new_issues['content'], new_issues['status_code'],
-                new_issues['response_headers'])
+        content, status_code, response_headers = issues
+        if status_code != 304:
+            content = filter_new(json.loads(content))
+        return (content, status_code, response_headers)
     else:
         # The path doesn’t exist. 404 Not Found.
         abort(404)
