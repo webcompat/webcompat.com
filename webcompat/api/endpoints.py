@@ -13,17 +13,14 @@ import json
 
 from flask import abort
 from flask import Blueprint
-from flask.ext.github import GitHubError
 from flask import g
 from flask import request
 from flask import session
 
 from webcompat import app
-from webcompat import github
 from webcompat import limiter
 from webcompat.helpers import api_request
 from webcompat.helpers import get_comment_data
-from webcompat.helpers import get_request_headers
 from webcompat.helpers import get_response_headers
 from webcompat.helpers import mockable_response
 from webcompat.helpers import normalize_api_params
@@ -43,7 +40,6 @@ def proxy_issue(number):
 
     either as an authed user, or as one of our proxy bots.
     '''
-    request_headers = get_request_headers(g.request_headers)
     path = 'repos/{0}/{1}'.format(ISSUES_PATH, number)
     return api_request('get', path)
 
