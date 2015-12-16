@@ -222,7 +222,8 @@ def show_user_page(username):
 
 @app.route('/rate_limit')
 def show_rate_limit():
-    rl = json.loads(get_rate_limit())
+    body, status_code, response_headers = get_rate_limit()
+    rl = json.loads(body)
     if g.user:
         rl.update({"user": session.get('username')})
     else:

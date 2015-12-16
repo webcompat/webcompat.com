@@ -123,6 +123,12 @@ class TestURLs(unittest.TestCase):
         rv = self.app.get('/tools/cssfixme')
         self.assertEqual(rv.status_code, 200)
 
+    def test_rate_limit(self):
+        '''Test that we are receiving the appropriate text file.'''
+        rv = self.app.get('/rate_limit')
+        response_start = 'Current user:'
+        self.assertEqual(rv.status_code, 200)
+        self.assertTrue = rv.data.startswith(response_start)
 
 if __name__ == '__main__':
     unittest.main()
