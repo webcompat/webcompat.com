@@ -13,13 +13,11 @@ import json
 
 from flask import abort
 from flask import Blueprint
-from flask.ext.github import GitHubError
 from flask import g
 from flask import request
 from flask import session
 
 from webcompat import app
-from webcompat import github
 from webcompat import limiter
 from webcompat.helpers import api_request
 from webcompat.helpers import get_comment_data
