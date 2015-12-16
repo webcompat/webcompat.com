@@ -17,7 +17,7 @@
       {%- if config.PRODUCTION or config.DEVELOPMENT -%}
       <script src="{{ url_for('static', filename='js/cssfixme.min.js')|bust_cache }}"></script>
       {%- else -%}
-      <script src="{{ url_for('static', filename='js/lib/css-fixme.js') }}"></script>
+      <script src="{{ url_for('static', filename='js/cssfixme.js') }}"></script>
       {%- endif -%}
       {%- endblock %}
     </main>
