@@ -41,7 +41,6 @@ def proxy_issue(number):
 
     either as an authed user, or as one of our proxy bots.
     '''
-    request_headers = get_request_headers(g.request_headers)
     path = 'repos/{0}/{1}'.format(ISSUES_PATH, number)
     return api_request('get', path)
 
