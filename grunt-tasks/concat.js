@@ -73,7 +73,7 @@ module.exports = function(grunt) {
         'git_modules/css-fixme/js/css-fixme.js',
         '<%= jsPath %>/lib/css-fixme-ui.js'
       ],
-      dest: '<%= jsPath %>/cssfixme/cssfixme.js'
+      dest: '<%= jsPath %>/cssfixme.js'
     }
   });
 };
