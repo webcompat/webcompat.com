@@ -21,7 +21,6 @@ from webcompat import app
 from webcompat import limiter
 from webcompat.helpers import api_request
 from webcompat.helpers import get_comment_data
-from webcompat.helpers import get_request_headers
 from webcompat.helpers import get_response_headers
 from webcompat.helpers import mockable_response
 from webcompat.helpers import normalize_api_params
