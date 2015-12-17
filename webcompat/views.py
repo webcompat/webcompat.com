@@ -289,11 +289,11 @@ def cssfixme():
             try:
                 req = requests.get('http://{0}'.format(url))
             except Exception:
-                pass  # Still broken.. anyway, we can't load this URL, the TEXTAREA loads empty.
+                pass  # Still failing - TEXTARE will be empty.
         except Exception:
-            pass  # If we can't load this URL, the TEXTAREA loads empty. No big deal.
+            pass  # If we can't load this URL, the TEXTAREA loads empty.
         if req:
-            # No escaping of HTML is required here, render_template takes care of it
+            # No escaping of HTML required, render_template takes care of it
             csscode = req.text
     return render_template('cssfixme.html', csscode=csscode)
 

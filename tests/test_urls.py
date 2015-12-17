@@ -132,7 +132,8 @@ class TestURLs(unittest.TestCase):
 
     def test_tools_cssfixme_with_URL(self):
         '''Test that the /tools/cssfixme route gets 200 with ?url query.'''
-        rv = self.app.get('/tools/cssfixme?url=https://webcompat.com/css/webcompat.min.css')
+        url = '/tools/cssfixme?url=https://webcompat.com/css/webcompat.min.css'
+        rv = self.app.get(url)
         self.assertEqual(rv.status_code, 200)
 
     def test_tools_cssfixme_with_nonsense_URL(self):
