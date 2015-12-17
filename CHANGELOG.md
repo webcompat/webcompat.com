@@ -1,3 +1,15 @@
+## 2.2 - 2015-12-17
+
+* Fix cssfixme scripts in wrong location [Pull #876](https://github.com/webcompat/webcompat.com/pull/876) [Issue #875](https://github.com/webcompat/webcompat.com/issues/875)
+* Fix broken rate_limit route [Pull #874](https://github.com/webcompat/webcompat.com/pull/874) [Issue #856](https://github.com/webcompat/webcompat.com/pull/856)
+* Clean up some dead code [Pull #873](https://github.com/webcompat/webcompat.com/pull/873) [Issue #872](https://github.com/webcompat/webcompat.com/issues/872)
+* Properly handle 304s from GitHub [Pull #872](https://github.com/webcompat/webcompat.com/pull/872) [Issue #870](https://github.com/webcompat/webcompat.com/issues/870)
+* Lint pep8 and eslint at Travis level [Pull #861](https://github.com/webcompat/webcompat.com/pull/861) [Issue #860](https://github.com/webcompat/webcompat.com/pull/860)
+* Add JS to make cssfix me work [Pull #853](https://github.com/webcompat/webcompat.com/pull/853) [Issue #850](https://github.com/webcompat/webcompat.com/pull/850)
+* Handle ?url query string for cssfixme [Pull #852](https://github.com/webcompat/webcompat.com/pull/852) [Issue #847](https://github.com/webcompat/webcompat.com/issues/847)
+* Add route and minimal style for cssfixme [Pull #849](https://github.com/webcompat/webcompat.com/pull/849) [Issue #12](https://github.com/webcompat/webcompat.com/issues/12)
+* Print a more helpful error if there is no config.py file [Pull #841](https://github.com/webcompat/webcompat.com/pull/842) [Issue #841](https://github.com/webcompat/webcompat.com/issues/841)
+
 ## 2.1.2 - 2015-11-30
 
 * Update imagemin version  [Pull #836](https://github.com/webcompat/webcompat.com/pull/836)[Issue #833](https://github.com/webcompat/webcompat.com/issues/833)
