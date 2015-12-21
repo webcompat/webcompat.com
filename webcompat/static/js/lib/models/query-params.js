@@ -1,3 +1,4 @@
+/*globals issues*/
 var issueList = issueList || {};
 
 /*
@@ -50,8 +51,8 @@ issueList.QueryParams = Backbone.Model.extend({
     _githubSearch: 'https://api.github.com/search/issues'
   },
   bugstatuses: ['contactready', 'needsdiagnosis', 'needscontact', 'sitewait'],
-  initialize: function(){
-    this.on('change', function(e){
+  initialize: function() {
+    this.on('change', function(e) {
       // When the query/parameters change, we want to
       // * update the drop-down menu if required
       // * update the URL and push a history entry
@@ -60,17 +61,17 @@ issueList.QueryParams = Backbone.Model.extend({
       // However, first we want to check if the change is significant.
       var significant = false;
       var changelist = Object.keys(e.changed);
-      for(var i=0, change; change = changelist[i]; i++) {
+      for (var i = 0, change; change = changelist[i]; i++) {
         // I think we only get notified of one property at a time so looping is
         // maybe not necessary here.
         var newvalue = e.changed[change];
         var oldvalue = e.previousAttributes()[change];
-        if(newvalue.toString().trim() === oldvalue.toString().trim()) {
+        if (newvalue.toString().trim() === oldvalue.toString().trim()) {
           continue; // just whitespace change, let's ignore this
         }
         // If a user clicks a label we're already filtering by, we can likewise ignore it
-        if(change === 'labels') {
-          if (this.get('labels').indexOf(newvalue)>-1) {
+        if (change === 'labels') {
+          if (this.get('labels').indexOf(newvalue) > -1) {
             continue;
           }
         }
@@ -95,16 +96,16 @@ issueList.QueryParams = Backbone.Model.extend({
   /*
   * This creates a query suitable for the URL bar from the current params
   */
-  toDisplayURLQuery: function(){
+  toDisplayURLQuery: function() {
     var urlParams = [];
-    _.each(this.attributes, function(value, key){
-      if(value) {
+    _.each(this.attributes, function(value, key) {
+      if (value) {
         urlParams.push(key + '=' + value);
       }
     });
     return urlParams.join('&');
   },
-  toBackendURL: function(loggedIn){
+  toBackendURL: function(loggedIn) {
     /*
     * This method returns either a GitHub API URL or a webcompat.com/api URL
     * depending on the login status and what type of query we run.
@@ -148,7 +149,7 @@ issueList.QueryParams = Backbone.Model.extend({
       } else {
         url = '/api/issues/search' + '?' + this.toSearchAPIParams();
       }
-    }else { // Seems like this query is so simple we only need the issues API.
+    } else { // Seems like this query is so simple we only need the issues API.
       if (_.contains(issuesAPICategories, this.get('stage'))) {
         url = '/api/issues/category/' + this.get('stage') + '?' + this.toIssueAPIParams();
       } else {
@@ -157,7 +158,7 @@ issueList.QueryParams = Backbone.Model.extend({
     }
     return url;
   },
-  toIssueAPIParams: function(){
+  toIssueAPIParams: function() {
     /* Serializes the parameters for the GitHub issues API.
     *
     * https://developer.github.com/v3/issues/
@@ -167,13 +168,13 @@ issueList.QueryParams = Backbone.Model.extend({
     // especially since we make no attempt at translating stage
     // property to labels - this happens at the backend..
     var paramsToSend = _.clone(this.attributes);
-    for(var property in paramsToSend) { // we want to ignore empty values
+    for (var property in paramsToSend) { // we want to ignore empty values
       if (!(paramsToSend[property])) {
         delete paramsToSend[property];
       }
     }
     // also drop label= if we don't filter by label
-    if(paramsToSend.labels.length) {
+    if (paramsToSend.labels.length) {
       // gotcha: issues API needs labels in plural, search API in singular.. :-/
       paramsToSend.labels = issues.allLabels.toPrefixed(paramsToSend.labels);
     } else {
@@ -181,7 +182,7 @@ issueList.QueryParams = Backbone.Model.extend({
     }
     return $.param(paramsToSend, true);
   },
-  toSearchAPIParams: function(){
+  toSearchAPIParams: function() {
     /* Serializes the parameters for the GitHub search API.
     *
     * The GitHub search API is documented here:
@@ -197,18 +198,18 @@ issueList.QueryParams = Backbone.Model.extend({
     // Some names are different for the search API..
     if (this.get('direction')) {
       paramsToSend.order = this.get('direction');
-    };
+    }
     // These properties must end up as ?q=name:value with name slightly translated
     var qMap = {
       creator:   'author',
       mentioned: 'mentions'
     };
-    for(key in qMap) {
+    for (key in qMap) {
       if (this.get(key)) {
         paramsToSend.q += ' ' + qMap[key] + ':' + this.get('key');
       }
     }
-    if(this.get('labels').length) {
+    if (this.get('labels').length) {
       var theLabels = issues.allLabels.toPrefixed(this.get('labels'));
       // gotcha: issues API needs labels in plural, search API in singular.. :-/
       paramsToSend.q += ' label:' + theLabels.join(' label:');
@@ -232,7 +233,7 @@ issueList.QueryParams = Backbone.Model.extend({
   setParam: function(name, value, silent) {
     // Because we query two separate GitHub APIs, which use slightly different keywords,
     // we have two names for some of the params - let's limit it to one name internally
-    if(name === 'order') {
+    if (name === 'order') {
       name = 'direction';
     }
     // Sometimes - in particular if a request to the backend fails - we want
@@ -244,16 +245,16 @@ issueList.QueryParams = Backbone.Model.extend({
     // for consistency, we should do a bit of parsing and extract those..
     // Both API and UI will be more confusing if we allow both label:foo inside search
     // AND label: ['bar'] internally.
-    if(name === 'q') {
+    if (name === 'q') {
       var namevalues = value.match(/\b\w+(%3A|:)\w+\b/g);
-      if(namevalues) {
-        for(var thisValue, parts, i=0; thisValue = namevalues[i]; i++) {
+      if (namevalues) {
+        for (var thisValue, parts, i = 0; thisValue = namevalues[i]; i++) {
           parts = thisValue.split(/%3A|:/);
           // If the name part is a keyword we know about, we set it in the API
           // and remove it from the eventual q string.
           // Otherwise, we just leave it as-is
-          if(this.has(parts[0])) {
-            this.setParam(parts[0], parts[1]);
+          if (this.has(parts[0])) {
+            this.setParam(parts[0], parts[1], silent);
             // TODO: if AppliedLabels view is brought back, we want this line
             // enabled again:
             // value = value.replace(thisValue, '');
@@ -261,33 +262,33 @@ issueList.QueryParams = Backbone.Model.extend({
         }
       }
     }
-    if(this.has(name)) {
+    if (this.has(name)) {
       var currentValue = this.get(name);
       // 'stage=closed' is actually an alias for state=closed
-      if(name === 'stage' && (value === 'closed' || currentValue === 'closed')){
+      if (name === 'stage' && (value === 'closed' || currentValue === 'closed')) {
         // Also, the default value for state is 'open'
-        this.setParam('state', value === 'all' ? 'open' : value);
+        this.setParam('state', value === 'all' ? 'open' : value, silent);
         // We don't return here - stage=closed or =all must be set too to match the
         // state we want the filter UI to be in.. Yeah, hack.
       }
-      if(currentValue instanceof Array) {
+      if (currentValue instanceof Array) {
         // Likely a 'labels' array..
         // We don't want to consider status- labels as labels
         // in this API although they are at the backend.
         // We special-case label:status-* updates and set the
         // corresponding stage value instead.
-        if(name === 'labels' &&
+        if (name === 'labels' &&
            (value.indexOf('status-') === 0 || this.bugstatuses.indexOf(value) > -1)) {
-          return this.setParam('stage', value.replace(/^status-/,''));
+          return this.setParam('stage', value.replace(/^status-/,''), silent);
         }
-        if(value && currentValue.indexOf(value) === -1) {
-          if(value instanceof Array) {
+        if (value && currentValue.indexOf(value) === -1) {
+          if (value instanceof Array) {
             // A brand new array of values - this resets the property completely
             // However, to make sure we go through the special status- processing above
             // we set one value at a time
             this.set(name, [], {silent:true});
-            for(var i = 0; i < value.length; i++) {
-              this.setParam(name, value[i], silent)
+            for (i = 0; i < value.length; i++) {
+              this.setParam(name, value[i], silent);
             }
           } else { // We add the new value to the existing array
             this.set(name, currentValue.concat([value]), options);
@@ -306,7 +307,7 @@ issueList.QueryParams = Backbone.Model.extend({
       // or should we throw?
       this.set('q', this.get('q') + ' ' + name + ':' + value, options);
     }
-    if(silent) {
+    if (silent) {
       // The UI is normally updated after a successful request to the backend,
       // however if something is broken and the request doesn't suceed, certain
       // parts of the UI that are changed directly by the user will now be out of
@@ -319,9 +320,9 @@ issueList.QueryParams = Backbone.Model.extend({
       issueList.events.trigger('search:update', this.get('q'));
     }
   },
-  deleteLabel: function(labelStr){
+  deleteLabel: function(labelStr) {
     var currentLabels = this.get('labels');
-    if(currentLabels.indexOf(labelStr) > -1) {
+    if (currentLabels.indexOf(labelStr) > -1) {
       currentLabels.splice(currentLabels.indexOf(labelStr), 1);
       this.set('labels', {}, {silent:true}); // hack: to trigger change event on *next* set..
       // hack explained: currentLabels is a reference to an array, so updates cause immediate change.
@@ -332,32 +333,32 @@ issueList.QueryParams = Backbone.Model.extend({
       this.setParam('labels', currentLabels);
     }
   },
-  fromQueryString: function(str, silent){
+  fromQueryString: function(str, silent) {
     var self = this;
     var namevalues;
-    var pair;
-    var name;
-    var value;
-    if(str.substr(0,1) === '?') {
+    if (str.substr(0,1) === '?') {
       str = str.substr(1);
     }
     namevalues = str.split(/&/g);
-    namevalues.forEach(function(namevalue){
+    namevalues.forEach(function(namevalue) {
+      var pair;
+      var theName;
+      var theValue;
       pair = namevalue.split('=');
-      name = pair[0];
-      value = pair[1];
+      theName = pair[0];
+      theValue = pair[1];
       // just in case..
-      if(pair[0] === 'label') {
-        pair[0] = 'labels';
+      if (theName === 'label') {
+        theName = 'labels';
       }
-      self.setParam(pair[0], pair[1]);
+      self.setParam(theName, theValue, silent);
     });
   },
   // silentReset is intended used when a request to the backend fails
   // it updates the model with data from the query string (which isn't
   // updated until a backend request was successful) without triggering
   // a new request to the backend.
-  silentReset: function(str){
+  silentReset: function(str) {
     this.fromQueryString(str, true);
   }
 });
