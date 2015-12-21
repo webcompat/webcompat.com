@@ -16,6 +16,9 @@ from flask import Flask
 app = Flask(__name__, static_url_path='')
 app.config.from_object('config')
 
+# set limit of 4MB for file uploads
+app.config['MAX_CONTENT_LENGTH'] = 4 * 1024 * 1024
+
 github = GitHub(app)
 limiter = Limiter(app)
 
