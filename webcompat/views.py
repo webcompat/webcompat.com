@@ -25,6 +25,7 @@ from helpers import get_browser_name
 from helpers import get_os
 from helpers import get_referer
 from helpers import get_user_info
+from helpers import thanks_page
 from helpers import set_referer
 from issues import report_issue
 from webcompat.db import session_db
@@ -174,14 +175,13 @@ def create_issue():
     if form.get('submit-type') == AUTH_REPORT:
         if g.user:  # If you're already authed, submit the bug.
             response = report_issue(form)
-            return redirect(url_for('thanks',
-                            number=response.get('number')))
+            return thanks_page(request, response)
         else:  # Stash form data into session, go do GitHub auth
             session['form_data'] = form
             return redirect(url_for('login'))
     elif form.get('submit-type') == PROXY_REPORT:
         response = report_issue(form, proxy=True).json()
-        return redirect(url_for('thanks', number=response.get('number')))
+        return thanks_page(request, response)
 
 
 @app.route('/issues/<int:number>')
