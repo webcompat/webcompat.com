@@ -168,9 +168,9 @@ def create_issue():
             flash(msg, 'notimeout')
             return redirect(url_for('index'))
     form['ua_header'] = request.headers.get('User-Agent')
-    # Do we have an image ready to be uploaded?
-    image = request.files['image']
-    if image:
+    # Do we have an image or screenshot ready to be uploaded?
+    if ((request.files['image'] and request.files['image'].filename) or
+       request.form.get('screenshot')):
         form['image_upload'] = json.loads(upload()[0])
     if form.get('submit-type') == AUTH_REPORT:
         if g.user:  # If you're already authed, submit the bug.
@@ -245,7 +245,7 @@ if app.config['LOCALHOST']:
         Python app.
         '''
         return send_from_directory(
-            app.config['UPLOADS_DEFAULT_DEST'] + '/uploads', filename)
+            app.config['UPLOADS_DEFAULT_DEST'], filename)
 
 
 @app.route('/about')
