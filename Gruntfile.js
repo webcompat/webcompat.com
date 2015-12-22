@@ -23,6 +23,11 @@ module.exports = function(grunt) {
 
   // Default task.
   grunt.registerTask('default', [
+    'checkDependencies', 'eslint', 'concat', 'uglify','cssnext', 'cssmin'
+  ]);
+
+  // Task used before doing a deploy (same as default, but does image optimization)
+  grunt.registerTask('deploy', [
     'checkDependencies', 'eslint', 'concat', 'uglify','cssnext', 'cssmin', 'imagemin'
   ]);
 };
