@@ -136,5 +136,34 @@ class TestUploads(unittest.TestCase):
             rv = test_client.post('/upload/', data=dict())
             self.assertEqual(rv.status_code, status_code)
 
+    def testBase64ScreenshotUploads(self):
+        BASE64_PNG = u'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAAAAAA6fptVAAAACklEQVQYV2P4DwABAQEAWk1v8QAAAABJRU5ErkJggg=='  # nopep8
+        BASE64_PNG_GARBAGE = u'data:image/png;base64,garbage!'
+        BASE64_PNG_GARBAGE2 = u'data:image/png;data:image/png;'
+        PILE_OF_POO = u'💩'
+
+        for filedata, status_code in (
+                (BASE64_PNG, 201),
+                (BASE64_PNG_GARBAGE, 415),
+                (BASE64_PNG_GARBAGE2, 415),
+                (PILE_OF_POO, 415)):
+
+            class TestingRequest(Request):
+                """A testing request to use that allows us to manipulate
+                request.form to send screenshot data.
+                """
+                @property
+                def form(self):
+                    d = MultiDict()
+                    d['screenshot'] = filedata
+                    return d
+
+            self.app.request_class = TestingRequest
+            test_client = self.app.test_client()
+
+            rv = test_client.post('/upload/', data=dict())
+            self.assertEqual(rv.status_code, status_code)
+
+
 if __name__ == '__main__':
     unittest.main()
