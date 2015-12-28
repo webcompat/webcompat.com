@@ -21,7 +21,6 @@ sys.path.append(os.path.realpath(os.pardir))
 from webcompat import app
 
 
-# taken from https://github.com/srusskih/flask-uploads/blob/master/flaskext/uploads.py#L476 # nopep8
 class TestingFileStorage(FileStorage):
     """
     This is a helper for testing upload behavior in your application. You
@@ -39,6 +38,8 @@ class TestingFileStorage(FileStorage):
     :param content_length: How long it is. The default is -1.
     :param headers: Multipart headers as a `werkzeug.Headers`. The default is
                     `None`.
+
+    taken from https://github.com/srusskih/flask-uploads/blob/master/flaskext/uploads.py#L476 # nopep8
     """
     def __init__(self, stream=None, filename=None, name=None,
                  content_type='application/octet-stream', content_length=-1,
@@ -63,7 +64,8 @@ class TestingFileStorage(FileStorage):
 
 
 class TestUploads(unittest.TestCase):
-    # modified from http://prschmid.blogspot.com/2013/05/unit-testing-flask-file-uploads-without.html  # nopep8
+    '''Modified from http://prschmid.blogspot.com/2013/05/unit-testing-flask-file-uploads-without.html  # nopep8'''
+
     def setUp(self):
         app.config['TESTING'] = True
         self.app = app
@@ -77,14 +79,15 @@ class TestUploads(unittest.TestCase):
         rv = self.test_client.get('/upload/')
         self.assertEqual(rv.status_code, 404)
 
-    def testBadUploads(self):
+    def testBadFileUploads(self):
         # Loop over some files and the status codes that we are expecting
         for filename, status_code in (
-                ('foo.xxx', 415),
-                ('foo', 415),
-                ('foo.rb', 415)):
+                ('evil.py', 415),
+                ('evil', 415),
+                ('evil.png', 415),
+                ('green_square.webp', 415)):
 
-            # The reason why we are defining it in here and not outside
+            # The reason why we are definisng it in here and not outside
             # this method is that we are setting the filename of the
             # TestingFileStorage to be the one in the for loop. This way
             # we can ensure that the filename that we are "uploading"
@@ -95,28 +98,25 @@ class TestUploads(unittest.TestCase):
                 @property
                 def files(self):
                     d = MultiDict()
-                    d['image'] = TestingFileStorage(filename=filename)
+                    f = open(os.path.join('tests', 'fixtures', filename), 'r')
+                    d['image'] = TestingFileStorage(stream=StringIO(f.read()),
+                                                    filename=filename)
+                    f.close()
                     return d
 
             self.app.request_class = TestingRequest
             test_client = self.app.test_client()
 
-            rv = test_client.post(
-                '/upload/',
-                data=dict(
-                    file=(StringIO('Fake image data'), filename),
-                ))
+            rv = test_client.post('/upload/', data=dict())
             self.assertEqual(rv.status_code, status_code)
 
-    def testGoodUploads(self):
+    def testGoodFileUploads(self):
         # Loop over some files and the URLs that we are expecting back
         for filename, status_code in (
-                ('foo.png', 201),
-                ('foo.jpg', 201),
-                ('foo.gif', 201),
-                ('foo.jpe', 201),
-                ('foo.jpeg', 201),
-                ('foo.bmp', 201)):
+                ('green_square.png', 201),
+                ('green_square.jpg', 201),
+                ('green_square.gif', 201),
+                ('green_square.bmp', 201)):
 
             class TestingRequest(Request):
                 """A testing request to use that will return a
@@ -124,17 +124,16 @@ class TestUploads(unittest.TestCase):
                 @property
                 def files(self):
                     d = MultiDict()
-                    d['image'] = TestingFileStorage(filename=filename)
+                    f = open(os.path.join('tests', 'fixtures', filename), 'r')
+                    d['image'] = TestingFileStorage(stream=StringIO(f.read()),
+                                                    filename=filename)
+                    f.close()
                     return d
 
             self.app.request_class = TestingRequest
             test_client = self.app.test_client()
 
-            rv = test_client.post(
-                '/upload/',
-                data=dict(
-                    file=(StringIO('Fake image data'), filename),
-                ))
+            rv = test_client.post('/upload/', data=dict())
             self.assertEqual(rv.status_code, status_code)
 
 if __name__ == '__main__':
