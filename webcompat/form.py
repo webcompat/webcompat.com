@@ -20,7 +20,7 @@ from wtforms.validators import InputRequired
 from wtforms.validators import Length
 from wtforms.validators import Optional
 
-from webcompat.api.uploads import images
+from webcompat.api.uploads import Upload
 
 AUTH_REPORT = 'github-auth-report'
 PROXY_REPORT = 'github-proxy-report'
@@ -70,7 +70,8 @@ class IssueForm(Form):
                                   choices=problem_choices)
     # we filter allowed type in uploads.py
     image = FileField(u'Attach a screenshot image',
-                      [Optional(), FileAllowed(images, image_message)])
+                      [Optional(),
+                       FileAllowed(Upload.ALLOWED_FORMATS, image_message)])
 
 
 def get_problem(category):

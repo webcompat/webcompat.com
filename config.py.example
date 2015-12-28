@@ -48,8 +48,8 @@ elif DEVELOPMENT:
     UPLOADS_DEFAULT_DEST = ''
     UPLOADS_DEFAULT_URL = ''
 elif LOCALHOST:
-    UPLOADS_DEFAULT_DEST = BASE_DIR
-    UPLOADS_DEFAULT_URL = 'http://localhost:5000/'
+    UPLOADS_DEFAULT_DEST = BASE_DIR + '/uploads/'
+    UPLOADS_DEFAULT_URL = 'http://localhost:5000/uploads/'
 
 DEBUG = False
 

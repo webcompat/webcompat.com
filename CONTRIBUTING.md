@@ -257,7 +257,11 @@ git submodule update
 # set up virtual environment
 [sudo] virtualenv env
 source env/bin/activate
-# install dependencies
+# install Pillow image lib dependencies (if you plan on hacking on image upload features)
+#  OSX: http://pillow.readthedocs.org/en/3.0.x/installation.html#os-x-installation
+#  Windows: http://pillow.readthedocs.org/en/3.0.x/installation.html#windows-installation
+#  Linux: http://pillow.readthedocs.org/en/3.0.x/installation.html#linux-installation
+# install rest of dependencies
 pip install -r requirements.txt
 ```
 
