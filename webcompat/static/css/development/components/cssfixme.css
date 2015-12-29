@@ -1,0 +1,20 @@
+/*----------cssfixme----------*/
+
+.wc-CSSFixme {
+  font-size:var(--base-font-size);
+}
+
+  /* item wrapper */
+  .wc-CSSFixme-item {
+    margin-top: 1em;
+  }
+
+  /* pre */
+  .wc-CSSFixme-resultat {
+    margin: 1em 0;
+    padding: 1em;
+    color: #414042;
+    border: 1px solid #ddd;
+    border-radius: .3em;
+    background: rgba(249, 249, 249, 0.6);
+  }
