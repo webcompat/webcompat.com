@@ -33,9 +33,9 @@ install:
   - travis_retry npm install -g grunt-cli
   - travis_retry npm install
   - travis_retry pip install -r requirements.txt --download-cache $HOME/.pip-cache
-  - cp config.py.example config.py
+  - cp config/secrets.py.example config/secrets.py
   # lint python
-  - pep8 --ignore=E402 webcompat/ tests/ config.py.example
+  - pep8 --ignore=E402 webcompat/ tests/ config/secrets.py.example
   - git submodule init && git submodule update
   - python run.py -t &
 
