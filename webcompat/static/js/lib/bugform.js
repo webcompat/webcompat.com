@@ -3,6 +3,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 function BugForm() {
+  this.form = $('form.js-ReportForm');
   this.urlField = $('#url');
   this.descField = $('#description');
   this.uploadField = $('#image');
@@ -10,6 +11,8 @@ function BugForm() {
   this.submitButtons = $('.js-ReportForm button.Button');
   this.loadingIndicator = $('.js-loader');
   this.reportButton = $('#report-bug');
+  this.loaderImage = $('.js-loader');
+  this.screenshotData = '';
 
   this.inputMap = {
     'url': {
@@ -31,6 +34,8 @@ function BugForm() {
   };
 
   this.init = function() {
+    var TRUSTED_ORIGINS = ['https://webcompat.com/', 'http://localhost:5000'];
+
     this.checkParams();
     this.disableSubmits();
     this.urlField.on('input',      _.bind(this.copyURL, this));
@@ -45,17 +50,59 @@ function BugForm() {
     // See if the user already has a valid form
     // (after a page refresh, back button, etc.)
     this.checkForm();
+
+    // Set up listener for message events from screenshot-enabled add-ons
+    window.addEventListener('message', _.bind(function(event) {
+      if (_.includes(TRUSTED_ORIGINS, event.origin)) {
+        this.form.on('submit', _.bind(this.submitFormWithScreenshot, this));
+
+        this.screenshotData = event.data;
+        this.addPreviewBackground(this.screenshotData);
+      }
+    }, this), false);
+  };
+
+  // If we've gotten this far, form validation has happened and
+  // we're reacting to a submit event.
+  this.submitFormWithScreenshot = function(event) {
+    // Stop regular form submission
+    event.preventDefault();
+    // construct a FormData object and append the base64 image to it.
+    var formdata = new FormData(this.form.get(0));
+    // we call this 'screenshot', rather than 'image' because it needs to be
+    // handled differently on the backend.
+    formdata.append('screenshot', this.screenshotData);
+
+    // so, we can do an ajax submission and have it respond the number.
+    // we can inspect the xhr header
+    this.loaderImage.show();
+    $.ajax({
+      contentType: false,
+      processData: false,
+      data: formdata,
+      method: 'POST',
+      url: '/issues/new',
+      success: _.bind(function(response) {
+        // navigate to thanks page.
+        this.loaderImage.hide();
+        window.location.href = '/thanks/' + response.number;
+      }, this),
+      error: function() {
+        var msg = 'There was an error trying to file the bug, try again?.';
+        wcEvents.trigger('flash:error', {message: msg, timeout: 3000});
+      }
+    });
   };
 
   this.checkParams = function() {
-      // Assumes a URI like: /?open=1&url=http://webpy.org/, for use by addons
-      // Quick sanity check
+    // Assumes a URI like: /?open=1&url=http://webpy.org/, for use by addons
+    // Quick sanity check
     if (!location.search.search(/open=1/) && !location.search.search(/url=/)) {
       return;
     }
     var urlParam = location.search.match(/url=(.+)/);
     if (urlParam != null) {
-        // weird Gecko bug. See https://bugzilla.mozilla.org/show_bug.cgi?id=1098037
+      // weird Gecko bug. See https://bugzilla.mozilla.org/show_bug.cgi?id=1098037
       urlParam = this.trimWyciwyg(urlParam[1]);
       this.urlField.val(decodeURIComponent(urlParam));
       this.copyURL();
@@ -191,11 +238,9 @@ function BugForm() {
     if (!(window.FileReader && window.File)) {
       return;
     }
-
     // We can just grab the 0th one, because we only allow uploading
     // a single image at a time (for now)
     var img = event.target.files[0];
-
     // One last validation check.
     if (!img.type.match('image.*')) {
       this.makeInvalid('image');
@@ -204,16 +249,23 @@ function BugForm() {
 
     var reader = new FileReader();
     reader.onload = _.bind(function(event) {
-      var dataURI = event.target.result;
-      var label = $('.js-image-upload').find('label').eq(0);
-
-      label.css({
-        'background': 'url(' + dataURI + ') no-repeat center / contain'
-      });
-
-      this.showRemoveUpload(label);
+      this.addPreviewBackground(event.target.result);
     }, this);
     reader.readAsDataURL(img);
+  };
+
+  this.addPreviewBackground = function(dataURI) {
+    if (!_.startsWith(dataURI, 'data:image/png;base64')) {
+      return;
+    }
+
+    var label = $('.js-image-upload').find('label').eq(0);
+    label.css({
+      'background': 'url(' + dataURI + ') no-repeat center / contain',
+      'background-color': '#eee'
+    });
+
+    this.showRemoveUpload(label);
   };
   /*
     Allow users to remove an image from the form upload.
