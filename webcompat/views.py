@@ -8,6 +8,7 @@ import json
 import urllib
 
 from flask.ext.github import GitHubError
+from flask import abort
 from flask import flash
 from flask import g
 from flask import jsonify
@@ -210,7 +211,7 @@ def thanks(number):
 def me_redirect():
     '''This route redirects to /activity/<username>, for logged in users.'''
     if not g.user:
-        return redirect(url_for('login'))
+        abort(401)
     get_user_info()
     return redirect(url_for('show_user_page', username=session['username']))
 
