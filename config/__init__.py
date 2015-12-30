@@ -6,11 +6,9 @@
 
 '''This module handles application configuration and secrets.'''
 
-import os
-from datetime import datetime
 from collections import namedtuple
 
-from env_constants import *
+from environment import *
 from secrets import *
 
 THREADS_PER_PAGE = 8

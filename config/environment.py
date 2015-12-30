@@ -6,7 +6,7 @@
 
 import os
 
-# Define the application directory
+# Define the application base directory
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
 
 # the PRODUCTION and DEVELOPMENT environment variables are set in uwsgi.conf
