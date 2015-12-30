@@ -50,7 +50,7 @@
               <div class="wc-Form-upload-icon" aria-hidden="true">
                 <span class="wc-Icon wc-Icon--cloud-upload"></span>
               </div>
-              {{ form.image.label(class_='wc-Form-label wc-Form-label--upload') }}
+              <label class="wc-Form-label wc-Form-label--upload">Attach a screenshot image</label>
               {% if form.image.errors %}
                 {% for error in form.image.errors %}
                 <span class="wc-Form-helpInline wc-bold">{{ error }}</span>
