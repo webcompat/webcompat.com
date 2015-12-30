@@ -122,12 +122,8 @@
   .wc-Hero--contributors .wc-Hero-light {
     height:15em;
   }
-
-    .wc-Hero--contributors .wc-Hero-lightFilament {
-      fill : #F0F0F0;
-    }
       /* is-active */
-      .wc-Hero-img.is-active .wc-Hero-lightFilament {
+      .wc-Hero-SVG.is-active .wc-Hero-lightFilament {
         fill: #E4BD0C;
       }
   @media (--viewport-600px) {

@@ -5,11 +5,15 @@
 <main role="main">
   <div class="wc-Hero wc-Hero--contributors">
     <div class="wc-content">
-      <div class="wc-Hero-section wc-Hero-section--left wc-Hero-section--contributors">
-        <h1 class="wc-Hero-title wc-Title--xl">Welcome aboard!<br/>Get started below...</h1>
-      </div>
-      <div class="wc-Hero-section wc-Hero-section--right">
-        <div class="wc-Hero-img is-active">{% include "shared/LightbulbwithBug.svg" %}</div>
+      <div class="wc-Hero-wrapper">
+        <div class="wc-Hero-section wc-Hero-section--left wc-Hero-section--home ">
+          <h1 class="wc-Hero-title wc-Title--xl">Welcome aboard!<br/>Get started below...</h1>
+        </div>
+        <div class="wc-Hero-section wc-Hero-section--right">
+          <div class="wc-Hero-SVG is-active">
+            {% include "shared/LightbulbwithBug.svg" %}
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -77,7 +81,7 @@
 {%- block extrascripts -%}
 <script>
 $(function(){
-  var lightElm     = $('.wc-Hero-img');
+  var lightElm     = $('.wc-Hero-SVG');
   var sections     = $('.contributors__item__content');
   var ACTIVE_CLASS = 'is-active';
   var OPEN_CLASS   = 'is-open';

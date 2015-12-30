@@ -38,7 +38,7 @@ define([
           assert.notInclude('is-open', className);
         })
         .end()
-        .findByCssSelector('.wc-Hero-img').getAttribute('class')
+        .findByCssSelector('.wc-Hero-SVG').getAttribute('class')
         .then(function(className) {
           assert.notEqual('is-active', className);
         })
@@ -54,7 +54,7 @@ define([
           assert.equal(isDisplayed, true);
         })
         .end()
-        .findByCssSelector('.wc-Hero-img.is-active').isDisplayed()
+        .findByCssSelector('.wc-Hero-SVG.is-active').isDisplayed()
         .then(function(isDisplayed) {
           assert.equal(isDisplayed, true);
         })
@@ -66,7 +66,7 @@ define([
           assert.notInclude('is-open', className);
         })
         .end()
-        .findByCssSelector('.wc-Hero-img').getAttribute('class')
+        .findByCssSelector('.wc-Hero-SVG').getAttribute('class')
         .then(function(className) {
           assert.notInclude('is-active', className);
         });
@@ -76,14 +76,14 @@ define([
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url('/contributors')))
-        .findByCssSelector('.wc-Hero-img.is-active').isDisplayed()
+        .findByCssSelector('.wc-Hero-SVG.is-active').isDisplayed()
         .then(function(isDisplayed) {
           assert.equal(isDisplayed, true);
         })
         .end()
         .findByCssSelector('.contributors__item__title').click()
         .end()
-        .findByCssSelector('.wc-Hero-img').getAttribute('class')
+        .findByCssSelector('.wc-Hero-SVG').getAttribute('class')
         .then(function(className) {
           assert.notInclude('is-active', className);
         });
