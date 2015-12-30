@@ -1,0 +1,180 @@
+/** @define Issue */
+
+:root {
+  --Issue-fontSize: var(--base-fontSize);
+  --Issue-detailLink: var(--Link-color);
+  --Issue-detailLinkHover: var(--Link-colorHover);
+  --Issue-widthComment: 45.125em;
+}
+
+.wc-Issue {
+  font-size:var(--Issue-fontSize);
+}
+
+  /* Wrapper title and date issue */
+  .wc-Issue-title {
+    font-size: 1.6em;
+    line-height: 1em;
+    margin-bottom: .5em;
+    word-wrap: break-word;
+  }
+
+  @media all and (max-width: 28.12em) {
+
+    .wc-Issue-title {
+      font-size:1.2em;
+    }
+  }
+
+  /* information issue : date / author / number of comment */
+  .wc-Issue-create {
+    font-size: 1em;
+    margin:0 0 2em
+  }
+
+  /* Date of issue */
+  .wc-Issue-date {
+    display: inline-block;
+  }
+
+  @media all and (max-width: 28.12em) {
+
+    .wc-Issue-date {
+      font-size:.9em;
+    }
+  }
+
+  /* Author */
+  .wc-Issue-reporter {
+    font-weight: bold;
+  }
+
+  @media all and (min-width: 48.13em) {
+
+    .wc-Issue-report,
+    .wc-Issue-commentList,
+    .wc-Issue-commentSubmit {
+      width: var(--Issue-widthComment);
+    }
+  }
+
+  /* CommentSubmit */
+  .wc-Issue-commentSubmit {
+    padding-top: 2em;
+    margin: 2em 0 0;
+  }
+
+  /* list comment */
+  .wc-Issue-commentList {
+    margin: 4em 0 0;
+  }
+
+  /* Issue wrapper */
+  .wc-Issue-wrapper {
+    margin:0 0 0 4.2em;
+  }
+
+    @media all and (max-width: 73.75em) {
+
+      .wc-Issue-wrapper {
+        margin:0;
+      }
+    }
+
+  /* container details issue */
+  .wc-Issue-details {
+    word-wrap: break-word;
+    overflow: hidden;
+    position: relative;
+    line-height: 1.5em;
+  }
+
+    .wc-Issue-details > *.is-hidden {
+      display: none;
+    }
+
+    /* force font-size */
+    .wc-Issue-details * {
+      font-size:1em !important;
+    }
+
+    .wc-Issue-details a {
+      color: var(--Issue-detailLink);
+      text-decoration: underline;
+    }
+
+      /* event */
+      .wc-Issue-details a:hover,
+      .wc-Issue-details a:focus {
+        color: var(--Issue-detailLinkHover);
+        text-decoration: none;
+      }
+
+    .wc-Issue-details strong {
+        font-weight: bold !important;
+    }
+
+    .wc-Issue-details img {
+        max-width: 100%;
+        max-height: 100%;
+    }
+
+    .wc-Issue-details code,
+    .wc-Comment-content code {
+      font-family: monospace;
+      font-size: 90%;
+    }
+
+    .wc-Issue-details p > code,
+    .wc-Comment-content p > code {
+      color: inherit;
+      background-color: #F5F5F5;
+      padding: 0.25em;
+    }
+
+    .wc-Issue-details li {
+      margin-bottom: 1em;
+    }
+
+    .wc-Issue-details p {
+      margin-bottom: 1em;
+    }
+
+  .wc-Issue-comment {
+    margin-top:2em;
+  }
+
+.wc-Issue-Labels {
+  margin-bottom: 2em;
+}
+/* FullScreen LabelEditor*/
+@media all and (max-width: 23.43em) {
+
+  .wc-Issue-Labels {
+    position:relative;
+  }
+}
+
+/* Link to log in */
+.wc-Issue-login {
+  margin-top: 2.5em;
+  text-align:center;
+}
+
+/*wrapper list comment */
+.wc-Issue-comment {
+  margin:4em 0 0;
+}
+
+/* labeleditor */
+.wc-Issue-labelEditor {
+  position:relative;
+  display:inline-block;
+}
+
+@media all and (max-width: 23.43em) {
+
+  .wc-Issue-labelEditor {
+    position: static; /* position of label_editor not depend of this class */
+  }
+}

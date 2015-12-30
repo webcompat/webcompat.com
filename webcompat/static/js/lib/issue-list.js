@@ -36,7 +36,7 @@ issueList.DropdownView = Backbone.View.extend({
   },
   openDropdown: function(e) {
     var target = $(e.target);
-    target.closest('.js-dropdown-wrapper').toggleClass('is-active');
+    target.closest('.js-dropdown').toggleClass('is-active');
   },
   closeDropdown: function() {
     this.$el.removeClass('is-active');
@@ -124,7 +124,7 @@ issueList.FilterView = Backbone.View.extend({
   template: _.template($('#issuelist-filter-tmpl').html()),
   render: function() {
     this.$el.html(this.template(this.model.toJSON()));
-    this.dropdown.setElement(this.$el.find('.js-dropdown-wrapper')).render();
+    this.dropdown.setElement(this.$el.find('.js-dropdown')).render();
     return this;
   },
   clearFilter: function(options) {
@@ -271,7 +271,7 @@ var issuesPagination = new PaginationMixin();
 
 issueList.IssueView = Backbone.View.extend(
   _.extend({}, issuesPagination, {
-    el: $('.js-issue-list'),
+    el: $('.js-list-issue'),
     events: {
       'click .js-issue-label': 'labelSearch',
     },

@@ -1,0 +1,70 @@
+/** @define UploadForm */
+
+:root {
+  --UploadForm-backgroundColorButton: var(--base-colorDark);
+}
+
+.wc-UploadForm {
+  display: block;
+  position: relative;
+  text-align: center;
+  border: dashed 1px #ccc;
+  border-radius: 20px;
+  min-height: 250px;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+  /* Form upload wrapper */
+  .wc-UploadForm-wrapper {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+    /* state */
+    .wc-UploadForm-wrapper.is-hidden {
+      display: none;
+    }
+
+    /* icon */
+    .wc-UploadForm-icon {
+      font-size: 6.2em;
+      margin: 0 0 16px;
+      color: #c8c8c8;
+    }
+
+    /* label */
+    .wc-UploadForm-label {
+      position: relative;
+      display: inline-block;
+      margin-bottom: 5px;
+      color: #000;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+
+    /* Upload button */
+    .wc-UploadForm-button {
+      position: absolute;
+      width: 100%;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 1em 0;
+      font-weight:700;
+      background-color: var(--UploadForm-backgroundColorButton);
+      border-bottom-left-radius: 20px;
+      border-bottom-right-radius: 20px;
+      cursor: pointer;
+      text-align: center;
+      text-decoration: underline;
+      transform: translateY(0);
+      transition: transform .2s linear 0s;
+    }
+
+      /* state */
+      .wc-UploadForm-button.is-hidden {
+        transform: translateY(100%);
+      }

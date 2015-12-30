@@ -7,8 +7,8 @@ var issues = issues || {};
 issues.QrView = Backbone.View.extend({
   qrButton: null,
   events: {
-    'click .wc-QrImage-launcher:not(.is-active)': 'showQr',
-    'click .wc-QrImage-launcher.is-active': 'closeQr'
+    'click .wc-QrCode-launcher:not(.is-active)': 'showQr',
+    'click .wc-QrCode-launcher.is-active': 'closeQr'
   },
   keyboardEvents: {
     'q': 'showQr'
@@ -19,7 +19,7 @@ issues.QrView = Backbone.View.extend({
     var regex = /[^]*?href\=\"(.*?)\"/ig;
     var urlMatch = regex.exec(body);
 
-    this.qrButton = $('.wc-QrImage-launcher');
+    this.qrButton = $('.wc-QrCode-launcher');
     if (!!urlMatch && urlMatch.length > 1) {
       this.qrImage = new issues.QrImageView({
         issueView: this,
@@ -37,12 +37,12 @@ issues.QrView = Backbone.View.extend({
   showQr: function() {
     this.qrButton.addClass('is-active');
     this.qrButton[0].setAttribute('aria-pressed', 'true');
-    this.$el.find('.wc-QrImage-launcher').after(this.qrImage.render().el);
+    this.$el.find('.wc-QrCode-launcher').after(this.qrImage.render().el);
   }
 });
 
 issues.QrImageView = Backbone.View.extend({
-  className: 'wc-QrImage',
+  className: 'wc-QrCode-image',
   events: {
     'click button': 'closeQr'
   },

@@ -1,0 +1,46 @@
+<div class="wc-UIContent js-list-issue">
+  <script type="text/template" id="issuelist-issue-tmpl">
+  <% if (issues.length) { %>
+    <% _.each(issues, function(issue) { %>
+      {% include "web_modules/issue-list.html" %}
+    <% }); %>
+  <% } else { %>
+    <div class="wc-ListIssue-noResults">
+      <div class="wc-ListIssue-noResults-title">Sorry, no results were found.</div>
+       <ul class="wc-ListIssue-noResults-list">
+         <li class="wc-ListIssue-noResults-list-item">Check your spelling</li>
+         <li class="wc-ListIssue-noResults-list-item">Try a more general search</li>
+         <li class="wc-ListIssue-noResults-list-item">Search for popular labels</li>
+         <li class="wc-ListIssue-noResults-list-item wc-ListIssue-noResults-list-item--label">
+           <ul class="r-ResetList wc-ListIssue-noResults-list-labels">
+             <li class="wc-ListIssue-noResults-list-labelsItem js-issue-label" >
+               <a class="wc-Labels" href="#" title="Labels : android"
+                  data-remotename="browser-android"
+                  style="border-color: #48DE20">android</a>
+              </li>
+             <li class="wc-ListIssue-noResults-list-labelsItem js-issue-label">
+               <a class="wc-Labels" href="#" title="Labels : chrome"
+                  data-remotename="browser-chrome"
+                  style="border-color: #FFA500">chrome</a>
+              </li>
+             <li class="wc-ListIssue-noResults-list-labelsItem js-issue-label">
+               <a class="wc-Labels" href="#" title="Labels : firefox"
+                  data-remotename="browser-firefox"
+                  style="border-color: #E50000">firefox</a>
+             </li>
+             <li class="wc-ListIssue-noResults-list-labelsItem js-issue-label">
+               <a class="wc-Labels" href="#" title="Labels : ie"
+                  data-remotename="browser-ie"
+                  style="border-color: #3E8AE5">ie</a>
+              </li>
+           </ul>
+         </li>
+       </ul>
+    </div>
+  <% } %>
+  <p class="wc-ListIssue-github">
+    <span class="wc-Keyhint">G</span>
+    takes you to the <a class="wc-Link" href="https://github.com/{{ config['ISSUES_REPO_URI'] }}">GitHub view</a> of this page.
+  </p>
+  </script>
+</div>

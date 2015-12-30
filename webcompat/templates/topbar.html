@@ -1,11 +1,11 @@
 <header class="wc-Navbar" role="banner">
-  <nav class="wc-content" role="navigation">
+  <nav class="wc-UIContent" role="navigation">
     <div class="wc-SearchBar js-SearchBar">
       <div class="wc-SearchBar-face wc-SearchBar-face--front">
         <div class="wc-Navbar-container">
           <div class="wc-Navbar-section">
             {%- if browser == 'firefox' %}
-            <a class="wc-Navbar-link"
+            <a class="wc-Navbar-link js-Navbar-link"
                href="https://addons.mozilla.org/en-US/firefox/addon/webcompatcom-reporter/"
             >
               <span class="wc-Navbar-linkDownload-icon" aria-hidden="true">
@@ -16,7 +16,7 @@
              </span>
             </a>
             {%- elif browser == 'firefox mobile' -%}
-            <a class="wc-Navbar-link"
+            <a class="wc-Navbar-link js-Navbar-link"
                href="https://addons.mozilla.org/en-US/android/addon/webcompatcom-mobile-reporter/"
             >
               <span class="wc-Navbar-linkDownload-icon" aria-hidden="true">
@@ -27,7 +27,7 @@
               </span>
             </a>
             {%- elif browser == 'chrome' -%}
-            <a class="wc-Navbar-link"
+            <a class="wc-Navbar-link js-Navbar-link"
                 href="https://chrome.google.com/webstore/detail/webcompatcom-reporter/ffnnhckjcpbbjlmgfjigknkoffakclol"
             >
               <span class="wc-Navbar-linkDownload-icon" aria-hidden="true">
@@ -38,7 +38,7 @@
              </span>
             </a>
             {%- elif browser == 'opera' -%}
-            <a class="wc-Navbar-link"
+            <a class="wc-Navbar-link js-Navbar-link"
                href="https://addons.opera.com/en/extensions/details/webcompatcom-reporter/?display=en"
             >
               <span class="wc-Navbar-linkDownload-icon" aria-hidden="true">
@@ -49,7 +49,7 @@
              </span>
             </a>
             {%- elif browser == 'safari' -%}
-            <a class="wc-Navbar-link"
+            <a class="wc-Navbar-link js-Navbar-link"
                href="https://webcompat.com/addons/webcompat-reporter.safariextz"
             >
               <span class="wc-Navbar-linkDownload-icon" aria-hidden="true">
@@ -60,7 +60,7 @@
              </span>
               </a>
             {% else %}
-            <a class="wc-Navbar-link" href="https://github.com/webcompat/webcompat.com/issues?state=open">Give Feedback</a>{%- endif -%}
+            <a class="wc-Navbar-link js-Navbar-link" href="https://github.com/webcompat/webcompat.com/issues?state=open">Give Feedback</a>{%- endif -%}
           </div>
           <div class="wc-Navbar-section">
             <button class="r-ResetButton wc-Navbar-link js-SearchBarOpen">

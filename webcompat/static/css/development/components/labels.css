@@ -1,4 +1,8 @@
-/*---------- Labels ----------*/
+/** @define Labels */
+
+:root {
+  --Labels-colorHover: var(--base-colorDark);
+}
 
 .wc-Labels {
   display: inline-block;
@@ -8,10 +12,12 @@
   border-color:transparent;
   opacity:.7;
   text-decoration:none;
+  color: inherit;
 }
   /* state */
   .wc-Labels:hover {
     text-decoration:none;
     opacity:1;
     border-color: #414042;
+    color: var(--Labels-colorHover);
   }

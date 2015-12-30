@@ -1,13 +1,13 @@
 {% extends "layout.html" %}
 {% block body %}
-<div class="page page--404">
-  {% include "shared/nav.html" %}
-  <main class="wc-content wc-content--body" id="pageerror" role="main">
-    <h1 class="wc-Title--l">Yikes!  {{ error_message }} ({{ error_code }})</h1>
-    <h2 class="wc-Title--m">(sound of broken glass)</h2>
+{% include "shared/nav.html" %}
+<div class="wc-UISection">
+  <main class="wc-UIContent" id="pageerror" role="main">
+    <h1 class="wc-Title wc-Title--l">Yikes!  {{ error_message }} ({{ error_code }})</h1>
+    <h2 class="wc-Title wc-Title--m">(sound of broken glass)</h2>
     <br>
     <br>
-    <a class="Button Button--action" href="/">Return home</a>
+    <a class="wc-Button wc-Button--action" href="/">Return home</a>
     </main>
 </div>
 {% endblock %}

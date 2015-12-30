@@ -1,25 +1,37 @@
-/*------Comment------*/
+/** @define Issue */
 
+:root {
+  --Comment-fontSize: var(--base-fontSize);
+  --Comment-color: var(--base-variantColorLight);
+  --Comment-widthAvatar: 59px;
+  --Comment-heightAvatar: 56px;
+}
 
 /* Main Class */
 .wc-Comment {
-  font-size:var(--base-font-size);
+  font-size: var(--Comment-fontSize);
   display: flex;
   flex-direction: row;
 }
 
-  /* Avatar */
-  .wc-Comment-avatar {
-      width: 59px;
-      height: 56px;
+  /* space */
+  .wc-Comment + .wc-Comment {
+    margin-top: 1em;
   }
 
+  /* Avatar */
+  .wc-Comment-avatar {
+    width: var(--Comment-widthAvatar);
+    height: var(--Comment-heightAvatar);
+  }
+
+    /* img */
     .wc-Comment-avatar img {
-      width: 59px;
-      height: 56px;
+      width: 100%;
     }
 
-  @media (--viewport-990px) {
+  @media all and (max-width: 61.87em) {
+
     .wc-Comment-avatar {
       display: none;
     }
@@ -28,16 +40,14 @@
   /* Body */
   .wc-Comment-body {
     position: relative;
+    flex: 1;
     margin-left:.8em;
   }
-  @media (--viewport-990px) {
+
+  @media all and (max-width: 61.87em) {
+
     .wc-Comment-body {
       margin-left:0;
-    }
-  }
-  @media (--viewport-770px) {
-    .wc-Comment-body {
-      width: 100%;
     }
   }
 
@@ -50,18 +60,23 @@
       top: 15px;
       left: -9px;
       background-color: #f0f0f0;
-      border-color: var(--wc-variant-background-light);
+      border-color: var(--Comment-color);
       border-style: solid;
       border-width: 0px 0px 1px 1px;
       transform: rotate(45deg);
     }
 
+    /* Form submit */
+    .wc-Comment--form .wc-Comment-body--caret:after {
+       background-color: #fff;
+    }
+
   /* Wrapper Comment-header Comment-content */
   .wc-Comment-wrapper {
     position: relative;
-    width: 650px;
+    width: 100%;
     min-height: 128px;
-    border: solid 1px var(--wc-variant-background-light);
+    border: solid 1px var(--Comment-color);
     border-radius: 10px;
     padding: 0 1em 2em 1em;
     word-wrap: break-word;
@@ -70,17 +85,18 @@
 
   /* Textarea Placeholder style */
   .wc-Comment-wrapper::placeholder {
-    color: var(--wc-variant-background-light);
+    color: var(--Comment-color);
     opacity: 1;
     font-size: 1.2em;
     font-weight: 500;
   }
 
-  @media (--viewport-770px) {
-    .wc-Comment-wrapper {
-      width: 100%;
+    .wc-Comment--form  .wc-Comment-wrapper {
+      padding-top: 1em;
+      margin-bottom: 1.5em;
     }
-  }
+
+
   /* Comment Header */
   .wc-Comment-header {
     border-radius: 10px 10px 0 0;
@@ -88,6 +104,7 @@
     padding:.8em 1em;
     margin: 0 -1em;
   }
+
   /* Name of owner */
   .wc-Comment-owner {
     font-weight: bold;
@@ -101,14 +118,22 @@
     overflow-x: auto;
     overflow-y: hidden;
   }
+
+    /*
+     *overide all style from Github Text
+     */
+
     /* list style */
     .wc-Comment-content ul,
     .wc-Comment-content ol {
       list-style: inside;
     }
+
+    /* ol */
     .wc-Comment-content ol {
       list-style-type: decimal;
     }
+
     /* pre / code */
     .wc-Comment-content pre,
     .wc-Comment-content code {
@@ -117,55 +142,59 @@
       overflow: auto;
       background: #F5F2F0;
     }
+
+    /* code */
     .wc-Comment-content code {
       padding: 0;
     }
+
     /* title */
     .wc-Comment-content h1 {
       font-size: 2em;
       font-weight: 600;
       margin: 1em 0;
     }
+
     .wc-Comment-content h2 {
       font-size: 1.5em;
       font-weight: 600;
       margin: 1em 0;
     }
+
     .wc-Comment-content h3 {
       font-size: 1.2em;
       font-weight: 600;
       margin: 1em 0;
     }
-  /* Comment-content img */
-  .wc-Comment-content img {
-    max-width:100%;
-    max-height:100%;
-  }
-  /* paragraph */
-  .wc-Comment-content p + p {
-    font-size: 1em;
-    margin-top: 2em;
-  }
-  /* blockquote */
-  .wc-Comment-content blockquote {
-    border-left: 4px solid var(--wc-background-light);
-    padding: 0px 1em;
-    margin: 1em 0px;
-    color: #6a6a6a;
-  }
-  /* GitHub username */
-  .wc-Comment-content .github__username {
-    font-weight: bold;
-  }
 
-  /* Form submit */
-  .wc-Comment--form {
-    padding-top:2em;
-    margin:2em 0 0 ;
-  }
-  .wc-Comment--form .wc-Comment-body--caret:after {
-     background-color: #fff;
-  }
+    /* Comment-content img */
+    .wc-Comment-content img {
+      display: block;
+      max-width: 100%;
+      max-height: 100%;
+      width: 100%;
+      height: 100%;
+    }
+
+    /* paragraph */
+    .wc-Comment-content p + p {
+      font-size: 1em;
+      margin-top: 2em;
+    }
+
+    /* blockquote */
+    .wc-Comment-content blockquote {
+      border-left: 4px solid var(--base-colorDark);
+      padding: 0px 1em;
+      margin: 1em 0px;
+      color: #6a6a6a;
+    }
+
+    /* GitHub username */
+    .wc-Comment-content .github__username {
+      font-weight: bold;
+    }
+
   /* img attach file */
   .wc-Comment-attach {
     display: block;
@@ -174,38 +203,12 @@
     text-align: center;
     overflow: hidden /* prevent overflow */
   }
+
   /* prevent width of img */
   .wc-Comment-attach img {
     width: 100%;
     max-width: 100%;
   }
-  .wc-Comment--form  .wc-Comment-wrapper {
-    padding-top: 1em;
-    margin-bottom: 1.5em;
-  }
-
-  /*Comment + Comment */
-  .wc-Comment + .wc-Comment {
-    margin-top: 1em;
-  }
-
-/* drag and drop */
-/*.Comment-drag{
-    position: relative;
-}
-.Comment-dd {
-  position: absolute;
-  bottom: .6em;
-  width: 100%;
-  text-align: center;
-  color: var(--wc-variant-background-light);
-  font-size: .8em;
-  z-index: 2;
-  font-weight: bold;
-}
-.Comment-dd-label {
-  color: #e6bf04;
-}*/
 
   /* Button */
   .wc-Comment-button {
@@ -213,7 +216,8 @@
     margin:1.2em 0 0;
   }
 
-  @media (--viewport-770px) {
+  @media all and (max-width: 48.12em) {
+
    .wc-Comment-button {
      text-align: center;
      font-size:.9em;
@@ -222,4 +226,11 @@
 
   .wc-Comment-button .button {
     text-align: center;
+  }
+
+  /* QR */
+  .wc-Comment-qr {
+    position:absolute;
+    z-index: 1;
+    right: 0;
   }

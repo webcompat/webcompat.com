@@ -1,21 +1,19 @@
-<div class="wc-IssueList">
-  <div class="wc-content" id="user-reported-issues">
-    <div class="wc-IssueList-subtitle">
-      <h2 class="wc-Title--l">Issues reported by {{user}}</h2>
-    </div>
-    <div class="wc-IssueList-pagination">
-        {% include "web_modules/pagination.html" %}
-    </div>
-    <div id="my-issues">
-      <script type="text/template" id="my-issues-tmpl">
-        <% if (myIssues.length) { %>
-          <% _.each(myIssues, function(issue) { %>
-            {% include "web_modules/issue-item.html" %}
-          <% }); %>
-        <% } else { %>
-        <p>Nothing here currently, go report something!</p>
-        <% } %>
-      </script>
-    </div>
+<div class="wc-UIContent" id="user-reported-issues">
+  <div class="wc-ListIssue-subtitle">
+    <h2 class="wc-Title wc-Title--l">Issues reported by {{user}}</h2>
+  </div>
+  <div class="wc-ListIssue-pagination">
+      {% include "web_modules/pagination.html" %}
+  </div>
+  <div id="my-issues">
+    <script type="text/template" id="my-issues-tmpl">
+      <% if (myIssues.length) { %>
+        <% _.each(myIssues, function(issue) { %>
+          {% include "web_modules/issue-list.html" %}
+        <% }); %>
+      <% } else { %>
+      <p>Nothing here currently, go report something!</p>
+      <% } %>
+    </script>
   </div>
 </div>

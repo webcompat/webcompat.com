@@ -1,12 +1,19 @@
-/* Dropdown */
+/** @define Pagination */
+
+:root {
+  --Pagination-fontSize: var(--base-fontSize);
+  --Pagination-colorHover: var(--base-colorDark);
+}
+
 .wc-Pagination {
-  font-size:var(--base-font-size);
+  font-size:var(--Pagination-fontSize);
   text-align:right;
 }
 
   .wc-Pagination-link {
     display:inline-block;
     cursor:pointer;
+    color: inherit;
     vertical-align:middle;
     padding: 0.7em 0px;
     font-weight:700;
@@ -14,14 +21,23 @@
     margin-top:.2em;
     text-decoration: none;
   }
-    .wc-Pagination-link:focus {
-      color: inherit;
+
+    /* event */
+    .wc-Pagination-link:focus:not(.is-disabled),
+    .wc-Pagination-link:hover:not(.is-disabled) {
+      color: var(--Pagination-colorHover);
     }
+
+    /* state */
     .wc-Pagination-link.is-disabled {
       cursor:inherit;
       opacity:.6;
       text-decoration:none;
     }
-  .wc-Pagination-link + .wc-Pagination-link {
-    margin-left:1em;
-  }
+    .wc-Pagination-link.is-hidden {
+      display: none;
+    }
+
+    .wc-Pagination-link + .wc-Pagination-link {
+      margin-left:1em;
+    }

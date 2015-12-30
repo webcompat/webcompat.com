@@ -33,7 +33,7 @@ define([
         .findByCssSelector('.js-issue-state-button').click()
         .sleep(2000)
         .end()
-        .findByCssSelector('.wc-IssueDetail-state').getVisibleText()
+        .findByCssSelector('.js-tag').getVisibleText()
         .then(function(text) {
           assert.equal(text, 'Closed', 'Closed state text is displayed');
         })
@@ -46,7 +46,7 @@ define([
         .findByCssSelector('.js-issue-state-button').click()
         .sleep(2000)
         .end()
-        .findByCssSelector('.wc-IssueDetail-state').getVisibleText()
+        .findByCssSelector('.js-tag').getVisibleText()
         .then(function(text) {
           assert.equal(text, 'Ready for Outreach', 'Ready for Outreach state is displayed');
         })

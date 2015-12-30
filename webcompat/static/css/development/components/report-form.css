@@ -1,26 +1,26 @@
-/*------Report form------*/
+/** @define ReportForm */
 
-.wc-ReportForm {}
+.wc-ReportForm {
+  display: none;
+}
 
-  .wc-ReportForm-button .Button {
-    font-size:.875em;
+  /* state */
+  .wc-ReportForm.is-opened {
+    display: block;
   }
 
-  /* Github Button */
-  .wc-ReportForm-button--github {
-    text-align:right;
+  /* actions */
+  .wc-ReportForm-actions {
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    flex-wrap: wrap;
   }
-  @media (--viewport-450px) {
-    .wc-ReportForm-button-github {
-      text-align:center;
-    }
-    .wc-ReportForm-button .Button {
-      font-size:.8em;
-    }
-  }
-  @media (--viewport-600px) {
-    .wc-ReportForm-button {
-      width:100%;
-      text-align:center;
-    }
+
+    @media all and (min-width: 30.75em) {
+
+      /* space between button */
+      .wc-ReportForm-actions-button + .wc-ReportForm-actions-button {
+        margin-left: .6em;
+      }
   }

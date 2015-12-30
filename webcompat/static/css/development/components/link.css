@@ -1,0 +1,18 @@
+/** @define Link */
+
+:root {
+  --Link-color: #000;
+  --Link-colorHover: var(--base-colorDark);
+}
+
+.wc-Link {
+  color: var(--Link-color);
+  text-decoration: underline;
+}
+
+    /* event */
+    .wc-Link:hover,
+    .wc-Link:focus {
+      color: var(--Link-colorHover);
+      text-decoration: none;
+    }

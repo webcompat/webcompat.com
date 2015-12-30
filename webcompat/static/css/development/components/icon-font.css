@@ -13,7 +13,7 @@
 
 .wc-Icon {
   display: inline-block;
-  font: normal normal normal 14px/1 webcompat;
+  font: normal normal normal 1em/1 webcompat;
   font-size: inherit;
   text-rendering: auto;
   -webkit-font-smoothing: antialiased;

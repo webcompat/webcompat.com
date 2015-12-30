@@ -90,15 +90,15 @@ function PaginationMixin() {
     if (!issuesCollection.length || isSinglePage) {
       // hide pagination buttons if there are no results,
       // or the results are limited to a single page.
-      nextButton.addClass('wc-hidden');
-      prevButton.addClass('wc-hidden');
+      nextButton.addClass('is-hidden');
+      prevButton.addClass('is-hidden');
       return;
     }
 
-    nextButton.removeClass('wc-hidden')
+    nextButton.removeClass('is-hidden')
               .prop('disabled', isLastPage())
               .toggleClass('is-disabled', isLastPage());
-    prevButton.removeClass('wc-hidden')
+    prevButton.removeClass('is-hidden')
               .prop('disabled', isFirstPage())
               .toggleClass('is-disabled', isFirstPage());
 

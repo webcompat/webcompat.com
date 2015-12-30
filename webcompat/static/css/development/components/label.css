@@ -1,0 +1,33 @@
+/** @define Label */
+
+:root {
+  --Label-fontSize: .7rem;
+}
+
+.wc-Label {
+  font-size:var(--Label-fontSize);
+  display: inline-block;
+  vertical-align:middle;
+  line-height:1;
+  color: #fff;
+  border-radius: 4px;
+  padding: 0.4em;
+  font-weight: bold;
+}
+
+  /* Labels */
+  .wc-Label--large {
+    font-size: 1.2em;
+    color: #000;
+    padding-right: 0;
+    padding-left: 0;
+    margin-right: 0.1em;
+  }
+
+  .wc-Label--badge {
+    margin-left: 1em;
+  }
+
+  .wc-Label--badge + .wc-Label--badge {
+    margin-left: .7em;
+  }

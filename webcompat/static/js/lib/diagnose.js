@@ -11,7 +11,7 @@ diagnose.NewCollection = Backbone.Collection.extend({
 });
 
 diagnose.NewView = Backbone.View.extend({
-  el: $('#new'),
+  el: $('#js-lastIssue'),
   initialize: function() {
     var self = this;
     var headersBag = {headers: {'Accept': 'application/json'}};

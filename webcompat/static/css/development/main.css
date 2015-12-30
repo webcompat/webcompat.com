@@ -1,51 +1,53 @@
-/*----------Base----------*/
-@import "base/variable.css";
-@import "base/font.css";
-
 /*----------Vendor----------*/
-@import "vendor/prism.css";
-@import "suitcss-utils-display/index.css";
-@import "suitcss-utils-align/index.css";
-@import "cssrecipes-reset/index.css";
-@import "cssrecipes-grid/index.css";
-@import "components/grid.css";
-@import "cssrecipes-utils/lib/all.css";
-@import "cssrecipes-utils/lib/max.css";
-@import "cssrecipes-utils/lib/min.css";
-@import "cssrecipes-custom-media-queries/index.css";
+
+@import "vendor/prism";
+@import "cssrecipes-reset/index";
+@import "cssrecipes-grid/index";
+@import "components/grid";
+@import "cssrecipes-utils/lib/all";
+@import "cssrecipes-utils/lib/max";
+@import "cssrecipes-utils/lib/min";
+@import "cssrecipes-custom-media-queries/index";
+@import "cssrecipes-defaults/lib/border-collapse";
+@import "cssrecipes-defaults/lib/box-sizing";
+@import "cssrecipes-defaults/lib/document-remove-margin-padding";
+@import "cssrecipes-defaults/lib/hidden";
 
 /*----------Component----------*/
-@import "components/navbar.css";
-@import "components/footer.css";
-@import "components/button.css";
-@import "components/comment.css";
-@import "components/label-editor.css";
-@import "components/responsive.css";
-@import "components/form.css";
-@import "components/issue-item.css";
-@import "components/dropdown.css";
-@import "components/flash-message.css";
-@import "components/hero.css";
-@import "components/filter.css";
-@import "components/pagination.css";
-@import "components/labels.css";
-@import "components/title.css";
-@import "components/loader.css";
-@import "components/box.css";
-@import "components/report-form.css";
-@import "components/issue-detail.css";
-@import "components/qrcode.css";
-@import "components/search-bar.css";
-@import "components/dropdown-header.css";
-@import "components/issue-list.css";
-@import "components/issue-search.css";
-@import "components/cssfixme.css";
 
-/*----------Layout----------*/
-@import "layout/body.css";
-@import "layout/utilities.css";
-
-/*----------page----------*/
-@import "page/home.css";
-@import "page/static.css";
-@import "page/contributors.css";
+@import "components/style-variable";
+@import "components/reset";
+@import "components/UI";
+@import "components/icon-font";
+@import "components/navbar";
+@import "components/footer";
+@import "components/button";
+@import "components/comment";
+@import "components/label-editor";
+@import "components/form";
+@import "components/issue-list";
+@import "components/dropdown";
+@import "components/flash-message";
+@import "components/hero";
+@import "components/tag";
+@import "components/pagination";
+@import "components/labels";
+@import "components/title";
+@import "components/loader";
+@import "components/box";
+@import "components/report-form";
+@import "components/issue";
+@import "components/qr-code";
+@import "components/search-bar";
+@import "components/dropdown-header";
+@import "components/list-issue";
+@import "components/search-form";
+@import "components/cssfixme";
+@import "components/threesteps";
+@import "components/link";
+@import "components/keyhint";
+@import "components/utilities";
+@import "components/accessibility";
+@import "components/label";
+@import "components/upload-form";
+@import "components/contributors";

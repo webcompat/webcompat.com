@@ -15,24 +15,24 @@ define([
   };
 
   registerSuite({
-    name: 'issues',
+    name: 'Issues',
 
     'Issue page loads': function() {
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url('/issues/100')))
         .sleep(1000)
-        .findByCssSelector('h1.wc-IssueDetail-title').getVisibleText()
+        .findByCssSelector('h1.js-issue-title').getVisibleText()
         .then(function(text) {
           assert.include(text, 'Issue 100:', 'Issue title displayed');
         })
         .end()
-        .findByCssSelector('.wc-IssueDetail-reporter').getVisibleText()
+        .findByCssSelector('.js-issue-reporter').getVisibleText()
         .then(function(text) {
           assert.equal(text, 'miketaylr', 'Issue reporter displayed.');
         })
         .end()
-        .findByCssSelector('.Label--badge').isDisplayed()
+        .findByCssSelector('.js-label').isDisplayed()
         .then(function(isDisplayed) {
           assert.equal(isDisplayed, true);
         });
@@ -47,13 +47,13 @@ define([
         .then(function(isDisplayed) {
           assert.equal(isDisplayed, true);
         })
-        .findByCssSelector('.wc-Comment-owner').getVisibleText()
+        .findByCssSelector('.js-comment-owner').getVisibleText()
         .then(function(text) {
           assert.equal(text, 'GIGANTOR', 'Commenter name displayed.');
         })
         .end()
         .sleep(500)
-        .findByCssSelector('.wc-Comment-content').getVisibleText()
+        .findByCssSelector('.js-comment-content').getVisibleText()
         .then(function(text) {
           assert.equal(text, 'Today\'s date is Mon Sep 28 2015', 'Comment is displayed.');
         });
@@ -85,9 +85,9 @@ define([
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url('/issues/252')))
         // Click on QR code button to open
-        .findByCssSelector('.wc-QrImage-launcher').click()
+        .findByCssSelector('.js-qrcode-launcher').click()
         .end()
-        .findByCssSelector('.wc-QrImage').isDisplayed()
+        .findByCssSelector('.wc-QrCode-image').isDisplayed()
         .then(function(isDisplayed) {
           assert.equal(isDisplayed, true);
         })
@@ -99,17 +99,17 @@ define([
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url('/issues/252')))
         // Click on QR code button to open
-        .findByCssSelector('.wc-QrImage-launcher').click()
+        .findByCssSelector('.js-qrcode-launcher').click()
         .end()
-        .findByCssSelector('.wc-QrImage').isDisplayed()
+        .findByCssSelector('.wc-QrCode-image').isDisplayed()
         .then(function(isDisplayed) {
           assert.equal(isDisplayed, true);
         })
         .end()
         // Click on QR code button again to close
-        .findByCssSelector('.wc-QrImage-launcher.is-active').click()
+        .findByCssSelector('.js-qrcode-launcher.is-active').click()
         .end()
-        .findByCssSelector('.wc-QrImage').isDisplayed()
+        .findByCssSelector('.wc-QrCode-image').isDisplayed()
         .then(function(isDisplayed) {
           assert.equal(isDisplayed, false);
         })
@@ -124,7 +124,7 @@ define([
         .findByCssSelector('body').click()
         .type('q')
         .end()
-        .findByCssSelector('.wc-QrImage').isDisplayed()
+        .findByCssSelector('.wc-QrCode-image').isDisplayed()
         .then(function(isDisplayed) {
           assert.equal(isDisplayed, true);
         })
@@ -136,17 +136,17 @@ define([
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url('/issues/252')))
         // Click on QR code button to open
-        .findByCssSelector('.wc-QrImage-launcher').click()
+        .findByCssSelector('.js-qrcode-launcher').click()
         .end()
-        .findByCssSelector('.wc-QrImage').isDisplayed()
+        .findByCssSelector('.wc-QrCode-image').isDisplayed()
         .then(function(isDisplayed) {
           assert.equal(isDisplayed, true);
         })
         .end()
         // Click on QR code Close link to close
-        .findByCssSelector('.wc-QrImage-btn').click()
+        .findByCssSelector('.js-qrcode-image-button').click()
         .end()
-        .findByCssSelector('.wc-QrImage').isDisplayed()
+        .findByCssSelector('.wc-QrCode-image').isDisplayed()
         .then(function(isDisplayed) {
           assert.equal(isDisplayed, false);
         })

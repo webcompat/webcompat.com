@@ -21,12 +21,12 @@ define([
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url('/issues')))
-        .findByCssSelector('.js-issuelist-filter .wc-Dropdown--large .wc-Dropdown-label').getVisibleText()
+        .findByCssSelector('.js-issuelist-filter .js-dropdown .js-dropdown-label').getVisibleText()
         .then(function(text) {
           assert.include(text, 'Issues', 'Page header displayed');
         })
         .end()
-        .findAllByCssSelector('button.wc-Filter')
+        .findAllByCssSelector('button.js-filter-button')
         .then(function(elms) {
           assert.equal(elms.length, 6, 'All filter buttons are displayed');
         })
@@ -43,17 +43,17 @@ define([
         })
         .sleep(1000)
         .end()
-        .findByCssSelector('.js-issue-list .wc-IssueItem').isDisplayed()
+        .findByCssSelector('.js-list-issue .js-issue-list').isDisplayed()
         .then(function(isDisplayed) {
           assert.equal(isDisplayed, true, 'IssueList item is visible.');
         })
         .end()
-        .findByCssSelector('.wc-IssueItem .wc-IssueItem-header').getVisibleText()
+        .findByCssSelector('.js-issue-list .wc-IssueList-header').getVisibleText()
         .then(function(text) {
           assert.match(text, /^Issue\s\d+:\s.+$/, 'Issue should have a non-empty title');
         })
         .end()
-        .findByCssSelector('.wc-IssueItem:nth-child(1) > div:nth-child(1) > p:nth-child(2)').getVisibleText()
+        .findByCssSelector('.js-issue-list:nth-child(1) > div:nth-child(1) > p:nth-child(2)').getVisibleText()
         .then(function(text) {
           assert.match(text, /comments:\s\d+$/i, 'Issue should display number of comments');
           assert.match(text, /^Opened:\s\d{4}\-\d{2}\-\d{2}.+/, 'Issue should display creation date');
@@ -112,14 +112,14 @@ define([
           assert.equal(isDisplayed, true, 'dropdown options are visible.');
         })
         .end()
-        .findByCssSelector('.js-dropdown-pagination li.wc-Dropdown-item:nth-child(3) > a:nth-child(1)').click()
+        .findByCssSelector('.js-dropdown-pagination .js-dropdown-item:nth-child(3) > .js-dropdown-link:nth-child(1)').click()
         .end()
-        .findByCssSelector('.js-dropdown-pagination .wc-Dropdown-label').getVisibleText()
+        .findByCssSelector('.js-dropdown-pagination .js-dropdown-label').getVisibleText()
         .then(function(text) {
           assert.include(text, 'Show 100', 'Clicking first option updated dropdown label');
         })
         .end()
-        .findByCssSelector('.wc-IssueItem:nth-child(51)').isDisplayed()
+        .findByCssSelector('.js-issue-list:nth-child(51)').isDisplayed()
         .then(function(isDisplayed) {
           assert.equal(isDisplayed, true, 'More than 50 issues were loaded.');
         })
@@ -162,7 +162,7 @@ define([
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url('/issues')))
         // find something so we know the page has loaded
-        .findByCssSelector('.wc-IssueItem:nth-of-type(1)')
+        .findByCssSelector('.js-issue-list:nth-of-type(1)')
         .getCurrentUrl()
         .then(function(currUrl) {
           assert.include(currUrl, 'page=1&per_page=50&state=open', 'Default model params are added to the URL');
@@ -175,7 +175,7 @@ define([
           .setFindTimeout(intern.config.wc.pageLoadTimeout)
           .get(require.toUrl(url('/issues') + params))
           // find something so we know the page has loaded
-          .findByCssSelector('.wc-IssueItem:nth-of-type(1)')
+          .findByCssSelector('.js-issue-list:nth-of-type(1)')
           .getCurrentUrl()
           .then(function(currUrl) {
             assert.include(currUrl, 'page=2&per_page=50&state=open', 'Default model params are merged with partial URL params');
@@ -219,10 +219,10 @@ define([
         // Select "Show 100" from pagination dropdown
         .findByCssSelector('.js-dropdown-pagination .js-dropdown-toggle').click()
         .end()
-        .findByCssSelector('.js-dropdown-pagination li.wc-Dropdown-item:nth-child(3) > a:nth-child(1)').click()
+        .findByCssSelector('.js-dropdown-pagination li.js-dropdown-item:nth-child(3) > a:nth-child(1)').click()
         .end()
         // find something so we know issues have been loaded
-        .findByCssSelector('.wc-IssueItem:nth-of-type(1)')
+        .findByCssSelector('.js-issue-list:nth-of-type(1)')
         .goBack()
         .getCurrentUrl()
         .then(function(currUrl) {
@@ -243,7 +243,7 @@ define([
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url('/issues') + params))
         // Did an issue load?
-        .findByCssSelector('.wc-IssueItem:nth-of-type(1)')
+        .findByCssSelector('.js-issue-list:nth-of-type(1)')
         .end()
         .findByCssSelector('.js-filter-button.is-active').getVisibleText()
         .then(function(text) {
@@ -259,7 +259,7 @@ define([
         .findByCssSelector('[data-filter="contactready"]').click()
         .end()
         // find something so we know the page has loaded
-        .findByCssSelector('.wc-IssueItem:nth-of-type(1)')
+        .findByCssSelector('.wc-IssueList:nth-of-type(1)')
         .getCurrentUrl()
         .then(function(currUrl) {
           assert.include(currUrl, 'stage=contactready', 'Stage filter added to URL correctly.');
@@ -274,7 +274,7 @@ define([
         .findByCssSelector('[data-filter="closed"]').click()
         .end()
         // find something so we know the page has loaded
-        .findByCssSelector('.wc-IssueItem:nth-of-type(1)')
+        .findByCssSelector('.wc-IssueList:nth-of-type(1)')
         .end()
         .findByCssSelector('[data-filter="closed"]').click()
         .end()
@@ -292,7 +292,7 @@ define([
         .findByCssSelector('[data-filter="closed"]').click()
         .end()
         // find something so we know the page has loaded
-        .findByCssSelector('.wc-IssueItem:nth-of-type(1)')
+        .findByCssSelector('.wc-IssueList:nth-of-type(1)')
         .end()
         .findByCssSelector('[data-filter="sitewait"]').click()
         .end()
@@ -309,7 +309,7 @@ define([
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url('/issues') + params))
-        .findByCssSelector('.wc-IssueItem:nth-of-type(1) a').getVisibleText()
+        .findByCssSelector('.wc-IssueList:nth-of-type(1) a').getVisibleText()
         .then(function(text) {
           assert.include(text, 'vladvlad', 'The search query results show up on the page.');
         })

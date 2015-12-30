@@ -3,15 +3,19 @@
 {% include "shared/nav.html" %}
 <main role="main">
   <div class="wc-Loader js-loader"></div>
-  <div class="wc-content wc-content--body">
-    <div class="wc-TextCenter">
-      <h1 class="wc-Title wc-Title--l wc-ResetOffsetBottom">{{user}}'s activity</h1>
+  <section class="wc-UISection">
+    <div class="wc-UIContent">
+      <div style="text-align: center">
+        <h1 class="wc-Title wc-Title--l wc-ResetOffsetBottom">{{user}}'s activity</h1>
+      </div>
     </div>
-  </div>
-  <div id="browse-issues-wrapper">
-    {% include "user-activity/reported-by-user.html" %}
-    {% include "user-activity/user-mentions.html" %}
-  </div>
+  </section>
+  <section class="wc-UISection wc-UISection--backgroundColor js-list-issue">
+    <div id="browse-issues-wrapper">
+      {% include "user-activity/reported-by-user.html" %}
+      {% include "user-activity/user-mentions.html" %}
+    </div>
+  </section>
 </div>
 {% endblock %}
 {% block extrascripts %}

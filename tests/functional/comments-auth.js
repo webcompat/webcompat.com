@@ -31,7 +31,7 @@ define([
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url('/issues/100')))
         .sleep(2000)
-        .findByCssSelector('.wc-Comment--form').isDisplayed()
+        .findByCssSelector('.js-comment-form').isDisplayed()
         .then(function(isDisplayed) {
           assert.equal(isDisplayed, true, 'Comment form visible for logged in users.');
         })
@@ -51,7 +51,7 @@ define([
           assert.notEqual('Close and comment', text);
         })
         .end()
-        .findByCssSelector('textarea.wc-Comment-text')
+        .findByCssSelector('textarea.js-comment-text')
         .type('test comment')
         .end()
         .sleep(1000)
@@ -74,7 +74,7 @@ define([
           assert.notEqual('Reopen and comment', text);
         })
         .end()
-        .findByCssSelector('textarea.wc-Comment-text')
+        .findByCssSelector('textarea.js-comment-text')
         .type('test comment')
         .end()
         .sleep(1000)
@@ -91,12 +91,12 @@ define([
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url('/issues/100')))
-        .findAllByCssSelector('.js-issue-comment:not(.wc-Comment--form)')
+        .findAllByCssSelector('.js-issue-comment')
         .then(function(elms) {
           originalCommentsLength = elms.length;
         })
         .end()
-        .findByCssSelector('textarea.wc-Comment-text')
+        .findByCssSelector('textarea.js-comment-text')
         .type('Today\'s date is ' + new Date().toDateString())
         .end()
         .sleep(2000)
@@ -104,7 +104,7 @@ define([
         .findByCssSelector('.js-issue-comment-button').click()
         .end()
         .sleep(2000)
-        .findAllByCssSelector('.js-issue-comment:not(.wc-Comment--form)')
+        .findAllByCssSelector('.js-issue-comment')
         .then(function(elms) {
           allCommentsLength = elms.length;
           assert(originalCommentsLength < allCommentsLength, 'Comment was successfully left.');
@@ -117,7 +117,7 @@ define([
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url('/issues/100')))
-        .findAllByCssSelector('.js-issue-comment:not(.wc-Comment--form)')
+        .findAllByCssSelector('.js-issue-comment')
         .then(function(elms) {
           originalCommentsLength = elms.length;
         })
@@ -126,7 +126,7 @@ define([
         .findByCssSelector('.js-issue-comment-button').click()
         .end()
         .sleep(500)
-        .findAllByCssSelector('.js-issue-comment:not(.wc-Comment--form)')
+        .findAllByCssSelector('.js-issue-comment')
         .then(function(elms) {
           allCommentsLength = elms.length;
           assert(originalCommentsLength === allCommentsLength, 'Comment was not successfully left.');

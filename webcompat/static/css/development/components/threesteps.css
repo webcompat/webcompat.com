@@ -1,0 +1,49 @@
+/** @define Threesteps */
+
+:root {
+  --Threesteps-fonSize: 1rem;
+  --Threesteps-backgroundColor: #fff;
+}
+
+.wc-Threesteps {
+  padding: 1em 0;
+}
+
+  /* item */
+  .wc-Threesteps-item {
+    display: flex;
+    align-items: center;
+    font-size: var(--Threesteps-fonSize);
+    margin: 0 0 .5em;
+  }
+
+    /* Number */
+    .wc-Threesteps-item-number {
+      font-size: 2em;
+      font-weight: 700;
+      padding: 0 .75em 0 .5em;
+    }
+
+      /* img */
+      .wc-Threesteps-item-number img {
+        width: 50px;
+      }
+
+    @media all and (max-width: 59.37em) {
+
+      .wc-Threesteps-item-number {
+        padding-right: 0.5em;
+      }
+    }
+
+    @media all and (max-width: 48.12em) {
+
+      .wc-Threesteps-item-number {
+        padding-bottom: 0;
+      }
+    }
+
+    /* text */
+    .wc-Threesteps-item-text {
+      margin: 0;
+    }

@@ -1,113 +1,111 @@
-/*------Form------*/
+/** @define Form */
 
-.wc-Form-input {
-  font: inherit;
-  display: block;
-  width: 100%;
-  height: 34px;
-  padding: 6px 12px;
-  font-size: 14px;
-  line-height: 1.42857;
-  color: #555;
-  background-color: #FFF;
-  background-image: none;
-  border: 1px solid #CCC;
-  border-radius: 20px;
-  padding: 0.5em;
-  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset;
-  transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+:root {
+  --Form-fontSize: 1rem;
 }
-  .wc-Form-input:focus {
-    border-color: #66AFE9;
-    outline: 0px none;
-    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset, 0px 0px 8px rgba(102, 175, 233, 0.6);
-  }
-  .wc-Form-input--textarea {
-    min-height: 250px;
-  }
-  .wc-Form-input::placeholder {
-    color: #999;
-    opacity: 1;
-   }
 
-  input[type="radio"] {
-    margin:0 5px 0 0;
-  }
-.wc-Form-label {
-  display:inline-block;
-  margin-bottom:5px;
-  color:#000;
-  font-weight:700;
-}
-  .wc-Form-label--upload {
+.wc-Form {}
+
+  /* group item */
+  .wc-Form-group {
     position: relative;
+    margin-bottom:1.6em;
+  }
+
+  /* information: wrapp label and helpMessage */
+  .wc-Form-information {
+    display: flex;
+  }
+
+  /* label */
+  .wc-Form-label {
+    display: inline-block;;
+    margin-bottom: 5px;
+    color: #000;
+    font-weight: 700;
+  }
+
+    /* modifier */
+    .wc-Form-label--light {
+      font-weight: 300;
+    }
+  .wc-Form-radio {
+    position: relative;
+    display: block;
+    width:100%;
+    margin: 0 0 .8em 0;
+    vertical-align: middle;
+    font-weight: 400;
     cursor: pointer;
-    text-decoration: underline;
   }
 
-/*------Form Validation------*/
-.wc-Form-error .wc-Form-input {
-  border-color: #ff0000;
-}
-.wc-Form-error .wc-Form-input:focus{
-  border-color: #ff0000;
-  box-shadow:none;
-}
-.wc-Form-error .wc-Form-helpInline {
-  color: #ff0000;
-  float: right;
-}
-.wc-Comment--form .wc-Form-error .wc-Form-helpInline {
-  float: none;
-}
-.wc-Form-group {
-  margin-bottom:1.6em;
-}
-.wc-Form-required {
-  color:#ff0000;
-}
-legend.wc-Form-label {
-  width: 100%;
-}
-
-.wc-Form-radio,
-.radio-inline {
-  width:100%;
-  height: 34px;
-  position: relative;
-  display: inline-block;
-  margin-bottom: 0px;
-  vertical-align: middle;
-  font-weight: 400;
-  cursor: pointer;
-}
-.wc-Form-radio label,
-.radio-inline label {
-  display: inline-block;
-  vertical-align: middle;
-  font-weight: 300;
-}
-.form-opened {
-  display: block;
-}
-.form-closed {
-  display: none;
-}
-
-  @media (--viewport-600px) {
-    .wc-Form-error .wc-Form-helpInline {
-      float: none;
-      display: block;
+    /* label */
+    .wc-Form-radio label {
+      display: inline-block;
+      vertical-align: middle;
+      font-weight: 300;
     }
-    .Report-form .Button-group .Grid-cell {
-      text-align:center !important;
-    }
+
+  /* helpMessage */
+  .wc-Form-helpMessage {
+    font-weight: 700;
+    color: #ff0000;
+    margin: 0 0 0 .5em;
   }
+
+  /* imput */
+  .wc-Form-item {
+    display: block;
+    width: 100%;
+    font-size: var(--Form-fontSize);
+    font-family: inherit;
+    font-weight: 300;
+    color: #555;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    padding: 0.5em;
+    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset;
+    transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+  }
+
+    /* state */
+    .wc-Form-item.is-hidden {
+      display: none;
+    }
+
+    /* event */
+    .wc-Form-item:focus {
+      border-color: #66AFE9;
+      box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset, 0px 0px 8px rgba(102, 175, 233, 0.6);
+    }
+
+    .wc-Form-input::placeholder {
+      color: #999;
+      opacity: 1;
+     }
+
+    /* modifier */
+    .wc-Form-item--textarea {
+      min-height: 250px;
+    }
+
+    input[type="radio"] {
+      margin:0 5px 0 0;
+    }
+
+  /* required */
+  .wc-Form-required {
+    color:#ff0000;
+  }
+
+  /* validation */
   .wc-Form-validation {
     display: block;
     clear: both;
     position: relative;
   }
+
     .wc-Form-validation::after {
       content: "";
       display: block;
@@ -120,74 +118,48 @@ legend.wc-Form-label {
       background-size: contain;
     }
 
-.wc-Form-validation .wc-Form-input {
-  padding-right: 40px;
-}
-.wc-Form-noError .wc-Form-validation::after {
-  background-image: url(../img/valid.svg);
-}
-.wc-Form-error .wc-Form-validation::after {
-  background-image: url(../img/invalid.svg);
-}
-.wc-Form-noError .wc-Form-helpInline {
-  display: none;
-}
-.wc-Form-error .wc-Form-input {
-  border-color: var(--wc-background-dark);
-}
-.wc-Form-noError .wc-Form-input:focus{
-  border-color: var(--wc-background-dark);
-  box-shadow:none;
-}
-
-/* upload */
-.wc-Form-upload {
-  display: block;
-  position: relative;
-  text-align: center;
-  border: dashed 1px #ccc;
-  border-radius: 20px;
-  min-height: 250px;
-  cursor: pointer;
-  overflow: hidden;
-}
-
-  /* Form upload wrapper */
-  .wc-Form-upload-wrapper {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
-    /* state */
-    .wc-Form-upload-wrapper.is-hidden {
-      display: none;
-    }
-
-    .wc-Form-upload-icon {
-      font-size: 6.2em;
-      margin: 0 0 16px;
-      color: #c8c8c8;
-    }
-
-    /* Upload button */
-    .wc-Form-upload-button {
-      position: absolute;
-      width: 100%;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      padding: 1em 0;
-      font-weight:700;
-      background-color: var(--wc-background-dark);
-      border-bottom-left-radius: 20px;
-      border-bottom-right-radius: 20px;
-      cursor: pointer;
-      text-align: center;
-      text-decoration: underline;
-      transform: translateY(0);
-      transition: transform .2s linear 0s;
-    }
-      .wc-Form-upload-button.is-hidden {
-        transform: translateY(100%);
+      /* handle error */
+      .wc-Form-group.is-error .wc-Form-item {
+        border-color: #ff0000;
       }
+
+      .wc-Form-group.is-error .wc-Form-item:focus{
+        border-color: #ff0000;
+        box-shadow:none;
+      }
+
+      .wc-Form-validation .wc-Form-item {
+        padding-right: 40px;
+      }
+
+      .wc-Form-group.is-validated .wc-Form-validation::after {
+        background-image: url(../img/valid.svg);
+      }
+
+      .wc-Form-group.is-error .wc-Form-validation::after {
+        background-image: url(../img/invalid.svg);
+      }
+
+      .wc-Form-group.is-validated .wc-Form-helpMessage {
+        display: none;
+      }
+
+      .wc-Form-group.is-error .wc-Form-item {
+        border-color: var(--base-variantColorDark);
+      }
+      
+      .wc-Form-group.is-error .wc-Form-item:focus{
+        border-color: var(--base-variantColorDark);
+        box-shadow:none;
+      }
+
+
+
+
+
+
+
+
+
+
+/* legacy */

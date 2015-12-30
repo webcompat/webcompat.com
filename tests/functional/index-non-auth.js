@@ -20,7 +20,7 @@ define([
     'front page loads': function() {
       return this.remote
         .get(require.toUrl(url('/')))
-        .findByCssSelector('.wc-Hero-title').getVisibleText()
+        .findByCssSelector('.js-hero-title').getVisibleText()
         .then(function(text) {
           assert.equal(text, 'Bug reporting\nfor the internet.');
         })
@@ -30,7 +30,7 @@ define([
     'reporter addon link is shown': function() {
       return this.remote
         .get(require.toUrl(url('/')))
-        .findByCssSelector('.wc-Navbar-link').getVisibleText()
+        .findByCssSelector('.js-Navbar-link').getVisibleText()
         .then(function(text) {
           assert.include(text, 'Download our Firefox');
         })
@@ -41,16 +41,16 @@ define([
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url('/')))
-        .findByCssSelector('#report-bug.is-closed').click()
+        .findByCssSelector('#js-ReportBug').click()
         .end()
-        .findByCssSelector('.form-opened').isDisplayed()
+        .findByCssSelector('#js-ReportForm').isDisplayed()
         .then(function(isDisplayed) {
           assert.equal(isDisplayed, true);
         })
         .end()
-        .findByCssSelector('#report-bug.is-open').click()
+        .findByCssSelector('#js-ReportBug').click()
         .end()
-        .findByCssSelector('.form-closed').isDisplayed()
+        .findByCssSelector('#js-ReportForm').isDisplayed()
         .then(function(isDisplayed) {
           assert.equal(isDisplayed, false);
         });
@@ -59,32 +59,32 @@ define([
     'browse issues (new)': function() {
       return this.remote
         .get(require.toUrl(url('/')))
-        .findAllByCssSelector('#new .wc-IssueItem.wc-IssueItem--new')
+        .findAllByCssSelector('#js-lastIssue .js-issue-list.wc-IssueList--new')
         .then(function(elms) {
           assert.equal(elms.length, 10, '10 issues should be displayed');
         })
         .end()
-        .findByCssSelector('.wc-IssueItem--new .wc-IssueItem-count').getVisibleText()
+        .findByCssSelector('.wc-IssueList--new .wc-IssueList-count').getVisibleText()
         .then(function(text) {
           assert.match(text, /^Issue\s(\d+)$/, 'Issue should have a number');
         })
         .end()
-        .findByCssSelector('.wc-IssueItem--new .wc-IssueItem-header a').getAttribute('href')
+        .findByCssSelector('.wc-IssueList--new .wc-IssueList-header a').getAttribute('href')
         .then(function(text) {
           assert.match(text, /^\/issues\/\d+$/, 'Link should have a number');
         })
         .end()
-        .findByCssSelector('.wc-IssueItem--new .wc-IssueItem-header').getVisibleText()
+        .findByCssSelector('.wc-IssueList--new .wc-IssueList-header').getVisibleText()
         .then(function(text) {
           assert.match(text, /^Issue\s\d+:\s.+$/, 'Issue should have a non-empty title');
         })
         .end()
-        .findByCssSelector('.wc-IssueItem--new .wc-IssueItem-metadata:nth-child(1)').getVisibleText()
+        .findByCssSelector('.wc-IssueList--new .wc-IssueList-metadata:nth-child(1)').getVisibleText()
         .then(function(text) {
           assert.match(text, /^Opened:\s\d{4}\-\d{2}\-\d{2}/, 'Issue should display creation date');
         })
         .end()
-        .findByCssSelector('.wc-IssueItem--new .wc-IssueItem-metadata:nth-child(2)').getVisibleText()
+        .findByCssSelector('.wc-IssueList--new .wc-IssueList-metadata:nth-child(2)').getVisibleText()
         .then(function(text) {
           assert.match(text, /Comments:\s\d/, 'Issue should display number of comments');
         })

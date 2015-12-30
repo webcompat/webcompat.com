@@ -31,7 +31,7 @@ define([
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url('/me')))
-        .findByCssSelector('.wc-content--body .wc-Title--l').getVisibleText()
+        .findByCssSelector('.wc-UIContent .wc-Title--l').getVisibleText()
         .then(function(text) {
           var usernameEnd = text.indexOf('\'s activity');
           username = text.slice(0, usernameEnd);
@@ -47,23 +47,23 @@ define([
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url('/me')))
-        .findByCssSelector('.wc-IssueList').isDisplayed()
+        .findByCssSelector('.js-list-issue').isDisplayed()
         .then(function(isDisplayed) {
           assert.equal(isDisplayed, true, 'IssueList container is visible.');
         })
         .sleep(1000)
         .end()
-        .findByCssSelector('.wc-IssueList .wc-IssueItem').isDisplayed()
+        .findByCssSelector('.js-list-issue .js-issue-list').isDisplayed()
         .then(function(isDisplayed) {
           assert.equal(isDisplayed, true, 'IssueList item is visible.');
         })
         .end()
-        .findByCssSelector('.wc-IssueItem .wc-IssueItem-header').getVisibleText()
+        .findByCssSelector('.js-issue-list .wc-IssueList-header').getVisibleText()
         .then(function(text) {
           assert.match(text, /^Issue\s\d+:\s.+$/, 'Issue should have a non-empty title');
         })
         .end()
-        .findByCssSelector('.wc-IssueItem:nth-child(1) > div:nth-child(1) > p:nth-child(2)').getVisibleText()
+        .findByCssSelector('.js-issue-list:nth-child(1) > div:nth-child(1) > p:nth-child(2)').getVisibleText()
         .then(function(text) {
           assert.match(text, /comments:\s\d+$/i, 'Issue should display number of comments');
           assert.match(text, /^Opened:\s\d{4}\-\d{2}\-\d{2}.+/, 'Issue should display creation date');

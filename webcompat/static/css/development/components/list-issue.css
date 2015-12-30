@@ -1,0 +1,70 @@
+/** @define ListIssue */
+
+:root {
+  --ListIssue-fontSize: var(--base-fontSize);
+}
+
+/* Main class */
+.wc-ListIssue {
+  font-size: --ListIssue-fontSize;
+  padding: 0 0 1em 0;
+}
+
+  /* Main page title */
+  .wc-ListIssue-title {}
+
+  .wc-ListIssue-subtitle {
+    padding: 3em 0 0 ;
+  }
+
+  /* Sorting issues */
+  .wc-ListIssue-sorting {
+    padding:0 0 .5em 0;
+  }
+
+  /* drodpown */
+  .wc-ListIssue-pagination {
+    padding: 0 0 .5em 0;
+  }
+
+  /* no resultats */
+  .wc-ListIssue-noResults {
+    font-size:1.5em;
+  }
+
+    /* title */
+    .wc-ListIssue-noResults-title {
+      font-weight:600;
+      margin-bottom:1em;
+    }
+
+    /* list*/
+    .wc-ListIssue-noResults-list {
+      list-style-position: inside;
+      margin: 0 0 1em 1em;
+      font-size: 0.7em;
+    }
+
+      /* list item */
+      .wc-ListIssue-noResults-list-item {
+        padding: .3em 0;
+      }
+
+      /* modifier : label */
+      .wc-ListIssue-noResults-list-item--label {
+        list-style: none;
+        padding-top:.8em;
+      }
+
+      /* labels item */
+      .wc-ListIssue-noResults-list-labelsItem {
+        display:inline-block;
+      }
+
+  /* Github link */
+  .wc-ListIssue-github {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin: 3em 0 0 0;
+  }

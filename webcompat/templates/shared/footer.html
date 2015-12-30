@@ -1,13 +1,35 @@
 <footer class="wc-Footer" role="contentinfo">
-  <div class="wc-content wc-content--footer">
-  <ul class="wc-Footer-section wc-Footer-section--left">
-    <li class="wc-Footer-item"><a class="wc-Footer-item-link wc-Footer-item-link--separator" href="{{ url_for('about') }}">About</a></li><!--
-    --><li class="wc-Footer-item"><a class="wc-Footer-item-link wc-Footer-item-link--separator" href="{{ url_for('privacy') }}">Privacy Policy</a></li><!--
-    --><li class="wc-Footer-item"><a class="wc-Footer-item-link wc-Footer-item-link--separator" href="/humans.txt">Contact</a></li><!--
-    --><li class="wc-Footer-item"><a class="wc-Footer-item-link" href="{{ url_for('contributors') }}">Contribute</a></li>
-  </ul>
-  <ul class="wc-Footer-section wc-Footer-section--right">
-    <li class="wc-Footer-item wc-Footer-item--follow"><a class="wc-Footer-item-link" href="https://twitter.com/intent/user?screen_name=webcompat" target="_blank">Follow @WebCompat</a></li>
-  </ul>
+  <div class="wc-UIContent wc-UIContent--footer">
+    <div class="wc-Footer-wrapper">
+      <ul class="wc-Footer-list r-ResetList">
+        <li class="wc-Footer-item">
+          <a class="wc-Footer-link wc-Footer-link--separator" href="{{ url_for('about') }}">
+            <span class="wc-Footer-link-label">About</span>
+          </a>
+        </li>
+        <li class="wc-Footer-item">
+          <a class="wc-Footer-link wc-Footer-link--separator" href="{{ url_for('privacy') }}">
+            <span class="wc-Footer-link-label">Privacy Policy</span>
+          </a>
+        </li>
+        <li class="wc-Footer-item">
+          <a class="wc-Footer-link wc-Footer-link--separator" href="/humans.txt">
+            <span class="wc-Footer-link-label">Contact</span>
+          </a>
+        </li>
+        <li class="wc-Footer-item">
+          <a class="wc-Footer-link" href="{{ url_for('contributors') }}">
+            <span class="wc-Footer-link-label">Contribute</span>
+          </a>
+        </li>
+      </ul>
+      <ul class="wc-Footer-list r-ResetList">
+        <li class="wc-Footer-item wc-Footer-item--follow">
+          <a class="wc-Footer-link" href="https://twitter.com/intent/user?screen_name=webcompat" target="_blank">
+            <span class="wc-Footer-link-label">Follow @WebCompat</span>
+          </a>
+        </li>
+      </ul>
+    </div>
   </div>
 </footer>

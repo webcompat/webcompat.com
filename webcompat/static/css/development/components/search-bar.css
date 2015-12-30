@@ -1,10 +1,14 @@
-/*------Search Bar------*/
+/** @define SearchBar */
+
+:root {
+  --SearchBar-fontSize: 1rem;
+}
 
 .wc-SearchBar {
   position: relative;
   min-height: 1.4375em;
-  /*transform-style: preserve-3d;*/
 }
+
   .wc-SearchBar-face {
     position: absolute;
     top:0;
@@ -13,30 +17,36 @@
     transition: all 0.5s ease 0s;
     backface-visibility: hidden;
   }
+
   .wc-SearchBar-face--front {
     z-index: 2;
   }
+
     /* state */
     .wc-SearchBar.is-active .wc-SearchBar-face--front {
       transform: rotateX(180deg);
     }
+
   .wc-SearchBar-face--back {
+    display: flex;
+    flex-direction: row;
     backface-visibility: hidden;
     transform: rotateX(-180deg);
     z-index: 3;
-    display: flex;
-    flex-direction: row;
   }
+
     .wc-SearchBar-input {
+      font-size: var(--SearchBar-fontSize);
       flex: 1;
       margin: 0 1em;
       background-color: transparent;
       border: none;
-      font-size: var(--base-font-size);
     }
+
     .wc-SearchBar-icon--button {
       cursor: pointer;
     }
+
     /* state */
     .wc-SearchBar.is-active .wc-SearchBar-face--back {
       transform: rotateX(0);

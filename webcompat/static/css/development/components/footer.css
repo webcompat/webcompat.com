@@ -1,75 +1,74 @@
-/*----------Footer ----------*/
-.wc-Footer {
-  background-color: #fff;
-  border-top: 5px solid var(--wc-background-dark);
-  clear: both;
-  font-size:var(--base-font-size);
+/** @define Footer */
+
+:root {
+  --Footer-fontSize: var(--base-fontSize);
+  --Footer-backgroundColor: #fff;
+  --Footer-border: var(--base-colorDark);
+  --Footer-colorHover: var(--base-colorDark);
 }
 
-@media (--viewport-450px) {
+.wc-Footer {
+  font-size:var(--Footer-fontSize);
+  background-color: var(--Footer-backgroundColor);
+  border-top: 5px solid var(--Footer-border);
+  padding: 1em 0;
+}
+
+@media all and (min-width: 28.12em) {
+
   .wc-Footer {
     margin-top: 3em;
   }
 }
+
+  /* Wrapper */
+  .wc-Footer-wrapper {
+    display: flex;
+    justify-content: space-between;
+  }
+
   /* section */
-  .wc-Footer__section {
-    list-style: none;
+  .wc-Footer-list {
+    padding: .75em 0;
   }
-    .wc-Footer-section--left {
-      float: left;
+
+  @media all and (min-width: 37.52em) {
+
+    .wc-Footer-list {
+      display: flex;
     }
-    .wc-Footer-section--right {
-      float: right;
-    }
+  }
+
   /* item */
-  .wc-Footer-item {
-    display: inline-block;
-    padding: .75em;
+  @media all and (min-width: 37.52em) {
+
+    .wc-Footer-item + .wc-Footer-item {
+      padding-left: .75em;
+    }
   }
+
+    /* modifier */
     .wc-Footer-item--follow {
       font-weight: 700;
     }
-  .wc-Footer-section--left .wc-Footer-item {
-    padding-left:  0;
-  }
-  .wc-Footer-section--right .wc-Footer-item {
-    padding-right:0 ;
-  }
+
   /* link */
-  .wc-Footer-item-link {
+  .wc-Footer-link {
+    color: inherit;
     text-decoration:none;
   }
-  .wc-Footer-item-link--separator:after {
-    content:"//";
-    margin-left:1em;
-  }
 
+    /* event */
+    .wc-Footer-link:hover .wc-Footer-link-label,
+    .wc-Footer-link:focus .wc-Footer-link-label {
+      color: var(--Footer-colorHover);
+    }
 
-@media (--viewport-600px) {
-  .wc-Footer-item {
-    display: block;
-  }
-  .wc-Footer-item-link:after {
-    display:none;
-  }
-}
+    /* modifier */
+    @media all and (min-width: 37.51em) {
 
-@media (--viewport-950px) {
-  .wc-Footer-item {
-    font-size: 0.75em;
-  }
-}
-
-@media (--viewport-375px) {
-  .wc-Footer-section--left,
-  .wc-Footer-section--right {
-    float: none;
-    margin:0;
-  }
-}
-
-@media (--viewport-375px) {
-  .wc-Footer-item-section--right  .wc-Footer-item {
-    padding-left: 0;
-  }
-}
+      .wc-Footer-link--separator:after {
+        content:"//";
+        margin-left:1em;
+      }
+    }

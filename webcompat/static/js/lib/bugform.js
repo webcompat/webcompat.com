@@ -3,14 +3,14 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 function BugForm() {
-  this.form = $('form.js-ReportForm');
+  this.form = $('#js-ReportForm');
   this.urlField = $('#url');
   this.descField = $('#description');
   this.uploadField = $('#image');
   this.problemType = $('[name=problem_category]');
-  this.submitButtons = $('.js-ReportForm button.Button');
+  this.submitButtons = $('#js-ReportForm .js-Button');
   this.loadingIndicator = $('.js-loader');
-  this.reportButton = $('#report-bug');
+  this.reportButton = $('#js-ReportBug');
   this.loaderImage = $('.js-loader');
   this.screenshotData = '';
 
@@ -192,21 +192,21 @@ function BugForm() {
     }
 
     var inlineHelp = $('<span></span>', {
-      'class': 'wc-Form-helpInline wc-bold',
+      'class': 'wc-Form-helpMessage',
       'text': this.inputMap[id].helpText
     });
 
     this.inputMap[id].valid = false;
-    this.inputMap[id].elm.parents('.wc-Form-group')
-                     .removeClass('wc-Form-noError js-no-error')
-                     .addClass('wc-Form-error js-form-error');
+    this.inputMap[id].elm.parents('.js-Form-group')
+                     .removeClass('is-validated js-no-error')
+                     .addClass('is-error js-form-error');
 
     if (id === 'url') {
       inlineHelp.insertAfter('label[for=' + id + ']');
     }
 
     if (id === 'problem_type') {
-      inlineHelp.appendTo('legend.wc-Form-label');
+      inlineHelp.appendTo('.wc-Form-information');
     }
 
     if (id === 'image') {
@@ -218,11 +218,11 @@ function BugForm() {
 
   this.makeValid = function(id) {
     this.inputMap[id].valid = true;
-    this.inputMap[id].elm.parents('.wc-Form-group')
-                     .removeClass('wc-Form-error js-form-error')
-                     .addClass('wc-Form-noError js-no-error');
+    this.inputMap[id].elm.parents('.js-Form-group')
+                     .removeClass('is-error js-form-error')
+                     .addClass('is-validated js-no-error');
 
-    this.inputMap[id].elm.parents('.wc-Form-group').find('.wc-Form-helpInline').remove();
+    this.inputMap[id].elm.parents('.js-Form-group').find('.wc-Form-helpMessage').remove();
 
     if (this.inputMap['url'].valid &&
         this.inputMap['problem_type'].valid &&
@@ -271,8 +271,8 @@ function BugForm() {
     Allow users to remove an image from the form upload.
   */
   this.showRemoveUpload = function(label) {
-    var removeBanner = $('.wc-Form-upload-button');
-    var uploadWrapper = $('.wc-Form-upload-wrapper');
+    var removeBanner = $('.wc-UploadForm-button');
+    var uploadWrapper = $('.wc-UploadForm-wrapper');
 
     removeBanner.removeClass('is-hidden');
     uploadWrapper.addClass('is-hidden');

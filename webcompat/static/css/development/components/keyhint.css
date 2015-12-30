@@ -1,0 +1,17 @@
+/** @define Keyhint */
+
+:root {
+  --Keyhint-fontSize: var(--base-fontSize);
+  --Keyhint-backgroundColor: var(--base-variantColorDark);
+}
+
+.wc-Keyhint {
+  font-size: var(--Keyhint-fontSize);
+  display: inline-block;
+  background-color: var(--Keyhint-backgroundColor);
+  border-radius: 5px;
+  color: #fff;
+  padding: 0.2em 0.5em;
+  vertical-align: middle;
+  margin: 0 .6em 0;
+}
