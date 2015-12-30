@@ -22,8 +22,8 @@
     outline: 0px none;
     box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset, 0px 0px 8px rgba(102, 175, 233, 0.6);
   }
-  .wc-Form-input--heightAuto {
-    height:auto;
+  .wc-Form-input--textarea {
+    min-height: 250px;
   }
   .wc-Form-input::placeholder {
     color: #999;
@@ -141,10 +141,24 @@ legend.wc-Form-label {
 
 /* upload */
 .wc-Form-upload {
-  text-align: center;
   position: relative;
+  display: block;
+  text-align: center;
+  border: dashed 1px #ccc;
+  border-radius: 20px;
+  min-height: 250px;
+  cursor: pointer;
 }
-  .wc-Form-upload-icon {
-    font-size: 1.2em;
-    margin: 0 .4em 0 0;
+
+  .wc-Form-upload-wrapper {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
   }
+
+    .wc-Form-upload-icon {
+      font-size: 6.2em;
+      margin: 0 0 16px;
+      color: #c8c8c8;
+    }
