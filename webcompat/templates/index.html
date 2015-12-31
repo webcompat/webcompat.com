@@ -102,7 +102,7 @@
 </main>
 {% endblock %}
 {%- block extrascripts -%}
-{%- if config.PRODUCTION or config.DEVELOPMENT -%}
+{%- if config.PRODUCTION or config.STAGING -%}
 <script src="{{ url_for('static', filename='js/diagnose.min.js')|bust_cache }}"></script>
 {%- else -%}
 <script src="{{ url_for('static', filename='js/lib/models/label-list.js') }}"></script>

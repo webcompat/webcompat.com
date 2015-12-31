@@ -282,24 +282,24 @@ grunt
 To test issue submission, you need to create a repository on GitHub. Create a new repository make note of the name. For example, the user `miketaylr` has created a repository called "[test-repo](https://github.com/miketaylr/test-repo)" for this purpose.
 
 ``` bash
-# set up config.py, filling in appropriate secrets and pointers to repos
+# set up secrets.py, filling in appropriate secrets and pointers to repos
 # Mac / Linux
-cp config.py.example config.py
+cp config/secrets.py.example config/secrets.py
 # Windows
-copy config.py.example config.py
+copy config/secrets.py.example config/secrets.py
 ```
 
-You can now edit `config.py` and
+You can now edit `secrets.py` and
 
-1. Add the right values to the [repo issues URIs](https://github.com/webcompat/webcompat.com/blob/master/config.py.example#L68-L73). `ISSUES_REPO_URI = "<user>/<repo>/issues"`. For example, miketaylr's setup needs to say `ISSUES_REPO_URI = "miketaylr/test-repo/issues"`
+1. Add the right values to the repo issues URIs. `ISSUES_REPO_URI = "<user>/<repo>/issues"`. For example, miketaylr's setup needs to say `ISSUES_REPO_URI = "miketaylr/test-repo/issues"`
 
 2. You have the option of creating a "bot account" (a dummy account for the purpose of testing), or using your own account for local development. Either way, you'll need a personal access token to proceed &mdash; this is the oauth token we use to report issues on behalf of people who don't want to give GitHub oauth access (or don't have GitHub accounts).
 
 The [instructions for creating a personal access token](http://help.github.com/articles/creating-an-access-token-for-command-line-use) are given on GitHub. Once you have created the token you can add it in the variable `OAUTH_TOKEN = ""` (yes, even if you're using your own credentials we still refer to it as a bot). More advanced users might want to create an environment variable called `OAUTH_TOKEN`. Either way is fine.
 
-3. [Add the client id and client secret](https://github.com/webcompat/webcompat.com/blob/master/config.py.example#L66-L86) to config.py. If you're part of the webcompat GitHub organization, you can [get the client id and client secret from GitHub](https://github.com/organizations/webcompat/settings/applications/). Otherwise, create your own test and production applications ([instructions here](https://github.com/settings/applications/new)) &mdash; when prompted for a "Authorization callback URL", use `http://localhost:5000/callback`, and take note of the client id and client secret GitHub gives you.
+3. Add the client id and client secret to secrets.py. If you're part of the webcompat GitHub organization, you can [get the client id and client secret from GitHub](https://github.com/organizations/webcompat/settings/applications/). Otherwise, create your own test and production applications ([instructions here](https://github.com/settings/applications/new)) &mdash; when prompted for a "Authorization callback URL", use `http://localhost:5000/callback`, and take note of the client id and client secret GitHub gives you.
 
-When you have the client id and client secret put them in the corresponding lines in config.py for the localhost application:
+When you have the client id and client secret put them in the corresponding lines in secrets.py for the localhost application:
 
 ```
 # We're running on localhost, use the test application
@@ -309,17 +309,9 @@ GITHUB_CLIENT_SECRET = os.environ.get('FAKE_SECRET') or  "<client secret goes he
 
 Note: You can ignore the `FAKE_ID` and `FAKE_SECRET` environment variables, we use that as a hack for automated tests.
 
-**Note**: If you get a 404 at GitHub when clicking "Login", it means you haven't [filled in the `GITHUB_CLIENT_ID` or `GITHUB_CLIENT_SECRET`](https://github.com/webcompat/webcompat.com/blob/master/config.py.example#L84-L86).
+**Note**: If you get a 404 at GitHub when clicking "Login", it means you haven't filled in the `GITHUB_CLIENT_ID` or `GITHUB_CLIENT_SECRET` in secrets.py.
 
 ![Auth 404](https://i.cloudup.com/8FDA5bVc7l.png)
-
-**Note**: If you see the following error,
-
-```
-RuntimeError: no destination for set uploads
-```
-
-That means your `config.py` is out of sync with `config.py.example`. You can copy over the `Image uploading settings` from config.py.example, as well as the `LOCALHOST = not PRODUCTION and not DEVELOPMENT` line.
 
 ### Starting The Server
 

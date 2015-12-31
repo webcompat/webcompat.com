@@ -10,6 +10,7 @@ docs/build/
 screenshots/
 uploads/
 .idea/
+config/secrets.py
 
 # these are our 'dist' files
 # checking them into the repo is silly
