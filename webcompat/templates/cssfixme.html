@@ -4,10 +4,18 @@
     {% include "shared/nav.html" %}
     <main class="wc-content wc-content--body" role="main">
       <div class="wc-CSSFixme">
-        <p>This tool attempts to fix non-standard CSS by adding standardised equivalents to all declarations that use <em>-webkit-</em>prefixed properties and values that have standardised equivalents. The standardised syntax is not always same as the -webkit- syntax, so getting everything right is a challenge. Please test this tool with various <em>-webkit-</em> prefixed CSS constructs and let us <a href="https://github.com/webcompat/css-fixme/issues">know</a> if you find problems.</p>
-        <p>Note: some <em>-webkit-</em> prefixed properties do not (yet?) have standardised equivalents. This tool will deliberately not add pseudo-standard code on the assumption that the standards will one day match the current -webkit- implementation.</p>
-        <p>This uses the <a href="https://github.com/reworkcss/rework">ReworkCSS</a> library for parsing and stringifying CSS.</p>
-        <p>Paste CSS in this box to see what needs fixing:</p>
+        <h1 class="wc-Title wc-Title--l">CSS Fix Me</h1>
+        <div class="wc-CSSFixme-instruction">
+          <div class="wc-CSSFixme-item">
+            <strong>You:</strong> paste the CSS code
+          </div>
+          <div class="wc-CSSFixme-item">
+            <strong>Us:</strong> add missing standard properties
+          </div>
+          <div class="wc-CSSFixme-item">
+            <strong>Them:</strong> have a satisfied Web experience. Happy users.
+          </div>
+        </div>
         <div class="wc-CSSFixme-item">
           <textarea class="wc-Form-input " style="height:20rem;">{{ csscode }}</textarea>
         </div>
@@ -17,19 +25,25 @@
           </label>
         </div>
         <div class="wc-CSSFixme-item">
-          <button type="button" class="Button Button--default" id="btn_do_fixup">Add standard equivalents for prefixed CSS</button>
+          <button type="button" class="Button Button--default" id="btn_do_fixup">Fix it!</button>
         </div>
         <div class="wc-CSSFixme-item">
-          <pre class="wc-CSSFixme-resultat" id="fixedcss"></pre>
+          <div id="js-CSSFixme"></div>
         </div>
-        {%- block extrascripts -%}
-        {%- if config.PRODUCTION or config.DEVELOPMENT -%}
-        <script src="{{ url_for('static', filename='js/cssfixme.min.js')|bust_cache }}"></script>
-        {%- else -%}
-        <script src="{{ url_for('static', filename='js/cssfixme.js') }}"></script>
-        {%- endif -%}
-        {%- endblock %}
+        <div class="wc-CSSFixme-item">
+          <p>This tool attempts to fix non-standard CSS by adding standardised equivalents to all declarations that use <em>-webkit-</em>prefixed properties and values that have standardised equivalents. The standardised syntax is not always same as the -webkit- syntax, so getting everything right is a challenge. Please test this tool with various <em>-webkit-</em> prefixed CSS constructs and let us <a href="https://github.com/webcompat/css-fixme/issues">know</a> if you find problems.</p>
+          <p>Note: some <em>-webkit-</em> prefixed properties do not (yet?) have standardised equivalents. This tool will deliberately not add pseudo-standard code on the assumption that the standards will one day match the current -webkit- implementation.</p>
+          <p>This uses the <a href="https://github.com/reworkcss/rework">ReworkCSS</a> library for parsing and stringifying CSS.</p>
+          <p>Paste CSS in this box to see what needs fixing:</p>
+        </div>
       </div>
     </main>
   </div>
 {% endblock %}
+{%- block extrascripts -%}
+{%- if config.PRODUCTION or config.DEVELOPMENT -%}
+<script src="{{ url_for('static', filename='js/cssfixme.min.js')|bust_cache }}"></script>
+{%- else -%}
+<script src="{{ url_for('static', filename='js/cssfixme.js') }}"></script>
+{%- endif -%}
+{%- endblock %}

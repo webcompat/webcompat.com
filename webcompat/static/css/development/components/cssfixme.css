@@ -1,5 +1,10 @@
 /*----------cssfixme----------*/
 
+:root {
+  --CSSFixme-backgroundColor : rgba(249, 249, 249, 0.6);
+  --CSSFixme-backgroundColorStrong: var(--wc-background-dark);
+}
+
 .wc-CSSFixme {
   font-size:var(--base-font-size);
 }
@@ -9,12 +14,25 @@
     margin-top: 1em;
   }
 
-  /* pre */
-  .wc-CSSFixme-resultat {
-    margin: 1em 0;
-    padding: 1em;
-    color: #414042;
-    border: 1px solid #ddd;
-    border-radius: .3em;
-    background: rgba(249, 249, 249, 0.6);
+  /* instruction */
+  .wc-CSSFixme-instruction {
+    margin-left: 1em;
+    font-size: 1.1em;
   }
+
+  /* pre */
+  .wc-CSSFixme-resultat,
+  .wc-CSSFixme pre {
+    margin: 1em 0;
+    padding: 1em 1em 1em .3125em;
+    color: #414042;
+    border-style: solid;
+    border-color: #ddd #ddd #ddd var(--wc-background-dark);
+    border-width: 1px 1px 1px 8px;
+    border-radius: .3em;
+    background: var(--CSSFixme-backgroundColor);
+  }
+    /* element modify */
+    .wc-CSSFixme-resultat strong {
+      background-color: var(--CSSFixme-backgroundColorStrong);
+    }
