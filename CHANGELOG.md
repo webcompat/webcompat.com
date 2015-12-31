@@ -1,3 +1,10 @@
+## 2.2.1 - 2015-12-31
+
+* Layout bugfix on contributors page [Pull #888](https://github.com/webcompat/webcompat.com/pull/888) [Issue #855](https://github.com/webcompat/webcompat.com/issues/855)
+* Various improvments around cssfixme tool layout and style [Pull #891](https://github.com/webcompat/webcompat.com/pull/891) [Pull #887](https://github.com/webcompat/webcompat.com/pull/887) [Issue #848](https://github.com/webcompat/webcompat.com/issues/848)
+* Make imagemin a non-default task [Pull #869](https://github.com/webcompat/webcompat.com/pull/869) [Issue #868](https://github.com/webcompat/webcompat.com/issues/868)
+* Add a new QueryParams model [Pull #859](https://github.com/webcompat/webcompat.com/pull/859) [Issue #795](https://github.com/webcompat/webcompat.com/issues/795)
+
 ## 2.2 - 2015-12-17
 
 * Fix cssfixme scripts in wrong location [Pull #876](https://github.com/webcompat/webcompat.com/pull/876) [Issue #875](https://github.com/webcompat/webcompat.com/issues/875)
