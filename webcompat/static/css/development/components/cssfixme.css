@@ -21,12 +21,14 @@
   }
 
   /* pre */
-  .wc-CSSFixme-resultat
+  .wc-CSSFixme-resultat,
   .wc-CSSFixme pre {
     margin: 1em 0;
-    padding: 1em;
+    padding: 1em 1em 1em .3125em;
     color: #414042;
-    border: 1px solid #ddd;
+    border-style: solid;
+    border-color: #ddd #ddd #ddd var(--wc-background-dark);
+    border-width: 1px 1px 1px 8px;
     border-radius: .3em;
     background: var(--CSSFixme-backgroundColor);
   }
