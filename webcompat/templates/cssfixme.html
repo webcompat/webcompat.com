@@ -36,14 +36,14 @@
           <p>This uses the <a href="https://github.com/reworkcss/rework">ReworkCSS</a> library for parsing and stringifying CSS.</p>
           <p>Paste CSS in this box to see what needs fixing:</p>
         </div>
-        {%- block extrascripts -%}
-        {%- if config.PRODUCTION or config.DEVELOPMENT -%}
-        <script src="{{ url_for('static', filename='js/cssfixme.min.js')|bust_cache }}"></script>
-        {%- else -%}
-        <script src="{{ url_for('static', filename='js/cssfixme.js') }}"></script>
-        {%- endif -%}
-        {%- endblock %}
       </div>
     </main>
   </div>
 {% endblock %}
+{%- block extrascripts -%}
+{%- if config.PRODUCTION or config.DEVELOPMENT -%}
+<script src="{{ url_for('static', filename='js/cssfixme.min.js')|bust_cache }}"></script>
+{%- else -%}
+<script src="{{ url_for('static', filename='js/cssfixme.js') }}"></script>
+{%- endif -%}
+{%- endblock %}
