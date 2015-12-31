@@ -3,10 +3,10 @@
   var pre = document.createElement('pre');
   pre.className = 'wc-CSSFixme-resultat';
   var preParentID = 'js-CSSFixme';
-  window.cssfixmeInit = false;
+  var cssfixmeInit = false;
 
   window.addEventListener('load', function() {
-    if (window.cssfixmeInit) {
+    if (cssfixmeInit) {
       return;
     }
     function do_fixup() {
@@ -36,7 +36,7 @@
       window.getSelection().addRange(rng);
       e.preventDefault();
     }, false);
-    window.cssfixmeInit = true;
+    cssfixmeInit = true;
   }, false);
 })();
 
