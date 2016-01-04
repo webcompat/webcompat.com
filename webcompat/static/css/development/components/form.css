@@ -44,6 +44,22 @@
     cursor: pointer;
     text-decoration: underline;
   }
+
+  .wc-Form-label--remove-upload {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 10px 0 0;
+    margin-bottom: 0;
+    height: 3em;
+    background-color: #FFC900;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: underline;
+  }
 /*------Form Validation------*/
 .wc-Form-error .wc-Form-input {
   border-color: #ff0000;

@@ -44,7 +44,7 @@
         </div>
       </div>
       <div class="r-Grid-cell r-Grid-cell--alignBottom r-all--1of2 r-maxS--2of2">
-        <div class="js-image-upload wc-Form-group {% if form.image.errors %}wc-Form-error{% endif %}">
+        <div class="js-image-upload wc-Form-group wc-pos-relative {% if form.image.errors %}wc-Form-error{% endif %}">
           <label class="wc-Form-upload" for="image">
             <div class="wc-Form-upload-wrapper">
               <div class="wc-Form-upload-icon" aria-hidden="true">
@@ -59,6 +59,7 @@
               {{ form.image(class_='ButtonUpload', accept='.jpe,.jpg,.jpeg,.gif,.png,.bmp') }}
             </div>
           </label>
+          <div class="wc-Form-label wc-Form-label--remove-upload wc-hidden">Remove image upload</div>
         </div>
       </div>
     </div>

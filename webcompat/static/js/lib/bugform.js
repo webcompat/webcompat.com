@@ -203,15 +203,35 @@ function BugForm() {
     }
 
     var reader = new FileReader();
-    reader.onload = function(event) {
+    reader.onload = _.bind(function(event) {
       var dataURI = event.target.result;
       var label = $('.js-image-upload').find('label').eq(0);
 
       label.css({
         'background': 'url(' + dataURI + ') no-repeat center / contain'
       });
-    };
+
+      this.showRemoveUpload(label);
+    }, this);
     reader.readAsDataURL(img);
+  };
+  /*
+    Allow users to remove an image from the form upload.
+  */
+  this.showRemoveUpload = function(label) {
+    var removeBanner = $('.wc-Form-label--remove-upload');
+    var uploadWrapper = $('.wc-Form-upload-wrapper');
+
+    removeBanner.removeClass('wc-hidden');
+    uploadWrapper.addClass('wc-hidden');
+    removeBanner.on('click', _.bind(function() {
+      // clear out the input value, remove the preview and hide the banner
+      this.uploadField.val(this.uploadField.get().defaultValue);
+      label.css('background', 'none');
+      removeBanner.addClass('wc-hidden');
+      uploadWrapper.removeClass('wc-hidden');
+      removeBanner.off('click');
+    }, this));
   };
   /*
      copy URL from urlField into the first line of the
