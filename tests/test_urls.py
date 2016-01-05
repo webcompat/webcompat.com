@@ -56,10 +56,13 @@ class TestURLs(unittest.TestCase):
         self.assertEqual(rv.status_code, 302)
         self.assertIn('github.com/login/oauth/', rv.headers['Location'])
 
-    def test_activity_page_login_redirect(self):
+    def test_activity_page_route(self):
+        rv = self.app.get('/activity/username')
+        self.assertEqual(rv.status_code, 200)
+
+    def test_activity_page_401_if_not_logged_in(self):
         rv = self.app.get('/me')
-        self.assertEqual(rv.status_code, 302)
-        self.assertIn('/login', rv.headers['Location'])
+        self.assertEqual(rv.status_code, 401)
 
     def test_issue_int(self):
         '''Test issues and integer for:
