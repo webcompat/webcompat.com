@@ -91,7 +91,7 @@ function BugForm() {
     }
   };
 
-  this.checkImageTypeValidity = function() {
+  this.checkImageTypeValidity = function(event) {
     var splitImg = this.uploadField.val().split('.');
     var ext = splitImg[splitImg.length - 1].toLowerCase();
     var allowed = ['jpg', 'jpeg', 'jpe', 'png', 'gif', 'bmp'];
@@ -104,6 +104,9 @@ function BugForm() {
       this.makeInvalid('image');
     } else {
       this.makeValid('image');
+      if (event) {
+        this.showUploadPreview(event);
+      }
     }
   };
 
@@ -179,6 +182,56 @@ function BugForm() {
         this.inputMap['image'].valid) {
       this.enableSubmits();
     }
+  };
+  /*
+    If the users browser understands the FileReader API, show a preview
+    of the image they're about to load.
+  */
+  this.showUploadPreview = function(event) {
+    if (!(window.FileReader && window.File)) {
+      return;
+    }
+
+    // We can just grab the 0th one, because we only allow uploading
+    // a single image at a time (for now)
+    var img = event.target.files[0];
+
+    // One last validation check.
+    if (!img.type.match('image.*')) {
+      this.makeInvalid('image');
+      return;
+    }
+
+    var reader = new FileReader();
+    reader.onload = _.bind(function(event) {
+      var dataURI = event.target.result;
+      var label = $('.js-image-upload').find('label').eq(0);
+
+      label.css({
+        'background': 'url(' + dataURI + ') no-repeat center / contain'
+      });
+
+      this.showRemoveUpload(label);
+    }, this);
+    reader.readAsDataURL(img);
+  };
+  /*
+    Allow users to remove an image from the form upload.
+  */
+  this.showRemoveUpload = function(label) {
+    var removeBanner = $('.wc-Form-upload-button');
+    var uploadWrapper = $('.wc-Form-upload-wrapper');
+
+    removeBanner.removeClass('is-hidden');
+    uploadWrapper.addClass('is-hidden');
+    removeBanner.on('click', _.bind(function() {
+      // clear out the input value, remove the preview and hide the banner
+      this.uploadField.val(this.uploadField.get().defaultValue);
+      label.css('background', 'none');
+      removeBanner.addClass('is-hidden');
+      uploadWrapper.removeClass('is-hidden');
+      removeBanner.off('click');
+    }, this));
   };
   /*
      copy URL from urlField into the first line of the

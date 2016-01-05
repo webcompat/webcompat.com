@@ -69,6 +69,8 @@ class IssueForm(Form):
                                   [InputRequired(message=radio_message)],
                                   choices=problem_choices)
     # we filter allowed type in uploads.py
+    # Note, we don't use the label programtically for this input[type=file],
+    # any changes here need to be updated in form.html.
     image = FileField(u'Attach a screenshot image',
                       [Optional(),
                        FileAllowed(Upload.ALLOWED_FORMATS, image_message)])

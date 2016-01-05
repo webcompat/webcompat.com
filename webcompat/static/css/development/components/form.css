@@ -22,8 +22,8 @@
     outline: 0px none;
     box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset, 0px 0px 8px rgba(102, 175, 233, 0.6);
   }
-  .wc-Form-input--heightAuto {
-    height:auto;
+  .wc-Form-input--textarea {
+    min-height: 250px;
   }
   .wc-Form-input::placeholder {
     color: #999;
@@ -44,6 +44,7 @@
     cursor: pointer;
     text-decoration: underline;
   }
+
 /*------Form Validation------*/
 .wc-Form-error .wc-Form-input {
   border-color: #ff0000;
@@ -141,10 +142,52 @@ legend.wc-Form-label {
 
 /* upload */
 .wc-Form-upload {
-  text-align: center;
+  display: block;
   position: relative;
+  text-align: center;
+  border: dashed 1px #ccc;
+  border-radius: 20px;
+  min-height: 250px;
+  cursor: pointer;
+  overflow: hidden;
 }
-  .wc-Form-upload-icon {
-    font-size: 1.2em;
-    margin: 0 .4em 0 0;
+
+  /* Form upload wrapper */
+  .wc-Form-upload-wrapper {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
   }
+    /* state */
+    .wc-Form-upload-wrapper.is-hidden {
+      display: none;
+    }
+
+    .wc-Form-upload-icon {
+      font-size: 6.2em;
+      margin: 0 0 16px;
+      color: #c8c8c8;
+    }
+
+    /* Upload button */
+    .wc-Form-upload-button {
+      position: absolute;
+      width: 100%;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 1em 0;
+      font-weight:700;
+      background-color: var(--wc-background-dark);
+      border-bottom-left-radius: 20px;
+      border-bottom-right-radius: 20px;
+      cursor: pointer;
+      text-align: center;
+      text-decoration: underline;
+      transform: translateY(0);
+      transition: transform .2s linear 0s;
+    }
+      .wc-Form-upload-button.is-hidden {
+        transform: translateY(100%);
+      }

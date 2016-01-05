@@ -120,8 +120,8 @@ define([
         .findByCssSelector('#image').type('/path/to/foo.hacks')
         .end()
         // wait a bit
-        .sleep(100)
-        .findByXpath('//*[@id="new-report"]/div/form/div[2]/div[2]').getAttribute('class')
+        .sleep(250)
+        .findByCssSelector('.js-image-upload').getAttribute('class')
         .then(function(className) {
           assert.include(className, 'js-form-error');
           assert.notInclude(className, 'js-no-error');
@@ -131,9 +131,9 @@ define([
         .findByCssSelector('#image').type('/path/to/foo.jpg')
         .end()
         // wait a bit
-        .sleep(100)
+        .sleep(250)
         // validation message should be removed now
-        .findByXpath('//*[@id="new-report"]/div/form/div[2]/div[2]').getAttribute('class')
+        .findByCssSelector('.js-image-upload').getAttribute('class')
         .then(function(className) {
           assert.include(className, 'js-no-error');
           assert.notInclude(className, 'js-form-error');

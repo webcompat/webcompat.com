@@ -37,19 +37,29 @@
           </div>
         </div>
     </div>
-    <div>
-      <div class="wc-Form-group">
-        {{ form.description.label(class_='wc-Form-label') }} {{ form.description(class_='wc-Form-input wc-Form-input--heightAuto', rows=7) }}
+    <div class="r-Grid r-Grid--withGutter ">
+      <div class="r-Grid-cell r-Grid-cell--alignBottom r-all--1of2 r-maxS--2of2">
+        <div class="wc-Form-group">
+          {{ form.description.label(class_='wc-Form-label') }} {{ form.description(class_='wc-Form-input wc-Form-input--textarea', rows=7) }}
+        </div>
       </div>
-      <div class="wc-Form-group {% if form.image.errors %}wc-Form-error{% endif %}">
-        <div class="wc-Form-upload">
-          <span class="wc-Form-upload-icon" aria-hidden="true">
-            <span class="wc-Icon wc-Icon--cloud-upload"></span>
-          </span>
-          {{ form.image.label(class_='wc-Form-label wc-Form-label--upload') }}{% if form.image.errors %}{% for error in form.image.errors %}
-          <span class="wc-Form-helpInline wc-bold">{{ error }}</span>
-          {% endfor %}{% endif %}
-          {{ form.image(class_='ButtonUpload', accept='.jpe,.jpg,.jpeg,.gif,.png,.bmp') }}
+      <div class="r-Grid-cell r-Grid-cell--alignBottom r-all--1of2 r-maxS--2of2">
+        <div class="js-image-upload wc-Form-group wc-pos-relative {% if form.image.errors %}wc-Form-error{% endif %}">
+          <label class="wc-Form-upload" for="image">
+            <div class="wc-Form-upload-wrapper">
+              <div class="wc-Form-upload-icon" aria-hidden="true">
+                <span class="wc-Icon wc-Icon--cloud-upload"></span>
+              </div>
+              <label class="wc-Form-label wc-Form-label--upload">Attach a screenshot image</label>
+              {% if form.image.errors %}
+                {% for error in form.image.errors %}
+                <span class="wc-Form-helpInline wc-bold">{{ error }}</span>
+                {% endfor %}
+              {% endif %}
+              {{ form.image(class_='ButtonUpload', accept='.jpe,.jpg,.jpeg,.gif,.png,.bmp') }}
+            </div>
+            <button class="wc-Form-upload-button is-hidden r-ResetButton" role="button" type="button">Remove image upload</button>
+          </label>
         </div>
       </div>
     </div>
