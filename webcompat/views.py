@@ -295,7 +295,7 @@ def unauthorized(err):
        not request.accept_mimetypes.accept_html):
         message = {
             'status': 401,
-            'message': 'API call' + message,
+            'message': 'API call. ' + message,
         }
         resp = jsonify(message)
         resp.status_code = 401
@@ -313,7 +313,7 @@ def unauthorized(err):
        not request.accept_mimetypes.accept_html):
         message = {
             'status': 400,
-            'message': 'API call' + message,
+            'message': 'API call. ' + message,
         }
         resp = jsonify(message)
         resp.status_code = 400
