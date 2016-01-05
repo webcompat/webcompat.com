@@ -219,17 +219,17 @@ function BugForm() {
     Allow users to remove an image from the form upload.
   */
   this.showRemoveUpload = function(label) {
-    var removeBanner = $('.wc-Form-label--remove-upload');
+    var removeBanner = $('.wc-Form-upload-button');
     var uploadWrapper = $('.wc-Form-upload-wrapper');
 
-    removeBanner.removeClass('wc-hidden');
-    uploadWrapper.addClass('wc-hidden');
+    removeBanner.removeClass('is-hidden');
+    uploadWrapper.addClass('is-hidden');
     removeBanner.on('click', _.bind(function() {
       // clear out the input value, remove the preview and hide the banner
       this.uploadField.val(this.uploadField.get().defaultValue);
       label.css('background', 'none');
-      removeBanner.addClass('wc-hidden');
-      uploadWrapper.removeClass('wc-hidden');
+      removeBanner.addClass('is-hidden');
+      uploadWrapper.removeClass('is-hidden');
       removeBanner.off('click');
     }, this));
   };
