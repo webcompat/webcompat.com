@@ -1,3 +1,9 @@
+## 2.3 - 2015-01-07
+
+* React to add-ons sending screenshots in bug report [Pull #895](https://github.com/webcompat/webcompat.com/pull/895) [Issue #879](https://github.com/webcompat/webcompat.com/issues/879)
+* Add nicer UI for adding screenshots in bug report [Pull #893](https://github.com/webcompat/webcompat.com/pull/893) [Issue #867](https://github.com/webcompat/webcompat.com/issues/867)
+*  Ensure backend supports combining labels and search terms [Pull #858](https://github.com/webcompat/webcompat.com/pull/858) [Issue #795](https://github.com/webcompat/webcompat.com/issues/795)
+
 ## 2.2.1 - 2015-12-31
 
 * Layout bugfix on contributors page [Pull #888](https://github.com/webcompat/webcompat.com/pull/888) [Issue #855](https://github.com/webcompat/webcompat.com/issues/855)
