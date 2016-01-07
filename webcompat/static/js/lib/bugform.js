@@ -34,8 +34,6 @@ function BugForm() {
   };
 
   this.init = function() {
-    var TRUSTED_ORIGINS = ['https://webcompat.com/', 'http://localhost:5000'];
-
     this.checkParams();
     this.disableSubmits();
     this.urlField.on('input',      _.bind(this.copyURL, this));
@@ -53,7 +51,9 @@ function BugForm() {
 
     // Set up listener for message events from screenshot-enabled add-ons
     window.addEventListener('message', _.bind(function(event) {
-      if (_.includes(TRUSTED_ORIGINS, event.origin)) {
+      // Make sure the data is coming from ~*inside the house*~!
+      // (i.e., our add-on sent it)
+      if (location.origin === event.origin) {
         this.form.on('submit', _.bind(this.submitFormWithScreenshot, this));
 
         this.screenshotData = event.data;
