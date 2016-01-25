@@ -50,9 +50,11 @@ define([
         .end()
         .findByCssSelector('#js-ReportBug').click()
         .end()
+        // we need to wait for the animation to end before checking.
+        .sleep(1000)
         .findByCssSelector('#js-ReportForm').isDisplayed()
         .then(function(isDisplayed) {
-          assert.equal(isDisplayed, false);
+          assert.equal(isDisplayed, false, 'The form should be hidden');
         });
     },
 
