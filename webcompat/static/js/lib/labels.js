@@ -17,11 +17,11 @@ if (!issues.allLabels) {
 
 issues.LabelsView = Backbone.View.extend({
   _isLoggedIn: $('body').data('username'),
-  el: $('.js-issue-labels'),
+  el: $('.js-Issue-labels'),
   editorButton: null,
   events: {
-    'click .js-labelEditor-launcher:not(.is-active)': 'editLabels',
-    'click .js-labelEditor-launcher.is-active': 'closeEditor'
+    'click .js-LabelEditorLauncher:not(.is-active)': 'editLabels',
+    'click .js-LabelEditorLauncher.is-active': 'closeEditor'
   },
   keyboardEvents: {
     'e': 'editLabels'
@@ -47,7 +47,7 @@ issues.LabelsView = Backbone.View.extend({
     this.$el.html(this.template(this.model.toJSON()));
   },
   fetchLabels: function() {
-    this.editorButton = $('.js-labelEditor-launcher');
+    this.editorButton = $('.js-LabelEditorLauncher');
     this.labelEditor = new issues.LabelEditorView({
       model: issues.allLabels,
       issueView: this,
@@ -62,7 +62,7 @@ issues.LabelsView = Backbone.View.extend({
   },
   editLabels: function() {
     this.editorButton.addClass('is-active');
-    this.$el.find('.js-labelEditor-launcher').after(this.labelEditor.render().el);
+    this.$el.find('.js-LabelEditorLauncher').after(this.labelEditor.render().el);
     var toBeChecked = _.intersection(this.getIssueLabels(), issues.allLabels.toArray());
     _.each(toBeChecked, function(labelName) {
       $('[name="' + labelName + '"]').prop('checked', true);
@@ -71,7 +71,7 @@ issues.LabelsView = Backbone.View.extend({
 });
 
 issues.LabelEditorView = Backbone.View.extend({
-  className: 'wc-LabelEditor js-labelEditor',
+  className: 'wc-LabelEditor js-LabelEditor',
   events: {
     'change input[type=checkbox]': 'updateView',
     'click button': 'closeEditor',
@@ -95,7 +95,7 @@ issues.LabelEditorView = Backbone.View.extend({
   reRender: function(data) {
     //only re-render the labels into the labels wrapper
     this.issueView.$el.find('.js-label-list').html(this.issueView.subTemplate(data));
-    this.issueView.$el.find('.js-labelEditor-launcher').addClass('is-active');
+    this.issueView.$el.find('.js-LabelEditorLauncher').addClass('is-active');
   },
   resizeEditorHeight: function() {
     var getBreakpoint = function() {

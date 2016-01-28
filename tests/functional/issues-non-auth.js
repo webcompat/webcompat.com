@@ -22,17 +22,17 @@ define([
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url('/issues/100')))
         .sleep(1000)
-        .findByCssSelector('h1.js-issue-title').getVisibleText()
+        .findByCssSelector('h1.js-Issue-title').getVisibleText()
         .then(function(text) {
           assert.include(text, 'Issue 100:', 'Issue title displayed');
         })
         .end()
-        .findByCssSelector('.js-issue-reporter').getVisibleText()
+        .findByCssSelector('.js-Issue-reporter').getVisibleText()
         .then(function(text) {
           assert.equal(text, 'miketaylr', 'Issue reporter displayed.');
         })
         .end()
-        .findByCssSelector('.js-label').isDisplayed()
+        .findByCssSelector('.js-Label').isDisplayed()
         .then(function(isDisplayed) {
           assert.equal(isDisplayed, true);
         });
@@ -43,17 +43,17 @@ define([
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url('/issues/100')))
         .sleep(1000)
-        .findByCssSelector('.js-issue-comment').isDisplayed()
+        .findByCssSelector('.js-Issue-comment').isDisplayed()
         .then(function(isDisplayed) {
           assert.equal(isDisplayed, true);
         })
-        .findByCssSelector('.js-comment-owner').getVisibleText()
+        .findByCssSelector('.js-Comment-owner').getVisibleText()
         .then(function(text) {
           assert.equal(text, 'GIGANTOR', 'Commenter name displayed.');
         })
         .end()
         .sleep(500)
-        .findByCssSelector('.js-comment-content').getVisibleText()
+        .findByCssSelector('.js-Comment-content').getVisibleText()
         .then(function(text) {
           assert.equal(text, 'Today\'s date is Mon Sep 28 2015', 'Comment is displayed.');
         });
@@ -85,7 +85,7 @@ define([
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url('/issues/252')))
         // Click on QR code button to open
-        .findByCssSelector('.js-qrcode-launcher').click()
+        .findByCssSelector('.js-QrCode-launcher').click()
         .end()
         .findByCssSelector('.wc-QrCode-image').isDisplayed()
         .then(function(isDisplayed) {
@@ -99,7 +99,7 @@ define([
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url('/issues/252')))
         // Click on QR code button to open
-        .findByCssSelector('.js-qrcode-launcher').click()
+        .findByCssSelector('.js-QrCode-launcher').click()
         .end()
         .findByCssSelector('.wc-QrCode-image').isDisplayed()
         .then(function(isDisplayed) {
@@ -107,7 +107,7 @@ define([
         })
         .end()
         // Click on QR code button again to close
-        .findByCssSelector('.js-qrcode-launcher.is-active').click()
+        .findByCssSelector('.js-QrCode-launcher.is-active').click()
         .end()
         .findByCssSelector('.wc-QrCode-image').isDisplayed()
         .then(function(isDisplayed) {
@@ -136,7 +136,7 @@ define([
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url('/issues/252')))
         // Click on QR code button to open
-        .findByCssSelector('.js-qrcode-launcher').click()
+        .findByCssSelector('.js-QrCode-launcher').click()
         .end()
         .findByCssSelector('.wc-QrCode-image').isDisplayed()
         .then(function(isDisplayed) {
@@ -144,7 +144,7 @@ define([
         })
         .end()
         // Click on QR code Close link to close
-        .findByCssSelector('.js-qrcode-image-button').click()
+        .findByCssSelector('.js-QrCode-image-button').click()
         .end()
         .findByCssSelector('.wc-QrCode-image').isDisplayed()
         .then(function(isDisplayed) {

@@ -1,14 +1,14 @@
 <script type="text/template" id="issue-labels-tmpl">
   <span class="wc-Label wc-Label--large">Labels</span>
   {% if session.user_id and session.avatar_url %}
-  <span class="wc-Issue-labelEditor js-issue-labelEditor">
-    <button class="wc-LabelEditorLauncher r-ResetButton wc-Icon wc-Icon--gear js-labelEditor-launcher" aria-hidden="true">
+  <span class="wc-Issue-labelEditor js-Issue-labelEditor">
+    <button class="wc-LabelEditorLauncher r-ResetButton wc-Icon wc-Icon--gear js-LabelEditorLauncher" aria-hidden="true">
       <span class="wc-Accessibility">Edit Labels</span></button>
   </span>
   {% endif %}
-   <span class="js-label-list">
+   <span class="js-Label-list">
   <% _.each(labels, function(label) { %>
-    <span class="wc-Label wc-Label--badge js-label" style="background-color:#<%=label.color%>">
+    <span class="wc-Label wc-Label--badge js-Label" style="background-color:#<%=label.color%>">
       <%= label.name %>
     </span>
   <% }); %>

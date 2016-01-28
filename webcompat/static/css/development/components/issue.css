@@ -144,13 +144,13 @@
     margin-top:2em;
   }
 
-.wc-Issue-Labels {
+.wc-Issue-labels {
   margin-bottom: 2em;
 }
 /* FullScreen LabelEditor*/
 @media all and (max-width: 23.43em) {
 
-  .wc-Issue-Labels {
+  .wc-Issue-lbels {
     position:relative;
   }
 }

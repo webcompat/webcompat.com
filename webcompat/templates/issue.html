@@ -1,17 +1,17 @@
 {% extends "layout.html" %}
 {% block body %}
   {% include "shared/nav.html" %}
-  <main class="wc-UIContent js-issue is-hidden" role="main">
+  <main class="wc-UIContent js-Issue is-hidden" role="main">
     <div class="wc-Issue">
       <section class="wc-UISection">
         {% include "issue/issue-header.html" %}
-        <div class="wc-Issue-Labels js-issue-labels">
+        <div class="wc-Issue-labels js-Issue-labels">
           {% include "issue/issue-labels.html" %}
         </div>
         <div class="wc-Issue-report">
           {% include "issue/issue-report.html" %}
         </div>
-        <div class="wc-Issue-commentList js-issue-commentList">
+        <div class="wc-Issue-commentList js-Issue-commentList">
           {% include "issue/issue-comment-list.html" %}
         </div>
         {% if session.user_id and session.avatar_url %}

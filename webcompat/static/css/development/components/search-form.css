@@ -10,7 +10,7 @@
     display:flex;
   }
 
-  .wc-SearchForm-form {
+  .wc-SearchForm-item {
     background-color:#F7F7F7;
     width:100%;
     font-size:1.5em;
@@ -18,7 +18,7 @@
     border:none;
   }
 
-    .wc-SearchForm-form::placeholder {
+    .wc-SearchForm-item::placeholder {
       color:#999898;
       font-weight:400;
       font-size:0.8em;

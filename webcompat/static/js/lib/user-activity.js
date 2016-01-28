@@ -4,7 +4,7 @@
 
 var issues = issues || {};
 var issueList = issueList || {};
-var loadingIndicator =  $('.js-loader');
+var loadingIndicator =  $('.js-Loader');
 issueList.user = $('body').data('username');
 
 var myIssuesPagination = new PaginationMixin();

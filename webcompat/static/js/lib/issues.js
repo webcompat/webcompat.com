@@ -153,7 +153,7 @@ issues.BodyView = Backbone.View.extend({
 });
 
 issues.TextAreaView = Backbone.View.extend({
-  el: $('.js-comment-text'),
+  el: $('.js-Comment-text'),
   events: {
     'keydown': 'broadcastChange'
   },
@@ -171,8 +171,8 @@ issues.ImageUploadView = Backbone.View.extend({
   events: {
     'change .js-buttonUpload': 'validateAndUpload'
   },
-  _submitButton: $('.js-issue-comment-button'),
-  _loaderImage: $('.js-loader'),
+  _submitButton: $('.js-Issue-comment-button'),
+  _loaderImage: $('.js-Loader'),
   template: _.template($('#upload-input-tmpl').html()),
   render: function() {
     this.$el.html(this.template()).insertAfter($('textarea'));
@@ -215,7 +215,7 @@ issues.ImageUploadView = Backbone.View.extend({
   addImageUploadComment: function(response) {
     // reponse looks like {filename: "blah", url: "http...blah"}
     var DELIMITER = '\n\n';
-    var textarea = $('.js-comment-text');
+    var textarea = $('.js-Comment-text');
     var textareaVal = textarea.val();
     var imageURL = _.template('![Screenshot of the site issue](<%= url %>)');
     var compiledImageURL = imageURL({url: response.url});
@@ -287,7 +287,7 @@ issues.ImageUploadView = Backbone.View.extend({
 
 // TODO: add comment before closing if there's a comment.
 issues.StateButtonView = Backbone.View.extend({
-  el: $('.js-issue-state-button'),
+  el: $('.js-Issue-state-button'),
   events: {
     'click': 'toggleState'
   },
@@ -335,9 +335,9 @@ issues.StateButtonView = Backbone.View.extend({
 });
 
 issues.MainView = Backbone.View.extend({
-  el: $('.js-issue'),
+  el: $('.js-Issue'),
   events: {
-    'click .js-issue-comment-button': 'addNewComment',
+    'click .js-Issue-comment-button': 'addNewComment',
     'click': 'closeLabelEditor'
   },
   keyboardEvents: {
@@ -355,11 +355,11 @@ issues.MainView = Backbone.View.extend({
   closeLabelEditor: function(e) {
     var target = $(e.target);
     // early return if the editor is closed,
-    if (!this.$el.find('.js-labelEditor').is(':visible') ||
+    if (!this.$el.find('.js-LabelEditor').is(':visible') ||
           // or we've clicked on the button to open it,
-         (target[0].nodeName === 'BUTTON' && target.hasClass('js-labelEditor-launcher')) ||
+         (target[0].nodeName === 'BUTTON' && target.hasClass('js-LabelEditorLauncher')) ||
            // or clicked anywhere inside the label editor
-           target.parents('.js-labelEditor').length) {
+           target.parents('.js-LabelEditor').length) {
       return;
     } else {
       this.labels.closeEditor();
@@ -427,14 +427,14 @@ issues.MainView = Backbone.View.extend({
   addComment: function(comment) {
     var view = new issues.CommentView({model: comment});
     var commentElm = view.render().el;
-    $('.js-issue-commentList').append(commentElm);
+    $('.js-Issue-commentList').append(commentElm);
     _.each($(commentElm).find('code'), function(elm) {
       Prism.highlightElement(elm);
     });
   },
   addNewComment: function() {
-    var form = $('.js-comment-form');
-    var textarea = $('.js-comment-text');
+    var form = $('.js-Comment-form');
+    var textarea = $('.js-Comment-text');
     // Only bother if the textarea isn't empty
     if ($.trim(textarea.val())) {
       var newComment = new issues.Comment({

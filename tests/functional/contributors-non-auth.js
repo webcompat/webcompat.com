@@ -20,7 +20,7 @@ define([
     'page loads': function() {
       return this.remote
         .get(require.toUrl(url('/contributors')))
-        .findByCssSelector('.js-hero-title').getVisibleText()
+        .findByCssSelector('.js-Hero-title').getVisibleText()
         .then(function(text) {
           assert.include(text, 'Welcome aboard!');
         })
@@ -38,7 +38,7 @@ define([
           assert.notInclude('is-open', className);
         })
         .end()
-        .findByCssSelector('.js-hero-svg').getAttribute('class')
+        .findByCssSelector('.js-Hero-svg').getAttribute('class')
         .then(function(className) {
           assert.notEqual('is-active', className);
         })
@@ -54,7 +54,7 @@ define([
           assert.equal(isDisplayed, true);
         })
         .end()
-        .findByCssSelector('.js-hero-svg.is-active').isDisplayed()
+        .findByCssSelector('.js-Hero-svg.is-active').isDisplayed()
         .then(function(isDisplayed) {
           assert.equal(isDisplayed, true);
         })
@@ -66,7 +66,7 @@ define([
           assert.notInclude('is-open', className);
         })
         .end()
-        .findByCssSelector('.js-hero-svg').getAttribute('class')
+        .findByCssSelector('.js-Hero-svg').getAttribute('class')
         .then(function(className) {
           assert.notInclude('is-active', className);
         });
@@ -76,14 +76,14 @@ define([
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url('/contributors')))
-        .findByCssSelector('.js-hero-svg.is-active').isDisplayed()
+        .findByCssSelector('.js-Hero-svg.is-active').isDisplayed()
         .then(function(isDisplayed) {
           assert.equal(isDisplayed, true);
         })
         .end()
         .findByCssSelector('.contributors__item__title').click()
         .end()
-        .findByCssSelector('.js-hero-svg').getAttribute('class')
+        .findByCssSelector('.js-Hero-svg').getAttribute('class')
         .then(function(className) {
           assert.notInclude('is-active', className);
         });

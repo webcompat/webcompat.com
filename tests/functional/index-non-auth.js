@@ -20,7 +20,7 @@ define([
     'front page loads': function() {
       return this.remote
         .get(require.toUrl(url('/')))
-        .findByCssSelector('.js-hero-title').getVisibleText()
+        .findByCssSelector('.js-Hero-title').getVisibleText()
         .then(function(text) {
           assert.equal(text, 'Bug reporting\nfor the internet.');
         })
@@ -61,7 +61,7 @@ define([
     'browse issues (new)': function() {
       return this.remote
         .get(require.toUrl(url('/')))
-        .findAllByCssSelector('#js-lastIssue .js-issue-list.wc-IssueList--new')
+        .findAllByCssSelector('#js-lastIssue .js-IssueList.wc-IssueList--new')
         .then(function(elms) {
           assert.equal(elms.length, 10, '10 issues should be displayed');
         })

@@ -30,7 +30,7 @@ define([
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url('/issues/69')))
-        .findByCssSelector('.js-issue-state-button').click()
+        .findByCssSelector('.js-Issue-state-button').click()
         .sleep(2000)
         .end()
         .findByCssSelector('.js-tag').getVisibleText()
@@ -38,12 +38,12 @@ define([
           assert.equal(text, 'Closed', 'Closed state text is displayed');
         })
         .end()
-        .findByCssSelector('.js-issue-state-button').getVisibleText()
+        .findByCssSelector('.js-Issue-state-button').getVisibleText()
         .then(function(text) {
           assert.equal(text, 'Reopen Issue', 'Button says Reopen not Close');
         })
         .end()
-        .findByCssSelector('.js-issue-state-button').click()
+        .findByCssSelector('.js-Issue-state-button').click()
         .sleep(2000)
         .end()
         .findByCssSelector('.js-tag').getVisibleText()
@@ -51,7 +51,7 @@ define([
           assert.equal(text, 'Ready for Outreach', 'Ready for Outreach state is displayed');
         })
         .end()
-        .findByCssSelector('.js-issue-state-button').getVisibleText()
+        .findByCssSelector('.js-Issue-state-button').getVisibleText()
         .then(function(text) {
           assert.equal(text, 'Close Issue', 'Button says Close not Reopen');
         });

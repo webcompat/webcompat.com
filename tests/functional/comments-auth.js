@@ -31,7 +31,7 @@ define([
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url('/issues/100')))
         .sleep(2000)
-        .findByCssSelector('.js-comment-form').isDisplayed()
+        .findByCssSelector('.js-Comment-form').isDisplayed()
         .then(function(isDisplayed) {
           assert.equal(isDisplayed, true, 'Comment form visible for logged in users.');
         })
@@ -43,19 +43,19 @@ define([
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url('/issues/100')))
-        .findByCssSelector('.js-issue-comment:nth-of-type(3)')
+        .findByCssSelector('.js-Issue-comment:nth-of-type(3)')
         .end()
-        .findByCssSelector('.js-issue-state-button').getVisibleText()
+        .findByCssSelector('.js-Issue-state-button').getVisibleText()
         .then(function(text) {
           assert.equal('Close Issue', text);
           assert.notEqual('Close and comment', text);
         })
         .end()
-        .findByCssSelector('textarea.js-comment-text')
+        .findByCssSelector('textarea.js-Comment-text')
         .type('test comment')
         .end()
         .sleep(1000)
-        .findByCssSelector('.js-issue-state-button').getVisibleText()
+        .findByCssSelector('.js-Issue-state-button').getVisibleText()
         .then(function(text) {
           assert.equal('Close and comment', text);
           assert.notEqual('Close Issue', text);
@@ -66,19 +66,19 @@ define([
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url('/issues/101')))
-        .findByCssSelector('.js-issue-comment:nth-of-type(3)')
+        .findByCssSelector('.js-Issue-comment:nth-of-type(3)')
         .end()
-        .findByCssSelector('.js-issue-state-button').getVisibleText()
+        .findByCssSelector('.js-Issue-state-button').getVisibleText()
         .then(function(text) {
           assert.equal('Reopen Issue', text);
           assert.notEqual('Reopen and comment', text);
         })
         .end()
-        .findByCssSelector('textarea.js-comment-text')
+        .findByCssSelector('textarea.js-Comment-text')
         .type('test comment')
         .end()
         .sleep(1000)
-        .findByCssSelector('.js-issue-state-button').getVisibleText()
+        .findByCssSelector('.js-Issue-state-button').getVisibleText()
         .then(function(text) {
           assert.equal('Reopen and comment', text);
           assert.notEqual('Reopen Issue', text);
@@ -91,20 +91,20 @@ define([
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url('/issues/100')))
-        .findAllByCssSelector('.js-issue-comment')
+        .findAllByCssSelector('.js-Issue-comment')
         .then(function(elms) {
           originalCommentsLength = elms.length;
         })
         .end()
-        .findByCssSelector('textarea.js-comment-text')
+        .findByCssSelector('textarea.js-Comment-text')
         .type('Today\'s date is ' + new Date().toDateString())
         .end()
         .sleep(2000)
         // click the comment button
-        .findByCssSelector('.js-issue-comment-button').click()
+        .findByCssSelector('.js-Issue-comment-button').click()
         .end()
         .sleep(2000)
-        .findAllByCssSelector('.js-issue-comment')
+        .findAllByCssSelector('.js-Issue-comment')
         .then(function(elms) {
           allCommentsLength = elms.length;
           assert(originalCommentsLength < allCommentsLength, 'Comment was successfully left.');
@@ -117,16 +117,16 @@ define([
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url('/issues/100')))
-        .findAllByCssSelector('.js-issue-comment')
+        .findAllByCssSelector('.js-Issue-comment')
         .then(function(elms) {
           originalCommentsLength = elms.length;
         })
         .end()
         // click the comment button
-        .findByCssSelector('.js-issue-comment-button').click()
+        .findByCssSelector('.js-Issue-comment-button').click()
         .end()
         .sleep(500)
-        .findAllByCssSelector('.js-issue-comment')
+        .findAllByCssSelector('.js-Issue-comment')
         .then(function(elms) {
           allCommentsLength = elms.length;
           assert(originalCommentsLength === allCommentsLength, 'Comment was not successfully left.');

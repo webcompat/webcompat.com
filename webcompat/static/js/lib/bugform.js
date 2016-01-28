@@ -9,9 +9,9 @@ function BugForm() {
   this.uploadField = $('#image');
   this.problemType = $('[name=problem_category]');
   this.submitButtons = $('#js-ReportForm .js-Button');
-  this.loadingIndicator = $('.js-loader');
+  this.loadingIndicator = $('.js-Loader');
   this.reportButton = $('#js-ReportBug');
-  this.loaderImage = $('.js-loader');
+  this.loaderImage = $('.js-Loader');
   this.screenshotData = '';
 
   this.inputMap = {

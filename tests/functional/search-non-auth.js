@@ -24,7 +24,7 @@ define([
         // to realize we're not at GitHub.
         .setFindTimeout(50)
         .get(require.toUrl(url('/issues')))
-        .findByCssSelector('#IssueList-search-input').click()
+        .findByCssSelector('#js-SearchForm-input').click()
         .type('g')
         .end()
         .findByCssSelector('.repo-container .issues-listing')
@@ -69,7 +69,7 @@ define([
     'Search input is visible': function() {
       return this.remote
         .get(require.toUrl(url('/issues')))
-        .findByCssSelector('.js-SearchIssue-searchForm').isDisplayed()
+        .findByCssSelector('.js-SearchForm').isDisplayed()
         .then(function(isDisplayed) {
           assert.equal(isDisplayed, true, 'Search input is visible for non-authed users.');
         })
@@ -80,10 +80,10 @@ define([
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url('/issues')))
-        .findByCssSelector('.js-SearchIssue-searchForm input')
+        .findByCssSelector('.js-SearchForm input')
         .type('vladvlad')
         .end()
-        .findByCssSelector('.js-SearchIssue-searchForm button').click()
+        .findByCssSelector('.js-SearchForm button').click()
         .end()
         // this is lame, but we gotta wait on search results.
         .sleep(3000)

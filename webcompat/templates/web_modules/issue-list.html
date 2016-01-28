@@ -1,4 +1,4 @@
-<article class="wc-IssueList wc-IssueList--<%= issue.stateClass %> wc-IssueList--large js-issue-list">
+<article class="wc-IssueList wc-IssueList--<%= issue.stateClass %> wc-IssueList--large js-IssueList">
   <div class="wc-IssueList-section">
     <header class="wc-IssueList-header">
       <a class="wc-Link" href="/issues/<%= issue.number %>">
@@ -11,7 +11,7 @@
     </p>
   </div>
   <div class="wc-IssueList-section">
-    <span class="wc-IssueList-label js-issue-label">
+    <span class="wc-IssueList-label js-Issue-label">
     <% _.each(issue.labels, function(label) { %>
       <a href="/issues?labels=<%= label.remoteName %>"
          class="wc-Labels" data-remotename="<%= label.remoteName %>"

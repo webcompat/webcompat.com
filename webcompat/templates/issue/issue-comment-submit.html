@@ -1,10 +1,10 @@
-<div class="wc-Comment wc-Comment--form js-comment-form" data-username="{{ session.username }}" data-avatar-url="{{ session.avatar_url }}">
+<div class="wc-Comment wc-Comment--form js-Comment-form" data-username="{{ session.username }}" data-avatar-url="{{ session.avatar_url }}">
   <div class="wc-Comment-avatar">
     <img class="" src="{{ session.avatar_url }}" alt="Avatar"/>
   </div>
   <div class="wc-Comment-body wc-Comment-body--caret">
   <label for="wc-Comment-text" class="wc-Accessibility">Comment Text</label>
-    <textarea id="Comment-text" class="wc-Comment-wrapper js-comment-text" placeholder="Leave a comment"></textarea>
+    <textarea id="Comment-text" class="wc-Comment-wrapper js-Comment-text" placeholder="Leave a comment"></textarea>
     <div class="wc-Form-group js-ImageUploadView">
       <script type="text/template" id="upload-input-tmpl">
         <form>
@@ -20,14 +20,14 @@
         </form>
       </script>
     </div>
-    <div class="wc-Loader js-loader"></div>
+    <div class="wc-Loader js-Loader"></div>
     <div class="wc-Comment-button">
-      <button class="wc-Button wc-Button--action js-issue-state-button">
+      <button class="wc-Button wc-Button--action js-Issue-state-button">
         <script type="text/template" id="state-button-tmpl">
         <%= state %>
         </script>
       </button>
-      <button value="comment" class="wc-Button wc-Button--default js-issue-comment-button" type="submit">Comment</button>
+      <button value="comment" class="wc-Button wc-Button--default js-Issue-comment-button" type="submit">Comment</button>
     </div>
   </div>
 </div>

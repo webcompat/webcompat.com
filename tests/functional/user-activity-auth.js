@@ -53,17 +53,17 @@ define([
         })
         .sleep(1000)
         .end()
-        .findByCssSelector('.js-list-issue .js-issue-list').isDisplayed()
+        .findByCssSelector('.js-list-issue .js-IssueList').isDisplayed()
         .then(function(isDisplayed) {
           assert.equal(isDisplayed, true, 'IssueList item is visible.');
         })
         .end()
-        .findByCssSelector('.js-issue-list .wc-IssueList-header').getVisibleText()
+        .findByCssSelector('.js-IssueList .wc-IssueList-header').getVisibleText()
         .then(function(text) {
           assert.match(text, /^Issue\s\d+:\s.+$/, 'Issue should have a non-empty title');
         })
         .end()
-        .findByCssSelector('.js-issue-list:nth-child(1) > div:nth-child(1) > p:nth-child(2)').getVisibleText()
+        .findByCssSelector('.js-IssueList:nth-child(1) > div:nth-child(1) > p:nth-child(2)').getVisibleText()
         .then(function(text) {
           assert.match(text, /comments:\s\d+$/i, 'Issue should display number of comments');
           assert.match(text, /^Opened:\s\d{4}\-\d{2}\-\d{2}.+/, 'Issue should display creation date');
