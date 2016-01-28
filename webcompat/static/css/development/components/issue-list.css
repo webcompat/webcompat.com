@@ -30,14 +30,6 @@
     }
   }
 
-  /* modifier */
-  .wc-IssueList--list {
-    display:inline-block;
-    width: auto;
-    margin:0;
-    background-color: transparent;
-  }
-
   /* Statut */
   .wc-IssueList--new {
     border-left: 5px solid var(--Issue-stateNew);
