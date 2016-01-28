@@ -1,8 +1,8 @@
 {% extends "layout.html" %}
 {% block body %}
 {% include "shared/nav.html" %}
-  <div class="wc-UISection">
-    <main class="wc-UIContent" role="main">
+  <main class="wc-UIContent" role="main">
+    <section class="wc-UISection">
       <div class="wc-CSSFixme">
         <h1 class="wc-Title wc-Title--l">CSS Fix Me</h1>
         <div class="wc-CSSFixme-instruction">
@@ -17,7 +17,7 @@
           </div>
         </div>
         <div class="wc-CSSFixme-item">
-          <textarea class="wc-Form-input " style="height:20rem;">{{ csscode }}</textarea>
+          <textarea class="wc-Form-input r-all--1of1" style="height:20rem;">{{ csscode }}</textarea>
         </div>
         <div class="wc-CSSFixme-item">
           <label class="wc-block">
@@ -37,8 +37,8 @@
           <p>Paste CSS in this box to see what needs fixing:</p>
         </div>
       </div>
-    </main>
-  </div>
+    </section>
+  </main>
 {% endblock %}
 {%- block extrascripts -%}
 {%- if config.PRODUCTION or config.STAGING -%}
