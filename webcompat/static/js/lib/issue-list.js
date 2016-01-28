@@ -83,7 +83,7 @@ issueList.DropdownView = Backbone.View.extend({
 });
 
 issueList.FilterView = Backbone.View.extend({
-  el: $('.js-issuelist-filter'),
+  el: $('.js-SearchIssue-filter'),
   events: {
     'click .js-filter-button': 'toggleFilter'
   },
@@ -164,7 +164,7 @@ issueList.FilterView = Backbone.View.extend({
 });
 
 issueList.SearchView = Backbone.View.extend({
-  el: $('.js-issuelist-search'),
+  el: $('.js-SearchIssue-searchForm'),
   events: {
     'click .js-search-button': 'searchIfNotEmpty'
   },
@@ -527,7 +527,7 @@ issueList.IssueView = Backbone.View.extend(
   }));
 
 issueList.MainView = Backbone.View.extend({
-  el: $('.js-issue-page'),
+  el: $('.js-SearchIssue'),
   events: {},
   keyboardEvents: {
     'g': 'githubWarp',

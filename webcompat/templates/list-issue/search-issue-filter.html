@@ -2,10 +2,10 @@
 {% from "web_modules/tag.html" import tag with context %}
 
 <script type="text/template" id="issuelist-filter-tmpl">
-    <div class="wc-IssueList-Dropdown">
+    <div class="wc-SearchIssue-Dropdown">
        {{ dropdown('large', 'js-dropdown') }}
     </div>
-    <div class="wc-IssueList-filter">
+    <div class="wc-SearchIssue-filter">
       {% for category in categories %}
       {{ tag('filter', category) }}
       {% endfor %}

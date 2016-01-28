@@ -21,7 +21,7 @@ define([
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url('/issues')))
-        .findByCssSelector('.js-issuelist-filter .js-dropdown .js-dropdown-label').getVisibleText()
+        .findByCssSelector('.js-SearchIssue-filter .js-dropdown .js-dropdown-label').getVisibleText()
         .then(function(text) {
           assert.include(text, 'Issues', 'Page header displayed');
         })
@@ -193,7 +193,7 @@ define([
           assert.equal(text, 'Show 25', 'Pagination dropdown label is updated from URL params');
         })
         .end()
-        .findAllByCssSelector('.js-issuelist-filter .js-dropdown-toggle h1').getVisibleText()
+        .findAllByCssSelector('.js-SearchIssue-filter .js-dropdown-toggle h1').getVisibleText()
         .then(function(text) {
           assert.equal(text, 'View all Issues', 'Filter dropdown label is updated from URL params');
         })
