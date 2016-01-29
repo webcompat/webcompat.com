@@ -2,103 +2,12 @@
 {%- block body -%}
 {% include "topbar.html" %}
 <main role="main">
-<div class="wc-Hero">
-  <div class="wc-content">
-    <div class="wc-Hero-wrapper">
-      <div class="wc-Hero-section wc-Hero-section--left wc-Hero-section--home ">
-        <h1 class="wc-Hero-title wc-Title--xl">Bug reporting <br>for the internet.</h1>
-        <a id="report-bug" class="wc-Hero-link is-closed" href="{{ url_for("index") }}">
-          Report bug
-          <span class="wc-Hero-link-icon wc-Hero-link-icon--default wc-Icon wc-Icon--arrow-right" aria-hidden="true"></span>
-          <span class="wc-Hero-link-icon wc-Hero-link-icon--active wc-Icon wc-Icon--arrow-down" aria-hidden="true"></span>
-        </a>
-      </div>
-      <div class="wc-Hero-section wc-Hero-section--right">
-        {% include "shared/LightbulbwithBug.svg" %}
-      </div>
-    </div>
-  </div>
-</div>
-{% include "form.html" %}
-  <div id="howitworks" class="wc-content">
-    <h2 class="wc-Title--l">How It Works</h2>
-    <div class="Threesteps">
-      <div class="r-Grid r-Grid--withGutter">
-        <div class="r-Grid-cell r-all--4of12 r-maxM--12of12">
-          <div class="u-table">
-            <div class="u-tableCell u-alignMiddle">
-             <span class="bignumber">1</span>
-            </div>
-              <div class="u-tableCell u-alignMiddle">
-                <p>Report a bug for any website or browser.</p>
-              </div>
-          </div>
-        </div>
-        <div class="r-Grid-cell r-all--4of12 r-maxM--12of12">
-          <div class="u-table">
-            <div class="u-tableCell u-alignMiddle">
-              <span class="bignumber">2</span>
-            </div>
-            <div class="u-tableCell u-alignMiddle">
-              <p>Our team of volunteers diagnoses the bug.</p>
-            </div>
-          </div>
-        </div>
-        <div class="r-Grid-cell r-all--4of12 r-maxM--12of12">
-          <div class="u-table">
-            <div class="u-tableCell u-alignMiddle">
-              <span class="bignumber">3</span>
-            </div>
-            <div class="u-tableCell u-alignMiddle">
-              <p>We send a fix to the site owner or browser.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
- {% include "browse-issues.html" %}
-
-  <div id="join" class="wc-content">
-    <h2>Join The Team</h2>
-    <p>Webcompat.com is a gathering place for the web compatibility community.  This site is a place to report bugs from any website across the web - whether you are a developer or not.  Started by the Mozilla Web Compatibility team, this initiative is a global task force on a mission to improve the web one bug at a time.  Join us!  Let&#39;s work together to make the web a better place to work and play. <a href="{{ url_for("about") }}">Learn More.</a></p>
-    <p class="wc-bold">Three Ways to Contribute \o/</p>
-    <div class="Threeways">
-      <div class="r-Grid r-Grid--withGutter">
-        <div class="r-Grid-cell r-all--4of12 r-maxS--12of12">
-          <div class="u-table">
-            <div class="u-tableCell u-alignMiddle">
-              <img src="../img/step1icon.png" alt="Report bugs">
-            </div>
-            <div class="u-tableCell u-alignMiddle">
-              <p><a id="report-bug-link" href="/?open=1">Report bugs</a></p>
-            </div>
-          </div>
-        </div>
-        <div class="r-Grid-cell r-all--4of12 r-maxS--12of12">
-          <div class="u-table">
-            <div class="u-tableCell u-alignMiddle">
-              <img src="../img/step2icon.png" alt="Diagnose bugs">
-            </div>
-            <div class="u-tableCell u-alignMiddle">
-              <p><a href="{{ url_for('show_issues') }}?stage=needsdiagnosis">Diagnose bugs</a></p>
-            </div>
-          </div>
-        </div>
-        <div class="r-Grid-cell r-all--4of12 r-maxS--12of12">
-          <div class="u-table">
-            <div class="u-tableCell u-alignMiddle">
-              <img src="../img/step3icon.png" alt="Reach out to sites">
-            </div>
-            <div class="u-tableCell u-alignMiddle">
-              <p><a href="{{ url_for('show_issues') }}?stage=contactready">Reach out to sites</a></p>
-            </div>
-          </div>
-        </div>
-      </div>
-  </div>
-</div>
+  <div class="wc-Loader js-Loader"></div>
+  {% include "home-page/hero.html" %}
+  {% include "home-page/form.html" %}
+  {% include "home-page/threesteps.html" %}
+  {% include "home-page/browse-issues.html" %}
+  {% include "home-page/join-us.html" %}
 </main>
 {% endblock %}
 {%- block extrascripts -%}

@@ -1,167 +1,33 @@
 {% extends "layout.html" %}
 {% block body %}
   {% include "shared/nav.html" %}
-    <main class="wc-content wc-content--body js-issue wc-hidden" role="main">
-      <div class="wc-IssueDetail">
-        <h1 class="wc-IssueDetail-title wc-Title--l">
-          <script type="text/template" id="title-tmpl">
-          Issue <%= number %>: <%- title %>
-          </script>
-        </h1>
-        <!-- Issue Date -->
-        <div class="wc-IssueDetail-create">
-          <script type="text/template" id="metadata-tmpl">
-          <div class="wc-IssueDetail-state wc-IssueDetail-state--<%= stateClass %>"><%= issueState %></div>
-          <div class="wc-IssueDetail-date">Opened <%= createdAt %> by
-            <span class="wc-IssueDetail-reporter">
-              <a href="https://github.com/<%= reporter %>"><%= reporter %></a><!--
-         --></span>. <%= commentNumber %> comments
+  <main class="wc-UIContent js-Issue is-hidden" role="main">
+    <div class="wc-Issue">
+      <section class="wc-UISection">
+        {% include "issue/issue-header.html" %}
+        <div class="wc-Issue-labels js-Issue-labels">
+          {% include "issue/issue-labels.html" %}
+        </div>
+        <div class="wc-Issue-report">
+          {% include "issue/issue-report.html" %}
+        </div>
+        <div class="wc-Issue-commentList js-Issue-commentList">
+          {% include "issue/issue-comment-list.html" %}
+        </div>
+        {% if session.user_id and session.avatar_url %}
+          <div class="wc-Issue-commentSubmit">
+            {% include "issue/issue-comment-submit.html" %}
           </div>
-          </script>
-        </div>
-      </div>
-      <!-- Issue Labels -->
-      <div class="Label-wrapper">
-        <script type="text/template" id="issue-labels-tmpl">
-          <span class="Label Label--title">Labels</span>
-          {% if session.user_id and session.avatar_url %}
-          <span class="LabelEditor-wrapper">
-            <button class="LabelEditor-launcher wc-Icon wc-Icon--gear" aria-hidden="true">
-              <span class="wc-sronly">Edit Labels</span></button>
-            </span>
-          {% endif %}
-          <span class="Label-list">
-          <% _.each(labels, function(label) { %>
-            <span class="Label Label--badge" style="background-color:#<%=label.color%>">
-              <%= label.name %>
-            </span>
-          <% }); %>
-          </span>
-        </script>
-      </div>
-
-      <div class="wc-IssueDetail-report">
-        <script type="text/template" id="issue-info-tmpl">
-        <div class="wc-Comment">
-          <div class="wc-Comment-avatar">
-            <img src="<%= reporterAvatar %>" alt="<%= reporter %>">
-          </div>
-          <div class="wc-Comment-body wc-Comment-body--caret">
-            <div class="wc-Comment-wrapper">
-              <div class="wc-Comment-header">
-                <span class="wc-Comment-owner">
-                  <a href="https://github.com/<%= reporter %>"><%= reporter %></a>
-                </span> reported on <a href="https://webcompat.com/issues/<%= number %>"><%= createdAt %></a>
-              </div>
-              <div class="wc-Comment-content">
-                <!-- QR Code -->
-                <div class="wc-Qr-wrapper">
-                  <span class="wc-QrImage-wrapper">
-                    <button class="wc-QrImage-launcher"
-                            aria-pressed="false"
-                            role="button"
-                    >
-                      <span class="wc-Qr-icon wc-Icon wc-Icon--qrcode" aria-hidden="true"></span>
-                      <span class="wc-Qr-iconPressed wc-Icon wc-Icon--times" aria-hidden="true"></span>
-                      <span class="wc-sronly">Show QR code</span>
-                    </button>
-                  </span>
-                </div>
-                <div class="wc-IssueDetail-details">
-
-                  <%= body %>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        </script>
-      </div>
-      <!-- Issue Comments -->
-      <div class="wc-IssueDetail-comment">
-        <script type="text/template" id="comment-tmpl">
-        <div class="wc-Comment-avatar">
-          <img src="<%= avatarUrl %>" alt="<%= commenter %>">
-        </div>
-        <div class="wc-Comment-body wc-Comment-body--caret">
-          <div class="wc-Comment-wrapper">
-            <div class="wc-Comment-header">
-              <span class="wc-Comment-owner">
-                <a href="https://github.com/<%= commenter %>"><%= commenter %></a>
-              </span> commented <a href="#<%= commentLinkId %>"><%= createdAt %></a>
-            </div>
-            <div class="wc-Comment-content"><%= body %></div>
-          </div>
-        </div>
-        </script>
-      </div>
-      {% if session.user_id and session.avatar_url %}
-      <!-- Create issue comment -->
-      <div class="wc-Comment wc-Comment--form" data-username="{{ session.username }}" data-avatar-url="{{ session.avatar_url }}">
-        <div class="wc-Comment-avatar">
-          <img class="" src="{{ session.avatar_url }}" alt="Avatar"/>
-        </div>
-        <div class="wc-Comment-body wc-Comment-body--caret">
-        <label for="wc-Comment-text" class="wc-sronly">Comment Text</label>
-          <textarea id="Comment-text" class="wc-Comment-wrapper wc-Comment-text" placeholder="Leave a comment"></textarea>
-          <div class="wc-Form-group js-ImageUploadView">
-          <script type="text/template" id="upload-input-tmpl">
-          <form><div class="wc-Form-upload">
-            <span class="wc-Form-upload-icon" aria-hidden="true">
-              <span class="wc-Icon wc-Icon--cloud-upload"></span>
-            </span>
-            <label class="wc-Form-label wc-Form-label--upload" for="image">Attach a screenshot image</label>
-            <input accept=".jpe,.jpg,.jpeg,.gif,.png,.bmp" class="ButtonUpload js-buttonUpload" id="image" name="image" type="file">
-          </div></form>
-          </script>
-          </div>
-          <div class="wc-Loader js-loader"></div>
-          <div class="wc-Comment-button">
-            <button class="Button Button--action js-issue-state-button">
-              <script type="text/template" id="state-button-tmpl">
-              <%= state %>
-              </script>
-            </button>
-            <button value="comment" class="Button Button--default js-issue-comment-button" type="submit">Comment</button>
-          </div>
-        </div>
-      </div>
-      {% else %}
-      <p class="wc-IssueDetail-login">Please <a href="{{ url_for('login') }}">login</a> to edit issues.</p>
-      {% endif %}
-      <p class="wc-margin-bottom"><span class="wc-keyhint">G</span> takes you to the <a href="https://github.com/{{ config['ISSUES_REPO_URI'] }}/{{ number }}">GitHub view</a> of this page.</p>
-    </main>
-
-  <script type="text/template" id="label-editor-tmpl">
-    <div class="LabelEditor-table">
-      <div class="LabelEditor-row LabelEditor-row--header">
-        <div class="LabelEditor-header">
-          <input class="form-control LabelEditor-search" placeholder="filter label">
-          <button class="LabelEditor-btn">Save &amp; Close</button>
-        </div>
-      </div>
-      <div class="LabelEditor-row">
-        <div class="LabelEditor-list">
-          <% _.each(labels, function(label) { %>
-            <label class="LabelEditor-item">
-              <span class="LabelEditor-color" style="background-color:#<%=label.color%>">
-                <input class="LabelEditor-checkbox" type="checkbox" name="<%= label.name %>" data-color="<%=label.color%>" data-remotename="<%= label.remoteName %>">
-              </span>
-              <span class="LabelEditor-name"><%= label.name %></span>
-              </label>
-            <% }); %>
-          </div>
-        </div>
+        {% else %}
+          <p class="wc-Issue-login">Please <a class="wc-Link" href="{{ url_for('login') }}">login</a> to edit issues.</p>
+        {% endif %}
+        <p>
+          <span class="wc-Keyhint">G</span> takes you to the
+          <a class="wc-Link" href="https://github.com/{{ config['ISSUES_REPO_URI'] }}/{{ number }}">GitHub view</a> of this page.
+        </p>
+      </section>
     </div>
-  </script>
-
-  <script type="text/template" id="qr-image-tmpl">
-    <div class="wc-QrImage-header">
-      <button class="wc-QrImage-btn r-ResetButton">Close</button>
-    </div>
-    <div class="wc-QrImage-main"><img src="<%= qrDataUrl %>" alt="QR code"></div>
-  </script>
-
+  </main>
 {% endblock %}
 {% block extrascripts %}
 <script>var issueNumber={{ number }};

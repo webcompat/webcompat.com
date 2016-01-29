@@ -1,36 +1,38 @@
-/*----------Button----------*/
+/** @define DropdownHeader */
 
 .wc-DropdownHeader {
   position: relative;
 }
 
-.wc-DropdownHeader-content {
-  position: absolute;
-  display: none;
-  z-index: 2;
-  top: 100%;
-  right: 0;
-  white-space: nowrap;
-  min-width: 100%;
-  border-radius: 5px;
-  padding: .625em;
-  margin: 1em 0 0;
-  background-color: #fbfced;
-}
-.wc-DropdownHeader-content::after {
-  position: absolute;
-  content: "";
-  width: 9px;
-  height: 9px;
-  top: 0;
-  right: 10%;
-  background-color: #fbfced;
-  border-color: #fbfced;
-  border-style: solid;
-  border-width: 1px 0 0 1px;
-  transform: rotate(45deg) translateY(-50%);
-}
+  .wc-DropdownHeader-content {
+    position: absolute;
+    display: none;
+    z-index: 2;
+    top: 100%;
+    right: 0;
+    white-space: nowrap;
+    min-width: 100%;
+    border-radius: 5px;
+    padding: .625em;
+    margin: 1em 0 0;
+    background-color: #fbfced;
+  }
 
-.wc-DropdownHeader.is-active .wc-DropdownHeader-content {
-  display: block;
-}
+    .wc-DropdownHeader-content::after {
+      position: absolute;
+      content: "";
+      width: 9px;
+      height: 9px;
+      top: 0;
+      right: 10%;
+      background-color: #fbfced;
+      border-color: #fbfced;
+      border-style: solid;
+      border-width: 1px 0 0 1px;
+      transform: rotate(45deg) translateY(-50%);
+    }
+
+    /* state */
+    .wc-DropdownHeader.is-active .wc-DropdownHeader-content {
+      display: block;
+    }

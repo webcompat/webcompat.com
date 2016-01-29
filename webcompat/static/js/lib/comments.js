@@ -12,7 +12,7 @@ issues.CommentsCollection = Backbone.Collection.extend({
 });
 
 issues.CommentView = Backbone.View.extend({
-  className: 'wc-Comment js-issue-comment',
+  className: 'wc-Comment js-Issue-comment',
   id: function() {
     return this.model.get('commentLinkId');
   },

@@ -1,8 +1,14 @@
-/*---------- Navbar ----------*/
+/** @define Navbar */
+
+:root {
+  --Navbar-fontSize: var(--base-fontSize);
+  --Navbar-backgroundColor: var(--base-colorDark);
+}
+
 .wc-Navbar {
-  background: var(--wc-background-dark);
+  font-size: var(--Navbar-fontSize);
+  background-color: var(--Navbar-backgroundColor);
   padding: 1.25em 0.5em;
-  font-size:var(--base-font-size);
 }
   .wc-Navbar-container {
     display: flex;

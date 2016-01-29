@@ -15,8 +15,8 @@ if (!window.md) {
 
 issueList.DropdownView = Backbone.View.extend({
   events: {
-    'click .js-dropdown-toggle': 'openDropdown',
-    'click .js-dropdown-options li': 'selectDropdownOption'
+    'click .js-Dropdown-toggle': 'openDropdown',
+    'click .js-Dropdown-options li': 'selectDropdownOption'
   },
   initialize: function() {
     // this.el is set from parent view via setElement
@@ -36,7 +36,7 @@ issueList.DropdownView = Backbone.View.extend({
   },
   openDropdown: function(e) {
     var target = $(e.target);
-    target.closest('.js-dropdown-wrapper').toggleClass('is-active');
+    target.closest('.js-Dropdown').toggleClass('is-active');
   },
   closeDropdown: function() {
     this.$el.removeClass('is-active');
@@ -83,9 +83,9 @@ issueList.DropdownView = Backbone.View.extend({
 });
 
 issueList.FilterView = Backbone.View.extend({
-  el: $('.js-issuelist-filter'),
+  el: $('.js-SearchIssue-filter'),
   events: {
-    'click .js-filter-button': 'toggleFilter'
+    'click .js-Tag': 'toggleFilter'
   },
   _isLoggedIn: $('body').data('username'),
   _userName: $('body').data('username'),
@@ -124,7 +124,7 @@ issueList.FilterView = Backbone.View.extend({
   template: _.template($('#issuelist-filter-tmpl').html()),
   render: function() {
     this.$el.html(this.template(this.model.toJSON()));
-    this.dropdown.setElement(this.$el.find('.js-dropdown-wrapper')).render();
+    this.dropdown.setElement(this.$el.find('.js-Dropdown')).render();
     return this;
   },
   clearFilter: function(options) {
@@ -164,9 +164,9 @@ issueList.FilterView = Backbone.View.extend({
 });
 
 issueList.SearchView = Backbone.View.extend({
-  el: $('.js-issuelist-search'),
+  el: $('.js-SearchForm'),
   events: {
-    'click .js-search-button': 'searchIfNotEmpty'
+    'click .js-SearchForm-button': 'searchIfNotEmpty'
   },
   keyboardEvents: {
     'enter': 'searchIfNotEmpty'
@@ -224,7 +224,7 @@ issueList.SearchView = Backbone.View.extend({
 });
 
 issueList.SortingView = Backbone.View.extend({
-  el: $('.js-issue-sorting'),
+  el: $('.js-SearchIssue-sorting'),
   events: {},
   initialize: function() {
     this.paginationModel = new Backbone.Model({
@@ -261,8 +261,8 @@ issueList.SortingView = Backbone.View.extend({
   template: _.template($('#issuelist-sorting-tmpl').html()),
   render: function() {
     this.$el.html(this.template());
-    this.paginationDropdown.setElement(this.$el.find('.js-dropdown-pagination')).render();
-    this.sortDropdown.setElement(this.$el.find('.js-dropdown-sort')).render();
+    this.paginationDropdown.setElement(this.$el.find('.js-Dropdown-pagination')).render();
+    this.sortDropdown.setElement(this.$el.find('.js-Dropdown-sort')).render();
     return this;
   }
 });
@@ -271,16 +271,16 @@ var issuesPagination = new PaginationMixin();
 
 issueList.IssueView = Backbone.View.extend(
   _.extend({}, issuesPagination, {
-    el: $('.js-issue-list'),
+    el: $('.js-list-issue'),
     events: {
-      'click .js-issue-label': 'labelSearch',
+      'click .js-Issue-label': 'labelSearch',
     },
   // NOTE: these filters don't need "status-" prefixes because appear in URL params
     _filterRegex: /&*stage=(new|needscontact|needsdiagnosis|contactready|sitewait|closed)&*/i,
     _searchRegex: /&*q=(?:(.+)?)&*/i,
     _githubSearchEndpoint: 'https://api.github.com/search/issues',
     _isLoggedIn: $('body').data('username'),
-    _loadingIndicator: $('.js-loader'),
+    _loadingIndicator: $('.js-Loader'),
     _urlParams: undefined,
     initialize: function() {
       this.issues = new issueList.IssueCollection();
@@ -527,7 +527,7 @@ issueList.IssueView = Backbone.View.extend(
   }));
 
 issueList.MainView = Backbone.View.extend({
-  el: $('.js-issue-page'),
+  el: $('.js-SearchIssue'),
   events: {},
   keyboardEvents: {
     'g': 'githubWarp',

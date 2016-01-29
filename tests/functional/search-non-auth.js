@@ -24,7 +24,7 @@ define([
         // to realize we're not at GitHub.
         .setFindTimeout(50)
         .get(require.toUrl(url('/issues')))
-        .findByCssSelector('#IssueList-search-input').click()
+        .findByCssSelector('#js-SearchForm-input').click()
         .type('g')
         .end()
         .findByCssSelector('.repo-container .issues-listing')
@@ -39,7 +39,7 @@ define([
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url('/issues') + params))
-        .findByCssSelector('.wc-IssueItem:nth-of-type(1) a').getVisibleText()
+        .findByCssSelector('.wc-IssueList:nth-of-type(1) a').getVisibleText()
         .then(function(text) {
           assert.include(text, 'vladvlad', 'The search query results show up on the page.');
         })
@@ -59,7 +59,7 @@ define([
         .findByCssSelector('[data-remotename=browser-android]').click()
         .end()
         // click the first suggestion, which is "android"
-        .findByCssSelector('.wc-IssueItem:nth-child(1) > div:nth-child(2) > span:nth-child(1) > a:nth-child(1)').getVisibleText()
+        .findByCssSelector('.wc-IssueList:nth-child(1) > div:nth-child(2) > span:nth-child(1) > a:nth-child(1)').getVisibleText()
         .then(function(text) {
           assert.include(text, 'android', 'Clicking on a suggested label gets you results.');
         })
@@ -69,7 +69,7 @@ define([
     'Search input is visible': function() {
       return this.remote
         .get(require.toUrl(url('/issues')))
-        .findByCssSelector('.js-issuelist-search').isDisplayed()
+        .findByCssSelector('.js-SearchForm').isDisplayed()
         .then(function(isDisplayed) {
           assert.equal(isDisplayed, true, 'Search input is visible for non-authed users.');
         })
@@ -80,14 +80,14 @@ define([
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url('/issues')))
-        .findByCssSelector('.js-issuelist-search input')
+        .findByCssSelector('.js-SearchForm input')
         .type('vladvlad')
         .end()
-        .findByCssSelector('.js-issuelist-search button').click()
+        .findByCssSelector('.js-SearchForm button').click()
         .end()
         // this is lame, but we gotta wait on search results.
         .sleep(3000)
-        .findByCssSelector('.wc-IssueItem:nth-of-type(1) a').getVisibleText()
+        .findByCssSelector('.wc-IssueList:nth-of-type(1) a').getVisibleText()
         .then(function(text) {
           assert.include(text, 'vladvlad', 'The search results show up on the page.');
         })
@@ -105,7 +105,7 @@ define([
         .type(keys.ENTER)
         .end()
         .sleep(3000)
-        .findByCssSelector('.wc-IssueItem:nth-of-type(1) a').getVisibleText()
+        .findByCssSelector('.wc-IssueList:nth-of-type(1) a').getVisibleText()
         .then(function(text) {
           assert.include(text, 'vladvlad', 'The search query results show up on the page.');
         })

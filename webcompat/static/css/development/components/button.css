@@ -1,9 +1,18 @@
-/*----------Button----------*/
-.Button {
+/** @define Button */
+
+:root {
+  --Button-disabledOpacity: 0.5;
+  --Button-defaultColor: var(--base-colorDark);
+  --Button-defaultColorHover: var(--Button-defaultColor);
+  --Button-actionColor: var(--base-variantColorLight);
+  --Button-actionColorHover: var(--Button-actionColor);
+}
+
+.wc-Button {
   display: inline-block;
   margin-bottom: .5em;
   padding: .5em 2em;
-  text-decoration: none !important;
+  text-decoration: none;
   font-weight: 700;
   border-radius: 20px;
   color: #000;
@@ -13,57 +22,63 @@
   white-space: nowrap;
   font-size: inherit;
   line-height: normal;
-
-}
-button {
   background-color: transparent;
   background-image: none;
   user-select: none;
   -webkit-appearance: none;
 }
-/**
-* Remove excess padding and border in Firefox 4+
-*/
-button::-moz-focus-inner {
-  border: 0;
-  padding: 0;
-}
-/*outline chrome */
-button:focus {outline:none;}
+  /**
+  * Remove excess padding and border in Firefox 4+
+  */
+  .wc-Button::-moz-focus-inner {
+    border: 0;
+    padding: 0;
+  }
 
-.Button:hover:not(.is-disabled),
-.Button:focus:not(.is-disabled),
-.Button:active:not(.is-disabled) {
-  text-decoration: none;
-}
-.Button:hover:not(.is-disabled) {
-  color:#fff;
-}
-.Button--default {
-  border: solid 4px var(--wc-background-dark);
-}
-.Button--default:hover:not(.is-disabled) {
-  background-color: var(--wc-background-dark);
-}
-.Button--action {
-  border: solid 4px var(--wc-variant-background-light);
-}
-.Button--action:hover:not(.is-disabled) {
-  background-color: var(--wc-variant-background-light);
-}
-.Button:disabled,
-.Button.is-disabled {
-  cursor: default;
-  opacity: var(--Button-disabled-opacity);
-}
+  /*outline chrome */
+  .wc-Button:focus {outline:none;}
 
-.ButtonUpload {
-  opacity: 0;
-  z-index: 1;
-  position: absolute;
-  top:0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 1;
-}
+  .wc-Button:hover:not(.is-disabled),
+  .wc-Button:focus:not(.is-disabled),
+  .wc-Button:active:not(.is-disabled) {
+    text-decoration: none;
+  }
+
+  .wc-Button:hover:not(.is-disabled) {
+    color:#fff;
+  }
+
+  .wc-Button:disabled,
+  .wc-Button.is-disabled {
+    cursor: default;
+    opacity: var(--Button-disabledOpacity);
+  }
+
+  /* modifier */
+  .wc-Button--default {
+    border: solid 4px var(--Button-defaultColor);
+  }
+
+  .wc-Button--default:hover:not(.is-disabled) {
+    background-color: var(--Button-defaultColorHover);
+  }
+
+  .wc-Button--action {
+    border: solid 4px var(--Button-actionColor);
+  }
+
+  .wc-Button--action:hover:not(.is-disabled) {
+    background-color: var(--Button-actionColorHover);
+  }
+
+
+  /* Upload Button */
+  .wc-ButtonUpload {
+    position: absolute;
+    opacity: 0;
+    z-index: 1;
+    top:0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+  }

@@ -23,11 +23,11 @@ define([
         .findByCssSelector('.js-issues-link').click()
         .end()
         //find an issue so we know the page has loaded
-        .findByCssSelector('div.wc-IssueItem:nth-child(1)')
+        .findByCssSelector('.js-IssueList:nth-child(1)')
         .end()
         .goBack()
         // now check that we're back at the home page.
-        .findByCssSelector('.wc-Hero-title').getVisibleText()
+        .findByCssSelector('.js-Hero-title').getVisibleText()
         .then(function(text) {
           assert.equal(text, 'Bug reporting\nfor the internet.');
         })

@@ -32,22 +32,22 @@ define([
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url('/issues')))
         .sleep(2000)
-        .findByCssSelector('.wc-IssueSearch-form').click()
+          .findByCssSelector('.wc-SearchForm-item').click()
         .type('taco')
         .end()
-        .findAllByCssSelector('button.wc-Filter--new').click()
+        .findAllByCssSelector('button.wc-Tag--new').click()
         .end()
-        .findByCssSelector('.wc-IssueSearch-form').getVisibleText()
+        .findByCssSelector('.wc-SearchForm-item').getVisibleText()
         .then(function(text) {
           assert.equal(text, '', 'Clicking filter should empty search text');
         })
         .end()
-        .findAllByCssSelector('button.wc-Filter--new').click()
+        .findAllByCssSelector('button.wc-Tag--new').click()
         .end()
-        .findByCssSelector('.wc-IssueSearch-form').click()
+        .findByCssSelector('.wc-SearchForm-item').click()
         .type('taco')
         .end()
-        .findAllByCssSelector('button.wc-Filter--new').getAttribute('class')
+        .findAllByCssSelector('button.wc-Tag--new').getAttribute('class')
         .then(function(className) {
           assert.notInclude(className, 'is-active', 'Searching should clear all filters');
         })
@@ -59,7 +59,7 @@ define([
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url('/issues') + params))
-        .findByCssSelector('.wc-IssueItem:nth-of-type(1) a').getVisibleText()
+        .findByCssSelector('.wc-IssueList:nth-of-type(1) a').getVisibleText()
         .then(function(text) {
           assert.include(text, 'vladvlad', 'The search query results show up on the page.');
         })
@@ -82,7 +82,7 @@ define([
         .type(keys.ENTER)
         .end()
         .sleep(3000)
-        .findByCssSelector('.wc-IssueItem:nth-of-type(1) a').getVisibleText()
+        .findByCssSelector('.wc-IssueList:nth-of-type(1) a').getVisibleText()
         .then(function(text) {
           assert.include(text, 'vladvlad', 'The search query results show up on the page.');
         })

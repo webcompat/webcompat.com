@@ -3,9 +3,9 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 function HomePage() {
-  var reportButton = $('#report-bug');
+  var reportButton = $('#js-ReportBug');
   var reportLink = $('#report-bug-link');
-  var formContainer = $('#new-report');
+  var formContainer = $('#js-ReportForm');
   var searchBar = $('.js-SearchBar');
   var searchBarOpen = $('.js-SearchBarOpen');
   var searchBarClose = $('.js-SearchBarClose');
@@ -18,7 +18,7 @@ function HomePage() {
       ('ontouchstart' in window || 'createTouch' in document) ?
       'touch' : 'no-touch';
     // Open the form if we've got open=1 param in the URL
-    if (formContainer.hasClass('form-closed') &&
+    if (formContainer.hasClass('is-closed') &&
         location.search.search(/open=1/) > -1) {
       reportButton.click();
     }
@@ -74,8 +74,8 @@ function HomePage() {
     reportButton.toggleClass('is-closed')
                 .toggleClass('is-open');
     formContainer.slideToggle(function() {
-      formContainer.toggleClass('form-closed')
-                   .toggleClass('form-opened');
+      formContainer.toggleClass('is-closed')
+                   .toggleClass('is-opened');
     });
   };
 

@@ -1,55 +1,77 @@
-/* Dropdown */
+/** @define Dropdown */
+
+:root {
+  --Dropdown-fontSize: var(--base-fontSize);
+  --Dropdown-linkHover: var(--base-colorDark);
+}
+
 .wc-Dropdown {
-  position:relative;
-  font-size:var(--base-font-size);
+  font-size: var(--Dropdown-fontSize);
+  position: relative;
   display: inline-block;
 }
-.wc-Dropdown--large {
-  font-size:2em;
-}
-@media (--viewport-450px) {
+
+  /* modifier*/
   .wc-Dropdown--large {
-    font-size:1.4em;
+    font-size: 2rem;
   }
-}
-.wc-Dropdown-toggle {
-  vertical-align:middle;
-  background-image:none;
-  background-color:transparent;
-  border:none;
-  color:#404040;
-  font-family:var(--base-font);
-  font-size:1em;
-  padding:0.7em 0;
-  cursor:pointer;
-  border:solid 2px transparent;
-  font-weight:700;
-}
-  .wc-Dropdown-label {
-    display:inline-block;
-    pointer-events: none;
-    vertical-align:middle;
+
+  @media all and (max-width: 28.12em) {
+    .wc-Dropdown--large {
+      font-size:1.4em;
+    }
   }
-  .wc-Dropdown-content {
-    position:absolute;
-    min-width:100%;
-    display: none;
-    padding:0 1em 1em 1em;
-    background-color:rgba(255,255,255,.8);
-    z-index:2;
-    list-style:none;
-  }
-  .wc-Dropdown.is-active .wc-Dropdown-toggle {
-    border:solid 2px rgba(255,255,255,.8);
-  }
-  .wc-Dropdown.is-active .wc-Dropdown-content {
-    display: block;
-  }
-  .wc-Dropdown-item {
-    cursor: pointer;
-    margin:1em 0 0 !important;
-    white-space:nowrap;
-  }
-  .wc-Dropdown-link {
+
+  .wc-Dropdown-toggle {
+    font-size:1em;
     font-weight:700;
+    vertical-align:middle;
+    background-color:transparent;
+    border:none;
+    color:#404040;
+    padding:0.7em 0;
+    cursor:pointer;
+    border:solid 2px transparent;
   }
+
+    .wc-Dropdown-label {
+      display: inline-block;
+      font-size: 1em;
+      margin: 0;
+      pointer-events: none;
+      vertical-align:middle;
+    }
+
+    .wc-Dropdown-content {
+      position:absolute;
+      min-width:100%;
+      display: none;
+      padding:0 1em 1em 1em;
+      background-color:rgba(255,255,255,.8);
+      z-index:2;
+      list-style:none;
+    }
+
+    .wc-Dropdown.is-active .wc-Dropdown-toggle {
+      border:solid 2px rgba(255,255,255,.8);
+    }
+
+    .wc-Dropdown.is-active .wc-Dropdown-content {
+      display: block;
+    }
+
+    .wc-Dropdown-item {
+      cursor: pointer;
+      margin:1em 0 0 !important;
+      white-space:nowrap;
+    }
+
+    .wc-Dropdown-link {
+      font-weight:700;
+      color: inherit;
+    }
+
+      .wc-Dropdown-link:hover,
+      .wc-Dropdown-link:focus {
+        color: var(--Dropdown-linkHover);
+      }

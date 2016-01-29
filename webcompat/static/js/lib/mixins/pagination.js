@@ -20,8 +20,8 @@ issueList.PaginationControlsView = Backbone.View.extend({
     this.el = options.el;
   },
   events: {
-    'click .js-pagination-previous': 'broadcastPrevious',
-    'click .js-pagination-next': 'broadcastNext',
+    'click .js-Pagination-previous': 'broadcastPrevious',
+    'click .js-Pagination-next': 'broadcastNext',
   },
   broadcastNext: function(e) {
     issueList.events.trigger('paginate:next', e);
@@ -75,8 +75,8 @@ function PaginationMixin() {
   this.initPaginationLinks = function(issuesCollection) {
     // if either the next or previous page numbers are null
     // disable the buttons and add .is-disabled classes.
-    var nextButton = this.paginationControls.el.find('.js-pagination-next');
-    var prevButton = this.paginationControls.el.find('.js-pagination-previous');
+    var nextButton = this.paginationControls.el.find('.js-Pagination-next');
+    var prevButton = this.paginationControls.el.find('.js-Pagination-previous');
     var nextPage = issuesCollection.getNextPage();
     var prevPage = issuesCollection.getPrevPage();
     var isLastPage = function() {
@@ -90,15 +90,15 @@ function PaginationMixin() {
     if (!issuesCollection.length || isSinglePage) {
       // hide pagination buttons if there are no results,
       // or the results are limited to a single page.
-      nextButton.addClass('wc-hidden');
-      prevButton.addClass('wc-hidden');
+      nextButton.addClass('is-hidden');
+      prevButton.addClass('is-hidden');
       return;
     }
 
-    nextButton.removeClass('wc-hidden')
+    nextButton.removeClass('is-hidden')
               .prop('disabled', isLastPage())
               .toggleClass('is-disabled', isLastPage());
-    prevButton.removeClass('wc-hidden')
+    prevButton.removeClass('is-hidden')
               .prop('disabled', isFirstPage())
               .toggleClass('is-disabled', isFirstPage());
 

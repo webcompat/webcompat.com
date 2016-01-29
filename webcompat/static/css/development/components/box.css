@@ -1,16 +1,5 @@
-/*------Contributors view------*/
+/** @define Box */
 
-
-.wc-Box-media {
-  margin:30px auto 30px auto;
-  width:80%;
-}
-@media (--viewport-770px) {
-  .wc-Box-media {
-    width:auto;
-  }
-}
-/* main class */
 .wc-Box {
   border-style:solid;
   border-width:1px;
@@ -19,17 +8,33 @@
   margin:3em 0;
   background-color: #F7F7F7;
   }
+
+    /* modifier */
+    .wc-Box--reporting {
+      border-color: var(--base-stateNew);
+    }
+
+    .wc-Box--analysis {
+      border-color: var(--base-stateNeedsDiagnosis);
+    }
+
+    .wc-Box--reaching {
+      border-color:var(--base-stateNeedsContact);
+    }
+
     /* label */
     .wc-Box-label {
       color : #000;
       font-weight:bold;
     }
-.wc-Box--reporting {
-  border-color: var(--wc-state-new);
-}
-.wc-Box--analysis {
-  border-color: var(--wc-state-needsDiagnosis);
-}
-.wc-Box--reaching {
-  border-color:var(--wc-state-ready);
-}
+
+    .wc-Box-media {
+      margin:30px auto 30px auto;
+    }
+
+    @media all and (min-width: 48.13em) {
+
+      .wc-Box-media {
+        width:80%;
+      }
+    }

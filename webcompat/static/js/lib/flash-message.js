@@ -41,7 +41,7 @@ var FlashMessageView = Backbone.View.extend({
     this.render(message);
   },
   showError: function(data) {
-    this.$el.addClass('wc-FlashMessage--error');
+    this.$el.addClass('is-error');
     this.show(data);
   },
   hide: function() {

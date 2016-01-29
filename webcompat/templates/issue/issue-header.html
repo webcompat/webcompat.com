@@ -1,0 +1,20 @@
+{% from "web_modules/tag.html" import tag with context %}
+
+<header class="wc-Issue-header">
+  <h1 class="wc-Issue-title js-Issue-title">
+    <script type="text/template" id="title-tmpl">
+    Issue <%= number %>: <%- title %>
+    </script>
+  </h1>
+  <!-- Issue Date -->
+  <div class="wc-Issue-create">
+    <script type="text/template" id="metadata-tmpl">
+      <div class="js-tag wc-Tag wc-Tag--label wc-Tag--<%= stateClass %>"><%= issueState %></div>
+      <div class="wc-Issue-date">Opened <%= createdAt %> by
+        <span class="wc-Issue-reporter js-Issue-reporter">
+          <a class="wc-Link" href="https://github.com/<%= reporter %>"><%= reporter %></a>
+        </span>. <%= commentNumber %> comments
+      </div>
+    </script>
+  </div>
+</header>

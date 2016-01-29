@@ -1,65 +1,119 @@
-/*------Issue List------*/
+/** @define IssueList */
 
-
-/* Main class */
-.wc-IssueList {
-  font-size:var(--base-font-size);
-  padding: 0 0 1em 0;
+:root {
+  --Issue-fontSize: var(--base-fontSize);
+  --Issue-backgroundColor: #f0f0f0;
+  --Issue-stateNew: var(--base-stateNew);
+  --Issue-stateNeedsDiagnosis: var(--base-stateNeedsDiagnosis);
+  --Issue-stateNeedsContact: var(--base-stateNeedsContact);
+  --Issue-stateReady: var(--base-stateReady);
+  --Issue-stateSitewait: var(--base-stateSitewait);
+  --Issue-stateClose: var(--base-stateClose);
 }
 
-  /* Main page title */
-  .wc-IssueList-title {}
+/* Parent class */
+.wc-IssueList {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  width: 100%;
+  font-size: var(--Issue-fontSize);
+  background-color: #fff;
+  padding: 0.5em 1em;
+  margin-bottom: 1em;
+}
 
-  .wc-IssueList-subtitle {
-    padding: 3em 0 0 ;
+  @media all and (max-width: 59.37em) {
+
+    .wc-IssueList {
+      flex-direction: column;
+    }
   }
 
-  /* Sorting issues */
-  .wc-IssueList-sorting {
-    background-color:#F0F0F0;
-    padding:3em 0 .5em 0;
+  /* Statut */
+  .wc-IssueList--new {
+    border-left: 5px solid var(--Issue-stateNew);
   }
 
-  /* drodpown */
-  .wc-IssueList-pagination {
-    padding: 0 0 .5em 0;
+  .wc-IssueList--needsDiagnosis {
+    border-left: 5px solid var(--Issue-stateNeedsDiagnosis);
   }
 
-  /* List of issue */
-  .wc-IssueList-displayed {
-    background-color:#F0F0F0;
+  .wc-IssueList--needsContact {
+    border-left: 5px solid var(--Issue-stateNeedsContact);
   }
 
-  /* no resultats */
-  .wc-IssueList-noResults {
-    font-size:1.5em;
+  .wc-IssueList--ready {
+    border-left: 5px solid var(--Issue-stateReady);
   }
 
-    /* title */
-    .wc-IssueList-noResults-title {
-      font-weight:600;
-      margin-bottom:1em;
+  .wc-IssueList--sitewait {
+    border-left: 5px solid var(--Issue-stateSitewait);
+  }
+
+  .wc-IssueList--close {
+    border-left: 5px solid var(--Issue-stateClose);
+  }
+
+  .wc-IssueList--large {
+    font-size:1.2em;
+    border-width:8px;
+  }
+
+  /* Header */
+  .wc-IssueList-header {
+    padding: 1em 0 .5em 0;
+    word-wrap: break-word;
+  }
+
+  .wc-IssueList-metadata {
+    font-size:.8em;
+    margin-right:.8em;
+  }
+
+    @media all and (max-width: 28.12em) {
+
+      .wc-IssueList-metadata {
+        display:block;
+      }
     }
 
-    /* list*/
-    .wc-IssueList-noResults-list {
-      list-style-position: inside;
-      margin: 0 0 1em 1em;
-      font-size: 0.7em;
+  /* Count */
+  .wc-IssueList-count {
+    font-weight: 400;
+  }
+
+  /* label */
+  .wc-IssueList-label {
+    display:block;
+    text-align:right;
+    font-size:.8em;
+  }
+
+  @media all and (max-width: 59.37em) {
+
+    .wc-IssueList-label {
+      text-align:left;
+    }
+  }
+
+  /* Section */
+  .wc-IssueList-section {
+    width:50%;
+  }
+
+    @media all and (max-width: 59.37em) {
+
+      .wc-IssueList-section {
+        width:100%;
+      }
+      .wc-IssueList-section + .wc-IssueList-section {
+        margin-top:1em;
+      }
     }
 
-      /* list item */
-      .wc-IssueList-noResults-list-item {
-        padding: .3em 0;
-      }
-
-      /* modifier : label */
-      .wc-IssueList-noResults-list-item--label {
-        list-style: none;
-        padding-top:.8em;
-      }
-
-      /* labels item */
-      .wc-IssueList-noResults-list-labelsItem {
-        display:inline-block;
-      }
+  /* Link */
+  .wc-IssueList-linkMoreIssues {
+    text-align: center;
+    margin:25px 0 0;
+  }

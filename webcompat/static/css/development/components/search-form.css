@@ -1,0 +1,38 @@
+/** @define SearchForm */
+
+.wc-SearchForm {
+  background-color:#F7F7F7;
+  padding-top:1.5em;
+  padding-bottom:1.5em;
+}
+
+  .wc-SearchForm-content {
+    display:flex;
+  }
+
+  .wc-SearchForm-item {
+    background-color:#F7F7F7;
+    width:100%;
+    font-size:1.5em;
+    font-weight:400;
+    border:none;
+  }
+
+    .wc-SearchForm-item::placeholder {
+      color:#999898;
+      font-weight:400;
+      font-size:0.8em;
+    }
+
+  /* button */
+  .wc-SearchForm-button {
+    width: 1.5em;
+    font-size: 1.5em;
+    cursor: pointer;
+    opacity: 0.8;
+  }
+
+    /* event */
+    .wc-SearchForm-button:hover {
+      opacity:1;
+    }

@@ -1,24 +1,27 @@
 {% extends "layout.html" %}
 {% block body %}
-<div class="wc-IssueList js-issue-page" data-username="{{ session.username }}">
+<div class="wc-SearchIssue js-SearchIssue" data-username="{{ session.username }}">
   {% include "shared/nav.html" %}
   <main role="main">
 
     <div class="wc-Loader js-loader"></div>
 
-    <div class="wc-content wc-content--body js-issuelist-filter">
-      {% include "issue-list/issue-filter.html" %}
-    </div>
+    <section class="wc-UISection">
+      <div class="wc-UIContent js-SearchIssue-filter">
+        {% include "list-issue/search-issue-filter.html" %}
+      </div>
+    </section>
 
-    {% include "issue-list/issue-search.html" %}
+    <section>
+      {% include "list-issue/search-issue-search-form.html" %}
+    </section>
 
-    <div class="wc-IssueList-sorting">
-      {% include "issue-list/issue-sorting.html" %}
-    </div>
-
-    <div class="wc-IssueList-displayed">
-      {% include "issue-list/issue-displayed.html" %}
-    </div>
+    <section class="wc-UISection wc-UISection--backgroundColor">
+      <div class="wc-SearchIssue-sorting">
+        {% include "list-issue/search-issue-sorting.html" %}
+      </div>
+      {% include "list-issue/issue-list.html" %}
+    </section>
 
   </main>
 </div>

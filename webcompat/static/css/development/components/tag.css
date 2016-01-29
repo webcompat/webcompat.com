@@ -1,0 +1,104 @@
+/** @define Tag */
+
+:root {
+  --Tag-fontSize: var(--base-fontSize);
+}
+
+/* wc-Taging issues */
+.wc-Tag {
+  font-size:var(--Tag-fontSize);
+  display:inline-block;
+  vertical-align:middle;
+  border: solid 1px;
+  padding:.4em;
+  margin:0 .8em .4em 0;
+  color:#404040;
+}
+  /* event */
+  .wc-Tag--filter:hover,
+  .wc-Tag.is-active,
+  .wc-Tag-filter:focus {
+    color:#fff;
+  }
+
+  /* modifier */
+  .wc-tag--filter {
+    cursor:pointer;
+  }
+  .wc-Tag--label {
+    color: #fff;
+    padding: .36em 1.19em;
+  }
+
+  @media all and (max-width: 28.12em) {
+
+    .wc-Tag--label {
+      font-size:.8em;
+    }
+  }
+
+  .wc-Tag--new {
+    border-color:var(--base-stateNew);
+  }
+
+    /* event */
+    .wc-Tag--new.wc-tag--filter:hover,
+    .wc-Tag--new.is-active,
+    .wc-Tag--new.wc-Tag--label {
+      background-color:var(--base-stateNew);
+    }
+
+  .wc-Tag--needsDiagnosis {
+    border-color:var(--base-stateNeedsDiagnosis);
+  }
+
+    /* event */
+    .wc-Tag--needsDiagnosis.wc-tag--filter:hover,
+    .wc-Tag--needsDiagnosis.is-active,
+    .wc-Tag--needsDiagnosis.wc-Tag--label {
+      background-color:var(--base-stateNeedsDiagnosis);
+    }
+
+  .wc-Tag--needsContact {
+    border-color:var(--base-stateNeedsContact);
+  }
+
+    /* event */
+    .wc-Tag--needsContact.wc-tag--filter:hover,
+    .wc-Tag--needsContact.is-active,
+    .wc-Tag--needsContact.wc-Tag--label {
+      background-color:var(--base-stateNeedsContact);
+    }
+
+  .wc-Tag--ready {
+    border-color:var(--base-stateReady);
+  }
+
+    /* event */
+    .wc-Tag--ready.wc-tag--filter:hover,
+    .wc-Tag--ready.is-active,
+    .wc-Tag--ready.wc-Tag--label {
+      background-color:var(--base-stateReady);
+    }
+
+  .wc-Tag--sitewait {
+    border-color:var(--base-stateSitewait);
+  }
+
+  /* event */
+  .wc-Tag--sitewait.wc-tag--filter:hover,
+  .wc-Tag--sitewait.is-active,
+  .wc-Tag--sitewait.wc-Tag--label {
+    background-color:var(--base-stateSitewait);
+  }
+
+  .wc-Tag--close {
+    border-color:var(--base-stateClose);
+  }
+
+    /* event */
+    .wc-Tag--close.wc-tag--filter:hover,
+    .wc-Tag--close.is-active,
+    .wc-Tag--close.wc-Tag--label {
+      background-color:var(--base-stateClose);
+    }

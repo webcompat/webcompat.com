@@ -1,0 +1,15 @@
+/** @define Reset */
+
+img {
+  max-width: 100%;
+}
+
+button {
+  cursor: pointer;
+}
+
+fieldset {
+  border: none;
+  margin: 0;
+  padding: 0;
+}

@@ -21,7 +21,8 @@
   font-size:1.4em;
   cursor:pointer;
 }
-@media (--viewport-375px) {
+@media all and (max-width: 23.43em) {
+
   .contributors__item__title h2 {
     font-size:1.2em;
   }
@@ -34,7 +35,6 @@
   padding:0;
   font-size:1em;
   cursor:pointer;
-  font-family: var(--base-font);
   position:relative;
 }
 /* wc-Icon header, default state */
@@ -72,12 +72,14 @@
 .contributors__list {
   list-style:none;
 }
-@media (--viewport-1180px) {
+@media all and (max-width: 73.75em) {
+
   .contributors__list {
     padding-left:2em;
   }
 }
-@media (--viewport-450px) {
+@media all and (max-width: 28.12em) {
+
   .contributors__list {
     padding-left:0;
   }
@@ -88,7 +90,8 @@
   margin-top:-1em;
   border-top:solid 1px transparent;
 }
-@media (--viewport-450px) {
+@media all and (max-width: 28.12em) {
+
   .contributors__list--lvl_down {
     margin-left:0;
   }
@@ -138,7 +141,8 @@
   line-height:22px;
   width:100%;
 }
-@media (--viewport-1180px) {
+@media all and (max-width: 73.75em) {
+
   .contributors__list__item--lvl_down span {
     padding-right:2.2em;
   }

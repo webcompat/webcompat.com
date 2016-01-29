@@ -1,0 +1,41 @@
+<script type="text/template" id="issue-info-tmpl">
+  <div class="wc-Comment">
+    <div class="wc-Comment-avatar">
+      <img src="<%= reporterAvatar %>" alt="<%= reporter %>">
+    </div>
+    <div class="wc-Comment-body wc-Comment-body--caret">
+      <div class="wc-Comment-wrapper">
+        <div class="wc-Comment-header">
+          <span class="wc-Comment-owner">
+            <a class="wc-Link" href="https://github.com/<%= reporter %>"><%= reporter %></a>
+          </span> reported on <a class="wc-Link" href="https://webcompat.com/issues/<%= number %>"><%= createdAt %></a>
+        </div>
+        <div class="wc-Comment-content">
+          <!-- QR Code -->
+          <div class="wc-Comment-qr">
+            <span class="wc-QrCode">
+              <button class="wc-QrCode-launcher js-QrCode-launcher"
+                      aria-pressed="false"
+                      role="button"
+              >
+                <span class="wc-QrCode-launcher-icon wc-Icon wc-Icon--qrcode" aria-hidden="true"></span>
+                <span class="wc-QrCode-launcher-iconPressed wc-Icon wc-Icon--times" aria-hidden="true"></span>
+                <span class="wc-Accessibility">Show QR code</span>
+              </button>
+            </span>
+          </div>
+          <div class="wc-Issue-details">
+            <%= body %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</script>
+
+<script type="text/template" id="qr-image-tmpl">
+  <div class="wc-QrCode-image-header">
+    <button class="wc-QrCode-image-button js-QrCode-image-button r-ResetButton">Close</button>
+  </div>
+  <div class="wc-QrCode-image-main"><img src="<%= qrDataUrl %>" alt="QR code"></div>
+</script>

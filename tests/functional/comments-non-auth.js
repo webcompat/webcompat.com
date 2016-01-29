@@ -21,7 +21,7 @@ define([
       return this.remote
         .setFindTimeout(1000)
         .get(require.toUrl(url('/issues/200')))
-        .findByCssSelector('.wc-Comment--form')
+        .findByCssSelector('.js-Comment-form')
         .then(assert.fail, function(err) {
           assert.isTrue(/NoSuchElement/.test(String(err)));
         })

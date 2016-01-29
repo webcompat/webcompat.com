@@ -66,7 +66,7 @@ define([
         .end()
         // wait a bit
         .sleep(100)
-        .findByXpath('//*[@id="new-report"]/div/form/div[1]/div[2]/div[1]').getAttribute('class')
+        .findByXpath('//*[@id="js-ReportForm"]/div/form/div[1]/div[2]/div[1]').getAttribute('class')
         .then(function(className) {
           assert.include(className, 'js-form-error');
           assert.notInclude(className, 'js-no-error');
@@ -77,7 +77,7 @@ define([
         // wait a bit
         .sleep(100)
         // xpath to the #url formGroup
-        .findByXpath('//*[@id="new-report"]/div/form/div[1]/div[2]/div[1]').getAttribute('class')
+        .findByXpath('//*[@id="js-ReportForm"]/div/form/div[1]/div[2]/div[1]').getAttribute('class')
         .then(function(className) {
           assert.include(className, 'js-no-error');
           assert.notInclude(className, 'js-form-error');
@@ -93,9 +93,9 @@ define([
         .end()
         // wait a bit
         .sleep(100)
-        .findByXpath('//*[@id="new-report"]/div/form/div[1]/div[1]/fieldset').getAttribute('class')
+        .findByXpath('//*[@id="js-ReportForm"]/div/form/div[1]/div[1]/div').getAttribute('class')
         .then(function(className) {
-          assert.include(className, 'js-form-error');
+          assert.include(className, 'is-error js-form-error');
           assert.notInclude(className, 'js-no-error');
         })
         .end()
@@ -105,10 +105,10 @@ define([
         // wait a bit
         .sleep(100)
         // validation message should be removed now
-        .findByXpath('//*[@id="new-report"]/div/form/div[1]/div[1]/fieldset').getAttribute('class')
+        .findByXpath('//*[@id="js-ReportForm"]/div/form/div[1]/div[1]/div').getAttribute('class')
         .then(function(className) {
           assert.include(className, 'js-no-error');
-          assert.notInclude(className, 'js-form-error');
+          assert.notInclude(className, 'is-error js-form-error');
         })
         .end();
     },
