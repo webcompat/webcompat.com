@@ -133,11 +133,11 @@
       }
 
       .wc-Form-group.is-validated .wc-Form-validation::after {
-        background-image: url(../img/valid.svg);
+        background-image: url(../../img/valid.svg);
       }
 
       .wc-Form-group.is-error .wc-Form-validation::after {
-        background-image: url(../img/invalid.svg);
+        background-image: url(../../img/invalid.svg);
       }
 
       .wc-Form-group.is-validated .wc-Form-helpMessage {
@@ -147,7 +147,7 @@
       .wc-Form-group.is-error .wc-Form-item {
         border-color: var(--base-variantColorDark);
       }
-      
+
       .wc-Form-group.is-error .wc-Form-item:focus{
         border-color: var(--base-variantColorDark);
         box-shadow:none;
