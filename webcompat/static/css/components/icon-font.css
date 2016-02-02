@@ -2,11 +2,11 @@
 
 @font-face {
   font-family: 'webcompat';
-  src:url('../font/webcompat/webcompat.eot?ccpilb');
-  src:url('../font/webcompat/webcompat.eot?#iefixccpilb') format('embedded-opentype'),
-      url('../font/webcompat/webcompat.woff?ccpilb') format('woff'),
-      url('../font/webcompat/webcompat.ttf?ccpilb') format('truetype'),
-      url('../font/webcompat/webcompat.svg?ccpilb#icomoon') format('svg');
+  src:url('../../font/webcompat/webcompat.eot?ccpilb');
+  src:url('../../font/webcompat/webcompat.eot?#iefixccpilb') format('embedded-opentype'),
+      url('../../font/webcompat/webcompat.woff?ccpilb') format('woff'),
+      url('../../font/webcompat/webcompat.ttf?ccpilb') format('truetype'),
+      url('../../font/webcompat/webcompat.svg?ccpilb#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
 }

@@ -23,6 +23,8 @@ webcompat/static/js/cssfixme.js
 webcompat/**/*.min.js
 webcompat/**/*.min.css
 webcompat/**/*.dev.css
+webcompat/static/build
+npm-debug.log
 
 #selenium server
 *.jar

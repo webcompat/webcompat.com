@@ -13,12 +13,19 @@
     "node": ">= 0.10.0"
   },
   "devDependencies": {
+    "babel-core": "^6.4.5",
+    "babel-loader": "^6.2.1",
+    "backbone": "^1.2.3",
+    "css-loader": "^0.23.1",
+    "cssnext-loader": "^1.0.1",
     "cssrecipes-custom-media-queries": "0.3.0",
     "cssrecipes-defaults": "^0.5.0",
     "cssrecipes-grid": "^0.4.0",
     "cssrecipes-reset": "^0.5.0",
     "cssrecipes-utils": "^0.5.0",
     "eslint": "^1.8.0",
+    "extract-text-webpack-plugin": "^1.0.1",
+    "file-loader": "^0.8.5",
     "grunt": "~0.4.5",
     "grunt-check-dependencies": "~0.9.0",
     "grunt-contrib-concat": "~0.3.0",
@@ -28,9 +35,26 @@
     "grunt-contrib-watch": "~0.5.3",
     "grunt-cssnext": "^1.0.0",
     "grunt-eslint": "^17.3.1",
+    "image-webpack-loader": "^1.6.3",
     "intern": "2.2.0",
+    "jquery": "^2.2.0",
+    "json-loader": "^0.5.4",
     "load-grunt-tasks": "~0.6.0",
+    "markdown-it": "^5.1.0",
+    "markdown-it-emoji": "^1.1.0",
+    "markdown-it-sanitizer": "^0.4.1",
+    "minimist": "^1.2.0",
+    "moment": "^2.11.1",
+    "mousetrap": "^1.5.3",
+    "prismjs": "^1.3.0",
+    "style-loader": "^0.13.0",
     "suitcss-utils-align": "^0.2.0",
-    "suitcss-utils-display": "^0.4.0"
+    "suitcss-utils-display": "^0.4.0",
+    "svgo": "^0.6.1",
+    "svgo-loader": "^1.1.0",
+    "webpack": "^1.12.12"
+  },
+  "scripts": {
+    "watch": "webpack --watch --progress --colors"
   }
 }
