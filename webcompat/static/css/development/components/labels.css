@@ -15,7 +15,8 @@
   color: inherit;
 }
   /* state */
-  .wc-Labels:hover {
+  .wc-Labels:hover,
+  .wc-Labels:focus {
     text-decoration:none;
     opacity:1;
     border-color: #414042;

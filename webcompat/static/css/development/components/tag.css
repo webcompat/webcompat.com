@@ -14,6 +14,7 @@
   margin:0 .8em .4em 0;
   color:#404040;
 }
+
   /* event */
   .wc-Tag--filter:hover,
   .wc-Tag.is-active,
@@ -25,6 +26,7 @@
   .wc-tag--filter {
     cursor:pointer;
   }
+
   .wc-Tag--label {
     color: #fff;
     padding: .36em 1.19em;
@@ -37,67 +39,79 @@
     }
   }
 
+  /* Tag new */
   .wc-Tag--new {
     border-color:var(--base-stateNew);
   }
 
     /* event */
-    .wc-Tag--new.wc-tag--filter:hover,
+    .wc-Tag--new.wc-tag--filter:hover
+    .wc-Tag--new.wc-tag--filter:focus,
     .wc-Tag--new.is-active,
     .wc-Tag--new.wc-Tag--label {
       background-color:var(--base-stateNew);
     }
 
+  /* Tag needsDiagnosis */
   .wc-Tag--needsDiagnosis {
     border-color:var(--base-stateNeedsDiagnosis);
   }
 
     /* event */
-    .wc-Tag--needsDiagnosis.wc-tag--filter:hover,
+    .wc-Tag--needsDiagnosis.wc-tag--filter:hover
+    .wc-Tag--needsDiagnosis.wc-tag--filter:focus,
     .wc-Tag--needsDiagnosis.is-active,
     .wc-Tag--needsDiagnosis.wc-Tag--label {
       background-color:var(--base-stateNeedsDiagnosis);
     }
 
+  /* Tag needsContact */
   .wc-Tag--needsContact {
     border-color:var(--base-stateNeedsContact);
   }
 
     /* event */
     .wc-Tag--needsContact.wc-tag--filter:hover,
+    .wc-Tag--needsContact.wc-tag--filter:focus,
     .wc-Tag--needsContact.is-active,
     .wc-Tag--needsContact.wc-Tag--label {
       background-color:var(--base-stateNeedsContact);
     }
 
+  /* Tag ready */
   .wc-Tag--ready {
     border-color:var(--base-stateReady);
   }
 
     /* event */
     .wc-Tag--ready.wc-tag--filter:hover,
+    .wc-Tag--ready.wc-tag--filter:focus,
     .wc-Tag--ready.is-active,
     .wc-Tag--ready.wc-Tag--label {
       background-color:var(--base-stateReady);
     }
 
+  /* Tag sitewait */
   .wc-Tag--sitewait {
     border-color:var(--base-stateSitewait);
   }
 
-  /* event */
-  .wc-Tag--sitewait.wc-tag--filter:hover,
-  .wc-Tag--sitewait.is-active,
-  .wc-Tag--sitewait.wc-Tag--label {
-    background-color:var(--base-stateSitewait);
-  }
+    /* event */
+    .wc-Tag--sitewait.wc-tag--filter:hover,
+    .wc-Tag--sitewait.wc-tag--filter:focus,
+    .wc-Tag--sitewait.is-active,
+    .wc-Tag--sitewait.wc-Tag--label {
+      background-color:var(--base-stateSitewait);
+    }
 
+  /* Tag close */
   .wc-Tag--close {
     border-color:var(--base-stateClose);
   }
 
     /* event */
     .wc-Tag--close.wc-tag--filter:hover,
+    .wc-Tag--close.wc-tag--filter:focus,
     .wc-Tag--close.is-active,
     .wc-Tag--close.wc-Tag--label {
       background-color:var(--base-stateClose);
