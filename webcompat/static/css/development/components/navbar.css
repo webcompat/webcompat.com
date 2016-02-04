@@ -26,7 +26,8 @@
   .wc-Navbar-linkDropdown {
     display: block;
   }
-    .wc-Navbar-link:hover {
+    .wc-Navbar-link:hover,
+    .wc-Navbar-link:focus {
       color: #fff;
     }
     .wc-Navbar-linkDropdown:hover {

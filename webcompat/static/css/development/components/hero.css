@@ -1,4 +1,4 @@
-/** @define Hero */
+  /** @define Hero */
 
 :root {
   --Hero-fontSize: var(--base-fontSize);
@@ -59,11 +59,8 @@
   }
 
       /* event */
+      .wc-Hero-link:hover,
       .wc-Hero-link:focus {
-        color: #414042;
-      }
-
-      .wc-Hero-link:hover {
         text-decoration:none;
         color: #fff;
       }

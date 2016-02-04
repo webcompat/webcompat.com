@@ -44,7 +44,8 @@
     text-decoration: none;
   }
 
-  .wc-Button:hover:not(.is-disabled) {
+  .wc-Button:hover:not(.is-disabled),
+  .wc-Button:focus:not(.is-disabled) {
     color:#fff;
   }
 
