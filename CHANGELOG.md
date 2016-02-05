@@ -1,3 +1,8 @@
+## 2.3.1 - 2015-02-05
+
+* Massive refactor of HTML + CSS [Pull #901](https://github.com/webcompat/webcompat.com/pull/901)
+* Add :focus styles [Pull #910](https://github.com/webcompat/webcompat.com/pull/910) [Issue #907](https://github.com/webcompat/webcompat.com/issues/907)
+
 ## 2.3 - 2015-01-07
 
 * React to add-ons sending screenshots in bug report [Pull #895](https://github.com/webcompat/webcompat.com/pull/895) [Issue #879](https://github.com/webcompat/webcompat.com/issues/879)
