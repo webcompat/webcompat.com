@@ -83,62 +83,9 @@
 
   /* container details issue */
   .wc-Issue-details {
-    word-wrap: break-word;
-    overflow: hidden;
     position: relative;
     line-height: 1.5em;
   }
-
-    .wc-Issue-details > *.is-hidden {
-      display: none;
-    }
-
-    /* force font-size */
-    .wc-Issue-details * {
-      font-size:1em !important;
-    }
-
-    .wc-Issue-details a {
-      color: var(--Issue-detailLink);
-      text-decoration: underline;
-    }
-
-      /* event */
-      .wc-Issue-details a:hover,
-      .wc-Issue-details a:focus {
-        color: var(--Issue-detailLinkHover);
-        text-decoration: none;
-      }
-
-    .wc-Issue-details strong {
-        font-weight: bold !important;
-    }
-
-    .wc-Issue-details img {
-        max-width: 100%;
-        max-height: 100%;
-    }
-
-    .wc-Issue-details code,
-    .wc-Comment-content code {
-      font-family: monospace;
-      font-size: 90%;
-    }
-
-    .wc-Issue-details p > code,
-    .wc-Comment-content p > code {
-      color: inherit;
-      background-color: #F5F5F5;
-      padding: 0.25em;
-    }
-
-    .wc-Issue-details li {
-      margin-bottom: 1em;
-    }
-
-    .wc-Issue-details p {
-      margin-bottom: 1em;
-    }
 
   .wc-Issue-comment {
     margin-top:2em;
