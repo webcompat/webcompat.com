@@ -159,15 +159,6 @@ def show_issues():
 def create_issue():
     # copy the form so we can add the full UA string to it.
     form = request.form.copy()
-    # see https://github.com/webcompat/webcompat.com/issues/688
-    spamlist = ['facebook', 'fb.com']
-    for spam in spamlist:
-        if spam in form.get('url'):
-            msg = (u'Anonymous reporting for Facebook.com is temporarily '
-                   'disabled. Please see https://github.com/webcompat/we'
-                   'bcompat.com/issues/688 for more details.')
-            flash(msg, 'notimeout')
-            return redirect(url_for('index'))
     form['ua_header'] = request.headers.get('User-Agent')
     # Do we have an image or screenshot ready to be uploaded?
     if ((request.files['image'] and request.files['image'].filename) or
