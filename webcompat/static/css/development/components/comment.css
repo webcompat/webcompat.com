@@ -42,6 +42,7 @@
     position: relative;
     flex: 1;
     margin-left:.8em;
+    max-width: calc(100% - 59px);
   }
 
   @media all and (max-width: 61.87em) {
@@ -78,7 +79,7 @@
     min-height: 128px;
     border: solid 1px var(--Comment-color);
     border-radius: 10px;
-    padding: 0 1em 2em 1em;
+    padding: 0 0 2em;
     word-wrap: break-word;
     background : #fff;
   }
@@ -101,8 +102,7 @@
   .wc-Comment-header {
     border-radius: 10px 10px 0 0;
     background-color: #f0f0f0;
-    padding:.8em 1em;
-    margin: 0 -1em;
+    padding: .8em 0 .8em 1em;
   }
 
   /* Name of owner */
@@ -115,13 +115,62 @@
     position: relative;
     word-wrap: break-word;
     padding:.5em .5em 0;
-    overflow-x: auto;
-    overflow-y: hidden;
+    /*overflow-x: auto;
+    overflow-y: hidden;*/
   }
 
     /*
      *overide all style from Github Text
      */
+
+     .wc-Comment-content .is-hidden {
+       display: none;
+     }
+
+     /* force font-size */
+     .wc-Comment-content * {
+       font-size:1em !important;
+     }
+
+     .wc-Issue-details a {
+       color: var(--Issue-detailLink);
+       text-decoration: underline;
+     }
+
+       /* event */
+       .wc-Comment-content a:hover,
+       .wc-Comment-content a:focus {
+         color: var(--Issue-detailLinkHover);
+         text-decoration: none;
+       }
+
+     .wc-Comment-content strong {
+         font-weight: bold !important;
+     }
+
+     .wc-Comment-content img {
+         max-width: 100%;
+         max-height: 100%;
+     }
+
+     .wc-Comment-content code {
+       font-family: monospace;
+       font-size: 90%;
+     }
+
+     .wc-Comment-content p > code {
+       color: inherit;
+       background-color: #F5F5F5;
+       padding: 0.25em;
+     }
+
+     .wc-Issue-details li {
+       margin-bottom: 1em;
+     }
+
+     .wc-Issue-details p {
+       margin-bottom: 1em;
+     }
 
     /* list style */
     .wc-Comment-content ul,
@@ -148,6 +197,10 @@
       padding: 0;
     }
 
+    .wc-Comment-content p > code {
+      white-space: normal;
+    }
+
     /* title */
     .wc-Comment-content h1 {
       font-size: 2em;
@@ -172,6 +225,10 @@
       display: block;
       max-width: 100%;
       max-height: 100%;
+    }
+
+    .wc-Comment-content p {
+      overflow: hidden;
     }
 
     /* paragraph */
