@@ -1,3 +1,10 @@
+## 2.3.2 - 2015-02-10
+
+* Fix pixelated images issue [Pull #916](https://github.com/webcompat/webcompat.com/pull/916) [Issue #914](https://github.com/webcompat/webcompat.com/issues/914)
+* Fix `<code>` overflow [Pull #917](https://github.com/webcompat/webcompat.com/pull/917) [Issue #913](https://github.com/webcompat/webcompat.com/issues/913)
+* Fix issue with issue comment upload form [Pull #918](https://github.com/webcompat/webcompat.com/pull/918) [Issue #915](https://github.com/webcompat/webcompat.com/issues/915)
+* Remove GitHub spam measures[Pull #919](https://github.com/webcompat/webcompat.com/pull/919) [Issue #912](https://github.com/webcompat/webcompat.com/issues/912)
+
 ## 2.3.1 - 2015-02-05
 
 * Massive refactor of HTML + CSS [Pull #901](https://github.com/webcompat/webcompat.com/pull/901)
