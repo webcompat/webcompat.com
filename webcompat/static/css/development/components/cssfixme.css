@@ -3,7 +3,7 @@
 :root {
   --CSSFixme-fontSize: var(--base-fontSize);
   --CSSFixme-backgroundColor : rgba(249, 249, 249, 0.6);
-  --CSSFixme-backgroundColorStrong: var(--base-variantColorDark);
+  --CSSFixme-backgroundColorStrong: var(--base-colorDark);
   --CSSFixme-preBorderColor: var(--base-colorDark);
 }
 
