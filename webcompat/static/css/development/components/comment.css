@@ -84,6 +84,11 @@
     background : #fff;
   }
 
+  /* Comment Textarea */
+  .wc-Comment-text {
+    padding-left: 1em;
+  }
+
   /* Textarea Placeholder style */
   .wc-Comment-wrapper::placeholder {
     color: var(--Comment-color);
