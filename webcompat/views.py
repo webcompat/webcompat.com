@@ -278,6 +278,24 @@ def jumpship(e):
     return redirect(url_for('index'))
 
 
+@app.errorhandler(400)
+def unauthorized(err):
+    message = 'Bad Request.'
+    if (request.path.startswith('/api/') and
+       request.accept_mimetypes.accept_json and
+       not request.accept_mimetypes.accept_html):
+        message = {
+            'status': 400,
+            'message': 'API call. ' + message,
+        }
+        resp = jsonify(message)
+        resp.status_code = 400
+        return resp
+    return render_template('error.html',
+                           error_code=400,
+                           error_message=message), 400
+
+
 @app.errorhandler(401)
 def unauthorized(err):
     message = 'Unauthorized. Please log in.'
