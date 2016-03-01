@@ -56,10 +56,6 @@ class TestURLs(unittest.TestCase):
         self.assertEqual(rv.status_code, 302)
         self.assertIn('github.com/login/oauth/', rv.headers['Location'])
 
-    def test_activity_page_route(self):
-        rv = self.app.get('/activity/username')
-        self.assertEqual(rv.status_code, 200)
-
     def test_activity_page_401_if_not_logged_in(self):
         rv = self.app.get('/me')
         self.assertEqual(rv.status_code, 401)

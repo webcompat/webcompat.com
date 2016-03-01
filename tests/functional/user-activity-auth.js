@@ -69,7 +69,18 @@ define([
           assert.match(text, /^Opened:\s\d{4}\-\d{2}\-\d{2}.+/, 'Issue should display creation date');
         })
         .end();
-    }
+    },
+
+    'Trying to view someone else\'s activity fails (logged in)': function() {
+      return this.remote
+        .setFindTimeout(intern.config.wc.pageLoadTimeout)
+        .get(require.toUrl(url('/activity/someoneelse')))
+        .findByCssSelector('.wc-UIContent .wc-Title--l').getVisibleText()
+        .then(function(text) {
+          assert.include(text, 'Forbidden', 'Get a 403 when trying to view someone else\'s activity');
+        })
+        .end();
+    },
 
   });
 });

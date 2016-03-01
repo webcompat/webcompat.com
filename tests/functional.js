@@ -24,6 +24,7 @@ define([
   './functional/labels-auth.js',
   './functional/reporting-auth.js',
   './functional/user-activity-auth.js',
-], function () {
+  './functional/user-activity-non-auth.js',
+], function() {
   'use strict';
 });
