@@ -209,7 +209,24 @@ def me_redirect():
 
 @app.route('/activity/<username>')
 def show_user_page(username):
-    return render_template('user-activity.html', user=username)
+    '''The logic for this route is as follows:
+
+    (this dupes some of the functionality of /me, but allows directly visiting
+    this endpoint via a bookmark)
+
+    If the user is not logged in, send back a 401.
+    Make sure we have username and avatar details from Github
+    If the username matches, render the template as expected.
+    If it doesn't match, abort with 403 until we support looking at
+    *other* users activity.
+    '''
+    if not g.user:
+        abort(401)
+    get_user_info()
+    if username == session['username']:
+        return render_template('user-activity.html', user=username)
+    else:
+        abort(403)
 
 
 @app.route('/rate_limit')
@@ -314,22 +331,22 @@ def unauthorized(err):
                            error_message=message), 401
 
 
-@app.errorhandler(400)
+@app.errorhandler(403)
 def unauthorized(err):
-    message = 'Bad Request.'
+    message = 'Forbidden. Are you trying to look at someone else\'s stuff?'
     if (request.path.startswith('/api/') and
        request.accept_mimetypes.accept_json and
        not request.accept_mimetypes.accept_html):
         message = {
-            'status': 400,
+            'status': 403,
             'message': 'API call. ' + message,
         }
         resp = jsonify(message)
-        resp.status_code = 400
+        resp.status_code = 403
         return resp
     return render_template('error.html',
-                           error_code=400,
-                           error_message=message), 400
+                           error_code=403,
+                           error_message=message), 403
 
 
 @app.errorhandler(404)
