@@ -25,7 +25,7 @@
     /* event */
     .wc-Markdown a:hover,
     .wc-Markdown a:focus {
-      color: var(---Markdown-colorHover);
+      color: var(--Markdown-colorHover);
     }
 
   .wc-Markdown strong {
