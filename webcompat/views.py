@@ -296,7 +296,7 @@ def jumpship(e):
 
 
 @app.errorhandler(400)
-def unauthorized(err):
+def bad_request_status(err):
     message = 'Bad Request.'
     if (request.path.startswith('/api/') and
        request.accept_mimetypes.accept_json and
@@ -314,7 +314,7 @@ def unauthorized(err):
 
 
 @app.errorhandler(401)
-def unauthorized(err):
+def unauthorized_status(err):
     message = 'Unauthorized. Please log in.'
     if (request.path.startswith('/api/') and
        request.accept_mimetypes.accept_json and
@@ -332,7 +332,7 @@ def unauthorized(err):
 
 
 @app.errorhandler(403)
-def unauthorized(err):
+def forbidden_status(err):
     message = 'Forbidden. Are you trying to look at someone else\'s stuff?'
     if (request.path.startswith('/api/') and
        request.accept_mimetypes.accept_json and
@@ -350,7 +350,7 @@ def unauthorized(err):
 
 
 @app.errorhandler(404)
-def not_found(err):
+def not_found_status(err):
     if (request.path.startswith('/api/') and
        request.accept_mimetypes.accept_json and
        not request.accept_mimetypes.accept_html):
@@ -368,7 +368,7 @@ def not_found(err):
 
 
 @app.errorhandler(429)
-def cool_your_jets(err):
+def too_many_requests_status(err):
     '''Error handler that comes from hitting our API rate limits.
 
     Sent by Flask Limiter.
@@ -386,7 +386,7 @@ def cool_your_jets(err):
 
 
 @app.errorhandler(500)
-def this_is_not_good(err):
+def internal_server_error_status(err):
     message = "Internal Server Error"
     return render_template('error.html',
                            error_code=500,
