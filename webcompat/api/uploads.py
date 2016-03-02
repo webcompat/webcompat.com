@@ -53,8 +53,8 @@ class Upload(object):
                 # Chop off 'data:image/.+;base64,' before decoding
                 imagedata = re.sub('^data:image/.+;base64,', '', imagedata)
                 return Image.open(BytesIO(base64.b64decode(imagedata)))
-            raise IOError('Not a valid image format')
-        except IOError as e:
+            raise TypeError('TypeError: Not a valid image format')
+        except TypeError:
             # Not a valid format
             abort(415)
 
