@@ -1,3 +1,11 @@
+## 2.4.0 - 2015-03-02
+
+* Give unique names to error handler methods. [Pull #935](https://github.com/webcompat/webcompat.com/pull/935) [Issue #932](https://github.com/webcompat/webcompat.com/issues/932)
+* Padding tweak for comments [Pull #931](https://github.com/webcompat/webcompat.com/pull/931) [Issue #921](https://github.com/webcompat/webcompat.com/issues/921)
+* Allow visiting /activity/username route directly [Pull #928](https://github.com/webcompat/webcompat.com/pull/928) [Issue #880](https://github.com/webcompat/webcompat.com/issues/880)
+* Tweak highlight color for cssfixme [Pull #927](https://github.com/webcompat/webcompat.com/pull/927) [Issue #926](https://github.com/webcompat/webcompat.com/issues/926)
+* Update Python module deps [Pull #920](https://github.com/webcompat/webcompat.com/pull/920) [Issue #902](https://github.com/webcompat/webcompat.com/issues/902)
+
 ## 2.3.2 - 2015-02-10
 
 * Fix pixelated images issue [Pull #916](https://github.com/webcompat/webcompat.com/pull/916) [Issue #914](https://github.com/webcompat/webcompat.com/issues/914)
