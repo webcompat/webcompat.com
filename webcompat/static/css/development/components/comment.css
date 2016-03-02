@@ -79,7 +79,7 @@
     min-height: 128px;
     border: solid 1px var(--Comment-color);
     border-radius: 10px;
-    padding: 0 0 2em;
+    padding: 0;
     word-wrap: break-word;
     background : #fff;
   }
@@ -97,8 +97,8 @@
     font-weight: 500;
   }
 
-    .wc-Comment--form  .wc-Comment-wrapper {
-      padding-top: 1em;
+    .wc-Comment-wrapper--postForm {
+      padding: 1em;
       margin-bottom: 1.5em;
     }
 
@@ -119,12 +119,11 @@
   .wc-Comment-content {
     position: relative;
     word-wrap: break-word;
-    padding:.5em 1em 0;
-    padding:.5em .5em 0;
+    padding: 1em;
   }
 
   .wc-Comment-content .is-hidden {
-   display: none;
+    display: none;
   }
 
   /* img attach file */
