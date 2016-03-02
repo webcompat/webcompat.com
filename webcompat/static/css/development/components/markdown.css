@@ -1,0 +1,126 @@
+/** @define Markdown */
+
+:root {
+  --Markdown-fontSize: 1rem;
+  --Markdown-color: #000;
+  --Markdown-colorHover: var(--base-colorDark);
+}
+
+.wc-Markdown {
+  font-size: var(--Markdown-fontSize);
+  line-height: 1.5em;
+}
+
+  /* all element */
+  .wc-Markdown * {
+    font-size: var(--Markdown-fontSize) !important;
+  }
+
+  /* link */
+  .wc-Markdown a {
+    color: var(--Markdown-color);
+    text-decoration: underline;
+  }
+
+    /* event */
+    .wc-Markdown a:hover,
+    .wc-Markdown a:focus {
+      color: var(--Markdown-colorHover);
+    }
+
+  .wc-Markdown strong {
+    font-weight: bold !important;
+  }
+
+  /* Markdown img */
+  .wc-Markdown img {
+    display: block;
+    max-width: 100%;
+    max-height: 100%;
+  }
+
+  .wc-Markdown code {
+    font-family: monospace;
+    font-size: 90%;
+  }
+
+  .wc-Markdown p > code {
+    color: inherit;
+    background-color: #F5F5F5;
+    padding: 0.25em;
+  }
+
+  /* list style */
+  .wc-Markdown ul,
+  .wc-Markdown ol {
+    list-style: inside;
+  }
+
+  .wc-Markdown li {
+    margin-bottom: 1em;
+  }
+
+  /* ol */
+  .wc-Markdown ol {
+    list-style-type: decimal;
+  }
+
+  /* pre / code */
+  .wc-Markdown pre,
+  .wc-Markdown code {
+    padding: 1em;
+    margin: 0.5em 0px;
+    overflow: auto;
+    background: #F5F2F0;
+  }
+
+  .wc-Markdown code {
+    padding: 0;
+  }
+
+    .wc-Markdown p > code {
+      white-space: normal;
+    }
+
+  /* title */
+  .wc-Markdown h1 {
+    font-size: 2em;
+    font-weight: 600;
+    margin: 1em 0;
+  }
+
+  .wc-Markdown h2 {
+    font-size: 1.5em;
+    font-weight: 600;
+    margin: 1em 0;
+  }
+
+  .wc-Markdown h3 {
+    font-size: 1.2em;
+    font-weight: 600;
+    margin: 1em 0;
+  }
+
+  /* paragraph */
+  .wc-Markdown p {
+    overflow: hidden;
+    margin-top: 0;
+  }
+
+  .wc-Markdown p:not(.is-hidden) + p {
+    font-size: 1em;
+    margin-top: 2em;
+  }
+
+  /* blockquote */
+  .wc-Markdown blockquote {
+    border-left: 4px solid var(--base-colorDark);
+    padding: 0px 1em;
+    margin: 1em 0px;
+    color: #6a6a6a;
+  }
+
+  /* GitHub username */
+  .wc-Markdown .github__username {
+    font-weight: bold;
+  }

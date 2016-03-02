@@ -140,7 +140,7 @@ issues.BodyView = Backbone.View.extend({
   render: function() {
     this.$el.html(this.template(this.model.toJSON()));
     // hide metadata
-    $('.wc-Issue-details')
+    $('.js-Issue-markdown')
       .contents()
       .filter(function() {
         //find the bare html comment-ish text nodes
@@ -386,7 +386,7 @@ issues.MainView = Backbone.View.extend({
               this.stateButton, this],
         function(elm) {
           elm.render();
-          _.each($('.wc-Issue-details code'), function(elm) {
+          _.each($('.js-Issue-markdown code'), function(elm) {
             Prism.highlightElement(elm);
           });
         }

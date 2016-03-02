@@ -9,7 +9,11 @@
           <a class="wc-Link" href="https://github.com/<%= commenter %>"><%= commenter %></a>
         </span> commented <a class="wc-Link" href="#<%= commentLinkId %>"><%= createdAt %></a>
       </div>
-      <div class="wc-Comment-content js-Comment-content"><%= body %></div>
+      <div class="wc-Comment-content js-Comment-content">
+        <div class="wc-Markdown">
+          <%= body %>
+        </div>
+      </div>
     </div>
   </div>
 </script>
