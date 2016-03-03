@@ -64,6 +64,7 @@
     box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.25);
     border-radius: 6px;
     background:  #fff;
+    min-width: 100px;
   }
   @media all and (max-width: 23.43em) {
 
@@ -91,6 +92,7 @@
   /* button */
   .wc-QrCode-image-button {
     font-size: 1em;
+    padding-left: 21px;
   }
 
   /* hover button */
