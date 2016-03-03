@@ -369,7 +369,7 @@ def extract_url(issue_body):
     URL in webcompat.com bugs follow this pattern:
     **URL**: https://example.com/foobar
     '''
-    url_pattern = re.compile('\*\*URL\*\*\: (.*)\n')
+    url_pattern = re.compile('\*\*URL\*\*\: (.+)\n')
     url_match = re.search(url_pattern, issue_body)
     if url_match:
         url = url_match.group(1).strip()
