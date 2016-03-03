@@ -297,7 +297,7 @@ cp config/secrets.py.example config/secrets.py
 copy config/secrets.py.example config/secrets.py
 ```
 
-Note: If you are using Cloud 9, you have to update run.py and replace `app.run('localhost')` with `app.run(host=os.getenv(‘IP’, ‘0.0.0.0’),port=int(os.getenv(‘PORT’, 8080)))`.
+Note: If you are using Cloud 9, you have to update run.py and replace `app.run(host=os.getenv("IP", "0.0.0.0"), port=int(os.getenv("PORT", 8080)))`.
 
 You can now edit `secrets.py` and
 
