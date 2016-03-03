@@ -541,7 +541,7 @@ issueList.MainView = Backbone.View.extend({
     if (e.target.nodeName === 'INPUT') {
       return;
     }
-
+    e.preventDefault();
     var warpPipe = 'https://github.com/' + repoPath;
     return location.href = warpPipe;
   },
