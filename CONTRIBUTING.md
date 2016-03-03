@@ -196,6 +196,14 @@ Note: If you install Python on Windows using the MSI installer, it is highly rec
 
 Windows typically doesn't have the *make* tool installed. Windows users without *make* should look at the "detailed setup" section below.
 
+As an alternative to Windows, a cloud IDE such as [Cloud 9](https://c9.io) can be used for a relatively easier setup. If you take this route, please update to the latest Python version with the following. (This is to avoid `InsecurePlatformWarning` errors that arise when the default Python 2.7.6 is used).  
+
+```
+sudo apt-add-repository ppa:fkrull/deadsnakes-python2.7
+sudo apt-get update
+sudo apt-get install python2.7 python2.7-dev
+```
+
 ### Simple setup (Mac OS and Linux)
 #### Initializing Project source code
 
@@ -289,6 +297,8 @@ cp config/secrets.py.example config/secrets.py
 copy config/secrets.py.example config/secrets.py
 ```
 
+Note: If you are using Cloud 9, you have to update run.py and replace `app.run(host=os.getenv("IP", "0.0.0.0"), port=int(os.getenv("PORT", 8080)))`.
+
 You can now edit `secrets.py` and
 
 1. Add the right values to the repo issues URIs. `ISSUES_REPO_URI = "<user>/<repo>/issues"`. For example, miketaylr's setup needs to say `ISSUES_REPO_URI = "miketaylr/test-repo/issues"`
@@ -297,7 +307,7 @@ You can now edit `secrets.py` and
 
 The [instructions for creating a personal access token](http://help.github.com/articles/creating-an-access-token-for-command-line-use) are given on GitHub. Once you have created the token you can add it in the variable `OAUTH_TOKEN = ""` (yes, even if you're using your own credentials we still refer to it as a bot). More advanced users might want to create an environment variable called `OAUTH_TOKEN`. Either way is fine.
 
-3. Add the client id and client secret to secrets.py. If you're part of the webcompat GitHub organization, you can [get the client id and client secret from GitHub](https://github.com/organizations/webcompat/settings/applications/). Otherwise, create your own test and production applications ([instructions here](https://github.com/settings/applications/new)) &mdash; when prompted for a "Authorization callback URL", use `http://localhost:5000/callback`, and take note of the client id and client secret GitHub gives you.
+3. Add the client id and client secret to secrets.py. If you're part of the webcompat GitHub organization, you can [get the client id and client secret from GitHub](https://github.com/organizations/webcompat/settings/applications/). Otherwise, create your own test and production applications ([instructions here](https://github.com/settings/applications/new)) &mdash; when prompted for a "Authorization callback URL", use `http://localhost:5000/callback`,(Cloud 9 users should use `http://yourapp.c9users.io:8000/callback`instead) and take note of the client id and client secret GitHub gives you.
 
 When you have the client id and client secret put them in the corresponding lines in secrets.py for the localhost application:
 
