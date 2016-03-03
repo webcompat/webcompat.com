@@ -196,7 +196,7 @@ Note: If you install Python on Windows using the MSI installer, it is highly rec
 
 Windows typically doesn't have the *make* tool installed. Windows users without *make* should look at the "detailed setup" section below.
 
-As an alternative to Windows, you can use a cloud IDE such as [Cloud 9](https://c9.io) for a relatively painless setup. If you take this route, please ensure to upgrade to the latest Python version with the following. (This is to avoid InsecurePlatformWarning that arise when the default Python 2.7.6 is used).  
+As an alternative to Windows, a cloud IDE such as [Cloud 9](https://c9.io) can be used for a relatively easier setup. If you take this route, please update to the latest Python version with the following. (This is to avoid `InsecurePlatformWarning` errors that arise when the default Python 2.7.6 is used).  
 
 ```
 sudo apt-add-repository ppa:fkrull/deadsnakes-python2.7
