@@ -17,4 +17,6 @@
   --base-stateReady: #7abce1; /* light blue*/
   --base-stateSitewait: #b0daf0; /* light blue */
   --base-stateClose: #c5d1d5; /* light gray */
+  --base-stateFixed: #dda0dd; /* light purple */
+  --base-stateWorksForMe: #cfb53b; /* light yellow */
 }

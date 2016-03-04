@@ -9,6 +9,8 @@
   --Issue-stateReady: var(--base-stateReady);
   --Issue-stateSitewait: var(--base-stateSitewait);
   --Issue-stateClose: var(--base-stateClose);
+  --Issue-stateFixed: var(--base-stateFixed);
+  --Issue-stateWorksForMe: var(--base-stateWorksForMe);
 }
 
 /* Parent class */
@@ -53,6 +55,14 @@
 
   .wc-IssueList--close {
     border-left: 5px solid var(--Issue-stateClose);
+  }
+  
+  .wc-IssueList--fixed {
+    border-left: 5px solid var(--Issue-stateFixed);
+  }
+  
+  .wc-IssueList--worksforme {
+    border-left: 5px solid var(--Issue-stateWorksForMe);
   }
 
   .wc-IssueList--large {
