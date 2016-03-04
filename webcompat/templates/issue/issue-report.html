@@ -6,24 +6,25 @@
     <div class="wc-Comment-body wc-Comment-body--caret">
       <div class="wc-Comment-wrapper">
         <div class="wc-Comment-header">
-          <span class="wc-Comment-owner">
-            <a class="wc-Link" href="https://github.com/<%= reporter %>"><%= reporter %></a>
-          </span> reported on <a class="wc-Link" href="https://webcompat.com/issues/<%= number %>"><%= createdAt %></a>
-        </div>
-        <div class="wc-Comment-content">
+          <div>
+            <span class="wc-Comment-owner">
+              <a class="wc-Link" href="https://github.com/<%= reporter %>"><%= reporter %></a>
+            </span><span class="wc-Comment-header-spacing"> reported on </span><a class="wc-Link" href="https://webcompat.com/issues/<%= number %>"><%= createdAt %></a>
+          </div>
           <!-- QR Code -->
           <div class="wc-Comment-qr">
             <span class="wc-QrCode">
               <button class="wc-QrCode-launcher js-QrCode-launcher"
                       aria-pressed="false"
-                      role="button"
-              >
+                      role="button">
                 <span class="wc-QrCode-launcher-icon wc-Icon wc-Icon--qrcode" aria-hidden="true"></span>
                 <span class="wc-QrCode-launcher-iconPressed wc-Icon wc-Icon--times" aria-hidden="true"></span>
                 <span class="wc-Accessibility">Show QR code</span>
               </button>
             </span>
           </div>
+        </div>
+        <div class="wc-Comment-content">
           <div class="js-Issue-markdown wc-Markdown">
             <%= body %>
           </div>

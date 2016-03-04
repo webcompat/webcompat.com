@@ -107,9 +107,16 @@
   .wc-Comment-header {
     border-radius: 10px 10px 0 0;
     background-color: #f0f0f0;
-    padding: .8em 0 .8em 1em;
+    padding: .8em .8em .8em 1em;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
   }
 
+  .wc-Comment-header-spacing {
+    padding: 0 6px;
+  }
+  
   /* Name of owner */
   .wc-Comment-owner {
     font-weight: bold;
@@ -161,7 +168,6 @@
 
   /* QR */
   .wc-Comment-qr {
-    position:absolute;
     z-index: 1;
-    right: 0;
+    margin-left: auto;
   }
