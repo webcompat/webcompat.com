@@ -6,9 +6,11 @@
     <div class="wc-Comment-body wc-Comment-body--caret">
       <div class="wc-Comment-wrapper">
         <div class="wc-Comment-header">
-          <span class="wc-Comment-owner">
-            <a class="wc-Link" href="https://github.com/<%= reporter %>"><%= reporter %></a>
-          </span><span class="wc-Comment-header-spacing"> reported on </span><a class="wc-Link" href="https://webcompat.com/issues/<%= number %>"><%= createdAt %></a>
+          <div>
+            <span class="wc-Comment-owner">
+              <a class="wc-Link" href="https://github.com/<%= reporter %>"><%= reporter %></a>
+            </span><span class="wc-Comment-header-spacing"> reported on </span><a class="wc-Link" href="https://webcompat.com/issues/<%= number %>"><%= createdAt %></a>
+          </div>
           <!-- QR Code -->
           <div class="wc-Comment-qr">
             <span class="wc-QrCode">
