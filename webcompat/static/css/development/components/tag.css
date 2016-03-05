@@ -116,3 +116,29 @@
     .wc-Tag--close.wc-Tag--label {
       background-color:var(--base-stateClose);
     }
+
+  /* Tag Fixed */
+  .wc-Tag--fixed {
+    border-color:var(--base-stateFixed);
+  }
+
+    /* event */
+    .wc-Tag--fixed.wc-tag--filter:hover,
+    .wc-Tag--fixed.wc-tag--filter:focus,
+    .wc-Tag--fixed.is-active,
+    .wc-Tag--fixed.wc-Tag--label {
+      background-color:var(--base-stateFixed);
+    }
+    
+  /* Tag Appears to work */
+  .wc-Tag--worksforme {
+    border-color:var(--base-stateWorksForMe);
+  }
+
+    /* event */
+    .wc-Tag--worksforme.wc-tag--filter:hover,
+    .wc-Tag--worksforme.wc-tag--filter:focus,
+    .wc-Tag--worksforme.is-active,
+    .wc-Tag--worksforme.wc-Tag--label {
+      background-color:var(--base-stateWorksForMe);
+    }
