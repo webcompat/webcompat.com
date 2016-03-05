@@ -13,8 +13,12 @@ cache:
     - $HOME/.pip-cache/
     - $HOME/.selenium/
 
+# limit the depth of the commits we clone
+git:
+  depth: 5
+
 addons:
-  firefox: "42.0"
+  firefox: "44.0"
 
 env:
   global:
@@ -25,8 +29,8 @@ env:
 before_install:
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
-  - "mkdir -p $HOME/.selenium && cd $HOME/.selenium && wget -nc http://selenium-release.storage.googleapis.com/2.48/selenium-server-standalone-2.48.0.jar"
-  - java -jar selenium-server-standalone-2.48.0.jar &> /dev/null &
+  - "mkdir -p $HOME/.selenium && cd $HOME/.selenium && wget -nc http://selenium-release.storage.googleapis.com/2.52/selenium-server-standalone-2.52.0.jar"
+  - java -jar selenium-server-standalone-2.52.0.jar &> /dev/null &
   - cd -
 
 install:
@@ -45,6 +49,9 @@ before_script:
   - grunt
 
 # now run the tests!
+# if this is a pull request from a fork, TRAVIS_SECURE_ENV_VARS will be false, so
+# just run the non-auth tests. otherwise, run everything.
 script:
   - nosetests
-  - node_modules/.bin/intern-runner reporters=console config=tests/intern user="$USER" pw="$PW"
+  - [ "${TRAVIS_SECURE_ENV_VARS}" = "false" ] && node_modules/.bin/intern-runner reporters=console config=tests/intern functionalSuites=tests/functional-nonauth
+  - [ "${TRAVIS_SECURE_ENV_VARS}" = "true" ] && node_modules/.bin/intern-runner reporters=console config=tests/intern user="$USER" pw="$PW"

@@ -196,7 +196,7 @@ Note: If you install Python on Windows using the MSI installer, it is highly rec
 
 Windows typically doesn't have the *make* tool installed. Windows users without *make* should look at the "detailed setup" section below.
 
-As an alternative to Windows, a cloud IDE such as [Cloud 9](https://c9.io) can be used for a relatively easier setup. If you take this route, please update to the latest Python version with the following. (This is to avoid `InsecurePlatformWarning` errors that arise when the default Python 2.7.6 is used).  
+As an alternative to Windows, a cloud IDE such as [Cloud 9](https://c9.io) can be used for a relatively easier setup. If you take this route, please update to the latest Python version with the following. (This is to avoid `InsecurePlatformWarning` errors that arise when the default Python 2.7.6 is used).
 
 ```
 sudo apt-add-repository ppa:fkrull/deadsnakes-python2.7
@@ -385,8 +385,11 @@ We use [Intern](http://theintern.io/) to run functional tests.
 To run them, make sure you download the Selenium standalone server from the repo root:
 
 ``` bash
-wget http://selenium-release.storage.googleapis.com/2.46/selenium-server-standalone-2.46.0.jar
+wget http://selenium-release.storage.googleapis.com/2.52/selenium-server-standalone-2.52.0.jar
 ```
+
+**Note: This version is known to work with Firefox 44. If things aren't working with the current stable version of Firefox, check to see
+if there isn't a newer version of the Selenium standalone server and file a bug on these docs!**
 
 The `firefox` binary will also need to be in your `PATH`. Here's how this can be done on OS X:
 
@@ -397,7 +400,7 @@ export PATH="/Applications/Firefox.app/Contents/MacOS/:$PATH"
 Now start Selenium:
 
 ``` bash
-java -jar selenium-server-standalone-2.46.0.jar
+java -jar selenium-server-standalone-2.52.0.jar
 ```
 
 In a separate terminal window or tab, start the application servers:

@@ -3,10 +3,12 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 /*
-
 To run a single test suite, use the following from the project root.
 
-node_modules/.bin/intern-runner config=tests/intern functionalSuites=tests/functional/foo.js user="username" pw="secret_lies"
+node_modules/.bin/intern-runner config=tests/intern \
+                                functionalSuites=tests/functional/foo.js \
+                                user="github_username" \
+                                pw="github_password"
 */
 
 define([
