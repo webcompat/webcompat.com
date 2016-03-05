@@ -33,8 +33,8 @@ define(['intern/lib/args'], function (args) {
     // Beauty, Bob.
     reporters: 'pretty',
 
-    // Functional test suite(s) to run in each browser once non-functional tests are completed
-    functionalSuites: [ 'tests/functional' ],
+    // Unless you pass in a command-line arg saying otherwise, we run all tests by default.
+    functionalSuites: [ 'tests/functional-all' ],
 
     // A regular expression matching URLs to files that should not be included in code coverage analysis
     excludeInstrumentation: /./
