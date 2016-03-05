@@ -13,6 +13,10 @@ cache:
     - $HOME/.pip-cache/
     - $HOME/.selenium/
 
+# limit the depth of the commits we clone
+git:
+  depth: 5
+
 addons:
   firefox: "44.0"
 
@@ -45,6 +49,9 @@ before_script:
   - grunt
 
 # now run the tests!
+# if this is a pull request from a fork, TRAVIS_SECURE_ENV_VARS will be false, so
+# just run the non-auth tests. otherwise, run everything.
 script:
   - nosetests
-  - node_modules/.bin/intern-runner reporters=console config=tests/intern user="$USER" pw="$PW"
+  - [ "${TRAVIS_SECURE_ENV_VARS}" = "false" ] && node_modules/.bin/intern-runner reporters=console config=tests/intern functionalSuites=tests/functional-nonauth
+  - [ "${TRAVIS_SECURE_ENV_VARS}" = "true" ] && node_modules/.bin/intern-runner reporters=console config=tests/intern user="$USER" pw="$PW"
