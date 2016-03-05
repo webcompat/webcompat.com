@@ -5,7 +5,7 @@
 // Learn more about configuring this file at <https://github.com/theintern/intern/wiki/Configuring-Intern>.
 // These default settings work OK for most people. The options that *must* be changed below are the
 // packages, suites, excludeInstrumentation, and (if you want functional tests) functionalSuites.
-define(['intern/lib/args'], function (args) {
+define(['intern/lib/args'], function(args) {
   'use strict';
 
   var siteRoot = args.siteRoot ? args.siteRoot : 'http://localhost:5000';
@@ -15,8 +15,8 @@ define(['intern/lib/args'], function (args) {
     wc: {
       pageLoadTimeout: args.wcPageLoadTimeout ? parseInt(args.wcPageLoadTimeout, 10) : 10000,
       // user and pw need to be passed in as command-line arguments. See CONTRIBUTING.md
-      user: args.user || "some username",
-      pw: args.pw || "some password"
+      user: args.user || 'some username',
+      pw: args.pw || 'some password'
     },
 
     // The port on which the instrumenting proxy will listen
