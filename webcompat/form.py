@@ -132,11 +132,10 @@ def normalize_url(url):
             url += '#' + parsed.fragment
     elif not parsed.scheme:
         # We assume that http is missing not https
-        url = 'http://%s' % (url)
-
-    # if url does not contain a path, ensure it has a trailing slash
-    if not urlparse.urlparse(url).path:
-        url += "/"
+        if url.startswith("//"):
+            url = "http://%s" % (url[2:])
+        else:
+            url = 'http://%s' % (url)
 
     return url
 
