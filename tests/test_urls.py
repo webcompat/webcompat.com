@@ -57,8 +57,14 @@ class TestURLs(unittest.TestCase):
         self.assertIn('github.com/login/oauth/', rv.headers['Location'])
 
     def test_activity_page_401_if_not_logged_in(self):
+        '''Test that asks user to log in before displaying activity.'''
         rv = self.app.get('/me')
         self.assertEqual(rv.status_code, 401)
+
+    def test_activity_page_403_view_other_user_activity(self):
+        '''Test to check that another user activity is not displayed.'''
+        rv = self.app.get('/activity/random_user_not_me')
+        self.assertEqual(rv.status_code, 403)
 
     def test_issue_int(self):
         '''Test issues and integer for:
