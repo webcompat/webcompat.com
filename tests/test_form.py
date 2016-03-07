@@ -30,7 +30,7 @@ class TestForm(unittest.TestCase):
         self.assertEqual(r, 'http://example.com')
 
     def test_domain_name(self):
-        
+
         r = form.domain_name("http://example.com")
         self.assertEqual(r, "example.com")
 
