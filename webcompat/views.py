@@ -286,6 +286,13 @@ def cssfixme():
     '''Route for CSS Fix me tool'''
     return render_template('cssfixme.html')
 
+ERROR_DICT = {
+    400: 'Bad Request.',
+    401: 'Unauthorized. Please log in.',
+    403: 'Forbidden. Are you trying to look at someone else\'s stuff?',
+    404: 'Not Found. Lost in Punk Cat Space'
+}
+
 
 @app.errorhandler(GitHubError)
 def jumpship(e):
@@ -296,75 +303,37 @@ def jumpship(e):
 
 
 @app.errorhandler(400)
-def bad_request_status(err):
-    message = 'Bad Request.'
-    if (request.path.startswith('/api/') and
-       request.accept_mimetypes.accept_json and
-       not request.accept_mimetypes.accept_html):
-        message = {
-            'status': 400,
-            'message': 'API call. ' + message,
-        }
-        resp = jsonify(message)
-        resp.status_code = 400
-        return resp
-    return render_template('error.html',
-                           error_code=400,
-                           error_message=message), 400
-
-
 @app.errorhandler(401)
-def unauthorized_status(err):
-    message = 'Unauthorized. Please log in.'
-    if (request.path.startswith('/api/') and
-       request.accept_mimetypes.accept_json and
-       not request.accept_mimetypes.accept_html):
-        message = {
-            'status': 401,
-            'message': 'API call. ' + message,
-        }
-        resp = jsonify(message)
-        resp.status_code = 401
-        return resp
-    return render_template('error.html',
-                           error_code=401,
-                           error_message=message), 401
-
-
 @app.errorhandler(403)
-def forbidden_status(err):
-    message = 'Forbidden. Are you trying to look at someone else\'s stuff?'
-    if (request.path.startswith('/api/') and
-       request.accept_mimetypes.accept_json and
-       not request.accept_mimetypes.accept_html):
-        message = {
-            'status': 403,
-            'message': 'API call. ' + message,
-        }
-        resp = jsonify(message)
-        resp.status_code = 403
-        return resp
-    return render_template('error.html',
-                           error_code=403,
-                           error_message=message), 403
-
-
 @app.errorhandler(404)
-def not_found_status(err):
+def custom_error_handler(err):
+    if api_call(request):
+        return api_message(err.code)
+    return render_template(
+        'error.html',
+        error_code=err.code,
+        error_message=ERROR_DICT[err.code]), err.code
+
+
+def api_call(request):
+    '''Checks if it's an API call'''
     if (request.path.startswith('/api/') and
        request.accept_mimetypes.accept_json and
        not request.accept_mimetypes.accept_html):
-        message = {
-            'status': 404,
-            'message': 'API call. Not Found',
-        }
-        resp = jsonify(message)
-        resp.status_code = 404
-        return resp
-    message = "We can't find what you are looking for."
-    return render_template('error.html',
-                           error_code=404,
-                           error_message=message), 404
+        return True
+    else:
+        return False
+
+
+def api_message(code):
+    '''Prepares HTTP response for API calls.'''
+    message = {
+        'status': code,
+        'message': ERROR_DICT[code],
+    }
+    resp = jsonify(message)
+    resp.status_code = code
+    return resp
 
 
 @app.errorhandler(429)
