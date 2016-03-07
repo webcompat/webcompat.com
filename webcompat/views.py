@@ -290,8 +290,13 @@ ERROR_DICT = {
     400: 'Bad Request.',
     401: 'Unauthorized. Please log in.',
     403: 'Forbidden. Are you trying to look at someone else\'s stuff?',
+<<<<<<< HEAD
     404: 'Not Found. Lost in Punk Cat Space'
 }
+=======
+    404: 'Not Found. Lost in Punk Cat Space',
+    }
+>>>>>>> 85f2a83bd3ed07e89f23c3990a62e462bc913891
 
 
 @app.errorhandler(GitHubError)
