@@ -30,12 +30,13 @@ GITHUB_SEARCH_LINK_HEADER = '<https://api.github.com/search/issues?q=taco&page=2
 REWRITTEN_ISSUES_LINK_HEADER = '</api/issues?per_page=50&page=3>; rel="next", </api/issues?per_page=50&page=4>; rel="last", </api/issues?per_page=50&page=1>; rel="first", </api/issues?per_page=50&page=1>; rel="prev"'  # nopep8
 REWRITTEN_SEARCH_LINK_HEADER = '</api/issues/search?q=taco&page=2>; rel="next", </api/issues/search?q=taco&page=26>; rel="last"'  # nopep8
 PARSED_LINKED_HEADERS = [{'link': 'https://api.github.com/repositories/17839063/issues?per_page=50&page=3', 'rel': 'next'}, {'link': 'https://api.github.com/repositories/17839063/issues?per_page=50&page=4', 'rel': 'last'}, {'link': 'https://api.github.com/repositories/17839063/issues?per_page=50&page=1', 'rel': 'first'}, {'link': 'https://api.github.com/repositories/17839063/issues?per_page=50&page=1', 'rel': 'prev'}]  # nopep8
-NON_TABLET_UA = "Mozilla/5.0 (Android; Mobile; rv:40.0) Gecko/40.0 Firefox/40.0"
-TABLET_UA = "Mozilla/5.0 (Android 4.4; Tablet; rv:41.0) Gecko/41.0 Firefox/41.0"
+NON_TABLET_UA = "Mozilla/5.0 (Android; Mobile; rv:40.0) Gecko/40.0 Firefox/40.0"  # nopep8
+TABLET_UA = "Mozilla/5.0 (Android 4.4; Tablet; rv:41.0) Gecko/41.0 Firefox/41.0"  # nopep8
 PARSED_NON_TABLET_BROWSER_NAME = "firefox mobile"
 PARSED_TABLET_BROWSER_NAME = "firefox mobile tablet"
 PARSED_NON_TABLET_BROWSER = "Firefox Mobile 40.0 "
 PARSED_TABLET_BROWSER = "Firefox Mobile 41.0 (Tablet)"
+
 
 class TestHelpers(unittest.TestCase):
     def setUp(self):
