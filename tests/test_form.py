@@ -11,6 +11,12 @@ class TestForm(unittest.TestCase):
 
     def test_normalize_url(self):
 
+        r = form.normalize_url('http://example.com')
+        self.assertEqual(r, 'http://example.com')
+
+        r = form.normalize_url('https://example.com')
+        self.assertEqual(r, 'https://example.com')
+
         r = form.normalize_url('example.com')
         self.assertEqual(r, 'http://example.com')
 
