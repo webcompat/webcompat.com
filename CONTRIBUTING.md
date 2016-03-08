@@ -105,7 +105,10 @@ You'll probably want to [set up a local development environment](#working-enviro
 
 ![master](https://cldup.com/YVlLDGItPf-3000x3000.png)
 
-When sending the pull request do not forget to call out someone for review by using the following convention:
+* Set the title of the pull request to reference the issue number.
+        `Fixes #123 - Fixes broken layout on mobile browsers`
+
+* When sending the pull request do not forget to call out someone for review by using the following convention:
 
 `r? @miketaylr`
 
@@ -181,6 +184,10 @@ The main stylesheet is main.css. There are @import statements to all other files
 We do not use frameworks. However we use libraries, such suitcss-components-grid, suitcss-utils-display.
 
 ### Javascript
+
+The js folder contains two subfolders: `lib` contains all project source files and `vendor` contains all third party libraries. The files out of the two sub folders contain the compiled source code.
+
+__Note: All code changes should be made to the files in `lib`__ 
 
 @@something to write by miketaylr@@
 
