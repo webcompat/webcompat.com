@@ -1,3 +1,14 @@
+## 2.4.1 - 2015-03-09
+
+* Split up Intern tests so some of them can run from forks [Pull #944](https://github.com/webcompat/webcompat.com/pull/944) [Issue #942](https://github.com/webcompat/webcompat.com/issues/942)
+* Remove "New" label from worksforme and fixed issues [Pull #943](https://github.com/webcompat/webcompat.com/pull/943) [Issue #832](https://github.com/webcompat/webcompat.com/pull/832)
+* Add '(Tablet)' to browser name for tablets [Pull #941](https://github.com/webcompat/webcompat.com/pull/941) [Issue #821](https://github.com/webcompat/webcompat.com/pull/821)
+* Add simple Regex validation for URL field [Pull #939](https://github.com/webcompat/webcompat.com/pull/939) [Issue #854](https://github.com/webcompat/webcompat.com/pull/939)
+* Prevent default search action for 'g' key [Pull #938](https://github.com/webcompat/webcompat.com/pull/938) [Issue #857](https://github.com/webcompat/webcompat.com/issues/857)
+* Add Cloud9 setup instructions to CONTRIBUTING.md [Pull #937](https://github.com/webcompat/webcompat.com/pull/937) [Issue #934](https://github.com/webcompat/webcompat.com/issues/934)
+* Fix QR code style regressions [Pull #936](https://github.com/webcompat/webcompat.com/pull/936) [Issue #930](https://github.com/webcompat/webcompat.com/pull/930)
+* Add a Markdown CSS compoenent for styling issue comments [Pull #933](https://github.com/webcompat/webcompat.com/pull/933)
+
 ## 2.4.0 - 2015-03-02
 
 * Give unique names to error handler methods. [Pull #935](https://github.com/webcompat/webcompat.com/pull/935) [Issue #932](https://github.com/webcompat/webcompat.com/issues/932)
