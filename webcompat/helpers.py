@@ -106,9 +106,12 @@ def get_browser_name(user_agent_string):
     '''
     ua_dict = user_agent_parser.Parse(user_agent_string)
     name = ua_dict.get('user_agent').get('family').lower()
+    device = ua_dict.get('device').get('model')
     if (name == 'firefox mobile' and
             ua_dict.get('os').get('family') == 'Firefox OS'):
         name = 'other'
+    if device == 'Tablet':
+        name += " " + device.lower()
     return name
 
 
@@ -128,7 +131,12 @@ def get_browser(user_agent_string):
             version = version + "." + ua.get('patch')
     else:
         version = ''
-    return '{0} {1}'.format(name, version)
+    # Check for tablet devices
+    if ua_dict.get('device').get('model') == 'Tablet':
+        model = '(Tablet)'
+    else:
+        model = ''
+    return '{0} {1} {2}'.format(name, version, model)
 
 
 def get_os(user_agent_string):

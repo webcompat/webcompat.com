@@ -20,6 +20,8 @@ from webcompat.helpers import parse_link_header
 from webcompat.helpers import rewrite_and_sanitize_link
 from webcompat.helpers import rewrite_links
 from webcompat.helpers import sanitize_link
+from webcompat.helpers import get_browser_name
+from webcompat.helpers import get_browser
 
 
 ACCESS_TOKEN_LINK = '<https://api.github.com/repositories/17839063/issues?per_page=50&page=3&access_token=12345>; rel="next", <https://api.github.com/repositories/17839063/issues?access_token=12345&per_page=50&page=4>; rel="last", <https://api.github.com/repositories/17839063/issues?per_page=50&access_token=12345&page=1>; rel="first", <https://api.github.com/repositories/17839063/issues?per_page=50&page=1&access_token=12345>; rel="prev"'  # nopep8
@@ -28,6 +30,12 @@ GITHUB_SEARCH_LINK_HEADER = '<https://api.github.com/search/issues?q=taco&page=2
 REWRITTEN_ISSUES_LINK_HEADER = '</api/issues?per_page=50&page=3>; rel="next", </api/issues?per_page=50&page=4>; rel="last", </api/issues?per_page=50&page=1>; rel="first", </api/issues?per_page=50&page=1>; rel="prev"'  # nopep8
 REWRITTEN_SEARCH_LINK_HEADER = '</api/issues/search?q=taco&page=2>; rel="next", </api/issues/search?q=taco&page=26>; rel="last"'  # nopep8
 PARSED_LINKED_HEADERS = [{'link': 'https://api.github.com/repositories/17839063/issues?per_page=50&page=3', 'rel': 'next'}, {'link': 'https://api.github.com/repositories/17839063/issues?per_page=50&page=4', 'rel': 'last'}, {'link': 'https://api.github.com/repositories/17839063/issues?per_page=50&page=1', 'rel': 'first'}, {'link': 'https://api.github.com/repositories/17839063/issues?per_page=50&page=1', 'rel': 'prev'}]  # nopep8
+NON_TABLET_UA = "Mozilla/5.0 (Android; Mobile; rv:40.0) Gecko/40.0 Firefox/40.0"  # nopep8
+TABLET_UA = "Mozilla/5.0 (Android 4.4; Tablet; rv:41.0) Gecko/41.0 Firefox/41.0"  # nopep8
+PARSED_NON_TABLET_BROWSER_NAME = "firefox mobile"
+PARSED_TABLET_BROWSER_NAME = "firefox mobile tablet"
+PARSED_NON_TABLET_BROWSER = "Firefox Mobile 40.0 "
+PARSED_TABLET_BROWSER = "Firefox Mobile 41.0 (Tablet)"
 
 
 class TestHelpers(unittest.TestCase):
@@ -108,6 +116,30 @@ class TestHelpers(unittest.TestCase):
         parsed_headers = PARSED_LINKED_HEADERS
         link_header = GITHUB_ISSUES_LINK_HEADER
         self.assertEqual(format_link_header(parsed_headers), link_header)
+
+    def test_get_browser_name_Tablet(self):
+        '''Test Browser name parsing for tablet devices.'''
+        user_agent = TABLET_UA
+        parsed_browser_name = PARSED_TABLET_BROWSER_NAME
+        self.assertEqual(get_browser_name(user_agent), parsed_browser_name)
+
+    def test_get_browser_name_Non_Tablet(self):
+        '''Test Browser name parsing for non-tablet devices.'''
+        user_agent = NON_TABLET_UA
+        parsed_browser_name = PARSED_NON_TABLET_BROWSER_NAME
+        self.assertEqual(get_browser_name(user_agent), parsed_browser_name)
+
+    def test_get_browser_Tablet(self):
+        '''Test Browser parsing for tablet devices.'''
+        user_agent = TABLET_UA
+        parsed_browser = PARSED_TABLET_BROWSER
+        self.assertEqual(get_browser(user_agent), parsed_browser)
+
+    def test_get_browser_Non_Tablet(self):
+        '''Test Browser parsing for non-tablet devices.'''
+        user_agent = NON_TABLET_UA
+        parsed_browser = PARSED_NON_TABLET_BROWSER
+        self.assertEqual(get_browser(user_agent), parsed_browser)
 
 if __name__ == '__main__':
     unittest.main()
