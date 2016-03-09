@@ -25,6 +25,7 @@ from webcompat.api.uploads import Upload
 AUTH_REPORT = 'github-auth-report'
 PROXY_REPORT = 'github-proxy-report'
 SCHEMES = ('http://', 'https://')
+BAD_SCHEMES = ('http:/', 'https:/', 'http:', 'https:')
 
 problem_choices = [
     (u'detection_bug', u'Desktop site instead of mobile site'),
@@ -118,9 +119,23 @@ def get_labels(browser_name):
 def normalize_url(url):
     '''normalize URL for consistency.'''
     url = url.strip()
-    if not url.startswith(SCHEMES):
+    parsed = urlparse.urlparse(url)
+
+    if url.startswith(BAD_SCHEMES) and not url.startswith(SCHEMES):
+        # if url starts with a bad scheme, parsed.netloc will be empty,
+        # so we use parsed.path instead
+        path = parsed.path.lstrip('/')
+        url = '{}://{}'.format(parsed.scheme, path)
+        if parsed.query:
+            url += '?' + parsed.query
+        if parsed.fragment:
+            url += '#' + parsed.fragment
+    elif not parsed.scheme:
         # We assume that http is missing not https
-        url = 'http://%s' % (url)
+        if url.startswith("//"):
+            url = "http://{}".format(url[2:])
+        else:
+            url = 'http://{}'.format(url)
     return url
 
 
