@@ -38,14 +38,14 @@ from webcompat.api.endpoints import get_rate_limit
 from webcompat.api.uploads import upload
 
 
-ERROR_DICT = { 400: 'Bad Request.', 
-               401: 'Unauthorized. Please log in.',
-               403: 'Forbidden. Maybe that looking at private stuff?', 
-	       404: 'Not Found. Lost in Punk Cat Space',
-               429: 'Cool your jets! Please wait {0} seconds before making'
-               ' another search.',
-               500: 'Internal Server Error',
-               GitHubError: "'Something bad happened. Please try again?', 'error'"}
+ERROR_DICT = {400: 'Bad Request.',
+              401: 'Unauthorized. Please log in.',
+              403: 'Forbidden. Maybe that looking at private stuff?',
+              404: 'Not Found. Lost in Punk Cat Space',
+              429: 'Cool your jets! Please wait {0} seconds before making'
+                   'another search.',
+              500: 'Internal Server Error',
+              GitHubError: 'Something bad happened. Please try again?'}
 
 
 @app.teardown_appcontext
@@ -354,5 +354,5 @@ def too_many_requests_status(err):
     time_left = 60
     message = (ERROR_DICT[err.code]).format(time_left)
     error_data = {'message': message, 'timeout': 5}
-    return (json.dumps(error_data), err.code, {'content-type': 'application/json'})
-
+    return (json.dumps(error_data),
+            err.code, {'content-type': 'application/json'})
