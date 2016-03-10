@@ -86,6 +86,11 @@ class Upload(object):
         # Optimize further the image compression for these formats
         if self.image_object.format in ['JPEG', 'JPG', 'JPE', 'PNG']:
             save_parameters['optimize'] = True
+        # If animated GIF, aka duration > 0, add save_all parameter
+        if (self.image_object.format == 'GIF' and
+           self.image_object.info['duration'] > 0):
+                save_parameters['save_all'] = True
+        # unpacking save_parameters
         self.image_object.save(file_dest, **save_parameters)
 
 
