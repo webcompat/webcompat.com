@@ -38,6 +38,16 @@ from webcompat.api.endpoints import get_rate_limit
 from webcompat.api.uploads import upload
 
 
+ERROR_DICT = { 400: 'Bad Request.', 
+               401: 'Unauthorized. Please log in.',
+               403: 'Forbidden. Maybe that looking at private stuff?', 
+	       404: 'Not Found. Lost in Punk Cat Space',
+               429: 'Cool your jets! Please wait {0} seconds before making'
+               ' another search.',
+               500: 'Internal Server Error',
+               GitHubError: "'Something bad happened. Please try again?', 'error'"}
+
+
 @app.teardown_appcontext
 def shutdown_session(exception=None):
     session_db.remove()
@@ -291,80 +301,43 @@ def cssfixme():
 def jumpship(e):
     print('jumpship! ', e)
     session.pop('user_id', None)
-    flash('Something bad happened. Please try again?', 'error')
+    flash(ERROR_DICT[GitHubError], 'error')
     return redirect(url_for('index'))
 
 
 @app.errorhandler(400)
-def bad_request_status(err):
-    message = 'Bad Request.'
-    if (request.path.startswith('/api/') and
-       request.accept_mimetypes.accept_json and
-       not request.accept_mimetypes.accept_html):
-        message = {
-            'status': 400,
-            'message': 'API call. ' + message,
-        }
-        resp = jsonify(message)
-        resp.status_code = 400
-        return resp
-    return render_template('error.html',
-                           error_code=400,
-                           error_message=message), 400
-
-
 @app.errorhandler(401)
-def unauthorized_status(err):
-    message = 'Unauthorized. Please log in.'
-    if (request.path.startswith('/api/') and
-       request.accept_mimetypes.accept_json and
-       not request.accept_mimetypes.accept_html):
-        message = {
-            'status': 401,
-            'message': 'API call. ' + message,
-        }
-        resp = jsonify(message)
-        resp.status_code = 401
-        return resp
-    return render_template('error.html',
-                           error_code=401,
-                           error_message=message), 401
-
-
 @app.errorhandler(403)
-def forbidden_status(err):
-    message = 'Forbidden. Are you trying to look at someone else\'s stuff?'
-    if (request.path.startswith('/api/') and
-       request.accept_mimetypes.accept_json and
-       not request.accept_mimetypes.accept_html):
-        message = {
-            'status': 403,
-            'message': 'API call. ' + message,
-        }
-        resp = jsonify(message)
-        resp.status_code = 403
-        return resp
-    return render_template('error.html',
-                           error_code=403,
-                           error_message=message), 403
-
-
 @app.errorhandler(404)
-def not_found_status(err):
+@app.errorhandler(500)
+def custom_error_handler(err):
+    if api_call(request):
+        return api_message(err.code)
+    return render_template(
+        'error.html',
+        error_code=err.code,
+        error_message=ERROR_DICT[err.code]), err.code
+
+
+def api_call(request):
+    '''Checks if it's an API call'''
     if (request.path.startswith('/api/') and
        request.accept_mimetypes.accept_json and
        not request.accept_mimetypes.accept_html):
-        message = {
-            'status': 404,
-            'message': 'API call. Not Found',
-        }
-        resp = jsonify(message)
-        resp.status_code = 404
-        return resp
-    message = "We can't find what you are looking for."
-    return render_template('error.html',
-                           error_code=404,
-                           error_message=message), 404
+        return True
+    else:
+        return False
+
+
+def api_message(code):
+    '''Prepares HTTP response for API calls.'''
+    message = {
+        'status': code,
+        'message': ERROR_DICT[code],
+    }
+    resp = jsonify(message)
+    resp.status_code = 404
+    return resp
 
 
 @app.errorhandler(429)
@@ -379,15 +352,7 @@ def too_many_requests_status(err):
     # TODO: determine actual time left.
     # TODO: send message with login link.
     time_left = 60
-    message = ('Cool your jets! Please wait {0} seconds before making'
-               ' another search.').format(time_left)
+    message = (ERROR_DICT[err.code]).format(time_left)
     error_data = {'message': message, 'timeout': 5}
-    return (json.dumps(error_data), 429, {'content-type': 'application/json'})
+    return (json.dumps(error_data), err.code, {'content-type': 'application/json'})
 
-
-@app.errorhandler(500)
-def internal_server_error_status(err):
-    message = "Internal Server Error"
-    return render_template('error.html',
-                           error_code=500,
-                           error_message=message), 500
