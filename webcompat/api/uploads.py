@@ -72,6 +72,7 @@ class Upload(object):
 
     def save(self):
         '''Check that the file is allowed, then save to filesystem.'''
+        save_parameters = {}
         if self.file_ext not in self.ALLOWED_FORMATS:
             raise TypeError('Image file format not allowed')
 
@@ -82,7 +83,10 @@ class Upload(object):
         dest_dir = os.path.dirname(file_dest)
         if not os.path.exists(dest_dir):
             os.makedirs(dest_dir)
-        self.image_object.save(file_dest)
+        # Optimize further the image compression for these formats
+        if self.image_object.format in ['JPEG', 'JPG', 'JPE', 'PNG']:
+            save_parameters['optimize'] = True
+        self.image_object.save(file_dest, **save_parameters)
 
 
 @uploads.route('/', methods=['POST'])
