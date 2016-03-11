@@ -41,14 +41,14 @@
   .wc-Comment-body {
     position: relative;
     flex: 1;
-    margin-left:.8em;
-    max-width: calc(100% - 59px);
+    max-width: 100%;
   }
 
-  @media all and (max-width: 61.87em) {
+  @media all and (min-width: 61.88em) {
 
     .wc-Comment-body {
-      margin-left:0;
+      margin-left:.8em;
+      max-width: calc(100% - 59px);
     }
   }
 
@@ -116,7 +116,7 @@
   .wc-Comment-header-spacing {
     padding: 0 6px;
   }
-  
+
   /* Name of owner */
   .wc-Comment-owner {
     font-weight: bold;
