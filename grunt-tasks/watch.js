@@ -6,7 +6,7 @@ module.exports = function(grunt) {
   grunt.config('watch', {
     css:{
       files: '<%= cssPath %>/development/**/*.css',
-      tasks: ['cssnext']
+      tasks: ['postcss']
     },
     script:{
       files: '<%= jshint.beforeconcat %>',
