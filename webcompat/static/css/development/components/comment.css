@@ -84,6 +84,14 @@
     background : #fff;
   }
 
+    /* modifier new comment of existing bug */
+    .wc-Comment-wrapper-new {
+      border-bottom: 1px dashed var(--Comment-color);
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+      padding: 5px; /* fix placeholder text spacing */
+    }
+
   /* Comment Textarea */
   .wc-Comment-text {
     padding-left: 1em;
