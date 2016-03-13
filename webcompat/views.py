@@ -45,7 +45,7 @@ ERROR_DICT = {400: 'Bad Request.',
               429: 'Cool your jets! Please wait {0} seconds before making'
                    'another search.',
               500: 'Internal Server Error',
-              GitHubError: 'Something bad happened. Please try again?'}
+              'GitHubError': 'Something bad happened. Please try again?'}
 
 
 @app.teardown_appcontext
@@ -301,7 +301,7 @@ def cssfixme():
 def jumpship(e):
     print('jumpship! ', e)
     session.pop('user_id', None)
-    flash(ERROR_DICT[GitHubError], 'error')
+    flash(ERROR_DICT['GitHubError'], 'error')
     return redirect(url_for('index'))
 
 
@@ -354,5 +354,6 @@ def too_many_requests_status(err):
     time_left = 60
     message = (ERROR_DICT[err.code]).format(time_left)
     error_data = {'message': message, 'timeout': 5}
-    return (json.dumps(error_data),
-            err.code, {'content-type': 'application/json'})
+    resp = jsonify(error_data)
+    resp.status_code = err.code
+    return resp
