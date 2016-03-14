@@ -336,7 +336,7 @@ def api_message(code):
         'message': ERROR_DICT[code],
     }
     resp = jsonify(message)
-    resp.status_code = 404
+    resp.status_code = code
     return resp
 
 

@@ -61,11 +61,6 @@ class TestURLs(unittest.TestCase):
         rv = self.app.get('/me')
         self.assertEqual(rv.status_code, 401)
 
-    def test_activity_page_403_view_other_user_activity(self):
-        '''Test to check that another user activity is not displayed.'''
-        rv = self.app.get('/activity/random_user_not_me')
-        self.assertEqual(rv.status_code, 403)
-
     def test_issue_int(self):
         '''Test issues and integer for:
 
