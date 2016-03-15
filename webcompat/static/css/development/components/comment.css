@@ -85,12 +85,12 @@
   }
 
     /* modifier new comment of existing bug */
-    .wc-Comment-wrapper-new {
+    .wc-Comment-wrapper--comment {
       display: block;
       border-bottom: 1px dashed var(--Comment-color);
       border-bottom-left-radius: 0;
       border-bottom-right-radius: 0;
-      padding: 5px; /* fix placeholder text spacing */
+      padding: 1em;
     }
 
   /* Comment Textarea */

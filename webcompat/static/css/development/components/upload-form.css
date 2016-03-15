@@ -17,7 +17,7 @@
 }
 
   /* modifier new comment of existing bug */
-  .wc-UploadForm-new {
+  .wc-UploadForm--new {
     border-top-left-radius: 0;
     border-top-right-radius: 0;
     border-bottom-right-radius: 10px;
@@ -61,14 +61,14 @@
     }
 
       /* modifier new label of existing bug */
-      .wc-UploadForm-label-new {
+      .wc-UploadForm-label--uploadForm {
         font-weight: 400;
         text-align: left;
         text-decoration: none;
       }
       
       /* link */
-      .wc-UploadForm-label-link {
+      .wc-UploadForm-label--link {
         color: #FFC900;
         font-weight: 600;
         text-decoration: underline;
