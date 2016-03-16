@@ -39,13 +39,16 @@ class WCIssue(IssueBase):
     issue_id = Column(String(128), unique=True, primary_key=True)
     summary = Column(String(256))
     url = Column(String(1024))
+    domain = Column(String(1024))
     body = Column(String(2048))
 
-    def __init__(self, issue_id, summary, url, body):
+    def __init__(self, issue_id, summary, url, domain, body):
         self.issue_id = issue_id
         self.summary = summary
         self.url = url
+        self.domain = domain
         self.body = body
+
 
 IssueBase.metadata.create_all(bind=issue_engine)
 
