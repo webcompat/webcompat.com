@@ -25,7 +25,11 @@ from webcompat.api.uploads import Upload
 AUTH_REPORT = 'github-auth-report'
 PROXY_REPORT = 'github-proxy-report'
 SCHEMES = ('http://', 'https://')
+<<<<<<< HEAD
 BAD_SCHEMES = ('http:/', 'https:/', 'http:', 'https:')
+=======
+GITHUB_HELP = '<p class="is-hidden">This issue was filed via webcompat.com</p>'
+>>>>>>> Issue 741: experimenting with hiding help messages via is-hidden class
 
 problem_choices = [
     (u'detection_bug', u'Desktop site instead of mobile site'),
@@ -196,11 +200,13 @@ def build_formdata(form_object):
         'browser': form_object.get('browser'),
         'os': form_object.get('os'),
         'problem_type': get_problem(form_object.get('problem_category')),
-        'description': form_object.get('description')
+        'description': form_object.get('description'),
+        'help_message': GITHUB_HELP
     }
 
     # Preparing the body
-    body = u'''{browser_label}{ua_label}
+    body = u'''{help_message}
+{browser_label}{ua_label}
 **URL**: {url}
 **Browser / Version**: {browser}
 **Operating System**: {os}
