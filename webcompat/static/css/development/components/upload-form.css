@@ -16,6 +16,19 @@
   z-index: 3;
 }
 
+  /* modifier new comment of existing bug */
+  .wc-UploadForm--new {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-top: 0;
+    border-left: solid 1px #ccc;
+    border-right: solid 1px #ccc;
+    border-bottom: solid 1px #ccc;
+    min-height: 35px;
+  }
+
   /* Form upload wrapper */
   .wc-UploadForm-wrapper {
     position: absolute;
@@ -46,6 +59,20 @@
       cursor: pointer;
       text-decoration: underline;
     }
+
+      /* modifier new label of existing bug */
+      .wc-UploadForm-label--uploadForm {
+        font-weight: 400;
+        text-align: left;
+        text-decoration: none;
+      }
+      
+      /* link */
+      .wc-UploadForm-label--link {
+        color: #FFC900;
+        font-weight: 600;
+        text-decoration: underline;
+      }
 
     /* Upload button */
     .wc-UploadForm-button {

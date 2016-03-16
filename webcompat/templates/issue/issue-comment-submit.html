@@ -4,16 +4,13 @@
   </div>
   <div class="wc-Comment-body wc-Comment-body--caret">
   <label for="wc-Comment-text" class="wc-Accessibility">Comment Text</label>
-    <textarea class="wc-Comment-wrapper wc-Comment-wrapper--postForm js-Comment-text" placeholder="Leave a comment"></textarea>
+    <textarea class="wc-Comment-wrapper wc-Comment-wrapper--comment js-Comment-text" placeholder="Leave a comment"></textarea>
     <div class="wc-Form-group js-ImageUploadView">
       <script type="text/template" id="upload-input-tmpl">
         <form>
-          <label class="wc-UploadForm" for="image">
+          <label class="wc-UploadForm wc-UploadForm--new" for="image">
             <div class="wc-UploadForm-wrapper">
-              <span class="wc-UploadForm-icon" aria-hidden="true">
-                <span class="wc-Icon wc-Icon--cloud-upload"></span>
-              </span>
-              <label class="wc-UploadForm-label">Attach a screenshot image</label>
+              <label class="wc-UploadForm-label wc-UploadForm-label--uploadForm">Attach images by <span class="wc-UploadForm-label--link">selecting them</span></label>
               <input accept=".jpe,.jpg,.jpeg,.gif,.png,.bmp" class="wc-ButtonUpload js-buttonUpload" id="image" name="image" type="file">
             </div>
           </div>
