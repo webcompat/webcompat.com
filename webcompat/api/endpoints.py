@@ -10,10 +10,12 @@ This is used to make API calls to GitHub, either via a logged-in users
 credentials or as a proxy on behalf of anonymous or unauthenticated users.'''
 
 import json
+import sys
 
 from flask import abort
 from flask import Blueprint
 from flask import g
+from flask import jsonify
 from flask import request
 from flask import session
 
@@ -26,6 +28,8 @@ from webcompat.helpers import mockable_response
 from webcompat.helpers import normalize_api_params
 from webcompat.helpers import proxy_request
 from webcompat.issues import filter_new
+from webcompat.db import issue_db
+from webcompat.db.helpers import domain_search
 
 api = Blueprint('api', __name__, url_prefix='/api')
 JSON_MIME = 'application/json'
@@ -254,3 +258,18 @@ def get_rate_limit():
     See https://developer.github.com/v3/rate_limit/.
     '''
     return api_request('get', 'rate_limit')
+
+
+@api.route('/issues/domainsearch/<domain>')
+def get_same_domain_issues(domain):
+    '''Endpoint to get issues with similar domain from server data dump.
+    Will return domains of which the queried domain is a substring.
+    '''
+    content = json.dumps(domain_search(domain))
+    if content:
+        status_code = 200
+        headers_dictionary = {'Content-Type': 'application/json'}
+        return (content, status_code, headers_dictionary)
+    else:
+        # Error carrying out request.
+        abort(404)
