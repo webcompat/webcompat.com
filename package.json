@@ -44,7 +44,7 @@
     "watch" : "grunt watch",
     "build": "grunt",
     "start": "sh -c '. env/bin/activate; python run.py'",
-    "pip": "pip install virtualenv && virtualenv env && sh -c '. env/bin/activate; pip install -r requirements.txt'",
+    "pip": "pip install virtualenv && virtualenv env && sh -c '. env/bin/activate; pip install -r config/requirements.txt'",
     "config": "cp config/secrets.py.example config/secrets.py",
     "project-update": "pip install --upgrade pip && npm run backend-install && npm update"
 
