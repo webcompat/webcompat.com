@@ -7,6 +7,7 @@
 import json
 import re
 import requests
+import tldextract
 
 from webcompat import app
 from webcompat.db import issue_db
@@ -49,7 +50,23 @@ def set_label(label, issue_number):
     api_post('labels', payload, issue_number)
 
 
+def extract_domain_name(url):
+    # Major sites where using only the domain results in losing information
+    prefix_blacklist = 'www.'
+    domain_blackList = r'(\.google\.com|\.live\.com|\.yahoo\.com|go\.com$)'
+    if prefix_blacklist in url:
+        url = url.replace(prefix_blacklist, '')
+    parts = tldextract.extract(url)
+    if parts.domain == '':
+        return parts.suffix
+    elif re.search(domain_blackList, url, re.I):
+        return '.'.join(parts[0:2])
+    else:
+        return parts.domain
+
+
 def dump_to_db(title, body, issue_number):
     url = extract_url(body)
-    issue_db.add(WCIssue(issue_number, title, url, body))
+    domain = extract_domain_name(url)
+    issue_db.add(WCIssue(issue_number, title, url, domain, body))
     issue_db.commit()
