@@ -10,7 +10,6 @@ This is used to make API calls to GitHub, either via a logged-in users
 credentials or as a proxy on behalf of anonymous or unauthenticated users.'''
 
 import json
-import sys
 
 from flask import abort
 from flask import Blueprint
@@ -28,7 +27,6 @@ from webcompat.helpers import mockable_response
 from webcompat.helpers import normalize_api_params
 from webcompat.helpers import proxy_request
 from webcompat.issues import filter_new
-from webcompat.db import issue_db
 from webcompat.db.helpers import domain_search
 
 api = Blueprint('api', __name__, url_prefix='/api')

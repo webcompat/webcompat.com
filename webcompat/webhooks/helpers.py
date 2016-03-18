@@ -49,19 +49,21 @@ def set_label(label, issue_number):
     payload = [label]
     api_post('labels', payload, issue_number)
 
+
 def extract_domain_name(url):
-    # List of major sites where using only the domain results in losing valuable information
-    blackList = r'(\.google\.com|\.live\.com|\.yahoo\.com|go\.com|\.js$)'
+    # Major sites where using only the domain results in losing information
+    prefix_blacklist = 'www.'
+    domain_blackList = r'(\.google\.com|\.live\.com|\.yahoo\.com|go\.com$)'
+    if prefix_blacklist in url:
+        url = url.replace(prefix_blacklist, '')
     parts = tldextract.extract(url)
-    if parts.domain == '' or parts.domain == 'www':
+    if parts.domain == '':
         return parts.suffix
-    elif re.search(blackList, url, re.I):
-        if not re.search('^www', parts[0]):
-            return '.'.join(parts[0:2])
-        else:
-            return '.'.join([parts[0].strip("www."), parts[1]])
+    elif re.search(domain_blackList, url, re.I):
+        return '.'.join(parts[0:2])
     else:
         return parts.domain
+
 
 def dump_to_db(title, body, issue_number):
     url = extract_url(body)

@@ -10,11 +10,12 @@ import os.path
 import sys
 import unittest
 
+import webcompat
+from webcompat.webhooks.helpers import extract_domain_name
+
 # Add webcompat module to import path
 sys.path.append(os.path.realpath(os.pardir))
 
-import webcompat
-from webcompat.webhooks.helpers import extract_domain_name
 
 BLOGSPOT_URL = "http://blogsofnote.blogspot.com/"
 RESULT_BLOGSPOT_URL = "blogspot"
@@ -24,6 +25,7 @@ SUBSITE_WWW_URL = "https://www.mail.google.com"
 RESULT_SUBSITE_WWW_URL = "mail.google"
 NETFLIX_URL = "https://www.netflix.co.uk"
 RESULT_NETFLIX_URL = "netflix"
+
 
 class TestHelpers(unittest.TestCase):
     def setUp(self):
@@ -35,7 +37,11 @@ class TestHelpers(unittest.TestCase):
 
     def test_extract_domain_name(self):
         '''Test for different combinations of domain names.'''
-        self.assertEqual(extract_domain_name(BLOGSPOT_URL), RESULT_BLOGSPOT_URL)
+        self.assertEqual(
+            extract_domain_name(BLOGSPOT_URL),
+            RESULT_BLOGSPOT_URL)
         self.assertEqual(extract_domain_name(SUBSITE_URL), RESULT_SUBSITE_URL)
-        self.assertEqual(extract_domain_name(SUBSITE_WWW_URL), RESULT_SUBSITE_WWW_URL)
+        self.assertEqual(
+            extract_domain_name(SUBSITE_WWW_URL),
+            RESULT_SUBSITE_WWW_URL)
         self.assertEqual(extract_domain_name(NETFLIX_URL), RESULT_NETFLIX_URL)
