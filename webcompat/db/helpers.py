@@ -6,7 +6,9 @@ from webcompat.db import WCIssue
 def row_to_dict(row):
     d = {}
     for column in row.__table__.columns:
-        d[column.name] = str(getattr(row, column.name))
+        if(column.name == 'issue_id' or column.name == 'domain' or
+                column.name == 'summary'):
+            d[column.name] = str(getattr(row, column.name))
     return d
 
 
@@ -17,8 +19,8 @@ def domain_search(search_domain):
     query_result = (
         session.query(WCIssue)
         .filter(WCIssue.domain.like(search_domain))
-        .limit(10).all()
-        )
+        .limit(10)
+        .all())
     result_dict = []
     for r in query_result:
         result_dict.append(row_to_dict(r))
