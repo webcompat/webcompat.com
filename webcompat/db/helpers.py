@@ -1,3 +1,9 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
 from webcompat import app
 from webcompat.db import issue_db
 from webcompat.db import WCIssue
@@ -21,7 +27,5 @@ def domain_search(search_domain):
         .filter(WCIssue.domain.like(search_domain))
         .limit(10)
         .all())
-    result_dict = []
-    for r in query_result:
-        result_dict.append(row_to_dict(r))
+    result_dict = [row_to_dict(r) for r in query_result]
     return result_dict
