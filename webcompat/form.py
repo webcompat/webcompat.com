@@ -26,8 +26,7 @@ AUTH_REPORT = 'github-auth-report'
 PROXY_REPORT = 'github-proxy-report'
 SCHEMES = ('http://', 'https://')
 BAD_SCHEMES = ('http:/', 'https:/', 'http:', 'https:')
-GITHUB_HELP = \
-    '<p class="github-help">This issue was filed via webcompat.com</p>'
+GITHUB_HELP = '<p class="github-help">This issue was filed via webcompat.com</p>'  # nopep8
 
 problem_choices = [
     (u'detection_bug', u'Desktop site instead of mobile site'),
