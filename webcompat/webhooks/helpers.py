@@ -51,21 +51,28 @@ def set_label(label, issue_number):
 
 
 def extract_domain_name(url):
-    # Major sites where using only the domain results in losing information
+    '''Extract the domain name from a given URL'''
     prefix_blacklist = 'www.'
-    domain_blackList = r'(\.google\.com|\.live\.com|\.yahoo\.com|go\.com$)'
-    if prefix_blacklist in url:
-        url = url.replace(prefix_blacklist, '')
+    domain_blackList = ['.google.com', '.live.com', '.yahoo.com', '.go.com']
     parts = tldextract.extract(url)
-    if parts.domain == '':
+    # Handles specific cases where 'www' is the domain (www.net, www.org)
+    if parts.domain == '' or parts.domain == 'www':
         return parts.suffix
-    elif re.search(domain_blackList, url, re.I):
-        return '.'.join(parts[0:2])
+    # Using only the domain in large domains with a number of subdomains would
+    # not yield much information. To improve accuracy, we include the subdomain
+    # in the domain
+    elif any(domain in url for domain in domain_blackList):
+        subdomain = parts.subdomain
+        if prefix_blacklist in subdomain:
+            # Handles cases of starting 'www' included in subdomain
+            subdomain = parts.subdomain.replace(prefix_blacklist, '')
+        return '.'.join([subdomain, parts.domain])
     else:
         return parts.domain
 
 
 def dump_to_db(title, body, issue_number):
+    '''Store issue details to issue_db'''
     url = extract_url(body)
     domain = extract_domain_name(url)
     issue_db.add(WCIssue(issue_number, title, url, domain, body))

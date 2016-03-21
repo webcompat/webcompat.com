@@ -17,6 +17,8 @@ from webcompat.webhooks.helpers import extract_domain_name
 sys.path.append(os.path.realpath(os.pardir))
 
 
+WWW_DOMAIN_URL = "www.net"
+RESULT_WWW_DOMAIN_URL = "net"
 BLOGSPOT_URL = "http://blogsofnote.blogspot.com/"
 RESULT_BLOGSPOT_URL = "blogspot"
 SUBSITE_URL = "https://mail.google.com"
@@ -37,6 +39,8 @@ class TestHelpers(unittest.TestCase):
 
     def test_extract_domain_name(self):
         '''Test for different combinations of domain names.'''
+        self.assertEqual(
+            extract_domain_name(WWW_DOMAIN_URL), RESULT_WWW_DOMAIN_URL)
         self.assertEqual(
             extract_domain_name(BLOGSPOT_URL),
             RESULT_BLOGSPOT_URL)
