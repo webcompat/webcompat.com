@@ -3,13 +3,17 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 module.exports = function(grunt) {
-  grunt.config('cssnext', {
+  grunt.config('postcss', {
     options: {
-      sourcemap: true,
-      url : false,
-      browsers: ['ff >= 4', 'ie >= 8', 'safari >= 5.1', 'opera >= 12', 'chrome >=10'],
-      import: { path: ['node_modules'] },
-      messages: {browser: false, console: true}
+      map: true,
+      processors: [
+        require('postcss-import')(),
+        require('postcss-cssnext')({
+          browsers: ['ff >= 20', 'ie >= 10', 'safari >= 7', 'opera >= 12', 'chrome >=30'],
+        }),
+        require('postcss-browser-reporter')(),
+        require('postcss-reporter')(),
+      ]
     },
     dist: {
       files: {
