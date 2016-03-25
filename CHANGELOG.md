@@ -1,3 +1,11 @@
+## 2.4.2 - 2015-03-25
+
+* Update .travis.yml to not use manual pip cache [Pull #970](https://github.com/webcompat/webcompat.com/pull/970) [Issue #950](https://github.com/webcompat/webcompat.com/issues/950)
+* Update style of image uploader for issues [Pull #964](https://github.com/webcompat/webcompat.com/pull/964) [Issue #906](https://github.com/webcompat/webcompat.com/issues/906)
+* Swap out grunt-cssnext for postcss-cssnext [Pull #960](https://github.com/webcompat/webcompat.com/pull/960)
+* Make better use of screen realestate for comments in small viewports [Pull #959](https://github.com/webcompat/webcompat.com/pull/959) [Issue #940](https://github.com/webcompat/webcompat.com/issues/940)
+* Display proper URL hostname when scheme is missing slashes [Pull #951](https://github.com/webcompat/webcompat.com/pull/951) [Issue #767](https://github.com/webcompat/webcompat.com/issues/767)
+
 ## 2.4.1 - 2015-03-09
 
 * Split up Intern tests so some of them can run from forks [Pull #944](https://github.com/webcompat/webcompat.com/pull/944) [Issue #942](https://github.com/webcompat/webcompat.com/issues/942)
