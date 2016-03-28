@@ -93,11 +93,11 @@ You'll probably want to [set up a local development environment](#working-enviro
 
 * Create your patch; commit your changes. Referencing the issue number you're working on from the message is recommended.
 
-	`git commit -m 'Issue #123 - Fixes broken layout on mobile browsers`
+  `git commit -m 'Issue #123 - Fixes broken layout on mobile browsers`
 
 * Push your branch to GitHub:
 
-	`git push origin name-of-fix-branch`
+  `git push origin name-of-fix-branch`
 
 * If you want to discuss your code or ask questions, please comment in the corresponding issue. You can link to the code you have pushed to your repository to ask for code review.
 
@@ -187,7 +187,7 @@ We do not use frameworks. However we use libraries, such suitcss-components-grid
 
 The js folder contains two subfolders: `lib` contains all project source files and `vendor` contains all third party libraries. The files out of the two sub folders contain the compiled source code.
 
-__Note: All code changes should be made to the files in `lib`__ 
+__Note: All code changes should be made to the files in `lib`__
 
 @@something to write by miketaylr@@
 
@@ -222,10 +222,9 @@ git clone https://github.com/<username>/webcompat.com.git #replace your github u
 # change to directory
 cd webcompat.com
 # check out submodules
-git submodule init
-git submodule update
+npm run module
 # initializing project
-[sudo] make install
+[sudo] npm init
 ```
 
 **Note**: if you got an error message, you may need to [install pip](#installing-pip) before running `make install` again.
@@ -341,7 +340,7 @@ or
 
 ``` bash
 # start local server
-make start
+npm run start
 ```
 
 You should now have a local instance of the site running at `http://localhost:5000/`. Please [file bugs](https://github.com/webcompat/webcompat.com/issues/new) if something went wrong!
@@ -358,13 +357,13 @@ You need to build the project before serving it from a webserver will work, and 
 You can build the entire project (CSS and JavaScript files and optimize images) by executing this command on Mac/Linux:
 
 ``` bash
-make build
+npm run build
 ```
 
 and this on Window:
 
 ``` bash
-grunt
+npm run watch
 ```
 
 ## Coding
@@ -372,7 +371,7 @@ grunt
 
  ``` bash
  # watching CSS and JS
- make watch
+ npm run watch
  ```
 
 By default, a build will *not* optimize images (which is done before deploys). If you'd like to do that, you can run `grunt imagemin`.
