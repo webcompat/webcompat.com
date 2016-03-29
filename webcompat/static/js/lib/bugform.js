@@ -3,7 +3,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 function BugForm() {
-  this.form = $('#js-ReportForm');
+  this.form = $('#js-ReportForm form');
   this.urlField = $('#url');
   this.descField = $('#description');
   this.uploadField = $('#image');
@@ -278,7 +278,7 @@ function BugForm() {
     uploadWrapper.addClass('is-hidden');
     removeBanner.on('click', _.bind(function() {
       // clear out the input value, remove the preview and hide the banner
-      this.uploadField.val(this.uploadField.get().defaultValue);
+      this.uploadField.val(this.uploadField.get(0).defaultValue);
       label.css('background', 'none');
       removeBanner.addClass('is-hidden');
       uploadWrapper.removeClass('is-hidden');
