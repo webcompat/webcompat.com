@@ -3,7 +3,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 function BugForm() {
-  this.form = $('#js-ReportForm');
+  this.form = $('#js-ReportForm form');
   this.urlField = $('#url');
   this.descField = $('#description');
   this.uploadField = $('#image');
