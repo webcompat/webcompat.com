@@ -26,6 +26,7 @@ AUTH_REPORT = 'github-auth-report'
 PROXY_REPORT = 'github-proxy-report'
 SCHEMES = ('http://', 'https://')
 BAD_SCHEMES = ('http:/', 'https:/', 'http:', 'https:')
+GITHUB_HELP = '<p class="wc-is-hidden">This issue was filed via webcompat.com</p>'  # nopep8
 
 problem_choices = [
     (u'detection_bug', u'Desktop site instead of mobile site'),
@@ -196,11 +197,13 @@ def build_formdata(form_object):
         'browser': form_object.get('browser'),
         'os': form_object.get('os'),
         'problem_type': get_problem(form_object.get('problem_category')),
-        'description': form_object.get('description')
+        'description': form_object.get('description'),
+        'help_message': GITHUB_HELP
     }
 
     # Preparing the body
     body = u'''{browser_label}{ua_label}
+{help_message}
 **URL**: {url}
 **Browser / Version**: {browser}
 **Operating System**: {os}
