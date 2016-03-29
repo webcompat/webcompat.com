@@ -133,10 +133,10 @@ def get_browser(user_agent_string):
         version = ''
     # Check for tablet devices
     if ua_dict.get('device').get('model') == 'Tablet':
-        model = '(Tablet)'
+        model = ' (Tablet)'
     else:
         model = ''
-    return '{0} {1} {2}'.format(name, version, model)
+    return '{0} {1}{2}'.format(name, version, model)
 
 
 def get_os(user_agent_string):
