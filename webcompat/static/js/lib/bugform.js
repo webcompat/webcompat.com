@@ -13,6 +13,8 @@ function BugForm() {
   this.reportButton = $('#js-ReportBug');
   this.loaderImage = $('.js-Loader');
   this.screenshotData = '';
+  // by default, submission type is anonymous
+  this.submitType = 'github-proxy-report';
 
   this.inputMap = {
     'url': {
@@ -41,7 +43,12 @@ function BugForm() {
     this.descField.on('focus',     _.bind(this.checkProblemTypeValidity, this));
     this.problemType.on('change',  _.bind(this.checkProblemTypeValidity, this));
     this.uploadField.on('change',  _.bind(this.checkImageTypeValidity, this));
-    this.submitButtons.on('click', _.bind(function() {
+    this.submitButtons.on('click', _.bind(function(e) {
+      if (e.target && e.target.value) {
+        // store a reference to what report button was clicked
+        this.submitType = e.target.value;
+      }
+
       this.loadingIndicator.show();
     }, this));
 
@@ -72,6 +79,8 @@ function BugForm() {
     // we call this 'screenshot', rather than 'image' because it needs to be
     // handled differently on the backend.
     formdata.append('screenshot', this.screenshotData);
+    // add in the submit-type, which won't be included in JS form submission by default
+    formdata.append('submit-type', this.submitType);
 
     // so, we can do an ajax submission and have it respond the number.
     // we can inspect the xhr header
