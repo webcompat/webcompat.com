@@ -40,7 +40,7 @@
     "suitcss-utils-display": "^0.4.0"
   },
   "scripts": {
-    "init": "npm run module && npm run virtualenv && && npm run pip && npm install && npm run config",
+    "init": "npm run module && npm run virtualenv && npm run pip && npm install && npm run config",
     "watch" : "grunt watch",
     "build": "grunt",
     "module": "git submodule init && git submodule update",
