@@ -34,7 +34,7 @@ NON_TABLET_UA = "Mozilla/5.0 (Android; Mobile; rv:40.0) Gecko/40.0 Firefox/40.0"
 TABLET_UA = "Mozilla/5.0 (Android 4.4; Tablet; rv:41.0) Gecko/41.0 Firefox/41.0"  # nopep8
 PARSED_NON_TABLET_BROWSER_NAME = "firefox mobile"
 PARSED_TABLET_BROWSER_NAME = "firefox mobile tablet"
-PARSED_NON_TABLET_BROWSER = "Firefox Mobile 40.0 "
+PARSED_NON_TABLET_BROWSER = "Firefox Mobile 40.0"
 PARSED_TABLET_BROWSER = "Firefox Mobile 41.0 (Tablet)"
 
 
