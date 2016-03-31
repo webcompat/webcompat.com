@@ -1,3 +1,11 @@
+## 2.4.4 - 2015-03-30
+
+* Fix bug preventing new issues from getting labels [Pull #984](https://github.com/webcompat/webcompat.com/pull/984) [Issue #983](https://github.com/webcompat/webcompat.com/issues/983)
+
+## 2.4.3 - 2015-03-29
+
+* Fix reference to form element [Pull #987](https://github.com/webcompat/webcompat.com/pull/987) [Issue #986](https://github.com/webcompat/webcompat.com/issues/986)
+
 ## 2.4.2 - 2015-03-25
 
 * Update .travis.yml to not use manual pip cache [Pull #970](https://github.com/webcompat/webcompat.com/pull/970) [Issue #950](https://github.com/webcompat/webcompat.com/issues/950)
