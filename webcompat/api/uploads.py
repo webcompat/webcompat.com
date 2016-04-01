@@ -53,8 +53,8 @@ class Upload(object):
                 # Chop off 'data:image/.+;base64,' before decoding
                 imagedata = re.sub('^data:image/.+;base64,', '', imagedata)
                 return Image.open(BytesIO(base64.b64decode(imagedata)))
-            raise IOError('Not a valid image format')
-        except IOError as e:
+            raise TypeError('TypeError: Not a valid image format')
+        except TypeError:
             # Not a valid format
             abort(415)
 
@@ -72,6 +72,7 @@ class Upload(object):
 
     def save(self):
         '''Check that the file is allowed, then save to filesystem.'''
+        save_parameters = {}
         if self.file_ext not in self.ALLOWED_FORMATS:
             raise TypeError('Image file format not allowed')
 
@@ -82,7 +83,15 @@ class Upload(object):
         dest_dir = os.path.dirname(file_dest)
         if not os.path.exists(dest_dir):
             os.makedirs(dest_dir)
-        self.image_object.save(file_dest)
+        # Optimize further the image compression for these formats
+        if self.image_object.format in ['JPEG', 'JPG', 'JPE', 'PNG']:
+            save_parameters['optimize'] = True
+        # If animated GIF, aka duration > 0, add save_all parameter
+        if (self.image_object.format == 'GIF' and
+           self.image_object.info['duration'] > 0):
+                save_parameters['save_all'] = True
+        # unpacking save_parameters
+        self.image_object.save(file_dest, **save_parameters)
 
 
 @uploads.route('/', methods=['POST'])
