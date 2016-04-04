@@ -74,7 +74,7 @@ def check_pip_deps():
     Make sure that the installed pip packages match what is in
     requirements.txt, prompting the user to upgrade if not.
     '''
-    for req in open("requirements.txt"):
+    for req in open("./config/requirements.txt"):
         try:
             pkg_resources.require(req)
         except VersionConflict as e:

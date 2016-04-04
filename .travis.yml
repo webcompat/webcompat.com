@@ -40,17 +40,17 @@ install:
   - rm -rf ~/.nvm && git clone https://github.com/creationix/nvm.git ~/.nvm && (cd ~/.nvm && git checkout `git describe --abbrev=0 --tags`) && source ~/.nvm/nvm.sh && nvm install $TRAVIS_NODE_VERSION
   - travis_retry npm install -g grunt-cli
   - travis_retry npm install
-  - travis_retry pip install -r requirements.txt
-  - cp config/secrets.py.example config/secrets.py
+  - travis_retry npm run pip
+  - travis_retry npm run config
   # lint python
   - pep8 --ignore=E402 webcompat/ tests/ config/secrets.py.example
-  - git submodule init && git submodule update
+  - npm run module
   - python run.py -t &
 
 before_script:
   - "sleep 2"
   # lint JS in default eslint task
-  - grunt
+  - npm run build
 
 # now run the tests!
 # if this is a pull request from a fork, TRAVIS_SECURE_ENV_VARS will be false, so
