@@ -140,13 +140,21 @@ issues.BodyView = Backbone.View.extend({
   render: function() {
     this.$el.html(this.template(this.model.toJSON()));
     // hide metadata
-    $('.js-Issue-markdown')
+    var issueDesc = $('.js-Issue-markdown');
+    issueDesc
       .contents()
       .filter(function() {
         //find the bare html comment-ish text nodes
         return this.nodeType === 3 && this.nodeValue.match(/<!--/);
         //and hide them
       }).wrap('<p class="is-hidden"></p>');
+
+    // this is probably really slow, but it's the safest way to not hide user data
+    issueDesc
+      .find('p:last-of-type em:contains(From webcompat.com)')
+      .parent()
+      .addClass('is-hidden');
+
     this.QrView.setElement('.wc-QrCode').render();
     return this;
   }
