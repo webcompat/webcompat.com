@@ -203,7 +203,6 @@ def build_formdata(form_object):
 
     # Preparing the body
     body = u'''{browser_label}{ua_label}
-{help_message}
 **URL**: {url}
 **Browser / Version**: {browser}
 **Operating System**: {os}
@@ -211,6 +210,8 @@ def build_formdata(form_object):
 
 **Steps to Reproduce**
 {description}
+
+{help_message}
 '''.format(**formdata)
     # Add the image, if there was one.
     if form_object.get('image_upload') is not None:
