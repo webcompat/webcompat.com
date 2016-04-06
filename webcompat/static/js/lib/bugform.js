@@ -264,6 +264,7 @@ function BugForm() {
     // file is unreasonably large.
     if (img.size > 1024 * 1024 * 4) {
       this.makeInvalid('img_too_big');
+      return;
     }
 
     // One last image type validation check.
