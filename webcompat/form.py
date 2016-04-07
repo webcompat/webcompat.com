@@ -26,6 +26,7 @@ AUTH_REPORT = 'github-auth-report'
 PROXY_REPORT = 'github-proxy-report'
 SCHEMES = ('http://', 'https://')
 BAD_SCHEMES = ('http:/', 'https:/', 'http:', 'https:')
+GITHUB_HELP = u'_From [webcompat.com](https://webcompat.com/) with ❤️_'
 
 problem_choices = [
     (u'detection_bug', u'Desktop site instead of mobile site'),
@@ -208,11 +209,14 @@ def build_formdata(form_object):
 
 **Steps to Reproduce**
 {description}
+
 '''.format(**formdata)
     # Add the image, if there was one.
     if form_object.get('image_upload') is not None:
         body += '\n\n![Screenshot of the site issue]({image_url})'.format(
             image_url=form_object.get('image_upload').get('url'))
+    # Append "from webcompat.com" message to bottom (for GitHub issue viewers)
+    body += u'\n\n{0}'.format(GITHUB_HELP)
     result = {}
     result['title'] = summary
     result['body'] = body
