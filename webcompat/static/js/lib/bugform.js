@@ -37,7 +37,7 @@ function BugForm() {
       'elm': this.uploadField,
       // image should be valid by default because it's optional
       'valid': true,
-      'helpText': 'Please choose an image that is smaller than 4GB.'
+      'helpText': 'Please choose an image that is smaller than 4MB.'
     }
   };
 
@@ -260,7 +260,7 @@ function BugForm() {
     // We can just grab the 0th one, because we only allow uploading
     // a single image at a time (for now)
     var img = event.target.files[0];
-    // The limit is 4GB (which is crazy big!), so let the user know if their
+    // The limit is 4MB (which is crazy big!), so let the user know if their
     // file is unreasonably large.
     if (img.size > 1024 * 1024 * 4) {
       this.makeInvalid('img_too_big');
