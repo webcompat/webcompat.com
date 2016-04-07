@@ -32,6 +32,12 @@ function BugForm() {
       // image should be valid by default because it's optional
       'valid': true,
       'helpText': 'Please select an image of the following type: jpg, png, gif, or bmp.'
+    },
+    'img_too_big': {
+      'elm': this.uploadField,
+      // image should be valid by default because it's optional
+      'valid': true,
+      'helpText': 'Please choose an image that is smaller than 4GB.'
     }
   };
 
@@ -222,6 +228,10 @@ function BugForm() {
       inlineHelp.insertAfter('.wc-Form-label--upload');
     }
 
+    if (id === 'img_too_big') {
+      inlineHelp.insertAfter('.js-image-upload');
+    }
+
     this.disableSubmits();
   };
 
@@ -250,7 +260,14 @@ function BugForm() {
     // We can just grab the 0th one, because we only allow uploading
     // a single image at a time (for now)
     var img = event.target.files[0];
-    // One last validation check.
+    // The limit is 4GB (which is crazy big!), so let the user know if their
+    // file is unreasonably large.
+    if (img.size > 1024 * 1024 * 4) {
+      this.makeInvalid('img_too_big');
+      return;
+    }
+
+    // One last image type validation check.
     if (!img.type.match('image.*')) {
       this.makeInvalid('image');
       return;
