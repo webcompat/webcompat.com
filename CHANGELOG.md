@@ -1,3 +1,10 @@
+## 2.4.5 - 2015-04-08
+
+* Rearrange admin scripts in repo [Pull #971](https://github.com/webcompat/webcompat.com/pull/971)
+* Fix label webhook bug [Pull #984](https://github.com/webcompat/webcompat.com/pull/984) [Issue #983](https://github.com/webcompat/webcompat.com/issues/983)
+* Optimize images as we save them to disk [Pull #990](https://github.com/webcompat/webcompat.com/pull/990) [Issue #710](https://github.com/webcompat/webcompat.com/issues/710)
+* Add webcompat.com origin comment (for GitHub users) [Pull #991](https://github.com/webcompat/webcompat.com/pull/991) [Issue #741](https://github.com/webcompat/webcompat.com/issues/741)
+
 ## 2.4.4 - 2015-03-30
 
 * Fix bug preventing new issues from getting labels [Pull #984](https://github.com/webcompat/webcompat.com/pull/984) [Issue #983](https://github.com/webcompat/webcompat.com/issues/983)
