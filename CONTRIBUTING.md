@@ -196,7 +196,7 @@ __Note: All code changes should be made to the files in `lib`__
 For testing code locally, you will need a very basic setup. There are a few requirements. These instructions have been made for working with Linux, Windows and MacOSX. You need:
 
 * [Python](https://www.python.org/) 2.7
-* [node](http://nodejs.org/download/) 0.10.0
+* [Node.js](https://nodejs.org/en/download/) Current LTS version
 * [Github](https://github.com) account
 
 Note: If you install Python on Windows using the MSI installer, it is highly recommended to check the "Add to path"-box during installation. If you have not done so, see if one of the answers to the StackOverflow post [Adding Python path on Windows 7](http://stackoverflow.com/questions/6318156/adding-python-path-on-windows-7) can help you - it should also work fine for later versions of Windows.
@@ -214,7 +214,7 @@ sudo apt-get install python2.7 python2.7-dev
 ### Simple setup (Mac OS and Linux)
 #### Initializing Project source code
 
-We use [Grunt](http://gruntjs.com/) as a task runner to perform certain things (minify + concat JS assets, for example). You need to have [Node.js](http://nodejs.org/download/) installed to be able to run Grunt.
+We use [Grunt](http://gruntjs.com/) as a task runner to perform certain things (minify + concat JS assets, for example). You need to have [Node.js](https://nodejs.org/en/download/) to be able to run Grunt.
 
 ``` bash
 # clone the repo
@@ -281,7 +281,7 @@ pip install -r requirements.txt
 
 #### Installing Grunt
 
-We use [Grunt](http://gruntjs.com/) as a task runner to perform certain things (minify + concat JS assets, for example). You need to have [Node.js](http://nodejs.org/download/) installed to be able to run Grunt. Once that's done, use `npm` to install the grunt dependencies. Version 0.10.0 or above is required.
+We use [Grunt](http://gruntjs.com/) as a task runner to perform certain things (minify + concat JS assets, for example). You need to have [Node.js](https://nodejs.org/en/download/) installed to be able to run Grunt. Once that's done, `npm` can be used to install Grunt and other build dependencies.
 
 First install the `grunt-cli` tool:
 

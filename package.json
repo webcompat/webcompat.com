@@ -10,7 +10,7 @@
     "url": "https://github.com/webcompat/webcompat.com.git"
   },
   "engines": {
-    "node": ">= 0.10.0"
+    "node": ">= 4.x"
   },
   "devDependencies": {
     "cssrecipes-custom-media-queries": "0.3.0",
