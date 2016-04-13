@@ -7,7 +7,6 @@
 import json
 import urllib
 
-from flask.ext.github import GitHubError
 from flask import abort
 from flask import flash
 from flask import g
@@ -44,8 +43,7 @@ ERROR_DICT = {400: 'Bad Request.',
               404: 'Not Found. Lost in Punk Cat Space',
               429: 'Cool your jets! Please wait {0} seconds before making'
                    'another search.',
-              500: 'Internal Server Error',
-              'GitHubError': 'Something bad happened. Please try again?'}
+              500: 'Internal Server Error'}
 
 
 @app.teardown_appcontext
@@ -295,15 +293,6 @@ def contributors():
 def cssfixme():
     '''Route for CSS Fix me tool'''
     return render_template('cssfixme.html')
-
-
-@app.errorhandler(GitHubError)
-def jumpship(e):
-    print('jumpship! ', e)
-    session.pop('user_id', None)
-    flash(ERROR_DICT['GitHubError'], 'error')
-    return redirect(url_for('index'))
-
 
 @app.errorhandler(400)
 @app.errorhandler(401)
