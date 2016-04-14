@@ -41,7 +41,7 @@ ERROR_DICT = {400: 'Bad Request.',
               401: 'Unauthorized. Please log in.',
               403: 'Forbidden. Maybe that looking at private stuff?',
               404: 'Not Found. Lost in Punk Cat Space',
-              429: 'Cool your jets! Please wait {0} seconds before making'
+              429: 'Cool your jets! Please wait {0} seconds before making '
                    'another search.',
               500: 'Internal Server Error'}
 
