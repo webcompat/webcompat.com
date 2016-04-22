@@ -233,6 +233,12 @@ function BugForm() {
                 .insertAfter('.js-image-upload-label');
 
       $('.wc-UploadForm-label').hide();
+      // "reset" the form field, because the file would get rejected
+      // from the server anyways.
+      this.uploadField.val(this.uploadField.get(0).defaultValue);
+      // return early because we just cleared out the input.
+      // someone might decide to just not select an image.
+      return;
     }
 
     this.disableSubmits();
@@ -248,7 +254,8 @@ function BugForm() {
 
     if (this.inputMap['url'].valid &&
         this.inputMap['problem_type'].valid &&
-        this.inputMap['image'].valid) {
+        this.inputMap['image'].valid &&
+        this.inputMap['img_too_big'].valid) {
       this.enableSubmits();
     }
   };
@@ -257,6 +264,8 @@ function BugForm() {
     of the image they're about to load.
   */
   this.showUploadPreview = function(event) {
+    var UPLOAD_LIMIT = 1024 * 1024 * 4;
+
     if (!(window.FileReader && window.File)) {
       return;
     }
@@ -265,9 +274,11 @@ function BugForm() {
     var img = event.target.files[0];
     // The limit is 4MB (which is crazy big!), so let the user know if their
     // file is unreasonably large.
-    if (img.size > 1024 * 1024 * 4) {
+    if (img.size > UPLOAD_LIMIT) {
       this.makeInvalid('img_too_big');
       return;
+    } else if (img.size < UPLOAD_LIMIT) {
+      this.makeValid('img_too_big');
     }
 
     // One last image type validation check.
