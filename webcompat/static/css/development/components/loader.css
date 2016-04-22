@@ -4,7 +4,7 @@
   display:none;
   position:fixed;
   background-image:url(/img/loader.gif);
-  z-index:2;
+  z-index:10;
   background-color:rgba(255,255,255,0);
   top:0px;left:0px;right:0px;bottom:0px;
   background-position:center center;
