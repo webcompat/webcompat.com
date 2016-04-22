@@ -284,7 +284,7 @@ function BugForm() {
   };
 
   this.addPreviewBackground = function(dataURI) {
-    if (!_.startsWith(dataURI, 'data:image/png;base64')) {
+    if (!_.startsWith(dataURI, 'data:image/')) {
       return;
     }
 
