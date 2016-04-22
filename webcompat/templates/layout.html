@@ -64,7 +64,7 @@
 <script src="{{ url_for('static', filename='js/lib/bugform.js') }}"></script>
 {%- endif %}
 {% for category, message in get_flashed_messages(with_categories=True) %}
-<script>wcEvents.trigger('flash:{{ category }}', {message: "{{ message }}", timeout: 1500});</script>
+<script>wcEvents.trigger('flash:{{ category }}', {message: "{{ message }}", timeout: 4000});</script>
 {% endfor %}
 {% block extrascripts %}{% endblock %}
 </body>

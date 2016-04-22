@@ -96,7 +96,7 @@ issues.Issue = Backbone.Model.extend({
       }, this),
       error: function() {
         var msg = 'There was an error editing this issues\'s status.';
-        wcEvents.trigger('flash:error', {message: msg, timeout: 2000});
+        wcEvents.trigger('flash:error', {message: msg, timeout: 4000});
       }
     });
   },
@@ -116,7 +116,7 @@ issues.Issue = Backbone.Model.extend({
       }, this),
       error: function() {
         var msg = 'There was an error setting labels.';
-        wcEvents.trigger('flash:error', {message: msg, timeout: 2000});
+        wcEvents.trigger('flash:error', {message: msg, timeout: 4000});
       }
     });
   }

@@ -6,7 +6,7 @@
 
 .wc-FlashMessage {
   font-size: var(--FlashMessage-fontSize);
-  position: absolute;
+  position: fixed;
   display:none;
   padding: 1.25em 0.5em;
   top: 0;

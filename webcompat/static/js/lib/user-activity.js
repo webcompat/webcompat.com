@@ -64,7 +64,7 @@ issueList.MyIssuesView = Backbone.View.extend(
           timeout = e.responseJSON.timeout * 1000;
         } else {
           message = 'Something went wrong!';
-          timeout = 3000;
+          timeout = 4000;
         }
 
         this._loadingIndicator.removeClass('is-active');
@@ -117,7 +117,7 @@ issueList.IssueMentionsView = Backbone.View.extend(
           timeout = e.responseJSON.timeout * 1000;
         } else {
           message = 'Something went wrong!';
-          timeout = 3000;
+          timeout = 4000;
         }
 
         this._loadingIndicator.removeClass('is-active');

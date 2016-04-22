@@ -215,7 +215,7 @@ issues.ImageUploadView = Backbone.View.extend({
         }, this),
         error: function() {
           var msg = 'There was an error trying to upload the image.';
-          wcEvents.trigger('flash:error', {message: msg, timeout: 3000});
+          wcEvents.trigger('flash:error', {message: msg, timeout: 4000});
         }
       });
     }
@@ -418,7 +418,7 @@ issues.MainView = Backbone.View.extend({
           }
         }, this)).error(function() {
           var msg = 'There was an error retrieving issue comments. Please reload to try again.';
-          wcEvents.trigger('flash:error', {message: msg, timeout: 2000});
+          wcEvents.trigger('flash:error', {message: msg, timeout: 4000});
         });
       }
     }, this)).error(function(response) {
@@ -428,7 +428,7 @@ issues.MainView = Backbone.View.extend({
         return;
       } else {
         msg = 'There was an error retrieving the issue. Please reload to try again.';
-        wcEvents.trigger('flash:error', {message: msg, timeout: 2000});
+        wcEvents.trigger('flash:error', {message: msg, timeout: 4000});
       }
     });
   },
