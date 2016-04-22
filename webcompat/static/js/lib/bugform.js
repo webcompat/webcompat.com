@@ -104,7 +104,7 @@ function BugForm() {
       }, this),
       error: function() {
         var msg = 'There was an error trying to file the bug, try again?.';
-        wcEvents.trigger('flash:error', {message: msg, timeout: 3000});
+        wcEvents.trigger('flash:error', {message: msg, timeout: 4000});
       }
     });
   };

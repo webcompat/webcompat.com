@@ -30,7 +30,7 @@ var FlashMessageView = Backbone.View.extend({
     return this;
   },
   show: function(opts) {
-    var timeout = opts.timeout || 3000;
+    var timeout = opts.timeout || 4000;
     var message = opts.message;
 
     this.render(message);
