@@ -102,10 +102,14 @@ function BugForm() {
         this.loaderImage.hide();
         window.location.href = '/thanks/' + response.number;
       }, this),
-      error: function() {
+      error: _.bind(function(response) {
         var msg = 'There was an error trying to file the bug, try again?.';
-        wcEvents.trigger('flash:error', {message: msg, timeout: 4000});
-      }
+        if (response && response.status === 413) {
+          msg = 'The image is too big! Please choose something smaller than 4MB.';
+        }
+        wcEvents.trigger('flash:error', {message: msg, timeout: 5000});
+        this.loaderImage.hide();
+      }, this)
     });
   };
 

@@ -21,7 +21,7 @@
   /* states */
   .wc-FlashMessage.is-active {
     display:block;
-    z-index: 2;
+    z-index: 10;
   }
 
   /* modifier */
