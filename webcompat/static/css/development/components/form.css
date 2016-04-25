@@ -2,6 +2,7 @@
 
 :root {
   --Form-fontSize: 1rem;
+  --Form-helpMessageColor: #ff0000;
 }
 
 .wc-Form {}
@@ -12,7 +13,7 @@
     margin-bottom:1.6em;
   }
 
-  /* information: wrapp label and helpMessage */
+  /* information: wrap label and helpMessage */
   .wc-Form-information {
     display: flex;
   }
@@ -49,9 +50,28 @@
   /* helpMessage */
   .wc-Form-helpMessage {
     font-weight: 700;
-    color: #ff0000;
+    color: var(--Form-helpMessageColor);
     margin: 0 0 0 .5em;
   }
+
+    .wc-Form-helpMessage--imageUpload {
+      position: absolute;
+      width: 100%;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 1em 0;
+      font-weight:700;
+      background-color: var(--Form-helpMessageColor);
+      border-bottom-left-radius: 20px;
+      border-bottom-right-radius: 20px;
+      color: #fff;
+      cursor: pointer;
+      text-align: center;
+      text-decoration: underline;
+      transform: translateY(0);
+      transition: transform .2s linear 0s;
+    }
 
   /* imput */
   .wc-Form-item {
@@ -147,7 +167,7 @@
       .wc-Form-group.is-error .wc-Form-item {
         border-color: var(--base-variantColorDark);
       }
-      
+
       .wc-Form-group.is-error .wc-Form-item:focus{
         border-color: var(--base-variantColorDark);
         box-shadow:none;

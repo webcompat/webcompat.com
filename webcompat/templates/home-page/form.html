@@ -67,7 +67,7 @@
                   <label class="wc-UploadForm-label">Attach a screenshot image</label>
                   {% if form.image.errors %}
                     {% for error in form.image.errors %}
-                    <span class="wc-Form-helpMessage">{{ error }}</span>
+                    <span class="wc-Form-helpMessage--imageUpload">{{ error }}</span>
                     {% endfor %}
                   {% endif %}
                   {{ form.image(class_='wc-ButtonUpload', accept='.jpe,.jpg,.jpeg,.gif,.png,.bmp') }}
