@@ -31,13 +31,13 @@ function BugForm() {
       'elm': this.uploadField,
       // image should be valid by default because it's optional
       'valid': true,
-      'helpText': 'Please select an image of the following type: jpg, png, gif, or bmp.'
+      'helpText': 'Image must be one of the following: jpg, png, gif, or bmp.'
     },
     'img_too_big': {
       'elm': this.uploadField,
       // image should be valid by default because it's optional
       'valid': true,
-      'helpText': 'Please choose an image that is smaller than 4MB.'
+      'helpText': 'Please choose a smaller image (< 4MB)'
     }
   };
 
