@@ -1,3 +1,9 @@
+## 2.4.6 - 2016-04-25
+
+* Bump z-index of loader image [Pull #1014](https://github.com/webcompat/webcompat.com/pull/1014) [Issue #1011](https://github.com/webcompat/webcompat.com/issues/1011)
+* Flash messages should use fixedpos [Pull #1013](https://github.com/webcompat/webcompat.com/pull/1013) [Issue #1010](https://github.com/webcompat/webcompat.com/issues/1010)
+* [Pull #958](https://github.com/webcompat/webcompat.com/pull/958) [Issue #929](https://github.com/webcompat/webcompat.com/issues/929)
+
 ## 2.4.5 - 2015-04-08
 
 * Rearrange admin scripts in repo [Pull #971](https://github.com/webcompat/webcompat.com/pull/971)
