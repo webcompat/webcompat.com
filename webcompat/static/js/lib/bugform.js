@@ -224,12 +224,15 @@ function BugForm() {
       inlineHelp.appendTo('.wc-Form-information');
     }
 
-    if (id === 'image') {
-      inlineHelp.insertAfter('.wc-Form-label--upload');
-    }
+    if (id === 'image' || id === 'img_too_big') {
+      // hide the error in case we already saw one
+      $('.wc-Form-helpMessage--imageUpload').remove();
 
-    if (id === 'img_too_big') {
-      inlineHelp.insertAfter('.js-image-upload');
+      inlineHelp.removeClass('wc-Form-helpMessage')
+                .addClass('wc-Form-helpMessage--imageUpload')
+                .insertAfter('.js-image-upload-label');
+
+      $('.wc-UploadForm-label').hide();
     }
 
     this.disableSubmits();
@@ -299,6 +302,10 @@ function BugForm() {
   this.showRemoveUpload = function(label) {
     var removeBanner = $('.wc-UploadForm-button');
     var uploadWrapper = $('.wc-UploadForm-wrapper');
+
+    // hide img_too_big errors (this will no-op if the user never saw one)
+    $('.wc-Form-helpMessage--imageUpload').remove();
+    $('.wc-UploadForm-label').show();
 
     removeBanner.removeClass('is-hidden');
     uploadWrapper.addClass('is-hidden');
