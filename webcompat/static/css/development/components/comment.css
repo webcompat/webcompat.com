@@ -77,6 +77,7 @@
     position: relative;
     width: 100%;
     min-height: 128px;
+    font-family: inherit;
     border: solid 1px var(--Comment-color);
     border-radius: 10px;
     padding: 0;
