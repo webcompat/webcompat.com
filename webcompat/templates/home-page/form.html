@@ -59,7 +59,7 @@
         </div>
         <div class="r-Grid-cell r-Grid-cell--alignBottom r-minS--1of2">
             <div class="js-image-upload wc-Form-group js-Form-group {% if form.image.errors %}is-error{% endif %}">
-              <label class="wc-UploadForm" for="image">
+              <label class="wc-UploadForm js-image-upload-label" for="image">
                 <div class="wc-UploadForm-wrapper">
                   <div class="wc-UploadForm-icon" aria-hidden="true">
                     <span class="wc-Icon wc-Icon--cloud-upload"></span>
@@ -67,7 +67,7 @@
                   <label class="wc-UploadForm-label">Attach a screenshot image</label>
                   {% if form.image.errors %}
                     {% for error in form.image.errors %}
-                    <span class="wc-Form-helpMessage">{{ error }}</span>
+                    <span class="wc-Form-helpMessage--imageUpload">{{ error }}</span>
                     {% endfor %}
                   {% endif %}
                   {{ form.image(class_='wc-ButtonUpload', accept='.jpe,.jpg,.jpeg,.gif,.png,.bmp') }}

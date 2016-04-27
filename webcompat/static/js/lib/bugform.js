@@ -31,13 +31,13 @@ function BugForm() {
       'elm': this.uploadField,
       // image should be valid by default because it's optional
       'valid': true,
-      'helpText': 'Please select an image of the following type: jpg, png, gif, or bmp.'
+      'helpText': 'Image must be one of the following: jpg, png, gif, or bmp.'
     },
     'img_too_big': {
       'elm': this.uploadField,
       // image should be valid by default because it's optional
       'valid': true,
-      'helpText': 'Please choose an image that is smaller than 4MB.'
+      'helpText': 'Please choose a smaller image (< 4MB)'
     }
   };
 
@@ -224,12 +224,15 @@ function BugForm() {
       inlineHelp.appendTo('.wc-Form-information');
     }
 
-    if (id === 'image') {
-      inlineHelp.insertAfter('.wc-Form-label--upload');
-    }
+    if (id === 'image' || id === 'img_too_big') {
+      // hide the error in case we already saw one
+      $('.wc-Form-helpMessage--imageUpload').remove();
 
-    if (id === 'img_too_big') {
-      inlineHelp.insertAfter('.js-image-upload');
+      inlineHelp.removeClass('wc-Form-helpMessage')
+                .addClass('wc-Form-helpMessage--imageUpload')
+                .insertAfter('.js-image-upload-label');
+
+      $('.wc-UploadForm-label').hide();
     }
 
     this.disableSubmits();
@@ -299,6 +302,10 @@ function BugForm() {
   this.showRemoveUpload = function(label) {
     var removeBanner = $('.wc-UploadForm-button');
     var uploadWrapper = $('.wc-UploadForm-wrapper');
+
+    // hide img_too_big errors (this will no-op if the user never saw one)
+    $('.wc-Form-helpMessage--imageUpload').remove();
+    $('.wc-UploadForm-label').show();
 
     removeBanner.removeClass('is-hidden');
     uploadWrapper.addClass('is-hidden');
