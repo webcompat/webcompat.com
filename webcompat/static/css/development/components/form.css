@@ -69,8 +69,6 @@
       cursor: pointer;
       text-align: center;
       text-decoration: underline;
-      transform: translateY(0);
-      transition: transform .2s linear 0s;
     }
 
   /* imput */
