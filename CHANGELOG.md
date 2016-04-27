@@ -1,3 +1,10 @@
+## 2.4.7 - 2016-04-27
+
+* Change font-family in comment textareas [Pull #1022](https://github.com/webcompat/webcompat.com/pull/1022) (No Issue)
+* Fix blank button (due to focus issues) [Pull #1020](https://github.com/webcompat/webcompat.com/pull/1020) [Issue #1006](https://github.com/webcompat/webcompat.com/issues/1006)
+* Improve error styles for image upload errors [Pull #1018](https://github.com/webcompat/webcompat.com/pull/1018) [Issue #995](https://github.com/webcompat/webcompat.com/issues/995)
+* Better handling of 413 errors on the client side [Pull #1016](https://github.com/webcompat/webcompat.com/pull/1016) [Issue #994](https://github.com/webcompat/webcompat.com/issues/994)
+
 ## 2.4.6 - 2016-04-25
 
 * Bump z-index of loader image [Pull #1014](https://github.com/webcompat/webcompat.com/pull/1014) [Issue #1011](https://github.com/webcompat/webcompat.com/issues/1011)
