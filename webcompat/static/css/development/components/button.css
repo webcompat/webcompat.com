@@ -60,7 +60,8 @@
     border: solid 4px var(--Button-defaultColor);
   }
 
-  .wc-Button--default:hover:not(.is-disabled) {
+  .wc-Button--default:hover:not(.is-disabled),
+  .wc-Button--default:focus:not(.is-disabled) {
     background-color: var(--Button-defaultColorHover);
   }
 
@@ -68,7 +69,8 @@
     border: solid 4px var(--Button-actionColor);
   }
 
-  .wc-Button--action:hover:not(.is-disabled) {
+  .wc-Button--action:hover:not(.is-disabled),
+  .wc-Button--action:focus:not(.is-disabled) {
     background-color: var(--Button-actionColorHover);
   }
 
