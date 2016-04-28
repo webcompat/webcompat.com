@@ -28,7 +28,7 @@ define(['intern/lib/args'], function(args) {
 
     // Selenium vers on BrowserStack
     capabilities: {
-      'browserstack.selenium_version': '2.45.0'
+      'browserstack.selenium_version': '2.52.0'
     },
 
     // Maximum number of simultaneous integration tests allowed on the remote WebDriver (BrowserStack)
