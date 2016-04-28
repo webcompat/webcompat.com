@@ -71,6 +71,24 @@ define([
         .end();
     },
 
+    'Search works': function() {
+      return this.remote
+        .setFindTimeout(intern.config.wc.pageLoadTimeout)
+        .get(require.toUrl(url('/issues')))
+        .findByCssSelector('.js-SearchForm input')
+        .type('vladvlad')
+        .end()
+        .findByCssSelector('.js-SearchForm button').click()
+        .end()
+        // this is lame, but we gotta wait on search results.
+        .sleep(3000)
+        .findByCssSelector('.wc-IssueList:nth-of-type(1) a').getVisibleText()
+        .then(function(text) {
+          assert.include(text, 'vladvlad', 'The search results show up on the page.');
+        })
+        .end();
+    },
+
     'Search from the homepage': function() {
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
