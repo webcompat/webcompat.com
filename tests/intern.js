@@ -36,7 +36,7 @@ define(['intern/lib/args'], function(args) {
 
     // One browser/version on two OS's will count as two parallel tests
     environments: [
-      { browserName: 'firefox', version: '44', platform: [ 'WINDOWS'] },
+      { browserName: 'firefox', version: '44', platform: 'MAC' },
     ],
 
     // Required for BrowserStack
