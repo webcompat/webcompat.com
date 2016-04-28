@@ -35,7 +35,7 @@ for blueprint in [api, uploads, webhooks]:
 
 
 # Start Logging Handlers
-# See config.py for parameters
+# See config/__init__.py for parameters
 file_handler = logging.FileHandler(app.config['LOG_FILE'])
 file_handler.setLevel(logging.INFO)
 file_handler.setFormatter(logging.Formatter(app.config['LOG_FMT']))
