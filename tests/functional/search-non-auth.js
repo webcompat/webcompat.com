@@ -8,7 +8,7 @@ define([
   'intern/chai!assert',
   'require',
   'intern/dojo/node!leadfoot/keys'
-], function(intern, registerSuite, assert, require, keys) {
+], function(intern, registerSuite, assert, require) {
   'use strict';
 
   var url = function(path) {
@@ -72,47 +72,6 @@ define([
         .findByCssSelector('.js-SearchForm').isDisplayed()
         .then(function(isDisplayed) {
           assert.equal(isDisplayed, true, 'Search input is visible for non-authed users.');
-        })
-        .end();
-    },
-
-    'Search works': function() {
-      return this.remote
-        .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url('/issues')))
-        .findByCssSelector('.js-SearchForm input')
-        .type('vladvlad')
-        .end()
-        .findByCssSelector('.js-SearchForm button').click()
-        .end()
-        // this is lame, but we gotta wait on search results.
-        .sleep(3000)
-        .findByCssSelector('.wc-IssueList:nth-of-type(1) a').getVisibleText()
-        .then(function(text) {
-          assert.include(text, 'vladvlad', 'The search results show up on the page.');
-        })
-        .end();
-    },
-
-    'Search from the homepage': function() {
-      return this.remote
-        .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url('/')))
-        .findByCssSelector('.js-SearchBarOpen').click()
-        .end()
-        .findByCssSelector('.js-SearchBar input').click()
-        .type('vladvlad')
-        .type(keys.ENTER)
-        .end()
-        .sleep(3000)
-        .findByCssSelector('.wc-IssueList:nth-of-type(1) a').getVisibleText()
-        .then(function(text) {
-          assert.include(text, 'vladvlad', 'The search query results show up on the page.');
-        })
-        .end()
-        .getCurrentUrl()
-        .then(function(currUrl) {
-          assert.include(currUrl, 'page=1', 'Default params got merged.');
         })
         .end();
     }
