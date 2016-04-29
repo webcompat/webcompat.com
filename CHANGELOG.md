@@ -1,3 +1,7 @@
+## 2.4.8 - 2016-04-28
+
+* Add speculative exception logging to figure out #1009. [Pull #1028](https://github.com/webcompat/webcompat.com/pull/1028) [Issue #1027](https://github.com/webcompat/webcompat.com/issues/1027)
+
 ## 2.4.7 - 2016-04-27
 
 * Change font-family in comment textareas [Pull #1022](https://github.com/webcompat/webcompat.com/pull/1022) (No Issue)
