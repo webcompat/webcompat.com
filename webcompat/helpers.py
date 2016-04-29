@@ -99,28 +99,37 @@ def get_user_info():
         session['avatar_url'] = gh_user.get('avatar_url')
 
 
-def get_browser(user_agent_string):
+def get_browser(user_agent_string=None):
     '''Return browser name family and version.
 
     It will pre-populate the bug reporting form.
     '''
-    ua_dict = user_agent_parser.Parse(user_agent_string)
-    ua = ua_dict.get('user_agent')
-    name = ua.get('family')
-    version = ua.get('major', u'Unknown')
-    # Add on the minor and patch version numbers if they exist
-    if version != u'Unknown' and ua.get('minor'):
-        version = version + "." + ua.get('minor')
-        if ua.get('patch'):
-            version = version + "." + ua.get('patch')
-    else:
-        version = ''
-    # Check for tablet devices
-    if ua_dict.get('device').get('model') == 'Tablet':
-        model = ' (Tablet)'
-    else:
-        model = ''
-    return '{0} {1}{2}'.format(name, version, model)
+    if user_agent_string:
+        ua_dict = user_agent_parser.Parse(user_agent_string)
+        ua = ua_dict.get('user_agent')
+        name = ua.get('family')
+        version = ua.get('major', u'Unknown')
+        # Add on the minor and patch version numbers if they exist
+        if version != u'Unknown' and ua.get('minor'):
+            version = version + "." + ua.get('minor')
+            if ua.get('patch'):
+                version = version + "." + ua.get('patch')
+        else:
+            version = ''
+        # Check for tablet devices
+        if ua_dict.get('device').get('model') == 'Tablet':
+            model = '(Tablet) '
+        else:
+            model = ''
+        rv = '{0} {1}{2}'.format(name, model, version)
+        # bizarre UA strings can be parsed like so:
+        # {'major': None, 'minor': None, 'family': 'Other', 'patch': None}
+        # but we want to return "Unknown", rather than "Other"
+        print(rv)
+        if rv.strip().lower() == "other":
+            return "Unknown"
+        return rv
+    return "Unknown"
 
 
 def get_browser_name(user_agent_string=None):
