@@ -136,21 +136,26 @@ def get_browser_name(user_agent_string=None):
     return "unknown"
 
 
-def get_os(user_agent_string):
+def get_os(user_agent_string=None):
     '''Return operating system name.
 
     It pre-populates the bug reporting form.
     '''
-    ua_dict = user_agent_parser.Parse(user_agent_string)
-    os = ua_dict.get('os')
-    version = os.get('major', u'Unknown')
-    if version != u'Unknown' and os.get('major'):
-        version = version + "." + os.get('minor')
-        if os.get('patch'):
-            version = version + "." + os.get('patch')
-    else:
-        version = ''
-    return '{0} {1}'.format(os.get('family'), version)
+    if user_agent_string:
+        ua_dict = user_agent_parser.Parse(user_agent_string)
+        os = ua_dict.get('os')
+        version = os.get('major', u'Unknown')
+        if version != u'Unknown' and os.get('major'):
+            version = version + "." + os.get('minor')
+            if os.get('patch'):
+                version = version + "." + os.get('patch')
+        else:
+            version = ''
+        rv = '{0} {1}'.format(os.get('family'), version).rstrip()
+        if rv.strip().lower() == "other":
+            return "Unknown"
+        return rv
+    return "Unknown"
 
 
 def get_response_headers(response):

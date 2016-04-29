@@ -17,6 +17,7 @@ import webcompat
 from webcompat.helpers import format_link_header
 from webcompat.helpers import get_browser_name
 from webcompat.helpers import get_browser
+from webcompat.helpers import get_os
 from webcompat.helpers import normalize_api_params
 from webcompat.helpers import parse_link_header
 from webcompat.helpers import rewrite_and_sanitize_link
@@ -154,6 +155,27 @@ class TestHelpers(unittest.TestCase):
         self.assertEqual(get_browser(None), 'Unknown')
         self.assertEqual(get_browser(), 'Unknown')
         self.assertEqual(get_browser(u'💀'), 'Unknown')
+
+    def test_get_os(self):
+        '''Test Browser parsing for non-tablet devices.'''
+        self.assertEqual(get_os(FIREFOX_UA), 'Mac OS X 10.11')
+        self.assertEqual(get_os(FIREFOX_MOBILE_UA), 'Android')
+        self.assertEqual(get_os(FIREFOX_TABLET_UA), 'Android 4.4')
+        self.assertEqual(get_os(SAFARI_UA), 'Mac OS X 10.11')
+        self.assertEqual(get_os(SAFARI_MOBILE_UA), 'iOS 6.1.4')
+        self.assertEqual(get_os(SAFARI_TABLET_UA), 'iOS 5.1.1')
+        self.assertEqual(get_os(CHROME_UA), 'Mac OS X 10.11.4')
+        self.assertEqual(get_os(CHROME_MOBILE_UA),
+                         'Android 4.0.4')
+        self.assertEqual(get_os(CHROME_TABLET_UA), 'Android 4.0.4')
+        self.assertEqual(get_os(''), 'Unknown')
+        self.assertEqual(get_os(), 'Unknown')
+        self.assertEqual(get_os(u'💀'), 'Unknown')
+        self.assertEqual(get_os('<script>lol()</script>'), 'Unknown')
+        self.assertEqual(get_os(True), 'Unknown')
+        self.assertEqual(get_os(False), 'Unknown')
+        self.assertEqual(get_os(None), 'Unknown')
+
 
 if __name__ == '__main__':
     unittest.main()
