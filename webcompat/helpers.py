@@ -104,7 +104,7 @@ def get_browser(user_agent_string=None):
 
     It will pre-populate the bug reporting form.
     '''
-    if user_agent_string:
+    if user_agent_string and isinstance(user_agent_string, basestring):
         ua_dict = user_agent_parser.Parse(user_agent_string)
         ua = ua_dict.get('user_agent')
         name = ua.get('family')
@@ -137,7 +137,7 @@ def get_browser_name(user_agent_string=None):
 
     unknown user agents will be reported as "unknown".
     '''
-    if user_agent_string:
+    if user_agent_string and isinstance(user_agent_string, basestring):
         # get_browser will return something like 'Chrome Mobile 47.0'
         # we just want 'chrome mobile', i.e., the lowercase name
         # w/o the version
@@ -150,7 +150,7 @@ def get_os(user_agent_string=None):
 
     It pre-populates the bug reporting form.
     '''
-    if user_agent_string:
+    if user_agent_string and isinstance(user_agent_string, basestring):
         ua_dict = user_agent_parser.Parse(user_agent_string)
         os = ua_dict.get('os')
         version = os.get('major', u'Unknown')

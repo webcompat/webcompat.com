@@ -137,6 +137,10 @@ class TestHelpers(unittest.TestCase):
         self.assertEqual(get_browser_name(None), 'unknown')
         self.assertEqual(get_browser_name(), 'unknown')
         self.assertEqual(get_browser_name(u'💀'), 'unknown')
+        self.assertEqual(get_browser('<script>lol()</script>'), 'Unknown')
+        self.assertEqual(get_browser(True), 'Unknown')
+        self.assertEqual(get_browser(False), 'Unknown')
+        self.assertEqual(get_browser(None), 'Unknown')
 
     def test_get_browser(self):
         '''Test Browser parsing for non-tablet devices.'''
@@ -152,9 +156,12 @@ class TestHelpers(unittest.TestCase):
                          'Chrome Mobile 18.0.1025')
         self.assertEqual(get_browser(CHROME_TABLET_UA), 'Chrome 18.0.1025')
         self.assertEqual(get_browser(''), 'Unknown')
-        self.assertEqual(get_browser(None), 'Unknown')
         self.assertEqual(get_browser(), 'Unknown')
         self.assertEqual(get_browser(u'💀'), 'Unknown')
+        self.assertEqual(get_browser('<script>lol()</script>'), 'Unknown')
+        self.assertEqual(get_browser(True), 'Unknown')
+        self.assertEqual(get_browser(False), 'Unknown')
+        self.assertEqual(get_browser(None), 'Unknown')
 
     def test_get_os(self):
         '''Test Browser parsing for non-tablet devices.'''
