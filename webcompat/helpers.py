@@ -99,22 +99,6 @@ def get_user_info():
         session['avatar_url'] = gh_user.get('avatar_url')
 
 
-def get_browser_name(user_agent_string):
-    '''Return just the browser name.
-
-    unknown user agents will be reported as "other".
-    '''
-    ua_dict = user_agent_parser.Parse(user_agent_string)
-    name = ua_dict.get('user_agent').get('family').lower()
-    device = ua_dict.get('device').get('model')
-    if (name == 'firefox mobile' and
-            ua_dict.get('os').get('family') == 'Firefox OS'):
-        name = 'other'
-    if device == 'Tablet':
-        name += " " + device.lower()
-    return name
-
-
 def get_browser(user_agent_string):
     '''Return browser name family and version.
 
@@ -137,6 +121,19 @@ def get_browser(user_agent_string):
     else:
         model = ''
     return '{0} {1}{2}'.format(name, version, model)
+
+
+def get_browser_name(user_agent_string=None):
+    '''Return just the browser name.
+
+    unknown user agents will be reported as "unknown".
+    '''
+    if user_agent_string:
+        # get_browser will return something like 'Chrome Mobile 47.0'
+        # we just want 'chrome mobile', i.e., the lowercase name
+        # w/o the version
+        return get_browser(user_agent_string).rsplit(' ', 1)[0].lower()
+    return "unknown"
 
 
 def get_os(user_agent_string):
