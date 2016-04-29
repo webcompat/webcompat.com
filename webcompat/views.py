@@ -301,6 +301,8 @@ def cssfixme():
 @app.errorhandler(404)
 @app.errorhandler(500)
 def custom_error_handler(err):
+    # log the exception stack trace
+    app.logger.exception("!!!")
     if api_call(request):
         return api_message(err.code)
     return render_template(
