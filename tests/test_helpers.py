@@ -122,7 +122,7 @@ class TestHelpers(unittest.TestCase):
         self.assertEqual(format_link_header(parsed_headers), link_header)
 
     def test_get_browser_name(self):
-        '''Test Browser name parsing.'''
+        '''Test browser name parsing via get_browser_name helper method.'''
         self.assertEqual(get_browser_name(FIREFOX_UA), 'firefox')
         self.assertEqual(get_browser_name(FIREFOX_MOBILE_UA), 'firefox mobile')
         self.assertEqual(get_browser_name(FIREFOX_TABLET_UA),
@@ -143,7 +143,7 @@ class TestHelpers(unittest.TestCase):
         self.assertEqual(get_browser(None), 'Unknown')
 
     def test_get_browser(self):
-        '''Test Browser parsing for non-tablet devices.'''
+        '''Test browser parsing via get_browser helper method.'''
         self.assertEqual(get_browser(FIREFOX_UA), 'Firefox 48.0')
         self.assertEqual(get_browser(FIREFOX_MOBILE_UA), 'Firefox Mobile 40.0')
         self.assertEqual(get_browser(FIREFOX_TABLET_UA),
@@ -164,7 +164,7 @@ class TestHelpers(unittest.TestCase):
         self.assertEqual(get_browser(None), 'Unknown')
 
     def test_get_os(self):
-        '''Test Browser parsing for non-tablet devices.'''
+        '''Test OS parsing via get_os helper method.'''
         self.assertEqual(get_os(FIREFOX_UA), 'Mac OS X 10.11')
         self.assertEqual(get_os(FIREFOX_MOBILE_UA), 'Android')
         self.assertEqual(get_os(FIREFOX_TABLET_UA), 'Android 4.4')
