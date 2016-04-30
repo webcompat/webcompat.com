@@ -302,7 +302,10 @@ def cssfixme():
 @app.errorhandler(500)
 def custom_error_handler(err):
     # log the exception stack trace
-    app.logger.exception("!!!")
+    # (but don't bother for localhost because the
+    # Flask debugger is already enabled)
+    if not app.config['LOCALHOST']:
+        app.logger.exception("Exception thrown:")
     if api_call(request):
         return api_message(err.code)
     return render_template(
