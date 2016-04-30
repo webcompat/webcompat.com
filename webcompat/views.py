@@ -306,12 +306,14 @@ def custom_error_handler(err):
     # Flask debugger is already enabled)
     if not app.config['LOCALHOST']:
         app.logger.exception("Exception thrown:")
-    if api_call(request):
-        return api_message(err.code)
-    return render_template(
-        'error.html',
-        error_code=err.code,
-        error_message=ERROR_DICT[err.code]), err.code
+    try:
+        if api_call(request):
+            return api_message(err.code)
+        return render_template('error.html', error_code=err.code,
+                               error_message=ERROR_DICT[err.code]), err.code
+    except AttributeError:
+        # Somethign bad happened, we're not dealing with an HTTPError
+        abort(500)
 
 
 def api_call(request):
