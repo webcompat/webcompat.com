@@ -26,20 +26,22 @@ define(['intern/lib/args'], function(args) {
     proxyUrl: 'http://127.0.0.1:9090/',
     siteRoot: siteRoot,
 
-    // Selenium vers on BrowserStack
+    // BrowserStack Selenium version
     capabilities: {
       'browserstack.selenium_version': '2.52.0'
     },
 
-    // Maximum number of simultaneous integration tests allowed on the remote WebDriver (BrowserStack)
+    // BrowserStack hard-coded max number of simultaneous browser tests
     maxConcurrency: 2,
 
-    // One browser/version on two OS's will count as two parallel tests
+    // Browser versions may have dependencies on browserstack.selenium_version
     environments: [
       { browserName: 'firefox', version: '44', platform: 'MAC' },
+      { browserName: 'internet explorer', version: '11', platform: 'WIN8' } //,
+      //{ browserName: 'chrome', version: '49', platform: 'MAC' }
     ],
 
-    // Required for BrowserStack
+    // BrowserStack connection
     tunnel: 'BrowserStackTunnel',
 
     // Beauty, Bob.
