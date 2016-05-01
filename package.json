@@ -32,5 +32,6 @@
     "load-grunt-tasks": "~0.6.0",
     "suitcss-utils-align": "^0.2.0",
     "suitcss-utils-display": "^0.4.0"
-  }
+  },
+  "license": "MPL-2.0" 
 }
