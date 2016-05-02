@@ -32,7 +32,8 @@ REWRITTEN_ISSUES_LINK_HEADER = '</api/issues?per_page=50&page=3>; rel="next", </
 REWRITTEN_SEARCH_LINK_HEADER = '</api/issues/search?q=taco&page=2>; rel="next", </api/issues/search?q=taco&page=26>; rel="last"'  # nopep8
 PARSED_LINKED_HEADERS = [{'link': 'https://api.github.com/repositories/17839063/issues?per_page=50&page=3', 'rel': 'next'}, {'link': 'https://api.github.com/repositories/17839063/issues?per_page=50&page=4', 'rel': 'last'}, {'link': 'https://api.github.com/repositories/17839063/issues?per_page=50&page=1', 'rel': 'first'}, {'link': 'https://api.github.com/repositories/17839063/issues?per_page=50&page=1', 'rel': 'prev'}]  # nopep8
 FIREFOX_UA = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:48.0) Gecko/20100101 Firefox/48.0'  # nopep8
-FIREFOX_MOBILE_UA = 'Mozilla/5.0 (Android; Mobile; rv:40.0) Gecko/40.0 Firefox/40.0'  # nopep8
+FIREFOX_MOBILE_UA_OLD = 'Mozilla/5.0 (Android; Mobile; rv:40.0) Gecko/40.0 Firefox/40.0'  # nopep8
+FIREFOX_MOBILE_UA = 'Mozilla/5.0 (Android 6.0.1; Mobile; rv:40.0) Gecko/40.0 Firefox/40.0'  # nopep8
 FIREFOX_TABLET_UA = 'Mozilla/5.0 (Android 4.4; Tablet; rv:41.0) Gecko/41.0 Firefox/41.0'  # nopep8
 SAFARI_UA = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11) AppleWebKit/601.1.39 (KHTML, like Gecko) Version/9.0 Safari/601.1.39'  # nopep8
 SAFARI_MOBILE_UA = 'Mozilla/5.0 (iPhone; CPU iPhone OS 6_1_4 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10B350 Safari/8536.25'  # nopep8
@@ -125,6 +126,8 @@ class TestHelpers(unittest.TestCase):
         '''Test browser name parsing via get_browser_name helper method.'''
         self.assertEqual(get_browser_name(FIREFOX_UA), 'firefox')
         self.assertEqual(get_browser_name(FIREFOX_MOBILE_UA), 'firefox mobile')
+        self.assertEqual(get_browser_name(FIREFOX_MOBILE_UA_OLD),
+                         'firefox mobile')
         self.assertEqual(get_browser_name(FIREFOX_TABLET_UA),
                          'firefox mobile (tablet)')
         self.assertEqual(get_browser_name(SAFARI_UA), 'safari')
@@ -146,6 +149,8 @@ class TestHelpers(unittest.TestCase):
         '''Test browser parsing via get_browser helper method.'''
         self.assertEqual(get_browser(FIREFOX_UA), 'Firefox 48.0')
         self.assertEqual(get_browser(FIREFOX_MOBILE_UA), 'Firefox Mobile 40.0')
+        self.assertEqual(get_browser_name(FIREFOX_MOBILE_UA_OLD),
+                         'firefox mobile')
         self.assertEqual(get_browser(FIREFOX_TABLET_UA),
                          'Firefox Mobile (Tablet) 41.0')
         self.assertEqual(get_browser(SAFARI_UA), 'Safari 9.0')
@@ -166,7 +171,8 @@ class TestHelpers(unittest.TestCase):
     def test_get_os(self):
         '''Test OS parsing via get_os helper method.'''
         self.assertEqual(get_os(FIREFOX_UA), 'Mac OS X 10.11')
-        self.assertEqual(get_os(FIREFOX_MOBILE_UA), 'Android')
+        self.assertEqual(get_os(FIREFOX_MOBILE_UA), 'Android 6.0.1')
+        self.assertEqual(get_os(FIREFOX_MOBILE_UA_OLD), 'Android')
         self.assertEqual(get_os(FIREFOX_TABLET_UA), 'Android 4.4')
         self.assertEqual(get_os(SAFARI_UA), 'Mac OS X 10.11')
         self.assertEqual(get_os(SAFARI_MOBILE_UA), 'iOS 6.1.4')
