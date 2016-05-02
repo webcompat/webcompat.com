@@ -138,6 +138,7 @@ def index():
     ua_header = request.headers.get('User-Agent')
     bug_form.browser.data = get_browser(ua_header)
     bug_form.os.data = get_os(ua_header)
+    # browser_name is used in topbar.html to show the right add-on link
     browser_name = get_browser_name(ua_header)
     # GET means you want to file a report.
     if request.method == 'GET':
@@ -151,7 +152,8 @@ def index():
 
     else:
         # Validation failed, re-render the form with the errors.
-        return render_template('index.html', form=bug_form)
+        return render_template('index.html', form=bug_form,
+                               browser=browser_name)
 
 
 @app.route('/issues')
