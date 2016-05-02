@@ -7,7 +7,6 @@
 '''This module powers the webcompat.com Flask application.'''
 
 import logging
-import os
 
 from flask.ext.github import GitHub
 from flask.ext.limiter import Limiter
