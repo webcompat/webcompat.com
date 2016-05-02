@@ -125,7 +125,6 @@ def get_browser(user_agent_string=None):
         # bizarre UA strings can be parsed like so:
         # {'major': None, 'minor': None, 'family': 'Other', 'patch': None}
         # but we want to return "Unknown", rather than "Other"
-        print(rv)
         if rv.strip().lower() == "other":
             return "Unknown"
         return rv
@@ -154,7 +153,7 @@ def get_os(user_agent_string=None):
         ua_dict = user_agent_parser.Parse(user_agent_string)
         os = ua_dict.get('os')
         version = os.get('major', u'Unknown')
-        if version != u'Unknown' and os.get('major'):
+        if version != u'Unknown' and os.get('minor'):
             version = version + "." + os.get('minor')
             if os.get('patch'):
                 version = version + "." + os.get('patch')
