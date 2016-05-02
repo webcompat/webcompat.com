@@ -10,7 +10,6 @@ import urllib
 from flask import abort
 from flask import flash
 from flask import g
-from flask import jsonify
 from flask import redirect
 from flask import render_template
 from flask import request
@@ -35,15 +34,6 @@ from webcompat import app
 from webcompat import github
 from webcompat.api.endpoints import get_rate_limit
 from webcompat.api.uploads import upload
-
-
-ERROR_DICT = {400: 'Bad Request.',
-              401: 'Unauthorized. Please log in.',
-              403: 'Forbidden. Maybe that looking at private stuff?',
-              404: 'Not Found. Lost in Punk Cat Space',
-              429: 'Cool your jets! Please wait {0} seconds before making '
-                   'another search.',
-              500: 'Internal Server Error'}
 
 
 @app.teardown_appcontext
@@ -293,64 +283,3 @@ def contributors():
 def cssfixme():
     '''Route for CSS Fix me tool'''
     return render_template('cssfixme.html')
-
-
-@app.errorhandler(400)
-@app.errorhandler(401)
-@app.errorhandler(403)
-@app.errorhandler(404)
-@app.errorhandler(500)
-def custom_error_handler(err):
-    # log the exception stack trace
-    # (but don't bother for localhost because the
-    # Flask debugger is already enabled)
-    if not app.config['LOCALHOST']:
-        app.logger.exception("Exception thrown:")
-    try:
-        if api_call(request):
-            return api_message(err.code)
-        return render_template('error.html', error_code=err.code,
-                               error_message=ERROR_DICT[err.code]), err.code
-    except AttributeError:
-        # Somethign bad happened, we're not dealing with an HTTPError
-        abort(500)
-
-
-def api_call(request):
-    '''Checks if it's an API call'''
-    if (request.path.startswith('/api/') and
-       request.accept_mimetypes.accept_json and
-       not request.accept_mimetypes.accept_html):
-        return True
-    else:
-        return False
-
-
-def api_message(code):
-    '''Prepares HTTP response for API calls.'''
-    message = {
-        'status': code,
-        'message': ERROR_DICT[code],
-    }
-    resp = jsonify(message)
-    resp.status_code = code
-    return resp
-
-
-@app.errorhandler(429)
-def too_many_requests_status(err):
-    '''Error handler that comes from hitting our API rate limits.
-
-    Sent by Flask Limiter.
-
-    error_data.message is displayed in the flash message
-    error_data.timeout determines how long until flash message disappears
-    '''
-    # TODO: determine actual time left.
-    # TODO: send message with login link.
-    time_left = 60
-    message = (ERROR_DICT[err.code]).format(time_left)
-    error_data = {'message': message, 'timeout': 5}
-    resp = jsonify(error_data)
-    resp.status_code = err.code
-    return resp
