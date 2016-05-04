@@ -325,8 +325,10 @@ function BugForm() {
     removeBanner.removeClass('is-hidden');
     uploadWrapper.addClass('is-hidden');
     removeBanner.on('click', _.bind(function() {
-      // clear out the input value, remove the preview and hide the banner
+      // clear out the input value or screenshot data
       this.uploadField.val(this.uploadField.get(0).defaultValue);
+      this.screenshotData = '';
+      // remove the preview and hide the banner
       label.css('background', 'none');
       removeBanner.addClass('is-hidden');
       uploadWrapper.removeClass('is-hidden');
