@@ -15,6 +15,7 @@ function BugForm() {
   this.screenshotData = '';
   // by default, submission type is anonymous
   this.submitType = 'github-proxy-report';
+  this.UPLOAD_LIMIT = 1024 * 1024 * 4;
 
   this.inputMap = {
     'url': {
@@ -64,13 +65,38 @@ function BugForm() {
 
     // Set up listener for message events from screenshot-enabled add-ons
     window.addEventListener('message', _.bind(function(event) {
+      var img = document.createElement('img');
+      var canvas = document.createElement('canvas');
+      var ctx = canvas.getContext('2d');
       // Make sure the data is coming from ~*inside the house*~!
       // (i.e., our add-on sent it)
       if (location.origin === event.origin) {
         this.form.on('submit', _.bind(this.submitFormWithScreenshot, this));
-
         this.screenshotData = event.data;
-        this.addPreviewBackground(this.screenshotData);
+
+        // The final size of Base64-encoded binary data is ~equal to
+        // 1.37 times the original data size + 814 bytes (for headers).
+        // so, bytes = (encoded_string.length - 814) / 1.37)
+        // see https://en.wikipedia.org/wiki/Base64#MIME
+        if ((String(this.screenshotData).length - 814 / 1.37) > this.UPLOAD_LIMIT) {
+          img.onload = _.bind(function() {
+            // scale the tmp canvas to 50%
+            canvas.width = Math.floor(img.width / 2);
+            canvas.height = Math.floor(img.height / 2);
+            ctx.scale(0.5, 0.5);
+            // draw back in the screenshot (at 50% scale)
+            // and re-serialize to data URI
+            ctx.drawImage(img, 0, 0);
+            this.screenshotData = canvas.toDataURL();
+            img = null, canvas = null;
+
+            this.addPreviewBackground(this.screenshotData);
+          }, this);
+
+          img.src = this.screenshotData;
+        } else {
+          this.addPreviewBackground(this.screenshotData);
+        }
       }
     }, this), false);
   };
@@ -88,8 +114,6 @@ function BugForm() {
     // add in the submit-type, which won't be included in JS form submission by default
     formdata.append('submit-type', this.submitType);
 
-    // so, we can do an ajax submission and have it respond the number.
-    // we can inspect the xhr header
     this.loaderImage.show();
     $.ajax({
       contentType: false,
@@ -268,8 +292,6 @@ function BugForm() {
     of the image they're about to load.
   */
   this.showUploadPreview = function(event) {
-    var UPLOAD_LIMIT = 1024 * 1024 * 4;
-
     if (!(window.FileReader && window.File)) {
       return;
     }
@@ -278,10 +300,10 @@ function BugForm() {
     var img = event.target.files[0];
     // The limit is 4MB (which is crazy big!), so let the user know if their
     // file is unreasonably large.
-    if (img.size > UPLOAD_LIMIT) {
+    if (img.size > this.UPLOAD_LIMIT) {
       this.makeInvalid('img_too_big');
       return;
-    } else if (img.size < UPLOAD_LIMIT) {
+    } else if (img.size < this.UPLOAD_LIMIT) {
       this.makeValid('img_too_big');
     }
 
