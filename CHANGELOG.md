@@ -1,3 +1,8 @@
+## 2.4.10 - 2016-05-04
+
+* Clear out screenshotData in showRemoveUpload [Pull #1040](https://github.com/webcompat/webcompat.com/pull/1040) [Issue #1039](https://github.com/webcompat/webcompat.com/issues/1039)
+* Downscale large images that come from the add-on [Pull #1041](https://github.com/webcompat/webcompat.com/pull/1041) [Issue #1012](https://github.com/webcompat/webcompat.com/issues/1012)
+
 ## 2.4.9 - 2016-05-03
 
 * Fix button style on contributor page [Pull #1021](https://github.com/webcompat/webcompat.com/pull/1021) [Issue #1005](https://github.com/webcompat/webcompat.com/issues/1005)
