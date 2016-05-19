@@ -286,7 +286,12 @@ function BugForm() {
 
     var reader = new FileReader();
     reader.onload = _.bind(function(event) {
-      this.addPreviewBackground(event.target.result);
+      var dataURI = event.target.result;
+      if ((String(dataURI).length - 814 / 1.37) > this.UPLOAD_LIMIT) {
+        this.downsampleImageAndUpload(dataURI);
+      } else {
+        this.addPreviewBackgroundAndUpload(dataURI);
+      }
     }, this);
     reader.readAsDataURL(img);
   };
@@ -362,7 +367,7 @@ function BugForm() {
         }
 
         if (response && response.status === 413) {
-          msg = 'The image is too big! Please choose something smaller than 2MB.';
+          msg = 'The image is too big! Please choose something smaller than 4MB.';
           wcEvents.trigger('flash:error', {message: msg, timeout: 5000});
         }
         this.loaderImage.hide();
