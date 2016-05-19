@@ -72,7 +72,6 @@ function BugForm() {
       // Make sure the data is coming from ~*inside the house*~!
       // (i.e., our add-on sent it)
       if (location.origin === event.origin) {
-        this.form.on('submit', _.bind(this.submitFormWithScreenshot, this));
         this.screenshotData = event.data;
 
         // The final size of Base64-encoded binary data is ~equal to
@@ -321,7 +320,7 @@ function BugForm() {
     reader.readAsDataURL(img);
   };
 
-  this.addPreviewBackground = function(dataURI) {
+  this.addPreviewBackgroundAndUpload = function(dataURI) {
     if (!_.startsWith(dataURI, 'data:image/')) {
       return;
     }
@@ -333,6 +332,7 @@ function BugForm() {
     });
 
     this.showRemoveUpload(label);
+    this.getUploadURL(dataURI);
   };
   /*
     Allow users to remove an image from the form upload.
@@ -348,15 +348,68 @@ function BugForm() {
     removeBanner.removeClass('is-hidden');
     uploadWrapper.addClass('is-hidden');
     removeBanner.on('click', _.bind(function() {
-      // clear out the input value or screenshot data
-      this.uploadField.val(this.uploadField.get(0).defaultValue);
-      this.screenshotData = '';
       // remove the preview and hide the banner
       label.css('background', 'none');
       removeBanner.addClass('is-hidden');
       uploadWrapper.removeClass('is-hidden');
       removeBanner.off('click');
+
+      // remove the last embedded image URL
+      // Note: this could fail in weird ways depending on how
+      // the user has edited the descField.
+      this.descField.val(function(idx, value) {
+        return value.replace(/!\[.+\.jpe*g\)$/, '');
+      });
     }, this));
+  };
+  /*
+     Upload the image before form submission so we can
+     put an image link in the bug description.
+  */
+  this.getUploadURL = function(dataURI) {
+    this.disableSubmits();
+    this.uploadLoader.addClass('is-active');
+    var formdata = new FormData();
+    formdata.append('image', dataURI);
+
+    $.ajax({
+      contentType: false,
+      processData: false,
+      data: formdata,
+      method: 'POST',
+      url: '/upload/',
+      success: _.bind(function(response) {
+        this.addImageURL(response.url);
+        this.uploadLoader.removeClass('is-active');
+        this.enableSubmits();
+      }, this),
+      error: _.bind(function(response) {
+        var msg;
+        if (response && response.status === 415) {
+          wcEvents.trigger('flash:error',
+            {message: this.inputMap.image.helpText, timeout: 5000});
+        }
+
+        if (response && response.status === 413) {
+          msg = 'The image is too big! Please choose something smaller than 2MB.';
+          wcEvents.trigger('flash:error', {message: msg, timeout: 5000});
+        }
+        this.loaderImage.hide();
+      }, this)
+    });
+
+    // clear out the input[type=file], because we don't need it anymore.
+    this.uploadField.val(this.uploadField.get(0).defaultValue);
+  };
+  /*
+    copy over the URL of a newly uploaded image asset to the bug
+    description textarea.
+  */
+  this.addImageURL = function(url) {
+    var imageURL = ['![Screenshot Description](', url, ')'].join('');
+    this.descField.val(function(idx, value) {
+      return value + '\n\n' + imageURL;
+    });
   };
   /*
      copy URL from urlField into the first line of the
