@@ -66,9 +66,6 @@ function BugForm() {
 
     // Set up listener for message events from screenshot-enabled add-ons
     window.addEventListener('message', _.bind(function(event) {
-      var img = document.createElement('img');
-      var canvas = document.createElement('canvas');
-      var ctx = canvas.getContext('2d');
       // Make sure the data is coming from ~*inside the house*~!
       // (i.e., our add-on sent it)
       if (location.origin === event.origin) {
@@ -79,62 +76,44 @@ function BugForm() {
         // so, bytes = (encoded_string.length - 814) / 1.37)
         // see https://en.wikipedia.org/wiki/Base64#MIME
         if ((String(this.screenshotData).length - 814 / 1.37) > this.UPLOAD_LIMIT) {
-          img.onload = _.bind(function() {
-            // scale the tmp canvas to 50%
-            canvas.width = Math.floor(img.width / 2);
-            canvas.height = Math.floor(img.height / 2);
-            ctx.scale(0.5, 0.5);
-            // draw back in the screenshot (at 50% scale)
-            // and re-serialize to data URI
-            ctx.drawImage(img, 0, 0);
-            this.screenshotData = canvas.toDataURL();
-            img = null, canvas = null;
-
-            this.addPreviewBackground(this.screenshotData);
-          }, this);
-
-          img.src = this.screenshotData;
+          this.downsampleImageAndUpload(this.screenshotData);
         } else {
-          this.addPreviewBackground(this.screenshotData);
+          this.addPreviewBackgroundAndUpload(this.screenshotData);
         }
       }
     }, this), false);
   };
 
-  // If we've gotten this far, form validation has happened and
-  // we're reacting to a submit event.
-  this.submitFormWithScreenshot = function(event) {
-    // Stop regular form submission
-    event.preventDefault();
-    // construct a FormData object and append the base64 image to it.
-    var formdata = new FormData(this.form.get(0));
-    // we call this 'screenshot', rather than 'image' because it needs to be
-    // handled differently on the backend.
-    formdata.append('screenshot', this.screenshotData);
-    // add in the submit-type, which won't be included in JS form submission by default
-    formdata.append('submit-type', this.submitType);
+  this.downsampleImageAndUpload = function(dataURI) {
+    var img = document.createElement('img');
+    var canvas = document.createElement('canvas');
+    var ctx = canvas.getContext('2d');
 
-    this.loaderImage.show();
-    $.ajax({
-      contentType: false,
-      processData: false,
-      data: formdata,
-      method: 'POST',
-      url: '/issues/new',
-      success: _.bind(function(response) {
-        // navigate to thanks page.
-        this.loaderImage.hide();
-        window.location.href = '/thanks/' + response.number;
-      }, this),
-      error: _.bind(function(response) {
-        var msg = 'There was an error trying to file the bug, try again?.';
-        if (response && response.status === 413) {
-          msg = 'The image is too big! Please choose something smaller than 4MB.';
-        }
-        wcEvents.trigger('flash:error', {message: msg, timeout: 5000});
-        this.loaderImage.hide();
-      }, this)
-    });
+    img.onload = _.bind(function() {
+      // scale the tmp canvas to 50%
+      canvas.width = Math.floor(img.width / 2);
+      canvas.height = Math.floor(img.height / 2);
+      ctx.scale(0.5, 0.5);
+      // draw back in the screenshot (at 50% scale)
+      // and re-serialize to data URI
+      ctx.drawImage(img, 0, 0);
+      // Note: this will convert GIFs to JPEG, which breaks
+      // animated GIFs. However, this only will happen if they
+      // were above the upload limit size. So... sorry?
+      this.screenshotData = canvas.toDataURL('image/jpeg', 0.8);
+
+      // The limit is 4MB (which is crazy big!), so let the user know if their
+      // file is unreasonably large at this point (after 1 round of downsampling)
+      if (this.screenshotData > this.UPLOAD_LIMIT) {
+        this.makeInvalid('img_too_big');
+        return;
+      }
+
+      this.addPreviewBackgroundAndUpload(this.screenshotData);
+      img = null, canvas = null;
+    }, this);
+
+    img.src = dataURI;
   };
 
   this.checkParams = function() {
@@ -298,14 +277,6 @@ function BugForm() {
     // We can just grab the 0th one, because we only allow uploading
     // a single image at a time (for now)
     var img = event.target.files[0];
-    // The limit is 4MB (which is crazy big!), so let the user know if their
-    // file is unreasonably large.
-    if (img.size > this.UPLOAD_LIMIT) {
-      this.makeInvalid('img_too_big');
-      return;
-    } else if (img.size < this.UPLOAD_LIMIT) {
-      this.makeValid('img_too_big');
-    }
 
     // One last image type validation check.
     if (!img.type.match('image.*')) {
@@ -425,7 +396,6 @@ function BugForm() {
       }
       return value.replace(firstLine, prefix + this.urlField.val() + '\n');
     }, this));
-
   };
 
   return this.init();
