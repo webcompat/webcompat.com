@@ -15,3 +15,15 @@
     display:block;
     background-color:rgba(255,255,255,.8);
   }
+
+.wc-Upload-Loader {
+  display:none;
+  position:absolute;
+  right:4%;top: 27%;
+  width: 24px;
+  height: 24px;
+}
+
+.wc-Upload-Loader.is-active {
+  display: block;
+}

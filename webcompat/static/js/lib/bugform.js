@@ -12,6 +12,7 @@ function BugForm() {
   this.loadingIndicator = $('.js-Loader');
   this.reportButton = $('#js-ReportBug');
   this.loaderImage = $('.js-Loader');
+  this.uploadLoader = $('.js-Upload-Loader');
   this.screenshotData = '';
   // by default, submission type is anonymous
   this.submitType = 'github-proxy-report';

@@ -72,7 +72,11 @@
                   {% endif %}
                   {{ form.image(class_='wc-ButtonUpload', accept='.jpe,.jpg,.jpeg,.gif,.png,.bmp') }}
                 </div>
-                <button class="wc-UploadForm-button is-hidden r-ResetButton" role="button" type="button">Remove image upload</button>
+                <button class="wc-UploadForm-button is-hidden r-ResetButton"
+                        role="button"
+                        type="button">
+                  <img class="wc-Upload-Loader js-Upload-Loader" src="/img/upload-loader.svg" alt="Uploading image">
+                  Remove image upload</button>
               </label>
             </div>
         </div>
