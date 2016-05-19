@@ -79,45 +79,24 @@ class TestUploads(unittest.TestCase):
         rv = self.test_client.get('/upload/')
         self.assertEqual(rv.status_code, 404)
 
-    def testBadFileUploads(self):
+    def testRegularUploads(self):
         # Loop over some files and the status codes that we are expecting
+        # Basically it should never be possible to upload a "regular" file.
         for filename, status_code in (
-                ('evil.py', 415),
-                ('evil', 415),
-                ('evil.png', 415),
-                ('green_square.webp', 415)):
+                ('evil.py', 501),
+                ('evil', 501),
+                ('evil.png', 501),
+                ('green_square.webp', 501),
+                ('green_square.png', 501),
+                ('green_square.jpg', 501),
+                ('green_square.gif', 501),
+                ('green_square.bmp', 501)):
 
-            # The reason why we are definisng it in here and not outside
+            # The reason why we are defining it in here and not outside
             # this method is that we are setting the filename of the
             # TestingFileStorage to be the one in the for loop. This way
             # we can ensure that the filename that we are "uploading"
             # is the same as the one being used by the application
-            class TestingRequest(Request):
-                """A testing request to use that will return a
-                TestingFileStorage to test the uploading."""
-                @property
-                def files(self):
-                    d = MultiDict()
-                    f = open(os.path.join('tests', 'fixtures', filename), 'r')
-                    d['image'] = TestingFileStorage(stream=StringIO(f.read()),
-                                                    filename=filename)
-                    f.close()
-                    return d
-
-            self.app.request_class = TestingRequest
-            test_client = self.app.test_client()
-
-            rv = test_client.post('/upload/', data=dict())
-            self.assertEqual(rv.status_code, status_code)
-
-    def testGoodFileUploads(self):
-        # Loop over some files and the URLs that we are expecting back
-        for filename, status_code in (
-                ('green_square.png', 201),
-                ('green_square.jpg', 201),
-                ('green_square.gif', 201),
-                ('green_square.bmp', 201)):
-
             class TestingRequest(Request):
                 """A testing request to use that will return a
                 TestingFileStorage to test the uploading."""
@@ -155,7 +134,7 @@ class TestUploads(unittest.TestCase):
                 @property
                 def form(self):
                     d = MultiDict()
-                    d['screenshot'] = filedata
+                    d['image'] = filedata
                     return d
 
             self.app.request_class = TestingRequest
