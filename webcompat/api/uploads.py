@@ -55,7 +55,12 @@ class Upload(object):
             abort(415)
 
     def get_file_ext(self):
-        '''Method to return the file extension, as determined by Pillow.'''
+        '''Method to return the file extension, as determined by Pillow.
+
+        (But, we return jpg for png images, since we convert them always.)
+        '''
+        if self.image_object.format.lower() == 'png':
+            return 'jpg'
         return self.image_object.format.lower()
 
     def get_filename(self):
