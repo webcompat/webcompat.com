@@ -1,3 +1,9 @@
+## 2.5.0 - 2016-05-20
+
+* Convert PNG to JPEG on the server [Pull #1052](https://github.com/webcompat/webcompat.com/pull/1052) [Issue #1051](https://github.com/webcompat/webcompat.com/issues/1051)
+* Upload images before submission [Pull #1053](https://github.com/webcompat/webcompat.com/pull/1053) [Issue #1049](https://github.com/webcompat/webcompat.com/issues/1049)
+* Include bmp and gif in the "remove image upload" regex [Pull #1056](https://github.com/webcompat/webcompat.com/pull/1056) [Issue #1055](https://github.com/webcompat/webcompat.com/issues/1055)
+
 ## 2.4.10 - 2016-05-04
 
 * Clear out screenshotData in showRemoveUpload [Pull #1040](https://github.com/webcompat/webcompat.com/pull/1040) [Issue #1039](https://github.com/webcompat/webcompat.com/issues/1039)
