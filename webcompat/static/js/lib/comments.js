@@ -7,7 +7,7 @@ var issues = issues || {};
 issues.CommentsCollection = Backbone.Collection.extend({
   model: issues.Comment,
   url: function() {
-    return '/api/issues/' + issueNumber + '/comments';
+    return '/api/issues/' + issueNumber + '/comments?per_page=100';
   }
 });
 
