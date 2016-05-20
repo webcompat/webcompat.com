@@ -17,7 +17,6 @@ from flask import Blueprint
 from flask import request
 from io import BytesIO
 from PIL import Image
-from werkzeug.datastructures import FileStorage
 from werkzeug.exceptions import RequestEntityTooLarge
 from uuid import uuid4
 
@@ -44,10 +43,7 @@ class Upload(object):
     def to_image_object(self, imagedata):
         '''Method to return a Pillow Image object from the raw imagedata.'''
         try:
-            # Is this a file uploaded via <input type=file>?
-            if isinstance(imagedata, FileStorage):
-                return Image.open(imagedata)
-            # Is this base64 encoded screenshot?
+            # Make sure we're being sent a base64 encoded image
             if (isinstance(imagedata, unicode) and
                     imagedata.startswith('data:image/')):
                 # Chop off 'data:image/.+;base64,' before decoding
@@ -59,7 +55,12 @@ class Upload(object):
             abort(415)
 
     def get_file_ext(self):
-        '''Method to return the file extension, as determined by Pillow.'''
+        '''Method to return the file extension, as determined by Pillow.
+
+        (But, we return jpg for png images, since we convert them always.)
+        '''
+        if self.image_object.format.lower() == 'png':
+            return 'jpg'
         return self.image_object.format.lower()
 
     def get_filename(self):
@@ -105,10 +106,8 @@ def upload():
 
     Returns a JSON string that contains the filename and url.
     '''
-    if 'image' in request.files and request.files['image'].filename:
-        imagedata = request.files['image']
-    elif 'screenshot' in request.form:
-        imagedata = request.form['screenshot']
+    if 'image' in request.form:
+        imagedata = request.form['image']
     else:
         # We don't know what you're trying to do, but it ain't gonna work.
         abort(501)
