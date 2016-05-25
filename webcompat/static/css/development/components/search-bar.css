@@ -39,7 +39,12 @@
       font-size: var(--SearchBar-fontSize);
       flex: 1;
       margin: 0 1em;
-      background-color: transparent;
+      background-color: white;
+      padding-top: 5px;
+      padding-right: 5px;
+      padding-bottom: 5px;
+      padding-left: 5px;
+      width: 100%;
       border: none;
     }
 
