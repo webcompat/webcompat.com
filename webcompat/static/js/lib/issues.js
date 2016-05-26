@@ -180,7 +180,7 @@ issues.ImageUploadView = Backbone.View.extend({
     'change .js-buttonUpload': 'validateAndUpload'
   },
   _submitButton: $('.js-Issue-comment-button'),
-  _loaderImage: $('.js-Loader'),
+  _loaderImage: $('.js-Upload-Loader'),
   template: _.template($('#upload-input-tmpl').html()),
   render: function() {
     this.$el.html(this.template()).insertAfter($('textarea'));

@@ -13,11 +13,12 @@
               <label class="wc-UploadForm-label wc-UploadForm-label--uploadForm">Attach images by <span class="wc-UploadForm-label--link">selecting them</span></label>
               <input accept=".jpe,.jpg,.jpeg,.gif,.png,.bmp" class="wc-ButtonUpload js-buttonUpload" id="image" name="image" type="file">
             </div>
-          </div>
+            <img class="wc-Upload-Loader wc-Issue-Loader js-Upload-Loader"
+                 src="/img/upload-loader.svg" alt="Uploading image">
+          </label>
         </form>
       </script>
     </div>
-    <div class="wc-Loader js-Loader"></div>
     <div class="wc-Comment-button">
       <button class="wc-Button wc-Button--action js-Issue-state-button">
         <script type="text/template" id="state-button-tmpl">
