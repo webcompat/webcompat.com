@@ -1,3 +1,8 @@
+## 2.5.1 - 2016-05-26
+
+* Scope labelSearch to actual anchor elm (not its wrapper) [Pull #1068](https://github.com/webcompat/webcompat.com/pull/1068) [Issue #1066](https://github.com/webcompat/webcompat.com/issues/1066)
+* Bandaid fix to allow for up to 100 comments per issue [Pull #1057](https://github.com/webcompat/webcompat.com/pull/1057) [Issue #1044](https://github.com/webcompat/webcompat.com/issues/1044)
+
 ## 2.5.0 - 2016-05-20
 
 * Convert PNG to JPEG on the server [Pull #1052](https://github.com/webcompat/webcompat.com/pull/1052) [Issue #1051](https://github.com/webcompat/webcompat.com/issues/1051)
