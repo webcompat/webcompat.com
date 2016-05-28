@@ -180,7 +180,7 @@ issues.ImageUploadView = Backbone.View.extend({
     'change .js-buttonUpload': 'validateAndUpload'
   },
   _submitButton: $('.js-Issue-comment-button'),
-  _loaderImage: $('.js-Loader'),
+  _loaderImage: $('.js-Upload-Loader'),
   template: _.template($('#upload-input-tmpl').html()),
   render: function() {
     this.$el.html(this.template()).insertAfter($('textarea'));
@@ -213,10 +213,11 @@ issues.ImageUploadView = Backbone.View.extend({
           this.addImageUploadComment(response);
           this._loaderImage.hide();
         }, this),
-        error: function() {
+        error: _.bind(function() {
           var msg = 'There was an error trying to upload the image.';
           wcEvents.trigger('flash:error', {message: msg, timeout: 4000});
-        }
+          this._loaderImage.hide();
+        }, this)
       });
     }
   },
