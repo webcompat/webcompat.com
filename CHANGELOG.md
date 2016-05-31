@@ -1,3 +1,9 @@
+## 2.5.2 - 2016-05-31
+
+* Ensure label list UI is updated when labels are set [Pull #1073](https://github.com/webcompat/webcompat.com/pull/1073) [Issue #1045](https://github.com/webcompat/webcompat.com/issues/1045)
+* Make search bar distinct from background [Pull #1065](https://github.com/webcompat/webcompat.com/pull/1065) [Issue #1064](https://github.com/webcompat/webcompat.com/issues/1064)
+* Fix image uploads for issues [Pull #1067](https://github.com/webcompat/webcompat.com/pull/1067) [Issue #1063](https://github.com/webcompat/webcompat.com/pull/1063)
+
 ## 2.5.1 - 2016-05-26
 
 * Scope labelSearch to actual anchor elm (not its wrapper) [Pull #1068](https://github.com/webcompat/webcompat.com/pull/1068) [Issue #1066](https://github.com/webcompat/webcompat.com/issues/1066)
