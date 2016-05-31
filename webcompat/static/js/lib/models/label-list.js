@@ -65,7 +65,7 @@ issues.LabelList = Backbone.Model.extend({
           'remoteName': matches[0]
         };
       } else {
-        if (typeof theLabel === 'object') {
+        if (typeof labelsArray[i] === 'object') {
           list[i] = labelsArray[i];
           list[i].remoteName = list[i].name;
         } else {

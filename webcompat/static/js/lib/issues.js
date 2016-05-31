@@ -322,6 +322,10 @@ issues.StateButtonView = Backbone.View.extend({
     this.model.on('change:state', _.bind(function() {
       this.render();
     }, this));
+
+    this.model.on('change:labels', _.bind(function() {
+      this.mainView.labels.renderLabels();
+    }, this));
   },
   template: _.template($('#state-button-tmpl').html()),
   render: function() {
