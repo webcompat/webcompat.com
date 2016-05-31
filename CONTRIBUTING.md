@@ -418,6 +418,10 @@ The `firefox` binary will also need to be in your `PATH`. Here's how this can be
 export PATH="/Applications/Firefox.app/Contents/MacOS/:$PATH"
 ```
 
+If you are a member of webcompat organisation in GitHub, edit `config/secrets.py`. The value of `ISSUES_REPO_URI` is the path of the repository containing test issues.
+
+Change the value to : `ISSUES_REPO_URI = 'webcompat/webcompat-tests/issues'`.
+
 Now start Selenium:
 
 ``` bash
