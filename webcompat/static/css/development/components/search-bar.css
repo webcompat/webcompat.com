@@ -2,6 +2,7 @@
 
 :root {
   --SearchBar-fontSize: 1rem;
+  --SearchBar-background: #fff;
 }
 
 .wc-SearchBar {
@@ -39,7 +40,9 @@
       font-size: var(--SearchBar-fontSize);
       flex: 1;
       margin: 0 1em;
-      background-color: transparent;
+      background-color: var(--SearchBar-background);
+      padding: 0.3125em;
+      width: 100%;
       border: none;
     }
 
