@@ -394,6 +394,7 @@ issueList.IssueView = Backbone.View.extend(
       var labelFilter = 'label:' + clickedLabel;
       issueList.events.trigger('search:update', labelFilter);
       issueList.events.trigger('issues:update', {query: labelFilter});
+      issueList.events.trigger('filter:clear', {removeQ: false});
       e.preventDefault();
     },
     resetStageFilter: function(options) {
