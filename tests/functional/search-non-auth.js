@@ -52,16 +52,42 @@ define([
     },
 
     'Clicking on label search suggestion works': function() {
-      var params = '?q=dfjdkfjdkfjkdfjdkjf';
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url('/issues') + params))
+        .get(require.toUrl(url('/issues')))
         .findByCssSelector('[data-remotename=browser-android]').click()
         .end()
         // click the first suggestion, which is "android"
         .findByCssSelector('.wc-IssueList:nth-child(1) > div:nth-child(2) > span:nth-child(1) > a:nth-child(1)').getVisibleText()
         .then(function(text) {
           assert.include(text, 'android', 'Clicking on a suggested label gets you results.');
+        })
+        .end();
+    },
+
+    'Clicking on label search adds query parameter to the URL': function() {
+      return this.remote
+        .setFindTimeout(intern.config.wc.pageLoadTimeout)
+        .get(require.toUrl(url('/issues')))
+        .findByCssSelector('[data-remotename=browser-android]').click()
+        .end()
+        .getCurrentUrl()
+        .then(function(currUrl) {
+          assert.include(currUrl, 'q=label%3Abrowser-android', 'Url updated with label name');
+        })
+        .end();
+    },
+
+    'Clicking on label search updates the search input': function() {
+      return this.remote
+        .setFindTimeout(intern.config.wc.pageLoadTimeout)
+        .get(require.toUrl(url('/issues')))
+        .findByCssSelector('[data-remotename=browser-android]').click()
+        .end()
+        .sleep(2000)
+        .findById('js-SearchForm-input').getProperty('value')
+        .then(function(searchText) {
+          assert.include(searchText, 'label:browser-android', 'Url updated with label name');
         })
         .end();
     },
