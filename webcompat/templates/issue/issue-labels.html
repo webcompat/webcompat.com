@@ -9,7 +9,9 @@
    <span class="js-Label-list">
   <% _.each(labels, function(label) { %>
     <span class="wc-Label wc-Label--badge js-Label" style="background-color:#<%=label.color%>">
-      <%= label.name %>
+      <a href="/issues?q=label:<%= label.remoteName %>"
+      class="wc-Labels" data-remotename="<%= label.remoteName %>"
+      title="Labels : <%= label.name %>"><%= label.name %></a>
     </span>
   <% }); %>
   </span>
