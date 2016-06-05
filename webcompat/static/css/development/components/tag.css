@@ -129,7 +129,7 @@
     .wc-Tag--fixed.wc-Tag--label {
       background-color:var(--base-stateFixed);
     }
-    
+
   /* Tag Appears to work */
   .wc-Tag--worksforme {
     border-color:var(--base-stateWorksForMe);
@@ -141,4 +141,17 @@
     .wc-Tag--worksforme.is-active,
     .wc-Tag--worksforme.wc-Tag--label {
       background-color:var(--base-stateWorksForMe);
+    }
+
+  /* Tag needs triaging */
+  .wc-Tag--needstriage {
+    border-color:var(--base-stateNeedsTriage);
+  }
+
+    /* event */
+    .wc-Tag--needstriage.wc-tag--filter:hover,
+    .wc-Tag--needstriage.wc-tag--filter:focus,
+    .wc-Tag--needstriage.is-active,
+    .wc-Tag--needstriage.wc-Tag--label {
+      background-color:var(--base-stateNeedsTriage);
     }

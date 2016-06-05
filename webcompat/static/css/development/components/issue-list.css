@@ -11,6 +11,7 @@
   --Issue-stateClose: var(--base-stateClose);
   --Issue-stateFixed: var(--base-stateFixed);
   --Issue-stateWorksForMe: var(--base-stateWorksForMe);
+  --Issue-stateNeedsTriage: var(--base-stateNeedsTriage);
 }
 
 /* Parent class */
@@ -56,13 +57,17 @@
   .wc-IssueList--close {
     border-left: 5px solid var(--Issue-stateClose);
   }
-  
+
   .wc-IssueList--fixed {
     border-left: 5px solid var(--Issue-stateFixed);
   }
-  
+
   .wc-IssueList--worksforme {
     border-left: 5px solid var(--Issue-stateWorksForMe);
+  }
+
+  .wc-IssueList--needstriage {
+    border-left: 5px solid var(--Issue-stateNeedsTriage);
   }
 
   .wc-IssueList--large {

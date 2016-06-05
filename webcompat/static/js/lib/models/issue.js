@@ -61,6 +61,10 @@ issues.Issue = Backbone.Model.extend({
       this.set('stateClass', 'worksforme');
       return 'Appears to work';
     }
+    if (labelsNames.indexOf('needstriage') > -1) {
+      this.set('stateClass', 'needstriage');
+      return 'Needs Triage';
+    }
     //New is the default value.
     this.set('stateClass', 'new');
     return 'New Issue';
