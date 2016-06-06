@@ -160,7 +160,7 @@ issues.BodyView = Backbone.View.extend({
       .addClass('is-hidden');
 
     if (this.mainView._isNSFW) {
-      issueDesc.find('img').addClass('nsfw');
+      issueDesc.find('img').closest('p').addClass('wc-Comment-content-nsfw');
     }
 
     this.QrView.setElement('.wc-QrCode').render();
@@ -359,7 +359,8 @@ issues.MainView = Backbone.View.extend({
   el: $('.js-Issue'),
   events: {
     'click .js-Issue-comment-button': 'addNewComment',
-    'click': 'closeLabelEditor'
+    'click': 'closeLabelEditor',
+    'click .wc-Comment-content-nsfw': 'toggleNSFW'
   },
   keyboardEvents: {
     'g': 'githubWarp'
@@ -406,7 +407,7 @@ issues.MainView = Backbone.View.extend({
     this.issue.fetch(headersBag).success(_.bind(function() {
       // _.find() will return the object if found (which is truthy),
       // or undefined if not found (which is falsey)
-      this._isNSFW = _.find(this.issue.get('labels'),
+      this._isNSFW = !!_.find(this.issue.get('labels'),
                             _.matchesProperty('name', 'nsfw'));
 
       _.each([this.title, this.metadata, this.labels, this.body,
@@ -463,7 +464,7 @@ issues.MainView = Backbone.View.extend({
 
     if (this._isNSFW) {
       _.each(commentElm.find('img'), function(elm) {
-        $(elm).addClass('nsfw');
+        $(elm).closest('p').addClass('.wc-Comment-content-nsfw');
       });
     }
   },
@@ -489,6 +490,15 @@ issues.MainView = Backbone.View.extend({
   },
   addExistingComments: function() {
     this.comments.each(this.addComment, this);
+  },
+  toggleNSFW: function(e) {
+    // make sure we've got a reference to the <img> element,
+    // (small images won't extend to the width of the containing
+    // p.nsfw)
+    var target = e.target.nodeName === 'IMG' ?
+                 e.target :
+                 e.target.nodeName === 'P' && e.target.firstElementChild;
+    $(target).parent().toggleClass('wc-Comment-content-nsfw--display');
   },
   render: function() {
     this.$el.fadeIn();
