@@ -365,6 +365,7 @@ issues.MainView = Backbone.View.extend({
     'g': 'githubWarp'
   },
   _supportsFormData: 'FormData' in window,
+  _isNSFW: undefined,
   initialize: function() {
     $(document.body).addClass('language-html');
     var issueNum = {number: issueNumber};
@@ -403,7 +404,12 @@ issues.MainView = Backbone.View.extend({
   fetchModels: function() {
     var headersBag = {headers: {'Accept': 'application/json'}};
     this.issue.fetch(headersBag).success(_.bind(function() {
-      _.each([this.title, this.metadata, this.body, this.labels,
+      // _.find() will return the object if found (which is truthy),
+      // or undefined if not found (which is falsey)
+      this._isNSFW = _.find(this.issue.get('labels'),
+                            _.matchesProperty('name', 'nsfw'));
+
+      _.each([this.title, this.metadata, this.labels, this.body,
               this.stateButton, this],
         function(elm) {
           elm.render();
