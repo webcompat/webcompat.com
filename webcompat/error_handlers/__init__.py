@@ -39,8 +39,8 @@ def error_response(request, code):
 def api_call(request):
     '''Helper method to check if the request originates from an API call'''
     if (request.path.startswith('/api/') and
-       request.accept_mimetypes.accept_json and
-       not request.accept_mimetypes.accept_html):
+            request.accept_mimetypes.accept_json and
+            not request.accept_mimetypes.accept_html):
         return True
     else:
         return False
