@@ -7,7 +7,6 @@
 import argparse
 import pkg_resources
 from pkg_resources import DistributionNotFound, VersionConflict
-import subprocess
 import sys
 
 IMPORT_ERROR = '''

@@ -33,7 +33,6 @@ from webcompat.db import User
 from webcompat import app
 from webcompat import github
 from webcompat.api.endpoints import get_rate_limit
-from webcompat.api.uploads import upload
 
 
 @app.teardown_appcontext
