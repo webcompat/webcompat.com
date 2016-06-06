@@ -131,8 +131,11 @@ issues.MetaDataView = Backbone.View.extend({
 
 issues.BodyView = Backbone.View.extend({
   el: $('.wc-Issue-report'),
+  mainView: null,
   template: _.template($('#issue-info-tmpl').html()),
-  initialize: function() {
+  initialize: function(options) {
+    this.mainView = options.mainView;
+
     this.QrView = new issues.QrView({
       model: this.model
     });
@@ -140,6 +143,7 @@ issues.BodyView = Backbone.View.extend({
   render: function() {
     this.$el.html(this.template(this.model.toJSON()));
     // hide metadata
+
     var issueDesc = $('.js-Issue-markdown');
     issueDesc
       .contents()
@@ -154,6 +158,10 @@ issues.BodyView = Backbone.View.extend({
       .find('p:last-of-type em:contains(From webcompat.com)')
       .parent()
       .addClass('is-hidden');
+
+    if (this.mainView._isNSFW) {
+      issueDesc.find('img').addClass('nsfw');
+    }
 
     this.QrView.setElement('.wc-QrCode').render();
     return this;
@@ -386,7 +394,7 @@ issues.MainView = Backbone.View.extend({
     var issueModel = {model: this.issue};
     this.title = new issues.TitleView(issueModel);
     this.metadata = new issues.MetaDataView(issueModel);
-    this.body = new issues.BodyView(issueModel);
+    this.body = new issues.BodyView(_.extend(issueModel, {mainView: this}));
     this.labels = new issues.LabelsView(issueModel);
     this.textArea = new issues.TextAreaView();
     this.imageUpload = new issues.ImageUploadView();
@@ -413,6 +421,7 @@ issues.MainView = Backbone.View.extend({
       if (this.issue.get('commentNumber') > 0) {
         this.comments.fetch(headersBag).success(_.bind(function() {
           this.addExistingComments();
+          // the add event is fired when a model is added to the collection.
           this.comments.bind('add', _.bind(this.addComment, this));
 
           // If there's a #hash pointing to a comment (or elsewhere)
@@ -438,12 +447,19 @@ issues.MainView = Backbone.View.extend({
     });
   },
   addComment: function(comment) {
+    // if there's a nsfw label, add the whatever class.
     var view = new issues.CommentView({model: comment});
-    var commentElm = view.render().el;
+    var commentElm = view.render().$el;
     $('.js-Issue-commentList').append(commentElm);
-    _.each($(commentElm).find('code'), function(elm) {
+    _.each(commentElm.find('code'), function(elm) {
       Prism.highlightElement(elm);
     });
+
+    if (this._isNSFW) {
+      _.each(commentElm.find('img'), function(elm) {
+        $(elm).addClass('nsfw');
+      });
+    }
   },
   addNewComment: function() {
     var form = $('.js-Comment-form');
