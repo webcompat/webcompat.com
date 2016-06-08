@@ -101,7 +101,7 @@ def get_issue_category(issue_category):
     '''Return all issues for a specific category.
 
     issue_category can be of N types:
-    * new
+    * needstriage
     * closed
     * contactready
     * needscontact
@@ -124,9 +124,9 @@ def get_issue_category(issue_category):
     elif issue_category == 'closed':
         params['state'] = 'closed'
         return api_request('get', issues_path, params=params)
-    # Note that 'new' here is primarily used on the homepage.
-    # For paginated results on the /issues page, see /issues/search/new.
-    elif issue_category == 'new':
+    # Note that 'needstriage' here is primarily used on the homepage.
+    # For paginated results on the /issues page, see /issues/search/needstriage.
+    elif issue_category == 'needstriage':
         issues = api_request('get', issues_path, params=params)
         # api_request returns a tuple of format:
         #       (content, status_code, response_headers)
@@ -194,7 +194,7 @@ def get_category_from_search(issue_category):
     elif issue_category == 'closed':
         query_string += ' state:closed '
         return get_search_results(query_string, params)
-    elif issue_category == 'new':
+    elif issue_category == 'needstriage':
         query_string += ' '.join(
             ['-label:status-%s' % cat for cat in category_list])
         query_string += ' state:open '

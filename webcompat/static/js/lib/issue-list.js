@@ -276,7 +276,7 @@ issueList.IssueView = Backbone.View.extend(
       'click .js-Issue-label .wc-Labels': 'labelSearch',
     },
   // NOTE: these filters don't need "status-" prefixes because appear in URL params
-    _filterRegex: /&*stage=(new|needscontact|needsdiagnosis|contactready|sitewait|closed)&*/i,
+    _filterRegex: /&*stage=(needstriage|needscontact|needsdiagnosis|contactready|sitewait|closed)&*/i,
     _searchRegex: /&*q=(?:(.+)?)&*/i,
     _githubSearchEndpoint: 'https://api.github.com/search/issues',
     _isLoggedIn: $('body').data('username'),
@@ -404,10 +404,7 @@ issueList.IssueView = Backbone.View.extend(
     // depending on what category was clicked (or if a search came in),
     // update the collection instance url property and fetch the issues.
 
-    // new is a special category that must be retrieved via the Search API,
-    // rather than the Issues API (which can return results for labels)
-      var searchAPICategories = ['new'];
-      var issuesAPICategories = ['closed', 'contactready', 'needsdiagnosis',
+      var issuesAPICategories = ['needstriage', 'closed', 'contactready', 'needsdiagnosis',
                                'needscontact', 'sitewait'];
       var params = this.issues.params;
       var paramsCopy;
@@ -424,8 +421,6 @@ issueList.IssueView = Backbone.View.extend(
         } else {
           this.issues.setURLState('/api/issues/search', paramsCopy);
         }
-      } else if (_.contains(searchAPICategories, category)) {
-        this.issues.setURLState('/api/issues/search/' + category, params);
       } else if (_.contains(issuesAPICategories, category)) {
         this.issues.setURLState('/api/issues/category/' + category, params);
       } else {

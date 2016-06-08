@@ -32,6 +32,7 @@ def filter_new(issues):
 
     "new" means anything that isn't an issue with a "contactready",
     "sitewait", or "needsdiagnosis" label.
+    This function gives all the "needs triage" issues.
     '''
     def is_new(issue):
         '''Filter function.'''

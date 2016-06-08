@@ -39,7 +39,7 @@ LOG_FMT = '%(asctime)s %(levelname)s: %(message)s [in %(pathname)s:%(lineno)d]'
 # Creating the model
 Category = namedtuple('Category', ['name', 'dataAttribute', 'label'])
 CATEGORIES = []
-cat_labels = [('new', 'new', 'New Issues'),
+cat_labels = [('needstriage', 'needstriage', 'Needs Triage'),
               ('needsDiagnosis', 'needsdiagnosis', 'Needs Diagnosis'),
               ('needsContact', 'needscontact', 'Needs Contact'),
               ('ready', 'contactready', 'Ready for Outreach'),

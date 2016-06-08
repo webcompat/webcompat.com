@@ -3,7 +3,6 @@
 :root {
   --Issue-fontSize: var(--base-fontSize);
   --Issue-backgroundColor: #f0f0f0;
-  --Issue-stateNew: var(--base-stateNew);
   --Issue-stateNeedsDiagnosis: var(--base-stateNeedsDiagnosis);
   --Issue-stateNeedsContact: var(--base-stateNeedsContact);
   --Issue-stateReady: var(--base-stateReady);
@@ -33,9 +32,10 @@
     }
   }
 
-  /* Statut */
-  .wc-IssueList--new {
-    border-left: 5px solid var(--Issue-stateNew);
+  /* States */
+
+  .wc-IssueList--needstriage {
+    border-left: 5px solid var(--Issue-stateNeedsTriage);
   }
 
   .wc-IssueList--needsDiagnosis {
@@ -64,10 +64,6 @@
 
   .wc-IssueList--worksforme {
     border-left: 5px solid var(--Issue-stateWorksForMe);
-  }
-
-  .wc-IssueList--needstriage {
-    border-left: 5px solid var(--Issue-stateNeedsTriage);
   }
 
   .wc-IssueList--large {

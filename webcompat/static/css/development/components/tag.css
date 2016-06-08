@@ -39,17 +39,17 @@
     }
   }
 
-  /* Tag new */
-  .wc-Tag--new {
-    border-color:var(--base-stateNew);
+  /* Tag needs triaging */
+  .wc-Tag--needstriage {
+    border-color:var(--base-stateNeedsTriage);
   }
 
     /* event */
-    .wc-Tag--new.wc-tag--filter:hover
-    .wc-Tag--new.wc-tag--filter:focus,
-    .wc-Tag--new.is-active,
-    .wc-Tag--new.wc-Tag--label {
-      background-color:var(--base-stateNew);
+    .wc-Tag--needstriage.wc-tag--filter:hover,
+    .wc-Tag--needstriage.wc-tag--filter:focus,
+    .wc-Tag--needstriage.is-active,
+    .wc-Tag--needstriage.wc-Tag--label {
+      background-color:var(--base-stateNeedsTriage);
     }
 
   /* Tag needsDiagnosis */
@@ -143,15 +143,3 @@
       background-color:var(--base-stateWorksForMe);
     }
 
-  /* Tag needs triaging */
-  .wc-Tag--needstriage {
-    border-color:var(--base-stateNeedsTriage);
-  }
-
-    /* event */
-    .wc-Tag--needstriage.wc-tag--filter:hover,
-    .wc-Tag--needstriage.wc-tag--filter:focus,
-    .wc-Tag--needstriage.is-active,
-    .wc-Tag--needstriage.wc-Tag--label {
-      background-color:var(--base-stateNeedsTriage);
-    }
