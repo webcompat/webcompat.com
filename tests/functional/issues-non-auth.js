@@ -21,7 +21,7 @@ define([
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url('/issues/100')))
-        .sleep(1000)
+        .sleep(2000)
         .findByCssSelector('h1.js-Issue-title').getVisibleText()
         .then(function(text) {
           assert.include(text, 'Issue 100:', 'Issue title displayed');
@@ -149,6 +149,40 @@ define([
         .findByCssSelector('.wc-QrCode-image').isDisplayed()
         .then(function(isDisplayed) {
           assert.equal(isDisplayed, false);
+        })
+        .end();
+    },
+
+    'NSFW images are blurred': function() {
+      return this.remote
+        .setFindTimeout(intern.config.wc.pageLoadTimeout)
+        .get(require.toUrl(url('/issues/396')))
+        .sleep(1000)
+        .findByCssSelector('.js-Issue-commentList .js-Comment-content p').getAttribute('class')
+        .then(function(className) {
+          assert.include(className, 'wc-Comment-content-nsfw');
+        })
+        .end();
+    },
+
+    'Clicking NSFW images toggles between blurry and not-blurry': function() {
+      return this.remote
+        .setFindTimeout(intern.config.wc.pageLoadTimeout)
+        .get(require.toUrl(url('/issues/396')))
+        .sleep(1000)
+        .findByCssSelector('.js-Issue-commentList .js-Comment-content p').getAttribute('class')
+        .then(function(className) {
+          assert.include(className, 'wc-Comment-content-nsfw');
+        }).click()
+        .end()
+        .findByCssSelector('.js-Issue-commentList .js-Comment-content p').getAttribute('class')
+        .then(function(className) {
+          assert.include(className, 'wc-Comment-content-nsfw--display');
+        }).click()
+        .end()
+        .findByCssSelector('.js-Issue-commentList .js-Comment-content p').getAttribute('class')
+        .then(function(className) {
+          assert.notInclude(className, 'wc-Comment-content-nsfw--display');
         })
         .end();
     }
