@@ -115,12 +115,14 @@
 
   /* Comment Header */
   .wc-Comment-header {
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: space-between;
     border-radius: 10px 10px 0 0;
     background-color: #f0f0f0;
     padding: .8em .8em .8em 1em;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
   }
 
   .wc-Comment-header-spacing {
@@ -180,4 +182,12 @@
   .wc-Comment-qr {
     z-index: 1;
     margin-left: auto;
+  }
+
+  @media all and (max-width: 31.25em) {
+    .wc-Comment-qr {
+      position: absolute;
+      top: 0;
+      right: 0;
+    }
   }
