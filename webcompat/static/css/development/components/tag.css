@@ -45,8 +45,8 @@
   }
 
     /* event */
-    .wc-Tag--new.wc-tag--filter:hover
-    .wc-Tag--new.wc-tag--filter:focus,
+    .wc-Tag--new.wc-Tag--filter:hover
+    .wc-Tag--new.wc-Tag--filter:focus,
     .wc-Tag--new.is-active,
     .wc-Tag--new.wc-Tag--label {
       background-color:var(--base-stateNew);
@@ -58,8 +58,8 @@
   }
 
     /* event */
-    .wc-Tag--needsDiagnosis.wc-tag--filter:hover
-    .wc-Tag--needsDiagnosis.wc-tag--filter:focus,
+    .wc-Tag--needsDiagnosis.wc-Tag--filter:hover
+    .wc-Tag--needsDiagnosis.wc-Tag--filter:focus,
     .wc-Tag--needsDiagnosis.is-active,
     .wc-Tag--needsDiagnosis.wc-Tag--label {
       background-color:var(--base-stateNeedsDiagnosis);
@@ -71,8 +71,8 @@
   }
 
     /* event */
-    .wc-Tag--needsContact.wc-tag--filter:hover,
-    .wc-Tag--needsContact.wc-tag--filter:focus,
+    .wc-Tag--needsContact.wc-Tag--filter:hover,
+    .wc-Tag--needsContact.wc-Tag--filter:focus,
     .wc-Tag--needsContact.is-active,
     .wc-Tag--needsContact.wc-Tag--label {
       background-color:var(--base-stateNeedsContact);
@@ -84,8 +84,8 @@
   }
 
     /* event */
-    .wc-Tag--ready.wc-tag--filter:hover,
-    .wc-Tag--ready.wc-tag--filter:focus,
+    .wc-Tag--ready.wc-Tag--filter:hover,
+    .wc-Tag--ready.wc-Tag--filter:focus,
     .wc-Tag--ready.is-active,
     .wc-Tag--ready.wc-Tag--label {
       background-color:var(--base-stateReady);
@@ -97,8 +97,8 @@
   }
 
     /* event */
-    .wc-Tag--sitewait.wc-tag--filter:hover,
-    .wc-Tag--sitewait.wc-tag--filter:focus,
+    .wc-Tag--sitewait.wc-Tag--filter:hover,
+    .wc-Tag--sitewait.wc-Tag--filter:focus,
     .wc-Tag--sitewait.is-active,
     .wc-Tag--sitewait.wc-Tag--label {
       background-color:var(--base-stateSitewait);
@@ -110,8 +110,8 @@
   }
 
     /* event */
-    .wc-Tag--close.wc-tag--filter:hover,
-    .wc-Tag--close.wc-tag--filter:focus,
+    .wc-Tag--close.wc-Tag--filter:hover,
+    .wc-Tag--close.wc-Tag--filter:focus,
     .wc-Tag--close.is-active,
     .wc-Tag--close.wc-Tag--label {
       background-color:var(--base-stateClose);
@@ -123,21 +123,21 @@
   }
 
     /* event */
-    .wc-Tag--fixed.wc-tag--filter:hover,
-    .wc-Tag--fixed.wc-tag--filter:focus,
+    .wc-Tag--fixed.wc-Tag--filter:hover,
+    .wc-Tag--fixed.wc-Tag--filter:focus,
     .wc-Tag--fixed.is-active,
     .wc-Tag--fixed.wc-Tag--label {
       background-color:var(--base-stateFixed);
     }
-    
+
   /* Tag Appears to work */
   .wc-Tag--worksforme {
     border-color:var(--base-stateWorksForMe);
   }
 
     /* event */
-    .wc-Tag--worksforme.wc-tag--filter:hover,
-    .wc-Tag--worksforme.wc-tag--filter:focus,
+    .wc-Tag--worksforme.wc-Tag--filter:hover,
+    .wc-Tag--worksforme.wc-Tag--filter:focus,
     .wc-Tag--worksforme.is-active,
     .wc-Tag--worksforme.wc-Tag--label {
       background-color:var(--base-stateWorksForMe);
