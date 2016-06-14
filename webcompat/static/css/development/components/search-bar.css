@@ -30,9 +30,13 @@
 
   .wc-SearchBar-face--back {
     display: flex;
+    align-items: center;
     flex-direction: row;
     backface-visibility: hidden;
     transform: rotateX(-180deg);
+    background-color: var(--SearchBar-background);
+    padding: .4em;
+    border-radius: 4px;
     z-index: 3;
   }
 
@@ -46,9 +50,13 @@
       border: none;
     }
 
-    .wc-SearchBar-icon--button {
-      cursor: pointer;
+    .wc-SearchBar-icon {
+      line-height: 0;
     }
+
+      .wc-SearchBar-icon--button {
+        cursor: pointer;
+      }
 
     /* state */
     .wc-SearchBar.is-active .wc-SearchBar-face--back {
