@@ -5,9 +5,15 @@
   <div class="wc-Comment-body wc-Comment-body--caret">
     <div class="wc-Comment-wrapper">
       <div class="wc-Comment-header">
-        <span class="wc-Comment-owner js-Comment-owner">
-          <a class="wc-Link" href="https://github.com/<%= commenter %>"><%= commenter %></a>
-        </span> commented <a class="wc-Link" href="#<%= commentLinkId %>"><%= createdAt %></a>
+        <div>
+          <span class="wc-Comment-owner js-Comment-owner">
+            <a class="wc-Link" href="https://github.com/<%= commenter %>"><%= commenter %></a>
+          </span>
+          <span class="wc-Comment-header-spacing">
+            commented
+          </span>
+          <a class="wc-Link" href="#<%= commentLinkId %>"><%= createdAt %></a>
+        </div>
       </div>
       <div class="wc-Comment-content js-Comment-content">
         <div class="wc-Markdown">
