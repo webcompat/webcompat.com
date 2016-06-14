@@ -45,7 +45,7 @@
   }
 
     /* event */
-    .wc-Tag--new.wc-Tag--filter:hover
+    .wc-Tag--new.wc-Tag--filter:hover,
     .wc-Tag--new.wc-Tag--filter:focus,
     .wc-Tag--new.is-active,
     .wc-Tag--new.wc-Tag--label {
@@ -58,7 +58,7 @@
   }
 
     /* event */
-    .wc-Tag--needsDiagnosis.wc-Tag--filter:hover
+    .wc-Tag--needsDiagnosis.wc-Tag--filter:hover,
     .wc-Tag--needsDiagnosis.wc-Tag--filter:focus,
     .wc-Tag--needsDiagnosis.is-active,
     .wc-Tag--needsDiagnosis.wc-Tag--label {
