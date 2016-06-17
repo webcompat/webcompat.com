@@ -131,8 +131,11 @@ issues.MetaDataView = Backbone.View.extend({
 
 issues.BodyView = Backbone.View.extend({
   el: $('.wc-Issue-report'),
+  mainView: null,
   template: _.template($('#issue-info-tmpl').html()),
-  initialize: function() {
+  initialize: function(options) {
+    this.mainView = options.mainView;
+
     this.QrView = new issues.QrView({
       model: this.model
     });
@@ -140,6 +143,7 @@ issues.BodyView = Backbone.View.extend({
   render: function() {
     this.$el.html(this.template(this.model.toJSON()));
     // hide metadata
+
     var issueDesc = $('.js-Issue-markdown');
     issueDesc
       .contents()
@@ -154,6 +158,10 @@ issues.BodyView = Backbone.View.extend({
       .find('p:last-of-type em:contains(From webcompat.com)')
       .parent()
       .addClass('is-hidden');
+
+    if (this.mainView._isNSFW) {
+      issueDesc.find('img').closest('p').addClass('wc-Comment-content-nsfw');
+    }
 
     this.QrView.setElement('.wc-QrCode').render();
     return this;
@@ -351,12 +359,14 @@ issues.MainView = Backbone.View.extend({
   el: $('.js-Issue'),
   events: {
     'click .js-Issue-comment-button': 'addNewComment',
-    'click': 'closeLabelEditor'
+    'click': 'closeLabelEditor',
+    'click .wc-Comment-content-nsfw': 'toggleNSFW'
   },
   keyboardEvents: {
     'g': 'githubWarp'
   },
   _supportsFormData: 'FormData' in window,
+  _isNSFW: undefined,
   initialize: function() {
     $(document.body).addClass('language-html');
     var issueNum = {number: issueNumber};
@@ -386,7 +396,7 @@ issues.MainView = Backbone.View.extend({
     var issueModel = {model: this.issue};
     this.title = new issues.TitleView(issueModel);
     this.metadata = new issues.MetaDataView(issueModel);
-    this.body = new issues.BodyView(issueModel);
+    this.body = new issues.BodyView(_.extend(issueModel, {mainView: this}));
     this.labels = new issues.LabelsView(issueModel);
     this.textArea = new issues.TextAreaView();
     this.imageUpload = new issues.ImageUploadView();
@@ -395,7 +405,12 @@ issues.MainView = Backbone.View.extend({
   fetchModels: function() {
     var headersBag = {headers: {'Accept': 'application/json'}};
     this.issue.fetch(headersBag).success(_.bind(function() {
-      _.each([this.title, this.metadata, this.body, this.labels,
+      // _.find() will return the object if found (which is truthy),
+      // or undefined if not found (which is falsey)
+      this._isNSFW = !!_.find(this.issue.get('labels'),
+                            _.matchesProperty('name', 'nsfw'));
+
+      _.each([this.title, this.metadata, this.labels, this.body,
               this.stateButton, this],
         function(elm) {
           elm.render();
@@ -413,6 +428,7 @@ issues.MainView = Backbone.View.extend({
       if (this.issue.get('commentNumber') > 0) {
         this.comments.fetch(headersBag).success(_.bind(function() {
           this.addExistingComments();
+          // the add event is fired when a model is added to the collection.
           this.comments.bind('add', _.bind(this.addComment, this));
 
           // If there's a #hash pointing to a comment (or elsewhere)
@@ -438,12 +454,19 @@ issues.MainView = Backbone.View.extend({
     });
   },
   addComment: function(comment) {
+    // if there's a nsfw label, add the whatever class.
     var view = new issues.CommentView({model: comment});
-    var commentElm = view.render().el;
+    var commentElm = view.render().$el;
     $('.js-Issue-commentList').append(commentElm);
-    _.each($(commentElm).find('code'), function(elm) {
+    _.each(commentElm.find('code'), function(elm) {
       Prism.highlightElement(elm);
     });
+
+    if (this._isNSFW) {
+      _.each(commentElm.find('img'), function(elm) {
+        $(elm).closest('p').addClass('.wc-Comment-content-nsfw');
+      });
+    }
   },
   addNewComment: function() {
     var form = $('.js-Comment-form');
@@ -467,6 +490,15 @@ issues.MainView = Backbone.View.extend({
   },
   addExistingComments: function() {
     this.comments.each(this.addComment, this);
+  },
+  toggleNSFW: function(e) {
+    // make sure we've got a reference to the <img> element,
+    // (small images won't extend to the width of the containing
+    // p.nsfw)
+    var target = e.target.nodeName === 'IMG' ?
+                 e.target :
+                 e.target.nodeName === 'P' && e.target.firstElementChild;
+    $(target).parent().toggleClass('wc-Comment-content-nsfw--display');
   },
   render: function() {
     this.$el.fadeIn();

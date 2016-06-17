@@ -4,6 +4,8 @@
   --Markdown-fontSize: 1rem;
   --Markdown-color: #000;
   --Markdown-colorHover: var(--base-colorDark);
+  --Markdown-bgColorNSFW: var(--base-colorDark);
+  --Markdown-colorNSFW: var(--base-background);
 }
 
 .wc-Markdown {
@@ -38,6 +40,36 @@
     max-width: 100%;
     max-height: 100%;
   }
+
+  .wc-Markdown .wc-Comment-content-nsfw {
+    position: relative;
+  }
+
+  .wc-Markdown .wc-Comment-content-nsfw::after {
+    display: block;
+    content: "Click to show image";
+    cursor: pointer;
+    text-align: center;
+    color: var(--Markdown-colorNSFW);
+    background: var(--Markdown-bgColorNSFW);
+    width: 50%;
+    padding: 1em;
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .wc-Markdown .wc-Comment-content-nsfw img {
+    filter: blur(50px);
+  }
+
+    .wc-Markdown .wc-Comment-content-nsfw--display img {
+      filter: blur(0);
+    }
+
+    .wc-Markdown .wc-Comment-content-nsfw--display::after {
+      display: none;
+    }
 
   .wc-Markdown code {
     font-family: monospace;
