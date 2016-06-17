@@ -10,7 +10,7 @@
   /* group item */
   .wc-Form-group {
     position: relative;
-    margin-bottom:1.6em;
+    margin-bottom: 1.6em;
   }
 
   /* information: wrap label and helpMessage */
@@ -30,10 +30,11 @@
     .wc-Form-label--light {
       font-weight: 300;
     }
+
   .wc-Form-radio {
     position: relative;
     display: block;
-    width:100%;
+    width: 100%;
     margin: 0 0 .8em 0;
     vertical-align: middle;
     font-weight: 400;
@@ -61,7 +62,7 @@
       left: 0;
       right: 0;
       padding: 1em 0;
-      font-weight:700;
+      font-weight: 700;
       background-color: var(--Form-helpMessageColor);
       border-bottom-left-radius: 20px;
       border-bottom-right-radius: 20px;
@@ -99,6 +100,7 @@
     }
 
     .wc-Form-input::placeholder {
+      font-size: var(--Form-fontSize);
       color: #999;
       opacity: 1;
      }
@@ -114,7 +116,7 @@
 
   /* required */
   .wc-Form-required {
-    color:#ff0000;
+    color: #ff0000;
   }
 
   /* validation */
@@ -143,7 +145,7 @@
 
       .wc-Form-group.is-error .wc-Form-item:focus{
         border-color: #ff0000;
-        box-shadow:none;
+        box-shadow: none;
       }
 
       .wc-Form-validation .wc-Form-item {
@@ -170,14 +172,3 @@
         border-color: var(--base-variantColorDark);
         box-shadow:none;
       }
-
-
-
-
-
-
-
-
-
-
-/* legacy */
