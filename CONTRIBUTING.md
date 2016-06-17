@@ -288,7 +288,7 @@ source env/bin/activate
 #  Windows: http://pillow.readthedocs.org/en/3.0.x/installation.html#windows-installation
 #  Linux: http://pillow.readthedocs.org/en/3.0.x/installation.html#linux-installation
 # install rest of dependencies
-pip install -r requirements.txt
+pip install -r config/requirements.txt
 # In Ubuntu, if ImportError: No module named flask.ext.github occurs, it means the dependencies in requirements.txt are installed in /usr/lib instead of <project_repository>/env/python<version>/site-packages.
 # In this case, use virtual environment's pip from <project_repository>/env/lib/pip folder of the project repository instead of the global pip.
 ```
