@@ -116,7 +116,7 @@ issues.TitleView = Backbone.View.extend({
 });
 
 issues.MetaDataView = Backbone.View.extend({
-  el: $('.wc-Issue-create'),
+  el: $('.wc-Issue-information'),
   initialize: function() {
     this.model.on('change:issueState', _.bind(function() {
       this.render();

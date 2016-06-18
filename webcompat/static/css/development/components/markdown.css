@@ -13,6 +13,11 @@
   line-height: 1.5em;
 }
 
+  /* state */
+  .wc-Markdown .is-hidden {
+    display: none;
+  }
+
   /* all element */
   .wc-Markdown * {
     font-size: var(--Markdown-fontSize) !important;
