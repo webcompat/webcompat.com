@@ -361,7 +361,8 @@ issues.MainView = Backbone.View.extend({
     $(document.body).addClass('language-html');
     var issueNum = {number: issueNumber};
     this.issue = new issues.Issue(issueNum);
-    this.comments = new issues.CommentsCollection([]);
+    this.commentPage = {page: 1};
+    this.comments = new issues.CommentsCollection([this.commentPage]);
     this.initSubViews();
     this.fetchModels();
   },
@@ -411,16 +412,17 @@ issues.MainView = Backbone.View.extend({
 
       // If there are any comments, go fetch the model data
       if (this.issue.get('commentNumber') > 0) {
-        this.comments.fetch(headersBag).success(_.bind(function() {
-          this.addExistingComments();
-          this.comments.bind('add', _.bind(this.addComment, this));
-
+        var that = this;
+        this.comments.fetch(headersBag).success(_.bind(function(InitialResponse) {
+          that.addExistingComments();
+          that.comments.bind('add', _.bind(that.addComment, this));
           // If there's a #hash pointing to a comment (or elsewhere)
           // scrollTo it.
           if (location.hash !== '') {
             var _id = $(location.hash);
             window.scrollTo(0, _id.offset().top);
           }
+          that.lastPageNumber = InitialResponse[0].lastPageNumber;
         }, this)).error(function() {
           var msg = 'There was an error retrieving issue comments. Please reload to try again.';
           wcEvents.trigger('flash:error', {message: msg, timeout: 4000});
@@ -436,6 +438,24 @@ issues.MainView = Backbone.View.extend({
         wcEvents.trigger('flash:error', {message: msg, timeout: 4000});
       }
     });
+    var i;
+    for (i = 2; i <= this.lastPageNumber; i++) {
+      this.commentPage.page = i;
+      this.comments.fetchPage({page : this.commentPage.page, headers: {'Accept': 'application/json'}}).done(_.bind(function() {
+        this.addExistingComments();
+        this.comments.bind('add', _.bind(this.addComment, this));
+        // If there's a #hash pointing to a comment (or elsewhere)
+        // scrollTo it.
+        if (location.hash !== '') {
+          var _id = $(location.hash);
+          window.scrollTo(0, _id.offset().top);
+        }
+
+      }, this)).error(function() {
+        var msg = 'There was an error retrieving issue comments. Please reload to try again.';
+        wcEvents.trigger('flash:error', {message: msg, timeout: 4000});
+      });
+    }
   },
   addComment: function(comment) {
     var view = new issues.CommentView({model: comment});
