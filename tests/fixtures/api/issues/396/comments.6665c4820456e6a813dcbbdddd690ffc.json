@@ -1,0 +1,31 @@
+[
+  {
+    "_fixture": true,
+    "url": "https://api.github.com/repos/webcompat/webcompat-tests/issues/comments/225209757",
+    "html_url": "https://github.com/webcompat/webcompat-tests/issues/396#issuecomment-225209757",
+    "issue_url": "https://api.github.com/repos/webcompat/webcompat-tests/issues/396",
+    "id": 225209757,
+    "user": {
+      "login": "miketaylr",
+      "id": 67283,
+      "avatar_url": "https://avatars.githubusercontent.com/u/67283?v=3",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/miketaylr",
+      "html_url": "https://github.com/miketaylr",
+      "followers_url": "https://api.github.com/users/miketaylr/followers",
+      "following_url": "https://api.github.com/users/miketaylr/following{/other_user}",
+      "gists_url": "https://api.github.com/users/miketaylr/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/miketaylr/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/miketaylr/subscriptions",
+      "organizations_url": "https://api.github.com/users/miketaylr/orgs",
+      "repos_url": "https://api.github.com/users/miketaylr/repos",
+      "events_url": "https://api.github.com/users/miketaylr/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/miketaylr/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "created_at": "2016-06-10T15:11:51Z",
+    "updated_at": "2016-06-10T15:11:51Z",
+    "body": "![29upbiv](https://cloud.githubusercontent.com/assets/67283/15969039/bd82fae2-2ef3-11e6-800f-535785681b50.jpg)\r\n"
+  }
+]
