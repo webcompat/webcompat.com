@@ -21,6 +21,10 @@
   vertical-align:middle;
 }
 
+.wc-Icon:not(button) {
+  pointer-events: none;
+}
+
 .wc-Icon--cloud-download:before {
   content: "\f0ed";
 }
