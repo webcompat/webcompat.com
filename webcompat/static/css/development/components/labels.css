@@ -21,4 +21,5 @@
     opacity:1;
     border-color: #414042;
     color: var(--Labels-colorHover);
+    border-bottom-color: #FFFFFF;
   }
