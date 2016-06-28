@@ -1,3 +1,13 @@
+## 2.6.1 - 2016-06-28
+
+* Hide NSFW images if they have a nsfw label [Pull #1087](https://github.com/webcompat/webcompat.com/pull/1087) [Issue #1001](https://github.com/webcompat/webcompat.com/pull/1001)
+* Improve label contrast [Pull #1094](https://github.com/webcompat/webcompat.com/pull/1094) [Issue #482](https://github.com/webcompat/webcompat.com/issues/482)
+* Improve comment header layout [Pull #1095](https://github.com/webcompat/webcompat.com/pull/1095) [Issue #972](https://github.com/webcompat/webcompat.com/issues/972)
+* Improve submit comment design [Pull #1096](https://github.com/webcompat/webcompat.com/pull/1096) (No issue)
+* Fix path for requirements.txt in CONTRIBUTING [Pull #1099](https://github.com/webcompat/webcompat.com/pull/1099) [Issue #1098](https://github.com/webcompat/webcompat.com/issues/1098)
+* Pass params with comments endpoint [Pull #1103](https://github.com/webcompat/webcompat.com/pull/1103) [Issue #1101](https://github.com/webcompat/webcompat.com/issues/11001)
+* Fix different favicon bug [Pull #1105](https://github.com/webcompat/webcompat.com/pull/1105) [Issue #1046](https://github.com/webcompat/webcompat.com/issues/1046)
+
 ## 2.6.0 - 2016-06-14
 
 * Remove nested labels from markup [Pull #1092](https://github.com/webcompat/webcompat.com/pull/1092) [Issue #1072](https://github.com/webcompat/webcompat.com/issues/1072)
