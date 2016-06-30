@@ -108,8 +108,8 @@ def get_issue_category(issue_category):
     * needsdiagnosis
     * sitewait
     '''
-    category_list = ['needstriage', 'contactready', 'needscontact',
-                     'needsdiagnosis', 'sitewait']
+    category_list = ['contactready', 'needscontact',
+                     'needsdiagnosis', 'needstriage', 'sitewait']
     issues_path = 'repos/{0}'.format(ISSUES_PATH)
     params = request.args.copy()
 
@@ -175,8 +175,8 @@ def get_category_from_search(issue_category):
     that maps to a label. This uses the Issues API, which is less costly than
     the Search API.
     '''
-    category_list = ['needstriage', 'contactready', 'needscontact',
-                     'needsdiagnosis', 'sitewait']
+    category_list = ['contactready', 'needscontact',
+                     'needsdiagnosis', 'needstriage', 'sitewait']
     params = request.args.copy()
     query_string = ''
 

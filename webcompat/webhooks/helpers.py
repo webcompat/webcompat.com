@@ -39,7 +39,6 @@ def parse_and_set_label(body, issue_number):
         browser = match_list.groups(0)[1].lower()
         dash_browser = '-'.join(browser.split())
         set_label('browser-' + dash_browser, issue_number)
-        set_label('status-needstriage', issue_number)
 
 
 def set_label(label, issue_number):

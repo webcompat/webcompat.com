@@ -39,7 +39,7 @@
     }
   }
 
-  /* Tag needs triaging */
+  /* Tag needs triage */
   .wc-Tag--needstriage {
     border-color:var(--base-stateNeedsTriage);
   }

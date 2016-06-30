@@ -276,7 +276,7 @@ issueList.IssueView = Backbone.View.extend(
       'click .js-Issue-label .wc-Labels': 'labelSearch',
     },
   // NOTE: these filters don't need "status-" prefixes because appear in URL params
-    _filterRegex: /&*stage=(needstriage|needscontact|needsdiagnosis|contactready|sitewait|closed)&*/i,
+    _filterRegex: /&*stage=(closed|contactready|needscontact|needsdiagnosis|needstriage|sitewait)&*/i,
     _searchRegex: /&*q=(?:(.+)?)&*/i,
     _githubSearchEndpoint: 'https://api.github.com/search/issues',
     _isLoggedIn: $('body').data('username'),
@@ -404,8 +404,8 @@ issueList.IssueView = Backbone.View.extend(
     // depending on what category was clicked (or if a search came in),
     // update the collection instance url property and fetch the issues.
 
-      var issuesAPICategories = ['needstriage', 'closed', 'contactready', 'needsdiagnosis',
-                               'needscontact', 'sitewait'];
+      var issuesAPICategories = ['closed', 'contactready', 'needscontact',
+                                 'needsdiagnosis', 'needstriage', 'sitewait'];
       var params = this.issues.params;
       var paramsCopy;
     // note: if query is the empty string, it will load all issues from the

@@ -50,7 +50,7 @@ issueList.QueryParams = Backbone.Model.extend({
   configUrls: {
     _githubSearch: 'https://api.github.com/search/issues'
   },
-  bugstatuses: ['needstriage', 'contactready', 'needsdiagnosis', 'needscontact', 'sitewait'],
+  bugstatuses: ['contactready', 'needscontact', 'needsdiagnosis', 'needstriage', 'sitewait'],
   initialize: function() {
     this.on('change', function(e) {
       // When the query/parameters change, we want to
@@ -131,10 +131,6 @@ issueList.QueryParams = Backbone.Model.extend({
     *     search API than the issues API
     */
     var url;
-
-    // new is a special category that must be retrieved via the Search API,
-    // rather than the Issues API (which can return results for label)
-    //var searchAPICategories = ['new'];
     var issuesAPICategories = ['closed'].concat(this.bugstatuses);
 
     // Rules for when to use GitHub directly and when Webcompat
