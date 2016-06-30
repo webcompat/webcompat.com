@@ -214,14 +214,6 @@ issueList.QueryParams = Backbone.Model.extend({
       // gotcha: issues API needs labels in plural, search API in singular.. :-/
       paramsToSend.q += ' label:' + theLabels.join(' label:');
     }
-    // The "stage" needs to be translated into the right combination of labels and state
-    /*if (this.get('stage') === 'new') {
-      // stage=new translates to "not one of these labels"..
-      this.bugstatuses.forEach(function(label) {
-        paramsToSend.q += ' -label:status-' + label;
-      });
-    } else
-    */
     if (this.get('stage') && !(this.get('stage') in {all:1,closed:1})) {
       paramsToSend.q += ' label:status-' + this.get('stage');
     }

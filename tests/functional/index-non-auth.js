@@ -58,35 +58,35 @@ define([
         });
     },
 
-    'browse issues (new)': function() {
+    'browse issues (needstriage)': function() {
       return this.remote
         .get(require.toUrl(url('/')))
-        .findAllByCssSelector('#js-lastIssue .js-IssueList.wc-IssueList--new')
+        .findAllByCssSelector('#js-lastIssue .js-IssueList.wc-IssueList--needstriage')
         .then(function(elms) {
           assert.equal(elms.length, 10, '10 issues should be displayed');
         })
         .end()
-        .findByCssSelector('.wc-IssueList--new .wc-IssueList-count').getVisibleText()
+        .findByCssSelector('.wc-IssueList--needstriage .wc-IssueList-count').getVisibleText()
         .then(function(text) {
           assert.match(text, /^Issue\s(\d+)$/, 'Issue should have a number');
         })
         .end()
-        .findByCssSelector('.wc-IssueList--new .wc-IssueList-header a').getAttribute('href')
+        .findByCssSelector('.wc-IssueList--needstriage .wc-IssueList-header a').getAttribute('href')
         .then(function(text) {
           assert.match(text, /^\/issues\/\d+$/, 'Link should have a number');
         })
         .end()
-        .findByCssSelector('.wc-IssueList--new .wc-IssueList-header').getVisibleText()
+        .findByCssSelector('.wc-IssueList--needstriage .wc-IssueList-header').getVisibleText()
         .then(function(text) {
           assert.match(text, /^Issue\s\d+:\s.+$/, 'Issue should have a non-empty title');
         })
         .end()
-        .findByCssSelector('.wc-IssueList--new .wc-IssueList-metadata:nth-child(1)').getVisibleText()
+        .findByCssSelector('.wc-IssueList--needstriage .wc-IssueList-metadata:nth-child(1)').getVisibleText()
         .then(function(text) {
           assert.match(text, /^Opened:\s\d{4}\-\d{2}\-\d{2}/, 'Issue should display creation date');
         })
         .end()
-        .findByCssSelector('.wc-IssueList--new .wc-IssueList-metadata:nth-child(2)').getVisibleText()
+        .findByCssSelector('.wc-IssueList--needstriage .wc-IssueList-metadata:nth-child(2)').getVisibleText()
         .then(function(text) {
           assert.match(text, /Comments:\s\d/, 'Issue should display number of comments');
         })
