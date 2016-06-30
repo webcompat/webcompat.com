@@ -8,9 +8,12 @@
   {% endif %}
    <span class="js-Label-list">
   <% _.each(labels, function(label) { %>
-    <span class="wc-Label wc-Label--badge js-Label" style="background-color:#<%=label.color%>">
-      <%= label.name %>
-    </span>
+    <a href="/issues?q=label:<%= label.remoteName %>"
+       class="wc-Labels js-Label"
+       data-remotename="<%= label.remoteName %>"
+       title="Label: <%= label.name %>"
+       style="background-color:#<%=label.color%>"
+    > <%= label.name %> </a>
   <% }); %>
   </span>
 </script>
