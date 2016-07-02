@@ -76,8 +76,6 @@
   .wc-Comment-wrapper {
     position: relative;
     width: 100%;
-    min-height: 128px;
-    font-family: inherit;
     border: solid 1px var(--Comment-color);
     border-radius: 10px;
     padding: 0;
@@ -85,42 +83,35 @@
     background : #fff;
   }
 
-    /* modifier new comment of existing bug */
-    .wc-Comment-wrapper--comment {
-      display: block;
-      border-bottom: 1px dashed var(--Comment-color);
-      border-bottom-left-radius: 0;
-      border-bottom-right-radius: 0;
-      padding: 1em;
-    }
-
   /* Comment Textarea */
-  .wc-Comment-text {
-    padding-left: 1em;
+  .wc-Comment-submit {
+    font-size: var(--Comment-fontSize);
+    display: block;
+    width: 100%;
+    min-height: 128px;
+    border-color: var(--Comment-color);
+    border-style: solid solid dashed solid;
+    border-width: 1px;
+    border-radius: 10px 10px 0 0;
+    padding: 1em;
   }
 
-  /* Textarea Placeholder style */
-  .wc-Comment-wrapper::placeholder {
-    color: var(--Comment-color);
-    opacity: 1;
-    font-size: 1.2em;
-    font-weight: 500;
-  }
-
-    .wc-Comment-wrapper--postForm {
-      padding: 1em;
-      margin-bottom: 1.5em;
+    /* Textarea Placeholder style */
+    .wc-Comment-submit::placeholder {
+      color: var(--Comment-color);
+      opacity: 1;
     }
-
 
   /* Comment Header */
   .wc-Comment-header {
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: space-between;
     border-radius: 10px 10px 0 0;
     background-color: #f0f0f0;
     padding: .8em .8em .8em 1em;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
   }
 
   .wc-Comment-header-spacing {
@@ -180,4 +171,12 @@
   .wc-Comment-qr {
     z-index: 1;
     margin-left: auto;
+  }
+
+  @media all and (max-width: 31.25em) {
+    .wc-Comment-qr {
+      position: absolute;
+      top: 0;
+      right: 0;
+    }
   }

@@ -1,0 +1,48 @@
+{
+  "_fixture": true,
+  "url": "https://api.github.com/repos/webcompat/webcompat-tests/issues/396",
+  "repository_url": "https://api.github.com/repos/webcompat/webcompat-tests",
+  "labels_url": "https://api.github.com/repos/webcompat/webcompat-tests/issues/396/labels{/name}",
+  "comments_url": "https://api.github.com/repos/webcompat/webcompat-tests/issues/396/comments",
+  "events_url": "https://api.github.com/repos/webcompat/webcompat-tests/issues/396/events",
+  "html_url": "https://github.com/webcompat/webcompat-tests/issues/396",
+  "id": 155848972,
+  "number": 396,
+  "title": "s.yimg.com - mobile site is not usable (note this issue requires a nsfw label for tests, don't remove)",
+  "user": {
+    "login": "miketaylr",
+    "id": 67283,
+    "avatar_url": "https://avatars.githubusercontent.com/u/67283?v=3",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/miketaylr",
+    "html_url": "https://github.com/miketaylr",
+    "followers_url": "https://api.github.com/users/miketaylr/followers",
+    "following_url": "https://api.github.com/users/miketaylr/following{/other_user}",
+    "gists_url": "https://api.github.com/users/miketaylr/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/miketaylr/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/miketaylr/subscriptions",
+    "organizations_url": "https://api.github.com/users/miketaylr/orgs",
+    "repos_url": "https://api.github.com/users/miketaylr/repos",
+    "events_url": "https://api.github.com/users/miketaylr/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/miketaylr/received_events",
+    "type": "User",
+    "site_admin": false
+  },
+  "labels": [
+    {
+      "url": "https://api.github.com/repos/webcompat/webcompat-tests/labels/nsfw",
+      "name": "nsfw",
+      "color": "b60205"
+    }
+  ],
+  "state": "open",
+  "locked": false,
+  "assignee": null,
+  "milestone": null,
+  "comments": 1,
+  "created_at": "2016-05-19T22:23:40Z",
+  "updated_at": "2016-06-10T15:11:51Z",
+  "closed_at": null,
+  "body": "<!-- @browser: Firefox Mobile 48.0 -->\n<!-- @ua_header: Mozilla/5.0 (Android 6.0.1; Mobile; rv:48.0) Gecko/48.0 Firefox/48.0 -->\n\n**URL**: https://s.yimg.com/lo/api/res/1.2/hV2VUJUemnMng439Rbbitw--/YXBwaWQ9eWlzZWFyY2g7Zmk9Zml0O2dlPTAwNjYwMDtncz0wMEEzMDA7aD00MDA7dz03MTE-/http://www.educadictos.com/wp-content/uploads/2013/06/color.png.cf.png\n**Browser / Version**: Firefox Mobile 48.0\n**Operating System**: Android 6.0.1\n**Problem type**: Mobile site is not usable\n\n**Steps to Reproduce**\n1) Navigate to: https://s.yimg.com/lo/api/res/1.2/hV2VUJUemnMng439Rbbitw--/YXBwaWQ9eWlzZWFyY2g7Zmk9Zml0O2dlPTAwNjYwMDtncz0wMEEzMDA7aD00MDA7dz03MTE-/http://www.educadictos.com/wp-content/uploads/2013/06/color.png.cf.png\r\n2) …\r\n\r\nExpected Behavior:\r\n\r\nActual Behavior:\r\n\r\n\r\n![Screenshot Description](http://staging.webcompat.com/uploads/2016/5/02f7720b-000f-49fd-9c0c-2e67a843b405.jpeg)\n\n\n\n_From [webcompat.com](https://webcompat.com/) with ❤️_",
+  "closed_by": null
+}

@@ -15,15 +15,8 @@
   color:#404040;
 }
 
-  /* event */
-  .wc-Tag--filter:hover,
-  .wc-Tag.is-active,
-  .wc-Tag-filter:focus {
-    color:#fff;
-  }
-
   /* modifier */
-  .wc-tag--filter {
+  .wc-Tag--filter {
     cursor:pointer;
   }
 
@@ -45,11 +38,19 @@
   }
 
     /* event */
+<<<<<<< HEAD
     .wc-Tag--needstriage.wc-tag--filter:hover,
     .wc-Tag--needstriage.wc-tag--filter:focus,
     .wc-Tag--needstriage.is-active,
     .wc-Tag--needstriage.wc-Tag--label {
       background-color:var(--base-stateNeedsTriage);
+=======
+    .wc-Tag--new.wc-Tag--filter:hover,
+    .wc-Tag--new.wc-Tag--filter:focus,
+    .wc-Tag--new.is-active,
+    .wc-Tag--new.wc-Tag--label {
+      background-color:var(--base-stateNew);
+>>>>>>> master
     }
 
   /* Tag needsDiagnosis */
@@ -58,8 +59,8 @@
   }
 
     /* event */
-    .wc-Tag--needsDiagnosis.wc-tag--filter:hover
-    .wc-Tag--needsDiagnosis.wc-tag--filter:focus,
+    .wc-Tag--needsDiagnosis.wc-Tag--filter:hover,
+    .wc-Tag--needsDiagnosis.wc-Tag--filter:focus,
     .wc-Tag--needsDiagnosis.is-active,
     .wc-Tag--needsDiagnosis.wc-Tag--label {
       background-color:var(--base-stateNeedsDiagnosis);
@@ -71,8 +72,8 @@
   }
 
     /* event */
-    .wc-Tag--needsContact.wc-tag--filter:hover,
-    .wc-Tag--needsContact.wc-tag--filter:focus,
+    .wc-Tag--needsContact.wc-Tag--filter:hover,
+    .wc-Tag--needsContact.wc-Tag--filter:focus,
     .wc-Tag--needsContact.is-active,
     .wc-Tag--needsContact.wc-Tag--label {
       background-color:var(--base-stateNeedsContact);
@@ -84,8 +85,8 @@
   }
 
     /* event */
-    .wc-Tag--ready.wc-tag--filter:hover,
-    .wc-Tag--ready.wc-tag--filter:focus,
+    .wc-Tag--ready.wc-Tag--filter:hover,
+    .wc-Tag--ready.wc-Tag--filter:focus,
     .wc-Tag--ready.is-active,
     .wc-Tag--ready.wc-Tag--label {
       background-color:var(--base-stateReady);
@@ -97,8 +98,8 @@
   }
 
     /* event */
-    .wc-Tag--sitewait.wc-tag--filter:hover,
-    .wc-Tag--sitewait.wc-tag--filter:focus,
+    .wc-Tag--sitewait.wc-Tag--filter:hover,
+    .wc-Tag--sitewait.wc-Tag--filter:focus,
     .wc-Tag--sitewait.is-active,
     .wc-Tag--sitewait.wc-Tag--label {
       background-color:var(--base-stateSitewait);
@@ -110,8 +111,8 @@
   }
 
     /* event */
-    .wc-Tag--close.wc-tag--filter:hover,
-    .wc-Tag--close.wc-tag--filter:focus,
+    .wc-Tag--close.wc-Tag--filter:hover,
+    .wc-Tag--close.wc-Tag--filter:focus,
     .wc-Tag--close.is-active,
     .wc-Tag--close.wc-Tag--label {
       background-color:var(--base-stateClose);
@@ -123,8 +124,8 @@
   }
 
     /* event */
-    .wc-Tag--fixed.wc-tag--filter:hover,
-    .wc-Tag--fixed.wc-tag--filter:focus,
+    .wc-Tag--fixed.wc-Tag--filter:hover,
+    .wc-Tag--fixed.wc-Tag--filter:focus,
     .wc-Tag--fixed.is-active,
     .wc-Tag--fixed.wc-Tag--label {
       background-color:var(--base-stateFixed);
@@ -136,10 +137,9 @@
   }
 
     /* event */
-    .wc-Tag--worksforme.wc-tag--filter:hover,
-    .wc-Tag--worksforme.wc-tag--filter:focus,
+    .wc-Tag--worksforme.wc-Tag--filter:hover,
+    .wc-Tag--worksforme.wc-Tag--filter:focus,
     .wc-Tag--worksforme.is-active,
     .wc-Tag--worksforme.wc-Tag--label {
       background-color:var(--base-stateWorksForMe);
     }
-

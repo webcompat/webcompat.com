@@ -29,6 +29,7 @@ JSON_MIME = 'application/json'
 
 
 class Upload(object):
+
     '''Class that abstracts over saving image and screenshot uploads.
 
     It performs a simple extension-based validation before saving to the
@@ -95,8 +96,8 @@ class Upload(object):
             file_dest = 'jpg'.join(file_dest.rsplit('png', 1))
         # If animated GIF, aka duration > 0, add save_all parameter
         if (self.image_object.format == 'GIF' and
-           self.image_object.info['duration'] > 0):
-                save_parameters['save_all'] = True
+                self.image_object.info['duration'] > 0):
+            save_parameters['save_all'] = True
         # unpacking save_parameters
         self.image_object.save(file_dest, **save_parameters)
 

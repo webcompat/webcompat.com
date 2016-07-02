@@ -9,7 +9,6 @@ authed user and the proxy case.'''
 
 import json
 
-from webcompat import app
 from webcompat import github
 from webcompat.form import build_formdata
 from webcompat.helpers import proxy_request

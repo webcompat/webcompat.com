@@ -202,12 +202,14 @@ def proxy_comments(number):
 
     Either as an authed user, or as one of our proxy bots.
     '''
+    params = request.args.copy()
     if request.method == 'POST':
         path = 'repos/{0}/{1}/comments'.format(ISSUES_PATH, number)
-        return api_request('post', path, data=get_comment_data(request.data))
+        return api_request('post', path, params=params,
+                           data=get_comment_data(request.data))
     else:
         path = 'repos/{0}/{1}/comments'.format(ISSUES_PATH, number)
-        return api_request('get', path)
+        return api_request('get', path, params=params)
 
 
 @api.route('/issues/<int:number>/labels', methods=['POST'])
