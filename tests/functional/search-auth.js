@@ -35,19 +35,19 @@ define([
           .findByCssSelector('.wc-SearchForm-item').click()
         .type('taco')
         .end()
-        .findAllByCssSelector('button.wc-Tag--needstriage').click()
+        .findAllByCssSelector('button.wc-Tag--new').click()
         .end()
         .findByCssSelector('.wc-SearchForm-item').getVisibleText()
         .then(function(text) {
           assert.equal(text, '', 'Clicking filter should empty search text');
         })
         .end()
-        .findAllByCssSelector('button.wc-Tag--needstriage').click()
+        .findAllByCssSelector('button.wc-Tag--new').click()
         .end()
         .findByCssSelector('.wc-SearchForm-item').click()
         .type('taco')
         .end()
-        .findAllByCssSelector('button.wc-Tag--needstriage').getAttribute('class')
+        .findAllByCssSelector('button.wc-Tag--new').getAttribute('class')
         .then(function(className) {
           assert.notInclude(className, 'is-active', 'Searching should clear all filters');
         })

@@ -17,8 +17,6 @@ from flask import request
 
 from helpers import dump_to_db
 from helpers import parse_and_set_label
-from helpers import set_label
-
 
 webhooks = Blueprint('webhooks', __name__, url_prefix='/webhooks')
 
@@ -40,9 +38,6 @@ def hooklistener():
             issue_title = payload.get('issue')['title']
             issue_number = payload.get('issue')['number']
             parse_and_set_label(issue_body, issue_number)
-            # Setting "Needs Triage" label by default
-            # to all the new issues raised
-            set_label('status-needstriage', issue_number)
             dump_to_db(issue_title, issue_body, issue_number)
             return ('gracias, amigo.', 200)
         else:

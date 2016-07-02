@@ -11,7 +11,7 @@
 
     /* modifier */
     .wc-Box--reporting {
-      border-color: var(--base-stateNeedsTriage);
+      border-color: var(--base-stateNew);
     }
 
     .wc-Box--analysis {

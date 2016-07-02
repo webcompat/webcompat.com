@@ -11,7 +11,7 @@
   --base-colorDark: #ffc900; /*Dark Yellow*/
   --base-variantColorDark: #404040; /* Dark Gray */
   --base-variantColorLight: #c2c2c2; /* Dark Light */
-  --base-stateNeedsTriage: #ff9900; /* orange */
+  --base-stateNew: #ff8364; /* light orange */
   --base-stateNeedsDiagnosis: #efce82;  /* light brown */
   --base-stateNeedsContact : #b9edce ; /* light green */
   --base-stateReady: #7abce1; /* light blue*/

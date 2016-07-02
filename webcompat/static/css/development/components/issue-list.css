@@ -3,6 +3,7 @@
 :root {
   --Issue-fontSize: var(--base-fontSize);
   --Issue-backgroundColor: #f0f0f0;
+  --Issue-stateNew: var(--base-stateNew);
   --Issue-stateNeedsDiagnosis: var(--base-stateNeedsDiagnosis);
   --Issue-stateNeedsContact: var(--base-stateNeedsContact);
   --Issue-stateReady: var(--base-stateReady);
@@ -10,7 +11,6 @@
   --Issue-stateClose: var(--base-stateClose);
   --Issue-stateFixed: var(--base-stateFixed);
   --Issue-stateWorksForMe: var(--base-stateWorksForMe);
-  --Issue-stateNeedsTriage: var(--base-stateNeedsTriage);
 }
 
 /* Parent class */
@@ -32,10 +32,9 @@
     }
   }
 
-  /* States */
-
-  .wc-IssueList--needstriage {
-    border-left: 5px solid var(--Issue-stateNeedsTriage);
+  /* Statut */
+  .wc-IssueList--new {
+    border-left: 5px solid var(--Issue-stateNew);
   }
 
   .wc-IssueList--needsDiagnosis {
@@ -57,11 +56,11 @@
   .wc-IssueList--close {
     border-left: 5px solid var(--Issue-stateClose);
   }
-
+  
   .wc-IssueList--fixed {
     border-left: 5px solid var(--Issue-stateFixed);
   }
-
+  
   .wc-IssueList--worksforme {
     border-left: 5px solid var(--Issue-stateWorksForMe);
   }
