@@ -61,9 +61,9 @@ issues.Issue = Backbone.Model.extend({
       this.set('stateClass', 'worksforme');
       return 'Appears to work';
     }
-    //New is the default value.
-    this.set('stateClass', 'new');
-    return 'New Issue';
+    //Needs Triage is the default value.
+    this.set('stateClass', 'needstriage');
+    return 'Needs Triage';
   },
   parse: function(response) {
     var labelList = new issues.LabelList({'labels':response.labels});

@@ -101,7 +101,7 @@ def get_issue_category(issue_category):
     '''Return all issues for a specific category.
 
     issue_category can be of N types:
-    * new
+    * needstriage
     * closed
     * contactready
     * needscontact
@@ -109,7 +109,7 @@ def get_issue_category(issue_category):
     * sitewait
     '''
     category_list = ['contactready', 'needscontact',
-                     'needsdiagnosis', 'sitewait']
+                     'needsdiagnosis', 'needstriage', 'sitewait']
     issues_path = 'repos/{0}'.format(ISSUES_PATH)
     params = request.args.copy()
 
@@ -124,17 +124,11 @@ def get_issue_category(issue_category):
     elif issue_category == 'closed':
         params['state'] = 'closed'
         return api_request('get', issues_path, params=params)
-    # Note that 'new' here is primarily used on the homepage.
-    # For paginated results on the /issues page, see /issues/search/new.
+    # Note that 'needstriage' here is primarily used on the homepage.
+    # For paginated results on the /issues page,
+    # see /issues/search/needstriage.
     elif issue_category == 'new':
-        issues = api_request('get', issues_path, params=params)
-        # api_request returns a tuple of format:
-        #       (content, status_code, response_headers)
-        # So we make a dict here for improved readability
-        content, status_code, response_headers = issues
-        if status_code != 304:
-            content = filter_new(json.loads(content))
-        return (content, status_code, response_headers)
+        abort(301)
     else:
         # The path doesn’t exist. 404 Not Found.
         abort(404)
@@ -182,7 +176,7 @@ def get_category_from_search(issue_category):
     the Search API.
     '''
     category_list = ['contactready', 'needscontact',
-                     'needsdiagnosis', 'sitewait']
+                     'needsdiagnosis', 'needstriage', 'sitewait']
     params = request.args.copy()
     query_string = ''
 
@@ -195,10 +189,7 @@ def get_category_from_search(issue_category):
         query_string += ' state:closed '
         return get_search_results(query_string, params)
     elif issue_category == 'new':
-        query_string += ' '.join(
-            ['-label:status-%s' % cat for cat in category_list])
-        query_string += ' state:open '
-        return get_search_results(query_string, params)
+        abort(301)
     else:
         # no known keyword we send not found
         abort(404)
