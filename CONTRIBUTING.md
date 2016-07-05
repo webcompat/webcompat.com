@@ -77,46 +77,47 @@ project.
 
 All code contributions should come in the form of a [pull request](https://help.github.com/articles/creating-a-pull-request), as a topic branch.
 
-* Have a quick search through existing issues and pull requests so you don't waste any of your time.
+1. Have a quick search through existing issues and pull requests so you don't waste any of your time.  
 
-* If no existing issue covers the change you want to make, please [open a new issue](https://github.com/webcompat/webcompat.com/issues/new) before you start coding.
+2. If no existing issue covers the change you want to make, please [open a new issue](https://github.com/webcompat/webcompat.com/issues/new) before you start coding.
 
-* Fork repository
+3. Fork repository  
 
-![master](http://f.cl.ly/items/1E3f0A0I2A2b3T2L2I2c/forked.png)
+    ![master](http://f.cl.ly/items/1E3f0A0I2A2b3T2L2I2c/forked.png)  
+  
+    You'll probably want to [set up a local development environment](#working-environment-setup) to get that far. If you've already been through this process, make sure you've [set the main repo as an upstream remote](https://help.github.com/articles/configuring-a-remote-for-a-fork/) and make sure [your fork is up to date](https://help.github.com/articles/syncing-a-fork/) before sending pull requests.  
 
-You'll probably want to [set up a local development environment](#working-environment-setup) to get that far. If you've already been through this process, make sure you've [set the main repo as an upstream remote](https://help.github.com/articles/configuring-a-remote-for-a-fork/) and make sure [your fork is up to date](https://help.github.com/articles/syncing-a-fork/) before sending pull requests.
+4. Make your changes in a new branch
 
-* Make your changes in a new branch
+    `git checkout -b name-of-fix-branch`
 
-  `git checkout -b name-of-fix-branch`
+5. Create your patch; commit your changes. Referencing the issue number you're working on from the message is recommended.
 
-* Create your patch; commit your changes. Referencing the issue number you're working on from the message is recommended.
+    `git commit -m 'Issue #123 - Fixes broken layout on mobile browsers`
 
-  `git commit -m 'Issue #123 - Fixes broken layout on mobile browsers`
+6. Push your branch to GitHub:
 
-* Push your branch to GitHub:
+    `git push origin name-of-fix-branch`
 
-  `git push origin name-of-fix-branch`
+7. If you want to discuss your code or ask questions, please comment in the corresponding issue. You can link to the code you have pushed to your repository to ask for code review.
 
-* If you want to discuss your code or ask questions, please comment in the corresponding issue. You can link to the code you have pushed to your repository to ask for code review.
+8. When your code is ready to be integrated into the project, use the GitHub site to send a pull request to `webcompat.com:master`, aka the master branch of the repo you forked from. This will be the default choice.
 
-* When your code is ready to be integrated into the project, use the GitHub site to send a pull request to `webcompat.com:master`, aka the master branch of the repo you forked from. This will be the default choice.
+    ![master](https://cldup.com/YVlLDGItPf-3000x3000.png)
 
-![master](https://cldup.com/YVlLDGItPf-3000x3000.png)
+9. Set the title of the pull request to reference the issue number.
 
-* Set the title of the pull request to reference the issue number.
-        `Fixes #123 - Fixes broken layout on mobile browsers`
+    `Fixes #123 - Fixes broken layout on mobile browsers`
 
-* When sending the pull request do not forget to call out someone for review by using the following convention:
+10. When sending the pull request do not forget to call out someone for review by using the following convention:
 
-`r? @miketaylr`
+    `r? @miketaylr`
 
-This will notify the person that your request is waiting for a review for merging. Ask a review only by one person, this will avoid misunderstandings and the ball is dropped. (Python: karlcow, miketaylr. JavaScript: magsout, miketaylr, tagawa CSS: magsout).
+    This will notify the person that your request is waiting for a review for merging. Ask a review only by one person, this will avoid misunderstandings and the ball is dropped. (Python: karlcow, miketaylr. JavaScript: magsout, miketaylr, tagawa CSS: magsout).
 
-* Continue discussion in the pull request.
+11. Continue discussion in the pull request.
 
-The discussion might lead to modify or abandon this specific pull request. This is the place where you can have a code review.
+    The discussion might lead to modify or abandon this specific pull request. This is the place where you can have a code review.
 
 After all that, if you'd like, you can send a pull request to add your name to our humans.txt file.
 
