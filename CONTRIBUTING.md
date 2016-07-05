@@ -119,6 +119,11 @@ All code contributions should come in the form of a [pull request](https://help.
 
     The discussion might lead to modify or abandon this specific pull request. This is the place where you can have a code review.
 
+12. Once the Pull Request **got an explicit `r+`** from the reviewer(s), it is the responsibility of the reviewer to merge the branch (or the admin). A pull request submitter should never merge himself/herself the pull request.
+
+    The repo owners might choose to self-merge for urgent security or hot fixes.
+
+
 After all that, if you'd like, you can send a pull request to add your name to our humans.txt file.
 
 For product and design contributions, check out the [Design Repo](https://github.com/webcompat/design)
