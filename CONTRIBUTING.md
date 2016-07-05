@@ -119,6 +119,9 @@ All code contributions should come in the form of a [pull request](https://help.
 
     The discussion might lead to modify or abandon this specific pull request. This is the place where you can have a code review.
 
+12. Once the Pull Request **got an explicit `r+`** from the reviewer(s), it is the responsibility of the reviewer to merge the branch (or the admin). A pull request submitter should never merge himself/herself the pull request.
+
+    In case of security fixes, or quick unbreaking things, one of the repo owners may merge himself the pull request.
 
 
 After all that, if you'd like, you can send a pull request to add your name to our humans.txt file.
