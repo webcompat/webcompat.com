@@ -7,7 +7,7 @@ var issues = issues || {};
 
 diagnose.NewCollection = Backbone.Collection.extend({
   model: issues.Issue,
-  url: '/api/issues/category/new'
+  url: '/api/issues/category/needstriage'
 });
 
 diagnose.NewView = Backbone.View.extend({

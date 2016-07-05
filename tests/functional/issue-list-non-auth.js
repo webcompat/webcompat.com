@@ -237,7 +237,7 @@ define([
     },
 
     'Loading URL with stage param loads issues': function() {
-      var params = '?page=1&per_page=50&state=open&stage=new&sort=created&direction=desc';
+      var params = '?page=1&per_page=50&state=open&stage=needstriage&sort=created&direction=desc';
 
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
@@ -247,7 +247,7 @@ define([
         .end()
         .findByCssSelector('.js-Tag.is-active').getVisibleText()
         .then(function(text) {
-          assert.equal('New Issues', text, 'New Issues filter is selected.');
+          assert.equal('Needs Triage', text, 'Needs Triage filter is selected.');
         })
         .end();
     },

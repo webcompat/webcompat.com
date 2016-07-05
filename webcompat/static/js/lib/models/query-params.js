@@ -50,7 +50,7 @@ issueList.QueryParams = Backbone.Model.extend({
   configUrls: {
     _githubSearch: 'https://api.github.com/search/issues'
   },
-  bugstatuses: ['contactready', 'needsdiagnosis', 'needscontact', 'sitewait'],
+  bugstatuses: ['contactready', 'needscontact', 'needsdiagnosis', 'needstriage', 'sitewait'],
   initialize: function() {
     this.on('change', function(e) {
       // When the query/parameters change, we want to
@@ -131,10 +131,6 @@ issueList.QueryParams = Backbone.Model.extend({
     *     search API than the issues API
     */
     var url;
-
-    // new is a special category that must be retrieved via the Search API,
-    // rather than the Issues API (which can return results for label)
-    var searchAPICategories = ['new'];
     var issuesAPICategories = ['closed'].concat(this.bugstatuses);
 
     // Rules for when to use GitHub directly and when Webcompat
@@ -143,7 +139,7 @@ issueList.QueryParams = Backbone.Model.extend({
     // we know that the issue API can handle queries with labels in, we don't want a labels:foo
     // in the search field to force the search API.
     q = q.replace(/labels:[^ ]+/g, '');
-    if (q || searchAPICategories.indexOf(this.get('stage')) > -1) { // We have a query that needs search API
+    if (q) { // We have a query that needs search API
       if ('withCredentials' in XMLHttpRequest.prototype && !loggedIn) { // CORS support, not logged in - talk directly to GH
         url = this.configUrls._githubSearch + '?' + this.toSearchAPIParams();
       } else {
@@ -214,13 +210,7 @@ issueList.QueryParams = Backbone.Model.extend({
       // gotcha: issues API needs labels in plural, search API in singular.. :-/
       paramsToSend.q += ' label:' + theLabels.join(' label:');
     }
-    // The "stage" needs to be translated into the right combination of labels and state
-    if (this.get('stage') === 'new') {
-      // stage=new translates to "not one of these labels"..
-      this.bugstatuses.forEach(function(label) {
-        paramsToSend.q += ' -label:status-' + label;
-      });
-    } else if (this.get('stage') && !(this.get('stage') in {all:1,closed:1})) {
+    if (this.get('stage') && !(this.get('stage') in {all:1,closed:1})) {
       paramsToSend.q += ' label:status-' + this.get('stage');
     }
     paramsToSend.q += ' state:' + this.get('state');

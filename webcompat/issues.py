@@ -27,10 +27,8 @@ def report_issue(form, proxy=False):
 
 
 def filter_new(issues):
-    '''Return the list of new issues, encoded as JSON.
-
-    "new" means anything that isn't an issue with a "contactready",
-    "sitewait", or "needsdiagnosis" label.
+    '''Return the list of "needs triage" issues, encoded as JSON.
+    This function gives all the "needs triage" issues.
     '''
     def is_new(issue):
         '''Filter function.'''
