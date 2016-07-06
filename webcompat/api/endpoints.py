@@ -25,7 +25,6 @@ from webcompat.helpers import get_response_headers
 from webcompat.helpers import mockable_response
 from webcompat.helpers import normalize_api_params
 from webcompat.helpers import proxy_request
-from webcompat.issues import filter_new
 
 api = Blueprint('api', __name__, url_prefix='/api')
 JSON_MIME = 'application/json'
@@ -127,6 +126,8 @@ def get_issue_category(issue_category):
     # Note that 'needstriage' here is primarily used on the homepage.
     # For paginated results on the /issues page,
     # see /issues/search/needstriage.
+    # We abort with 301 here because the new endpoint has
+    # been replaced with needstriage.
     elif issue_category == 'new':
         abort(301)
     else:
@@ -188,6 +189,8 @@ def get_category_from_search(issue_category):
     elif issue_category == 'closed':
         query_string += ' state:closed '
         return get_search_results(query_string, params)
+    # We abort with 301 here because the new endpoint has
+    # been replaced with needstriage.
     elif issue_category == 'new':
         abort(301)
     else:

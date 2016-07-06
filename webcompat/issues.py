@@ -24,23 +24,3 @@ def report_issue(form, proxy=False):
                              data=json.dumps(build_formdata(form)))
     else:
         return github.post(path, build_formdata(form))
-
-
-def filter_new(issues):
-    '''Return the list of "needs triage" issues, encoded as JSON.
-    This function gives all the "needs triage" issues.
-    '''
-    def is_new(issue):
-        '''Filter function.'''
-        match = True
-        category_list = ['status-contactready', 'status-needscontact',
-                         'status-needsdiagnosis', 'status-sitewait']
-        labels = [label.get('name') for label in issue.get('labels')]
-        # if the intersection of labels and category_list is not empty
-        # then it's not part of untriaged
-        common_cat = set(labels).intersection(category_list)
-        if common_cat:
-            match = False
-        return match
-
-    return json.dumps([issue for issue in issues if is_new(issue)])
