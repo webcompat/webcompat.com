@@ -3,15 +3,14 @@
 :root {
   --Comment-fontSize: var(--base-fontSize);
   --Comment-color: var(--base-variantColorLight);
-  --Comment-widthAvatar: 59px;
-  --Comment-heightAvatar: 56px;
+  --Comment-widthAvatar: 48px;
+  --Comment-heightAvatar: var(--Comment-widthAvatar);
+  --Comment-borderRadius: 4px;
 }
 
 /* Main Class */
 .wc-Comment {
   font-size: var(--Comment-fontSize);
-  display: flex;
-  flex-direction: row;
 }
 
   /* space */
@@ -31,7 +30,6 @@
     }
 
   @media all and (max-width: 61.87em) {
-
     .wc-Comment-avatar {
       display: none;
     }
@@ -40,44 +38,15 @@
   /* Body */
   .wc-Comment-body {
     position: relative;
-    flex: 1;
     max-width: 100%;
   }
-
-  @media all and (min-width: 61.88em) {
-
-    .wc-Comment-body {
-      margin-left:.8em;
-      max-width: calc(100% - 59px);
-    }
-  }
-
-    /* Body Caret */
-    .wc-Comment-body--caret:after {
-      position: absolute;
-      content: "";
-      width: 18px;
-      height: 18px;
-      top: 15px;
-      left: -9px;
-      background-color: #f0f0f0;
-      border-color: var(--Comment-color);
-      border-style: solid;
-      border-width: 0px 0px 1px 1px;
-      transform: rotate(45deg);
-    }
-
-    /* Form submit */
-    .wc-Comment--form .wc-Comment-body--caret:after {
-       background-color: #fff;
-    }
 
   /* Wrapper Comment-header Comment-content */
   .wc-Comment-wrapper {
     position: relative;
     width: 100%;
     border: solid 1px var(--Comment-color);
-    border-radius: 10px;
+    border-radius: var(--Comment-borderRadius);
     padding: 0;
     word-wrap: break-word;
     background : #fff;
@@ -92,7 +61,7 @@
     border-color: var(--Comment-color);
     border-style: solid solid dashed solid;
     border-width: 1px;
-    border-radius: 10px 10px 0 0;
+    border-radius: var(--Comment-borderRadius) var(--Comment-borderRadius) 0 0;
     padding: 1em;
   }
 
@@ -108,10 +77,8 @@
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-    justify-content: space-between;
-    border-radius: 10px 10px 0 0;
-    background-color: #f0f0f0;
-    padding: .8em .8em .8em 1em;
+    background-color: #e2e2e2;
+    padding: .4em 1em;
   }
 
   .wc-Comment-header-spacing {
@@ -121,6 +88,12 @@
   /* Name of owner */
   .wc-Comment-owner {
     font-weight: bold;
+  }
+
+  @media all and (min-width: 61.88em) {
+    .wc-Comment-owner {
+      margin: 0 0 0 .6em;
+    }
   }
 
   /* Comment text */
@@ -156,7 +129,6 @@
   }
 
   @media all and (max-width: 48.12em) {
-
    .wc-Comment-button {
      text-align: center;
      font-size:.9em;
