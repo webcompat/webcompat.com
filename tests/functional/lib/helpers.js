@@ -26,8 +26,6 @@ define([
       .findByCssSelector('input[type=submit]').submit()
       .end()
       .findByCssSelector('button').submit()
-      //TEST adding delay for adding 2FA authcode manually
-      .sleep(10000)
       .end();
   }
 

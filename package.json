@@ -18,7 +18,6 @@
     "cssrecipes-grid": "^0.4.0",
     "cssrecipes-reset": "^0.5.0",
     "cssrecipes-utils": "^0.5.0",
-    "digdug": "^1.4.1",
     "eslint": "^1.8.0",
     "grunt": "~0.4.5",
     "grunt-check-dependencies": "~0.9.0",
@@ -29,7 +28,7 @@
     "grunt-contrib-watch": "~0.5.3",
     "grunt-eslint": "^17.3.1",
     "grunt-postcss": "^0.8.0",
-    "intern": "^2.2.2",
+    "intern": "2.2.0",
     "load-grunt-tasks": "~0.6.0",
     "postcss": "^5.0.19",
     "postcss-browser-reporter": "^0.4.0",
@@ -49,11 +48,7 @@
     "virtualenv" : "pip install virtualenv && virtualenv env &&  source env/bin/activate",
     "pip": "pip install -r config/requirements.txt",
     "config": "cp config/secrets.py.example config/secrets.py",
-    "project-update": "pip install --upgrade pip && npm run backend-install && npm update",
-    "test-browserstack": "intern-runner config=tests/intern",
-    "test": "intern-runner config=tests/intern-firefox",
-    "test-chrome": "intern-runner config=tests/intern-chrome",
-    "test-functional-nonauth": "intern-runner config=tests/intern-firefox functionalSuites=tests/functional-nonauth"
+    "project-update": "pip install --upgrade pip && npm run backend-install && npm update"
   },
   "eslintConfig": {
     "env": {
