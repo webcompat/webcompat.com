@@ -42,7 +42,7 @@
     .wc-Tag--needstriage.wc-Tag--filter:focus,
     .wc-Tag--needstriage.is-active,
     .wc-Tag--needstriage.wc-Tag--label {
-      background-color:var(--base-needstriage);
+      background-color:var(--base-stateNeedsTriage);
     }
 
   /* Tag needsDiagnosis */
