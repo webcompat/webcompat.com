@@ -267,12 +267,17 @@ def rewrite_links(link_header):
     header_link_data = parse_link_header(link_header)
     for data in header_link_data:
         uri = data['link']
-        api_path, endpoint_path = uri.rsplit('/', 1)
-        if api_path.strip().startswith('https://api.github.com/repositories'):
-            data['link'] = endpoint_path.replace('issues?', '/api/issues?')
-        if api_path.strip().startswith('https://api.github.com/search'):
-            data['link'] = endpoint_path.replace('issues?',
-                                                 '/api/issues/search?')
+        uri_tuple = urlparse.urlsplit(uri)
+        path = uri_tuple.path
+        query = uri_tuple.query
+        if path.startswith('/repositories/'):
+            # remove repositories and takes the second element
+            # of ['17839063', 'issues/398/comments']
+            path = path.lstrip('/repositories/').split('/', 1)[1]
+        elif path.startswith('/search/issues'):
+            path = 'issues/search'
+        api_path = '{}{}'.format('/api/', path)
+        data['link'] = urlparse.urlunsplit(('', '', api_path, query, ''))
     return format_link_header(header_link_data)
 
 
