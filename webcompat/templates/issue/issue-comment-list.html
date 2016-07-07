@@ -2,16 +2,17 @@
   <div class="wc-Comment-body wc-Comment-body--caret">
     <div class="wc-Comment-wrapper">
       <div class="wc-Comment-header">
-        <div class="wc-Comment-avatar">
-          <img src="<%= avatarUrl %>" alt="<%= commenter %>">
-        </div>
-          <span class="wc-Comment-owner js-Comment-owner">
+        <div class="wc-Comment-owner">
+          <div class="wc-Comment-owner-avatar">
+            <img src="<%= avatarUrl %>" alt="<%= commenter %>">
+          </div>
+          <div class="wc-Comment-owner-name js-Comment-owner">
             <a class="wc-Link" href="https://github.com/<%= commenter %>"><%= commenter %></a>
-          </span>
-          <span class="wc-Comment-header-spacing">
-            commented
-          </span>
+          </div>
+        </div>
+        <div>
           <a class="wc-Link" href="#<%= commentLinkId %>"><%= createdAt %></a>
+        </div>
       </div>
       <div class="wc-Comment-content js-Comment-content">
         <div class="wc-Markdown">

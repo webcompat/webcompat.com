@@ -10,7 +10,7 @@
 
 .wc-Markdown {
   font-size: var(--Markdown-fontSize);
-  line-height: 1.5em;
+  line-height: 1.7em;
 }
 
   /* state */
@@ -141,7 +141,10 @@
   /* paragraph */
   .wc-Markdown p {
     overflow: hidden;
-    margin-top: 0;
+    margin: 0;
+  }
+  .wc-Markdown p + p {
+    margin-top: 1em;
   }
 
   .wc-Markdown p:not(.is-hidden) + p {

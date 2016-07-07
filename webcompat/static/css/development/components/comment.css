@@ -5,36 +5,18 @@
   --Comment-color: var(--base-variantColorLight);
   --Comment-widthAvatar: 48px;
   --Comment-heightAvatar: var(--Comment-widthAvatar);
-  --Comment-borderRadius: 4px;
 }
 
 /* Main Class */
 .wc-Comment {
   font-size: var(--Comment-fontSize);
+  box-shadow: 0 1px 3px rgba(0,0,0, 0.10), 0 1px 2px rgba(0,0,0, 0.25);
 }
 
   /* space */
   .wc-Comment + .wc-Comment {
     margin-top: 1em;
   }
-
-  /* Avatar */
-  .wc-Comment-avatar {
-    width: var(--Comment-widthAvatar);
-    height: var(--Comment-heightAvatar);
-  }
-
-    /* img */
-    .wc-Comment-avatar img {
-      width: 100%;
-    }
-
-  @media all and (max-width: 61.87em) {
-    .wc-Comment-avatar {
-      display: none;
-    }
-  }
-
   /* Body */
   .wc-Comment-body {
     position: relative;
@@ -45,8 +27,6 @@
   .wc-Comment-wrapper {
     position: relative;
     width: 100%;
-    border: solid 1px var(--Comment-color);
-    border-radius: var(--Comment-borderRadius);
     padding: 0;
     word-wrap: break-word;
     background : #fff;
@@ -61,7 +41,6 @@
     border-color: var(--Comment-color);
     border-style: solid solid dashed solid;
     border-width: 1px;
-    border-radius: var(--Comment-borderRadius) var(--Comment-borderRadius) 0 0;
     padding: 1em;
   }
 
@@ -77,24 +56,45 @@
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-    background-color: #e2e2e2;
-    padding: .4em 1em;
+    justify-content: space-between;
+    background-color: #f5f5f5;
+    padding: 1em;
   }
-
-  .wc-Comment-header-spacing {
-    padding: 0 6px;
-  }
-
-  /* Name of owner */
-  .wc-Comment-owner {
-    font-weight: bold;
-  }
-
-  @media all and (min-width: 61.88em) {
-    .wc-Comment-owner {
-      margin: 0 0 0 .6em;
+  
+  @media all and (max-width: 61.87em) {
+    .wc-Comment-header {
+      padding: .5em;
     }
   }
+
+  .wc-Comment-owner {
+    display: flex;
+    align-items: center;
+  }
+
+    /* Avatar */
+    .wc-Comment-owner-avatar {
+      width: var(--Comment-widthAvatar);
+      height: var(--Comment-heightAvatar);
+    }
+
+      /* img */
+      .wc-Comment-owner-avatar img {
+        width: 100%;
+        border-radius: 50%;
+      }
+
+    @media all and (max-width: 61.87em) {
+      .wc-Comment--owner-avatar {
+        width: 25px;
+        height: 25px;
+      }
+    }
+
+    .wc-Comment-owner-name {
+      font-weight: bold;
+      margin: 0 0 0 1em;
+    }
 
   /* Comment text */
   .wc-Comment-content {
