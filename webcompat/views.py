@@ -5,6 +5,7 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 import json
+import logging
 import urllib
 
 from flask import abort
@@ -159,6 +160,11 @@ def create_issue():
     # copy the form so we can add the full UA string to it.
     form = request.form.copy()
     form['ua_header'] = request.headers.get('User-Agent')
+    # Logging the ip and url for investigation
+    log = app.logger
+    log.setLevel(logging.INFO)
+    log.info('{ip} {url}'.format(ip=request.remote_addr, url=form['url']))
+    # form submission for 3 scenarios: authed, to be authed, anonymous
     if form.get('submit-type') == AUTH_REPORT:
         if g.user:  # If you're already authed, submit the bug.
             response = report_issue(form)
