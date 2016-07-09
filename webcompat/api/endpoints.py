@@ -12,6 +12,8 @@ credentials or as a proxy on behalf of anonymous or unauthenticated users.'''
 import json
 
 from flask import abort
+from flask import redirect
+from flask import url_for
 from flask import Blueprint
 from flask import g
 from flask import request
@@ -127,14 +129,9 @@ def get_issue_category(issue_category):
     # Note that 'new' here is primarily used on the homepage.
     # For paginated results on the /issues page, see /issues/search/new.
     elif issue_category == 'new':
-        issues = api_request('get', issues_path, params=params)
-        # api_request returns a tuple of format:
-        #       (content, status_code, response_headers)
-        # So we make a dict here for improved readability
-        content, status_code, response_headers = issues
-        if status_code != 304:
-            content = filter_new(json.loads(content))
-        return (content, status_code, response_headers)
+        params.add('labels', 'status-' + 'contactready')
+        params['labels'] = ','.join(params.getlist('labels'))
+        return api_request('get', issues_path, params=params)
     else:
         # The path doesn’t exist. 404 Not Found.
         abort(404)
