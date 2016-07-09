@@ -14,8 +14,10 @@ import json
 from flask import abort
 from flask import Blueprint
 from flask import g
+from flask import redirect
 from flask import request
 from flask import session
+from flask import url_for
 
 from webcompat import app
 from webcompat import limiter
@@ -128,7 +130,8 @@ def get_issue_category(issue_category):
     # For paginated results on the /issues page,
     # see /issues/search/needstriage.
     elif issue_category == 'new':
-        abort(301)
+        redirect(url_for('.get_issue_category',
+                         issue_category='needstriage'), 301)
     else:
         # The path doesn’t exist. 404 Not Found.
         abort(404)
@@ -189,7 +192,8 @@ def get_category_from_search(issue_category):
         query_string += ' state:closed '
         return get_search_results(query_string, params)
     elif issue_category == 'new':
-        abort(301)
+        redirect(url_for('.get_category_from_search',
+                         issue_category='needstriage'), 301)
     else:
         # no known keyword we send not found
         abort(404)
