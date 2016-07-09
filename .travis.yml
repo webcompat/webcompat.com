@@ -65,5 +65,6 @@ before_script:
 # just run the non-auth tests. otherwise, run everything.
 script:
   - nosetests
-  - if [ "$TRAVIS_SECURE_ENV_VARS" == "false" ] ; then node_modules/.bin/intern-runner reporters=console config=tests/intern-firefox functionalSuites=tests/functional-nonauth; fi
+  - if [ "$TRAVIS_SECURE_ENV_VARS" == "false" ] ; then travis_retry npm run -s test-functional-nonauth; fi
+  #- if [ "$TRAVIS_SECURE_ENV_VARS" == "false" ] ; then node_modules/.bin/intern-runner reporters=console config=tests/intern-firefox functionalSuites=tests/functional-nonauth; fi
   - if [ "$TRAVIS_SECURE_ENV_VARS" == "true" ] ; then node_modules/.bin/intern-runner reporters=console config=tests/intern user="$USER" pw="$PW"; fi
