@@ -64,9 +64,9 @@ define([
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url('/issues/' + issueNumber)))
+//TODO test, what if next line is removed, would the test fail (local, browserstack)?
         .findByCssSelector('body').click()
-        //browserstack support recommended fix for remote firefox test fail (breaks local test tho)
-        .findByCssSelector('body').type('g')
+        .type('g')
         .end()
         // look for the issue container on github.com/foo/bar/issues/N
         .findByCssSelector('.gh-header.issue').isDisplayed()
