@@ -1,3 +1,12 @@
+## 2.7.0 - 2016-07-11
+
+* Add IP logging for bug reports (to be able to investigate abuse) [Pull #1125](https://github.com/webcompat/webcompat.com/pull/1125) * [Issue #719](https://github.com/webcompat/webcompat.com/issues/719)
+* Fix CSS variable name [Pull #1122](https://github.com/webcompat/webcompat.com/pull/1122) [Issue #1121](https://github.com/webcompat/webcompat.com/issues/1121)
+* Handle Link headers from Comments endpoints [Pull #1117](https://github.com/webcompat/webcompat.com/pull/1117) [Issue #1100](https://github.com/webcompat/webcompat.com/pull/1100)
+* Replace "new" with "needs triage" [Pull #1114](https://github.com/webcompat/webcompat.com/pull/1114) [Issue #975](https://github.com/webcompat/webcompat.com/issues/975)
+* Document strict review comment policy [Pull #1112](https://github.com/webcompat/webcompat.com/pull/1112) [Issue #1110](https://github.com/webcompat/webcompat.com/issues/1110)
+* Pointer-events tweak on icon images for Chrome [Pull #1107](https://github.com/webcompat/webcompat.com/pull/1107) [Issue #1088](https://github.com/webcompat/webcompat.com/issues/1088)
+
 ## 2.6.1 - 2016-06-28
 
 * Hide NSFW images if they have a nsfw label [Pull #1087](https://github.com/webcompat/webcompat.com/pull/1087) [Issue #1001](https://github.com/webcompat/webcompat.com/pull/1001)
