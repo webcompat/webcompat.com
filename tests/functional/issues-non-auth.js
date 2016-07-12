@@ -64,6 +64,7 @@ define([
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url('/issues/' + issueNumber)))
+//TODO test, what if next line is removed, would the test fail (local, browserstack)?
         .findByCssSelector('body').click()
         .type('g')
         .end()
