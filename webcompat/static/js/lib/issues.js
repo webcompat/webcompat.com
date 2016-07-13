@@ -371,8 +371,7 @@ issues.MainView = Backbone.View.extend({
     $(document.body).addClass('language-html');
     var issueNum = {number: issueNumber};
     this.issue = new issues.Issue(issueNum);
-    this.commentPage = {page: 1};
-    this.comments = new issues.CommentsCollection([this.commentPage]);
+    this.comments = new issues.CommentsCollection({pageNumber: 1});
     this.initSubViews();
     this.fetchModels();
   },
@@ -460,7 +459,7 @@ issues.MainView = Backbone.View.extend({
     //in consecutive pages
 
     _.each(_.range(2, count), function(i) {
-      this.comments.fetchPage({page : i, headers: {'Accept': 'application/json'}});
+      this.comments.fetchPage({pageNumber: i, headers: {'Accept': 'application/json'}});
     },this);
   },
 

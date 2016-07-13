@@ -7,14 +7,14 @@ var issues = issues || {};
 issues.CommentsCollection = Backbone.Collection.extend({
   model: issues.Comment,
   url: function() {
-    return '/api/issues/' + issueNumber + '/comments?page=' + this.param;
+    return '/api/issues/' + issueNumber + '/comments?page=' + this.pageNumber;
   },
-  initialize: function(param) {
-    this.param = param[0].page;
+  initialize: function(options) {
+    this.pageNumber = options.pageNumber;
   },
-  fetchPage: function(commentPage, options) {
-    if (commentPage.page) {
-      this.param = commentPage.page;
+  fetchPage: function(options) {
+    if (options.pageNumber) {
+      this.pageNumber = options.pageNumber;
     }
     return this.fetch(options);
   }
