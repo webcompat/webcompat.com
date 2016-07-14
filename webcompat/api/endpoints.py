@@ -130,7 +130,7 @@ def get_issue_category(issue_category):
     # For paginated results on the /issues page,
     # see /issues/search/needstriage.
     elif issue_category == 'new':
-        redirect(url_for('.get_issue_category',
+        return redirect(url_for('api.get_issue_category',
                          issue_category='needstriage'), 301)
     else:
         # The path doesn’t exist. 404 Not Found.
@@ -192,7 +192,7 @@ def get_category_from_search(issue_category):
         query_string += ' state:closed '
         return get_search_results(query_string, params)
     elif issue_category == 'new':
-        redirect(url_for('.get_category_from_search',
+        return redirect(url_for('api.get_category_from_search',
                          issue_category='needstriage'), 301)
     else:
         # no known keyword we send not found
