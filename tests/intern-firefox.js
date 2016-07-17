@@ -14,7 +14,9 @@ define([
   ];
 
   intern.environments = [
-    { browserName: 'firefox'}
+    { browserName: 'firefox',
+      version: '47'
+    }
   ];
 
   intern.tunnel = 'Tunnel';
