@@ -27,11 +27,20 @@ env:
     - ISSUES_REPO_URI=webcompat/webcompat-tests/issues
     - FAKE_ID=e80a666fbf1fa9ea18db
     - FAKE_SECRET=688c4546f09624f8c44773b22268064dfca19a59
-    - TRAVIS_NODE_VERSION="0.12.7"
+    - TRAVIS_NODE_VERSION="4.4.7"
+    #- TRAVIS_NODE_VERSION="0.12.7"
+    # BrowserStack (SELENIUM_HOST, SELENIUM_PORT, BS_AUTOMATE_PROJECT, BS_AUTOMATE_BUILD, secure - 2 lines)
+    - SELENIUM_HOST=hub.browserstack.com
+    - SELENIUM_PORT=80
+    - BS_AUTOMATE_PROJECT="$TRAVIS_REPO_SLUG"
+    - BS_AUTOMATE_BUILD="Travis build No. $TRAVIS_BUILD_NUMBER for $TRAVIS_REPO_SLUG"
+    - secure: GHdEMwyqEtazcI9tcFKCS7uagsJPPN8tbp52aZztfTQTDV2NZ89FJKqphJIdgTgs+7lr7aRRR6KIM2yGi3AgMj6eYPgnmGuykSRc2xMNVz34uw18rWeJqmsebVVLnDTONkyjK6XH3qWMwfe8XB4dlDiqIu+w4/05tu11snrmps5WLG39RK5nbH5tbelPPvV+8z53vAKgVIETKRjOCe0jW99264kPJJ2KmHdZdeHN6NxVblG5Nz4yhyl4m2ASvh+Um6/GraanwKsXlm5E5OqN6r3w2+UClRa9mhkCXwzaF+jI0I+0WVuLbbg9SR1AhiUY8DcCYbQR0kugzNR2E/aY0wQE52mDcx+SM1aNP+d0RSsO27KM4cTEM0mCB1viKYfAlMvuMSRMtfGOFGwqE8Q2SxE2ATKGLo2z281wNSQxtJgMSfMOPLadKoT296MH2mGvL2qXs8yVO4gKootqgks1qbuSyspSH4j6wI4SeDhPxTx59NrVIwkDU4nxfwdUNyUmNFBnyFIgCpr9PYtKGP8Ro7VhqAyqXy/q8ot9eaf5ZSnnPCmBWklPGy61kKfrPqFJUKf8qpxJ9JT5Blah3jPQdV09gNbOKOMvp1dO4uyIMpd4U0MN8kslEgwqxXi0PUe/mcqIoYHJnWjWzi+mpnqBo//83FLgtoPNRkrlWyjb2YE=
+    - secure: 0enD6VWqOLBqtO8+P8JvTGyLTQwljxtjTGV9yR+J8uFcCDDgQFBWQ2eRbX7xRl6XvcLuYkqAtLsEP/F2bmY+4OJ03SY8/dtkJ+htEHkCSXhNRvIE0NphqkijzUlZRV+KAS6wBi0v5bk4xmsbDIVPVursPpvKjOnho0I7vi31j8akwIJHino3FGMK6p2QsTAKZk326yBOQHKAO1VNX+C5cohce19XSYkKsGMIa2g54t5Qqlp9xG/txArYtqiNA2vkWGD04+LMSmuxmp/iGbITfN39myrSlkUIkl5CqkBNpCT9QAtRfEl4tCMgIMbfH0SPBD1NDjn1X/DvLw7gOHeSuNW+slYe+brfu7WGI6aeuFZzOS1i6xwni7tczj8DUS/Q+pDn5P9t5F5hHCMgp0vMup8kI7ytaHiA4RNGxgkzzBK+8vhnbgKfYnNtQoncWKXd7USiIWYYyrXVmst5N6Nn4xXsEdgJEsfzKyzLjSw+ST7j6G2/kVZKot96UL3cxug85XersMrgy3+xXKMg7U20T81G86paEKL7LXGzPnIbYMXq2Xb6maOPIOGWOMvAcKLlBuapgxsqPNv+nYRXthrEnNRnjmO+TUmVH7sqewotpHkys27CUs0q/ADRGtY255A1Yy9lVpEeuFJXxf85dTlx+heV9BAXDSxId+sJMjmU7qM=
 
 before_install:
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
+  # next 3 lines required for Travis only test
   - "mkdir -p $HOME/.selenium && cd $HOME/.selenium && wget -nc http://selenium-release.storage.googleapis.com/2.53/selenium-server-standalone-2.53.1.jar"
   - java -jar selenium-server-standalone-2.53.1.jar &> /dev/null &
   - cd -
@@ -57,5 +66,6 @@ before_script:
 # just run the non-auth tests. otherwise, run everything.
 script:
   - nosetests
-  - if [ "$TRAVIS_SECURE_ENV_VARS" == "false" ] ; then node_modules/.bin/intern-runner reporters=console config=tests/intern functionalSuites=tests/functional-nonauth ; fi
-  - if [ "$TRAVIS_SECURE_ENV_VARS" == "true" ] ; then node_modules/.bin/intern-runner reporters=console config=tests/intern user="$USER" pw="$PW" ; fi
+  - if [ "$TRAVIS_SECURE_ENV_VARS" == "false" ] ; then travis_retry npm run test-functional-nonauth; fi
+  #- if [ "$TRAVIS_SECURE_ENV_VARS" == "false" ] ; then node_modules/.bin/intern-runner reporters=console config=tests/intern-firefox functionalSuites=tests/functional-nonauth; fi
+  - if [ "$TRAVIS_SECURE_ENV_VARS" == "true" ] ; then node_modules/.bin/intern-runner reporters=console config=tests/intern user="$USER" pw="$PW"; fi
