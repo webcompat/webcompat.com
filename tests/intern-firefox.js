@@ -9,13 +9,17 @@ define([
   './intern'
 ], function(intern) {
 
+  intern.capabilities = {
+    'selenium-version': '2.53.0'
+  };
+
   intern.functionalSuites = [
     'tests/functional-nonauth'
   ];
 
   intern.environments = [
     { browserName: 'firefox',
-      version: '47'
+      version: '46'
     }
   ];
 

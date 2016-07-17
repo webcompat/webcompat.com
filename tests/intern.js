@@ -28,14 +28,14 @@ define(['intern/lib/args'], function(args) {
 
     // Selenium vers on BrowserStack
     capabilities: {
-      'browserstack.selenium_version': '2.53.1'
+      'browserstack.selenium_version': '2.53.0'
     },
 
     // Required for BrowserStack, Maximum number of simultaneous integration tests allowed
     maxConcurrency: 2,
 
     environments: [
-      { browser: 'firefox', browser_version: '47', os : 'OS X', os_version : 'El Capitan' },
+      { browser: 'firefox', browser_version: '46', os : 'OS X', os_version : 'El Capitan' },
       { browser: 'chrome', browser_version: '50', os : 'OS X', os_version : 'El Capitan' }
     ],
 
