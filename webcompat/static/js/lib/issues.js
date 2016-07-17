@@ -371,7 +371,7 @@ issues.MainView = Backbone.View.extend({
     $(document.body).addClass('language-html');
     var issueNum = {number: issueNumber};
     this.issue = new issues.Issue(issueNum);
-    this.comments = new issues.CommentsCollection([]);
+    this.comments = new issues.CommentsCollection({pageNumber: 1});
     this.initSubViews();
     this.fetchModels();
   },
@@ -426,17 +426,16 @@ issues.MainView = Backbone.View.extend({
 
       // If there are any comments, go fetch the model data
       if (this.issue.get('commentNumber') > 0) {
-        this.comments.fetch(headersBag).success(_.bind(function() {
+        this.comments.fetch(headersBag).success(_.bind(function(response) {
           this.addExistingComments();
-          // the add event is fired when a model is added to the collection.
           this.comments.bind('add', _.bind(this.addComment, this));
-
           // If there's a #hash pointing to a comment (or elsewhere)
           // scrollTo it.
           if (location.hash !== '') {
             var _id = $(location.hash);
             window.scrollTo(0, _id.offset().top);
           }
+          (response[0].lastPageNumber > 1) ? this.getRemainingComments(++response[0].lastPageNumber) : '';
         }, this)).error(function() {
           var msg = 'There was an error retrieving issue comments. Please reload to try again.';
           wcEvents.trigger('flash:error', {message: msg, timeout: 4000});
@@ -453,6 +452,17 @@ issues.MainView = Backbone.View.extend({
       }
     });
   },
+
+  getRemainingComments: function(count) {
+    //The first 30 comments for page 1 has already been loaded.
+    //If more than 30 comments are there the remaining comments are rendered in sets of 30
+    //in consecutive pages
+
+    _.each(_.range(2, count), function(i) {
+      this.comments.fetchPage({pageNumber: i, headers: {'Accept': 'application/json'}});
+    },this);
+  },
+
   addComment: function(comment) {
     // if there's a nsfw label, add the whatever class.
     var view = new issues.CommentView({model: comment});
