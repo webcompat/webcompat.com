@@ -27,7 +27,8 @@ env:
     - ISSUES_REPO_URI=webcompat/webcompat-tests/issues
     - FAKE_ID=e80a666fbf1fa9ea18db
     - FAKE_SECRET=688c4546f09624f8c44773b22268064dfca19a59
-    - TRAVIS_NODE_VERSION="0.12.7"
+    - TRAVIS_NODE_VERSION="4.4.7"
+    #- TRAVIS_NODE_VERSION="0.12.7"
     # BrowserStack (SELENIUM_HOST, SELENIUM_PORT, BS_AUTOMATE_PROJECT, BS_AUTOMATE_BUILD, secure - 2 lines)
     - SELENIUM_HOST=hub.browserstack.com
     - SELENIUM_PORT=80
@@ -65,6 +66,6 @@ before_script:
 # just run the non-auth tests. otherwise, run everything.
 script:
   - nosetests
-  - if [ "$TRAVIS_SECURE_ENV_VARS" == "false" ] ; then travis_retry npm run -s test-functional-nonauth; fi
+  - if [ "$TRAVIS_SECURE_ENV_VARS" == "false" ] ; then travis_retry npm run test-functional-nonauth; fi
   #- if [ "$TRAVIS_SECURE_ENV_VARS" == "false" ] ; then node_modules/.bin/intern-runner reporters=console config=tests/intern-firefox functionalSuites=tests/functional-nonauth; fi
   - if [ "$TRAVIS_SECURE_ENV_VARS" == "true" ] ; then node_modules/.bin/intern-runner reporters=console config=tests/intern user="$USER" pw="$PW"; fi
