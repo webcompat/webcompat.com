@@ -13,8 +13,12 @@ define([
     { browserName: 'firefox'}
   ];
 
-  intern.tunnel = 'NullTunnel';
-  intern.tunnelOptions = {};
+  intern.tunnel = 'Tunnel';
+  intern.tunnelOptions = {
+    //port is not getting read so moved it into host value
+    host: '127.0.0.1:4444',
+    path: '/wd/hub'
+  };
 
   return intern;
 });

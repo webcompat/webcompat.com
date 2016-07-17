@@ -18,7 +18,6 @@ define([
   intern.tunnelOptions = {
     host: '127.0.0.1:4444',
     //port is not getting read so moved it into host value
-    //port: '4444',
     path: '/wd/hub'
   };
 
