@@ -10,7 +10,7 @@ define([
 ], function(intern) {
 
   intern.capabilities = {
-    'selenium-version': '2.53.0'
+    'selenium-version': '2.53.1'
   };
 
   intern.functionalSuites = [
@@ -19,11 +19,11 @@ define([
 
   intern.environments = [
     { browserName: 'firefox',
-      version: '46'
+      version: '47'
     }
   ];
 
-  intern.tunnel = 'Tunnel';
+  intern.tunnel = 'NullTunnel';
   intern.tunnelOptions = {
     //port is not getting read so moved it into host value
     host: '127.0.0.1:4444',
