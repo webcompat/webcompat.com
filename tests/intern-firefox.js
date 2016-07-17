@@ -9,6 +9,10 @@ define([
   './intern'
 ], function(intern) {
 
+  intern.functionalSuites = [
+    'tests/functional-nonauth'
+  ];
+
   intern.environments = [
     { browserName: 'firefox'}
   ];

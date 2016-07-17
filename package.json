@@ -53,7 +53,7 @@
     "test-browserstack": "intern-runner config=tests/intern",
     "test": "intern-runner config=tests/intern-firefox",
     "test-chrome": "intern-runner config=tests/intern-chrome",
-    "test-functional-nonauth": "intern-runner config=tests/intern-firefox functionalSuites=tests/functional-nonauth"
+    "test-functional-nonauth": "intern-runner config=tests/intern-firefox"
   },
   "eslintConfig": {
     "env": {
