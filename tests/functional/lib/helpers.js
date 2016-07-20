@@ -26,6 +26,7 @@ define([
       .findByCssSelector('input[type=submit]').submit()
       .end()
       .findByCssSelector('button').submit()
+      .sleep(10000)
       .end();
   }
 

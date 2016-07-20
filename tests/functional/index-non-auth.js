@@ -32,7 +32,7 @@ define([
         .get(require.toUrl(url('/')))
         .findByCssSelector('.js-Navbar-link').getVisibleText()
         .then(function(text) {
-          assert.include(text, 'Download our Firefox');
+          assert.include(text, 'Download our');
         })
         .end();
     },

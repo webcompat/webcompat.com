@@ -71,7 +71,7 @@ define([
         .end();
     },
 
-    'Search works': function() {
+    'Search works by icon click': function() {
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url('/issues')))
@@ -79,6 +79,25 @@ define([
         .type('vladvlad')
         .end()
         .findByCssSelector('.js-SearchForm button').click()
+        .end()
+        // this is lame, but we gotta wait on search results.
+        .sleep(3000)
+        .findByCssSelector('.wc-IssueList:nth-of-type(1) a').getVisibleText()
+        .then(function(text) {
+          assert.include(text, 'vladvlad', 'The search results show up on the page.');
+        })
+        .end();
+    },
+
+    'Search works by Return key': function() {
+      return this.remote
+        .setFindTimeout(intern.config.wc.pageLoadTimeout)
+        .get(require.toUrl(url('/issues')))
+        // time for the issues list to load, otherwise test breaks locally
+        .sleep(2000)
+        .findByCssSelector('.js-SearchForm input')
+        .type('vladvlad')
+        .type(keys.ENTER)
         .end()
         // this is lame, but we gotta wait on search results.
         .sleep(3000)
