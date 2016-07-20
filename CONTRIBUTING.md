@@ -2,6 +2,9 @@
 
 You are welcome to contribute to this project. Here are the guidelines we try to stick to in this project.
 
+Test
+Testkj
+
 
 * [Question or Problem](#question-or-problem)
 * [Filing an Issue](#filing-an-issue)
@@ -77,15 +80,15 @@ project.
 
 All code contributions should come in the form of a [pull request](https://help.github.com/articles/creating-a-pull-request), as a topic branch.
 
-1. Have a quick search through existing issues and pull requests so you don't waste any of your time.  
+1. Have a quick search through existing issues and pull requests so you don't waste any of your time.
 
 2. If no existing issue covers the change you want to make, please [open a new issue](https://github.com/webcompat/webcompat.com/issues/new) before you start coding.
 
-3. Fork repository  
+3. Fork repository
 
-    ![master](http://f.cl.ly/items/1E3f0A0I2A2b3T2L2I2c/forked.png)  
-  
-    You'll probably want to [set up a local development environment](#working-environment-setup) to get that far. If you've already been through this process, make sure you've [set the main repo as an upstream remote](https://help.github.com/articles/configuring-a-remote-for-a-fork/) and make sure [your fork is up to date](https://help.github.com/articles/syncing-a-fork/) before sending pull requests.  
+    ![master](http://f.cl.ly/items/1E3f0A0I2A2b3T2L2I2c/forked.png)
+
+    You'll probably want to [set up a local development environment](#working-environment-setup) to get that far. If you've already been through this process, make sure you've [set the main repo as an upstream remote](https://help.github.com/articles/configuring-a-remote-for-a-fork/) and make sure [your fork is up to date](https://help.github.com/articles/syncing-a-fork/) before sending pull requests.
 
 4. Make your changes in a new branch
 
@@ -220,7 +223,7 @@ sudo apt-get install python2.7 python2.7-dev
 In Ubuntu, sometimes even after installing Node.js, the command `node -v` does not show the installed version. To complete installation, a symbolic link has to be created to the sbin folder.
 
 ```
-#remove old symbolic links if any 
+#remove old symbolic links if any
 sudo rm -r /usr/bin/node
 
 #add new symbolic link
