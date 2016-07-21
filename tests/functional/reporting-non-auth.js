@@ -58,6 +58,8 @@ define([
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url + '?open=1'))
+        //allow form load
+        .sleep(2000)
         .findByCssSelector('#url').click()
         .end()
         .findByCssSelector('#browser').click()
@@ -89,6 +91,8 @@ define([
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url + '?open=1'))
+        //allow form load
+        .sleep(2000)
         .findByCssSelector('#description').click()
         .end()
         // wait a bit
