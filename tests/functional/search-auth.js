@@ -75,6 +75,8 @@ define([
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url('/issues')))
+        // time for the issues list to load, otherwise test breaks locally
+        .sleep(2000)
         .findByCssSelector('.js-SearchForm input')
         .type('vladvlad')
         .end()
