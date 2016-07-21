@@ -26,6 +26,7 @@ define([
       .findByCssSelector('input[type=submit]').submit()
       .end()
       .findByCssSelector('button').submit()
+      // allow time for local test entry of github auth code
       .sleep(10000)
       .end();
   }
