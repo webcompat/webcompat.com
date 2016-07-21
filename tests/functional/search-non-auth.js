@@ -39,6 +39,8 @@ define([
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url('/issues') + params))
+        //add timeout to allow issues to load
+        .sleep(2000)
         .findByCssSelector('.wc-IssueList:nth-of-type(1) a').getVisibleText()
         .then(function(text) {
           assert.include(text, 'vladvlad', 'The search query results show up on the page.');
@@ -47,20 +49,6 @@ define([
         .getCurrentUrl()
         .then(function(currUrl) {
           assert.include(currUrl, 'q=vladvlad', 'Our params didn\'t go anywhere.');
-        })
-        .end();
-    },
-
-    'Clicking on label search suggestion works': function() {
-      return this.remote
-        .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url('/issues')))
-        .findByCssSelector('[data-remotename=browser-android]').click()
-        .end()
-        // click the first suggestion, which is "android"
-        .findByCssSelector('.wc-IssueList:nth-child(1) > div:nth-child(2) > span:nth-child(1) > a:nth-child(1)').getVisibleText()
-        .then(function(text) {
-          assert.include(text, 'android', 'Clicking on a suggested label gets you results.');
         })
         .end();
     },
