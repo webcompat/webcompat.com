@@ -1,3 +1,11 @@
+## 2.7.1 - 2016-07-27
+
+* Adds block for qiangpiaoruanjian [Pull #1142](https://github.com/webcompat/webcompat.com/pull/1142) [Issue #1141](https://github.com/webcompat/webcompat.com/issues/1141)
+* Render all comments (not just 30) [Pull #1119](https://github.com/webcompat/webcompat.com/pull/1119) [Issue #1058](https://github.com/webcompat/webcompat.com/issues/1058)
+* Add missing fixture files [Pull #1129](https://github.com/webcompat/webcompat.com/pull/1129) [Issue #1123](https://github.com/webcompat/webcompat.com/pull/1123)
+* Add 301 redirect for /new endpoint [Pull #1130](https://github.com/webcompat/webcompat.com/pull/1130) [Issue #1120](https://github.com/webcompat/webcompat.com/issues/1120)
+
+
 ## 2.7.0 - 2016-07-11
 
 * Add IP logging for bug reports (to be able to investigate abuse) [Pull #1125](https://github.com/webcompat/webcompat.com/pull/1125) * [Issue #719](https://github.com/webcompat/webcompat.com/issues/719)
