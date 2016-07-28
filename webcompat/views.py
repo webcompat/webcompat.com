@@ -159,6 +159,16 @@ def show_issues():
 def create_issue():
     # copy the form so we can add the full UA string to it.
     form = request.form.copy()
+    # see https://github.com/webcompat/webcompat.com/issues/1141
+    spamlist = ['qiangpiaoruanjian']
+    for spam in spamlist:
+        if spam in form.get('url'):
+            msg = (u'Anonymous reporting for qiangpiaoruanjian.cn '
+                   'is temporarily disabled. Please see '
+                   'https://github.com/webcompat/webcompat.com/issues/1141 '
+                   'for more details.')
+            flash(msg, 'notimeout')
+            return redirect(url_for('index'))
     form['ua_header'] = request.headers.get('User-Agent')
     # Logging the ip and url for investigation
     log = app.logger
