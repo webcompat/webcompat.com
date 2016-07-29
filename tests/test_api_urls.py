@@ -71,6 +71,19 @@ class TestAPIURLs(unittest.TestCase):
         self.assertEqual(rv.status_code, 200)
         self.assertEqual(rv.content_type, 'application/json')
 
+    def test_api_comments_link_header_auth(self):
+        '''API access to comments greater than 30 returns pagination in Link header of the response.'''
+        query_string = {'callback': 'foo'}
+        rv = self.app.get('/api/issues/398/comments', query_string=query_string, environ_base=headers)
+        self.assertTrue = all(x in rv.data for x in ['Link', 'rel', 'next', 'last', 'page'])
+        self.assertEqual(rv.status_code, 200)
+        self.assertEqual(rv.content_type, 'application/json')
+        '''API access to comments less than 30 does not return any link header in the response.'''
+        rv = self.app.get('/api/issues/4/comments', query_string=query_string, environ_base=headers)
+        self.assertTrue = not all(x in rv.data for x in ['Link', 'rel', 'next', 'last', 'page'])
+        self.assertEqual(rv.status_code, 200)
+        self.assertEqual(rv.content_type, 'application/json')
+
     def test_api_set_labels_without_auth(self):
         '''API setting labels without auth returns JSON 403 error code.'''
         rv = self.app.post('/api/issues/1/labels',
