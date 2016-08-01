@@ -74,6 +74,7 @@ class TestAPIURLs(unittest.TestCase):
     def test_api_comments_link_header_auth(self):
         '''API access to comments greater than 30 returns pagination in Link header of the response.'''
         query_string = {'callback': 'foo'}
+        '''Force a JSONP callback response because it gives us the header properties we want to test.'''
         rv = self.app.get('/api/issues/398/comments', query_string=query_string, environ_base=headers)
         self.assertTrue = all(x in rv.data for x in ['Link', 'rel', 'next', 'last', 'page'])
         self.assertEqual(rv.status_code, 200)

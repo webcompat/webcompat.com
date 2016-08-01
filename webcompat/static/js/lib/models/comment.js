@@ -25,14 +25,13 @@ issues.Comment = Backbone.Model.extend({
       createdAt: moment(response.created_at).fromNow(),
       rawBody: response.body
     });
-    var linkHeaderRegex = /(?=.*?(link|last|next|comments|page)).*/ 
-    if (linkHeaderRegex.test(jqXHR.xhr.getAllResponseHeaders())) { 
-      response.lastPageNumber = this.parseHeader(jqXHR.xhr.getResponseHeader('Link')).last.split('\?page\=')[1]; 
+    var linkHeader = jqXHR.xhr.getResponseHeader('Link');
+    if (linkHeader !== null && !!this.parseHeader(linkHeader).last) {
+      response.lastPageNumber = this.parseHeader(linkHeader).last.split('\?page\=')[1];
     }
-    else if(!jqXHR.xhr.getAllResponseHeaders().includes('link:')){ 
-      response.lastPageNumber = "1";
+    else {
+      response.lastPageNumber = '1';
     }
-
   },
   parseHeader: function(linkHeader) {
   //TODO: Abstract 'parseHeader' method from comment.js in to a mixin

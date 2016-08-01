@@ -435,7 +435,9 @@ issues.MainView = Backbone.View.extend({
             var _id = $(location.hash);
             window.scrollTo(0, _id.offset().top);
           }
-          (response[0].lastPageNumber > 1) ? this.getRemainingComments(++response[0].lastPageNumber) : '';
+          if (response[0].lastPageNumber > 1) {
+            this.getRemainingComments(++response[0].lastPageNumber);
+          }
         }, this)).error(function() {
           var msg = 'There was an error retrieving issue comments. Please reload to try again.';
           wcEvents.trigger('flash:error', {message: msg, timeout: 4000});
@@ -460,7 +462,7 @@ issues.MainView = Backbone.View.extend({
 
     _.each(_.range(2, count), function(i) {
       this.comments.fetchPage({pageNumber: i, headers: {'Accept': 'application/json'}});
-    },this);
+    }, this);
   },
 
   addComment: function(comment) {
