@@ -315,11 +315,16 @@ issues.StateButtonView = Backbone.View.extend({
 
     issues.events.on('textarea:content', _.bind(function() {
       this.hasComment = true;
+      var buttonText;
       if (this.model.get('state') === 'open') {
-        this.$el.text(this.template({state: 'Close and comment'}));
+        buttonText = 'Close and comment';
       } else {
-        this.$el.text(this.template({state: 'Reopen and comment'}));
+        buttonText = 'Reopen and comment';
       }
+      this.$el.html(this.template({
+        state: buttonText,
+        stateClass: buttonText.split(' ').join('-').toLowerCase()
+      }));
     }, this));
 
     issues.events.on('textarea:empty', _.bind(function() {
@@ -343,7 +348,10 @@ issues.StateButtonView = Backbone.View.extend({
     } else {
       buttonText = 'Reopen Issue';
     }
-    this.$el.text(this.template({state: buttonText}));
+    this.$el.html(this.template({
+      state: buttonText,
+      stateClass: buttonText.split(' ').join('-').toLowerCase()
+    }));
     return this;
   },
   toggleState: function() {

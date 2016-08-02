@@ -30,7 +30,7 @@
     <div class="wc-Comment-button">
       <button class="wc-Button wc-Button--action js-Issue-state-button">
         <script type="text/template" id="state-button-tmpl">
-        <%= state %>
+        <span class="js-comment-<%= stateClass %>"><%= state %></span>
         </script>
       </button>
       <button value="comment" class="wc-Button wc-Button--default js-Issue-comment-button" type="submit">Comment</button>
