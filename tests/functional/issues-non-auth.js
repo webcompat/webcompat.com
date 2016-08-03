@@ -6,8 +6,9 @@ define([
   'intern',
   'intern!object',
   'intern/chai!assert',
+  'tests/functional/lib/helpers',
   'require'
-], function(intern, registerSuite, assert, require) {
+], function(intern, registerSuite, assert, FunctionalHelpers, require) {
   'use strict';
 
   var url = function(path) {
@@ -21,7 +22,7 @@ define([
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url('/issues/100')))
-        .sleep(2000)
+        .then(FunctionalHelpers.visibleByQSA('h1.js-Issue-title'))
         .findByCssSelector('h1.js-Issue-title').getVisibleText()
         .then(function(text) {
           assert.include(text, 'Issue 100:', 'Issue title displayed');
@@ -42,7 +43,7 @@ define([
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url('/issues/100')))
-        .sleep(1000)
+        .then(FunctionalHelpers.visibleByQSA('.js-Issue-comment:nth-of-type(1)'))
         .findByCssSelector('.js-Issue-comment').isDisplayed()
         .then(function(isDisplayed) {
           assert.equal(isDisplayed, true);
@@ -52,7 +53,6 @@ define([
           assert.equal(text, 'GIGANTOR', 'Commenter name displayed.');
         })
         .end()
-        .sleep(500)
         .findByCssSelector('.js-Comment-content').getVisibleText()
         .then(function(text) {
           assert.equal(text, 'Today\'s date is Mon Sep 28 2015', 'Comment is displayed.');
@@ -85,6 +85,7 @@ define([
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url('/issues/252')))
         // Click on QR code button to open
+        .then(FunctionalHelpers.visibleByQSA('.js-QrCode-launcher'))
         .findByCssSelector('.js-QrCode-launcher').click()
         .end()
         .findByCssSelector('.wc-QrCode-image').isDisplayed()
@@ -99,6 +100,7 @@ define([
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url('/issues/252')))
         // Click on QR code button to open
+        .then(FunctionalHelpers.visibleByQSA('.js-QrCode-launcher'))
         .findByCssSelector('.js-QrCode-launcher').click()
         .end()
         .findByCssSelector('.wc-QrCode-image').isDisplayed()
@@ -121,6 +123,7 @@ define([
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url('/issues/252')))
         // Click on QR code button to open
+        .then(FunctionalHelpers.visibleByQSA('.js-QrCode-launcher'))
         .findByCssSelector('body').click()
         .type('q')
         .end()
@@ -136,6 +139,7 @@ define([
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url('/issues/252')))
         // Click on QR code button to open
+        .then(FunctionalHelpers.visibleByQSA('.js-QrCode-launcher'))
         .findByCssSelector('.js-QrCode-launcher').click()
         .end()
         .findByCssSelector('.wc-QrCode-image').isDisplayed()
@@ -157,7 +161,7 @@ define([
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url('/issues/396')))
-        .sleep(1000)
+        .then(FunctionalHelpers.visibleByQSA('.js-Issue-commentList .js-Comment-content p'))
         .findByCssSelector('.js-Issue-commentList .js-Comment-content p').getAttribute('class')
         .then(function(className) {
           assert.include(className, 'wc-Comment-content-nsfw');
@@ -169,7 +173,7 @@ define([
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url('/issues/396')))
-        .sleep(1000)
+        .then(FunctionalHelpers.visibleByQSA('.js-Issue-commentList .js-Comment-content p'))
         .findByCssSelector('.js-Issue-commentList .js-Comment-content p').getAttribute('class')
         .then(function(className) {
           assert.include(className, 'wc-Comment-content-nsfw');
