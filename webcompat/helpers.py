@@ -379,6 +379,7 @@ def mockable_response(func):
                 print('Expected fixture file: ' + file_path + '.json')
             else:
                 file_path = FIXTURES_PATH + request.path
+                print('Expected fixture file: ' + file_path + '.json')
             with open(file_path + '.json', 'r') as f:
                 data = f.read()
                 return (data, 200, get_fixture_headers(data))
