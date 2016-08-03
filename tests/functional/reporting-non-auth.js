@@ -6,8 +6,9 @@ define([
   'intern',
   'intern!object',
   'intern/chai!assert',
+  'tests/functional/lib/helpers',
   'require'
-], function(intern, registerSuite, assert, require) {
+], function(intern, registerSuite, assert, FunctionalHelpers, require) {
   'use strict';
 
   var url = intern.config.siteRoot;
@@ -45,8 +46,7 @@ define([
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url + '?open=1'))
-        // wait a second
-        .sleep(1000)
+        .then(FunctionalHelpers.visibleByQSA('button:contains(Report via)'))
         .findByCssSelector('#submitgithub').getVisibleText()
         .then(function(text) {
           assert.include(text, 'Report via'); //Report via GitHub (logged out)
@@ -59,7 +59,7 @@ define([
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url + '?open=1'))
         //allow form load
-        .sleep(2000)
+        .then(FunctionalHelpers.visibleByQSA('#url'))
         .findByCssSelector('#url').click()
         .end()
         .findByCssSelector('#browser').click()
@@ -67,7 +67,7 @@ define([
         .findByCssSelector('#url').click()
         .end()
         // wait a bit
-        .sleep(100)
+        .then(FunctionalHelpers.visibleByQSA('.wc-Form-helpMessage'))
         .findByXpath('//*[@id="js-ReportForm"]/div/form/div[1]/div[2]/div[1]').getAttribute('class')
         .then(function(className) {
           assert.include(className, 'js-form-error');
@@ -77,7 +77,7 @@ define([
         .findByCssSelector('#url').type('sup')
         .end()
         // wait a bit
-        .sleep(100)
+        .sleep(250)
         // xpath to the #url formGroup
         .findByXpath('//*[@id="js-ReportForm"]/div/form/div[1]/div[2]/div[1]').getAttribute('class')
         .then(function(className) {
@@ -91,12 +91,10 @@ define([
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url + '?open=1'))
-        //allow form load
-        .sleep(2000)
+        .then(FunctionalHelpers.visibleByQSA('#description'))
         .findByCssSelector('#description').click()
         .end()
-        // wait a bit
-        .sleep(100)
+        .then(FunctionalHelpers.visibleByQSA('.is-error > fieldset:nth-child(1) > div:nth-child(1) > span:nth-child(2)'))
         .findByXpath('//*[@id="js-ReportForm"]/div/form/div[1]/div[1]/div').getAttribute('class')
         .then(function(className) {
           assert.include(className, 'is-error js-form-error');
@@ -107,7 +105,7 @@ define([
         .findByCssSelector('#problem_category-0').click()
         .end()
         // wait a bit
-        .sleep(100)
+        .sleep(250)
         // validation message should be removed now
         .findByXpath('//*[@id="js-ReportForm"]/div/form/div[1]/div[1]/div').getAttribute('class')
         .then(function(className) {
@@ -160,7 +158,7 @@ define([
         .findByCssSelector('#description').click()
         .end()
         // wait a bit
-        .sleep(100)
+        .sleep(250)
          // now make sure the buttons aren't disabled anymore
         .findByCssSelector('#submitanon').getAttribute('class')
         .then(function(className) {
