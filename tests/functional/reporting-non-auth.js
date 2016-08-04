@@ -46,7 +46,14 @@ define([
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url + '?open=1'))
-        .then(FunctionalHelpers.visibleByQSA('button:contains(Report via)'))
+        // do some junk here just so we know the form-open animation is done
+        .then(FunctionalHelpers.visibleByQSA('#url'))
+        .findByCssSelector('#url').click()
+        .end()
+        .findByCssSelector('#browser').click()
+        .end()
+        .findByCssSelector('#url').click()
+        .end()
         .findByCssSelector('#submitgithub').getVisibleText()
         .then(function(text) {
           assert.include(text, 'Report via'); //Report via GitHub (logged out)
