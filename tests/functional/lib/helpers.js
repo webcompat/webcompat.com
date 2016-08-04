@@ -14,6 +14,8 @@ define([
     return intern.config.siteRoot + path;
   };
 
+  var manualLoginDelay = intern.config.wc.loginDelay ? 10000 : 0;
+
   function login(context) {
     return context.remote
       .setFindTimeout(intern.config.wc.pageLoadTimeout)
@@ -39,7 +41,8 @@ define([
           }
         });
       })
-      .sleep(10000)
+      // allow time for local test entry of github auth code
+      .sleep(manualLoginDelay)
       .end();
   }
 
