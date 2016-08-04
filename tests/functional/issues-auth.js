@@ -30,9 +30,10 @@ define([
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url('/issues/69')))
+        .then(FunctionalHelpers.visibleByQSA('.js-Issue-state-button'))
         .findByCssSelector('.js-Issue-state-button').click()
-        .sleep(2000)
         .end()
+        .then(FunctionalHelpers.visibleByQSA('.js-tag:contains(Closed)'))
         .findByCssSelector('.js-tag').getVisibleText()
         .then(function(text) {
           assert.equal(text, 'Closed', 'Closed state text is displayed');
@@ -44,8 +45,8 @@ define([
         })
         .end()
         .findByCssSelector('.js-Issue-state-button').click()
-        .sleep(2000)
         .end()
+        .then(FunctionalHelpers.visibleByQSA('.js-tag:contains(Ready)'))
         .findByCssSelector('.js-tag').getVisibleText()
         .then(function(text) {
           assert.equal(text, 'Ready for Outreach', 'Ready for Outreach state is displayed');

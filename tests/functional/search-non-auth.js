@@ -7,8 +7,8 @@ define([
   'intern!object',
   'intern/chai!assert',
   'require',
-  'intern/dojo/node!leadfoot/keys'
-], function(intern, registerSuite, assert, require) {
+  'tests/functional/lib/helpers',
+], function(intern, registerSuite, assert, require, FunctionalHelpers) {
   'use strict';
 
   var url = function(path) {
@@ -40,8 +40,8 @@ define([
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url('/issues') + params))
         //add timeout to allow issues to load
-        .sleep(2000)
-        .findByCssSelector('.wc-IssueList:nth-of-type(1) a').getVisibleText()
+        .then(FunctionalHelpers.visibleByQSA('.wc-IssueList:nth-of-type(1) .wc-Link'))
+        .findByCssSelector('.wc-IssueList:nth-of-type(1) .wc-Link').getVisibleText()
         .then(function(text) {
           assert.include(text, 'vladvlad', 'The search query results show up on the page.');
         })
@@ -72,7 +72,7 @@ define([
         .get(require.toUrl(url('/issues')))
         .findByCssSelector('[data-remotename=browser-android]').click()
         .end()
-        .sleep(2000)
+        .then(FunctionalHelpers.visibleByQSA('#js-SearchForm-input'))
         .findById('js-SearchForm-input').getProperty('value')
         .then(function(searchText) {
           assert.include(searchText, 'label:browser-android', 'Url updated with label name');

@@ -30,7 +30,7 @@ define([
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url('/issues/100')))
-        .sleep(2000)
+        .then(FunctionalHelpers.visibleByQSA('.js-Comment-form'))
         .findByCssSelector('.js-Comment-form').isDisplayed()
         .then(function(isDisplayed) {
           assert.equal(isDisplayed, true, 'Comment form visible for logged in users.');
@@ -43,8 +43,9 @@ define([
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url('/issues/100')))
-        .findByCssSelector('.js-Issue-comment:nth-of-type(3)')
+        .then(FunctionalHelpers.visibleByQSA('.js-Issue-comment:nth-of-type(3)'))
         .end()
+        .then(FunctionalHelpers.visibleByQSA('.js-comment-close-issue'))
         .findByCssSelector('.js-Issue-state-button').getVisibleText()
         .then(function(text) {
           assert.equal('Close Issue', text);
@@ -54,8 +55,8 @@ define([
         .findByCssSelector('textarea.js-Comment-text')
         .type('test comment')
         .end()
-        .sleep(1000)
-        .findByCssSelector('.js-Issue-state-button').getVisibleText()
+        .then(FunctionalHelpers.visibleByQSA('.js-comment-close-and-comment'))
+        .findByCssSelector('.js-comment-close-and-comment').getVisibleText()
         .then(function(text) {
           assert.equal('Close and comment', text);
           assert.notEqual('Close Issue', text);
@@ -66,9 +67,9 @@ define([
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url('/issues/101')))
-        .findByCssSelector('.js-Issue-comment:nth-of-type(3)')
-        .end()
-        .findByCssSelector('.js-Issue-state-button').getVisibleText()
+        .then(FunctionalHelpers.visibleByQSA('.js-Issue-comment:nth-of-type(3)'))
+        .then(FunctionalHelpers.visibleByQSA('.js-comment-reopen-issue'))
+        .findByCssSelector('.js-comment-reopen-issue').getVisibleText()
         .then(function(text) {
           assert.equal('Reopen Issue', text);
           assert.notEqual('Reopen and comment', text);
@@ -77,8 +78,8 @@ define([
         .findByCssSelector('textarea.js-Comment-text')
         .type('test comment')
         .end()
-        .sleep(1000)
-        .findByCssSelector('.js-Issue-state-button').getVisibleText()
+        .then(FunctionalHelpers.visibleByQSA('.js-comment-reopen-and-comment'))
+        .findByCssSelector('.js-comment-reopen-and-comment').getVisibleText()
         .then(function(text) {
           assert.equal('Reopen and comment', text);
           assert.notEqual('Reopen Issue', text);
@@ -99,7 +100,7 @@ define([
         .findByCssSelector('textarea.js-Comment-text')
         .type('Today\'s date is ' + new Date().toDateString())
         .end()
-        .sleep(2000)
+        .then(FunctionalHelpers.visibleByQSA('.js-comment-close-and-comment'))
         // click the comment button
         .findByCssSelector('.js-Issue-comment-button').click()
         .end()
@@ -125,7 +126,7 @@ define([
         // click the comment button
         .findByCssSelector('.js-Issue-comment-button').click()
         .end()
-        .sleep(500)
+        .sleep(2000)
         .findAllByCssSelector('.js-Issue-comment')
         .then(function(elms) {
           allCommentsLength = elms.length;

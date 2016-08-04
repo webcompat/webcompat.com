@@ -32,8 +32,8 @@ define([
         return this.remote
           .setFindTimeout(intern.config.wc.pageLoadTimeout)
           .get(require.toUrl(url('/issues/2')))
-          .findByCssSelector('.js-Issue-labelEditor')
-          .isDisplayed()
+          .then(FunctionalHelpers.visibleByQSA('.js-Issue-labelEditor'))
+          .findByCssSelector('.js-Issue-labelEditor').isDisplayed()
           .then(function(displayed) {
             assert.isTrue(displayed, 'The label gear icon is visible once logged');
           })
@@ -46,8 +46,8 @@ define([
           .get(require.toUrl(url('/issues/2')))
           .findByCssSelector('.js-LabelEditorLauncher').click()
           .end()
-          .findByCssSelector('.js-LabelEditor')
-          .isDisplayed()
+          .then(FunctionalHelpers.visibleByQSA('.js-LabelEditor'))
+          .findByCssSelector('.js-LabelEditor').isDisplayed()
           .then(function(displayed) {
             assert.isTrue(displayed, 'The label editor widget is open');
           })
