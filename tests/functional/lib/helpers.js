@@ -5,8 +5,9 @@
 define([
   'intern',
   'intern!object',
-  'require'
-], function (intern, registerSuite, require) {
+  'require',
+  'intern/dojo/node!leadfoot/helpers/pollUntil',
+], function(intern, registerSuite, require, pollUntil) {
   'use strict';
 
   var url = function(path) {
@@ -43,8 +44,45 @@ define([
       .end();
   }
 
+  // stolen from https://github.com/mozilla/fxa-content-server/blob/03debc1145f09ea78b85bca045b867cf1a39e9bb/tests/functional/lib/helpers.js
+  function visibleByQSA(selector, options) {
+    options = options || {};
+    var timeout = options.timeout || 10000;
+
+    return pollUntil(function(selector, options) {
+      var $matchingEl = $(selector);
+
+      if ($matchingEl.length === 0) {
+        return null;
+      }
+
+      if ($matchingEl.length > 1) {
+        throw new Error('Multiple elements matched. Make a more precise selector - ' + selector);
+      }
+
+      if (!$matchingEl.is(':visible')) {
+        return null;
+      }
+
+      if ($matchingEl.is(':animated')) {
+        // If the element is animating, try again after a delay. Clicks
+        // do not always register if the element is in the midst of
+        // an animation.
+        return null;
+      }
+
+      // build in a tiny delay
+      return new Promise(function(resolve) {
+        setTimeout(function() {
+          resolve(true);
+        }, 100);
+      });
+    }, [ selector, options ], timeout);
+  }
+
   return {
     login: login,
-    logout: logout
-  }
+    logout: logout,
+    visibleByQSA: visibleByQSA
+  };
 });
