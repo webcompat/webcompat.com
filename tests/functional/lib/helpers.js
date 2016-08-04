@@ -26,8 +26,19 @@ define([
       .end()
       .findByCssSelector('input[type=submit]').submit()
       .end()
-      .findByCssSelector('button').submit()
-      // allow time for local test entry of github auth code
+      // *Sometimes* GitHub can bring up an extra verification
+      // page if it detects that our test user is requesting
+      // access too much. In that case, there's an extra button to click.
+      // Otherwise, there won't be so we swallow the NoSuchElement error.
+      .findByCssSelector('button.btn-primary').then(function(el) {
+        el.click();
+      }, function(err) {
+        return new Promise(function(resolve) {
+          if (/NoSuchElement/.test(String(err))) {
+            resolve(true);
+          }
+        });
+      })
       .sleep(10000)
       .end();
   }
