@@ -27,3 +27,8 @@
 .wc-Upload-Loader.is-active {
   display: block;
 }
+
+.wc-Issue-Loader {
+  right: 1%;
+  top: 12%;
+}

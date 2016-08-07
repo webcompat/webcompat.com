@@ -17,6 +17,7 @@ from flask import Blueprint
 from flask import request
 from io import BytesIO
 from PIL import Image
+from werkzeug.datastructures import FileStorage
 from werkzeug.exceptions import RequestEntityTooLarge
 from uuid import uuid4
 
@@ -28,6 +29,7 @@ JSON_MIME = 'application/json'
 
 
 class Upload(object):
+
     '''Class that abstracts over saving image and screenshot uploads.
 
     It performs a simple extension-based validation before saving to the
@@ -43,7 +45,10 @@ class Upload(object):
     def to_image_object(self, imagedata):
         '''Method to return a Pillow Image object from the raw imagedata.'''
         try:
-            # Make sure we're being sent a base64 encoded image
+            # Is this a file upload (i.e., issue form upload)?
+            if isinstance(imagedata, FileStorage):
+                return Image.open(imagedata)
+            # Is this a base64 encoded image (i.e., bug report screenshot)?
             if (isinstance(imagedata, unicode) and
                     imagedata.startswith('data:image/')):
                 # Chop off 'data:image/.+;base64,' before decoding
@@ -91,8 +96,8 @@ class Upload(object):
             file_dest = 'jpg'.join(file_dest.rsplit('png', 1))
         # If animated GIF, aka duration > 0, add save_all parameter
         if (self.image_object.format == 'GIF' and
-           self.image_object.info['duration'] > 0):
-                save_parameters['save_all'] = True
+                self.image_object.info['duration'] > 0):
+            save_parameters['save_all'] = True
         # unpacking save_parameters
         self.image_object.save(file_dest, **save_parameters)
 
@@ -106,7 +111,9 @@ def upload():
 
     Returns a JSON string that contains the filename and url.
     '''
-    if 'image' in request.form:
+    if 'image' in request.files and request.files['image'].filename:
+        imagedata = request.files['image']
+    elif 'image' in request.form:
         imagedata = request.form['image']
     else:
         # We don't know what you're trying to do, but it ain't gonna work.

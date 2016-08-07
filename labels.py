@@ -28,9 +28,9 @@ def get_issue_labels(labels_uri):
 def create_label(labels):
     '''Create a label in the user repo'''
     response = requests.post(
-                            USER_LABELS_URI,
-                            json.dumps(labels),
-                            headers=AUTH_HEADERS)
+        USER_LABELS_URI,
+        json.dumps(labels),
+        headers=AUTH_HEADERS)
     if not response.status_code == 201:
         response.raise_for_status()
 
@@ -45,28 +45,28 @@ def delete_label(name):
 
 def main():
     '''Duplicate webcompat test repo labels in user test repo'''
-    #check if the user repo is a webcompat repo
+    # check if the user repo is a webcompat repo
     if (ISSUES_URI == "webcompat/webcompat-tests" or
             ISSUES_URI == "webcompat/webcompat.com"):
         sys.exit("Error: Attempting to change a webcompat repo")
     try:
-        #get all existing labels from the user issues repo
+        # get all existing labels from the user issues repo
         user_labels = get_issue_labels(USER_LABELS_URI)
-        #delete all existing labels from the user issues repo
+        # delete all existing labels from the user issues repo
         for label in user_labels:
             delete_label(label.get('name'))
-        #get all labels from the webcompat tests repo
+        # get all labels from the webcompat tests repo
         webcompat_labels = get_issue_labels(WEBCOMPAT_LABELS_URI)
-        #re-create labels in user issues repo
+        # re-create labels in user issues repo
         for label in webcompat_labels:
             data = {"name": label.get('name'), "color": label.get('color')}
             create_label(data)
         sys.exit(0)
     except requests.exceptions.HTTPError as e:
-        #handles exceptions occuring due to undesired response status code
+        # handles exceptions occuring due to undesired response status code
         sys.exit("Error: {}".format(e))
     except requests.exceptions.RequestException as e:
-        #handles all other exceptions
+        # handles all other exceptions
         sys.exit("Error: {}".format(e))
 
 

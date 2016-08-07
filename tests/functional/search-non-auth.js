@@ -7,8 +7,8 @@ define([
   'intern!object',
   'intern/chai!assert',
   'require',
-  'intern/dojo/node!leadfoot/keys'
-], function(intern, registerSuite, assert, require) {
+  'tests/functional/lib/helpers',
+], function(intern, registerSuite, assert, require, FunctionalHelpers) {
   'use strict';
 
   var url = function(path) {
@@ -39,7 +39,9 @@ define([
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url('/issues') + params))
-        .findByCssSelector('.wc-IssueList:nth-of-type(1) a').getVisibleText()
+        //add timeout to allow issues to load
+        .then(FunctionalHelpers.visibleByQSA('.wc-IssueList:nth-of-type(1) .wc-Link'))
+        .findByCssSelector('.wc-IssueList:nth-of-type(1) .wc-Link').getVisibleText()
         .then(function(text) {
           assert.include(text, 'vladvlad', 'The search query results show up on the page.');
         })
@@ -51,17 +53,29 @@ define([
         .end();
     },
 
-    'Clicking on label search suggestion works': function() {
-      var params = '?q=dfjdkfjdkfjkdfjdkjf';
+    'Clicking on label search adds query parameter to the URL': function() {
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url('/issues') + params))
+        .get(require.toUrl(url('/issues')))
         .findByCssSelector('[data-remotename=browser-android]').click()
         .end()
-        // click the first suggestion, which is "android"
-        .findByCssSelector('.wc-IssueList:nth-child(1) > div:nth-child(2) > span:nth-child(1) > a:nth-child(1)').getVisibleText()
-        .then(function(text) {
-          assert.include(text, 'android', 'Clicking on a suggested label gets you results.');
+        .getCurrentUrl()
+        .then(function(currUrl) {
+          assert.include(currUrl, 'q=label%3Abrowser-android', 'Url updated with label name');
+        })
+        .end();
+    },
+
+    'Clicking on label search updates the search input': function() {
+      return this.remote
+        .setFindTimeout(intern.config.wc.pageLoadTimeout)
+        .get(require.toUrl(url('/issues')))
+        .findByCssSelector('[data-remotename=browser-android]').click()
+        .end()
+        .then(FunctionalHelpers.visibleByQSA('#js-SearchForm-input'))
+        .findById('js-SearchForm-input').getProperty('value')
+        .then(function(searchText) {
+          assert.include(searchText, 'label:browser-android', 'Url updated with label name');
         })
         .end();
     },

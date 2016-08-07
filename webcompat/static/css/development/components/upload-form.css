@@ -62,11 +62,11 @@
 
       /* modifier new label of existing bug */
       .wc-UploadForm-label--uploadForm {
+        font-size: .8125em;
         font-weight: 400;
-        text-align: left;
         text-decoration: none;
       }
-      
+
       /* link */
       .wc-UploadForm-label--link {
         color: #FFC900;

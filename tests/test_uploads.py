@@ -83,14 +83,14 @@ class TestUploads(unittest.TestCase):
         # Loop over some files and the status codes that we are expecting
         # Basically it should never be possible to upload a "regular" file.
         for filename, status_code in (
-                ('evil.py', 501),
-                ('evil', 501),
-                ('evil.png', 501),
-                ('green_square.webp', 501),
-                ('green_square.png', 501),
-                ('green_square.jpg', 501),
-                ('green_square.gif', 501),
-                ('green_square.bmp', 501)):
+                ('evil.py', 415),
+                ('evil', 415),
+                ('evil.png', 415),
+                ('green_square.webp', 415),
+                ('green_square.png', 201),
+                ('green_square.jpg', 201),
+                ('green_square.gif', 201),
+                ('green_square.bmp', 201)):
 
             # The reason why we are defining it in here and not outside
             # this method is that we are setting the filename of the

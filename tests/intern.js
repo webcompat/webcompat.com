@@ -16,7 +16,11 @@ define(['intern/lib/args'], function(args) {
       pageLoadTimeout: args.wcPageLoadTimeout ? parseInt(args.wcPageLoadTimeout, 10) : 10000,
       // user and pw need to be passed in as command-line arguments. See CONTRIBUTING.md
       user: args.user || 'some username',
-      pw: args.pw || 'some password'
+      pw: args.pw || 'some password',
+      // if you pass in loginDelay=true or loginDelay=1 you'll have an extra 10
+      // seconds to manually enter a 2FA token.
+      // loginDelay=0 will have the same effect as not using it.
+      loginDelay: Boolean(args.loginDelay) || false
     },
 
     // The port on which the instrumenting proxy will listen

@@ -31,15 +31,16 @@ if not PRODUCTION:
 #   app.logger.info(Thing_To_Log)
 # it will create a line with the following format
 # 2015-09-14 20:50:19,185 INFO: Thing_To_Log [in /codepath/views.py:127]
+
 LOG_FILE = '/tmp/webcompat.log'
-LOG_FMT = '%(asctime)s %(levelname)s: %(message)s [in %(pathname)s:%(lineno)d]'
+LOG_FMT = '%(asctime)s tracking %(message)s'
 
 # Status categories used in the project
 # 'new', 'needsdiagnosis', 'needscontact', 'contactready' , 'sitewait', 'close'
 # Creating the model
 Category = namedtuple('Category', ['name', 'dataAttribute', 'label'])
 CATEGORIES = []
-cat_labels = [('new', 'new', 'New Issues'),
+cat_labels = [('needstriage', 'needstriage', 'Needs Triage'),
               ('needsDiagnosis', 'needsdiagnosis', 'Needs Diagnosis'),
               ('needsContact', 'needscontact', 'Needs Contact'),
               ('ready', 'contactready', 'Ready for Outreach'),

@@ -13,8 +13,8 @@ uploads/
 config/secrets.py
 
 # backup folder contains the issues.db backup file with issues dump
-#for the previous version of schema
-backup/*.db
+# for the previous version of schema
+backups/*.db
 
 # these are our 'dist' files
 # checking them into the repo is silly

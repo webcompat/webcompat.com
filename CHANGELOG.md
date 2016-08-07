@@ -1,3 +1,51 @@
+## 2.7.1 - 2016-07-27
+
+* Adds block for qiangpiaoruanjian [Pull #1142](https://github.com/webcompat/webcompat.com/pull/1142) [Issue #1141](https://github.com/webcompat/webcompat.com/issues/1141)
+* Render all comments (not just 30) [Pull #1119](https://github.com/webcompat/webcompat.com/pull/1119) [Issue #1058](https://github.com/webcompat/webcompat.com/issues/1058)
+* Add missing fixture files [Pull #1129](https://github.com/webcompat/webcompat.com/pull/1129) [Issue #1123](https://github.com/webcompat/webcompat.com/pull/1123)
+* Add 301 redirect for /new endpoint [Pull #1130](https://github.com/webcompat/webcompat.com/pull/1130) [Issue #1120](https://github.com/webcompat/webcompat.com/issues/1120)
+
+
+## 2.7.0 - 2016-07-11
+
+* Add IP logging for bug reports (to be able to investigate abuse) [Pull #1125](https://github.com/webcompat/webcompat.com/pull/1125) * [Issue #719](https://github.com/webcompat/webcompat.com/issues/719)
+* Fix CSS variable name [Pull #1122](https://github.com/webcompat/webcompat.com/pull/1122) [Issue #1121](https://github.com/webcompat/webcompat.com/issues/1121)
+* Handle Link headers from Comments endpoints [Pull #1117](https://github.com/webcompat/webcompat.com/pull/1117) [Issue #1100](https://github.com/webcompat/webcompat.com/pull/1100)
+* Replace "new" with "needs triage" [Pull #1114](https://github.com/webcompat/webcompat.com/pull/1114) [Issue #975](https://github.com/webcompat/webcompat.com/issues/975)
+* Document strict review comment policy [Pull #1112](https://github.com/webcompat/webcompat.com/pull/1112) [Issue #1110](https://github.com/webcompat/webcompat.com/issues/1110)
+* Pointer-events tweak on icon images for Chrome [Pull #1107](https://github.com/webcompat/webcompat.com/pull/1107) [Issue #1088](https://github.com/webcompat/webcompat.com/issues/1088)
+
+## 2.6.1 - 2016-06-28
+
+* Hide NSFW images if they have a nsfw label [Pull #1087](https://github.com/webcompat/webcompat.com/pull/1087) [Issue #1001](https://github.com/webcompat/webcompat.com/pull/1001)
+* Improve label contrast [Pull #1094](https://github.com/webcompat/webcompat.com/pull/1094) [Issue #482](https://github.com/webcompat/webcompat.com/issues/482)
+* Improve comment header layout [Pull #1095](https://github.com/webcompat/webcompat.com/pull/1095) [Issue #972](https://github.com/webcompat/webcompat.com/issues/972)
+* Improve submit comment design [Pull #1096](https://github.com/webcompat/webcompat.com/pull/1096) (No issue)
+* Fix path for requirements.txt in CONTRIBUTING [Pull #1099](https://github.com/webcompat/webcompat.com/pull/1099) [Issue #1098](https://github.com/webcompat/webcompat.com/issues/1098)
+* Pass params with comments endpoint [Pull #1103](https://github.com/webcompat/webcompat.com/pull/1103) [Issue #1101](https://github.com/webcompat/webcompat.com/issues/11001)
+* Fix different favicon bug [Pull #1105](https://github.com/webcompat/webcompat.com/pull/1105) [Issue #1046](https://github.com/webcompat/webcompat.com/issues/1046)
+
+## 2.6.0 - 2016-06-14
+
+* Remove nested labels from markup [Pull #1092](https://github.com/webcompat/webcompat.com/pull/1092) [Issue #1072](https://github.com/webcompat/webcompat.com/issues/1072)
+* Improved search bar design [Pull #1091](https://github.com/webcompat/webcompat.com/pull/1091) [Issue #1089](https://github.com/webcompat/webcompat.com/issues/1089)
+* Syntax and import clean ups [Pull #1085](https://github.com/webcompat/webcompat.com/pull/1085) [Issue #1084](https://github.com/webcompat/webcompat.com/issues/1084)
+* Functional tests around label URL updates [Pull #1080](https://github.com/webcompat/webcompat.com/pull/1080) [Issue #1079](https://github.com/webcompat/webcompat.com/pull/1079)
+* Add clear filter event to labelSearch [Pull #1078](https://github.com/webcompat/webcompat.com/pull/1078) [Issue #1074](https://github.com/webcompat/webcompat.com/pull/1074)
+* Fix label href URL [Pull #1077](https://github.com/webcompat/webcompat.com/pull/1077) [Issue #1075](https://github.com/webcompat/webcompat.com/pull/1075)
+* Update docs around ISSUES_REPO_URI [Pull #1076](https://github.com/webcompat/webcompat.com/pull/1076) [Issue #1069](https://github.com/webcompat/webcompat.com/issues/1069)
+
+## 2.5.2 - 2016-05-31
+
+* Ensure label list UI is updated when labels are set [Pull #1073](https://github.com/webcompat/webcompat.com/pull/1073) [Issue #1045](https://github.com/webcompat/webcompat.com/issues/1045)
+* Make search bar distinct from background [Pull #1065](https://github.com/webcompat/webcompat.com/pull/1065) [Issue #1064](https://github.com/webcompat/webcompat.com/issues/1064)
+* Fix image uploads for issues [Pull #1067](https://github.com/webcompat/webcompat.com/pull/1067) [Issue #1063](https://github.com/webcompat/webcompat.com/pull/1063)
+
+## 2.5.1 - 2016-05-26
+
+* Scope labelSearch to actual anchor elm (not its wrapper) [Pull #1068](https://github.com/webcompat/webcompat.com/pull/1068) [Issue #1066](https://github.com/webcompat/webcompat.com/issues/1066)
+* Bandaid fix to allow for up to 100 comments per issue [Pull #1057](https://github.com/webcompat/webcompat.com/pull/1057) [Issue #1044](https://github.com/webcompat/webcompat.com/issues/1044)
+
 ## 2.5.0 - 2016-05-20
 
 * Convert PNG to JPEG on the server [Pull #1052](https://github.com/webcompat/webcompat.com/pull/1052) [Issue #1051](https://github.com/webcompat/webcompat.com/issues/1051)

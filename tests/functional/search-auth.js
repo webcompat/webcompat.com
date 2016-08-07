@@ -12,8 +12,10 @@ define([
 ], function(intern, registerSuite, assert, require, FunctionalHelpers, keys) {
   'use strict';
 
-  var url = function(path) {
-    return intern.config.siteRoot + path;
+  var url = function(path, params) {
+    var fullUrl = params !== undefined ? intern.config.siteRoot + path + params :
+                                         intern.config.siteRoot + path;
+    return fullUrl;
   };
 
   registerSuite({
@@ -31,23 +33,23 @@ define([
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url('/issues')))
-        .sleep(2000)
-          .findByCssSelector('.wc-SearchForm-item').click()
+        .then(FunctionalHelpers.visibleByQSA('.wc-SearchForm-item'))
+        .findByCssSelector('.wc-SearchForm-item').click()
         .type('taco')
         .end()
-        .findAllByCssSelector('button.wc-Tag--new').click()
+        .findAllByCssSelector('button.wc-Tag--needstriage').click()
         .end()
         .findByCssSelector('.wc-SearchForm-item').getVisibleText()
         .then(function(text) {
           assert.equal(text, '', 'Clicking filter should empty search text');
         })
         .end()
-        .findAllByCssSelector('button.wc-Tag--new').click()
+        .findAllByCssSelector('button.wc-Tag--needstriage').click()
         .end()
         .findByCssSelector('.wc-SearchForm-item').click()
         .type('taco')
         .end()
-        .findAllByCssSelector('button.wc-Tag--new').getAttribute('class')
+        .findAllByCssSelector('button.wc-Tag--needstriage').getAttribute('class')
         .then(function(className) {
           assert.notInclude(className, 'is-active', 'Searching should clear all filters');
         })
@@ -55,11 +57,12 @@ define([
     },
 
     'Results are loaded from the query params': function() {
-      var params = '?q=vladvlad';
+      var params = '?page=1&per_page=50&state=open&stage=all&sort=created&direction=desc&q=vladvlad';
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url('/issues') + params))
-        .findByCssSelector('.wc-IssueList:nth-of-type(1) a').getVisibleText()
+        .get(require.toUrl(url('/issues', params)))
+        .then(FunctionalHelpers.visibleByQSA('.wc-IssueList:nth-of-type(1) .wc-Link'))
+        .findByCssSelector('.wc-IssueList:nth-of-type(1) .wc-Link').getVisibleText()
         .then(function(text) {
           assert.include(text, 'vladvlad', 'The search query results show up on the page.');
         })
@@ -71,17 +74,35 @@ define([
         .end();
     },
 
-    'Search works': function() {
+    'Search works by icon click': function() {
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url('/issues')))
+        // time for the issues list to load, otherwise test breaks locally
+        .then(FunctionalHelpers.visibleByQSA('.wc-IssueList:nth-of-type(10)'))
         .findByCssSelector('.js-SearchForm input')
         .type('vladvlad')
         .end()
         .findByCssSelector('.js-SearchForm button').click()
         .end()
-        // this is lame, but we gotta wait on search results.
-        .sleep(3000)
+        .then(FunctionalHelpers.visibleByQSA('.wc-IssueList:nth-of-type(1) a:contains(vlad)'))
+        .findByCssSelector('.wc-IssueList:nth-of-type(1) a').getVisibleText()
+        .then(function(text) {
+          assert.include(text, 'vladvlad', 'The search results show up on the page.');
+        })
+        .end();
+    },
+
+    'Search works by Return key': function() {
+      return this.remote
+        .setFindTimeout(intern.config.wc.pageLoadTimeout)
+        .get(require.toUrl(url('/issues')))
+        .then(FunctionalHelpers.visibleByQSA('.js-SearchForm input'))
+        .findByCssSelector('.js-SearchForm input')
+        .type('vladvlad')
+        .type(keys.ENTER)
+        .end()
+        .then(FunctionalHelpers.visibleByQSA('.wc-IssueList:nth-of-type(1) a:contains(vlad)'))
         .findByCssSelector('.wc-IssueList:nth-of-type(1) a').getVisibleText()
         .then(function(text) {
           assert.include(text, 'vladvlad', 'The search results show up on the page.');
@@ -99,7 +120,7 @@ define([
         .type('vladvlad')
         .type(keys.ENTER)
         .end()
-        .sleep(3000)
+        .then(FunctionalHelpers.visibleByQSA('.wc-IssueList:nth-of-type(1) a:contains(vlad)'))
         .findByCssSelector('.wc-IssueList:nth-of-type(1) a').getVisibleText()
         .then(function(text) {
           assert.include(text, 'vladvlad', 'The search query results show up on the page.');

@@ -77,46 +77,52 @@ project.
 
 All code contributions should come in the form of a [pull request](https://help.github.com/articles/creating-a-pull-request), as a topic branch.
 
-* Have a quick search through existing issues and pull requests so you don't waste any of your time.
+1. Have a quick search through existing issues and pull requests so you don't waste any of your time.
 
-* If no existing issue covers the change you want to make, please [open a new issue](https://github.com/webcompat/webcompat.com/issues/new) before you start coding.
+2. If no existing issue covers the change you want to make, please [open a new issue](https://github.com/webcompat/webcompat.com/issues/new) before you start coding.
 
-* Fork repository
+3. Fork repository
 
-![master](http://f.cl.ly/items/1E3f0A0I2A2b3T2L2I2c/forked.png)
+    ![master](http://f.cl.ly/items/1E3f0A0I2A2b3T2L2I2c/forked.png)
 
-You'll probably want to [set up a local development environment](#working-environment-setup) to get that far. If you've already been through this process, make sure you've [set the main repo as an upstream remote](https://help.github.com/articles/configuring-a-remote-for-a-fork/) and make sure [your fork is up to date](https://help.github.com/articles/syncing-a-fork/) before sending pull requests.
+    You'll probably want to [set up a local development environment](#working-environment-setup) to get that far. If you've already been through this process, make sure you've [set the main repo as an upstream remote](https://help.github.com/articles/configuring-a-remote-for-a-fork/) and make sure [your fork is up to date](https://help.github.com/articles/syncing-a-fork/) before sending pull requests.
 
-* Make your changes in a new branch
+4. Make your changes in a new branch
 
-  `git checkout -b name-of-fix-branch`
+    `git checkout -b name-of-fix-branch`
 
-* Create your patch; commit your changes. Referencing the issue number you're working on from the message is recommended.
+5. Create your patch; commit your changes. Referencing the issue number you're working on from the message is recommended.
 
-  `git commit -m 'Issue #123 - Fixes broken layout on mobile browsers`
+    `git commit -m 'Issue #123 - Fixes broken layout on mobile browsers`
 
-* Push your branch to GitHub:
+6. Push your branch to GitHub:
 
-  `git push origin name-of-fix-branch`
+    `git push origin name-of-fix-branch`
 
-* If you want to discuss your code or ask questions, please comment in the corresponding issue. You can link to the code you have pushed to your repository to ask for code review.
+7. If you want to discuss your code or ask questions, please comment in the corresponding issue. You can link to the code you have pushed to your repository to ask for code review.
 
-* When your code is ready to be integrated into the project, use the GitHub site to send a pull request to `webcompat.com:master`, aka the master branch of the repo you forked from. This will be the default choice.
+8. When your code is ready to be integrated into the project, use the GitHub site to send a pull request to `webcompat.com:master`, aka the master branch of the repo you forked from. This will be the default choice.
 
-![master](https://cldup.com/YVlLDGItPf-3000x3000.png)
+    ![master](https://cldup.com/YVlLDGItPf-3000x3000.png)
 
-* Set the title of the pull request to reference the issue number.
-        `Fixes #123 - Fixes broken layout on mobile browsers`
+9. Set the title of the pull request to reference the issue number.
 
-* When sending the pull request do not forget to call out someone for review by using the following convention:
+    `Fixes #123 - Fixes broken layout on mobile browsers`
 
-`r? @miketaylr`
+10. When sending the pull request do not forget to call out someone for review by using the following convention:
 
-This will notify the person that your request is waiting for a review for merging. Ask a review only by one person, this will avoid misunderstandings and the ball is dropped. (Python: karlcow, miketaylr. JavaScript: magsout, miketaylr, tagawa CSS: magsout).
+    `r? @miketaylr`
 
-* Continue discussion in the pull request.
+    This will notify the person that your request is waiting for a review for merging. Ask a review only by one person, this will avoid misunderstandings and the ball is dropped. (Python: karlcow, miketaylr. JavaScript: magsout, miketaylr, tagawa CSS: magsout).
 
-The discussion might lead to modify or abandon this specific pull request. This is the place where you can have a code review.
+11. Continue discussion in the pull request.
+
+    The discussion might lead to modify or abandon this specific pull request. This is the place where you can have a code review.
+
+12. Once the Pull Request **got an explicit `r+`** from the reviewer(s), it is the responsibility of the reviewer to merge the branch (or the admin). A pull request submitter should never merge himself/herself the pull request.
+
+    The repo owners might choose to self-merge for urgent security or hot fixes.
+
 
 After all that, if you'd like, you can send a pull request to add your name to our humans.txt file.
 
@@ -211,6 +217,18 @@ sudo apt-get update
 sudo apt-get install python2.7 python2.7-dev
 ```
 
+In Ubuntu, sometimes even after installing Node.js, the command `node -v` does not show the installed version. To complete installation, a symbolic link has to be created to the sbin folder.
+
+```
+#remove old symbolic links if any
+sudo rm -r /usr/bin/node
+
+#add new symbolic link
+sudo ln -s /usr/bin/nodejs /usr/bin/node
+sudo ln -s /usr/bin/nodejs /usr/sbin/node
+```
+
+
 ### Simple setup (Mac OS and Linux)
 #### Initializing Project source code
 
@@ -276,8 +294,11 @@ source env/bin/activate
 #  Windows: http://pillow.readthedocs.org/en/3.0.x/installation.html#windows-installation
 #  Linux: http://pillow.readthedocs.org/en/3.0.x/installation.html#linux-installation
 # install rest of dependencies
-pip install -r requirements.txt
+pip install -r config/requirements.txt
+# In Ubuntu, if ImportError: No module named flask.ext.github occurs, it means the dependencies in requirements.txt are installed in /usr/lib instead of <project_repository>/env/python<version>/site-packages.
+# In this case, use virtual environment's pip from <project_repository>/env/lib/pip folder of the project repository instead of the global pip.
 ```
+
 
 #### Installing Grunt
 
@@ -391,10 +412,10 @@ We use [Intern](http://theintern.io/) to run functional tests.
 To run them, make sure you download the Selenium standalone server from the repo root:
 
 ``` bash
-wget http://selenium-release.storage.googleapis.com/2.52/selenium-server-standalone-2.52.0.jar
+wget http://selenium-release.storage.googleapis.com/2.53/selenium-server-standalone-2.53.1.jar
 ```
 
-**Note: This version is known to work with Firefox 44. If things aren't working with the current stable version of Firefox, check to see
+**Note: This version is known to work with Firefox 47.0.1. If things aren't working with the current stable version of Firefox, check to see
 if there isn't a newer version of the Selenium standalone server and file a bug on these docs!**
 
 The `firefox` binary will also need to be in your `PATH`. Here's how this can be done on OS X:
@@ -403,10 +424,14 @@ The `firefox` binary will also need to be in your `PATH`. Here's how this can be
 export PATH="/Applications/Firefox.app/Contents/MacOS/:$PATH"
 ```
 
+If you are a member of webcompat organisation in GitHub, edit `config/secrets.py`. The value of `ISSUES_REPO_URI` is the path of the repository containing test issues.
+
+Change the value to : `ISSUES_REPO_URI = 'webcompat/webcompat-tests/issues'`.
+
 Now start Selenium:
 
 ``` bash
-java -jar selenium-server-standalone-2.52.0.jar
+java -jar selenium-server-standalone-2.53.1.jar
 ```
 
 In a separate terminal window or tab, start the application servers:
@@ -430,6 +455,14 @@ node_modules/.bin/intern-runner config=tests/intern user=testusername pw=testpas
 ```
 
 **Note** Be aware that this will add the `testusername` and `testpassword` to your bash history. It is possible to run the tests without using a GitHub username and password as command-line arguments. In that case, the automatic login will fail and you then have 10 seconds to manually enter a username and password in the GitHub login screen that appears.
+
+If you have [Two-Factor Authentication](https://help.github.com/articles/about-two-factor-authentication/) enabled and need time to enter a token, you can use the `loginDelay` command-line argument:
+
+``` bash
+node_modules/.bin/intern-runner config=tests/intern user=testusername pw=testpassword loginDelay=true
+```
+
+This will give you 10 extra seconds to enter a 2FA token when the inital login happens. By default there is no delay, so if you don't need this &mdash; you don't need to do anything differently.
 
 To run a single test suite, where foo.js is the file found in the `tests/functional` directory:
 

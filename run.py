@@ -9,7 +9,7 @@ import pkg_resources
 from pkg_resources import DistributionNotFound, VersionConflict
 import time
 import datetime
-from subprocess import Popen, PIPE, STDOUT
+import os
 import sys
 
 IMPORT_ERROR = '''
@@ -103,11 +103,6 @@ def config_validator():
     if app.config['OAUTH_TOKEN'] == '':
         sys.exit(TOKEN_HELP)
 
-def execute_command(command):
-    #pattern, filename = 'test', 'tmp'
-    p = Popen(command, stdin=PIPE, stdout=PIPE, stderr=PIPE)
-    return [p.communicate(), p.returncode]
-
 if __name__ == '__main__':
     # testing the config file
     config_validator()
@@ -127,18 +122,38 @@ if __name__ == '__main__':
         print("Starting server in ~*TEST MODE*~")
         app.run(host='localhost')
     elif args.backup:
-        try:
-            command = ['ls', '-l', 'issues.db']
-            if execute_command(command)[1] == 0:
-                execute_command(['mkdir', '-p', app.config['BACKUP_DEFAULT_DEST']])
-                current_ts = time.time()
-                time_stamp = datetime.datetime.fromtimestamp(current_ts).strftime('%Y-%m-%d-%H:%M:%S')
-                issue_backup_db = 'issues_backup_' + time_stamp + '.db'
-                execute_command(['mv', 'issues.db', app.config['BACKUP_DEFAULT_DEST'] + issue_backup_db])
-            else:
-                print FILE_NOT_FOUND_ERROR
-        except OSError, e:
-            raise OSError('{0}\n\n{1}'.format(e, FILE_NOT_FOUND_ERROR))
+        # To verify if issues.db exist, simply calling os.path.exists is not enough.
+        # Both os.path.exists and os.path.isfile returns true even when file is not there in the path
+        # Every time the script is re run, os.path.exists returns true because of cache.
+        # To avoid this, we open the file in try catch - just to be sure
+        if os.path.isfile(os.path.join(os.getcwd(), 'issues.db')):
+            try:
+                with open(os.path.join(os.getcwd(), 'issues.db')) as file:
+                    if not os.path.exists(app.config['BACKUP_DEFAULT_DEST']):
+                        print 'backup db folder does not exist'
+                        os.makedirs(app.config['BACKUP_DEFAULT_DEST'])
+                    else:
+                        print 'backup db folder exists'
+                        # Retain last 3 recent backup files
+                        no_of_backup_files = len(os.listdir(app.config['BACKUP_DEFAULT_DEST']))
+                        if no_of_backup_files > 3:
+                            for idx, val in enumerate(os.listdir(app.config['BACKUP_DEFAULT_DEST'])):
+                                if idx < no_of_backup_files - 2:
+                                    os.remove(app.config['BACKUP_DEFAULT_DEST'] + val)
+                    current_ts = time.time()
+                    time_stamp = datetime.datetime.fromtimestamp(current_ts).strftime('%Y-%m-%d-%H:%M:%S')
+                    issue_backup_db = 'issues_backup_' + time_stamp + '.db'
+                    os.rename(os.getcwd() + '/issues.db', app.config['BACKUP_DEFAULT_DEST'] + issue_backup_db)
+                    try:
+                        os.remove(os.path.join(os.getcwd(), 'issues.db'))
+                    except OSError:
+                        print 'Backup issues.db complete'
+
+            except IOError:
+                sys.exit(FILE_NOT_FOUND_ERROR)
+
+        else:
+            sys.exit(FILE_NOT_FOUND_ERROR)
     else:
         if check_pip_deps():
             app.run(host='localhost')

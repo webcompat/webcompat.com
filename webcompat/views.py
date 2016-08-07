@@ -5,6 +5,7 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 import json
+import logging
 import urllib
 
 from flask import abort
@@ -33,7 +34,6 @@ from webcompat.db import User
 from webcompat import app
 from webcompat import github
 from webcompat.api.endpoints import get_rate_limit
-from webcompat.api.uploads import upload
 
 
 @app.teardown_appcontext
@@ -159,7 +159,22 @@ def show_issues():
 def create_issue():
     # copy the form so we can add the full UA string to it.
     form = request.form.copy()
+    # see https://github.com/webcompat/webcompat.com/issues/1141
+    spamlist = ['qiangpiaoruanjian']
+    for spam in spamlist:
+        if spam in form.get('url'):
+            msg = (u'Anonymous reporting for qiangpiaoruanjian.cn '
+                   'is temporarily disabled. Please see '
+                   'https://github.com/webcompat/webcompat.com/issues/1141 '
+                   'for more details.')
+            flash(msg, 'notimeout')
+            return redirect(url_for('index'))
     form['ua_header'] = request.headers.get('User-Agent')
+    # Logging the ip and url for investigation
+    log = app.logger
+    log.setLevel(logging.INFO)
+    log.info('{ip} {url}'.format(ip=request.remote_addr, url=form['url']))
+    # form submission for 3 scenarios: authed, to be authed, anonymous
     if form.get('submit-type') == AUTH_REPORT:
         if g.user:  # If you're already authed, submit the bug.
             response = report_issue(form)
