@@ -7,7 +7,9 @@
 import argparse
 import pkg_resources
 from pkg_resources import DistributionNotFound, VersionConflict
-import subprocess
+import time
+import datetime
+from subprocess import Popen, PIPE, STDOUT
 import sys
 
 IMPORT_ERROR = '''
@@ -25,6 +27,16 @@ The config.py file seems to be missing.
 Please create a copy of config.py.example and customize it accordingly.
 For details, please see
 https://github.com/webcompat/webcompat.com/blob/master/CONTRIBUTING.md#configuring-the-server
+==============================================
+'''
+
+FILE_NOT_FOUND_ERROR = '''
+==============================================
+The issues.db file seems to be missing.
+
+Please create a issues.db file by running:
+
+python run.py
 ==============================================
 '''
 
@@ -91,6 +103,11 @@ def config_validator():
     if app.config['OAUTH_TOKEN'] == '':
         sys.exit(TOKEN_HELP)
 
+def execute_command(command):
+    #pattern, filename = 'test', 'tmp'
+    p = Popen(command, stdin=PIPE, stdout=PIPE, stderr=PIPE)
+    return [p.communicate(), p.returncode]
+
 if __name__ == '__main__':
     # testing the config file
     config_validator()
@@ -98,6 +115,8 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('-t', '--testmode', action='store_true',
                         help='Run server in "test mode".')
+    parser.add_argument('--backup', action='store_true',
+                        help='backup existing issues.db and update db schema and issues dump.')
     args = parser.parse_args()
 
     if args.testmode:
@@ -107,6 +126,19 @@ if __name__ == '__main__':
         app.config['TESTING'] = True
         print("Starting server in ~*TEST MODE*~")
         app.run(host='localhost')
+    elif args.backup:
+        try:
+            command = ['ls', '-l', 'issues.db']
+            if execute_command(command)[1] == 0:
+                execute_command(['mkdir', '-p', app.config['BACKUP_DEFAULT_DEST']])
+                current_ts = time.time()
+                time_stamp = datetime.datetime.fromtimestamp(current_ts).strftime('%Y-%m-%d-%H:%M:%S')
+                issue_backup_db = 'issues_backup_' + time_stamp + '.db'
+                execute_command(['mv', 'issues.db', app.config['BACKUP_DEFAULT_DEST'] + issue_backup_db])
+            else:
+                print FILE_NOT_FOUND_ERROR
+        except OSError, e:
+            raise OSError('{0}\n\n{1}'.format(e, FILE_NOT_FOUND_ERROR))
     else:
         if check_pip_deps():
             app.run(host='localhost')
