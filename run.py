@@ -11,7 +11,6 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session
 from sqlalchemy.orm import sessionmaker
 import time
-import datetime
 import os
 import sys
 
@@ -139,18 +138,13 @@ if __name__ == '__main__':
                     os.makedirs(app.config['BACKUP_DEFAULT_DEST'])
                 else:
                     print 'Backup db folder exists'
-                current_ts = time.time()
-                time_stamp = datetime.datetime.fromtimestamp(current_ts).strftime('%Y-%m-%d-%H:%M:%S')
-                issue_backup_db = 'issues_backup_' + time_stamp + '.db'
+                time_stamp = time.strftime('%Y-%m-%dT%H-%M-%S', time.localtime())
+                issue_backup_db = 'issues_' + time_stamp + '.db'
                 os.rename(os.getcwd() + '/issues.db', app.config['BACKUP_DEFAULT_DEST'] + issue_backup_db)
                 # Retain last 3 recent backup files
-                no_of_backup_files = len(os.listdir(app.config['BACKUP_DEFAULT_DEST']))
-                print no_of_backup_files
-                if no_of_backup_files > 3:
-                    for idx, val in enumerate(os.listdir(app.config['BACKUP_DEFAULT_DEST'])):
-                        print idx
-                        if idx < no_of_backup_files - 3:
-                            os.remove(app.config['BACKUP_DEFAULT_DEST'] + val)
+                backup_files = os.listdir(app.config['BACKUP_DEFAULT_DEST'])
+                for old_files in backup_files[:-3]:
+                    os.remove(app.config['BACKUP_DEFAULT_DEST'] + old_files)
         else:
             sys.exit(FILE_NOT_FOUND_ERROR)
     else:
