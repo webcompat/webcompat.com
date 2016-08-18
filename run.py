@@ -32,15 +32,6 @@ https://github.com/webcompat/webcompat.com/blob/master/CONTRIBUTING.md#configuri
 ==============================================
 '''
 
-FILE_NOT_FOUND_ERROR = '''
-==============================================
-The issues.db file seems to be missing.
-
-Please create a issues.db file by running:
-
-python run.py
-==============================================
-'''
 
 try:
     from webcompat import app
@@ -113,7 +104,7 @@ if __name__ == '__main__':
     parser.add_argument('-t', '--testmode', action='store_true',
                         help='Run server in "test mode".')
     parser.add_argument('--backup', action='store_true',
-                        help='backup existing issues.db and update db schema and issues dump.')
+                        help='backup existing issues.db.')
     args = parser.parse_args()
 
     if args.testmode:
@@ -124,29 +115,24 @@ if __name__ == '__main__':
         print("Starting server in ~*TEST MODE*~")
         app.run(host='localhost')
     elif args.backup:
-        if os.path.isfile(os.path.join(os.getcwd(), 'issues.db')):
-            issue_engine = create_engine('sqlite:///' + os.path.join(
-                app.config['BASE_DIR'], 'issues.db'))
-            issue_session_maker = sessionmaker(autocommit=False,
-                                               autoflush=False,
-                                               bind=issue_engine)
-            issue_db = scoped_session(issue_session_maker)
-            # Take a backup if issues.db has data dump.
-            if issue_db().execute('select count(*) from webcompat_issues').fetchall()[0][0] > 0:
-                if not os.path.exists(app.config['BACKUP_DEFAULT_DEST']):
-                    print 'Backup db folder does not exist'
-                    os.makedirs(app.config['BACKUP_DEFAULT_DEST'])
-                else:
-                    print 'Backup db folder exists'
-                time_stamp = time.strftime('%Y-%m-%dT%H-%M-%S', time.localtime())
-                issue_backup_db = 'issues_' + time_stamp + '.db'
-                os.rename(os.getcwd() + '/issues.db', app.config['BACKUP_DEFAULT_DEST'] + issue_backup_db)
-                # Retain last 3 recent backup files
-                backup_files = os.listdir(app.config['BACKUP_DEFAULT_DEST'])
-                for old_files in backup_files[:-3]:
-                    os.remove(app.config['BACKUP_DEFAULT_DEST'] + old_files)
-        else:
-            sys.exit(FILE_NOT_FOUND_ERROR)
+        issue_engine = create_engine('sqlite:///' + os.path.join(app.config['BASE_DIR'], 'issues.db'))
+        issue_session_maker = sessionmaker(autocommit=False,
+                                           autoflush=False,
+                                           bind=issue_engine)
+        issue_db = scoped_session(issue_session_maker)
+        # Take a backup if issues.db has data dump.
+        if issue_db().execute('select count(*) from webcompat_issues').fetchall()[0][0] > 0:
+            if not os.path.exists(app.config['BACKUP_DEFAULT_DEST']):
+                print ('Creating backup directory at {}').format(os.path.join(app.config['BASE_DIR'], 'issues.db'))
+                os.makedirs(app.config['BACKUP_DEFAULT_DEST'])
+            time_stamp = time.strftime('%Y-%m-%dT%H-%M-%S', time.localtime())
+            issue_backup_db = 'issues_' + time_stamp + '.db'
+            os.rename(os.getcwd() + '/issues.db', app.config['BACKUP_DEFAULT_DEST'] + issue_backup_db)
+            # Retain last 3 recent backup files
+            backup_files = os.listdir(app.config['BACKUP_DEFAULT_DEST'])
+            backup_files.sort()
+            for old_file in backup_files[:-3]:
+                os.remove(app.config['BACKUP_DEFAULT_DEST'] + old_file)
     else:
         if check_pip_deps():
             app.run(host='localhost')
