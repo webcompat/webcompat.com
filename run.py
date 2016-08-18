@@ -7,6 +7,9 @@
 import argparse
 import pkg_resources
 from pkg_resources import DistributionNotFound, VersionConflict
+from sqlalchemy import create_engine
+from sqlalchemy.orm import scoped_session
+from sqlalchemy.orm import sessionmaker
 import time
 import datetime
 import os
@@ -122,36 +125,32 @@ if __name__ == '__main__':
         print("Starting server in ~*TEST MODE*~")
         app.run(host='localhost')
     elif args.backup:
-        # To verify if issues.db exist, simply calling os.path.exists is not enough.
-        # Both os.path.exists and os.path.isfile returns true even when file is not there in the path
-        # Every time the script is re run, os.path.exists returns true because of cache.
-        # To avoid this, we open the file in try catch - just to be sure
         if os.path.isfile(os.path.join(os.getcwd(), 'issues.db')):
-            try:
-                with open(os.path.join(os.getcwd(), 'issues.db')) as file:
-                    if not os.path.exists(app.config['BACKUP_DEFAULT_DEST']):
-                        print 'backup db folder does not exist'
-                        os.makedirs(app.config['BACKUP_DEFAULT_DEST'])
-                    else:
-                        print 'backup db folder exists'
-                        # Retain last 3 recent backup files
-                        no_of_backup_files = len(os.listdir(app.config['BACKUP_DEFAULT_DEST']))
-                        if no_of_backup_files > 3:
-                            for idx, val in enumerate(os.listdir(app.config['BACKUP_DEFAULT_DEST'])):
-                                if idx < no_of_backup_files - 2:
-                                    os.remove(app.config['BACKUP_DEFAULT_DEST'] + val)
-                    current_ts = time.time()
-                    time_stamp = datetime.datetime.fromtimestamp(current_ts).strftime('%Y-%m-%d-%H:%M:%S')
-                    issue_backup_db = 'issues_backup_' + time_stamp + '.db'
-                    os.rename(os.getcwd() + '/issues.db', app.config['BACKUP_DEFAULT_DEST'] + issue_backup_db)
-                    try:
-                        os.remove(os.path.join(os.getcwd(), 'issues.db'))
-                    except OSError:
-                        print 'Backup issues.db complete'
-
-            except IOError:
-                sys.exit(FILE_NOT_FOUND_ERROR)
-
+            issue_engine = create_engine('sqlite:///' + os.path.join(
+                app.config['BASE_DIR'], 'issues.db'))
+            issue_session_maker = sessionmaker(autocommit=False,
+                                               autoflush=False,
+                                               bind=issue_engine)
+            issue_db = scoped_session(issue_session_maker)
+            # Take a backup if issues.db has data dump.
+            if issue_db().execute('select count(*) from webcompat_issues').fetchall()[0][0] > 0:
+                if not os.path.exists(app.config['BACKUP_DEFAULT_DEST']):
+                    print 'Backup db folder does not exist'
+                    os.makedirs(app.config['BACKUP_DEFAULT_DEST'])
+                else:
+                    print 'Backup db folder exists'
+                current_ts = time.time()
+                time_stamp = datetime.datetime.fromtimestamp(current_ts).strftime('%Y-%m-%d-%H:%M:%S')
+                issue_backup_db = 'issues_backup_' + time_stamp + '.db'
+                os.rename(os.getcwd() + '/issues.db', app.config['BACKUP_DEFAULT_DEST'] + issue_backup_db)
+                # Retain last 3 recent backup files
+                no_of_backup_files = len(os.listdir(app.config['BACKUP_DEFAULT_DEST']))
+                print no_of_backup_files
+                if no_of_backup_files > 3:
+                    for idx, val in enumerate(os.listdir(app.config['BACKUP_DEFAULT_DEST'])):
+                        print idx
+                        if idx < no_of_backup_files - 3:
+                            os.remove(app.config['BACKUP_DEFAULT_DEST'] + val)
         else:
             sys.exit(FILE_NOT_FOUND_ERROR)
     else:
