@@ -12,6 +12,10 @@ uploads/
 .idea/
 config/secrets.py
 
+# backup folder contains the issues.db backup file with issues dump
+# for the previous versions
+backups/*.db
+
 # these are our 'dist' files
 # checking them into the repo is silly
 webcompat/static/js/webcompat.js
