@@ -14,9 +14,10 @@ function HomePage() {
 
   this.init = function() {
     reportButton.add(reportLink).on('click', this.toggleForm);
-    document.documentElement.className =
-      ('ontouchstart' in window || 'createTouch' in document) ?
-      'touch' : 'no-touch';
+    var htmlClass = ('ontouchstart' in window || 'createTouch' in document) ?
+                     'touch' : 'no-touch';
+    document.documentElement.classList.add(htmlClass);
+
     // Open the form if we've got open=1 param in the URL
     if (formContainer.hasClass('is-closed') &&
         location.search.search(/open=1/) > -1) {

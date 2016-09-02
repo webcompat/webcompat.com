@@ -68,6 +68,11 @@
     vertical-align: middle;
   }
 
+  /* .is-hidden class added when add-on is already installed */
+  .wc-Navbar-link.is-hidden {
+    display: none
+  }
+
   @media all and (max-width: 30em) {
     .wc-Navbar-linkDownload-label-word {
       display: none;
