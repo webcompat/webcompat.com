@@ -27,7 +27,7 @@
     "grunt-contrib-uglify": "~0.2.7",
     "grunt-contrib-watch": "~0.5.3",
     "grunt-eslint": "^17.3.1",
-    "grunt-postcss": "^0.8.0",
+    "grunt-postcss": "~0.8.0",
     "intern": "2.2.0",
     "load-grunt-tasks": "~0.6.0",
     "postcss": "^5.0.19",
@@ -41,11 +41,11 @@
   },
   "scripts": {
     "init": "npm run module && npm run virtualenv && npm run pip && npm install && npm run config",
-    "watch" : "grunt watch",
+    "watch": "grunt watch",
     "build": "grunt",
     "module": "git submodule init && git submodule update",
     "start": "source env/bin/activate && python run.py",
-    "virtualenv" : "pip install virtualenv && virtualenv env &&  source env/bin/activate",
+    "virtualenv": "pip install virtualenv && virtualenv env &&  source env/bin/activate",
     "pip": "pip install -r config/requirements.txt",
     "config": "cp config/secrets.py.example config/secrets.py",
     "project-update": "pip install --upgrade pip && npm run backend-install && npm update"
@@ -78,21 +78,48 @@
     },
     "rules": {
       "comma-dangle": 0,
-      "curly": [2, "all"],
-      "eqeqeq": [2, "smart"],
-      "indent": [2, 2],
-      "linebreak-style": [2, "unix"],
+      "curly": [
+        2,
+        "all"
+      ],
+      "eqeqeq": [
+        2,
+        "smart"
+      ],
+      "indent": [
+        2,
+        2
+      ],
+      "linebreak-style": [
+        2,
+        "unix"
+      ],
       "new-cap": 2,
       "no-cond-assign": 0,
       "no-spaced-func": 2,
       "no-use-before-define": 2,
-      "one-var": [2, "never"],
-      "quotes": [2, "single"],
-      "semi": [2, "always"],
+      "one-var": [
+        2,
+        "never"
+      ],
+      "quotes": [
+        2,
+        "single"
+      ],
+      "semi": [
+        2,
+        "always"
+      ],
       "space-after-keywords": 2,
       "space-before-blocks": 2,
-      "space-before-function-paren": [2, "never"],
-      "space-before-keywords": [2, "always"],
+      "space-before-function-paren": [
+        2,
+        "never"
+      ],
+      "space-before-keywords": [
+        2,
+        "always"
+      ],
       "space-infix-ops": 2,
       "space-return-throw-case": 2,
       "space-unary-ops": 2
