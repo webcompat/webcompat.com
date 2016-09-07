@@ -5,8 +5,8 @@
  * Contains some code modified from https://github.com/jfromaniello/li
  * which is released under the MIT license. */
 
-var issues = issues || {};
-var issueList = issueList || {};
+var issues = issues || {}; // eslint-disable-line no-use-before-define
+var issueList = issueList || {}; // eslint-disable-line no-use-before-define
 
 if (!window.md) {
   window.md = window.markdownit({

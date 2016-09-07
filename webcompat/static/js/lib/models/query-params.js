@@ -1,5 +1,5 @@
 /*globals issues*/
-var issueList = issueList || {};
+var issueList = issueList || {}; // eslint-disable-line no-use-before-define
 
 /*
 * QueryParams is a model for keeping track of all parameters

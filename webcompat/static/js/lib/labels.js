@@ -2,7 +2,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-var issues = issues || {};
+var issues = issues || {}; // eslint-disable-line no-use-before-define
 
 // We need a complete list of labels for certain operations,
 // especially namespace mapping. If the list we're handling
