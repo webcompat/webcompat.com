@@ -2,7 +2,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-var issueList = issueList || {};
+var issueList = issueList || {}; // eslint-disable-line no-use-before-define
 issueList.events = _.extend({},Backbone.Events);
 
 /*

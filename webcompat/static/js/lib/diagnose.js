@@ -2,8 +2,8 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-var diagnose = diagnose || {};
-var issues = issues || {};
+var diagnose = diagnose || {}; // eslint-disable-line no-use-before-define
+var issues = issues || {}; // eslint-disable-line no-use-before-define
 
 diagnose.NewCollection = Backbone.Collection.extend({
   model: issues.Issue,
