@@ -39,11 +39,19 @@ def hooklistener():
             issue_body = payload.get('issue')['body']
             issue_title = payload.get('issue')['title']
             issue_number = payload.get('issue')['number']
+            issue_status = payload.get('issue')['status']
+            issue_creation_time = payload.get('issue')['created_at']
+            issue_last_change_time = payload.get('issue')['updated_at']
+            if 'reported_from' in payload.get('issue'):
+                issue_reported_from = payload.get('issue')['reported_from']
+            else:
+                issue_reported_from = 'null'
             parse_and_set_label(issue_body, issue_number)
             # Setting "Needs Triage" label by default
             # to all the new issues raised
             set_label('status-needstriage', issue_number)
-            dump_to_db(issue_title, issue_body, issue_number)
+            dump_to_db(issue_title, issue_body, issue_number, issue_status, issue_reported_from,
+                       issue_creation_time, issue_last_change_time)
             return ('gracias, amigo.', 200)
         else:
             return ('cool story, bro.', 200)

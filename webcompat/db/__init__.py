@@ -5,9 +5,11 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 import os
+import datetime
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column
+from sqlalchemy import DateTime
 from sqlalchemy import String
 from sqlalchemy.orm import scoped_session
 from sqlalchemy.orm import sessionmaker
@@ -37,13 +39,23 @@ class WCIssue(IssueBase):
     issue_id = Column(String(128), unique=True, primary_key=True)
     summary = Column(String(256))
     url = Column(String(1024))
+    domain = Column(String(1024))
+    status = Column(String(256))
     body = Column(String(2048))
+    reported_from = Column(String(256), default='null')
+    creation_time = Column(DateTime)
+    last_change_time = Column(DateTime)
 
-    def __init__(self, issue_id, summary, url, body):
+    def __init__(self, issue_id, summary, url, domain, body, status, reported_from, creation_time, last_change_time):
         self.issue_id = issue_id
         self.summary = summary
         self.url = url
+        self.domain = domain
+        self.status = status
         self.body = body
+        self.reported_from = reported_from
+        self.creation_time = datetime.datetime.strptime(creation_time.split('Z')[0],"%Y-%m-%dT%H:%M:%S")
+        self.last_change_time = datetime.datetime.strptime(last_change_time.split('Z')[0],"%Y-%m-%dT%H:%M:%S")
 
 IssueBase.metadata.create_all(bind=issue_engine)
 
