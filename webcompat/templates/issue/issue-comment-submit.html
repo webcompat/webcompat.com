@@ -1,8 +1,15 @@
 <div class="wc-Comment wc-Comment--form js-Comment-form" data-username="{{ session.username }}" data-avatar-url="{{ session.avatar_url }}">
-  <div class="wc-Comment-owner-avatar">
-    <img class="" src="{{ session.avatar_url }}" alt="Avatar"/>
+  <div class="wc-Comment-header">
+    <div class="wc-Comment-owner">
+      <div class="wc-Comment-owner-avatar">
+        <img src="{{ session.avatar_url }}" alt="{{ session.username }}">
+      </div>
+      <div class="wc-Comment-owner-name js-Comment-owner">
+        {{ session.username }}
+      </div>
+    </div>
   </div>
-  <div class="wc-Comment-body wc-Comment-body--caret">
+  <div class="wc-Comment-body">
   <label for="wc-Comment-text" class="wc-Accessibility">Comment Text</label>
     <textarea class="wc-Comment-submit js-Comment-text" placeholder="Leave a comment"></textarea>
     <div class="wc-Form-group js-ImageUploadView">
