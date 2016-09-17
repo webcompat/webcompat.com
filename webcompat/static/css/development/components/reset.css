@@ -13,3 +13,10 @@ fieldset {
   margin: 0;
   padding: 0;
 }
+
+input,
+textarea {
+  font-family: var(--base-fontFamily);
+  font-size: 1rem;
+  font-weight: 300;
+}
