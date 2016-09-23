@@ -18,6 +18,9 @@ from flask import request
 from helpers import dump_to_db
 from helpers import parse_and_set_label
 from helpers import set_label
+from helpers import signature_check
+
+from webcompat import app
 
 
 webhooks = Blueprint('webhooks', __name__, url_prefix='/webhooks')
@@ -32,23 +35,30 @@ def hooklistener():
     '''
     if request.method == 'GET':
         abort(403)
-    elif (request.method == 'POST' and
-            request.headers.get('X-GitHub-Event') == 'issues'):
-        payload = json.loads(request.data)
-        if payload.get('action') == 'opened':
-            issue_body = payload.get('issue')['body']
-            issue_title = payload.get('issue')['title']
-            issue_number = payload.get('issue')['number']
-            parse_and_set_label(issue_body, issue_number)
-            # Setting "Needs Triage" label by default
-            # to all the new issues raised
-            set_label('status-needstriage', issue_number)
-            dump_to_db(issue_title, issue_body, issue_number)
-            return ('gracias, amigo.', 200)
+    elif request.method == 'POST':
+        event_type = request.headers.get('X-GitHub-Event')
+        post_signature = request.headers.get('X-Hub-Signature')
+        if post_signature:
+            key = app.config['HOOK_SECRET_KEY']
+            payload = json.loads(request.data)
+            if not signature_check(key, post_signature, request.data):
+                abort(401)
+            if event_type == 'issues':
+                if payload.get('action') == 'opened':
+                    issue_body = payload.get('issue')['body']
+                    issue_title = payload.get('issue')['title']
+                    issue_number = payload.get('issue')['number']
+                    parse_and_set_label(issue_body, issue_number)
+                    # Setting "Needs Triage" label by default
+                    # to all the new issues raised
+                    set_label('status-needstriage', issue_number)
+                    dump_to_db(issue_title, issue_body, issue_number)
+                    return ('gracias, amigo.', 200)
+                else:
+                    return ('cool story, bro.', 200)
+            elif event_type == 'ping':
+                return ('pong', 200)
+            else:
+                abort(403)
         else:
-            return ('cool story, bro.', 200)
-    elif (request.method == 'POST' and
-            request.headers.get('X-GitHub-Event') == 'ping'):
-        return ('pong', 200)
-    else:
-        abort(403)
+            abort(401)

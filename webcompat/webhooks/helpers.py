@@ -4,6 +4,8 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
+import hashlib
+import hmac
 import json
 import re
 import requests
@@ -53,3 +55,15 @@ def dump_to_db(title, body, issue_number):
     url = extract_url(body)
     issue_db.add(WCIssue(issue_number, title, url, body))
     issue_db.commit()
+
+
+def signature_check(key, post_signature, payload):
+    '''Checks the HTTP POST legitimacy.'''
+    sha_name, signature = post_signature.split('=')
+    if sha_name != 'sha1':
+        return False
+    if not signature:
+        return False
+    # HMAC requires its key to be bytes, but data is strings.
+    mac = hmac.new(key, msg=payload, digestmod=hashlib.sha1)
+    return hmac.compare_digest(mac.hexdigest(), signature.encode('utf-8'))
