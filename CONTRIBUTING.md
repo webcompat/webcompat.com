@@ -6,6 +6,7 @@ You are welcome to contribute to this project. Here are the guidelines we try to
 * [Question or Problem](#question-or-problem)
 * [Filing an Issue](#filing-an-issue)
 * [Triaging Issues](#triaging-issues)
+  * [Closing Bugs as Invalid](#closing-bugs-as-invalid)
 * [Finding an Issue to Work On](#finding-an-issue-to-work-on)
 * [Feature Requests](#feature-requests)
 * [Submission Guidelines](#submission-guidelines)
@@ -53,6 +54,12 @@ If you're using webcompat.com and something is confusing, broken, or you think i
 ## Triaging Issues
 
 One way to contribute is to triage issues. This could be as simple as confirming a bug, or as complicated as debugging errors and providing fixes. A tiny bit of effort in someone else's issue can go a long way.
+
+### Closing Bugs as Invalid
+
+The wiki contains a [list of reasons why bugs might be closed as invalid](https://github.com/webcompat/webcompat.com/wiki/Invalid-Bugs). When in doubt, ask questions in the bug.
+
+https://github.com/webcompat/webcompat.com/wiki/Invalid-Bugs
 
 ## Finding an Issue to Work On
 
