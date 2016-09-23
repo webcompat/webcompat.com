@@ -1,3 +1,11 @@
+## 2.7.2 - 2016-09-23
+
+* Use secure webhooks (no issue)
+* Link to invalid issues wiki from CONTRIBUTING [Pull #1180](https://github.com/webcompat/webcompat.com/pull/1180) [Issue #1175](https://github.com/webcompat/webcompat.com/issues/1175)
+* Fix truncated text on contributors page [Pull #1173](https://github.com/webcompat/webcompat.com/pull/1173) [Issue #1004](https://github.com/webcompat/webcompat.com/issues/1004)
+* Add class to hide add-on download link (for add-on users)[Pull #1170](https://github.com/webcompat/webcompat.com/pull/1170) [Issue #1169](https://github.com/webcompat/webcompat.com/issues/1169)
+* (re-land) Display all comments for an issue [Pull #1147](https://github.com/webcompat/webcompat.com/pull/1147) [Issue #1058](https://github.com/webcompat/webcompat.com/issues/1058)
+
 ## 2.7.1 - 2016-07-27
 
 * Adds block for qiangpiaoruanjian [Pull #1142](https://github.com/webcompat/webcompat.com/pull/1142) [Issue #1141](https://github.com/webcompat/webcompat.com/issues/1141)
