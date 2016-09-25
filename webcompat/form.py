@@ -9,6 +9,7 @@ power the issue reporting form on webcompat.com.'''
 
 import random
 import urlparse
+import re
 
 from flask_wtf.file import FileField
 from flask_wtf.file import FileAllowed
@@ -147,6 +148,12 @@ def domain_name(url):
     # testing if it's an http URL
     if url.startswith(SCHEMES):
         domain = urlparse.urlparse(url).netloc
+        if domain.lower().startswith('www.'):
+            domain = domain.split('www.')[1]
+        port_number = re.search(r':\d+$', domain)
+        if port_number is not None:
+            if domain.endswith(port_number.group()):
+                domain = domain.split(port_number.group())[0]
     else:
         domain = None
     return domain

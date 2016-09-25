@@ -12,6 +12,8 @@ from webcompat import app
 from webcompat.db import issue_db
 from webcompat.db import WCIssue
 from webcompat.helpers import extract_url
+from webcompat.form import normalize_url
+from webcompat.form import domain_name
 
 
 def api_post(endpoint, payload, issue):
@@ -49,7 +51,10 @@ def set_label(label, issue_number):
     api_post('labels', payload, issue_number)
 
 
-def dump_to_db(title, body, issue_number):
+def dump_to_db(title, body, issue_number, status, reported_from, creation_time, last_change_time):
     url = extract_url(body)
-    issue_db.add(WCIssue(issue_number, title, url, body))
+    normalized_url = normalize_url(url)
+    domain = domain_name(normalized_url)
+    issue_db.add(WCIssue(issue_number, title, url, domain, body, status,
+                         reported_from, creation_time, last_change_time))
     issue_db.commit()
