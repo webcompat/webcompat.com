@@ -57,6 +57,19 @@ def dump_to_db(title, body, issue_number):
     issue_db.commit()
 
 
+def compare_digest(x, y):
+    '''Approximates hmac.compare_digest (Py 2.7.7+) until we
+    upgrade.'''
+    if not (isinstance(x, bytes) and isinstance(y, bytes)):
+        raise TypeError("both inputs should be instances of bytes")
+    if len(x) != len(y):
+        return False
+    result = 0
+    for a, b in zip(bytearray(x), bytearray(y)):
+        result |= a ^ b
+    return result == 0
+
+
 def signature_check(key, post_signature, payload):
     '''Checks the HTTP POST legitimacy.'''
     sha_name, signature = post_signature.split('=')
@@ -66,4 +79,4 @@ def signature_check(key, post_signature, payload):
         return False
     # HMAC requires its key to be bytes, but data is strings.
     mac = hmac.new(key, msg=payload, digestmod=hashlib.sha1)
-    return hmac.compare_digest(mac.hexdigest(), signature.encode('utf-8'))
+    return compare_digest(mac.hexdigest(), signature.encode('utf-8'))
