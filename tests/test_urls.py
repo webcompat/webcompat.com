@@ -85,12 +85,13 @@ class TestURLs(unittest.TestCase):
         self.assertNotEqual(rv.status_code, 307)
 
     def test_labeler_webhook(self):
-        '''Test that the labeler webhook can respond to ping event.'''
+        '''Webhook related tests.'''
         headers = {'X-GitHub-Event': 'ping'}
         rv = self.app.get('/webhooks/labeler', headers=headers)
         self.assertEqual(rv.status_code, 403)
         rv = self.app.post('/webhooks/labeler', headers=headers)
-        self.assertEqual(rv.data, 'pong')
+        # A random post should 401, only requests from GitHub will 200
+        self.assertEqual(rv.status_code, 401)
 
     def test_tools_cssfixme(self):
         '''Test that the /tools/cssfixme route gets 200.'''
