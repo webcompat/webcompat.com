@@ -11,7 +11,7 @@ import sys
 import unittest
 
 from flask import Request
-from StringIO import StringIO
+from io import StringIO
 from werkzeug import FileStorage
 from werkzeug.datastructures import MultiDict
 
@@ -57,7 +57,7 @@ class TestingFileStorage(FileStorage):
         :param dst: The file to save to.
         :param buffer_size: Ignored.
         """
-        if isinstance(dst, basestring):
+        if isinstance(dst, str):
             self.saved = dst
         else:
             self.saved = dst.name
@@ -116,10 +116,10 @@ class TestUploads(unittest.TestCase):
             self.assertEqual(rv.status_code, status_code)
 
     def testBase64ScreenshotUploads(self):
-        BASE64_PNG = u'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAAAAAA6fptVAAAACklEQVQYV2P4DwABAQEAWk1v8QAAAABJRU5ErkJggg=='  # nopep8
-        BASE64_PNG_GARBAGE = u'data:image/png;base64,garbage!'
-        BASE64_PNG_GARBAGE2 = u'data:image/png;data:image/png;'
-        PILE_OF_POO = u'💩'
+        BASE64_PNG = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAAAAAA6fptVAAAACklEQVQYV2P4DwABAQEAWk1v8QAAAABJRU5ErkJggg=='  # nopep8
+        BASE64_PNG_GARBAGE = 'data:image/png;base64,garbage!'
+        BASE64_PNG_GARBAGE2 = 'data:image/png;data:image/png;'
+        PILE_OF_POO = '💩'
 
         for filedata, status_code in (
                 (BASE64_PNG, 201),

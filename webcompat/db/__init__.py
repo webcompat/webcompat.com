@@ -45,6 +45,7 @@ class WCIssue(IssueBase):
         self.url = url
         self.body = body
 
+
 IssueBase.metadata.create_all(bind=issue_engine)
 
 UsersBase = declarative_base()
@@ -62,7 +63,7 @@ class User(UsersBase):
         # We use the user_id in the session cookie to identify auth'd users.
         # Here we salt and hash the GitHub access token so you can't get
         # back to the auth token if the session cookie was ever compromised.
-        self.user_id = sha512(access_token + uuid4().hex).hexdigest()[0:128]
+        self.user_id = sha512((access_token + uuid4().hex).encode('utf-8')).hexdigest()[0:128]
 
 
 UsersBase.metadata.create_all(bind=session_engine)

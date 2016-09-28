@@ -35,7 +35,7 @@ https://github.com/webcompat/webcompat.com/blob/master/CONTRIBUTING.md#configuri
 
 try:
     from webcompat import app
-except ImportError, e:
+except ImportError as e:
     if 'import_name' in e and e.import_name == 'config':
         # config not found, did you forget to copy config.py.example?
         raise ImportError('{0}\n\n{1}'.format(e, NO_CONF_ERROR))
@@ -96,6 +96,7 @@ def config_validator():
     if app.config['OAUTH_TOKEN'] == '':
         sys.exit(TOKEN_HELP)
 
+
 if __name__ == '__main__':
     # testing the config file
     config_validator()
@@ -115,7 +116,8 @@ if __name__ == '__main__':
         print("Starting server in ~*TEST MODE*~")
         app.run(host='localhost')
     elif args.backup:
-        issue_engine = create_engine('sqlite:///' + os.path.join(app.config['BASE_DIR'], 'issues.db'))
+        issue_engine = create_engine(
+            'sqlite:///' + os.path.join(app.config['BASE_DIR'], 'issues.db'))
         issue_session_maker = sessionmaker(autocommit=False,
                                            autoflush=False,
                                            bind=issue_engine)
