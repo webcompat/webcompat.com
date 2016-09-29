@@ -95,25 +95,23 @@ def get_problem_summary(category):
         return get_problem(category).lower()
 
 
-def wrap_label(label):
-    '''Helper method to wrap a label and its type in an HTML comment.
+def wrap_metadata(metadata):
+    '''Helper method to wrap metadata and its type in an HTML comment.
 
-    We use it to hide from users in GitHub issues.
-    We can parse these later and add labels programmatically (as you
-    have to have push access to the report to add labels.
+    We use it to hide potentially (un)interesting metadata from the UI.
     '''
-    return u'<!-- @{0}: {1} -->\n'.format(*label)
+    return u'<!-- @{0}: {1} -->\n'.format(*metadata)
 
 
-def get_labels(browser_name):
-    '''Return all labels as a single string.'''
-    labels = []
+def get_metadata(browser_name):
+    '''Return all metadata as a single string.'''
+    metadata = []
     result = ''
     # Only the name for now.
-    labels.append(('browser', browser_name))
-    # Now, "wrap the labels" and return them all as a single string
-    for label in labels:
-        result += wrap_label(label)
+    metadata.append(('browser', browser_name))
+    # Now, "wrap the metadata" and return them all as a single string
+    for md in metadata:
+        result += wrap_metadata(md)
     return result
 
 
@@ -191,8 +189,9 @@ def build_formdata(form_object):
         summary = '{0} - {1}'.format(normalized_url, problem_summary)
 
     formdata = {
-        'browser_label': get_labels(form_object.get('browser')),
-        'ua_label': wrap_label(('ua_header', form_object.get('ua_header'))),
+        'browser_metadata': get_metadata(form_object.get('browser')),
+        'ua_metadata': wrap_metadata(('ua_header',
+                                     form_object.get('ua_header'))),
         'url': form_object.get('url'),
         'browser': form_object.get('browser'),
         'os': form_object.get('os'),
@@ -201,7 +200,7 @@ def build_formdata(form_object):
     }
 
     # Preparing the body
-    body = u'''{browser_label}{ua_label}
+    body = u'''{browser_metadata}{ua_metadata}
 **URL**: {url}
 **Browser / Version**: {browser}
 **Operating System**: {os}
