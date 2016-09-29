@@ -11,7 +11,7 @@ import sys
 import unittest
 
 from flask import Request
-from io import StringIO
+from io import BytesIO
 from werkzeug import FileStorage
 from werkzeug.datastructures import MultiDict
 
@@ -103,8 +103,8 @@ class TestUploads(unittest.TestCase):
                 @property
                 def files(self):
                     d = MultiDict()
-                    f = open(os.path.join('tests', 'fixtures', filename), 'r')
-                    d['image'] = TestingFileStorage(stream=StringIO(f.read()),
+                    f = open(os.path.join('tests', 'fixtures', filename), 'rb')
+                    d['image'] = TestingFileStorage(stream=BytesIO(f.read()),
                                                     filename=filename)
                     f.close()
                     return d
