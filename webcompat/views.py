@@ -170,6 +170,8 @@ def create_issue():
             flash(msg, 'notimeout')
             return redirect(url_for('index'))
     form['ua_header'] = request.headers.get('User-Agent')
+    # Store where the report originated from
+    form['reported_with'] = request.headers.get('X-Reported-With', 'web')
     # Logging the ip and url for investigation
     log = app.logger
     log.setLevel(logging.INFO)
