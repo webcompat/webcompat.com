@@ -49,10 +49,13 @@ class Upload(object):
             if isinstance(imagedata, FileStorage):
                 return Image.open(imagedata)
             # Is this a base64 encoded image (i.e., bug report screenshot)?
-            if (isinstance(imagedata, unicode) and
+            if (isinstance(imagedata, str) and
                     imagedata.startswith('data:image/')):
                 # Chop off 'data:image/.+;base64,' before decoding
                 imagedata = re.sub('^data:image/.+;base64,', '', imagedata)
+                # If the string is not a multiple of 4,
+                # it throws with incorrect padding
+                imagedata = imagedata + '=' * (4 - len(imagedata) % 4)
                 return Image.open(BytesIO(base64.b64decode(imagedata)))
             raise TypeError('TypeError: Not a valid image format')
         except TypeError:

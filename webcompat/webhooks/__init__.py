@@ -15,10 +15,10 @@ from flask import abort
 from flask import Blueprint
 from flask import request
 
-from helpers import dump_to_db
-from helpers import parse_and_set_label
-from helpers import set_label
-from helpers import signature_check
+from .helpers import dump_to_db
+from .helpers import parse_and_set_label
+from .helpers import set_label
+from .helpers import signature_check
 
 from webcompat import app
 

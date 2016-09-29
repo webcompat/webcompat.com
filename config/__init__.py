@@ -8,8 +8,8 @@
 
 from collections import namedtuple
 
-from environment import *
-from secrets import *
+from .environment import *
+from .secrets import *
 
 THREADS_PER_PAGE = 8
 

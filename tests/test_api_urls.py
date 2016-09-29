@@ -43,7 +43,7 @@ class TestAPIURLs(unittest.TestCase):
         '''API issue for a non existent number returns JSON 404.'''
         # If we reach 1,000,000 webcompat issues we can celebrate
         rv = self.app.get('/api/issues/1000000', environ_base=headers)
-        json_body = json.loads(rv.data)
+        json_body = json.loads(rv.data.decode("utf-8"))
         self.assertEqual(rv.status_code, 404)
         self.assertEqual(rv.content_type, 'application/json')
         self.assertEqual(json_body['status'], 404)
@@ -51,7 +51,7 @@ class TestAPIURLs(unittest.TestCase):
     def test_api_wrong_route(self):
         '''API with wrong route returns JSON 404.'''
         rv = self.app.get('/api/foobar', environ_base=headers)
-        json_body = json.loads(rv.data)
+        json_body = json.loads(rv.data.decode("utf-8"))
         self.assertEqual(rv.status_code, 404)
         self.assertEqual(rv.content_type, 'application/json')
         self.assertEqual(json_body['status'], 404)
@@ -59,7 +59,7 @@ class TestAPIURLs(unittest.TestCase):
     def test_api_wrong_category(self):
         '''API with wrong category returns JSON 404.'''
         rv = self.app.get('/api/issues/category/foobar', environ_base=headers)
-        json_body = json.loads(rv.data)
+        json_body = json.loads(rv.data.decode("utf-8"))
         self.assertEqual(rv.status_code, 404)
         self.assertEqual(rv.content_type, 'application/json')
         self.assertEqual(json_body['status'], 404)
@@ -67,7 +67,6 @@ class TestAPIURLs(unittest.TestCase):
     def test_api_labels_without_auth(self):
         '''API access to labels without auth returns JSON 200.'''
         rv = self.app.get('/api/issues/labels', environ_base=headers)
-        json_body = json.loads(rv.data)
         self.assertEqual(rv.status_code, 200)
         self.assertEqual(rv.content_type, 'application/json')
 
@@ -79,16 +78,18 @@ class TestAPIURLs(unittest.TestCase):
         # us the header properties we want to test.
         rv = self.app.get('/api/issues/398/comments',
                           query_string=query_string, environ_base=headers)
-        self.assertTrue = all(x in rv.data for x in ['Link', 'rel', 'next',
-                                                     'last', 'page'])
+        body = rv.data.decode("utf-8")
+        self.assertTrue = all(x in body for x in ['Link', 'rel', 'next',
+                                                  'last', 'page'])
         self.assertEqual(rv.status_code, 200)
         self.assertEqual(rv.content_type, 'application/json')
         # API access to comments for an issue with < 30 does not return link a
         # header in the response (until GitHub changes it....?)
         rv = self.app.get('/api/issues/4/comments', query_string=query_string,
                           environ_base=headers)
-        self.assertTrue = not all(x in rv.data for x in ['Link', 'rel', 'next',
-                                                         'last', 'page'])
+        body = rv.data.decode("utf-8")
+        self.assertTrue = not all(x in body for x in ['Link', 'rel', 'next',
+                                                      'last', 'page'])
         self.assertEqual(rv.status_code, 200)
         self.assertEqual(rv.content_type, 'application/json')
 
@@ -102,7 +103,7 @@ class TestAPIURLs(unittest.TestCase):
         '''API access to user activity without auth returns JSON 401.'''
         rv = self.app.get('/api/issues/miketaylr/creator',
                           environ_base=headers)
-        json_body = json.loads(rv.data)
+        json_body = json.loads(rv.data.decode("utf-8"))
         self.assertEqual(rv.status_code, 401)
         self.assertEqual(rv.content_type, 'application/json')
         self.assertEqual(json_body['status'], 401)
@@ -110,7 +111,7 @@ class TestAPIURLs(unittest.TestCase):
     def test_api_search_wrong_parameter(self):
         '''API with wrong parameter returns JSON 404.'''
         rv = self.app.get('/api/issues/search?z=foobar', environ_base=headers)
-        json_body = json.loads(rv.data)
+        json_body = json.loads(rv.data.decode("utf-8"))
         self.assertEqual(rv.status_code, 404)
         self.assertEqual(rv.content_type, 'application/json')
         self.assertEqual(json_body['status'], 404)

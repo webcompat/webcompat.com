@@ -6,7 +6,9 @@
 
 import json
 import logging
-import urllib
+import urllib.error
+import urllib.parse
+import urllib.request
 
 from flask import abort
 from flask import flash
@@ -17,17 +19,17 @@ from flask import request
 from flask import session
 from flask import send_from_directory
 from flask import url_for
-from form import AUTH_REPORT
-from form import IssueForm
-from form import PROXY_REPORT
-from helpers import get_browser
-from helpers import get_browser_name
-from helpers import get_os
-from helpers import get_referer
-from helpers import get_user_info
-from helpers import thanks_page
-from helpers import set_referer
-from issues import report_issue
+from .form import AUTH_REPORT
+from .form import IssueForm
+from .form import PROXY_REPORT
+from .helpers import get_browser
+from .helpers import get_browser_name
+from .helpers import get_os
+from .helpers import get_referer
+from .helpers import get_user_info
+from .helpers import thanks_page
+from .helpers import set_referer
+from .issues import report_issue
 from webcompat.db import session_db
 from webcompat.db import User
 
@@ -84,7 +86,7 @@ def login():
 @app.route('/logout')
 def logout():
     session.clear()
-    flash(u'You were successfully logged out.', 'info')
+    flash('You were successfully logged out.', 'info')
     return redirect(g.referer)
 
 
@@ -94,7 +96,7 @@ def logout():
 @github.authorized_handler
 def authorized(access_token):
     if access_token is None:
-        flash(u'Something went wrong trying to sign into GitHub. :(', 'error')
+        flash('Something went wrong trying to sign into GitHub. :(', 'error')
         return redirect(g.referer)
     user = User.query.filter_by(access_token=access_token).first()
     if user is None:
@@ -163,7 +165,7 @@ def create_issue():
     spamlist = ['qiangpiaoruanjian']
     for spam in spamlist:
         if spam in form.get('url'):
-            msg = (u'Anonymous reporting for qiangpiaoruanjian.cn '
+            msg = ('Anonymous reporting for qiangpiaoruanjian.cn '
                    'is temporarily disabled. Please see '
                    'https://github.com/webcompat/webcompat.com/issues/1141 '
                    'for more details.')
@@ -198,10 +200,10 @@ def show_issue(number):
 @app.route('/thanks/<int:number>')
 def thanks(number):
     issue = number
-    uri = u"https://webcompat.com/issues/{0}".format(number)
-    text = u"I just filed a bug on the internet: "
-    encoded_issue = urllib.quote(uri.encode("utf-8"))
-    encoded_text = urllib.quote(text.encode("utf-8"))
+    uri = "https://webcompat.com/issues/{0}".format(number)
+    text = "I just filed a bug on the internet: "
+    encoded_issue = urllib.parse.quote(uri.encode("utf-8"))
+    encoded_text = urllib.parse.quote(text.encode("utf-8"))
     if g.user:
         get_user_info()
     return render_template('thanks.html', number=issue,
@@ -243,7 +245,7 @@ def show_user_page(username):
 @app.route('/rate_limit')
 def show_rate_limit():
     body, status_code, response_headers = get_rate_limit()
-    rl = json.loads(body)
+    rl = json.loads(body.decode('utf-8'))
     if g.user:
         rl.update({"user": session.get('username')})
     else:

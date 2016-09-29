@@ -11,7 +11,7 @@ import math
 import os
 import re
 import requests
-import urlparse
+import urllib.parse
 
 from babel.dates import format_timedelta
 from flask import abort
@@ -104,13 +104,13 @@ def get_browser(user_agent_string=None):
 
     It will pre-populate the bug reporting form.
     '''
-    if user_agent_string and isinstance(user_agent_string, basestring):
+    if user_agent_string and isinstance(user_agent_string, str):
         ua_dict = user_agent_parser.Parse(user_agent_string)
         ua = ua_dict.get('user_agent')
         name = ua.get('family')
-        version = ua.get('major', u'Unknown')
+        version = ua.get('major', 'Unknown')
         # Add on the minor and patch version numbers if they exist
-        if version != u'Unknown' and ua.get('minor'):
+        if version != 'Unknown' and ua.get('minor'):
             version = version + "." + ua.get('minor')
             if ua.get('patch'):
                 version = version + "." + ua.get('patch')
@@ -136,7 +136,7 @@ def get_browser_name(user_agent_string=None):
 
     unknown user agents will be reported as "unknown".
     '''
-    if user_agent_string and isinstance(user_agent_string, basestring):
+    if user_agent_string and isinstance(user_agent_string, str):
         # get_browser will return something like 'Chrome Mobile 47.0'
         # we just want 'chrome mobile', i.e., the lowercase name
         # w/o the version
@@ -149,11 +149,11 @@ def get_os(user_agent_string=None):
 
     It pre-populates the bug reporting form.
     '''
-    if user_agent_string and isinstance(user_agent_string, basestring):
+    if user_agent_string and isinstance(user_agent_string, str):
         ua_dict = user_agent_parser.Parse(user_agent_string)
         os = ua_dict.get('os')
-        version = os.get('major', u'Unknown')
-        if version != u'Unknown' and os.get('minor'):
+        version = os.get('major', 'Unknown')
+        if version != 'Unknown' and os.get('minor'):
             version = version + "." + os.get('minor')
             if os.get('patch'):
                 version = version + "." + os.get('patch')
@@ -202,7 +202,7 @@ def get_referer(request):
     the session for a manually stashed 'referer' key, otherwise return None.
     '''
     if request.referrer:
-        host = urlparse.urlparse(request.referrer).hostname
+        host = urllib.parse.urlparse(request.referrer).hostname
         if host in HOST_WHITELIST:
             return request.referrer
         else:
@@ -218,7 +218,7 @@ def set_referer(request):
     the HOST_WHITELIST.
     '''
     if request.referrer:
-        host = urlparse.urlparse(request.referrer).hostname
+        host = urllib.parse.urlparse(request.referrer).hostname
         if host in HOST_WHITELIST:
             session['referer'] = request.referrer
 
@@ -267,7 +267,7 @@ def rewrite_links(link_header):
     header_link_data = parse_link_header(link_header)
     for data in header_link_data:
         uri = data['link']
-        uri_tuple = urlparse.urlsplit(uri)
+        uri_tuple = urllib.parse.urlsplit(uri)
         path = uri_tuple.path
         query = uri_tuple.query
         if path.startswith('/repositories/'):
@@ -277,7 +277,7 @@ def rewrite_links(link_header):
         elif path.startswith('/search/issues'):
             path = 'issues/search'
         api_path = '{}{}'.format('/api/', path)
-        data['link'] = urlparse.urlunsplit(('', '', api_path, query, ''))
+        data['link'] = urllib.parse.urlunsplit(('', '', api_path, query, ''))
     return format_link_header(header_link_data)
 
 
@@ -297,13 +297,13 @@ def remove_oauth(uri):
     Github returns Oauth tokens in some circumstances. We remove it for
     avoiding to spill it in public as it's not necessary in Link Header.
     '''
-    uri_group = urlparse.urlparse(uri)
+    uri_group = urllib.parse.urlparse(uri)
     parameters = uri_group.query.split('&')
     clean_parameters_list = [parameter for parameter in parameters
                              if not parameter.startswith('access_token=')]
     clean_parameters = '&'.join(clean_parameters_list)
     clean_uri = uri_group._replace(query=clean_parameters)
-    return urlparse.urlunparse(clean_uri)
+    return urllib.parse.urlunparse(clean_uri)
 
 
 def rewrite_and_sanitize_link(link_header):
@@ -376,10 +376,10 @@ def mockable_response(func):
                 # have different fixture files for different response states
                 checksum = hashlib.md5(json.dumps(get_args)).hexdigest()
                 file_path = FIXTURES_PATH + request.path + "." + checksum
-                print('Expected fixture file: ' + file_path + '.json')
+                print(('Expected fixture file: ' + file_path + '.json'))
             else:
                 file_path = FIXTURES_PATH + request.path
-                print('Expected fixture file: ' + file_path + '.json')
+                print(('Expected fixture file: ' + file_path + '.json'))
             with open(file_path + '.json', 'r') as f:
                 data = f.read()
                 return (data, 200, get_fixture_headers(data))
