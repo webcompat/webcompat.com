@@ -67,7 +67,6 @@ class TestAPIURLs(unittest.TestCase):
     def test_api_labels_without_auth(self):
         '''API access to labels without auth returns JSON 200.'''
         rv = self.app.get('/api/issues/labels', environ_base=headers)
-        json_body = json.loads(rv.data)
         self.assertEqual(rv.status_code, 200)
         self.assertEqual(rv.content_type, 'application/json')
 
