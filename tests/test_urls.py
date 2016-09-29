@@ -101,9 +101,10 @@ class TestURLs(unittest.TestCase):
     def test_rate_limit(self):
         '''Test that we are receiving the appropriate text file.'''
         rv = self.app.get('/rate_limit')
+        body = rv.data.decode('utf-8')
         response_start = 'Current user:'
         self.assertEqual(rv.status_code, 200)
-        self.assertTrue = rv.data.startswith(response_start)
+        self.assertTrue = body.startswith(response_start)
 
     def test_tools_cssfixme_with_URL(self):
         '''Test that the /tools/cssfixme route gets 200 with ?url query.'''
