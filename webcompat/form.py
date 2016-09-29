@@ -103,12 +103,12 @@ def wrap_metadata(metadata):
     return u'<!-- @{0}: {1} -->\n'.format(*metadata)
 
 
-def get_metadata(browser_name):
-    '''Return all metadata as a single string.'''
+def get_metadata(metadata_keys, form_object):
+    '''Return relevant metadata hanging off the form as a single string.'''
     metadata = []
     result = ''
-    # Only the name for now.
-    metadata.append(('browser', browser_name))
+    for key in metadata_keys:
+        metadata.append((key, form_object.get(key)))
     # Now, "wrap the metadata" and return them all as a single string
     for md in metadata:
         result += wrap_metadata(md)
@@ -189,9 +189,8 @@ def build_formdata(form_object):
         summary = '{0} - {1}'.format(normalized_url, problem_summary)
 
     formdata = {
-        'browser_metadata': get_metadata(form_object.get('browser')),
-        'ua_metadata': wrap_metadata(('ua_header',
-                                     form_object.get('ua_header'))),
+        'metadata': get_metadata(('browser', 'ua_header', 'reported_with'),
+                                 form_object),
         'url': form_object.get('url'),
         'browser': form_object.get('browser'),
         'os': form_object.get('os'),
@@ -200,7 +199,7 @@ def build_formdata(form_object):
     }
 
     # Preparing the body
-    body = u'''{browser_metadata}{ua_metadata}
+    body = u'''{metadata}
 **URL**: {url}
 **Browser / Version**: {browser}
 **Operating System**: {os}
