@@ -234,7 +234,7 @@ issues.ImageUploadView = Backbone.View.extend({
     var DELIMITER = '\n\n';
     var textarea = $('.js-Comment-text');
     var textareaVal = textarea.val();
-    var imageURL = _.template('![Screenshot of the site issue](<%= url %>)');
+    var imageURL = _.template('[![Screenshot of the site issue](<%= url %>)](<%= url %>)');
     var compiledImageURL = imageURL({url: response.url});
 
     if (!$.trim(textareaVal)) {
