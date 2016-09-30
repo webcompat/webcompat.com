@@ -1,3 +1,8 @@
+## 2.7.3 - 2016-09-30
+
+* Update Markdown-it [Pull #1184](https://github.com/webcompat/webcompat.com/pull/1184) [Issue #1183](https://github.com/webcompat/webcompat.com/issues/1183) [Issue #1148](https://github.com/webcompat/webcompat.com/issues/1148)
+* Add hidden metadata to determine how people are reporting issues [Issue #255](https://github.com/webcompat/webcompat.com/issues/355) (no PR, because @miketaylr pushed straight to master... oops)
+
 ## 2.7.2.1 - 2016-09-27
 
 * Update (failing) webhook test. Oops. (no issue)
