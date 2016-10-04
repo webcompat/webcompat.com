@@ -59,6 +59,8 @@ function BugForm() {
     this.descField.on('focus',     _.bind(this.checkProblemTypeValidity, this));
     this.problemType.on('change',  _.bind(this.checkProblemTypeValidity, this));
     this.uploadField.on('change',  _.bind(this.checkImageTypeValidity, this));
+    this.osField.add(this.browserField)
+                .on('blur input', _.bind(this.checkOptionalNonEmpty, this));
     this.submitButtons.on('click', _.bind(function(e) {
       if (e.target && e.target.value) {
         // store a reference to what report button was clicked
@@ -197,6 +199,19 @@ function BugForm() {
     }
   };
 
+  /* Check if Browser and OS are empty or not, only
+     so we can set them to valid (there is no invalid state) */
+  this.checkOptionalNonEmpty = function() {
+    _.forEach([this.browserField, this.osField], _.bind(function(input) {
+      var inputId = input.prop('id');
+      if (input.val()) {
+        this.makeValid(inputId);
+      } else {
+        this.makeInvalid(inputId);
+      }
+    }, this));
+  };
+
   this.checkForm = function() {
     // Run through and see if there's any user input in the
     // required inputs
@@ -208,6 +223,7 @@ function BugForm() {
       this.checkURLValidity();
       this.checkProblemTypeValidity();
       this.checkImageTypeValidity();
+      this.checkOptionalNonEmpty();
       // and open the form, if it's not already open
       if (!this.reportButton.hasClass('is-open')) {
         this.reportButton.click();
