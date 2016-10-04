@@ -4,10 +4,7 @@
 
 function BugForm() {
   this.form = $('#js-ReportForm form');
-  this.urlField = $('#url');
   this.descField = $('#description');
-  this.uploadField = $('#image');
-  this.problemType = $('[name=problem_category]');
   this.submitButtons = $('#js-ReportForm .js-Button');
   this.loadingIndicator = $('.js-Loader');
   this.reportButton = $('#js-ReportBug');
@@ -18,30 +15,46 @@ function BugForm() {
   this.submitType = 'github-proxy-report';
   this.UPLOAD_LIMIT = 1024 * 1024 * 4;
 
-  this.inputMap = {
+  this.inputs = {
     'url': {
-      'elm': this.urlField, // elm is a jQuery object
+      'el': $('#url'),
       'valid': null,
       'helpText': 'A URL is required.'
     },
     'problem_type': {
-      'elm': this.problemType,
+      'el': $('[name=problem_category]'),
       'valid': null,
       'helpText': 'Problem type required.'
     },
     'image': {
-      'elm': this.uploadField,
+      'el': $('#image'),
       // image should be valid by default because it's optional
       'valid': true,
-      'helpText': 'Image must be one of the following: jpg, png, gif, or bmp.'
+      'helpText': 'Image must be one of the following: jpg, png, gif, or bmp.',
     },
     'img_too_big': {
-      'elm': this.uploadField,
+      'el': $('#image'),
       // image should be valid by default because it's optional
       'valid': true,
       'helpText': 'Please choose a smaller image (< 4MB)'
+    },
+    'browser': {
+      'el': $('#browser'),
+      'valid': true,
+      'helpText': null
+    },
+    'os': {
+      'el': $('#os'),
+      'valid': true,
+      'helpText': null
     }
   };
+
+  this.browserField = this.inputs.browser.el;
+  this.osField = this.inputs.os.el;
+  this.problemType = this.inputs.problem_type.el;
+  this.uploadField = this.inputs.image.el;
+  this.urlField = this.inputs.url.el;
 
   this.init = function() {
     this.checkParams();
@@ -209,17 +222,17 @@ function BugForm() {
 
   this.makeInvalid = function(id) {
     // Early return if inline help is already in place.
-    if (this.inputMap[id].valid === false) {
+    if (this.inputs[id].valid === false) {
       return;
     }
 
     var inlineHelp = $('<span></span>', {
       'class': 'wc-Form-helpMessage',
-      'text': this.inputMap[id].helpText
+      'text': this.inputs[id].helpText
     });
 
-    this.inputMap[id].valid = false;
-    this.inputMap[id].elm.parents('.js-Form-group')
+    this.inputs[id].valid = false;
+    this.inputs[id].el.parents('.js-Form-group')
                      .removeClass('is-validated js-no-error')
                      .addClass('is-error js-form-error');
 
@@ -252,17 +265,17 @@ function BugForm() {
   };
 
   this.makeValid = function(id) {
-    this.inputMap[id].valid = true;
-    this.inputMap[id].elm.parents('.js-Form-group')
+    this.inputs[id].valid = true;
+    this.inputs[id].el.parents('.js-Form-group')
                      .removeClass('is-error js-form-error')
                      .addClass('is-validated js-no-error');
 
-    this.inputMap[id].elm.parents('.js-Form-group').find('.wc-Form-helpMessage').remove();
+    this.inputs[id].el.parents('.js-Form-group').find('.wc-Form-helpMessage').remove();
 
-    if (this.inputMap['url'].valid &&
-        this.inputMap['problem_type'].valid &&
-        this.inputMap['image'].valid &&
-        this.inputMap['img_too_big'].valid) {
+    if (this.inputs['url'].valid &&
+        this.inputs['problem_type'].valid &&
+        this.inputs['image'].valid &&
+        this.inputs['img_too_big'].valid) {
       this.enableSubmits();
     }
   };
@@ -363,7 +376,7 @@ function BugForm() {
         var msg;
         if (response && response.status === 415) {
           wcEvents.trigger('flash:error',
-            {message: this.inputMap.image.helpText, timeout: 5000});
+            {message: this.inputs.image.helpText, timeout: 5000});
         }
 
         if (response && response.status === 413) {
