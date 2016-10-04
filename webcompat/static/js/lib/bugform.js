@@ -223,11 +223,14 @@ function BugForm() {
       this.checkURLValidity();
       this.checkProblemTypeValidity();
       this.checkImageTypeValidity();
-      this.checkOptionalNonEmpty();
       // and open the form, if it's not already open
       if (!this.reportButton.hasClass('is-open')) {
         this.reportButton.click();
       }
+    }
+    // Make sure we only do this if the inputs exist on the page
+    if (this.browserField.length || this.osField.length) {
+      this.checkOptionalNonEmpty();
     }
   };
 
