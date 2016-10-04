@@ -31,12 +31,7 @@ function BugForm() {
       // image should be valid by default because it's optional
       'valid': true,
       'helpText': 'Image must be one of the following: jpg, png, gif, or bmp.',
-    },
-    'img_too_big': {
-      'el': $('#image'),
-      // image should be valid by default because it's optional
-      'valid': true,
-      'helpText': 'Please choose a smaller image (< 4MB)'
+      'altHelpText': 'Please choose a smaller image (< 4MB)'
     },
     'browser': {
       'el': $('#browser'),
@@ -118,7 +113,7 @@ function BugForm() {
       // The limit is 4MB (which is crazy big!), so let the user know if their
       // file is unreasonably large at this point (after 1 round of downsampling)
       if (this.screenshotData > this.UPLOAD_LIMIT) {
-        this.makeInvalid('img_too_big');
+        this.makeInvalid('image', {altHelp: true});
         return;
       }
 
@@ -220,7 +215,9 @@ function BugForm() {
     }
   };
 
-  this.makeInvalid = function(id) {
+  /* makeInvalid can take an {altHelp: true} options argument to select
+     alternate helpText to display */
+  this.makeInvalid = function(id, opts) {
     // Early return if inline help is already in place.
     if (this.inputs[id].valid === false) {
       return;
@@ -228,7 +225,8 @@ function BugForm() {
 
     var inlineHelp = $('<span></span>', {
       'class': 'wc-Form-helpMessage',
-      'text': this.inputs[id].helpText
+      'text': opts && opts.altHelp ? this.inputs[id].altHelpText :
+                                     this.inputs[id].helpText
     });
 
     this.inputs[id].valid = false;
@@ -244,7 +242,7 @@ function BugForm() {
       inlineHelp.appendTo('.wc-Form-information');
     }
 
-    if (id === 'image' || id === 'img_too_big') {
+    if (id === 'image') {
       // hide the error in case we already saw one
       $('.wc-Form-helpMessage--imageUpload').remove();
 
@@ -274,8 +272,7 @@ function BugForm() {
 
     if (this.inputs['url'].valid &&
         this.inputs['problem_type'].valid &&
-        this.inputs['image'].valid &&
-        this.inputs['img_too_big'].valid) {
+        this.inputs['image'].valid) {
       this.enableSubmits();
     }
   };
@@ -330,7 +327,7 @@ function BugForm() {
     var removeBanner = $('.wc-UploadForm-button');
     var uploadWrapper = $('.wc-UploadForm-wrapper');
 
-    // hide img_too_big errors (this will no-op if the user never saw one)
+    // hide upload image errors (this will no-op if the user never saw one)
     $('.wc-Form-helpMessage--imageUpload').remove();
     $('.wc-UploadForm-label').show();
 
