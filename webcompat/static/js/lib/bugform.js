@@ -4,7 +4,6 @@
 
 function BugForm() {
   this.form = $('#js-ReportForm form');
-  this.descField = $('#description');
   this.submitButtons = $('#js-ReportForm .js-Button');
   this.loadingIndicator = $('.js-Loader');
   this.reportButton = $('#js-ReportBug');
@@ -50,6 +49,7 @@ function BugForm() {
   this.problemType = this.inputs.problem_type.el;
   this.uploadField = this.inputs.image.el;
   this.urlField = this.inputs.url.el;
+  this.descField = $('#description');
 
   this.init = function() {
     this.checkParams();
@@ -250,29 +250,34 @@ function BugForm() {
                      .removeClass('is-validated js-no-error')
                      .addClass('is-error js-form-error');
 
-    if (id === 'url') {
-      inlineHelp.insertAfter('label[for=' + id + ']');
-    }
+    switch (id) {
+      case 'os':
+      case 'browser':
+        // remove error classes, because these inputs are optional
+        this.inputs[id].el.parents('.js-Form-group')
+                          .removeClass('is-error js-form-error');
+        break;
+      case 'url':
+        inlineHelp.insertAfter('label[for=' + id + ']');
+        break;
+      case 'problem_type':
+        inlineHelp.appendTo('.wc-Form-information');
+        break;
+      case 'image':
+        // hide the error in case we already saw one
+        $('.wc-Form-helpMessage--imageUpload').remove();
 
-    if (id === 'problem_type') {
-      inlineHelp.appendTo('.wc-Form-information');
-    }
+        inlineHelp.removeClass('wc-Form-helpMessage')
+                  .addClass('wc-Form-helpMessage--imageUpload')
+                  .insertAfter('.js-image-upload-label');
 
-    if (id === 'image') {
-      // hide the error in case we already saw one
-      $('.wc-Form-helpMessage--imageUpload').remove();
-
-      inlineHelp.removeClass('wc-Form-helpMessage')
-                .addClass('wc-Form-helpMessage--imageUpload')
-                .insertAfter('.js-image-upload-label');
-
-      $('.wc-UploadForm-label').hide();
-      // "reset" the form field, because the file would get rejected
-      // from the server anyways.
-      this.uploadField.val(this.uploadField.get(0).defaultValue);
-      // return early because we just cleared out the input.
-      // someone might decide to just not select an image.
-      return;
+        $('.wc-UploadForm-label').hide();
+        // "reset" the form field, because the file would get rejected
+        // from the server anyways.
+        this.uploadField.val(this.uploadField.get(0).defaultValue);
+        // return early because we just cleared out the input.
+        // someone might decide to just not select an image.
+        return;
     }
 
     this.disableSubmits();
