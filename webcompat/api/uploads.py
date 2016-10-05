@@ -106,6 +106,10 @@ class Upload(object):
             save_parameters['save_all'] = True
         # unpacking save_parameters
         self.image_object.save(file_dest, **save_parameters)
+        # Creating the thumbnail
+        size = (150, 150)
+        self.image_object.thumbnail(size, Image.ANTIALIAS)
+        self.image_object.save(thumb_dest, **save_parameters)
 
 
 @uploads.route('/', methods=['POST'])
