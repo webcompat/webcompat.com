@@ -3,7 +3,7 @@
 You are welcome to contribute to this project. Here are the guidelines we try to stick to in this project.
 
 
-* [Question or Problem](#question-or-problem)
+* [Questions or Problems](#questions-or-problems)
 * [Filing an Issue](#filing-an-issue)
 * [Triaging Issues](#triaging-issues)
   * [Closing Bugs as Invalid](#closing-bugs-as-invalid)
@@ -33,11 +33,11 @@ You are welcome to contribute to this project. Here are the guidelines we try to
 * [Acknowledgements](#acknowledgements)
 
 
-## Question or Problem
+## Questions or Problems
 
 If you have a question about the site or about web compatibility in general, feel free to join us in the #webcompat channel on the Mozilla IRC network. [Here's how to join](https://wiki.mozilla.org/IRC#Connect_to_the_Mozilla_IRC_server).
 
-Otherwise, you can try to ping Mike Taylor on the Freenode network with the following command `/msg miketaylr hi I have a question about webcompat.com`.
+Otherwise, you can try to ping Mike Taylor on the Freenode network with the following command `/msg miketaylr Hi, I have a question about webcompat.com`.
 
 ## Filing an Issue
 
@@ -58,8 +58,6 @@ One way to contribute is to triage issues. This could be as simple as confirming
 ### Closing Bugs as Invalid
 
 The wiki contains a [list of reasons why bugs might be closed as invalid](https://github.com/webcompat/webcompat.com/wiki/Invalid-Bugs). When in doubt, ask questions in the bug.
-
-https://github.com/webcompat/webcompat.com/wiki/Invalid-Bugs
 
 ## Finding an Issue to Work On
 
@@ -126,7 +124,7 @@ All code contributions should come in the form of a [pull request](https://help.
 
     The discussion might lead to modify or abandon this specific pull request. This is the place where you can have a code review.
 
-12. Once the Pull Request **got an explicit `r+`** from the reviewer(s), it is the responsibility of the reviewer to merge the branch (or the admin). A pull request submitter should never merge himself/herself the pull request.
+12. Once the Pull Request **got an explicit `r+`** from the reviewer(s), it is the responsibility of the reviewer (or the admin) to merge the branch. A pull request submitter should never merge the pull request themselves.
 
     The repo owners might choose to self-merge for urgent security or hot fixes.
 
@@ -142,7 +140,7 @@ For product and design contributions, check out the [Design Repo](https://github
  Try to take care to follow existing conventions. Some of these are defined in an [.editorconfig](https://github.com/webcompat/webcompat.com/blob/master/.editorconfig) file. You can download the plugin for your editor here http://editorconfig.org/#download
 
 ### Python
-As we are still very early in the project, we do not have yet that much conventions for naming, routes, APIs. In doubt, ask us or open an issue.  All Python code should pass [pep8](http://pep8.readthedocs.org/en/1.4.6/intro.html).
+As we are still very early in the project, we do not yet have that many conventions for naming, routes, APIs. If in doubt, ask us or open an issue.  All Python code should pass [pep8](http://pep8.readthedocs.org/en/1.4.6/intro.html).
 
 You can check this by installing the pep8 module.
 
@@ -257,9 +255,9 @@ npm run module
 ### Detailed setup (All platforms)
 #### Installing pip
 
-We use `pip` to install other Python packages. You may need to install `pip` if you haven't do so for another project or Python development.
+We use `pip` to install other Python packages. You may need to install `pip` if you haven't done so for another project or Python development.
 
-To determine if you need to, type the following command into the terminal:
+To determine if you need to install pip, type the following command into the terminal:
 
 ```bash
 pip --version
@@ -286,7 +284,7 @@ Windows users should simply download the most recent Python 2.7 installer and ru
 #### Installing Project source code
 
 ``` bash
-# clone the repo. Change username to your Github user
+# clone the repo. Change username to your Github username
 git clone git@github.com:username/webcompat.com.git
 # change to directory
 cd webcompat.com
@@ -302,14 +300,14 @@ source env/bin/activate
 #  Linux: http://pillow.readthedocs.org/en/3.0.x/installation.html#linux-installation
 # install rest of dependencies
 pip install -r config/requirements.txt
-# In Ubuntu, if ImportError: No module named flask.ext.github occurs, it means the dependencies in requirements.txt are installed in /usr/lib instead of <project_repository>/env/python<version>/site-packages.
+# In Ubuntu: if ImportError: No module named flask.ext.github occurs, it means the dependencies in requirements.txt are installed in /usr/lib instead of <project_repository>/env/python<version>/site-packages.
 # In this case, use virtual environment's pip from <project_repository>/env/lib/pip folder of the project repository instead of the global pip.
 ```
 
 
 #### Installing Grunt
 
-We use [Grunt](http://gruntjs.com/) as a task runner to perform certain things (minify + concat JS assets, for example). You need to have [Node.js](https://nodejs.org/en/download/) installed to be able to run Grunt. Once that's done, `npm` can be used to install Grunt and other build dependencies.
+We use [Grunt](http://gruntjs.com/) as a task runner to perform certain tasks (minify + concat JS assets, for example). You need to have [Node.js](https://nodejs.org/en/download/) installed to be able to run Grunt. Once that's done, `npm` can be used to install Grunt and other build dependencies.
 
 First install the `grunt-cli` tool:
 
@@ -375,7 +373,7 @@ You should now have a local instance of the site running at `http://localhost:50
 
 ### Building the Project
 
-You need to build the project before serving it from a webserver will work, and after certain kinds of changes are made.
+After certain kinds of changes are made, you need to build the project before serving it from a webserver will work
 
 * CSS: a build will run cssnext, combine custom media queries, and concat all source files into webcompat.dev.css. You'll need to re-build the CSS to see any changes, so it's recommended to use a watch task (see `make watch` or `grunt watch`).
 * JS: a build will run eslint, minify and concat source files.
@@ -388,7 +386,7 @@ You can build the entire project (CSS and JavaScript files and optimize images) 
 npm run build
 ```
 
-and this on Window:
+and this command on Windows:
 
 ``` bash
 npm run watch
@@ -402,7 +400,7 @@ npm run watch
  npm run watch
  ```
 
-By default, a build will *not* optimize images (which is done before deploys). If you'd like to do that, you can run `grunt imagemin`.
+By default, a build will *not* optimize images (which is done before deploys). If you'd like to optimize images, you can run `grunt imagemin`.
 
 ## Running Tests
 
@@ -416,14 +414,13 @@ Tests are also run automatically on [Travis](https://travis-ci.org/webcompat/web
 
 We use [Intern](http://theintern.io/) to run functional tests.
 
-To run them, make sure you download the Selenium standalone server from the repo root:
+To run them, make sure you have downloaded the Selenium standalone server from the repo root:
 
 ``` bash
 wget http://selenium-release.storage.googleapis.com/2.53/selenium-server-standalone-2.53.1.jar
 ```
 
-**Note: This version is known to work with Firefox 47.0.1. If things aren't working with the current stable version of Firefox, check to see
-if there isn't a newer version of the Selenium standalone server and file a bug on these docs!**
+**Note: This version is known to work with Firefox 47.0.1. If things aren't working with the current stable version of Firefox, check to see if there isn't a newer version of the Selenium standalone server and file a bug on these docs!**
 
 The `firefox` binary will also need to be in your `PATH`. Here's how this can be done on OS X:
 
@@ -431,7 +428,7 @@ The `firefox` binary will also need to be in your `PATH`. Here's how this can be
 export PATH="/Applications/Firefox.app/Contents/MacOS/:$PATH"
 ```
 
-If you are a member of webcompat organisation in GitHub, edit `config/secrets.py`. The value of `ISSUES_REPO_URI` is the path of the repository containing test issues.
+If you are a member of webcompat organization in GitHub, edit `config/secrets.py`. The value of `ISSUES_REPO_URI` is the path of the repository containing test issues.
 
 Change the value to : `ISSUES_REPO_URI = 'webcompat/webcompat-tests/issues'`.
 
@@ -647,7 +644,7 @@ logto = $LOGS/staging-uwsgi.log
 buffer-size = 8192
 ```
 
-Hopefully this will help you to clear up a few struggles.
+Hopefully this will help you clear up a few struggles.
 
 ## Acknowledgements
 A lot of this document was inspired directly by the excellent [Backbone.LayoutManager](https://github.com/tbranyen/backbone.layoutmanager/blob/master/CONTRIBUTING.md), [CouchDB](https://github.com/apache/couchdb/blob/master/src/fauxton/CONTRIBUTING.md), and [Angular.js](https://github.com/angular/angular.js/blob/master/CONTRIBUTING.md#issue) CONTRIBUTING files.
