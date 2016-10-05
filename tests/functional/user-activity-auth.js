@@ -47,12 +47,13 @@ define([
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url('/me')))
+        .then(FunctionalHelpers.visibleByQSA('.js-list-issue'))
         .findByCssSelector('.js-list-issue').isDisplayed()
         .then(function(isDisplayed) {
           assert.equal(isDisplayed, true, 'IssueList container is visible.');
         })
-        .sleep(1000)
         .end()
+        .then(FunctionalHelpers.visibleByQSA('#my-issues .js-IssueList:first-child'))
         .findByCssSelector('.js-list-issue .js-IssueList').isDisplayed()
         .then(function(isDisplayed) {
           assert.equal(isDisplayed, true, 'IssueList item is visible.');
