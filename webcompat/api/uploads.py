@@ -83,9 +83,15 @@ class Upload(object):
             raise TypeError('Image file format not allowed')
 
         today = date.today()
-        self.file_path = os.path.join(str(today.year), str(today.month),
-                                      str(uuid4()) + '.' + self.file_ext)
+        year = str(today.year)
+        month = str(today.month)
+        image_id = str(uuid4())
+        self.file_path = os.path.join(year, month,
+                                      image_id + '.' + self.file_ext)
+        self.thumb_path = os.path.join(year, month,
+                                       image_id + 'thumb.' + self.file_ext)
         file_dest = app.config['UPLOADS_DEFAULT_DEST'] + self.file_path
+        thumb_dest = app.config['UPLOADS_DEFAULT_DEST'] + self.thumb_path
         dest_dir = os.path.dirname(file_dest)
         if not os.path.exists(dest_dir):
             os.makedirs(dest_dir)
