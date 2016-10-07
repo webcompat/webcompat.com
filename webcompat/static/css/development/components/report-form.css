@@ -1,6 +1,6 @@
 /** @define ReportForm */
 
-.wc-ReportForm {
+.wc-HomePage .wc-ReportForm {
   display: none;
 }
 
