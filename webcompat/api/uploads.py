@@ -7,19 +7,19 @@
 '''Flask Blueprint for image uploads.'''
 
 import base64
+import datetime
+import io
 import json
 import os
 import re
+import uuid
 
-from datetime import date
 from flask import abort
 from flask import Blueprint
 from flask import request
-from io import BytesIO
 from PIL import Image
 from werkzeug.datastructures import FileStorage
 from werkzeug.exceptions import RequestEntityTooLarge
-from uuid import uuid4
 
 from webcompat import app
 
@@ -53,7 +53,7 @@ class Upload(object):
                     imagedata.startswith('data:image/')):
                 # Chop off 'data:image/.+;base64,' before decoding
                 imagedata = re.sub('^data:image/.+;base64,', '', imagedata)
-                return Image.open(BytesIO(base64.b64decode(imagedata)))
+                return Image.open(io.BytesIO(base64.b64decode(imagedata)))
             raise TypeError('TypeError: Not a valid image format')
         except TypeError:
             # Not a valid format
@@ -82,10 +82,10 @@ class Upload(object):
         if self.file_ext not in self.ALLOWED_FORMATS:
             raise TypeError('Image file format not allowed')
 
-        today = date.today()
+        today = datetime.date.today()
         year = str(today.year)
         month = str(today.month)
-        image_id = str(uuid4())
+        image_id = str(uuid.uuid4())
         self.file_path = os.path.join(year, month,
                                       image_id + '.' + self.file_ext)
         self.thumb_path = os.path.join(year, month,
