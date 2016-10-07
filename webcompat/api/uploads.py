@@ -85,13 +85,13 @@ class Upload(object):
             return 'jpg'
         return self.image_object.format.lower()
 
-    def get_filename(self):
+    def get_filename(self, image_path):
         '''Method to return the uploaded filename (with extension).'''
-        return self.get_url().split('/')[-1]
+        return self.get_url(image_path).split('/')[-1]
 
-    def get_url(self):
+    def get_url(self, image_path):
         '''Method to return a URL for the uploaded file.'''
-        return app.config['UPLOADS_DEFAULT_URL'] + self.image_path
+        return app.config['UPLOADS_DEFAULT_URL'] + image_path
 
     def save(self):
         '''Check that the file is allowed, then save to filesystem.'''
@@ -142,8 +142,9 @@ def upload():
         upload = Upload(imagedata)
         upload.save()
         data = {
-            'filename': upload.get_filename(),
-            'url': upload.get_url()
+            'filename': upload.get_filename(upload.image_path),
+            'url': upload.get_url(upload.image_path),
+            'thumb_url': upload.get_url(upload.thumb_path)
         }
         return (json.dumps(data), 201, {'content-type': JSON_MIME})
     except (TypeError, IOError):
