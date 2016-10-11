@@ -14,9 +14,10 @@ from flask import g
 from flask import redirect
 from flask import render_template
 from flask import request
-from flask import session
 from flask import send_from_directory
+from flask import session
 from flask import url_for
+
 from form import AUTH_REPORT
 from form import IssueForm
 from form import PROXY_REPORT
@@ -25,15 +26,14 @@ from helpers import get_browser_name
 from helpers import get_os
 from helpers import get_referer
 from helpers import get_user_info
-from helpers import thanks_page
 from helpers import set_referer
+from helpers import thanks_page
 from issues import report_issue
-from webcompat.db import session_db
-from webcompat.db import User
-
 from webcompat import app
 from webcompat import github
 from webcompat.api.endpoints import get_rate_limit
+from webcompat.db import User
+from webcompat.db import session_db
 
 
 @app.teardown_appcontext
@@ -257,6 +257,7 @@ def show_rate_limit():
         rl.pop("rate")
     return (render_template('ratelimit.txt', rl=rl), 200,
             {"content-type": "text/plain"})
+
 
 if app.config['LOCALHOST']:
     @app.route('/uploads/<path:filename>')

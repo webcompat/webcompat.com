@@ -10,9 +10,9 @@ power the issue reporting form on webcompat.com.'''
 import random
 import urlparse
 
-from flask_wtf.file import FileField
-from flask_wtf.file import FileAllowed
 from flask_wtf import Form
+from flask_wtf.file import FileAllowed
+from flask_wtf.file import FileField
 from wtforms import RadioField
 from wtforms import StringField
 from wtforms import TextAreaField
