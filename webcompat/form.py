@@ -215,7 +215,4 @@ def build_formdata(form_object):
             image_url=form_object.get('image_upload').get('url'))
     # Append "from webcompat.com" message to bottom (for GitHub issue viewers)
     body += u'\n\n{0}'.format(GITHUB_HELP)
-    result = {}
-    result['title'] = summary
-    result['body'] = body
-    return result
+    return {'title': summary, 'body': body}
