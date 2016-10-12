@@ -155,8 +155,22 @@ def show_issues():
     return render_template('list-issue.html', categories=categories)
 
 
-@app.route('/issues/new', methods=['POST'])
+@app.route('/issues/new', methods=['GET', 'POST'])
 def create_issue():
+    """Creates a new issue.
+
+    GET will return an HTML response for reporting issues
+    POST will create a new issue
+    """
+    if request.method == 'GET':
+        bug_form = IssueForm()
+        # add browser and version to bug_form object data
+        ua_header = request.headers.get('User-Agent')
+        bug_form.browser.data = get_browser(ua_header)
+        bug_form.os.data = get_os(ua_header)
+        if g.user:
+            get_user_info()
+        return render_template('new-issue.html', form=bug_form)
     # copy the form so we can add the full UA string to it.
     form = request.form.copy()
     # see https://github.com/webcompat/webcompat.com/issues/1141
