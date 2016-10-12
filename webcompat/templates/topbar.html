@@ -4,7 +4,14 @@
       <div class="wc-SearchBar-face wc-SearchBar-face--front">
         <div class="wc-Navbar-container">
           <div class="wc-Navbar-section">
+          {%- if request.url_rule.endpoint == 'create_issue' %}
+          <a class="wc-Navbar-link js-Navbar-link" href="/">
+            <span class="wc-Navbar-link-icon wc-Icon wc-Icon--home" aria-hidden="true"></span>
+            <span class="wc-Navbar-link-label">Home</span>
+          </a>
+          {%- else %}
             {% include "addon-links.html" %}
+          {%- endif %}
           </div>
           <div class="wc-Navbar-section">
             <button class="r-ResetButton wc-Navbar-link js-SearchBarOpen">
