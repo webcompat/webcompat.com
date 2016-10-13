@@ -20,6 +20,7 @@ from flask import redirect
 from flask import request
 from flask import session
 from flask import url_for
+from form import IssueForm
 from functools import wraps
 from ua_parser import user_agent_parser
 
@@ -142,6 +143,15 @@ def get_browser_name(user_agent_string=None):
         # w/o the version
         return get_browser(user_agent_string).rsplit(' ', 1)[0].lower()
     return "unknown"
+
+
+def get_form(ua_header):
+    """Return an instance of flask_wtf.Form with browser and os info added"""
+    bug_form = IssueForm()
+    # add browser and version to bug_form object data
+    bug_form.browser.data = get_browser(ua_header)
+    bug_form.os.data = get_os(ua_header)
+    return bug_form
 
 
 def get_os(user_agent_string=None):
