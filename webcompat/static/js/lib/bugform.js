@@ -4,10 +4,6 @@
 
 function BugForm() {
   this.form = $('#js-ReportForm form');
-  this.urlField = $('#url');
-  this.descField = $('#description');
-  this.uploadField = $('#image');
-  this.problemType = $('[name=problem_category]');
   this.submitButtons = $('#js-ReportForm .js-Button');
   this.loadingIndicator = $('.js-Loader');
   this.reportButton = $('#js-ReportBug');
@@ -18,30 +14,42 @@ function BugForm() {
   this.submitType = 'github-proxy-report';
   this.UPLOAD_LIMIT = 1024 * 1024 * 4;
 
-  this.inputMap = {
+  this.inputs = {
     'url': {
-      'elm': this.urlField, // elm is a jQuery object
+      'el': $('#url'),
       'valid': null,
       'helpText': 'A URL is required.'
     },
     'problem_type': {
-      'elm': this.problemType,
+      'el': $('[name=problem_category]'),
       'valid': null,
       'helpText': 'Problem type required.'
     },
     'image': {
-      'elm': this.uploadField,
+      'el': $('#image'),
       // image should be valid by default because it's optional
       'valid': true,
-      'helpText': 'Image must be one of the following: jpg, png, gif, or bmp.'
+      'helpText': 'Image must be one of the following: jpg, png, gif, or bmp.',
+      'altHelpText': 'Please choose a smaller image (< 4MB)'
     },
-    'img_too_big': {
-      'elm': this.uploadField,
-      // image should be valid by default because it's optional
+    'browser': {
+      'el': $('#browser'),
       'valid': true,
-      'helpText': 'Please choose a smaller image (< 4MB)'
+      'helpText': null
+    },
+    'os': {
+      'el': $('#os'),
+      'valid': true,
+      'helpText': null
     }
   };
+
+  this.browserField = this.inputs.browser.el;
+  this.osField = this.inputs.os.el;
+  this.problemType = this.inputs.problem_type.el;
+  this.uploadField = this.inputs.image.el;
+  this.urlField = this.inputs.url.el;
+  this.descField = $('#description');
 
   this.init = function() {
     this.checkParams();
@@ -51,6 +59,8 @@ function BugForm() {
     this.descField.on('focus',     _.bind(this.checkProblemTypeValidity, this));
     this.problemType.on('change',  _.bind(this.checkProblemTypeValidity, this));
     this.uploadField.on('change',  _.bind(this.checkImageTypeValidity, this));
+    this.osField.add(this.browserField)
+                .on('blur input', _.bind(this.checkOptionalNonEmpty, this));
     this.submitButtons.on('click', _.bind(function(e) {
       if (e.target && e.target.value) {
         // store a reference to what report button was clicked
@@ -105,7 +115,7 @@ function BugForm() {
       // The limit is 4MB (which is crazy big!), so let the user know if their
       // file is unreasonably large at this point (after 1 round of downsampling)
       if (this.screenshotData > this.UPLOAD_LIMIT) {
-        this.makeInvalid('img_too_big');
+        this.makeInvalid('image', {altHelp: true});
         return;
       }
 
@@ -189,6 +199,19 @@ function BugForm() {
     }
   };
 
+  /* Check if Browser and OS are empty or not, only
+     so we can set them to valid (there is no invalid state) */
+  this.checkOptionalNonEmpty = function() {
+    _.forEach([this.browserField, this.osField], _.bind(function(input) {
+      var inputId = input.prop('id');
+      if (input.val()) {
+        this.makeValid(inputId);
+      } else {
+        this.makeInvalid(inputId);
+      }
+    }, this));
+  };
+
   this.checkForm = function() {
     // Run through and see if there's any user input in the
     // required inputs
@@ -205,64 +228,75 @@ function BugForm() {
         this.reportButton.click();
       }
     }
+    // Make sure we only do this if the inputs exist on the page
+    if (this.browserField.length || this.osField.length) {
+      this.checkOptionalNonEmpty();
+    }
   };
 
-  this.makeInvalid = function(id) {
+  /* makeInvalid can take an {altHelp: true} options argument to select
+     alternate helpText to display */
+  this.makeInvalid = function(id, opts) {
     // Early return if inline help is already in place.
-    if (this.inputMap[id].valid === false) {
+    if (this.inputs[id].valid === false) {
       return;
     }
 
     var inlineHelp = $('<span></span>', {
       'class': 'wc-Form-helpMessage',
-      'text': this.inputMap[id].helpText
+      'text': opts && opts.altHelp ? this.inputs[id].altHelpText :
+                                     this.inputs[id].helpText
     });
 
-    this.inputMap[id].valid = false;
-    this.inputMap[id].elm.parents('.js-Form-group')
+    this.inputs[id].valid = false;
+    this.inputs[id].el.parents('.js-Form-group')
                      .removeClass('is-validated js-no-error')
                      .addClass('is-error js-form-error');
 
-    if (id === 'url') {
-      inlineHelp.insertAfter('label[for=' + id + ']');
-    }
+    switch (id) {
+      case 'os':
+      case 'browser':
+        // remove error classes, because these inputs are optional
+        this.inputs[id].el.parents('.js-Form-group')
+                          .removeClass('is-error js-form-error');
+        break;
+      case 'url':
+        inlineHelp.insertAfter('label[for=' + id + ']');
+        break;
+      case 'problem_type':
+        inlineHelp.appendTo('.wc-Form-information');
+        break;
+      case 'image':
+        // hide the error in case we already saw one
+        $('.wc-Form-helpMessage--imageUpload').remove();
 
-    if (id === 'problem_type') {
-      inlineHelp.appendTo('.wc-Form-information');
-    }
+        inlineHelp.removeClass('wc-Form-helpMessage')
+                  .addClass('wc-Form-helpMessage--imageUpload')
+                  .insertAfter('.js-image-upload-label');
 
-    if (id === 'image' || id === 'img_too_big') {
-      // hide the error in case we already saw one
-      $('.wc-Form-helpMessage--imageUpload').remove();
-
-      inlineHelp.removeClass('wc-Form-helpMessage')
-                .addClass('wc-Form-helpMessage--imageUpload')
-                .insertAfter('.js-image-upload-label');
-
-      $('.wc-UploadForm-label').hide();
-      // "reset" the form field, because the file would get rejected
-      // from the server anyways.
-      this.uploadField.val(this.uploadField.get(0).defaultValue);
-      // return early because we just cleared out the input.
-      // someone might decide to just not select an image.
-      return;
+        $('.wc-UploadForm-label').hide();
+        // "reset" the form field, because the file would get rejected
+        // from the server anyways.
+        this.uploadField.val(this.uploadField.get(0).defaultValue);
+        // return early because we just cleared out the input.
+        // someone might decide to just not select an image.
+        return;
     }
 
     this.disableSubmits();
   };
 
   this.makeValid = function(id) {
-    this.inputMap[id].valid = true;
-    this.inputMap[id].elm.parents('.js-Form-group')
+    this.inputs[id].valid = true;
+    this.inputs[id].el.parents('.js-Form-group')
                      .removeClass('is-error js-form-error')
                      .addClass('is-validated js-no-error');
 
-    this.inputMap[id].elm.parents('.js-Form-group').find('.wc-Form-helpMessage').remove();
+    this.inputs[id].el.parents('.js-Form-group').find('.wc-Form-helpMessage').remove();
 
-    if (this.inputMap['url'].valid &&
-        this.inputMap['problem_type'].valid &&
-        this.inputMap['image'].valid &&
-        this.inputMap['img_too_big'].valid) {
+    if (this.inputs['url'].valid &&
+        this.inputs['problem_type'].valid &&
+        this.inputs['image'].valid) {
       this.enableSubmits();
     }
   };
@@ -317,7 +351,7 @@ function BugForm() {
     var removeBanner = $('.wc-UploadForm-button');
     var uploadWrapper = $('.wc-UploadForm-wrapper');
 
-    // hide img_too_big errors (this will no-op if the user never saw one)
+    // hide upload image errors (this will no-op if the user never saw one)
     $('.wc-Form-helpMessage--imageUpload').remove();
     $('.wc-UploadForm-label').show();
 
@@ -363,7 +397,7 @@ function BugForm() {
         var msg;
         if (response && response.status === 415) {
           wcEvents.trigger('flash:error',
-            {message: this.inputMap.image.helpText, timeout: 5000});
+            {message: this.inputs.image.helpText, timeout: 5000});
         }
 
         if (response && response.status === 413) {

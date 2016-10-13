@@ -74,7 +74,7 @@ define([
         .findByCssSelector('#url').click()
         .end()
         // wait a bit
-        .then(FunctionalHelpers.visibleByQSA('.wc-Form-helpMessage'))
+        .then(FunctionalHelpers.visibleByQSA('label[for=url] + span'))
         .findByXpath('//*[@id="js-ReportForm"]/div/form/div[1]/div[2]/div[1]').getAttribute('class')
         .then(function(className) {
           assert.include(className, 'js-form-error');
@@ -90,6 +90,33 @@ define([
         .then(function(className) {
           assert.include(className, 'js-no-error');
           assert.notInclude(className, 'js-form-error');
+        })
+        .end();
+    },
+
+    '(optional) browser + os validation': function() {
+      return this.remote
+        .setFindTimeout(intern.config.wc.pageLoadTimeout)
+        .get(require.toUrl(url + '?open=1'))
+        .then(FunctionalHelpers.visibleByQSA('#browser'))
+        // xpath to the #browser formGroup
+        .findByXpath('//*[@id="js-ReportForm"]/div/form/div[1]/div[2]/div[2]').getAttribute('class')
+        .then(function(className) {
+          assert.include(className, 'js-no-error');
+          assert.notInclude(className, 'js-form-error');
+        })
+        .end()
+        .findByCssSelector('#browser').clearValue()
+        .end()
+        .findByCssSelector('#os').click()
+        .end()
+        // wait a bit
+        .sleep(250)
+        // xpath to the #browser formGroup
+        .findByXpath('//*[@id="js-ReportForm"]/div/form/div[1]/div[2]/div[2]').getAttribute('class')
+        .then(function(className) {
+          assert.notInclude(className, 'js-form-error');
+          assert.notInclude(className, 'js-no-error');
         })
         .end();
     },
