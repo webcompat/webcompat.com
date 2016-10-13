@@ -19,11 +19,9 @@ from flask import session
 from flask import url_for
 
 from form import AUTH_REPORT
-from form import IssueForm
 from form import PROXY_REPORT
-from helpers import get_browser
 from helpers import get_browser_name
-from helpers import get_os
+from helpers import get_form
 from helpers import get_referer
 from helpers import get_user_info
 from helpers import set_referer
@@ -123,11 +121,8 @@ def file_issue():
 @app.route('/', methods=['GET', 'POST'])
 def index():
     '''Main view where people come to report issues.'''
-    bug_form = IssueForm()
-    # add browser and version to bug_form object data
     ua_header = request.headers.get('User-Agent')
-    bug_form.browser.data = get_browser(ua_header)
-    bug_form.os.data = get_os(ua_header)
+    bug_form = get_form(ua_header)
     # browser_name is used in topbar.html to show the right add-on link
     browser_name = get_browser_name(ua_header)
     # GET means you want to file a report.
@@ -163,11 +158,7 @@ def create_issue():
     POST will create a new issue
     """
     if request.method == 'GET':
-        bug_form = IssueForm()
-        # add browser and version to bug_form object data
-        ua_header = request.headers.get('User-Agent')
-        bug_form.browser.data = get_browser(ua_header)
-        bug_form.os.data = get_os(ua_header)
+        bug_form = get_form(request.headers.get('User-Agent'))
         if g.user:
             get_user_info()
         return render_template('new-issue.html', form=bug_form)
