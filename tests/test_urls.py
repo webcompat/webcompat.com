@@ -33,6 +33,11 @@ class TestURLs(unittest.TestCase):
         rv = self.app.get('/', environ_base=headers)
         self.assertEqual(rv.status_code, 200)
 
+    def test_new_issue(self):
+        '''Test that /issues/new exists.'''
+        rv = self.app.get('/issues/new', environ_base=headers)
+        self.assertEqual(rv.status_code, 200)
+
     def test_about(self):
         '''Test that /about exists.'''
         rv = self.app.get('/about')
