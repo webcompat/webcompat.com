@@ -1,3 +1,8 @@
+## 2.8 - 2016-10-14
+
+* Create an /issues/new view for reporting issues [Pull #1198](https://github.com/webcompat/webcompat.com/pull/1198) [Issue #1193](https://github.com/webcompat/webcompat.com/issues/1193)
+* Add checkmark validation for os and browser names [Pull #1186](https://github.com/webcompat/webcompat.com/pull/1186) [Issue #1167](https://github.com/webcompat/webcompat.com/issues/1167)
+
 ## 2.7.3 - 2016-09-30
 
 * Update Markdown-it [Pull #1184](https://github.com/webcompat/webcompat.com/pull/1184) [Issue #1183](https://github.com/webcompat/webcompat.com/issues/1183) [Issue #1148](https://github.com/webcompat/webcompat.com/issues/1148)
