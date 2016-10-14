@@ -54,7 +54,7 @@ define([
       .clearCookies()
       .end()
       .get(require.toUrl('https://github.com/logout'))
-      .findByCssSelector('.auth-form-body input.btn').click()
+      .findByCssSelector('input.btn').click()
       .end();
   }
 

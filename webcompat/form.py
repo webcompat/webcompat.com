@@ -10,9 +10,9 @@ power the issue reporting form on webcompat.com.'''
 import random
 import urlparse
 
-from flask_wtf.file import FileField
-from flask_wtf.file import FileAllowed
 from flask_wtf import Form
+from flask_wtf.file import FileAllowed
+from flask_wtf.file import FileField
 from wtforms import RadioField
 from wtforms import StringField
 from wtforms import TextAreaField
@@ -215,7 +215,4 @@ def build_formdata(form_object):
             image_url=form_object.get('image_upload').get('url'))
     # Append "from webcompat.com" message to bottom (for GitHub issue viewers)
     body += u'\n\n{0}'.format(GITHUB_HELP)
-    result = {}
-    result['title'] = summary
-    result['body'] = body
-    return result
+    return {'title': summary, 'body': body}

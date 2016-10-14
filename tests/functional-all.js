@@ -21,6 +21,7 @@ define([
   './functional/index-non-auth.js',
   './functional/issue-list-non-auth.js',
   './functional/issues-non-auth.js',
+  './functional/new-issue-non-auth.js',
   './functional/search-non-auth.js',
   './functional/search-auth.js',
   './functional/issues-auth.js',
