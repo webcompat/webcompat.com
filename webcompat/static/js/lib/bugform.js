@@ -273,7 +273,7 @@ function BugForm() {
         inlineHelp.insertAfter('label[for=' + id + ']');
         break;
       case 'problem_type':
-        inlineHelp.appendTo('.wc-Form-information');
+        inlineHelp.appendTo('fieldset .wc-Form-information');
         break;
       case 'image':
         // hide the error in case we already saw one
