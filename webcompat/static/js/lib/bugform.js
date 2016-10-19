@@ -189,10 +189,19 @@ function BugForm() {
     }
   };
 
-  /* Check to see that the URL input element is not empty.
-     We don't do any other kind of validation yet. */
+  this.isReportableURL = function(url) {
+    return url && !(_.startsWith(url, 'about:')     ||
+                    _.startsWith(url, 'chrome:')    ||
+                    _.startsWith(url, 'file:')      ||
+                    _.startsWith(url, 'resource:')  ||
+                    _.startsWith(url, 'view-source:'));
+  };
+
+  /* Check to see that the URL input element is not empty,
+     or if it's a non-webby scheme. */
   this.checkURLValidity = function() {
-    if ($.trim(this.urlField.val()) === '') {
+    var val = this.urlField.val();
+    if ($.trim(val) === '' || !this.isReportableURL(val)) {
       this.makeInvalid('url');
     } else {
       this.makeValid('url');
