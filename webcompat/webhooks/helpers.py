@@ -14,6 +14,9 @@ from webcompat import app
 from webcompat.db import issue_db
 from webcompat.db import WCIssue
 from webcompat.helpers import extract_url
+from webcompat.form import normalize_url
+from webcompat.form import domain_name
+from sqlalchemy import update
 
 
 def api_post(endpoint, payload, issue):
@@ -51,10 +54,23 @@ def set_label(label, issue_number):
     api_post('labels', payload, issue_number)
 
 
-def dump_to_db(title, body, issue_number):
+def dump_to_db(issue_number, title,
+               body, state, status,
+               reported_from, creation_time,
+               last_change_time):
     url = extract_url(body)
-    issue_db.add(WCIssue(issue_number, title, url, body))
+    normalized_url = normalize_url(url)
+    domain = domain_name(normalized_url)
+    issue_db.add(WCIssue(issue_number, title, url, domain, body, state, status,
+                         reported_from, creation_time, last_change_time))
     issue_db.commit()
+
+
+def update_issue_in_db(issue_number, **kwargs):
+    for key, value in kwargs:
+        if value:
+            update(issue_db).where(issue_db.issue_id == issue_number).\
+                values(key=value)
 
 
 def compare_digest(x, y):

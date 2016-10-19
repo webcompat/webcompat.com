@@ -1,0 +1,9 @@
+diff a/webcompat/form.py b/webcompat/form.py	(rejected hunks)
+@@ -9,6 +9,7 @@ power the issue reporting form on webcompat.com.'''
+ 
+ import random
+ import urlparse
++import re
+ 
+ from flask_wtf.file import FileField
+ from flask_wtf.file import FileAllowed

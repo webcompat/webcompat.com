@@ -19,7 +19,7 @@ from helpers import dump_to_db
 from helpers import parse_and_set_label
 from helpers import set_label
 from helpers import signature_check
-
+from helpers import update_issue_in_db
 from webcompat import app
 
 
@@ -41,6 +41,8 @@ def hooklistener():
         if post_signature:
             key = app.config['HOOK_SECRET_KEY']
             payload = json.loads(request.data)
+            issue_reported_from, issue_title = 'null', None
+            issue_body, issue_status = None, None
             if not signature_check(key, post_signature, request.data):
                 abort(401)
             if event_type == 'issues':
@@ -48,12 +50,55 @@ def hooklistener():
                     issue_body = payload.get('issue')['body']
                     issue_title = payload.get('issue')['title']
                     issue_number = payload.get('issue')['number']
+                    issue_state = payload.get('issue')['state']
+                    for item in payload.get('issue')['labels']:
+                        if 'status' in item:
+                            issue_status = item.split("status-")[1]
+                    issue_creation_time = payload.get('issue')['created_at']
+                    issue_last_change_time = payload.get('issue')['updated_at']
+                    if 'reported_from' in payload.get('issue'):
+                        issue_reported_from = \
+                            payload.get('issue')['reported_from']
                     parse_and_set_label(issue_body, issue_number)
                     # Setting "Needs Triage" label by default
                     # to all the new issues raised
                     set_label('status-needstriage', issue_number)
-                    dump_to_db(issue_title, issue_body, issue_number)
+                    dump_to_db(int(issue_number), issue_title, issue_body,
+                               issue_state, issue_status, issue_reported_from,
+                               issue_creation_time, issue_last_change_time)
                     return ('gracias, amigo.', 200)
+                elif payload.get('action') == 'edited':
+                    issue_number = payload.get('issue')['number']
+                    updated = payload.get('issue')['updated_at']
+                    if 'title' in payload.get('changes'):
+                        issue_title = payload.get('issue')['title']
+                    if 'body' in payload.get('changes'):
+                        issue_body = payload.get('issue')['body']
+                    update_issue_in_db(int(issue_number),
+                                       issue_title=issue_title,
+                                       issue_body=issue_body,
+                                       issue_last_change_time=updated)
+                    return ('gracias, amigo.', 200)
+                elif payload.get('action') == 'labeled' or\
+                        payload.get('action') == 'unlabeled':
+                    issue_number = payload.get('issue')['number']
+                    updated = payload.get('issue')['updated_at']
+                    for item in payload.get('issue')['labels']:
+                        if 'status' in item:
+                            issue_status = item.split("status-")[1]
+                    update_issue_in_db(int(issue_number),
+                                       issue_title=issue_title,
+                                       issue_body=issue_body,
+                                       issue_status=issue_status,
+                                       issue_last_change_time=updated)
+                    return ('gracias, amigo.', 200)
+                elif payload.get('action') == 'closed':
+                    issue_number = payload.get('issue')['number']
+                    issue_state = payload.get('issue')['state']
+                    updated = payload.get('issue')['updated_at']
+                    update_issue_in_db(int(issue_number),
+                                       issue_state=issue_state,
+                                       issue_last_change_time=updated)
                 else:
                     return ('cool story, bro.', 200)
             elif event_type == 'ping':
