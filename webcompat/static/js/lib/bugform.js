@@ -18,7 +18,7 @@ function BugForm() {
     'url': {
       'el': $('#url'),
       'valid': null,
-      'helpText': 'A URL is required.'
+      'helpText': 'A valid URL is required.'
     },
     'problem_type': {
       'el': $('[name=problem_category]'),
