@@ -48,7 +48,6 @@ class WCIssue(IssueBase):
     creation_time = Column(DateTime)
     last_change_time = Column(DateTime)
 
-
     def __init__(self, issue_id, summary, url, domain, body, state, status,
                  reported_from, creation_time, last_change_time):
         self.issue_id = issue_id
