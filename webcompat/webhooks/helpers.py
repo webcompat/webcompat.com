@@ -16,7 +16,10 @@ from webcompat.db import WCIssue
 from webcompat.helpers import extract_url
 from webcompat.form import normalize_url
 from webcompat.form import domain_name
+<<<<<<< HEAD
 from sqlalchemy import update
+=======
+>>>>>>> eb1d9e2e5e0c6c1b65b6738b1a5352692bb1673c
 
 
 def api_post(endpoint, payload, issue):
