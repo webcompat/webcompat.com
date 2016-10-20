@@ -37,7 +37,7 @@ problem_choices = [
     (u'unknown_bug', u'Something else - I\'ll add details below')
 ]
 
-url_message = u'A URL is required.'
+url_message = u'A valid URL is required.'
 image_message = (u'Please select an image of the following type:'
                  ' jpg, png, gif, or bmp.')
 radio_message = u'Problem type required.'
