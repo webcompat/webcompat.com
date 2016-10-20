@@ -9,6 +9,9 @@
       action="/issues/new"
       novalidate
     >
+      {%- if request.url_rule.endpoint == 'create_issue' %}
+      <h3 class="wc-Title--s">Report Site Issue</h3>
+      {%- endif %}
       <div class="r-Grid r-Grid--withGutter">
         <div class="r-Grid-cell r-minM--1of2">
           <div class="wc-Form-group js-Form-group">

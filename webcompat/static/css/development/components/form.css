@@ -7,6 +7,11 @@
 
 .wc-Form {}
 
+  /* header */
+  .wc-Form .wc-Title--s {
+    margin-top: 0;
+  }
+
   /* group item */
   .wc-Form-group {
     position: relative;
@@ -72,7 +77,7 @@
       text-decoration: underline;
     }
 
-  /* imput */
+  /* input */
   .wc-Form-item {
     display: block;
     width: 100%;
