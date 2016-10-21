@@ -12,7 +12,7 @@ You are welcome to contribute to this project. Here are the guidelines we try to
 * [Submission Guidelines](#submission-guidelines)
 * [Coding Style](#coding-style)
 * [Working Environment setup](#working-environment-setup)
-  * [Simple setup](#simple-setup)
+  * [Simple setup](#simple-setup-mac-os-and-linux)
     * [Installing Project source code](#initializing-project-source-code)
   * [Detailed setup](#detailed-setup)
     * [Installing pip](#installing-pip)
