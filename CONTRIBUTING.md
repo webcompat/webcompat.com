@@ -14,7 +14,7 @@ You are welcome to contribute to this project. Here are the guidelines we try to
 * [Working Environment setup](#working-environment-setup)
   * [Simple setup](#simple-setup-mac-os-and-linux)
     * [Installing Project source code](#initializing-project-source-code)
-  * [Detailed setup](#detailed-setup)
+  * [Detailed setup](#detailed-setup-all-platforms)
     * [Installing pip](#installing-pip)
     * [Installing virtualenv](#installing-virtualenv)
     * [Installing Project source code](#installing-project-source-code)
