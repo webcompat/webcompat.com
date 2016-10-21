@@ -65,7 +65,7 @@ The logic for the issue tracker is this -
 * [*Milestones*](https://github.com/webcompat/webcompat.com/milestones) - initiatives in priority order (ignore the dates)
 * [*Unprioritized*](https://github.com/webcompat/webcompat.com/milestones/Unprioritized%20issues) - new ideas, cool things, easy issues to tackle
 
-Anything labeled ["Good-first-patch"](https://github.com/webcompat/webcompat.com/labels/good-first-patch) is perfect for getting started!
+Anything labeled ["status: good-first-bug"](https://github.com/webcompat/webcompat.com/labels/status:%20good%20first%20bug) is perfect for getting started!
 
 ## Feature Requests
 
