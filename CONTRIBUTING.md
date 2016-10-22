@@ -12,9 +12,9 @@ You are welcome to contribute to this project. Here are the guidelines we try to
 * [Submission Guidelines](#submission-guidelines)
 * [Coding Style](#coding-style)
 * [Working Environment setup](#working-environment-setup)
-  * [Simple setup](#simple-setup)
+  * [Simple setup](#simple-setup-mac-os-and-linux)
     * [Installing Project source code](#initializing-project-source-code)
-  * [Detailed setup](#detailed-setup)
+  * [Detailed setup](#detailed-setup-all-platforms)
     * [Installing pip](#installing-pip)
     * [Installing virtualenv](#installing-virtualenv)
     * [Installing Project source code](#installing-project-source-code)
@@ -65,7 +65,7 @@ The logic for the issue tracker is this -
 * [*Milestones*](https://github.com/webcompat/webcompat.com/milestones) - initiatives in priority order (ignore the dates)
 * [*Unprioritized*](https://github.com/webcompat/webcompat.com/milestones/Unprioritized%20issues) - new ideas, cool things, easy issues to tackle
 
-Anything labeled ["Good-first-patch"](https://github.com/webcompat/webcompat.com/labels/good-first-patch) is perfect for getting started!
+Anything labeled ["status: good-first-bug"](https://github.com/webcompat/webcompat.com/labels/status:%20good%20first%20bug) is perfect for getting started!
 
 ## Feature Requests
 
