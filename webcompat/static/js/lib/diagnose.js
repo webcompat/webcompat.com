@@ -5,31 +5,31 @@
 var diagnose = diagnose || {}; // eslint-disable-line no-use-before-define
 var issues = issues || {}; // eslint-disable-line no-use-before-define
 
-diagnose.NewCollection = Backbone.Collection.extend({
+diagnose.NeedsTriageCollection = Backbone.Collection.extend({
   model: issues.Issue,
   url: '/api/issues/category/needstriage'
 });
 
-diagnose.NewView = Backbone.View.extend({
+diagnose.NeedsTriageView = Backbone.View.extend({
   el: $('#js-lastIssue'),
   initialize: function() {
     var self = this;
     var headersBag = {headers: {'Accept': 'application/json'}};
-    this.issues = new diagnose.NewCollection();
+    this.issues = new diagnose.NeedsTriageCollection();
     this.issues.fetch(headersBag).success(function() {
       self.render();
     }).error(function() {});
   },
-  template: _.template($('#new-tmpl').html()),
+  template: _.template($('#needstriage-tmpl').html()),
   render: function() {
     this.$el.html(this.template({
       // Just display the first 10.
-      newIssues: this.issues.toJSON().slice(0, 10)
+      issues: this.issues.toJSON().slice(0, 10)
     }));
     return this;
   }
 });
 
 $(function() {
-  new diagnose.NewView();
+  new diagnose.NeedsTriageView();
 });
