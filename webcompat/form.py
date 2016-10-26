@@ -48,8 +48,8 @@ problem_label = (u'What seems to be the trouble?',
                  '<span class="wc-Form-required">*</span>')
 url_label = u'Site URL <span class="wc-Form-required">*</span>'
 
-desc_default = u'''1) Navigate to: Site URL
-2) …
+desc_default = u'''1. Navigate to: Site URL
+2. …
 
 Expected Behavior:
 
