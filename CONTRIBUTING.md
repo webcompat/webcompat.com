@@ -98,7 +98,7 @@ All code contributions should come in the form of a [pull request](https://help.
 
 5. Create your patch; commit your changes. Referencing the issue number you're working on from the message is recommended.
 
-    `git commit -m 'Issue #123 - Fixes broken layout on mobile browsers`
+    `git commit -m 'Issue #123 - Fixes broken layout on mobile browsers'`
 
 6. Push your branch to GitHub:
 
