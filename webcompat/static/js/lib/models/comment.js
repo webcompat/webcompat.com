@@ -22,7 +22,9 @@ issues.Comment = Backbone.Model.extend({
       body: md.render(response.body),
       commenter: response.user.login,
       commentLinkId: 'issuecomment-' + response.id,
-      createdAt: moment(response.created_at).fromNow(),
+      createdAt:  moment(Date.now()).diff(response.created_at, 'weeks') > 1
+                  ? moment(response.created_at).format("YYYY-MM-DD")
+                  : moment(response.created_at).fromNow(),
       rawBody: response.body
     });
     var linkHeader = jqXHR.xhr.getResponseHeader('Link');
