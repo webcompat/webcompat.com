@@ -1,3 +1,10 @@
+## 2.8.1 - 2016-11-09
+
+* Update humans.txt [Pull #1220](https://github.com/webcompat/webcompat.com/pull/1220) [Issue #1218](https://github.com/webcompat/webcompat.com/issues/1218)
+* Use dot instead of paren in STR [Pull #1213](https://github.com/webcompat/webcompat.com/pull/1213) [Issue #1206](https://github.com/webcompat/webcompat.com/issues/1206)
+* Don't allow non webby URLs to pass form validation [Pull #1208](https://github.com/webcompat/webcompat.com/pull/1208) [Issue #1054](https://github.com/webcompat/webcompat.com/issues/1054)
+* Rename NewCollection to NeedsTriageCollection[Pull #1202](https://github.com/webcompat/webcompat.com/pull/1202) [Issue #1197](https://github.com/webcompat/webcompat.com/issues/1197)
+
 ## 2.8 - 2016-10-14
 
 * Create an /issues/new view for reporting issues [Pull #1198](https://github.com/webcompat/webcompat.com/pull/1198) [Issue #1193](https://github.com/webcompat/webcompat.com/issues/1193)
