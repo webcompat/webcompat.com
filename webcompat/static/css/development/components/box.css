@@ -14,7 +14,7 @@
       border-color: var(--base-stateNeedsTriage);
     }
 
-    .wc-Box--analysis {
+    .wc-Box--diagnosis {
       border-color: var(--base-stateNeedsDiagnosis);
     }
 
