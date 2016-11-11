@@ -6,8 +6,9 @@ define([
   'intern',
   'intern!object',
   'intern/chai!assert',
-  'require'
-], function(intern, registerSuite, assert, require) {
+  'require',
+  'tests/functional/lib/helpers'
+], function(intern, registerSuite, assert, require, FunctionalHelpers) {
   'use strict';
 
   var url = function(path) {
@@ -23,6 +24,20 @@ define([
         .findByCssSelector('.js-Hero-title').getVisibleText()
         .then(function(text) {
           assert.equal(text, 'Bug reporting\nfor the internet.');
+        })
+        .end();
+    },
+
+    'copyURL works': function() {
+      return this.remote
+        .get(require.toUrl(url('/?open=1')))
+        .then(FunctionalHelpers.visibleByQSA('#url'))
+        .findByCssSelector('#url')
+        .type('zombo.com')
+        .end()
+        .findByCssSelector('#description').getProperty('value')
+        .then(function(value) {
+          assert.include(value, 'zombo');
         })
         .end();
     },
