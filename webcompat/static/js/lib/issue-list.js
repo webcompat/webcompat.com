@@ -405,7 +405,7 @@ issueList.IssueView = Backbone.View.extend(
     // update the collection instance url property and fetch the issues.
 
       var issuesAPICategories = ['closed', 'contactready', 'needscontact',
-                                 'needsdiagnosis', 'needstriage', 'sitewait'];
+        'needsdiagnosis', 'needstriage', 'sitewait'];
       var params = this.issues.params;
       var paramsCopy;
     // note: if query is the empty string, it will load all issues from the

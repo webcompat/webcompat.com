@@ -225,8 +225,7 @@ function BugForm() {
     // Run through and see if there's any user input in the
     // required inputs
     var inputs = [this.problemType.filter(':checked').length,
-                  this.urlField.val(),
-                  this.uploadField.val()];
+      this.urlField.val(), this.uploadField.val()];
     if (_.some(inputs, Boolean)) {
       // then, check validity
       this.checkURLValidity();

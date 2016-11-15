@@ -419,7 +419,7 @@ issues.MainView = Backbone.View.extend({
                             _.matchesProperty('name', 'nsfw'));
 
       _.each([this.title, this.metadata, this.labels, this.body,
-              this.stateButton, this],
+        this.stateButton, this],
         function(elm) {
           elm.render();
           _.each($('.js-Issue-markdown code'), function(elm) {
