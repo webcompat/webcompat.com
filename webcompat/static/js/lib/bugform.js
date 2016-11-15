@@ -436,9 +436,9 @@ function BugForm() {
      the first so we don't make them sad.
   */
   this.copyURL = function() {
-    var firstLine = /^1\)\sNavigate.*\n/;
+    var firstLine = /^1\.\sNavigate.*\n/;
     this.descField.val(_.bind(function(idx, value) {
-      var prefix = '1) Navigate to: ';
+      var prefix = '1. Navigate to: ';
       if (!firstLine.test(value)) {
         return value;
       }
