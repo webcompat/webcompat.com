@@ -1,3 +1,7 @@
+## 2.8.2 - 2016-11-15
+
+* Un-break copyURL, oops! [Pull #1227](https://github.com/webcompat/webcompat.com/pull/1227) [Issue #1226](https://github.com/webcompat/webcompat.com/issues/1226)
+
 ## 2.8.1 - 2016-11-09
 
 * Update humans.txt [Pull #1220](https://github.com/webcompat/webcompat.com/pull/1220) [Issue #1218](https://github.com/webcompat/webcompat.com/issues/1218)
