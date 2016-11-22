@@ -23,7 +23,7 @@ issues.Comment = Backbone.Model.extend({
       commenter: response.user.login,
       commentLinkId: 'issuecomment-' + response.id,
       createdAt:  moment(Date.now()).diff(response.created_at, 'weeks') > 1
-                  ? moment(response.created_at).format("YYYY-MM-DD")
+                  ? moment(response.created_at).format('YYYY-MM-DD')
                   : moment(response.created_at).fromNow(),
       rawBody: response.body
     });
