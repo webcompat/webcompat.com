@@ -11,11 +11,57 @@
   font-size:var(--Issue-fontSize);
 }
 
+    /* header */
+    .wc-Issue-information-header {
+      display: flex;
+      justify-content: space-between;
+      padding: .7em 1em;
+      border-radius: 3px 3px 0 0;
+    }
+
+    .wc-Issue-information-header--new {
+      background-color:var(--base-stateNew);
+    }
+
+    .wc-Issue-information-header--needsDiagnosis {
+      background-color:var(--base-stateNeedsDiagnosis);
+    }
+
+    .wc-Issue-information-header--needsContact {
+      background-color:var(--base-stateNeedsContact);
+    }
+
+    .wc-Issue-information-header--ready {
+      background-color:var(--base-stateReady);
+    }
+
+    .wc-Issue-information-header--sitewait {
+      background-color:var(--base-stateSitewait);
+    }
+
+    .wc-Issue-information-header--fixed {
+      background-color:var(--base-stateFixed);
+    }
+
+    .wc-Issue-information-header--worksforme {
+      background-color:var(--base-stateWorksForMe);
+    }
+
+    /* content */
+    .wc-Issue-information-content {
+      background-color: #fff;
+      padding: 1em;
+    }
+
+      .wc-Issue-information-content + .wc-Issue-information-content {
+        margin: 2px 0 0 0;
+      }
+
   /* Wrapper title and date issue */
   .wc-Issue-title {
-    font-size: 1.6em;
+    font-size: 1.2em;
     line-height: 1em;
-    margin-bottom: .5em;
+    margin:0 0 .5em 0;
     word-wrap: break-word;
   }
 
@@ -53,7 +99,8 @@
 
     .wc-Issue-report,
     .wc-Issue-commentList,
-    .wc-Issue-commentSubmit {
+    .wc-Issue-commentSubmit,
+    .wc-Issue-information {
       width: var(--Issue-widthComment);
     }
   }
@@ -66,7 +113,7 @@
 
   /* list comment */
   .wc-Issue-commentList {
-    margin: 4em 0 0;
+    margin: 1em 0 0;
   }
 
   /* Issue wrapper */

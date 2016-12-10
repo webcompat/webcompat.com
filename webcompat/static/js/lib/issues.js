@@ -85,38 +85,8 @@ md.renderer.rules.link_open = function(tokens, idx, options, env, self) {
   return defaultLinkOpenRender(tokens, idx, options, env, self);
 };
 
-issues.TitleView = Backbone.View.extend({
-  el: $('.wc-Issue-title'),
-  events: {
-    'click .js-linkBack': 'goBack'
-  },
-  template: _.template($('#title-tmpl').html()),
-  render: function() {
-    document.title = 'Issue ' + this.model.get('number') +
-                     ': ' + this.model.get('title') +
-                     ' - webcompat.com';
-    this.$el.html(this.template(this.model.toJSON()));
-    return this;
-  },
-  goBack: function(e) {
-    if (!('origin' in location)) {
-      location.origin = location.protocol + '//' + location.host;
-    }
-
-    // Only go back in history if we came from the /issues page and there's
-    // actually some history to go back to
-    if ((document.referrer.indexOf(location.origin + '/issues') === 0) &&
-        (history.length !== 1)) {
-      history.back();
-      e.preventDefault();
-    } else {
-      location.href = '/issues';
-    }
-  }
-});
-
 issues.MetaDataView = Backbone.View.extend({
-  el: $('.wc-Issue-create'),
+  el: $('.wc-Issue-information'),
   initialize: function() {
     this.model.on('change:issueState', _.bind(function() {
       this.render();
@@ -402,7 +372,6 @@ issues.MainView = Backbone.View.extend({
   },
   initSubViews: function() {
     var issueModel = {model: this.issue};
-    this.title = new issues.TitleView(issueModel);
     this.metadata = new issues.MetaDataView(issueModel);
     this.body = new issues.BodyView(_.extend(issueModel, {mainView: this}));
     this.labels = new issues.LabelsView(issueModel);
@@ -417,9 +386,7 @@ issues.MainView = Backbone.View.extend({
       // or undefined if not found (which is falsey)
       this._isNSFW = !!_.find(this.issue.get('labels'),
                             _.matchesProperty('name', 'nsfw'));
-
-      _.each([this.title, this.metadata, this.labels, this.body,
-        this.stateButton, this],
+      _.each([this.metadata, this.labels, this.body, this.stateButton, this],
         function(elm) {
           elm.render();
           _.each($('.js-Issue-markdown code'), function(elm) {

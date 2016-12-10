@@ -82,7 +82,7 @@
     display: block;
     width: 100%;
     font-size: var(--Form-fontSize);
-    font-family: inherit;
+    font-family: var(--base-fontFamily);
     font-weight: 300;
     color: #555;
     background-color: #fff;

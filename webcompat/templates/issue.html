@@ -1,16 +1,10 @@
 {% extends "layout.html" %}
 {% block body %}
   {% include "shared/nav.html" %}
-  <main class="wc-UIContent js-Issue is-hidden" role="main">
+  <main class="wc-UISection wc-UISection--backgroundColor" role="main">
     <div class="wc-Issue">
-      <section class="wc-UISection">
-        {% include "issue/issue-header.html" %}
-        <div class="wc-Issue-labels js-Issue-labels">
-          {% include "issue/issue-labels.html" %}
-        </div>
-        <div class="wc-Issue-report">
-          {% include "issue/issue-report.html" %}
-        </div>
+      <section class="wc-UIContent js-Issue is-hidden">
+        {% include "issue/issue-information.html" %}
         <div class="wc-Issue-commentList js-Issue-commentList">
           {% include "issue/issue-comment-list.html" %}
         </div>
