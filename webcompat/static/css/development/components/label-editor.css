@@ -9,7 +9,7 @@
   position: absolute;
   font-size: var(--LabelEditor-fontSize);
   display: none;
-  z-index: 2;
+  z-index: 5;
   white-space: nowrap;
   top: 100%;
   left: 0;
