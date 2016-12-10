@@ -1,3 +1,8 @@
+## 2.9.0 - 2016-12-09
+
+* Display absolute date for dates more than 1 week old [Pull #1224](https://github.com/webcompat/webcompat.com/pull/1224) [Issue #1154](https://github.com/webcompat/webcompat.com/issues/1154)
+* Improve issues page design [Pull #1104](https://github.com/webcompat/webcompat.com/pull/1104) [Issue #545](https://github.com/webcompat/webcompat.com/issues/545)
+
 ## 2.8.2 - 2016-11-15
 
 * Un-break copyURL, oops! [Pull #1227](https://github.com/webcompat/webcompat.com/pull/1227) [Issue #1226](https://github.com/webcompat/webcompat.com/issues/1226)
