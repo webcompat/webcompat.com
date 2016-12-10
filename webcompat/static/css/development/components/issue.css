@@ -19,8 +19,8 @@
       border-radius: 3px 3px 0 0;
     }
 
-    .wc-Issue-information-header--new {
-      background-color:var(--base-stateNew);
+    .wc-Issue-information-header--needstriage {
+      background-color:var(--base-stateNeedsTriage);
     }
 
     .wc-Issue-information-header--needsDiagnosis {
