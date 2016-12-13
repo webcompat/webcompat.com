@@ -1,4 +1,10 @@
-## 2.9.0 - 2016-12-09
+## 2.9.1 - 2016-12-13
+
+* Add cityweb.de to spamlist [Pull #1238](https://github.com/webcompat/webcompat.com/pull/1238) [Issue #1237](https://github.com/webcompat/webcompat.com/issues/1237)
+* Test failure fixes [Issue #1236](https://github.com/webcompat/webcompat.com/issues/1236) (no PR)
+* Minor layout tweaks [Issue #1235](https://github.com/webcompat/webcompat.com/issues/1235) (no PR)
+
+## 2.9.0 - 2016-12-09 (not deployed due to bugs in issues page re-design)
 
 * Display absolute date for dates more than 1 week old [Pull #1224](https://github.com/webcompat/webcompat.com/pull/1224) [Issue #1154](https://github.com/webcompat/webcompat.com/issues/1154)
 * Improve issues page design [Pull #1104](https://github.com/webcompat/webcompat.com/pull/1104) [Issue #545](https://github.com/webcompat/webcompat.com/issues/545)
