@@ -165,13 +165,14 @@ def create_issue():
     # copy the form so we can add the full UA string to it.
     form = request.form.copy()
     # see https://github.com/webcompat/webcompat.com/issues/1141
-    spamlist = ['qiangpiaoruanjian']
+    # see https://github.com/webcompat/webcompat.com/issues/1237
+    spamlist = ['qiangpiaoruanjian', 'cityweb']
     for spam in spamlist:
         if spam in form.get('url'):
-            msg = (u'Anonymous reporting for qiangpiaoruanjian.cn '
-                   'is temporarily disabled. Please see '
-                   'https://github.com/webcompat/webcompat.com/issues/1141 '
-                   'for more details.')
+            msg = (u'Anonymous reporting for domain %s '
+                   'is temporarily disabled. Please contact '
+                   'miket@mozilla.com '
+                   'for more details.' %(spam))
             flash(msg, 'notimeout')
             return redirect(url_for('index'))
     form['ua_header'] = request.headers.get('User-Agent')
