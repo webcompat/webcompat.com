@@ -113,6 +113,7 @@
     /* modifier */
     .wc-Form-item--textarea {
       min-height: 250px;
+      resize: vertical;
     }
 
     input[type="radio"] {
