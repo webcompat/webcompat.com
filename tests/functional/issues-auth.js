@@ -33,8 +33,8 @@ define([
         .then(FunctionalHelpers.visibleByQSA('.js-Issue-state-button'))
         .findByCssSelector('.js-Issue-state-button').click()
         .end()
-        .then(FunctionalHelpers.visibleByQSA('.js-tag:contains(Closed)'))
-        .findByCssSelector('.js-tag').getVisibleText()
+        .then(FunctionalHelpers.visibleByQSA('.wc-Issue-information-header:contains(Closed)'))
+        .findByCssSelector('.wc-Issue-information-header').getVisibleText()
         .then(function(text) {
           assert.equal(text, 'Closed', 'Closed state text is displayed');
         })
@@ -46,8 +46,8 @@ define([
         .end()
         .findByCssSelector('.js-Issue-state-button').click()
         .end()
-        .then(FunctionalHelpers.visibleByQSA('.js-tag:contains(Ready)'))
-        .findByCssSelector('.js-tag').getVisibleText()
+        .then(FunctionalHelpers.visibleByQSA('.wc-Issue-information-header:contains(Ready)'))
+        .findByCssSelector('.wc-Issue-information-header').getVisibleText()
         .then(function(text) {
           assert.equal(text, 'Ready for Outreach', 'Ready for Outreach state is displayed');
         })
