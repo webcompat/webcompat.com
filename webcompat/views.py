@@ -169,10 +169,10 @@ def create_issue():
     spamlist = ['qiangpiaoruanjian', 'cityweb']
     for spam in spamlist:
         if spam in form.get('url'):
-            msg = (u'Anonymous reporting for domain %s '
+            msg = (u'Anonymous reporting for domain {0} '
                    'is temporarily disabled. Please contact '
                    'miket@mozilla.com '
-                   'for more details.' % (spam))
+                   'for more details.').format(spam)
             flash(msg, 'notimeout')
             return redirect(url_for('index'))
     form['ua_header'] = request.headers.get('User-Agent')
