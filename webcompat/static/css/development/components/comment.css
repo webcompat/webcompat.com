@@ -42,6 +42,7 @@
     border-style: solid solid dashed solid;
     border-width: 1px;
     padding: 1em;
+    resize: vertical;
   }
 
     /* Textarea Placeholder style */
@@ -60,7 +61,7 @@
     background-color: #f5f5f5;
     padding: 1em;
   }
-  
+
   @media all and (max-width: 61.87em) {
     .wc-Comment-header {
       padding: .5em;
