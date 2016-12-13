@@ -55,7 +55,7 @@ define([
         .end()
         .findByCssSelector('.js-Comment-content').getVisibleText()
         .then(function(text) {
-          assert.equal(text, 'Today\'s date is Thu Oct 01 2015', 'Comment is displayed.');
+          assert.equal(text, 'Today\'s date is Mon Sep 28 2015', 'Comment is displayed.');
         });
     },
 
