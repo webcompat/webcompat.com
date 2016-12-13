@@ -172,7 +172,7 @@ def create_issue():
             msg = (u'Anonymous reporting for domain %s '
                    'is temporarily disabled. Please contact '
                    'miket@mozilla.com '
-                   'for more details.' %(spam))
+                   'for more details.' % (spam))
             flash(msg, 'notimeout')
             return redirect(url_for('index'))
     form['ua_header'] = request.headers.get('User-Agent')
