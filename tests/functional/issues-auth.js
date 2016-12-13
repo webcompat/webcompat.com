@@ -36,7 +36,7 @@ define([
         .then(FunctionalHelpers.visibleByQSA('.wc-Issue-information-header:contains(Closed)'))
         .findByCssSelector('.wc-Issue-information-header').getVisibleText()
         .then(function(text) {
-          assert.equal(text, 'Closed', 'Closed state text is displayed');
+          assert.include(text, 'Closed', 'Closed state text is displayed');
         })
         .end()
         .findByCssSelector('.js-Issue-state-button').getVisibleText()
@@ -49,7 +49,7 @@ define([
         .then(FunctionalHelpers.visibleByQSA('.wc-Issue-information-header:contains(Ready)'))
         .findByCssSelector('.wc-Issue-information-header').getVisibleText()
         .then(function(text) {
-          assert.equal(text, 'Ready for Outreach', 'Ready for Outreach state is displayed');
+          assert.include(text, 'Ready for Outreach', 'Ready for Outreach state is displayed');
         })
         .end()
         .findByCssSelector('.js-Issue-state-button').getVisibleText()
