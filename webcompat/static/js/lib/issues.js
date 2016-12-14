@@ -105,10 +105,6 @@ issues.BodyView = Backbone.View.extend({
   template: _.template($('#issue-info-tmpl').html()),
   initialize: function(options) {
     this.mainView = options.mainView;
-
-    this.QrView = new issues.QrView({
-      model: this.model
-    });
   },
   render: function() {
     this.$el.html(this.template(this.model.toJSON()));
@@ -133,7 +129,6 @@ issues.BodyView = Backbone.View.extend({
       issueDesc.find('img').closest('p').addClass('wc-Comment-content-nsfw');
     }
 
-    this.QrView.setElement('.wc-QrCode').render();
     return this;
   }
 });
