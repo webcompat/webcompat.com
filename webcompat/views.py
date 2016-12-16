@@ -25,7 +25,6 @@ from helpers import get_form
 from helpers import get_referer
 from helpers import get_user_info
 from helpers import set_referer
-from helpers import thanks_page
 from issues import report_issue
 from webcompat import app
 from webcompat import github
@@ -201,20 +200,6 @@ def show_issue(number):
     if g.user:
         get_user_info()
     return render_template('issue.html', number=number)
-
-
-@app.route('/thanks/<int:number>')
-def thanks(number):
-    issue = number
-    uri = u"https://webcompat.com/issues/{0}".format(number)
-    text = u"I just filed a bug on the internet: "
-    encoded_issue = urllib.quote(uri.encode("utf-8"))
-    encoded_text = urllib.quote(text.encode("utf-8"))
-    if g.user:
-        get_user_info()
-    return render_template('thanks.html', number=issue,
-                           encoded_issue=encoded_issue,
-                           encoded_text=encoded_text)
 
 
 @app.route('/me')
