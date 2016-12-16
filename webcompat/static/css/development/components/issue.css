@@ -31,6 +31,10 @@
       background-color:var(--base-stateNeedsContact);
     }
 
+    .wc-Issue-information-header--closed {
+      background-color:var(--base-stateClosed);
+    }
+
     .wc-Issue-information-header--ready {
       background-color:var(--base-stateReady);
     }
