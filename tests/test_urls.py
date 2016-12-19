@@ -48,11 +48,6 @@ class TestURLs(unittest.TestCase):
         rv = self.app.get('/privacy')
         self.assertEqual(rv.status_code, 200)
 
-    def test_thanks(self):
-        '''Test that /thanks/1 exists.'''
-        rv = self.app.get('/thanks/1')
-        self.assertEqual(rv.status_code, 200)
-
     def test_login(self):
         '''Test that the /login route 302s to GitHub.'''
         rv = self.app.get('/login')
