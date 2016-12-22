@@ -34,7 +34,7 @@ issues.Issue = Backbone.Model.extend({
   getState: function(state, labels) {
     var labelsNames = _.pluck(labels, 'name');
     if (state === 'closed') {
-      this.set('stateClass', 'close');
+      this.set('stateClass', 'closed');
       return 'Closed';
     }
     if (labelsNames.indexOf('sitewait') > -1) {

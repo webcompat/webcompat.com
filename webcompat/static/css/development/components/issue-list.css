@@ -7,7 +7,7 @@
   --Issue-stateNeedsContact: var(--base-stateNeedsContact);
   --Issue-stateReady: var(--base-stateReady);
   --Issue-stateSitewait: var(--base-stateSitewait);
-  --Issue-stateClose: var(--base-stateClose);
+  --Issue-stateClosed: var(--base-stateClosed);
   --Issue-stateFixed: var(--base-stateFixed);
   --Issue-stateWorksForMe: var(--base-stateWorksForMe);
   --Issue-stateNeedsTriage: var(--base-stateNeedsTriage);
@@ -54,8 +54,8 @@
     border-left: 5px solid var(--Issue-stateSitewait);
   }
 
-  .wc-IssueList--close {
-    border-left: 5px solid var(--Issue-stateClose);
+  .wc-IssueList--closed {
+    border-left: 5px solid var(--Issue-stateClosed);
   }
 
   .wc-IssueList--fixed {

@@ -99,7 +99,7 @@
 
   /* Tag close */
   .wc-Tag--close {
-    border-color:var(--base-stateClose);
+    border-color:var(--base-stateClosed);
   }
 
     /* event */
@@ -107,7 +107,7 @@
     .wc-Tag--close.wc-Tag--filter:focus,
     .wc-Tag--close.is-active,
     .wc-Tag--close.wc-Tag--label {
-      background-color:var(--base-stateClose);
+      background-color:var(--base-stateClosed);
     }
 
   /* Tag Fixed */
