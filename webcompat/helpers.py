@@ -458,13 +458,3 @@ def api_request(method, path, params=None, data=None):
                 get_response_headers(resource))
     else:
         abort(404)
-
-
-def thanks_page(request, response):
-    '''Helper method to get us to the right thanks page
-    after an issue is created.'''
-    if request.is_xhr:
-        payload = {'number': response.get('number')}
-        return (json.dumps(payload), 201, {'content-type': JSON_MIME})
-    else:
-        return redirect(url_for('thanks', number=response.get('number')))

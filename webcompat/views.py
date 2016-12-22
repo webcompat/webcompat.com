@@ -25,7 +25,6 @@ from helpers import get_form
 from helpers import get_referer
 from helpers import get_user_info
 from helpers import set_referer
-from helpers import thanks_page
 from issues import report_issue
 from webcompat import app
 from webcompat import github
@@ -115,7 +114,7 @@ def file_issue():
     response = report_issue(session['form_data'])
     # Get rid of stashed form data
     session.pop('form_data', None)
-    return redirect(url_for('thanks', number=response.get('number')))
+    return show_issue(response.get('number'), show_thanks_flash=True)
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -186,35 +185,23 @@ def create_issue():
     if form.get('submit-type') == AUTH_REPORT:
         if g.user:  # If you're already authed, submit the bug.
             response = report_issue(form)
-            return thanks_page(request, response)
+            return show_issue(response.get('number'), show_thanks_flash=True)
         else:  # Stash form data into session, go do GitHub auth
             session['form_data'] = form
             return redirect(url_for('login'))
     elif form.get('submit-type') == PROXY_REPORT:
         response = report_issue(form, proxy=True).json()
-        return thanks_page(request, response)
+        return show_issue(response.get('number'), show_thanks_flash=True)
 
 
 @app.route('/issues/<int:number>')
-def show_issue(number):
+def show_issue(number, show_thanks_flash=False):
     '''Route to display a single issue.'''
     if g.user:
         get_user_info()
+    if show_thanks_flash:
+        flash(number, 'thanks')
     return render_template('issue.html', number=number)
-
-
-@app.route('/thanks/<int:number>')
-def thanks(number):
-    issue = number
-    uri = u"https://webcompat.com/issues/{0}".format(number)
-    text = u"I just filed a bug on the internet: "
-    encoded_issue = urllib.quote(uri.encode("utf-8"))
-    encoded_text = urllib.quote(text.encode("utf-8"))
-    if g.user:
-        get_user_info()
-    return render_template('thanks.html', number=issue,
-                           encoded_issue=encoded_issue,
-                           encoded_text=encoded_text)
 
 
 @app.route('/me')
