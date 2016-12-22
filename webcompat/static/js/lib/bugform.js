@@ -9,7 +9,6 @@ function BugForm() {
   this.reportButton = $('#js-ReportBug');
   this.loaderImage = $('.js-Loader');
   this.uploadLoader = $('.js-Upload-Loader');
-  this.screenshotData = '';
   // by default, submission type is anonymous
   this.submitType = 'github-proxy-report';
   this.UPLOAD_LIMIT = 1024 * 1024 * 4;
@@ -77,21 +76,32 @@ function BugForm() {
     // Set up listener for message events from screenshot-enabled add-ons
     window.addEventListener('message', _.bind(function(event) {
       // Make sure the data is coming from ~*inside the house*~!
-      // (i.e., our add-on sent it)
+      // (i.e., our add-on or some other priviledged code sent it)
       if (location.origin === event.origin) {
-        this.screenshotData = event.data;
-
-        // The final size of Base64-encoded binary data is ~equal to
-        // 1.37 times the original data size + 814 bytes (for headers).
-        // so, bytes = (encoded_string.length - 814) / 1.37)
-        // see https://en.wikipedia.org/wiki/Base64#MIME
-        if ((String(this.screenshotData).length - 814 / 1.37) > this.UPLOAD_LIMIT) {
-          this.downsampleImageAndUpload(this.screenshotData);
+        // See https://github.com/webcompat/webcompat.com/issues/1252 to track
+        // the work of only accepting blobs, which should simplify things.
+        if (event.data instanceof Blob) {
+          // showUploadPreview will take care of converting from blob to
+          // dataURI, and will send the result to resampleIfNecessaryAndUpload.
+          this.showUploadPreview(event.data);
         } else {
-          this.addPreviewBackgroundAndUpload(this.screenshotData);
+          // ...the data is already a data URI string
+          this.resampleIfNecessaryAndUpload(event.data);
         }
       }
     }, this), false);
+  };
+
+  this.resampleIfNecessaryAndUpload = function(screenshotData) {
+    // The final size of Base64-encoded binary data is ~equal to
+    // 1.37 times the original data size + 814 bytes (for headers).
+    // so, bytes = (encoded_string.length - 814) / 1.37)
+    // see https://en.wikipedia.org/wiki/Base64#MIME
+    if ((String(screenshotData).length - 814 / 1.37) > this.UPLOAD_LIMIT) {
+      this.downsampleImageAndUpload(screenshotData);
+    } else {
+      this.addPreviewBackgroundAndUpload(screenshotData);
+    }
   };
 
   this.downsampleImageAndUpload = function(dataURI) {
@@ -110,16 +120,16 @@ function BugForm() {
       // Note: this will convert GIFs to JPEG, which breaks
       // animated GIFs. However, this only will happen if they
       // were above the upload limit size. So... sorry?
-      this.screenshotData = canvas.toDataURL('image/jpeg', 0.8);
+      var screenshotData = canvas.toDataURL('image/jpeg', 0.8);
 
       // The limit is 4MB (which is crazy big!), so let the user know if their
       // file is unreasonably large at this point (after 1 round of downsampling)
-      if (this.screenshotData > this.UPLOAD_LIMIT) {
+      if (screenshotData > this.UPLOAD_LIMIT) {
         this.makeInvalid('image', {altHelp: true});
         return;
       }
 
-      this.addPreviewBackgroundAndUpload(this.screenshotData);
+      this.addPreviewBackgroundAndUpload(screenshotData);
       img = null, canvas = null;
     }, this);
 
@@ -184,7 +194,9 @@ function BugForm() {
     } else {
       this.makeValid('image');
       if (event) {
-        this.showUploadPreview(event);
+        // We can just grab the 0th one, because we only allow uploading
+        // a single image at a time (for now)
+        this.showUploadPreview(event.target.files[0]);
       }
     }
   };
@@ -312,16 +324,13 @@ function BugForm() {
     If the users browser understands the FileReader API, show a preview
     of the image they're about to load.
   */
-  this.showUploadPreview = function(event) {
+  this.showUploadPreview = function(blobOrFile) {
     if (!(window.FileReader && window.File)) {
       return;
     }
-    // We can just grab the 0th one, because we only allow uploading
-    // a single image at a time (for now)
-    var img = event.target.files[0];
 
     // One last image type validation check.
-    if (!img.type.match('image.*')) {
+    if (!blobOrFile.type.match('image.*')) {
       this.makeInvalid('image');
       return;
     }
@@ -329,13 +338,9 @@ function BugForm() {
     var reader = new FileReader();
     reader.onload = _.bind(function(event) {
       var dataURI = event.target.result;
-      if ((String(dataURI).length - 814 / 1.37) > this.UPLOAD_LIMIT) {
-        this.downsampleImageAndUpload(dataURI);
-      } else {
-        this.addPreviewBackgroundAndUpload(dataURI);
-      }
+      this.resampleIfNecessaryAndUpload(dataURI);
     }, this);
-    reader.readAsDataURL(img);
+    reader.readAsDataURL(blobOrFile);
   };
 
   this.addPreviewBackgroundAndUpload = function(dataURI) {
