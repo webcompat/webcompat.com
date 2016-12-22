@@ -1,3 +1,10 @@
+## 2.9.2 - 2016-12-22
+
+* Kill thanks page [Pull #1247](https://github.com/webcompat/webcompat.com/pull/1247) [Issue #646](https://github.com/webcompat/webcompat.com/issues/646)
+* Add header closed class for issues page [Pull #1246](https://github.com/webcompat/webcompat.com/pull/1246) [Issue #1245](https://github.com/webcompat/webcompat.com/issues/1245)
+* Remove QR code related code [Pull #1242](https://github.com/webcompat/webcompat.com/pull/1242) [](https://github.com/webcompat/webcompat.com/issues/1239)
+* Restrict textarea resize to vertical [Pull #1241](https://github.com/webcompat/webcompat.com/pull/1241) [](https://github.com/webcompat/webcompat.com/issues/1230)
+
 ## 2.9.1 - 2016-12-13
 
 * Add cityweb.de to spamlist [Pull #1238](https://github.com/webcompat/webcompat.com/pull/1238) [Issue #1237](https://github.com/webcompat/webcompat.com/issues/1237)
