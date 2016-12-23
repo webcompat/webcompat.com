@@ -160,6 +160,8 @@ def create_issue():
         bug_form = get_form(request.headers.get('User-Agent'))
         if g.user:
             get_user_info()
+        if request.args.get('src'):
+            session['src'] = request.args.get('src')
         return render_template('new-issue.html', form=bug_form)
     # copy the form so we can add the full UA string to it.
     form = request.form.copy()
@@ -175,8 +177,14 @@ def create_issue():
             flash(msg, 'notimeout')
             return redirect(url_for('index'))
     form['ua_header'] = request.headers.get('User-Agent')
-    # Store where the report originated from
-    form['reported_with'] = request.headers.get('X-Reported-With', 'web')
+    # Currently we support either a src GET param, or X-Reported-With header
+    # to track where the report originated from.
+    # See https://github.com/webcompat/webcompat.com/issues/1254 to track
+    # supporting only the src param
+    if session.get('src'):
+        form['reported_with'] = session.pop('src')
+    else:
+        form['reported_with'] = request.headers.get('X-Reported-With', 'web')
     # Logging the ip and url for investigation
     log = app.logger
     log.setLevel(logging.INFO)
