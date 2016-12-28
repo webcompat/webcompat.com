@@ -142,7 +142,7 @@ function BugForm() {
     if (!location.search.search(/open=1/) && !location.search.search(/url=/)) {
       return;
     }
-    var urlParam = location.search.match(/url=(.+)/);
+    var urlParam = location.href.match(/url=([^&]*)/);
     if (urlParam != null) {
       // weird Gecko bug. See https://bugzilla.mozilla.org/show_bug.cgi?id=1098037
       urlParam = this.trimWyciwyg(urlParam[1]);
