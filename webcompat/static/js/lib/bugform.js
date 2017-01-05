@@ -428,8 +428,10 @@ function BugForm() {
     copy over the URL of a newly uploaded image asset to the bug
     description textarea.
   */
-  this.addImageURL = function(url) {
-    var imageURL = ['![Screenshot Description](', url, ')'].join('');
+   this.addImageURL = function(url) {
+    var file_ext = url.split('.').pop();
+    var thumb_url = url.replace('.' + file_ext, '-thumb.' + file_ext);
+    var imageURL = ['[![Screenshot Description](', thumb_url, ')](', url, ')'].join('');
     this.descField.val(function(idx, value) {
       return value + '\n\n' + imageURL;
     });

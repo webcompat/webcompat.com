@@ -199,8 +199,11 @@ issues.ImageUploadView = Backbone.View.extend({
     var DELIMITER = '\n\n';
     var textarea = $('.js-Comment-text');
     var textareaVal = textarea.val();
-    var imageURL = _.template('![Screenshot of the site issue](<%= url %>)');
-    var compiledImageURL = imageURL({url: response.url});
+    var img_url = response.url;
+    var file_ext = img_url.split('.').pop();
+    var thumb_url = img_url.replace('.' + file_ext, '-thumb.' + file_ext);
+    var imageURL = _.template('[![Screenshot Description](<%= thumb_url %>)](<%= img_url %>)');
+    var compiledImageURL = imageURL({thumb_url: thumb_url, img_url: img_url});
 
     if (!$.trim(textareaVal)) {
       textarea.val(compiledImageURL);
