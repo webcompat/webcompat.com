@@ -26,6 +26,7 @@
   background-image: none;
   user-select: none;
   -webkit-appearance: none;
+  margin: 0 1em .5em 1em;
 }
   /**
   * Remove excess padding and border in Firefox 4+

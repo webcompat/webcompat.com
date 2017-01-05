@@ -124,7 +124,10 @@
   /* Button */
   .wc-Comment-button {
     text-align: right;
-    margin:1.2em 0 0;
+    margin: 0.6em auto 0 auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
   }
 
   @media all and (max-width: 48.12em) {
