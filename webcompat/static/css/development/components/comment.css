@@ -38,9 +38,7 @@
     display: block;
     width: 100%;
     min-height: 128px;
-    border-color: var(--Comment-color);
-    border-style: solid solid dashed solid;
-    border-width: 1px;
+    border-width: 0;
     padding: 1em;
     resize: vertical;
   }
