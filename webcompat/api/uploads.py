@@ -116,8 +116,8 @@ class Upload(object):
         # unpacking save_parameters
         self.image_object.save(file_dest, **save_parameters)
         # Creating the thumbnail
-        size = (320, 320)
-        self.image_object.thumbnail(size, Image.NEAREST)
+        size = (700, 700)
+        self.image_object.thumbnail(size, Image.BILINEAR)
         self.image_object.save(thumb_dest, **save_parameters)
 
 
