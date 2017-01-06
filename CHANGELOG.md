@@ -1,3 +1,8 @@
+## 2.9.3 - 2017-11-06
+
+* support a src param to track "reported-with" avenues [Issue #1249](https://github.com/webcompat/webcompat.com/pull/1249)
+* Handle blobs in addition to data URIs in bugform.js [Pull #1253](https://github.com/webcompat/webcompat.com/pull/1253) [Issue #1248](https://github.com/webcompat/webcompat.com/issues/1248)
+
 ## 2.9.2 - 2016-12-22
 
 * Kill thanks page [Pull #1247](https://github.com/webcompat/webcompat.com/pull/1247) [Issue #646](https://github.com/webcompat/webcompat.com/issues/646)
