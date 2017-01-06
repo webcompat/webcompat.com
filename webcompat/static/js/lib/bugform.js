@@ -425,8 +425,8 @@ function BugForm() {
     this.uploadField.val(this.uploadField.get(0).defaultValue);
   };
   /*
-    copy over the URL of a newly uploaded image asset to the bug
-    description textarea.
+    create the markdown with the URL of a newly uploaded image
+    and its thumbnail URL assets to the bug description textarea.
   */
   this.addImageURL = function(response) {
     var img_url = response.url;
