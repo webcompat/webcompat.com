@@ -425,13 +425,11 @@ function BugForm() {
     this.uploadField.val(this.uploadField.get(0).defaultValue);
   };
   /*
-    create the markdown with the URL of a newly uploaded image
-    and its thumbnail URL assets to the bug description textarea.
+    copy over the URL of a newly uploaded image asset to the bug
+    description textarea.
   */
-  this.addImageURL = function(response) {
-    var img_url = response.url;
-    var thumb_url = response.thumb_url;
-    var imageURL = ['[![Screenshot Description](', thumb_url, ')](', img_url, ')'].join('');
+  this.addImageURL = function(url) {
+    var imageURL = ['![Screenshot Description](', url, ')'].join('');
     this.descField.val(function(idx, value) {
       return value + '\n\n' + imageURL;
     });
