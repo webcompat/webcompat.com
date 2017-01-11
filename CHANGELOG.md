@@ -1,4 +1,9 @@
-## 2.9.3 - 2017-11-06
+## 2.9.4 - 2017-01-11
+
+* Redirect to issue page after bug creation. [Pull #1273](https://github.com/webcompat/webcompat.com/pull/1273) [Issue #1262](https://github.com/webcompat/webcompat.com/issues/1262)
+* Wrap really long URL links. [Pull #1275](https://github.com/webcompat/webcompat.com/pull/1275) [Issue #1264](https://github.com/webcompat/webcompat.com/issues/1264)
+
+## 2.9.3 - 2017-01-06
 
 * support a src param to track "reported-with" avenues [Issue #1249](https://github.com/webcompat/webcompat.com/pull/1249)
 * Handle blobs in addition to data URIs in bugform.js [Pull #1253](https://github.com/webcompat/webcompat.com/pull/1253) [Issue #1248](https://github.com/webcompat/webcompat.com/issues/1248)
