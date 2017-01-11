@@ -27,6 +27,7 @@
   .wc-Markdown a {
     color: var(--Markdown-color);
     text-decoration: underline;
+    word-wrap: break-word;
   }
 
     /* event */
