@@ -6,12 +6,16 @@ define([
   'intern',
   'intern!object',
   'intern/chai!assert',
+  'intern/browser_modules/dojo/node!path',
   'tests/functional/lib/helpers',
   'require'
-], function(intern, registerSuite, assert, FunctionalHelpers, require) {
+], function(intern, registerSuite, assert, path, FunctionalHelpers, require) {
   'use strict';
 
   var url = intern.config.siteRoot;
+  var cwd = intern.config.basePath;
+  var VALID_IMAGE_PATH = path.join(cwd, 'tests/fixtures', 'green_square.png');
+  var BAD_IMAGE_PATH = path.join(cwd, 'tests/fixtures', 'evil.py');
 
   registerSuite({
     name: 'Reporting (non-auth)',
@@ -153,7 +157,7 @@ define([
       return this.remote
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url + '?open=1'))
-        .findByCssSelector('#image').type('/path/to/foo.hacks')
+        .findByCssSelector('#image').type(BAD_IMAGE_PATH)
         .end()
         // wait a bit
         .sleep(250)
@@ -164,7 +168,7 @@ define([
         })
         .end()
         // pick a valid file type
-        .findByCssSelector('#image').type('/path/to/foo.jpg')
+        .findByCssSelector('#image').type(VALID_IMAGE_PATH)
         .end()
         // wait a bit
         .sleep(250)
@@ -182,7 +186,7 @@ define([
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url + '?open=1'))
         // pick a valid file type
-        .findByCssSelector('#image').type('/path/to/foo.png')
+        .findByCssSelector('#image').type(VALID_IMAGE_PATH)
         .end()
         .findByCssSelector('#url').type('http://coolguy.biz')
         .end()
