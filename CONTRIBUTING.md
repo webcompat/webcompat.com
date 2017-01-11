@@ -198,7 +198,7 @@ We do not use frameworks. However we use libraries, such suitcss-components-grid
 
 The js folder contains two subfolders: `lib` contains all project source files and `vendor` contains all third party libraries. The files out of the two sub folders contain the compiled source code.
 
-__Note: All code changes should be made to the files in `lib`__
+> Note: All code changes should be made to the files in `lib`
 
 @@something to write by miketaylr@@
 
@@ -210,11 +210,11 @@ For testing code locally, you will need a very basic setup. There are a few requ
 * [Node.js](https://nodejs.org/en/download/) Current LTS version
 * [Github](https://github.com) account
 
-Note: If you install Python on Windows using the MSI installer, it is highly recommended to check the "Add to path"-box during installation. If you have not done so, see if one of the answers to the StackOverflow post [Adding Python path on Windows 7](http://stackoverflow.com/questions/6318156/adding-python-path-on-windows-7) can help you - it should also work fine for later versions of Windows.
-
-Windows typically doesn't have the *make* tool installed. Windows users without *make* should look at the "detailed setup" section below.
-
-As an alternative to Windows, a cloud IDE such as [Cloud 9](https://c9.io) can be used for a relatively easier setup. If you take this route, please update to the latest Python version with the following. (This is to avoid `InsecurePlatformWarning` errors that arise when the default Python 2.7.6 is used).
+> Note: If you install Python on Windows using the MSI installer, it is highly recommended to check the "Add to path"-box during installation. If you have not done so, see if one of the answers to the StackOverflow post [Adding Python path on Windows 7](http://stackoverflow.com/questions/6318156/adding-python-path-on-windows-7) can help you - it should also work fine for later versions of Windows.
+>
+> Windows typically doesn't have the *make* tool installed. Windows users without *make* should look at the "detailed setup" section below.
+>
+> As an alternative to Windows, a cloud IDE such as [Cloud 9](https://c9.io) can be used for a relatively easier setup. If you take this route, please update to the latest Python version with the following. (This is to avoid `InsecurePlatformWarning` errors that arise when the default Python 2.7.6 is used).
 
 ```
 sudo apt-add-repository ppa:fkrull/deadsnakes-python2.7
@@ -329,7 +329,7 @@ cp config/secrets.py.example config/secrets.py
 copy config/secrets.py.example config/secrets.py
 ```
 
-Note: If you are using Cloud 9, you have to update run.py and replace `app.run(host=os.getenv("IP", "0.0.0.0"), port=int(os.getenv("PORT", 8080)))`.
+> Note: If you are using Cloud 9, you have to update run.py and replace `app.run(host=os.getenv("IP", "0.0.0.0"), port=int(os.getenv("PORT", 8080)))`.
 
 You can now edit `secrets.py` and
 
@@ -349,9 +349,9 @@ GITHUB_CLIENT_ID = os.environ.get('FAKE_ID') or "<client id goes here>"
 GITHUB_CLIENT_SECRET = os.environ.get('FAKE_SECRET') or  "<client secret goes here>"
 ```
 
-Note: You can ignore the `FAKE_ID` and `FAKE_SECRET` environment variables, we use that as a hack for automated tests.
+> Note: You can ignore the `FAKE_ID` and `FAKE_SECRET` environment variables, we use that as a hack for automated tests.
 
-**Note**: If you get a 404 at GitHub when clicking "Login", it means you haven't filled in the `GITHUB_CLIENT_ID` or `GITHUB_CLIENT_SECRET` in secrets.py.
+> **Note**: If you get a 404 at GitHub when clicking "Login", it means you haven't filled in the `GITHUB_CLIENT_ID` or `GITHUB_CLIENT_SECRET` in secrets.py.
 
 ![Auth 404](https://i.cloudup.com/8FDA5bVc7l.png)
 
@@ -414,13 +414,23 @@ Tests are also run automatically on [Travis](https://travis-ci.org/webcompat/web
 
 We use [Intern](http://theintern.io/) to run functional tests.
 
-To run them, make sure you have downloaded the Selenium standalone server from the repo root:
+> Note: This version is known to work with Firefox 50.1.0. If things aren't working with the current stable version of Firefox, please [file a bug!](https://github.com/webcompat/webcompat.com/issues/new)
 
-``` bash
-wget http://selenium-release.storage.googleapis.com/2.53/selenium-server-standalone-2.53.1.jar
+#### Installing Java
+
+> Java is used to run Selenium functional tests
+
+##### OS X:
+
+Download from [java.com/en/download/](https://www.java.com/en/download/)
+
+##### Ubuntu:
+
 ```
-
-**Note: This version is known to work with Firefox 47.0.1. If things aren't working with the current stable version of Firefox, check to see if there isn't a newer version of the Selenium standalone server and file a bug on these docs!**
+sudo add-apt-repository ppa:webupd8team/java
+sudo apt-get update
+sudo apt-get install oracle-java8-installer
+```
 
 The `firefox` binary will also need to be in your `PATH`. Here's how this can be done on OS X:
 
@@ -432,19 +442,13 @@ If you are a member of webcompat organization in GitHub, edit `config/secrets.py
 
 Change the value to : `ISSUES_REPO_URI = 'webcompat/webcompat-tests/issues'`.
 
-Now start Selenium:
-
-``` bash
-java -jar selenium-server-standalone-2.53.1.jar
-```
-
-In a separate terminal window or tab, start the application servers:
+Start the application server:
 
 ``` bash
 source env/bin/activate && python run.py
 ```
 
-In another separate terminal window or tab, run the tests:
+In a separate terminal window or tab, run the tests:
 
 ``` bash
 node_modules/.bin/intern-runner config=tests/intern
@@ -460,10 +464,8 @@ node_modules/.bin/intern-runner config=tests/intern user=testusername pw=testpas
 
 **Note** Be aware that this will add the `testusername` and `testpassword` to your bash history. It is possible to run the tests without using a GitHub username and password as command-line arguments. In that case, the automatic login will fail and you then have 10 seconds to manually enter a username and password in the GitHub login screen that appears.
 
-If you have [Two-Factor Authentication](https://help.github.com/articles/about-two-factor-authentication/) enabled and need time to enter a token, you can use the `loginDelay` command-line argument:
-
 ``` bash
-node_modules/.bin/intern-runner config=tests/intern user=testusername pw=testpassword loginDelay=true
+node_modules/.bin/intern-runner config=tests/intern user=testusername pw=testpassword
 ```
 
 This will give you 10 extra seconds to enter a 2FA token when the inital login happens. By default there is no delay, so if you don't need this &mdash; you don't need to do anything differently.
