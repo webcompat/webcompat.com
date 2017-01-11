@@ -49,9 +49,8 @@ define([
       marionette: true
     }],
 
+    filterErrorStack: true,
     reporters: ['Pretty'],
-    // fail fast
-    bail: true,
 
     // Unless you pass in a command-line arg saying otherwise, we run all tests by default.
     functionalSuites: [ 'tests/functional-all' ],
