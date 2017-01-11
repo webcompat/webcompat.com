@@ -5,10 +5,19 @@
 // Learn more about configuring this file at <https://github.com/theintern/intern/wiki/Configuring-Intern>.
 // These default settings work OK for most people. The options that *must* be changed below are the
 // packages, suites, excludeInstrumentation, and (if you want functional tests) functionalSuites.
-define(['intern/lib/args'], function(args) {
+define([
+  'intern',
+], function(intern, topic) {
   'use strict';
 
+  var args = intern.args;
   var siteRoot = args.siteRoot ? args.siteRoot : 'http://localhost:5000';
+
+  if (topic) {
+    topic.subscribe('/suite/start', function (suite) {
+      console.log('Running: ' + suite.name);
+    });
+  }
 
   return {
     // Configuration object for webcompat
@@ -29,13 +38,20 @@ define(['intern/lib/args'], function(args) {
     // A fully qualified URL to the Intern proxy
     proxyUrl: 'http://127.0.0.1:9090/',
     siteRoot: siteRoot,
+    tunnel: 'SeleniumTunnel',
+    tunnelOptions: {
+      // this tells SeleniumTunnel to download geckodriver
+      drivers: [ 'firefox' ]
+    },
 
-    environments: [
-      { browserName: 'firefox' }
-    ],
+    environments: [{
+      browserName: 'firefox',
+      marionette: true
+    }],
 
-    // Beauty, Bob.
-    reporters: 'pretty',
+    reporters: ['Pretty'],
+    // fail fast
+    bail: true,
 
     // Unless you pass in a command-line arg saying otherwise, we run all tests by default.
     functionalSuites: [ 'tests/functional-all' ],

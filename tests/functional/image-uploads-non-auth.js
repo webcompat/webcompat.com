@@ -9,7 +9,7 @@ define([
   'intern!object',
   'intern/chai!assert',
   'require',
-  'intern/node_modules/dojo/node!path',
+  'intern/browser_modules/dojo/node!path',
 ], function(intern, registerSuite, assert) {
   'use strict';
 
