@@ -153,4 +153,8 @@
       top: 0;
       right: 0;
     }
+
+    .wc-Comment-button {
+      flex-direction: column;
+    }
   }
