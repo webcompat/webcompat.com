@@ -2,7 +2,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-/*global Promise:true*/
+/*global WindowHelpers:true*/
 
 define([
   'intern',
@@ -37,26 +37,10 @@ define([
         .setFindTimeout(intern.config.wc.pageLoadTimeout)
         .get(require.toUrl(url + '?open=1'))
         // Build up a green test square in canvas, toBlob that, and then postMessage the blob
+        // see window-helpers.js for more details.
         .execute(function() {
-          return new Promise(function(res) {
-            var c = document.createElement('canvas');
-            c.width = 25;
-            c.height = 25;
-            var ctx = c.getContext('2d');
-            ctx.fillStyle = 'rgb(0, 128, 0)';
-            ctx.rect(0, 0, 25, 25);
-            ctx.fill();
-            ctx.lineWidth = 2;
-            ctx.strokeStyle = 'rgb(0, 0, 0)';
-            ctx.strokeRect(0, 0, 25, 25);
-            c.toBlob(function(blob) {
-              res(blob);
-            });
-          }).then(function(blob) {
-            postMessage(blob, 'http://localhost:5000');
-          });
+          WindowHelpers.getBlob().then(WindowHelpers.sendBlob);
         })
-        .sleep(1000)
         .findByCssSelector('.js-image-upload-label').getAttribute('style')
         .then(function(inlineStyle) {
           assert.include(inlineStyle, 'data:image/png;base64,iVBOR', 'Base64 data shown as preview background');
@@ -84,23 +68,7 @@ define([
         .get(require.toUrl(url + '?open=1'))
         // Build up a green test square in canvas, toBlob that, and then postMessage the blob
         .execute(function() {
-          return new Promise(function(res) {
-            var c = document.createElement('canvas');
-            c.width = 25;
-            c.height = 25;
-            var ctx = c.getContext('2d');
-            ctx.fillStyle = 'rgb(0, 128, 0)';
-            ctx.rect(0, 0, 25, 25);
-            ctx.fill();
-            ctx.lineWidth = 2;
-            ctx.strokeStyle = 'rgb(0, 0, 0)';
-            ctx.strokeRect(0, 0, 25, 25);
-            c.toBlob(function(blob) {
-              res(blob);
-            });
-          }).then(function(blob) {
-            postMessage(blob, 'http://localhost:5000');
-          });
+          WindowHelpers.getBlob().then(WindowHelpers.sendBlob);
         })
         .sleep(1000)
         .findByCssSelector('#description').getProperty('value')
