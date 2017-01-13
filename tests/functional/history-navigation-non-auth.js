@@ -6,8 +6,9 @@ define([
   'intern',
   'intern!object',
   'intern/chai!assert',
+  'tests/functional/lib/helpers',
   'require'
-], function(intern, registerSuite, assert, require) {
+], function(intern, registerSuite, assert, FunctionalHelpers, require) {
   'use strict';
 
   var url = function(path) {
@@ -22,8 +23,7 @@ define([
         .get(require.toUrl(url('/')))
         .findByCssSelector('.js-issues-link').click()
         .end()
-        //find an issue so we know the page has loaded
-        .findByCssSelector('.js-IssueList:nth-child(1)')
+        .then(FunctionalHelpers.visibleByQSA('.js-IssueList:nth-child(1)'))
         .end()
         .goBack()
         // now check that we're back at the home page.
