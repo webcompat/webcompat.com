@@ -21,7 +21,8 @@
     "Prism": true,
     "repoPath": true,
     "require": true,
-    "wcEvents": true
+    "wcEvents": true,
+    "WindowHelpers": true
   },
   "rules": {
     "comma-dangle": 0,
