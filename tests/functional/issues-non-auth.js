@@ -6,9 +6,9 @@ define([
   'intern',
   'intern!object',
   'intern/chai!assert',
-  'tests/functional/lib/helpers',
-  'require'
-], function(intern, registerSuite, assert, FunctionalHelpers, require) {
+  'require',
+  'tests/functional/lib/helpers'
+], function(intern, registerSuite, assert, require, FunctionalHelpers) {
   'use strict';
 
   var url = function(path) {
@@ -19,11 +19,8 @@ define([
     name: 'Issues',
 
     'Issue page loads': function() {
-      return this.remote
-        .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url('/issues/100')))
-        .then(FunctionalHelpers.visibleByQSA('.wc-Issue-information-header'))
-        .findByCssSelector('.wc-Issue-information-header').getVisibleText()
+      return FunctionalHelpers.openPage(this, url('/issues/100'), '.js-Issue')
+        .findDisplayedByCssSelector('.wc-Issue-information-header').getVisibleText()
         .then(function(text) {
           assert.include(text, '#100', 'Issue title displayed');
         })
@@ -40,11 +37,8 @@ define([
     },
 
     'Issue comments load': function() {
-      return this.remote
-        .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url('/issues/100')))
-        .then(FunctionalHelpers.visibleByQSA('.js-Issue-comment:nth-of-type(1)'))
-        .findByCssSelector('.js-Issue-comment').isDisplayed()
+      return FunctionalHelpers.openPage(this, url('/issues/100'), '.js-Issue')
+        .findDisplayedByCssSelector('.js-Issue-comment').isDisplayed()
         .then(function(isDisplayed) {
           assert.equal(isDisplayed, true);
         })
@@ -61,9 +55,7 @@ define([
 
     'Pressing g goes to the github issue page': function() {
       var issueNumber = 100;
-      return this.remote
-        .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url('/issues/' + issueNumber)))
+      return FunctionalHelpers.openPage(this, url('/issues/' + issueNumber), '.js-Issue')
         .findByCssSelector('body').click()
         .type('g')
         .end()
@@ -81,11 +73,8 @@ define([
     },
 
     'NSFW images are blurred': function() {
-      return this.remote
-        .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url('/issues/396')))
-        .then(FunctionalHelpers.visibleByQSA('.js-Issue-commentList .js-Comment-content p'))
-        .findByCssSelector('.js-Issue-commentList .js-Comment-content p').getAttribute('class')
+      return FunctionalHelpers.openPage(this, url('/issues/396'), '.js-Issue')
+        .findDisplayedByCssSelector('.js-Issue-commentList .js-Comment-content p').getAttribute('class')
         .then(function(className) {
           assert.include(className, 'wc-Comment-content-nsfw');
         })
@@ -93,11 +82,8 @@ define([
     },
 
     'Clicking NSFW images toggles between blurry and not-blurry': function() {
-      return this.remote
-        .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url('/issues/396')))
-        .then(FunctionalHelpers.visibleByQSA('.js-Issue-commentList .js-Comment-content p'))
-        .findByCssSelector('.js-Issue-commentList .js-Comment-content p').getAttribute('class')
+      return FunctionalHelpers.openPage(this, url('/issues/396'), '.js-Issue')
+        .findDisplayedByCssSelector('.js-Issue-commentList .js-Comment-content p').getAttribute('class')
         .then(function(className) {
           assert.include(className, 'wc-Comment-content-nsfw');
           assert.notInclude(className, 'wc-Comment-content-nsfw--display');

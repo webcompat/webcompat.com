@@ -6,21 +6,21 @@ define([
   'intern',
   'intern!object',
   'intern/chai!assert',
-  'require'
-], function(intern, registerSuite, assert, require) {
+  'require',
+  'tests/functional/lib/helpers',
+], function(intern, registerSuite, assert, require, FunctionalHelpers) {
   'use strict';
 
-  var url = function(path) {
-    return intern.config.siteRoot + path;
+  var url = function(path, params) {
+    var base = intern.config.siteRoot + path;
+    return params ? base + params : base;
   };
 
   registerSuite({
     name: 'Issue-list',
 
     'FilterView renders': function() {
-      return this.remote
-        .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url('/issues')))
+      return FunctionalHelpers.openPage(this, url('/issues'), '.js-SearchIssue-filter')
         .findByCssSelector('.js-SearchIssue-filter .js-Dropdown .js-Dropdown-label').getVisibleText()
         .then(function(text) {
           assert.include(text, 'Issues', 'Page header displayed');
@@ -34,9 +34,7 @@ define([
     },
 
     'IssueListView renders': function() {
-      return this.remote
-        .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url('/issues')))
+      return FunctionalHelpers.openPage(this, url('/issues'), '.js-IssueList')
         .findByCssSelector('.js-IssueList').isDisplayed()
         .then(function(isDisplayed) {
           assert.equal(isDisplayed, true, 'IssueList container is visible.');
@@ -62,9 +60,7 @@ define([
     },
 
     'PaginationControlsView tests': function() {
-      return this.remote
-        .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url('/issues')))
+      return FunctionalHelpers.openPage(this, url('/issues'), '.js-Pagination-controls')
         .findByCssSelector('.js-Pagination-controls').isDisplayed()
         .then(function(isDisplayed) {
           assert.equal(isDisplayed, true, 'IssueList container is visible.');
@@ -92,9 +88,7 @@ define([
     },
 
     'Pagination dropdown tests': function() {
-      return this.remote
-        .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url('/issues')))
+      return FunctionalHelpers.openPage(this, url('/issues'), '.js-Pagination-controls')
         .findByCssSelector('.js-Dropdown-pagination').isDisplayed()
         .then(function(isDisplayed) {
           assert.equal(isDisplayed, true, 'pagination dropdown container is visible.');
@@ -119,7 +113,7 @@ define([
           assert.include(text, 'Show 100', 'Clicking first option updated dropdown label');
         })
         .end()
-        .findByCssSelector('.js-IssueList:nth-child(51)').isDisplayed()
+        .findDisplayedByCssSelector('.js-IssueList:nth-child(51)').isDisplayed()
         .then(function(isDisplayed) {
           assert.equal(isDisplayed, true, 'More than 50 issues were loaded.');
         })
@@ -127,9 +121,7 @@ define([
     },
 
     'Pressing g goes to github issues': function() {
-      return this.remote
-        .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url('/issues')))
+      return FunctionalHelpers.openPage(this, url('/issues'), '.js-Pagination-controls')
         .findByCssSelector('body').click()
         .type('g')
         .end()
@@ -142,14 +134,11 @@ define([
     },
 
     'Pressing g inside of search input *doesn\'t* go to github issues': function() {
-      return this.remote
-        // set a short timeout, so we don't have to wait 10 seconds
-        // to realize we're not at GitHub.
-        .setFindTimeout(50)
-        .get(require.toUrl(url('/issues')))
+      return FunctionalHelpers.openPage(this, url('/issues'), '#js-SearchForm-input')
         .findByCssSelector('#js-SearchForm-input').click()
         .type('g')
         .end()
+        .setFindTimeout(0)
         .findByCssSelector('.repo-container .issues-listing')
         .then(assert.fail, function(err) {
           assert.isTrue(/NoSuchElement/.test(String(err)));
@@ -158,11 +147,7 @@ define([
     },
 
     'Loading issues page has default params in URL': function() {
-      return this.remote
-        .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url('/issues')))
-        // find something so we know the page has loaded
-        .findByCssSelector('.js-IssueList:nth-of-type(1)')
+      return FunctionalHelpers.openPage(this, url('/issues'), '.js-IssueList:nth-of-type(1)')
         .getCurrentUrl()
         .then(function(currUrl) {
           assert.include(currUrl, 'page=1&per_page=50&state=open', 'Default model params are added to the URL');
@@ -171,11 +156,7 @@ define([
 
     'Loading partial params results in merge with defaults': function() {
       var params = '?page=2';
-      return this.remote
-          .setFindTimeout(intern.config.wc.pageLoadTimeout)
-          .get(require.toUrl(url('/issues') + params))
-          // find something so we know the page has loaded
-          .findByCssSelector('.js-IssueList:nth-of-type(1)')
+      return FunctionalHelpers.openPage(this, url('/issues', params), '.js-IssueList:nth-of-type(1)')
           .getCurrentUrl()
           .then(function(currUrl) {
             assert.include(currUrl, 'page=2&per_page=50&state=open', 'Default model params are merged with partial URL params');
@@ -185,9 +166,7 @@ define([
     'Dropdowns reflect state from URL': function() {
       var params = '?per_page=25&sort=updated&direction=desc&state=all';
 
-      return this.remote
-        .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url('/issues') + params))
+      return FunctionalHelpers.openPage(this, url('/issues', params), '.js-IssueList:nth-of-type(1)')
         .findByCssSelector('.js-Dropdown-pagination .js-Dropdown-toggle h1').getVisibleText()
         .then(function(text) {
           assert.equal(text, 'Show 25', 'Pagination dropdown label is updated from URL params');
@@ -208,9 +187,7 @@ define([
     'Going back in history updates issue list and URL state': function() {
       var params = '?per_page=25';
 
-      return this.remote
-        .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url('/issues') + params))
+      return FunctionalHelpers.openPage(this, url('/issues', params), '.js-IssueList:nth-of-type(1)')
         .findByCssSelector('.js-Dropdown-pagination .js-Dropdown-toggle h1').getVisibleText()
         .then(function(text) {
           assert.equal(text, 'Show 25', 'Pagination dropdown label is updated from URL params');
@@ -239,12 +216,7 @@ define([
     'Loading URL with stage param loads issues': function() {
       var params = '?page=1&per_page=50&state=open&stage=needstriage&sort=created&direction=desc';
 
-      return this.remote
-        .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url('/issues') + params))
-        // Did an issue load?
-        .findByCssSelector('.js-IssueList:nth-of-type(1)')
-        .end()
+      return FunctionalHelpers.openPage(this, url('/issues', params), '.js-IssueList:nth-of-type(1)')
         .findByCssSelector('.js-Tag.is-active').getVisibleText()
         .then(function(text) {
           assert.equal('Needs Triage', text, 'Needs Triage filter is selected.');
@@ -253,13 +225,12 @@ define([
     },
 
     'Clicking on a stage filter adds the correct param to the URL': function() {
-      return this.remote
-        .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url('/issues')))
+      return FunctionalHelpers.openPage(this, url('/issues'), '.js-IssueList:nth-of-type(1)')
         .findByCssSelector('[data-filter="contactready"]').click()
         .end()
         // find something so we know the page has loaded
         .findByCssSelector('.wc-IssueList:nth-of-type(1)')
+        .end()
         .getCurrentUrl()
         .then(function(currUrl) {
           assert.include(currUrl, 'stage=contactready', 'Stage filter added to URL correctly.');
@@ -268,9 +239,7 @@ define([
     },
 
     'Toggling a stage filter doesn\'t leave the param in the URL': function() {
-      return this.remote
-        .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url('/issues')))
+      return FunctionalHelpers.openPage(this, url('/issues'), '.js-IssueList:nth-of-type(1)')
         .findByCssSelector('[data-filter="closed"]').click()
         .end()
         // find something so we know the page has loaded
@@ -286,9 +255,7 @@ define([
     },
 
     'Toggling between stage filters results in last param in URL': function() {
-      return this.remote
-        .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url('/issues')))
+      return FunctionalHelpers.openPage(this, url('/issues'), '.js-IssueList:nth-of-type(1)')
         .findByCssSelector('[data-filter="closed"]').click()
         .end()
         // find something so we know the page has loaded
@@ -306,9 +273,7 @@ define([
 
     'Results are loaded from the query params': function() {
       var params = '?q=vladvlad';
-      return this.remote
-        .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url('/issues') + params))
+      return FunctionalHelpers.openPage(this, url('/issues', params), '.js-IssueList:nth-of-type(1)')
         .findByCssSelector('.wc-IssueList:nth-of-type(1) a').getVisibleText()
         .then(function(text) {
           assert.include(text, 'vladvlad', 'The search query results show up on the page.');

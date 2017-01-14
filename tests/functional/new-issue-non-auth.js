@@ -6,8 +6,9 @@ define([
   'intern',
   'intern!object',
   'intern/chai!assert',
-  'require'
-], function(intern, registerSuite, assert, require) {
+  'require',
+  'tests/functional/lib/helpers'
+], function(intern, registerSuite, assert, require, FunctionalHelpers) {
   'use strict';
 
   var url = function(path) {
@@ -18,8 +19,7 @@ define([
     name: 'New Issue Page',
 
     'new issue page loads': function() {
-      return this.remote
-        .get(require.toUrl(url('/issues/new')))
+      return FunctionalHelpers.openPage(this, url('/issues/new'), '.js-Navbar-link')
         .findByCssSelector('.js-Navbar-link').getVisibleText()
         .then(function(text) {
           assert.equal(text, 'Home');

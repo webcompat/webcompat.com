@@ -7,26 +7,26 @@ define([
   'intern!object',
   'intern/chai!assert',
   'require',
-  'tests/functional/lib/helpers',
+  'tests/functional/lib/helpers'
 ], function(intern, registerSuite, assert, require, FunctionalHelpers) {
   'use strict';
 
-  var url = function(path) {
-    return intern.config.siteRoot + path;
+  var url = function(path, params) {
+    var base = intern.config.siteRoot + path;
+    return params ? base + params : base;
   };
 
   registerSuite({
     name: 'Search (non-auth)',
 
     'Pressing g inside of search input *doesnt* go to github issues': function() {
-      return this.remote
-        // set a short timeout, so we don't have to wait 10 seconds
-        // to realize we're not at GitHub.
-        .setFindTimeout(50)
-        .get(require.toUrl(url('/issues')))
+      return FunctionalHelpers.openPage(this, url('/issues'), '#js-SearchForm-input')
         .findByCssSelector('#js-SearchForm-input').click()
         .type('g')
         .end()
+        // set a short timeout, so we don't have to wait 10 seconds
+        // to realize we're not at GitHub.
+        .setFindTimeout(0)
         .findByCssSelector('.repo-container .issues-listing')
         .then(assert.fail, function(err) {
           assert.isTrue(/NoSuchElement/.test(String(err)));
@@ -36,12 +36,9 @@ define([
 
     'Results are loaded from the query params': function() {
       var params = '?q=vladvlad';
-      return this.remote
-        .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url('/issues') + params))
-        //add timeout to allow issues to load
-        .then(FunctionalHelpers.visibleByQSA('.wc-IssueList:nth-of-type(1) .wc-Link'))
-        .findByCssSelector('.wc-IssueList:nth-of-type(1) .wc-Link').getVisibleText()
+
+      return FunctionalHelpers.openPage(this, url('/issues', params), '.wc-IssueList:only-of-type a')
+        .findDisplayedByCssSelector('.wc-IssueList:only-of-type a').getVisibleText()
         .then(function(text) {
           assert.include(text, 'vladvlad', 'The search query results show up on the page.');
         })
@@ -54,9 +51,7 @@ define([
     },
 
     'Clicking on label search adds query parameter to the URL': function() {
-      return this.remote
-        .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url('/issues')))
+      return FunctionalHelpers.openPage(this, url('/issues'), '[data-remotename=browser-android')
         .findByCssSelector('[data-remotename=browser-android]').click()
         .end()
         .getCurrentUrl()
@@ -67,13 +62,10 @@ define([
     },
 
     'Clicking on label search updates the search input': function() {
-      return this.remote
-        .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url('/issues')))
+      return FunctionalHelpers.openPage(this, url('/issues'), '[data-remotename=browser-android')
         .findByCssSelector('[data-remotename=browser-android]').click()
         .end()
-        .then(FunctionalHelpers.visibleByQSA('#js-SearchForm-input'))
-        .findById('js-SearchForm-input').getProperty('value')
+        .findDisplayedById('js-SearchForm-input').getProperty('value')
         .then(function(searchText) {
           assert.include(searchText, 'label:browser-android', 'Url updated with label name');
         })
@@ -81,8 +73,7 @@ define([
     },
 
     'Search input is visible': function() {
-      return this.remote
-        .get(require.toUrl(url('/issues')))
+      return FunctionalHelpers.openPage(this, url('/issues'), '.js-SearchForm')
         .findByCssSelector('.js-SearchForm').isDisplayed()
         .then(function(isDisplayed) {
           assert.equal(isDisplayed, true, 'Search input is visible for non-authed users.');

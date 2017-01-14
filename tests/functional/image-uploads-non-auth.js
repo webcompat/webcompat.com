@@ -9,19 +9,18 @@ define([
   'intern!object',
   'intern/chai!assert',
   'require',
-  'intern/browser_modules/dojo/node!path',
-], function(intern, registerSuite, assert) {
+  'tests/functional/lib/helpers',
+  'intern/browser_modules/dojo/node!path'
+], function(intern, registerSuite, assert, require, FunctionalHelpers) {
   'use strict';
 
-  var url = intern.config.siteRoot;
+  var url = intern.config.siteRoot + '/?open=1';
 
   registerSuite({
     name: 'Image Uploads (non-auth)',
 
     'postMessaged dataURI preview': function() {
-      return this.remote
-        .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url + '?open=1'))
+      return FunctionalHelpers.openPage(this, url, '.js-image-upload-label')
         // send a small base64 encoded green test square
         .execute('postMessage("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAIAAABLixI0AAAACXBIWXMAAA7DAAAOwwHHb6hkAAAAB3RJTUUH3gYSAig452t/EQAAAClJREFUOMvtzkENAAAMg0A25ZU+E032AQEXoNcApCGFLX5paWlpaWl9dqq9AS6CKROfAAAAAElFTkSuQmCC", "http://localhost:5000")')
         .sleep(1000)
@@ -33,14 +32,13 @@ define([
     },
 
     'postMessaged blob preview': function() {
-      return this.remote
-        .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url + '?open=1'))
+      return FunctionalHelpers.openPage(this, url, '.js-image-upload-label')
         // Build up a green test square in canvas, toBlob that, and then postMessage the blob
         // see window-helpers.js for more details.
         .execute(function() {
           WindowHelpers.getBlob().then(WindowHelpers.sendBlob);
         })
+        .sleep(1000)
         .findByCssSelector('.js-image-upload-label').getAttribute('style')
         .then(function(inlineStyle) {
           assert.include(inlineStyle, 'data:image/png;base64,iVBOR', 'Base64 data shown as preview background');
@@ -49,9 +47,7 @@ define([
     },
 
     'postMessaged dataURI image upload worked': function() {
-      return this.remote
-        .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url + '?open=1'))
+      return FunctionalHelpers.openPage(this, url, '.js-image-upload-label')
         // send a small base64 encoded green test square
         .execute('postMessage("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAIAAABLixI0AAAACXBIWXMAAA7DAAAOwwHHb6hkAAAAB3RJTUUH3gYSAig452t/EQAAAClJREFUOMvtzkENAAAMg0A25ZU+E032AQEXoNcApCGFLX5paWlpaWl9dqq9AS6CKROfAAAAAElFTkSuQmCC", "http://localhost:5000")')
         .sleep(1000)
@@ -63,9 +59,7 @@ define([
     },
 
     'postMessaged blob image upload worked': function() {
-      return this.remote
-        .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url + '?open=1'))
+      return FunctionalHelpers.openPage(this, url, '.js-image-upload-label')
         // Build up a green test square in canvas, toBlob that, and then postMessage the blob
         .execute(function() {
           WindowHelpers.getBlob().then(WindowHelpers.sendBlob);
@@ -79,12 +73,8 @@ define([
     },
 
     'remove image upload button': function() {
-      return this.remote
-        .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url + '?open=1'))
+      return FunctionalHelpers.openPage(this, url, '.wc-UploadForm-button')
         // send a small base64 encoded green test square
-        // in theory a blob should work as well, since by the time we're removing the image,
-        // it's been converted to a data URI
         .execute('postMessage("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAIAAABLixI0AAAACXBIWXMAAA7DAAAOwwHHb6hkAAAAB3RJTUUH3gYSAig452t/EQAAAClJREFUOMvtzkENAAAMg0A25ZU+E032AQEXoNcApCGFLX5paWlpaWl9dqq9AS6CKROfAAAAAElFTkSuQmCC", "http://localhost:5000")')
         .sleep(1000)
         .findByCssSelector('.js-image-upload-label .wc-UploadForm-button').isDisplayed()
@@ -93,6 +83,7 @@ define([
         })
         .end()
         .findByCssSelector('.js-image-upload-label .wc-UploadForm-button').click()
+        .sleep(1000)
         .end()
         .findByCssSelector('.js-image-upload-label').getAttribute('style')
         .then(function(inlineStyle) {

@@ -6,9 +6,9 @@ define([
   'intern',
   'intern!object',
   'intern/chai!assert',
+  'require',
   'tests/functional/lib/helpers',
-  'require'
-], function(intern, registerSuite, assert, FunctionalHelpers, require) {
+], function(intern, registerSuite, assert, require, FunctionalHelpers) {
   'use strict';
 
   var url = function(path) {
@@ -19,17 +19,23 @@ define([
     name: 'History navigation',
 
     'Back button works from issues page': function() {
-      return this.remote
-        .get(require.toUrl(url('/')))
+      return FunctionalHelpers.openPage(this, url('/'), '.js-issues-link')
         .findByCssSelector('.js-issues-link').click()
         .end()
-        .then(FunctionalHelpers.visibleByQSA('.js-IssueList:nth-child(1)'))
+        // check that the page is loaded
+        .findDisplayedByCssSelector('.wc-IssueList:nth-child(11)')
         .end()
+        .getCurrentUrl()
+        .then(function(url) {
+          assert.include(url, '/issues');
+        })
         .goBack()
         // now check that we're back at the home page.
-        .findByCssSelector('.js-Hero-title').getVisibleText()
-        .then(function(text) {
-          assert.equal(text, 'Bug reporting\nfor the internet.');
+        .findDisplayedByCssSelector('.wc-IssueList:nth-child(1)')
+        .end()
+        .getCurrentUrl()
+        .then(function(url) {
+          assert.notInclude(url, '/issues');
         })
         .end();
     }

@@ -7,7 +7,7 @@ define([
   'intern!object',
   'intern/chai!assert',
   'require',
-  'tests/functional/lib/helpers'
+  'tests/functional/lib/helpers',
 ], function(intern, registerSuite, assert, require, FunctionalHelpers) {
   'use strict';
 
@@ -19,8 +19,7 @@ define([
     name: 'Index',
 
     'front page loads': function() {
-      return this.remote
-        .get(require.toUrl(url('/')))
+      return FunctionalHelpers.openPage(this, url('/'), '.js-Hero-title')
         .findByCssSelector('.js-Hero-title').getVisibleText()
         .then(function(text) {
           assert.equal(text, 'Bug reporting\nfor the internet.');
@@ -29,10 +28,8 @@ define([
     },
 
     'copyURL works': function() {
-      return this.remote
-        .get(require.toUrl(url('/?open=1')))
-        .then(FunctionalHelpers.visibleByQSA('#url'))
-        .findByCssSelector('#url')
+      return FunctionalHelpers.openPage(this, url('/?open=1'), '#url')
+        .findDisplayedByCssSelector('#url')
         .type('zombo.com')
         .end()
         .findByCssSelector('#description').getProperty('value')
@@ -43,8 +40,7 @@ define([
     },
 
     'reporter addon link is shown': function() {
-      return this.remote
-        .get(require.toUrl(url('/')))
+      return FunctionalHelpers.openPage(this, url('/'), '.js-Hero-title')
         .findByCssSelector('.js-Navbar-link').getVisibleText()
         .then(function(text) {
           assert.include(text, 'Download our');
@@ -53,19 +49,15 @@ define([
     },
 
     'form toggles open then closed': function() {
-      return this.remote
-        .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url('/')))
+      return FunctionalHelpers.openPage(this, url('/'), '.js-Hero-title')
         .findByCssSelector('#js-ReportBug').click()
         .end()
-        .findByCssSelector('#js-ReportForm').isDisplayed()
-        .then(function(isDisplayed) {
-          assert.equal(isDisplayed, true);
-        })
+        .findDisplayedByCssSelector('#js-ReportForm')
         .end()
         .findByCssSelector('#js-ReportBug').click()
         .end()
-        .then(FunctionalHelpers.visibleByQSA('#js-ReportForm'))
+        // wait a bit for animation to finish
+        .sleep(1000)
         .findByCssSelector('#js-ReportForm').isDisplayed()
         .then(function(isDisplayed) {
           assert.equal(isDisplayed, false, 'The form should be hidden');
@@ -73,8 +65,7 @@ define([
     },
 
     'browse issues (needstriage)': function() {
-      return this.remote
-        .get(require.toUrl(url('/')))
+      return FunctionalHelpers.openPage(this, url('/'), '.js-Hero-title')
         .findAllByCssSelector('#js-lastIssue .js-IssueList.wc-IssueList--needstriage')
         .then(function(elms) {
           assert.equal(elms.length, 10, '10 issues should be displayed');

@@ -6,8 +6,9 @@ define([
   'intern',
   'intern!object',
   'intern/chai!assert',
-  'require'
-], function(intern, registerSuite, assert, require) {
+  'require',
+  'tests/functional/lib/helpers',
+], function(intern, registerSuite, assert, require, FunctionalHelpers) {
   'use strict';
 
   var url = function(path) {
@@ -18,9 +19,7 @@ define([
     name: 'Comments (non-auth)',
 
     'Comment form not visible for logged out users': function() {
-      return this.remote
-        .setFindTimeout(1000)
-        .get(require.toUrl(url('/issues/200')))
+      return FunctionalHelpers.openPage(this, url('/issues/200'), '.js-Issue')
         .findByCssSelector('.js-Comment-form')
         .then(assert.fail, function(err) {
           assert.isTrue(/NoSuchElement/.test(String(err)));

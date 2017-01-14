@@ -19,6 +19,7 @@
     "Mousetrap": true,
     "PaginationMixin": true,
     "Prism": true,
+    "Promise": true,
     "repoPath": true,
     "require": true,
     "wcEvents": true,
