@@ -10,7 +10,6 @@
 
 .wc-Button {
   display: inline-block;
-  margin-bottom: .5em;
   padding: .5em 2em;
   text-decoration: none;
   font-weight: 700;
@@ -26,6 +25,7 @@
   background-image: none;
   user-select: none;
   -webkit-appearance: none;
+  margin: 0 1em .5em 1em;
 }
   /**
   * Remove excess padding and border in Firefox 4+
