@@ -96,6 +96,7 @@ def config_validator():
     if app.config['OAUTH_TOKEN'] == '':
         sys.exit(TOKEN_HELP)
 
+
 if __name__ == '__main__':
     # testing the config file
     config_validator()
@@ -115,24 +116,35 @@ if __name__ == '__main__':
         print("Starting server in ~*TEST MODE*~")
         app.run(host='localhost')
     elif args.backup:
-        issue_engine = create_engine('sqlite:///' + os.path.join(app.config['BASE_DIR'], 'issues.db'))
+        # Check 'BACKUP_DEFAULT_DEST' before backup
+        if 'BACKUP_DEFAULT_DEST' not in app.config.keys():
+            sys.exit('Please define BAKCUP_DEFAULT_DEST in secrets.py.')
+
+        issue_engine = create_engine(
+            'sqlite:///' + os.path.join(app.config['BASE_DIR'], 'issues.db'))
         issue_session_maker = sessionmaker(autocommit=False,
                                            autoflush=False,
                                            bind=issue_engine)
         issue_db = scoped_session(issue_session_maker)
         # Take a backup if issues.db has data dump.
-        if issue_db().execute('select count(*) from webcompat_issues').fetchall()[0][0] > 0:
+        if (issue_db().execute('select count(*) from webcompat_issues')
+                      .fetchall()[0][0] > 0):
             if not os.path.exists(app.config['BACKUP_DEFAULT_DEST']):
-                print ('Creating backup directory at {}').format(os.path.join(app.config['BASE_DIR'], 'issues.db'))
+                print('Creating backup directory at {}').format(
+                    os.path.join(app.config['BASE_DIR'], 'issues.db'))
                 os.makedirs(app.config['BACKUP_DEFAULT_DEST'])
             time_stamp = time.strftime('%Y-%m-%dT%H-%M-%S', time.localtime())
             issue_backup_db = 'issues_' + time_stamp + '.db'
-            os.rename(os.getcwd() + '/issues.db', app.config['BACKUP_DEFAULT_DEST'] + issue_backup_db)
+            os.rename(os.getcwd() + '/issues.db',
+                      app.config['BACKUP_DEFAULT_DEST'] + issue_backup_db)
             # Retain last 3 recent backup files
             backup_files = os.listdir(app.config['BACKUP_DEFAULT_DEST'])
             backup_files.sort()
             for old_file in backup_files[:-3]:
                 os.remove(app.config['BACKUP_DEFAULT_DEST'] + old_file)
+        else:
+            print('There is nothing to backup to ' +
+                  app.config['BACKUP_DEFAULT_DEST'])
     else:
         if check_pip_deps():
             app.run(host='localhost')
