@@ -15,6 +15,7 @@
     text-align: center;
     justify-content: center;
     flex-wrap: wrap;
+    margin-top: 1em;
   }
 
     @media all and (min-width: 30.75em) {
