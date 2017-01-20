@@ -18,6 +18,18 @@
     margin-top: 1em;
   }
 
+  .wc-ReportForm .wc-UploadForm {
+    border: dashed 1px rgb(204, 204, 204);
+    border-radius: 20px;
+  }
+
+  .wc-ReportForm .r-Grid-cell {
+    margin-bottom: 1em;
+  }
+  .wc-ReportForm div.r-minM--1of2:nth-child(2) .wc-Form-group {
+    margin-bottom: 2em;
+  }
+
     @media all and (min-width: 30.75em) {
 
       /* space between button */

@@ -25,12 +25,11 @@
   .wc-UploadForm-wrapper {
     z-index: 2;
     padding: 1rem;
-    border: 2px dashed #CCCCCC;
-    border-radius: 15px;
     align-content: center;
     align-items: center;
     flex: 1 0 0;
   }
+
     /* state */
     .wc-UploadForm-wrapper.is-hidden {
       display: none;
