@@ -80,6 +80,8 @@ def login():
 
 @app.route('/logout')
 def logout():
+    User.query.filter_by(user_id=session.get('user_id', None)).delete()
+    session_db.commit()
     session.clear()
     flash(u'You were successfully logged out.', 'info')
     return redirect(g.referer)
