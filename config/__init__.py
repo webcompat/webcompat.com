@@ -22,9 +22,11 @@ RATELIMIT_STORAGE_URL = 'memory://'
 RATELIMIT_STRATEGY = 'moving-window'
 
 DEBUG = False
+SESSION_COOKIE_SECURE = True
 
 if not PRODUCTION:
     DEBUG = True
+    SESSION_COOKIE_SECURE = False
 
 # Logging Capabilities
 # To benefit from the logging, you may want to add:
