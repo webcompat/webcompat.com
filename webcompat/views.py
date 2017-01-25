@@ -34,8 +34,7 @@ from webcompat.api.endpoints import get_rate_limit
 @app.before_request
 def before_request():
     g.user = None
-    if 'user_id' in session:
-        g.user = session.get('user_id')
+    g.user = session.get('logged_in', False)
     g.referer = get_referer(request) or url_for('index')
     g.request_headers = request.headers
 
@@ -56,7 +55,7 @@ def format_date(datestring):
 
 @app.route('/login')
 def login():
-    if session.get('user_id', None) is None:
+    if session.get('logged_in', False) is False:
         # manually set the referer so we know where to come back to
         # when we return from GitHub
         set_referer(request)
@@ -83,7 +82,7 @@ def authorized(access_token):
     user = session.get('access_token', None)
     if user is None:
         session['access_token'] = access_token
-    session['user_id'] = user.user_id
+    session['logged_in'] = True
     if session.get('form_data', None) is not None:
         return redirect(url_for('file_issue'))
     else:
