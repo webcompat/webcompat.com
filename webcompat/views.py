@@ -29,35 +29,22 @@ from issues import report_issue
 from webcompat import app
 from webcompat import github
 from webcompat.api.endpoints import get_rate_limit
-from webcompat.db import User
-from webcompat.db import session_db
-
-
-@app.teardown_appcontext
-def shutdown_session(exception=None):
-    session_db.remove()
 
 
 @app.before_request
 def before_request():
     g.user = None
     if 'user_id' in session:
-        g.user = User.query.get(session['user_id'])
+        g.user = session.get('user_id')
     g.referer = get_referer(request) or url_for('index')
     g.request_headers = request.headers
-
-
-@app.after_request
-def after_request(response):
-    session_db.remove()
-    return response
 
 
 @github.access_token_getter
 def token_getter():
     user = g.user
     if user is not None:
-        return user.access_token
+        return session['access_token']
 
 
 @app.template_filter('format_date')
@@ -80,8 +67,6 @@ def login():
 
 @app.route('/logout')
 def logout():
-    User.query.filter_by(user_id=session.get('user_id', None)).delete()
-    session_db.commit()
     session.clear()
     flash(u'You were successfully logged out.', 'info')
     return redirect(g.referer)
@@ -95,11 +80,9 @@ def authorized(access_token):
     if access_token is None:
         flash(u'Something went wrong trying to sign into GitHub. :(', 'error')
         return redirect(g.referer)
-    user = User.query.filter_by(access_token=access_token).first()
+    user = session.get('access_token', None)
     if user is None:
-        user = User(access_token)
-        session_db.add(user)
-    session_db.commit()
+        session['access_token'] = access_token
     session['user_id'] = user.user_id
     if session.get('form_data', None) is not None:
         return redirect(url_for('file_issue'))

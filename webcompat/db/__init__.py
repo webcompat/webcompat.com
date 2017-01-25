@@ -13,15 +13,8 @@ from sqlalchemy import String
 from sqlalchemy.orm import scoped_session
 from sqlalchemy.orm import sessionmaker
 from hashlib import sha512
-from uuid import uuid4
 
 from webcompat import app
-
-session_engine = create_engine('sqlite:///' + os.path.join(
-    app.config['BASE_DIR'], 'session.db'))
-session_db = scoped_session(sessionmaker(autocommit=False,
-                                         autoflush=False,
-                                         bind=session_engine))
 
 issue_engine = create_engine('sqlite:///' + os.path.join(
     app.config['BASE_DIR'], 'issues.db'))
@@ -47,19 +40,3 @@ class WCIssue(IssueBase):
         self.body = body
 
 IssueBase.metadata.create_all(bind=issue_engine)
-
-UsersBase = declarative_base()
-UsersBase.query = session_db.query_property()
-
-
-class User(UsersBase):
-    __tablename__ = 'users'
-
-    user_id = Column(Integer, primary_key=True)
-    access_token = Column(String(128), unique=True)
-
-    def __init__(self, access_token):
-        self.access_token = access_token
-
-
-UsersBase.metadata.create_all(bind=session_engine)
