@@ -1,6 +1,6 @@
 Babel==2.2.0
 blinker==1.4
-Flask==0.10.1
+Flask==0.12
 Flask-Limiter==0.9.1
 Flask-SQLAlchemy==2.1
 Flask-WTF==0.12
