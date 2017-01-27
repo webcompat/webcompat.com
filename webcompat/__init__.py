@@ -8,8 +8,8 @@
 
 import logging
 
-from flask.ext.github import GitHub
-from flask.ext.limiter import Limiter
+from flask_github import GitHub
+from flask_limiter import Limiter
 from flask import Flask
 
 app = Flask(__name__, static_url_path='')
