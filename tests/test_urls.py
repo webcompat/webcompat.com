@@ -99,7 +99,7 @@ class TestURLs(unittest.TestCase):
         self.assertEqual(rv.status_code, 200)
 
     def test_rate_limit(self):
-        '''Test that we are receiving the appropriate text file.'''
+        '''Rate Limit URI sends 200 OK and starts with Current user.'''
         rv = self.app.get('/rate_limit')
         response_start = 'Current user:'
         self.assertEqual(rv.status_code, 200)

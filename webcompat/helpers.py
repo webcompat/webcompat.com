@@ -16,10 +16,8 @@ import urlparse
 from babel.dates import format_timedelta
 from flask import abort
 from flask import g
-from flask import redirect
 from flask import request
 from flask import session
-from flask import url_for
 from form import IssueForm
 from functools import wraps
 from ua_parser import user_agent_parser
@@ -146,7 +144,7 @@ def get_browser_name(user_agent_string=None):
 
 
 def get_form(ua_header):
-    """Return an instance of flask_wtf.Form with browser and os info added"""
+    """Return an instance of flask_wtf.FlaskForm with browser and os info."""
     bug_form = IssueForm()
     # add browser and version to bug_form object data
     bug_form.browser.data = get_browser(ua_header)

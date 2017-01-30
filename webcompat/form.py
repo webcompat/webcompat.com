@@ -10,7 +10,7 @@ power the issue reporting form on webcompat.com.'''
 import random
 import urlparse
 
-from flask_wtf import Form
+from flask_wtf import FlaskForm
 from flask_wtf.file import FileAllowed
 from flask_wtf.file import FileField
 from wtforms import RadioField
@@ -57,7 +57,7 @@ Actual Behavior:
 '''
 
 
-class IssueForm(Form):
+class IssueForm(FlaskForm):
     '''Define form fields and validation for our bug reporting form.'''
     url = StringField(url_label,
                       [InputRequired(message=url_message)])
