@@ -18,7 +18,7 @@ IMPORT_ERROR = '''
 ==============================================
 It seems like you don't have all dependencies.
 Please re-run:
-    pip install -r requirements.txt
+    pip install -r config/requirements.txt
 ==============================================
 '''
 
