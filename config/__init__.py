@@ -26,6 +26,10 @@ DEBUG = False
 if not PRODUCTION:
     DEBUG = True
 
+# localhost runs on HTTP, use secure flag on session cookie otherwise.
+if not LOCALHOST:
+    SESSION_COOKIE_SECURE = True
+
 # Logging Capabilities
 # To benefit from the logging, you may want to add:
 #   app.logger.info(Thing_To_Log)
