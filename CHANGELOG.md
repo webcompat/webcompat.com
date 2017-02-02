@@ -1,3 +1,15 @@
+## 2.10.0 - 2017-02-02
+
+* handful of typo fixes (docs, copy, templates) [Pull #1326](https://github.com/webcompat/webcompat.com/pull/1326) [Pull #1326](https://github.com/webcompat/webcompat.com/pull/1325) [Pull #1315](https://github.com/webcompat/webcompat.com/pull/1315) [Pull #1321](https://github.com/webcompat/webcompat.com/pull/1321) [Pull #1302](https://github.com/webcompat/webcompat.com/pull/1302)
+* Add secure flag to session cookie [Pull #1313](https://github.com/webcompat/webcompat.com/pull/1313) [Issue #1312](https://github.com/webcompat/webcompat.com/issues/1312)
+* Upgrade Python modules [Pull #1307](https://github.com/webcompat/webcompat.com/pull/1307) [Issue #1304](https://github.com/webcompat/webcompat.com/issues/1304)
+* Correctly handle missing BACKUP_DEFAULT_DEST [Issue #1294](https://github.com/webcompat/webcompat.com/issues/1294) [Issue #1291](https://github.com/webcompat/webcompat.com/pull/1291)
+* Print message if there's nothing to back up [Pull #1291](https://github.com/webcompat/webcompat.com/pull/1291) [Issue #1161](https://github.com/webcompat/webcompat.com/issues/1161)
+* Update Intern to v3.4 (and fix tests accordingly) [Pull #1277](https://github.com/webcompat/webcompat.com/pull/1277) [Issue #982](https://github.com/webcompat/webcompat.com/issues/982)
+* Fix long URL overflow on issues page [Pull #1275](https://github.com/webcompat/webcompat.com/pull/1275) [](https://github.com/webcompat/webcompat.com/issues/1264)
+* Improvements to comment form and image uploads [Pull #1265](https://github.com/webcompat/webcompat.com/pull/1265) [Issue #1261](https://github.com/webcompat/webcompat.com/issues/1261)
+
+
 ## 2.9.4 - 2017-01-11
 
 * Redirect to issue page after bug creation. [Pull #1273](https://github.com/webcompat/webcompat.com/pull/1273) [Issue #1262](https://github.com/webcompat/webcompat.com/issues/1262)
