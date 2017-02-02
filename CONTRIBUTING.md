@@ -247,7 +247,7 @@ cd webcompat.com
 # check out submodules
 npm run module
 # initializing project
-[sudo] npm init
+[sudo] npm run init
 ```
 
 **Note**: if you got an error message, you may need to [install pip](#installing-pip) before running `make install` again.
