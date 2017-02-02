@@ -6,8 +6,9 @@ define([
   'intern',
   'intern!object',
   'intern/chai!assert',
-  'require'
-], function(intern, registerSuite, assert, require) {
+  'require',
+  'tests/functional/lib/helpers',
+], function(intern, registerSuite, assert, require, FunctionalHelpers) {
   'use strict';
 
   var url = function(path) {
@@ -18,8 +19,7 @@ define([
     name: 'Contributors',
 
     'page loads': function() {
-      return this.remote
-        .get(require.toUrl(url('/contributors')))
+      return FunctionalHelpers.openPage(this, url('/contributors'), '.wc-Hero--contributors')
         .findByCssSelector('.js-Hero-title').getVisibleText()
         .then(function(text) {
           assert.include(text, 'Welcome aboard!');
@@ -28,9 +28,7 @@ define([
     },
 
     'clicking first section closes it': function() {
-      return this.remote
-        .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url('/contributors')))
+      return FunctionalHelpers.openPage(this, url('/contributors'), '.wc-Hero--contributors')
         .findByCssSelector('.contributors__item__title').click()
         .end()
         .findByCssSelector('.contributors__item__content').getAttribute('class')
@@ -46,9 +44,7 @@ define([
     },
 
     'clicking section toggles it': function() {
-      return this.remote
-        .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url('/contributors')))
+      return FunctionalHelpers.openPage(this, url('/contributors'), '.wc-Hero--contributors')
         .findByCssSelector('.contributors__item__content.is-open').isDisplayed()
         .then(function(isDisplayed) {
           assert.equal(isDisplayed, true);
@@ -73,9 +69,7 @@ define([
     },
 
     'toggling section toggles lightbulb': function() {
-      return this.remote
-        .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url('/contributors')))
+      return FunctionalHelpers.openPage(this, url('/contributors'), '.wc-Hero--contributors')
         .findByCssSelector('.js-Hero-svg.is-active').isDisplayed()
         .then(function(isDisplayed) {
           assert.equal(isDisplayed, true);

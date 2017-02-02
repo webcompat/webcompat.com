@@ -28,29 +28,11 @@ define([
         return FunctionalHelpers.logout(this);
       },
 
-      'Label gear is visible': function() {
-        return this.remote
-          .setFindTimeout(intern.config.wc.pageLoadTimeout)
-          .get(require.toUrl(url('/issues/2')))
-          .then(FunctionalHelpers.visibleByQSA('.js-Issue-labelEditor'))
-          .findByCssSelector('.js-Issue-labelEditor').isDisplayed()
-          .then(function(displayed) {
-            assert.isTrue(displayed, 'The label gear icon is visible once logged');
-          })
-          .end();
-      },
-
-      'Label widget is opening on click': function() {
-        return this.remote
-          .setFindTimeout(intern.config.wc.pageLoadTimeout)
-          .get(require.toUrl(url('/issues/2')))
+      'Label widget opens': function() {
+        return FunctionalHelpers.openPage(this, url('/issues/2'), '.js-LabelEditorLauncher', true /* longerTimeout */)
           .findByCssSelector('.js-LabelEditorLauncher').click()
           .end()
-          .then(FunctionalHelpers.visibleByQSA('.js-LabelEditor'))
-          .findByCssSelector('.js-LabelEditor').isDisplayed()
-          .then(function(displayed) {
-            assert.isTrue(displayed, 'The label editor widget is open');
-          })
+          .findByCssSelector('.js-LabelEditor')
           .end();
       }
     };

@@ -30,11 +30,8 @@ define([
     },
 
     'Search/filter interaction': function() {
-      return this.remote
-        .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url('/issues')))
-        .then(FunctionalHelpers.visibleByQSA('.wc-SearchForm-item'))
-        .findByCssSelector('.wc-SearchForm-item').click()
+      return FunctionalHelpers.openPage(this, url('/issues'), '.wc-SearchForm-item')
+        .findDisplayedByCssSelector('.wc-SearchForm-item').click()
         .type('taco')
         .end()
         .findAllByCssSelector('button.wc-Tag--needstriage').click()
@@ -58,11 +55,8 @@ define([
 
     'Results are loaded from the query params': function() {
       var params = '?page=1&per_page=50&state=open&stage=all&sort=created&direction=desc&q=vladvlad';
-      return this.remote
-        .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url('/issues', params)))
-        .then(FunctionalHelpers.visibleByQSA('.wc-IssueList:nth-of-type(1) .wc-Link'))
-        .findByCssSelector('.wc-IssueList:nth-of-type(1) .wc-Link').getVisibleText()
+      return FunctionalHelpers.openPage(this, url('/issues', params), '.wc-IssueList:nth-of-type(1)')
+        .findDisplayedByCssSelector('.wc-IssueList:nth-of-type(1) .wc-Link').getVisibleText()
         .then(function(text) {
           assert.include(text, 'vladvlad', 'The search query results show up on the page.');
         })
@@ -75,18 +69,13 @@ define([
     },
 
     'Search works by icon click': function() {
-      return this.remote
-        .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url('/issues')))
-        // time for the issues list to load, otherwise test breaks locally
-        .then(FunctionalHelpers.visibleByQSA('.wc-IssueList:nth-of-type(10)'))
+      return FunctionalHelpers.openPage(this, url('/issues'), '.wc-IssueList:nth-of-type(10)')
         .findByCssSelector('.js-SearchForm input')
         .type('vladvlad')
         .end()
         .findByCssSelector('.js-SearchForm button').click()
         .end()
-        .then(FunctionalHelpers.visibleByQSA('.wc-IssueList:nth-of-type(1) a:contains(vlad)'))
-        .findByCssSelector('.wc-IssueList:nth-of-type(1) a').getVisibleText()
+        .findDisplayedByCssSelector('.wc-IssueList:only-of-type a').getVisibleText()
         .then(function(text) {
           assert.include(text, 'vladvlad', 'The search results show up on the page.');
         })
@@ -94,16 +83,12 @@ define([
     },
 
     'Search works by Return key': function() {
-      return this.remote
-        .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url('/issues')))
-        .then(FunctionalHelpers.visibleByQSA('.js-SearchForm input'))
-        .findByCssSelector('.js-SearchForm input')
+      return FunctionalHelpers.openPage(this, url('/issues'), '.js-SearchForm input')
+        .findDisplayedByCssSelector('.js-SearchForm input')
         .type('vladvlad')
         .type(keys.ENTER)
         .end()
-        .then(FunctionalHelpers.visibleByQSA('.wc-IssueList:nth-of-type(1) a:contains(vlad)'))
-        .findByCssSelector('.wc-IssueList:nth-of-type(1) a').getVisibleText()
+        .findDisplayedByCssSelector('.wc-IssueList:only-of-type a').getVisibleText()
         .then(function(text) {
           assert.include(text, 'vladvlad', 'The search results show up on the page.');
         })
@@ -111,8 +96,7 @@ define([
     },
 
     'Search from the homepage': function() {
-      return this.remote
-        .setFindTimeout(intern.config.wc.pageLoadTimeout)
+      return FunctionalHelpers.openPage(this, url('/'), '.js-SearchBarOpen')
         .get(require.toUrl(url('/')))
         .findByCssSelector('.js-SearchBarOpen').click()
         .end()
@@ -120,8 +104,7 @@ define([
         .type('vladvlad')
         .type(keys.ENTER)
         .end()
-        .then(FunctionalHelpers.visibleByQSA('.wc-IssueList:nth-of-type(1) a:contains(vlad)'))
-        .findByCssSelector('.wc-IssueList:nth-of-type(1) a').getVisibleText()
+        .findDisplayedByCssSelector('.wc-IssueList:only-of-type a').getVisibleText()
         .then(function(text) {
           assert.include(text, 'vladvlad', 'The search query results show up on the page.');
         })

@@ -27,18 +27,10 @@ define([
     },
 
     'Closing and reopening an issue': function() {
-      return this.remote
-        .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url('/issues/69')))
-        .then(FunctionalHelpers.visibleByQSA('.js-Issue-state-button'))
-        .findByCssSelector('.js-Issue-state-button').click()
+      return FunctionalHelpers.openPage(this, url('/issues/70'), '.wc-Issue-commentSubmit', true)
+        .findDisplayedByCssSelector('.js-Issue-state-button').click()
         .end()
-        .then(FunctionalHelpers.visibleByQSA('.wc-Issue-information-header:contains(Closed)'))
-        .findByCssSelector('.wc-Issue-information-header').getVisibleText()
-        .then(function(text) {
-          assert.include(text, 'Closed', 'Closed state text is displayed');
-        })
-        .end()
+        .sleep(1000)
         .findByCssSelector('.js-Issue-state-button').getVisibleText()
         .then(function(text) {
           assert.equal(text, 'Reopen Issue', 'Button says Reopen not Close');
@@ -46,12 +38,7 @@ define([
         .end()
         .findByCssSelector('.js-Issue-state-button').click()
         .end()
-        .then(FunctionalHelpers.visibleByQSA('.wc-Issue-information-header:contains(Ready)'))
-        .findByCssSelector('.wc-Issue-information-header').getVisibleText()
-        .then(function(text) {
-          assert.include(text, 'Ready for Outreach', 'Ready for Outreach state is displayed');
-        })
-        .end()
+        .sleep(1000)
         .findByCssSelector('.js-Issue-state-button').getVisibleText()
         .then(function(text) {
           assert.equal(text, 'Close Issue', 'Button says Close not Reopen');

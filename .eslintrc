@@ -19,9 +19,11 @@
     "Mousetrap": true,
     "PaginationMixin": true,
     "Prism": true,
+    "Promise": true,
     "repoPath": true,
     "require": true,
-    "wcEvents": true
+    "wcEvents": true,
+    "WindowHelpers": true
   },
   "rules": {
     "comma-dangle": 0,

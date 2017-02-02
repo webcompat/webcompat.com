@@ -28,9 +28,7 @@ define([
 
     'We\'re at the right place': function() {
       var username;
-      return this.remote
-        .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url('/me')))
+      return FunctionalHelpers.openPage(this, url('/me'), '.js-username')
         .findByCssSelector('.wc-UIContent .wc-Title--l').getVisibleText()
         .then(function(text) {
           var usernameEnd = text.indexOf('\'s activity');
@@ -44,17 +42,13 @@ define([
     },
 
     'IssueListView renders': function() {
-      return this.remote
-        .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url('/me')))
-        .then(FunctionalHelpers.visibleByQSA('.js-list-issue'))
-        .findByCssSelector('.js-list-issue').isDisplayed()
+      return FunctionalHelpers.openPage(this, url('/me'), '.js-list-issue')
+        .findDisplayedByCssSelector('.js-list-issue').isDisplayed()
         .then(function(isDisplayed) {
           assert.equal(isDisplayed, true, 'IssueList container is visible.');
         })
         .end()
-        .then(FunctionalHelpers.visibleByQSA('#my-issues .js-IssueList:first-child'))
-        .findByCssSelector('.js-list-issue .js-IssueList').isDisplayed()
+        .findDisplayedByCssSelector('.js-list-issue .js-IssueList').isDisplayed()
         .then(function(isDisplayed) {
           assert.equal(isDisplayed, true, 'IssueList item is visible.');
         })
@@ -73,9 +67,7 @@ define([
     },
 
     'Trying to view someone else\'s activity fails (logged in)': function() {
-      return this.remote
-        .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url('/activity/someoneelse')))
+      return FunctionalHelpers.openPage(this, url('/activity/someoneelse'), '.wc-UIContent')
         .findByCssSelector('.wc-UIContent .wc-Title--l').getVisibleText()
         .then(function(text) {
           assert.include(text, 'Forbidden', 'Get a 403 when trying to view someone else\'s activity');

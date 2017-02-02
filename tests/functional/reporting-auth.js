@@ -27,17 +27,7 @@ define([
     },
 
     'Report button shows name': function() {
-      return this.remote
-        .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url('/') + '?open=1'))
-        // do some junk here just so we know the form-open animation is done
-        .then(FunctionalHelpers.visibleByQSA('#url'))
-        .findByCssSelector('#url').click()
-        .end()
-        .findByCssSelector('#browser').click()
-        .end()
-        .findByCssSelector('#url').click()
-        .end()
+      return FunctionalHelpers.openPage(this, url('/issues/new'), '.js-Navbar-link')
         .findByCssSelector('#submitgithub').getVisibleText()
         .then(function(text) {
           assert.include(text, 'Report as'); //Report as FooUser (logged in)

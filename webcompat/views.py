@@ -6,6 +6,7 @@
 
 import json
 import logging
+import os
 import urllib
 
 from flask import abort
@@ -275,6 +276,13 @@ if app.config['LOCALHOST']:
         '''
         return send_from_directory(
             app.config['UPLOADS_DEFAULT_DEST'], filename)
+
+    @app.route('/test-files/<path:filename>')
+    def get_test_helper(filename):
+        '''Route to get ahold of test-related files, only on localhost.
+        '''
+        path = os.path.join(app.config['BASE_DIR'], 'tests')
+        return send_from_directory(path, filename)
 
 
 @app.route('/about')

@@ -6,35 +6,33 @@ define([
   'intern',
   'intern!object',
   'intern/chai!assert',
+  'intern/browser_modules/dojo/node!path',
   'tests/functional/lib/helpers',
   'require'
-], function(intern, registerSuite, assert, FunctionalHelpers, require) {
+], function(intern, registerSuite, assert, path, FunctionalHelpers, require) {
   'use strict';
 
-  var url = intern.config.siteRoot;
+  var url = intern.config.siteRoot + '/issues/new';
+  var cwd = intern.config.basePath;
+  var VALID_IMAGE_PATH = path.join(cwd, 'tests/fixtures', 'green_square.png');
+  var BAD_IMAGE_PATH = path.join(cwd, 'tests/fixtures', 'evil.py');
 
   registerSuite({
     name: 'Reporting (non-auth)',
 
     'Submit buttons are disabled': function() {
-      return this.remote
-        .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url + '?open=1'))
-        .findByCssSelector('#submitanon').getAttribute('class')
-        .then(function(className) {
-          assert.include(className, 'is-disabled');
+      return FunctionalHelpers.openPage(this, require.toUrl(url), '.wc-ReportForm-actions-button')
+        .findAllByCssSelector('.wc-ReportForm-actions-button button').getAttribute('class')
+        .then(function(classNames) {
+          classNames.forEach(function(className) {
+            assert.include(className, 'is-disabled');
+          });
         })
-        .end()
-        .findByCssSelector('#submitgithub').getAttribute('class')
-        .then(function(className) {
-          assert.include(className, 'is-disabled');
-        });
+        .end();
     },
 
     'Wyciwyg bug workaround': function() {
-      return this.remote
-        .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url + '?open=1&url=wyciwyg://0/http://bbs.csdn.net/topics/20282413'))
+      return FunctionalHelpers.openPage(this, require.toUrl(url + '?url=wyciwyg://0/http://bbs.csdn.net/topics/20282413'), '#url')
         .findByCssSelector('#url').getProperty('value')
         .then(function(value) {
           assert.notInclude(value, 'wyciwyg://0/');
@@ -43,17 +41,7 @@ define([
     },
 
     'Report button shows via GitHub': function() {
-      return this.remote
-        .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url + '?open=1'))
-        // do some junk here just so we know the form-open animation is done
-        .then(FunctionalHelpers.visibleByQSA('#url'))
-        .findByCssSelector('#url').click()
-        .end()
-        .findByCssSelector('#browser').click()
-        .end()
-        .findByCssSelector('#url').click()
-        .end()
+      return FunctionalHelpers.openPage(this, require.toUrl(url), '.wc-ReportForm-actions-button')
         .findByCssSelector('#submitgithub').getVisibleText()
         .then(function(text) {
           assert.include(text, 'Report via'); //Report via GitHub (logged out)
@@ -62,127 +50,91 @@ define([
     },
 
     'URL validation': function() {
-      return this.remote
-        .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url + '?open=1'))
-        //allow form load
-        .then(FunctionalHelpers.visibleByQSA('#url'))
+      return FunctionalHelpers.openPage(this, require.toUrl(url), '.wc-ReportForm-actions-button')
         .findByCssSelector('#url').click()
         .end()
-        .findByCssSelector('#browser').click()
-        .end()
-        .findByCssSelector('#url').click()
-        .end()
-        // wait a bit
-        .then(FunctionalHelpers.visibleByQSA('label[for=url] + span'))
-        .findByXpath('//*[@id="js-ReportForm"]/div/form/div[1]/div[2]/div[1]').getAttribute('class')
-        .then(function(className) {
-          assert.include(className, 'js-form-error');
-          assert.notInclude(className, 'js-no-error');
+        .execute(function() {
+          var elm = document.querySelector('#url');
+          WindowHelpers.sendEvent(elm, 'input');
+        })
+        .sleep(500)
+        .findByCssSelector('.wc-Form-helpMessage').getVisibleText()
+        .then(function(text) {
+          assert.include(text, 'A valid URL is required', 'URL validation message is shown');
         })
         .end()
         .findByCssSelector('#url').type('sup')
         .end()
-        // wait a bit
-        .sleep(250)
-        // xpath to the #url formGroup
-        .findByXpath('//*[@id="js-ReportForm"]/div/form/div[1]/div[2]/div[1]').getAttribute('class')
-        .then(function(className) {
-          assert.include(className, 'js-no-error');
-          assert.notInclude(className, 'js-form-error');
-        })
+        .waitForDeletedByCssSelector('.wc-Form-helpMessage')
         .end();
     },
 
     '(optional) browser + os validation': function() {
-      return this.remote
-        .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url + '?open=1'))
-        .then(FunctionalHelpers.visibleByQSA('#browser'))
-        // xpath to the #browser formGroup
-        .findByXpath('//*[@id="js-ReportForm"]/div/form/div[1]/div[2]/div[2]').getAttribute('class')
-        .then(function(className) {
-          assert.include(className, 'js-no-error');
-          assert.notInclude(className, 'js-form-error');
+      return FunctionalHelpers.openPage(this, require.toUrl(url), '.wc-ReportForm-actions-button')
+        // make sure we can see the valid checkbox (i.e. it's background image is non-empty)
+        .execute(function() {
+          return window.getComputedStyle(document.querySelector('div.wc-Form-group:nth-child(2) > span:nth-child(2)'), ':after').getPropertyValue('background-image');
+        }).then(function(bgImage) {
+          assert.include(bgImage, 'valid.svg', 'The valid checkbox psuedo is visible');
         })
         .end()
-        .findByCssSelector('#browser').clearValue()
+        .execute(function() {
+          var elm = document.querySelector('#os');
+          elm.value = '';
+          WindowHelpers.sendEvent(elm, 'input');
+        })
         .end()
-        .findByCssSelector('#os').click()
-        .end()
-        // wait a bit
-        .sleep(250)
-        // xpath to the #browser formGroup
-        .findByXpath('//*[@id="js-ReportForm"]/div/form/div[1]/div[2]/div[2]').getAttribute('class')
-        .then(function(className) {
-          assert.notInclude(className, 'js-form-error');
-          assert.notInclude(className, 'js-no-error');
+        .sleep(500)
+        // make sure we can't see the valid checkbox (i.e. it's background image is empty)
+        .execute(function() {
+          return window.getComputedStyle(document.querySelector('div.wc-Form-group:nth-child(3) > span:nth-child(2)'), ':after').getPropertyValue('background-image');
+        }).then(function(bgImage) {
+          assert.notInclude(bgImage, 'valid.svg', 'The valid checkbox psuedo is not visible');
         })
         .end();
     },
 
     'Problem type validation': function() {
-      return this.remote
-        .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url + '?open=1'))
-        .then(FunctionalHelpers.visibleByQSA('#description'))
-        .findByCssSelector('#description').click()
+      return FunctionalHelpers.openPage(this, require.toUrl(url), '.wc-ReportForm-actions-button')
+        .execute(function() {
+          var elm = document.querySelector('#description');
+          WindowHelpers.sendEvent(elm, 'focus');
+        })
         .end()
-        .then(FunctionalHelpers.visibleByQSA('.is-error > fieldset:nth-child(1) > div:nth-child(1) > span:nth-child(2)'))
-        .findByXpath('//*[@id="js-ReportForm"]/div/form/div[1]/div[1]/div').getAttribute('class')
-        .then(function(className) {
-          assert.include(className, 'is-error js-form-error');
-          assert.notInclude(className, 'js-no-error');
+        .findByCssSelector('.wc-Form-helpMessage').getVisibleText()
+        .then(function(text) {
+          assert.include(text, 'Problem type required', 'Problem type validation message is shown');
         })
         .end()
         // pick a problem type
         .findByCssSelector('#problem_category-0').click()
         .end()
-        // wait a bit
-        .sleep(250)
-        // validation message should be removed now
-        .findByXpath('//*[@id="js-ReportForm"]/div/form/div[1]/div[1]/div').getAttribute('class')
-        .then(function(className) {
-          assert.include(className, 'js-no-error');
-          assert.notInclude(className, 'is-error js-form-error');
-        })
+        // validation message should be gone
+        .waitForDeletedByCssSelector('.wc-Form-helpMessage')
         .end();
     },
 
     'Image extension validation': function() {
-      return this.remote
-        .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url + '?open=1'))
-        .findByCssSelector('#image').type('/path/to/foo.hacks')
+      return FunctionalHelpers.openPage(this, require.toUrl(url), '.wc-ReportForm-actions-button')
+        .findByCssSelector('#image').type(BAD_IMAGE_PATH)
         .end()
-        // wait a bit
-        .sleep(250)
-        .findByCssSelector('.js-image-upload').getAttribute('class')
-        .then(function(className) {
-          assert.include(className, 'js-form-error');
-          assert.notInclude(className, 'js-no-error');
+        .findByCssSelector('.wc-Form-helpMessage--imageUpload').getVisibleText()
+        .then(function(text) {
+          assert.include(text, 'Image must be one of the following', 'Image type validation message is shown');
         })
         .end()
         // pick a valid file type
-        .findByCssSelector('#image').type('/path/to/foo.jpg')
+        .findByCssSelector('#image').type(VALID_IMAGE_PATH)
         .end()
-        // wait a bit
-        .sleep(250)
-        // validation message should be removed now
-        .findByCssSelector('.js-image-upload').getAttribute('class')
-        .then(function(className) {
-          assert.include(className, 'js-no-error');
-          assert.notInclude(className, 'js-form-error');
-        })
+        // validation message should be gone
+        .waitForDeletedByCssSelector('.wc-Form-helpMessage--imageUpload')
         .end();
     },
 
     'Submits are enabled': function() {
-      return this.remote
-        .setFindTimeout(intern.config.wc.pageLoadTimeout)
-        .get(require.toUrl(url + '?open=1'))
+      return FunctionalHelpers.openPage(this, require.toUrl(url), '.wc-ReportForm-actions-button')
         // pick a valid file type
-        .findByCssSelector('#image').type('/path/to/foo.png')
+        .findByCssSelector('#image').type(VALID_IMAGE_PATH)
         .end()
         .findByCssSelector('#url').type('http://coolguy.biz')
         .end()
@@ -194,15 +146,11 @@ define([
         // wait a bit
         .sleep(250)
          // now make sure the buttons aren't disabled anymore
-        .findByCssSelector('#submitanon').getAttribute('class')
-        .then(function(className) {
-          assert.notInclude(className, 'is-disabled');
-        })
-        .end()
-         // now make sure the buttons aren't disabled anymore
-        .findByCssSelector('#submitgithub').getAttribute('class')
-        .then(function(className) {
-          assert.notInclude(className, 'is-disabled');
+        .findAllByCssSelector('.wc-ReportForm-actions-button button').getAttribute('class')
+        .then(function(classNames) {
+          classNames.forEach(function(className) {
+            assert.notInclude(className, 'is-disabled');
+          });
         })
         .end();
     }
