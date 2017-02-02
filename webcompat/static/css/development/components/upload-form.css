@@ -5,12 +5,13 @@
 }
 
 .wc-UploadForm {
-  display: block;
+  display: flex;
   position: relative;
   text-align: center;
   min-height: 250px;
   cursor: pointer;
   z-index: 3;
+  overflow: hidden;
 }
 
   /* modifier new comment of existing bug */
@@ -23,14 +24,12 @@
   /* Form upload wrapper */
   .wc-UploadForm-wrapper {
     z-index: 2;
-    margin-top: 1rem;
     padding: 1rem;
-    border: 2px dashed #CCCCCC;
-    border-radius: 15px;
     align-content: center;
     align-items: center;
-    margin: 1rem auto;
+    flex: 1 0 0;
   }
+
     /* state */
     .wc-UploadForm-wrapper.is-hidden {
       display: none;
