@@ -65,7 +65,7 @@ body {
     display: none;
   }
 
-  @media all and (max-width: 73.75em) {
+  @media all and (max-width: 75em) {
 
     .wc-UIContent {
       width:auto;
