@@ -179,14 +179,7 @@ def create_issue():
             flash(msg, 'notimeout')
             return redirect(url_for('index'))
     form['ua_header'] = request.headers.get('User-Agent')
-    # Currently we support either a src GET param, or X-Reported-With header
-    # to track where the report originated from.
-    # See https://github.com/webcompat/webcompat.com/issues/1254 to track
-    # supporting only the src param
-    if session.get('src'):
-        form['reported_with'] = session.pop('src')
-    else:
-        form['reported_with'] = request.headers.get('X-Reported-With', 'web')
+    form['reported_with'] = session.pop('src')
     # Logging the ip and url for investigation
     log = app.logger
     log.setLevel(logging.INFO)
