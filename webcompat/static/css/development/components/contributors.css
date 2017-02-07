@@ -72,7 +72,7 @@
 .contributors__list {
   list-style:none;
 }
-@media all and (max-width: 73.75em) {
+@media all and (max-width: 75em) {
 
   .contributors__list {
     padding-left:2em;
@@ -141,7 +141,7 @@
   line-height:22px;
   width:100%;
 }
-@media all and (max-width: 73.75em) {
+@media all and (max-width: 75em) {
 
   .contributors__list__item--lvl_down span {
     padding-right:2.2em;
