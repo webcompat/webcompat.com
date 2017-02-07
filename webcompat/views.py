@@ -179,7 +179,7 @@ def create_issue():
             flash(msg, 'notimeout')
             return redirect(url_for('index'))
     form['ua_header'] = request.headers.get('User-Agent')
-    form['reported_with'] = session.pop('src')
+    form['reported_with'] = session.pop('src', 'web')
     # Logging the ip and url for investigation
     log = app.logger
     log.setLevel(logging.INFO)
