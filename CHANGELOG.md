@@ -1,3 +1,12 @@
+## 2.11.0 - 2017-02-10
+
+* Remove support for X-Reported-With header [Pull #1334](https://github.com/webcompat/webcompat.com/pull/1334) [Issue #1254](https://github.com/webcompat/webcompat.com/issues/1254)
+* Update privacy policy around report logging and deletion [Pull #1333](https://github.com/webcompat/webcompat.com/pull/1333) [Issue #705](https://github.com/webcompat/webcompat.com/issues/705)
+* Add padding to wc-Link class [Pull #1331](https://github.com/webcompat/webcompat.com/pull/1331) [Issue #1155](https://github.com/webcompat/webcompat.com/issues/1155)
+* Add more padding around form, for certain viewport widths [Pull #1330](https://github.com/webcompat/webcompat.com/pull/1330) [](https://github.com/webcompat/webcompat.com/issues/1243)
+* Change report bug link to new issues endpoint [Pull #1323](https://github.com/webcompat/webcompat.com/pull/1323) [Issue #1290](https://github.com/webcompat/webcompat.com/issues/1290)
+* Rename `init` command to `setup`; make sure virtualenv is activated before installing pip packages, [Pull #1322](https://github.com/webcompat/webcompat.com/pull/1322) [Issue #1317](https://github.com/webcompat/webcompat.com/issues/1317)
+
 ## 2.10.0 - 2017-02-02
 
 * handful of typo fixes (docs, copy, templates) [Pull #1326](https://github.com/webcompat/webcompat.com/pull/1326) [Pull #1326](https://github.com/webcompat/webcompat.com/pull/1325) [Pull #1315](https://github.com/webcompat/webcompat.com/pull/1315) [Pull #1321](https://github.com/webcompat/webcompat.com/pull/1321) [Pull #1302](https://github.com/webcompat/webcompat.com/pull/1302)
