@@ -213,6 +213,7 @@ issueList.IssueCollection = Backbone.Collection.extend({
       creator:   'author',
       mentioned: 'mentions'
     };
+    var sitesearchRegExp = /site:([\w-\.]+(:\d+)?)/g;
 
     if (_.isString(paramsArg)) {
       var paramsArray = _.uniq(paramsArg.split('&'));
@@ -229,6 +230,12 @@ issueList.IssueCollection = Backbone.Collection.extend({
     if ('direction' in params) {
       params.order = params.direction;
       delete params.direction;
+    }
+
+    // Support domain name search
+    // Replace all site:DOMAIN_NAME to DOMAIN_NAME in:title
+    if (params.q.match(sitesearchRegExp)) {
+      params.q = params.q.replace(sitesearchRegExp, "$1 in:title");
     }
 
     // The rest need to be added to the "q" param as substrings
