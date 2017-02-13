@@ -53,7 +53,7 @@ define([
         .sleep(1000)
         .findByCssSelector('#description').getProperty('value')
         .then(function(val) {
-          assert.include(val, '![Screenshot Description](http://localhost:5000/uploads/', 'The data URI was correctly uploaded and its URL was copied to the bug description.');
+          assert.include(val, '[![Screenshot Description](http://localhost:5000/uploads/', 'The data URI was correctly uploaded and its URL was copied to the bug description.');
         })
         .end();
     },
@@ -67,7 +67,7 @@ define([
         .sleep(1000)
         .findByCssSelector('#description').getProperty('value')
         .then(function(val) {
-          assert.include(val, '![Screenshot Description](http://localhost:5000/uploads/', 'The data URI was correctly uploaded and its URL was copied to the bug description.');
+          assert.include(val, '[![Screenshot Description](http://localhost:5000/uploads/', 'The data URI was correctly uploaded and its URL was copied to the bug description.');
         })
         .end();
     },
@@ -92,7 +92,7 @@ define([
         .end()
         .findByCssSelector('#description').getProperty('value')
         .then(function(val) {
-          assert.notInclude(val, '![Screenshot Description](http://localhost:5000/uploads/', 'The url to the image upload was correctly removed.');
+          assert.notInclude(val, '[![Screenshot Description](http://localhost:5000/uploads/', 'The url to the image upload was correctly removed.');
         })
         .end();
     }
