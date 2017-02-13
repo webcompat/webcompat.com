@@ -210,9 +210,11 @@ def build_formdata(form_object):
 
 '''.format(**formdata)
     # Add the image, if there was one.
-    if form_object.get('image_upload') is not None:
-        body += '\n\n![Screenshot of the site issue]({image_url})'.format(
-            image_url=form_object.get('image_upload').get('url'))
+    if form_object.get('image_upload'):
+        img_url = form_object.get('image_upload').get('url')
+        thumb_url = form_object.get('image_upload').get('thumb_url')
+        IMG = '\n\n[![Screenshot of the site issue]({thumb_url})]({img_url})'
+        body += IMG.format(img_url=img_url, thumb_url=thumb_url)
     # Append "from webcompat.com" message to bottom (for GitHub issue viewers)
     body += u'\n\n{0}'.format(GITHUB_HELP)
     return {'title': summary, 'body': body}
