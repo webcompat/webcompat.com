@@ -418,7 +418,16 @@ We use [Intern](http://theintern.io/) to run functional tests.
 
 #### Installing Java
 
-> Java is used to run Selenium functional tests
+> Java is used to run Selenium functional tests. Version 1.8.0+ is required.
+
+To test if your version of Java is recent enough, type the `java -version` into your terminal.
+
+```
+> java -version
+java version "1.8.0_51"
+Java(TM) SE Runtime Environment (build 1.8.0_51-b16)
+Java HotSpot(TM) 64-Bit Server VM (build 25.51-b03, mixed mode)
+```
 
 ##### OS X:
 
