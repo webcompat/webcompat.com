@@ -235,7 +235,7 @@ issueList.IssueCollection = Backbone.Collection.extend({
     // Support domain name search
     // Replace all site:DOMAIN_NAME to DOMAIN_NAME in:title
     if (params.q.match(sitesearchRegExp)) {
-      params.q = params.q.replace(sitesearchRegExp, "$1 in:title");
+      params.q = params.q.replace(sitesearchRegExp, '$1 in:title');
     }
 
     // The rest need to be added to the "q" param as substrings
