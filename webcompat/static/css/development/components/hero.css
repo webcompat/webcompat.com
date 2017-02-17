@@ -66,7 +66,8 @@
       /* event */
       .wc-Hero-link:hover,
       .wc-Hero-link:focus {
-        text-decoration:none;      }
+        text-decoration:none;
+      }
 
       /* state */
       .wc-Hero-link.is-open {
