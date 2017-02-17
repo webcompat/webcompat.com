@@ -52,23 +52,25 @@
     display: inline-block;
     position: relative;
     font-size: 2em;
-    color: #414042;
     text-decoration: none;
-    transition: top 100ms ease-out 0ms;
-    top:1em;
+    top: 1em;
+    margin-top: 2.4em;
+    padding: .4em .6em;
+    border-radius: .3em;
+    border: 1px solid var(--Hero-backgroundColor);
+    background: #414141;
+    color: var(--Hero-backgroundColor);
+    opacity: .95;
   }
 
       /* event */
       .wc-Hero-link:hover,
       .wc-Hero-link:focus {
-        text-decoration:none;
-        color: #fff;
-      }
+        text-decoration:none;      }
 
       /* state */
       .wc-Hero-link.is-open {
         top: 2em;
-        transition: top 100ms ease-out 0ms;
       }
 
       /* icon */
@@ -81,27 +83,27 @@
         line-height: 1.15em;
         vertical-align: middle;
         margin: 0 0 0 .3em;
-        background-color: #414042;
-        color: var(--Hero-colorIcon);
+        background-color: var(--base-variantColorDark);
+        color: var(--Hero-backgroundColor);
         border-radius: 50%;
-        transition: all 0.3s linear 0s;
+        transition: all 0.7s linear 0s;
+        padding: 0.1em;
       }
 
         /* modifier */
         .wc-Hero-link-icon--active {
           display:none;
+          border: 1px solid var(--Hero-backgroundColor);
         }
 
     /* hover  icon */
     .no-touch .wc-Hero-link:hover .wc-Hero-link-icon {
-      background-color: var(--Hero-colorIcon);
-      color: #fff;
-      transition: all 0.3s linear 0s;
     }
     /* hover a - icon down */
     .no-touch .wc-Hero-link:hover .wc-Hero-link-icon--active,
     .wc-Hero-link.is-open .wc-Hero-link-icon--active {
       display:inline-flex;
+      border: 1px solid var(--Hero-backgroundColor);
     }
     .no-touch .wc-Hero-link:hover .wc-Hero-link-icon--default,
     .wc-Hero-link.is-open .wc-Hero-link-icon--default {
