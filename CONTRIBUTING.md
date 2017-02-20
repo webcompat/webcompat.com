@@ -351,6 +351,10 @@ GITHUB_CLIENT_SECRET = os.environ.get('FAKE_SECRET') or  "<client secret goes he
 
 > Note: You can ignore the `FAKE_ID` and `FAKE_SECRET` environment variables, we use that as a hack for automated tests.
 
+4. Click on login to authorize the application and get access to the issues.
+![Login](https://cldup.com/HHtMlPhAod.png) 
+
+
 > **Note**: If you get a 404 at GitHub when clicking "Login", it means you haven't filled in the `GITHUB_CLIENT_ID` or `GITHUB_CLIENT_SECRET` in secrets.py.
 
 ![Auth 404](https://i.cloudup.com/8FDA5bVc7l.png)
