@@ -311,12 +311,10 @@ pip install -r config/requirements.txt
 
 We use [Grunt](http://gruntjs.com/) as a task runner to perform certain tasks (minify + concat JS assets, for example). You need to have [Node.js](https://nodejs.org/en/download/) installed to be able to run Grunt. Once that's done, `npm` can be used to install Grunt and other build dependencies.
 
-First install the `grunt-cli` tool:
 
 ``` bash
-npm install -g grunt-cli
 npm install
-grunt
+npm run build
 ```
 
 **Note**: if you get an error message about missing rights to install the setup through npm, please *do not run `sudo npm`*. You just need to [fix you permissions](https://coderwall.com/p/t2mc9g/don-t-sudo-npm) for `usr/local`.
@@ -383,7 +381,7 @@ You should now have a local instance of the site running at `http://localhost:50
 
 After certain kinds of changes are made, you need to build the project before serving it from a webserver will work
 
-* CSS: a build will run cssnext, combine custom media queries, and concat all source files into webcompat.dev.css. You'll need to re-build the CSS to see any changes, so it's recommended to use a watch task (see `make watch` or `grunt watch`).
+* CSS: a build will run cssnext, combine custom media queries, and concat all source files into webcompat.dev.css. You'll need to re-build the CSS to see any changes, so it's recommended to use a watch task (see `make watch` or `npm run watch`).
 * JS: a build will run eslint, minify and concat source files.
 * HTML templates: the changes should be served from disk without the need for rebuilding
 * Python: the Flask local server will detect changes and restart automatically. No need to re-build.
@@ -423,7 +421,7 @@ Fixing static JS files with project coding styles, if an error occurs.
 npm run fix
 ```
 
-By default, a build will *not* optimize images (which is done before deploys). If you'd like to optimize images, you can run `grunt imagemin`.
+By default, a build will *not* optimize images (which is done before deploys). If you'd like to optimize images, you can run `npm run imagemin`.
 
 ## Running Tests
 
