@@ -247,10 +247,12 @@ cd webcompat.com
 # check out submodules
 npm run module
 # initializing project
-[sudo] npm run setup
+npm run setup
 ```
 
 **Note**: if you got an error message, you may need to [install pip](#installing-pip) before running `make install` again.
+
+**Note**: if you get an error message about missing rights to install the setup through npm, please *do not run `sudo npm`*. You just need to [fix you permissions](https://coderwall.com/p/t2mc9g/don-t-sudo-npm) for `usr/local`.
 
 ### Detailed setup (All platforms)
 #### Installing pip
@@ -312,10 +314,12 @@ We use [Grunt](http://gruntjs.com/) as a task runner to perform certain tasks (m
 First install the `grunt-cli` tool:
 
 ``` bash
-[sudo] npm install -g grunt-cli
-[sudo] npm install
+npm install -g grunt-cli
+npm install
 grunt
 ```
+
+**Note**: if you get an error message about missing rights to install the setup through npm, please *do not run `sudo npm`*. You just need to [fix you permissions](https://coderwall.com/p/t2mc9g/don-t-sudo-npm) for `usr/local`.
 
 ### Configuring The Server
 
