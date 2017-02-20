@@ -57,6 +57,9 @@ var FlashMessageView = Backbone.View.extend({
     this.$el.addClass('is-active wc-FlashMessage--thanks');
     this.$el.html(buildTemplate({number: opts.message}))
             .insertBefore('.wc-Issue-information').show();
+
+    // show the correct URL now, rather than /issues/new
+    history.replaceState({}, '', '/issues/' + opts.message);
   },
   hide: function() {
     this.$el.fadeOut();
