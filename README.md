@@ -1,9 +1,17 @@
 # webcompat.com
 
-**Build Status**: [![Build Status](https://travis-ci.org/webcompat/webcompat.com.svg?branch=master)](https://travis-ci.org/webcompat/webcompat.com)
 
-**Waffle Story Board**: [![Stories in Ready](https://badge.waffle.io/webcompat/webcompat.com.png?label=ready&title=Ready)](https://waffle.io/webcompat/webcompat.com)
+[![GitHub version](https://badge.fury.io/gh/webcompat%2Fwebcompat.com.svg)](https://badge.fury.io/gh/webcompat%2Fwebcompat.com)
+[![Dependency Status](https://david-dm.org/webcompat/webcompat.com.svg)](https://david-dm.org/webcompat/webcompat.com)
+[![devDependency Status](https://david-dm.org/webcompat/webcompat.com/dev-status.svg)](https://david-dm.org/webcompat/webcompat.com/)
 
+[![Built with Grunt](https://cdn.gruntjs.com/builtwith.svg)](http://gruntjs.com/)
+[![Travis Build Status](https://travis-ci.org/webcompat/webcompat.com.svg?branch=master)](https://travis-ci.org/webcompat/webcompat.com)
+
+[![Waffle Stories in Ready](https://badge.waffle.io/webcompat/webcompat.com.png?label=ready&title=Ready)](https://waffle.io/webcompat/webcompat.com)
+[![Twitter](https://img.shields.io/twitter/url/https/github.com/webcompat/webcompat.com.svg?style=social)](https://twitter.com/webcompat)
+
+	
 
 This repository hosts the code which powers the [webcompat.com Web site](http://webcompat.com/).
 
