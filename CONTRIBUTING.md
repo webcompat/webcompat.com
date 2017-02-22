@@ -339,19 +339,19 @@ You can now edit `secrets.py` and
 
 2. You have the option of creating a "bot account" (a dummy account for the purpose of testing), or using your own account for local development. Either way, you'll need a personal access token to proceed &mdash; this is the oauth token we use to report issues on behalf of people who don't want to give GitHub oauth access (or don't have GitHub accounts).
 
-The [instructions for creating a personal access token](http://help.github.com/articles/creating-an-access-token-for-command-line-use) are given on GitHub. Select public_repo to grant access to the public repositories through the personal access token.  Once you have created the token you can add it in the variable `OAUTH_TOKEN = ""` (yes, even if you're using your own credentials we still refer to it as a bot). More advanced users might want to create an environment variable called `OAUTH_TOKEN`. Either way is fine.
+  The [instructions for creating a personal access token](http://help.github.com/articles/creating-an-access-token-for-command-line-use) are given on GitHub. Select public_repo to grant access to the public repositories through the personal access token.  Once you have created the token you can add it in the variable `OAUTH_TOKEN = ""` (yes, even if you're using your own credentials we still refer to it as a bot). More advanced users might want to create an environment variable called `OAUTH_TOKEN`. Either way is fine.
 
 3. Add the client id and client secret to secrets.py. If you're part of the webcompat GitHub organization, you can [get the client id and client secret from GitHub](https://github.com/organizations/webcompat/settings/applications/). Otherwise, create your own test and production applications ([instructions here](https://github.com/settings/applications/new)) &mdash; when prompted for a "Authorization callback URL", use `http://localhost:5000/callback`,(Cloud 9 users should use `http://yourapp.c9users.io:8000/callback`instead) and take note of the client id and client secret GitHub gives you.
 
-When you have the client id and client secret put them in the corresponding lines in secrets.py for the localhost application:
+  When you have the client id and client secret put them in the corresponding lines in secrets.py for the localhost application:
 
-```
-# We're running on localhost, use the test application
-GITHUB_CLIENT_ID = os.environ.get('FAKE_ID') or "<client id goes here>"
-GITHUB_CLIENT_SECRET = os.environ.get('FAKE_SECRET') or  "<client secret goes here>"
-```
+  ```
+  # We're running on localhost, use the test application
+  GITHUB_CLIENT_ID = os.environ.get('FAKE_ID') or "<client id goes here>"
+  GITHUB_CLIENT_SECRET = os.environ.get('FAKE_SECRET') or  "<client secret goes here>"
+  ```
 
-> Note: You can ignore the `FAKE_ID` and `FAKE_SECRET` environment variables, we use that as a hack for automated tests.
+  > Note: You can ignore the `FAKE_ID` and `FAKE_SECRET` environment variables, we use that as a hack for automated tests.
 
 4. Click on login to authorize the application and get access to the issues.
 ![Login](https://cldup.com/HHtMlPhAod.png) 
