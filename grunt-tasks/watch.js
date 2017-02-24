@@ -3,14 +3,14 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 module.exports = function(grunt) {
-  grunt.config('watch', {
+  grunt.config("watch", {
     css:{
-      files: '<%= cssPath %>/development/**/*.css',
-      tasks: ['postcss']
+      files: "<%= cssPath %>/development/**/*.css",
+      tasks: ["postcss"]
     },
     script:{
-      files: '<%= jshint.beforeconcat %>',
-      tasks: ['jshint:beforeconcat']
+      files: "<%= jshint.beforeconcat %>",
+      tasks: ["jshint:beforeconcat"]
     }
   });
 };

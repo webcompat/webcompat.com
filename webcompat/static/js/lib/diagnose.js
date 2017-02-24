@@ -7,20 +7,20 @@ var issues = issues || {}; // eslint-disable-line no-use-before-define
 
 diagnose.NeedsTriageCollection = Backbone.Collection.extend({
   model: issues.Issue,
-  url: '/api/issues/category/needstriage'
+  url: "/api/issues/category/needstriage"
 });
 
 diagnose.NeedsTriageView = Backbone.View.extend({
-  el: $('#js-lastIssue'),
+  el: $("#js-lastIssue"),
   initialize: function() {
     var self = this;
-    var headersBag = {headers: {'Accept': 'application/json'}};
+    var headersBag = {headers: {"Accept": "application/json"}};
     this.issues = new diagnose.NeedsTriageCollection();
     this.issues.fetch(headersBag).success(function() {
       self.render();
     }).error(function() {});
   },
-  template: _.template($('#needstriage-tmpl').html()),
+  template: _.template($("#needstriage-tmpl").html()),
   render: function() {
     this.$el.html(this.template({
       // Just display the first 10.

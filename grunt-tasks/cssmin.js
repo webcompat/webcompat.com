@@ -3,16 +3,16 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 module.exports = function(grunt) {
-  grunt.config('cssmin', {
+  grunt.config("cssmin", {
     options: {
-      banner: '<%= banner %>'
+      banner: "<%= banner %>"
     },
     combine: {
       files: {
         // output
-        '<%= cssPath %>/webcompat.min.css': [
+        "<%= cssPath %>/webcompat.min.css": [
           // input
-          '<%= cssPath %>/webcompat.dev.css'
+          "<%= cssPath %>/webcompat.dev.css"
         ]
       }
     }

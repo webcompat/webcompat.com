@@ -24,28 +24,28 @@ var issues = issues || {}; // eslint-disable-line no-use-before-define
 
 issues.LabelList = Backbone.Model.extend({
   initialize: function() {
-    this.set('namespaceRegex', /(browser|closed|os|status)-(.+)/i);
+    this.set("namespaceRegex", /(browser|closed|os|status)-(.+)/i);
     // Temporarily set pagination to 100 labels per page, until
     // we fix Issue #781
-    this.set('defaultLabelURL', '/api/issues/labels?per_page=100');
+    this.set("defaultLabelURL", "/api/issues/labels?per_page=100");
     // The templating engine needs objects that have JS properties, it won't call
     // get('labels'). Setting a property here makes sure we can pass the model
     // directly to a template() method
-    this.on('change:labels', function() {
-      this.labels = this.get('labels');
+    this.on("change:labels", function() {
+      this.labels = this.get("labels");
     });
     // if we're initialized with {labels:array-of-objects}, process the data
-    var inputLabelData = this.get('labels');
-    this.set('labels', []);
+    var inputLabelData = this.get("labels");
+    this.set("labels", []);
     if (inputLabelData) {
       this.parse(inputLabelData);
     } else {
       // No input data, let's fetch it from a URL
-      if (!this.get('url')) {
+      if (!this.get("url")) {
         // default to "all labels" URL
-        this.set('url', this.get('defaultLabelURL'));
+        this.set("url", this.get("defaultLabelURL"));
       }
-      var headersBag = {headers: {'Accept': 'application/json'}};
+      var headersBag = {headers: {"Accept": "application/json"}};
       this.fetch(headersBag); // This will trigger parse() on response
     }
   },
@@ -55,34 +55,34 @@ issues.LabelList = Backbone.Model.extend({
     for (var i = 0, matches, theLabel; i < labelsArray.length; i++) {
       // We assume we either have an object with .name or an array of strings
       theLabel = labelsArray[i].name || labelsArray[i];
-      matches = theLabel.match(this.get('namespaceRegex'));
+      matches = theLabel.match(this.get("namespaceRegex"));
       if (matches) {
         namespaceMap[matches[2]] = matches[1];
         list[i] = {
-          'name': matches[2],
-          'url': labelsArray[i].url,
-          'color': labelsArray[i].color,
-          'remoteName': matches[0]
+          "name": matches[2],
+          "url": labelsArray[i].url,
+          "color": labelsArray[i].color,
+          "remoteName": matches[0]
         };
       } else {
-        if (typeof labelsArray[i] === 'object') {
+        if (typeof labelsArray[i] === "object") {
           list[i] = labelsArray[i];
           list[i].remoteName = list[i].name;
         } else {
-          list[i] = {'name': theLabel};
+          list[i] = {"name": theLabel};
         }
       }
     }
-    this.set('labels', list);
-    this.set('namespaceMap', namespaceMap);
+    this.set("labels", list);
+    this.set("namespaceMap", namespaceMap);
   },
   // toPrefixed takes a local label name and maps it
   // to the prefixed repository form. Also handles an array
   // of label names (Note: not arrays of objects)
   toPrefixed: function(input) {
-    if (typeof input === 'string') {
-      if (issues.allLabels.get('namespaceMap')[input]) {
-        return issues.allLabels.get('namespaceMap')[input] + '-' + input;
+    if (typeof input === "string") {
+      if (issues.allLabels.get("namespaceMap")[input]) {
+        return issues.allLabels.get("namespaceMap")[input] + "-" + input;
       }
       return input;
     } else {
@@ -93,17 +93,17 @@ issues.LabelList = Backbone.Model.extend({
     }
   },
   url: function() {
-    return this.get('url');
+    return this.get("url");
   },
   // Returns a simple array of unprefixed labels - strings only
   toArray: function() {
-    return _.pluck(this.get('labels'), 'name');
+    return _.pluck(this.get("labels"), "name");
   },
   // To save the model to the server, we need to make
   // sure we apply the prefixes the server expects.
   // The JSON serialization will take care of it.
   toJSON: function() {
-    var labelsArray = _.pluck(this.get('labels'), 'name');
+    var labelsArray = _.pluck(this.get("labels"), "name");
     return issues.allLabels.toPrefixed(labelsArray);
   }
 });
