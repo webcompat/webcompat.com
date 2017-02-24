@@ -134,7 +134,7 @@ define([
     },
 
     "Submits are enabled": function() {
-      return FunctionalHelpers.openPage(this, require.toUrl(url), ".wc-ReportForm-actions-button")
+      return FunctionalHelpers.openPage(this, url("/issues/new"), ".wc-ReportForm-actions-button")
         // pick a valid file type
         .findByCssSelector("#image").type(VALID_IMAGE_PATH)
         .end()
@@ -153,6 +153,15 @@ define([
           classNames.forEach(function(className) {
             assert.notInclude(className, "is-disabled");
           });
+        })
+        .end();
+    },
+
+    "problem_type param selects problem type": function() {
+      return FunctionalHelpers.openPage(this, url("/issues/new?problem_type=video_bug"), ".wc-ReportForm-actions-button")
+        .findByCssSelector("[value=video_bug]").isSelected()
+        .then(function(isSelected) {
+          assert.isTrue(isSelected, "The right option is selected");
         })
         .end();
     }
