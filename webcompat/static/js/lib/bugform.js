@@ -143,12 +143,20 @@ function BugForm() {
       return;
     }
     var urlParam = location.href.match(/url=([^&]*)/);
-    if (urlParam != null) {
+    if (urlParam !== null) {
       // weird Gecko bug. See https://bugzilla.mozilla.org/show_bug.cgi?id=1098037
       urlParam = this.trimWyciwyg(urlParam[1]);
       this.urlField.val(decodeURIComponent(urlParam));
       this.copyURL();
       this.makeValid("url");
+    }
+
+    // If we have a problem_type param, and it matches the value, select it for
+    // the user. see https://github.com/webcompat/webcompat.com/blob/master/webcompat/form.py#L31
+    // for possible matching values
+    var problemType = location.href.match(/problem_type=([^&]*)/);
+    if (problemType !== null) {
+      $("[value=" + problemType[1] + "]").click();
     }
   };
 
