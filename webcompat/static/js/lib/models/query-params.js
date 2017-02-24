@@ -36,23 +36,23 @@ var issueList = issueList || {}; // eslint-disable-line no-use-before-define
 */
 issueList.QueryParams = Backbone.Model.extend({
   defaults: {
-    stage: 'all',
-    state: 'open',
+    stage: "all",
+    state: "open",
     page: 1,
     per_page: 50,
-    sort: 'created',
-    direction: 'desc',
-    q: '',
-    creator: '',
-    mentioned: '',
+    sort: "created",
+    direction: "desc",
+    q: "",
+    creator: "",
+    mentioned: "",
     labels: []
   },
   configUrls: {
-    _githubSearch: 'https://api.github.com/search/issues'
+    _githubSearch: "https://api.github.com/search/issues"
   },
-  bugstatuses: ['contactready', 'needscontact', 'needsdiagnosis', 'needstriage', 'sitewait'],
+  bugstatuses: ["contactready", "needscontact", "needsdiagnosis", "needstriage", "sitewait"],
   initialize: function() {
-    this.on('change', function(e) {
+    this.on("change", function(e) {
       // When the query/parameters change, we want to
       // * update the drop-down menu if required
       // * update the URL and push a history entry
@@ -70,8 +70,8 @@ issueList.QueryParams = Backbone.Model.extend({
           continue; // just whitespace change, let's ignore this
         }
         // If a user clicks a label we're already filtering by, we can likewise ignore it
-        if (change === 'labels') {
-          if (this.get('labels').indexOf(newvalue) > -1) {
+        if (change === "labels") {
+          if (this.get("labels").indexOf(newvalue) > -1) {
             continue;
           }
         }
@@ -79,17 +79,17 @@ issueList.QueryParams = Backbone.Model.extend({
         // so, we think this change matters and want to send update notifications to
         // the UI
         significant = true;
-        if (change === 'per_page' || change === 'state') {
-          issueList.events.trigger('dropdown:update', change + '=' + newvalue);
-        } else if (change === 'sort' || change === 'direction') {
-          issueList.events.trigger('dropdown:update', 'sort=' +
-              this.attributes.sort + '&direction=' + this.attributes.direction);
-        } else if (change === 'q') {
-          issueList.events.trigger('search:update', newvalue);
+        if (change === "per_page" || change === "state") {
+          issueList.events.trigger("dropdown:update", change + "=" + newvalue);
+        } else if (change === "sort" || change === "direction") {
+          issueList.events.trigger("dropdown:update", "sort=" +
+              this.attributes.sort + "&direction=" + this.attributes.direction);
+        } else if (change === "q") {
+          issueList.events.trigger("search:update", newvalue);
         }
       }
       if (significant) {
-        issueList.events.trigger('issues:update');
+        issueList.events.trigger("issues:update");
       }
     });
   },
@@ -100,10 +100,10 @@ issueList.QueryParams = Backbone.Model.extend({
     var urlParams = [];
     _.each(this.attributes, function(value, key) {
       if (value) {
-        urlParams.push(key + '=' + value);
+        urlParams.push(key + "=" + value);
       }
     });
-    return urlParams.join('&');
+    return urlParams.join("&");
   },
   toBackendURL: function(loggedIn) {
     /*
@@ -131,25 +131,25 @@ issueList.QueryParams = Backbone.Model.extend({
     *     search API than the issues API
     */
     var url;
-    var issuesAPICategories = ['closed'].concat(this.bugstatuses);
+    var issuesAPICategories = ["closed"].concat(this.bugstatuses);
 
     // Rules for when to use GitHub directly and when Webcompat
-    var q = this.get('q');
+    var q = this.get("q");
     // TODO: can be simplified if we bring back AppliedLabels view, this next line should go
     // we know that the issue API can handle queries with labels in, we don't want a labels:foo
     // in the search field to force the search API.
-    q = q.replace(/labels:[^ ]+/g, '');
+    q = q.replace(/labels:[^ ]+/g, "");
     if (q) { // We have a query that needs search API
-      if ('withCredentials' in XMLHttpRequest.prototype && !loggedIn) { // CORS support, not logged in - talk directly to GH
-        url = this.configUrls._githubSearch + '?' + this.toSearchAPIParams();
+      if ("withCredentials" in XMLHttpRequest.prototype && !loggedIn) { // CORS support, not logged in - talk directly to GH
+        url = this.configUrls._githubSearch + "?" + this.toSearchAPIParams();
       } else {
-        url = '/api/issues/search' + '?' + this.toSearchAPIParams();
+        url = "/api/issues/search" + "?" + this.toSearchAPIParams();
       }
     } else { // Seems like this query is so simple we only need the issues API.
-      if (_.contains(issuesAPICategories, this.get('stage'))) {
-        url = '/api/issues/category/' + this.get('stage') + '?' + this.toIssueAPIParams();
+      if (_.contains(issuesAPICategories, this.get("stage"))) {
+        url = "/api/issues/category/" + this.get("stage") + "?" + this.toIssueAPIParams();
       } else {
-        url = '/api/issues' + '?' + this.toIssueAPIParams();
+        url = "/api/issues" + "?" + this.toIssueAPIParams();
       }
     }
     return url;
@@ -189,33 +189,33 @@ issueList.QueryParams = Backbone.Model.extend({
     *   author, mentions, state, label (several), repo
     * We can also negate by prefixing these with -.
     */
-    var paramsToSend = _.pick(this.attributes, 'q', 'sort');
+    var paramsToSend = _.pick(this.attributes, "q", "sort");
     var key;
     // Some names are different for the search API..
-    if (this.get('direction')) {
-      paramsToSend.order = this.get('direction');
+    if (this.get("direction")) {
+      paramsToSend.order = this.get("direction");
     }
     // These properties must end up as ?q=name:value with name slightly translated
     var qMap = {
-      creator:   'author',
-      mentioned: 'mentions'
+      creator:   "author",
+      mentioned: "mentions"
     };
     for (key in qMap) {
       if (this.get(key)) {
-        paramsToSend.q += ' ' + qMap[key] + ':' + this.get('key');
+        paramsToSend.q += " " + qMap[key] + ":" + this.get("key");
       }
     }
-    if (this.get('labels').length) {
-      var theLabels = issues.allLabels.toPrefixed(this.get('labels'));
+    if (this.get("labels").length) {
+      var theLabels = issues.allLabels.toPrefixed(this.get("labels"));
       // gotcha: issues API needs labels in plural, search API in singular.. :-/
-      paramsToSend.q += ' label:' + theLabels.join(' label:');
+      paramsToSend.q += " label:" + theLabels.join(" label:");
     }
-    if (this.get('stage') && !(this.get('stage') in {all:1,closed:1})) {
-      paramsToSend.q += ' label:status-' + this.get('stage');
+    if (this.get("stage") && !(this.get("stage") in {all:1,closed:1})) {
+      paramsToSend.q += " label:status-" + this.get("stage");
     }
-    paramsToSend.q += ' state:' + this.get('state');
+    paramsToSend.q += " state:" + this.get("state");
     // Scope this to our issues repo.
-    paramsToSend.q += ' repo:' + repoPath.slice(0,-7);
+    paramsToSend.q += " repo:" + repoPath.slice(0,-7);
 
     return $.param(paramsToSend, true);
   },
@@ -223,8 +223,8 @@ issueList.QueryParams = Backbone.Model.extend({
   setParam: function(name, value, silent) {
     // Because we query two separate GitHub APIs, which use slightly different keywords,
     // we have two names for some of the params - let's limit it to one name internally
-    if (name === 'order') {
-      name = 'direction';
+    if (name === "order") {
+      name = "direction";
     }
     // Sometimes - in particular if a request to the backend fails - we want
     // to reset the model back to previous values without triggering a new change
@@ -235,7 +235,7 @@ issueList.QueryParams = Backbone.Model.extend({
     // for consistency, we should do a bit of parsing and extract those..
     // Both API and UI will be more confusing if we allow both label:foo inside search
     // AND label: ['bar'] internally.
-    if (name === 'q') {
+    if (name === "q") {
       var namevalues = value.match(/\b\w+(%3A|:)\w+\b/g);
       if (namevalues) {
         for (var thisValue, parts, i = 0; thisValue = namevalues[i]; i++) {
@@ -255,9 +255,9 @@ issueList.QueryParams = Backbone.Model.extend({
     if (this.has(name)) {
       var currentValue = this.get(name);
       // 'stage=closed' is actually an alias for state=closed
-      if (name === 'stage' && (value === 'closed' || currentValue === 'closed')) {
+      if (name === "stage" && (value === "closed" || currentValue === "closed")) {
         // Also, the default value for state is 'open'
-        this.setParam('state', value === 'all' ? 'open' : value, silent);
+        this.setParam("state", value === "all" ? "open" : value, silent);
         // We don't return here - stage=closed or =all must be set too to match the
         // state we want the filter UI to be in.. Yeah, hack.
       }
@@ -267,9 +267,9 @@ issueList.QueryParams = Backbone.Model.extend({
         // in this API although they are at the backend.
         // We special-case label:status-* updates and set the
         // corresponding stage value instead.
-        if (name === 'labels' &&
-           (value.indexOf('status-') === 0 || this.bugstatuses.indexOf(value) > -1)) {
-          return this.setParam('stage', value.replace(/^status-/,''), silent);
+        if (name === "labels" &&
+           (value.indexOf("status-") === 0 || this.bugstatuses.indexOf(value) > -1)) {
+          return this.setParam("stage", value.replace(/^status-/,""), silent);
         }
         if (value && currentValue.indexOf(value) === -1) {
           if (value instanceof Array) {
@@ -295,7 +295,7 @@ issueList.QueryParams = Backbone.Model.extend({
       // append name:value to existing search
       // TODO: we should never get here. Is it OK to stuff it into search,
       // or should we throw?
-      this.set('q', this.get('q') + ' ' + name + ':' + value, options);
+      this.set("q", this.get("q") + " " + name + ":" + value, options);
     }
     if (silent) {
       // The UI is normally updated after a successful request to the backend,
@@ -307,26 +307,26 @@ issueList.QueryParams = Backbone.Model.extend({
       // It may be somewhat annoying and surprising that a search term you've changed
       // reverts to its previous state if the backend acts up - but the alternative is
       // worse: UI inconsistency, with a list that doesn't match the search UI state.
-      issueList.events.trigger('search:update', this.get('q'));
+      issueList.events.trigger("search:update", this.get("q"));
     }
   },
   deleteLabel: function(labelStr) {
-    var currentLabels = this.get('labels');
+    var currentLabels = this.get("labels");
     if (currentLabels.indexOf(labelStr) > -1) {
       currentLabels.splice(currentLabels.indexOf(labelStr), 1);
-      this.set('labels', {}, {silent:true}); // hack: to trigger change event on *next* set..
+      this.set("labels", {}, {silent:true}); // hack: to trigger change event on *next* set..
       // hack explained: currentLabels is a reference to an array, so updates cause immediate change.
       // However, when we're manipulating the array directly, the model does not fire any change events
       // because JS gives Backbone no way to observe changes to an array. If we set label to a reference
       // to the array it already references, it won't fire change events either, even if array content
       // was updated in the meantime. Hence the workaround sets it to {} and then back to the array.
-      this.setParam('labels', currentLabels);
+      this.setParam("labels", currentLabels);
     }
   },
   fromQueryString: function(str, silent) {
     var self = this;
     var namevalues;
-    if (str.substr(0,1) === '?') {
+    if (str.substr(0,1) === "?") {
       str = str.substr(1);
     }
     namevalues = str.split(/&/g);
@@ -334,12 +334,12 @@ issueList.QueryParams = Backbone.Model.extend({
       var pair;
       var theName;
       var theValue;
-      pair = namevalue.split('=');
+      pair = namevalue.split("=");
       theName = pair[0];
       theValue = pair[1];
       // just in case..
-      if (theName === 'label') {
-        theName = 'labels';
+      if (theName === "label") {
+        theName = "labels";
       }
       self.setParam(theName, theValue, silent);
     });

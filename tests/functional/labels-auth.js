@@ -3,13 +3,13 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 define([
-  'intern',
-  'intern!object',
-  'intern/chai!assert',
-  'require',
-  'tests/functional/lib/helpers'
+  "intern",
+  "intern!object",
+  "intern/chai!assert",
+  "require",
+  "tests/functional/lib/helpers"
 ], function(intern, registerSuite, assert, require, FunctionalHelpers) {
-  'use strict';
+  "use strict";
 
   registerSuite(function() {
 
@@ -18,7 +18,7 @@ define([
     };
 
     return {
-      name: 'Labels (auth)',
+      name: "Labels (auth)",
 
       setup: function() {
         return FunctionalHelpers.login(this);
@@ -28,11 +28,11 @@ define([
         return FunctionalHelpers.logout(this);
       },
 
-      'Label widget opens': function() {
-        return FunctionalHelpers.openPage(this, url('/issues/2'), '.js-LabelEditorLauncher', true /* longerTimeout */)
-          .findByCssSelector('.js-LabelEditorLauncher').click()
+      "Label widget opens": function() {
+        return FunctionalHelpers.openPage(this, url("/issues/2"), ".js-LabelEditorLauncher", true /* longerTimeout */)
+          .findByCssSelector(".js-LabelEditorLauncher").click()
           .end()
-          .findByCssSelector('.js-LabelEditor')
+          .findByCssSelector(".js-LabelEditor")
           .end();
       }
     };

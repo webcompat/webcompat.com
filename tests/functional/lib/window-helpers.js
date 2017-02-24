@@ -10,15 +10,15 @@
 var WindowHelpers = {
   getBlob: function() {
     return new Promise(function(resolve, reject) {
-      var c = document.createElement('canvas');
+      var c = document.createElement("canvas");
       c.width = 25;
       c.height = 25;
-      var ctx = c.getContext('2d');
-      ctx.fillStyle = 'rgb(0, 128, 0)';
+      var ctx = c.getContext("2d");
+      ctx.fillStyle = "rgb(0, 128, 0)";
       ctx.rect(0, 0, 25, 25);
       ctx.fill();
       ctx.lineWidth = 2;
-      ctx.strokeStyle = 'rgb(0, 0, 0)';
+      ctx.strokeStyle = "rgb(0, 0, 0)";
       ctx.strokeRect(0, 0, 25, 25);
       try {
         c.toBlob(function(blob) {
@@ -32,7 +32,7 @@ var WindowHelpers = {
 
   sendBlob: function(blob) {
     return new Promise(function(res) {
-      postMessage(blob, 'http://localhost:5000');
+      postMessage(blob, "http://localhost:5000");
       res();
     });
   },
