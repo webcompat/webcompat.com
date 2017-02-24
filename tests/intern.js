@@ -15,6 +15,7 @@ define([
 
   if (topic) {
     topic.subscribe("/suite/start", function(suite) {
+      /* eslint-disable no-console*/
       console.log("Running: " + suite.name);
     });
   }
