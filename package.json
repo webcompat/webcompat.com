@@ -43,6 +43,7 @@
     "setup": "npm run module && npm run virtualenv && npm install && npm run config",
     "watch" : "grunt watch",
     "build": "grunt",
+    "lint": "grunt eslint",
     "module": "git submodule init && git submodule update",
     "start": "source env/bin/activate && python run.py",
     "virtualenv" : "pip install virtualenv && virtualenv env && source env/bin/activate && npm run pip",
