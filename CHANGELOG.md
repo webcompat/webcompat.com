@@ -1,3 +1,21 @@
+## 3.0.0 - 2017-02-27
+
+Note: from now on, versioning will work in the following way:
+
+1) Bug fixes, docs updates, etc.: affect patch number
+2) New features: affect minor number
+3) API endpoint changes or dependency version updates: affect major number
+
+
+* Switch to double quotes for JS [Pull #1361](https://github.com/webcompat/webcompat.com/pull/1361)
+* Change login message alignment [Pull #1355](https://github.com/webcompat/webcompat.com/pull/1355)
+* Add some badges to README [Pull #1354](https://github.com/webcompat/webcompat.com/pull/1354)
+* Remove cursor: pointer from form. [Pull #1350](https://github.com/webcompat/webcompat.com/pull/1350)
+* Bump NPM deps [Pull #1349](https://github.com/webcompat/webcompat.com/pull/1349)
+* Docs update around Java versions [Pull #1348](https://github.com/webcompat/webcompat.com/pull/1348)
+* Make dark Report Bug button [Pull #1341](https://github.com/webcompat/webcompat.com/pull/1341)
+* Add site:domain.com search [Pull #1340](https://github.com/webcompat/webcompat.com/pull/1340)
+
 ## 2.11.0 - 2017-02-10
 
 * Remove support for X-Reported-With header [Pull #1334](https://github.com/webcompat/webcompat.com/pull/1334) [Issue #1254](https://github.com/webcompat/webcompat.com/issues/1254)
