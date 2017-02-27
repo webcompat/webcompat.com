@@ -315,3 +315,13 @@ def contributors():
 def cssfixme():
     '''Route for CSS Fix me tool'''
     return render_template('cssfixme.html')
+
+
+@app.route('/csp-report', methods=['POST'])
+def log_csp_report():
+    '''Route to record CSP header violations.'''
+    if 'application/csp-report' not in request.headers.get('content-type', ''):
+        return ('Wrong Content-Type.', 400)
+    with open(app.config['CSP_REPORTS_LOG'], 'a') as r:
+        r.write(request.data + '\n')
+    return ('', 204)

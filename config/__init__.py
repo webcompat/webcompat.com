@@ -38,6 +38,7 @@ if not LOCALHOST:
 
 LOG_FILE = '/tmp/webcompat.log'
 LOG_FMT = '%(asctime)s tracking %(message)s'
+CSP_REPORTS_LOG = '/tmp/webcompat-csp-reports.log'
 
 # Status categories used in the project
 # 'new', 'needsdiagnosis', 'needscontact', 'contactready' , 'sitewait', 'close'
