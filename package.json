@@ -43,7 +43,7 @@
     "setup": "npm run module && npm run virtualenv && npm install && npm run config",
     "watch" : "grunt watch",
     "build": "grunt",
-    "lint": "grunt eslint",
+    "lint": "eslint ./Gruntfile.js ./tests ./grunt-tasks ./webcompat/static/js/lib",
     "fix": "eslint --fix ./Gruntfile.js ./tests ./grunt-tasks ./webcompat/static/js/lib",
     "module": "git submodule init && git submodule update",
     "start": "source env/bin/activate && python run.py",
