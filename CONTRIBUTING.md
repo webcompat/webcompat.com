@@ -394,11 +394,26 @@ npm run watch
 
 ## Coding
 
+Build the entire project (CSS and JavaScript files and optimize images) on the fly everytime you save a file to see changes immediately.
 
- ``` bash
- # watching CSS and JS
- npm run watch
- ```
+``` bash
+# watching CSS and JS
+npm run watch
+```
+
+Linting static JS files with project coding styles.
+
+``` bash
+# linting style JS
+npm run lint
+```
+
+Fixing static JS files with project coding styles, if an error occurs.
+
+``` bash
+# fixing linting style JS
+npm run fix
+```
 
 By default, a build will *not* optimize images (which is done before deploys). If you'd like to optimize images, you can run `grunt imagemin`.
 
