@@ -23,11 +23,11 @@ module.exports = function(grunt) {
 
   // Default task.
   grunt.registerTask("default", [
-    "checkDependencies", "eslint", "concat", "uglify","postcss", "cssmin"
+    "checkDependencies", "concat", "uglify","postcss", "cssmin"
   ]);
 
   // Task used before doing a deploy (same as default, but does image optimization)
   grunt.registerTask("deploy", [
-    "checkDependencies", "eslint", "concat", "uglify","postcss", "cssmin", "imagemin"
+    "checkDependencies", "concat", "uglify","postcss", "cssmin", "imagemin"
   ]);
 };
