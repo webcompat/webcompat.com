@@ -487,3 +487,15 @@ def cache_policy(private=True, uri_max_age=86400):
             return response
         return update_wrapper(policy, view)
     return set_policy
+
+
+def add_sec_headers(response):
+    '''Add security-related headers to the response.
+
+    This should be used in @app.after_request to ensure the headers are
+    added to all responses.'''
+    if not app.config['LOCALHOST']:
+        response.headers['Strict-Transport-Security'] = 'max-age=31536000; includeSubDomains'  # nopep8
+    response.headers['X-Content-Type-Options'] = 'nosniff'
+    response.headers['X-XSS-Protection'] = '1; mode=block'
+    response.headers['X-Frame-Options'] = 'DENY'

@@ -21,6 +21,7 @@ from flask import url_for
 
 from form import AUTH_REPORT
 from form import PROXY_REPORT
+from helpers import add_sec_headers
 from helpers import cache_policy
 from helpers import get_browser_name
 from helpers import get_form
@@ -52,6 +53,7 @@ def before_request():
 @app.after_request
 def after_request(response):
     session_db.remove()
+    add_sec_headers(response)
     return response
 
 
