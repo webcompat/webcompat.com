@@ -21,6 +21,7 @@ from flask import url_for
 
 from form import AUTH_REPORT
 from form import PROXY_REPORT
+from helpers import add_csp
 from helpers import add_sec_headers
 from helpers import cache_policy
 from helpers import get_browser_name
@@ -54,6 +55,7 @@ def before_request():
 def after_request(response):
     session_db.remove()
     add_sec_headers(response)
+    add_csp(response)
     return response
 
 

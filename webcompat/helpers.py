@@ -499,3 +499,22 @@ def add_sec_headers(response):
     response.headers['X-Content-Type-Options'] = 'nosniff'
     response.headers['X-XSS-Protection'] = '1; mode=block'
     response.headers['X-Frame-Options'] = 'DENY'
+
+
+def add_csp(response):
+    '''Add a Content-Security-Policy header to response.
+
+    This should be used in @app.after_request to ensure the header is
+    added to all responses.'''
+    # short term, we send Content-Security-Policy-Report-Only
+    # see https://github.com/webcompat/webcompat.com/issues/763 for
+    # sending Content-Security-Policy
+    response.headers['Content-Security-Policy-Report-Only'] = (
+        "default-src 'none'; " +
+        "connect-src 'self'; " +
+        "font-src 'self'; " +
+        "img-src 'self'; " +
+        "script-src 'self' https://www.google-analytics.com; " +
+        "style-src 'self'; " +
+        "report-uri /csp-report"
+    )
