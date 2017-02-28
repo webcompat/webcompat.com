@@ -8,20 +8,22 @@ define([
   "intern/chai!assert",
   "intern/browser_modules/dojo/node!path",
   "tests/functional/lib/helpers",
-  "require"
-], function(intern, registerSuite, assert, path, FunctionalHelpers, require) {
+], function(intern, registerSuite, assert, path, FunctionalHelpers) {
   "use strict";
 
-  var url = intern.config.siteRoot + "/issues/new";
   var cwd = intern.config.basePath;
   var VALID_IMAGE_PATH = path.join(cwd, "tests/fixtures", "green_square.png");
   var BAD_IMAGE_PATH = path.join(cwd, "tests/fixtures", "evil.py");
+
+  var url = function(path) {
+    return intern.config.siteRoot + path;
+  };
 
   registerSuite({
     name: "Reporting (non-auth)",
 
     "Submit buttons are disabled": function() {
-      return FunctionalHelpers.openPage(this, require.toUrl(url), ".wc-ReportForm-actions-button")
+      return FunctionalHelpers.openPage(this, url("/issues/new"), ".wc-ReportForm-actions-button")
         .findAllByCssSelector(".wc-ReportForm-actions-button button").getAttribute("class")
         .then(function(classNames) {
           classNames.forEach(function(className) {
@@ -32,7 +34,7 @@ define([
     },
 
     "Wyciwyg bug workaround": function() {
-      return FunctionalHelpers.openPage(this, require.toUrl(url + "?url=wyciwyg://0/http://bbs.csdn.net/topics/20282413"), "#url")
+      return FunctionalHelpers.openPage(this, url("/issues/new?url=wyciwyg://0/http://bbs.csdn.net/topics/20282413"), "#url")
         .findByCssSelector("#url").getProperty("value")
         .then(function(value) {
           assert.notInclude(value, "wyciwyg://0/");
@@ -41,7 +43,7 @@ define([
     },
 
     "Report button shows via GitHub": function() {
-      return FunctionalHelpers.openPage(this, require.toUrl(url), ".wc-ReportForm-actions-button")
+      return FunctionalHelpers.openPage(this, url("/issues/new"), ".wc-ReportForm-actions-button")
         .findByCssSelector("#submitgithub").getVisibleText()
         .then(function(text) {
           assert.include(text, "Report via"); //Report via GitHub (logged out)
@@ -50,7 +52,7 @@ define([
     },
 
     "URL validation": function() {
-      return FunctionalHelpers.openPage(this, require.toUrl(url), ".wc-ReportForm-actions-button")
+      return FunctionalHelpers.openPage(this, url("/issues/new"), ".wc-ReportForm-actions-button")
         .findByCssSelector("#url").click()
         .end()
         .execute(function() {
@@ -70,7 +72,7 @@ define([
     },
 
     "(optional) browser + os validation": function() {
-      return FunctionalHelpers.openPage(this, require.toUrl(url), ".wc-ReportForm-actions-button")
+      return FunctionalHelpers.openPage(this, url("/issues/new"), ".wc-ReportForm-actions-button")
         // make sure we can see the valid checkbox (i.e. it's background image is non-empty)
         .execute(function() {
           return window.getComputedStyle(document.querySelector("div.wc-Form-group:nth-child(2) > span:nth-child(2)"), ":after").getPropertyValue("background-image");
@@ -95,7 +97,7 @@ define([
     },
 
     "Problem type validation": function() {
-      return FunctionalHelpers.openPage(this, require.toUrl(url), ".wc-ReportForm-actions-button")
+      return FunctionalHelpers.openPage(this, url("/issues/new"), ".wc-ReportForm-actions-button")
         .execute(function() {
           var elm = document.querySelector("#description");
           WindowHelpers.sendEvent(elm, "focus");
@@ -115,7 +117,7 @@ define([
     },
 
     "Image extension validation": function() {
-      return FunctionalHelpers.openPage(this, require.toUrl(url), ".wc-ReportForm-actions-button")
+      return FunctionalHelpers.openPage(this, url("/issues/new"), ".wc-ReportForm-actions-button")
         .findByCssSelector("#image").type(BAD_IMAGE_PATH)
         .end()
         .findByCssSelector(".wc-Form-helpMessage--imageUpload").getVisibleText()
@@ -132,7 +134,7 @@ define([
     },
 
     "Submits are enabled": function() {
-      return FunctionalHelpers.openPage(this, require.toUrl(url), ".wc-ReportForm-actions-button")
+      return FunctionalHelpers.openPage(this, url("/issues/new"), ".wc-ReportForm-actions-button")
         // pick a valid file type
         .findByCssSelector("#image").type(VALID_IMAGE_PATH)
         .end()
@@ -151,6 +153,15 @@ define([
           classNames.forEach(function(className) {
             assert.notInclude(className, "is-disabled");
           });
+        })
+        .end();
+    },
+
+    "problem_type param selects problem type": function() {
+      return FunctionalHelpers.openPage(this, url("/issues/new?problem_type=video_bug"), ".wc-ReportForm-actions-button")
+        .findByCssSelector("[value=video_bug]").isSelected()
+        .then(function(isSelected) {
+          assert.isTrue(isSelected, "The right option is selected");
         })
         .end();
     }
