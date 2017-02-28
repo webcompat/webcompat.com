@@ -50,6 +50,7 @@ install:
 before_script:
   - "sleep 2"
   # lint JS in default eslint task
+  - npm run lint
   - npm run build
 
 # now run the tests!
