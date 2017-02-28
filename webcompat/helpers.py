@@ -5,6 +5,8 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 from datetime import datetime
+from functools import wraps
+from functools import update_wrapper
 import hashlib
 import json
 import math
@@ -16,10 +18,10 @@ import urlparse
 from babel.dates import format_timedelta
 from flask import abort
 from flask import g
+from flask import make_response
 from flask import request
 from flask import session
 from form import IssueForm
-from functools import wraps
 from ua_parser import user_agent_parser
 
 from webcompat import app
@@ -456,3 +458,32 @@ def api_request(method, path, params=None, data=None):
                 get_response_headers(resource))
     else:
         abort(404)
+
+
+def cache_policy(private=True, uri_max_age=86400):
+    '''Implements a HTTP Cache Decorator.
+
+    Adds Cache-Control headers.
+      * max-age has a 1 day default (86400s)
+      * and makes it private by default
+    Adds Etag based on HTTP Body.
+    Sends a 304 Not Modified in case of If-None-Match.
+    '''
+    def set_policy(view):
+        @wraps(view)
+        def policy(*args, **kwargs):
+            response = make_response(view(*args, **kwargs))
+            # we choose if the resource is private or public
+            if private:
+                response.cache_control.private = True
+            else:
+                response.cache_control.public = True
+            # Instructs how long the Cache should keep the resource
+            response.cache_control.max_age = uri_max_age
+            # Etag is based on the HTTP body
+            response.add_etag(response.data)
+            # to send a 304 Not Modified instead of a full HTTP response
+            response.make_conditional(request)
+            return response
+        return update_wrapper(policy, view)
+    return set_policy

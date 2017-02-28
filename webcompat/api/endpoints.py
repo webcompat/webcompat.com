@@ -9,7 +9,6 @@
 This is used to make API calls to GitHub, either via a logged-in users
 credentials or as a proxy on behalf of anonymous or unauthenticated users.'''
 
-import json
 
 from flask import abort
 from flask import Blueprint
