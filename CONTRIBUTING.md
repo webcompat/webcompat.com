@@ -80,7 +80,7 @@ project.
 
 ## Submission Guidelines
 
-All code contributions should come in the form of a [pull request](https://help.github.com/articles/creating-a-pull-request), as a topic branch.
+All code contributions should come in the form of a pull request, as a topic branch.
 
 1. Have a quick search through existing issues and pull requests so you don't waste any of your time.
 
@@ -94,31 +94,57 @@ All code contributions should come in the form of a [pull request](https://help.
 
 4. Make your changes in a new branch
 
-    `git checkout -b name-of-fix-branch`
+    ```bash
+    
+    # makes sure, you are on the master branch
+    git checkout master 
+    
+    # if you are SURE your fork is up-to-date
+    git pull origin master
+    
+    # OR 
+    # if you are NOT SURE your fork is up-to-date
+    git pull upstream master  
+    
+    # creates new branch
+    git checkout -b issues/NumberOfIssue/VersionOfPR  
+    ```
 
 5. Create your patch; commit your changes. Referencing the issue number you're working on from the message is recommended.
+  > Note: Please keep the title under 50 chars. If you'd like to provide more information, just add the details to the commit body.
 
-    `git commit -m 'Issue #123 - Fixes broken layout on mobile browsers'`
-
+    ```bash
+    # check for changed files
+    git status
+    
+    # add files to commit, e.g. as following
+    git add file.js foldername/foldername2/file2.js 
+    
+    # add commit message including issue number
+    git commit -m 'Issue #NumberOfIssue - Fixes broken layout on mobile browsers'
+    
+    ```
+    
 6. Push your branch to GitHub:
 
-    `git push origin name-of-fix-branch`
+    `git push origin issues/NumberOfIssue/VersionOfPR`
 
 7. If you want to discuss your code or ask questions, please comment in the corresponding issue. You can link to the code you have pushed to your repository to ask for code review.
 
-8. When your code is ready to be integrated into the project, use the GitHub site to send a pull request to `webcompat.com:master`, aka the master branch of the repo you forked from. This will be the default choice.
+8. When your code is ready to be integrated into the project, use the GitHub site to send a [pull request](https://help.github.com/articles/creating-a-pull-request) to `webcompat.com:master`, aka the master branch of the repo you forked from. This will be the default choice.
 
     ![master](https://cldup.com/YVlLDGItPf-3000x3000.png)
 
-9. Set the title of the pull request to reference the issue number.
+9. Set the title of the pull request to reference the issue number. Please keep the title short, but descriptive or it will be cut off. You can provide further information in the commit body.
 
-    `Fixes #123 - Fixes broken layout on mobile browsers`
+    `Fixes #NumberOfIssue - Fixes broken layout on mobile browsers`
+    > Note: `Fix` or `Fixes` are keywords recognized automatically and will close the issue when the pull request gets merged.
 
 10. When sending the pull request do not forget to call out someone for review by using the following convention:
 
     `r? @miketaylr`
 
-    This will notify the person that your request is waiting for a review for merging. Ask a review only by one person, this will avoid misunderstandings and the ball is dropped. (Python: karlcow, miketaylr. JavaScript: magsout, miketaylr, tagawa CSS: magsout).
+    This will notify the person that your request is waiting for a review for merging. Ask a review only by one person, this will avoid misunderstandings and the ball is dropped. (Python: karlcow, miketaylr. JavaScript: magsout, miketaylr, tagawa, zoepage CSS: magsout, zoepage).
 
 11. Continue discussion in the pull request.
 
