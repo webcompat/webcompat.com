@@ -30,6 +30,9 @@ if not PRODUCTION:
 if not LOCALHOST:
     SESSION_COOKIE_SECURE = True
 
+# By default, we want to log CSP violations. See /csp-report in views.py.
+CSP_LOG = True
+
 # Logging Capabilities
 # To benefit from the logging, you may want to add:
 #   app.logger.info(Thing_To_Log)
