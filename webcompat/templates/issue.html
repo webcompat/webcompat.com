@@ -8,7 +8,7 @@
         <div class="wc-Issue-commentList js-Issue-commentList">
           {% include "issue/issue-comment-list.html" %}
         </div>
-        {% if session.user_id and session.avatar_url %}
+        {% if session.logged_in and session.avatar_url %}
           <div class="wc-Issue-commentSubmit">
             {% include "issue/issue-comment-submit.html" %}
           </div>
