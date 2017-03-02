@@ -495,7 +495,7 @@ def add_sec_headers(response):
     This should be used in @app.after_request to ensure the headers are
     added to all responses.'''
     if not app.config['LOCALHOST']:
-        response.headers['Strict-Transport-Security'] = 'max-age=31536000; includeSubDomains'  # nopep8
+        response.headers['Strict-Transport-Security'] = 'max-age=31536000; includeSubDomains;'  # nopep8
     response.headers['X-Content-Type-Options'] = 'nosniff'
     response.headers['X-XSS-Protection'] = '1; mode=block'
     response.headers['X-Frame-Options'] = 'DENY'
