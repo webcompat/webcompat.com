@@ -1,3 +1,12 @@
+## 3.1.0 - 2017-03-01
+
+* Implment better HTTP caching for HTML routes [Pull #1335](https://github.com/webcompat/webcompat.com/pull/1335)
+* Add support for a problem_type param to preselect type in form [Pull #1362](https://github.com/webcompat/webcompat.com/pull/1362)
+* Tweaks to linting JS paths [Pull #1365](https://github.com/webcompat/webcompat.com/pull/1365)
+* Add an npm lint & fix command [Pull #1366](https://github.com/webcompat/webcompat.com/pull/1366)
+* Add CSP-Report-Only endpoint, and move security headers into app [Pull #1367](https://github.com/webcompat/webcompat.com/pull/1367)
+* Change Twitter link in footer [Pull #1371](https://github.com/webcompat/webcompat.com/pull/1373)
+
 ## 3.0.0 - 2017-02-27
 
 Note: from now on, versioning will work in the following way:
