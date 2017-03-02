@@ -1,3 +1,7 @@
+## 3.1.1 - 2017-03-01
+
+* Add missing semicolon to Strict-Transport-Security header. No issue.
+
 ## 3.1.0 - 2017-03-01
 
 * Implment better HTTP caching for HTML routes [Pull #1335](https://github.com/webcompat/webcompat.com/pull/1335)
