@@ -387,7 +387,7 @@ def mockable_response(func):
                 checksum = hashlib.md5(json.dumps(get_args)).hexdigest()
                 file_path = FIXTURES_PATH + request.path + "." + checksum
             else:
-                file_path = FIXTURES_PATH + request.path              
+                file_path = FIXTURES_PATH + request.path
             if not os.path.exists(file_path + '.json'):
                 print('Expected fixture file: ' + file_path + '.json')
                 return ('', 404)
