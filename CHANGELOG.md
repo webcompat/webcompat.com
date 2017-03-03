@@ -1,3 +1,10 @@
+## 3.1.2 - 2017-03-03
+
+* Revert "Issue #609 - Implement Cache-Policy decorator" (it regressed logins) [Pull #1387](https://github.com/webcompat/webcompat.com/pull/1387)
+* Only print expected fixture file path when we can't find it [Pull #1382](https://github.com/webcompat/webcompat.com/pull/1382)
+* Add a details param to put info in description textarea [Pull #1329](https://github.com/webcompat/webcompat.com/pull/1379)
+* CONTRIBUTING Guidelines cleanup [Pull #1351](https://github.com/webcompat/webcompat.com/pull/1351)
+
 ## 3.1.1 - 2017-03-01
 
 * Add missing semicolon to Strict-Transport-Security header. No issue.
