@@ -407,7 +407,7 @@ You should now have a local instance of the site running at `http://localhost:50
 
 After certain kinds of changes are made, you need to build the project before serving it from a webserver will work
 
-* CSS: a build will run cssnext, combine custom media queries, and concat all source files into webcompat.dev.css. You'll need to re-build the CSS to see any changes, so it's recommended to use a watch task (see `make watch` or `npm run watch`).
+* CSS: a build will run cssnext, combine custom media queries, and concat all source files into webcompat.dev.css. You'll need to re-build the CSS to see any changes, so it's recommended to use a watch task (see `npm run watch`).
 * JS: a build will run eslint, minify and concat source files.
 * HTML templates: the changes should be served from disk without the need for rebuilding
 * Python: the Flask local server will detect changes and restart automatically. No need to re-build.
