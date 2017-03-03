@@ -8,7 +8,7 @@
 }
 
 .wc-Issue {
-  font-size:var(--Issue-fontSize);
+  font-size: var(--Issue-fontSize);
 }
 
     /* header */
@@ -20,35 +20,35 @@
     }
 
     .wc-Issue-information-header--needstriage {
-      background-color:var(--base-stateNeedsTriage);
+      background-color: var(--base-stateNeedsTriage);
     }
 
     .wc-Issue-information-header--needsDiagnosis {
-      background-color:var(--base-stateNeedsDiagnosis);
+      background-color: var(--base-stateNeedsDiagnosis);
     }
 
     .wc-Issue-information-header--needsContact {
-      background-color:var(--base-stateNeedsContact);
+      background-color: var(--base-stateNeedsContact);
     }
 
     .wc-Issue-information-header--closed {
-      background-color:var(--base-stateClosed);
+      background-color: var(--base-stateClosed);
     }
 
     .wc-Issue-information-header--ready {
-      background-color:var(--base-stateReady);
+      background-color: var(--base-stateReady);
     }
 
     .wc-Issue-information-header--sitewait {
-      background-color:var(--base-stateSitewait);
+      background-color: var(--base-stateSitewait);
     }
 
     .wc-Issue-information-header--fixed {
-      background-color:var(--base-stateFixed);
+      background-color: var(--base-stateFixed);
     }
 
     .wc-Issue-information-header--worksforme {
-      background-color:var(--base-stateWorksForMe);
+      background-color: var(--base-stateWorksForMe);
     }
 
     /* content */
@@ -70,7 +70,6 @@
   }
 
   @media all and (max-width: 28.12em) {
-
     .wc-Issue-title {
       font-size: 1.2em;
     }
@@ -88,7 +87,6 @@
   }
 
   @media all and (max-width: 28.12em) {
-
     .wc-Issue-date {
       font-size: .9em;
     }
@@ -100,7 +98,6 @@
   }
 
   @media all and (min-width: 48.13em) {
-
     .wc-Issue-report,
     .wc-Issue-commentList,
     .wc-Issue-commentSubmit,
@@ -126,7 +123,6 @@
   }
 
     @media all and (max-width: 73.75em) {
-
       .wc-Issue-wrapper {
         margin: 0;
       }
@@ -139,16 +135,16 @@
   }
 
   .wc-Issue-comment {
-    margin-top:2em;
+    margin-top: 2em;
   }
 
 .wc-Issue-labels {
   margin-bottom: 2em;
 }
+
 /* FullScreen LabelEditor*/
 @media all and (max-width: 23.43em) {
-
-  .wc-Issue-lbels {
+  .wc-Issue-labels {
     position: relative;
   }
 }
@@ -164,14 +160,13 @@
   margin:4em 0 0;
 }
 
-/* labeleditor */
+/* labeleditor wrapper */
 .wc-Issue-labelEditor {
   position: relative;
   display: inline-block;
 }
 
 @media all and (max-width: 23.43em) {
-
   .wc-Issue-labelEditor {
     position: static; /* position of label_editor not depend of this class */
   }
