@@ -51,24 +51,31 @@ define([
 
 ////// Section to run tests on browserstack via travis ci
     // fix for BrowserStack exceptions (geolocation and webStorage)
-    fixSessionCapabilities: false,
+    // fixSessionCapabilities: false,
 
-    // Selenium vers on BrowserStack, not yet at 2.53.1
     capabilities: {
-      'browserstack.selenium_version': '2.53.0'
+      "browserstack.local": false,
+      fixSessionCapabilities: false
     },
 
-    // Required for BrowserStack, Maximum number of simultaneous integration tests allowed
-    maxConcurrency: 2,
+    // // Required for BrowserStack, Maximum number of simultaneous integration tests allowed
+    // maxConcurrency: 2,
 
-    // currently BrowserStack not supporting firefox 47
+    // // currently BrowserStack not supporting firefox 47
     environments: [
-      { browser: 'firefox', browser_version: '46', os : 'OS X', os_version : 'El Capitan' },
-      { browser: 'chrome', browser_version: '50', os : 'OS X', os_version : 'El Capitan' }
+      { browser: 'Chrome' },
     ],
+    // environments: [
+    //   { browser: 'firefox', browser_version: '46', os : 'OS X', os_version : 'El Capitan' },
+    //   { browser: 'chrome', browser_version: '50', os : 'OS X', os_version : 'El Capitan' }
+    // ],
 
-    //browserstack
     tunnel: 'BrowserStackTunnel',
+    tunnelOptions: {
+      verbose: true,
+      username: $BROWSERSTACK_USER,
+      accessKey: $BROWSERSTACK_KEY
+    }
 ////// end selenium test configs
 
     filterErrorStack: true,
