@@ -7,11 +7,11 @@
 import json
 import logging
 import os
+import urllib
 
 from flask import abort
 from flask import flash
 from flask import g
-from flask import make_response
 from flask import redirect
 from flask import render_template
 from flask import request
@@ -23,7 +23,6 @@ from form import AUTH_REPORT
 from form import PROXY_REPORT
 from helpers import add_csp
 from helpers import add_sec_headers
-from helpers import cache_policy
 from helpers import get_browser_name
 from helpers import get_form
 from helpers import get_referer
@@ -148,7 +147,6 @@ def index():
 
 
 @app.route('/issues')
-@cache_policy(private=True, uri_max_age=86400)
 def show_issues():
     '''Route to display global issues view.'''
     if g.user:
@@ -158,7 +156,6 @@ def show_issues():
 
 
 @app.route('/issues/new', methods=['GET', 'POST'])
-@cache_policy(private=True, uri_max_age=86400)
 def create_issue():
     """Creates a new issue.
 
@@ -208,7 +205,6 @@ def create_issue():
 
 
 @app.route('/issues/<int:number>')
-@cache_policy(private=True, uri_max_age=86400)
 def show_issue(number):
     '''Route to display a single issue.'''
     if g.user:
@@ -216,9 +212,7 @@ def show_issue(number):
     if session.get('show_thanks'):
         flash(number, 'thanks')
         session.pop('show_thanks')
-    content = render_template('issue.html', number=number)
-    response = make_response(content)
-    return response
+    return render_template('issue.html', number=number)
 
 
 @app.route('/me')
@@ -289,7 +283,6 @@ if app.config['LOCALHOST']:
 
 
 @app.route('/about')
-@cache_policy(private=True, uri_max_age=86400)
 def about():
     '''Route to display about page.'''
     if g.user:
@@ -298,7 +291,6 @@ def about():
 
 
 @app.route('/privacy')
-@cache_policy(private=True, uri_max_age=86400)
 def privacy():
     '''Route to display privacy page.'''
     if g.user:
@@ -307,7 +299,6 @@ def privacy():
 
 
 @app.route('/contributors')
-@cache_policy(private=True, uri_max_age=86400)
 def contributors():
     '''Route to display contributors page.'''
     if g.user:

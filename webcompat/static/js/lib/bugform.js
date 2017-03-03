@@ -162,9 +162,11 @@ function BugForm() {
 
     // If we got a details param, add that to the end of the issue description.
     var details = location.href.match(/details=([^&]*)/);
-    this.descField.val(function(idx, value) {
-      return value + "\n" + decodeURIComponent(details[1]);
-    });
+    if (details !== null) {
+      this.descField.val(function(idx, value) {
+        return value + "\n" + decodeURIComponent(details[1]);
+      });
+    }
   };
 
   this.trimWyciwyg = function(url) {
