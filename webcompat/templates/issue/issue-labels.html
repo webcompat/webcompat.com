@@ -1,12 +1,16 @@
 <script type="text/template" id="issue-labels-tmpl">
-  <span class="wc-Label wc-Label--large">Labels</span>
-  {% if session.user_id and session.avatar_url %}
-  <span class="wc-Issue-labelEditor js-Issue-labelEditor">
-    <button class="wc-LabelEditorLauncher r-ResetButton wc-Icon wc-Icon--gear js-LabelEditorLauncher" aria-hidden="true">
-      <span class="wc-Accessibility">Edit Labels</span></button>
-  </span>
-  {% endif %}
-   <span class="js-Label-list">
+  <header class="wc-Issue-labelEditor">
+    <div class="wc-Issue-labelEditor-title">
+      Labels
+    </div>
+    {% if session.user_id and session.avatar_url %}
+    <span class="wc-Issue-labelEditor-button js-Issue-labelEditor">
+      <button class="wc-LabelEditorLauncher r-ResetButton wc-Icon wc-Icon--gear js-LabelEditorLauncher" aria-hidden="true">
+        <span class="wc-Accessibility">Edit Labels</span></button>
+    </span>
+    {% endif %}
+  </header>
+   <div class="js-Label-list">
   <% _.each(labels, function(label) { %>
     <span class="wc-Label wc-Label--badge js-Label" style="background-color:#<%=label.color%>">
       <%= label.name %>

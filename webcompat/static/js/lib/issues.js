@@ -86,7 +86,7 @@ md.renderer.rules.link_open = function(tokens, idx, options, env, self) {
 };
 
 issues.MetaDataView = Backbone.View.extend({
-  el: $(".wc-Issue-information"),
+  el: $("#js-Issue-information"),
   initialize: function() {
     this.model.on("change:issueState", _.bind(function() {
       this.render();

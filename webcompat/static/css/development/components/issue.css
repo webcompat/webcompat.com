@@ -4,7 +4,7 @@
   --Issue-fontSize: var(--base-fontSize);
   --Issue-detailLink: var(--Link-color);
   --Issue-detailLinkHover: var(--Link-colorHover);
-  --Issue-widthComment: 45.125em;
+  --Issue-widthComment: 68%;
 }
 
 .wc-Issue {
@@ -101,7 +101,7 @@
     .wc-Issue-report,
     .wc-Issue-commentList,
     .wc-Issue-commentSubmit,
-    .wc-Issue-information {
+    .wc-Issue-information:not(.wc-Issue-information--fullWidth){
       width: var(--Issue-widthComment);
     }
   }
@@ -138,10 +138,6 @@
     margin-top: 2em;
   }
 
-.wc-Issue-labels {
-  margin-bottom: 2em;
-}
-
 /* FullScreen LabelEditor*/
 @media all and (max-width: 23.43em) {
   .wc-Issue-labels {
@@ -163,11 +159,28 @@
 /* labeleditor wrapper */
 .wc-Issue-labelEditor {
   position: relative;
-  display: inline-block;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 0 .625em 0;
 }
 
 @media all and (max-width: 23.43em) {
   .wc-Issue-labelEditor {
     position: static; /* position of label_editor not depend of this class */
+  }
+}
+
+@media all and (min-width: 48.13em) {
+  .wc-Issue-aside {
+    float: right;
+    width: 30%;
+  }
+}
+
+@media all and (min-height: 40em), all and (min-width: 48.13em) {
+  .wc-Issue-aside {
+    position: sticky;
+    top: 1em;
   }
 }
