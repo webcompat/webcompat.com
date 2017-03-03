@@ -36,47 +36,16 @@ define([
     siteRoot: siteRoot,
 
 
-////// Section to run tests on selenium
-    // tunnel: 'SeleniumTunnel',
-    // tunnelOptions: {
-    //   // this tells SeleniumTunnel to download geckodriver
-    //   drivers: [ 'firefox' ]
-    // },
-
-    // environments: [{
-    //   browserName: 'firefox',
-    //   marionette: true
-    // }],
-////// end selenium test configs
-
-////// Section to run tests on browserstack via travis ci
-    // fix for BrowserStack exceptions (geolocation and webStorage)
-    // fixSessionCapabilities: false,
-
-    capabilities: {
-      "browserstack.local": false,
-      fixSessionCapabilities: false
+    tunnel: 'SeleniumTunnel',
+    tunnelOptions: {
+      // this tells SeleniumTunnel to download geckodriver
+      drivers: [ 'firefox' ]
     },
 
-    // // Required for BrowserStack, Maximum number of simultaneous integration tests allowed
-    // maxConcurrency: 2,
-
-    // // currently BrowserStack not supporting firefox 47
-    environments: [
-      { browser: 'Chrome' },
-    ],
-    // environments: [
-    //   { browser: 'firefox', browser_version: '46', os : 'OS X', os_version : 'El Capitan' },
-    //   { browser: 'chrome', browser_version: '50', os : 'OS X', os_version : 'El Capitan' }
-    // ],
-
-    tunnel: 'BrowserStackTunnel',
-    tunnelOptions: {
-      verbose: true,
-      username: $BROWSERSTACK_USER,
-      accessKey: $BROWSERSTACK_KEY
-    }
-////// end selenium test configs
+    environments: [{
+      browserName: 'firefox',
+      marionette: true
+    }],
 
     filterErrorStack: true,
     reporters: ['Pretty'],
