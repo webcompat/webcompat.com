@@ -386,13 +386,15 @@ def mockable_response(func):
                 # have different fixture files for different response states
                 checksum = hashlib.md5(json.dumps(get_args)).hexdigest()
                 file_path = FIXTURES_PATH + request.path + "." + checksum
-                print('Expected fixture file: ' + file_path + '.json')
             else:
-                file_path = FIXTURES_PATH + request.path
+                file_path = FIXTURES_PATH + request.path              
+            if not os.path.exists(file_path + '.json'):
                 print('Expected fixture file: ' + file_path + '.json')
-            with open(file_path + '.json', 'r') as f:
-                data = f.read()
-                return (data, 200, get_fixture_headers(data))
+                return ('', 404)
+            else:
+                with open(file_path + '.json', 'r') as f:
+                    data = f.read()
+                    return (data, 200, get_fixture_headers(data))
         return func(*args, **kwargs)
     return wrapped_func
 
