@@ -136,12 +136,13 @@ function BugForm() {
     img.src = dataURI;
   };
 
+  // Do some extra work based on the GET params that come with the request
   this.checkParams = function() {
-    // Assumes a URI like: /?open=1&url=http://webpy.org/, for use by addons
-    // Quick sanity check
-    if (!location.search.search(/open=1/) && !location.search.search(/url=/)) {
+    // Don't bother doing any work for bare requests.
+    if (!location.search) {
       return;
     }
+
     var urlParam = location.href.match(/url=([^&]*)/);
     if (urlParam !== null) {
       // weird Gecko bug. See https://bugzilla.mozilla.org/show_bug.cgi?id=1098037
@@ -158,6 +159,12 @@ function BugForm() {
     if (problemType !== null) {
       $("[value=" + problemType[1] + "]").click();
     }
+
+    // If we got a details param, add that to the end of the issue description.
+    var details = location.href.match(/details=([^&]*)/);
+    this.descField.val(function(idx, value) {
+      return value + "\n" + decodeURIComponent(details[1]);
+    });
   };
 
   this.trimWyciwyg = function(url) {

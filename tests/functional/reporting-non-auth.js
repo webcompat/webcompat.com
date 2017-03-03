@@ -14,6 +14,7 @@ define([
   var cwd = intern.config.basePath;
   var VALID_IMAGE_PATH = path.join(cwd, "tests/fixtures", "green_square.png");
   var BAD_IMAGE_PATH = path.join(cwd, "tests/fixtures", "evil.py");
+  var DETAILS_STRING = "Encountered error: NS_ERROR_DOM_MEDIA_DEMUXER_ERR (0x806e000c)%0ALocation: virtual%0ARefPtrMP4Demuxer::InitPromise mozilla::MP4Demuxer::Init()%0AError information:%0AIncomplete MP4 metadata%0AMedia URL: file:///Users/potch/Documents/mozilla/media.mp4";
 
   var url = function(path) {
     return intern.config.siteRoot + path;
@@ -162,6 +163,15 @@ define([
         .findByCssSelector("[value=video_bug]").isSelected()
         .then(function(isSelected) {
           assert.isTrue(isSelected, "The right option is selected");
+        })
+        .end();
+    },
+
+    "details param adds info to description": function() {
+      return FunctionalHelpers.openPage(this, url("/issues/new?details=" + DETAILS_STRING), "#description")
+        .findByCssSelector("#description").getProperty("value")
+        .then(function(text) {
+          assert.include(text, "Encountered error: NS_ERROR_DOM_MEDIA_DEMUXER_ERR (0x806e000c)\nLocation: virtual\nRefPtrMP4Demuxer::InitPromise mozilla::MP4Demuxer::Init()\nError information:\nIncomplete MP4 metadata\nMedia URL: file:///Users/potch/Documents/mozilla/media.mp4");
         })
         .end();
     }
