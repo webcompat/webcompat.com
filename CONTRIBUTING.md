@@ -338,8 +338,15 @@ pip install -r config/requirements.txt
 We use [Grunt](http://gruntjs.com/) as a task runner to perform certain tasks (minify + concat JS assets, for example). You need to have [Node.js](https://nodejs.org/en/download/) installed to be able to run Grunt. Once that's done, `npm` can be used to install Grunt and other build dependencies.
 
 
+Install npm dependencies:
+
 ``` bash
 npm install
+```
+
+Then run grunt through npm (if you miss this step, when you try to start the server and view the site locally or run functional tests, you won't get the css!):
+
+```bash
 npm run build
 ```
 
@@ -462,6 +469,9 @@ Tests are also run automatically on [Travis](https://travis-ci.org/webcompat/web
 We use [Intern](http://theintern.io/) to run functional tests.
 
 > Note: This version is known to work with Firefox 50.1.0. If things aren't working with the current stable version of Firefox, please [file a bug!](https://github.com/webcompat/webcompat.com/issues/new)
+
+Be sure that you have installed local npm dependencies and run the build before trying to run functional tests - if not, you will notice problems with the css. [See dev env setup](#installing-grunt) for details.
+
 
 #### Installing Java
 
