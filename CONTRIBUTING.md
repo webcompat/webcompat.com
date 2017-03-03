@@ -80,7 +80,7 @@ project.
 
 ## Submission Guidelines
 
-All code contributions should come in the form of a [pull request](https://help.github.com/articles/creating-a-pull-request), as a topic branch.
+All code contributions should come in the form of a pull request, as a topic branch.
 
 1. Have a quick search through existing issues and pull requests so you don't waste any of your time.
 
@@ -94,31 +94,57 @@ All code contributions should come in the form of a [pull request](https://help.
 
 4. Make your changes in a new branch
 
-    `git checkout -b name-of-fix-branch`
+    ```bash
+    
+    # makes sure, you are on the master branch
+    git checkout master 
+    
+    # if you are SURE your fork is up-to-date
+    git pull origin master
+    
+    # OR 
+    # if you are NOT SURE your fork is up-to-date
+    git pull upstream master  
+    
+    # creates new branch
+    git checkout -b issues/NumberOfIssue/VersionOfPR  
+    ```
 
 5. Create your patch; commit your changes. Referencing the issue number you're working on from the message is recommended.
+  > Note: Please keep the title under 50 chars. If you'd like to provide more information, just add the details to the commit body.
 
-    `git commit -m 'Issue #123 - Fixes broken layout on mobile browsers'`
-
+    ```bash
+    # check for changed files
+    git status
+    
+    # add files to commit, e.g. as following
+    git add file.js foldername/foldername2/file2.js 
+    
+    # add commit message including issue number
+    git commit -m 'Issue #NumberOfIssue - Fixes broken layout on mobile browsers'
+    
+    ```
+    
 6. Push your branch to GitHub:
 
-    `git push origin name-of-fix-branch`
+    `git push origin issues/NumberOfIssue/VersionOfPR`
 
 7. If you want to discuss your code or ask questions, please comment in the corresponding issue. You can link to the code you have pushed to your repository to ask for code review.
 
-8. When your code is ready to be integrated into the project, use the GitHub site to send a pull request to `webcompat.com:master`, aka the master branch of the repo you forked from. This will be the default choice.
+8. When your code is ready to be integrated into the project, use the GitHub site to send a [pull request](https://help.github.com/articles/creating-a-pull-request) to `webcompat.com:master`, aka the master branch of the repo you forked from. This will be the default choice.
 
     ![master](https://cldup.com/YVlLDGItPf-3000x3000.png)
 
-9. Set the title of the pull request to reference the issue number.
+9. Set the title of the pull request to reference the issue number. Please keep the title short, but descriptive or it will be cut off. You can provide further information in the commit body.
 
-    `Fixes #123 - Fixes broken layout on mobile browsers`
+    `Fixes #NumberOfIssue - Fixes broken layout on mobile browsers`
+    > Note: `Fix` or `Fixes` are keywords recognized automatically and will close the issue when the pull request gets merged.
 
 10. When sending the pull request do not forget to call out someone for review by using the following convention:
 
     `r? @miketaylr`
 
-    This will notify the person that your request is waiting for a review for merging. Ask a review only by one person, this will avoid misunderstandings and the ball is dropped. (Python: karlcow, miketaylr. JavaScript: magsout, miketaylr, tagawa CSS: magsout).
+    This will notify the person that your request is waiting for a review for merging. Ask a review only by one person, this will avoid misunderstandings and the ball is dropped. (Python: karlcow, miketaylr. JavaScript: magsout, miketaylr, tagawa, zoepage CSS: magsout, zoepage).
 
 11. Continue discussion in the pull request.
 
@@ -247,10 +273,12 @@ cd webcompat.com
 # check out submodules
 npm run module
 # initializing project
-[sudo] npm run setup
+npm run setup
 ```
 
 **Note**: if you got an error message, you may need to [install pip](#installing-pip) before running `make install` again.
+
+**Note**: if you get an error message about missing rights to install the setup through npm, please *do not run `sudo npm`*. You just need to [fix you permissions](https://coderwall.com/p/t2mc9g/don-t-sudo-npm) for `usr/local`.
 
 ### Detailed setup (All platforms)
 #### Installing pip
@@ -309,13 +337,13 @@ pip install -r config/requirements.txt
 
 We use [Grunt](http://gruntjs.com/) as a task runner to perform certain tasks (minify + concat JS assets, for example). You need to have [Node.js](https://nodejs.org/en/download/) installed to be able to run Grunt. Once that's done, `npm` can be used to install Grunt and other build dependencies.
 
-First install the `grunt-cli` tool:
 
 ``` bash
-[sudo] npm install -g grunt-cli
-[sudo] npm install
-grunt
+npm install
+npm run build
 ```
+
+**Note**: if you get an error message about missing rights to install the setup through npm, please *do not run `sudo npm`*. You just need to [fix you permissions](https://coderwall.com/p/t2mc9g/don-t-sudo-npm) for `usr/local`.
 
 ### Configuring The Server
 
@@ -337,19 +365,23 @@ You can now edit `secrets.py` and
 
 2. You have the option of creating a "bot account" (a dummy account for the purpose of testing), or using your own account for local development. Either way, you'll need a personal access token to proceed &mdash; this is the oauth token we use to report issues on behalf of people who don't want to give GitHub oauth access (or don't have GitHub accounts).
 
-The [instructions for creating a personal access token](http://help.github.com/articles/creating-an-access-token-for-command-line-use) are given on GitHub. Select public_repo to grant access to the public repositories through the personal access token.  Once you have created the token you can add it in the variable `OAUTH_TOKEN = ""` (yes, even if you're using your own credentials we still refer to it as a bot). More advanced users might want to create an environment variable called `OAUTH_TOKEN`. Either way is fine.
+  The [instructions for creating a personal access token](http://help.github.com/articles/creating-an-access-token-for-command-line-use) are given on GitHub. Select public_repo to grant access to the public repositories through the personal access token.  Once you have created the token you can add it in the variable `OAUTH_TOKEN = ""`. More advanced users might want to create an environment variable called `OAUTH_TOKEN`. Either way is fine.
 
 3. Add the client id and client secret to secrets.py. If you're part of the webcompat GitHub organization, you can [get the client id and client secret from GitHub](https://github.com/organizations/webcompat/settings/applications/). Otherwise, create your own test and production applications ([instructions here](https://github.com/settings/applications/new)) &mdash; when prompted for a "Authorization callback URL", use `http://localhost:5000/callback`,(Cloud 9 users should use `http://yourapp.c9users.io:8000/callback`instead) and take note of the client id and client secret GitHub gives you.
 
-When you have the client id and client secret put them in the corresponding lines in secrets.py for the localhost application:
+  When you have the client id and client secret put them in the corresponding lines in secrets.py for the localhost application:
 
-```
-# We're running on localhost, use the test application
-GITHUB_CLIENT_ID = os.environ.get('FAKE_ID') or "<client id goes here>"
-GITHUB_CLIENT_SECRET = os.environ.get('FAKE_SECRET') or  "<client secret goes here>"
-```
+  ```
+  # We're running on localhost, use the test application
+  GITHUB_CLIENT_ID = os.environ.get('FAKE_ID') or "<client id goes here>"
+  GITHUB_CLIENT_SECRET = os.environ.get('FAKE_SECRET') or  "<client secret goes here>"
+  ```
 
-> Note: You can ignore the `FAKE_ID` and `FAKE_SECRET` environment variables, we use that as a hack for automated tests.
+  > Note: You can ignore the `FAKE_ID` and `FAKE_SECRET` environment variables, we use that as a hack for automated tests.
+
+4. Click on login to authorize the application and get access to the issues.
+![Login](https://cldup.com/HHtMlPhAod.png) 
+
 
 > **Note**: If you get a 404 at GitHub when clicking "Login", it means you haven't filled in the `GITHUB_CLIENT_ID` or `GITHUB_CLIENT_SECRET` in secrets.py.
 
@@ -375,7 +407,7 @@ You should now have a local instance of the site running at `http://localhost:50
 
 After certain kinds of changes are made, you need to build the project before serving it from a webserver will work
 
-* CSS: a build will run cssnext, combine custom media queries, and concat all source files into webcompat.dev.css. You'll need to re-build the CSS to see any changes, so it's recommended to use a watch task (see `make watch` or `grunt watch`).
+* CSS: a build will run cssnext, combine custom media queries, and concat all source files into webcompat.dev.css. You'll need to re-build the CSS to see any changes, so it's recommended to use a watch task (see `npm run watch`).
 * JS: a build will run eslint, minify and concat source files.
 * HTML templates: the changes should be served from disk without the need for rebuilding
 * Python: the Flask local server will detect changes and restart automatically. No need to re-build.
@@ -394,13 +426,28 @@ npm run watch
 
 ## Coding
 
+Build the entire project (CSS and JavaScript files and optimize images) on the fly everytime you save a file to see changes immediately.
 
- ``` bash
- # watching CSS and JS
- npm run watch
- ```
+``` bash
+# watching CSS and JS
+npm run watch
+```
 
-By default, a build will *not* optimize images (which is done before deploys). If you'd like to optimize images, you can run `grunt imagemin`.
+Linting static JS files with project coding styles.
+
+``` bash
+# linting style JS
+npm run lint
+```
+
+Fixing static JS files with project coding styles, if an error occurs.
+
+``` bash
+# fixing linting style JS
+npm run fix
+```
+
+By default, a build will *not* optimize images (which is done before deploys). If you'd like to optimize images, you can run `npm run imagemin`.
 
 ## Running Tests
 

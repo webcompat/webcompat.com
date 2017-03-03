@@ -384,13 +384,15 @@ def mockable_response(func):
                 # have different fixture files for different response states
                 checksum = hashlib.md5(json.dumps(get_args)).hexdigest()
                 file_path = FIXTURES_PATH + request.path + "." + checksum
-                print('Expected fixture file: ' + file_path + '.json')
             else:
                 file_path = FIXTURES_PATH + request.path
+            if not os.path.exists(file_path + '.json'):
                 print('Expected fixture file: ' + file_path + '.json')
-            with open(file_path + '.json', 'r') as f:
-                data = f.read()
-                return (data, 200, get_fixture_headers(data))
+                return ('', 404)
+            else:
+                with open(file_path + '.json', 'r') as f:
+                    data = f.read()
+                    return (data, 200, get_fixture_headers(data))
         return func(*args, **kwargs)
     return wrapped_func
 
@@ -456,3 +458,34 @@ def api_request(method, path, params=None, data=None):
                 get_response_headers(resource))
     else:
         abort(404)
+
+
+def add_sec_headers(response):
+    '''Add security-related headers to the response.
+
+    This should be used in @app.after_request to ensure the headers are
+    added to all responses.'''
+    if not app.config['LOCALHOST']:
+        response.headers['Strict-Transport-Security'] = 'max-age=31536000; includeSubDomains;'  # nopep8
+    response.headers['X-Content-Type-Options'] = 'nosniff'
+    response.headers['X-XSS-Protection'] = '1; mode=block'
+    response.headers['X-Frame-Options'] = 'DENY'
+
+
+def add_csp(response):
+    '''Add a Content-Security-Policy header to response.
+
+    This should be used in @app.after_request to ensure the header is
+    added to all responses.'''
+    # short term, we send Content-Security-Policy-Report-Only
+    # see https://github.com/webcompat/webcompat.com/issues/763 for
+    # sending Content-Security-Policy
+    response.headers['Content-Security-Policy-Report-Only'] = (
+        "default-src 'none'; " +
+        "connect-src 'self'; " +
+        "font-src 'self'; " +
+        "img-src 'self'; " +
+        "script-src 'self' https://www.google-analytics.com; " +
+        "style-src 'self'; " +
+        "report-uri /csp-report"
+    )

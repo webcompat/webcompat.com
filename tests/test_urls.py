@@ -93,6 +93,19 @@ class TestURLs(unittest.TestCase):
         # A random post should 401, only requests from GitHub will 200
         self.assertEqual(rv.status_code, 401)
 
+    def test_csp_report_uri(self):
+        '''Test POST to /csp-report w/ correct content-type returns 204.'''
+        headers = {'Content-Type': 'application/csp-report'}
+        rv = self.app.post('/csp-report', headers=headers)
+        self.assertEqual(rv.status_code, 204)
+
+    def test_csp_report_uri_bad_content_type(self):
+        '''Test POST w/ wrong content-type to /csp-report returns 400.'''
+        headers = {'Content-Type': 'application/json'}
+        rv = self.app.post('/csp-report', headers=headers)
+        self.assertNotEqual(rv.status_code, 204)
+        self.assertEqual(rv.status_code, 400)
+
     def test_tools_cssfixme(self):
         '''Test that the /tools/cssfixme route gets 200.'''
         rv = self.app.get('/tools/cssfixme')

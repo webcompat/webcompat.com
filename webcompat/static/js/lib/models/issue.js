@@ -19,55 +19,55 @@ if (!window.md) {
 issues.Issue = Backbone.Model.extend({
   _namespaceRegex: /(browser|closed|os|status)-/i,
   urlRoot: function() {
-    return '/api/issues/' + this.get('number');
+    return "/api/issues/" + this.get("number");
   },
   initialize: function() {
-    this.on('change:state', _.bind(function() {
-      this.set('issueState', this.getState(this.get('state'),
-                                           this.get('labels')));
+    this.on("change:state", _.bind(function() {
+      this.set("issueState", this.getState(this.get("state"),
+                                           this.get("labels")));
     }, this));
-    this.on('change:labels', _.bind(function() {
-      this.set('issueState', this.getState(this.get('state'),
-                                           this.get('labels')));
+    this.on("change:labels", _.bind(function() {
+      this.set("issueState", this.getState(this.get("state"),
+                                           this.get("labels")));
     }, this));
   },
   getState: function(state, labels) {
-    var labelsNames = _.pluck(labels, 'name');
-    if (state === 'closed') {
-      this.set('stateClass', 'closed');
-      return 'Closed';
+    var labelsNames = _.pluck(labels, "name");
+    if (state === "closed") {
+      this.set("stateClass", "closed");
+      return "Closed";
     }
-    if (labelsNames.indexOf('sitewait') > -1) {
-      this.set('stateClass', 'sitewait');
-      return 'Site Contacted';
+    if (labelsNames.indexOf("sitewait") > -1) {
+      this.set("stateClass", "sitewait");
+      return "Site Contacted";
     }
-    if (labelsNames.indexOf('contactready') > -1) {
-      this.set('stateClass', 'ready');
-      return 'Ready for Outreach';
+    if (labelsNames.indexOf("contactready") > -1) {
+      this.set("stateClass", "ready");
+      return "Ready for Outreach";
     }
-    if (labelsNames.indexOf('needsdiagnosis') > -1) {
-      this.set('stateClass', 'needsDiagnosis');
-      return 'Needs Diagnosis';
+    if (labelsNames.indexOf("needsdiagnosis") > -1) {
+      this.set("stateClass", "needsDiagnosis");
+      return "Needs Diagnosis";
     }
-    if (labelsNames.indexOf('needscontact') > -1) {
-      this.set('stateClass', 'needsContact');
-      return 'Needs Contact';
+    if (labelsNames.indexOf("needscontact") > -1) {
+      this.set("stateClass", "needsContact");
+      return "Needs Contact";
     }
-    if (labelsNames.indexOf('fixed') > -1) {
-      this.set('stateClass', 'fixed');
-      return 'Fixed';
+    if (labelsNames.indexOf("fixed") > -1) {
+      this.set("stateClass", "fixed");
+      return "Fixed";
     }
-    if (labelsNames.indexOf('worksforme') > -1) {
-      this.set('stateClass', 'worksforme');
-      return 'Appears to work';
+    if (labelsNames.indexOf("worksforme") > -1) {
+      this.set("stateClass", "worksforme");
+      return "Appears to work";
     }
     //Needs Triage is the default value.
-    this.set('stateClass', 'needstriage');
-    return 'Needs Triage';
+    this.set("stateClass", "needstriage");
+    return "Needs Triage";
   },
   parse: function(response) {
-    var labelList = new issues.LabelList({'labels':response.labels});
-    var labels = labelList.get('labels');
+    var labelList = new issues.LabelList({"labels":response.labels});
+    var labels = labelList.get("labels");
     this.set({
       body: md.render(response.body),
       commentNumber: response.comments,
@@ -82,41 +82,41 @@ issues.Issue = Backbone.Model.extend({
     });
   },
   toggleState: function(callback) {
-    var newState = this.get('state') === 'open' ? 'closed' : 'open';
+    var newState = this.get("state") === "open" ? "closed" : "open";
     $.ajax({
-      contentType: 'application/json',
-      data: JSON.stringify({'state': newState}),
-      type: 'PATCH',
-      url: '/api/issues/' + this.get('number') + '/edit',
+      contentType: "application/json",
+      data: JSON.stringify({"state": newState}),
+      type: "PATCH",
+      url: "/api/issues/" + this.get("number") + "/edit",
       success: _.bind(function() {
-        this.set('state', newState);
+        this.set("state", newState);
         if (callback) {
           callback();
         }
       }, this),
       error: function() {
-        var msg = 'There was an error editing this issues\'s status.';
-        wcEvents.trigger('flash:error', {message: msg, timeout: 4000});
+        var msg = "There was an error editing this issues's status.";
+        wcEvents.trigger("flash:error", {message: msg, timeout: 4000});
       }
     });
   },
   updateLabels: function(labelsArray) {
     // Save ourselves some requests in case nothing has changed.
     if (!$.isArray(labelsArray) ||
-        _.isEqual(labelsArray.sort(), _.pluck(this.get('labels'), 'name').sort())) {
+        _.isEqual(labelsArray.sort(), _.pluck(this.get("labels"), "name").sort())) {
       return;
     }
-    var labels = new issues.LabelList({'labels':labelsArray,
-      url: '/api/issues/' + this.get('number') + '/labels'});
+    var labels = new issues.LabelList({"labels":labelsArray,
+      url: "/api/issues/" + this.get("number") + "/labels"});
     labels.save(null, {
       success: _.bind(function(response) {
         // update model after success
-        var updatedLabels = new issues.LabelList({'labels': response.get('labels')});
-        this.set('labels', updatedLabels.get('labels'));
+        var updatedLabels = new issues.LabelList({"labels": response.get("labels")});
+        this.set("labels", updatedLabels.get("labels"));
       }, this),
       error: function() {
-        var msg = 'There was an error setting labels.';
-        wcEvents.trigger('flash:error', {message: msg, timeout: 4000});
+        var msg = "There was an error setting labels.";
+        wcEvents.trigger("flash:error", {message: msg, timeout: 4000});
       }
     });
   }
@@ -130,17 +130,17 @@ issueList.IssueCollection = Backbone.Collection.extend({
   initialize: function(options) {
     // set defaults
     this.params = options && options.params || {page: 1, per_page: 50,
-      state: 'open', stage: 'all', sort: 'created', direction: 'desc'};
-    this.path = options && options.path || '/api/issues';
+      state: "open", stage: "all", sort: "created", direction: "desc"};
+    this.path = options && options.path || "/api/issues";
   },
   parse: function(response, jqXHR) {
-    if (jqXHR.xhr.getResponseHeader('Link') != null) {
+    if (jqXHR.xhr.getResponseHeader("Link") != null) {
       //external code can access the parsed header via this.linkHeader
-      this.linkHeader = this.parseHeader(jqXHR.xhr.getResponseHeader('Link'));
+      this.linkHeader = this.parseHeader(jqXHR.xhr.getResponseHeader("Link"));
     } else {
       this.linkHeader = null;
     }
-    if (response.hasOwnProperty('items')) {
+    if (response.hasOwnProperty("items")) {
       // Search API results return an Object with the
       // issues array in the items key
       return response.items;
@@ -161,7 +161,7 @@ issueList.IssueCollection = Backbone.Collection.extend({
         prev:  "/api/issues?per_page=50&state=open&page=1"
       } */
     var result = {};
-    var entries = linkHeader.split(',');
+    var entries = linkHeader.split(",");
     var relsRegExp = /\brel="?([^"]+)"?\s*;?/;
     var keysRegExp = /(\b[0-9a-z\.-]+\b)/g;
     var sourceRegExp = /^<(.*)>/;
@@ -183,14 +183,14 @@ issueList.IssueCollection = Backbone.Collection.extend({
     return result;
   },
   getNextPage: function() {
-    if (this.linkHeader && this.linkHeader.hasOwnProperty('next')) {
+    if (this.linkHeader && this.linkHeader.hasOwnProperty("next")) {
       return this.linkHeader.next;
     } else {
       return null;
     }
   },
   getPrevPage: function() {
-    if (this.linkHeader && this.linkHeader.hasOwnProperty('prev')) {
+    if (this.linkHeader && this.linkHeader.hasOwnProperty("prev")) {
       return this.linkHeader.prev;
     } else {
       return null;
@@ -209,16 +209,16 @@ issueList.IssueCollection = Backbone.Collection.extend({
     */
     var params = {};
     var qMap = {
-      state:     'state',
-      creator:   'author',
-      mentioned: 'mentions'
+      state:     "state",
+      creator:   "author",
+      mentioned: "mentions"
     };
     var sitesearchRegExp = /site:([\w-\.]+(:\d+)?)/g;
 
     if (_.isString(paramsArg)) {
-      var paramsArray = _.uniq(paramsArg.split('&'));
+      var paramsArray = _.uniq(paramsArg.split("&"));
       _.forEach(paramsArray, function(param) {
-        var kvArray = param.split('=');
+        var kvArray = param.split("=");
         var key = kvArray[0];
         var value = kvArray[1];
         params[key] = value;
@@ -227,7 +227,7 @@ issueList.IssueCollection = Backbone.Collection.extend({
       params = paramsArg;
     }
 
-    if ('direction' in params) {
+    if ("direction" in params) {
       params.order = params.direction;
       delete params.direction;
     }
@@ -235,19 +235,19 @@ issueList.IssueCollection = Backbone.Collection.extend({
     // Support domain name search
     // Replace all site:DOMAIN_NAME to DOMAIN_NAME in:title
     if (params.q.match(sitesearchRegExp)) {
-      params.q = params.q.replace(sitesearchRegExp, '$1 in:title');
+      params.q = params.q.replace(sitesearchRegExp, "$1 in:title");
     }
 
     // The rest need to be added to the "q" param as substrings
     _.forEach(qMap, function(val, key) {
       if (key in params) {
-        params.q += ' ' + val + ':' + params[key];
+        params.q += " " + val + ":" + params[key];
         delete params[key];
       }
     });
 
     // Finally, scope this to our issues repo.
-    params.q += ' repo:' + repoPath.slice(0,-7);
+    params.q += " repo:" + repoPath.slice(0,-7);
 
     return params;
   }
