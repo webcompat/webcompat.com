@@ -34,16 +34,42 @@ define([
     // A fully qualified URL to the Intern proxy
     proxyUrl: 'http://127.0.0.1:9090/',
     siteRoot: siteRoot,
-    tunnel: 'SeleniumTunnel',
-    tunnelOptions: {
-      // this tells SeleniumTunnel to download geckodriver
-      drivers: [ 'firefox' ]
+
+
+////// Section to run tests on selenium
+    // tunnel: 'SeleniumTunnel',
+    // tunnelOptions: {
+    //   // this tells SeleniumTunnel to download geckodriver
+    //   drivers: [ 'firefox' ]
+    // },
+
+    // environments: [{
+    //   browserName: 'firefox',
+    //   marionette: true
+    // }],
+////// end selenium test configs
+
+////// Section to run tests on browserstack via travis ci
+    // fix for BrowserStack exceptions (geolocation and webStorage)
+    fixSessionCapabilities: false,
+
+    // Selenium vers on BrowserStack, not yet at 2.53.1
+    capabilities: {
+      'browserstack.selenium_version': '2.53.0'
     },
 
-    environments: [{
-      browserName: 'firefox',
-      marionette: true
-    }],
+    // Required for BrowserStack, Maximum number of simultaneous integration tests allowed
+    maxConcurrency: 2,
+
+    // currently BrowserStack not supporting firefox 47
+    environments: [
+      { browser: 'firefox', browser_version: '46', os : 'OS X', os_version : 'El Capitan' },
+      { browser: 'chrome', browser_version: '50', os : 'OS X', os_version : 'El Capitan' }
+    ],
+
+    //browserstack
+    tunnel: 'BrowserStackTunnel',
+////// end selenium test configs
 
     filterErrorStack: true,
     reporters: ['Pretty'],
