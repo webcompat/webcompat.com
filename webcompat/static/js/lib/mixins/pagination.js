@@ -20,15 +20,15 @@ issueList.PaginationControlsView = Backbone.View.extend({
     this.el = options.el;
   },
   events: {
-    'click .js-Pagination-previous': 'broadcastPrevious',
-    'click .js-Pagination-next': 'broadcastNext',
+    "click .js-Pagination-previous": "broadcastPrevious",
+    "click .js-Pagination-next": "broadcastNext",
   },
   broadcastNext: function(e) {
-    issueList.events.trigger('paginate:next', e);
+    issueList.events.trigger("paginate:next", e);
     e.preventDefault();
   },
   broadcastPrevious: function(e) {
-    issueList.events.trigger('paginate:previous', e);
+    issueList.events.trigger("paginate:previous", e);
     e.preventDefault();
   }
 });
@@ -68,15 +68,15 @@ function PaginationMixin() {
       {el: this.parentContainerEl}
     );
 
-    issueList.events.on('paginate:next', _.bind(this.requestNextPage, this));
-    issueList.events.on('paginate:previous', _.bind(this.requestPreviousPage, this));
+    issueList.events.on("paginate:next", _.bind(this.requestNextPage, this));
+    issueList.events.on("paginate:previous", _.bind(this.requestPreviousPage, this));
   };
 
   this.initPaginationLinks = function(issuesCollection) {
     // if either the next or previous page numbers are null
     // disable the buttons and add .is-disabled classes.
-    var nextButton = this.paginationControls.el.find('.js-Pagination-next');
-    var prevButton = this.paginationControls.el.find('.js-Pagination-previous');
+    var nextButton = this.paginationControls.el.find(".js-Pagination-next");
+    var prevButton = this.paginationControls.el.find(".js-Pagination-previous");
     var nextPage = issuesCollection.getNextPage();
     var prevPage = issuesCollection.getPrevPage();
     var isLastPage = function() {
@@ -90,30 +90,30 @@ function PaginationMixin() {
     if (!issuesCollection.length || isSinglePage) {
       // hide pagination buttons if there are no results,
       // or the results are limited to a single page.
-      nextButton.addClass('is-hidden');
-      prevButton.addClass('is-hidden');
+      nextButton.addClass("is-hidden");
+      prevButton.addClass("is-hidden");
       return;
     }
 
-    nextButton.removeClass('is-hidden')
-              .prop('disabled', isLastPage())
-              .toggleClass('is-disabled', isLastPage());
-    prevButton.removeClass('is-hidden')
-              .prop('disabled', isFirstPage())
-              .toggleClass('is-disabled', isFirstPage());
+    nextButton.removeClass("is-hidden")
+              .prop("disabled", isLastPage())
+              .toggleClass("is-disabled", isLastPage());
+    prevButton.removeClass("is-hidden")
+              .prop("disabled", isFirstPage())
+              .toggleClass("is-disabled", isFirstPage());
 
     if (nextPage) {
       // chop off leading "/api" and set @href
-      nextButton.attr('href', issuesCollection.getNextPage().substring(4));
+      nextButton.attr("href", issuesCollection.getNextPage().substring(4));
     } else {
-      nextButton.attr('href', 'javascript: void(0);');
+      nextButton.attr("href", "javascript: void(0);");
     }
 
     if (prevPage) {
       // chop off leading "/api" and set @href
-      prevButton.attr('href', issuesCollection.getPrevPage().substring(4));
+      prevButton.attr("href", issuesCollection.getPrevPage().substring(4));
     } else {
-      prevButton.attr('href', 'javascript: void(0);');
+      prevButton.attr("href", "javascript: void(0);");
     }
   };
 

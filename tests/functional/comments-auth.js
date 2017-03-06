@@ -3,20 +3,20 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 define([
-  'intern',
-  'intern!object',
-  'intern/chai!assert',
-  'require',
-  'tests/functional/lib/helpers'
+  "intern",
+  "intern!object",
+  "intern/chai!assert",
+  "require",
+  "tests/functional/lib/helpers"
 ], function(intern, registerSuite, assert, require, FunctionalHelpers) {
-  'use strict';
+  "use strict";
 
   var url = function(path) {
     return intern.config.siteRoot + path;
   };
 
   registerSuite({
-    name: 'Comments (auth)',
+    name: "Comments (auth)",
 
     setup: function() {
       return FunctionalHelpers.login(this);
@@ -26,92 +26,92 @@ define([
       return FunctionalHelpers.logout(this);
     },
 
-    'Comments form visible when logged in': function() {
-      return FunctionalHelpers.openPage(this, url('/issues/100'), '.js-Issue')
+    "Comments form visible when logged in": function() {
+      return FunctionalHelpers.openPage(this, url("/issues/100"), ".js-Issue")
         // Comment form visible for logged in users.
-        .findDisplayedByCssSelector('.js-Comment-form')
+        .findDisplayedByCssSelector(".js-Comment-form")
         .end();
     },
 
 
-    'Empty vs non-empty comment button text (open issue)': function() {
-      return FunctionalHelpers.openPage(this, url('/issues/100'), '.js-Issue')
-        .findDisplayedByCssSelector('.js-Issue-state-button').getVisibleText()
+    "Empty vs non-empty comment button text (open issue)": function() {
+      return FunctionalHelpers.openPage(this, url("/issues/100"), ".js-Issue")
+        .findDisplayedByCssSelector(".js-Issue-state-button").getVisibleText()
         .then(function(text) {
-          assert.equal('Close Issue', text);
-          assert.notEqual('Close and comment', text);
+          assert.equal("Close Issue", text);
+          assert.notEqual("Close and comment", text);
         })
         .end()
-        .findByCssSelector('textarea.js-Comment-text')
-        .type('test comment')
+        .findByCssSelector("textarea.js-Comment-text")
+        .type("test comment")
         .end()
-        .findDisplayedByCssSelector('.js-comment-close-and-comment').getVisibleText()
+        .findDisplayedByCssSelector(".js-comment-close-and-comment").getVisibleText()
         .then(function(text) {
-          assert.equal('Close and comment', text);
-          assert.notEqual('Close Issue', text);
+          assert.equal("Close and comment", text);
+          assert.notEqual("Close Issue", text);
         });
     },
 
-    'Empty vs non-empty comment button text (closed issue)': function() {
-      return FunctionalHelpers.openPage(this, url('/issues/101'), '.js-Issue')
-        .findDisplayedByCssSelector('.js-comment-reopen-issue').getVisibleText()
+    "Empty vs non-empty comment button text (closed issue)": function() {
+      return FunctionalHelpers.openPage(this, url("/issues/101"), ".js-Issue")
+        .findDisplayedByCssSelector(".js-comment-reopen-issue").getVisibleText()
         .then(function(text) {
-          assert.equal('Reopen Issue', text);
-          assert.notEqual('Reopen and comment', text);
+          assert.equal("Reopen Issue", text);
+          assert.notEqual("Reopen and comment", text);
         })
         .end()
-        .findByCssSelector('textarea.js-Comment-text')
-        .type('test comment')
+        .findByCssSelector("textarea.js-Comment-text")
+        .type("test comment")
         .end()
-        .findDisplayedByCssSelector('.js-comment-reopen-and-comment').getVisibleText()
+        .findDisplayedByCssSelector(".js-comment-reopen-and-comment").getVisibleText()
         .then(function(text) {
-          assert.equal('Reopen and comment', text);
-          assert.notEqual('Reopen Issue', text);
+          assert.equal("Reopen and comment", text);
+          assert.notEqual("Reopen Issue", text);
         });
     },
 
-    'Posting a comment': function() {
+    "Posting a comment": function() {
       var originalCommentsLength;
       var allCommentsLength;
-      return FunctionalHelpers.openPage(this, url('/issues/100'), '.js-Issue')
-        .findAllByCssSelector('.js-Issue-comment')
+      return FunctionalHelpers.openPage(this, url("/issues/100"), ".js-Issue")
+        .findAllByCssSelector(".js-Issue-comment")
         .then(function(elms) {
           originalCommentsLength = elms.length;
         })
         .end()
-        .findByCssSelector('textarea.js-Comment-text')
-        .type('Today\'s date is ' + new Date().toDateString())
+        .findByCssSelector("textarea.js-Comment-text")
+        .type("Today's date is " + new Date().toDateString())
         .end()
-        .findDisplayedByCssSelector('.js-comment-close-and-comment')
+        .findDisplayedByCssSelector(".js-comment-close-and-comment")
         .end()
         // click the comment button
-        .findByCssSelector('.js-Issue-comment-button').click()
+        .findByCssSelector(".js-Issue-comment-button").click()
         .end()
         .sleep(1000)
-        .findAllByCssSelector('.js-Issue-comment')
+        .findAllByCssSelector(".js-Issue-comment")
         .then(function(elms) {
           allCommentsLength = elms.length;
-          assert(originalCommentsLength < allCommentsLength, 'Comment was successfully left.');
+          assert(originalCommentsLength < allCommentsLength, "Comment was successfully left.");
         });
     },
 
-    'Posting an empty comment fails': function() {
+    "Posting an empty comment fails": function() {
       var originalCommentsLength;
       var allCommentsLength;
-      return FunctionalHelpers.openPage(this, url('/issues/100'), '.js-Issue')
-        .findAllByCssSelector('.js-Issue-comment')
+      return FunctionalHelpers.openPage(this, url("/issues/100"), ".js-Issue")
+        .findAllByCssSelector(".js-Issue-comment")
         .then(function(elms) {
           originalCommentsLength = elms.length;
         })
         .end()
         // click the comment button
-        .findByCssSelector('.js-Issue-comment-button').click()
+        .findByCssSelector(".js-Issue-comment-button").click()
         .end()
         .sleep(2000)
-        .findAllByCssSelector('.js-Issue-comment')
+        .findAllByCssSelector(".js-Issue-comment")
         .then(function(elms) {
           allCommentsLength = elms.length;
-          assert(originalCommentsLength === allCommentsLength, 'Comment was not successfully left.');
+          assert(originalCommentsLength === allCommentsLength, "Comment was not successfully left.");
         });
     }
 

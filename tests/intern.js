@@ -6,16 +6,17 @@
 // These default settings work OK for most people. The options that *must* be changed below are the
 // packages, suites, excludeInstrumentation, and (if you want functional tests) functionalSuites.
 define([
-  'intern',
+  "intern",
 ], function(intern, topic) {
-  'use strict';
+  "use strict";
 
   var args = intern.args;
-  var siteRoot = args.siteRoot ? args.siteRoot : 'http://localhost:5000';
+  var siteRoot = args.siteRoot ? args.siteRoot : "http://localhost:5000";
 
   if (topic) {
-    topic.subscribe('/suite/start', function(suite) {
-      console.log('Running: ' + suite.name);
+    topic.subscribe("/suite/start", function(suite) {
+      /* eslint-disable no-console*/
+      console.log("Running: " + suite.name);
     });
   }
 
@@ -24,32 +25,32 @@ define([
     wc: {
       pageLoadTimeout: args.wcPageLoadTimeout ? parseInt(args.wcPageLoadTimeout, 10) : 10000,
       // user and pw need to be passed in as command-line arguments. See CONTRIBUTING.md
-      user: args.user || 'some username',
-      pw: args.pw || 'some password',
+      user: args.user || "some username",
+      pw: args.pw || "some password",
     },
 
     // The port on which the instrumenting proxy will listen
     proxyPort: 9090,
 
     // A fully qualified URL to the Intern proxy
-    proxyUrl: 'http://127.0.0.1:9090/',
+    proxyUrl: "http://127.0.0.1:9090/",
     siteRoot: siteRoot,
-    tunnel: 'SeleniumTunnel',
+    tunnel: "SeleniumTunnel",
     tunnelOptions: {
       // this tells SeleniumTunnel to download geckodriver
-      drivers: [ 'firefox' ]
+      drivers: [ "firefox" ]
     },
 
     environments: [{
-      browserName: 'firefox',
+      browserName: "firefox",
       marionette: true
     }],
 
     filterErrorStack: true,
-    reporters: ['Pretty'],
+    reporters: ["Pretty"],
 
     // Unless you pass in a command-line arg saying otherwise, we run all tests by default.
-    functionalSuites: [ 'tests/functional-all' ],
+    functionalSuites: [ "tests/functional-all" ],
     excludeInstrumentation: true
   };
 

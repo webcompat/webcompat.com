@@ -7,7 +7,7 @@ var issues = issues || {}; // eslint-disable-line no-use-before-define
 issues.CommentsCollection = Backbone.Collection.extend({
   model: issues.Comment,
   url: function() {
-    return '/api/issues/' + issueNumber + '/comments?page=' + this.pageNumber;
+    return "/api/issues/" + issueNumber + "/comments?page=" + this.pageNumber;
   },
   initialize: function(options) {
     this.pageNumber = options.pageNumber;
@@ -21,11 +21,11 @@ issues.CommentsCollection = Backbone.Collection.extend({
 });
 
 issues.CommentView = Backbone.View.extend({
-  className: 'wc-Comment js-Issue-comment',
+  className: "wc-Comment js-Issue-comment",
   id: function() {
-    return this.model.get('commentLinkId');
+    return this.model.get("commentLinkId");
   },
-  template: _.template($('#comment-tmpl').html()),
+  template: _.template($("#comment-tmpl").html()),
   render: function() {
     this.$el.html(this.template(this.model.toJSON()));
     return this;

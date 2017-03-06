@@ -37,7 +37,7 @@
     "no-spaced-func": 2,
     "no-use-before-define": 2,
     "one-var": [2, "never"],
-    "quotes": [2, "single"],
+    "quotes": [2, "double"],
     "semi": [2, "always"],
     "space-before-blocks": 2,
     "space-before-function-paren": [2, "never"],

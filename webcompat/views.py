@@ -21,6 +21,8 @@ from flask import url_for
 
 from form import AUTH_REPORT
 from form import PROXY_REPORT
+from helpers import add_csp
+from helpers import add_sec_headers
 from helpers import get_browser_name
 from helpers import get_form
 from helpers import get_referer
@@ -51,6 +53,8 @@ def before_request():
 @app.after_request
 def after_request(response):
     session_db.remove()
+    add_sec_headers(response)
+    add_csp(response)
     return response
 
 
@@ -306,3 +310,22 @@ def contributors():
 def cssfixme():
     '''Route for CSS Fix me tool'''
     return render_template('cssfixme.html')
+
+
+@app.route('/csp-report', methods=['POST'])
+def log_csp_report():
+    '''Route to record CSP header violations.
+
+    This route can be enabled/disabled by setting CSP_LOG to True/False
+    in config/__init__.py. It's enabled by default.
+    '''
+    expected_mime = 'application/csp-report'
+
+    if app.config['CSP_LOG']:
+        if expected_mime not in request.headers.get('content-type', ''):
+            return ('Wrong Content-Type.', 400)
+        with open(app.config['CSP_REPORTS_LOG'], 'a') as r:
+            r.write(request.data + '\n')
+        return ('', 204)
+    else:
+        return ('Forbidden.', 403)

@@ -3,16 +3,16 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 module.exports = function(grunt) {
-  grunt.config('imagemin', {
+  grunt.config("imagemin", {
     png: {
       options: {
         optimizationLevel: 7
       },
       files: [{
         expand: true,
-        cwd:    '<%= imgPath %>/',
-        src:    ['*.png'],
-        dest:   '<%= imgPath %>/'
+        cwd:    "<%= imgPath %>/",
+        src:    ["*.png"],
+        dest:   "<%= imgPath %>/"
       }]
     },
     jpg: {
@@ -21,9 +21,9 @@ module.exports = function(grunt) {
       },
       files: [{
         expand: true,
-        cwd:    '<%= imgPath %>/',
-        src:    ['*.jpg'],
-        dest:   '<%= imgPath %>/'
+        cwd:    "<%= imgPath %>/",
+        src:    ["*.jpg"],
+        dest:   "<%= imgPath %>/"
       }]
     }
   });

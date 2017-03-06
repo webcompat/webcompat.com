@@ -3,13 +3,13 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 module.exports = function(grunt) {
-  grunt.config('cmq', {
+  grunt.config("cmq", {
     options: {
       log: true
     },
     your_target: {
       files: {
-        '<%= cssPath %>' : ['<%= cssPath %>/webcompat.dev.css']
+        "<%= cssPath %>" : ["<%= cssPath %>/webcompat.dev.css"]
       }
     }
   });

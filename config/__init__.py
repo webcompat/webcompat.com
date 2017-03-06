@@ -30,6 +30,9 @@ if not PRODUCTION:
 if not LOCALHOST:
     SESSION_COOKIE_SECURE = True
 
+# By default, we want to log CSP violations. See /csp-report in views.py.
+CSP_LOG = True
+
 # Logging Capabilities
 # To benefit from the logging, you may want to add:
 #   app.logger.info(Thing_To_Log)
@@ -38,6 +41,7 @@ if not LOCALHOST:
 
 LOG_FILE = '/tmp/webcompat.log'
 LOG_FMT = '%(asctime)s tracking %(message)s'
+CSP_REPORTS_LOG = '/tmp/webcompat-csp-reports.log'
 
 # Status categories used in the project
 # 'new', 'needsdiagnosis', 'needscontact', 'contactready' , 'sitewait', 'close'
