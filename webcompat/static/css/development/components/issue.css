@@ -65,21 +65,21 @@
   .wc-Issue-title {
     font-size: 1.2em;
     line-height: 1em;
-    margin:0 0 .5em 0;
+    margin: 0 0 .5em 0;
     word-wrap: break-word;
   }
 
   @media all and (max-width: 28.12em) {
 
     .wc-Issue-title {
-      font-size:1.2em;
+      font-size: 1.2em;
     }
   }
 
   /* information issue : date / author / number of comment */
   .wc-Issue-create {
     font-size: 1em;
-    margin:0 0 2em
+    margin: 0 0 2em
   }
 
   /* Date of issue */
@@ -90,7 +90,7 @@
   @media all and (max-width: 28.12em) {
 
     .wc-Issue-date {
-      font-size:.9em;
+      font-size: .9em;
     }
   }
 
@@ -122,13 +122,13 @@
 
   /* Issue wrapper */
   .wc-Issue-wrapper {
-    margin:0 0 0 4.2em;
+    margin: 0 0 0 4.2em;
   }
 
     @media all and (max-width: 73.75em) {
 
       .wc-Issue-wrapper {
-        margin:0;
+        margin: 0;
       }
     }
 
@@ -149,14 +149,14 @@
 @media all and (max-width: 23.43em) {
 
   .wc-Issue-lbels {
-    position:relative;
+    position: relative;
   }
 }
 
 /* Link to log in */
 .wc-Issue-login {
   margin-top: 2.5em;
-  text-align:center;
+  text-align: left;
 }
 
 /*wrapper list comment */
@@ -166,8 +166,8 @@
 
 /* labeleditor */
 .wc-Issue-labelEditor {
-  position:relative;
-  display:inline-block;
+  position: relative;
+  display: inline-block;
 }
 
 @media all and (max-width: 23.43em) {

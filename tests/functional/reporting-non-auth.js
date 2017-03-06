@@ -3,154 +3,175 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 define([
-  'intern',
-  'intern!object',
-  'intern/chai!assert',
-  'intern/browser_modules/dojo/node!path',
-  'tests/functional/lib/helpers',
-  'require'
-], function(intern, registerSuite, assert, path, FunctionalHelpers, require) {
-  'use strict';
+  "intern",
+  "intern!object",
+  "intern/chai!assert",
+  "intern/browser_modules/dojo/node!path",
+  "tests/functional/lib/helpers",
+], function(intern, registerSuite, assert, path, FunctionalHelpers) {
+  "use strict";
 
-  var url = intern.config.siteRoot + '/issues/new';
   var cwd = intern.config.basePath;
-  var VALID_IMAGE_PATH = path.join(cwd, 'tests/fixtures', 'green_square.png');
-  var BAD_IMAGE_PATH = path.join(cwd, 'tests/fixtures', 'evil.py');
+  var VALID_IMAGE_PATH = path.join(cwd, "tests/fixtures", "green_square.png");
+  var BAD_IMAGE_PATH = path.join(cwd, "tests/fixtures", "evil.py");
+  var DETAILS_STRING = "Encountered error: NS_ERROR_DOM_MEDIA_DEMUXER_ERR (0x806e000c)%0ALocation: virtual%0ARefPtrMP4Demuxer::InitPromise mozilla::MP4Demuxer::Init()%0AError information:%0AIncomplete MP4 metadata%0AMedia URL: file:///Users/potch/Documents/mozilla/media.mp4";
+
+  var url = function(path) {
+    return intern.config.siteRoot + path;
+  };
 
   registerSuite({
-    name: 'Reporting (non-auth)',
+    name: "Reporting (non-auth)",
 
-    'Submit buttons are disabled': function() {
-      return FunctionalHelpers.openPage(this, require.toUrl(url), '.wc-ReportForm-actions-button')
-        .findAllByCssSelector('.wc-ReportForm-actions-button button').getAttribute('class')
+    "Submit buttons are disabled": function() {
+      return FunctionalHelpers.openPage(this, url("/issues/new"), ".wc-ReportForm-actions-button")
+        .findAllByCssSelector(".wc-ReportForm-actions-button button").getAttribute("class")
         .then(function(classNames) {
           classNames.forEach(function(className) {
-            assert.include(className, 'is-disabled');
+            assert.include(className, "is-disabled");
           });
         })
         .end();
     },
 
-    'Wyciwyg bug workaround': function() {
-      return FunctionalHelpers.openPage(this, require.toUrl(url + '?url=wyciwyg://0/http://bbs.csdn.net/topics/20282413'), '#url')
-        .findByCssSelector('#url').getProperty('value')
+    "Wyciwyg bug workaround": function() {
+      return FunctionalHelpers.openPage(this, url("/issues/new?url=wyciwyg://0/http://bbs.csdn.net/topics/20282413"), "#url")
+        .findByCssSelector("#url").getProperty("value")
         .then(function(value) {
-          assert.notInclude(value, 'wyciwyg://0/');
+          assert.notInclude(value, "wyciwyg://0/");
         })
         .end();
     },
 
-    'Report button shows via GitHub': function() {
-      return FunctionalHelpers.openPage(this, require.toUrl(url), '.wc-ReportForm-actions-button')
-        .findByCssSelector('#submitgithub').getVisibleText()
+    "Report button shows via GitHub": function() {
+      return FunctionalHelpers.openPage(this, url("/issues/new"), ".wc-ReportForm-actions-button")
+        .findByCssSelector("#submitgithub").getVisibleText()
         .then(function(text) {
-          assert.include(text, 'Report via'); //Report via GitHub (logged out)
+          assert.include(text, "Report via"); //Report via GitHub (logged out)
         })
         .end();
     },
 
-    'URL validation': function() {
-      return FunctionalHelpers.openPage(this, require.toUrl(url), '.wc-ReportForm-actions-button')
-        .findByCssSelector('#url').click()
+    "URL validation": function() {
+      return FunctionalHelpers.openPage(this, url("/issues/new"), ".wc-ReportForm-actions-button")
+        .findByCssSelector("#url").click()
         .end()
         .execute(function() {
-          var elm = document.querySelector('#url');
-          WindowHelpers.sendEvent(elm, 'input');
+          var elm = document.querySelector("#url");
+          WindowHelpers.sendEvent(elm, "input");
         })
         .sleep(500)
-        .findByCssSelector('.wc-Form-helpMessage').getVisibleText()
+        .findByCssSelector(".wc-Form-helpMessage").getVisibleText()
         .then(function(text) {
-          assert.include(text, 'A valid URL is required', 'URL validation message is shown');
+          assert.include(text, "A valid URL is required", "URL validation message is shown");
         })
         .end()
-        .findByCssSelector('#url').type('sup')
+        .findByCssSelector("#url").type("sup")
         .end()
-        .waitForDeletedByCssSelector('.wc-Form-helpMessage')
+        .waitForDeletedByCssSelector(".wc-Form-helpMessage")
         .end();
     },
 
-    '(optional) browser + os validation': function() {
-      return FunctionalHelpers.openPage(this, require.toUrl(url), '.wc-ReportForm-actions-button')
+    "(optional) browser + os validation": function() {
+      return FunctionalHelpers.openPage(this, url("/issues/new"), ".wc-ReportForm-actions-button")
         // make sure we can see the valid checkbox (i.e. it's background image is non-empty)
         .execute(function() {
-          return window.getComputedStyle(document.querySelector('div.wc-Form-group:nth-child(2) > span:nth-child(2)'), ':after').getPropertyValue('background-image');
+          return window.getComputedStyle(document.querySelector("div.wc-Form-group:nth-child(2) > span:nth-child(2)"), ":after").getPropertyValue("background-image");
         }).then(function(bgImage) {
-          assert.include(bgImage, 'valid.svg', 'The valid checkbox psuedo is visible');
+          assert.include(bgImage, "valid.svg", "The valid checkbox psuedo is visible");
         })
         .end()
         .execute(function() {
-          var elm = document.querySelector('#os');
-          elm.value = '';
-          WindowHelpers.sendEvent(elm, 'input');
+          var elm = document.querySelector("#os");
+          elm.value = "";
+          WindowHelpers.sendEvent(elm, "input");
         })
         .end()
         .sleep(500)
         // make sure we can't see the valid checkbox (i.e. it's background image is empty)
         .execute(function() {
-          return window.getComputedStyle(document.querySelector('div.wc-Form-group:nth-child(3) > span:nth-child(2)'), ':after').getPropertyValue('background-image');
+          return window.getComputedStyle(document.querySelector("div.wc-Form-group:nth-child(3) > span:nth-child(2)"), ":after").getPropertyValue("background-image");
         }).then(function(bgImage) {
-          assert.notInclude(bgImage, 'valid.svg', 'The valid checkbox psuedo is not visible');
+          assert.notInclude(bgImage, "valid.svg", "The valid checkbox psuedo is not visible");
         })
         .end();
     },
 
-    'Problem type validation': function() {
-      return FunctionalHelpers.openPage(this, require.toUrl(url), '.wc-ReportForm-actions-button')
+    "Problem type validation": function() {
+      return FunctionalHelpers.openPage(this, url("/issues/new"), ".wc-ReportForm-actions-button")
         .execute(function() {
-          var elm = document.querySelector('#description');
-          WindowHelpers.sendEvent(elm, 'focus');
+          var elm = document.querySelector("#description");
+          WindowHelpers.sendEvent(elm, "focus");
         })
         .end()
-        .findByCssSelector('.wc-Form-helpMessage').getVisibleText()
+        .findByCssSelector(".wc-Form-helpMessage").getVisibleText()
         .then(function(text) {
-          assert.include(text, 'Problem type required', 'Problem type validation message is shown');
+          assert.include(text, "Problem type required", "Problem type validation message is shown");
         })
         .end()
         // pick a problem type
-        .findByCssSelector('#problem_category-0').click()
+        .findByCssSelector("#problem_category-0").click()
         .end()
         // validation message should be gone
-        .waitForDeletedByCssSelector('.wc-Form-helpMessage')
+        .waitForDeletedByCssSelector(".wc-Form-helpMessage")
         .end();
     },
 
-    'Image extension validation': function() {
-      return FunctionalHelpers.openPage(this, require.toUrl(url), '.wc-ReportForm-actions-button')
-        .findByCssSelector('#image').type(BAD_IMAGE_PATH)
+    "Image extension validation": function() {
+      return FunctionalHelpers.openPage(this, url("/issues/new"), ".wc-ReportForm-actions-button")
+        .findByCssSelector("#image").type(BAD_IMAGE_PATH)
         .end()
-        .findByCssSelector('.wc-Form-helpMessage--imageUpload').getVisibleText()
+        .findByCssSelector(".wc-Form-helpMessage--imageUpload").getVisibleText()
         .then(function(text) {
-          assert.include(text, 'Image must be one of the following', 'Image type validation message is shown');
+          assert.include(text, "Image must be one of the following", "Image type validation message is shown");
         })
         .end()
         // pick a valid file type
-        .findByCssSelector('#image').type(VALID_IMAGE_PATH)
+        .findByCssSelector("#image").type(VALID_IMAGE_PATH)
         .end()
         // validation message should be gone
-        .waitForDeletedByCssSelector('.wc-Form-helpMessage--imageUpload')
+        .waitForDeletedByCssSelector(".wc-Form-helpMessage--imageUpload")
         .end();
     },
 
-    'Submits are enabled': function() {
-      return FunctionalHelpers.openPage(this, require.toUrl(url), '.wc-ReportForm-actions-button')
+    "Submits are enabled": function() {
+      return FunctionalHelpers.openPage(this, url("/issues/new"), ".wc-ReportForm-actions-button")
         // pick a valid file type
-        .findByCssSelector('#image').type(VALID_IMAGE_PATH)
+        .findByCssSelector("#image").type(VALID_IMAGE_PATH)
         .end()
-        .findByCssSelector('#url').type('http://coolguy.biz')
+        .findByCssSelector("#url").type("http://coolguy.biz")
         .end()
         // pick a problem type
-        .findByCssSelector('#problem_category-0').click()
+        .findByCssSelector("#problem_category-0").click()
         .end()
-        .findByCssSelector('#description').click()
+        .findByCssSelector("#description").click()
         .end()
         // wait a bit
         .sleep(250)
          // now make sure the buttons aren't disabled anymore
-        .findAllByCssSelector('.wc-ReportForm-actions-button button').getAttribute('class')
+        .findAllByCssSelector(".wc-ReportForm-actions-button button").getAttribute("class")
         .then(function(classNames) {
           classNames.forEach(function(className) {
-            assert.notInclude(className, 'is-disabled');
+            assert.notInclude(className, "is-disabled");
           });
+        })
+        .end();
+    },
+
+    "problem_type param selects problem type": function() {
+      return FunctionalHelpers.openPage(this, url("/issues/new?problem_type=video_bug"), ".wc-ReportForm-actions-button")
+        .findByCssSelector("[value=video_bug]").isSelected()
+        .then(function(isSelected) {
+          assert.isTrue(isSelected, "The right option is selected");
+        })
+        .end();
+    },
+
+    "details param adds info to description": function() {
+      return FunctionalHelpers.openPage(this, url("/issues/new?details=" + DETAILS_STRING), "#description")
+        .findByCssSelector("#description").getProperty("value")
+        .then(function(text) {
+          assert.include(text, "Encountered error: NS_ERROR_DOM_MEDIA_DEMUXER_ERR (0x806e000c)\nLocation: virtual\nRefPtrMP4Demuxer::InitPromise mozilla::MP4Demuxer::Init()\nError information:\nIncomplete MP4 metadata\nMedia URL: file:///Users/potch/Documents/mozilla/media.mp4");
         })
         .end();
     }

@@ -12,23 +12,23 @@ node_modules/.bin/intern-runner config=tests/intern \
 */
 
 define([
-  './functional/reporting-non-auth.js',
-  './functional/comments-non-auth.js',
-  './functional/contributors-non-auth.js',
-  './functional/comments-auth.js',
-  './functional/history-navigation-non-auth.js',
-  './functional/image-uploads-non-auth.js',
-  './functional/index-non-auth.js',
-  './functional/issue-list-non-auth.js',
-  './functional/issues-non-auth.js',
-  './functional/new-issue-non-auth.js',
-  './functional/search-non-auth.js',
-  './functional/search-auth.js',
-  './functional/issues-auth.js',
-  './functional/labels-auth.js',
-  './functional/reporting-auth.js',
-  './functional/user-activity-auth.js',
-  './functional/user-activity-non-auth.js',
+  "./functional/reporting-non-auth.js",
+  "./functional/comments-non-auth.js",
+  "./functional/contributors-non-auth.js",
+  "./functional/comments-auth.js",
+  "./functional/history-navigation-non-auth.js",
+  "./functional/image-uploads-non-auth.js",
+  "./functional/index-non-auth.js",
+  "./functional/issue-list-non-auth.js",
+  "./functional/issues-non-auth.js",
+  "./functional/new-issue-non-auth.js",
+  "./functional/search-non-auth.js",
+  "./functional/search-auth.js",
+  "./functional/issues-auth.js",
+  "./functional/labels-auth.js",
+  "./functional/reporting-auth.js",
+  "./functional/user-activity-auth.js",
+  "./functional/user-activity-non-auth.js",
 ], function() {
-  'use strict';
+  "use strict";
 });

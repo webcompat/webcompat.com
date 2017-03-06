@@ -5,12 +5,12 @@
 /*eslint no-console: ["error", { allow: ["log", "error"] }] */
 
 define([
-  'intern',
-  'intern!object',
-  'require',
-  'intern/dojo/node!leadfoot/helpers/pollUntil',
+  "intern",
+  "intern!object",
+  "require",
+  "intern/dojo/node!leadfoot/helpers/pollUntil",
 ], function(intern, registerSuite, require, pollUntil) {
-  'use strict';
+  "use strict";
 
   var config = intern.config;
 
@@ -23,8 +23,8 @@ define([
     return function() {
       return this.parent.takeScreenshot()
         .then(function(buffer) {
-          console.error('Capturing base64 screenshot:');
-          console.error('data:image/png,base64,' + buffer.toString('base64'));
+          console.error("Capturing base64 screenshot:");
+          console.error("data:image/png,base64," + buffer.toString("base64"));
         });
     };
   }
@@ -49,7 +49,7 @@ define([
         return context.remote
           .getCurrentUrl()
             .then(function(resultUrl) {
-              console.log('Error fetching %s', resultUrl);
+              console.log("Error fetching %s", resultUrl);
             })
           .end()
 
@@ -65,31 +65,31 @@ define([
   // remove this ugliness.
 
   function login(context) {
-    return openPage(context, url('/login'), 'body')
+    return openPage(context, url("/login"), "body")
       .setFindTimeout(config.wc.pageLoadTimeout)
       .getCurrentUrl()
       .then(function(url) {
         // is this the "normal" login flow?
-        if (url.includes('return_to')) {
+        if (url.includes("return_to")) {
           return context.remote
-            .findByCssSelector('#login_field').click()
+            .findByCssSelector("#login_field").click()
               .type(config.wc.user)
             .end()
-            .findByCssSelector('#password').click()
+            .findByCssSelector("#password").click()
               .type(config.wc.pw)
             .end()
-            .findByCssSelector('input[type=submit]').click()
+            .findByCssSelector("input[type=submit]").click()
             .end()
             // *Sometimes* GitHub can bring up an extra verification
             // page if it detects that our test user is requesting
             // access too much.
-            .findByCssSelector('.oauth-review-permissions')
+            .findByCssSelector(".oauth-review-permissions")
             .then(function() {
               // In this case, there's an extra button to click to convince
               // GitHub we're totally not a bot. >_>
               return context.remote
                 .sleep(3000)
-                .findByCssSelector('button.btn-primary').click()
+                .findByCssSelector("button.btn-primary").click()
                 .end();
             }, function(err) {
               // Otherwise, we swallow the NoSuchElement error.
@@ -104,7 +104,7 @@ define([
             .end()
             // ...Now make sure the logged-in avatar is shown so we know we're
             // back at the home page before we end.
-            .findByCssSelector('.wc-Navbar-avatar')
+            .findByCssSelector(".wc-Navbar-avatar")
             .end();
         }
       })
@@ -112,11 +112,11 @@ define([
   }
 
   function logout(context) {
-    return openPage(context, url('/logout'), 'body')
+    return openPage(context, url("/logout"), "body")
            .clearCookies()
            .end()
-           .get(require.toUrl('https://github.com/logout'))
-           .findByCssSelector('input.btn').click()
+           .get(require.toUrl("https://github.com/logout"))
+           .findByCssSelector("input.btn").click()
            .end();
   }
 

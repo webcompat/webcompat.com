@@ -1,3 +1,41 @@
+## 3.1.2 - 2017-03-03
+
+* Revert "Issue #609 - Implement Cache-Policy decorator" (it regressed logins) [Pull #1387](https://github.com/webcompat/webcompat.com/pull/1387)
+* Only print expected fixture file path when we can't find it [Pull #1382](https://github.com/webcompat/webcompat.com/pull/1382)
+* Add a details param to put info in description textarea [Pull #1329](https://github.com/webcompat/webcompat.com/pull/1379)
+* CONTRIBUTING Guidelines cleanup [Pull #1351](https://github.com/webcompat/webcompat.com/pull/1351)
+
+## 3.1.1 - 2017-03-01
+
+* Add missing semicolon to Strict-Transport-Security header. No issue.
+
+## 3.1.0 - 2017-03-01
+
+* Implment better HTTP caching for HTML routes [Pull #1335](https://github.com/webcompat/webcompat.com/pull/1335)
+* Add support for a problem_type param to preselect type in form [Pull #1362](https://github.com/webcompat/webcompat.com/pull/1362)
+* Tweaks to linting JS paths [Pull #1365](https://github.com/webcompat/webcompat.com/pull/1365)
+* Add an npm lint & fix command [Pull #1366](https://github.com/webcompat/webcompat.com/pull/1366)
+* Add CSP-Report-Only endpoint, and move security headers into app [Pull #1367](https://github.com/webcompat/webcompat.com/pull/1367)
+* Change Twitter link in footer [Pull #1371](https://github.com/webcompat/webcompat.com/pull/1373)
+
+## 3.0.0 - 2017-02-27
+
+Note: from now on, versioning will work in the following way:
+
+1) Bug fixes, docs updates, etc.: affect patch number
+2) New features: affect minor number
+3) API endpoint changes or dependency version updates: affect major number
+
+
+* Switch to double quotes for JS [Pull #1361](https://github.com/webcompat/webcompat.com/pull/1361)
+* Change login message alignment [Pull #1355](https://github.com/webcompat/webcompat.com/pull/1355)
+* Add some badges to README [Pull #1354](https://github.com/webcompat/webcompat.com/pull/1354)
+* Remove cursor: pointer from form. [Pull #1350](https://github.com/webcompat/webcompat.com/pull/1350)
+* Bump NPM deps [Pull #1349](https://github.com/webcompat/webcompat.com/pull/1349)
+* Docs update around Java versions [Pull #1348](https://github.com/webcompat/webcompat.com/pull/1348)
+* Make dark Report Bug button [Pull #1341](https://github.com/webcompat/webcompat.com/pull/1341)
+* Add site:domain.com search [Pull #1340](https://github.com/webcompat/webcompat.com/pull/1340)
+
 ## 2.11.0 - 2017-02-10
 
 * Remove support for X-Reported-With header [Pull #1334](https://github.com/webcompat/webcompat.com/pull/1334) [Issue #1254](https://github.com/webcompat/webcompat.com/issues/1254)
