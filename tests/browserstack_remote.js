@@ -13,11 +13,11 @@ define([
   var args = intern.args;
   var siteRoot = args.siteRoot ? args.siteRoot : "http://localhost:5000";
 
-  if (topic) {
-    topic.subscribe("/suite/start", function(suite) {
+  //if (topic) {
+    //topic.subscribe("/suite/start", function(suite) {
       //console.log("Running: " + suite.name);
-    });
-  }
+    //});
+  //}
 
   return {
     // Configuration object for webcompat
@@ -57,8 +57,8 @@ define([
     tunnel: "BrowserStackTunnel",
     tunnelOptions: {
       verbose: true,
-      username: $BROWSERSTACK_USERNAME,
-      accessKey: $BROWSERSTACK_ACCESS_KEY
+      username: BROWSERSTACK_USERNAME,
+      accessKey: BROWSERSTACK_ACCESS_KEY
     },
 ////// end browserstack test configs
 
