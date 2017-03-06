@@ -57,8 +57,8 @@ define([
     tunnel: "BrowserStackTunnel",
     tunnelOptions: {
       verbose: true,
-      username: BROWSERSTACK_USERNAME,
-      accessKey: BROWSERSTACK_ACCESS_KEY
+      username: args.BROWSERSTACK_USERNAME,
+      accessKey: args.BROWSERSTACK_ACCESS_KEY
     },
 ////// end browserstack test configs
 
