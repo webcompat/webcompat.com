@@ -10,6 +10,7 @@ from webcompat import form
 class TestForm(unittest.TestCase):
 
     def test_normalize_url(self):
+        ''' Make sure that normalize_url method works.'''
         r = form.normalize_url('http://example.com')
         self.assertEqual(r, 'http://example.com')
 
@@ -35,6 +36,7 @@ class TestForm(unittest.TestCase):
         self.assertEqual(r, 'http://example.com')
 
     def test_domain_name(self):
+        '''Make sure that domain_name method works.'''
         r = form.domain_name('http://example.com')
         self.assertEqual(r, 'example.com')
 
