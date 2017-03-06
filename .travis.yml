@@ -20,6 +20,12 @@ git:
 
 addons:
   firefox: "50.1.0"
+  browserstack:
+    username: "carolchung2"
+    access_key:
+      secure: "XWsOjRwk514gGAcwfBZeBcA8cjUwDpAlqXrcWIf84BAVkaqNe48eZZTX5/jqVCefnGuvWcZspb/0G7Tl/cPdRjnQzdQF41lqOVcAlVOhgO3CGhW8S3u8YI3PipFociNdzLkZIffrkhwoF5P/9OmJMbaRMAeDSCfny8aW13iIJ1c/V+rMJTSH4oB59oD1lDhJBAk8CPuJy+s7OBiv+wCmtP0tJx31LsS+rAgzuOEacl+bFykXM2hBRLc8AK4vW3evxhg7lAwJUcIxXwujjd1a/jQVCEpqxdhAfe3qTRH55tF3iPaMatdtT4nuObh37K1TcaBAQLbIH4zxFto+zt60IhNdPTjeDZ68Lydty6rc07UyWDG2J7x+TXzK7Fft1kd9OXs6izp/9Oio/hYL2s6zvB7Gn3Bin6o/McujM/8Z6OrtaDlffTxr/1Dbvtk8OlN1CFaWrxUnaMzeKFsjAcbZanAuf4IpQ0fFsEffcbpznpuNM7hiTVoWcugxT4X7GK/xAIE0Xxqw0/Bfhk/L+1Va1zfqL9KcL2kHkz0UyGjr0NFpVPbi9PqY/m8OthDYdArYl0VRV7Xqd31vDfuSOsepFfAXChNOx1Y7zF89iuq5w1qX9DyuaIrOGG4miNdx1tqOqZnfY2MUyOvuJB9O2lJUBVeedDCK1dA2CTZrnGrezHA="
+    proxyHost: "http://localhost"
+    proxyPort: "5000"
 
 env:
   global:
