@@ -7,7 +7,7 @@
 // packages, suites, excludeInstrumentation, and (if you want functional tests) functionalSuites.
 define([
   "intern",
-], function(intern, topic) {
+], function(intern) { //, topic
   "use strict";
 
   var args = intern.args;
