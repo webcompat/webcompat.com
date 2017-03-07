@@ -116,7 +116,7 @@ class TestUploads(unittest.TestCase):
             self.assertEqual(rv.status_code, status_code)
 
     def testBase64ScreenshotUploads(self):
-        '''Test that uploaded Base64 screenshots return the expected status code.'''
+        '''Test that Base64 screenshots return the expected status codes.'''
         BASE64_PNG = u'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAAAAAA6fptVAAAACklEQVQYV2P4DwABAQEAWk1v8QAAAABJRU5ErkJggg=='  # nopep8
         BASE64_PNG_GARBAGE = u'data:image/png;base64,garbage!'
         BASE64_PNG_GARBAGE2 = u'data:image/png;data:image/png;'
