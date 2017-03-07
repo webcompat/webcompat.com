@@ -46,6 +46,19 @@ define([
         .end();
     },
 
+    "uploaded image file preview": function() {
+      return FunctionalHelpers.openPage(this, url, ".js-image-upload-label")
+        .findById("image")
+        .type("tests/fixtures/green_square.png")
+        .sleep(1000)
+        .end()
+        .findByCssSelector(".js-image-upload-label").getAttribute("style")
+        .then(function(inlineStyle) {
+          assert.include(inlineStyle, "data:image/png;base64,iVBOR", "Base64 data shown as preview background");
+        })
+        .end();
+    },
+
     "postMessaged dataURI image upload worked": function() {
       return FunctionalHelpers.openPage(this, url, ".js-image-upload-label")
         // send a small base64 encoded green test square
@@ -65,6 +78,19 @@ define([
           WindowHelpers.getBlob().then(WindowHelpers.sendBlob);
         })
         .sleep(1000)
+        .findByCssSelector("#description").getProperty("value")
+        .then(function(val) {
+          assert.include(val, "![Screenshot Description](http://localhost:5000/uploads/", "The data URI was correctly uploaded and its URL was copied to the bug description.");
+        })
+        .end();
+    },
+
+    "uploaded image file upload worked": function() {
+      return FunctionalHelpers.openPage(this, url, ".js-image-upload-label")
+        .findById("image")
+        .type("tests/fixtures/green_square.png")
+        .sleep(1000)
+        .end()
         .findByCssSelector("#description").getProperty("value")
         .then(function(val) {
           assert.include(val, "![Screenshot Description](http://localhost:5000/uploads/", "The data URI was correctly uploaded and its URL was copied to the bug description.");
