@@ -1,6 +1,7 @@
 {
   "title": "webcompat.com",
   "name": "webcompat",
+  "description": "The webcompat.com is a tool to gather web compatibility bugs, inform the community and help to fix the web.",
   "author": {
     "name": "The fine folks who contribute to webcompat.com",
     "url": "http://webcompat.com"
