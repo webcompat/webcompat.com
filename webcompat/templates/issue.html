@@ -16,10 +16,10 @@
           <p class="wc-Issue-login">Please <a class="wc-Link" href="{{ url_for('login') }}">login</a> to edit issues.</p>
         {% endif %}
         <p>
-          <a class="wc-Link" href="https://github.com/{{ config['ISSUES_REPO_URI'] }}/{{ number }}"><span class="wc-GithubLink-Icon"></span>View issue on Github</a>
+          <a class="wc-Link wc-GithubLink" href="https://github.com/{{ config['ISSUES_REPO_URI'] }}/{{ number }}"><span class="wc-GithubLink-Icon"></span>View issue on Github</a>
         </p>
         <p>
-          <span class="wc-GithubLink-DesktopOnly">Shortcut: Press<span class="wc-Keyhint">g</span>on your keyboard to be taken to the GitHub view of this page.</span>
+          <span class="wc-GithubKeyhint-DesktopOnly">Shortcut: Press<span class="wc-Keyhint">g</span>on your keyboard to be taken to the GitHub view of this page.</span>
         </p>
       </section>
     </div>

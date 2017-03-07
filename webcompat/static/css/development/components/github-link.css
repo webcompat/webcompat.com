@@ -14,14 +14,17 @@
   top: 0.2em;
 }
 
-.wc-GithubLink-DesktopOnly {
+.wc-GithubLink:hover .wc-GithubLink-Icon {
+  background-image: url(/img/githubAccentColor.svg);
+}
+
+.wc-GithubKeyhint-DesktopOnly {
   font-size: var(--desktopOnly-fontSize);
 }
 
 @media all and (max-width: 40em) {
 
-  .wc-GithubLink-DesktopOnly {
+  .wc-GithubKeyhint-DesktopOnly {
     display: none;
   }
-
 }
