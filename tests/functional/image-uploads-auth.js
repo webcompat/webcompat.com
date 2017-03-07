@@ -29,7 +29,7 @@ define([
     "add a screenshot to a comment": function() {
       return FunctionalHelpers.openPage(this, url("/issues/100"), ".wc-Comment-body")
         .findById("image")
-        .type("tests/fixtures/green_square.jpg")
+        .type("tests/fixtures/green_square.png")
         .sleep(1000)
         .end()
         .findByCssSelector(".js-Comment-text").getProperty("value")
