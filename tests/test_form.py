@@ -10,6 +10,7 @@ from webcompat import form
 class TestForm(unittest.TestCase):
 
     def test_normalize_url(self):
+        '''Checks that URL is normalized.'''
         r = form.normalize_url('http://example.com')
         self.assertEqual(r, 'http://example.com')
 
@@ -35,6 +36,7 @@ class TestForm(unittest.TestCase):
         self.assertEqual(r, 'http://example.com')
 
     def test_domain_name(self):
+        '''Checks that domain name is extracted.'''
         r = form.domain_name('http://example.com')
         self.assertEqual(r, 'example.com')
 
@@ -42,7 +44,7 @@ class TestForm(unittest.TestCase):
         self.assertEqual(r, 'example.com')
 
     def test_metadata_wrapping(self):
-        '''Make sure wrap_metadata and get_metadata methods work.'''
+        '''Checks that metadata is processed and wrapped.'''
         TEST_DICT = {'cool': 'dude', 'wow': 'ok'}
         EXPECTED_SINGLE = '<!-- @cool: dude -->\n'
         EXPECTED_MULTIPLE = '<!-- @cool: dude -->\n<!-- @wow: ok -->\n'
