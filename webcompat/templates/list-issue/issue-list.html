@@ -38,9 +38,11 @@
        </ul>
     </div>
   <% } %>
-  <p class="wc-SearchIssue-github">
-    <span class="wc-Keyhint">G</span>
-    takes you to the <a class="wc-Link" href="https://github.com/{{ config['ISSUES_REPO_URI'] }}">GitHub view</a> of this page.
+  <p>
+    <a class="wc-Link wc-GithubLink" href="https://github.com/{{ config['ISSUES_REPO_URI'] }}/{{ number }}"><span class="wc-GithubLink-Icon"></span>View issues on Github</a>
+  </p>
+  <p>
+    <span class="wc-GithubKeyhint-DesktopOnly">Shortcut: Press<span class="wc-Keyhint">g</span>on your keyboard to be taken to the GitHub view of this page.</span>
   </p>
   </script>
 </div>
