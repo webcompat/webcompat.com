@@ -99,6 +99,20 @@ issues.MetaDataView = Backbone.View.extend({
   }
 });
 
+issues.AsideView = Backbone.View.extend({
+  el: $("#js-Issue-aside"),
+  initialize: function() {
+    this.model.on("change:issueState", _.bind(function() {
+      this.render();
+    }, this));
+  },
+  template: _.template($("#aside-tmpl").html()),
+  render: function() {
+    this.$el.html(this.template(this.model.toJSON()));
+    return this;
+  }
+});
+
 issues.BodyView = Backbone.View.extend({
   el: $(".wc-Issue-report"),
   mainView: null,
@@ -374,6 +388,7 @@ issues.MainView = Backbone.View.extend({
     var issueModel = {model: this.issue};
     this.metadata = new issues.MetaDataView(issueModel);
     this.body = new issues.BodyView(_.extend(issueModel, {mainView: this}));
+    this.aside = new issues.AsideView(issueModel);
     this.labels = new issues.LabelsView(issueModel);
     this.textArea = new issues.TextAreaView();
     this.imageUpload = new issues.ImageUploadView();
