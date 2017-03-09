@@ -16,7 +16,6 @@ define([
   "./functional/comments-non-auth.js",
   "./functional/contributors-non-auth.js",
   "./functional/comments-auth.js",
-  "./functional/image-uploads-auth.js",
   "./functional/history-navigation-non-auth.js",
   "./functional/image-uploads-non-auth.js",
   "./functional/index-non-auth.js",
