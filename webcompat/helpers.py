@@ -5,6 +5,7 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 from datetime import datetime
+from functools import wraps
 import hashlib
 import json
 import math
@@ -18,10 +19,9 @@ from flask import abort
 from flask import g
 from flask import request
 from flask import session
-from form import IssueForm
-from functools import wraps
 from ua_parser import user_agent_parser
 
+from form import IssueForm
 from webcompat import app
 from webcompat import github
 
