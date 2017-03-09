@@ -18,18 +18,6 @@ cache:
 git:
   depth: 5
 
-addons:
-  firefox: "50.1.0"
-  browserstack:
-    username:
-      secure: "JQ9ZK07B98zZ67dGChFLA+1oqoB+xhh6iL2NFhiV6mYetFC8ZT3fc7xtAJyiloIn0qqi4pyByAz+S/DocxAYd+M0EqwEvqM6BT9QyL5N4F7gFdodAmNuVq4jd/WL2md/s238eUVhhxWhKFgIQCqI/4JgnubdRxWntSGo2k/vYqLUlaf6Qg6Of8eoKKJpfu6juP/On8mnQwJSZgSsODbf7BmHlXZrtleciPpdFduo+AwoxHiW34+c8ZIKZ8niGGEe1zQsCAeoR75a5tjtBBL3HMA8yMY9M+e7+jrLq2oY5mUBNTLnP0BrLRokIE7LNklPCykw61/jOzYZG8g43X8v+NDkwjSqJFwZOZVq5Cjl/nkvCk4OKVT0EDGlEY+i7bHwpQTYR5egS93E7RgWyHnUAmR2M9iMdJ7FYMSASlE51Vc9OfcPJ3Ag9bkfyjOs/oJ019+UmCD+CJV2ulzCbL4zm0XkzA+NT2ytNETug0CV5OvNXtKimJZpA8BeeEnOUpaNlP3lC8/LohH+SjVjMnPGKMczqVEADiLUaFXQF3rrw8xuWsjmByayBIWpVzSMzO/BBrYE56MQbdkIjrnLeagYln/UdZtln5Dw3co1MZ4yM/fOwf6LotL/hyBde1IuaGuXhPLIkUCO7OaiSjXncWpR5ZwqupsMbfpjAas1csvTZ14="
-    access_key:
-      secure: "Y3tUJgFQNFDQYkxDzoaofIEAb40uJUvN7fOx4bvjEJRVL958mvGD0fexOE9JYyrztc6RXHyWfmigxZiBWnRFdmuXES5ao8WuhXbNThqQhgHJnbZM0EkOXJ5T72M7xWsLJYJ0o2cIsYR32dKUDVM1AofLIA5MYA0PvAUIbogcyQMzeB+iowIGDxAFnSCt5t17NQEQTSILBdF8RO7grvuXrNtcJP6USoj9sRrz9VHMjYHmbDkUrRWUOTPluvH6E/4xWG3NtPfxpMsxxmKn44utVO+pJ91eXB52itmPI28S0BGbjYY/O7+/czqUKEw5PjE0PYtKN6dsQ3S32ul/i8xo8PV6rCuauR91V6VcYnJtDideP/5/PPqSyCTLPfwnKa/Krr6AfWbsFuJdBQUxZNL8nSMbWYn9Unm7SjANGdb26r1ju9WdMJddwOdX4+IcdVjVmmMVBkSoh6GWO4yJ/+plIovZ5o2fCkZwEuHBu9LuoNHV4QPAqVy7/aDzpfsJOzpM8p+M1Hp/U/W4nholY5t9YHqbaXRb2qTTFDIfrTG6IZYvIoFWDd2nYzOYuPOqHdffm5Eq7/lSN82alCkF4R4eQNnClNTzvD5C6aZrUT/n6iimrNYH/mCUjm1fZY6ERewdrf/YJKrjVGBvUSIGeyQYGggnR8uTK+rbd6/wl9oKA3w="
-    forcelocal: true
-    #only: localhost,5000,0
-    proxyHost: "http://localhost"
-    proxyPort: "5000"
-
 env:
   global:
     - ISSUES_REPO_URI=webcompat/webcompat-tests/issues
@@ -37,6 +25,20 @@ env:
     - FAKE_SECRET=688c4546f09624f8c44773b22268064dfca19a59
     # grab latest 4.x release, which is LTS for now
     - TRAVIS_NODE_VERSION="4"
+    - BROWSERSTACK_USERNAME:
+      secure: "ijBiVkRhLhcy+MfA/LTx15ZPsc9h7DQiHOv6Mosv9/Wq4heG6Fsn46+U5uli8u/eIJVWxr5l/VvkrAHLLyrTDHMPYui89isht6WQGKItZHuE3jdeygDaxP0RysmXWQ42d1yn0tjzcEVY3E9xQgObXGPmc1Mbm0GQ0GhR4zyFSOToUPV3Qy+vf8+th+zrPFM5+2xZVSaO6XrhjC9vXpDu9baV+Ls0pN6vkFvD0JavuJohXfDxdZbDvPLQcBt/emp9Yhd8YRXGDGp+jbNC87lo69nxPIijufeUEaccTGXcGcwWZ43RXT/LPwm5ryAsjPMu2xU5IQg0csVr3z8rEBH5Ls0d8/DkY1VHDFEV448wgas3mdzj/sS5fSChkfrTp53w1xuOjKbhGL67BRxlfzl21lP8wrm9alGgOa6j0uEepHHrEekBWF5VvV8x1WX8eIu4AGJCI45pOV8nG1ueellVyfFOcXw+y4LfhllLAFhTKTsBvKQqT1EfY2ZU+4GJYOvTuPsojYmiRPfYw9viaDXawGWvGvOyZKY4DHq6iSOr537IzNAP99kmsCz4k2LMAQJNOjF+EdCZLRuK/TxTWSx11oHkpTFY7bw3VlbtEpioliUVyrcrCG+GqILLVmInrQdWyW0ExlWyQXDMX6Ae1rK6eyCSixv061wkVm8DbQSxlBM="
+    - BROWSERSTACK_ACCESS_KEY:
+      secure: "HS5ezC1F3rjlq1ZzxnuvzuZqDKz1cLQ7N6R99YgkF+uJb6xq+BQAp+cTW5LvexEJmhbyy1Q3IXIe+Vo/YxVGOVlWLtLXJlhz2+vAVharB3GCtiP4Ub9nDHhk2ztYfLMjaJPbUC3bGODqAncobRAf76jPaybNQhWrRb2HWb2rZlZmr+n3y+YTDelUXrXcpwhp+SpSHAjrQdeWk5aho6RYVGHzO/oeaD5nlBqopedr6SHchFNIOa5/8ljOQjvUeaSgIyJFQn79w6cYQwbcOsAjeLx3YMan6cPqFO727qVOBGxL0OJnsQGZKwsrtDv7G5akt2NRsemw5HJtQuGIIYrr+qdiY+7qyAvN3lot28As3V7+lglmrbO4wV3138b9zWZxHOfmkP6tvZfZjSWhmj1SDbfXlsT7VBG5G6Wz1NA4KGDlsDbqbVIKWM/Qtf8LZNGgGn4hbNKKo6eVVzBo1ArIB/RZrmgIlb/T3xRkraYFuWje/2fFLrvo6EQgCBsZZ7dTw2tOvtd28/v9AsxCuDH4/Pc1Lc+nlVslCZ079FMJljeCJuhllE65Dl3hiHHHbWb+1eGIPXzUiAIsO89w+Gjojuqd2OGQr7bLrfdP723ihbGaAUbQrCweoSRgIKnzuXebJn5H6BkFvKM4NM2EdiQYkMLv3nFI71rXEvrINOKdUBQ="
+
+addons:
+  firefox: "50.1.0"
+  browserstack:
+    username: BROWSERSTACK_USERNAME
+    access_key: BROWSERSTACK_ACCESS_KEY
+    forcelocal: true
+    #only: localhost,5000,0
+    proxyHost: "http://localhost"
+    proxyPort: "5000"
 
 before_install:
   - "export DISPLAY=:99.0"
