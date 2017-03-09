@@ -41,7 +41,7 @@ define([
 
     capabilities: {
       //"browserstack.local": false for running tests on travis
-      "browserstack.local": false, 
+      "browserstack.local": true, 
       fixSessionCapabilities: false
     },
 
