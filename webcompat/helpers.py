@@ -5,6 +5,7 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 from datetime import datetime
+from functools import update_wrapper
 from functools import wraps
 import hashlib
 import json
@@ -17,6 +18,7 @@ import urlparse
 from babel.dates import format_timedelta
 from flask import abort
 from flask import g
+from flask import make_response
 from flask import request
 from flask import session
 from ua_parser import user_agent_parser
@@ -489,3 +491,36 @@ def add_csp(response):
         "style-src 'self' 'unsafe-inline'; " +
         "report-uri /csp-report"
     )
+
+
+def cache_policy(private=True, uri_max_age=86400, must_revalidate=False):
+    '''Implements a HTTP Cache Decorator.
+
+    Adds Cache-Control headers.
+      * set max-age value (default: 1 day aka 86400s)
+      * private by default
+      * revalidation (False by default)
+    Adds Etag based on HTTP Body.
+    Sends a 304 Not Modified in case of If-None-Match.
+    '''
+    def set_policy(view):
+        @wraps(view)
+        def policy(*args, **kwargs):
+            response = make_response(view(*args, **kwargs))
+            # we choose if the resource is private or public for caching
+            if private:
+                response.cache_control.private = True
+            else:
+                response.cache_control.public = True
+            # Instructs the client if it needs to revalidate
+            if must_revalidate:
+                response.cache_control.must_revalidate = True
+            # Instructs how long the Cache should keep the resource
+            response.cache_control.max_age = uri_max_age
+            # Etag is based on the HTTP body
+            response.add_etag(response.data)
+            # to send a 304 Not Modified instead of a full HTTP response
+            response.make_conditional(request)
+            return response
+        return update_wrapper(policy, view)
+    return set_policy
