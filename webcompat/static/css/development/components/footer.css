@@ -72,3 +72,28 @@
         margin-left:1em;
       }
     }
+.wc-Twitter {
+  
+  width:1.5em;
+  display:inline-block;
+  background-image:url(/img/twitter.svg);
+  color:transparent;
+  background-repeat: no-repeat;
+}
+.wc-Github {
+  
+  width:1.5em;
+  display:inline-block;
+  background-image:url(/img/github-logo.svg);
+  color:transparent;
+  background-repeat: no-repeat;
+}
+
+@media all and (max-width: 28em) {
+  .wc-Twitter {
+    margin:0;
+  }
+  .wc-Github {
+    margin:0;
+  }
+}
