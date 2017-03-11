@@ -25,8 +25,15 @@
     }
 
       /* img */
-      .wc-Threesteps-item-number img {
-        width: 50px;
+      
+      .wc-bug-report-icon {
+        width:130px;
+      }
+      .wc-bug-diagnosis-icon {
+        width:100px;
+      }
+      .wc-site-outreach-icon {
+        width:100px;
       }
 
     @media all and (max-width: 59.37em) {
@@ -46,4 +53,15 @@
     /* text */
     .wc-Threesteps-item-text {
       margin: 0;
+      padding:0;
     }
+
+    .wc-Report {
+      padding:0;
+      margin:0;
+    }
+    .wc-Link {
+      margin:0;
+      padding:0;
+    }
+    
