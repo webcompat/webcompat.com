@@ -1,53 +1,59 @@
 <section class="wc-UISection">
   <div class="wc-UIContent">
-    <h2 class="wc-Title wc-Title--l">Join The Team</h2>
-    <p>Webcompat.com is a gathering place for the web compatibility community.  This site is a place to report bugs from any website across the web - whether you are a developer or not.  Started by the Mozilla Web Compatibility team, this initiative is a global task force on a mission to improve the web one bug at a time.  Join us!  Let&#39;s work together to make the web a better place to work and play. <a class="wc-Link" href="{{ url_for("about") }}">Learn More.</a></p>
+    <h2 class="wc-Title wc-Title--l">Help Us Improve the Web</h2>
+    <p>Webcompat.com is a gathering place for the web compatibility community.  This site is a place to report bugs from any website across the web - whether you are a developer or not.  Started by the Mozilla Web Compatibility team, this initiative is a global task force on a mission to improve the web one bug at a time.  Join us!  Let&#39;s work together to make the web a better place to work and play. Learn more about <a class="wc-Link" href="{{ url_for("about") }}">how to contribute.</a></p>
     <h3 class="wc-Title wc-Title--s">Three Ways to Contribute \o/</h3>
     <div class="wc-Threesteps">
       <div class="r-Grid r-Grid--withGutter">
         <div class="r-Grid-cell r-all--4of12 r-maxS--12of12">
           <div class="wc-Threesteps-item">
-             <span class="wc-Threesteps-item-number">
-               <img src="../img/step1icon.png" alt="Report bugs">
-             </span>
-             <p class="wc-Threesteps-item-text">
+             <div class="wc-Threesteps-item-number">
+               <img src="../img/Bugreporting.svg" alt="Report bugs" class="wc-bug-report-icon">
+             </div>
+             <div class="wc-Threesteps-item-text">
+              <h3 class="wc-Report"> Bug Reporting</h3>
+              <p class="wc-Threesteps-item-text"> Report compatibility issues that you come across on the web.</p>
                <a id="report-bug-link"
                   href="/?open=1"
                   class="wc-Link"
                 >
                   Report bugs
                 </a>
-            </p>
+            </div>
           </div>
         </div>
         <div class="r-Grid-cell r-all--4of12 r-maxS--12of12">
           <div class="wc-Threesteps-item">
-             <span class="wc-Threesteps-item-number">
-               <img src="../img/step2icon.png" alt="Diagnose bugs">
-             </span>
-             <p class="wc-Threesteps-item-text">
+             <div class="wc-Threesteps-item-number">
+               <img src="../img/Bugdiagnosis.svg" alt="Diagnose bugs" class="wc-bug-diagnosis-icon">
+             </div>
+             <div class="wc-Threesteps-item-text">
+             <h3 class="wc-Report">Bug Diagnosis</h3>
+             <p class="wc-Threesteps-item-text">Figure out what is causing the issue and help to find a fix.</p>
                <a id="report-bug-link"
                   href="{{ url_for('show_issues') }}?stage=needsdiagnosis"
                   class="wc-Link"
                 >
                   Diagnose bugs
                 </a>
-            </p>
+            </div>
           </div>
         </div>
         <div class="r-Grid-cell r-all--4of12 r-maxS--12of12">
           <div class="wc-Threesteps-item">
-             <span class="wc-Threesteps-item-number">
-               <img src="../img/step3icon.png" alt="Reach out to sites">
-             </span>
-             <p class="wc-Threesteps-item-text">
+             <div class="wc-Threesteps-item-number">
+               <img src="../img/Siteoutreach.svg" alt="Reach out to sites" class="wc-site-outreach-icon">
+             </div>
+             <div class="wc-Threesteps-item-text">
+              <h3 class="wc-Report">Site Outreach</h3>
+             <p class="wc-Threesteps-item-text">Locate a contact and reach out to sites to help solve the issue.</p>
                <a id="report-bug-link"
                   href="{{ url_for('show_issues') }}?stage=contactready"
                   class="wc-Link"
                 >
                   Reach out to sites
                 </a>
-            </p>
+            </div>
           </div>
         </div>
       </div>
