@@ -50,3 +50,5 @@ All icons are public domain or licensed from The Noun Project.
 [Reach out to sites icon](http://thenounproject.com/term/sport-fan/8283/) designed by Colin Lawrence.  (Licensed)
 
 [Lightswitch](http://thenounproject.com/term/light-switch/2235/) designed by Jeremy Lloyd.  (Public domain)
+
+[Contribute icon](https://thenounproject.com/search/?q=group&i=876004) designed by Tjaša Kimovec. (Licensed)
