@@ -1,3 +1,13 @@
+## 3.1.3 - 2017-03-09
+
+* Tweak CSP Policy [Pull #1410](https://github.com/webcompat/webcompat.com/pull/1410)
+* Clarify steps to reach Github issues [Pull #1407](https://github.com/webcompat/webcompat.com/pull/1407)
+* Add missing description to package.json [Pull #1400](https://github.com/webcompat/webcompat.com/pull/1400)
+* Change Twitter link to include replies [Pull #1399](https://github.com/webcompat/webcompat.com/pull/1399)
+* Add docstrings to some form tests [Pull #1397](https://github.com/webcompat/webcompat.com/pull/1397)
+* Add alternative shell command to activate virtualenv [Pull #1395](https://github.com/webcompat/webcompat.com/pull/1395)
+* Add docstrings to some upload tests [Pull #1392](https://github.com/webcompat/webcompat.com/pull/1392)
+
 ## 3.1.2 - 2017-03-03
 
 * Revert "Issue #609 - Implement Cache-Policy decorator" (it regressed logins) [Pull #1387](https://github.com/webcompat/webcompat.com/pull/1387)

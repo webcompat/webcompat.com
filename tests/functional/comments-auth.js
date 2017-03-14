@@ -113,6 +113,19 @@ define([
           allCommentsLength = elms.length;
           assert(originalCommentsLength === allCommentsLength, "Comment was not successfully left.");
         });
+    },
+
+    "Add a screenshot to a comment": function() {
+      return FunctionalHelpers.openPage(this, url("/issues/100"), ".wc-Comment-body")
+        .findById("image")
+        .type("tests/fixtures/green_square.png")
+        .sleep(1000)
+        .end()
+        .findByCssSelector(".js-Comment-text").getProperty("value")
+        .then(function(val) {
+          assert.include(val, "![Screenshot of the site issue](http://localhost:5000/uploads/", "The image was correctly uploaded and its URL was copied to the comment text.");
+        })
+        .end();
     }
 
   });

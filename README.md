@@ -52,3 +52,5 @@ All icons are public domain or licensed from The Noun Project.
 [Lightswitch](http://thenounproject.com/term/light-switch/2235/) designed by Jeremy Lloyd.  (Public domain)
 
 [Bug Report](https://thenounproject.com/term/bug-report/883147/) designed by Guilherme Simoes. (Licensed)
+
+[Contribute icon](https://thenounproject.com/search/?q=group&i=876004) designed by Tjaša Kimovec. (Licensed)
