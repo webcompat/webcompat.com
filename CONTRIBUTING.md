@@ -43,13 +43,9 @@ Otherwise, you can try to ping Mike Taylor on the Freenode network with the foll
 
 If you're using webcompat.com and something is confusing, broken, or you think it could be done in a better way, please let us know. Issues are how the project moves forward&mdash;let us know what's bothering you.
 
-* Search the [issues
-  list](https://github.com/webcompat/webcompat.com/issues)
-  for existing similar issues.  Consider adding to an existing issue if you
-  find one.
+* Search the [issues list](https://github.com/webcompat/webcompat.com/issues) for existing similar issues.  Consider adding to an existing issue if you find one.
 * Choose a descriptive title.
-* Provide a test, snippet of code or screenshot that illustrates the problem. This small
-  gesture goes a long way towards getting a speedy fix.
+* Provide a test, snippet of code or screenshot that illustrates the problem. This small gesture goes a long way towards getting a speedy fix.
 
 ## Triaging Issues
 
@@ -69,12 +65,9 @@ Anything labeled ["status: good-first-bug"](https://github.com/webcompat/webcomp
 
 ## Feature Requests
 
-You can request a new feature by [submitting an issue](#filing-an-issue) to our repo.  If you
-would like to implement a new feature then consider what kind of change it is:
+You can request a new feature by [submitting an issue](#filing-an-issue) to our repo.  If you would like to implement a new feature then consider what kind of change it is:
 
-* **Major Changes** that you wish to contribute to the project should be discussed first in an issue or irc so that we can better coordinate our efforts, prevent
-duplication of work, and help you to craft the change so that it is successfully accepted into the
-project.
+* **Major Changes** that you wish to contribute to the project should be discussed first in an issue or irc so that we can better coordinate our efforts, prevent duplication of work, and help you to craft the change so that it is successfully accepted into the project.
 * **Small Changes** can be crafted and submitted as a Pull Request.
 
 
@@ -95,7 +88,6 @@ All code contributions should come in the form of a pull request, as a topic bra
 4. Make your changes in a new branch
 
     ```bash
-    
     # makes sure, you are on the master branch
     git checkout master 
     
@@ -111,8 +103,9 @@ All code contributions should come in the form of a pull request, as a topic bra
     ```
 
 5. Create your patch; commit your changes. Referencing the issue number you're working on from the message is recommended.
-  > Note: Please keep the title under 50 chars. If you'd like to provide more information, just add the details to the commit body.
 
+    > Note: Please keep the title under 50 chars. If you'd like to provide more information, just add the details to the commit body.
+    
     ```bash
     # check for changed files
     git status
@@ -121,8 +114,7 @@ All code contributions should come in the form of a pull request, as a topic bra
     git add file.js foldername/foldername2/file2.js 
     
     # add commit message including issue number
-    git commit -m 'Issue #NumberOfIssue - Fixes broken layout on mobile browsers'
-    
+    git commit -m 'Issue #NumberOfIssue - Fixes broken layout on mobile browsers'    
     ```
     
 6. Push your branch to GitHub:
@@ -198,7 +190,7 @@ When in doubt, follow the conventions you see used in the source already.
 ### CSS
 We use cssnext as a tool for compiling css
 
-````
+```
 This is a CSS transpiler (CSS4+ to CSS3) that allows you to use tomorrow's CSS syntax today. It transforms CSS specs that are not already implemented in popular browsers into more compatible CSS.
 ```
 More info here : https://github.com/cssnext/cssnext
@@ -265,7 +257,7 @@ sudo ln -s /usr/bin/nodejs /usr/sbin/node
 
 We use [Grunt](http://gruntjs.com/) as a task runner to perform certain things (minify + concat JS assets, for example). You need to have [Node.js](https://nodejs.org/en/download/) to be able to run Grunt.
 
-``` bash
+```bash
 # clone the repo
 git clone https://github.com/<username>/webcompat.com.git #replace your github username
 # change to directory
@@ -304,14 +296,14 @@ Windows users should simply download the most recent Python 2.7 installer and ru
 
 #### Installing virtualenv
 
-``` bash
+```bash
 # Install virtualenv
 [sudo] pip install virtualenv
 ```
 
 #### Installing Project source code
 
-``` bash
+```bash
 # clone the repo. Change username to your Github username
 git clone git@github.com:username/webcompat.com.git
 # change to directory
@@ -340,7 +332,7 @@ We use [Grunt](http://gruntjs.com/) as a task runner to perform certain tasks (m
 
 Install npm dependencies:
 
-``` bash
+```bash
 npm install
 ```
 
@@ -356,7 +348,7 @@ npm run build
 
 To test issue submission, you need to create a repository on GitHub. Create a new repository make note of the name. For example, the user `miketaylr` has created a repository called "[test-repo](https://github.com/miketaylr/test-repo)" for this purpose.
 
-``` bash
+```bash
 # set up secrets.py, filling in appropriate secrets and pointers to repos
 # Mac / Linux
 cp config/secrets.py.example config/secrets.py
@@ -396,14 +388,14 @@ You can now edit `secrets.py` and
 
 ### Starting The Server
 
-``` bash
+```bash
 # start local server
 python run.py
 ```
 
 or
 
-``` bash
+```bash
 # start local server
 npm run start
 ```
@@ -421,13 +413,13 @@ After certain kinds of changes are made, you need to build the project before se
 
 You can build the entire project (CSS and JavaScript files and optimize images) by executing this command on Mac/Linux:
 
-``` bash
+```bash
 npm run build
 ```
 
 and this command on Windows:
 
-``` bash
+```bash
 npm run watch
 ```
 
@@ -435,21 +427,21 @@ npm run watch
 
 Build the entire project (CSS and JavaScript files and optimize images) on the fly everytime you save a file to see changes immediately.
 
-``` bash
+```bash
 # watching CSS and JS
 npm run watch
 ```
 
 Linting static JS files with project coding styles.
 
-``` bash
+```bash
 # linting style JS
 npm run lint
 ```
 
 Fixing static JS files with project coding styles, if an error occurs.
 
-``` bash
+```bash
 # fixing linting style JS
 npm run fix
 ```
@@ -500,7 +492,7 @@ sudo apt-get install oracle-java8-installer
 
 The `firefox` binary will also need to be in your `PATH`. Here's how this can be done on OS X:
 
-``` bash
+```bash
 export PATH="/Applications/Firefox.app/Contents/MacOS/:$PATH"
 ```
 
@@ -510,13 +502,13 @@ Change the value to : `ISSUES_REPO_URI = 'webcompat/webcompat-tests/issues'`.
 
 Start the application server:
 
-``` bash
+```bash
 source env/bin/activate && python run.py
 ```
 
 In a separate terminal window or tab, run the tests:
 
-``` bash
+```bash
 node_modules/.bin/intern-runner config=tests/intern
 ```
 
@@ -524,13 +516,13 @@ Shortly after running this command, you should see the browser open and various 
 
 Many tests require the ability to log in with GitHub OAuth. This can be achieved by passing in a valid GitHub username: `user` and password: `pw` as command-line arguments:
 
-``` bash
+```bash
 node_modules/.bin/intern-runner config=tests/intern user=testusername pw=testpassword
 ```
 
 **Note** Be aware that this will add the `testusername` and `testpassword` to your bash history. It is possible to run the tests without using a GitHub username and password as command-line arguments. In that case, the automatic login will fail and you then have 10 seconds to manually enter a username and password in the GitHub login screen that appears.
 
-``` bash
+```bash
 node_modules/.bin/intern-runner config=tests/intern user=testusername pw=testpassword
 ```
 
