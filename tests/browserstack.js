@@ -6,15 +6,16 @@
 // These default settings work OK for most people. The options that *must* be changed below are the
 // packages, suites, excludeInstrumentation, and (if you want functional tests) functionalSuites.
 define([
-  'intern',
+  "intern",
 ], function(intern, topic) {
-  'use strict';
+  "use strict";
 
   var args = intern.args;
-  var siteRoot = args.siteRoot ? args.siteRoot : 'http://localhost:5000';
+  var siteRoot = args.siteRoot ? args.siteRoot : "http://localhost:5000";
 
   if (topic) {
-    topic.subscribe('/suite/start', function(suite) {
+    topic.subscribe("/suite/start", function(suite) {
+      /* eslint-disable no-console*/
       console.log('Running: ' + suite.name);
     });
   }
@@ -24,8 +25,8 @@ define([
     wc: {
       pageLoadTimeout: args.wcPageLoadTimeout ? parseInt(args.wcPageLoadTimeout, 10) : 10000,
       // user and pw need to be passed in as command-line arguments. See CONTRIBUTING.md
-      user: args.user || 'some username',
-      pw: args.pw || 'some password',
+      user: args.user || "some username",
+      pw: args.pw || "some password",
     },
 
     // The port on which the instrumenting proxy will listen
@@ -50,11 +51,11 @@ define([
 
     // // currently BrowserStack not supporting firefox 47
     environments: [
-      { browser: 'firefox', browser_version: '51', os : 'OS X', os_version : 'Sierra' },
-      { browser: 'chrome', browser_version: '56', os : 'OS X', os_version : 'Sierra' }
+      { browser: "firefox", browser_version: "51", os : "OS X", os_version : "Sierra" },
+      { browser: "chrome", browser_version: "56", os : "OS X", os_version : "Sierra" }
     ],
 
-    tunnel: 'BrowserStackTunnel',
+    tunnel: "BrowserStackTunnel",
     tunnelOptions: {
       verbose: true,
       username: args.BROWSERSTACK_USER,
@@ -63,10 +64,10 @@ define([
 ////// end browserstack test configs
 
     filterErrorStack: true,
-    reporters: ['Pretty'],
+    reporters: ["Pretty"],
 
     // Unless you pass in a command-line arg saying otherwise, we run all tests by default.
-    functionalSuites: [ 'tests/functional-all' ],
+    functionalSuites: [ "tests/functional-all" ],
     excludeInstrumentation: true
   };
 
