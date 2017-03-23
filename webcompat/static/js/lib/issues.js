@@ -347,6 +347,7 @@ issues.MainView = Backbone.View.extend({
     this.comments = new issues.CommentsCollection({pageNumber: 1});
     this.initSubViews();
     this.fetchModels();
+    this.handleKeyShortcuts();
   },
   closeLabelEditor: function(e) {
     var target = $(e.target);
@@ -484,6 +485,10 @@ issues.MainView = Backbone.View.extend({
   },
   render: function() {
     this.$el.fadeIn();
+  },
+
+  handleKeyShortcuts: function() {
+    Mousetrap.bind("mod+enter", _.bind(this.addNewComment, this));
   }
 });
 
