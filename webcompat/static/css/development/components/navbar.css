@@ -37,13 +37,18 @@
     .wc-Navbar-link + .wc-Navbar-link {
       margin-left:1em;
     }
+      @media all and (max-width: 30em) {
+        .wc-Navbar-link + .wc-Navbar-link {
+          margin-left: 0.5em;
+        }
+      }
     /* label */
     .wc-Navbar-link-label {
       display:inline-block;
       vertical-align:middle;
       margin-left:.3em;
     }
-      @media all and (max-width: 36.25em) {
+      @media all and (max-width: 47.25em) {
         .wc-Navbar-link-label {
           position: absolute;
           top: -9999px;
@@ -53,7 +58,25 @@
     /*icon */
     .wc-Navbar-link-icon {
       font-size:1.2em;
+      display: inline-block;
+      background-repeat: no-repeat;
+      background-position: center center;
+      position: relative;
     }
+
+  /* "Contribute" link icon */
+  .wc-Icon--contribute {
+    background-image: url(/img/contribute.svg);
+    height: 1.7em;
+    width: 1.4em;
+    top: 0.1em;
+  }
+
+  .wc-Navbar-link:hover .wc-Icon--contribute,
+  .wc-Navbar-link:focus .wc-Icon--contribute {
+    background-image: url(/img/contribute-white.svg);
+  }
+
   /* avatar */
   .wc-Navbar-avatar {
     height: 20px;
