@@ -39,6 +39,21 @@
         margin-top: 5px;
       }
 
+.wc-Browserstack {
+  width: 100%;
+  background-image:url(/img/browserstack_logo.svg);
+  background-size: cover;
+  height: 0;
+  padding: 0 0 22%;
+  display: inline-block;
+  color:transparent;
+  background-repeat: no-repeat;
+}
+
+.wc-Thanks-logo {
+  width: 155px;
+}
+
     @media all and (max-width: 59.37em) {
 
       .wc-Threesteps-item-number {
