@@ -45,9 +45,9 @@ All icons are public domain or licensed from The Noun Project.
 
 [Form icon](http://thenounproject.com/term/list/14362/) designed by banoshi. (Licensed)
 
-[Diagnose bugs icon](http://thenounproject.com/term/hackathon/6324/) designed by Iconathon (Public domain)
+[Diagnose bugs icon](https://thenounproject.com/term/electrocardiogram/241273/) designed by Vectors Market (Licensed)
 
-[Reach out to sites icon](http://thenounproject.com/term/sport-fan/8283/) designed by Colin Lawrence.  (Licensed)
+[Reach out to sites icon](https://thenounproject.com/term/heart-care/518087/) designed by ProSymbols.  (Licensed)
 
 [Lightswitch](http://thenounproject.com/term/light-switch/2235/) designed by Jeremy Lloyd.  (Public domain)
 

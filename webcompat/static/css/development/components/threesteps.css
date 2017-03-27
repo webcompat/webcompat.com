@@ -1,5 +1,3 @@
-/** @define Threesteps */
-
 :root {
   --Threesteps-fonSize: 1rem;
   --Threesteps-backgroundColor: #fff;
@@ -7,12 +5,14 @@
 
 .wc-Threesteps {
   padding: 1em 0;
+  display: flex;
+  flex-direction: row;
 }
 
   /* item */
   .wc-Threesteps-item {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     font-size: var(--Threesteps-fonSize);
     margin: 0 0 .5em;
   }
@@ -25,14 +25,34 @@
     }
 
       /* img */
-      .wc-Threesteps-item-number img {
-        width: 50px;
+      
+      .wc-bug-report-icon {
+        width:120px;
+
+      }
+      .wc-bug-diagnosis-icon {
+        width: 85px;
+        margin-top: 10px;
+      }
+      .wc-site-outreach-icon {
+        width: 85px;
+        margin-top: 5px;
       }
 
     @media all and (max-width: 59.37em) {
 
       .wc-Threesteps-item-number {
         padding-right: 0.5em;
+      }
+    }
+
+    @media all and (max-width: 59.37em) {
+      .wc-bug-report-icon {
+        width: 100px;
+      }
+      .wc-site-outreach-icon,
+      .wc-bug-diagnosis-icon {
+        width: 70px;
       }
     }
 
@@ -46,4 +66,26 @@
     /* text */
     .wc-Threesteps-item-text {
       margin: 0;
+      padding:0;
+    }
+
+    .wc-Report {
+      padding:0;
+      margin:0;
+    }
+    .wc-Link {
+      margin:0;
+      padding:0;
+    }
+
+    .wc-Threesteps-item-number * {
+      vertical-align: middle;
+    }
+
+@media all and (max-width: 48.12em) {
+
+      .wc-Threesteps .r-all--4of12 {
+        width: 100%;
+      }
+
     }
