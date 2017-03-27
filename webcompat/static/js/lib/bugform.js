@@ -7,10 +7,8 @@ function BugForm() {
   this.submitButtons = $("#js-ReportForm .js-Button");
   this.loadingIndicator = $(".js-Loader");
   this.reportButton = $("#js-ReportBug");
-  this.loaderImage = $(".js-Loader");
   this.uploadLoader = $(".js-Upload-Loader");
   // by default, submission type is anonymous
-  this.submitType = "github-proxy-report";
   this.UPLOAD_LIMIT = 1024 * 1024 * 4;
 
   this.inputs = {
@@ -60,14 +58,7 @@ function BugForm() {
     this.uploadField.on("change",  _.bind(this.checkImageTypeValidity, this));
     this.osField.add(this.browserField)
                 .on("blur input", _.bind(this.checkOptionalNonEmpty, this));
-    this.submitButtons.on("click", _.bind(function(e) {
-      if (e.target && e.target.value) {
-        // store a reference to what report button was clicked
-        this.submitType = e.target.value;
-      }
-
-      this.loadingIndicator.show();
-    }, this));
+    this.submitButtons.on("click", _.bind(this.loadingIndicator.show, this));
 
     // See if the user already has a valid form
     // (after a page refresh, back button, etc.)
@@ -434,7 +425,7 @@ function BugForm() {
           msg = "The image is too big! Please choose something smaller than 4MB.";
           wcEvents.trigger("flash:error", {message: msg, timeout: 5000});
         }
-        this.loaderImage.hide();
+        this.loadingIndicator.hide();
       }, this)
     });
 
