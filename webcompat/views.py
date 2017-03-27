@@ -7,7 +7,6 @@
 import json
 import logging
 import os
-import urllib
 
 from flask import abort
 from flask import flash
@@ -23,6 +22,7 @@ from form import AUTH_REPORT
 from form import PROXY_REPORT
 from helpers import add_csp
 from helpers import add_sec_headers
+from helpers import cache_policy
 from helpers import get_browser_name
 from helpers import get_form
 from helpers import get_referer
@@ -147,6 +147,7 @@ def index():
 
 
 @app.route('/issues')
+@cache_policy(private=True, uri_max_age=0, must_revalidate=True)
 def show_issues():
     '''Route to display global issues view.'''
     if g.user:
@@ -205,6 +206,7 @@ def create_issue():
 
 
 @app.route('/issues/<int:number>')
+@cache_policy(private=True, uri_max_age=0, must_revalidate=True)
 def show_issue(number):
     '''Route to display a single issue.'''
     if g.user:
@@ -283,6 +285,7 @@ if app.config['LOCALHOST']:
 
 
 @app.route('/about')
+@cache_policy(private=True, uri_max_age=0, must_revalidate=True)
 def about():
     '''Route to display about page.'''
     if g.user:
@@ -291,6 +294,7 @@ def about():
 
 
 @app.route('/privacy')
+@cache_policy(private=True, uri_max_age=0, must_revalidate=True)
 def privacy():
     '''Route to display privacy page.'''
     if g.user:
@@ -299,6 +303,7 @@ def privacy():
 
 
 @app.route('/contributors')
+@cache_policy(private=True, uri_max_age=0, must_revalidate=True)
 def contributors():
     '''Route to display contributors page.'''
     if g.user:
