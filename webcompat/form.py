@@ -211,6 +211,7 @@ def build_formdata(form_object):
     # Append "from webcompat.com" message to bottom (for GitHub issue viewers)
     body += u'\n\n{0}'.format(GITHUB_HELP)
     rv = {'title': summary, 'body': body}
-    if 'label' in form_object:
-        rv.update({'labels': [form_object.get('label')]})
+    extra_label = form_object.get('label', None)
+    if extra_label:
+        rv.update({'labels': [extra_label]})
     return rv
