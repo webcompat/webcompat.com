@@ -1,3 +1,16 @@
+## 3.1.4 - 2017-03-28
+
+* New title + link text [Pull #1447](https://github.com/webcompat/webcompat.com/pull/1447)
+* bugform.js cleanup [Pull #1435](https://github.com/webcompat/webcompat.com/pull/1435)
+* Add support for ctrl+enter for adding comments [Pull #1431](https://github.com/webcompat/webcompat.com/pull/1431)
+* Adjust CONTRIBUTING.md markdown format [Pull #1429](https://github.com/webcompat/webcompat.com/pull/1429)
+* Update join the team section [Pull #1426](https://github.com/webcompat/webcompat.com/pull/1426)
+* Update usage of Flask-Limiter [Pull #1424](https://github.com/webcompat/webcompat.com/pull/1424)
+* Add title to (many!) pages [Pull #1419](https://github.com/webcompat/webcompat.com/pull/1419)
+* Implement a caching policy for HTML resources [Pull #1415](https://github.com/webcompat/webcompat.com/pull/1415)
+* Add functional tests for file upload screenshots [Pull #1411](https://github.com/webcompat/webcompat.com/pull/1411)
+* Add docstrings to upload tests [Pull #1392](https://github.com/webcompat/webcompat.com/pull/1392)
+
 ## 3.1.3 - 2017-03-09
 
 * Tweak CSP Policy [Pull #1410](https://github.com/webcompat/webcompat.com/pull/1410)
