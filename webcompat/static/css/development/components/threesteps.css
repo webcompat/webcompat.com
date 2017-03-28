@@ -24,20 +24,14 @@
       padding: 0 .75em 0 .5em;
     }
 
-      /* img */
-      
-      .wc-bug-report-icon {
-        width:120px;
-
-      }
-      .wc-bug-diagnosis-icon {
-        width: 85px;
-        margin-top: 10px;
-      }
-      .wc-site-outreach-icon {
-        width: 85px;
-        margin-top: 5px;
-      }
+    .wc-bug-report-icon {
+      transform: scale(1.25);
+      transform-origin: top;
+    }
+    .wc-bug-diagnosis-icon {
+      transform: scale(1.25);
+      transform-origin: center;
+    }
 
 .wc-Browserstack {
   width: 100%;
@@ -58,16 +52,6 @@
 
       .wc-Threesteps-item-number {
         padding-right: 0.5em;
-      }
-    }
-
-    @media all and (max-width: 59.37em) {
-      .wc-bug-report-icon {
-        width: 100px;
-      }
-      .wc-site-outreach-icon,
-      .wc-bug-diagnosis-icon {
-        width: 70px;
       }
     }
 
@@ -103,4 +87,35 @@
         width: 100%;
       }
 
+    }
+
+    /* icon */
+    .wc-Threesteps-item-icon {
+      font-size: 2em;
+      font-weight: 700;
+      padding: 0 .75em 0 .5em;
+      flex: 0 0 3.5em;
+      max-height: 3.5em;
+      display: flex;
+      vertical-align: top;
+      align-self: center;
+    }
+
+    @media all and (max-width: 59.37em) {
+
+      .wc-Threesteps-item-icon {
+        padding-right: 0.5em;
+        flex: 0 0 3em;
+        max-height: 3em;
+      }
+    }
+
+
+    @media all and (max-width: 48.12em) {
+
+      .wc-Threesteps-item-icon {
+        padding-bottom: 0;
+        flex: 0 0 2.5em;
+        max-height: 2.5em;
+      }
     }

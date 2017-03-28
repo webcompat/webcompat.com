@@ -11,7 +11,7 @@
 [![Waffle Stories in Ready](https://badge.waffle.io/webcompat/webcompat.com.png?label=ready&title=Ready)](https://waffle.io/webcompat/webcompat.com)
 [![Twitter](https://img.shields.io/twitter/url/https/github.com/webcompat/webcompat.com.svg?style=social)](https://twitter.com/webcompat)
 
-	
+
 
 This repository hosts the code which powers the [webcompat.com Web site](http://webcompat.com/).
 
@@ -45,7 +45,7 @@ All icons are public domain or licensed from The Noun Project.
 
 [Form icon](http://thenounproject.com/term/list/14362/) designed by banoshi. (Licensed)
 
-[Diagnose bugs icon](https://thenounproject.com/term/electrocardiogram/241273/) designed by Vectors Market (Licensed)
+[Diagnose bugs icon](https://thenounproject.com/rockicon/collection/office-line/?i=450639) designed by Rockicon (Licensed)
 
 [Reach out to sites icon](https://thenounproject.com/term/heart-care/518087/) designed by ProSymbols.  (Licensed)
 
