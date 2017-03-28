@@ -1,3 +1,7 @@
+## 3.1.5 - 2017-03-28
+
+* Fix contribute button link. No issue.
+
 ## 3.1.4 - 2017-03-28
 
 * New title + link text [Pull #1447](https://github.com/webcompat/webcompat.com/pull/1447)
