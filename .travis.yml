@@ -58,5 +58,5 @@ before_script:
 # just run the non-auth tests. otherwise, run everything.
 script:
   - nosetests
-  - if [ "$TRAVIS_SECURE_ENV_VARS" == "false" ] ; then node_modules/.bin/intern-runner config=tests/intern reporters=Console functionalSuites=tests/functional-nonauth ; fi
+  - if [ "$TRAVIS_SECURE_ENV_VARS" == "false" ] ; then node_modules/.bin/intern-runner BROWSERSTACK_USER=$BROWSERSTACK_USERNAME BROWSERSTACK_KEY=$BROWSERSTACK_ACCESS_KEY config=tests/browserstack_remote reporters=Console functionalSuites=tests/functional-nonauth ; fi
   - if [ "$TRAVIS_SECURE_ENV_VARS" == "true" ] ; then node_modules/.bin/intern-runner config=tests/intern reporters=Console user="$USER" pw="$PW" ; fi
