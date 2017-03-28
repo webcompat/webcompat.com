@@ -149,13 +149,13 @@ All code contributions should come in the form of a pull request, as a topic bra
 
 After all that, if you'd like, you can send a pull request to add your name to our humans.txt file.
 
-For product and design contributions, check out the [Design Repo](https://github.com/webcompat/design)
+For product and design contributions, check out the [Design Repo](https://github.com/webcompat/design).
 
 ## Coding Style
 
 ### Syntax
 
- Try to take care to follow existing conventions. Some of these are defined in an [.editorconfig](https://github.com/webcompat/webcompat.com/blob/master/.editorconfig) file. You can download the plugin for your editor here http://editorconfig.org/#download
+ Try to take care to follow existing conventions. Some of these are defined in an [.editorconfig](https://github.com/webcompat/webcompat.com/blob/master/.editorconfig) file. You can download the plugin for your editor here http://editorconfig.org/#download.
 
 ### Python
 As we are still very early in the project, we do not yet have that many conventions for naming, routes, APIs. If in doubt, ask us or open an issue.  All Python code should pass [pep8](http://pep8.readthedocs.org/en/1.4.6/intro.html).
@@ -188,7 +188,7 @@ You will get in return the list of mistakes. Some of the basics recommendations 
 When in doubt, follow the conventions you see used in the source already.
 
 ### CSS
-We use cssnext as a tool for compiling css
+We use cssnext as a tool for compiling css.
 
 ```
 This is a CSS transpiler (CSS4+ to CSS3) that allows you to use tomorrow's CSS syntax today. It transforms CSS specs that are not already implemented in popular browsers into more compatible CSS.
@@ -295,6 +295,7 @@ sudo easy_install pip
 Windows users should simply download the most recent Python 2.7 installer and run it again, it installs `pip` by default.
 
 #### Installing virtualenv
+[Virtual Environment]( https://virtualenv.pypa.io/en/stable/) is a tool to create isolated environments for different projects so as to prevent conflicts.
 
 ```bash
 # Install virtualenv
@@ -460,7 +461,7 @@ Tests are also run automatically on [Travis](https://travis-ci.org/webcompat/web
 
 We use [Intern](http://theintern.io/) to run functional tests.
 
-> Note: This version is known to work with Firefox 50.1.0. If things aren't working with the current stable version of Firefox, please [file a bug!](https://github.com/webcompat/webcompat.com/issues/new)
+> Note: This version is known to work with Firefox 50.1.0. If things aren't working with the current stable version of Firefox, please [file a bug!](https://github.com/webcompat/webcompat.com/issues/new).
 
 Be sure that you have installed local npm dependencies and run the build before trying to run functional tests - if not, you will notice problems with the css. [See dev env setup](#installing-grunt) for details.
 
@@ -480,7 +481,7 @@ Java HotSpot(TM) 64-Bit Server VM (build 25.51-b03, mixed mode)
 
 ##### OS X:
 
-Download from [java.com/en/download/](https://www.java.com/en/download/)
+Download from [java.com/en/download/](https://www.java.com/en/download/).
 
 ##### Ubuntu:
 
