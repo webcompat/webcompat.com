@@ -24,7 +24,16 @@ issues.LabelsView = Backbone.View.extend({
     "click .js-LabelEditorLauncher.is-active": "closeEditor"
   },
   keyboardEvents: {
-    "e": "editLabels"
+    "l": "labelWrap"
+  },
+  labelWrap: function(e) {
+    // make sure we're not typing in the search input.
+    if (e.target.nodeName === "TEXTAREA") {
+      return;
+    } else {
+      e.preventDefault();
+      this.editLabels();
+    }
   },
   template: _.template($("#issue-labels-tmpl").html()),
   // this subTemplate will need to be kept in sync with
