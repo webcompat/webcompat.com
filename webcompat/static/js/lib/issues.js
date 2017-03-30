@@ -362,9 +362,13 @@ issues.MainView = Backbone.View.extend({
       this.labels.closeEditor();
     }
   },
-  githubWarp: function() {
-    var warpPipe = "https://github.com/" + repoPath + "/" + this.issue.get("number");
-    return location.href = warpPipe;
+  githubWarp: function(e) {
+    if (e.target.nodeName === "TEXTAREA") {
+      return;
+    } else {
+      var warpPipe = "https://github.com/" + repoPath + "/" + this.issue.get("number");
+      return location.href = warpPipe;
+    }
   },
   initSubViews: function() {
     var issueModel = {model: this.issue};
