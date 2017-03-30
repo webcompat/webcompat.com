@@ -1,3 +1,9 @@
+## 3.1.6 - 2017-03-29
+
+* Make form.get_metadata string concatenation more idiomatic [Pull #1460](https://github.com/webcompat/webcompat.com/pull/1460)
+* Prevent shortcut to open when typing comment [Pull #1459](https://github.com/webcompat/webcompat.com/pull/1459)
+* Fixed broken contribute link on all issues page [Pull #1458](https://github.com/webcompat/webcompat.com/pull/1458)
+
 ## 3.1.5 - 2017-03-28
 
 * Fix contribute button link. No issue.

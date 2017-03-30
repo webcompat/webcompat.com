@@ -105,14 +105,9 @@ def wrap_metadata(metadata):
 
 def get_metadata(metadata_keys, form_object):
     '''Return relevant metadata hanging off the form as a single string.'''
-    metadata = []
-    result = ''
-    for key in metadata_keys:
-        metadata.append((key, form_object.get(key)))
+    metadata = [(key, form_object.get(key)) for key in metadata_keys]
     # Now, "wrap the metadata" and return them all as a single string
-    for md in metadata:
-        result += wrap_metadata(md)
-    return result
+    return ''.join([wrap_metadata(md) for md in metadata])
 
 
 def normalize_url(url):
