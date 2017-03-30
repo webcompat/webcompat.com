@@ -4,7 +4,6 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-import json
 import logging
 import os
 
@@ -31,7 +30,6 @@ from helpers import set_referer
 from issues import report_issue
 from webcompat import app
 from webcompat import github
-from webcompat.api.endpoints import get_rate_limit
 from webcompat.db import User
 from webcompat.db import session_db
 
@@ -250,19 +248,19 @@ def show_user_page(username):
 
 @app.route('/rate_limit')
 def show_rate_limit():
-    body, status_code, response_headers = get_rate_limit()
-    rl = json.loads(body)
-    if g.user:
-        rl.update({"user": session.get('username')})
-    else:
-        rl.update({"user": "webcompat-bot"})
-    # The "rate" hash (shown at the bottom of the response above) is
-    # deprecated and is scheduled for removal in the next version of the API.
-    # see https://developer.github.com/v3/rate_limit/
-    if "rate" in rl:
-        rl.pop("rate")
-    return (render_template('ratelimit.txt', rl=rl), 200,
-            {"content-type": "text/plain"})
+    '''Retired route. 410 Gone.
+
+    Decision made on March 2017. See
+    https://github.com/webcompat/webcompat.com/issues/1437
+    '''
+    msg = """
+    All those moments will be lost in time…
+    like tears in rain…
+    Time to die.
+    – Blade Runner
+
+    This resource doesn't exist anymore."""
+    return (msg, 410, {"content-type": "text/plain; charset=utf-8"})
 
 
 if app.config['LOCALHOST']:

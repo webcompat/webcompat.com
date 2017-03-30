@@ -12,7 +12,7 @@ import unittest
 
 # Add webcompat module to import path
 sys.path.append(os.path.realpath(os.pardir))
-import webcompat
+import webcompat  # nopep8
 
 # Any request that depends on parsing HTTP Headers (basically anything
 # on the index route, will need to include the following: environ_base=headers
@@ -112,11 +112,9 @@ class TestURLs(unittest.TestCase):
         self.assertEqual(rv.status_code, 200)
 
     def test_rate_limit(self):
-        '''Rate Limit URI sends 200 OK and starts with Current user.'''
+        '''Rate Limit URI sends 410 Gone.'''
         rv = self.app.get('/rate_limit')
-        response_start = 'Current user:'
-        self.assertEqual(rv.status_code, 200)
-        self.assertTrue = rv.data.startswith(response_start)
+        self.assertEqual(rv.status_code, 410)
 
     def test_tools_cssfixme_with_URL(self):
         '''Test that the /tools/cssfixme route gets 200 with ?url query.'''
