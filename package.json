@@ -48,6 +48,7 @@
     "fix": "eslint --fix ./Gruntfile.js ./tests ./grunt-tasks ./webcompat/static/js/lib",
     "imagemin":"grunt imagemin",
     "module": "git submodule init && git submodule update",
+    "prestart":"npm run build",
     "start": "source env/bin/activate || . env/bin/activate && python run.py",
     "virtualenv": "pip install virtualenv && virtualenv env && source env/bin/activate || . env/bin/activate && npm run pip",
     "pip": "pip install -r config/requirements.txt",
