@@ -24,9 +24,9 @@ issues.LabelsView = Backbone.View.extend({
     "click .js-LabelEditorLauncher.is-active": "closeEditor"
   },
   keyboardEvents: {
-    "l": "labelWrap"
+    "l": "labelWarp"
   },
-  labelWrap: function(e) {
+  labelWarp: function(e) {
     // make sure we're not typing in the search input.
     if (e.target.nodeName === "TEXTAREA") {
       return;
