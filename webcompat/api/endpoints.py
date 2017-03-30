@@ -9,7 +9,6 @@
 This is used to make API calls to GitHub, either via a logged-in users
 credentials or as a proxy on behalf of anonymous or unauthenticated users.'''
 
-import json
 
 from flask import abort
 from flask import Blueprint
@@ -240,13 +239,3 @@ def get_repo_labels():
     params = request.args.copy()
     path = 'repos/{0}/labels'.format(REPO_PATH)
     return api_request('get', path, params=params)
-
-
-@api.route('/rate_limit')
-def get_rate_limit():
-    '''Endpoint to display the current GitHub API rate limit.
-
-    Will display for the logged in user, or webcompat-bot if not logged in.
-    See https://developer.github.com/v3/rate_limit/.
-    '''
-    return api_request('get', 'rate_limit')
