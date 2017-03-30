@@ -1,3 +1,9 @@
+## 3.1.7 - 2017-03-30
+
+* Prevent shortcuts firing in textarea [Pull #1464](https://github.com/webcompat/webcompat.com/pull/1464)
+* makes /rate_limit route send 410 Gone [Pull #1463](https://github.com/webcompat/webcompat.com/pull/1463)
+* added grunt build as prestart script [Pull #1461](https://github.com/webcompat/webcompat.com/pull/1461)
+
 ## 3.1.6 - 2017-03-29
 
 * Make form.get_metadata string concatenation more idiomatic [Pull #1460](https://github.com/webcompat/webcompat.com/pull/1460)
