@@ -138,6 +138,11 @@
     margin-top: 2em;
   }
 
+.wc-Issue-labels {
+  background-color: #fff;
+  margin: 2px 0;
+  padding: 1em;
+}
 /* FullScreen LabelEditor*/
 @media all and (max-width: 23.43em) {
   .wc-Issue-labels {
