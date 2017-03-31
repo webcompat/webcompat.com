@@ -5,8 +5,8 @@
 }
 
 .wc-Label {
-  font-size:var(--Label-fontSize);
-  vertical-align:middle;
+  font-size: var(--Label-fontSize);
+  vertical-align: middle;
   color: #fff;
   border-radius: 4px;
   font-weight: bold;
@@ -22,7 +22,7 @@
   @media all and (max-width: 48.12em) {
     .wc-Label {
       display: inline-block;
-      line-height:1;
+      line-height: 1;
       padding: 0.4em;
     }
   }
@@ -33,7 +33,7 @@
     color: #000;
     padding-right: 0;
     padding-left: 0;
-    margin-right: 0.1em;
+    margin-right: .1em;
   }
 
   @media all and (max-width: 48.12em) {
