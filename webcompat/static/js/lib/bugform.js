@@ -12,32 +12,32 @@ function BugForm() {
   this.UPLOAD_LIMIT = 1024 * 1024 * 4;
 
   this.inputs = {
-    "url": {
-      "el": $("#url"),
-      "valid": null,
-      "helpText": "A valid URL is required."
+    url: {
+      el: $("#url"),
+      valid: null,
+      helpText: "A valid URL is required."
     },
-    "problem_type": {
-      "el": $("[name=problem_category]"),
-      "valid": null,
-      "helpText": "Problem type required."
+    problem_type: {
+      el: $("[name=problem_category]"),
+      valid: null,
+      helpText: "Problem type required."
     },
-    "image": {
-      "el": $("#image"),
+    image: {
+      el: $("#image"),
       // image should be valid by default because it's optional
-      "valid": true,
-      "helpText": "Image must be one of the following: jpg, png, gif, or bmp.",
-      "altHelpText": "Please choose a smaller image (< 4MB)"
+      valid: true,
+      helpText: "Image must be one of the following: jpg, png, gif, or bmp.",
+      altHelpText: "Please choose a smaller image (< 4MB)"
     },
-    "browser": {
-      "el": $("#browser"),
-      "valid": true,
-      "helpText": null
+    browser: {
+      el: $("#browser"),
+      valid: true,
+      helpText: null
     },
-    "os": {
-      "el": $("#os"),
-      "valid": true,
-      "helpText": null
+    os: {
+      el: $("#os"),
+      valid: true,
+      helpText: null
     }
   };
 
@@ -51,13 +51,14 @@ function BugForm() {
   this.init = function() {
     this.checkParams();
     this.disableSubmits();
-    this.urlField.on("input",      _.bind(this.copyURL, this));
+    this.urlField.on("input", _.bind(this.copyURL, this));
     this.urlField.on("blur input", _.bind(this.checkURLValidity, this));
-    this.descField.on("focus",     _.bind(this.checkProblemTypeValidity, this));
-    this.problemType.on("change",  _.bind(this.checkProblemTypeValidity, this));
-    this.uploadField.on("change",  _.bind(this.checkImageTypeValidity, this));
-    this.osField.add(this.browserField)
-                .on("blur input", _.bind(this.checkOptionalNonEmpty, this));
+    this.descField.on("focus", _.bind(this.checkProblemTypeValidity, this));
+    this.problemType.on("change", _.bind(this.checkProblemTypeValidity, this));
+    this.uploadField.on("change", _.bind(this.checkImageTypeValidity, this));
+    this.osField
+      .add(this.browserField)
+      .on("blur input", _.bind(this.checkOptionalNonEmpty, this));
     this.submitButtons.on("click", _.bind(this.loadingIndicator.show, this));
 
     // See if the user already has a valid form
@@ -65,22 +66,29 @@ function BugForm() {
     this.checkForm();
 
     // Set up listener for message events from screenshot-enabled add-ons
-    window.addEventListener("message", _.bind(function(event) {
-      // Make sure the data is coming from ~*inside the house*~!
-      // (i.e., our add-on or some other priviledged code sent it)
-      if (location.origin === event.origin) {
-        // See https://github.com/webcompat/webcompat.com/issues/1252 to track
-        // the work of only accepting blobs, which should simplify things.
-        if (event.data instanceof Blob) {
-          // showUploadPreview will take care of converting from blob to
-          // dataURI, and will send the result to resampleIfNecessaryAndUpload.
-          this.showUploadPreview(event.data);
-        } else {
-          // ...the data is already a data URI string
-          this.resampleIfNecessaryAndUpload(event.data);
-        }
-      }
-    }, this), false);
+    window.addEventListener(
+      "message",
+      _.bind(
+        function(event) {
+          // Make sure the data is coming from ~*inside the house*~!
+          // (i.e., our add-on or some other priviledged code sent it)
+          if (location.origin === event.origin) {
+            // See https://github.com/webcompat/webcompat.com/issues/1252 to track
+            // the work of only accepting blobs, which should simplify things.
+            if (event.data instanceof Blob) {
+              // showUploadPreview will take care of converting from blob to
+              // dataURI, and will send the result to resampleIfNecessaryAndUpload.
+              this.showUploadPreview(event.data);
+            } else {
+              // ...the data is already a data URI string
+              this.resampleIfNecessaryAndUpload(event.data);
+            }
+          }
+        },
+        this
+      ),
+      false
+    );
   };
 
   this.resampleIfNecessaryAndUpload = function(screenshotData) {
@@ -88,7 +96,7 @@ function BugForm() {
     // 1.37 times the original data size + 814 bytes (for headers).
     // so, bytes = (encoded_string.length - 814) / 1.37)
     // see https://en.wikipedia.org/wiki/Base64#MIME
-    if ((String(screenshotData).length - 814 / 1.37) > this.UPLOAD_LIMIT) {
+    if (String(screenshotData).length - 814 / 1.37 > this.UPLOAD_LIMIT) {
       this.downsampleImageAndUpload(screenshotData);
     } else {
       this.addPreviewBackgroundAndUpload(screenshotData);
@@ -100,29 +108,32 @@ function BugForm() {
     var canvas = document.createElement("canvas");
     var ctx = canvas.getContext("2d");
 
-    img.onload = _.bind(function() {
-      // scale the tmp canvas to 50%
-      canvas.width = Math.floor(img.width / 2);
-      canvas.height = Math.floor(img.height / 2);
-      ctx.scale(0.5, 0.5);
-      // draw back in the screenshot (at 50% scale)
-      // and re-serialize to data URI
-      ctx.drawImage(img, 0, 0);
-      // Note: this will convert GIFs to JPEG, which breaks
-      // animated GIFs. However, this only will happen if they
-      // were above the upload limit size. So... sorry?
-      var screenshotData = canvas.toDataURL("image/jpeg", 0.8);
+    img.onload = _.bind(
+      function() {
+        // scale the tmp canvas to 50%
+        canvas.width = Math.floor(img.width / 2);
+        canvas.height = Math.floor(img.height / 2);
+        ctx.scale(0.5, 0.5);
+        // draw back in the screenshot (at 50% scale)
+        // and re-serialize to data URI
+        ctx.drawImage(img, 0, 0);
+        // Note: this will convert GIFs to JPEG, which breaks
+        // animated GIFs. However, this only will happen if they
+        // were above the upload limit size. So... sorry?
+        var screenshotData = canvas.toDataURL("image/jpeg", 0.8);
 
-      // The limit is 4MB (which is crazy big!), so let the user know if their
-      // file is unreasonably large at this point (after 1 round of downsampling)
-      if (screenshotData > this.UPLOAD_LIMIT) {
-        this.makeInvalid("image", {altHelp: true});
-        return;
-      }
+        // The limit is 4MB (which is crazy big!), so let the user know if their
+        // file is unreasonably large at this point (after 1 round of downsampling)
+        if (screenshotData > this.UPLOAD_LIMIT) {
+          this.makeInvalid("image", { altHelp: true });
+          return;
+        }
 
-      this.addPreviewBackgroundAndUpload(screenshotData);
-      img = null, canvas = null;
-    }, this);
+        this.addPreviewBackgroundAndUpload(screenshotData);
+        (img = null), (canvas = null);
+      },
+      this
+    );
 
     img.src = dataURI;
   };
@@ -210,11 +221,12 @@ function BugForm() {
   };
 
   this.isReportableURL = function(url) {
-    return url && !(_.startsWith(url, "about:")     ||
-                    _.startsWith(url, "chrome:")    ||
-                    _.startsWith(url, "file:")      ||
-                    _.startsWith(url, "resource:")  ||
-                    _.startsWith(url, "view-source:"));
+    return url &&
+      !(_.startsWith(url, "about:") ||
+        _.startsWith(url, "chrome:") ||
+        _.startsWith(url, "file:") ||
+        _.startsWith(url, "resource:") ||
+        _.startsWith(url, "view-source:"));
   };
 
   /* Check to see that the URL input element is not empty,
@@ -231,21 +243,30 @@ function BugForm() {
   /* Check if Browser and OS are empty or not, only
      so we can set them to valid (there is no invalid state) */
   this.checkOptionalNonEmpty = function() {
-    _.forEach([this.browserField, this.osField], _.bind(function(input) {
-      var inputId = input.prop("id");
-      if (input.val()) {
-        this.makeValid(inputId);
-      } else {
-        this.makeInvalid(inputId);
-      }
-    }, this));
+    _.forEach(
+      [this.browserField, this.osField],
+      _.bind(
+        function(input) {
+          var inputId = input.prop("id");
+          if (input.val()) {
+            this.makeValid(inputId);
+          } else {
+            this.makeInvalid(inputId);
+          }
+        },
+        this
+      )
+    );
   };
 
   this.checkForm = function() {
     // Run through and see if there's any user input in the
     // required inputs
-    var inputs = [this.problemType.filter(":checked").length,
-      this.urlField.val(), this.uploadField.val()];
+    var inputs = [
+      this.problemType.filter(":checked").length,
+      this.urlField.val(),
+      this.uploadField.val()
+    ];
     if (_.some(inputs, Boolean)) {
       // then, check validity
       this.checkURLValidity();
@@ -271,22 +292,25 @@ function BugForm() {
     }
 
     var inlineHelp = $("<span></span>", {
-      "class": "wc-Form-helpMessage",
-      "text": opts && opts.altHelp ? this.inputs[id].altHelpText :
-                                     this.inputs[id].helpText
+      class: "wc-Form-helpMessage",
+      text: opts && opts.altHelp
+        ? this.inputs[id].altHelpText
+        : this.inputs[id].helpText
     });
 
     this.inputs[id].valid = false;
-    this.inputs[id].el.parents(".js-Form-group")
-                     .removeClass("is-validated js-no-error")
-                     .addClass("is-error js-form-error");
+    this.inputs[id].el
+      .parents(".js-Form-group")
+      .removeClass("is-validated js-no-error")
+      .addClass("is-error js-form-error");
 
     switch (id) {
       case "os":
       case "browser":
         // remove error classes, because these inputs are optional
-        this.inputs[id].el.parents(".js-Form-group")
-                          .removeClass("is-error js-form-error");
+        this.inputs[id].el
+          .parents(".js-Form-group")
+          .removeClass("is-error js-form-error");
         break;
       case "url":
         inlineHelp.insertAfter("label[for=" + id + "]");
@@ -298,9 +322,10 @@ function BugForm() {
         // hide the error in case we already saw one
         $(".wc-Form-helpMessage--imageUpload").remove();
 
-        inlineHelp.removeClass("wc-Form-helpMessage")
-                  .addClass("wc-Form-helpMessage--imageUpload")
-                  .insertAfter(".js-image-upload-label");
+        inlineHelp
+          .removeClass("wc-Form-helpMessage")
+          .addClass("wc-Form-helpMessage--imageUpload")
+          .insertAfter(".js-image-upload-label");
 
         $(".wc-UploadForm-label").hide();
         // "reset" the form field, because the file would get rejected
@@ -316,15 +341,21 @@ function BugForm() {
 
   this.makeValid = function(id) {
     this.inputs[id].valid = true;
-    this.inputs[id].el.parents(".js-Form-group")
-                     .removeClass("is-error js-form-error")
-                     .addClass("is-validated js-no-error");
+    this.inputs[id].el
+      .parents(".js-Form-group")
+      .removeClass("is-error js-form-error")
+      .addClass("is-validated js-no-error");
 
-    this.inputs[id].el.parents(".js-Form-group").find(".wc-Form-helpMessage").remove();
+    this.inputs[id].el
+      .parents(".js-Form-group")
+      .find(".wc-Form-helpMessage")
+      .remove();
 
-    if (this.inputs["url"].valid &&
-        this.inputs["problem_type"].valid &&
-        this.inputs["image"].valid) {
+    if (
+      this.inputs["url"].valid &&
+      this.inputs["problem_type"].valid &&
+      this.inputs["image"].valid
+    ) {
       this.enableSubmits();
     }
   };
@@ -344,10 +375,13 @@ function BugForm() {
     }
 
     var reader = new FileReader();
-    reader.onload = _.bind(function(event) {
-      var dataURI = event.target.result;
-      this.resampleIfNecessaryAndUpload(dataURI);
-    }, this);
+    reader.onload = _.bind(
+      function(event) {
+        var dataURI = event.target.result;
+        this.resampleIfNecessaryAndUpload(dataURI);
+      },
+      this
+    );
     reader.readAsDataURL(blobOrFile);
   };
 
@@ -358,7 +392,7 @@ function BugForm() {
 
     var label = $(".js-image-upload").find("label").eq(0);
     label.css({
-      "background": "url(" + dataURI + ") no-repeat center / contain",
+      background: "url(" + dataURI + ") no-repeat center / contain",
       "background-color": "#eee"
     });
 
@@ -378,20 +412,26 @@ function BugForm() {
 
     removeBanner.removeClass("is-hidden");
     uploadWrapper.addClass("is-hidden");
-    removeBanner.on("click", _.bind(function() {
-      // remove the preview and hide the banner
-      label.css("background", "none");
-      removeBanner.addClass("is-hidden");
-      uploadWrapper.removeClass("is-hidden");
-      removeBanner.off("click");
+    removeBanner.on(
+      "click",
+      _.bind(
+        function() {
+          // remove the preview and hide the banner
+          label.css("background", "none");
+          removeBanner.addClass("is-hidden");
+          uploadWrapper.removeClass("is-hidden");
+          removeBanner.off("click");
 
-      // remove the last embedded image URL
-      // Note: this could fail in weird ways depending on how
-      // the user has edited the descField.
-      this.descField.val(function(idx, value) {
-        return value.replace(/!\[.+\.(?:bmp|gif|jpe*g*)\)$/, "");
-      });
-    }, this));
+          // remove the last embedded image URL
+          // Note: this could fail in weird ways depending on how
+          // the user has edited the descField.
+          this.descField.val(function(idx, value) {
+            return value.replace(/!\[.+\.(?:bmp|gif|jpe*g*)\)$/, "");
+          });
+        },
+        this
+      )
+    );
   };
   /*
      Upload the image before form submission so we can
@@ -409,24 +449,32 @@ function BugForm() {
       data: formdata,
       method: "POST",
       url: "/upload/",
-      success: _.bind(function(response) {
-        this.addImageURL(response.url);
-        this.uploadLoader.removeClass("is-active");
-        this.enableSubmits();
-      }, this),
-      error: _.bind(function(response) {
-        var msg;
-        if (response && response.status === 415) {
-          wcEvents.trigger("flash:error",
-            {message: this.inputs.image.helpText, timeout: 5000});
-        }
+      success: _.bind(
+        function(response) {
+          this.addImageURL(response.url);
+          this.uploadLoader.removeClass("is-active");
+          this.enableSubmits();
+        },
+        this
+      ),
+      error: _.bind(
+        function(response) {
+          var msg;
+          if (response && response.status === 415) {
+            wcEvents.trigger("flash:error", {
+              message: this.inputs.image.helpText,
+              timeout: 5000
+            });
+          }
 
-        if (response && response.status === 413) {
-          msg = "The image is too big! Please choose something smaller than 4MB.";
-          wcEvents.trigger("flash:error", {message: msg, timeout: 5000});
-        }
-        this.loadingIndicator.hide();
-      }, this)
+          if (response && response.status === 413) {
+            msg = "The image is too big! Please choose something smaller than 4MB.";
+            wcEvents.trigger("flash:error", { message: msg, timeout: 5000 });
+          }
+          this.loadingIndicator.hide();
+        },
+        this
+      )
     });
 
     // clear out the input[type=file], because we don't need it anymore.
@@ -449,13 +497,18 @@ function BugForm() {
   */
   this.copyURL = function() {
     var firstLine = /^1\.\sNavigate.*\n/;
-    this.descField.val(_.bind(function(idx, value) {
-      var prefix = "1. Navigate to: ";
-      if (!firstLine.test(value)) {
-        return value;
-      }
-      return value.replace(firstLine, prefix + this.urlField.val() + "\n");
-    }, this));
+    this.descField.val(
+      _.bind(
+        function(idx, value) {
+          var prefix = "1. Navigate to: ";
+          if (!firstLine.test(value)) {
+            return value;
+          }
+          return value.replace(firstLine, prefix + this.urlField.val() + "\n");
+        },
+        this
+      )
+    );
   };
 
   return this.init();

@@ -14,18 +14,23 @@ diagnose.NeedsTriageView = Backbone.View.extend({
   el: $("#js-lastIssue"),
   initialize: function() {
     var self = this;
-    var headersBag = {headers: {"Accept": "application/json"}};
+    var headersBag = { headers: { Accept: "application/json" } };
     this.issues = new diagnose.NeedsTriageCollection();
-    this.issues.fetch(headersBag).success(function() {
-      self.render();
-    }).error(function() {});
+    this.issues
+      .fetch(headersBag)
+      .success(function() {
+        self.render();
+      })
+      .error(function() {});
   },
   template: _.template($("#needstriage-tmpl").html()),
   render: function() {
-    this.$el.html(this.template({
-      // Just display the first 10.
-      issues: this.issues.toJSON().slice(0, 10)
-    }));
+    this.$el.html(
+      this.template({
+        // Just display the first 10.
+        issues: this.issues.toJSON().slice(0, 10)
+      })
+    );
     return this;
   }
 });

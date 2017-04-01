@@ -5,11 +5,8 @@
 // Learn more about configuring this file at <https://github.com/theintern/intern/wiki/Configuring-Intern>.
 // These default settings work OK for most people. The options that *must* be changed below are the
 // packages, suites, excludeInstrumentation, and (if you want functional tests) functionalSuites.
-define([
-  "intern",
-], function(intern, topic) {
+define(["intern"], function(intern, topic) {
   "use strict";
-
   var args = intern.args;
   var siteRoot = args.siteRoot ? args.siteRoot : "http://localhost:5000";
 
@@ -23,10 +20,12 @@ define([
   return {
     // Configuration object for webcompat
     wc: {
-      pageLoadTimeout: args.wcPageLoadTimeout ? parseInt(args.wcPageLoadTimeout, 10) : 10000,
+      pageLoadTimeout: args.wcPageLoadTimeout
+        ? parseInt(args.wcPageLoadTimeout, 10)
+        : 10000,
       // user and pw need to be passed in as command-line arguments. See CONTRIBUTING.md
       user: args.user || "some username",
-      pw: args.pw || "some password",
+      pw: args.pw || "some password"
     },
 
     // The port on which the instrumenting proxy will listen
@@ -38,20 +37,21 @@ define([
     tunnel: "SeleniumTunnel",
     tunnelOptions: {
       // this tells SeleniumTunnel to download geckodriver
-      drivers: [ "firefox" ]
+      drivers: ["firefox"]
     },
 
-    environments: [{
-      browserName: "firefox",
-      marionette: true
-    }],
+    environments: [
+      {
+        browserName: "firefox",
+        marionette: true
+      }
+    ],
 
     filterErrorStack: true,
     reporters: ["Pretty"],
 
     // Unless you pass in a command-line arg saying otherwise, we run all tests by default.
-    functionalSuites: [ "tests/functional-all" ],
+    functionalSuites: ["tests/functional-all"],
     excludeInstrumentation: true
   };
-
 });

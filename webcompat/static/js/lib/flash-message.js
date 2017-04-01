@@ -12,7 +12,7 @@ eventBus.trigger('flash:error', {message: 'hi', timeout: 1000});
 `opts.timeout` (optional) is the length of time before fading the message out.
                           Default is 3 seconds
 */
-var wcEvents = _.extend({},Backbone.Events);
+var wcEvents = _.extend({}, Backbone.Events);
 
 var FlashMessageView = Backbone.View.extend({
   tagName: "div",
@@ -24,9 +24,7 @@ var FlashMessageView = Backbone.View.extend({
     wcEvents.on("flash:thanks", _.bind(this.showThanks, this));
   },
   render: function(message) {
-    this.$el.html(message)
-            .addClass("is-active")
-            .appendTo("body").show();
+    this.$el.html(message).addClass("is-active").appendTo("body").show();
 
     return this;
   },
@@ -46,17 +44,21 @@ var FlashMessageView = Backbone.View.extend({
     this.render(message);
   },
   showThanks: function(opts) {
-    var buildTemplate = _.template([
-      "<h4>Thanks for reporting an issue!</h4>",
-      "<p>You're helping us make the web a better place to work and play.</p>",
-      "<p>Tell your friends about the bug you just filed:</p>",
-      "<a class=\"wc-Button wc-Button--action\" href=\"https://twitter.com/intent/tweet?text=<%- encodeURIComponent(\"I just filed a bug on the internet:\") %>&url=<%- encodeURIComponent(\"https://webcompat.com/issues/\") %><%= number %>&via=webcompat\" target=\"_blank\">Share on Twitter</a>",
-      "<a class=\"wc-Button wc-Button--action\" href=\"https://facebook.com/sharer/sharer.php?u=<%- encodeURIComponent(\"https://webcompat.com/issues/\") %><%= number %>\" target=\"_blank\">Share on Facebook</a>"
-    ].join(""));
+    var buildTemplate = _.template(
+      [
+        "<h4>Thanks for reporting an issue!</h4>",
+        "<p>You're helping us make the web a better place to work and play.</p>",
+        "<p>Tell your friends about the bug you just filed:</p>",
+        '<a class="wc-Button wc-Button--action" href="https://twitter.com/intent/tweet?text=<%- encodeURIComponent("I just filed a bug on the internet:") %>&url=<%- encodeURIComponent("https://webcompat.com/issues/") %><%= number %>&via=webcompat" target="_blank">Share on Twitter</a>',
+        '<a class="wc-Button wc-Button--action" href="https://facebook.com/sharer/sharer.php?u=<%- encodeURIComponent("https://webcompat.com/issues/") %><%= number %>" target="_blank">Share on Facebook</a>'
+      ].join("")
+    );
 
     this.$el.addClass("is-active wc-FlashMessage--thanks");
-    this.$el.html(buildTemplate({number: opts.message}))
-            .insertBefore(".wc-Issue-information").show();
+    this.$el
+      .html(buildTemplate({ number: opts.message }))
+      .insertBefore(".wc-Issue-information")
+      .show();
   },
   hide: function() {
     this.$el.fadeOut();

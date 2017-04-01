@@ -9,10 +9,16 @@ module.exports = function(grunt) {
       processors: [
         require("postcss-import")(),
         require("postcss-cssnext")({
-          browsers: ["ff >= 20", "ie >= 10", "safari >= 7", "opera >= 12", "chrome >=30"],
+          browsers: [
+            "ff >= 20",
+            "ie >= 10",
+            "safari >= 7",
+            "opera >= 12",
+            "chrome >=30"
+          ]
         }),
         require("postcss-browser-reporter")(),
-        require("postcss-reporter")(),
+        require("postcss-reporter")()
       ]
     },
     dist: {

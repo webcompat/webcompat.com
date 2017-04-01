@@ -4,11 +4,11 @@
 
 module.exports = function(grunt) {
   grunt.config("watch", {
-    css:{
+    css: {
       files: "<%= cssPath %>/development/**/*.css",
       tasks: ["postcss"]
     },
-    script:{
+    script: {
       files: "<%= jshint.beforeconcat %>",
       tasks: ["jshint:beforeconcat"]
     }

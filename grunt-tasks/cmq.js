@@ -9,7 +9,7 @@ module.exports = function(grunt) {
     },
     your_target: {
       files: {
-        "<%= cssPath %>" : ["<%= cssPath %>/webcompat.dev.css"]
+        "<%= cssPath %>": ["<%= cssPath %>/webcompat.dev.css"]
       }
     }
   });

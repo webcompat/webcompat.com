@@ -45,7 +45,7 @@ issues.LabelList = Backbone.Model.extend({
         // default to "all labels" URL
         this.set("url", this.get("defaultLabelURL"));
       }
-      var headersBag = {headers: {"Accept": "application/json"}};
+      var headersBag = { headers: { Accept: "application/json" } };
       this.fetch(headersBag); // This will trigger parse() on response
     }
   },
@@ -59,17 +59,17 @@ issues.LabelList = Backbone.Model.extend({
       if (matches) {
         namespaceMap[matches[2]] = matches[1];
         list[i] = {
-          "name": matches[2],
-          "url": labelsArray[i].url,
-          "color": labelsArray[i].color,
-          "remoteName": matches[0]
+          name: matches[2],
+          url: labelsArray[i].url,
+          color: labelsArray[i].color,
+          remoteName: matches[0]
         };
       } else {
         if (typeof labelsArray[i] === "object") {
           list[i] = labelsArray[i];
           list[i].remoteName = list[i].name;
         } else {
-          list[i] = {"name": theLabel};
+          list[i] = { name: theLabel };
         }
       }
     }
