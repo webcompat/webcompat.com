@@ -1,19 +1,31 @@
 /** @define Label */
 
 :root {
-  --Label-fontSize: .7rem;
+  --Label-fontSize: .75rem;
 }
 
 .wc-Label {
-  font-size:var(--Label-fontSize);
-  display: inline-block;
-  vertical-align:middle;
-  line-height:1;
+  font-size: var(--Label-fontSize);
+  vertical-align: middle;
   color: #fff;
   border-radius: 4px;
-  padding: 0.4em;
   font-weight: bold;
 }
+
+  @media all and (min-width: 48.13em) {
+    .wc-Label {
+      display: block;
+      padding: .375rem .625rem;
+    }
+  }
+
+  @media all and (max-width: 48.12em) {
+    .wc-Label {
+      display: inline-block;
+      line-height: 1;
+      padding: 0.4em;
+    }
+  }
 
   /* Labels */
   .wc-Label--large {
@@ -21,13 +33,20 @@
     color: #000;
     padding-right: 0;
     padding-left: 0;
-    margin-right: 0.1em;
+    margin-right: .1em;
   }
 
-  .wc-Label--badge {
-    margin-left: 1em;
+  @media all and (max-width: 48.12em) {
+    .wc-Label--badge {
+      margin-left: 1em;
+    }
+    .wc-Label--badge + .wc-Label--badge {
+      margin-left: .7em;
+    }
   }
 
-  .wc-Label--badge + .wc-Label--badge {
-    margin-left: .7em;
+  @media all and (min-width: 48.13em) {
+    .wc-Label--badge + .wc-Label--badge {
+      margin-top: .625em;
+    }
   }

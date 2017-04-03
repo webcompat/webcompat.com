@@ -1,26 +1,9 @@
-<div class="wc-Issue-information">
+<div class="wc-Issue-information" id="js-Issue-information">
   <script type="text/template" id="metadata-tmpl">
-    <header class="wc-Issue-information-header wc-Issue-information-header--<%= stateClass %>">
-      <div><%= issueState %></div>
-      <div>#<%= number %></div>
-    </header>
-    <div class="wc-Issue-information-content">
-      <h1 class="wc-Issue-title js-Issue-title">
-        <%= title %>
-      </h1>
-      <div class="wc-Issue-date">Opened <%= createdAt %> by
-        <span class="wc-Issue-reporter js-Issue-reporter">
-          <a class="wc-Link" href="https://github.com/<%= reporter %>"><%= reporter %></a>
-        </span>. <%= commentNumber %> comments
-      </div>
-    </div>
     <div class="wc-Issue-information-content">
       <div class="js-Issue-markdown wc-Markdown">
         <%= body %>
       </div>
     </div>
   </script>
-</div>
-<div class="wc-Issue-labels js-Issue-labels">
-  {% include "issue/issue-labels.html" %}
 </div>
