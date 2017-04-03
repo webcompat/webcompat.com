@@ -42,7 +42,7 @@ module.exports = function(grunt) {
         "<%= jsPath %>/lib/models/issue.js",
         "<%= jsPath %>/lib/models/comment.js",
         "<%= jsPath %>/lib/comments.js",
-        "<%= jsPath %>/lib/issues.js",
+        "<%= jsPath %>/lib/issues.js"
       ],
       dest: "<%= jsPath %>/issues.js"
     },

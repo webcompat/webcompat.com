@@ -9,7 +9,7 @@ module.exports = function(grunt) {
     cssPath: "webcompat/static/css",
     imgPath: "webcompat/static/img",
     banner: "/*! <%= pkg.title %>\n" +
-      " *  Copyright (c) <%= grunt.template.today(\"yyyy\") %> <%= pkg.author.name %>\n" +
+      ' *  Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author.name %>\n' +
       " *\n" +
       " *  This code is licensed under the MPL 2.0 License, except where\n" +
       " *  otherwise stated. See http://mozilla.org/MPL/2.0/. */\n"
@@ -23,11 +23,20 @@ module.exports = function(grunt) {
 
   // Default task.
   grunt.registerTask("default", [
-    "checkDependencies", "concat", "uglify","postcss", "cssmin"
+    "checkDependencies",
+    "concat",
+    "uglify",
+    "postcss",
+    "cssmin"
   ]);
 
   // Task used before doing a deploy (same as default, but does image optimization)
   grunt.registerTask("deploy", [
-    "checkDependencies", "concat", "uglify","postcss", "cssmin", "imagemin"
+    "checkDependencies",
+    "concat",
+    "uglify",
+    "postcss",
+    "cssmin",
+    "imagemin"
   ]);
 };

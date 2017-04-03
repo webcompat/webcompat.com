@@ -9,11 +9,14 @@ var issues = issues || {}; // eslint-disable-line no-use-before-define
 var issueList = issueList || {}; // eslint-disable-line no-use-before-define
 
 if (!window.md) {
-  window.md = window.markdownit({
-    breaks: true,
-    html: true,
-    linkify: true
-  }).use(window.markdownitSanitizer).use(window.markdownitEmoji);
+  window.md = window
+    .markdownit({
+      breaks: true,
+      html: true,
+      linkify: true
+    })
+    .use(window.markdownitSanitizer)
+    .use(window.markdownitEmoji);
 }
 
 issues.Issue = Backbone.Model.extend({
@@ -22,14 +25,30 @@ issues.Issue = Backbone.Model.extend({
     return "/api/issues/" + this.get("number");
   },
   initialize: function() {
-    this.on("change:state", _.bind(function() {
-      this.set("issueState", this.getState(this.get("state"),
-                                           this.get("labels")));
-    }, this));
-    this.on("change:labels", _.bind(function() {
-      this.set("issueState", this.getState(this.get("state"),
-                                           this.get("labels")));
-    }, this));
+    this.on(
+      "change:state",
+      _.bind(
+        function() {
+          this.set(
+            "issueState",
+            this.getState(this.get("state"), this.get("labels"))
+          );
+        },
+        this
+      )
+    );
+    this.on(
+      "change:labels",
+      _.bind(
+        function() {
+          this.set(
+            "issueState",
+            this.getState(this.get("state"), this.get("labels"))
+          );
+        },
+        this
+      )
+    );
   },
   getState: function(state, labels) {
     var labelsNames = _.pluck(labels, "name");
@@ -66,7 +85,7 @@ issues.Issue = Backbone.Model.extend({
     return "Needs Triage";
   },
   parse: function(response) {
-    var labelList = new issues.LabelList({"labels":response.labels});
+    var labelList = new issues.LabelList({ labels: response.labels });
     var labels = labelList.get("labels");
     this.set({
       body: md.render(response.body),
@@ -85,38 +104,50 @@ issues.Issue = Backbone.Model.extend({
     var newState = this.get("state") === "open" ? "closed" : "open";
     $.ajax({
       contentType: "application/json",
-      data: JSON.stringify({"state": newState}),
+      data: JSON.stringify({ state: newState }),
       type: "PATCH",
       url: "/api/issues/" + this.get("number") + "/edit",
-      success: _.bind(function() {
-        this.set("state", newState);
-        if (callback) {
-          callback();
-        }
-      }, this),
+      success: _.bind(
+        function() {
+          this.set("state", newState);
+          if (callback) {
+            callback();
+          }
+        },
+        this
+      ),
       error: function() {
         var msg = "There was an error editing this issues's status.";
-        wcEvents.trigger("flash:error", {message: msg, timeout: 4000});
+        wcEvents.trigger("flash:error", { message: msg, timeout: 4000 });
       }
     });
   },
   updateLabels: function(labelsArray) {
     // Save ourselves some requests in case nothing has changed.
-    if (!$.isArray(labelsArray) ||
-        _.isEqual(labelsArray.sort(), _.pluck(this.get("labels"), "name").sort())) {
+    if (
+      !$.isArray(labelsArray) ||
+      _.isEqual(labelsArray.sort(), _.pluck(this.get("labels"), "name").sort())
+    ) {
       return;
     }
-    var labels = new issues.LabelList({"labels":labelsArray,
-      url: "/api/issues/" + this.get("number") + "/labels"});
+    var labels = new issues.LabelList({
+      labels: labelsArray,
+      url: "/api/issues/" + this.get("number") + "/labels"
+    });
     labels.save(null, {
-      success: _.bind(function(response) {
-        // update model after success
-        var updatedLabels = new issues.LabelList({"labels": response.get("labels")});
-        this.set("labels", updatedLabels.get("labels"));
-      }, this),
+      success: _.bind(
+        function(response) {
+          // update model after success
+          var updatedLabels = new issues.LabelList({
+            labels: response.get("labels")
+          });
+          this.set("labels", updatedLabels.get("labels"));
+        },
+        this
+      ),
       error: function() {
         var msg = "There was an error setting labels.";
-        wcEvents.trigger("flash:error", {message: msg, timeout: 4000});
+        wcEvents.trigger("flash:error", { message: msg, timeout: 4000 });
       }
     });
   }
@@ -129,9 +160,15 @@ issueList.IssueCollection = Backbone.Collection.extend({
   /* the url property is set in issueList.IssueView#fetchAndRenderIssues */
   initialize: function(options) {
     // set defaults
-    this.params = options && options.params || {page: 1, per_page: 50,
-      state: "open", stage: "all", sort: "created", direction: "desc"};
-    this.path = options && options.path || "/api/issues";
+    this.params = (options && options.params) || {
+      page: 1,
+      per_page: 50,
+      state: "open",
+      stage: "all",
+      sort: "created",
+      direction: "desc"
+    };
+    this.path = (options && options.path) || "/api/issues";
   },
   parse: function(response, jqXHR) {
     if (jqXHR.xhr.getResponseHeader("Link") != null) {
@@ -209,8 +246,8 @@ issueList.IssueCollection = Backbone.Collection.extend({
     */
     var params = {};
     var qMap = {
-      state:     "state",
-      creator:   "author",
+      state: "state",
+      creator: "author",
       mentioned: "mentions"
     };
     var sitesearchRegExp = /site:([\w-\.]+(:\d+)?)/g;
@@ -247,7 +284,7 @@ issueList.IssueCollection = Backbone.Collection.extend({
     });
 
     // Finally, scope this to our issues repo.
-    params.q += " repo:" + repoPath.slice(0,-7);
+    params.q += " repo:" + repoPath.slice(0, -7);
 
     return params;
   }

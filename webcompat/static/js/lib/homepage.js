@@ -11,16 +11,18 @@ function HomePage() {
   var searchBarClose = $(".js-SearchBarClose");
   var navDropDown = $(".wc-Navbar-link.wc-DropdownHeader");
 
-
   this.init = function() {
     reportButton.add(reportLink).on("click", this.toggleForm);
-    var htmlClass = ("ontouchstart" in window || "createTouch" in document) ?
-                     "touch" : "no-touch";
+    var htmlClass = "ontouchstart" in window || "createTouch" in document
+      ? "touch"
+      : "no-touch";
     document.documentElement.classList.add(htmlClass);
 
     // Open the form if we've got open=1 param in the URL
-    if (formContainer.hasClass("is-closed") &&
-        location.search.search(/open=1/) > -1) {
+    if (
+      formContainer.hasClass("is-closed") &&
+      location.search.search(/open=1/) > -1
+    ) {
       reportButton.click();
     }
 
@@ -63,20 +65,24 @@ function HomePage() {
 
   this.toggleForm = function(e) {
     e.preventDefault();
-    $("html, body").animate({
-      scrollTop: reportButton.offset().top + 5
-    }, 250);
+    $("html, body").animate(
+      {
+        scrollTop: reportButton.offset().top + 5
+      },
+      250
+    );
 
     if (reportButton.hasClass("is-open")) {
-      $("html, body").animate({
-        scrollTop: 0
-      }, 250);
+      $("html, body").animate(
+        {
+          scrollTop: 0
+        },
+        250
+      );
     }
-    reportButton.toggleClass("is-closed")
-                .toggleClass("is-open");
+    reportButton.toggleClass("is-closed").toggleClass("is-open");
     formContainer.slideToggle(function() {
-      formContainer.toggleClass("is-closed")
-                   .toggleClass("is-opened");
+      formContainer.toggleClass("is-closed").toggleClass("is-opened");
     });
   };
 

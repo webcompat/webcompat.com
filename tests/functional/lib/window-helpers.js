@@ -38,6 +38,6 @@ var WindowHelpers = {
   },
 
   sendEvent: function(elm, type) {
-    elm.dispatchEvent(new Event(type), {bubbles: true});
+    elm.dispatchEvent(new Event(type), { bubbles: true });
   }
 };
