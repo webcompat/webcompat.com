@@ -65,6 +65,9 @@ function BugForm() {
     // (after a page refresh, back button, etc.)
     this.checkForm();
 
+    // Auto Expanding feature for form
+    this.autoExpand();
+
     // Set up listener for message events from screenshot-enabled add-ons
     window.addEventListener(
       "message",
@@ -509,6 +512,15 @@ function BugForm() {
         this
       )
     );
+  };
+
+  // See function autoExpand in issues.js
+  this.autoExpand = function() {
+    var initialHeight = $("textarea.js-autoExpand").height();
+    $("textarea.js-autoExpand").on("input", function() {
+      $(this).css("height", initialHeight);
+      $(this).css({ "overflow":"hidden", "height": this.scrollHeight + "px"});
+    });
   };
 
   return this.init();
