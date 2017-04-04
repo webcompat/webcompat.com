@@ -519,7 +519,7 @@ function BugForm() {
     var initialHeight = $("textarea.js-autoExpand").height();
     $("textarea.js-autoExpand").on("input", function() {
       $(this).css("height", initialHeight);
-      $(this).css({ "overflow":"hidden", "height": this.scrollHeight + "px"});
+      $(this).css({ overflow: "hidden", height: this.scrollHeight + "px" });
     });
   };
 
