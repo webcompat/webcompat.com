@@ -425,6 +425,7 @@ issues.MainView = Backbone.View.extend({
     this.initSubViews();
     this.fetchModels();
     this.handleKeyShortcuts();
+    this.autoExpand();
   },
   closeLabelEditor: function(e) {
     var target = $(e.target);
@@ -608,6 +609,15 @@ issues.MainView = Backbone.View.extend({
 
   handleKeyShortcuts: function() {
     Mousetrap.bind("mod+enter", _.bind(this.addNewComment, this));
+  },
+
+  // See function autoExpand in bugform.js
+  autoExpand: function() {
+    var initialHeight = $("textarea.js-autoExpand").height();
+    $("textarea.js-autoExpand").on("input", function() {
+      $(this).css("height", initialHeight);
+      $(this).css({ overflow: "hidden", height: this.scrollHeight + "px" });
+    });
   }
 });
 
