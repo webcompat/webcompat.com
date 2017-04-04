@@ -34,7 +34,7 @@ define(["intern"], function(intern, topic) {
     // A fully qualified URL to the Intern proxy
     proxyUrl: "http://127.0.0.1:9090/",
     siteRoot: siteRoot,
-    tunnel: "SeleniumTunnel",
+    tunnel: 'SeleniumTunnel',
     tunnelOptions: {
       // this tells SeleniumTunnel to download geckodriver
       drivers: ["firefox"]
