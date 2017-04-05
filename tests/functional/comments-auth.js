@@ -153,7 +153,44 @@ define(
             );
           })
           .end();
-      }
+      },
+
+      "Pressing 'g' inside of comment textarea *doesn't* go to github issue": function() {
+        return FunctionalHelpers.openPage(
+          this,
+          url("/issues/100"),
+          ".wc-Comment-submit"
+        )
+          .findByCssSelector(".wc-Comment-submit")
+          .click()
+          .type("g")
+          .end()
+          .setFindTimeout(2000)
+          .findByCssSelector(".repo-container .issues-listing")
+          .then(assert.fail, function(err) {
+            assert.isTrue(/NoSuchElement/.test(String(err)));
+          })
+          .end();
+      },
+
+      "Pressing 'l' inside of comment textarea *doesn't* open the label editor box": function() {
+        return FunctionalHelpers.openPage(
+          this,
+          url("/issues/100"),
+          ".wc-Comment-submit"
+        )
+          .findByCssSelector(".wc-Comment-submit")
+          .click()
+          .type("l")
+          .end()
+          .setFindTimeout(2000)
+          .findByCssSelector(".js-LabelEditorLauncher")
+          .getAttribute("class")
+          .then(function(className) {
+            assert.notInclude(className, "is-active");
+          })
+          .end();
+      },
     });
   }
 );
