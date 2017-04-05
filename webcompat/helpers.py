@@ -486,9 +486,10 @@ def add_csp(response):
         "default-src 'none'; " +
         "connect-src 'self'; " +
         "font-src 'self'; " +
-        "img-src 'self' https://www.google-analytics.com https://*.githubusercontent.com; " +  # nopep8
-        "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://www.google-analytics.com https://api.github.com data:; " +  # nopep8
-        "style-src 'self' 'unsafe-inline' data:; " +
+        "img-src 'self' https://www.google-analytics.com https://*.githubusercontent.com data:; " +  # nopep8
+        "manifest-src 'self'; " +
+        "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://www.google-analytics.com https://api.github.com; " +  # nopep8
+        "style-src 'self' 'unsafe-inline'; " +
         "report-uri /csp-report"
     )
 
