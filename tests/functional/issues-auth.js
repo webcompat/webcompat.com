@@ -59,14 +59,12 @@ define(
         return FunctionalHelpers.openPage(
           this,
           url("/issues/70"),
-          ".wc-Issue-commentSubmit",
-          true
+          ".wc-Issue-commentSubmit"
         )
           .findByCssSelector(".wc-Issue-labels")
           .click()
           .type("l")
           .end()
-          .setFindTimeout(0)
           .findByCssSelector(".js-LabelEditorLauncher")
           .getAttribute("class")
           .then(function(className) {
