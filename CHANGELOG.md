@@ -1,3 +1,14 @@
+## 3.2.0 - 2017-04-07
+
+* Rename labelWarp method [Pull #1487](https://github.com/webcompat/webcompat.com/pull/1487)
+* Update CSP policy (round 3) [Pull #1479](https://github.com/webcompat/webcompat.com/pull/1479)
+* Add auto-expanding feature for textarea [Pull #1476](https://github.com/webcompat/webcompat.com/pull/1476)
+* Add grunt lint task for travis [Pull #1472](https://github.com/webcompat/webcompat.com/pull/1472)
+* Add prettier [Pull #1468](https://github.com/webcompat/webcompat.com/pull/1468)
+* Change GA to alternative tracking snippet [Pull #1467](https://github.com/webcompat/webcompat.com/pull/1467)
+* Add grunt build to npm prestart [Pull #1461](https://github.com/webcompat/webcompat.com/pull/1461)
+* Move label editor to right column on issues page [Pull #1389](https://github.com/webcompat/webcompat.com/pull/1389)
+
 ## 3.1.7 - 2017-03-30
 
 * Prevent shortcuts firing in textarea [Pull #1464](https://github.com/webcompat/webcompat.com/pull/1464)
