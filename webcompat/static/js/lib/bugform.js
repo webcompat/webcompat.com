@@ -414,6 +414,7 @@ function BugForm() {
     $(".wc-UploadForm-label").show();
 
     removeBanner.removeClass("is-hidden");
+    removeBanner.attr("tabIndex", "0");
     uploadWrapper.addClass("is-hidden");
     removeBanner.on(
       "click",
@@ -422,6 +423,7 @@ function BugForm() {
           // remove the preview and hide the banner
           label.css("background", "none");
           removeBanner.addClass("is-hidden");
+          removeBanner.attr("tabIndex", "-1");
           uploadWrapper.removeClass("is-hidden");
           removeBanner.off("click");
 
