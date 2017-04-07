@@ -14,9 +14,16 @@
   overflow: hidden;
 }
 
+  /* modifier homepage uploadform */
+
+  .wc-UploadForm--homePage {
+    border: dashed 1px rgb(204, 204, 204);
+    border-radius: 20px;
+  }
+
   /* modifier new comment of existing bug */
   .wc-UploadForm--new {
-    display:flex;
+    display: flex;
     background-color: #404040;
     min-height: 35px;
   }
@@ -47,7 +54,7 @@
       position: relative;
       display: inline-block;
       margin-bottom: 5px;
-      color: #CCCCCC;
+      color: #ccc;
       font-weight: 700;
       cursor: pointer;
       text-decoration: underline;
@@ -62,7 +69,7 @@
 
       /* link */
       .wc-UploadForm-label--link {
-        color: #FFC900;
+        color: #ffc900;
         font-weight: 600;
         text-decoration: underline;
       }

@@ -31,7 +31,7 @@
           </div>
         </div>
         <div class="r-Grid-cell r-minM--1of2">
-          <div class="wc-Form-group js-Form-group {% if form.url.errors %}is-error{% endif %}">
+          <div class="wc-Form-group wc-Form-group--biggerOffset js-Form-group {% if form.url.errors %}is-error{% endif %}">
             <div class="wc-Form-information">
               {{ form.url.label(class_='wc-Form-label') }}
               {% if form.url.errors %}
@@ -46,13 +46,13 @@
                required=True, type='url', pattern='') }}
             </span>
           </div>
-          <div class="wc-Form-group js-Form-group">
+          <div class="wc-Form-group wc-Form-group--biggerOffset js-Form-group">
             {{ form.browser.label(class_='wc-Form-label') }}
             <span class="wc-Form-validation">
             {{ form.browser(class_='wc-Form-item') }}
             </span>
           </div>
-          <div class="wc-Form-group js-Form-group">
+          <div class="wc-Form-group wc-Form-group--biggerOffset js-Form-group">
             {{ form.os.label(class_='wc-Form-label') }}
             <span class="wc-Form-validation">
             {{ form.os(class_='wc-Form-item') }}
@@ -68,7 +68,10 @@
         </div>
         <div class="r-Grid-cell r-Grid-cell--alignBottom r-minS--1of2">
             <div class="js-image-upload wc-Form-group js-Form-group {% if form.image.errors %}is-error{% endif %}">
-              <label class="wc-UploadForm js-image-upload-label" for="image">
+              <label
+                class="wc-UploadForm wc-UploadForm--homePage js-image-upload-label"
+                for="image"
+              >
                 <div class="wc-UploadForm-wrapper">
                   <div class="wc-UploadForm-icon" aria-hidden="true">
                     <span class="wc-Icon wc-Icon--cloud-upload"></span>
@@ -81,11 +84,18 @@
                   {% endif %}
                   {{ form.image(class_='wc-ButtonUpload', accept='.jpe,.jpg,.jpeg,.gif,.png,.bmp') }}
                 </div>
-                <button class="wc-UploadForm-button is-hidden r-ResetButton"
-                        role="button"
-                        type="button">
-                  <img class="wc-Upload-Loader js-Upload-Loader" src="/img/upload-loader.svg" alt="Uploading image">
-                  Remove image upload</button>
+                <button
+                  class="wc-UploadForm-button is-hidden r-ResetButton"
+                  role="button"
+                  type="button"
+                >
+                  <img
+                    class="wc-Upload-Loader js-Upload-Loader"
+                    src="/img/upload-loader.svg"
+                    alt="Uploading image"
+                  >
+                    Remove image upload
+                  </button>
               </label>
             </div>
         </div>
