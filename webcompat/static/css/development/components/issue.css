@@ -183,7 +183,7 @@
   }
 }
 
-@media all and (min-height: 40em), all and (min-width: 48.13em) {
+@media all and (min-height: 40em) and (min-width: 48.13em) {
   .wc-Issue-aside {
     position: sticky;
     top: 1em;
