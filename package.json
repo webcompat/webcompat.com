@@ -57,7 +57,7 @@
     "virtualenv": "pip install virtualenv && virtualenv env && source env/bin/activate || . env/bin/activate && npm run pip",
     "pip": "pip install -r config/requirements.txt",
     "config": "cp config/secrets.py.example config/secrets.py",
-    "project-update": "pip install --upgrade pip && npm run backend-install && npm update"
+    "project-update": "pip install --upgrade pip && npm update"
   },
   "license": "MPL-2.0"
 }
