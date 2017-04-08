@@ -63,6 +63,9 @@ The logic for the issue tracker is this -
 
 Anything labeled ["status: good-first-bug"](https://github.com/webcompat/webcompat.com/labels/status:%20good%20first%20bug) is perfect for getting started!
 
+> Note: We do not recommend working on more than two `good-first-bugs`. Take it slow and your time to get into the projects own flow. 
+
+
 ## Feature Requests
 
 You can request a new feature by [submitting an issue](#filing-an-issue) to our repo.  If you would like to implement a new feature then consider what kind of change it is:
