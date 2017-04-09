@@ -169,7 +169,12 @@ function BugForm() {
     var details = location.href.match(/details=([^&]*)/);
     if (details !== null) {
       this.descField.val(function(idx, value) {
-        return value + "\n" + decodeURIComponent(details[1]);
+        return value +
+          "\n" +
+          // The content of the details param may be encoded via
+          // application/x-www-form-urlencoded, so we need to change the
+          // + (SPACE) to %20 before decoding
+          decodeURIComponent(details[1].replace(/\+/g, "%20"));
       });
     }
   };

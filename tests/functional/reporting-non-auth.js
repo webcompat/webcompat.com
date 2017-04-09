@@ -16,6 +16,7 @@ define(
     var VALID_IMAGE_PATH = path.join(cwd, "tests/fixtures", "green_square.png");
     var BAD_IMAGE_PATH = path.join(cwd, "tests/fixtures", "evil.py");
     var DETAILS_STRING = "Encountered error: NS_ERROR_DOM_MEDIA_DEMUXER_ERR (0x806e000c)%0ALocation: virtual%0ARefPtrMP4Demuxer::InitPromise mozilla::MP4Demuxer::Init()%0AError information:%0AIncomplete MP4 metadata%0AMedia URL: file:///Users/potch/Documents/mozilla/media.mp4";
+    var DETAILS_STRING2 = "Encountered+error:+NS_ERROR_DOM_MEDIA_DEMUXER_ERR";
 
     var url = function(path) {
       return intern.config.siteRoot + path;
@@ -279,6 +280,29 @@ define(
             assert.include(
               text,
               "Encountered error: NS_ERROR_DOM_MEDIA_DEMUXER_ERR (0x806e000c)\nLocation: virtual\nRefPtrMP4Demuxer::InitPromise mozilla::MP4Demuxer::Init()\nError information:\nIncomplete MP4 metadata\nMedia URL: file:///Users/potch/Documents/mozilla/media.mp4"
+            );
+          })
+          .end();
+      },
+
+      "details param: + decoded as space": function() {
+        return FunctionalHelpers.openPage(
+          this,
+          url("/issues/new?details=" + DETAILS_STRING2),
+          "#description"
+        )
+          .findByCssSelector("#description")
+          .getProperty("value")
+          .then(function(text) {
+            assert.notInclude(
+              text,
+              "Encountered+error:+NS_ERROR_DOM_MEDIA_DEMUXER_ERR",
+              "+ not found in decoded string"
+            );
+            assert.include(
+              text,
+              "Encountered error: NS_ERROR_DOM_MEDIA_DEMUXER_ERR",
+              "+ replaced with space"
             );
           })
           .end();
