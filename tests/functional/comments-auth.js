@@ -190,7 +190,7 @@ define(
             assert.notInclude(className, "is-active");
           })
           .end();
-      },
+      }
     });
   }
 );

@@ -55,7 +55,7 @@ define(
           });
       },
 
-      "Pressing 'l' opens the label editor box": function () {
+      "Pressing 'l' opens the label editor box": function() {
         return FunctionalHelpers.openPage(
           this,
           url("/issues/70"),
@@ -72,7 +72,6 @@ define(
           })
           .end();
       }
-
     });
   }
 );
