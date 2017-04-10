@@ -65,7 +65,7 @@ def token_getter():
 
 @app.template_filter('format_date')
 def format_date(datestring):
-    '''For now, just chops off crap.'''
+    """For now, just chops off crap."""
     # 2014-05-01T02:26:28Z
     return datestring[0:10]
 
@@ -113,7 +113,7 @@ def authorized(access_token):
 # a user auths with GitHub.
 @app.route('/file')
 def file_issue():
-    '''File an issue on behalf of the user that just gave us authorization.'''
+    """File an issue on behalf of the user that just gave us authorization."""
     response = report_issue(session['form_data'])
     # Get rid of stashed form data
     session.pop('form_data', None)
@@ -123,7 +123,7 @@ def file_issue():
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    '''Main view where people come to report issues.'''
+    """Main view where people come to report issues."""
     ua_header = request.headers.get('User-Agent')
     bug_form = get_form(ua_header)
     # browser_name is used in topbar.html to show the right add-on link
@@ -147,7 +147,7 @@ def index():
 @app.route('/issues')
 @cache_policy(private=True, uri_max_age=0, must_revalidate=True)
 def show_issues():
-    '''Route to display global issues view.'''
+    """Route to display global issues view."""
     if g.user:
         get_user_info()
     categories = app.config['CATEGORIES']
@@ -156,7 +156,7 @@ def show_issues():
 
 @app.route('/issues/new', methods=['GET', 'POST'])
 def create_issue():
-    """Creates a new issue.
+    """Create a new issue.
 
     GET will return an HTML response for reporting issues
     POST will create a new issue
@@ -206,7 +206,7 @@ def create_issue():
 @app.route('/issues/<int:number>')
 @cache_policy(private=True, uri_max_age=0, must_revalidate=True)
 def show_issue(number):
-    '''Route to display a single issue.'''
+    """Route to display a single issue."""
     if g.user:
         get_user_info()
     if session.get('show_thanks'):
@@ -217,7 +217,7 @@ def show_issue(number):
 
 @app.route('/me')
 def me_redirect():
-    '''This route redirects to /activity/<username>, for logged in users.'''
+    """This route redirects to /activity/<username>, for logged in users."""
     if not g.user:
         abort(401)
     get_user_info()
@@ -226,7 +226,7 @@ def me_redirect():
 
 @app.route('/activity/<username>')
 def show_user_page(username):
-    '''The logic for this route is as follows:
+    """The logic for this route is as follows.
 
     (this dupes some of the functionality of /me, but allows directly visiting
     this endpoint via a bookmark)
@@ -236,7 +236,7 @@ def show_user_page(username):
     If the username matches, render the template as expected.
     If it doesn't match, abort with 403 until we support looking at
     *other* users activity.
-    '''
+    """
     if not g.user:
         abort(401)
     get_user_info()
@@ -248,11 +248,11 @@ def show_user_page(username):
 
 @app.route('/rate_limit')
 def show_rate_limit():
-    '''Retired route. 410 Gone.
+    """Retired route. 410 Gone.
 
     Decision made on March 2017. See
     https://github.com/webcompat/webcompat.com/issues/1437
-    '''
+    """
     msg = """
     All those moments will be lost in time…
     like tears in rain…
@@ -266,18 +266,17 @@ def show_rate_limit():
 if app.config['LOCALHOST']:
     @app.route('/uploads/<path:filename>')
     def download_file(filename):
-        '''Route just for local environments to send uploaded images.
+        """Route just for local environments to send uploaded images.
 
         In production, nginx handles this without needing to touch the
         Python app.
-        '''
+        """
         return send_from_directory(
             app.config['UPLOADS_DEFAULT_DEST'], filename)
 
     @app.route('/test-files/<path:filename>')
     def get_test_helper(filename):
-        '''Route to get ahold of test-related files, only on localhost.
-        '''
+        """Route to get ahold of test-related files, only on localhost."""
         path = os.path.join(app.config['BASE_DIR'], 'tests')
         return send_from_directory(path, filename)
 
@@ -285,7 +284,7 @@ if app.config['LOCALHOST']:
 @app.route('/about')
 @cache_policy(private=True, uri_max_age=0, must_revalidate=True)
 def about():
-    '''Route to display about page.'''
+    """Route to display about page."""
     if g.user:
         get_user_info()
     return render_template('about.html')
@@ -294,7 +293,7 @@ def about():
 @app.route('/privacy')
 @cache_policy(private=True, uri_max_age=0, must_revalidate=True)
 def privacy():
-    '''Route to display privacy page.'''
+    """Route to display privacy page."""
     if g.user:
         get_user_info()
     return render_template('privacy.html')
@@ -303,7 +302,7 @@ def privacy():
 @app.route('/contributors')
 @cache_policy(private=True, uri_max_age=0, must_revalidate=True)
 def contributors():
-    '''Route to display contributors page.'''
+    """Route to display contributors page."""
     if g.user:
         get_user_info()
     return render_template('contributors.html')
@@ -311,17 +310,17 @@ def contributors():
 
 @app.route('/tools/cssfixme')
 def cssfixme():
-    '''Route for CSS Fix me tool'''
+    """Route for CSS Fix me tool."""
     return render_template('cssfixme.html')
 
 
 @app.route('/csp-report', methods=['POST'])
 def log_csp_report():
-    '''Route to record CSP header violations.
+    """Route to record CSP header violations.
 
     This route can be enabled/disabled by setting CSP_LOG to True/False
     in config/__init__.py. It's enabled by default.
-    '''
+    """
     expected_mime = 'application/csp-report'
 
     if app.config['CSP_LOG']:
