@@ -53,7 +53,26 @@ define(
           .then(function(text) {
             assert.equal(text, "Close Issue", "Button says Close not Reopen");
           });
+      },
+
+      "Pressing 'l' opens the label editor box": function () {
+        return FunctionalHelpers.openPage(
+          this,
+          url("/issues/70"),
+          ".wc-Issue-commentSubmit"
+        )
+          .findByCssSelector(".wc-Issue-labels")
+          .click()
+          .type("l")
+          .end()
+          .findByCssSelector(".js-LabelEditorLauncher")
+          .getAttribute("class")
+          .then(function(className) {
+            assert.include(className, "is-active");
+          })
+          .end();
       }
+
     });
   }
 );
