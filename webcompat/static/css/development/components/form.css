@@ -15,7 +15,12 @@
   /* group item */
   .wc-Form-group {
     position: relative;
+    margin: 0 0 1em 0;
   }
+
+    .wc-Form-group--biggerOffset {
+      margin: 0 0 2em 0;
+    }
 
   /* information: wrap label and helpMessage */
   .wc-Form-information {
