@@ -1,3 +1,12 @@
+## 3.2.1 - 2017-04-11
+
+* Fix template typo [Pull #1498](https://github.com/webcompat/webcompat.com/pull/1498)
+* replaced 'or' with 'and' in MQ for Aside position [Pull #1495](https://github.com/webcompat/webcompat.com/pull/1495)
+* removed missing backend-install script call  [Pull #1494](https://github.com/webcompat/webcompat.com/pull/1494)
+* removed side effect when button is active [Pull #1492](https://github.com/webcompat/webcompat.com/pull/1492)
+* Handle x-www-form-urlencoded spaces in details param [Pull #1486](https://github.com/webcompat/webcompat.com/pull/1486)
+* Add functional tests for when typing 'g' or 'l' in an issue or issue comment [Pull #1481](https://github.com/webcompat/webcompat.com/pull/1481)
+
 ## 3.2.0 - 2017-04-07
 
 * Rename labelWarp method [Pull #1487](https://github.com/webcompat/webcompat.com/pull/1487)
