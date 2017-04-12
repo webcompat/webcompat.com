@@ -19,11 +19,11 @@ from flask import url_for
 
 from form import AUTH_REPORT
 from form import PROXY_REPORT
+from form import get_form
 from helpers import add_csp
 from helpers import add_sec_headers
 from helpers import cache_policy
 from helpers import get_browser_name
-from helpers import get_form
 from helpers import get_referer
 from helpers import get_user_info
 from helpers import set_referer

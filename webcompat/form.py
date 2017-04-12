@@ -10,6 +10,9 @@ power the issue reporting form on webcompat.com.'''
 import random
 import urlparse
 
+from helpers import get_browser
+from helpers import get_os
+
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileAllowed
 from flask_wtf.file import FileField
@@ -76,6 +79,15 @@ class IssueForm(FlaskForm):
     image = FileField(u'Attach a screenshot image',
                       [Optional(),
                        FileAllowed(Upload.ALLOWED_FORMATS, image_message)])
+
+
+def get_form(ua_header):
+    """Return an instance of flask_wtf.FlaskForm with browser and os info."""
+    bug_form = IssueForm()
+    # add browser and version to bug_form object data
+    bug_form.browser.data = get_browser(ua_header)
+    bug_form.os.data = get_os(ua_header)
+    return bug_form
 
 
 def get_problem(category):
