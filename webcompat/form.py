@@ -23,6 +23,7 @@ from wtforms.validators import InputRequired
 from wtforms.validators import Length
 from wtforms.validators import Optional
 
+from webcompat import app
 from webcompat.api.uploads import Upload
 
 AUTH_REPORT = 'github-auth-report'
@@ -224,6 +225,6 @@ def build_formdata(form_object):
     body += u'\n\n{0}'.format(GITHUB_HELP)
     rv = {'title': summary, 'body': body}
     extra_label = form_object.get('label', None)
-    if extra_label:
+    if extra_label and extra_label in app.config['EXTRA_LABELS']:
         rv.update({'labels': [extra_label]})
     return rv
