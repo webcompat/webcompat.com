@@ -146,10 +146,10 @@ class TestHelpers(unittest.TestCase):
         self.assertEqual(get_browser_name(None), 'unknown')
         self.assertEqual(get_browser_name(), 'unknown')
         self.assertEqual(get_browser_name(u'💀'), 'unknown')
-        self.assertEqual(get_browser('<script>lol()</script>'), 'Unknown')
-        self.assertEqual(get_browser(True), 'Unknown')
-        self.assertEqual(get_browser(False), 'Unknown')
-        self.assertEqual(get_browser(None), 'Unknown')
+        self.assertEqual(get_browser_name('<script>lol()</script>'), 'unknown')
+        self.assertEqual(get_browser_name(True), 'unknown')
+        self.assertEqual(get_browser_name(False), 'unknown')
+        self.assertEqual(get_browser_name(None), 'unknown')
 
     def test_get_browser(self):
         '''Test browser parsing via get_browser helper method.'''
