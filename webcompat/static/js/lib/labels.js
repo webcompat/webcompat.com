@@ -105,12 +105,9 @@ issues.LabelEditorView = Backbone.View.extend({
     this.$el.html(this.template(this.model));
     this.resizeEditorHeight();
     _.defer(
-      _.bind(
-        function() {
-          this.$el.find(".wc-LabelEditor-search").focus();
-        },
-        this
-      )
+      _.bind(function() {
+        this.$el.find(".wc-LabelEditor-search").focus();
+      }, this)
     );
     return this;
   },
@@ -190,26 +187,23 @@ issues.LabelEditorView = Backbone.View.extend({
     // user reopens the editor.
     this.$el.children().detach();
   },
-  filterLabels: _.debounce(
-    function(e) {
-      var escape = function(s) {
-        return s.replace(/[-\/\\^$*+?:.()|[\]{}]/g, "\\$&");
-      };
-      var re = new RegExp("^" + escape(e.target.value), "i");
-      var toHide = _.filter(this.model.toArray(), function(label) {
-        return !re.test(label);
-      });
+  filterLabels: _.debounce(function(e) {
+    var escape = function(s) {
+      return s.replace(/[-\/\\^$*+?:.()|[\]{}]/g, "\\$&");
+    };
+    var re = new RegExp("^" + escape(e.target.value), "i");
+    var toHide = _.filter(this.model.toArray(), function(label) {
+      return !re.test(label);
+    });
 
-      // make sure everything is showing
-      $(".wc-LabelEditor-list-item").show();
+    // make sure everything is showing
+    $(".wc-LabelEditor-list-item").show();
 
-      // hide the non-filter matches
-      _.each(toHide, function(name) {
-        $("input[name=" + escape(name) + "]")
-          .closest(".wc-LabelEditor-list-item")
-          .hide();
-      });
-    },
-    100
-  )
+    // hide the non-filter matches
+    _.each(toHide, function(name) {
+      $("input[name=" + escape(name) + "]")
+        .closest(".wc-LabelEditor-list-item")
+        .hide();
+    });
+  }, 100)
 });

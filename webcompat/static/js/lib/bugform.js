@@ -71,25 +71,22 @@ function BugForm() {
     // Set up listener for message events from screenshot-enabled add-ons
     window.addEventListener(
       "message",
-      _.bind(
-        function(event) {
-          // Make sure the data is coming from ~*inside the house*~!
-          // (i.e., our add-on or some other priviledged code sent it)
-          if (location.origin === event.origin) {
-            // See https://github.com/webcompat/webcompat.com/issues/1252 to track
-            // the work of only accepting blobs, which should simplify things.
-            if (event.data instanceof Blob) {
-              // showUploadPreview will take care of converting from blob to
-              // dataURI, and will send the result to resampleIfNecessaryAndUpload.
-              this.showUploadPreview(event.data);
-            } else {
-              // ...the data is already a data URI string
-              this.resampleIfNecessaryAndUpload(event.data);
-            }
+      _.bind(function(event) {
+        // Make sure the data is coming from ~*inside the house*~!
+        // (i.e., our add-on or some other priviledged code sent it)
+        if (location.origin === event.origin) {
+          // See https://github.com/webcompat/webcompat.com/issues/1252 to track
+          // the work of only accepting blobs, which should simplify things.
+          if (event.data instanceof Blob) {
+            // showUploadPreview will take care of converting from blob to
+            // dataURI, and will send the result to resampleIfNecessaryAndUpload.
+            this.showUploadPreview(event.data);
+          } else {
+            // ...the data is already a data URI string
+            this.resampleIfNecessaryAndUpload(event.data);
           }
-        },
-        this
-      ),
+        }
+      }, this),
       false
     );
   };
@@ -111,32 +108,29 @@ function BugForm() {
     var canvas = document.createElement("canvas");
     var ctx = canvas.getContext("2d");
 
-    img.onload = _.bind(
-      function() {
-        // scale the tmp canvas to 50%
-        canvas.width = Math.floor(img.width / 2);
-        canvas.height = Math.floor(img.height / 2);
-        ctx.scale(0.5, 0.5);
-        // draw back in the screenshot (at 50% scale)
-        // and re-serialize to data URI
-        ctx.drawImage(img, 0, 0);
-        // Note: this will convert GIFs to JPEG, which breaks
-        // animated GIFs. However, this only will happen if they
-        // were above the upload limit size. So... sorry?
-        var screenshotData = canvas.toDataURL("image/jpeg", 0.8);
+    img.onload = _.bind(function() {
+      // scale the tmp canvas to 50%
+      canvas.width = Math.floor(img.width / 2);
+      canvas.height = Math.floor(img.height / 2);
+      ctx.scale(0.5, 0.5);
+      // draw back in the screenshot (at 50% scale)
+      // and re-serialize to data URI
+      ctx.drawImage(img, 0, 0);
+      // Note: this will convert GIFs to JPEG, which breaks
+      // animated GIFs. However, this only will happen if they
+      // were above the upload limit size. So... sorry?
+      var screenshotData = canvas.toDataURL("image/jpeg", 0.8);
 
-        // The limit is 4MB (which is crazy big!), so let the user know if their
-        // file is unreasonably large at this point (after 1 round of downsampling)
-        if (screenshotData > this.UPLOAD_LIMIT) {
-          this.makeInvalid("image", { altHelp: true });
-          return;
-        }
+      // The limit is 4MB (which is crazy big!), so let the user know if their
+      // file is unreasonably large at this point (after 1 round of downsampling)
+      if (screenshotData > this.UPLOAD_LIMIT) {
+        this.makeInvalid("image", { altHelp: true });
+        return;
+      }
 
-        this.addPreviewBackgroundAndUpload(screenshotData);
-        (img = null), (canvas = null);
-      },
-      this
-    );
+      this.addPreviewBackgroundAndUpload(screenshotData);
+      (img = null), (canvas = null);
+    }, this);
 
     img.src = dataURI;
   };
@@ -169,12 +163,14 @@ function BugForm() {
     var details = location.href.match(/details=([^&]*)/);
     if (details !== null) {
       this.descField.val(function(idx, value) {
-        return value +
+        return (
+          value +
           "\n" +
           // The content of the details param may be encoded via
           // application/x-www-form-urlencoded, so we need to change the
           // + (SPACE) to %20 before decoding
-          decodeURIComponent(details[1].replace(/\+/g, "%20"));
+          decodeURIComponent(details[1].replace(/\+/g, "%20"))
+        );
       });
     }
   };
@@ -229,12 +225,14 @@ function BugForm() {
   };
 
   this.isReportableURL = function(url) {
-    return url &&
+    return (
+      url &&
       !(_.startsWith(url, "about:") ||
         _.startsWith(url, "chrome:") ||
         _.startsWith(url, "file:") ||
         _.startsWith(url, "resource:") ||
-        _.startsWith(url, "view-source:"));
+        _.startsWith(url, "view-source:"))
+    );
   };
 
   /* Check to see that the URL input element is not empty,
@@ -253,17 +251,14 @@ function BugForm() {
   this.checkOptionalNonEmpty = function() {
     _.forEach(
       [this.browserField, this.osField],
-      _.bind(
-        function(input) {
-          var inputId = input.prop("id");
-          if (input.val()) {
-            this.makeValid(inputId);
-          } else {
-            this.makeInvalid(inputId);
-          }
-        },
-        this
-      )
+      _.bind(function(input) {
+        var inputId = input.prop("id");
+        if (input.val()) {
+          this.makeValid(inputId);
+        } else {
+          this.makeInvalid(inputId);
+        }
+      }, this)
     );
   };
 
@@ -383,13 +378,10 @@ function BugForm() {
     }
 
     var reader = new FileReader();
-    reader.onload = _.bind(
-      function(event) {
-        var dataURI = event.target.result;
-        this.resampleIfNecessaryAndUpload(dataURI);
-      },
-      this
-    );
+    reader.onload = _.bind(function(event) {
+      var dataURI = event.target.result;
+      this.resampleIfNecessaryAndUpload(dataURI);
+    }, this);
     reader.readAsDataURL(blobOrFile);
   };
 
@@ -423,24 +415,21 @@ function BugForm() {
     uploadWrapper.addClass("is-hidden");
     removeBanner.on(
       "click",
-      _.bind(
-        function() {
-          // remove the preview and hide the banner
-          label.css("background", "none");
-          removeBanner.addClass("is-hidden");
-          removeBanner.attr("tabIndex", "-1");
-          uploadWrapper.removeClass("is-hidden");
-          removeBanner.off("click");
+      _.bind(function() {
+        // remove the preview and hide the banner
+        label.css("background", "none");
+        removeBanner.addClass("is-hidden");
+        removeBanner.attr("tabIndex", "-1");
+        uploadWrapper.removeClass("is-hidden");
+        removeBanner.off("click");
 
-          // remove the last embedded image URL
-          // Note: this could fail in weird ways depending on how
-          // the user has edited the descField.
-          this.descField.val(function(idx, value) {
-            return value.replace(/!\[.+\.(?:bmp|gif|jpe*g*)\)$/, "");
-          });
-        },
-        this
-      )
+        // remove the last embedded image URL
+        // Note: this could fail in weird ways depending on how
+        // the user has edited the descField.
+        this.descField.val(function(idx, value) {
+          return value.replace(/!\[.+\.(?:bmp|gif|jpe*g*)\)$/, "");
+        });
+      }, this)
     );
   };
   /*
@@ -459,32 +448,27 @@ function BugForm() {
       data: formdata,
       method: "POST",
       url: "/upload/",
-      success: _.bind(
-        function(response) {
-          this.addImageURL(response.url);
-          this.uploadLoader.removeClass("is-active");
-          this.enableSubmits();
-        },
-        this
-      ),
-      error: _.bind(
-        function(response) {
-          var msg;
-          if (response && response.status === 415) {
-            wcEvents.trigger("flash:error", {
-              message: this.inputs.image.helpText,
-              timeout: 5000
-            });
-          }
+      success: _.bind(function(response) {
+        this.addImageURL(response.url);
+        this.uploadLoader.removeClass("is-active");
+        this.enableSubmits();
+      }, this),
+      error: _.bind(function(response) {
+        var msg;
+        if (response && response.status === 415) {
+          wcEvents.trigger("flash:error", {
+            message: this.inputs.image.helpText,
+            timeout: 5000
+          });
+        }
 
-          if (response && response.status === 413) {
-            msg = "The image is too big! Please choose something smaller than 4MB.";
-            wcEvents.trigger("flash:error", { message: msg, timeout: 5000 });
-          }
-          this.loadingIndicator.hide();
-        },
-        this
-      )
+        if (response && response.status === 413) {
+          msg =
+            "The image is too big! Please choose something smaller than 4MB.";
+          wcEvents.trigger("flash:error", { message: msg, timeout: 5000 });
+        }
+        this.loadingIndicator.hide();
+      }, this)
     });
 
     // clear out the input[type=file], because we don't need it anymore.
@@ -508,16 +492,13 @@ function BugForm() {
   this.copyURL = function() {
     var firstLine = /^1\.\sNavigate.*\n/;
     this.descField.val(
-      _.bind(
-        function(idx, value) {
-          var prefix = "1. Navigate to: ";
-          if (!firstLine.test(value)) {
-            return value;
-          }
-          return value.replace(firstLine, prefix + this.urlField.val() + "\n");
-        },
-        this
-      )
+      _.bind(function(idx, value) {
+        var prefix = "1. Navigate to: ";
+        if (!firstLine.test(value)) {
+          return value;
+        }
+        return value.replace(firstLine, prefix + this.urlField.val() + "\n");
+      }, this)
     );
   };
 

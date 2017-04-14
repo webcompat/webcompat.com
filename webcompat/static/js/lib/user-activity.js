@@ -15,11 +15,8 @@ var mentionsPagination = new PaginationMixin();
 // path and params manually.
 issueList.UserActivityCollection = issueList.IssueCollection.extend({
   initialize: function(options) {
-    this.url = "/api/issues/" +
-      issueList.user +
-      options.path +
-      "?" +
-      options.params;
+    this.url =
+      "/api/issues/" + issueList.user + options.path + "?" + options.params;
   }
 });
 
@@ -64,36 +61,30 @@ issueList.MyIssuesView = Backbone.View.extend(
       this.issues
         .fetch(headers)
         .success(
-          _.bind(
-            function() {
-              this._loadingIndicator.removeClass("is-active");
-              this.render(this.issues);
-              myIssuesPagination.initPaginationLinks(this.issues);
-            },
-            this
-          )
+          _.bind(function() {
+            this._loadingIndicator.removeClass("is-active");
+            this.render(this.issues);
+            myIssuesPagination.initPaginationLinks(this.issues);
+          }, this)
         )
         .error(
-          _.bind(
-            function(e) {
-              var message;
-              var timeout;
-              if (e.responseJSON) {
-                message = e.responseJSON.message;
-                timeout = e.responseJSON.timeout * 1000;
-              } else {
-                message = "Something went wrong!";
-                timeout = 4000;
-              }
+          _.bind(function(e) {
+            var message;
+            var timeout;
+            if (e.responseJSON) {
+              message = e.responseJSON.message;
+              timeout = e.responseJSON.timeout * 1000;
+            } else {
+              message = "Something went wrong!";
+              timeout = 4000;
+            }
 
-              this._loadingIndicator.removeClass("is-active");
-              wcEvents.trigger("flash:error", {
-                message: message,
-                timeout: timeout
-              });
-            },
-            this
-          )
+            this._loadingIndicator.removeClass("is-active");
+            wcEvents.trigger("flash:error", {
+              message: message,
+              timeout: timeout
+            });
+          }, this)
         );
     }
   })
@@ -140,36 +131,30 @@ issueList.IssueMentionsView = Backbone.View.extend(
       this.issues
         .fetch(headers)
         .success(
-          _.bind(
-            function() {
-              this._loadingIndicator.removeClass("is-active");
-              this.render(this.issues);
-              mentionsPagination.initPaginationLinks(this.issues);
-            },
-            this
-          )
+          _.bind(function() {
+            this._loadingIndicator.removeClass("is-active");
+            this.render(this.issues);
+            mentionsPagination.initPaginationLinks(this.issues);
+          }, this)
         )
         .error(
-          _.bind(
-            function(e) {
-              var message;
-              var timeout;
-              if (e.responseJSON) {
-                message = e.responseJSON.message;
-                timeout = e.responseJSON.timeout * 1000;
-              } else {
-                message = "Something went wrong!";
-                timeout = 4000;
-              }
+          _.bind(function(e) {
+            var message;
+            var timeout;
+            if (e.responseJSON) {
+              message = e.responseJSON.message;
+              timeout = e.responseJSON.timeout * 1000;
+            } else {
+              message = "Something went wrong!";
+              timeout = 4000;
+            }
 
-              this._loadingIndicator.removeClass("is-active");
-              wcEvents.trigger("flash:error", {
-                message: message,
-                timeout: timeout
-              });
-            },
-            this
-          )
+            this._loadingIndicator.removeClass("is-active");
+            wcEvents.trigger("flash:error", {
+              message: message,
+              timeout: timeout
+            });
+          }, this)
         );
     }
   })

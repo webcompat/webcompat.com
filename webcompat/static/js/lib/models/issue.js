@@ -27,27 +27,21 @@ issues.Issue = Backbone.Model.extend({
   initialize: function() {
     this.on(
       "change:state",
-      _.bind(
-        function() {
-          this.set(
-            "issueState",
-            this.getState(this.get("state"), this.get("labels"))
-          );
-        },
-        this
-      )
+      _.bind(function() {
+        this.set(
+          "issueState",
+          this.getState(this.get("state"), this.get("labels"))
+        );
+      }, this)
     );
     this.on(
       "change:labels",
-      _.bind(
-        function() {
-          this.set(
-            "issueState",
-            this.getState(this.get("state"), this.get("labels"))
-          );
-        },
-        this
-      )
+      _.bind(function() {
+        this.set(
+          "issueState",
+          this.getState(this.get("state"), this.get("labels"))
+        );
+      }, this)
     );
   },
   getState: function(state, labels) {
@@ -107,15 +101,12 @@ issues.Issue = Backbone.Model.extend({
       data: JSON.stringify({ state: newState }),
       type: "PATCH",
       url: "/api/issues/" + this.get("number") + "/edit",
-      success: _.bind(
-        function() {
-          this.set("state", newState);
-          if (callback) {
-            callback();
-          }
-        },
-        this
-      ),
+      success: _.bind(function() {
+        this.set("state", newState);
+        if (callback) {
+          callback();
+        }
+      }, this),
       error: function() {
         var msg = "There was an error editing this issues's status.";
         wcEvents.trigger("flash:error", { message: msg, timeout: 4000 });
@@ -135,16 +126,13 @@ issues.Issue = Backbone.Model.extend({
       url: "/api/issues/" + this.get("number") + "/labels"
     });
     labels.save(null, {
-      success: _.bind(
-        function(response) {
-          // update model after success
-          var updatedLabels = new issues.LabelList({
-            labels: response.get("labels")
-          });
-          this.set("labels", updatedLabels.get("labels"));
-        },
-        this
-      ),
+      success: _.bind(function(response) {
+        // update model after success
+        var updatedLabels = new issues.LabelList({
+          labels: response.get("labels")
+        });
+        this.set("labels", updatedLabels.get("labels"));
+      }, this),
       error: function() {
         var msg = "There was an error setting labels.";
         wcEvents.trigger("flash:error", { message: msg, timeout: 4000 });

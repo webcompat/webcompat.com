@@ -26,14 +26,11 @@ issueList.DropdownView = Backbone.View.extend({
     // handles closing dropdown when clicking "outside".
     $(document).on(
       "click",
-      _.bind(
-        function(e) {
-          if (!$(e.target).closest(this.$el).length) {
-            this.closeDropdown();
-          }
-        },
-        this
-      )
+      _.bind(function(e) {
+        if (!$(e.target).closest(this.$el).length) {
+          this.closeDropdown();
+        }
+      }, this)
     );
 
     issueList.events.on(
@@ -212,41 +209,35 @@ issueList.SearchView = Backbone.View.extend({
   },
   _isEmpty: true,
   _currentSearch: null,
-  searchIfNotEmpty: _.debounce(
-    function(e) {
-      var searchValue = e.type === "click"
-        ? $(e.target).prev().val()
-        : e.target.value;
-      if (searchValue.length) {
-        this._isEmpty = false;
-        // don't search if nothing has changed
-        // (or user just added whitespace)
-        if ($.trim(searchValue) !== this._currentSearch) {
-          this._currentSearch = $.trim(searchValue);
-          this.doSearch(this._currentSearch);
-          // clear any filters that have been set.
-          issueList.events.trigger("filter:clear", { removeQ: false });
-        }
+  searchIfNotEmpty: _.debounce(function(e) {
+    var searchValue = e.type === "click"
+      ? $(e.target).prev().val()
+      : e.target.value;
+    if (searchValue.length) {
+      this._isEmpty = false;
+      // don't search if nothing has changed
+      // (or user just added whitespace)
+      if ($.trim(searchValue) !== this._currentSearch) {
+        this._currentSearch = $.trim(searchValue);
+        this.doSearch(this._currentSearch);
+        // clear any filters that have been set.
+        issueList.events.trigger("filter:clear", { removeQ: false });
       }
+    }
 
-      // if it's empty and the user searches, show the default results
-      // (but only once)
-      if (!searchValue.length && this._currentSearch !== "") {
-        this._currentSearch = "";
-        this._isEmpty = true;
-        issueList.events.trigger("issues:update");
-      }
-    },
-    350
-  ),
-  doSearch: _.throttle(
-    function(value) {
-      if (!this._isEmpty) {
-        issueList.events.trigger("issues:update", { query: value });
-      }
-    },
-    500
-  )
+    // if it's empty and the user searches, show the default results
+    // (but only once)
+    if (!searchValue.length && this._currentSearch !== "") {
+      this._currentSearch = "";
+      this._isEmpty = true;
+      issueList.events.trigger("issues:update");
+    }
+  }, 350),
+  doSearch: _.throttle(function(value) {
+    if (!this._isEmpty) {
+      issueList.events.trigger("issues:update", { query: value });
+    }
+  }, 500)
 });
 
 issueList.SortingView = Backbone.View.extend({
@@ -349,24 +340,18 @@ issueList.IssueView = Backbone.View.extend(
           // We're dealing with an un-authed user, with a q param.
           this.doGitHubSearch(urlParams);
           this.updateModelParams(urlParams);
-          _.delay(
-            function() {
-              // TODO: update search input from query param for authed users.
-              issueList.events.trigger("search:update", queryMatch[1]);
-            },
-            0
-          );
+          _.delay(function() {
+            // TODO: update search input from query param for authed users.
+            issueList.events.trigger("search:update", queryMatch[1]);
+          }, 0);
         } else if (
           (category = window.location.search.match(this._filterRegex))
         ) {
           // If there was a stage filter match, fire an event which loads results
           this.updateModelParams(urlParams);
-          _.delay(
-            function() {
-              issueList.events.trigger("filter:activate", category[1]);
-            },
-            0
-          );
+          _.delay(function() {
+            issueList.events.trigger("filter:activate", category[1]);
+          }, 0);
         } else {
           // Only bother to update/merge model params if we're not loading the defaults
           if (urlParams !== $.param(this.issues.params)) {
@@ -383,7 +368,8 @@ issueList.IssueView = Backbone.View.extend(
     doGitHubSearch: function(params) {
       // Bypass our server and request GitHub search results (from the client)
       // to avoid being penalized for unauthed Search API requests.
-      var gitHubSearchURL = this._githubSearchEndpoint +
+      var gitHubSearchURL =
+        this._githubSearchEndpoint +
         "?" +
         $.param(this.issues.normalizeAPIParams(params));
       this.fetchAndRenderIssues({ url: gitHubSearchURL });
@@ -400,45 +386,40 @@ issueList.IssueView = Backbone.View.extend(
       this.issues
         .fetch(headers)
         .success(
-          _.bind(
-            function() {
-              this._loadingIndicator.removeClass("is-active");
-              this.render(this.issues);
-              issuesPagination.initPaginationLinks(this.issues);
-            },
-            this
-          )
+          _.bind(function() {
+            this._loadingIndicator.removeClass("is-active");
+            this.render(this.issues);
+            issuesPagination.initPaginationLinks(this.issues);
+          }, this)
         )
         .error(
-          _.bind(
-            function(e) {
-              var message;
-              var timeout;
-              if (e.responseJSON) {
-                if (_.startsWith(e.responseJSON, "API rate limit")) {
-                  // If we get a client-side Rate Limit error, prompt the
-                  // user to login and display the message for 60 seconds (by the
-                  // time it goes away, they can do more requests)
-                  message = "Search rate limit exceeded! Please " +
-                    '<a href="/login">login</a> or wait 60 seconds to search again.';
-                  timeout = 60 * 1000;
-                } else {
-                  message = e.responseJSON.message;
-                  timeout = e.responseJSON.timeout * 1000;
-                }
+          _.bind(function(e) {
+            var message;
+            var timeout;
+            if (e.responseJSON) {
+              if (_.startsWith(e.responseJSON, "API rate limit")) {
+                // If we get a client-side Rate Limit error, prompt the
+                // user to login and display the message for 60 seconds (by the
+                // time it goes away, they can do more requests)
+                message =
+                  "Search rate limit exceeded! Please " +
+                  '<a href="/login">login</a> or wait 60 seconds to search again.';
+                timeout = 60 * 1000;
               } else {
-                message = "Something went wrong!";
-                timeout = 3000;
+                message = e.responseJSON.message;
+                timeout = e.responseJSON.timeout * 1000;
               }
+            } else {
+              message = "Something went wrong!";
+              timeout = 3000;
+            }
 
-              this._loadingIndicator.removeClass("is-active");
-              wcEvents.trigger("flash:error", {
-                message: message,
-                timeout: timeout
-              });
-            },
-            this
-          )
+            this._loadingIndicator.removeClass("is-active");
+            wcEvents.trigger("flash:error", {
+              message: message,
+              timeout: timeout
+            });
+          }, this)
         );
     },
     render: function(issues) {
@@ -504,15 +485,12 @@ issueList.IssueView = Backbone.View.extend(
       // paramsArray is an array of param 'key=value' string pairs
       _.forEach(
         paramsArray,
-        _.bind(
-          function(param) {
-            var kvArray = param.split("=");
-            var key = kvArray[0];
-            var value = kvArray[1];
-            this.issues.params[key] = value;
-          },
-          this
-        )
+        _.bind(function(param) {
+          var kvArray = param.split("=");
+          var key = kvArray[0];
+          var value = kvArray[1];
+          this.issues.params[key] = value;
+        }, this)
       );
     },
     updateModelParams: function(params, options) {
@@ -536,27 +514,22 @@ issueList.IssueView = Backbone.View.extend(
       var pageDropdown;
       if (hasPerPageChange) {
         pageDropdown = "per_page=" + this.issues.params.per_page;
-        _.delay(
-          function() {
-            issueList.events.trigger("dropdown:update", pageDropdown);
-          },
-          0
-        );
+        _.delay(function() {
+          issueList.events.trigger("dropdown:update", pageDropdown);
+        }, 0);
       }
 
       var sortDropdown;
       // all the sort options begin with sort, and end with direction.
       if (hasSortChange) {
-        sortDropdown = "sort=" +
+        sortDropdown =
+          "sort=" +
           this.issues.params.sort +
           "&direction=" +
           this.issues.params.direction;
-        _.delay(
-          function() {
-            issueList.events.trigger("dropdown:update", sortDropdown);
-          },
-          0
-        );
+        _.delay(function() {
+          issueList.events.trigger("dropdown:update", sortDropdown);
+        }, 0);
       }
 
       // make sure we prevent more than one mutually-exclusive state param
@@ -576,21 +549,15 @@ issueList.IssueView = Backbone.View.extend(
         var toDelete = _.without(stateParamsSet, currentStateParamName);
         _.forEach(
           toDelete,
-          _.bind(
-            function(param) {
-              delete this.issues.params[param];
-            },
-            this
-          )
+          _.bind(function(param) {
+            delete this.issues.params[param];
+          }, this)
         );
 
         if (currentStateParamName in this.issues.params) {
-          _.delay(
-            function() {
-              issueList.events.trigger("dropdown:update", stateParam);
-            },
-            0
-          );
+          _.delay(function() {
+            issueList.events.trigger("dropdown:update", stateParam);
+          }, 0);
         }
       }
 
@@ -647,14 +614,11 @@ issueList.MainView = Backbone.View.extend({
   render: function() {
     //TODO: render filter post-model fetch. See Issue #291.
     this.$el.fadeIn(
-      _.bind(
-        function() {
-          this.filter.render();
-          this.issueSorter.render();
-          this.search.render();
-        },
-        this
-      )
+      _.bind(function() {
+        this.filter.render();
+        this.issueSorter.render();
+        this.search.render();
+      }, this)
     );
   }
 });
