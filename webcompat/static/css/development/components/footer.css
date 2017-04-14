@@ -54,6 +54,7 @@
 
   /* link */
   .wc-Footer-link {
+    display: block;
     color: inherit;
     text-decoration:none;
   }
@@ -72,28 +73,23 @@
         margin-left:1em;
       }
     }
+
 .wc-Twitter {
-  
-  width:1.5em;
-  display:inline-block;
-  background-image:url(/img/twitter.svg);
-  color:transparent;
+  display: block;
+  width: 1.5em;
+  height: 1.5em;
+  overflow: hidden;
+  background-image: url("../../../img/twitter.svg");
   background-repeat: no-repeat;
-}
-.wc-Github {
-  
-  width:1.5em;
-  display:inline-block;
-  background-image:url(/img/github-logo.svg);
-  color:transparent;
-  background-repeat: no-repeat;
+  color: transparent;
 }
 
-@media all and (max-width: 28em) {
-  .wc-Twitter {
-    margin:0;
-  }
-  .wc-Github {
-    margin:0;
-  }
+.wc-Github {
+  display: block;
+  width: 1.5em;
+  height: 1.5em;
+  overflow: hidden;
+  background-image: url("../../../img/github-logo.svg");
+  background-repeat: no-repeat;
+  color: transparent;
 }
