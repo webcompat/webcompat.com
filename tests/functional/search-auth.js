@@ -70,7 +70,8 @@ define(
       },
 
       "Results are loaded from the query params": function() {
-        var params = "?page=1&per_page=50&state=open&stage=all&sort=created&direction=desc&q=vladvlad";
+        var params =
+          "?page=1&per_page=50&state=open&stage=all&sort=created&direction=desc&q=vladvlad";
         return FunctionalHelpers.openPage(
           this,
           url("/issues", params),

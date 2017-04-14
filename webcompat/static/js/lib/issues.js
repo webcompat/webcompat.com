@@ -52,7 +52,8 @@ md.linkify.add("#", {
   }
 });
 // Add rel=nofollow to links
-var defaultLinkOpenRender = md.renderer.rules.link_open ||
+var defaultLinkOpenRender =
+  md.renderer.rules.link_open ||
   function(tokens, idx, options, env, self) {
     return self.renderToken(tokens, idx, options);
   };
@@ -76,11 +77,8 @@ md.renderer.rules.link_open = function(tokens, idx, options, env, self) {
           for (var i = idx, theToken; (theToken = tokens[i]); i++) {
             // find the token for link text
             if (theToken.content === link) {
-              theToken.content = "#" +
-                matches[2] +
-                " (" +
-                transformations[bugtracker] +
-                ")";
+              theToken.content =
+                "#" + matches[2] + " (" + transformations[bugtracker] + ")";
               break;
             }
           }
@@ -97,12 +95,9 @@ issues.MetaDataView = Backbone.View.extend({
   initialize: function() {
     this.model.on(
       "change:issueState",
-      _.bind(
-        function() {
-          this.render();
-        },
-        this
-      )
+      _.bind(function() {
+        this.render();
+      }, this)
     );
   },
   template: _.template($("#metadata-tmpl").html()),
@@ -117,12 +112,9 @@ issues.AsideView = Backbone.View.extend({
   initialize: function() {
     this.model.on(
       "change:issueState",
-      _.bind(
-        function() {
-          this.render();
-        },
-        this
-      )
+      _.bind(function() {
+        this.render();
+      }, this)
     );
   },
   template: _.template($("#aside-tmpl").html()),
@@ -220,21 +212,15 @@ issues.ImageUploadView = Backbone.View.extend({
         data: formdata,
         method: "POST",
         url: "/upload/",
-        success: _.bind(
-          function(response) {
-            this.addImageUploadComment(response);
-            this._loaderImage.hide();
-          },
-          this
-        ),
-        error: _.bind(
-          function() {
-            var msg = "There was an error trying to upload the image.";
-            wcEvents.trigger("flash:error", { message: msg, timeout: 4000 });
-            this._loaderImage.hide();
-          },
-          this
-        )
+        success: _.bind(function(response) {
+          this.addImageUploadComment(response);
+          this._loaderImage.hide();
+        }, this),
+        error: _.bind(function() {
+          var msg = "There was an error trying to upload the image.";
+          wcEvents.trigger("flash:error", { message: msg, timeout: 4000 });
+          this._loaderImage.hide();
+        }, this)
       });
     }
   },
@@ -327,55 +313,43 @@ issues.StateButtonView = Backbone.View.extend({
 
     issues.events.on(
       "textarea:content",
-      _.bind(
-        function() {
-          this.hasComment = true;
-          var buttonText;
-          if (this.model.get("state") === "open") {
-            buttonText = "Close and comment";
-          } else {
-            buttonText = "Reopen and comment";
-          }
-          this.$el.html(
-            this.template({
-              state: buttonText,
-              stateClass: buttonText.split(" ").join("-").toLowerCase()
-            })
-          );
-        },
-        this
-      )
+      _.bind(function() {
+        this.hasComment = true;
+        var buttonText;
+        if (this.model.get("state") === "open") {
+          buttonText = "Close and comment";
+        } else {
+          buttonText = "Reopen and comment";
+        }
+        this.$el.html(
+          this.template({
+            state: buttonText,
+            stateClass: buttonText.split(" ").join("-").toLowerCase()
+          })
+        );
+      }, this)
     );
 
     issues.events.on(
       "textarea:empty",
-      _.bind(
-        function() {
-          // Remove the "and comment" text if there's no comment.
-          this.render();
-        },
-        this
-      )
+      _.bind(function() {
+        // Remove the "and comment" text if there's no comment.
+        this.render();
+      }, this)
     );
 
     this.model.on(
       "change:state",
-      _.bind(
-        function() {
-          this.render();
-        },
-        this
-      )
+      _.bind(function() {
+        this.render();
+      }, this)
     );
 
     this.model.on(
       "change:labels",
-      _.bind(
-        function() {
-          this.mainView.labels.renderLabels();
-        },
-        this
-      )
+      _.bind(function() {
+        this.mainView.labels.renderLabels();
+      }, this)
     );
   },
   template: _.template($("#state-button-tmpl").html()),
@@ -447,10 +421,8 @@ issues.MainView = Backbone.View.extend({
     if (e.target.nodeName === "TEXTAREA") {
       return;
     } else {
-      var warpPipe = "https://github.com/" +
-        repoPath +
-        "/" +
-        this.issue.get("number");
+      var warpPipe =
+        "https://github.com/" + repoPath + "/" + this.issue.get("number");
       return (location.href = warpPipe);
     }
   },
@@ -471,61 +443,56 @@ issues.MainView = Backbone.View.extend({
     this.issue
       .fetch(headersBag)
       .success(
-        _.bind(
-          function() {
-            // _.find() will return the object if found (which is truthy),
-            // or undefined if not found (which is falsey)
-            this._isNSFW = !!_.find(
-              this.issue.get("labels"),
-              _.matchesProperty("name", "nsfw")
-            );
-            _.each(
-              [this.metadata, this.labels, this.body, this.stateButton, this],
-              function(elm) {
-                elm.render();
-                _.each($(".js-Issue-markdown code"), function(elm) {
-                  Prism.highlightElement(elm);
-                });
-              }
-            );
-
-            if (this._supportsFormData) {
-              this.imageUpload.render();
+        _.bind(function() {
+          // _.find() will return the object if found (which is truthy),
+          // or undefined if not found (which is falsey)
+          this._isNSFW = !!_.find(
+            this.issue.get("labels"),
+            _.matchesProperty("name", "nsfw")
+          );
+          _.each(
+            [this.metadata, this.labels, this.body, this.stateButton, this],
+            function(elm) {
+              elm.render();
+              _.each($(".js-Issue-markdown code"), function(elm) {
+                Prism.highlightElement(elm);
+              });
             }
+          );
 
-            // If there are any comments, go fetch the model data
-            if (this.issue.get("commentNumber") > 0) {
-              this.comments
-                .fetch(headersBag)
-                .success(
-                  _.bind(
-                    function(response) {
-                      this.addExistingComments();
-                      this.comments.bind("add", _.bind(this.addComment, this));
-                      // If there's a #hash pointing to a comment (or elsewhere)
-                      // scrollTo it.
-                      if (location.hash !== "") {
-                        var _id = $(location.hash);
-                        window.scrollTo(0, _id.offset().top);
-                      }
-                      if (response[0].lastPageNumber > 1) {
-                        this.getRemainingComments(++response[0].lastPageNumber);
-                      }
-                    },
-                    this
-                  )
-                )
-                .error(function() {
-                  var msg = "There was an error retrieving issue comments. Please reload to try again.";
-                  wcEvents.trigger("flash:error", {
-                    message: msg,
-                    timeout: 4000
-                  });
+          if (this._supportsFormData) {
+            this.imageUpload.render();
+          }
+
+          // If there are any comments, go fetch the model data
+          if (this.issue.get("commentNumber") > 0) {
+            this.comments
+              .fetch(headersBag)
+              .success(
+                _.bind(function(response) {
+                  this.addExistingComments();
+                  this.comments.bind("add", _.bind(this.addComment, this));
+                  // If there's a #hash pointing to a comment (or elsewhere)
+                  // scrollTo it.
+                  if (location.hash !== "") {
+                    var _id = $(location.hash);
+                    window.scrollTo(0, _id.offset().top);
+                  }
+                  if (response[0].lastPageNumber > 1) {
+                    this.getRemainingComments(++response[0].lastPageNumber);
+                  }
+                }, this)
+              )
+              .error(function() {
+                var msg =
+                  "There was an error retrieving issue comments. Please reload to try again.";
+                wcEvents.trigger("flash:error", {
+                  message: msg,
+                  timeout: 4000
                 });
-            }
-          },
-          this
-        )
+              });
+          }
+        }, this)
       )
       .error(function(response) {
         var msg;
@@ -533,7 +500,8 @@ issues.MainView = Backbone.View.extend({
           location.href = "/404";
           return;
         } else {
-          msg = "There was an error retrieving the issue. Please reload to try again.";
+          msg =
+            "There was an error retrieving the issue. Please reload to try again.";
           wcEvents.trigger("flash:error", { message: msg, timeout: 4000 });
         }
       });

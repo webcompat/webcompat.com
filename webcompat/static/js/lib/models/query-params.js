@@ -161,7 +161,8 @@ issueList.QueryParams = Backbone.Model.extend({
     } else {
       // Seems like this query is so simple we only need the issues API.
       if (_.contains(issuesAPICategories, this.get("stage"))) {
-        url = "/api/issues/category/" +
+        url =
+          "/api/issues/category/" +
           this.get("stage") +
           "?" +
           this.toIssueAPIParams();

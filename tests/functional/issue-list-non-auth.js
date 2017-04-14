@@ -359,7 +359,8 @@ define(
       },
 
       "Loading URL with stage param loads issues": function() {
-        var params = "?page=1&per_page=50&state=open&stage=needstriage&sort=created&direction=desc";
+        var params =
+          "?page=1&per_page=50&state=open&stage=needstriage&sort=created&direction=desc";
 
         return FunctionalHelpers.openPage(
           this,

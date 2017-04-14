@@ -15,7 +15,8 @@ define(
     var cwd = intern.config.basePath;
     var VALID_IMAGE_PATH = path.join(cwd, "tests/fixtures", "green_square.png");
     var BAD_IMAGE_PATH = path.join(cwd, "tests/fixtures", "evil.py");
-    var DETAILS_STRING = "Encountered error: NS_ERROR_DOM_MEDIA_DEMUXER_ERR (0x806e000c)%0ALocation: virtual%0ARefPtrMP4Demuxer::InitPromise mozilla::MP4Demuxer::Init()%0AError information:%0AIncomplete MP4 metadata%0AMedia URL: file:///Users/potch/Documents/mozilla/media.mp4";
+    var DETAILS_STRING =
+      "Encountered error: NS_ERROR_DOM_MEDIA_DEMUXER_ERR (0x806e000c)%0ALocation: virtual%0ARefPtrMP4Demuxer::InitPromise mozilla::MP4Demuxer::Init()%0AError information:%0AIncomplete MP4 metadata%0AMedia URL: file:///Users/potch/Documents/mozilla/media.mp4";
     var DETAILS_STRING2 = "Encountered+error:+NS_ERROR_DOM_MEDIA_DEMUXER_ERR";
 
     var url = function(path) {
