@@ -8,14 +8,13 @@
 }
 
 .wc-Footer {
-  font-size:var(--Footer-fontSize);
+  font-size: var(--Footer-fontSize);
   background-color: var(--Footer-backgroundColor);
   border-top: 5px solid var(--Footer-border);
   padding: 1em 0;
 }
 
 @media all and (min-width: 28.12em) {
-
   .wc-Footer {
     margin-top: 3em;
   }
@@ -33,7 +32,6 @@
   }
 
   @media all and (min-width: 37.52em) {
-
     .wc-Footer-list {
       display: flex;
     }
@@ -41,7 +39,6 @@
 
   /* item */
   @media all and (min-width: 37.52em) {
-
     .wc-Footer-item + .wc-Footer-item {
       padding-left: .75em;
     }
@@ -56,7 +53,7 @@
   .wc-Footer-link {
     display: block;
     color: inherit;
-    text-decoration:none;
+    text-decoration: none;
   }
 
     /* event */
@@ -67,29 +64,25 @@
 
     /* modifier */
     @media all and (min-width: 37.51em) {
-
       .wc-Footer-link--separator:after {
-        content:"//";
-        margin-left:1em;
+        content: "//";
+        margin-left: 1em;
       }
     }
 
-.wc-Twitter {
-  display: block;
-  width: 1.5em;
-  height: 1.5em;
-  overflow: hidden;
-  background-image: url("../../../img/twitter.svg");
-  background-repeat: no-repeat;
-  color: transparent;
-}
+  .wc-Footer-icon {
+    display: block;
+    width: 1.5em;
+    height: 1.5em;
+    overflow: hidden;
+    background-repeat: no-repeat;
+    color: transparent;
+  }
 
-.wc-Github {
-  display: block;
-  width: 1.5em;
-  height: 1.5em;
-  overflow: hidden;
-  background-image: url("../../../img/github-logo.svg");
-  background-repeat: no-repeat;
-  color: transparent;
-}
+  .wc-Footer-icon--twitter {
+    background-image: url("../../../img/twitter.svg");
+  }
+
+  .wc-Footer-icon--github {
+    background-image: url("../../../img/github-logo.svg");
+  }
