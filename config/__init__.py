@@ -59,3 +59,10 @@ for cat_label in cat_labels:
     CATEGORIES.append(Category(name=cat_label[0],
                                dataAttribute=cat_label[1],
                                label=cat_label[2]))
+
+# labels that we allow to be added via a `label` GET param, when
+# creating an issue.
+EXTRA_LABELS = [
+    'type-media',
+    'type-webvr',
+]

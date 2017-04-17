@@ -19,11 +19,11 @@ from flask import url_for
 
 from form import AUTH_REPORT
 from form import PROXY_REPORT
+from form import get_form
 from helpers import add_csp
 from helpers import add_sec_headers
 from helpers import cache_policy
 from helpers import get_browser_name
-from helpers import get_form
 from helpers import get_referer
 from helpers import get_user_info
 from helpers import set_referer
@@ -165,8 +165,9 @@ def create_issue():
         bug_form = get_form(request.headers.get('User-Agent'))
         if g.user:
             get_user_info()
-        if request.args.get('src'):
-            session['src'] = request.args.get('src')
+        for param in ['src', 'label']:
+            if request.args.get(param):
+                session[param] = request.args.get(param)
         return render_template('new-issue.html', form=bug_form)
     # copy the form so we can add the full UA string to it.
     form = request.form.copy()
@@ -183,6 +184,7 @@ def create_issue():
             return redirect(url_for('index'))
     form['ua_header'] = request.headers.get('User-Agent')
     form['reported_with'] = session.pop('src', 'web')
+    form['label'] = session.pop('label', None)
     # Logging the ip and url for investigation
     log = app.logger
     log.setLevel(logging.INFO)
