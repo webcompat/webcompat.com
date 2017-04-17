@@ -57,7 +57,7 @@ var FlashMessageView = Backbone.View.extend({
     this.$el.addClass("is-active wc-FlashMessage--thanks");
     this.$el
       .html(buildTemplate({ number: opts.message }))
-      .insertBefore(".wc-Issue-information")
+      .insertBefore("#js-Issue-information")
       .show();
   },
   hide: function() {
