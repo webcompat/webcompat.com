@@ -165,6 +165,11 @@ def create_issue():
         bug_form = get_form(request.headers.get('User-Agent'))
         if g.user:
             get_user_info()
+        # Note: `src` and `label` are special GET params that can pass
+        # in extra information about a bug report. They're not part of the
+        # HTML <form>, so we stick them in the session cookie so they survive
+        # the scenario where the user decides to do authentication, and they
+        # can then be passed on to form.py
         for param in ['src', 'label']:
             if request.args.get(param):
                 session[param] = request.args.get(param)
