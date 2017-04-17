@@ -1,3 +1,18 @@
+### webcompat.com versioning:
+
+1. Bug fixes, docs updates, etc.: affect patch number
+2. New features: affect minor number
+3. API endpoint changes or dependency version updates: affect major number
+
+## 4.0.0 - 2017-04-17
+
+* Fix double "thanks" flash message [Pull #1514](https://github.com/webcompat/webcompat.com/pull/1514)
+* Update Grunt-related deps [Pull #1513](https://github.com/webcompat/webcompat.com/pull/1513)
+* Upgrade Prettier to 1.0 [Pull #1507](https://github.com/webcompat/webcompat.com/pull/1507)
+* Remove Safari Addon link [Pull #1503](https://github.com/webcompat/webcompat.com/pull/1503)
+* Docs update [Pull #1484](https://github.com/webcompat/webcompat.com/pull/1484)
+* Provide a param to assign a label to a new issue [Pull #1453](https://github.com/webcompat/webcompat.com/pull/1453)
+
 ## 3.2.1 - 2017-04-11
 
 * Fix template typo [Pull #1498](https://github.com/webcompat/webcompat.com/pull/1498)
