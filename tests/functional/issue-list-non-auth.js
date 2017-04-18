@@ -463,34 +463,6 @@ define(
             })
             .end()
         );
-      },
-
-      "Results are loaded from the query params": function() {
-        var params = "?q=vladvlad";
-        return FunctionalHelpers.openPage(
-          this,
-          url("/issues", params),
-          ".js-IssueList:nth-of-type(1)"
-        )
-          .findByCssSelector(".wc-IssueList:nth-of-type(1) a")
-          .getVisibleText()
-          .then(function(text) {
-            assert.include(
-              text,
-              "vladvlad",
-              "The search query results show up on the page."
-            );
-          })
-          .end()
-          .getCurrentUrl()
-          .then(function(currUrl) {
-            assert.include(
-              currUrl,
-              "q=vladvlad",
-              "Our params didn't go anywhere."
-            );
-          })
-          .end();
       }
     });
   }
