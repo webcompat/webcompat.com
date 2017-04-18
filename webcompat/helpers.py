@@ -99,6 +99,38 @@ def get_user_info():
         session['avatar_url'] = gh_user.get('avatar_url')
 
 
+def get_version_string(dictionary):
+    '''Return version string from dict.
+
+    Used on `user_agent` or `os` dict
+    with `major`, and optional `minor` and `patch`.
+    Minor and patch, orderly, are added only if they exist.
+    '''
+    version = dictionary.get('major')
+    if not version:
+        return ''
+    minor = dictionary.get('minor')
+    if not minor:
+        return version
+    patch = dictionary.get('patch')
+    if not patch:
+        return version + "." + minor
+    return version + "." + minor + "." + patch
+
+
+def get_name(dictionary):
+    '''Return name from UA or OS dictionary's `family`.
+
+    As bizarre UA or OS strings can be parsed like so:
+    {'major': None, 'minor': None, 'family': 'Other', 'patch': None}
+    we return "Unknown", rather than "Other"
+    '''
+    name = dictionary.get('family')
+    if name.lower() == "other":
+        name = "Unknown"
+    return name
+
+
 def get_browser(user_agent_string=None):
     '''Return browser name family and version.
 
@@ -107,26 +139,17 @@ def get_browser(user_agent_string=None):
     if user_agent_string and isinstance(user_agent_string, basestring):
         ua_dict = user_agent_parser.Parse(user_agent_string)
         ua = ua_dict.get('user_agent')
-        name = ua.get('family')
-        version = ua.get('major', u'Unknown')
-        # Add on the minor and patch version numbers if they exist
-        if version != u'Unknown' and ua.get('minor'):
-            version = version + "." + ua.get('minor')
-            if ua.get('patch'):
-                version = version + "." + ua.get('patch')
-        else:
-            version = ''
+        name = get_name(ua)
+        # if browser is unknown, we don't need further details
+        if name == "Unknown":
+            return "Unknown"
+        version = get_version_string(ua)
         # Check for tablet devices
         if ua_dict.get('device').get('model') == 'Tablet':
             model = '(Tablet) '
         else:
             model = ''
-        rv = '{0} {1}{2}'.format(name, model, version)
-        # bizarre UA strings can be parsed like so:
-        # {'major': None, 'minor': None, 'family': 'Other', 'patch': None}
-        # but we want to return "Unknown", rather than "Other"
-        if rv.strip().lower() == "other":
-            return "Unknown"
+        rv = '{0} {1}{2}'.format(name, model, version).rstrip()
         return rv
     return "Unknown"
 
@@ -152,16 +175,12 @@ def get_os(user_agent_string=None):
     if user_agent_string and isinstance(user_agent_string, basestring):
         ua_dict = user_agent_parser.Parse(user_agent_string)
         os = ua_dict.get('os')
-        version = os.get('major', u'Unknown')
-        if version != u'Unknown' and os.get('minor'):
-            version = version + "." + os.get('minor')
-            if os.get('patch'):
-                version = version + "." + os.get('patch')
-        else:
-            version = ''
-        rv = '{0} {1}'.format(os.get('family'), version).rstrip()
-        if rv.strip().lower() == "other":
+        name = get_name(os)
+        # if OS is unknown, we don't need further details
+        if name == "Unknown":
             return "Unknown"
+        version = get_version_string(os)
+        rv = '{0} {1}'.format(name, version).rstrip()
         return rv
     return "Unknown"
 
