@@ -336,14 +336,18 @@ issueList.IssueView = Backbone.View.extend(
       // There are some params in the URL
       if (urlParams.length !== 0) {
         queryMatch = urlParams.match(this._searchRegex);
+        if (queryMatch) {
+          _.delay(function() {
+            issueList.events.trigger(
+              "search:update",
+              decodeURIComponent(queryMatch[1])
+            );
+          }, 0);
+        }
         if (!this._isLoggedIn && queryMatch) {
           // We're dealing with an un-authed user, with a q param.
           this.doGitHubSearch(urlParams);
           this.updateModelParams(urlParams);
-          _.delay(function() {
-            // TODO: update search input from query param for authed users.
-            issueList.events.trigger("search:update", queryMatch[1]);
-          }, 0);
         } else if (
           (category = window.location.search.match(this._filterRegex))
         ) {
