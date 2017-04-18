@@ -190,6 +190,7 @@ issueList.SearchView = Backbone.View.extend({
   initialize: function() {
     issueList.events.on("search:update", _.bind(this.updateSearchQuery, this));
     issueList.events.on("search:clear", _.bind(this.clearSearchBox, this));
+    issueList.events.on("search:current", _.bind(this.currentSearch, this));
   },
   template: _.template($("#issuelist-search-tmpl").html()),
   render: function(cb) {
@@ -207,6 +208,9 @@ issueList.SearchView = Backbone.View.extend({
   updateSearchQuery: function(data) {
     this.input.val(data);
   },
+  currentSearch: function(data) {
+    this._currentSearch = data;
+  },
   _isEmpty: true,
   _currentSearch: null,
   searchIfNotEmpty: _.debounce(function(e) {
@@ -218,8 +222,8 @@ issueList.SearchView = Backbone.View.extend({
       // don't search if nothing has changed
       // (or user just added whitespace)
       if ($.trim(searchValue) !== this._currentSearch) {
-        this._currentSearch = $.trim(searchValue);
-        this.doSearch(this._currentSearch);
+        this.currentSearch($.trim(searchValue));
+        this.doSearch($.trim(searchValue));
         // clear any filters that have been set.
         issueList.events.trigger("filter:clear", { removeQ: false });
       }
@@ -228,7 +232,7 @@ issueList.SearchView = Backbone.View.extend({
     // if it's empty and the user searches, show the default results
     // (but only once)
     if (!searchValue.length && this._currentSearch !== "") {
-      this._currentSearch = "";
+      this.currentSearch("");
       this._isEmpty = true;
       issueList.events.trigger("issues:update");
     }
@@ -340,6 +344,10 @@ issueList.IssueView = Backbone.View.extend(
           _.delay(function() {
             issueList.events.trigger(
               "search:update",
+              decodeURIComponent(queryMatch[1])
+            );
+            issueList.events.trigger(
+              "search:current",
               decodeURIComponent(queryMatch[1])
             );
           }, 0);
