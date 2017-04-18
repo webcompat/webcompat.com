@@ -200,14 +200,14 @@ class TestHelpers(unittest.TestCase):
         via get_version_string helper method.
         '''
         tests = [
-            [{'major': '10', 'minor':  '4', 'patch':  '3'}, '10.4.3'],
-            [{'major': '10', 'minor':  '4', 'patch': None}, '10.4'],
-            [{'major': '10', 'minor': None, 'patch':  '3'}, '10'],
+            [{'major': '10', 'minor': '4', 'patch': '3'}, '10.4.3'],
+            [{'major': '10', 'minor': '4', 'patch': None}, '10.4'],
+            [{'major': '10', 'minor': None, 'patch': '3'}, '10'],
             [{'major': '10', 'minor': None, 'patch': None}, '10'],
             [{'major': None, 'minor': None, 'patch': None}, ''],
-            [{'major': None, 'minor':  '4', 'patch': None}, ''],
-            [{'major': None, 'minor':  '4', 'patch':  '3'}, ''],
-            [{'tinker': '10', 'tailor': '4',  'soldier': '3'}, ''],
+            [{'major': None, 'minor': '4', 'patch': None}, ''],
+            [{'major': None, 'minor': '4', 'patch': '3'}, ''],
+            [{'tinker': '10', 'tailor': '4', 'soldier': '3'}, ''],
         ]
         for test in tests:
             self.assertEqual(get_version_string(test[0]), test[1])
