@@ -232,9 +232,10 @@ issueList.SearchView = Backbone.View.extend({
     // if it's empty and the user searches, show the default results
     // (but only once)
     if (!searchValue.length && this._currentSearch !== "") {
+      this.doSearch("");
       this.currentSearch("");
+      issueList.events.trigger("filter:clear", { removeQ: true });
       this._isEmpty = true;
-      issueList.events.trigger("issues:update");
     }
   }, 350),
   doSearch: _.throttle(function(value) {
@@ -485,12 +486,21 @@ issueList.IssueView = Backbone.View.extend(
           this.issues.setURLState("/api/issues/search", paramsCopy);
         }
       } else if (_.contains(issuesAPICategories, category)) {
-        this.issues.setURLState("/api/issues/category/" + category, params);
+        this.issues.setURLState(
+          "/api/issues/category/" + category,
+          this.removeParamQuery(params)
+        );
       } else {
-        this.issues.setURLState("/api/issues", params);
+        this.issues.setURLState("/api/issues", this.removeParamQuery(params));
       }
 
       this.fetchAndRenderIssues();
+    },
+    removeParamQuery: function(params) {
+      if (params && params.q) {
+        delete params.q;
+      }
+      return params;
     },
     addParamsToModel: function(paramsArray) {
       // this method just puts the params in the model's params property.
