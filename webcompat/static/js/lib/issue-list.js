@@ -190,6 +190,7 @@ issueList.SearchView = Backbone.View.extend({
   initialize: function() {
     issueList.events.on("search:update", _.bind(this.updateSearchQuery, this));
     issueList.events.on("search:clear", _.bind(this.clearSearchBox, this));
+    issueList.events.on("search:current", _.bind(this.currentSearch, this));
   },
   template: _.template($("#issuelist-search-tmpl").html()),
   render: function(cb) {
@@ -207,6 +208,9 @@ issueList.SearchView = Backbone.View.extend({
   updateSearchQuery: function(data) {
     this.input.val(data);
   },
+  currentSearch: function(data) {
+    this._currentSearch = data;
+  },
   _isEmpty: true,
   _currentSearch: null,
   searchIfNotEmpty: _.debounce(function(e) {
@@ -218,8 +222,8 @@ issueList.SearchView = Backbone.View.extend({
       // don't search if nothing has changed
       // (or user just added whitespace)
       if ($.trim(searchValue) !== this._currentSearch) {
-        this._currentSearch = $.trim(searchValue);
-        this.doSearch(this._currentSearch);
+        this.currentSearch($.trim(searchValue));
+        this.doSearch($.trim(searchValue));
         // clear any filters that have been set.
         issueList.events.trigger("filter:clear", { removeQ: false });
       }
@@ -228,9 +232,10 @@ issueList.SearchView = Backbone.View.extend({
     // if it's empty and the user searches, show the default results
     // (but only once)
     if (!searchValue.length && this._currentSearch !== "") {
-      this._currentSearch = "";
+      this.doSearch("");
+      this.currentSearch("");
+      issueList.events.trigger("filter:clear", { removeQ: true });
       this._isEmpty = true;
-      issueList.events.trigger("issues:update");
     }
   }, 350),
   doSearch: _.throttle(function(value) {
@@ -336,14 +341,22 @@ issueList.IssueView = Backbone.View.extend(
       // There are some params in the URL
       if (urlParams.length !== 0) {
         queryMatch = urlParams.match(this._searchRegex);
+        if (queryMatch) {
+          _.delay(function() {
+            issueList.events.trigger(
+              "search:update",
+              decodeURIComponent(queryMatch[1])
+            );
+            issueList.events.trigger(
+              "search:current",
+              decodeURIComponent(queryMatch[1])
+            );
+          }, 0);
+        }
         if (!this._isLoggedIn && queryMatch) {
           // We're dealing with an un-authed user, with a q param.
           this.doGitHubSearch(urlParams);
           this.updateModelParams(urlParams);
-          _.delay(function() {
-            // TODO: update search input from query param for authed users.
-            issueList.events.trigger("search:update", queryMatch[1]);
-          }, 0);
         } else if (
           (category = window.location.search.match(this._filterRegex))
         ) {
@@ -473,12 +486,21 @@ issueList.IssueView = Backbone.View.extend(
           this.issues.setURLState("/api/issues/search", paramsCopy);
         }
       } else if (_.contains(issuesAPICategories, category)) {
-        this.issues.setURLState("/api/issues/category/" + category, params);
+        this.issues.setURLState(
+          "/api/issues/category/" + category,
+          this.removeParamQuery(params)
+        );
       } else {
-        this.issues.setURLState("/api/issues", params);
+        this.issues.setURLState("/api/issues", this.removeParamQuery(params));
       }
 
       this.fetchAndRenderIssues();
+    },
+    removeParamQuery: function(params) {
+      if (params && params.q) {
+        delete params.q;
+      }
+      return params;
     },
     addParamsToModel: function(paramsArray) {
       // this method just puts the params in the model's params property.
@@ -489,7 +511,7 @@ issueList.IssueView = Backbone.View.extend(
           var kvArray = param.split("=");
           var key = kvArray[0];
           var value = kvArray[1];
-          this.issues.params[key] = value;
+          this.issues.params[key] = decodeURIComponent(value);
         }, this)
       );
     },
