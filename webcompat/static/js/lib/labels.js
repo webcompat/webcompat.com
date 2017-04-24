@@ -176,7 +176,7 @@ issues.LabelEditorView = Backbone.View.extend({
       item.color = $(item).data("color");
       modelUpdate.push(item);
     });
-    this.reRender({ labels: modelUpdate });
+    this.reRender({ labels: _.uniq(modelUpdate) });
   },
   closeEditor: function() {
     var checked = $("input[type=checkbox]:checked");
