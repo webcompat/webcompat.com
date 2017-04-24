@@ -36,7 +36,6 @@ issues.LabelList = Backbone.Model.extend({
     });
     // if we're initialized with {labels:array-of-objects}, process the data
     var inputLabelData = this.get("labels");
-    this.set("labels", []);
     if (inputLabelData) {
       this.parse(inputLabelData);
     } else {
