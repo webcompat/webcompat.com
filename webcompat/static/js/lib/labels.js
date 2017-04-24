@@ -41,7 +41,7 @@ issues.LabelsView = Backbone.View.extend({
   subTemplate: _.template(
     [
       "<% _.each(labels, function(label) { %>",
-      '<span class="wc-Label wc-Label--badge" style="background-color:#<%=label.color%>">',
+      '<span class="wc-Label wc-Label--badge js-Label" style="background-color:#<%=label.color%>">',
       "<%= label.name %>",
       "</span>",
       "<% }); %>"
@@ -114,7 +114,7 @@ issues.LabelEditorView = Backbone.View.extend({
   reRender: function(data) {
     //only re-render the labels into the labels wrapper
     this.issueView.$el
-      .find(".js-label-list")
+      .find(".js-Label-list")
       .html(this.issueView.subTemplate(data));
     this.issueView.$el.find(".js-LabelEditorLauncher").addClass("is-active");
   },
