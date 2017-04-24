@@ -4,6 +4,12 @@
 2. New features: affect minor number
 3. API endpoint changes or dependency version updates: affect major number
 
+## 4.0.1 - 2018-04-24
+
+* Fixed encoding param bugs [Pull #1518](https://github.com/webcompat/webcompat.com/pull/1518)
+* Unified code for UA string version parsing [Pull #1504](https://github.com/webcompat/webcompat.com/pull/1504)
+
+
 ## 4.0.0 - 2017-04-17
 
 * Fix double "thanks" flash message [Pull #1514](https://github.com/webcompat/webcompat.com/pull/1514)
