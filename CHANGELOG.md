@@ -4,6 +4,11 @@
 2. New features: affect minor number
 3. API endpoint changes or dependency version updates: affect major number
 
+## 4.0.2 - 2018-04-25
+
+* Fix a disappearing label gear [Pull #1525](https://github.com/webcompat/webcompat.com/pull/1525)
+* Adds a list of files to ignore for deploy [Pull #1524](https://github.com/webcompat/webcompat.com/pull/1524)
+
 ## 4.0.1 - 2018-04-24
 
 * Fixed encoding param bugs [Pull #1518](https://github.com/webcompat/webcompat.com/pull/1518)
