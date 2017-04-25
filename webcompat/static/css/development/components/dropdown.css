@@ -11,17 +11,6 @@
   display: inline-block;
 }
 
-  /* modifier*/
-  .wc-Dropdown--large {
-    font-size: 2rem;
-  }
-
-  @media all and (max-width: 28.12em) {
-    .wc-Dropdown--large {
-      font-size:1.4em;
-    }
-  }
-
   .wc-Dropdown-toggle {
     font-size:1em;
     font-weight:700;
