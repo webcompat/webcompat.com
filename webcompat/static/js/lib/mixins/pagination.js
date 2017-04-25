@@ -9,7 +9,7 @@ issueList.events = _.extend({}, Backbone.Events);
 PaginationControlsView Usage:
 This assumes there is an element with a .js-dropdown-pagination class, e.g.:
 
-{{ dropdown('default', 'js-dropdown-wrapper js-dropdown-pagination') }}
+{{ dropdown('js-dropdown-wrapper js-dropdown-pagination') }}
 
 We just listen for and fire events from this view -
 no template needed. It gets constructed in PaginationMixin.initMixin()
