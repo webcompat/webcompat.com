@@ -26,14 +26,6 @@ define(
           url("/issues"),
           ".js-SearchIssue-filter"
         )
-          .findByCssSelector(
-            ".js-SearchIssue-filter .js-Dropdown .js-Dropdown-label"
-          )
-          .getVisibleText()
-          .then(function(text) {
-            assert.include(text, "Issues", "Page header displayed");
-          })
-          .end()
           .findAllByCssSelector("button.js-Tag")
           .then(function(elms) {
             assert.equal(elms.length, 6, "All filter buttons are displayed");
@@ -280,16 +272,6 @@ define(
               text,
               "Show 25",
               "Pagination dropdown label is updated from URL params"
-            );
-          })
-          .end()
-          .findAllByCssSelector(".js-SearchIssue-filter .js-Dropdown-toggle h1")
-          .getVisibleText()
-          .then(function(text) {
-            assert.equal(
-              text,
-              "View all Issues",
-              "Filter dropdown label is updated from URL params"
             );
           })
           .end()
