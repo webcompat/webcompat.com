@@ -5,17 +5,17 @@
   --Footer-backgroundColor: #fff;
   --Footer-border: var(--base-colorDark);
   --Footer-colorHover: var(--base-colorDark);
+  --Footer-withIcon : 1.5em;
 }
 
 .wc-Footer {
-  font-size:var(--Footer-fontSize);
+  font-size: var(--Footer-fontSize);
   background-color: var(--Footer-backgroundColor);
   border-top: 5px solid var(--Footer-border);
   padding: 1em 0;
 }
 
 @media all and (min-width: 28.12em) {
-
   .wc-Footer {
     margin-top: 3em;
   }
@@ -33,15 +33,23 @@
   }
 
   @media all and (min-width: 37.52em) {
-
     .wc-Footer-list {
       display: flex;
     }
   }
 
+  /* modifier */
+  @media all and (max-width: 37.51em) {
+    .wc-Footer-list--right {
+      display: flex;
+      align-content: space-between;
+      flex-flow: row wrap;
+      width: var(--Footer-withIcon);
+    }
+  }
+
   /* item */
   @media all and (min-width: 37.52em) {
-
     .wc-Footer-item + .wc-Footer-item {
       padding-left: .75em;
     }
@@ -54,8 +62,9 @@
 
   /* link */
   .wc-Footer-link {
+    display: block;
     color: inherit;
-    text-decoration:none;
+    text-decoration: none;
   }
 
     /* event */
@@ -66,34 +75,25 @@
 
     /* modifier */
     @media all and (min-width: 37.51em) {
-
       .wc-Footer-link--separator:after {
-        content:"//";
-        margin-left:1em;
+        content: "//";
+        margin-left: 1em;
       }
     }
-.wc-Twitter {
-  
-  width:1.5em;
-  display:inline-block;
-  background-image:url(/img/twitter.svg);
-  color:transparent;
-  background-repeat: no-repeat;
-}
-.wc-Github {
-  
-  width:1.5em;
-  display:inline-block;
-  background-image:url(/img/github-logo.svg);
-  color:transparent;
-  background-repeat: no-repeat;
-}
 
-@media all and (max-width: 28em) {
-  .wc-Twitter {
-    margin:0;
+  .wc-Footer-icon {
+    display: block;
+    width: var(--Footer-withIcon);
+    height: var(--Footer-withIcon);
+    overflow: hidden;
+    background-repeat: no-repeat;
+    color: transparent;
   }
-  .wc-Github {
-    margin:0;
+
+  .wc-Footer-icon--twitter {
+    background-image: url("../../../img/twitter.svg");
   }
-}
+
+  .wc-Footer-icon--github {
+    background-image: url("../../../img/github-logo.svg");
+  }
