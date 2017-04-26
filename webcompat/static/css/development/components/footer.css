@@ -5,6 +5,7 @@
   --Footer-backgroundColor: #fff;
   --Footer-border: var(--base-colorDark);
   --Footer-colorHover: var(--base-colorDark);
+  --Footer-withIcon : 1.5em;
 }
 
 .wc-Footer {
@@ -34,6 +35,16 @@
   @media all and (min-width: 37.52em) {
     .wc-Footer-list {
       display: flex;
+    }
+  }
+
+  /* modifier */
+  @media all and (max-width: 37.51em) {
+    .wc-Footer-list--right {
+      display: flex;
+      align-content: space-between;
+      flex-flow: row wrap;
+      width: var(--Footer-withIcon);
     }
   }
 
@@ -72,8 +83,8 @@
 
   .wc-Footer-icon {
     display: block;
-    width: 1.5em;
-    height: 1.5em;
+    width: var(--Footer-withIcon);
+    height: var(--Footer-withIcon);
     overflow: hidden;
     background-repeat: no-repeat;
     color: transparent;
