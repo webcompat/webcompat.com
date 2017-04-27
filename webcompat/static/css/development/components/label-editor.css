@@ -87,6 +87,12 @@
   text-decoration: underline;
 }
 
+.wc-LabelEditor-button:focus {
+  outline-width: 2px;
+  outline-style: solid;
+  outline-color: Highlight;
+}
+
 /* list label */
 .wc-LabelEditor-list {
   background-color: #fff;
@@ -113,8 +119,17 @@
   padding: .5em .3125em;
 }
 
-.wc-LabelEditor--list-item:last-child {
+.wc-LabelEditor-list-item:last-child {
   border-bottom: 1px solid #ddd;
+}
+
+/* event */
+.wc-LabelEditor-list-item:focus,
+.wc-LabelEditor-list-item.focused {
+  border-width: 2px;
+  border-style: solid;
+  border-color: Highlight;
+  outline: none;
 }
 
 /* square color */
