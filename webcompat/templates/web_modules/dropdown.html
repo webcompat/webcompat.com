@@ -1,12 +1,3 @@
-{% macro dropdown(size, config) %}
-
-{% if size == 'large' %}
-
-  <div class="wc-Dropdown wc-Dropdown--large {{config}}"></div>
-
-{% else %}
-
-  <div class="wc-Dropdown {{config}}"></div>
-
-{% endif %}
+{% macro dropdown(config) %}
+  <div class="wc-Dropdown js-Dropdown {{config}}"></div>
 {% endmacro %}
