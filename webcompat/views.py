@@ -193,7 +193,8 @@ def create_issue():
     # Logging the ip and url for investigation
     log = app.logger
     log.setLevel(logging.INFO)
-    log.info('{ip} {url}'.format(ip=request.remote_addr, url=form['url']))
+    log.info('{ip} {url}'.format(ip=request.remote_addr,
+                                 url=form['url'].encode('utf-8')))
     # form submission for 3 scenarios: authed, to be authed, anonymous
     if form.get('submit-type') == AUTH_REPORT:
         if g.user:  # If you're already authed, submit the bug.
