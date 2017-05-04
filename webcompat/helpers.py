@@ -493,7 +493,7 @@ def add_csp(response):
     # sending Content-Security-Policy
     response.headers['Content-Security-Policy-Report-Only'] = (
         "default-src 'none'; " +
-        "connect-src 'self'; " +
+        "connect-src 'self' https://api.github.com; " +
         "font-src 'self'; " +
         "img-src 'self' https://www.google-analytics.com https://*.githubusercontent.com data:; " +  # nopep8
         "manifest-src 'self'; " +
