@@ -10,8 +10,6 @@
 * Fix UTF-8 decoding error [Pull #1545](https://github.com/webcompat/webcompat.com/pull/1545)
 * Split up CONTRIBUTING.md into multiple files [Pull #1532](https://github.com/webcompat/webcompat.com/pull/1532)
 * Remove main dropdown from issues page [Pull #1531](https://github.com/webcompat/webcompat.com/pull/1531)
-* Fix disappearing label editor icon[Pull #1525](https://github.com/webcompat/webcompat.com/pull/1525)
-* Add list of files for rsync to ignore [Pull #1524](https://github.com/webcompat/webcompat.com/pull/1524)
 * Fix SVG overflow for small viewports [Pull #1511](https://github.com/webcompat/webcompat.com/pull/1511)
 
 ## 4.0.2 - 2018-04-25
