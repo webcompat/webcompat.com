@@ -20,6 +20,12 @@ git:
 
 addons:
   firefox: "50.1.0"
+  browserstack:
+    #username: "carolchung2"
+    #access_key:
+      #secure: "tohP3qGVoeTTfoLFTkrHI5xXk9RcRHqN0kH9SyinOODTWvSGTb1rqVztL+fz/KI2Buo1OxOA4w3QNyPQPGVgIISd5wk3/AY+XsxYmhtglCcE9dnFr1T+Ze6UbwGef0ozhPrN9QzlklqKBXb0hSrr6prRSngbGRafqXYsE/vA/LvZ5E3WpPIIqCa502UG9yk8knkHVNsbj2gxmQt/fexVu+H7eSPxBkh6TlnyhvD1gAPaleQT8Mqg2X4fJeNOayRPK4C5GqcDslfwhp9A/MB9Aux7tIhOxFkXW4s3ltyBSExd+vlzyk2tkphUbUFG3I0ld1uXoWbkdVDb/HBDO+rHumGiygeU1K7wOEsF41HSpT/lvSsClNU5Gtd9y7dTj6Co4eHY+IG4OKYtFp3yLOYsUcwmTAHOxlJUGFxC4FgsSZBoOopK+M4i6Ys8KsoZc2Bc5Y1YXejKKa9SqS80FvtIugsXUJPXbMVahMy9rlg/UeTyN0TynDpPrHg8cuu4UA6KHo6KSAgLMHb4ui6yF6cAKuzuOemK0qTCDVMLWrjhFwW/QqzPJCxtJNahIjgGvCJKMltCxEhOEfdbfQ/1ROGvVu3scXwz3QgZagSrhQoGQKaOmYsBpbHZogt8Qb0YI+lNpCmVgl01D/UwUCl3Z4FNooNEItGIIRX+e3/EupzBDlM="
+    proxyHost: "http://localhost"
+    proxyPort: "5000"
 
 env:
   global:
@@ -58,5 +64,5 @@ before_script:
 # just run the non-auth tests. otherwise, run everything.
 script:
   - nosetests
-  - if [ "$TRAVIS_SECURE_ENV_VARS" == "false" ] ; then node_modules/.bin/intern-runner config=tests/intern reporters=Console functionalSuites=tests/functional-nonauth ; fi
+  - if [ "$TRAVIS_SECURE_ENV_VARS" == "false" ] ; then node_modules/.bin/intern-runner BROWSERSTACK_USERNAME=$BROWSERSTACK_USERNAME BROWSERSTACK_ACCESS_KEY=$BROWSERSTACK_ACCESS_KEY config=tests/browserstack_remote BROWSERSTACK_USERNAME="$BROWSERSTACK_USERNAME" BROWSERSTACK_ACCESS_KEY="$BROWSERSTACK_ACCESS_KEY" reporters=Console functionalSuites=tests/functional-nonauth ; fi
   - if [ "$TRAVIS_SECURE_ENV_VARS" == "true" ] ; then node_modules/.bin/intern-runner config=tests/intern reporters=Console user="$USER" pw="$PW" ; fi
