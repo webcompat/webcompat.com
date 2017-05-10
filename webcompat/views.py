@@ -32,6 +32,7 @@ from webcompat import app
 from webcompat import github
 from webcompat.db import User
 from webcompat.db import session_db
+from urlparse import urlparse
 
 
 @app.teardown_appcontext
@@ -117,7 +118,6 @@ def file_issue():
     response = report_issue(session['form_data'])
     # Get rid of stashed form data
     session.pop('form_data', None)
-    session['show_thanks'] = True
     return redirect(url_for('show_issue', number=response.get('number')))
 
 
@@ -199,7 +199,6 @@ def create_issue():
     if form.get('submit-type') == AUTH_REPORT:
         if g.user:  # If you're already authed, submit the bug.
             response = report_issue(form)
-            session['show_thanks'] = True
             return redirect(url_for('show_issue',
                                     number=response.get('number')))
         else:  # Stash form data into session, go do GitHub auth
@@ -207,7 +206,6 @@ def create_issue():
             return redirect(url_for('login'))
     elif form.get('submit-type') == PROXY_REPORT:
         response = report_issue(form, proxy=True).json()
-        session['show_thanks'] = True
         return redirect(url_for('show_issue', number=response.get('number')))
 
 
@@ -217,9 +215,10 @@ def show_issue(number):
     '''Route to display a single issue.'''
     if g.user:
         get_user_info()
-    if session.get('show_thanks'):
-        flash(number, 'thanks')
-        session.pop('show_thanks')
+    if request.referrer is not None:
+        url_path = urlparse(request.referrer).path
+        if url_path == '/issues/new':
+            flash(number, 'thanks')
     return render_template('issue.html', number=number)
 
 
