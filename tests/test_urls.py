@@ -127,6 +127,11 @@ class TestURLs(unittest.TestCase):
         rv = self.app.get('/tools/cssfixme?url=foobar')
         self.assertEqual(rv.status_code, 200)
 
+    def test_missing_parameters_for_new_issue(self):
+        '''Sends 400 to POST on /issues/new with missing parameters.'''
+        rv = self.app.post('/issues/new', data=dict(url='foo'))
+        self.assertEqual(rv.status_code, 400)
+
 
 if __name__ == '__main__':
     unittest.main()
