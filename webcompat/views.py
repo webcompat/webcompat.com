@@ -165,7 +165,18 @@ def create_issue():
                 session[param] = request.args.get(param)
         return render_template('new-issue.html', form=bug_form)
     # copy the form so we can add the full UA string to it.
-    form = request.form.copy()
+    if request.form:
+        form = request.form.copy()
+        # To be legit the form needs a couple of parameters
+        # if one essential is missing, it's a bad request
+        must_parameters = set(['url', 'problem_category', 'description',
+                               'os', 'browser',
+                               'username', 'submit-type'])
+        if not must_parameters.issubset(form.keys()):
+            abort(400)
+    else:
+        # https://tools.ietf.org/html/rfc7231#section-6.5.1
+        abort(400)
     # see https://github.com/webcompat/webcompat.com/issues/1141
     # see https://github.com/webcompat/webcompat.com/issues/1237
     spamlist = ['qiangpiaoruanjian', 'cityweb.de']
@@ -199,6 +210,9 @@ def create_issue():
         response = report_issue(form, proxy=True).json()
         session['show_thanks'] = True
         return redirect(url_for('show_issue', number=response.get('number')))
+    else:
+        # if anything wrong, we assume it is a bad forged request
+        abort(400)
 
 
 @app.route('/issues/<int:number>')
