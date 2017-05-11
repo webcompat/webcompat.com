@@ -121,7 +121,7 @@ def file_issue():
     return redirect(url_for('show_issue', number=response.get('number')))
 
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/', methods=['GET'])
 def index():
     """Main view where people come to report issues."""
     ua_header = request.headers.get('User-Agent')
@@ -129,19 +129,9 @@ def index():
     # browser_name is used in topbar.html to show the right add-on link
     browser_name = get_browser_name(ua_header)
     # GET means you want to file a report.
-    if request.method == 'GET':
-        if g.user:
-            get_user_info()
-        return render_template('index.html', form=bug_form,
-                               browser=browser_name)
-    # Validate, then create issue.
-    elif bug_form.validate_on_submit():
-        return create_issue()
-
-    else:
-        # Validation failed, re-render the form with the errors.
-        return render_template('index.html', form=bug_form,
-                               browser=browser_name)
+    if g.user:
+        get_user_info()
+    return render_template('index.html', form=bug_form, browser=browser_name)
 
 
 @app.route('/issues')
