@@ -132,6 +132,18 @@ class TestURLs(unittest.TestCase):
         rv = self.app.post('/issues/new', data=dict(url='foo'))
         self.assertEqual(rv.status_code, 400)
 
+    def test_new_issue_should_not_crash(self):
+        '''Checks 500 is not accepted for /issues/new POST.'''
+        data = {'problem_category': u'mobile_site_bug',
+                'username': u'',
+                'description': u'foo',
+                'submit-type': u'github-proxy-report',
+                'url': u'http://example.com',
+                'os': u'Foobar',
+                'browser': u'BarFoo'}
+        rv = self.app.post('/issues/new', data=data)
+        self.assertNotEqual(rv.status_code, 500)
+
 
 if __name__ == '__main__':
     unittest.main()
