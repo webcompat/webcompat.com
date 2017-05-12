@@ -4,6 +4,14 @@
 2. New features: affect minor number
 3. API endpoint changes or dependency version updates: affect major number
 
+## 5.0.0 - 2018-05-12
+
+* Fix regression that prevents closing or re-opening an issue. [Pull #1561](https://github.com/webcompat/webcompat.com/pull/1561)
+* Restrict comments and constrain the closing of issue (updates to issues and edit API endpoints)[Pull #1559](https://github.com/webcompat/webcompat.com/pull/1559)
+* Handles crash scenario (500) and validation of the form [Pull #1556](https://github.com/webcompat/webcompat.com/pull/1556)
+* Removes dead code and method [Pull #1555](https://github.com/webcompat/webcompat.com/pull/1555)
+* Fixes length and quote style issues [Pull #1500](https://github.com/webcompat/webcompat.com/pull/1500)
+
 ## 4.0.3 - 2018-05-08
 
 * Add GitHub API to CSP connect-src [Pull #1550](https://github.com/webcompat/webcompat.com/pull/1550)
