@@ -427,7 +427,7 @@ function BugForm() {
         // Note: this could fail in weird ways depending on how
         // the user has edited the descField.
         this.descField.val(function(idx, value) {
-          return value.replace(/!\[.+\.(?:bmp|gif|jpe*g*)\)$/, "");
+          return value.replace(/\[!\[[^\]]+\]\([^\)]+\)\]\([^\.]+.(?:bmp|gif|jpe*g*)\)$/, "");
         });
       }, this)
     );
@@ -449,7 +449,7 @@ function BugForm() {
       method: "POST",
       url: "/upload/",
       success: _.bind(function(response) {
-        this.addImageURL(response.url);
+        this.addImageURL(response);
         this.uploadLoader.removeClass("is-active");
         this.enableSubmits();
       }, this),
@@ -475,11 +475,13 @@ function BugForm() {
     this.uploadField.val(this.uploadField.get(0).defaultValue);
   };
   /*
-    copy over the URL of a newly uploaded image asset to the bug
-    description textarea.
+    create the markdown with the URL of a newly uploaded image
+    and its thumbnail URL assets to the bug description
   */
-  this.addImageURL = function(url) {
-    var imageURL = ["![Screenshot Description](", url, ")"].join("");
+  this.addImageURL = function(response) {
+    var img_url = response.url;
+    var thumb_url = response.thumb_url;
+    var imageURL = ["[![Screenshot Description](", thumb_url, ")](", img_url, ")"].join("");
     this.descField.val(function(idx, value) {
       return value + "\n\n" + imageURL;
     });
