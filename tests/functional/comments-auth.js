@@ -148,7 +148,7 @@ define(
           .then(function(val) {
             assert.include(
               val,
-              "![Screenshot of the site issue](http://localhost:5000/uploads/",
+              "[![Screenshot Description](http://localhost:5000/uploads/",
               "The image was correctly uploaded and its URL was copied to the comment text."
             );
           })
