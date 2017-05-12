@@ -205,7 +205,7 @@ def proxy_comments(number):
     Either as an authed user, or as one of our proxy bots.
     '''
     params = request.args.copy()
-    if request.method == 'POST':
+    if request.method == 'POST' and g.user:
         path = 'repos/{0}/{1}/comments'.format(ISSUES_PATH, number)
         return api_request('post', path, params=params,
                            data=get_comment_data(request.data))
