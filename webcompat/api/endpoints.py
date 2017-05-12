@@ -50,8 +50,13 @@ def edit_issue(number):
     edit issues.
     '''
     path = 'repos/{0}/{1}'.format(ISSUES_PATH, number)
-    edit = proxy_request('patch', path, data=request.data)
-    return (edit.content, edit.status_code, {'content-type': JSON_MIME})
+    # we can only change the state of the issue: close or open
+    states_list = ['{"state": "closed"}', '{"state": "open"}']
+    if request.data in states_list:
+        edit = proxy_request('patch', path, data=request.data)
+        return (edit.content, edit.status_code, {'content-type': JSON_MIME})
+    else:
+        abort(403)
 
 
 @api.route('/issues')
