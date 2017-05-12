@@ -427,7 +427,10 @@ function BugForm() {
         // Note: this could fail in weird ways depending on how
         // the user has edited the descField.
         this.descField.val(function(idx, value) {
-          return value.replace(/\[!\[[^\]]+\]\([^\)]+\)\]\([^\.]+.(?:bmp|gif|jpe*g*)\)$/, "");
+          return value.replace(
+            /\[!\[[^\]]+\]\([^\)]+\)\]\([^\.]+.(?:bmp|gif|jpe*g*)\)$/,
+            ""
+          );
         });
       }, this)
     );
@@ -481,7 +484,13 @@ function BugForm() {
   this.addImageURL = function(response) {
     var img_url = response.url;
     var thumb_url = response.thumb_url;
-    var imageURL = ["[![Screenshot Description](", thumb_url, ")](", img_url, ")"].join("");
+    var imageURL = [
+      "[![Screenshot Description](",
+      thumb_url,
+      ")](",
+      img_url,
+      ")"
+    ].join("");
     this.descField.val(function(idx, value) {
       return value + "\n\n" + imageURL;
     });

@@ -231,12 +231,18 @@ issues.ImageUploadView = Backbone.View.extend({
     var textareaVal = textarea.val();
     var img_url = response.url;
     var thumb_url = response.thumb_url;
-    var imageURL = ["[![Screenshot Description](", thumb_url, ")](", img_url, ")"].join("");
+    var imageURL = [
+      "[![Screenshot Description](",
+      thumb_url,
+      ")](",
+      img_url,
+      ")"
+    ].join("");
 
     if (!$.trim(textareaVal)) {
       textarea.val(imageURL);
     } else {
-      textarea.val(textareaVal + DELIMITER + ImageURL);
+      textarea.val(textareaVal + DELIMITER + imageURL);
     }
   },
   // Adapted from bugform.js
