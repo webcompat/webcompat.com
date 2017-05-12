@@ -10,6 +10,8 @@ This is used to make API calls to GitHub, either via a logged-in users
 credentials or as a proxy on behalf of anonymous or unauthenticated users.'''
 
 
+import json
+
 from flask import abort
 from flask import Blueprint
 from flask import g
@@ -50,9 +52,12 @@ def edit_issue(number):
     edit issues.
     '''
     path = 'repos/{0}/{1}'.format(ISSUES_PATH, number)
-    # we can only change the state of the issue: close or open
-    states_list = ['{"state": "closed"}', '{"state": "open"}']
-    if request.data in states_list:
+    # we can only change the state of the issue: closed or open
+    states_list = ['closed', 'open']
+    patch_data = json.loads(request.data)
+    # check to see if we're trying to change state from/to closed or open
+    # and make sure that's the only thing we're trying to change
+    if patch_data.get('state') in states_list and len(patch_data) == 1:
         edit = proxy_request('patch', path, data=request.data)
         return (edit.content, edit.status_code, {'content-type': JSON_MIME})
     else:
