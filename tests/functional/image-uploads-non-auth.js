@@ -94,7 +94,7 @@ define(
             .then(function(val) {
               assert.include(
                 val,
-                "![Screenshot Description](http://localhost:5000/uploads/",
+                "[![Screenshot Description](http://localhost:5000/uploads/",
                 "The data URI was correctly uploaded and its URL was copied to the bug description."
               );
             })
@@ -115,7 +115,7 @@ define(
             .then(function(val) {
               assert.include(
                 val,
-                "![Screenshot Description](http://localhost:5000/uploads/",
+                "[![Screenshot Description](http://localhost:5000/uploads/",
                 "The data URI was correctly uploaded and its URL was copied to the bug description."
               );
             })
@@ -134,7 +134,7 @@ define(
           .then(function(val) {
             assert.include(
               val,
-              "![Screenshot Description](http://localhost:5000/uploads/",
+              "[![Screenshot Description](http://localhost:5000/uploads/",
               "The data URI was correctly uploaded and its URL was copied to the bug description."
             );
           })
@@ -174,7 +174,7 @@ define(
             .then(function(val) {
               assert.notInclude(
                 val,
-                "![Screenshot Description](http://localhost:5000/uploads/",
+                "[![Screenshot Description](http://localhost:5000/uploads/",
                 "The url to the image upload was correctly removed."
               );
             })

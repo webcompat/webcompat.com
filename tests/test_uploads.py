@@ -18,7 +18,7 @@ from werkzeug.datastructures import MultiDict
 # Add webcompat module to import path
 sys.path.append(os.path.realpath(os.pardir))
 
-from webcompat import app
+from webcompat import app  # nopep8
 
 
 class TestingFileStorage(FileStorage):
@@ -74,12 +74,12 @@ class TestUploads(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def testGet(self):
+    def test_get(self):
         '''Test that /upload/ doesn't let you GET.'''
         rv = self.test_client.get('/upload/')
         self.assertEqual(rv.status_code, 404)
 
-    def testRegularUploads(self):
+    def test_regular_uploads(self):
         '''Test that uploaded files return the expected status code.'''
         # Loop over some files and the status codes that we are expecting
         for filename, status_code in (
@@ -115,7 +115,7 @@ class TestUploads(unittest.TestCase):
             rv = test_client.post('/upload/', data=dict())
             self.assertEqual(rv.status_code, status_code)
 
-    def testBase64ScreenshotUploads(self):
+    def test_base64_screenshot_uploads(self):
         '''Test that Base64 screenshots return the expected status codes.'''
         BASE64_PNG = u'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAAAAAA6fptVAAAACklEQVQYV2P4DwABAQEAWk1v8QAAAABJRU5ErkJggg=='  # nopep8
         BASE64_PNG_GARBAGE = u'data:image/png;base64,garbage!'
