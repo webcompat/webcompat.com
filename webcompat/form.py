@@ -34,11 +34,15 @@ GITHUB_HELP = u'_From [webcompat.com](https://webcompat.com/) with ❤️_'
 
 problem_choices = [
     (u'detection_bug', u'Desktop site instead of mobile site'),
-    (u'mobile_site_bug', u'Mobile site is not usable'),
-    (u'video_bug', u'Video doesn\'t play'),
-    (u'layout_bug', u'Layout is messed up'),
-    (u'text_bug', u'Text is not visible'),
-    (u'unknown_bug', u'Something else - I\'ll add details below')
+    (u'mobile_site_bug', u'The site is not usable'), #still mobile_site_bug?
+    (u'layout_bug', u'The design is broken'),
+    (u'video_bug', u'Video or audio doesn\'t play'),
+    (u'unknown_bug', u'Something else')
+]
+
+browser_test_choices = [
+    (u'yes', u'Yes'),
+    (u'no', u'No')
 ]
 
 url_message = u'A valid URL is required.'
@@ -47,6 +51,9 @@ image_message = (u'Please select an image of the following type:'
 radio_message = u'Problem type required.'
 username_message = u'A valid username must be {0} characters long'.format(
     random.randrange(0, 99))
+
+desc_label = (u'Please describe what was wrong <span class="wc-Form-required">*</span>')
+desc_message = u'An issue description is required.'
 
 problem_label = (u'What seems to be the trouble?',
                  '<span class="wc-Form-required">*</span>')
@@ -57,23 +64,36 @@ desc_default = u'''1. Navigate to: Site URL
 
 Expected Behavior:
 
-Actual Behavior:
 '''
 
+steps_default = u'''1. Navigate to: Site URL
+2. …
+
+Actual Behavior:
+
+'''
 
 class IssueForm(FlaskForm):
     '''Define form fields and validation for our bug reporting form.'''
     url = StringField(url_label,
                       [InputRequired(message=url_message)])
-    browser = StringField(u'Browser / Version', [Optional()])
+    browser = StringField(u'Is this information correct?', [Optional()])
     os = StringField(u'Operating System', [Optional()])
     username = StringField(u'Username',
                            [Length(max=0, message=username_message)])
-    description = TextAreaField(u'Give more details', [Optional()],
-                                default=desc_default)
+    description = StringField(desc_label,
+                      [InputRequired(message=desc_message)])
+
+    steps_reproduce = TextAreaField(u'How did you get there?', [Optional()],
+                                default=steps_default)
     problem_category = RadioField(problem_label,
                                   [InputRequired(message=radio_message)],
                                   choices=problem_choices)
+    browser_test_category = RadioField(problem_label,
+                                  [InputRequired(message=radio_message)],
+                                  choices=browser_test_choices)
+
+
     # we filter allowed type in uploads.py
     # Note, we don't use the label programtically for this input[type=file],
     # any changes here need to be updated in form.html.
@@ -94,6 +114,15 @@ def get_form(ua_header):
 def get_problem(category):
     '''Return human-readable label for problem choices form value.'''
     for choice in problem_choices:
+        if choice[0] == category:
+            return choice[1]
+    # Something probably went wrong. Return something safe.
+    return u'Unknown'
+
+
+def get_browser_test(category):
+    '''Return human-readable label for problem choices form value.'''
+    for choice in browser_test_choices:
         if choice[0] == category:
             return choice[1]
     # Something probably went wrong. Return something safe.
@@ -190,6 +219,7 @@ def build_formdata(form_object):
     normalized_url = normalize_url(url)
     domain = domain_name(normalized_url)
     problem_summary = get_problem_summary(form_object.get('problem_category'))
+    browser_test_sumary = get_browser_test(form_object.get('browser_test_category'))
 
     if domain:
         summary = '{0} - {1}'.format(domain, problem_summary)
@@ -203,7 +233,9 @@ def build_formdata(form_object):
         'browser': form_object.get('browser'),
         'os': form_object.get('os'),
         'problem_type': get_problem(form_object.get('problem_category')),
-        'description': form_object.get('description')
+        'browser_test_type': get_problem(form_object.get('browser_test_category')),
+        'description': form_object.get('description'),
+        'steps_reproduce': form_object.get('steps_reproduce')
     }
 
     # Preparing the body
