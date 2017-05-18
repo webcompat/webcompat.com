@@ -488,10 +488,7 @@ def add_csp(response):
 
     This should be used in @app.after_request to ensure the header is
     added to all responses.'''
-    # short term, we send Content-Security-Policy-Report-Only
-    # see https://github.com/webcompat/webcompat.com/issues/763 for
-    # sending Content-Security-Policy
-    response.headers['Content-Security-Policy-Report-Only'] = (
+    response.headers['Content-Security-Policy'] = (
         "default-src 'none'; " +
         "connect-src 'self' https://api.github.com; " +
         "font-src 'self'; " +
