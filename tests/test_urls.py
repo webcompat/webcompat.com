@@ -84,15 +84,6 @@ class TestURLs(unittest.TestCase):
         self.assertEqual(rv.status_code, 200)
         self.assertNotEqual(rv.status_code, 307)
 
-    def test_labeler_webhook(self):
-        '''Webhook related tests.'''
-        headers = {'X-GitHub-Event': 'ping'}
-        rv = self.app.get('/webhooks/labeler', headers=headers)
-        self.assertEqual(rv.status_code, 403)
-        rv = self.app.post('/webhooks/labeler', headers=headers)
-        # A random post should 401, only requests from GitHub will 200
-        self.assertEqual(rv.status_code, 401)
-
     def test_csp_report_uri(self):
         '''Test POST to /csp-report w/ correct content-type returns 204.'''
         headers = {'Content-Type': 'application/csp-report'}
