@@ -11,9 +11,6 @@ import re
 import requests
 
 from webcompat import app
-from webcompat.db import issue_db
-from webcompat.db import WCIssue
-from webcompat.helpers import extract_url
 
 
 def api_post(endpoint, payload, issue):
@@ -52,9 +49,6 @@ def set_label(label, issue_number):
 
 
 def dump_to_db(title, body, issue_number):
-    url = extract_url(body)
-    issue_db.add(WCIssue(issue_number, title, url, body))
-    issue_db.commit()
 
 
 def compare_digest(x, y):
