@@ -66,11 +66,18 @@ def compare_digest(x, y):
 
 def signature_check(key, post_signature, payload):
     '''Checks the HTTP POST legitimacy.'''
-    sha_name, signature = post_signature.split('=')
-    if sha_name != 'sha1':
+    if post_signature.startswith('sha1='):
+        sha_name, signature = post_signature.split('=')
+    else:
         return False
     if not signature:
         return False
     # HMAC requires its key to be bytes, but data is strings.
+    hexmac = get_payload_signature(key, payload)
+    return compare_digest(hexmac, signature.encode('utf-8'))
+
+
+def get_payload_signature(key, payload):
+    '''Compute the payload signature given a key.'''
     mac = hmac.new(key, msg=payload, digestmod=hashlib.sha1)
-    return compare_digest(mac.hexdigest(), signature.encode('utf-8'))
+    return mac.hexdigest()
