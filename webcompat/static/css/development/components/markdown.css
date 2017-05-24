@@ -21,6 +21,9 @@
   /* all element */
   .wc-Markdown * {
     font-size: var(--Markdown-fontSize) !important;
+    word-wrap: break-word;
+    white-space: normal;
+    overflow: hidden;
   }
 
   /* link */
@@ -80,6 +83,7 @@
   .wc-Markdown code {
     font-family: monospace;
     font-size: 90%;
+    white-space: normal;
   }
 
   .wc-Markdown p > code {
