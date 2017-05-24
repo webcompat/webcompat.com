@@ -4,6 +4,14 @@
 2. New features: affect minor number
 3. API endpoint changes or dependency version updates: affect major number
 
+## 5.1.0 - 2018-05-24
+
+* Prevent overflow in code elements in issue description [Pull #1568](https://github.com/webcompat/webcompat.com/pull/1568)
+* Improves webhooks to send labels at once [Pull #1566](https://github.com/webcompat/webcompat.com/pull/1566)
+* Enable CSP header [Pull #1563](https://github.com/webcompat/webcompat.com/pull/1563)
+* Adds thumbnails to image upload and link them [Pull #1557](https://github.com/webcompat/webcompat.com/pull/1557)
+* Fixes length and quote style issues [Pull #1500](https://github.com/webcompat/webcompat.com/pull/1500)
+
 ## 5.0.0 - 2018-05-12
 
 * Fix regression that prevents closing or re-opening an issue. [Pull #1561](https://github.com/webcompat/webcompat.com/pull/1561)
