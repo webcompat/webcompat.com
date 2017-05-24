@@ -8,9 +8,9 @@ import hashlib
 import hmac
 import json
 import re
-import requests
 
 from webcompat import app
+from webcompat.helpers import proxy_request
 
 
 def extract_browser_label(body):
@@ -33,15 +33,19 @@ def extract_browser_label(body):
 
 
 def set_labels(payload, issue_number):
-    '''Do a GitHub POST request to set a label for the issue.'''
-    # POST /repos/:owner/:repo/issues/:number/labels
-    # ['Label1', 'Label2']
+    '''Do a GitHub POST request to set a label for the issue.
+
+    POST /repos/:owner/:repo/issues/:number/labels
+    ['Label1', 'Label2']
+    '''
     headers = {
         'Authorization': 'token {0}'.format(app.config['OAUTH_TOKEN'])
     }
-    uri = 'https://api.github.com/repos/{0}/{1}/labels'.format(
+    path = 'repos/{0}/{1}/labels'.format(
         app.config['ISSUES_REPO_URI'], issue_number)
-    return requests.post(uri, data=json.dumps(payload), headers=headers)
+    return proxy_request('post', path,
+                         headers=headers,
+                         data=json.dumps(payload))
 
 
 def compare_digest(x, y):
