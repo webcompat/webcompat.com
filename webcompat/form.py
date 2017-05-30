@@ -59,6 +59,8 @@ problem_label = (u'What seems to be the trouble?',
                  '<span class="wc-Form-required">*</span>')
 url_label = u'Site URL <span class="wc-Form-required">*</span>'
 
+browser_radio_message = u'Cross browser test info required.'
+
 desc_default = u'''1. Navigate to: Site URL
 2. …
 
@@ -90,7 +92,7 @@ class IssueForm(FlaskForm):
                                   [InputRequired(message=radio_message)],
                                   choices=problem_choices)
     browser_test_category = RadioField(problem_label,
-                                  [InputRequired(message=radio_message)],
+                                  [InputRequired(message=browser_radio_message)],
                                   choices=browser_test_choices)
 
 
@@ -219,7 +221,7 @@ def build_formdata(form_object):
     normalized_url = normalize_url(url)
     domain = domain_name(normalized_url)
     problem_summary = get_problem_summary(form_object.get('problem_category'))
-    browser_test_sumary = get_browser_test(form_object.get('browser_test_category'))
+    #browser_test_sumary = get_browser_test(form_object.get('browser_test_category'))
 
     if domain:
         summary = '{0} - {1}'.format(domain, problem_summary)
