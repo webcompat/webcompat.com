@@ -28,8 +28,9 @@
                placeholder='e.g., http://www.example.com',
                required=True, type='url', pattern='') }}
             </span>
+          </div>
 
-
+          <div class="wc-Form-group js-Form-group">
             <fieldset class="{% if form.problem_category.errors %}is-error{% endif %}">
               <div class="wc-Form-information">
                 <label class="wc-Form-label">Type of issue <span class="wc-Form-required">*</span></label>
@@ -43,7 +44,9 @@
                 </div>
                 {% endfor %}
             </fieldset>
+          </div>
 
+          <div class="wc-Form-group js-Form-group">
             <div class="wc-Form-information">
               {{ form.description.label(class_='wc-Form-label') }}
               {% if form.description.errors %}
@@ -60,14 +63,12 @@
             <div class="wc-Form-group js-Form-group">
               {{ form.steps_reproduce.label(class_='wc-Form-label') }} {{ form.steps_reproduce(class_='wc-Form-item wc-Form-item--textarea js-autoExpand', rows=4) }}
             </div>
-
-
           </div>
         </div>
         <div class="r-Grid-cell r-minM--1of2">
 
           <div class="wc-Form-group wc-Form-group--biggerOffset js-Form-group {% if form.url.errors %}is-error{% endif %}">
-            <div class="wc-Form-group wc-Form-group--biggerOffset js-Form-group">
+            <!--<div class="wc-Form-group wc-Form-group--biggerOffset js-Form-group">-->
               {{ form.browser.label(class_='wc-Form-label') }}
               <span class="wc-Form-validation" id="span-browser">
               {{ form.browser(class_='wc-Form-item') }}
@@ -75,11 +76,10 @@
               <span class="wc-Form-validation" id="span-os">
               {{ form.os(class_='wc-Form-item') }}
               </span>
-            </div>
-<!--             <div class="wc-Form-group wc-Form-group--biggerOffset js-Form-group">
-              {{ form.os.label(class_='wc-Form-label') }}
-            </div>
- -->
+            <!--</div>-->
+          </div>
+
+          <div class="wc-Form-group js-Form-group">
             <fieldset class="{% if form.browser_test_category.errors %}is-error{% endif %}">
               <div class="wc-Form-information">
                 <label class="wc-Form-label">Did you test in another browser? <span class="wc-Form-required">*</span></label>
@@ -93,6 +93,7 @@
                 {% endfor %}
                 </div>
             </fieldset>
+          </div>
 
             <div class="js-image-upload wc-Form-group js-Form-group {% if form.image.errors %}is-error{% endif %}">
               <label
