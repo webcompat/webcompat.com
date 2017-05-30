@@ -76,13 +76,13 @@ Actual Behavior:
 class IssueForm(FlaskForm):
     '''Define form fields and validation for our bug reporting form.'''
     url = StringField(url_label,
-                      [InputRequired(message=url_message)])
+                      [Length(min=2, message=url_message)])
     browser = StringField(u'Is this information correct?', [Optional()])
     os = StringField(u'Operating System', [Optional()])
     username = StringField(u'Username',
                            [Length(max=0, message=username_message)])
     description = StringField(desc_label,
-                      [InputRequired(message=desc_message)])
+                      [Length(min=2, message=desc_message)])
 
     steps_reproduce = TextAreaField(u'How did you get there?', [Optional()],
                                 default=steps_default)
@@ -241,13 +241,12 @@ def build_formdata(form_object):
     # Preparing the body
     body = u'''{metadata}
 **URL**: {url}
+**Problem type**: {problem_type}
+**Description**: {description}
+**Steps to Reproduce** {steps_reproduce}
 **Browser / Version**: {browser}
 **Operating System**: {os}
-**Problem type**: {problem_type}
-
-**Steps to Reproduce**
-{description}
-
+**Test Another Browser**: {browser_test_type}
 '''.format(**formdata)
     # Add the image, if there was one.
     if form_object.get('image_upload') is not None:
