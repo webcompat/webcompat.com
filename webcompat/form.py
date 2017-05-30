@@ -76,13 +76,13 @@ Actual Behavior:
 class IssueForm(FlaskForm):
     '''Define form fields and validation for our bug reporting form.'''
     url = StringField(url_label,
-                      [Length(min=2, message=url_message)])
+                      [InputRequired(message=url_message)])
     browser = StringField(u'Is this information correct?', [Optional()])
     os = StringField(u'Operating System', [Optional()])
     username = StringField(u'Username',
                            [Length(max=0, message=username_message)])
     description = StringField(desc_label,
-                      [Length(min=2, message=desc_message)])
+                      [InputRequired(message=desc_message)])
 
     steps_reproduce = TextAreaField(u'How did you get there?', [Optional()],
                                 default=steps_default)
@@ -233,7 +233,7 @@ def build_formdata(form_object):
         'browser': form_object.get('browser'),
         'os': form_object.get('os'),
         'problem_type': get_problem(form_object.get('problem_category')),
-        'browser_test_type': get_problem(form_object.get('browser_test_category')),
+        'browser_test_type': get_browser_test(form_object.get('browser_test_category')),
         'description': form_object.get('description'),
         'steps_reproduce': form_object.get('steps_reproduce')
     }
