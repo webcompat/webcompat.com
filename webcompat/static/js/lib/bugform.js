@@ -45,7 +45,7 @@ function BugForm() {
       helpText: null
     },
     browser_test: {
-      el: $("[name=browser_test_category]"),
+      el: $("[name=browser_test]"),
       valid: null,
       helpText: "Browser test info required."
     }
@@ -217,7 +217,7 @@ function BugForm() {
   };
 
   this.checkBrowserTestValidity = function() {
-    if (!$("[name=browser_test_category]:checked").length) {
+    if (!$("[name=browser_test]:checked").length) {
       this.makeInvalid("browser_test");
     } else {
       this.makeValid("browser_test");
@@ -348,11 +348,9 @@ function BugForm() {
         break;
       case "url":
       case "description":
-        inlineHelp.insertAfter("label[for=" + id + "]");
-        break;
       case "problem_type":
       case "browser_test":
-        inlineHelp.appendTo("fieldset .wc-Form-information");
+        inlineHelp.insertAfter("label[for=" + id + "]");
         break;
       case "image":
         // hide the error in case we already saw one
