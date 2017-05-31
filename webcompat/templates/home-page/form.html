@@ -33,7 +33,7 @@
           <div class="wc-Form-group js-Form-group">
             <fieldset class="{% if form.problem_category.errors %}is-error{% endif %}">
               <div class="wc-Form-information">
-                <label class="wc-Form-label">Type of issue <span class="wc-Form-required">*</span></label>
+                <label class="wc-Form-label" for="problem_type">Type of issue <span class="wc-Form-required">*</span></label>
                 {% if form.problem_category.errors %}{% for error in form.problem_category.errors %}
                 <span class="wc-Form-helpMessage">{{ error }}</span>
                 {% endfor %}{% endif %}
@@ -80,15 +80,15 @@
           </div>
 
           <div class="wc-Form-group js-Form-group">
-            <fieldset class="{% if form.browser_test_category.errors %}is-error{% endif %}">
+            <fieldset class="{% if form.browser_test.errors %}is-error{% endif %}">
               <div class="wc-Form-information">
-                <label class="wc-Form-label">Did you test in another browser? <span class="wc-Form-required">*</span></label>
-                {% if form.browser_test_category.errors %}{% for error in form.browser_test_category.errors %}
+                <label class="wc-Form-label" for="browser_test">Did you test in another browser? <span class="wc-Form-required">*</span></label>
+                {% if form.browser_test.errors %}{% for error in form.browser_test.errors %}
                 <span class="wc-Form-helpMessage">{{ error }}</span>
                 {% endfor %}{% endif %}
               </div>
                 <div class="wc-Form-radio">
-                {% for subradio in form.browser_test_category %}
+                {% for subradio in form.browser_test %}
                   {{ subradio }} {{ subradio.label }}
                 {% endfor %}
                 </div>
