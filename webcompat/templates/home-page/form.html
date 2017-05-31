@@ -55,17 +55,14 @@
                 {% endfor %}
               {% endif %}
             </div>
-          </div>
-
-          <div class="wc-Form-group js-Form-group">
             <span class="wc-Form-validation">
             {{ form.description(class_='wc-Form-item required',
                placeholder='e.g. The video should have started after 3 sec.',
                required=True, type='text', pattern='') }}
             </span>
-            <div class="wc-Form-group js-Form-group">
-              {{ form.steps_reproduce.label(class_='wc-Form-label') }} {{ form.steps_reproduce(class_='wc-Form-item wc-Form-item--textarea js-autoExpand', rows=4) }}
-            </div>
+          </div>
+          <div class="wc-Form-group js-Form-group">
+            {{ form.steps_reproduce.label(class_='wc-Form-label') }} {{ form.steps_reproduce(class_='wc-Form-item wc-Form-item--textarea js-autoExpand', rows=4) }}
           </div>
         </div>
         <div class="r-Grid-cell r-minM--1of2">
