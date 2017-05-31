@@ -91,7 +91,7 @@ class IssueForm(FlaskForm):
     problem_category = RadioField(problem_label,
                                   [InputRequired(message=radio_message)],
                                   choices=problem_choices)
-    browser_test_category = RadioField(problem_label,
+    browser_test = RadioField(problem_label,
                                   [InputRequired(message=browser_radio_message)],
                                   choices=browser_test_choices)
 
@@ -221,7 +221,6 @@ def build_formdata(form_object):
     normalized_url = normalize_url(url)
     domain = domain_name(normalized_url)
     problem_summary = get_problem_summary(form_object.get('problem_category'))
-    #browser_test_sumary = get_browser_test(form_object.get('browser_test_category'))
 
     if domain:
         summary = '{0} - {1}'.format(domain, problem_summary)
@@ -235,7 +234,7 @@ def build_formdata(form_object):
         'browser': form_object.get('browser'),
         'os': form_object.get('os'),
         'problem_type': get_problem(form_object.get('problem_category')),
-        'browser_test_type': get_browser_test(form_object.get('browser_test_category')),
+        'browser_test': get_browser_test(form_object.get('browser_test')),
         'description': form_object.get('description'),
         'steps_reproduce': form_object.get('steps_reproduce')
     }
@@ -248,7 +247,7 @@ def build_formdata(form_object):
 **Steps to Reproduce** {steps_reproduce}
 **Browser / Version**: {browser}
 **Operating System**: {os}
-**Test Another Browser**: {browser_test_type}
+**Test Another Browser**: {browser_test}
 '''.format(**formdata)
     # Add the image, if there was one.
     if form_object.get('image_upload') is not None:
