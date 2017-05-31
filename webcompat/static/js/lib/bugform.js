@@ -299,13 +299,18 @@ function BugForm() {
     var inputs = [
       this.problemType.filter(":checked").length,
       this.urlField.val(),
-      this.uploadField.val()
+      this.descField.val(),
+      this.uploadField.val(),
+      this.browserTestField.filter(":checked").length,
+
     ];
     if (_.some(inputs, Boolean)) {
       // then, check validity
       this.checkURLValidity();
+      this.checkDescriptionValidity();
       this.checkProblemTypeValidity();
       this.checkImageTypeValidity();
+      this.checkBrowserTestValidity();
       // and open the form, if it's not already open
       if (!this.reportButton.hasClass("is-open")) {
         this.reportButton.click();
