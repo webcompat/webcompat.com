@@ -43,6 +43,11 @@ function BugForm() {
       el: $("#os"),
       valid: true,
       helpText: null
+    },
+    browser_test: {
+      el: $("[name=browser_test_category]"),
+      valid: null,
+      helpText: "Browser test info required."
     }
   };
 
@@ -51,7 +56,8 @@ function BugForm() {
   this.problemType = this.inputs.problem_type.el;
   this.uploadField = this.inputs.image.el;
   this.urlField = this.inputs.url.el;
-  this.descField = this.inputs.description.el;//$("#description");
+  this.descField = this.inputs.description.el;
+  this.browserTestField = this.inputs.browser_test.el;
 
   this.init = function() {
     this.checkParams();
@@ -65,6 +71,7 @@ function BugForm() {
     this.osField
       .add(this.browserField)
       .on("blur input", _.bind(this.checkOptionalNonEmpty, this));
+    this.browserTestField.on("change", _.bind(this.checkBrowserTestValidity, this));
     this.submitButtons.on("click", _.bind(this.loadingIndicator.show, this));
 
     // See if the user already has a valid form
@@ -209,6 +216,14 @@ function BugForm() {
     }
   };
 
+  this.checkBrowserTestValidity = function() {
+    if (!$("[name=browser_test_category]:checked").length) {
+      this.makeInvalid("browser_test");
+    } else {
+      this.makeValid("browser_test");
+    }
+  };
+
   this.checkImageTypeValidity = function(event) {
     var splitImg = this.uploadField.val().split(".");
     var ext = splitImg[splitImg.length - 1].toLowerCase();
@@ -336,6 +351,7 @@ function BugForm() {
         inlineHelp.insertAfter("label[for=" + id + "]");
         break;
       case "problem_type":
+      case "browser_test":
         inlineHelp.appendTo("fieldset .wc-Form-information");
         break;
       case "image":
