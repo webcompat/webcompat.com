@@ -22,6 +22,11 @@ function BugForm() {
       valid: null,
       helpText: "Problem type required."
     },
+    description: {
+      el: $("#description"),
+      valid: null,
+      helpText: "Description required."
+    },
     image: {
       el: $("#image"),
       // image should be valid by default because it's optional
@@ -46,7 +51,7 @@ function BugForm() {
   this.problemType = this.inputs.problem_type.el;
   this.uploadField = this.inputs.image.el;
   this.urlField = this.inputs.url.el;
-  this.descField = $("#description");
+  this.descField = this.inputs.description.el;//$("#description");
 
   this.init = function() {
     this.checkParams();
@@ -54,6 +59,7 @@ function BugForm() {
     this.urlField.on("input", _.bind(this.copyURL, this));
     this.urlField.on("blur input", _.bind(this.checkURLValidity, this));
     this.descField.on("focus", _.bind(this.checkProblemTypeValidity, this));
+    this.descField.on("blur input", _.bind(this.checkDescriptionValidity, this));
     this.problemType.on("change", _.bind(this.checkProblemTypeValidity, this));
     this.uploadField.on("change", _.bind(this.checkImageTypeValidity, this));
     this.osField
@@ -246,6 +252,16 @@ function BugForm() {
     }
   };
 
+  /* Check to see that the description input element is not empty. */
+  this.checkDescriptionValidity = function() {
+    var val = this.descField.val();
+    if ($.trim(val) === "") {
+      this.makeInvalid("description");
+    } else {
+      this.makeValid("description");
+    }
+  };
+
   /* Check if Browser and OS are empty or not, only
      so we can set them to valid (there is no invalid state) */
   this.checkOptionalNonEmpty = function() {
@@ -316,6 +332,7 @@ function BugForm() {
           .removeClass("is-error js-form-error");
         break;
       case "url":
+      case "description":
         inlineHelp.insertAfter("label[for=" + id + "]");
         break;
       case "problem_type":
