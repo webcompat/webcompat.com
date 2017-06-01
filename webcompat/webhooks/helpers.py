@@ -13,6 +13,17 @@ from webcompat import app
 from webcompat.helpers import proxy_request
 
 
+def is_github_hook(request):
+    '''Check if the HTTP POST headers are valid.'''
+    if request.headers.get('X-GitHub-Event') is None:
+        return False
+    post_signature = request.headers.get('X-Hub-Signature')
+    if post_signature:
+        key = app.config['HOOK_SECRET_KEY']
+        return signature_check(key, post_signature, request.data)
+    return False
+
+
 def extract_browser_label(body):
     '''Parse the labels from the body in comment:
 

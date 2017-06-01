@@ -16,8 +16,8 @@ from flask import Blueprint
 from flask import request
 
 from helpers import extract_browser_label
+from helpers import is_github_hook
 from helpers import set_labels
-from helpers import signature_check
 
 from webcompat import app
 
@@ -32,42 +32,36 @@ def hooklistener():
     - Add label needstriage to the issue
     - Add label for the browser name
     """
+    if not is_github_hook(request):
+        return ('Nothing to see here', 401, {'Content-Type': 'plain/text'})
+    payload = json.loads(request.data)
     event_type = request.headers.get('X-GitHub-Event')
-    post_signature = request.headers.get('X-Hub-Signature')
-    if post_signature:
-        key = app.config['HOOK_SECRET_KEY']
-        payload = json.loads(request.data)
-        if not signature_check(key, post_signature, request.data):
-            abort(401)
-        if event_type == 'issues':
-            if payload.get('action') == 'opened':
-                # Setting "Needs Triage" label by default
-                # to all the new issues raised
-                labels = ['status-needstriage']
-                issue_body = payload.get('issue')['body']
-                issue_number = payload.get('issue')['number']
-                browser_label = extract_browser_label(issue_body)
-                if browser_label:
-                    labels.append(browser_label)
-                # Sending a request to set labels
-                response = set_labels(labels, issue_number)
-                if response.status_code == 200:
-                    return ('gracias, amigo.', 200,
-                            {'Content-Type': 'plain/text'})
-                else:
-                    # Logging the ip and url for investigation
-                    log = app.logger
-                    log.setLevel(logging.INFO)
-                    msg = 'failed to set labels on issue {issue}'.format(
-                        issue=issue_number)
-                    log.info(msg)
-            else:
-                return ('cool story, bro.', 200,
+    if event_type == 'issues':
+        if payload.get('action') == 'opened':
+            # Setting "Needs Triage" label by default
+            # to all the new issues raised
+            labels = ['status-needstriage']
+            issue_body = payload.get('issue')['body']
+            issue_number = payload.get('issue')['number']
+            browser_label = extract_browser_label(issue_body)
+            if browser_label:
+                labels.append(browser_label)
+            # Sending a request to set labels
+            response = set_labels(labels, issue_number)
+            if response.status_code == 200:
+                return ('gracias, amigo.', 200,
                         {'Content-Type': 'plain/text'})
-        elif event_type == 'ping':
-            return ('pong', 200, {'Content-Type': 'plain/text'})
+            else:
+                # Logging the ip and url for investigation
+                log = app.logger
+                log.setLevel(logging.INFO)
+                msg = 'failed to set labels on issue {issue}'.format(
+                    issue=issue_number)
+                log.info(msg)
         else:
-            abort(403)
+            return ('cool story, bro.', 200,
+                    {'Content-Type': 'plain/text'})
+    elif event_type == 'ping':
+        return ('pong', 200, {'Content-Type': 'plain/text'})
     else:
-        # No signature.
-        abort(401)
+        abort(403)
