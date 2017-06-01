@@ -13,6 +13,21 @@ from webcompat import app
 from webcompat.helpers import proxy_request
 
 
+def new_opened_issue(payload):
+    '''When a new issue is opened, we set a couple of things.
+
+    - Browser label
+    - status-needstriage
+    '''
+    labels = ['status-needstriage']
+    issue_body = payload.get('issue')['body']
+    issue_number = payload.get('issue')['number']
+    browser_label = extract_browser_label(issue_body)
+    if browser_label:
+        labels.append(browser_label)
+    return set_labels(labels, issue_number)
+
+
 def is_github_hook(request):
     '''Check if the HTTP POST headers are valid.'''
     if request.headers.get('X-GitHub-Event') is None:

@@ -15,9 +15,8 @@ from flask import abort
 from flask import Blueprint
 from flask import request
 
-from helpers import extract_browser_label
 from helpers import is_github_hook
-from helpers import set_labels
+from helpers import new_opened_issue
 
 from webcompat import app
 
@@ -38,26 +37,17 @@ def hooklistener():
     event_type = request.headers.get('X-GitHub-Event')
     if event_type == 'issues':
         if payload.get('action') == 'opened':
-            # Setting "Needs Triage" label by default
-            # to all the new issues raised
-            labels = ['status-needstriage']
-            issue_body = payload.get('issue')['body']
-            issue_number = payload.get('issue')['number']
-            browser_label = extract_browser_label(issue_body)
-            if browser_label:
-                labels.append(browser_label)
-            # Sending a request to set labels
-            response = set_labels(labels, issue_number)
+            # we are setting things on each new open issues
+            response = new_opened_issue(payload)
             if response.status_code == 200:
-                return ('gracias, amigo.', 200,
-                        {'Content-Type': 'plain/text'})
+                return ('gracias, amigo.', 200, {'Content-Type': 'plain/text'})
             else:
-                # Logging the ip and url for investigation
                 log = app.logger
                 log.setLevel(logging.INFO)
                 msg = 'failed to set labels on issue {issue}'.format(
-                    issue=issue_number)
+                    issue=payload.get('issue')['number'])
                 log.info(msg)
+                return ('ooops', 400, {'Content-Type': 'plain/text'})
         else:
             return ('cool story, bro.', 200,
                     {'Content-Type': 'plain/text'})
