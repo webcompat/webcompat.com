@@ -11,6 +11,8 @@ import os
 import sys
 import unittest
 
+import flask
+
 from webcompat import app
 from webcompat.webhooks import helpers
 
@@ -38,7 +40,7 @@ def event_data(filename):
 class TestWebhook(unittest.TestCase):
     def setUp(self):
         webcompat.app.config['TESTING'] = True
-        self.app = webcompat.app.test_client()
+        self.client = webcompat.app.test_client()
         self.headers = {'content-type': 'application/json'}
         self.test_url = '/webhooks/labeler'
         self.issue_body = """
@@ -59,13 +61,13 @@ class TestWebhook(unittest.TestCase):
 
     def test_forbidden_get(self):
         """GET is forbidden on labeler webhook."""
-        rv = self.app.get(self.test_url, headers=self.headers)
+        rv = self.client.get(self.test_url, headers=self.headers)
         self.assertEqual(rv.status_code, 404)
 
     def test_fail_on_missing_signature(self):
         """POST without signature on labeler webhook is forbidden."""
         self.headers.update({'X-GitHub-Event': 'ping'})
-        rv = self.app.post(self.test_url, headers=self.headers)
+        rv = self.client.post(self.test_url, headers=self.headers)
         self.assertEqual(rv.status_code, 401)
 
     def test_fail_on_bogus_signature(self):
@@ -73,9 +75,9 @@ class TestWebhook(unittest.TestCase):
         json_event, signature = event_data('new_event_valid.json')
         self.headers.update({'X-GitHub-Event': 'ping',
                              'X-Hub-Signature': 'Boo!'})
-        rv = self.app.post(self.test_url,
-                           data=json_event,
-                           headers=self.headers)
+        rv = self.client.post(self.test_url,
+                              data=json_event,
+                              headers=self.headers)
         self.assertEqual(rv.status_code, 401)
 
     def test_fail_on_invalid_event_type(self):
@@ -83,9 +85,9 @@ class TestWebhook(unittest.TestCase):
         json_event, signature = event_data('new_event_valid.json')
         self.headers.update({'X-GitHub-Event': 'failme',
                              'X-Hub-Signature': signature})
-        rv = self.app.post(self.test_url,
-                           data=json_event,
-                           headers=self.headers)
+        rv = self.client.post(self.test_url,
+                              data=json_event,
+                              headers=self.headers)
         self.assertEqual(rv.status_code, 403)
 
     def test_success_on_ping_event(self):
@@ -93,9 +95,9 @@ class TestWebhook(unittest.TestCase):
         json_event, signature = event_data('new_event_valid.json')
         self.headers.update({'X-GitHub-Event': 'ping',
                              'X-Hub-Signature': signature})
-        rv = self.app.post(self.test_url,
-                           data=json_event,
-                           headers=self.headers)
+        rv = self.client.post(self.test_url,
+                              data=json_event,
+                              headers=self.headers)
         self.assertEqual(rv.status_code, 200)
         self.assertIn('pong', rv.data)
 
@@ -104,9 +106,9 @@ class TestWebhook(unittest.TestCase):
         json_event, signature = event_data('new_event_invalid.json')
         self.headers.update({'X-GitHub-Event': 'issues',
                              'X-Hub-Signature': signature})
-        rv = self.app.post(self.test_url,
-                           data=json_event,
-                           headers=self.headers)
+        rv = self.client.post(self.test_url,
+                              data=json_event,
+                              headers=self.headers)
         self.assertEqual(rv.status_code, 200)
         self.assertIn('cool story, bro.', rv.data)
 
@@ -116,6 +118,48 @@ class TestWebhook(unittest.TestCase):
         self.assertEqual(browser_label, 'browser-firefox')
         browser_label_none = helpers.extract_browser_label(self.issue_body2)
         self.assertEqual(browser_label_none, None)
+
+    def test_is_github_hook(self):
+        """Define if the GitHub request is valid."""
+        json_event, signature = event_data('new_event_invalid.json')
+        # Lack the X-GitHub-Event
+        with webcompat.app.test_client() as client:
+            headers = self.headers.copy()
+            headers.update({'X-Hub-Signature': signature})
+            client.post(self.test_url,
+                        data=json_event,
+                        headers=headers)
+            webhook_request = helpers.is_github_hook(flask.request)
+            self.assertFalse(webhook_request)
+        # Lack the X-Hub-Signature
+        with webcompat.app.test_client() as client:
+            headers = self.headers.copy()
+            headers.update({'X-GitHub-Event': 'issues'})
+            client.post(self.test_url,
+                        data=json_event,
+                        headers=headers)
+            webhook_request = helpers.is_github_hook(flask.request)
+            self.assertFalse(webhook_request)
+        # X-Hub-Signature is wrong
+        with webcompat.app.test_client() as client:
+            headers = self.headers.copy()
+            headers.update({'X-GitHub-Event': 'issues',
+                            'X-Hub-Signature': 'failme'})
+            client.post(self.test_url,
+                        data=json_event,
+                        headers=headers)
+            webhook_request = helpers.is_github_hook(flask.request)
+            self.assertFalse(webhook_request)
+        # Everything is fine
+        with webcompat.app.test_client() as client:
+            headers = self.headers.copy()
+            headers.update({'X-GitHub-Event': 'issues',
+                            'X-Hub-Signature': signature})
+            client.post(self.test_url,
+                        data=json_event,
+                        headers=headers)
+            webhook_request = helpers.is_github_hook(flask.request)
+            self.assertTrue(webhook_request)
 
 
 if __name__ == '__main__':
