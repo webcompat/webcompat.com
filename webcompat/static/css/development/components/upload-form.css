@@ -38,7 +38,9 @@
   }
 
     /* state */
-    .wc-UploadForm-wrapper.is-hidden {
+    .wc-UploadForm-wrapper.is-hidden,
+    .wc-UploadForm-icon.is-hidden,
+    .wc-UploadForm-label.is-hidden {
       display: none;
     }
 
