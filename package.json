@@ -46,7 +46,7 @@
     "postcss-import": "^8.0.2",
     "postcss-reporter": "^3.0.0",
     "postcss-url": "^5.1.1",
-    "prettier": "^1.1.0"
+    "prettier": "1.1.0"
   },
   "scripts": {
     "setup": "npm run module && npm run virtualenv && npm install && npm run config",
