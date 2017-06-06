@@ -13,12 +13,16 @@
   "engines": {
     "node": ">= 4.x"
   },
-  "devDependencies": {
+  "dependencies": {
     "cssrecipes-custom-media-queries": "0.3.0",
     "cssrecipes-defaults": "^0.5.0",
     "cssrecipes-grid": "^1.0.0",
     "cssrecipes-reset": "^0.5.0",
     "cssrecipes-utils": "^0.6.2",
+    "suitcss-utils-align": "^0.2.0",
+    "suitcss-utils-display": "^0.4.0"
+  },
+  "devDependencies": {
     "eslint": "^3.4.0",
     "eslint-config-prettier": "^1.6.0",
     "eslint-plugin-prettier": "^2.0.1",
@@ -32,7 +36,9 @@
     "grunt-contrib-watch": "^1.0.0",
     "grunt-postcss": "^0.8.0",
     "grunt-travis-lint": "0.0.3",
+    "husky": "^0.13.3",
     "intern": "3.4.0",
+    "lint-staged": "^3.4.0",
     "load-grunt-tasks": "^3.5.2",
     "postcss": "^5.2.14",
     "postcss-browser-reporter": "^0.4.0",
@@ -40,9 +46,7 @@
     "postcss-import": "^8.0.2",
     "postcss-reporter": "^3.0.0",
     "postcss-url": "^5.1.1",
-    "prettier": "^1.1.0",
-    "suitcss-utils-align": "^0.2.0",
-    "suitcss-utils-display": "^0.4.0"
+    "prettier": "1.1.0"
   },
   "scripts": {
     "setup": "npm run module && npm run virtualenv && npm install && npm run config",
@@ -57,7 +61,11 @@
     "virtualenv": "pip install virtualenv && virtualenv env && source env/bin/activate || . env/bin/activate && npm run pip",
     "pip": "pip install -r config/requirements.txt",
     "config": "cp config/secrets.py.example config/secrets.py",
-    "project-update": "pip install --upgrade pip && npm update"
+    "project-update": "pip install --upgrade pip && npm update",
+    "precommit": "lint-staged"
+  },
+  "lint-staged": {
+    "*.js": "lint"
   },
   "license": "MPL-2.0"
 }
