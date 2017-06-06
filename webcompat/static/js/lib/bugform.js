@@ -405,14 +405,19 @@ function BugForm() {
   this.showRemoveUpload = function(label) {
     var removeBanner = $(".wc-UploadForm-button");
     var uploadWrapper = $(".wc-UploadForm-wrapper");
+    var uploadIcon = $(".wc-UploadForm-icon");
+    var uploadLabel = $(".wc-UploadForm-label");
 
     // hide upload image errors (this will no-op if the user never saw one)
     $(".wc-Form-helpMessage--imageUpload").remove();
-    $(".wc-UploadForm-label").show();
+// TODO do not understand need
+    //$(".wc-UploadForm-label").show();
 
     removeBanner.removeClass("is-hidden");
     removeBanner.attr("tabIndex", "0");
-    uploadWrapper.addClass("is-hidden");
+    uploadIcon.addClass("is-hidden");
+    uploadLabel.addClass("is-hidden");
+    //uploadWrapper.addClass("is-hidden");
     removeBanner.on(
       "click",
       _.bind(function() {
@@ -420,7 +425,9 @@ function BugForm() {
         label.css("background", "none");
         removeBanner.addClass("is-hidden");
         removeBanner.attr("tabIndex", "-1");
-        uploadWrapper.removeClass("is-hidden");
+        uploadIcon.removeClass("is-hidden");
+        uploadLabel.removeClass("is-hidden");
+        //uploadWrapper.removeClass("is-hidden");
         removeBanner.off("click");
 
         // remove the last embedded image URL
