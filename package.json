@@ -13,12 +13,16 @@
   "engines": {
     "node": ">= 4.x"
   },
-  "devDependencies": {
+  "dependencies": {
     "cssrecipes-custom-media-queries": "0.3.0",
     "cssrecipes-defaults": "^0.5.0",
     "cssrecipes-grid": "^1.0.0",
     "cssrecipes-reset": "^0.5.0",
     "cssrecipes-utils": "^0.6.2",
+    "suitcss-utils-align": "^0.2.0",
+    "suitcss-utils-display": "^0.4.0"
+  },
+  "devDependencies": {
     "eslint": "^3.4.0",
     "eslint-config-prettier": "^1.6.0",
     "eslint-plugin-prettier": "^2.0.1",
@@ -40,9 +44,7 @@
     "postcss-import": "^8.0.2",
     "postcss-reporter": "^3.0.0",
     "postcss-url": "^5.1.1",
-    "prettier": "^1.1.0",
-    "suitcss-utils-align": "^0.2.0",
-    "suitcss-utils-display": "^0.4.0"
+    "prettier": "^1.1.0"
   },
   "scripts": {
     "setup": "npm run module && npm run virtualenv && npm install && npm run config",
