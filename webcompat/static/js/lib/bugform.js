@@ -498,8 +498,13 @@ function BugForm() {
       img_url,
       ")"
     ].join("");
+    var delimeter = "[![Screenshot Description](";
     this.descField.val(function(idx, value) {
-      return value + "\n\n" + imageURL;
+      if (value.includes(delimeter)) {
+        return value.split(delimeter)[0] + "\n\n" + imageURL;
+      } else {
+        return value + "\n\n" + imageURL;
+      }
     });
   };
   /*
