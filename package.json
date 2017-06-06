@@ -36,7 +36,9 @@
     "grunt-contrib-watch": "^1.0.0",
     "grunt-postcss": "^0.8.0",
     "grunt-travis-lint": "0.0.3",
+    "husky": "^0.13.3",
     "intern": "3.4.0",
+    "lint-staged": "^3.4.0",
     "load-grunt-tasks": "^3.5.2",
     "postcss": "^5.2.14",
     "postcss-browser-reporter": "^0.4.0",
@@ -59,7 +61,11 @@
     "virtualenv": "pip install virtualenv && virtualenv env && source env/bin/activate || . env/bin/activate && npm run pip",
     "pip": "pip install -r config/requirements.txt",
     "config": "cp config/secrets.py.example config/secrets.py",
-    "project-update": "pip install --upgrade pip && npm update"
+    "project-update": "pip install --upgrade pip && npm update",
+    "precommit": "lint-staged"
+  },
+  "lint-staged": {
+    "*.js": "lint"
   },
   "license": "MPL-2.0"
 }
