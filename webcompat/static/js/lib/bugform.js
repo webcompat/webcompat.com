@@ -410,13 +410,13 @@ function BugForm() {
 
     // hide upload image errors (this will no-op if the user never saw one)
     $(".wc-Form-helpMessage--imageUpload").remove();
-// TODO do not understand need
-    //$(".wc-UploadForm-label").show();
+    $(".wc-UploadForm-label").show();
 
     removeBanner.removeClass("is-hidden");
     removeBanner.attr("tabIndex", "0");
     uploadIcon.addClass("is-hidden");
     uploadLabel.addClass("is-hidden");
+    uploadLabel.hide();
     //uploadWrapper.addClass("is-hidden");
     removeBanner.on(
       "click",
@@ -427,6 +427,7 @@ function BugForm() {
         removeBanner.attr("tabIndex", "-1");
         uploadIcon.removeClass("is-hidden");
         uploadLabel.removeClass("is-hidden");
+        uploadLabel.show();
         //uploadWrapper.removeClass("is-hidden");
         removeBanner.off("click");
 
