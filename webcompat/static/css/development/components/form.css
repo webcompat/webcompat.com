@@ -133,6 +133,7 @@
     display: block;
     clear: both;
     position: relative;
+    margin-bottom: 12px;
   }
 
     .wc-Form-validation::after {

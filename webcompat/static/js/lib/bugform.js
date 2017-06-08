@@ -22,6 +22,11 @@ function BugForm() {
       valid: null,
       helpText: "Problem type required."
     },
+    description: {
+      el: $("#description"),
+      valid: null,
+      helpText: "Description required."
+    },
     image: {
       el: $("#image"),
       // image should be valid by default because it's optional
@@ -38,6 +43,11 @@ function BugForm() {
       el: $("#os"),
       valid: true,
       helpText: null
+    },
+    browser_test: {
+      el: $("[name=browser_test]"),
+      valid: null,
+      helpText: "Browser test info required."
     }
   };
 
@@ -46,7 +56,8 @@ function BugForm() {
   this.problemType = this.inputs.problem_type.el;
   this.uploadField = this.inputs.image.el;
   this.urlField = this.inputs.url.el;
-  this.descField = $("#description");
+  this.descField = this.inputs.description.el;
+  this.browserTestField = this.inputs.browser_test.el;
 
   this.init = function() {
     this.checkParams();
@@ -54,11 +65,13 @@ function BugForm() {
     this.urlField.on("input", _.bind(this.copyURL, this));
     this.urlField.on("blur input", _.bind(this.checkURLValidity, this));
     this.descField.on("focus", _.bind(this.checkProblemTypeValidity, this));
+    this.descField.on("blur input", _.bind(this.checkDescriptionValidity, this));
     this.problemType.on("change", _.bind(this.checkProblemTypeValidity, this));
     this.uploadField.on("change", _.bind(this.checkImageTypeValidity, this));
     this.osField
       .add(this.browserField)
       .on("blur input", _.bind(this.checkOptionalNonEmpty, this));
+    this.browserTestField.on("change", _.bind(this.checkBrowserTestValidity, this));
     this.submitButtons.on("click", _.bind(this.loadingIndicator.show, this));
 
     // See if the user already has a valid form
@@ -203,6 +216,14 @@ function BugForm() {
     }
   };
 
+  this.checkBrowserTestValidity = function() {
+    if (!$("[name=browser_test]:checked").length) {
+      this.makeInvalid("browser_test");
+    } else {
+      this.makeValid("browser_test");
+    }
+  };
+
   this.checkImageTypeValidity = function(event) {
     var splitImg = this.uploadField.val().split(".");
     var ext = splitImg[splitImg.length - 1].toLowerCase();
@@ -246,6 +267,16 @@ function BugForm() {
     }
   };
 
+  /* Check to see that the description input element is not empty. */
+  this.checkDescriptionValidity = function() {
+    var val = this.descField.val();
+    if ($.trim(val) === "") {
+      this.makeInvalid("description");
+    } else {
+      this.makeValid("description");
+    }
+  };
+
   /* Check if Browser and OS are empty or not, only
      so we can set them to valid (there is no invalid state) */
   this.checkOptionalNonEmpty = function() {
@@ -268,13 +299,18 @@ function BugForm() {
     var inputs = [
       this.problemType.filter(":checked").length,
       this.urlField.val(),
-      this.uploadField.val()
+      this.descField.val(),
+      this.uploadField.val(),
+      this.browserTestField.filter(":checked").length,
+
     ];
     if (_.some(inputs, Boolean)) {
       // then, check validity
       this.checkURLValidity();
+      this.checkDescriptionValidity();
       this.checkProblemTypeValidity();
       this.checkImageTypeValidity();
+      this.checkBrowserTestValidity();
       // and open the form, if it's not already open
       if (!this.reportButton.hasClass("is-open")) {
         this.reportButton.click();
@@ -316,10 +352,10 @@ function BugForm() {
           .removeClass("is-error js-form-error");
         break;
       case "url":
-        inlineHelp.insertAfter("label[for=" + id + "]");
-        break;
+      case "description":
       case "problem_type":
-        inlineHelp.appendTo("fieldset .wc-Form-information");
+      case "browser_test":
+        inlineHelp.insertAfter("label[for=" + id + "]");
         break;
       case "image":
         // hide the error in case we already saw one
