@@ -150,16 +150,16 @@ The js folder contains two subfolders: `lib` contains all project source files a
 
 #### Linting
 
-To make it easier for everyone to contribute, we use [eslint](http://eslint.org/) to keep the code base steady. You can view the rules in our [ESLint config](https://github.com/webcompat/webcompat.com/blob/master/.eslintrc#L34). For further explanation of the rules, please have a look at the [ESLint documentation](http://eslint.org/docs/rules/).
+To make it easier for everyone to contribute, we use [eslint](http://eslint.org/) for JavaScript and [stylelint](https://stylelint.io/) for CSS to keep the code base steady. You can view the JavaScript's rules in our [ESLint config](https://github.com/webcompat/webcompat.com/blob/master/.eslintrc#L34) and the CSS's rules in our [stylelint config](https://github.com/webcompat/webcompat.com/blob/master/.stylelintrc#L3). For further explanation of the rules, please have a look at the [ESLint documentation](http://eslint.org/docs/rules/) and [stylelint documentation](https://stylelint.io/user-guide/rules/).
 
 For the linting process, we use [Prettier](http://jlongster.com/A-Prettier-Formatter).
 
 In order to avoid errors during a Pull Request, `npm run lint` will be executed before each commit.
 
-`npm run lint` checks all relevant JavaScript files and displays, if something needs to be fixed.
+`npm run lint` checks all relevant JavaScript and CSS files and displays, if something needs to be fixed.
 
 If you get an error displayed, there are two ways to fix it.
-1. You can run `npm run fix` automatically, which is great for small issues like missing spaces or lines in various files.
+1. You can run `npm run fix` automatically (only for JavaScript), which is great for small issues like missing spaces or lines in various files.
 2. You can correct it manually as every error message includes the file and line of the error as well as the rule which was violated will be displayed..
 
 Hopefully this will help you clear up a few struggles.
