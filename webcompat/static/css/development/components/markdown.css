@@ -115,6 +115,10 @@
     background: #F5F2F0;
   }
 
+  .wc-Markdown pre > code {
+    white-space: pre !important;
+  }
+
   /* title */
   .wc-Markdown h1 {
     font-size: 2em;
