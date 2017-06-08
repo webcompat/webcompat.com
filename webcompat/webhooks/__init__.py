@@ -39,6 +39,7 @@ def hooklistener():
     # Treating events related to issues
     if event_type == 'issues':
         action = payload.get('action')
+        issue_number = payload.get('issue')['number']
         # A new issue has been created
         if action == 'opened':
             # we are setting things on each new open issues
@@ -49,12 +50,16 @@ def hooklistener():
                 log = app.logger
                 log.setLevel(logging.INFO)
                 msg = 'failed to set labels on issue {issue}'.format(
-                    issue=payload.get('issue')['number'])
+                    issue_number)
                 log.info(msg)
                 return ('ooops', 400, {'Content-Type': 'plain/text'})
         # A label has been added to an issue.
         elif action == 'labeled':
+            # if new issue change label to needs_diagnosis
+            # adds the issue to the type-media list
             pass
+            # if known issue close as duplicate
+            # with labels and comment.
     elif event_type == 'ping':
         return ('pong', 200, {'Content-Type': 'plain/text'})
     # If nothing worked as expected, the default response is 403.
