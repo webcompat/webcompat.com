@@ -103,6 +103,36 @@ define(
           .end();
       },
 
+      "description validation": function() {
+        return FunctionalHelpers.openPage(
+          this,
+          url("/issues/new"),
+          ".wc-ReportForm-actions-button"
+        )
+          .findByCssSelector("#description")
+          .click()
+          .end()
+          .execute(function() {
+            var elm = document.querySelector("#description");
+            WindowHelpers.sendEvent(elm, "input");
+          })
+          .sleep(500)
+          .findAllByCssSelector(".wc-Form-helpMessage")
+          .getVisibleText()
+          .then(function(texts) {
+            assert.include(
+              // checking second item because selecting description will trigger display
+              // of error for previous input as well
+              texts[1],
+              "Description required",
+              "Description validation message is shown"
+            );
+          })
+          .end()
+          // did not include the waitForDeletedByCssSelector(".wc-Form-helpMessage")
+          // due to timeout reasons
+      },
+
       "(optional) browser + os validation": function() {
         return (
           FunctionalHelpers.openPage(
@@ -114,8 +144,8 @@ define(
             .execute(function() {
               return window
                 .getComputedStyle(
-                  document.querySelector(
-                    "div.wc-Form-group:nth-child(2) > span:nth-child(2)"
+                  document.getElementById(
+                    "span-os"
                   ),
                   ":after"
                 )
@@ -140,8 +170,8 @@ define(
             .execute(function() {
               return window
                 .getComputedStyle(
-                  document.querySelector(
-                    "div.wc-Form-group:nth-child(3) > span:nth-child(2)"
+                  document.getElementById(
+                    "span-os"
                   ),
                   ":after"
                 )
@@ -269,6 +299,20 @@ define(
           .end();
       },
 
+      "browser_test param selects test status": function() {
+        return FunctionalHelpers.openPage(
+          this,
+          url("/issues/new?browser_test_type=yes"),
+          ".wc-ReportForm-actions-button"
+        )
+          .findByCssSelector("[value=yes]")
+          .isSelected()
+          .then(function(isSelected) {
+            assert.isTrue(isSelected, "The right option is selected");
+          })
+          .end();
+      },
+
       "details param adds info to description": function() {
         return FunctionalHelpers.openPage(
           this,
@@ -280,7 +324,7 @@ define(
           .then(function(text) {
             assert.include(
               text,
-              "Encountered error: NS_ERROR_DOM_MEDIA_DEMUXER_ERR (0x806e000c)\nLocation: virtual\nRefPtrMP4Demuxer::InitPromise mozilla::MP4Demuxer::Init()\nError information:\nIncomplete MP4 metadata\nMedia URL: file:///Users/potch/Documents/mozilla/media.mp4"
+              "Encountered error: NS_ERROR_DOM_MEDIA_DEMUXER_ERR (0x806e000c)Location: virtualRefPtrMP4Demuxer::InitPromise mozilla::MP4Demuxer::Init()Error information:Incomplete MP4 metadataMedia URL: file:///Users/potch/Documents/mozilla/media.mp4"
             );
           })
           .end();
