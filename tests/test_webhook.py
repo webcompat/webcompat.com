@@ -170,6 +170,12 @@ class TestWebhook(unittest.TestCase):
         actual = helpers.extract_media_info(body)
         self.assertTupleEqual(expected, actual)
 
+    def test_extract_media_info_fails(self):
+        """Fails scenario for type-media parsing."""
+        body = ''
+        actual = helpers.extract_media_info(body)
+        self.assertIsNone(actual)
+
 
 if __name__ == '__main__':
     unittest.main()
