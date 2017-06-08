@@ -114,8 +114,8 @@ define(
             .execute(function() {
               return window
                 .getComputedStyle(
-                  document.querySelector(
-                    "div.wc-Form-group:nth-child(2) > span:nth-child(2)"
+                  document.getElementById(
+                    "span-os"
                   ),
                   ":after"
                 )
@@ -140,8 +140,8 @@ define(
             .execute(function() {
               return window
                 .getComputedStyle(
-                  document.querySelector(
-                    "div.wc-Form-group:nth-child(3) > span:nth-child(2)"
+                  document.getElementById(
+                    "span-os"
                   ),
                   ":after"
                 )
@@ -280,7 +280,7 @@ define(
           .then(function(text) {
             assert.include(
               text,
-              "Encountered error: NS_ERROR_DOM_MEDIA_DEMUXER_ERR (0x806e000c)\nLocation: virtual\nRefPtrMP4Demuxer::InitPromise mozilla::MP4Demuxer::Init()\nError information:\nIncomplete MP4 metadata\nMedia URL: file:///Users/potch/Documents/mozilla/media.mp4"
+              "Encountered error: NS_ERROR_DOM_MEDIA_DEMUXER_ERR (0x806e000c)Location: virtualRefPtrMP4Demuxer::InitPromise mozilla::MP4Demuxer::Init()Error information:Incomplete MP4 metadataMedia URL: file:///Users/potch/Documents/mozilla/media.mp4"
             );
           })
           .end();
