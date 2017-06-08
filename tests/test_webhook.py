@@ -101,7 +101,7 @@ class TestWebhook(unittest.TestCase):
         self.assertEqual(rv.status_code, 200)
         self.assertIn('pong', rv.data)
 
-    def test_fails_on_action_not_opened(self):
+    def test_fails_on_not_known_action(self):
         """POST with action different of opened fails."""
         json_event, signature = event_data('new_event_invalid.json')
         self.headers.update({'X-GitHub-Event': 'issues',
@@ -109,8 +109,8 @@ class TestWebhook(unittest.TestCase):
         rv = self.client.post(self.test_url,
                               data=json_event,
                               headers=self.headers)
-        self.assertEqual(rv.status_code, 200)
-        self.assertIn('cool story, bro.', rv.data)
+        self.assertEqual(rv.status_code, 403)
+        self.assertIn('Not an interesting hook', rv.data)
 
     def test_extract_browser_label(self):
         """Extract browser label name."""
