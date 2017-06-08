@@ -77,7 +77,7 @@ def get_issue_info(payload):
 
 def extract_media_error(body):
     '''Extract information from the payload body for type-media.'''
-    # normalize the body for better parsing with regex
+    # normalize the body for better parsing
     body = body.replace('\r', '')
     MATCH = 'Technical Information:\nError Code: '
     media_string = body.partition(MATCH)[2]
