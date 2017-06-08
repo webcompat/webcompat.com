@@ -8,6 +8,7 @@ import hashlib
 import hmac
 import json
 import re
+import urlparse
 
 from webcompat import app
 from webcompat.helpers import proxy_request
@@ -54,6 +55,26 @@ def extract_browser_label(body):
         browser = match_list.groups(0)[1].lower()
         dash_browser = '-'.join(browser.split())
         return 'browser-{name}'.format(name=dash_browser)
+    else:
+        return None
+
+
+def extract_media_info(body):
+    '''Extract information from the payload body for type-media.'''
+    media_error, domain = None, None
+    # normalize the body for better parsing with regex
+    body = body.replace('\r', '')
+    match_error = re.search(
+        r'<!-- @reported_with: media-decode-error -->\n\n'
+        '\*\*URL\*\*:\s'
+        '(?P<url>[^\n]+)'
+        '[^T]+Technical Information:\nError Code: '
+        '(?P<error>\S+)', body)
+    if match_error:
+        url = match_error.group('url')
+        domain = urlparse.urlsplit(url).netloc
+        media_error = match_error.group('error')
+        return (media_error, domain)
     else:
         return None
 

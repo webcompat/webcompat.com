@@ -36,8 +36,11 @@ def hooklistener():
         return ('Nothing to see here', 401, {'Content-Type': 'plain/text'})
     payload = json.loads(request.data)
     event_type = request.headers.get('X-GitHub-Event')
+    # Treating events related to issues
     if event_type == 'issues':
-        if payload.get('action') == 'opened':
+        action = payload.get('action')
+        # A new issue has been created
+        if action == 'opened':
             # we are setting things on each new open issues
             response = new_opened_issue(payload)
             if response.status_code == 200:
@@ -49,6 +52,9 @@ def hooklistener():
                     issue=payload.get('issue')['number'])
                 log.info(msg)
                 return ('ooops', 400, {'Content-Type': 'plain/text'})
+        # A label has been added to an issue.
+        elif action == 'labeled':
+            pass
     elif event_type == 'ping':
         return ('pong', 200, {'Content-Type': 'plain/text'})
     # If nothing worked as expected, the default response is 403.

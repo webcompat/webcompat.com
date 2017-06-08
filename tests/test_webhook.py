@@ -161,6 +161,15 @@ class TestWebhook(unittest.TestCase):
             webhook_request = helpers.is_github_hook(flask.request)
             self.assertTrue(webhook_request)
 
+    def test_extract_media_info(self):
+        """Extract the information for type-media issue."""
+        json_event, signature = event_data('type-media-event.json')
+        payload = json.loads(json_event)
+        body = payload['issue']['body']
+        expected = ('NS_ERROR_DOM_MEDIA_DEMUXER_ERR', 'www.chia-anime.tv')
+        actual = helpers.extract_media_info(body)
+        self.assertTupleEqual(expected, actual)
+
 
 if __name__ == '__main__':
     unittest.main()
