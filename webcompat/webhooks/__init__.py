@@ -15,6 +15,8 @@ from flask import Blueprint
 from flask import request
 
 from helpers import is_github_hook
+from helpers import handle_type_media
+from helpers import get_issue_info
 from helpers import new_opened_issue
 
 from webcompat import app
@@ -38,10 +40,9 @@ def hooklistener():
     event_type = request.headers.get('X-GitHub-Event')
     # Treating events related to issues
     if event_type == 'issues':
-        action = payload.get('action')
-        issue_number = payload.get('issue')['number']
+        issue = get_issue_info(payload)
         # A new issue has been created
-        if action == 'opened':
+        if issue['action'] == 'opened':
             # we are setting things on each new open issues
             response = new_opened_issue(payload)
             if response.status_code == 200:
@@ -50,11 +51,12 @@ def hooklistener():
                 log = app.logger
                 log.setLevel(logging.INFO)
                 msg = 'failed to set labels on issue {issue}'.format(
-                    issue_number)
+                    issue['number'])
                 log.info(msg)
                 return ('ooops', 400, {'Content-Type': 'plain/text'})
         # A label has been added to an issue.
-        elif action == 'labeled':
+        elif issue['action'] == 'labeled':
+            response = handle_type_media(payload)
             # if new issue change label to needs_diagnosis
             # adds the issue to the type-media list
             pass

@@ -167,19 +167,19 @@ class TestWebhook(unittest.TestCase):
             webhook_request = helpers.is_github_hook(flask.request)
             self.assertTrue(webhook_request)
 
-    def test_extract_media_info(self):
+    def test_extract_media_error(self):
         """Extract the information for type-media issue."""
         json_event, signature = event_data('type-media-event.json')
         payload = json.loads(json_event)
         body = payload['issue']['body']
-        expected = ('NS_ERROR_DOM_MEDIA_DEMUXER_ERR', 'www.chia-anime.tv')
-        actual = helpers.extract_media_info(body)
-        self.assertTupleEqual(expected, actual)
+        expected = 'NS_ERROR_DOM_MEDIA_DEMUXER_ERR'
+        actual = helpers.extract_media_error(body)
+        self.assertEqual(expected, actual)
 
-    def test_extract_media_info_fails(self):
+    def test_extract_media_error_fail(self):
         """Fails scenario for type-media parsing."""
         body = ''
-        actual = helpers.extract_media_info(body)
+        actual = helpers.extract_media_error(body)
         self.assertIsNone(actual)
 
     def test_known_type_media(self):
@@ -196,10 +196,19 @@ class TestWebhook(unittest.TestCase):
         """
         json_event, signature = event_data('type-media-event.json')
         payload = json.loads(json_event)
-        body = payload['issue']['body']
-        issue_number = payload['issue']['number']
         self.assertTrue(
-            helpers.is_known_media(issue_number, body, ISSUES_LIST))
+            helpers.is_known_media(payload, ISSUES_LIST))
+
+    def test_get_issue_info(self):
+        """Extract the right information from an issue."""
+        json_event, signature = event_data('type-media-event.json')
+        payload = json.loads(json_event)
+        expected = {'number': 600,
+                    'action': 'labeled',
+                    'domain': 'www.chia-anime.tv',
+                    'media_error': 'NS_ERROR_DOM_MEDIA_DEMUXER_ERR'}
+        actual = helpers.get_issue_info(payload)
+        self.assertDictEqual(expected, actual)
 
 
 if __name__ == '__main__':
