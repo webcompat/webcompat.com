@@ -1,5 +1,5 @@
 {
-  "action": "closed",
+  "action": "foobar",
   "issue": {
     "number": 600,
     "body": "<!-- @browser: Firefox 55.0 -->\n<!-- @ua_header: Mozilla/5.0 (X11; Linux x86_64; rv:55.0) Gecko/20100101 Firefox/55.0 -->\n<!-- @reported_with: web -->\n\n**URL**: https://www.netflix.com/"

@@ -11,7 +11,6 @@ See https://developer.github.com/webhooks/ for what is possible."""
 import json
 import logging
 
-from flask import abort
 from flask import Blueprint
 from flask import request
 
@@ -30,6 +29,8 @@ def hooklistener():
     - Only in response to the 'opened' action (for now).
     - Add label needstriage to the issue
     - Add label for the browser name
+
+    By default, we return a 403.
     """
     if not is_github_hook(request):
         return ('Nothing to see here', 401, {'Content-Type': 'plain/text'})
@@ -48,10 +49,7 @@ def hooklistener():
                     issue=payload.get('issue')['number'])
                 log.info(msg)
                 return ('ooops', 400, {'Content-Type': 'plain/text'})
-        else:
-            return ('cool story, bro.', 200,
-                    {'Content-Type': 'plain/text'})
     elif event_type == 'ping':
         return ('pong', 200, {'Content-Type': 'plain/text'})
-    else:
-        abort(403)
+    # If nothing worked as expected, the default response is 403.
+    return ('Not an interesting hook', 403, {'Content-Type': 'plain/text'})
