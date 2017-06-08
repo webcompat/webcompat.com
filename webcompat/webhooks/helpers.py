@@ -61,7 +61,6 @@ def extract_browser_label(body):
 
 def extract_media_info(body):
     '''Extract information from the payload body for type-media.'''
-    media_error, domain = None, None
     # normalize the body for better parsing with regex
     body = body.replace('\r', '')
     match_error = re.search(
@@ -77,6 +76,21 @@ def extract_media_info(body):
         return (media_error, domain)
     else:
         return None
+
+
+def is_known_media(issue_number, body, issues_list):
+    """Asserts if it's already an issue we know."""
+    media_error, domain = extract_media_info(body)
+    # filter the list by domain names
+    for line in filter(lambda x: domain in x, issues_list):
+        # the issue is already known
+        if line.startswith(str(issue_number) + ' '):
+            return True
+        known_media_error = line.split(' ')[1]
+        # do we already have an issue for this error
+        if media_error == known_media_error:
+            return True
+    return False
 
 
 def set_labels(payload, issue_number):

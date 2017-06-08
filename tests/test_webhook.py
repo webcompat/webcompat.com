@@ -23,6 +23,12 @@ import webcompat  # nopep8
 # The key is being used for testing and computing the signature.
 key = app.config['HOOK_SECRET_KEY']
 
+# a fake type-media issues list for testing
+ISSUES_LIST = ['600 NS_ERROR_DOM_MEDIA_DEMUXER_ERR www.chia-anime.tv',
+               '430 NS_ERROR_DOM_MEDIA_METADATA_ERR example.com',
+               '9 NS_ERROR_DOM_MEDIA_DEMUXER_ERR example.com',
+               '69 NS_ERROR_DOM_MEDIA_DEMUXER_ERR example.org']
+
 
 # Some machinery for opening our test files
 def event_data(filename):
@@ -175,6 +181,25 @@ class TestWebhook(unittest.TestCase):
         body = ''
         actual = helpers.extract_media_info(body)
         self.assertIsNone(actual)
+
+    def test_known_type_media(self):
+        """Check if the issue is already in the list of known type-media.
+
+        Scenarios:
+        1. the issue is already in the list with the same issue number.
+           (nothing to do. Might happen with change of labels.)
+           True
+        2. the issue is in the list with same error code and domain,
+           but different issue number. (duplicate)
+           True
+        3. the issue is not in the list, add it.
+        """
+        json_event, signature = event_data('type-media-event.json')
+        payload = json.loads(json_event)
+        body = payload['issue']['body']
+        issue_number = payload['issue']['number']
+        self.assertTrue(
+            helpers.is_known_media(issue_number, body, ISSUES_LIST))
 
 
 if __name__ == '__main__':
