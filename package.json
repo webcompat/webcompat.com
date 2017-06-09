@@ -56,7 +56,7 @@
     "build": "grunt",
     "lint": "npm run lint:JS && npm run lint:CSS && grunt travis-lint",
     "lint:JS": "eslint ./Gruntfile.js ./tests ./grunt-tasks ./webcompat/static/js/lib",
-    "lint:CSS": "stylelint ./webcompat/static/css/development/**/*.css",
+    "lint:CSS": "stylelint './webcompat/static/css/development/**/*.css'",
     "fix": "npm run lint:fix:JS",
     "lint:fix:JS": "eslint --fix ./Gruntfile.js ./tests ./grunt-tasks ./webcompat/static/js/lib",
     "imagemin": "grunt imagemin",
@@ -70,7 +70,8 @@
     "precommit": "lint-staged"
   },
   "lint-staged": {
-    "*.js": "lint"
+    "*.js": "lint:JS",
+    "*.css": "lint:CSS"
   },
   "license": "MPL-2.0"
 }
