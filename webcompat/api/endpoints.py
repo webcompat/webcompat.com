@@ -84,6 +84,7 @@ def proxy_issues():
 
 
 @api.route('/issues/<username>/<parameter>')
+@mockable_response
 def get_user_activity_issues(username, parameter):
     '''API endpoint to return issues related to a user.
 

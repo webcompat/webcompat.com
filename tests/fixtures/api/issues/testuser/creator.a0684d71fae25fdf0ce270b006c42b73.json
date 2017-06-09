@@ -1,0 +1,589 @@
+[
+  {
+    "url": "https://api.github.com/repos/webcompat/web-bugs/issues/279",
+    "repository_url": "https://api.github.com/repos/webcompat/web-bugs",
+    "labels_url": "https://api.github.com/repos/webcompat/web-bugs/issues/279/labels{/name}",
+    "comments_url": "https://api.github.com/repos/webcompat/web-bugs/issues/279/comments",
+    "events_url": "https://api.github.com/repos/webcompat/web-bugs/issues/279/events",
+    "html_url": "https://github.com/webcompat/web-bugs/issues/279",
+    "id": 40579555,
+    "number": 279,
+    "title": "pki.dmdc.osd.mil - secure connection failed/ server error",
+    "user": {
+      "login": "GIGANTOR",
+      "id": 7131070,
+      "avatar_url": "https://avatars2.githubusercontent.com/u/7131070?v=3",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/GIGANTOR",
+      "html_url": "https://github.com/GIGANTOR",
+      "followers_url": "https://api.github.com/users/GIGANTOR/followers",
+      "following_url": "https://api.github.com/users/GIGANTOR/following{/other_user}",
+      "gists_url": "https://api.github.com/users/GIGANTOR/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/GIGANTOR/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/GIGANTOR/subscriptions",
+      "organizations_url": "https://api.github.com/users/GIGANTOR/orgs",
+      "repos_url": "https://api.github.com/users/GIGANTOR/repos",
+      "events_url": "https://api.github.com/users/GIGANTOR/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/GIGANTOR/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "labels": [
+      {
+        "id": 90471196,
+        "url": "https://api.github.com/repos/webcompat/web-bugs/labels/browser-firefox",
+        "name": "browser-firefox",
+        "color": "FF4E00",
+        "default": false
+      },
+      {
+        "id": 87069897,
+        "url": "https://api.github.com/repos/webcompat/web-bugs/labels/status-invalid",
+        "name": "status-invalid",
+        "color": "e6e6e6",
+        "default": false
+      }
+    ],
+    "state": "closed",
+    "locked": false,
+    "assignee": null,
+    "assignees": [
+
+    ],
+    "milestone": null,
+    "comments": 2,
+    "created_at": "2014-08-19T11:01:15Z",
+    "updated_at": "2015-07-29T07:41:26Z",
+    "closed_at": "2015-07-29T07:41:26Z",
+    "body": "<!-- @browser: Firefox 31.0 -->\n\n**URL**: https://pki.dmdc.osd.mil/identitymanagement/authenticate.do?gotoUrl=https://myaccess.dmdc.osd.mil/opensso/SAMLAwareServlet?TARGET=https://eauth.va.gov/ebenefits-portal\n**Browser / Version**: Firefox 31.0\n**Operating System**: Windows 7 \n**Problem type**: Don't know but something's wrong.\n**Site owner**: Unknown\n\n**Steps to Reproduce**\n1) Navigate to: www.ebenefits.va.gov- attempt to sign in takes you to -https://pki.dmdc.osd.mil/identitymanagement/authenticate.do?gotoUrl=https://myaccess.dmdc.osd.mil/opensso/SAMLAwareServlet?TARGET=https://eauth.va.gov/ebenefits-portal\n2) …\n\nExpected Behavior: log into ebenefits\nActual Behavior: met with secure connection failed or internal server error.\n"
+  },
+  {
+    "url": "https://api.github.com/repos/webcompat/web-bugs/issues/278",
+    "repository_url": "https://api.github.com/repos/webcompat/web-bugs",
+    "labels_url": "https://api.github.com/repos/webcompat/web-bugs/issues/278/labels{/name}",
+    "comments_url": "https://api.github.com/repos/webcompat/web-bugs/issues/278/comments",
+    "events_url": "https://api.github.com/repos/webcompat/web-bugs/issues/278/events",
+    "html_url": "https://github.com/webcompat/web-bugs/issues/278",
+    "id": 40449787,
+    "number": 278,
+    "title": "news.samba.org - SSL error",
+    "user": {
+      "login": "GIGANTOR",
+      "id": 7131070,
+      "avatar_url": "https://avatars2.githubusercontent.com/u/7131070?v=3",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/GIGANTOR",
+      "html_url": "https://github.com/GIGANTOR",
+      "followers_url": "https://api.github.com/users/GIGANTOR/followers",
+      "following_url": "https://api.github.com/users/GIGANTOR/following{/other_user}",
+      "gists_url": "https://api.github.com/users/GIGANTOR/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/GIGANTOR/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/GIGANTOR/subscriptions",
+      "organizations_url": "https://api.github.com/users/GIGANTOR/orgs",
+      "repos_url": "https://api.github.com/users/GIGANTOR/repos",
+      "events_url": "https://api.github.com/users/GIGANTOR/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/GIGANTOR/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "labels": [
+      {
+        "id": 113131759,
+        "url": "https://api.github.com/repos/webcompat/web-bugs/labels/status-fixed",
+        "name": "status-fixed",
+        "color": "009800",
+        "default": false
+      }
+    ],
+    "state": "closed",
+    "locked": false,
+    "assignee": null,
+    "assignees": [
+
+    ],
+    "milestone": null,
+    "comments": 3,
+    "created_at": "2014-08-18T02:02:08Z",
+    "updated_at": "2016-02-18T02:06:15Z",
+    "closed_at": "2016-02-18T02:06:14Z",
+    "body": "<!-- @browser: Firefox 31.0 -->\n\n**URL**: https://news.samba.org/\n**Browser / Version**: Firefox 31.0\n**Operating System**: Ubuntu \n**Problem type**: Looks like the website has a bug.\n**Site owner**: No\n\n**Steps to Reproduce**\n1) Navigate to: https://news.samba.org/\n2) …\n\nExpected Behavior: open page\nActual Behavior: Browser gives \"Untrusted connection\"\n\nLooks like the cert is only for www. & wiki., not news.  Their host still hands out cert and browser spits up.\n"
+  },
+  {
+    "url": "https://api.github.com/repos/webcompat/web-bugs/issues/277",
+    "repository_url": "https://api.github.com/repos/webcompat/web-bugs",
+    "labels_url": "https://api.github.com/repos/webcompat/web-bugs/issues/277/labels{/name}",
+    "comments_url": "https://api.github.com/repos/webcompat/web-bugs/issues/277/comments",
+    "events_url": "https://api.github.com/repos/webcompat/web-bugs/issues/277/events",
+    "html_url": "https://github.com/webcompat/web-bugs/issues/277",
+    "id": 40405146,
+    "number": 277,
+    "title": "m.youtube.com - Video delete",
+    "user": {
+      "login": "GIGANTOR",
+      "id": 7131070,
+      "avatar_url": "https://avatars2.githubusercontent.com/u/7131070?v=3",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/GIGANTOR",
+      "html_url": "https://github.com/GIGANTOR",
+      "followers_url": "https://api.github.com/users/GIGANTOR/followers",
+      "following_url": "https://api.github.com/users/GIGANTOR/following{/other_user}",
+      "gists_url": "https://api.github.com/users/GIGANTOR/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/GIGANTOR/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/GIGANTOR/subscriptions",
+      "organizations_url": "https://api.github.com/users/GIGANTOR/orgs",
+      "repos_url": "https://api.github.com/users/GIGANTOR/repos",
+      "events_url": "https://api.github.com/users/GIGANTOR/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/GIGANTOR/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "labels": [
+      {
+        "id": 87069897,
+        "url": "https://api.github.com/repos/webcompat/web-bugs/labels/status-invalid",
+        "name": "status-invalid",
+        "color": "e6e6e6",
+        "default": false
+      }
+    ],
+    "state": "closed",
+    "locked": false,
+    "assignee": null,
+    "assignees": [
+
+    ],
+    "milestone": null,
+    "comments": 1,
+    "created_at": "2014-08-16T06:41:46Z",
+    "updated_at": "2014-08-18T10:26:19Z",
+    "closed_at": "2014-08-18T10:26:19Z",
+    "body": "<!-- @browser: Firefox Mobile 22.0 -->\n\n**URL**: https://m.youtube.com/channel/UCi9XzRQaSapnnayfZ5q591A\n**Browser / Version**: Firefox Mobile 22.0\n**Operating System**: Android \n**Problem type**: Looks like the website has a bug.\n**Site owner**: Yes\n\n**Steps to Reproduce**\n1) Navigate to: https://m.youtube.com/channel/UCi9XzRQaSapnnayfZ5q591A\n2) …\n\nExpected Behavior:\nActual Behavior:\n"
+  },
+  {
+    "url": "https://api.github.com/repos/webcompat/web-bugs/issues/274",
+    "repository_url": "https://api.github.com/repos/webcompat/web-bugs",
+    "labels_url": "https://api.github.com/repos/webcompat/web-bugs/issues/274/labels{/name}",
+    "comments_url": "https://api.github.com/repos/webcompat/web-bugs/issues/274/comments",
+    "events_url": "https://api.github.com/repos/webcompat/web-bugs/issues/274/events",
+    "html_url": "https://github.com/webcompat/web-bugs/issues/274",
+    "id": 40271066,
+    "number": 274,
+    "title": "www.colissimo.fr - Untrusted connection error",
+    "user": {
+      "login": "GIGANTOR",
+      "id": 7131070,
+      "avatar_url": "https://avatars2.githubusercontent.com/u/7131070?v=3",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/GIGANTOR",
+      "html_url": "https://github.com/GIGANTOR",
+      "followers_url": "https://api.github.com/users/GIGANTOR/followers",
+      "following_url": "https://api.github.com/users/GIGANTOR/following{/other_user}",
+      "gists_url": "https://api.github.com/users/GIGANTOR/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/GIGANTOR/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/GIGANTOR/subscriptions",
+      "organizations_url": "https://api.github.com/users/GIGANTOR/orgs",
+      "repos_url": "https://api.github.com/users/GIGANTOR/repos",
+      "events_url": "https://api.github.com/users/GIGANTOR/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/GIGANTOR/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "labels": [
+      {
+        "id": 90471196,
+        "url": "https://api.github.com/repos/webcompat/web-bugs/labels/browser-firefox",
+        "name": "browser-firefox",
+        "color": "FF4E00",
+        "default": false
+      },
+      {
+        "id": 113131759,
+        "url": "https://api.github.com/repos/webcompat/web-bugs/labels/status-fixed",
+        "name": "status-fixed",
+        "color": "009800",
+        "default": false
+      },
+      {
+        "id": 122147840,
+        "url": "https://api.github.com/repos/webcompat/web-bugs/labels/status-worksforme",
+        "name": "status-worksforme",
+        "color": "d4c5f9",
+        "default": false
+      }
+    ],
+    "state": "closed",
+    "locked": false,
+    "assignee": null,
+    "assignees": [
+
+    ],
+    "milestone": null,
+    "comments": 12,
+    "created_at": "2014-08-14T16:12:56Z",
+    "updated_at": "2014-10-12T19:43:21Z",
+    "closed_at": "2014-10-12T19:43:21Z",
+    "body": "<!-- @browser: Firefox 34.0 -->\n\n**URL**: https://www.colissimo.fr/mon_compte/inscriptionForm.htm\n**Browser / Version**: Firefox 34.0\n**Operating System**: Mac OS X 10.10\n**Problem type**: Looks like the website has a bug.\n**Site owner**: No\n\n**Steps to Reproduce**\n1) Navigate to: https://www.colissimo.fr/mon_compte/inscriptionForm.htm\n2) …\n\nExpected Behavior: Site loads\nActual Behavior: I get a \"This Connections is Untrusted\" error:\n\ndetails:\nwww.colissimo.fr uses an invalid security certificate. \nThe certificate is not trusted because the issuer certificate is unknown. \n(Error code: sec_error_unknown_issuer)\n"
+  },
+  {
+    "url": "https://api.github.com/repos/webcompat/web-bugs/issues/273",
+    "repository_url": "https://api.github.com/repos/webcompat/web-bugs",
+    "labels_url": "https://api.github.com/repos/webcompat/web-bugs/issues/273/labels{/name}",
+    "comments_url": "https://api.github.com/repos/webcompat/web-bugs/issues/273/comments",
+    "events_url": "https://api.github.com/repos/webcompat/web-bugs/issues/273/events",
+    "html_url": "https://github.com/webcompat/web-bugs/issues/273",
+    "id": 40186760,
+    "number": 273,
+    "title": "games.danskespil.dk - webkit browser is mandatory",
+    "user": {
+      "login": "GIGANTOR",
+      "id": 7131070,
+      "avatar_url": "https://avatars2.githubusercontent.com/u/7131070?v=3",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/GIGANTOR",
+      "html_url": "https://github.com/GIGANTOR",
+      "followers_url": "https://api.github.com/users/GIGANTOR/followers",
+      "following_url": "https://api.github.com/users/GIGANTOR/following{/other_user}",
+      "gists_url": "https://api.github.com/users/GIGANTOR/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/GIGANTOR/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/GIGANTOR/subscriptions",
+      "organizations_url": "https://api.github.com/users/GIGANTOR/orgs",
+      "repos_url": "https://api.github.com/users/GIGANTOR/repos",
+      "events_url": "https://api.github.com/users/GIGANTOR/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/GIGANTOR/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "labels": [
+      {
+        "id": 90471209,
+        "url": "https://api.github.com/repos/webcompat/web-bugs/labels/browser-ie",
+        "name": "browser-ie",
+        "color": "00B9EC",
+        "default": false
+      },
+      {
+        "id": 96375336,
+        "url": "https://api.github.com/repos/webcompat/web-bugs/labels/mobile",
+        "name": "mobile",
+        "color": "009800",
+        "default": false
+      },
+      {
+        "id": 122147840,
+        "url": "https://api.github.com/repos/webcompat/web-bugs/labels/status-worksforme",
+        "name": "status-worksforme",
+        "color": "d4c5f9",
+        "default": false
+      }
+    ],
+    "state": "closed",
+    "locked": false,
+    "assignee": null,
+    "assignees": [
+
+    ],
+    "milestone": null,
+    "comments": 1,
+    "created_at": "2014-08-13T18:54:51Z",
+    "updated_at": "2014-09-03T22:50:57Z",
+    "closed_at": "2014-09-03T22:50:57Z",
+    "body": "<!-- @browser: IE Mobile 11.0 -->\n\n**URL**: https://games.danskespil.dk/lite/index.do#login\n**Browser / Version**: IE Mobile 11.0\n**Operating System**: Windows Phone 8.1\n**Problem type**: Looks like the website has a bug.\n**Site owner**: No\n\n**Steps to Reproduce**\n1) Navigate to: https://games.danskespil.dk/lite/index.do#login\n2) ....or visit mobil.danskespil.dk and click login in upper right corner (nb: Link is there but not shown properly due to rendering errots on this page as well)\n\nExpected Behavior: Login page should be available\nActual Behavior: Cannot continue as webkit browser is mandatory\n"
+  },
+  {
+    "url": "https://api.github.com/repos/webcompat/web-bugs/issues/272",
+    "repository_url": "https://api.github.com/repos/webcompat/web-bugs",
+    "labels_url": "https://api.github.com/repos/webcompat/web-bugs/issues/272/labels{/name}",
+    "comments_url": "https://api.github.com/repos/webcompat/web-bugs/issues/272/comments",
+    "events_url": "https://api.github.com/repos/webcompat/web-bugs/issues/272/events",
+    "html_url": "https://github.com/webcompat/web-bugs/issues/272",
+    "id": 39912271,
+    "number": 272,
+    "title": "shrinked",
+    "user": {
+      "login": "GIGANTOR",
+      "id": 7131070,
+      "avatar_url": "https://avatars2.githubusercontent.com/u/7131070?v=3",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/GIGANTOR",
+      "html_url": "https://github.com/GIGANTOR",
+      "followers_url": "https://api.github.com/users/GIGANTOR/followers",
+      "following_url": "https://api.github.com/users/GIGANTOR/following{/other_user}",
+      "gists_url": "https://api.github.com/users/GIGANTOR/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/GIGANTOR/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/GIGANTOR/subscriptions",
+      "organizations_url": "https://api.github.com/users/GIGANTOR/orgs",
+      "repos_url": "https://api.github.com/users/GIGANTOR/repos",
+      "events_url": "https://api.github.com/users/GIGANTOR/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/GIGANTOR/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "labels": [
+      {
+        "id": 87069895,
+        "url": "https://api.github.com/repos/webcompat/web-bugs/labels/status-duplicate",
+        "name": "status-duplicate",
+        "color": "cccccc",
+        "default": false
+      }
+    ],
+    "state": "closed",
+    "locked": false,
+    "assignee": null,
+    "assignees": [
+
+    ],
+    "milestone": null,
+    "comments": 1,
+    "created_at": "2014-08-10T17:28:36Z",
+    "updated_at": "2014-08-11T07:10:20Z",
+    "closed_at": "2014-08-11T07:10:20Z",
+    "body": "<!-- @browser: IE 11.0 -->\n\n**URL**: m.spiegel.de\n**Browser / Version**: IE 11.0\n**Operating System**: Windows Phone 8.1\n**Problem type**: Looks like the browser has a bug\n**Site owner**: No\n\n**Steps to Reproduce**\n1) Navigate to: m.spiegel.de\n2) …\n\nExpected Behavior:\nActual Behavior:\n"
+  },
+  {
+    "url": "https://api.github.com/repos/webcompat/web-bugs/issues/271",
+    "repository_url": "https://api.github.com/repos/webcompat/web-bugs",
+    "labels_url": "https://api.github.com/repos/webcompat/web-bugs/issues/271/labels{/name}",
+    "comments_url": "https://api.github.com/repos/webcompat/web-bugs/issues/271/comments",
+    "events_url": "https://api.github.com/repos/webcompat/web-bugs/issues/271/events",
+    "html_url": "https://github.com/webcompat/web-bugs/issues/271",
+    "id": 39899487,
+    "number": 271,
+    "title": "mobile.twitter.com - Prompts to install Android Twitter app",
+    "user": {
+      "login": "GIGANTOR",
+      "id": 7131070,
+      "avatar_url": "https://avatars2.githubusercontent.com/u/7131070?v=3",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/GIGANTOR",
+      "html_url": "https://github.com/GIGANTOR",
+      "followers_url": "https://api.github.com/users/GIGANTOR/followers",
+      "following_url": "https://api.github.com/users/GIGANTOR/following{/other_user}",
+      "gists_url": "https://api.github.com/users/GIGANTOR/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/GIGANTOR/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/GIGANTOR/subscriptions",
+      "organizations_url": "https://api.github.com/users/GIGANTOR/orgs",
+      "repos_url": "https://api.github.com/users/GIGANTOR/repos",
+      "events_url": "https://api.github.com/users/GIGANTOR/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/GIGANTOR/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "labels": [
+      {
+        "id": 90471209,
+        "url": "https://api.github.com/repos/webcompat/web-bugs/labels/browser-ie",
+        "name": "browser-ie",
+        "color": "00B9EC",
+        "default": false
+      },
+      {
+        "id": 96375336,
+        "url": "https://api.github.com/repos/webcompat/web-bugs/labels/mobile",
+        "name": "mobile",
+        "color": "009800",
+        "default": false
+      },
+      {
+        "id": 113131759,
+        "url": "https://api.github.com/repos/webcompat/web-bugs/labels/status-fixed",
+        "name": "status-fixed",
+        "color": "009800",
+        "default": false
+      }
+    ],
+    "state": "closed",
+    "locked": false,
+    "assignee": null,
+    "assignees": [
+
+    ],
+    "milestone": null,
+    "comments": 4,
+    "created_at": "2014-08-10T02:43:12Z",
+    "updated_at": "2015-02-03T00:56:27Z",
+    "closed_at": "2015-02-03T00:56:27Z",
+    "body": "<!-- @browser: IE11 -->\n\n**URL**: https://mobile.twitter.com/\n**Browser / Version**: IE11\n**Operating System**: Windows Phone 8.1 Update\n**Problem type**: Looks like the website has a bug.\n**Site owner**: No\n\n**Steps to Reproduce**\n1) Navigate to: https://mobile.twitter.com/\n2) Sign in as required\n\nExpected Behavior:\n\nAs needed, prompt to install Windows Phone Twitter app.\n\nActual Behavior:\n\nThe site prompts with a Google Play link for Twitter.\n"
+  },
+  {
+    "url": "https://api.github.com/repos/webcompat/web-bugs/issues/270",
+    "repository_url": "https://api.github.com/repos/webcompat/web-bugs",
+    "labels_url": "https://api.github.com/repos/webcompat/web-bugs/issues/270/labels{/name}",
+    "comments_url": "https://api.github.com/repos/webcompat/web-bugs/issues/270/comments",
+    "events_url": "https://api.github.com/repos/webcompat/web-bugs/issues/270/events",
+    "html_url": "https://github.com/webcompat/web-bugs/issues/270",
+    "id": 39893631,
+    "number": 270,
+    "title": "www.hulu.com - Hulu requires Flash Player 10.1.53.64 or higher.",
+    "user": {
+      "login": "GIGANTOR",
+      "id": 7131070,
+      "avatar_url": "https://avatars2.githubusercontent.com/u/7131070?v=3",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/GIGANTOR",
+      "html_url": "https://github.com/GIGANTOR",
+      "followers_url": "https://api.github.com/users/GIGANTOR/followers",
+      "following_url": "https://api.github.com/users/GIGANTOR/following{/other_user}",
+      "gists_url": "https://api.github.com/users/GIGANTOR/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/GIGANTOR/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/GIGANTOR/subscriptions",
+      "organizations_url": "https://api.github.com/users/GIGANTOR/orgs",
+      "repos_url": "https://api.github.com/users/GIGANTOR/repos",
+      "events_url": "https://api.github.com/users/GIGANTOR/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/GIGANTOR/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "labels": [
+      {
+        "id": 105063702,
+        "url": "https://api.github.com/repos/webcompat/web-bugs/labels/browser-iceweasel",
+        "name": "browser-iceweasel",
+        "color": "0052cc",
+        "default": false
+      },
+      {
+        "id": 122147840,
+        "url": "https://api.github.com/repos/webcompat/web-bugs/labels/status-worksforme",
+        "name": "status-worksforme",
+        "color": "d4c5f9",
+        "default": false
+      }
+    ],
+    "state": "closed",
+    "locked": false,
+    "assignee": null,
+    "assignees": [
+
+    ],
+    "milestone": null,
+    "comments": 1,
+    "created_at": "2014-08-09T20:40:46Z",
+    "updated_at": "2015-01-09T01:07:27Z",
+    "closed_at": "2015-01-09T01:07:26Z",
+    "body": "<!-- @browser: Iceweasel 24.7.0 -->\n\n**URL**: http://www.hulu.com/watch/670173\n**Browser / Version**: Iceweasel 24.7.0\n**Operating System**: Linux \n**Problem type**: Looks like the website has a bug.\n**Site owner**: No\n\n**Steps to Reproduce**\n1) Navigate to: http://www.hulu.com/watch/670173\n2) …\n\nExpected Behavior:\nActual Behavior:\n"
+  },
+  {
+    "url": "https://api.github.com/repos/webcompat/web-bugs/issues/269",
+    "repository_url": "https://api.github.com/repos/webcompat/web-bugs",
+    "labels_url": "https://api.github.com/repos/webcompat/web-bugs/issues/269/labels{/name}",
+    "comments_url": "https://api.github.com/repos/webcompat/web-bugs/issues/269/comments",
+    "events_url": "https://api.github.com/repos/webcompat/web-bugs/issues/269/events",
+    "html_url": "https://github.com/webcompat/web-bugs/issues/269",
+    "id": 39888970,
+    "number": 269,
+    "title": "www.bloomberg.com - Requires Flash player...",
+    "user": {
+      "login": "GIGANTOR",
+      "id": 7131070,
+      "avatar_url": "https://avatars2.githubusercontent.com/u/7131070?v=3",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/GIGANTOR",
+      "html_url": "https://github.com/GIGANTOR",
+      "followers_url": "https://api.github.com/users/GIGANTOR/followers",
+      "following_url": "https://api.github.com/users/GIGANTOR/following{/other_user}",
+      "gists_url": "https://api.github.com/users/GIGANTOR/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/GIGANTOR/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/GIGANTOR/subscriptions",
+      "organizations_url": "https://api.github.com/users/GIGANTOR/orgs",
+      "repos_url": "https://api.github.com/users/GIGANTOR/repos",
+      "events_url": "https://api.github.com/users/GIGANTOR/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/GIGANTOR/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "labels": [
+      {
+        "id": 105063702,
+        "url": "https://api.github.com/repos/webcompat/web-bugs/labels/browser-iceweasel",
+        "name": "browser-iceweasel",
+        "color": "0052cc",
+        "default": false
+      },
+      {
+        "id": 122147840,
+        "url": "https://api.github.com/repos/webcompat/web-bugs/labels/status-worksforme",
+        "name": "status-worksforme",
+        "color": "d4c5f9",
+        "default": false
+      }
+    ],
+    "state": "closed",
+    "locked": false,
+    "assignee": null,
+    "assignees": [
+
+    ],
+    "milestone": null,
+    "comments": 1,
+    "created_at": "2014-08-09T16:33:17Z",
+    "updated_at": "2015-01-09T01:07:05Z",
+    "closed_at": "2015-01-09T01:07:05Z",
+    "body": "<!-- @browser: Iceweasel 24.7.0 -->\n\n**URL**: http://www.bloomberg.com/video/embed/UhBn5xcORr2eWW90JWSKUw?height=395&width=640\n**Browser / Version**: Iceweasel 24.7.0\n**Operating System**: Linux \n**Problem type**: Looks like the website has a bug.\n**Site owner**: No\n\n**Steps to Reproduce**\n1) Navigate to: http://www.bloomberg.com/video/embed/UhBn5xcORr2eWW90JWSKUw?height=395&width=640\n2) …\n\nExpected Behavior:\nActual Behavior:\n"
+  },
+  {
+    "url": "https://api.github.com/repos/webcompat/web-bugs/issues/268",
+    "repository_url": "https://api.github.com/repos/webcompat/web-bugs",
+    "labels_url": "https://api.github.com/repos/webcompat/web-bugs/issues/268/labels{/name}",
+    "comments_url": "https://api.github.com/repos/webcompat/web-bugs/issues/268/comments",
+    "events_url": "https://api.github.com/repos/webcompat/web-bugs/issues/268/events",
+    "html_url": "https://github.com/webcompat/web-bugs/issues/268",
+    "id": 39882622,
+    "number": 268,
+    "title": "news.yahoo.com - Page does not render properly",
+    "user": {
+      "login": "GIGANTOR",
+      "id": 7131070,
+      "avatar_url": "https://avatars2.githubusercontent.com/u/7131070?v=3",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/GIGANTOR",
+      "html_url": "https://github.com/GIGANTOR",
+      "followers_url": "https://api.github.com/users/GIGANTOR/followers",
+      "following_url": "https://api.github.com/users/GIGANTOR/following{/other_user}",
+      "gists_url": "https://api.github.com/users/GIGANTOR/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/GIGANTOR/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/GIGANTOR/subscriptions",
+      "organizations_url": "https://api.github.com/users/GIGANTOR/orgs",
+      "repos_url": "https://api.github.com/users/GIGANTOR/repos",
+      "events_url": "https://api.github.com/users/GIGANTOR/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/GIGANTOR/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "labels": [
+      {
+        "id": 90471209,
+        "url": "https://api.github.com/repos/webcompat/web-bugs/labels/browser-ie",
+        "name": "browser-ie",
+        "color": "00B9EC",
+        "default": false
+      },
+      {
+        "id": 96375336,
+        "url": "https://api.github.com/repos/webcompat/web-bugs/labels/mobile",
+        "name": "mobile",
+        "color": "009800",
+        "default": false
+      },
+      {
+        "id": 122147840,
+        "url": "https://api.github.com/repos/webcompat/web-bugs/labels/status-worksforme",
+        "name": "status-worksforme",
+        "color": "d4c5f9",
+        "default": false
+      }
+    ],
+    "state": "closed",
+    "locked": false,
+    "assignee": null,
+    "assignees": [
+
+    ],
+    "milestone": null,
+    "comments": 4,
+    "created_at": "2014-08-09T10:15:55Z",
+    "updated_at": "2014-09-03T22:48:14Z",
+    "closed_at": "2014-09-03T22:48:13Z",
+    "body": "<!-- @browser: IE11 - Windows Phone 8.1 Update (GDR1) -->\n\n**URL**: http://news.yahoo.com\n**Browser / Version**: IE11 - Windows Phone 8.1 Update (GDR1)\n**Operating System**: Windows Phone 8.1 Update (GDR) 1\n**Problem type**: Looks like the website has a bug.\n**Site owner**: No\n\n**Steps to Reproduce**\n1) Navigate to: http://news.yahoo.com\n2) …\n\nExpected Behavior: Webpage expected to load the same as iOS/Android\nActual Behavior: Feature phone page loads instead - looks awful\n"
+  }
+]
