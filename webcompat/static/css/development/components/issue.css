@@ -1,4 +1,6 @@
-/** @define Issue */
+/* This Source Code Form is subject to the terms of the Mozilla Public
+* License, v. 2.0. If a copy of the MPL was not distributed with this
+* file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 :root {
   --Issue-fontSize: var(--base-fontSize);
@@ -11,139 +13,136 @@
   font-size: var(--Issue-fontSize);
 }
 
-    /* header */
-    .wc-Issue-information-header {
-      display: flex;
-      justify-content: space-between;
-      padding: .7em 1em;
-      border-radius: 3px 3px 0 0;
-    }
+/* header */
+.wc-Issue-information-header {
+  display: flex;
+  justify-content: space-between;
+  padding: .7em 1em;
+  border-radius: 3px 3px 0 0;
+}
 
-    .wc-Issue-information-header--needstriage {
-      background-color: var(--base-stateNeedsTriage);
-    }
+.wc-Issue-information-header--needstriage {
+  background-color: var(--base-stateNeedsTriage);
+}
 
-    .wc-Issue-information-header--needsDiagnosis {
-      background-color: var(--base-stateNeedsDiagnosis);
-    }
+.wc-Issue-information-header--needsDiagnosis {
+  background-color: var(--base-stateNeedsDiagnosis);
+}
 
-    .wc-Issue-information-header--needsContact {
-      background-color: var(--base-stateNeedsContact);
-    }
+.wc-Issue-information-header--needsContact {
+  background-color: var(--base-stateNeedsContact);
+}
 
-    .wc-Issue-information-header--closed {
-      background-color: var(--base-stateClosed);
-    }
+.wc-Issue-information-header--closed {
+  background-color: var(--base-stateClosed);
+}
 
-    .wc-Issue-information-header--ready {
-      background-color: var(--base-stateReady);
-    }
+.wc-Issue-information-header--ready {
+  background-color: var(--base-stateReady);
+}
 
-    .wc-Issue-information-header--sitewait {
-      background-color: var(--base-stateSitewait);
-    }
+.wc-Issue-information-header--sitewait {
+  background-color: var(--base-stateSitewait);
+}
 
-    .wc-Issue-information-header--fixed {
-      background-color: var(--base-stateFixed);
-    }
+.wc-Issue-information-header--fixed {
+  background-color: var(--base-stateFixed);
+}
 
-    .wc-Issue-information-header--worksforme {
-      background-color: var(--base-stateWorksForMe);
-    }
+.wc-Issue-information-header--worksforme {
+  background-color: var(--base-stateWorksForMe);
+}
 
-    /* content */
-    .wc-Issue-information-content {
-      background-color: #fff;
-      padding: 1em;
-    }
+/* content */
+.wc-Issue-information-content {
+  background-color: #fff;
+  padding: 1em;
+}
 
-      .wc-Issue-information-content + .wc-Issue-information-content {
-        margin: 2px 0 0 0;
-      }
+.wc-Issue-information-content + .wc-Issue-information-content {
+  margin: 2px 0 0;
+}
 
-  /* Wrapper title and date issue */
+/* Wrapper title and date issue */
+.wc-Issue-title {
+  font-size: 1.2em;
+  line-height: 1em;
+  margin: 0 0 .5em;
+  word-wrap: break-word;
+}
+
+@media all and (max-width: 28.12em) {
   .wc-Issue-title {
     font-size: 1.2em;
-    line-height: 1em;
-    margin: 0 0 .5em 0;
-    word-wrap: break-word;
   }
+}
 
-  @media all and (max-width: 28.12em) {
-    .wc-Issue-title {
-      font-size: 1.2em;
-    }
-  }
+/* information issue : date / author / number of comment */
+.wc-Issue-create {
+  font-size: 1em;
+  margin: 0 0 2em;
+}
 
-  /* information issue : date / author / number of comment */
-  .wc-Issue-create {
-    font-size: 1em;
-    margin: 0 0 2em
-  }
+/* Date of issue */
+.wc-Issue-date {
+  display: inline-block;
+}
 
-  /* Date of issue */
+@media all and (max-width: 28.12em) {
   .wc-Issue-date {
-    display: inline-block;
+    font-size: .9em;
   }
+}
 
-  @media all and (max-width: 28.12em) {
-    .wc-Issue-date {
-      font-size: .9em;
-    }
+/* Author */
+.wc-Issue-reporter {
+  font-weight: 700;
+}
+
+@media all and (min-width: 48.13em) {
+  .wc-Issue-report,
+  .wc-Issue-commentList,
+  .wc-Issue-commentSubmit,
+  .wc-Issue-information:not(.wc-Issue-information--fullWidth) {
+    width: var(--Issue-widthComment);
   }
+}
 
-  /* Author */
-  .wc-Issue-reporter {
-    font-weight: bold;
-  }
+/* CommentSubmit */
+.wc-Issue-commentSubmit {
+  padding-top: 2em;
+  margin: 2em 0 0;
+}
 
-  @media all and (min-width: 48.13em) {
-    .wc-Issue-report,
-    .wc-Issue-commentList,
-    .wc-Issue-commentSubmit,
-    .wc-Issue-information:not(.wc-Issue-information--fullWidth){
-      width: var(--Issue-widthComment);
-    }
-  }
+/* list comment */
+.wc-Issue-commentList {
+  margin: 1em 0 0;
+}
 
-  /* CommentSubmit */
-  .wc-Issue-commentSubmit {
-    padding-top: 2em;
-    margin: 2em 0 0;
-  }
+/* Issue wrapper */
+.wc-Issue-wrapper {
+  margin: 0 0 0 4.2em;
+}
 
-  /* list comment */
-  .wc-Issue-commentList {
-    margin: 1em 0 0;
-  }
-
-  /* Issue wrapper */
+@media all and (max-width: 73.75em) {
   .wc-Issue-wrapper {
-    margin: 0 0 0 4.2em;
+    margin: 0;
   }
+}
 
-    @media all and (max-width: 73.75em) {
-      .wc-Issue-wrapper {
-        margin: 0;
-      }
-    }
-
-  /* container details issue */
-  .wc-Issue-details {
-    position: relative;
-    line-height: 1.5em;
-  }
-
-  .wc-Issue-comment {
-    margin-top: 2em;
-  }
+/* container details issue */
+.wc-Issue-details {
+  position: relative;
+  line-height: 1.5em;
+}
 
 .wc-Issue-labels {
   background-color: #fff;
   margin: 2px 0;
   padding: 1em;
 }
-/* FullScreen LabelEditor*/
+
+/* FullScreen LabelEditor */
 @media all and (max-width: 23.43em) {
   .wc-Issue-labels {
     position: relative;
@@ -156,9 +155,9 @@
   text-align: left;
 }
 
-/*wrapper list comment */
+/* wrapper list comment */
 .wc-Issue-comment {
-  margin:4em 0 0;
+  margin: 4em 0 0;
 }
 
 /* labeleditor wrapper */
@@ -167,7 +166,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin: 0 0 .625em 0;
+  margin: 0 0 .625em;
 }
 
 @media all and (max-width: 23.43em) {

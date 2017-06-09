@@ -1,3 +1,7 @@
+/* This Source Code Form is subject to the terms of the Mozilla Public
+* License, v. 2.0. If a copy of the MPL was not distributed with this
+* file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+
 :root {
   --Threesteps-fonSize: 1rem;
   --Threesteps-backgroundColor: #fff;
@@ -9,38 +13,39 @@
   flex-direction: row;
 }
 
-  /* item */
-  .wc-Threesteps-item {
-    display: flex;
-    align-items: flex-start;
-    font-size: var(--Threesteps-fonSize);
-    margin: 0 0 .5em;
-  }
+/* item */
+.wc-Threesteps-item {
+  display: flex;
+  align-items: flex-start;
+  font-size: var(--Threesteps-fonSize);
+  margin: 0 0 .5em;
+}
 
-    /* Number */
-    .wc-Threesteps-item-number {
-      font-size: 2em;
-      font-weight: 700;
-      padding: 0 .75em 0 .5em;
-    }
+/* Number */
+.wc-Threesteps-item-number {
+  font-size: 2em;
+  font-weight: 700;
+  padding: 0 .75em 0 .5em;
+}
 
-    .wc-bug-report-icon {
-      transform: scale(1.25);
-      transform-origin: top;
-    }
-    .wc-bug-diagnosis-icon {
-      transform: scale(1.25);
-      transform-origin: center;
-    }
+.wc-bug-report-icon {
+  transform: scale(1.25);
+  transform-origin: top;
+}
+
+.wc-bug-diagnosis-icon {
+  transform: scale(1.25);
+  transform-origin: center;
+}
 
 .wc-Browserstack {
   width: 100%;
-  background-image:url(/img/browserstack_logo.svg);
+  background-image: url("../../../img/browserstack_logo.svg");
   background-size: cover;
   height: 0;
   padding: 0 0 22%;
   display: inline-block;
-  color:transparent;
+  color: transparent;
   background-repeat: no-repeat;
 }
 
@@ -48,74 +53,53 @@
   width: 155px;
 }
 
-    @media all and (max-width: 59.37em) {
-
-      .wc-Threesteps-item-number {
-        padding-right: 0.5em;
-      }
-    }
-
-    @media all and (max-width: 48.12em) {
-
-      .wc-Threesteps-item-number {
-        padding-bottom: 0;
-      }
-    }
-
-    /* text */
-    .wc-Threesteps-item-text {
-      margin: 0;
-      padding:0;
-    }
-
-    .wc-Report {
-      padding:0;
-      margin:0;
-    }
-    .wc-Link {
-      margin:0;
-      padding:0;
-    }
-
-    .wc-Threesteps-item-number * {
-      vertical-align: middle;
-    }
+@media all and (max-width: 59.37em) {
+  .wc-Threesteps-item-number {
+    padding-right: .5em;
+  }
+}
 
 @media all and (max-width: 48.12em) {
+  .wc-Threesteps-item-number {
+    padding-bottom: 0;
+  }
+}
 
-      .wc-Threesteps .r-all--4of12 {
-        width: 100%;
-      }
+/* text */
+.wc-Threesteps-item-text {
+  margin: 0;
+  padding: 0;
+}
 
-    }
+.wc-Report {
+  padding: 0;
+  margin: 0;
+}
 
-    /* icon */
-    .wc-Threesteps-item-icon {
-      font-size: 2em;
-      font-weight: 700;
-      padding: 0 .75em 0 .5em;
-      flex: 0 0 3.5em;
-      max-height: 3.5em;
-      display: flex;
-      vertical-align: top;
-      align-self: center;
-    }
+/* icon */
+.wc-Threesteps-item-icon {
+  font-size: 2em;
+  font-weight: 700;
+  padding: 0 .75em 0 .5em;
+  flex: 0 0 3.5em;
+  max-height: 3.5em;
+  display: flex;
+  vertical-align: top;
+  align-self: center;
+}
 
-    @media all and (max-width: 59.37em) {
+@media all and (max-width: 59.37em) {
+  .wc-Threesteps-item-icon {
+    padding-right: .5em;
+    flex: 0 0 3em;
+    max-height: 3em;
+  }
+}
 
-      .wc-Threesteps-item-icon {
-        padding-right: 0.5em;
-        flex: 0 0 3em;
-        max-height: 3em;
-      }
-    }
-
-
-    @media all and (max-width: 48.12em) {
-
-      .wc-Threesteps-item-icon {
-        padding-bottom: 0;
-        flex: 0 0 2.5em;
-        max-height: 2.5em;
-      }
-    }
+@media all and (max-width: 48.12em) {
+  .wc-Threesteps-item-icon {
+    padding-bottom: 0;
+    flex: 0 0 2.5em;
+    max-height: 2.5em;
+  }
+}

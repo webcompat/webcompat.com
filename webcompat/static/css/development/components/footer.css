@@ -5,7 +5,7 @@
   --Footer-backgroundColor: #fff;
   --Footer-border: var(--base-colorDark);
   --Footer-colorHover: var(--base-colorDark);
-  --Footer-withIcon : 1.5em;
+  --Footer-withIcon: 1.5em;
 }
 
 .wc-Footer {
@@ -21,79 +21,79 @@
   }
 }
 
-  /* Wrapper */
-  .wc-Footer-wrapper {
-    display: flex;
-    justify-content: space-between;
-  }
+/* Wrapper */
+.wc-Footer-wrapper {
+  display: flex;
+  justify-content: space-between;
+}
 
-  /* section */
+/* section */
+.wc-Footer-list {
+  padding: .75em 0;
+}
+
+@media all and (min-width: 37.52em) {
   .wc-Footer-list {
-    padding: .75em 0;
+    display: flex;
   }
+}
 
-  @media all and (min-width: 37.52em) {
-    .wc-Footer-list {
-      display: flex;
-    }
-  }
-
-  /* modifier */
-  @media all and (max-width: 37.51em) {
-    .wc-Footer-list--right {
-      display: flex;
-      align-content: space-between;
-      flex-flow: row wrap;
-      width: var(--Footer-withIcon);
-    }
-  }
-
-  /* item */
-  @media all and (min-width: 37.52em) {
-    .wc-Footer-item + .wc-Footer-item {
-      padding-left: .75em;
-    }
-  }
-
-    /* modifier */
-    .wc-Footer-item--follow {
-      font-weight: 700;
-    }
-
-  /* link */
-  .wc-Footer-link {
-    display: block;
-    color: inherit;
-    text-decoration: none;
-  }
-
-    /* event */
-    .wc-Footer-link:hover .wc-Footer-link-label,
-    .wc-Footer-link:focus .wc-Footer-link-label {
-      color: var(--Footer-colorHover);
-    }
-
-    /* modifier */
-    @media all and (min-width: 37.51em) {
-      .wc-Footer-link--separator:after {
-        content: "//";
-        margin-left: 1em;
-      }
-    }
-
-  .wc-Footer-icon {
-    display: block;
+/* modifier */
+@media all and (max-width: 37.51em) {
+  .wc-Footer-list--right {
+    display: flex;
+    align-content: space-between;
+    flex-flow: row wrap;
     width: var(--Footer-withIcon);
-    height: var(--Footer-withIcon);
-    overflow: hidden;
-    background-repeat: no-repeat;
-    color: transparent;
   }
+}
 
-  .wc-Footer-icon--twitter {
-    background-image: url("../../../img/twitter.svg");
+/* item */
+@media all and (min-width: 37.52em) {
+  .wc-Footer-item + .wc-Footer-item {
+    padding-left: .75em;
   }
+}
 
-  .wc-Footer-icon--github {
-    background-image: url("../../../img/github-logo.svg");
+/* modifier */
+.wc-Footer-item--follow {
+  font-weight: 700;
+}
+
+/* link */
+.wc-Footer-link {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+
+/* event */
+.wc-Footer-link:hover .wc-Footer-link-label,
+.wc-Footer-link:focus .wc-Footer-link-label {
+  color: var(--Footer-colorHover);
+}
+
+/* modifier */
+@media all and (min-width: 37.51em) {
+  .wc-Footer-link--separator::after {
+    content: "//";
+    margin-left: 1em;
   }
+}
+
+.wc-Footer-icon {
+  display: block;
+  width: var(--Footer-withIcon);
+  height: var(--Footer-withIcon);
+  overflow: hidden;
+  background-repeat: no-repeat;
+  color: transparent;
+}
+
+.wc-Footer-icon--twitter {
+  background-image: url("../../../img/twitter.svg");
+}
+
+.wc-Footer-icon--github {
+  background-image: url("../../../img/github-logo.svg");
+}
