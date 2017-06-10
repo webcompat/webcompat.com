@@ -46,14 +46,19 @@
     "postcss-import": "^8.0.2",
     "postcss-reporter": "^3.0.0",
     "postcss-url": "^5.1.1",
-    "prettier": "1.1.0"
+    "prettier": "1.1.0",
+    "stylelint": "^7.10.1",
+    "stylelint-config-standard": "^16.0.0"
   },
   "scripts": {
     "setup": "npm run module && npm run virtualenv && npm install && npm run config",
     "watch": "grunt watch",
     "build": "grunt",
-    "lint": "eslint ./Gruntfile.js ./tests ./grunt-tasks ./webcompat/static/js/lib && grunt travis-lint",
-    "fix": "eslint --fix ./Gruntfile.js ./tests ./grunt-tasks ./webcompat/static/js/lib",
+    "lint": "npm run lint:JS && npm run lint:CSS && grunt travis-lint",
+    "lint:JS": "eslint ./Gruntfile.js ./tests ./grunt-tasks ./webcompat/static/js/lib",
+    "lint:CSS": "stylelint './webcompat/static/css/development/**/*.css'",
+    "fix": "npm run lint:fix:JS",
+    "lint:fix:JS": "eslint --fix ./Gruntfile.js ./tests ./grunt-tasks ./webcompat/static/js/lib",
     "imagemin": "grunt imagemin",
     "module": "git submodule init && git submodule update",
     "prestart": "npm run build",
@@ -65,7 +70,8 @@
     "precommit": "lint-staged"
   },
   "lint-staged": {
-    "*.js": "lint"
+    "*.js": "lint:JS",
+    "*.css": "lint:CSS"
   },
   "license": "MPL-2.0"
 }

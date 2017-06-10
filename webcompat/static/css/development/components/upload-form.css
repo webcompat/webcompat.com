@@ -1,4 +1,6 @@
-/** @define UploadForm */
+/* This Source Code Form is subject to the terms of the Mozilla Public
+* License, v. 2.0. If a copy of the MPL was not distributed with this
+* file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 :root {
   --UploadForm-backgroundColorButton: var(--base-colorDark);
@@ -14,86 +16,85 @@
   overflow: hidden;
 }
 
-  /* modifier homepage uploadform */
+/* modifier homepage uploadform */
+.wc-UploadForm--homePage {
+  border: dashed 1px rgb(204, 204, 204);
+  border-radius: 20px;
+}
 
-  .wc-UploadForm--homePage {
-    border: dashed 1px rgb(204, 204, 204);
-    border-radius: 20px;
-  }
+/* modifier new comment of existing bug */
+.wc-UploadForm--new {
+  display: flex;
+  background-color: #404040;
+  min-height: 35px;
+}
 
-  /* modifier new comment of existing bug */
-  .wc-UploadForm--new {
-    display: flex;
-    background-color: #404040;
-    min-height: 35px;
-  }
+/* Form upload wrapper */
+.wc-UploadForm-wrapper {
+  z-index: 2;
+  padding: 1rem;
+  align-content: center;
+  align-items: center;
+  flex: 1 0 0;
+}
 
-  /* Form upload wrapper */
-  .wc-UploadForm-wrapper {
-    z-index: 2;
-    padding: 1rem;
-    align-content: center;
-    align-items: center;
-    flex: 1 0 0;
-  }
+/* state */
+.wc-UploadForm-wrapper.is-hidden {
+  display: none;
+}
 
-    /* state */
-    .wc-UploadForm-wrapper.is-hidden {
-      display: none;
-    }
+/* icon */
+.wc-UploadForm-icon {
+  font-size: 6.2em;
+  margin: 0 0 16px;
+  color: #c8c8c8;
+}
 
-    /* icon */
-    .wc-UploadForm-icon {
-      font-size: 6.2em;
-      margin: 0 0 16px;
-      color: #c8c8c8;
-    }
+/* label */
+.wc-UploadForm-label {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 5px;
+  color: #ccc;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: underline;
+}
 
-    /* label */
-    .wc-UploadForm-label {
-      position: relative;
-      display: inline-block;
-      margin-bottom: 5px;
-      color: #ccc;
-      font-weight: 700;
-      cursor: pointer;
-      text-decoration: underline;
-    }
+/* modifier new label of existing bug */
+.wc-UploadForm-label--uploadForm {
+  font-size: .8125em;
+  font-weight: 400;
+  text-decoration: none;
+}
 
-      /* modifier new label of existing bug */
-      .wc-UploadForm-label--uploadForm {
-        font-size: .8125em;
-        font-weight: 400;
-        text-decoration: none;
-      }
+/* link */
+.wc-UploadForm-label--link {
+  color: #ffc900;
+  font-weight: 600;
+  text-decoration: underline;
+}
 
-      /* link */
-      .wc-UploadForm-label--link {
-        color: #ffc900;
-        font-weight: 600;
-        text-decoration: underline;
-      }
+/* Upload button */
+.wc-UploadForm-button {
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 1em 0;
+  font-weight: 700;
+  background-color: var(--UploadForm-backgroundColorButton);
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: underline;
+  transform: translateY(0);
+  transition: transform .2s linear 0s;
+}
 
-    /* Upload button */
-    .wc-UploadForm-button {
-      position: absolute;
-      width: 100%;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      padding: 1em 0;
-      font-weight:700;
-      background-color: var(--UploadForm-backgroundColorButton);
-      border-bottom-left-radius: 20px;
-      border-bottom-right-radius: 20px;
-      cursor: pointer;
-      text-align: center;
-      text-decoration: underline;
-      transform: translateY(0);
-      transition: transform .2s linear 0s;
-    }
-
-      /* state */
-      .wc-UploadForm-button.is-hidden {
-        transform: translateY(100%);
-      }
+/* state */
+.wc-UploadForm-button.is-hidden {
+  transform: translateY(100%);
+}

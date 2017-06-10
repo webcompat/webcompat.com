@@ -1,4 +1,6 @@
-/** @define Label */
+/* This Source Code Form is subject to the terms of the Mozilla Public
+* License, v. 2.0. If a copy of the MPL was not distributed with this
+* file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 :root {
   --Label-fontSize: .75rem;
@@ -9,44 +11,45 @@
   vertical-align: middle;
   color: #fff;
   border-radius: 4px;
-  font-weight: bold;
+  font-weight: 700;
 }
 
-  @media all and (min-width: 48.13em) {
-    .wc-Label {
-      display: block;
-      padding: .375rem .625rem;
-    }
+@media all and (min-width: 48.13em) {
+  .wc-Label {
+    display: block;
+    padding: .375rem .625rem;
+  }
+}
+
+@media all and (max-width: 48.12em) {
+  .wc-Label {
+    display: inline-block;
+    line-height: 1;
+    padding: .4em;
+  }
+}
+
+/* Labels */
+.wc-Label--large {
+  font-size: 1.2em;
+  color: #000;
+  padding-right: 0;
+  padding-left: 0;
+  margin-right: .1em;
+}
+
+@media all and (max-width: 48.12em) {
+  .wc-Label--badge {
+    margin-left: 1em;
   }
 
-  @media all and (max-width: 48.12em) {
-    .wc-Label {
-      display: inline-block;
-      line-height: 1;
-      padding: 0.4em;
-    }
+  .wc-Label--badge + .wc-Label--badge {
+    margin-left: .7em;
   }
+}
 
-  /* Labels */
-  .wc-Label--large {
-    font-size: 1.2em;
-    color: #000;
-    padding-right: 0;
-    padding-left: 0;
-    margin-right: .1em;
+@media all and (min-width: 48.13em) {
+  .wc-Label--badge + .wc-Label--badge {
+    margin-top: .625em;
   }
-
-  @media all and (max-width: 48.12em) {
-    .wc-Label--badge {
-      margin-left: 1em;
-    }
-    .wc-Label--badge + .wc-Label--badge {
-      margin-left: .7em;
-    }
-  }
-
-  @media all and (min-width: 48.13em) {
-    .wc-Label--badge + .wc-Label--badge {
-      margin-top: .625em;
-    }
-  }
+}

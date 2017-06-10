@@ -1,4 +1,6 @@
-/** @define Link */
+/* This Source Code Form is subject to the terms of the Mozilla Public
+* License, v. 2.0. If a copy of the MPL was not distributed with this
+* file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 :root {
   --Link-color: #000;
@@ -10,9 +12,9 @@
   text-decoration: underline;
 }
 
-    /* event */
-    .wc-Link:hover,
-    .wc-Link:focus {
-      color: var(--Link-colorHover);
-      text-decoration: none;
-    }
+/* event */
+.wc-Link:hover,
+.wc-Link:focus {
+  color: var(--Link-colorHover);
+  text-decoration: none;
+}
