@@ -11,6 +11,7 @@ screenshots/
 uploads/
 .idea/
 config/secrets.py
+package-lock.json
 
 # backup folder contains the issues.db backup file with issues dump
 # for the previous versions
