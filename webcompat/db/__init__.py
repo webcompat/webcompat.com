@@ -4,15 +4,17 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
+from hashlib import sha512
 import os
+from uuid import uuid4
+
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column
 from sqlalchemy import String
+from sqlalchemy import Integer
 from sqlalchemy.orm import scoped_session
 from sqlalchemy.orm import sessionmaker
-from hashlib import sha512
-from uuid import uuid4
 
 from webcompat import app
 
@@ -29,6 +31,12 @@ issue_db = scoped_session(sessionmaker(autocommit=False,
                                        bind=issue_engine))
 IssueBase = declarative_base()
 IssueBase.query = issue_db.query_property()
+
+site_engine = create_engine('sqlite:///' + os.path.join(
+    app.config['BASE_DIR'], 'topsites.db'))
+site_db = scoped_session(sessionmaker(autocommit=False,
+                                      autoflush=False,
+                                      bind=site_engine))
 
 
 class WCIssue(IssueBase):
@@ -66,3 +74,24 @@ class User(UsersBase):
 
 
 UsersBase.metadata.create_all(bind=session_engine)
+
+SiteBase = declarative_base()
+SiteBase.query = site_db.query_property()
+
+
+class Site(SiteBase):
+    """SQLAchemy base object for an Alexa top site."""
+    __tablename__ = 'topsites'
+
+    url = Column(String, primary_key=True)
+    priority = Column(Integer)
+    country_code = Column(String)
+    ranking = Column(Integer)
+
+    def __init__(self, url, priority, country_code, ranking):
+        self.url = url
+        self.priority = priority
+        self.country_code = country_code
+        self.ranking = ranking
+
+SiteBase.metadata.create_all(bind=site_engine)

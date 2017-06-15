@@ -16,6 +16,7 @@ from flask import Blueprint
 from flask import request
 
 from helpers import extract_browser_label
+from helpers import extract_priority_label
 from helpers import set_labels
 from helpers import signature_check
 
@@ -49,6 +50,9 @@ def hooklistener():
                 browser_label = extract_browser_label(issue_body)
                 if browser_label:
                     labels.append(browser_label)
+                priority_label = extract_priority_label(issue_body)
+                if priority_label:
+                    labels.append(priority_label)
                 # Sending a request to set labels
                 response = set_labels(labels, issue_number)
                 if response.status_code == 200:
