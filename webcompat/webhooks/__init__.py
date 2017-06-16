@@ -28,10 +28,6 @@ webhooks = Blueprint('webhooks', __name__, url_prefix='/webhooks')
 def hooklistener():
     """Listen for the "issues" webhook event.
 
-    - Only in response to the 'opened' action (for now).
-    - Add label needstriage to the issue
-    - Add label for the browser name
-
     By default, we return a 403.
     """
     if not is_github_hook(request):
@@ -56,12 +52,10 @@ def hooklistener():
                 return ('ooops', 400, {'Content-Type': 'plain/text'})
         # A label has been added to an issue.
         elif issue['action'] == 'labeled':
+            # will return Duplicate if already existing
+            # and Added if not
             response = handle_type_media(payload)
-            # if new issue change label to needs_diagnosis
-            # adds the issue to the type-media list
-            pass
-            # if known issue close as duplicate
-            # with labels and comment.
+            return (response, 200, {'Content-Type': 'plain/text'})
     elif event_type == 'ping':
         return ('pong', 200, {'Content-Type': 'plain/text'})
     # If nothing worked as expected, the default response is 403.
