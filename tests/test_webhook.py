@@ -194,21 +194,51 @@ class TestWebhook(unittest.TestCase):
            True
         3. the issue is not in the list, add it.
         """
+        # Domain is known and has the same issue number
+        # It should never happened. We just return True.
+        json_event, signature = event_data('type-media-event-error.json')
+        payload = json.loads(json_event)
+        actual = helpers.is_known_media(payload, ISSUES_LIST)
+        self.assertIsNone(actual)
+        # The domain is not in the list of known domains. True
+        json_event, signature = event_data('type-media-event-not-known.json')
+        payload = json.loads(json_event)
+        expected = (False, {'action': u'labeled',
+                            'domain': u'example.net',
+                            'media_error': u'Foobar',
+                            'number': 666})
+        actual = helpers.is_known_media(payload, ISSUES_LIST)
+        self.assertTupleEqual(expected, actual)
+        # The domain is in the list of known domains
+        # with the same error message.
         json_event, signature = event_data('type-media-event.json')
         payload = json.loads(json_event)
-        self.assertTrue(
-            helpers.is_known_media(payload, ISSUES_LIST))
+        expected = (True, {'action': u'labeled',
+                           'initial_issue': 600,
+                           'domain': u'www.chia-anime.tv',
+                           'media_error': u'NS_ERROR_DOM_MEDIA_DEMUXER_ERR',
+                           'number': 700})
+        actual = helpers.is_known_media(payload, ISSUES_LIST)
+        self.assertTupleEqual(expected, actual)
 
     def test_get_issue_info(self):
         """Extract the right information from an issue."""
         json_event, signature = event_data('type-media-event.json')
         payload = json.loads(json_event)
-        expected = {'number': 600,
+        expected = {'number': 700,
                     'action': 'labeled',
                     'domain': 'www.chia-anime.tv',
                     'media_error': 'NS_ERROR_DOM_MEDIA_DEMUXER_ERR'}
         actual = helpers.get_issue_info(payload)
         self.assertDictEqual(expected, actual)
+
+    def test_handle_type_media(self):
+        """Testing the results of type-media handling."""
+        json_event, signature = event_data('type-media-event-not-known.json')
+        payload = json.loads(json_event)
+        actual = helpers.handle_type_media(payload)
+        expected = 'Added'
+        self.assertEqual(actual, expected)
 
 
 if __name__ == '__main__':
