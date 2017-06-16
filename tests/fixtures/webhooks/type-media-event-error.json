@@ -8,7 +8,7 @@
     "events_url": "https://api.github.com/repos/webcompat/web-bugs/issues/600/events",
     "html_url": "https://github.com/webcompat/web-bugs/issues/600",
     "id": 232700993,
-    "number": 700,
+    "number": 600,
     "title": "www.chia-anime.tv - video doesn't play",
     "user": {
       "login": "webcompat-bot",
@@ -49,7 +49,7 @@
     "created_at": "2017-05-31T21:25:08Z",
     "updated_at": "2017-05-31T21:25:08Z",
     "closed_at": null,
-    "body": "<!-- @browser: Firefox 55.0 -->\n<!-- @ua_header: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:55.0) Gecko/20100101 Firefox/55.0 -->\n<!-- @reported_with: media-decode-error -->\n\n**URL**: http://www.chia-anime.tv/player.php?id=78454\n**Browser / Version**: Firefox 55.0\n**Operating System**: Windows 10\n**Problem type**: Video doesn't play\n\n**Steps to Reproduce**\n1. Navigate to: http://www.chia-anime.tv/player.php?id=78454\r\n2. …\r\n\r\nExpected Behavior:\r\n\r\nActual Behavior:\r\n\r\nTechnical Information:\r\nError Code: NS_ERROR_DOM_MEDIA_DEMUXER_ERR (0x806e000c)\r\nDetails: class RefPtr<class mozilla::MozPromise<class mozilla::MediaResult,class mozilla::MediaResult,1> > __cdecl mozilla::MP4Demuxer::Init(void): No MP4 audio () or video () tracks\r\nResource: http://sasuke.chia-anime.tv:7779/cache/m_vTxrZNLcoL3q-_9YTC3w/1496434235/ei93pkha7qeg-650x370.html.mp4\n\n\n\n_From [webcompat.com](https://webcompat.com/) with ❤️_"
+    "body": "<!-- @browser: Firefox 55.0 -->\n<!-- @ua_header: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:55.0) Gecko/20100101 Firefox/55.0 -->\n<!-- @reported_with: media-decode-error -->\n\n**URL**: http://www.chia-anime.tv/player.php?id=78454\n**Browser / Version**: Firefox 55.0\n**Operating System**: Windows 10\n**Problem type**: Video doesn't play\n\n**Steps to Reproduce**\n1. Navigate to: http://www.chia-anime.tv/player.php?id=78454\r\n2. …\r\n\r\nExpected Behavior:\r\n\r\nActual Behavior:\r\n\r\nTechnical Information:\r\nError Code: blah (0x806e000c)\r\nDetails: class RefPtr<class mozilla::MozPromise<class mozilla::MediaResult,class mozilla::MediaResult,1> > __cdecl mozilla::MP4Demuxer::Init(void): No MP4 audio () or video () tracks\r\nResource: http://sasuke.chia-anime.tv:7779/cache/m_vTxrZNLcoL3q-_9YTC3w/1496434235/ei93pkha7qeg-650x370.html.mp4\n\n\n\n_From [webcompat.com](https://webcompat.com/) with ❤️_"
   },
   "label": {
     "id": 584005045,
