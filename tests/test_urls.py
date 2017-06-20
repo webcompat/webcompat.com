@@ -48,12 +48,6 @@ class TestURLs(unittest.TestCase):
         rv = self.app.get('/privacy')
         self.assertEqual(rv.status_code, 200)
 
-    def test_login(self):
-        '''Test that the /login route 302s to GitHub.'''
-        rv = self.app.get('/login')
-        self.assertEqual(rv.status_code, 302)
-        self.assertIn('github.com/login/oauth/', rv.headers['Location'])
-
     def test_activity_page_401_if_not_logged_in(self):
         '''Test that asks user to log in before displaying activity.'''
         rv = self.app.get('/me')
