@@ -29,19 +29,6 @@ define(
           .end();
       },
 
-      "copyURL works": function() {
-        return FunctionalHelpers.openPage(this, url("/?open=1"), "#url")
-          .findDisplayedByCssSelector("#url")
-          .type("zombo.com")
-          .end()
-          .findByCssSelector("#description")
-          .getProperty("value")
-          .then(function(value) {
-            assert.include(value, "zombo");
-          })
-          .end();
-      },
-
       "reporter addon link is shown": function() {
         return FunctionalHelpers.openPage(this, url("/"), ".js-Hero-title")
           .findByCssSelector(".js-Navbar-link")

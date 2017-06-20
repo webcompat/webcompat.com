@@ -22,11 +22,21 @@ function BugForm() {
       valid: null,
       helpText: "Problem type required."
     },
+    description: {
+      el: $("#description"),
+      valid: null,
+      helpText: "Description required."
+    },
+    steps_reproduce: {
+      el: $("#steps_reproduce"),
+      valid: true,
+      helpText: null
+    },
     image: {
       el: $("#image"),
       // image should be valid by default because it's optional
       valid: true,
-      helpText: "Image must be one of the following: jpg, png, gif, or bmp.",
+      helpText: "Image must be one of the following: jpe, jpg, jpeg, png, gif, or bmp.",
       altHelpText: "Please choose a smaller image (< 4MB)"
     },
     browser: {
@@ -38,6 +48,11 @@ function BugForm() {
       el: $("#os"),
       valid: true,
       helpText: null
+    },
+    browser_test_type: {
+      el: $("[name=browser_test]"),
+      valid: true,
+      helpText: null
     }
   };
 
@@ -46,14 +61,19 @@ function BugForm() {
   this.problemType = this.inputs.problem_type.el;
   this.uploadField = this.inputs.image.el;
   this.urlField = this.inputs.url.el;
-  this.descField = $("#description");
+  this.descField = this.inputs.description.el;
+  this.browserTestField = this.inputs.browser_test_type.el;
+  this.stepsToReproduceField = this.inputs.steps_reproduce.el;
 
   this.init = function() {
     this.checkParams();
     this.disableSubmits();
-    this.urlField.on("input", _.bind(this.copyURL, this));
     this.urlField.on("blur input", _.bind(this.checkURLValidity, this));
     this.descField.on("focus", _.bind(this.checkProblemTypeValidity, this));
+    this.descField.on(
+      "blur input",
+      _.bind(this.checkDescriptionValidity, this)
+    );
     this.problemType.on("change", _.bind(this.checkProblemTypeValidity, this));
     this.uploadField.on("change", _.bind(this.checkImageTypeValidity, this));
     this.osField
@@ -147,7 +167,6 @@ function BugForm() {
       // weird Gecko bug. See https://bugzilla.mozilla.org/show_bug.cgi?id=1098037
       urlParam = this.trimWyciwyg(urlParam[1]);
       this.urlField.val(decodeURIComponent(urlParam));
-      this.copyURL();
       this.makeValid("url");
     }
 
@@ -159,10 +178,10 @@ function BugForm() {
       $("[value=" + problemType[1] + "]").click();
     }
 
-    // If we got a details param, add that to the end of the issue description.
+    // If we got a details param, add that to the end of the steps to reproduce field
     var details = location.href.match(/details=([^&]*)/);
     if (details !== null) {
-      this.descField.val(function(idx, value) {
+      this.stepsToReproduceField.val(function(idx, value) {
         return (
           value +
           "\n" +
@@ -246,6 +265,16 @@ function BugForm() {
     }
   };
 
+  /* Check to see that the description input element is not empty. */
+  this.checkDescriptionValidity = function() {
+    var val = this.descField.val();
+    if ($.trim(val) === "") {
+      this.makeInvalid("description");
+    } else {
+      this.makeValid("description");
+    }
+  };
+
   /* Check if Browser and OS are empty or not, only
      so we can set them to valid (there is no invalid state) */
   this.checkOptionalNonEmpty = function() {
@@ -268,11 +297,13 @@ function BugForm() {
     var inputs = [
       this.problemType.filter(":checked").length,
       this.urlField.val(),
+      this.descField.val(),
       this.uploadField.val()
     ];
     if (_.some(inputs, Boolean)) {
       // then, check validity
       this.checkURLValidity();
+      this.checkDescriptionValidity();
       this.checkProblemTypeValidity();
       this.checkImageTypeValidity();
       // and open the form, if it's not already open
@@ -316,10 +347,9 @@ function BugForm() {
           .removeClass("is-error js-form-error");
         break;
       case "url":
-        inlineHelp.insertAfter("label[for=" + id + "]");
-        break;
+      case "description":
       case "problem_type":
-        inlineHelp.appendTo("fieldset .wc-Form-information");
+        inlineHelp.insertAfter("label[for=" + id + "]");
         break;
       case "image":
         // hide the error in case we already saw one
@@ -357,7 +387,8 @@ function BugForm() {
     if (
       this.inputs["url"].valid &&
       this.inputs["problem_type"].valid &&
-      this.inputs["image"].valid
+      this.inputs["image"].valid &&
+      this.inputs["description"].valid
     ) {
       this.enableSubmits();
     }
@@ -491,26 +522,9 @@ function BugForm() {
       img_url,
       ")"
     ].join("");
-    this.descField.val(function(idx, value) {
-      return value + "\n\n" + imageURL;
+    this.stepsToReproduceField.val(function(idx, value) {
+      return value + "\n" + imageURL;
     });
-  };
-  /*
-     copy URL from urlField into the first line of the
-     description field. early return if the user has deleted
-     the first so we don't make them sad.
-  */
-  this.copyURL = function() {
-    var firstLine = /^1\.\sNavigate.*\n/;
-    this.descField.val(
-      _.bind(function(idx, value) {
-        var prefix = "1. Navigate to: ";
-        if (!firstLine.test(value)) {
-          return value;
-        }
-        return value.replace(firstLine, prefix + this.urlField.val() + "\n");
-      }, this)
-    );
   };
 
   // See function autoExpand in issues.js
