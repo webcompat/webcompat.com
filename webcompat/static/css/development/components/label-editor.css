@@ -170,3 +170,7 @@
 .wc-LabelEditor-launcher.is-active::before {
   content: "\f00d";
 }
+
+.wc-Issue-labelEditor-button .wc-LabelEditorLauncher {
+  pointer-events: auto;
+}
