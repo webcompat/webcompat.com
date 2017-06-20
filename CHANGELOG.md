@@ -4,6 +4,15 @@
 2. New features: affect minor number
 3. API endpoint changes or dependency version updates: affect major number
 
+## 5.2.0 - 2018-06-20
+
+* Add CSS linter [Pull #1509](https://github.com/webcompat/webcompat.com/pull/1509)
+* Add pre-commit linter [Pull #1538](https://github.com/webcompat/webcompat.com/pull/1538)
+* Fix broke code layout in issue page [Pull #1583](https://github.com/webcompat/webcompat.com/pull/1583)
+* Get mock GitHub login working [Pull #1588](https://github.com/webcompat/webcompat.com/pull/1588)
+* Remove test_login unit test (obsolete now) [Pull #1598](https://github.com/webcompat/webcompat.com/pull/1598)
+* Remove unused query-params.js file [Pull #1599](https://github.com/webcompat/webcompat.com/pull/1599)
+
 ## 5.1.0 - 2018-05-24
 
 * Prevent overflow in code elements in issue description [Pull #1568](https://github.com/webcompat/webcompat.com/pull/1568)
