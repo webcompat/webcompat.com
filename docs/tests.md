@@ -71,24 +71,10 @@ node_modules/.bin/intern-runner config=tests/intern
 
 Shortly after running this command, you should see the browser open and various pages appear and disappear automatically for a minute or two. The tests are complete when the browser window closes and you see a report of how many passed or failed in the terminal window that you ran the `intern-runner` command in.
 
-Many tests require the ability to log in with GitHub OAuth. This can be achieved by passing in a valid GitHub username: `user` and password: `pw` as command-line arguments:
-
-```bash
-node_modules/.bin/intern-runner config=tests/intern user=testusername pw=testpassword
-```
-
-**Note** Be aware that this will add the `testusername` and `testpassword` to your bash history. It is possible to run the tests without using a GitHub username and password as command-line arguments. In that case, the automatic login will fail and you then have 10 seconds to manually enter a username and password in the GitHub login screen that appears.
-
-```bash
-node_modules/.bin/intern-runner config=tests/intern user=testusername pw=testpassword
-```
-
-This will give you 10 extra seconds to enter a 2FA token when the inital login happens. By default there is no delay, so if you don't need this &mdash; you don't need to do anything differently.
-
 To run a single test suite, where foo.js is the file found in the `tests/functional` directory:
 
 ```bash
-node_modules/.bin/intern-runner config=tests/intern functionalSuites=tests/functional/foo.js user=testusername pw=testpassword
+node_modules/.bin/intern-runner config=tests/intern functionalSuites=tests/functional/foo.js 
 ```
 
 ## Functional Tests using Fixture Data

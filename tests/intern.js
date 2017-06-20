@@ -22,10 +22,7 @@ define(["intern"], function(intern, topic) {
     wc: {
       pageLoadTimeout: args.wcPageLoadTimeout
         ? parseInt(args.wcPageLoadTimeout, 10)
-        : 10000,
-      // user and pw need to be passed in as command-line arguments. See CONTRIBUTING.md
-      user: args.user || "some username",
-      pw: args.pw || "some password"
+        : 10000
     },
 
     // The port on which the instrumenting proxy will listen
