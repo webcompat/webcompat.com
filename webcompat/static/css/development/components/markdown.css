@@ -112,8 +112,8 @@
 
 .wc-Markdown pre,
 .wc-Markdown code {
-  padding: 1em;
-  margin: .5em 0;
+  padding: 0 1em;
+  margin: 1.5em 0;
   overflow: auto;
   background: #f5f2f0;
 }
