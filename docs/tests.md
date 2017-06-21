@@ -57,11 +57,12 @@ If you are a member of webcompat organization in GitHub, edit `config/secrets.py
 
 Change the value to : `ISSUES_REPO_URI = 'webcompat/webcompat-tests/issues'`.
 
-Start the application server:
+Start the application server in test mode:
 
 ```bash
-source env/bin/activate && python run.py
+source env/bin/activate && python run.py -t
 ```
+> We start the server in test mode to mock the communications with GitHub API servers using local fixture data. The files in `/tests/fixtures/` directory will be served as responses.
 
 In a separate terminal window or tab, run the tests:
 
@@ -76,16 +77,6 @@ To run a single test suite, where foo.js is the file found in the `tests/functio
 ```bash
 node_modules/.bin/intern-runner config=tests/intern functionalSuites=tests/functional/foo.js 
 ```
-
-## Functional Tests using Fixture Data
-
-It's possible to mock the communications with GitHub API servers using local fixture data. To run tests using these mocked repsonses, run the server in "test mode":
-
-```bash
-python run.py -t
-```
-
-You can then run intern tests or do local development and the files in the `/tests/fixtures/` directory will be served as responses.
 
 ## Adding Fixtures
 
