@@ -128,6 +128,8 @@ def get_metadata(metadata_keys, form_object):
 
 def normalize_url(url):
     """normalize URL for consistency."""
+    if not url:
+        return None
     url = url.strip()
     parsed = urlparse.urlparse(url)
 
@@ -152,6 +154,8 @@ def normalize_url(url):
 def domain_name(url):
     """Extract the domain name of a sanitized version of the submitted URL."""
     # Removing leading spaces
+    if not url:
+        return None
     url = url.lstrip()
     # testing if it's an http URL
     if url.startswith(SCHEMES):
