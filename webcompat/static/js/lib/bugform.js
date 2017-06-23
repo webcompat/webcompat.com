@@ -94,38 +94,40 @@ function BugForm() {
     );
   };
 
-// test
+// test #1571
   this.handleImageDrop = function(ev) {
-    console.log('image was dropped');
-//    console.log('ev.target.value: ' + ev.target.value);
+    console.log('start drop event')
 
-//TODO get attribute for style if string value includes "url" then filled
-    if (this.uploadLabel.value.length) {
+    var imageFilled = false;
+    if ($('.wc-UploadForm-wrapper.is-hidden').length) {
+      console.log('image is filled')
+      imageFilled = true;
+    }
+    if (imageFilled) {
+      console.log('want to prevent image drop')
       ev.preventDefault();
-    }
-    // If dropped items aren't files, reject them
-    var dt = ev.dataTransfer;
-    if (dt.items) {
-      // Use DataTransferItemList interface to access the file(s)
-      for (var i=0; i < dt.items.length; i++) {
-        if (dt.items[i].kind == "file") {
-          var f = dt.items[i].getAsFile();
-          console.log("... file[" + i + "].name = " + f.name);
-        }
-      }
     } else {
-      // Use DataTransfer interface to access the file(s)
-      for (var i=0; i < dt.files.length; i++) {
-        console.log("... file[" + i + "].name = " + dt.files[i].name);
-      }  
+      console.log('want to allow image drop')
+      console.log('image was dropped');
     }
-
   }
 
-// test
+// test #1571
   this.handleImageDrag = function(ev) {
-    console.log('image was dragged');
-    ev.preventDefault();
+    console.log('start drag event');
+
+    var imageFilled = false;
+    if ($('.wc-UploadForm-wrapper.is-hidden').length) {
+      console.log('image is filled')
+      imageFilled = true;
+    }
+    if (imageFilled) {
+      console.log('want to prevent image drop (from drag)')
+      ev.preventDefault();
+    } else {
+      console.log('want to allow image drop (from drag)')
+    }
+
   }
 
   this.resampleIfNecessaryAndUpload = function(screenshotData) {
