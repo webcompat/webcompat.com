@@ -454,7 +454,7 @@ function BugForm() {
       success: _.bind(function(response) {
         this.addImageURL(response);
         this.uploadLoader.removeClass("is-active");
-        this.enableSubmits();
+        this.checkForm();
       }, this),
       error: _.bind(function(response) {
         var msg;
