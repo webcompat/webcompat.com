@@ -4,6 +4,12 @@
 2. New features: affect minor number
 3. API endpoint changes or dependency version updates: affect major number
 
+## 5.2.2 - 2018-06-23
+
+* Check form validation in image upload success handler [Pull #1614](https://github.com/webcompat/webcompat.com/pull/1614)
+* Fix padding issue in Markdown[Pull #1606](https://github.com/webcompat/webcompat.com/pull/1606)
+* Updates CONTRIBUTING.md tests section for mock login [Pull #1604](https://github.com/webcompat/webcompat.com/pull/1604)
+
 ## 5.2.1 - 2018-06-20
 
 * Ensure label editor button can receive click events [Pull #1602](https://github.com/webcompat/webcompat.com/pull/1602)
