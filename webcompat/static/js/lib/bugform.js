@@ -47,6 +47,7 @@ function BugForm() {
   this.uploadField = this.inputs.image.el;
   this.urlField = this.inputs.url.el;
   this.descField = $("#description");
+  this.uploadLabel = $(".wc-UploadForm");
 
   this.init = function() {
     this.checkParams();
@@ -55,6 +56,8 @@ function BugForm() {
     this.urlField.on("blur input", _.bind(this.checkURLValidity, this));
     this.descField.on("focus", _.bind(this.checkProblemTypeValidity, this));
     this.problemType.on("change", _.bind(this.checkProblemTypeValidity, this));
+    this.uploadLabel.on("drop", _.bind(this.handleImageDrop, this));
+    this.uploadLabel.on("dragover", _.bind(this.handleImageDrag, this));
     this.uploadField.on("change", _.bind(this.checkImageTypeValidity, this));
     this.osField
       .add(this.browserField)
@@ -90,6 +93,40 @@ function BugForm() {
       false
     );
   };
+
+// test
+  this.handleImageDrop = function(ev) {
+    console.log('image was dropped');
+//    console.log('ev.target.value: ' + ev.target.value);
+
+//TODO get attribute for style if string value includes "url" then filled
+    if (this.uploadLabel.value.length) {
+      ev.preventDefault();
+    }
+    // If dropped items aren't files, reject them
+    var dt = ev.dataTransfer;
+    if (dt.items) {
+      // Use DataTransferItemList interface to access the file(s)
+      for (var i=0; i < dt.items.length; i++) {
+        if (dt.items[i].kind == "file") {
+          var f = dt.items[i].getAsFile();
+          console.log("... file[" + i + "].name = " + f.name);
+        }
+      }
+    } else {
+      // Use DataTransfer interface to access the file(s)
+      for (var i=0; i < dt.files.length; i++) {
+        console.log("... file[" + i + "].name = " + dt.files[i].name);
+      }  
+    }
+
+  }
+
+// test
+  this.handleImageDrag = function(ev) {
+    console.log('image was dragged');
+    ev.preventDefault();
+  }
 
   this.resampleIfNecessaryAndUpload = function(screenshotData) {
     // The final size of Base64-encoded binary data is ~equal to
