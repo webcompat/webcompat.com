@@ -25,16 +25,8 @@
 }
 
 /* event */
-.wc-Pagination-link:focus:not(.is-disabled),
 .wc-Pagination-link:hover:not(.is-disabled) {
   color: var(--Pagination-colorHover);
-}
-
-/* state */
-.wc-Pagination-link.is-disabled {
-  cursor: inherit;
-  opacity: .6;
-  text-decoration: none;
 }
 
 .wc-Pagination-link.is-hidden {
