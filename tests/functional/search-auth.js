@@ -170,6 +170,56 @@ define(
             assert.include(currUrl, "page=1", "Default params got merged.");
           })
           .end();
+      },
+
+      "Search with a dash works": function() {
+        // load up a garbage search, so we can more easily detect when
+        // the search values we want are loaded.
+        var searchParam = "?q=jfdkjfkdjfkdjfdkjfkd";
+        return FunctionalHelpers.openPage(
+          this,
+          url("/issues", searchParam),
+          ".wc-SearchIssue-noResults-title"
+        )
+          .findByCssSelector("#js-SearchForm-input")
+          .clearValue()
+          .click()
+          .type("label:status-tacos")
+          .type(keys.ENTER)
+          .end()
+          .findDisplayedByCssSelector(
+            ".wc-IssueList:first-of-type .js-Issue-label"
+          )
+          .getVisibleText()
+          .then(function(text) {
+            assert.include(
+              text,
+              "tacos",
+              "The label:status-tacos search worked."
+            );
+          })
+          .end();
+      },
+
+      "Search input is loaded from q param (with dashes)": function() {
+        // load up a garbage search, so we can more easily detect when
+        // the search values we want are loaded.
+        var searchParam = "?q=one:two-three";
+        return FunctionalHelpers.openPage(
+          this,
+          url("/issues", searchParam),
+          ".wc-SearchIssue-noResults-title"
+        )
+          .findByCssSelector("#js-SearchForm-input")
+          .getProperty("value")
+          .then(function(text) {
+            assert.include(
+              text,
+              "one:two-three",
+              "The q param populated the search input."
+            );
+          })
+          .end();
       }
     });
   }

@@ -119,13 +119,7 @@ define(
     }
 
     function logout(context) {
-      return openPage(context, url("/logout"), "body")
-        .clearCookies()
-        .end()
-        .get(require.toUrl("https://github.com/logout"))
-        .findByCssSelector("input.btn")
-        .click()
-        .end();
+      return openPage(context, url("/logout"), "body").clearCookies().end();
     }
 
     function visibleByClass(selector) {
