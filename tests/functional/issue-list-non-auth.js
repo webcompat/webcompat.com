@@ -317,7 +317,9 @@ define(
             .end()
             // find something so we know issues have been loaded
             .findByCssSelector(".js-IssueList:nth-of-type(1)")
-            .goBack()
+            .execute(function() {
+              history.back();
+            })
             .getCurrentUrl()
             .then(function(currUrl) {
               assert.include(
