@@ -156,11 +156,11 @@ issues.LabelEditorView = Backbone.View.extend({
     // the others.
     var checked;
     var remotename = $(evt.target).data("remotename");
-    if (
-      remotename.match(/^(status|priority)/) && evt.target.checked
-    ) {
+    if (remotename.match(/^(status|priority)/) && evt.target.checked) {
       var prefix = remotename.split("-")[0];
-      checked = $('input[type=checkbox][data-remotename^="' + prefix + '"]:checked');
+      checked = $(
+        'input[type=checkbox][data-remotename^="' + prefix + '"]:checked'
+      );
       _.each(checked, function(item) {
         if (item !== evt.target) {
           item.checked = false;
