@@ -47,6 +47,7 @@ function BugForm() {
   this.uploadField = this.inputs.image.el;
   this.urlField = this.inputs.url.el;
   this.descField = $("#description");
+  this.uploadLabel = $(".wc-UploadForm");
 
   this.init = function() {
     this.checkParams();
@@ -55,6 +56,8 @@ function BugForm() {
     this.urlField.on("blur input", _.bind(this.checkURLValidity, this));
     this.descField.on("focus", _.bind(this.checkProblemTypeValidity, this));
     this.problemType.on("change", _.bind(this.checkProblemTypeValidity, this));
+    this.uploadLabel.on("drop", _.bind(this.handleImageDrop, this));
+    this.uploadLabel.on("dragover", _.bind(this.handleImageDrag, this));
     this.uploadField.on("change", _.bind(this.checkImageTypeValidity, this));
     this.osField
       .add(this.browserField)
@@ -90,6 +93,42 @@ function BugForm() {
       false
     );
   };
+
+// test #1571
+  this.handleImageDrop = function(ev) {
+    console.log('start drop event')
+
+    var imageFilled = false;
+    if ($('.wc-UploadForm-wrapper.is-hidden').length) {
+      console.log('image is filled')
+      imageFilled = true;
+    }
+    if (imageFilled) {
+      console.log('want to prevent image drop')
+      ev.preventDefault();
+    } else {
+      console.log('want to allow image drop')
+      console.log('image was dropped');
+    }
+  }
+
+// test #1571
+  this.handleImageDrag = function(ev) {
+    console.log('start drag event');
+
+    var imageFilled = false;
+    if ($('.wc-UploadForm-wrapper.is-hidden').length) {
+      console.log('image is filled')
+      imageFilled = true;
+    }
+    if (imageFilled) {
+      console.log('want to prevent image drop (from drag)')
+      ev.preventDefault();
+    } else {
+      console.log('want to allow image drop (from drag)')
+    }
+
+  }
 
   this.resampleIfNecessaryAndUpload = function(screenshotData) {
     // The final size of Base64-encoded binary data is ~equal to
