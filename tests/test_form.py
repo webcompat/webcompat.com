@@ -54,3 +54,22 @@ class TestForm(unittest.TestCase):
 
         r = form.get_metadata(('cool', 'wow'), TEST_DICT)
         self.assertEqual(r, EXPECTED_MULTIPLE)
+
+    def test_radio_button_label(self):
+        '''Checks that appropriate radio button label is returned.'''
+        TEST_LABELS_LIST = [
+            (u'detection_bug', u'Desktop site instead of mobile site'),
+            (u'unknown_bug', u'Something else')
+        ]
+
+        r = form.get_radio_button_label('unknown_bug', TEST_LABELS_LIST)
+        self.assertEqual(r, u'Something else')
+
+        r = form.get_radio_button_label(u'detection_bug', TEST_LABELS_LIST)
+        self.assertEqual(r, u'Desktop site instead of mobile site')
+
+        r = form.get_radio_button_label(None, TEST_LABELS_LIST)
+        self.assertEqual(r, u'Unknown')
+
+        r = form.get_radio_button_label('failme', TEST_LABELS_LIST)
+        self.assertEqual(r, u'Unknown')

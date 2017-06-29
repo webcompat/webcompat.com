@@ -103,61 +103,6 @@ define(
           .end();
       },
 
-      "(optional) browser + os validation": function() {
-        return (
-          FunctionalHelpers.openPage(
-            this,
-            url("/issues/new"),
-            ".wc-ReportForm-actions-button"
-          )
-            // make sure we can see the valid checkbox (i.e. it's background image is non-empty)
-            .execute(function() {
-              return window
-                .getComputedStyle(
-                  document.querySelector(
-                    "div.wc-Form-group:nth-child(2) > span:nth-child(2)"
-                  ),
-                  ":after"
-                )
-                .getPropertyValue("background-image");
-            })
-            .then(function(bgImage) {
-              assert.include(
-                bgImage,
-                "valid.svg",
-                "The valid checkbox psuedo is visible"
-              );
-            })
-            .end()
-            .execute(function() {
-              var elm = document.querySelector("#os");
-              elm.value = "";
-              WindowHelpers.sendEvent(elm, "input");
-            })
-            .end()
-            .sleep(500)
-            // make sure we can't see the valid checkbox (i.e. it's background image is empty)
-            .execute(function() {
-              return window
-                .getComputedStyle(
-                  document.querySelector(
-                    "div.wc-Form-group:nth-child(3) > span:nth-child(2)"
-                  ),
-                  ":after"
-                )
-                .getPropertyValue("background-image");
-            })
-            .then(function(bgImage) {
-              assert.notInclude(
-                bgImage,
-                "valid.svg",
-                "The valid checkbox psuedo is not visible"
-              );
-            })
-            .end()
-        );
-      },
-
       "Problem type validation": function() {
         return (
           FunctionalHelpers.openPage(
@@ -186,6 +131,57 @@ define(
             .end()
             // validation message should be gone
             .waitForDeletedByCssSelector(".wc-Form-helpMessage")
+            .end()
+        );
+      },
+
+      "(optional) browser + os validation": function() {
+        return (
+          FunctionalHelpers.openPage(
+            this,
+            url("/issues/new"),
+            ".wc-ReportForm-actions-button"
+          )
+            // make sure we can see the valid checkbox (i.e. it's background image is non-empty)
+            .execute(function() {
+              return window
+                .getComputedStyle(
+                  document.querySelector(".js-bug-form-os"),
+                  ":after"
+                )
+                .getPropertyValue("background-image");
+            })
+            .then(function(bgImage) {
+              assert.include(
+                bgImage,
+                "valid.svg",
+                "The valid checkbox pseudo is visible"
+              );
+            })
+            .end()
+            .execute(function() {
+              var elm = document.querySelector("#os");
+              elm.value = "";
+              WindowHelpers.sendEvent(elm, "input");
+            })
+            .end()
+            .sleep(500)
+            // make sure we can't see the valid checkbox (i.e. it's background image is empty)
+            .execute(function() {
+              return window
+                .getComputedStyle(
+                  document.querySelector(".js-bug-form-os"),
+                  ":after"
+                )
+                .getPropertyValue("background-image");
+            })
+            .then(function(bgImage) {
+              assert.notInclude(
+                bgImage,
+                "valid.svg",
+                "The valid checkbox pseudo is not visible"
+              );
+            })
             .end()
         );
       },
@@ -239,7 +235,8 @@ define(
             .click()
             .end()
             .findByCssSelector("#description")
-            .click()
+            .type("test for desktop site")
+            //.click()
             .end()
             // wait a bit
             .sleep(250)
@@ -255,6 +252,7 @@ define(
         );
       },
 
+      // tests a scenario where bug reported from firefox nightly media type tool
       "problem_type param selects problem type": function() {
         return FunctionalHelpers.openPage(
           this,
@@ -275,7 +273,7 @@ define(
           url("/issues/new?details=" + DETAILS_STRING),
           "#description"
         )
-          .findByCssSelector("#description")
+          .findByCssSelector("#steps_reproduce")
           .getProperty("value")
           .then(function(text) {
             assert.include(
@@ -292,7 +290,7 @@ define(
           url("/issues/new?details=" + DETAILS_STRING2),
           "#description"
         )
-          .findByCssSelector("#description")
+          .findByCssSelector("#steps_reproduce")
           .getProperty("value")
           .then(function(text) {
             assert.notInclude(

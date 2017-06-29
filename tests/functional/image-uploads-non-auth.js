@@ -89,7 +89,7 @@ define(
               'postMessage("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAIAAABLixI0AAAACXBIWXMAAA7DAAAOwwHHb6hkAAAAB3RJTUUH3gYSAig452t/EQAAAClJREFUOMvtzkENAAAMg0A25ZU+E032AQEXoNcApCGFLX5paWlpaWl9dqq9AS6CKROfAAAAAElFTkSuQmCC", "http://localhost:5000")'
             )
             .sleep(1000)
-            .findByCssSelector("#description")
+            .findByCssSelector("#steps_reproduce")
             .getProperty("value")
             .then(function(val) {
               assert.include(
@@ -110,7 +110,7 @@ define(
               WindowHelpers.getBlob().then(WindowHelpers.sendBlob);
             })
             .sleep(1000)
-            .findByCssSelector("#description")
+            .findByCssSelector("#steps_reproduce")
             .getProperty("value")
             .then(function(val) {
               assert.include(
@@ -129,7 +129,7 @@ define(
           .type("tests/fixtures/green_square.png")
           .sleep(1000)
           .end()
-          .findByCssSelector("#description")
+          .findByCssSelector("#steps_reproduce")
           .getProperty("value")
           .then(function(val) {
             assert.include(

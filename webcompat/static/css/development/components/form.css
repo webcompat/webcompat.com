@@ -92,8 +92,9 @@
   border: 1px solid #ccc;
   border-radius: 20px;
   padding: .5em;
-  box-shadow: 0 1px 1px rgba(0, 0, 0, .75) inset;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, .075) inset;
   transition: border-color .15s ease-in-out 0s, box-shadow .15s ease-in-out 0s;
+  margin-bottom: 5px;
 }
 
 /* state */
@@ -104,7 +105,7 @@
 /* event */
 .wc-Form-item:focus {
   border-color: #66afe9;
-  box-shadow: 0 1px 1px rgba(0, 0, 0, .75) inset, 0 0 8px rgba(102, 175, 233, .6);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, .075) inset, 0 0 8px rgba(102, 175, 233, .6);
 }
 
 .wc-Form-input::placeholder {
@@ -115,7 +116,7 @@
 
 /* modifier */
 .wc-Form-item--textarea {
-  min-height: 250px;
+  min-height: 125px;
   resize: vertical;
 }
 
@@ -133,6 +134,7 @@ input[type = "radio"] { /* stylelint-disable selector-no-attribute */
   display: block;
   clear: both;
   position: relative;
+  margin-bottom: 12px;
 }
 
 .wc-Form-validation::after {

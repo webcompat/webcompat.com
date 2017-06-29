@@ -34,30 +34,37 @@ GITHUB_HELP = u'_From [webcompat.com](https://webcompat.com/) with ❤️_'
 
 problem_choices = [
     (u'detection_bug', u'Desktop site instead of mobile site'),
-    (u'mobile_site_bug', u'Mobile site is not usable'),
-    (u'video_bug', u'Video doesn\'t play'),
-    (u'layout_bug', u'Layout is messed up'),
-    (u'text_bug', u'Text is not visible'),
-    (u'unknown_bug', u'Something else - I\'ll add details below')
+    (u'site_bug', u'Site is not usable'),
+    (u'layout_bug', u'Design is broken'),
+    (u'video_bug', u'Video or audio doesn\'t play'),
+    (u'unknown_bug', u'Something else')
+]
+
+tested_elsewhere = [
+    (u'yes', u'Yes'),
+    (u'no', u'No')
 ]
 
 url_message = u'A valid URL is required.'
 image_message = (u'Please select an image of the following type:'
-                 ' jpg, png, gif, or bmp.')
+                 u' jpg, png, gif, or bmp.')
 radio_message = u'Problem type required.'
 username_message = u'A valid username must be {0} characters long'.format(
     random.randrange(0, 99))
 
-problem_label = (u'What seems to be the trouble?',
-                 '<span class="wc-Form-required">*</span>')
+desc_label = (u'Please describe what was wrong'
+              u' <span class="wc-Form-required">*</span>')
+desc_message = u'An issue description is required.'
+
 url_label = u'Site URL <span class="wc-Form-required">*</span>'
+browser_test_label = u'Did you test in another browser?'
 
-desc_default = u'''1. Navigate to: Site URL
-2. …
+steps_default = u'''For example,
+1. I've tried to log in.
+2. I've filled out the form details.
+3. I clicked on the submit button.
+4. Nothing happened.
 
-Expected Behavior:
-
-Actual Behavior:
 '''
 
 
@@ -65,15 +72,19 @@ class IssueForm(FlaskForm):
     '''Define form fields and validation for our bug reporting form.'''
     url = StringField(url_label,
                       [InputRequired(message=url_message)])
-    browser = StringField(u'Browser / Version', [Optional()])
+    browser = StringField(u'Is this information correct?', [Optional()])
     os = StringField(u'Operating System', [Optional()])
     username = StringField(u'Username',
                            [Length(max=0, message=username_message)])
-    description = TextAreaField(u'Give more details', [Optional()],
-                                default=desc_default)
-    problem_category = RadioField(problem_label,
-                                  [InputRequired(message=radio_message)],
+    description = StringField(desc_label,
+                              [InputRequired(message=desc_message)])
+
+    steps_reproduce = TextAreaField(u'How did you get there?', [Optional()],
+                                    default=steps_default)
+    problem_category = RadioField([InputRequired(message=radio_message)],
                                   choices=problem_choices)
+    browser_test = RadioField(browser_test_label, [Optional()],
+                              choices=tested_elsewhere)
     # we filter allowed type in uploads.py
     # Note, we don't use the label programtically for this input[type=file],
     # any changes here need to be updated in form.html.
@@ -91,11 +102,11 @@ def get_form(ua_header):
     return bug_form
 
 
-def get_problem(category):
+def get_radio_button_label(field_value, label_list):
     '''Return human-readable label for problem choices form value.'''
-    for choice in problem_choices:
-        if choice[0] == category:
-            return choice[1]
+    for value, text in label_list:
+        if value == field_value:
+            return text
     # Something probably went wrong. Return something safe.
     return u'Unknown'
 
@@ -105,7 +116,7 @@ def get_problem_summary(category):
     if category == 'unknown_bug':
         return u'see bug description'
     else:
-        return get_problem(category).lower()
+        return get_radio_button_label(category, problem_choices).lower()
 
 
 def wrap_metadata(metadata):
@@ -162,12 +173,15 @@ def build_formdata(form_object):
     '''Convert HTML form data to GitHub API data.
 
     Summary -> title
-    Browser -> part of body, labels
     Version -> part of body
     URL -> part of body
-    Description -> part of body
-    Image Upload -> part of body
     Category -> labels
+    Detail -> part of body
+    Description -> part of body
+    Browser -> part of body, labels
+    OS -> part of body, labels
+    Tested Elsewhere -> labels
+    Image Upload -> part of body
 
     We'll try to parse the Browser and come up with a browser label, as well
     as labels like mobile, desktop, tablet.
@@ -202,20 +216,23 @@ def build_formdata(form_object):
         'url': form_object.get('url'),
         'browser': form_object.get('browser'),
         'os': form_object.get('os'),
-        'problem_type': get_problem(form_object.get('problem_category')),
-        'description': form_object.get('description')
+        'problem_type': get_radio_button_label(
+            form_object.get('problem_category'), problem_choices),
+        'browser_test_type': get_radio_button_label(form_object.get(
+            'browser_test'), tested_elsewhere),
+        'description': form_object.get('description'),
+        'steps_reproduce': form_object.get('steps_reproduce')
     }
 
     # Preparing the body
     body = u'''{metadata}
 **URL**: {url}
+**Problem type**: {problem_type}
+**Description**: {description}
+**Steps to Reproduce** {steps_reproduce}
 **Browser / Version**: {browser}
 **Operating System**: {os}
-**Problem type**: {problem_type}
-
-**Steps to Reproduce**
-{description}
-
+**Tested Another Browser**: {browser_test_type}
 '''.format(**formdata)
     # Add the image, if there was one.
     if form_object.get('image_upload') is not None:
