@@ -197,15 +197,14 @@ define(
           .end()
           .sleep(500)
           .getCurrentUrl()
-          .then(
-            function(url) {
-              assert.match(
-                url,
-                /[https://github.com/^*/^*/issues/]/,
-                "We're at GitHub now."
-              );
-            }.end()
-          );
+          .then(function(url) {
+            assert.match(
+              url,
+              /[https://github.com/^*/^*/issues/]/,
+              "We're at GitHub now."
+            );
+          })
+          .end();
       },
 
       "Pressing g inside of search input *doesn't* go to github issues": function() {
