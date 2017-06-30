@@ -186,7 +186,8 @@ def create_issue():
         abort(400)
     # see https://github.com/webcompat/webcompat.com/issues/1141
     # see https://github.com/webcompat/webcompat.com/issues/1237
-    spamlist = ['qiangpiaoruanjian', 'cityweb.de']
+    # see https://github.com/webcompat/webcompat.com/issues/1627
+    spamlist = ['qiangpiaoruanjian', 'cityweb.de', 'coco.fr']
     for spam in spamlist:
         if spam in form.get('url'):
             msg = (u'Anonymous reporting for domain {0} '
