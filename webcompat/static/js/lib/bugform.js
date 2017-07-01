@@ -457,11 +457,8 @@ function BugForm() {
         // remove the last embedded image URL
         // Note: this could fail in weird ways depending on how
         // the user has edited the descField.
-        this.descField.val(function(idx, value) {
-          return value.replace(
-            /\[!\[[^\]]+\]\([^\)]+\)\]\([^\.]+.(?:bmp|gif|jpe*g*)\)$/,
-            ""
-          );
+        this.stepsToReproduceField.val(function(idx, value) {
+          return value.replace(/\[!\[[^\]]+\]\([^\)]+\)\]\([^\)]+\)$/, "");
         });
       }, this)
     );

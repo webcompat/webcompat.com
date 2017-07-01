@@ -169,7 +169,7 @@ define(
               );
             })
             .end()
-            .findByCssSelector("#description")
+            .findByCssSelector("#steps_reproduce")
             .getProperty("value")
             .then(function(val) {
               assert.notInclude(
