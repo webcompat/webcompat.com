@@ -103,31 +103,34 @@ define(
           .end();
       },
 
-      "Problem type validation": function() {
+      "Description validation": function() {
         return (
           FunctionalHelpers.openPage(
             this,
             url("/issues/new"),
             ".wc-ReportForm-actions-button"
           )
+            .findByCssSelector("#description")
+            .click()
+            .end()
             .execute(function() {
               var elm = document.querySelector("#description");
-              WindowHelpers.sendEvent(elm, "focus");
+              WindowHelpers.sendEvent(elm, "input");
             })
-            .end()
+            .sleep(500)
             .findByCssSelector(".wc-Form-helpMessage")
             .getVisibleText()
             .then(function(text) {
               assert.include(
                 text,
-                "Problem type required",
-                "Problem type validation message is shown"
+                "Description required.",
+                "Description validation message is shown"
               );
             })
             .end()
-            // pick a problem type
-            .findByCssSelector("#problem_category-0")
-            .click()
+            // enter a bug description
+            .findByCssSelector("#description")
+            .type("bug description")
             .end()
             // validation message should be gone
             .waitForDeletedByCssSelector(".wc-Form-helpMessage")

@@ -69,7 +69,6 @@ function BugForm() {
     this.checkParams();
     this.disableSubmits();
     this.urlField.on("blur input", _.bind(this.checkURLValidity, this));
-    this.descField.on("focus", _.bind(this.checkProblemTypeValidity, this));
     this.descField.on(
       "blur input",
       _.bind(this.checkDescriptionValidity, this)
