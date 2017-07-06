@@ -98,11 +98,11 @@ function BugForm() {
           // the work of only accepting blobs, which should simplify things.
           if (event.data instanceof Blob) {
             // showUploadPreview will take care of converting from blob to
-            // dataURI, and will send the result to resampleIfNecessaryAndUpload.
-            this.showUploadPreview(event.data);
+            // dataURI, and will send the result to the upload callback.
+            this.showUploadPreview(event.data, this.uploadImage);
           } else {
             // ...the data is already a data URI string
-            this.resampleIfNecessaryAndUpload(event.data);
+            this.uploadImage(event.data);
           }
         }
       }, this),
@@ -110,19 +110,27 @@ function BugForm() {
     );
   };
 
-  this.resampleIfNecessaryAndUpload = function(screenshotData) {
+  this.uploadImage = _.bind(function(dataURI) {
     // The final size of Base64-encoded binary data is ~equal to
     // 1.37 times the original data size + 814 bytes (for headers).
     // so, bytes = (encoded_string.length - 814) / 1.37)
     // see https://en.wikipedia.org/wiki/Base64#MIME
-    if (String(screenshotData).length - 814 / 1.37 > this.UPLOAD_LIMIT) {
-      this.downsampleImageAndUpload(screenshotData);
+    if (String(dataURI).length - 814 / 1.37 > this.UPLOAD_LIMIT) {
+      this.downsampleImage(
+        dataURI,
+        _.bind(function(downsampledData) {
+          // Recurse until it's small enough for us to upload.
+          this.uploadImage(downsampledData);
+        }, this)
+      );
     } else {
-      this.addPreviewBackgroundAndUpload(screenshotData);
+      this.addPreviewBackground(dataURI);
+      // upload the image and stick the upload URL in the description textarea
+      this.getUploadURL(dataURI);
     }
-  };
+  }, this);
 
-  this.downsampleImageAndUpload = function(dataURI) {
+  this.downsampleImage = function(dataURI, callback) {
     var img = document.createElement("img");
     var canvas = document.createElement("canvas");
     var ctx = canvas.getContext("2d");
@@ -139,16 +147,9 @@ function BugForm() {
       // animated GIFs. However, this only will happen if they
       // were above the upload limit size. So... sorry?
       var screenshotData = canvas.toDataURL("image/jpeg", 0.8);
-
-      // The limit is 4MB (which is crazy big!), so let the user know if their
-      // file is unreasonably large at this point (after 1 round of downsampling)
-      if (screenshotData > this.UPLOAD_LIMIT) {
-        this.makeInvalid("image", { altHelp: true });
-        return;
-      }
-
-      this.addPreviewBackgroundAndUpload(screenshotData);
       (img = null), (canvas = null);
+
+      callback(screenshotData);
     }, this);
 
     img.src = dataURI;
@@ -237,7 +238,7 @@ function BugForm() {
       if (event) {
         // We can just grab the 0th one, because we only allow uploading
         // a single image at a time (for now)
-        this.showUploadPreview(event.target.files[0]);
+        this.showUploadPreview(event.target.files[0], this.uploadImage);
       }
     }
   };
@@ -394,9 +395,10 @@ function BugForm() {
   };
   /*
     If the users browser understands the FileReader API, show a preview
-    of the image they're about to load.
+    of the image they're about to load, then invoke the passed in callback
+    with the result of reading the blobOrFile as a dataURI.
   */
-  this.showUploadPreview = function(blobOrFile) {
+  this.showUploadPreview = function(blobOrFile, callback) {
     if (!(window.FileReader && window.File)) {
       return;
     }
@@ -410,12 +412,12 @@ function BugForm() {
     var reader = new FileReader();
     reader.onload = _.bind(function(event) {
       var dataURI = event.target.result;
-      this.resampleIfNecessaryAndUpload(dataURI);
+      callback(dataURI);
     }, this);
     reader.readAsDataURL(blobOrFile);
   };
 
-  this.addPreviewBackgroundAndUpload = function(dataURI) {
+  this.addPreviewBackground = function(dataURI) {
     if (!_.startsWith(dataURI, "data:image/")) {
       return;
     }
@@ -427,7 +429,6 @@ function BugForm() {
     });
 
     this.showRemoveUpload(label);
-    this.getUploadURL(dataURI);
   };
   /*
     Allow users to remove an image from the form upload.
