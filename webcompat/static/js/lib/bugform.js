@@ -97,9 +97,9 @@ function BugForm() {
           // See https://github.com/webcompat/webcompat.com/issues/1252 to track
           // the work of only accepting blobs, which should simplify things.
           if (event.data instanceof Blob) {
-            // showUploadPreview will take care of converting from blob to
-            // dataURI, and will send the result to the upload callback.
-            this.showUploadPreview(event.data, this.uploadImage);
+            // convertToDataURI sends the resulting string to the upload
+            // callback.
+            this.convertToDataURI(event.data, this.uploadImage);
           } else {
             // ...the data is already a data URI string
             this.uploadImage(event.data);
@@ -238,7 +238,7 @@ function BugForm() {
       if (event) {
         // We can just grab the 0th one, because we only allow uploading
         // a single image at a time (for now)
-        this.showUploadPreview(event.target.files[0], this.uploadImage);
+        this.convertToDataURI(event.target.files[0], this.uploadImage);
       }
     }
   };
@@ -398,7 +398,7 @@ function BugForm() {
     of the image they're about to load, then invoke the passed in callback
     with the result of reading the blobOrFile as a dataURI.
   */
-  this.showUploadPreview = function(blobOrFile, callback) {
+  this.convertToDataURI = function(blobOrFile, callback) {
     if (!(window.FileReader && window.File)) {
       return;
     }
