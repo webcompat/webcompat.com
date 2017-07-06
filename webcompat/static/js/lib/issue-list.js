@@ -185,7 +185,7 @@ issueList.SearchView = Backbone.View.extend({
       // (or user just added whitespace)
       if ($.trim(searchValue) !== this._currentSearch) {
         this.currentSearch($.trim(searchValue));
-        this.doSearch($.trim(searchValue));
+        this.doSearch($.trim(searchValue) + '-label:type-media');
         // clear any filters that have been set.
         issueList.events.trigger("filter:clear", { removeQ: false });
       }
