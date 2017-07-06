@@ -8,8 +8,9 @@ function BugForm() {
   this.loadingIndicator = $(".js-Loader");
   this.reportButton = $("#js-ReportBug");
   this.uploadLoader = $(".js-Upload-Loader");
-  // by default, submission type is anonymous
   this.UPLOAD_LIMIT = 1024 * 1024 * 4;
+  this.clickedButton = null;
+  this.hasImage = null;
 
   this.inputs = {
     url: {
@@ -78,7 +79,9 @@ function BugForm() {
     this.osField
       .add(this.browserField)
       .on("blur input", _.bind(this.checkOptionalNonEmpty, this));
+    this.submitButtons.on("click", _.bind(this.storeClickedButton, this));
     this.submitButtons.on("click", _.bind(this.loadingIndicator.show, this));
+    this.form.on("submit", _.bind(this.maybeUploadImage, this));
 
     // See if the user already has a valid form
     // (after a page refresh, back button, etc.)
@@ -125,8 +128,6 @@ function BugForm() {
       );
     } else {
       this.addPreviewBackground(dataURI);
-      // upload the image and stick the upload URL in the description textarea
-      // this.getUploadURL(dataURI);
     }
   }, this);
 
@@ -192,6 +193,10 @@ function BugForm() {
         );
       });
     }
+  };
+
+  this.storeClickedButton = function(event) {
+    this.clickedButton = event.target.value;
   };
 
   this.trimWyciwyg = function(url) {
@@ -422,13 +427,14 @@ function BugForm() {
       return;
     }
 
-    var label = $(".js-image-upload").find("label").eq(0);
-    label.css({
+    this.previewEl = $(".js-image-upload").find("label").eq(0);
+    this.previewEl.css({
       background: "url(" + dataURI + ") no-repeat center / contain",
       "background-color": "#eee"
     });
 
-    this.showRemoveUpload(label);
+    this.hasImage = true;
+    this.showRemoveUpload(this.previewEl);
   };
   /*
     Allow users to remove an image from the form upload.
@@ -460,14 +466,50 @@ function BugForm() {
         this.stepsToReproduceField.val(function(idx, value) {
           return value.replace(/\[!\[[^\]]+\]\([^\)]+\)\]\([^\)]+\)$/, "");
         });
+
+        this.hasImage = false;
       }, this)
     );
   };
+
+  this.maybeUploadImage = _.bind(function(event) {
+    if (!this.hasImage) {
+      // nothing to do if there's no image, so form submission
+      // can happen regularly.
+      return;
+    }
+
+    event.preventDefault();
+
+    this.uploadImage(
+      // grab the data URI from background-image property, since it's already
+      // in the DOM: 'url("data:image/....")'
+      this.previewEl.get(0).style.backgroundImage.slice(5, -2),
+      function(response) {
+        this.addImageURL(
+          response,
+          _.bind(function() {
+            var formEl = this.form.get(0);
+            // Calling submit() manually on the form won't contain details
+            // about which <button> was clicked (since one wasn't clicked).
+            // So we create a hidden <input> to pass along in the form data.
+            var hiddenEl = document.createElement("input");
+            hiddenEl.type = "hidden";
+            hiddenEl.name = "submit-type";
+            hiddenEl.value = this.clickedButton;
+            formEl.appendChild(hiddenEl);
+            formEl.submit();
+          }, this)
+        );
+      }
+    );
+  }, this);
+
   /*
      Upload the image before form submission so we can
      put an image link in the bug description.
   */
-  this.getUploadURL = function(dataURI) {
+  this.uploadImage = function(dataURI, callback) {
     this.disableSubmits();
     this.uploadLoader.addClass("is-active");
     var formdata = new FormData();
@@ -479,11 +521,7 @@ function BugForm() {
       data: formdata,
       method: "POST",
       url: "/upload/",
-      success: _.bind(function(response) {
-        this.addImageURL(response);
-        this.uploadLoader.removeClass("is-active");
-        this.checkForm();
-      }, this),
+      success: callback,
       error: _.bind(function(response) {
         var msg;
         if (response && response.status === 415) {
@@ -509,7 +547,7 @@ function BugForm() {
     create the markdown with the URL of a newly uploaded image
     and its thumbnail URL assets to the bug description
   */
-  this.addImageURL = function(response) {
+  this.addImageURL = function(response, callback) {
     var img_url = response.url;
     var thumb_url = response.thumb_url;
     var imageURL = [
@@ -522,6 +560,8 @@ function BugForm() {
     this.stepsToReproduceField.val(function(idx, value) {
       return value + "\n" + imageURL;
     });
+
+    callback();
   };
 
   // See function autoExpand in issues.js
