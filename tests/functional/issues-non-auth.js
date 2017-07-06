@@ -65,39 +65,20 @@ define(
       },
 
       "Pressing g goes to the github issue page": function() {
-        var issueNumber = 100;
-        return (
-          FunctionalHelpers.openPage(
-            this,
-            url("/issues/" + issueNumber),
-            ".js-Issue"
-          )
-            .findByCssSelector("body")
-            .click()
-            .type("g")
-            .end()
-            // look for the issue container on github.com/foo/bar/issues/N
-            .findByCssSelector(".gh-header.issue")
-            .isDisplayed()
-            .then(function(isDisplayed) {
-              assert.equal(
-                isDisplayed,
-                true,
-                "We're at the GitHub issue page now."
-              );
-            })
-            .end()
-            .findByCssSelector(".gh-header-number")
-            .getVisibleText()
-            .then(function(text) {
-              var headerNumber = parseInt(text.slice(1), 10);
-              assert.equal(
-                headerNumber,
-                issueNumber,
-                "GitHub issue number matches."
-              );
-            })
-        );
+        return FunctionalHelpers.openPage(this, url("/issues/100"), ".js-Issue")
+          .findByCssSelector("body")
+          .click()
+          .type("g")
+          .end()
+          .sleep(500)
+          .getCurrentUrl()
+          .then(function(url) {
+            assert.match(
+              url,
+              /[https://github.com/^*/^*/issues/100]/,
+              "We're at the GitHub issue page now."
+            );
+          });
       },
 
       "NSFW images are blurred": function() {
