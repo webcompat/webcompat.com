@@ -99,10 +99,10 @@ function BugForm() {
           if (event.data instanceof Blob) {
             // convertToDataURI sends the resulting string to the upload
             // callback.
-            this.convertToDataURI(event.data, this.uploadImage);
+            this.convertToDataURI(event.data, this.showUploadPreview);
           } else {
             // ...the data is already a data URI string
-            this.uploadImage(event.data);
+            this.showUploadPreview(event.data);
           }
         }
       }, this),
@@ -110,7 +110,7 @@ function BugForm() {
     );
   };
 
-  this.uploadImage = _.bind(function(dataURI) {
+  this.showUploadPreview = _.bind(function(dataURI) {
     // The final size of Base64-encoded binary data is ~equal to
     // 1.37 times the original data size + 814 bytes (for headers).
     // so, bytes = (encoded_string.length - 814) / 1.37)
@@ -120,13 +120,13 @@ function BugForm() {
         dataURI,
         _.bind(function(downsampledData) {
           // Recurse until it's small enough for us to upload.
-          this.uploadImage(downsampledData);
+          this.showUploadPreview(downsampledData);
         }, this)
       );
     } else {
       this.addPreviewBackground(dataURI);
       // upload the image and stick the upload URL in the description textarea
-      this.getUploadURL(dataURI);
+      // this.getUploadURL(dataURI);
     }
   }, this);
 
@@ -238,7 +238,7 @@ function BugForm() {
       if (event) {
         // We can just grab the 0th one, because we only allow uploading
         // a single image at a time (for now)
-        this.convertToDataURI(event.target.files[0], this.uploadImage);
+        this.convertToDataURI(event.target.files[0], this.showUploadPreview);
       }
     }
   };
