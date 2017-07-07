@@ -81,7 +81,7 @@ define(
           .end();
       },
 
-      "postMessaged dataURI image upload worked": function() {
+      "postMessaged dataURI image doesn't upload before form submission": function() {
         return (
           FunctionalHelpers.openPage(this, url, ".js-image-upload-label")
             // send a small base64 encoded green test square
@@ -92,17 +92,17 @@ define(
             .findByCssSelector("#steps_reproduce")
             .getProperty("value")
             .then(function(val) {
-              assert.include(
+              assert.notInclude(
                 val,
                 "[![Screenshot Description](http://localhost:5000/uploads/",
-                "The data URI was correctly uploaded and its URL was copied to the bug description."
+                "The data URI was not uploaded before form submission."
               );
             })
             .end()
         );
       },
 
-      "postMessaged blob image upload worked": function() {
+      "postMessaged blob image doesn't upload before form submission": function() {
         return (
           FunctionalHelpers.openPage(this, url, ".js-image-upload-label")
             // Build up a green test square in canvas, toBlob that, and then postMessage the blob
@@ -113,17 +113,17 @@ define(
             .findByCssSelector("#steps_reproduce")
             .getProperty("value")
             .then(function(val) {
-              assert.include(
+              assert.notInclude(
                 val,
                 "[![Screenshot Description](http://localhost:5000/uploads/",
-                "The data URI was correctly uploaded and its URL was copied to the bug description."
+                "The data URI was not uploaded before form submission."
               );
             })
             .end()
         );
       },
 
-      "uploaded image file upload worked": function() {
+      "uploaded image file doesn't upload before form submission": function() {
         return FunctionalHelpers.openPage(this, url, ".js-image-upload-label")
           .findById("image")
           .type("tests/fixtures/green_square.png")
@@ -132,10 +132,10 @@ define(
           .findByCssSelector("#steps_reproduce")
           .getProperty("value")
           .then(function(val) {
-            assert.include(
+            assert.notInclude(
               val,
               "[![Screenshot Description](http://localhost:5000/uploads/",
-              "The data URI was correctly uploaded and its URL was copied to the bug description."
+              "The data URI was not uploaded before form submission."
             );
           })
           .end();
