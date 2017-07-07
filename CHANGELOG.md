@@ -4,6 +4,17 @@
 2. New features: affect minor number
 3. API endpoint changes or dependency version updates: affect major number
 
+## 5.3.0 - 2017-07-07
+
+* Change to validation logic for form description [Pull #1633](https://github.com/webcompat/webcompat.com/pull/1633)
+* Fix "going back in history" test [Pull #1626](https://github.com/webcompat/webcompat.com/pull/1626)
+* Get functional tests to work offline [Pull #1625](https://github.com/webcompat/webcompat.com/pull/1625)
+* Staging docs update [Pull #1624](https://github.com/webcompat/webcompat.com/pull/1624)
+* Add priority labels for ranking [Pull #1612](https://github.com/webcompat/webcompat.com/pull/1612)
+* Add script to populate a database with Alexa top info [Pull #1591](https://github.com/webcompat/webcompat.com/pull/1591)
+* Add pagination below issue list [Pull #1589](https://github.com/webcompat/webcompat.com/pull/1589)
+* New form redesign [Pull #1578](https://github.com/webcompat/webcompat.com/pull/1578)
+
 ## 5.2.2 - 2018-06-23
 
 * Check form validation in image upload success handler [Pull #1614](https://github.com/webcompat/webcompat.com/pull/1614)
