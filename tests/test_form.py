@@ -101,24 +101,6 @@ class TestForm(unittest.TestCase):
             self.assertEqual(actual.browser.data, expected_browser)
             self.assertEqual(actual.os.data, expected_os)
 
-    def test_get_problem(self):
-        """Checks we get the appropriate category."""
-        actual = form.get_problem(u'text_bug')
-        expected = u'Text is not visible'
-        self.assertEqual(actual, expected)
-        actual = form.get_problem(u'foobar2017')
-        expected = u'Unknown'
-        self.assertEqual(actual, expected)
-
-    def test_get_problem_summary(self):
-        """Problem summary is the string going to the title."""
-        actual = form.get_problem_summary(u'unknown_bug')
-        expected = u'see bug description'
-        self.assertEqual(actual, expected)
-        actual = form.get_problem_summary(u'text_bug')
-        expected = u'text is not visible'
-        self.assertEqual(actual, expected)
-
     def test_get_metadata(self):
         """HTML comments need the right values depending on the keys."""
         metadata_keys = ('sky', 'earth')
@@ -133,6 +115,6 @@ class TestForm(unittest.TestCase):
         actual = form.build_formdata(form_object)
         # we just need to test that nothing breaks
         # even if the data are empty
-        expected = {'body': u'<!-- @browser: None -->\n<!-- @ua_header: None -->\n<!-- @reported_with: None -->\n\n**URL**: None\n**Browser / Version**: None\n**Operating System**: None\n**Problem type**: Unknown\n\n**Steps to Reproduce**\nNone\n\n\n\n_From [webcompat.com](https://webcompat.com/) with \u2764\ufe0f_', 'title': 'None - unknown'}  # nopep8
+        expected = {'body': u'<!-- @browser: None -->\n<!-- @ua_header: None -->\n<!-- @reported_with: None -->\n\n**URL**: None\n**Problem type**: Unknown\n**Description**: None\n**Steps to Reproduce** None\n**Browser / Version**: None\n**Operating System**: None\n**Tested Another Browser**: Unknown\n\n\n_From [webcompat.com](https://webcompat.com/) with \u2764\ufe0f_', 'title': 'None - unknown'}  # nopep8
         self.assertIs(type(actual), dict)
         self.assertEqual(actual, expected)
