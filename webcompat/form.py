@@ -4,8 +4,8 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-'''This module contains the base IssueForm class and helper methods that
-power the issue reporting form on webcompat.com.'''
+"""This module contains the base IssueForm class and helper methods that
+power the issue reporting form on webcompat.com."""
 
 import random
 import urlparse
@@ -59,17 +59,16 @@ desc_message = u'An issue description is required.'
 url_label = u'Site URL <span class="wc-Form-required">*</span>'
 browser_test_label = u'Did you test in another browser?'
 
-steps_default = u'''For example,
+steps_default = u"""For example,
 1. I've tried to log in.
 2. I've filled out the form details.
 3. I clicked on the submit button.
 4. Nothing happened.
-
-'''
+"""
 
 
 class IssueForm(FlaskForm):
-    '''Define form fields and validation for our bug reporting form.'''
+    """Define form fields and validation for our bug reporting form."""
     url = StringField(url_label,
                       [InputRequired(message=url_message)])
     browser = StringField(u'Is this information correct?', [Optional()])
@@ -103,7 +102,7 @@ def get_form(ua_header):
 
 
 def get_radio_button_label(field_value, label_list):
-    '''Return human-readable label for problem choices form value.'''
+    """Return human-readable label for problem choices form value."""
     for value, text in label_list:
         if value == field_value:
             return text
@@ -112,30 +111,35 @@ def get_radio_button_label(field_value, label_list):
 
 
 def get_problem_summary(category):
-    '''Allows us to special case the "Other" radio choice summary.'''
+    """Creates the summary for the issue title."""
     if category == 'unknown_bug':
+        # In this case, we need a special message
         return u'see bug description'
     else:
+        # Return the usual message in lowercase
+        # because it is not at the start of the summary.
         return get_radio_button_label(category, problem_choices).lower()
 
 
 def wrap_metadata(metadata):
-    '''Helper method to wrap metadata and its type in an HTML comment.
+    """Helper method to wrap metadata and its type in an HTML comment.
 
     We use it to hide potentially (un)interesting metadata from the UI.
-    '''
+    """
     return u'<!-- @{0}: {1} -->\n'.format(*metadata)
 
 
 def get_metadata(metadata_keys, form_object):
-    '''Return relevant metadata hanging off the form as a single string.'''
+    """Return relevant metadata hanging off the form as a single string."""
     metadata = [(key, form_object.get(key)) for key in metadata_keys]
     # Now, "wrap the metadata" and return them all as a single string
     return ''.join([wrap_metadata(md) for md in metadata])
 
 
 def normalize_url(url):
-    '''normalize URL for consistency.'''
+    """normalize URL for consistency."""
+    if not url:
+        return None
     url = url.strip()
     parsed = urlparse.urlparse(url)
 
@@ -158,8 +162,10 @@ def normalize_url(url):
 
 
 def domain_name(url):
-    '''Extract the domain name of a sanitized version of the submitted URL.'''
+    """Extract the domain name of a sanitized version of the submitted URL."""
     # Removing leading spaces
+    if not url:
+        return None
     url = url.lstrip()
     # testing if it's an http URL
     if url.startswith(SCHEMES):
@@ -170,7 +176,7 @@ def domain_name(url):
 
 
 def build_formdata(form_object):
-    '''Convert HTML form data to GitHub API data.
+    """Convert HTML form data to GitHub API data.
 
     Summary -> title
     Version -> part of body
@@ -198,7 +204,7 @@ def build_formdata(form_object):
     NOTE: Only users with push access can set labels for new issues.
     Labels are silently dropped otherwise.
     NOTE: intentionally leaving out `milestone` and `assignee`.
-    '''
+    """
     # Do domain extraction for adding to the summary/title
     url = form_object.get('url')
     normalized_url = normalize_url(url)
@@ -225,7 +231,7 @@ def build_formdata(form_object):
     }
 
     # Preparing the body
-    body = u'''{metadata}
+    body = u"""{metadata}
 **URL**: {url}
 **Problem type**: {problem_type}
 **Description**: {description}
@@ -233,7 +239,7 @@ def build_formdata(form_object):
 **Browser / Version**: {browser}
 **Operating System**: {os}
 **Tested Another Browser**: {browser_test_type}
-'''.format(**formdata)
+""".format(**formdata)
     # Add the image, if there was one.
     if form_object.get('image_upload') is not None:
         body += '\n\n![Screenshot of the site issue]({image_url})'.format(
