@@ -4,6 +4,13 @@
 2. New features: affect minor number
 3. API endpoint changes or dependency version updates: affect major number
 
+## 5.3.1 - 2017-07-11
+
+* Add tests for form.py [Pull #1644](https://github.com/webcompat/webcompat.com/pull/1644)
+* Update description placeholder [Pull #1639](https://github.com/webcompat/webcompat.com/pull/1639)
+* Update regex and target field for text url removal [Pull #1632](https://github.com/webcompat/webcompat.com/pull/1632)
+* Add coco.fr to abuse list >:| [Pull #1628](https://github.com/webcompat/webcompat.com/pull/1628)
+
 ## 5.3.0 - 2017-07-07
 
 * Change to validation logic for form description [Pull #1633](https://github.com/webcompat/webcompat.com/pull/1633)
