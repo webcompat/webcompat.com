@@ -8,8 +8,9 @@ function BugForm() {
   this.loadingIndicator = $(".js-Loader");
   this.reportButton = $("#js-ReportBug");
   this.uploadLoader = $(".js-Upload-Loader");
-  // by default, submission type is anonymous
   this.UPLOAD_LIMIT = 1024 * 1024 * 4;
+  this.clickedButton = null;
+  this.hasImage = null;
 
   this.inputs = {
     url: {
@@ -78,7 +79,9 @@ function BugForm() {
     this.osField
       .add(this.browserField)
       .on("blur input", _.bind(this.checkOptionalNonEmpty, this));
+    this.submitButtons.on("click", _.bind(this.storeClickedButton, this));
     this.submitButtons.on("click", _.bind(this.loadingIndicator.show, this));
+    this.form.on("submit", _.bind(this.maybeUploadImage, this));
 
     // See if the user already has a valid form
     // (after a page refresh, back button, etc.)
@@ -97,12 +100,12 @@ function BugForm() {
           // See https://github.com/webcompat/webcompat.com/issues/1252 to track
           // the work of only accepting blobs, which should simplify things.
           if (event.data instanceof Blob) {
-            // showUploadPreview will take care of converting from blob to
-            // dataURI, and will send the result to resampleIfNecessaryAndUpload.
-            this.showUploadPreview(event.data);
+            // convertToDataURI sends the resulting string to the upload
+            // callback.
+            this.convertToDataURI(event.data, this.showUploadPreview);
           } else {
             // ...the data is already a data URI string
-            this.resampleIfNecessaryAndUpload(event.data);
+            this.showUploadPreview(event.data);
           }
         }
       }, this),
@@ -110,19 +113,25 @@ function BugForm() {
     );
   };
 
-  this.resampleIfNecessaryAndUpload = function(screenshotData) {
+  this.showUploadPreview = _.bind(function(dataURI) {
     // The final size of Base64-encoded binary data is ~equal to
     // 1.37 times the original data size + 814 bytes (for headers).
     // so, bytes = (encoded_string.length - 814) / 1.37)
     // see https://en.wikipedia.org/wiki/Base64#MIME
-    if (String(screenshotData).length - 814 / 1.37 > this.UPLOAD_LIMIT) {
-      this.downsampleImageAndUpload(screenshotData);
+    if (String(dataURI).length - 814 / 1.37 > this.UPLOAD_LIMIT) {
+      this.downsampleImage(
+        dataURI,
+        _.bind(function(downsampledData) {
+          // Recurse until it's small enough for us to upload.
+          this.showUploadPreview(downsampledData);
+        }, this)
+      );
     } else {
-      this.addPreviewBackgroundAndUpload(screenshotData);
+      this.addPreviewBackground(dataURI);
     }
-  };
+  }, this);
 
-  this.downsampleImageAndUpload = function(dataURI) {
+  this.downsampleImage = function(dataURI, callback) {
     var img = document.createElement("img");
     var canvas = document.createElement("canvas");
     var ctx = canvas.getContext("2d");
@@ -139,16 +148,9 @@ function BugForm() {
       // animated GIFs. However, this only will happen if they
       // were above the upload limit size. So... sorry?
       var screenshotData = canvas.toDataURL("image/jpeg", 0.8);
-
-      // The limit is 4MB (which is crazy big!), so let the user know if their
-      // file is unreasonably large at this point (after 1 round of downsampling)
-      if (screenshotData > this.UPLOAD_LIMIT) {
-        this.makeInvalid("image", { altHelp: true });
-        return;
-      }
-
-      this.addPreviewBackgroundAndUpload(screenshotData);
       (img = null), (canvas = null);
+
+      callback(screenshotData);
     }, this);
 
     img.src = dataURI;
@@ -191,6 +193,10 @@ function BugForm() {
         );
       });
     }
+  };
+
+  this.storeClickedButton = function(event) {
+    this.clickedButton = event.target.value;
   };
 
   this.trimWyciwyg = function(url) {
@@ -237,7 +243,7 @@ function BugForm() {
       if (event) {
         // We can just grab the 0th one, because we only allow uploading
         // a single image at a time (for now)
-        this.showUploadPreview(event.target.files[0]);
+        this.convertToDataURI(event.target.files[0], this.showUploadPreview);
       }
     }
   };
@@ -394,9 +400,10 @@ function BugForm() {
   };
   /*
     If the users browser understands the FileReader API, show a preview
-    of the image they're about to load.
+    of the image they're about to load, then invoke the passed in callback
+    with the result of reading the blobOrFile as a dataURI.
   */
-  this.showUploadPreview = function(blobOrFile) {
+  this.convertToDataURI = function(blobOrFile, callback) {
     if (!(window.FileReader && window.File)) {
       return;
     }
@@ -410,24 +417,24 @@ function BugForm() {
     var reader = new FileReader();
     reader.onload = _.bind(function(event) {
       var dataURI = event.target.result;
-      this.resampleIfNecessaryAndUpload(dataURI);
+      callback(dataURI);
     }, this);
     reader.readAsDataURL(blobOrFile);
   };
 
-  this.addPreviewBackgroundAndUpload = function(dataURI) {
+  this.addPreviewBackground = function(dataURI) {
     if (!_.startsWith(dataURI, "data:image/")) {
       return;
     }
 
-    var label = $(".js-image-upload").find("label").eq(0);
-    label.css({
+    this.previewEl = $(".js-image-upload").find("label").eq(0);
+    this.previewEl.css({
       background: "url(" + dataURI + ") no-repeat center / contain",
       "background-color": "#eee"
     });
 
-    this.showRemoveUpload(label);
-    this.getUploadURL(dataURI);
+    this.hasImage = true;
+    this.showRemoveUpload(this.previewEl);
   };
   /*
     Allow users to remove an image from the form upload.
@@ -459,14 +466,50 @@ function BugForm() {
         this.stepsToReproduceField.val(function(idx, value) {
           return value.replace(/\[!\[[^\]]+\]\([^\)]+\)\]\([^\)]+\)$/, "");
         });
+
+        this.hasImage = false;
       }, this)
     );
   };
+
+  this.maybeUploadImage = _.bind(function(event) {
+    if (!this.hasImage) {
+      // nothing to do if there's no image, so form submission
+      // can happen regularly.
+      return;
+    }
+
+    event.preventDefault();
+
+    this.uploadImage(
+      // grab the data URI from background-image property, since it's already
+      // in the DOM: 'url("data:image/....")'
+      this.previewEl.get(0).style.backgroundImage.slice(5, -2),
+      function(response) {
+        this.addImageURL(
+          response,
+          _.bind(function() {
+            var formEl = this.form.get(0);
+            // Calling submit() manually on the form won't contain details
+            // about which <button> was clicked (since one wasn't clicked).
+            // So we create a hidden <input> to pass along in the form data.
+            var hiddenEl = document.createElement("input");
+            hiddenEl.type = "hidden";
+            hiddenEl.name = "submit-type";
+            hiddenEl.value = this.clickedButton;
+            formEl.appendChild(hiddenEl);
+            formEl.submit();
+          }, this)
+        );
+      }
+    );
+  }, this);
+
   /*
      Upload the image before form submission so we can
      put an image link in the bug description.
   */
-  this.getUploadURL = function(dataURI) {
+  this.uploadImage = function(dataURI, callback) {
     this.disableSubmits();
     this.uploadLoader.addClass("is-active");
     var formdata = new FormData();
@@ -478,11 +521,7 @@ function BugForm() {
       data: formdata,
       method: "POST",
       url: "/upload/",
-      success: _.bind(function(response) {
-        this.addImageURL(response);
-        this.uploadLoader.removeClass("is-active");
-        this.checkForm();
-      }, this),
+      success: callback,
       error: _.bind(function(response) {
         var msg;
         if (response && response.status === 415) {
@@ -508,7 +547,7 @@ function BugForm() {
     create the markdown with the URL of a newly uploaded image
     and its thumbnail URL assets to the bug description
   */
-  this.addImageURL = function(response) {
+  this.addImageURL = function(response, callback) {
     var img_url = response.url;
     var thumb_url = response.thumb_url;
     var imageURL = [
@@ -521,6 +560,8 @@ function BugForm() {
     this.stepsToReproduceField.val(function(idx, value) {
       return value + "\n" + imageURL;
     });
+
+    callback();
   };
 
   // See function autoExpand in issues.js
