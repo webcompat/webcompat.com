@@ -68,6 +68,16 @@ In a separate terminal window or tab, run the tests:
 
 ```bash
 node_modules/.bin/intern-runner config=tests/intern
+
+or
+
+npm run test:js
+```
+
+You can also run the functional tests as well as the python tests in a seperate tab, after starting the server with:
+
+```
+npm test
 ```
 
 Shortly after running this command, you should see the browser open and various pages appear and disappear automatically for a minute or two. The tests are complete when the browser window closes and you see a report of how many passed or failed in the terminal window that you ran the `intern-runner` command in.
