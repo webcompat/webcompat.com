@@ -67,7 +67,10 @@
     "pip": "pip install -r config/requirements.txt",
     "config": "cp config/secrets.py.example config/secrets.py",
     "project-update": "pip install --upgrade pip && npm update",
-    "precommit": "lint-staged"
+    "precommit": "lint-staged",
+    "test": "npm run test:js && npm run test:python",
+    "test:js": "node_modules/.bin/intern-runner config=tests/intern",
+    "test:python": "nosetests"
   },
   "lint-staged": {
     "*.js": "lint:JS",
