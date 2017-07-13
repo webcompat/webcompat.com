@@ -9,7 +9,13 @@
 
 You can run the Python unit tests from the project root with the `nosetests` command.
 
-Running functional tests is a bit more involved (see the next section).
+You can also run them with following:
+
+```
+npm run test:python
+```
+
+Running functional tests is a bit more involved. You can also run both test suites at once (see the next section).
 
 Tests are also run automatically on [Travis](https://travis-ci.org/webcompat/webcompat.com) for each commit. If you would like to skip running tests for a given commit, you can use use the magical `[ci skip]` string in your commit message. See the [Travis docs](http://docs.travis-ci.com/user/how-to-skip-a-build/#Not-All-Commits-Need-CI-Builds) for more info.
 
