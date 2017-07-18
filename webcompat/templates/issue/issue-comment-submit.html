@@ -1,10 +1,17 @@
 <div class="wc-Comment wc-Comment--form js-Comment-form" data-username="{{ session.username }}" data-avatar-url="{{ session.avatar_url }}">
-  <div class="wc-Comment-avatar">
-    <img class="" src="{{ session.avatar_url }}" alt="Avatar"/>
+  <div class="wc-Comment-header">
+    <div class="wc-Comment-owner">
+      <div class="wc-Comment-owner-avatar">
+        <img src="{{ session.avatar_url }}" alt="{{ session.username }}">
+      </div>
+      <div class="wc-Comment-owner-name js-Comment-owner">
+        {{ session.username }}
+      </div>
+    </div>
   </div>
-  <div class="wc-Comment-body wc-Comment-body--caret">
+  <div class="wc-Comment-body">
   <label for="wc-Comment-text" class="wc-Accessibility">Comment Text</label>
-    <textarea class="wc-Comment-submit js-Comment-text" placeholder="Leave a comment"></textarea>
+    <textarea class="wc-Comment-submit js-Comment-text mousetrap js-autoExpand" placeholder="Leave a comment"></textarea>
     <div class="wc-Form-group js-ImageUploadView">
       <script type="text/template" id="upload-input-tmpl">
         <form>
@@ -30,7 +37,7 @@
     <div class="wc-Comment-button">
       <button class="wc-Button wc-Button--action js-Issue-state-button">
         <script type="text/template" id="state-button-tmpl">
-        <%= state %>
+        <span class="js-comment-<%= stateClass %>"><%= state %></span>
         </script>
       </button>
       <button value="comment" class="wc-Button wc-Button--default js-Issue-comment-button" type="submit">Comment</button>

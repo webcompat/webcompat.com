@@ -3,180 +3,165 @@
 :root {
   --Comment-fontSize: var(--base-fontSize);
   --Comment-color: var(--base-variantColorLight);
-  --Comment-widthAvatar: 59px;
-  --Comment-heightAvatar: 56px;
+  --Comment-widthAvatar: 48px;
+  --Comment-heightAvatar: var(--Comment-widthAvatar);
 }
 
 /* Main Class */
 .wc-Comment {
   font-size: var(--Comment-fontSize);
-  display: flex;
-  flex-direction: row;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, .1), 0 1px 2px rgba(0, 0, 0, .25);
 }
 
-  /* space */
-  .wc-Comment + .wc-Comment {
-    margin-top: 1em;
-  }
+.wc-Comment .wc-UploadForm-wrapper {
+  margin: 1em;
+  border: 2px dashed #ccc;
+  border-radius: 15px;
+}
 
-  /* Avatar */
-  .wc-Comment-avatar {
-    width: var(--Comment-widthAvatar);
-    height: var(--Comment-heightAvatar);
-  }
+/* space */
+.wc-Comment + .wc-Comment {
+  margin-top: 1em;
+}
 
-    /* img */
-    .wc-Comment-avatar img {
-      width: 100%;
-    }
+/* Body */
+.wc-Comment-body {
+  position: relative;
+  max-width: 100%;
+}
 
-  @media all and (max-width: 61.87em) {
+/* Wrapper Comment-header Comment-content */
+.wc-Comment-wrapper {
+  position: relative;
+  width: 100%;
+  padding: 0;
+  word-wrap: break-word;
+  background: #fff;
+}
 
-    .wc-Comment-avatar {
-      display: none;
-    }
-  }
+/* Comment Textarea */
+.wc-Comment-submit {
+  font-size: var(--Comment-fontSize);
+  display: block;
+  width: 100%;
+  min-height: 128px;
+  border-width: 0;
+  padding: 1em;
+  resize: vertical;
+}
 
-  /* Body */
-  .wc-Comment-body {
-    position: relative;
-    flex: 1;
-    max-width: 100%;
-  }
+/* Textarea Placeholder style */
+.wc-Comment-submit::placeholder {
+  color: var(--Comment-color);
+  opacity: 1;
+}
 
-  @media all and (min-width: 61.88em) {
+/* Comment Header */
+.wc-Comment-header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  background-color: #f5f5f5;
+  padding: 1em;
+}
 
-    .wc-Comment-body {
-      margin-left:.8em;
-      max-width: calc(100% - 59px);
-    }
-  }
-
-    /* Body Caret */
-    .wc-Comment-body--caret:after {
-      position: absolute;
-      content: "";
-      width: 18px;
-      height: 18px;
-      top: 15px;
-      left: -9px;
-      background-color: #f0f0f0;
-      border-color: var(--Comment-color);
-      border-style: solid;
-      border-width: 0px 0px 1px 1px;
-      transform: rotate(45deg);
-    }
-
-    /* Form submit */
-    .wc-Comment--form .wc-Comment-body--caret:after {
-       background-color: #fff;
-    }
-
-  /* Wrapper Comment-header Comment-content */
-  .wc-Comment-wrapper {
-    position: relative;
-    width: 100%;
-    border: solid 1px var(--Comment-color);
-    border-radius: 10px;
-    padding: 0;
-    word-wrap: break-word;
-    background : #fff;
-  }
-
-  /* Comment Textarea */
-  .wc-Comment-submit {
-    font-size: var(--Comment-fontSize);
-    display: block;
-    width: 100%;
-    min-height: 128px;
-    border-color: var(--Comment-color);
-    border-style: solid solid dashed solid;
-    border-width: 1px;
-    border-radius: 10px 10px 0 0;
-    padding: 1em;
-  }
-
-    /* Textarea Placeholder style */
-    .wc-Comment-submit::placeholder {
-      color: var(--Comment-color);
-      opacity: 1;
-    }
-
-  /* Comment Header */
+@media all and (max-width: 61.87em) {
   .wc-Comment-header {
-    position: relative;
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    border-radius: 10px 10px 0 0;
-    background-color: #f0f0f0;
-    padding: .8em .8em .8em 1em;
+    padding: .5em;
   }
+}
 
-  .wc-Comment-header-spacing {
-    padding: 0 6px;
+.wc-Comment-owner {
+  display: flex;
+  align-items: center;
+}
+
+/* Avatar */
+.wc-Comment-owner-avatar {
+  width: var(--Comment-widthAvatar);
+  height: var(--Comment-heightAvatar);
+}
+
+/* img */
+.wc-Comment-owner-avatar img { /* stylelint-disable selector-no-type  */
+  width: 100%;
+  border-radius: 50%;
+}
+
+@media all and (max-width: 61.87em) {
+  .wc-Comment--owner-avatar {
+    width: 25px;
+    height: 25px;
   }
+}
 
-  /* Name of owner */
-  .wc-Comment-owner {
-    font-weight: bold;
-  }
+.wc-Comment-owner-name {
+  font-weight: 700;
+  margin: 0 0 0 1em;
+}
 
-  /* Comment text */
-  .wc-Comment-content {
-    position: relative;
-    word-wrap: break-word;
-    padding: 1em;
-  }
+/* Comment text */
+.wc-Comment-content {
+  position: relative;
+  word-wrap: break-word;
+  padding: 1em;
+}
 
-  .wc-Comment-content .is-hidden {
-    display: none;
-  }
+.wc-Comment-content .is-hidden {
+  display: none;
+}
 
-  /* img attach file */
-  .wc-Comment-attach {
-    display: block;
-    margin:.8em 0 0 0;
-    padding: .4em;
-    text-align: center;
-    overflow: hidden /* prevent overflow */
-  }
+/* img attach file */
+.wc-Comment-attach {
+  display: block;
+  margin: .8em 0 0;
+  padding: .4em;
+  text-align: center;
+  overflow: hidden /* prevent overflow */
+}
 
-  /* prevent width of img */
-  .wc-Comment-attach img {
-    width: 100%;
-    max-width: 100%;
-  }
+/* prevent width of img */
+.wc-Comment-attach img {
+  width: 100%;
+  max-width: 100%;
+}
 
-  /* Button */
+/* Button */
+.wc-Comment-button {
+  text-align: right;
+  margin: .6em auto 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+@media all and (max-width: 48.12em) {
   .wc-Comment-button {
-    text-align: right;
-    margin:1.2em 0 0;
-  }
-
-  @media all and (max-width: 48.12em) {
-
-   .wc-Comment-button {
-     text-align: center;
-     font-size:.9em;
-    }
-  }
-
-  .wc-Comment-button .button {
     text-align: center;
+    font-size: .9em;
   }
+}
 
-  /* QR */
+.wc-Comment-button .button {
+  text-align: center;
+}
+
+/* QR */
+.wc-Comment-qr {
+  z-index: 1;
+  margin-left: auto;
+}
+
+@media all and (max-width: 31.25em) {
   .wc-Comment-qr {
-    z-index: 1;
-    margin-left: auto;
+    position: absolute;
+    top: 0;
+    right: 0;
   }
 
-  @media all and (max-width: 31.25em) {
-    .wc-Comment-qr {
-      position: absolute;
-      top: 0;
-      right: 0;
-    }
+  .wc-Comment-button {
+    flex-direction: column;
   }
+}

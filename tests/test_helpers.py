@@ -17,7 +17,9 @@ import webcompat
 from webcompat.helpers import format_link_header
 from webcompat.helpers import get_browser_name
 from webcompat.helpers import get_browser
+from webcompat.helpers import get_name
 from webcompat.helpers import get_os
+from webcompat.helpers import get_version_string
 from webcompat.helpers import normalize_api_params
 from webcompat.helpers import parse_link_header
 from webcompat.helpers import rewrite_and_sanitize_link
@@ -27,9 +29,11 @@ from webcompat.helpers import sanitize_link
 
 ACCESS_TOKEN_LINK = '<https://api.github.com/repositories/17839063/issues?per_page=50&page=3&access_token=12345>; rel="next", <https://api.github.com/repositories/17839063/issues?access_token=12345&per_page=50&page=4>; rel="last", <https://api.github.com/repositories/17839063/issues?per_page=50&access_token=12345&page=1>; rel="first", <https://api.github.com/repositories/17839063/issues?per_page=50&page=1&access_token=12345>; rel="prev"'  # nopep8
 GITHUB_ISSUES_LINK_HEADER = '<https://api.github.com/repositories/17839063/issues?per_page=50&page=3>; rel="next", <https://api.github.com/repositories/17839063/issues?per_page=50&page=4>; rel="last", <https://api.github.com/repositories/17839063/issues?per_page=50&page=1>; rel="first", <https://api.github.com/repositories/17839063/issues?per_page=50&page=1>; rel="prev"'  # nopep8
-GITHUB_SEARCH_LINK_HEADER = '<https://api.github.com/search/issues?q=taco&page=2>; rel="next", <https://api.github.com/search/issues?q=taco&page=26>; rel="last"'  # nopep8
 REWRITTEN_ISSUES_LINK_HEADER = '</api/issues?per_page=50&page=3>; rel="next", </api/issues?per_page=50&page=4>; rel="last", </api/issues?per_page=50&page=1>; rel="first", </api/issues?per_page=50&page=1>; rel="prev"'  # nopep8
+GITHUB_SEARCH_LINK_HEADER = '<https://api.github.com/search/issues?q=taco&page=2>; rel="next", <https://api.github.com/search/issues?q=taco&page=26>; rel="last"'  # nopep8
 REWRITTEN_SEARCH_LINK_HEADER = '</api/issues/search?q=taco&page=2>; rel="next", </api/issues/search?q=taco&page=26>; rel="last"'  # nopep8
+GITHUB_COMMENTS_LINK_HEADER = '<https://api.github.com/repositories/17839063/issues/398/comments?page=2>; rel="next", <https://api.github.com/repositories/17839063/issues/398/comments?page=4>; rel="last"'  # nopep8
+REWRITTEN_COMMENTS_LINK_HEADER = '</api/issues/398/comments?page=2>; rel="next", </api/issues/398/comments?page=4>; rel="last"'  # nopep8
 PARSED_LINKED_HEADERS = [{'link': 'https://api.github.com/repositories/17839063/issues?per_page=50&page=3', 'rel': 'next'}, {'link': 'https://api.github.com/repositories/17839063/issues?per_page=50&page=4', 'rel': 'last'}, {'link': 'https://api.github.com/repositories/17839063/issues?per_page=50&page=1', 'rel': 'first'}, {'link': 'https://api.github.com/repositories/17839063/issues?per_page=50&page=1', 'rel': 'prev'}]  # nopep8
 FIREFOX_UA = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:48.0) Gecko/20100101 Firefox/48.0'  # nopep8
 FIREFOX_MOBILE_UA_OLD = 'Mozilla/5.0 (Android; Mobile; rv:40.0) Gecko/40.0 Firefox/40.0'  # nopep8
@@ -57,6 +61,8 @@ class TestHelpers(unittest.TestCase):
                          REWRITTEN_ISSUES_LINK_HEADER)
         self.assertEqual(rewrite_links(GITHUB_SEARCH_LINK_HEADER),
                          REWRITTEN_SEARCH_LINK_HEADER)
+        self.assertEqual(rewrite_links(GITHUB_COMMENTS_LINK_HEADER),
+                         REWRITTEN_COMMENTS_LINK_HEADER)
 
     def test_sanitize_link(self):
         '''Test that we're removing access_token parameters.'''
@@ -140,10 +146,10 @@ class TestHelpers(unittest.TestCase):
         self.assertEqual(get_browser_name(None), 'unknown')
         self.assertEqual(get_browser_name(), 'unknown')
         self.assertEqual(get_browser_name(u'💀'), 'unknown')
-        self.assertEqual(get_browser('<script>lol()</script>'), 'Unknown')
-        self.assertEqual(get_browser(True), 'Unknown')
-        self.assertEqual(get_browser(False), 'Unknown')
-        self.assertEqual(get_browser(None), 'Unknown')
+        self.assertEqual(get_browser_name('<script>lol()</script>'), 'unknown')
+        self.assertEqual(get_browser_name(True), 'unknown')
+        self.assertEqual(get_browser_name(False), 'unknown')
+        self.assertEqual(get_browser_name(None), 'unknown')
 
     def test_get_browser(self):
         '''Test browser parsing via get_browser helper method.'''
@@ -189,6 +195,28 @@ class TestHelpers(unittest.TestCase):
         self.assertEqual(get_os(False), 'Unknown')
         self.assertEqual(get_os(None), 'Unknown')
 
+    def test_get_version_string(self):
+        '''Test version string composition from Dict
+        via get_version_string helper method.
+        '''
+        tests = [
+            [{'major': '10', 'minor': '4', 'patch': '3'}, '10.4.3'],
+            [{'major': '10', 'minor': '4', 'patch': None}, '10.4'],
+            [{'major': '10', 'minor': None, 'patch': '3'}, '10'],
+            [{'major': '10', 'minor': None, 'patch': None}, '10'],
+            [{'major': None, 'minor': None, 'patch': None}, ''],
+            [{'major': None, 'minor': '4', 'patch': None}, ''],
+            [{'major': None, 'minor': '4', 'patch': '3'}, ''],
+            [{'tinker': '10', 'tailor': '4', 'soldier': '3'}, ''],
+        ]
+        for test in tests:
+            self.assertEqual(get_version_string(test[0]), test[1])
+
+    def test_get_name(self):
+        '''Test name extraction from Dict via get_name helper method.'''
+        self.assertEqual(get_name({'family': 'Chrome'}), 'Chrome')
+        self.assertEqual(get_name({'family': 'Mac OS X'}), 'Mac OS X')
+        self.assertEqual(get_name({'family': 'Other'}), 'Unknown')
 
 if __name__ == '__main__':
     unittest.main()

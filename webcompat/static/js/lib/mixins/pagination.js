@@ -2,14 +2,14 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-var issueList = issueList || {};
-issueList.events = _.extend({},Backbone.Events);
+var issueList = issueList || {}; // eslint-disable-line no-use-before-define
+issueList.events = _.extend({}, Backbone.Events);
 
 /*
 PaginationControlsView Usage:
-This assumes there is an element with a .js-dropdown-pagination class, e.g.:
+This assumes there is an element with a .js-Dropdown-pagination class, e.g.:
 
-{{ dropdown('default', 'js-dropdown-wrapper js-dropdown-pagination') }}
+{{ dropdown('js-Dropdown-pagination') }}
 
 We just listen for and fire events from this view -
 no template needed. It gets constructed in PaginationMixin.initMixin()
@@ -20,15 +20,15 @@ issueList.PaginationControlsView = Backbone.View.extend({
     this.el = options.el;
   },
   events: {
-    'click .js-Pagination-previous': 'broadcastPrevious',
-    'click .js-Pagination-next': 'broadcastNext',
+    "click .js-Pagination-previous": "broadcastPrevious",
+    "click .js-Pagination-next": "broadcastNext"
   },
   broadcastNext: function(e) {
-    issueList.events.trigger('paginate:next', e);
+    issueList.events.trigger("paginate:next", e);
     e.preventDefault();
   },
   broadcastPrevious: function(e) {
-    issueList.events.trigger('paginate:previous', e);
+    issueList.events.trigger("paginate:previous", e);
     e.preventDefault();
   }
 });
@@ -64,19 +64,22 @@ function PaginationMixin() {
     this.model = hostModel;
     this.parentContainerEl = parentContainerEl;
 
-    this.paginationControls = new issueList.PaginationControlsView(
-      {el: this.parentContainerEl}
-    );
+    this.paginationControls = new issueList.PaginationControlsView({
+      el: this.parentContainerEl
+    });
 
-    issueList.events.on('paginate:next', _.bind(this.requestNextPage, this));
-    issueList.events.on('paginate:previous', _.bind(this.requestPreviousPage, this));
+    issueList.events.on("paginate:next", _.bind(this.requestNextPage, this));
+    issueList.events.on(
+      "paginate:previous",
+      _.bind(this.requestPreviousPage, this)
+    );
   };
 
   this.initPaginationLinks = function(issuesCollection) {
     // if either the next or previous page numbers are null
     // disable the buttons and add .is-disabled classes.
-    var nextButton = this.paginationControls.el.find('.js-Pagination-next');
-    var prevButton = this.paginationControls.el.find('.js-Pagination-previous');
+    var nextButton = this.paginationControls.el.find(".js-Pagination-next");
+    var prevButton = this.paginationControls.el.find(".js-Pagination-previous");
     var nextPage = issuesCollection.getNextPage();
     var prevPage = issuesCollection.getPrevPage();
     var isLastPage = function() {
@@ -90,30 +93,32 @@ function PaginationMixin() {
     if (!issuesCollection.length || isSinglePage) {
       // hide pagination buttons if there are no results,
       // or the results are limited to a single page.
-      nextButton.addClass('is-hidden');
-      prevButton.addClass('is-hidden');
+      nextButton.addClass("is-hidden");
+      prevButton.addClass("is-hidden");
       return;
     }
 
-    nextButton.removeClass('is-hidden')
-              .prop('disabled', isLastPage())
-              .toggleClass('is-disabled', isLastPage());
-    prevButton.removeClass('is-hidden')
-              .prop('disabled', isFirstPage())
-              .toggleClass('is-disabled', isFirstPage());
+    nextButton
+      .removeClass("is-hidden")
+      .prop("disabled", isLastPage())
+      .toggleClass("is-disabled", isLastPage());
+    prevButton
+      .removeClass("is-hidden")
+      .prop("disabled", isFirstPage())
+      .toggleClass("is-disabled", isFirstPage());
 
     if (nextPage) {
       // chop off leading "/api" and set @href
-      nextButton.attr('href', issuesCollection.getNextPage().substring(4));
+      nextButton.attr("href", issuesCollection.getNextPage().substring(4));
     } else {
-      nextButton.attr('href', 'javascript: void(0);');
+      nextButton.attr("href", "javascript: void(0);");
     }
 
     if (prevPage) {
       // chop off leading "/api" and set @href
-      prevButton.attr('href', issuesCollection.getPrevPage().substring(4));
+      prevButton.attr("href", issuesCollection.getPrevPage().substring(4));
     } else {
-      prevButton.attr('href', 'javascript: void(0);');
+      prevButton.attr("href", "javascript: void(0);");
     }
   };
 
@@ -126,12 +131,12 @@ function PaginationMixin() {
       return;
     }
 
-    if (nextPage = this.model.getNextPage()) {
+    if ((nextPage = this.model.getNextPage())) {
       // update the URL to be in sync with the model
       pageNum = this.getPageNumberFromURL(nextPage);
       this.view.updateModelParams(pageNum);
       // we pass along the entire URL from the Link header
-      this.view.fetchAndRenderIssues({url: nextPage});
+      this.view.fetchAndRenderIssues({ url: nextPage });
     }
   };
 
@@ -144,12 +149,12 @@ function PaginationMixin() {
       return;
     }
 
-    if (prevPage = this.model.getPrevPage()) {
+    if ((prevPage = this.model.getPrevPage())) {
       // update the URL to be in sync with the model
       pageNum = this.getPageNumberFromURL(prevPage);
       this.view.updateModelParams(pageNum);
       // we pass along the entire URL from the Link header
-      this.view.fetchAndRenderIssues({url: prevPage});
+      this.view.fetchAndRenderIssues({ url: prevPage });
     }
   };
 

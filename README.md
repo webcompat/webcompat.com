@@ -1,8 +1,16 @@
 # webcompat.com
 
-**Build Status**: [![Build Status](https://travis-ci.org/webcompat/webcompat.com.svg?branch=master)](https://travis-ci.org/webcompat/webcompat.com)
 
-**Waffle Story Board**: [![Stories in Ready](https://badge.waffle.io/webcompat/webcompat.com.png?label=ready&title=Ready)](https://waffle.io/webcompat/webcompat.com)
+[![GitHub version](https://badge.fury.io/gh/webcompat%2Fwebcompat.com.svg)](https://badge.fury.io/gh/webcompat%2Fwebcompat.com)
+[![Dependency Status](https://david-dm.org/webcompat/webcompat.com.svg)](https://david-dm.org/webcompat/webcompat.com)
+[![devDependency Status](https://david-dm.org/webcompat/webcompat.com/dev-status.svg)](https://david-dm.org/webcompat/webcompat.com/)
+
+[![Built with Grunt](https://cdn.gruntjs.com/builtwith.svg)](http://gruntjs.com/)
+[![Travis Build Status](https://travis-ci.org/webcompat/webcompat.com.svg?branch=master)](https://travis-ci.org/webcompat/webcompat.com)
+
+[![Waffle Stories in Ready](https://badge.waffle.io/webcompat/webcompat.com.png?label=ready&title=Ready)](https://waffle.io/webcompat/webcompat.com)
+[![Twitter](https://img.shields.io/twitter/url/https/github.com/webcompat/webcompat.com.svg?style=social)](https://twitter.com/webcompat)
+
 
 
 This repository hosts the code which powers the [webcompat.com Web site](http://webcompat.com/).
@@ -37,8 +45,14 @@ All icons are public domain or licensed from The Noun Project.
 
 [Form icon](http://thenounproject.com/term/list/14362/) designed by banoshi. (Licensed)
 
-[Diagnose bugs icon](http://thenounproject.com/term/hackathon/6324/) designed by Iconathon (Public domain)
+[Diagnose bugs icon](https://thenounproject.com/rockicon/collection/office-line/?i=450639) designed by Rockicon (Licensed)
 
-[Reach out to sites icon](http://thenounproject.com/term/sport-fan/8283/) designed by Colin Lawrence.  (Licensed)
+[Reach out to sites icon](https://thenounproject.com/term/heart-care/518087/) designed by ProSymbols.  (Licensed)
 
 [Lightswitch](http://thenounproject.com/term/light-switch/2235/) designed by Jeremy Lloyd.  (Public domain)
+
+[Contribute icon](https://thenounproject.com/search/?q=group&i=876004) designed by Tjaša Kimovec. (Licensed)
+
+### Thanks
+
+Thanks to [BrowserStack](https://www.browserstack.com/) for providing the infrastructure that allows us to test in real browsers.

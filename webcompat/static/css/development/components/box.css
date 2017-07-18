@@ -1,40 +1,40 @@
-/** @define Box */
+/* This Source Code Form is subject to the terms of the Mozilla Public
+* License, v. 2.0. If a copy of the MPL was not distributed with this
+* file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 .wc-Box {
-  border-style:solid;
-  border-width:1px;
-  border-radius :10px;
+  border: solid 1px;
+  border-radius: 10px;
   padding: 1.6em;
-  margin:3em 0;
-  background-color: #F7F7F7;
+  margin: 3em 0;
+  background-color: #f7f7f7;
+}
+
+/* modifier */
+.wc-Box--reporting {
+  border-color: var(--base-stateNeedsTriage);
+}
+
+.wc-Box--diagnosis {
+  border-color: var(--base-stateNeedsDiagnosis);
+}
+
+.wc-Box--reaching {
+  border-color: var(--base-stateNeedsContact);
+}
+
+/* label */
+.wc-Box-label {
+  color: #000;
+  font-weight: 700;
+}
+
+.wc-Box-media {
+  margin: 30px auto;
+}
+
+@media all and (min-width: 48.13em) {
+  .wc-Box-media {
+    width: 80%;
   }
-
-    /* modifier */
-    .wc-Box--reporting {
-      border-color: var(--base-stateNeedsTriage);
-    }
-
-    .wc-Box--analysis {
-      border-color: var(--base-stateNeedsDiagnosis);
-    }
-
-    .wc-Box--reaching {
-      border-color:var(--base-stateNeedsContact);
-    }
-
-    /* label */
-    .wc-Box-label {
-      color : #000;
-      font-weight:bold;
-    }
-
-    .wc-Box-media {
-      margin:30px auto 30px auto;
-    }
-
-    @media all and (min-width: 48.13em) {
-
-      .wc-Box-media {
-        width:80%;
-      }
-    }
+}

@@ -1,3 +1,288 @@
+### webcompat.com versioning:
+
+1. Bug fixes, docs updates, etc.: affect patch number
+2. New features: affect minor number
+3. API endpoint changes or dependency version updates: affect major number
+
+## 5.3.1 - 2017-07-11
+
+* Add tests for form.py [Pull #1644](https://github.com/webcompat/webcompat.com/pull/1644)
+* Update description placeholder [Pull #1639](https://github.com/webcompat/webcompat.com/pull/1639)
+* Update regex and target field for text url removal [Pull #1632](https://github.com/webcompat/webcompat.com/pull/1632)
+* Add coco.fr to abuse list >:| [Pull #1628](https://github.com/webcompat/webcompat.com/pull/1628)
+
+## 5.3.0 - 2017-07-07
+
+* Change to validation logic for form description [Pull #1633](https://github.com/webcompat/webcompat.com/pull/1633)
+* Fix "going back in history" test [Pull #1626](https://github.com/webcompat/webcompat.com/pull/1626)
+* Get functional tests to work offline [Pull #1625](https://github.com/webcompat/webcompat.com/pull/1625)
+* Staging docs update [Pull #1624](https://github.com/webcompat/webcompat.com/pull/1624)
+* Add priority labels for ranking [Pull #1612](https://github.com/webcompat/webcompat.com/pull/1612)
+* Add script to populate a database with Alexa top info [Pull #1591](https://github.com/webcompat/webcompat.com/pull/1591)
+* Add pagination below issue list [Pull #1589](https://github.com/webcompat/webcompat.com/pull/1589)
+* New form redesign [Pull #1578](https://github.com/webcompat/webcompat.com/pull/1578)
+
+## 5.2.2 - 2017-06-23
+
+* Check form validation in image upload success handler [Pull #1614](https://github.com/webcompat/webcompat.com/pull/1614)
+* Fix padding issue in Markdown[Pull #1606](https://github.com/webcompat/webcompat.com/pull/1606)
+* Updates CONTRIBUTING.md tests section for mock login [Pull #1604](https://github.com/webcompat/webcompat.com/pull/1604)
+
+## 5.2.1 - 2017-06-20
+
+* Ensure label editor button can receive click events [Pull #1602](https://github.com/webcompat/webcompat.com/pull/1602)
+
+## 5.2.0 - 2017-06-20
+
+(Not deployed, caused a regression. v5.2.1 is the good release)
+
+* Add CSS linter [Pull #1509](https://github.com/webcompat/webcompat.com/pull/1509)
+* Add pre-commit linter [Pull #1538](https://github.com/webcompat/webcompat.com/pull/1538)
+* Fix broke code layout in issue page [Pull #1583](https://github.com/webcompat/webcompat.com/pull/1583)
+* Get mock GitHub login working [Pull #1588](https://github.com/webcompat/webcompat.com/pull/1588)
+* Remove test_login unit test (obsolete now) [Pull #1598](https://github.com/webcompat/webcompat.com/pull/1598)
+* Remove unused query-params.js file [Pull #1599](https://github.com/webcompat/webcompat.com/pull/1599)
+
+## 5.1.0 - 2017-05-24
+
+* Prevent overflow in code elements in issue description [Pull #1568](https://github.com/webcompat/webcompat.com/pull/1568)
+* Improves webhooks to send labels at once [Pull #1566](https://github.com/webcompat/webcompat.com/pull/1566)
+* Enable CSP header [Pull #1563](https://github.com/webcompat/webcompat.com/pull/1563)
+* Adds thumbnails to image upload and link them [Pull #1557](https://github.com/webcompat/webcompat.com/pull/1557)
+* Fixes length and quote style issues [Pull #1500](https://github.com/webcompat/webcompat.com/pull/1500)
+
+## 5.0.0 - 2017-05-12
+
+* Fix regression that prevents closing or re-opening an issue. [Pull #1561](https://github.com/webcompat/webcompat.com/pull/1561)
+* Restrict comments and constrain the closing of issue (updates to issues and edit API endpoints)[Pull #1559](https://github.com/webcompat/webcompat.com/pull/1559)
+* Handles crash scenario (500) and validation of the form [Pull #1556](https://github.com/webcompat/webcompat.com/pull/1556)
+* Removes dead code and method [Pull #1555](https://github.com/webcompat/webcompat.com/pull/1555)
+* Fixes length and quote style issues [Pull #1500](https://github.com/webcompat/webcompat.com/pull/1500)
+
+## 4.0.3 - 2017-05-08
+
+* Add GitHub API to CSP connect-src [Pull #1550](https://github.com/webcompat/webcompat.com/pull/1550)
+* Fix UTF-8 decoding error [Pull #1545](https://github.com/webcompat/webcompat.com/pull/1545)
+* Split up CONTRIBUTING.md into multiple files [Pull #1532](https://github.com/webcompat/webcompat.com/pull/1532)
+* Remove main dropdown from issues page [Pull #1531](https://github.com/webcompat/webcompat.com/pull/1531)
+* Fix SVG overflow for small viewports [Pull #1511](https://github.com/webcompat/webcompat.com/pull/1511)
+
+## 4.0.2 - 2017-04-25
+
+* Fix a disappearing label gear [Pull #1525](https://github.com/webcompat/webcompat.com/pull/1525)
+* Adds a list of files to ignore for deploy [Pull #1524](https://github.com/webcompat/webcompat.com/pull/1524)
+
+## 4.0.1 - 2017-04-24
+
+* Fixed encoding param bugs [Pull #1518](https://github.com/webcompat/webcompat.com/pull/1518)
+* Unified code for UA string version parsing [Pull #1504](https://github.com/webcompat/webcompat.com/pull/1504)
+
+
+## 4.0.0 - 2017-04-17
+
+* Fix double "thanks" flash message [Pull #1514](https://github.com/webcompat/webcompat.com/pull/1514)
+* Update Grunt-related deps [Pull #1513](https://github.com/webcompat/webcompat.com/pull/1513)
+* Upgrade Prettier to 1.0 [Pull #1507](https://github.com/webcompat/webcompat.com/pull/1507)
+* Remove Safari Addon link [Pull #1503](https://github.com/webcompat/webcompat.com/pull/1503)
+* Docs update [Pull #1484](https://github.com/webcompat/webcompat.com/pull/1484)
+* Provide a param to assign a label to a new issue [Pull #1453](https://github.com/webcompat/webcompat.com/pull/1453)
+
+## 3.2.1 - 2017-04-11
+
+* Fix template typo [Pull #1498](https://github.com/webcompat/webcompat.com/pull/1498)
+* replaced 'or' with 'and' in MQ for Aside position [Pull #1495](https://github.com/webcompat/webcompat.com/pull/1495)
+* removed missing backend-install script call  [Pull #1494](https://github.com/webcompat/webcompat.com/pull/1494)
+* removed side effect when button is active [Pull #1492](https://github.com/webcompat/webcompat.com/pull/1492)
+* Handle x-www-form-urlencoded spaces in details param [Pull #1486](https://github.com/webcompat/webcompat.com/pull/1486)
+* Add functional tests for when typing 'g' or 'l' in an issue or issue comment [Pull #1481](https://github.com/webcompat/webcompat.com/pull/1481)
+
+## 3.2.0 - 2017-04-07
+
+* Rename labelWarp method [Pull #1487](https://github.com/webcompat/webcompat.com/pull/1487)
+* Update CSP policy (round 3) [Pull #1479](https://github.com/webcompat/webcompat.com/pull/1479)
+* Add auto-expanding feature for textarea [Pull #1476](https://github.com/webcompat/webcompat.com/pull/1476)
+* Add grunt lint task for travis [Pull #1472](https://github.com/webcompat/webcompat.com/pull/1472)
+* Add prettier [Pull #1468](https://github.com/webcompat/webcompat.com/pull/1468)
+* Change GA to alternative tracking snippet [Pull #1467](https://github.com/webcompat/webcompat.com/pull/1467)
+* Add grunt build to npm prestart [Pull #1461](https://github.com/webcompat/webcompat.com/pull/1461)
+* Move label editor to right column on issues page [Pull #1389](https://github.com/webcompat/webcompat.com/pull/1389)
+
+## 3.1.7 - 2017-03-30
+
+* Prevent shortcuts firing in textarea [Pull #1464](https://github.com/webcompat/webcompat.com/pull/1464)
+* makes /rate_limit route send 410 Gone [Pull #1463](https://github.com/webcompat/webcompat.com/pull/1463)
+* added grunt build as prestart script [Pull #1461](https://github.com/webcompat/webcompat.com/pull/1461)
+
+## 3.1.6 - 2017-03-29
+
+* Make form.get_metadata string concatenation more idiomatic [Pull #1460](https://github.com/webcompat/webcompat.com/pull/1460)
+* Prevent shortcut to open when typing comment [Pull #1459](https://github.com/webcompat/webcompat.com/pull/1459)
+* Fixed broken contribute link on all issues page [Pull #1458](https://github.com/webcompat/webcompat.com/pull/1458)
+
+## 3.1.5 - 2017-03-28
+
+* Fix contribute button link. No issue.
+
+## 3.1.4 - 2017-03-28
+
+* New title + link text [Pull #1447](https://github.com/webcompat/webcompat.com/pull/1447)
+* bugform.js cleanup [Pull #1435](https://github.com/webcompat/webcompat.com/pull/1435)
+* Add support for ctrl+enter for adding comments [Pull #1431](https://github.com/webcompat/webcompat.com/pull/1431)
+* Adjust CONTRIBUTING.md markdown format [Pull #1429](https://github.com/webcompat/webcompat.com/pull/1429)
+* Update join the team section [Pull #1426](https://github.com/webcompat/webcompat.com/pull/1426)
+* Update usage of Flask-Limiter [Pull #1424](https://github.com/webcompat/webcompat.com/pull/1424)
+* Add title to (many!) pages [Pull #1419](https://github.com/webcompat/webcompat.com/pull/1419)
+* Implement a caching policy for HTML resources [Pull #1415](https://github.com/webcompat/webcompat.com/pull/1415)
+* Add functional tests for file upload screenshots [Pull #1411](https://github.com/webcompat/webcompat.com/pull/1411)
+* Add docstrings to upload tests [Pull #1392](https://github.com/webcompat/webcompat.com/pull/1392)
+
+## 3.1.3 - 2017-03-09
+
+* Tweak CSP Policy [Pull #1410](https://github.com/webcompat/webcompat.com/pull/1410)
+* Clarify steps to reach Github issues [Pull #1407](https://github.com/webcompat/webcompat.com/pull/1407)
+* Add missing description to package.json [Pull #1400](https://github.com/webcompat/webcompat.com/pull/1400)
+* Change Twitter link to include replies [Pull #1399](https://github.com/webcompat/webcompat.com/pull/1399)
+* Add docstrings to some form tests [Pull #1397](https://github.com/webcompat/webcompat.com/pull/1397)
+* Add alternative shell command to activate virtualenv [Pull #1395](https://github.com/webcompat/webcompat.com/pull/1395)
+* Add docstrings to some upload tests [Pull #1392](https://github.com/webcompat/webcompat.com/pull/1392)
+
+## 3.1.2 - 2017-03-03
+
+* Revert "Issue #609 - Implement Cache-Policy decorator" (it regressed logins) [Pull #1387](https://github.com/webcompat/webcompat.com/pull/1387)
+* Only print expected fixture file path when we can't find it [Pull #1382](https://github.com/webcompat/webcompat.com/pull/1382)
+* Add a details param to put info in description textarea [Pull #1329](https://github.com/webcompat/webcompat.com/pull/1379)
+* CONTRIBUTING Guidelines cleanup [Pull #1351](https://github.com/webcompat/webcompat.com/pull/1351)
+
+## 3.1.1 - 2017-03-01
+
+* Add missing semicolon to Strict-Transport-Security header. No issue.
+
+## 3.1.0 - 2017-03-01
+
+* Implment better HTTP caching for HTML routes [Pull #1335](https://github.com/webcompat/webcompat.com/pull/1335)
+* Add support for a problem_type param to preselect type in form [Pull #1362](https://github.com/webcompat/webcompat.com/pull/1362)
+* Tweaks to linting JS paths [Pull #1365](https://github.com/webcompat/webcompat.com/pull/1365)
+* Add an npm lint & fix command [Pull #1366](https://github.com/webcompat/webcompat.com/pull/1366)
+* Add CSP-Report-Only endpoint, and move security headers into app [Pull #1367](https://github.com/webcompat/webcompat.com/pull/1367)
+* Change Twitter link in footer [Pull #1371](https://github.com/webcompat/webcompat.com/pull/1373)
+
+## 3.0.0 - 2017-02-27
+
+Note: from now on, versioning will work in the following way:
+
+1) Bug fixes, docs updates, etc.: affect patch number
+2) New features: affect minor number
+3) API endpoint changes or dependency version updates: affect major number
+
+
+* Switch to double quotes for JS [Pull #1361](https://github.com/webcompat/webcompat.com/pull/1361)
+* Change login message alignment [Pull #1355](https://github.com/webcompat/webcompat.com/pull/1355)
+* Add some badges to README [Pull #1354](https://github.com/webcompat/webcompat.com/pull/1354)
+* Remove cursor: pointer from form. [Pull #1350](https://github.com/webcompat/webcompat.com/pull/1350)
+* Bump NPM deps [Pull #1349](https://github.com/webcompat/webcompat.com/pull/1349)
+* Docs update around Java versions [Pull #1348](https://github.com/webcompat/webcompat.com/pull/1348)
+* Make dark Report Bug button [Pull #1341](https://github.com/webcompat/webcompat.com/pull/1341)
+* Add site:domain.com search [Pull #1340](https://github.com/webcompat/webcompat.com/pull/1340)
+
+## 2.11.0 - 2017-02-10
+
+* Remove support for X-Reported-With header [Pull #1334](https://github.com/webcompat/webcompat.com/pull/1334) [Issue #1254](https://github.com/webcompat/webcompat.com/issues/1254)
+* Update privacy policy around report logging and deletion [Pull #1333](https://github.com/webcompat/webcompat.com/pull/1333) [Issue #705](https://github.com/webcompat/webcompat.com/issues/705)
+* Add padding to wc-Link class [Pull #1331](https://github.com/webcompat/webcompat.com/pull/1331) [Issue #1155](https://github.com/webcompat/webcompat.com/issues/1155)
+* Add more padding around form, for certain viewport widths [Pull #1330](https://github.com/webcompat/webcompat.com/pull/1330) [](https://github.com/webcompat/webcompat.com/issues/1243)
+* Change report bug link to new issues endpoint [Pull #1323](https://github.com/webcompat/webcompat.com/pull/1323) [Issue #1290](https://github.com/webcompat/webcompat.com/issues/1290)
+* Rename `init` command to `setup`; make sure virtualenv is activated before installing pip packages, [Pull #1322](https://github.com/webcompat/webcompat.com/pull/1322) [Issue #1317](https://github.com/webcompat/webcompat.com/issues/1317)
+
+## 2.10.0 - 2017-02-02
+
+* handful of typo fixes (docs, copy, templates) [Pull #1326](https://github.com/webcompat/webcompat.com/pull/1326) [Pull #1326](https://github.com/webcompat/webcompat.com/pull/1325) [Pull #1315](https://github.com/webcompat/webcompat.com/pull/1315) [Pull #1321](https://github.com/webcompat/webcompat.com/pull/1321) [Pull #1302](https://github.com/webcompat/webcompat.com/pull/1302)
+* Add secure flag to session cookie [Pull #1313](https://github.com/webcompat/webcompat.com/pull/1313) [Issue #1312](https://github.com/webcompat/webcompat.com/issues/1312)
+* Upgrade Python modules [Pull #1307](https://github.com/webcompat/webcompat.com/pull/1307) [Issue #1304](https://github.com/webcompat/webcompat.com/issues/1304)
+* Correctly handle missing BACKUP_DEFAULT_DEST [Issue #1294](https://github.com/webcompat/webcompat.com/issues/1294) [Issue #1291](https://github.com/webcompat/webcompat.com/pull/1291)
+* Print message if there's nothing to back up [Pull #1291](https://github.com/webcompat/webcompat.com/pull/1291) [Issue #1161](https://github.com/webcompat/webcompat.com/issues/1161)
+* Update Intern to v3.4 (and fix tests accordingly) [Pull #1277](https://github.com/webcompat/webcompat.com/pull/1277) [Issue #982](https://github.com/webcompat/webcompat.com/issues/982)
+* Fix long URL overflow on issues page [Pull #1275](https://github.com/webcompat/webcompat.com/pull/1275) [](https://github.com/webcompat/webcompat.com/issues/1264)
+* Improvements to comment form and image uploads [Pull #1265](https://github.com/webcompat/webcompat.com/pull/1265) [Issue #1261](https://github.com/webcompat/webcompat.com/issues/1261)
+
+
+## 2.9.4 - 2017-01-11
+
+* Redirect to issue page after bug creation. [Pull #1273](https://github.com/webcompat/webcompat.com/pull/1273) [Issue #1262](https://github.com/webcompat/webcompat.com/issues/1262)
+* Wrap really long URL links. [Pull #1275](https://github.com/webcompat/webcompat.com/pull/1275) [Issue #1264](https://github.com/webcompat/webcompat.com/issues/1264)
+
+## 2.9.3 - 2017-01-06
+
+* support a src param to track "reported-with" avenues [Issue #1249](https://github.com/webcompat/webcompat.com/pull/1249)
+* Handle blobs in addition to data URIs in bugform.js [Pull #1253](https://github.com/webcompat/webcompat.com/pull/1253) [Issue #1248](https://github.com/webcompat/webcompat.com/issues/1248)
+
+## 2.9.2 - 2016-12-22
+
+* Kill thanks page [Pull #1247](https://github.com/webcompat/webcompat.com/pull/1247) [Issue #646](https://github.com/webcompat/webcompat.com/issues/646)
+* Add header closed class for issues page [Pull #1246](https://github.com/webcompat/webcompat.com/pull/1246) [Issue #1245](https://github.com/webcompat/webcompat.com/issues/1245)
+* Remove QR code related code [Pull #1242](https://github.com/webcompat/webcompat.com/pull/1242) [](https://github.com/webcompat/webcompat.com/issues/1239)
+* Restrict textarea resize to vertical [Pull #1241](https://github.com/webcompat/webcompat.com/pull/1241) [](https://github.com/webcompat/webcompat.com/issues/1230)
+
+## 2.9.1 - 2016-12-13
+
+* Add cityweb.de to spamlist [Pull #1238](https://github.com/webcompat/webcompat.com/pull/1238) [Issue #1237](https://github.com/webcompat/webcompat.com/issues/1237)
+* Test failure fixes [Issue #1236](https://github.com/webcompat/webcompat.com/issues/1236) (no PR)
+* Minor layout tweaks [Issue #1235](https://github.com/webcompat/webcompat.com/issues/1235) (no PR)
+
+## 2.9.0 - 2016-12-09 (not deployed due to bugs in issues page re-design)
+
+* Display absolute date for dates more than 1 week old [Pull #1224](https://github.com/webcompat/webcompat.com/pull/1224) [Issue #1154](https://github.com/webcompat/webcompat.com/issues/1154)
+* Improve issues page design [Pull #1104](https://github.com/webcompat/webcompat.com/pull/1104) [Issue #545](https://github.com/webcompat/webcompat.com/issues/545)
+
+## 2.8.2 - 2016-11-15
+
+* Un-break copyURL, oops! [Pull #1227](https://github.com/webcompat/webcompat.com/pull/1227) [Issue #1226](https://github.com/webcompat/webcompat.com/issues/1226)
+
+## 2.8.1 - 2016-11-09
+
+* Update humans.txt [Pull #1220](https://github.com/webcompat/webcompat.com/pull/1220) [Issue #1218](https://github.com/webcompat/webcompat.com/issues/1218)
+* Use dot instead of paren in STR [Pull #1213](https://github.com/webcompat/webcompat.com/pull/1213) [Issue #1206](https://github.com/webcompat/webcompat.com/issues/1206)
+* Don't allow non webby URLs to pass form validation [Pull #1208](https://github.com/webcompat/webcompat.com/pull/1208) [Issue #1054](https://github.com/webcompat/webcompat.com/issues/1054)
+* Rename NewCollection to NeedsTriageCollection[Pull #1202](https://github.com/webcompat/webcompat.com/pull/1202) [Issue #1197](https://github.com/webcompat/webcompat.com/issues/1197)
+
+## 2.8 - 2016-10-14
+
+* Create an /issues/new view for reporting issues [Pull #1198](https://github.com/webcompat/webcompat.com/pull/1198) [Issue #1193](https://github.com/webcompat/webcompat.com/issues/1193)
+* Add checkmark validation for os and browser names [Pull #1186](https://github.com/webcompat/webcompat.com/pull/1186) [Issue #1167](https://github.com/webcompat/webcompat.com/issues/1167)
+
+## 2.7.3 - 2016-09-30
+
+* Update Markdown-it [Pull #1184](https://github.com/webcompat/webcompat.com/pull/1184) [Issue #1183](https://github.com/webcompat/webcompat.com/issues/1183) [Issue #1148](https://github.com/webcompat/webcompat.com/issues/1148)
+* Add hidden metadata to determine how people are reporting issues [Issue #255](https://github.com/webcompat/webcompat.com/issues/355) (no PR, because @miketaylr pushed straight to master... oops)
+
+## 2.7.2.1 - 2016-09-27
+
+* Update (failing) webhook test. Oops. (no issue)
+
+## 2.7.2 - 2016-09-23
+
+* Use secure webhooks (no issue)
+* Link to invalid issues wiki from CONTRIBUTING [Pull #1180](https://github.com/webcompat/webcompat.com/pull/1180) [Issue #1175](https://github.com/webcompat/webcompat.com/issues/1175)
+* Fix truncated text on contributors page [Pull #1173](https://github.com/webcompat/webcompat.com/pull/1173) [Issue #1004](https://github.com/webcompat/webcompat.com/issues/1004)
+* Add class to hide add-on download link (for add-on users)[Pull #1170](https://github.com/webcompat/webcompat.com/pull/1170) [Issue #1169](https://github.com/webcompat/webcompat.com/issues/1169)
+* (re-land) Display all comments for an issue [Pull #1147](https://github.com/webcompat/webcompat.com/pull/1147) [Issue #1058](https://github.com/webcompat/webcompat.com/issues/1058)
+
+## 2.7.1 - 2016-07-27
+
+* Adds block for qiangpiaoruanjian [Pull #1142](https://github.com/webcompat/webcompat.com/pull/1142) [Issue #1141](https://github.com/webcompat/webcompat.com/issues/1141)
+* Render all comments (not just 30) [Pull #1119](https://github.com/webcompat/webcompat.com/pull/1119) [Issue #1058](https://github.com/webcompat/webcompat.com/issues/1058)
+* Add missing fixture files [Pull #1129](https://github.com/webcompat/webcompat.com/pull/1129) [Issue #1123](https://github.com/webcompat/webcompat.com/pull/1123)
+* Add 301 redirect for /new endpoint [Pull #1130](https://github.com/webcompat/webcompat.com/pull/1130) [Issue #1120](https://github.com/webcompat/webcompat.com/issues/1120)
+
+
+## 2.7.0 - 2016-07-11
+
+* Add IP logging for bug reports (to be able to investigate abuse) [Pull #1125](https://github.com/webcompat/webcompat.com/pull/1125) * [Issue #719](https://github.com/webcompat/webcompat.com/issues/719)
+* Fix CSS variable name [Pull #1122](https://github.com/webcompat/webcompat.com/pull/1122) [Issue #1121](https://github.com/webcompat/webcompat.com/issues/1121)
+* Handle Link headers from Comments endpoints [Pull #1117](https://github.com/webcompat/webcompat.com/pull/1117) [Issue #1100](https://github.com/webcompat/webcompat.com/pull/1100)
+* Replace "new" with "needs triage" [Pull #1114](https://github.com/webcompat/webcompat.com/pull/1114) [Issue #975](https://github.com/webcompat/webcompat.com/issues/975)
+* Document strict review comment policy [Pull #1112](https://github.com/webcompat/webcompat.com/pull/1112) [Issue #1110](https://github.com/webcompat/webcompat.com/issues/1110)
+* Pointer-events tweak on icon images for Chrome [Pull #1107](https://github.com/webcompat/webcompat.com/pull/1107) [Issue #1088](https://github.com/webcompat/webcompat.com/issues/1088)
+
 ## 2.6.1 - 2016-06-28
 
 * Hide NSFW images if they have a nsfw label [Pull #1087](https://github.com/webcompat/webcompat.com/pull/1087) [Issue #1001](https://github.com/webcompat/webcompat.com/pull/1001)

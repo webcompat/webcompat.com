@@ -1,9 +1,9 @@
-/** @define UI */
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-html {
-  -ms-text-size-adjust: 100%;
-  -moz-text-size-adjust: 100%;
-  -webkit-text-size-adjust: 100%;
+html {  /* stylelint-disable selector-no-type  */
+  text-size-adjust: 100%;
 }
 
 /* Viewport */
@@ -18,61 +18,56 @@ body {
   color: var(--base-variantColorDark);
 }
 
-  /* Configuration, comunication between JS and CSS */
-  body:after {
-    display:none;
-    content:'{"webcompat":"ok"}';
+/* Configuration, comunication between JS and CSS */
+body::after {
+  display: none;
+  content: '{"webcompat":"ok"}';  /* stylelint-disable string-quotes  */
+}
+
+@media all and (max-width: 73.75em) {
+  body::after {
+    content: '{"webcompat":"ok"}';
   }
+}
 
-
-  @media all and (max-width: 73.75em) {
-
-    body:after {
-      content:'{"webcompat":"ok"}';
-    }
+@media all and (max-width: 61.87em) {
+  body::after {
+    content: '{"webcompat":"ok"}';
   }
+}
 
-  @media all and (max-width: 61.87em) {
-
-    body:after {
-      content:'{"webcompat":"ok"}';
-    }
+@media all and (max-width: 28.12em) {
+  body::after {
+    content: '{"webcompat":"ok","resizeEditor":true}';
   }
-
-  @media all and (max-width: 28.12em) {
-
-    body:after {
-      content:'{"webcompat":"ok","resizeEditor":true}';
-    }
-  }
+}
 
 /* min max class */
 .wc-UIViewport {
   min-width: var(--base-minWidth);
   max-width: var(--base-maxWidth);
-  margin:0 auto;
+  margin: 0 auto;
 }
 
 /* Content */
 .wc-UIContent {
-  position:relative;
-  width:var(--base-widthContent);
+  position: relative;
+  width: var(--base-widthContent);
   margin: 0 auto;
 }
 
-  /* state */
-  .wc-UIContent.is-hidden {
-    display: none;
-  }
+/* state */
+.wc-UIContent.is-hidden {
+  display: none;
+}
 
-  @media all and (max-width: 73.75em) {
-
-    .wc-UIContent {
-      width:auto;
-      padding-left: 1em;
-      padding-right: 1em;
-    }
+@media all and (max-width: 75em) {
+  .wc-UIContent {
+    width: auto;
+    padding-left: 1em;
+    padding-right: 1em;
   }
+}
 
 /* Section */
 .wc-UISection {
@@ -80,15 +75,13 @@ body {
   padding-bottom: 3em;
 }
 
-  @media all and (max-width: 28.12em) {
-
-    .wc-UISection {
-      padding-top: 2em;
-      padding-bottom: 2em;
-    }
+@media all and (max-width: 28.12em) {
+  .wc-UISection {
+    padding-top: 2em;
+    padding-bottom: 2em;
   }
+}
 
-  /* modifier */
-  .wc-UISection--backgroundColor {
-    background-color: #f0f0f0;
-  }
+.wc-UISection--backgroundColor {
+  background-color: #f0f0f0;
+}

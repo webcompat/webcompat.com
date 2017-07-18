@@ -1,4 +1,6 @@
-  /** @define Hero */
+/* This Source Code Form is subject to the terms of the Mozilla Public
+* License, v. 2.0. If a copy of the MPL was not distributed with this
+* file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 :root {
   --Hero-fontSize: var(--base-fontSize);
@@ -8,146 +10,145 @@
 
 /* main class */
 .wc-Hero {
-  font-size:var(--Hero-fontSize);
+  font-size: var(--Hero-fontSize);
   background-color: var(--Hero-backgroundColor);
 }
 
-  /* wrapper */
-  .wc-Hero-wrapper {
-    display: flex;
-    justify-content: space-between;
-  }
+/* wrapper */
+.wc-Hero-wrapper {
+  display: flex;
+  justify-content: space-between;
+}
 
-  /* home text */
+/* home text */
+.wc-Hero-textHome {
+  padding: 6em 0 7.25em;
+}
+
+@media all and (max-width: 28.12em) {
   .wc-Hero-textHome {
-    padding: 6em 0 7.25em 0;
+    padding: 3em 0;
   }
+}
 
-  @media all and (max-width: 28.12em) {
+/* contributors texte */
+.wc-Hero-textContributors {
+  padding: 4em 0 5.2em;
+}
 
-    .wc-Hero-textHome  {
-      padding: 3em 0;
-    }
-  }
-
-  /* contributors texte */
+@media all and (max-width: 28.12em) {
   .wc-Hero-textContributors {
-    padding: 4em 0px 5.2em;
+    padding: 3em 0 4.2em;
   }
+}
 
-  @media all and (max-width: 28.12em) {
+/* title */
+.wc-Hero-title {
+  color: #414042;
+}
 
-    .wc-Hero-textContributors  {
-      padding: 3em 0 4.20em;
-    }
+/* submit bug */
+.wc-Hero-link {
+  display: inline-block;
+  position: relative;
+  font-size: 2em;
+  text-decoration: none;
+  top: 1em;
+  margin-top: 2.4em;
+  padding: .4em .6em;
+  border-radius: .3em;
+  border: 1px solid var(--Hero-backgroundColor);
+  background: #414141;
+  color: var(--Hero-backgroundColor);
+  opacity: .95;
+}
+
+/* event */
+.wc-Hero-link:hover,
+.wc-Hero-link:focus {
+  text-decoration: none;
+}
+
+/* state */
+.wc-Hero-link.is-open {
+  top: 2em;
+}
+
+/* icon */
+.wc-Hero-link-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.15em;
+  height: 1.15em;
+  line-height: 1.15em;
+  vertical-align: middle;
+  margin: 0 0 0 .3em;
+  background-color: var(--base-variantColorDark);
+  color: var(--Hero-backgroundColor);
+  border-radius: 50%;
+  transition: all .7s linear 0s;
+  padding: .1em;
+}
+
+/* modifier */
+.wc-Hero-link-icon--active {
+  display: none;
+  border: 1px solid var(--Hero-backgroundColor);
+}
+
+/* hover a - icon down */
+.no-touch .wc-Hero-link:hover .wc-Hero-link-icon--active,
+.wc-Hero-link.is-open .wc-Hero-link-icon--active {
+  display: inline-flex;
+  border: 1px solid var(--Hero-backgroundColor);
+}
+
+.no-touch .wc-Hero-link:hover .wc-Hero-link-icon--default,
+.wc-Hero-link.is-open .wc-Hero-link-icon--default {
+  display: none;
+}
+
+/* hover open a - icon up */
+.no-touch .wc-Hero-link.is-open:hover .wc-Hero-link-icon--default {
+  display: inline-flex;
+}
+
+.no-touch .wc-Hero-link.is-open:hover .wc-Hero-link-icon--active {
+  display: none;
+}
+
+@media all and (max-width: 28.12em) {
+  .wc-Hero-link.is-open {
+    top: 1.25em;
   }
+}
 
-  /* title */
-  .wc-Hero-title {
-    color:#414042;
+/* svg image */
+.wc-Hero-light {
+  height: 20em;
+}
+
+.wc-Hero-light > * { /* stylelint-disable selector-no-universal */
+  fill: #414042;
+}
+
+.wc-Hero-lightFilament {
+  fill: #fff;
+}
+
+/* contributors */
+.wc-Hero--contributors .wc-Hero-light {
+  height: 15em;
+}
+
+/* is-active */
+.wc-Hero-SVG.is-active .wc-Hero-lightFilament {
+  fill: #e4bd0c;
+}
+
+@media all and (max-width: 37.5em) {
+  .wc-Hero-light {
+    display: none;
   }
-
-  /* submit bug */
-  .wc-Hero-link {
-    display: inline-block;
-    position: relative;
-    font-size: 2em;
-    color: #414042;
-    text-decoration: none;
-    transition: top 100ms ease-out 0ms;
-    top:1em;
-  }
-
-      /* event */
-      .wc-Hero-link:hover,
-      .wc-Hero-link:focus {
-        text-decoration:none;
-        color: #fff;
-      }
-
-      /* state */
-      .wc-Hero-link.is-open {
-        top: 2em;
-        transition: top 100ms ease-out 0ms;
-      }
-
-      /* icon */
-      .wc-Hero-link-icon {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        width: 1.15em;
-        height: 1.15em;
-        line-height: 1.15em;
-        vertical-align: middle;
-        margin: 0 0 0 .3em;
-        background-color: #414042;
-        color: var(--Hero-colorIcon);
-        border-radius: 50%;
-        transition: all 0.3s linear 0s;
-      }
-
-        /* modifier */
-        .wc-Hero-link-icon--active {
-          display:none;
-        }
-
-    /* hover  icon */
-    .no-touch .wc-Hero-link:hover .wc-Hero-link-icon {
-      background-color: var(--Hero-colorIcon);
-      color: #fff;
-      transition: all 0.3s linear 0s;
-    }
-    /* hover a - icon down */
-    .no-touch .wc-Hero-link:hover .wc-Hero-link-icon--active,
-    .wc-Hero-link.is-open .wc-Hero-link-icon--active {
-      display:inline-flex;
-    }
-    .no-touch .wc-Hero-link:hover .wc-Hero-link-icon--default,
-    .wc-Hero-link.is-open .wc-Hero-link-icon--default {
-      display:none;
-    }
-
-    /* hover open a - icon up */
-    .no-touch .wc-Hero-link.is-open:hover .wc-Hero-link-icon--default {
-      display:inline-flex;
-    }
-    .no-touch .wc-Hero-link.is-open:hover .wc-Hero-link-icon--active {
-      display:none;
-    }
-
-    @media all and (max-width: 28.12em) {
-
-      .wc-Hero-link.is-open {
-        top: 1.25em;
-      }
-    }
-
-    /* svg image */
-    .wc-Hero-light {
-      height:20em;
-    }
-
-    .wc-Hero-light > * {
-      fill : #414042;
-    }
-
-    .wc-Hero-lightFilament {
-      fill: #fff;
-    }
-
-    /* contributors */
-    .wc-Hero--contributors .wc-Hero-light {
-      height:15em;
-    }
-        /* is-active */
-        .wc-Hero-SVG.is-active .wc-Hero-lightFilament {
-          fill: #E4BD0C;
-        }
-
-    @media all and (max-width: 37.5em) {
-
-      .wc-Hero-light {
-        display:none;
-      }
-    }
+}

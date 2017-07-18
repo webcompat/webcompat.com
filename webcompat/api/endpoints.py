@@ -9,6 +9,7 @@
 This is used to make API calls to GitHub, either via a logged-in users
 credentials or as a proxy on behalf of anonymous or unauthenticated users.'''
 
+
 import json
 
 from flask import abort
@@ -44,6 +45,7 @@ def proxy_issue(number):
 
 
 @api.route('/issues/<int:number>/edit', methods=['PATCH'])
+@mockable_response
 def edit_issue(number):
     '''XHR endpoint to push back edits to GitHub for a single issue.
 
@@ -51,8 +53,16 @@ def edit_issue(number):
     edit issues.
     '''
     path = 'repos/{0}/{1}'.format(ISSUES_PATH, number)
-    edit = proxy_request('patch', path, data=request.data)
-    return (edit.content, edit.status_code, {'content-type': JSON_MIME})
+    # we can only change the state of the issue: closed or open
+    states_list = ['closed', 'open']
+    patch_data = json.loads(request.data)
+    # check to see if we're trying to change state from/to closed or open
+    # and make sure that's the only thing we're trying to change
+    if patch_data.get('state') in states_list and len(patch_data) == 1:
+        edit = proxy_request('patch', path, data=request.data)
+        return (edit.content, edit.status_code, {'content-type': JSON_MIME})
+    else:
+        abort(403)
 
 
 @api.route('/issues')
@@ -75,6 +85,7 @@ def proxy_issues():
 
 
 @api.route('/issues/<username>/<parameter>')
+@mockable_response
 def get_user_activity_issues(username, parameter):
     '''API endpoint to return issues related to a user.
 
@@ -206,7 +217,7 @@ def proxy_comments(number):
     Either as an authed user, or as one of our proxy bots.
     '''
     params = request.args.copy()
-    if request.method == 'POST':
+    if request.method == 'POST' and g.user:
         path = 'repos/{0}/{1}/comments'.format(ISSUES_PATH, number)
         return api_request('post', path, params=params,
                            data=get_comment_data(request.data))
@@ -240,13 +251,3 @@ def get_repo_labels():
     params = request.args.copy()
     path = 'repos/{0}/labels'.format(REPO_PATH)
     return api_request('get', path, params=params)
-
-
-@api.route('/rate_limit')
-def get_rate_limit():
-    '''Endpoint to display the current GitHub API rate limit.
-
-    Will display for the logged in user, or webcompat-bot if not logged in.
-    See https://developer.github.com/v3/rate_limit/.
-    '''
-    return api_request('get', 'rate_limit')

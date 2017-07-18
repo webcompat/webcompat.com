@@ -1,16 +1,11 @@
 {% from "web_modules/dropdown.html" import dropdown with context %}
 {% from "web_modules/tag.html" import tag with context %}
 
-<script type="text/template" id="issuelist-filter-tmpl">
-    <div class="wc-SearchIssue-Dropdown">
-       {{ dropdown('large', 'js-Dropdown') }}
-    </div>
-    <div class="wc-SearchIssue-filter">
-      {% for category in categories %}
-      {{ tag('filter', category) }}
-      {% endfor %}
-    </div>
-</script>
+<div class="wc-SearchIssue-filter">
+  {% for category in categories %}
+  {{ tag('filter', category) }}
+  {% endfor %}
+</div>
 
 <script type="text/template" id="dropdown-tmpl">
   <button type="button" class="wc-Dropdown-toggle js-Dropdown-toggle">

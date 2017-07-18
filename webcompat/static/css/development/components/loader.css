@@ -1,25 +1,32 @@
-/** @define Loader */
+/* This Source Code Form is subject to the terms of the Mozilla Public
+* License, v. 2.0. If a copy of the MPL was not distributed with this
+* file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 .wc-Loader {
-  display:none;
-  position:fixed;
-  background-image:url(/img/loader.gif);
-  z-index:10;
-  background-color:rgba(255,255,255,0);
-  top:0px;left:0px;right:0px;bottom:0px;
-  background-position:center center;
-  background-repeat:no-repeat;
+  display: none;
+  position: fixed;
+  background-image: url("../../../img/loader.gif");
+  z-index: 10;
+  background-color: rgba(255, 255, 255, 0);
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-position: center center;
+  background-repeat: no-repeat;
 }
-  /* states */
-  .wc-Loader.is-active {
-    display:block;
-    background-color:rgba(255,255,255,.8);
-  }
+
+/* states */
+.wc-Loader.is-active {
+  display: block;
+  background-color: rgba(255, 255, 255, .8);
+}
 
 .wc-Upload-Loader {
-  display:none;
-  position:absolute;
-  right:4%;top: 27%;
+  display: none;
+  position: absolute;
+  right: 4%;
+  top: 27%;
   width: 24px;
   height: 24px;
 }

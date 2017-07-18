@@ -2,9 +2,9 @@
   <div class="wc-UIContent">
     <h2 class="wc-Title wc-Title--l">Latest Untriaged Issues</h2>
     <div id="js-lastIssue">
-      <script type="text/template" id="new-tmpl">
-        <% if (newIssues.length) { %>
-          <% _.each(newIssues, function(issue) { %>
+      <script type="text/template" id="needstriage-tmpl">
+        <% if (issues.length) { %>
+          <% _.each(issues, function(issue) { %>
             {% include "web_modules/issue-list.html" %}
           <% }); %>
         <% } else { %>

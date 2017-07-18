@@ -2,57 +2,46 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-define([
-  'intern',
-  'intern!object',
-  'intern/chai!assert',
-  'require',
-  'tests/functional/lib/helpers'
-], function(intern, registerSuite, assert, require, FunctionalHelpers) {
-  'use strict';
+define(
+  [
+    "intern",
+    "intern!object",
+    "intern/chai!assert",
+    "require",
+    "tests/functional/lib/helpers"
+  ],
+  function(intern, registerSuite, assert, require, FunctionalHelpers) {
+    "use strict";
+    registerSuite(function() {
+      var url = function(path) {
+        return intern.config.siteRoot + path;
+      };
 
-  registerSuite(function() {
+      return {
+        name: "Labels (auth)",
 
-    var url = function(path) {
-      return intern.config.siteRoot + path;
-    };
+        setup: function() {
+          return FunctionalHelpers.login(this);
+        },
 
-    return {
-      name: 'Labels (auth)',
+        teardown: function() {
+          return FunctionalHelpers.logout(this);
+        },
 
-      setup: function() {
-        return FunctionalHelpers.login(this);
-      },
-
-      teardown: function() {
-        return FunctionalHelpers.logout(this);
-      },
-
-      'Label gear is visible': function() {
-        return this.remote
-          .setFindTimeout(intern.config.wc.pageLoadTimeout)
-          .get(require.toUrl(url('/issues/2')))
-          .findByCssSelector('.js-Issue-labelEditor')
-          .isDisplayed()
-          .then(function(displayed) {
-            assert.isTrue(displayed, 'The label gear icon is visible once logged');
-          })
-          .end();
-      },
-
-      'Label widget is opening on click': function() {
-        return this.remote
-          .setFindTimeout(intern.config.wc.pageLoadTimeout)
-          .get(require.toUrl(url('/issues/2')))
-          .findByCssSelector('.js-LabelEditorLauncher').click()
-          .end()
-          .findByCssSelector('.js-LabelEditor')
-          .isDisplayed()
-          .then(function(displayed) {
-            assert.isTrue(displayed, 'The label editor widget is open');
-          })
-          .end();
-      }
-    };
-  });
-});
+        "Label widget opens": function() {
+          return FunctionalHelpers.openPage(
+            this,
+            url("/issues/2"),
+            ".js-LabelEditorLauncher",
+            true /* longerTimeout */
+          )
+            .findByCssSelector(".js-LabelEditorLauncher")
+            .click()
+            .end()
+            .findByCssSelector(".js-LabelEditor")
+            .end();
+        }
+      };
+    });
+  }
+);

@@ -1,13 +1,14 @@
 {%- extends "layout.html" -%}
 {%- block body -%}
 {% include "topbar.html" %}
-<main role="main">
+<main role="main" class="wc-HomePage">
   <div class="wc-Loader js-Loader"></div>
   {% include "home-page/hero.html" %}
   {% include "home-page/form.html" %}
   {% include "home-page/threesteps.html" %}
   {% include "home-page/browse-issues.html" %}
   {% include "home-page/join-us.html" %}
+  {% include "home-page/thanks.html" %}
 </main>
 {% endblock %}
 {%- block extrascripts -%}

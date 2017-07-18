@@ -1,99 +1,100 @@
-/** @define UploadForm */
+/* This Source Code Form is subject to the terms of the Mozilla Public
+* License, v. 2.0. If a copy of the MPL was not distributed with this
+* file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 :root {
   --UploadForm-backgroundColorButton: var(--base-colorDark);
 }
 
 .wc-UploadForm {
-  display: block;
+  display: flex;
   position: relative;
   text-align: center;
-  border: dashed 1px #ccc;
-  border-radius: 20px;
   min-height: 250px;
   cursor: pointer;
-  overflow: hidden;
   z-index: 3;
+  overflow: hidden;
 }
 
-  /* modifier new comment of existing bug */
-  .wc-UploadForm--new {
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 10px;
-    border-bottom-left-radius: 10px;
-    border-top: 0;
-    border-left: solid 1px #ccc;
-    border-right: solid 1px #ccc;
-    border-bottom: solid 1px #ccc;
-    min-height: 35px;
-  }
+/* modifier homepage uploadform */
+.wc-UploadForm--homePage {
+  border: dashed 1px rgb(204, 204, 204);
+  border-radius: 20px;
+}
 
-  /* Form upload wrapper */
-  .wc-UploadForm-wrapper {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 2;
-  }
-    /* state */
-    .wc-UploadForm-wrapper.is-hidden {
-      display: none;
-    }
+/* modifier new comment of existing bug */
+.wc-UploadForm--new {
+  display: flex;
+  background-color: #404040;
+  min-height: 35px;
+}
 
-    /* icon */
-    .wc-UploadForm-icon {
-      font-size: 6.2em;
-      margin: 0 0 16px;
-      color: #c8c8c8;
-    }
+/* Form upload wrapper */
+.wc-UploadForm-wrapper {
+  z-index: 2;
+  padding: 1rem;
+  align-content: center;
+  align-items: center;
+  flex: 1 0 0;
+}
 
-    /* label */
-    .wc-UploadForm-label {
-      position: relative;
-      display: inline-block;
-      margin-bottom: 5px;
-      color: #000;
-      font-weight: 700;
-      cursor: pointer;
-      text-decoration: underline;
-    }
+/* state */
+.wc-UploadForm-wrapper.is-hidden {
+  display: none;
+}
 
-      /* modifier new label of existing bug */
-      .wc-UploadForm-label--uploadForm {
-        font-size: .8125em;
-        font-weight: 400;
-        text-decoration: none;
-      }
+/* icon */
+.wc-UploadForm-icon {
+  font-size: 6.2em;
+  margin: 0 0 16px;
+  color: #c8c8c8;
+}
 
-      /* link */
-      .wc-UploadForm-label--link {
-        color: #FFC900;
-        font-weight: 600;
-        text-decoration: underline;
-      }
+/* label */
+.wc-UploadForm-label {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 5px;
+  color: #ccc;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: underline;
+}
 
-    /* Upload button */
-    .wc-UploadForm-button {
-      position: absolute;
-      width: 100%;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      padding: 1em 0;
-      font-weight:700;
-      background-color: var(--UploadForm-backgroundColorButton);
-      border-bottom-left-radius: 20px;
-      border-bottom-right-radius: 20px;
-      cursor: pointer;
-      text-align: center;
-      text-decoration: underline;
-      transform: translateY(0);
-      transition: transform .2s linear 0s;
-    }
+/* modifier new label of existing bug */
+.wc-UploadForm-label--uploadForm {
+  font-size: .8125em;
+  font-weight: 400;
+  text-decoration: none;
+}
 
-      /* state */
-      .wc-UploadForm-button.is-hidden {
-        transform: translateY(100%);
-      }
+/* link */
+.wc-UploadForm-label--link {
+  color: #ffc900;
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+/* Upload button */
+.wc-UploadForm-button {
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 1em 0;
+  font-weight: 700;
+  background-color: var(--UploadForm-backgroundColorButton);
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: underline;
+  transform: translateY(0);
+  transition: transform .2s linear 0s;
+}
+
+/* state */
+.wc-UploadForm-button.is-hidden {
+  transform: translateY(100%);
+}

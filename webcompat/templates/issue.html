@@ -1,16 +1,12 @@
 {% extends "layout.html" %}
+{% block title %}Issue #{{ number }}{% endblock %}
 {% block body %}
   {% include "shared/nav.html" %}
-  <main class="wc-UIContent js-Issue is-hidden" role="main">
+  <main class="wc-UISection wc-UISection--backgroundColor" role="main">
     <div class="wc-Issue">
-      <section class="wc-UISection">
-        {% include "issue/issue-header.html" %}
-        <div class="wc-Issue-labels js-Issue-labels">
-          {% include "issue/issue-labels.html" %}
-        </div>
-        <div class="wc-Issue-report">
-          {% include "issue/issue-report.html" %}
-        </div>
+      <section class="wc-UIContent js-Issue is-hidden">
+        {% include "issue/issue-aside.html" %}
+        {% include "issue/issue-information.html" %}
         <div class="wc-Issue-commentList js-Issue-commentList">
           {% include "issue/issue-comment-list.html" %}
         </div>
@@ -22,8 +18,11 @@
           <p class="wc-Issue-login">Please <a class="wc-Link" href="{{ url_for('login') }}">login</a> to edit issues.</p>
         {% endif %}
         <p>
-          <span class="wc-Keyhint">G</span> takes you to the
-          <a class="wc-Link" href="https://github.com/{{ config['ISSUES_REPO_URI'] }}/{{ number }}">GitHub view</a> of this page.
+          <a class="wc-Link wc-GithubLink" href="https://github.com/{{ config['ISSUES_REPO_URI'] }}/{{ number }}"><span class="wc-GithubLink-Icon"></span>View issue on Github</a>
+        </p>
+        <p>
+          <span class="wc-GithubLink-DesktopOnly">Shortcut: Press <b>l</b> on your keyboard to open the label editor.</span> <br />
+          <span class="wc-GithubLink-DesktopOnly">Shortcut: Press <b>g</b> on your keyboard to be taken to the GitHub view of this page.</span>
         </p>
       </section>
     </div>
@@ -35,13 +34,11 @@ var repoPath="{{config['ISSUES_REPO_URI']}}";</script>
 {%- if config.PRODUCTION or config.STAGING -%}
 <script src="{{ url_for('static', filename='js/issues.min.js')|bust_cache }}"></script>
 {% else %}
-<script src="{{ url_for('static', filename='js/vendor/qr.min.js') }}"></script>
 <script src="{{ url_for('static', filename='js/lib/models/label-list.js') }}"></script>
 <script src="{{ url_for('static', filename='js/lib/labels.js') }}"></script>
 <script src="{{ url_for('static', filename='js/lib/models/issue.js') }}"></script>
 <script src="{{ url_for('static', filename='js/lib/models/comment.js') }}"></script>
 <script src="{{ url_for('static', filename='js/lib/comments.js') }}"></script>
-<script src="{{ url_for('static', filename='js/lib/qrcode.js') }}"></script>
 <script src="{{ url_for('static', filename='js/lib/issues.js') }}"></script>
 {%- endif %}
 {% endblock %}

@@ -5,6 +5,8 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 from datetime import datetime
+from functools import update_wrapper
+from functools import wraps
 import hashlib
 import json
 import math
@@ -16,11 +18,9 @@ import urlparse
 from babel.dates import format_timedelta
 from flask import abort
 from flask import g
-from flask import redirect
+from flask import make_response
 from flask import request
 from flask import session
-from flask import url_for
-from functools import wraps
 from ua_parser import user_agent_parser
 
 from webcompat import app
@@ -99,6 +99,38 @@ def get_user_info():
         session['avatar_url'] = gh_user.get('avatar_url')
 
 
+def get_version_string(dictionary):
+    '''Return version string from dict.
+
+    Used on `user_agent` or `os` dict
+    with `major`, and optional `minor` and `patch`.
+    Minor and patch, orderly, are added only if they exist.
+    '''
+    version = dictionary.get('major')
+    if not version:
+        return ''
+    minor = dictionary.get('minor')
+    if not minor:
+        return version
+    patch = dictionary.get('patch')
+    if not patch:
+        return version + "." + minor
+    return version + "." + minor + "." + patch
+
+
+def get_name(dictionary):
+    '''Return name from UA or OS dictionary's `family`.
+
+    As bizarre UA or OS strings can be parsed like so:
+    {'major': None, 'minor': None, 'family': 'Other', 'patch': None}
+    we return "Unknown", rather than "Other"
+    '''
+    name = dictionary.get('family')
+    if name.lower() == "other":
+        name = "Unknown"
+    return name
+
+
 def get_browser(user_agent_string=None):
     '''Return browser name family and version.
 
@@ -107,26 +139,17 @@ def get_browser(user_agent_string=None):
     if user_agent_string and isinstance(user_agent_string, basestring):
         ua_dict = user_agent_parser.Parse(user_agent_string)
         ua = ua_dict.get('user_agent')
-        name = ua.get('family')
-        version = ua.get('major', u'Unknown')
-        # Add on the minor and patch version numbers if they exist
-        if version != u'Unknown' and ua.get('minor'):
-            version = version + "." + ua.get('minor')
-            if ua.get('patch'):
-                version = version + "." + ua.get('patch')
-        else:
-            version = ''
+        name = get_name(ua)
+        # if browser is unknown, we don't need further details
+        if name == "Unknown":
+            return "Unknown"
+        version = get_version_string(ua)
         # Check for tablet devices
         if ua_dict.get('device').get('model') == 'Tablet':
             model = '(Tablet) '
         else:
             model = ''
-        rv = '{0} {1}{2}'.format(name, model, version)
-        # bizarre UA strings can be parsed like so:
-        # {'major': None, 'minor': None, 'family': 'Other', 'patch': None}
-        # but we want to return "Unknown", rather than "Other"
-        if rv.strip().lower() == "other":
-            return "Unknown"
+        rv = '{0} {1}{2}'.format(name, model, version).rstrip()
         return rv
     return "Unknown"
 
@@ -152,16 +175,12 @@ def get_os(user_agent_string=None):
     if user_agent_string and isinstance(user_agent_string, basestring):
         ua_dict = user_agent_parser.Parse(user_agent_string)
         os = ua_dict.get('os')
-        version = os.get('major', u'Unknown')
-        if version != u'Unknown' and os.get('minor'):
-            version = version + "." + os.get('minor')
-            if os.get('patch'):
-                version = version + "." + os.get('patch')
-        else:
-            version = ''
-        rv = '{0} {1}'.format(os.get('family'), version).rstrip()
-        if rv.strip().lower() == "other":
+        name = get_name(os)
+        # if OS is unknown, we don't need further details
+        if name == "Unknown":
             return "Unknown"
+        version = get_version_string(os)
+        rv = '{0} {1}'.format(name, version).rstrip()
         return rv
     return "Unknown"
 
@@ -267,12 +286,17 @@ def rewrite_links(link_header):
     header_link_data = parse_link_header(link_header)
     for data in header_link_data:
         uri = data['link']
-        api_path, endpoint_path = uri.rsplit('/', 1)
-        if api_path.strip().startswith('https://api.github.com/repositories'):
-            data['link'] = endpoint_path.replace('issues?', '/api/issues?')
-        if api_path.strip().startswith('https://api.github.com/search'):
-            data['link'] = endpoint_path.replace('issues?',
-                                                 '/api/issues/search?')
+        uri_tuple = urlparse.urlsplit(uri)
+        path = uri_tuple.path
+        query = uri_tuple.query
+        if path.startswith('/repositories/'):
+            # remove repositories and takes the second element
+            # of ['17839063', 'issues/398/comments']
+            path = path.lstrip('/repositories/').split('/', 1)[1]
+        elif path.startswith('/search/issues'):
+            path = 'issues/search'
+        api_path = '{}{}'.format('/api/', path)
+        data['link'] = urlparse.urlunsplit(('', '', api_path, query, ''))
     return format_link_header(header_link_data)
 
 
@@ -371,12 +395,15 @@ def mockable_response(func):
                 # have different fixture files for different response states
                 checksum = hashlib.md5(json.dumps(get_args)).hexdigest()
                 file_path = FIXTURES_PATH + request.path + "." + checksum
-                print('Expected fixture file: ' + file_path + '.json')
             else:
                 file_path = FIXTURES_PATH + request.path
-            with open(file_path + '.json', 'r') as f:
-                data = f.read()
-                return (data, 200, get_fixture_headers(data))
+            if not os.path.exists(file_path + '.json'):
+                print('Expected fixture file: ' + file_path + '.json')
+                return ('', 404)
+            else:
+                with open(file_path + '.json', 'r') as f:
+                    data = f.read()
+                    return (data, 200, get_fixture_headers(data))
         return func(*args, **kwargs)
     return wrapped_func
 
@@ -444,11 +471,63 @@ def api_request(method, path, params=None, data=None):
         abort(404)
 
 
-def thanks_page(request, response):
-    '''Helper method to get us to the right thanks page
-    after an issue is created.'''
-    if request.is_xhr:
-        payload = {'number': response.get('number')}
-        return (json.dumps(payload), 201, {'content-type': JSON_MIME})
-    else:
-        return redirect(url_for('thanks', number=response.get('number')))
+def add_sec_headers(response):
+    '''Add security-related headers to the response.
+
+    This should be used in @app.after_request to ensure the headers are
+    added to all responses.'''
+    if not app.config['LOCALHOST']:
+        response.headers['Strict-Transport-Security'] = 'max-age=31536000; includeSubDomains;'  # nopep8
+    response.headers['X-Content-Type-Options'] = 'nosniff'
+    response.headers['X-XSS-Protection'] = '1; mode=block'
+    response.headers['X-Frame-Options'] = 'DENY'
+
+
+def add_csp(response):
+    '''Add a Content-Security-Policy header to response.
+
+    This should be used in @app.after_request to ensure the header is
+    added to all responses.'''
+    response.headers['Content-Security-Policy'] = (
+        "default-src 'none'; " +
+        "connect-src 'self' https://api.github.com; " +
+        "font-src 'self'; " +
+        "img-src 'self' https://www.google-analytics.com https://*.githubusercontent.com data:; " +  # nopep8
+        "manifest-src 'self'; " +
+        "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://www.google-analytics.com https://api.github.com; " +  # nopep8
+        "style-src 'self' 'unsafe-inline'; " +
+        "report-uri /csp-report"
+    )
+
+
+def cache_policy(private=True, uri_max_age=86400, must_revalidate=False):
+    '''Implements a HTTP Cache Decorator.
+
+    Adds Cache-Control headers.
+      * set max-age value (default: 1 day aka 86400s)
+      * private by default
+      * revalidation (False by default)
+    Adds Etag based on HTTP Body.
+    Sends a 304 Not Modified in case of If-None-Match.
+    '''
+    def set_policy(view):
+        @wraps(view)
+        def policy(*args, **kwargs):
+            response = make_response(view(*args, **kwargs))
+            # we choose if the resource is private or public for caching
+            if private:
+                response.cache_control.private = True
+            else:
+                response.cache_control.public = True
+            # Instructs the client if it needs to revalidate
+            if must_revalidate:
+                response.cache_control.must_revalidate = True
+            # Instructs how long the Cache should keep the resource
+            response.cache_control.max_age = uri_max_age
+            # Etag is based on the HTTP body
+            response.add_etag(response.data)
+            # to send a 304 Not Modified instead of a full HTTP response
+            response.make_conditional(request)
+            return response
+        return update_wrapper(policy, view)
+    return set_policy

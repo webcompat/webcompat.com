@@ -1,5 +1,8 @@
-/*----------Vendor----------*/
+/* This Source Code Form is subject to the terms of the Mozilla Public
+* License, v. 2.0. If a copy of the MPL was not distributed with this
+* file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
+/* Vendor */
 @import "vendor/prism";
 @import "cssrecipes-reset/index";
 @import "cssrecipes-grid/index";
@@ -13,8 +16,7 @@
 @import "cssrecipes-defaults/lib/document-remove-margin-padding";
 @import "cssrecipes-defaults/lib/hidden";
 
-/*----------Component----------*/
-
+/* Component */
 @import "components/style-variable";
 @import "components/reset";
 @import "components/UI";
@@ -37,7 +39,6 @@
 @import "components/box";
 @import "components/report-form";
 @import "components/issue";
-@import "components/qr-code";
 @import "components/search-bar";
 @import "components/dropdown-header";
 @import "components/search-issue";
@@ -45,7 +46,7 @@
 @import "components/cssfixme";
 @import "components/threesteps";
 @import "components/link";
-@import "components/keyhint";
+@import "components/github-link";
 @import "components/utilities";
 @import "components/accessibility";
 @import "components/label";

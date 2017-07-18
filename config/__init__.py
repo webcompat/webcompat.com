@@ -26,13 +26,22 @@ DEBUG = False
 if not PRODUCTION:
     DEBUG = True
 
+# localhost runs on HTTP, use secure flag on session cookie otherwise.
+if not LOCALHOST:
+    SESSION_COOKIE_SECURE = True
+
+# By default, we want to log CSP violations. See /csp-report in views.py.
+CSP_LOG = True
+
 # Logging Capabilities
 # To benefit from the logging, you may want to add:
 #   app.logger.info(Thing_To_Log)
 # it will create a line with the following format
 # 2015-09-14 20:50:19,185 INFO: Thing_To_Log [in /codepath/views.py:127]
+
 LOG_FILE = '/tmp/webcompat.log'
-LOG_FMT = '%(asctime)s %(levelname)s: %(message)s [in %(pathname)s:%(lineno)d]'
+LOG_FMT = '%(asctime)s tracking %(message)s'
+CSP_REPORTS_LOG = '/tmp/webcompat-csp-reports.log'
 
 # Status categories used in the project
 # 'new', 'needsdiagnosis', 'needscontact', 'contactready' , 'sitewait', 'close'
@@ -50,3 +59,10 @@ for cat_label in cat_labels:
     CATEGORIES.append(Category(name=cat_label[0],
                                dataAttribute=cat_label[1],
                                label=cat_label[2]))
+
+# labels that we allow to be added via a `label` GET param, when
+# creating an issue.
+EXTRA_LABELS = [
+    'type-media',
+    'type-webvr',
+]

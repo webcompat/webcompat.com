@@ -1,0 +1,37 @@
+/* This Source Code Form is subject to the terms of the Mozilla Public
+* License, v. 2.0. If a copy of the MPL was not distributed with this
+* file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+
+:root {
+  --desktopOnly-fontSize: 85%;
+}
+
+.wc-GithubLink:hover {
+  color: inherit;
+}
+
+.wc-GithubLink-Icon {
+  height: 1.2em;
+  width: 1.2em;
+  display: inline-block;
+  background-image: url("../../../img/github.svg");
+  background-repeat: no-repeat;
+  background-position: center center;
+  margin-right: .6em;
+  position: relative;
+  top: .2em;
+}
+
+.wc-GithubLink-DesktopOnly {
+  font-size: var(--desktopOnly-fontSize);
+}
+
+.wc-GithubLink-DesktopOnly b { /* stylelint-disable selector-no-type  */
+  font-weight: 700;
+}
+
+@media all and (max-width: 40em) {
+  .wc-GithubLink-DesktopOnly {
+    display: none;
+  }
+}

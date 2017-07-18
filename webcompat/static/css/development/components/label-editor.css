@@ -1,4 +1,6 @@
-/** @define LbelEditor */
+/* This Source Code Form is subject to the terms of the Mozilla Public
+* License, v. 2.0. If a copy of the MPL was not distributed with this
+* file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 :root {
   --LabelEditor-fontSize: var(--base-fontSize);
@@ -9,163 +11,166 @@
   position: absolute;
   font-size: var(--LabelEditor-fontSize);
   display: none;
-  z-index: 2;
+  z-index: 5;
   white-space: nowrap;
   top: 100%;
   left: 0;
-  /* caret */
-  margin-left: -11px;
+  margin-left: -11px; /* caret */
   margin-top: 18px;
-  box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, .25);
   border-radius: 6px;
   background-color: #fff;
 }
 
-  @media all and (max-width: 23.43em) {
-
-    .wc-LabelEditor {
-      position: fixed;
-      width: 100%;
-      height: 100%;
-      top: 0;
-      left: 0;
-      transform: none;
-      margin: 0;
-      overflow-y: auto;
-      overflow-x: hidden;
-    }
-  }
-
-  /* Caret */
-  .wc-LabelEditor:after {
-    display: none;
-    position: absolute;
-    content: "";
-    width: 1.125em;
-    height: 1.125em;
-    top: -0.625em;
-    left: 1.06em;
-    background-color: #ffffff;
-    box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.25);
-    transform: rotate(45deg);
-    z-index: -1;
-  }
-  @media all and (max-width: 23.43em) {
-
-    .wc-LabelEditor:after {
-      display:none;
-    }
-  }
-
-  /* Label header */
-  .wc-LabelEditor-header {
-    background-color:#fff;
-    border-radius: 6px 6px 0px 0px;
-    box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.1), 0px 2px 3px rgba(0, 0, 0, 0.05);
-    padding: 0.625em;
-  }
-
-  /* Search*/
-  .wc-LabelEditor-search {
-    display:inline-block;
-    width:auto;
-  }
-
-  @media all and (max-width: 23.43em) {
-
-    .wc-LabelEditor-search {
-      font-size: var(--LabelEditor-fontSize);
-    }
-  }
-
-  /* Button */
-  .wc-LabelEditor-button {
-    border:none;
-  }
-
-    /* event  */
-    .wc-LabelEditor-button:hover {
-      text-decoration:underline;
-    }
-
-  /* list label */
-  .wc-LabelEditor-list {
-    background-color: #FFF;
-    color: #333;
-    max-height:18.75em;
-    overflow-x: hidden;
+@media all and (max-width: 23.43em) {
+  .wc-LabelEditor {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    transform: none;
+    margin: 0;
     overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
+    overflow-x: hidden;
   }
+}
 
-  @media all and (max-width: 23.43em) {
+/* Caret */
+.wc-LabelEditor::after {
+  display: none;
+  position: absolute;
+  content: "";
+  width: 1.125em;
+  height: 1.125em;
+  top: -.625em;
+  left: 1.06em;
+  background-color: #fff;
+  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, .25);
+  transform: rotate(45deg);
+  z-index: -1;
+}
 
-    .wc-LabelEditor-list {
-       max-height:inherit;
-    }
+@media all and (max-width: 23.43em) {
+  .wc-LabelEditor::after {
+    display: none;
   }
+}
 
-    /* item label */
-    .wc-LabelEditor-list-item {
-      font-size: 1em;
-      display: block;
-      cursor: pointer;
-      border-top: 1px solid #ddd;
-      margin: 0;
-      padding: .5em .3125em;
-    }
+/* Label header */
+.wc-LabelEditor-header {
+  background-color: #fff;
+  border-radius: 6px 6px 0 0;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, .1), 0 2px 3px rgba(0, 0, 0, .05);
+  padding: .625em;
+}
 
-      .wc-LabelEditor--list-item:last-child {
-          border-bottom:1px solid #ddd;
-      }
+/* Search */
+.wc-LabelEditor-search {
+  display: inline-block;
+  width: auto;
+}
 
-    /* square color */
-    .wc-LabelEditor-list-item-squareColor {
-      display: inline-block;
-      margin: 0 .3125em 0 0;
-      width: 1.5em;
-      height: 1.5em;
-      line-height: 1.25em;
-      text-align: center;
-      border-radius: 3px;
-    }
+@media all and (max-width: 23.43em) {
+  .wc-LabelEditor-search {
+    font-size: var(--LabelEditor-fontSize);
+  }
+}
 
-      /* checkbox */
-      .wc-LabelEditor-list-item-checkbox {
-        margin:0;
-        padding:0;
-      }
+/* Button */
+.wc-LabelEditor-button {
+  border: none;
+}
 
-      /* name */
-      .wc-LabelEditor-list-item-name {
-        display:inline-block;
-        font-size: .75em;
-        font-weight: 500;
-        line-height: .1.25em;
-      }
+/* event  */
+.wc-LabelEditor-button:hover {
+  text-decoration: underline;
+}
+
+/* list label */
+.wc-LabelEditor-list {
+  background-color: #fff;
+  color: #333;
+  max-height: 18.75em;
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+@media all and (max-width: 23.43em) {
+  .wc-LabelEditor-list {
+    max-height: inherit;
+  }
+}
+
+/* item label */
+.wc-LabelEditor-list-item {
+  font-size: 1em;
+  display: block;
+  cursor: pointer;
+  border-top: 1px solid #ddd;
+  margin: 0;
+  padding: .5em .3125em;
+}
+
+.wc-LabelEditor--list-item:last-child {
+  border-bottom: 1px solid #ddd;
+}
+
+/* square color */
+.wc-LabelEditor-list-item-squareColor {
+  display: inline-block;
+  margin: 0 .3125em 0 0;
+  width: 1.5em;
+  height: 1.5em;
+  line-height: 1.25em;
+  text-align: center;
+  border-radius: 3px;
+}
+
+/* checkbox */
+.wc-LabelEditor-list-item-checkbox {
+  margin: 0;
+  padding: 0;
+}
+
+/* name */
+.wc-LabelEditor-list-item-name {
+  display: inline-block;
+  font-size: .75em;
+  font-weight: 500;
+  line-height: 1.25em;
+}
 
 /* Launch Label Editor */
 .wc-LabelEditorLauncher {
   display: none;
-  border:none;
-  width:1.3em;
-  height:1.3em;
-  font-size:1.4em;
-  padding:0;
-  opacity:.8;
+  border: none;
+  width: 1.3em;
+  height: 1.3em;
+  font-size: 1.4em;
+  padding: 0;
+  opacity: .8;
 }
 
-  /* display caret and label only if button is-active*/
-  .wc-LabelEditorLauncher.is-active + .wc-LabelEditor:after,
-  .wc-LabelEditorLauncher.is-active + .wc-LabelEditor {
-    display:block;
-  }
-  .wc-LabelEditor-launcher:hover {
-    opacity:1;
-  }
-  .wc-LabelEditor-launcher:before {
-    content: "\f013";
-  }
-  .wc-LabelEditor-launcher.is-active:before {
-    content: "\f00d";
-  }
+/* display caret and label only if button is-active */
+.wc-LabelEditorLauncher.is-active + .wc-LabelEditor::after,
+.wc-LabelEditorLauncher.is-active + .wc-LabelEditor {
+  display: block;
+}
+
+.wc-LabelEditor-launcher:hover {
+  opacity: 1;
+}
+
+.wc-LabelEditor-launcher::before {
+  content: "\f013";
+}
+
+.wc-LabelEditor-launcher.is-active::before {
+  content: "\f00d";
+}
+
+.wc-Issue-labelEditor-button .wc-LabelEditorLauncher {
+  pointer-events: auto;
+}

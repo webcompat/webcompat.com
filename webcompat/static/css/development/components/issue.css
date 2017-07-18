@@ -1,127 +1,190 @@
-/** @define Issue */
+/* This Source Code Form is subject to the terms of the Mozilla Public
+* License, v. 2.0. If a copy of the MPL was not distributed with this
+* file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 :root {
   --Issue-fontSize: var(--base-fontSize);
   --Issue-detailLink: var(--Link-color);
   --Issue-detailLinkHover: var(--Link-colorHover);
-  --Issue-widthComment: 45.125em;
+  --Issue-widthComment: 68%;
 }
 
 .wc-Issue {
-  font-size:var(--Issue-fontSize);
+  font-size: var(--Issue-fontSize);
 }
 
-  /* Wrapper title and date issue */
+/* header */
+.wc-Issue-information-header {
+  display: flex;
+  justify-content: space-between;
+  padding: .7em 1em;
+  border-radius: 3px 3px 0 0;
+}
+
+.wc-Issue-information-header--needstriage {
+  background-color: var(--base-stateNeedsTriage);
+}
+
+.wc-Issue-information-header--needsDiagnosis {
+  background-color: var(--base-stateNeedsDiagnosis);
+}
+
+.wc-Issue-information-header--needsContact {
+  background-color: var(--base-stateNeedsContact);
+}
+
+.wc-Issue-information-header--closed {
+  background-color: var(--base-stateClosed);
+}
+
+.wc-Issue-information-header--ready {
+  background-color: var(--base-stateReady);
+}
+
+.wc-Issue-information-header--sitewait {
+  background-color: var(--base-stateSitewait);
+}
+
+.wc-Issue-information-header--fixed {
+  background-color: var(--base-stateFixed);
+}
+
+.wc-Issue-information-header--worksforme {
+  background-color: var(--base-stateWorksForMe);
+}
+
+/* content */
+.wc-Issue-information-content {
+  background-color: #fff;
+  padding: 1em;
+}
+
+.wc-Issue-information-content + .wc-Issue-information-content {
+  margin: 2px 0 0;
+}
+
+/* Wrapper title and date issue */
+.wc-Issue-title {
+  font-size: 1.2em;
+  line-height: 1em;
+  margin: 0 0 .5em;
+  word-wrap: break-word;
+}
+
+@media all and (max-width: 28.12em) {
   .wc-Issue-title {
-    font-size: 1.6em;
-    line-height: 1em;
-    margin-bottom: .5em;
-    word-wrap: break-word;
+    font-size: 1.2em;
   }
+}
 
-  @media all and (max-width: 28.12em) {
+/* information issue : date / author / number of comment */
+.wc-Issue-create {
+  font-size: 1em;
+  margin: 0 0 2em;
+}
 
-    .wc-Issue-title {
-      font-size:1.2em;
-    }
-  }
+/* Date of issue */
+.wc-Issue-date {
+  display: inline-block;
+}
 
-  /* information issue : date / author / number of comment */
-  .wc-Issue-create {
-    font-size: 1em;
-    margin:0 0 2em
-  }
-
-  /* Date of issue */
+@media all and (max-width: 28.12em) {
   .wc-Issue-date {
-    display: inline-block;
+    font-size: .9em;
   }
+}
 
-  @media all and (max-width: 28.12em) {
+/* Author */
+.wc-Issue-reporter {
+  font-weight: 700;
+}
 
-    .wc-Issue-date {
-      font-size:.9em;
-    }
+@media all and (min-width: 48.13em) {
+  .wc-Issue-report,
+  .wc-Issue-commentList,
+  .wc-Issue-commentSubmit,
+  .wc-Issue-information:not(.wc-Issue-information--fullWidth) {
+    width: var(--Issue-widthComment);
   }
+}
 
-  /* Author */
-  .wc-Issue-reporter {
-    font-weight: bold;
-  }
+/* CommentSubmit */
+.wc-Issue-commentSubmit {
+  padding-top: 2em;
+  margin: 2em 0 0;
+}
 
-  @media all and (min-width: 48.13em) {
+/* list comment */
+.wc-Issue-commentList {
+  margin: 1em 0 0;
+}
 
-    .wc-Issue-report,
-    .wc-Issue-commentList,
-    .wc-Issue-commentSubmit {
-      width: var(--Issue-widthComment);
-    }
-  }
+/* Issue wrapper */
+.wc-Issue-wrapper {
+  margin: 0 0 0 4.2em;
+}
 
-  /* CommentSubmit */
-  .wc-Issue-commentSubmit {
-    padding-top: 2em;
-    margin: 2em 0 0;
-  }
-
-  /* list comment */
-  .wc-Issue-commentList {
-    margin: 4em 0 0;
-  }
-
-  /* Issue wrapper */
+@media all and (max-width: 73.75em) {
   .wc-Issue-wrapper {
-    margin:0 0 0 4.2em;
+    margin: 0;
   }
+}
 
-    @media all and (max-width: 73.75em) {
-
-      .wc-Issue-wrapper {
-        margin:0;
-      }
-    }
-
-  /* container details issue */
-  .wc-Issue-details {
-    position: relative;
-    line-height: 1.5em;
-  }
-
-  .wc-Issue-comment {
-    margin-top:2em;
-  }
+/* container details issue */
+.wc-Issue-details {
+  position: relative;
+  line-height: 1.5em;
+}
 
 .wc-Issue-labels {
-  margin-bottom: 2em;
+  background-color: #fff;
+  margin: 2px 0;
+  padding: 1em;
 }
-/* FullScreen LabelEditor*/
-@media all and (max-width: 23.43em) {
 
-  .wc-Issue-lbels {
-    position:relative;
+/* FullScreen LabelEditor */
+@media all and (max-width: 23.43em) {
+  .wc-Issue-labels {
+    position: relative;
   }
 }
 
 /* Link to log in */
 .wc-Issue-login {
   margin-top: 2.5em;
-  text-align:center;
+  text-align: left;
 }
 
-/*wrapper list comment */
+/* wrapper list comment */
 .wc-Issue-comment {
-  margin:4em 0 0;
+  margin: 4em 0 0;
 }
 
-/* labeleditor */
+/* labeleditor wrapper */
 .wc-Issue-labelEditor {
-  position:relative;
-  display:inline-block;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 0 .625em;
 }
 
 @media all and (max-width: 23.43em) {
-
   .wc-Issue-labelEditor {
     position: static; /* position of label_editor not depend of this class */
+  }
+}
+
+@media all and (min-width: 48.13em) {
+  .wc-Issue-aside {
+    float: right;
+    width: 30%;
+  }
+}
+
+@media all and (min-height: 40em) and (min-width: 48.13em) {
+  .wc-Issue-aside {
+    position: sticky;
+    top: 1em;
   }
 }

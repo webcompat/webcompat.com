@@ -1,174 +1,175 @@
-/** @define Form */
+/* This Source Code Form is subject to the terms of the Mozilla Public
+* License, v. 2.0. If a copy of the MPL was not distributed with this
+* file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 :root {
   --Form-fontSize: 1rem;
-  --Form-helpMessageColor: #ff0000;
+  --Form-helpMessageColor: #f00;
 }
 
-.wc-Form {}
+/* header */
+.wc-Form .wc-Title--s {
+  margin-top: 0;
+}
 
-  /* group item */
-  .wc-Form-group {
-    position: relative;
-    margin-bottom: 1.6em;
-  }
+/* group item */
+.wc-Form-group {
+  position: relative;
+  margin: 0 0 1em;
+}
 
-  /* information: wrap label and helpMessage */
-  .wc-Form-information {
-    display: flex;
-  }
+.wc-Form-group--biggerOffset {
+  margin: 0 0 2em;
+}
 
-  /* label */
-  .wc-Form-label {
-    display: inline-block;;
-    margin-bottom: 5px;
-    color: #000;
-    font-weight: 700;
-  }
+/* information: wrap label and helpMessage */
+.wc-Form-information {
+  display: flex;
+}
 
-    /* modifier */
-    .wc-Form-label--light {
-      font-weight: 300;
-    }
+/* label */
+.wc-Form-label {
+  display: inline-block;
+  margin-bottom: 5px;
+  color: #000;
+  font-weight: 700;
+}
 
-  .wc-Form-radio {
-    position: relative;
-    display: block;
-    width: 100%;
-    margin: 0 0 .8em 0;
-    vertical-align: middle;
-    font-weight: 400;
-    cursor: pointer;
-  }
+/* modifier */
+.wc-Form-label--light {
+  font-weight: 300;
+}
 
-    /* label */
-    .wc-Form-radio label {
-      display: inline-block;
-      vertical-align: middle;
-      font-weight: 300;
-    }
+.wc-Form-radio {
+  position: relative;
+  display: block;
+  width: 100%;
+  margin: 0 0 .8em;
+  vertical-align: middle;
+  font-weight: 400;
+}
 
-  /* helpMessage */
-  .wc-Form-helpMessage {
-    font-weight: 700;
-    color: var(--Form-helpMessageColor);
-    margin: 0 0 0 .5em;
-  }
+/* label */
+.wc-Form-radio label { /* stylelint-disable selector-no-type */
+  display: inline-block;
+  vertical-align: middle;
+  font-weight: 300;
+}
 
-    .wc-Form-helpMessage--imageUpload {
-      position: absolute;
-      width: 100%;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      padding: 1em 0;
-      font-weight: 700;
-      background-color: var(--Form-helpMessageColor);
-      border-bottom-left-radius: 20px;
-      border-bottom-right-radius: 20px;
-      color: #fff;
-      cursor: pointer;
-      text-align: center;
-      text-decoration: underline;
-    }
+/* helpMessage */
+.wc-Form-helpMessage {
+  font-weight: 700;
+  color: var(--Form-helpMessageColor);
+  margin: 0 0 0 .5em;
+}
 
-  /* imput */
-  .wc-Form-item {
-    display: block;
-    width: 100%;
-    font-size: var(--Form-fontSize);
-    font-family: inherit;
-    font-weight: 300;
-    color: #555;
-    background-color: #fff;
-    border: 1px solid #ccc;
-    border-radius: 20px;
-    padding: 0.5em;
-    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset;
-    transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
-  }
+.wc-Form-helpMessage--imageUpload {
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 1em 0;
+  font-weight: 700;
+  background-color: var(--Form-helpMessageColor);
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  color: #fff;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: underline;
+}
 
-    /* state */
-    .wc-Form-item.is-hidden {
-      display: none;
-    }
+/* input */
+.wc-Form-item {
+  display: block;
+  width: 100%;
+  font-size: var(--Form-fontSize);
+  font-family: var(--base-fontFamily);
+  font-weight: 300;
+  color: #555;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  padding: .5em;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, .075) inset;
+  transition: border-color .15s ease-in-out 0s, box-shadow .15s ease-in-out 0s;
+  margin-bottom: 5px;
+}
 
-    /* event */
-    .wc-Form-item:focus {
-      border-color: #66AFE9;
-      box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset, 0px 0px 8px rgba(102, 175, 233, 0.6);
-    }
+/* state */
+.wc-Form-item.is-hidden {
+  display: none;
+}
 
-    .wc-Form-input::placeholder {
-      font-size: var(--Form-fontSize);
-      color: #999;
-      opacity: 1;
-     }
+/* event */
+.wc-Form-item:focus {
+  border-color: #66afe9;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, .075) inset, 0 0 8px rgba(102, 175, 233, .6);
+}
 
-    /* modifier */
-    .wc-Form-item--textarea {
-      min-height: 250px;
-    }
+.wc-Form-input::placeholder {
+  font-size: var(--Form-fontSize);
+  color: #999;
+  opacity: 1;
+}
 
-    input[type="radio"] {
-      margin:0 5px 0 0;
-    }
+/* modifier */
+.wc-Form-item--textarea {
+  min-height: 125px;
+  resize: vertical;
+}
 
-  /* required */
-  .wc-Form-required {
-    color: #ff0000;
-  }
+input[type = "radio"] { /* stylelint-disable selector-no-attribute */
+  margin: 0 5px 0 0;
+}
 
-  /* validation */
-  .wc-Form-validation {
-    display: block;
-    clear: both;
-    position: relative;
-  }
+/* required */
+.wc-Form-required {
+  color: #f00;
+}
 
-    .wc-Form-validation::after {
-      content: "";
-      display: block;
-      width: 60px;
-      height: 20px;
-      position: absolute;
-      right: 12px;
-      top: 8px;
-      background-repeat: no-repeat;
-      background-size: contain;
-    }
+/* validation */
+.wc-Form-validation {
+  display: block;
+  clear: both;
+  position: relative;
+  margin-bottom: 12px;
+}
 
-      /* handle error */
-      .wc-Form-group.is-error .wc-Form-item {
-        border-color: #ff0000;
-      }
+.wc-Form-validation::after {
+  content: "";
+  display: block;
+  width: 60px;
+  height: 20px;
+  position: absolute;
+  right: 12px;
+  top: 8px;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
 
-      .wc-Form-group.is-error .wc-Form-item:focus{
-        border-color: #ff0000;
-        box-shadow: none;
-      }
+.wc-Form-validation .wc-Form-item {
+  padding-right: 40px;
+}
 
-      .wc-Form-validation .wc-Form-item {
-        padding-right: 40px;
-      }
+.wc-Form-group.is-validated .wc-Form-validation::after {
+  background-image: url("../../../img/valid.svg");
+}
 
-      .wc-Form-group.is-validated .wc-Form-validation::after {
-        background-image: url(../img/valid.svg);
-      }
+.wc-Form-group.is-error .wc-Form-validation::after {
+  background-image: url("../../../img/invalid.svg");
+}
 
-      .wc-Form-group.is-error .wc-Form-validation::after {
-        background-image: url(../img/invalid.svg);
-      }
+.wc-Form-group.is-validated .wc-Form-helpMessage {
+  display: none;
+}
 
-      .wc-Form-group.is-validated .wc-Form-helpMessage {
-        display: none;
-      }
+.wc-Form-group.is-error .wc-Form-item {
+  border-color: var(--base-variantColorDark);
+}
 
-      .wc-Form-group.is-error .wc-Form-item {
-        border-color: var(--base-variantColorDark);
-      }
-
-      .wc-Form-group.is-error .wc-Form-item:focus{
-        border-color: var(--base-variantColorDark);
-        box-shadow:none;
-      }
+.wc-Form-group.is-error .wc-Form-item:focus {
+  border-color: var(--base-variantColorDark);
+  box-shadow: none;
+}

@@ -4,8 +4,8 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-import json
-import urllib
+import logging
+import os
 
 from flask import abort
 from flask import flash
@@ -13,26 +13,25 @@ from flask import g
 from flask import redirect
 from flask import render_template
 from flask import request
-from flask import session
 from flask import send_from_directory
+from flask import session
 from flask import url_for
+
 from form import AUTH_REPORT
-from form import IssueForm
 from form import PROXY_REPORT
-from helpers import get_browser
+from form import get_form
+from helpers import add_csp
+from helpers import add_sec_headers
+from helpers import cache_policy
 from helpers import get_browser_name
-from helpers import get_os
 from helpers import get_referer
 from helpers import get_user_info
-from helpers import thanks_page
 from helpers import set_referer
 from issues import report_issue
-from webcompat.db import session_db
-from webcompat.db import User
-
 from webcompat import app
 from webcompat import github
-from webcompat.api.endpoints import get_rate_limit
+from webcompat.db import User
+from webcompat.db import session_db
 
 
 @app.teardown_appcontext
@@ -52,6 +51,8 @@ def before_request():
 @app.after_request
 def after_request(response):
     session_db.remove()
+    add_sec_headers(response)
+    add_csp(response)
     return response
 
 
@@ -64,7 +65,7 @@ def token_getter():
 
 @app.template_filter('format_date')
 def format_date(datestring):
-    '''For now, just chops off crap.'''
+    """For now, just chops off crap."""
     # 2014-05-01T02:26:28Z
     return datestring[0:10]
 
@@ -72,10 +73,15 @@ def format_date(datestring):
 @app.route('/login')
 def login():
     if session.get('user_id', None) is None:
-        # manually set the referer so we know where to come back to
-        # when we return from GitHub
-        set_referer(request)
-        return github.authorize('public_repo')
+        if app.config['TESTING']:
+            session['username'] = 'testuser'
+            session['avatar_url'] = '/test-files/fixtures/avatar.png?'
+            return authorized()
+        else:
+            # manually set the referer so we know where to come back to
+            # when we return from GitHub
+            set_referer(request)
+            return github.authorize('public_repo')
     else:
         return redirect(g.referer)
 
@@ -92,6 +98,8 @@ def logout():
 @app.route('/callback')
 @github.authorized_handler
 def authorized(access_token):
+    if app.config['TESTING']:
+        access_token = 'thisisatest'
     if access_token is None:
         flash(u'Something went wrong trying to sign into GitHub. :(', 'error')
         return redirect(g.referer)
@@ -112,90 +120,124 @@ def authorized(access_token):
 # a user auths with GitHub.
 @app.route('/file')
 def file_issue():
-    '''File an issue on behalf of the user that just gave us authorization.'''
+    """File an issue on behalf of the user that just gave us authorization."""
     response = report_issue(session['form_data'])
     # Get rid of stashed form data
     session.pop('form_data', None)
-    return redirect(url_for('thanks', number=response.get('number')))
+    session['show_thanks'] = True
+    return redirect(url_for('show_issue', number=response.get('number')))
 
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/', methods=['GET'])
 def index():
-    '''Main view where people come to report issues.'''
-    bug_form = IssueForm()
-    # add browser and version to bug_form object data
+    """Main view where people come to report issues."""
     ua_header = request.headers.get('User-Agent')
-    bug_form.browser.data = get_browser(ua_header)
-    bug_form.os.data = get_os(ua_header)
+    bug_form = get_form(ua_header)
     # browser_name is used in topbar.html to show the right add-on link
     browser_name = get_browser_name(ua_header)
     # GET means you want to file a report.
-    if request.method == 'GET':
-        if g.user:
-            get_user_info()
-        return render_template('index.html', form=bug_form,
-                               browser=browser_name)
-    # Validate, then create issue.
-    elif bug_form.validate_on_submit():
-        return create_issue()
-
-    else:
-        # Validation failed, re-render the form with the errors.
-        return render_template('index.html', form=bug_form,
-                               browser=browser_name)
+    if g.user:
+        get_user_info()
+    return render_template('index.html', form=bug_form, browser=browser_name)
 
 
 @app.route('/issues')
+@cache_policy(private=True, uri_max_age=0, must_revalidate=True)
 def show_issues():
-    '''Route to display global issues view.'''
+    """Route to display global issues view."""
     if g.user:
         get_user_info()
     categories = app.config['CATEGORIES']
     return render_template('list-issue.html', categories=categories)
 
 
-@app.route('/issues/new', methods=['POST'])
+@app.route('/issues/new', methods=['GET', 'POST'])
 def create_issue():
+    """Create a new issue.
+
+    GET will return an HTML response for reporting issues
+    POST will create a new issue
+    """
+    if request.method == 'GET':
+        bug_form = get_form(request.headers.get('User-Agent'))
+        if g.user:
+            get_user_info()
+        # Note: `src` and `label` are special GET params that can pass
+        # in extra information about a bug report. They're not part of the
+        # HTML <form>, so we stick them in the session cookie so they survive
+        # the scenario where the user decides to do authentication, and they
+        # can then be passed on to form.py
+        for param in ['src', 'label']:
+            if request.args.get(param):
+                session[param] = request.args.get(param)
+        return render_template('new-issue.html', form=bug_form)
     # copy the form so we can add the full UA string to it.
-    form = request.form.copy()
+    if request.form:
+        form = request.form.copy()
+        # To be legit the form needs a couple of parameters
+        # if one essential is missing, it's a bad request
+        must_parameters = set(['url', 'problem_category', 'description',
+                               'os', 'browser',
+                               'username', 'submit-type'])
+        if not must_parameters.issubset(form.keys()):
+            abort(400)
+    else:
+        # https://tools.ietf.org/html/rfc7231#section-6.5.1
+        abort(400)
+    # see https://github.com/webcompat/webcompat.com/issues/1141
+    # see https://github.com/webcompat/webcompat.com/issues/1237
+    # see https://github.com/webcompat/webcompat.com/issues/1627
+    spamlist = ['qiangpiaoruanjian', 'cityweb.de', 'coco.fr']
+    for spam in spamlist:
+        if spam in form.get('url'):
+            msg = (u'Anonymous reporting for domain {0} '
+                   'is temporarily disabled. Please contact '
+                   'miket@mozilla.com '
+                   'for more details.').format(spam)
+            flash(msg, 'notimeout')
+            return redirect(url_for('index'))
     form['ua_header'] = request.headers.get('User-Agent')
+    form['reported_with'] = session.pop('src', 'web')
+    form['label'] = session.pop('label', None)
+    # Logging the ip and url for investigation
+    log = app.logger
+    log.setLevel(logging.INFO)
+    log.info('{ip} {url}'.format(ip=request.remote_addr,
+                                 url=form['url'].encode('utf-8')))
+    # form submission for 3 scenarios: authed, to be authed, anonymous
     if form.get('submit-type') == AUTH_REPORT:
         if g.user:  # If you're already authed, submit the bug.
             response = report_issue(form)
-            return thanks_page(request, response)
+            session['show_thanks'] = True
+            return redirect(url_for('show_issue',
+                                    number=response.get('number')))
         else:  # Stash form data into session, go do GitHub auth
             session['form_data'] = form
             return redirect(url_for('login'))
     elif form.get('submit-type') == PROXY_REPORT:
         response = report_issue(form, proxy=True).json()
-        return thanks_page(request, response)
+        session['show_thanks'] = True
+        return redirect(url_for('show_issue', number=response.get('number')))
+    else:
+        # if anything wrong, we assume it is a bad forged request
+        abort(400)
 
 
 @app.route('/issues/<int:number>')
+@cache_policy(private=True, uri_max_age=0, must_revalidate=True)
 def show_issue(number):
-    '''Route to display a single issue.'''
+    """Route to display a single issue."""
     if g.user:
         get_user_info()
+    if session.get('show_thanks'):
+        flash(number, 'thanks')
+        session.pop('show_thanks')
     return render_template('issue.html', number=number)
-
-
-@app.route('/thanks/<int:number>')
-def thanks(number):
-    issue = number
-    uri = u"https://webcompat.com/issues/{0}".format(number)
-    text = u"I just filed a bug on the internet: "
-    encoded_issue = urllib.quote(uri.encode("utf-8"))
-    encoded_text = urllib.quote(text.encode("utf-8"))
-    if g.user:
-        get_user_info()
-    return render_template('thanks.html', number=issue,
-                           encoded_issue=encoded_issue,
-                           encoded_text=encoded_text)
 
 
 @app.route('/me')
 def me_redirect():
-    '''This route redirects to /activity/<username>, for logged in users.'''
+    """This route redirects to /activity/<username>, for logged in users."""
     if not g.user:
         abort(401)
     get_user_info()
@@ -204,7 +246,7 @@ def me_redirect():
 
 @app.route('/activity/<username>')
 def show_user_page(username):
-    '''The logic for this route is as follows:
+    """The logic for this route is as follows.
 
     (this dupes some of the functionality of /me, but allows directly visiting
     this endpoint via a bookmark)
@@ -214,7 +256,7 @@ def show_user_page(username):
     If the username matches, render the template as expected.
     If it doesn't match, abort with 403 until we support looking at
     *other* users activity.
-    '''
+    """
     if not g.user:
         abort(401)
     get_user_info()
@@ -226,51 +268,61 @@ def show_user_page(username):
 
 @app.route('/rate_limit')
 def show_rate_limit():
-    body, status_code, response_headers = get_rate_limit()
-    rl = json.loads(body)
-    if g.user:
-        rl.update({"user": session.get('username')})
-    else:
-        rl.update({"user": "webcompat-bot"})
-    # The "rate" hash (shown at the bottom of the response above) is
-    # deprecated and is scheduled for removal in the next version of the API.
-    # see https://developer.github.com/v3/rate_limit/
-    if "rate" in rl:
-        rl.pop("rate")
-    return (render_template('ratelimit.txt', rl=rl), 200,
-            {"content-type": "text/plain"})
+    """Retired route. 410 Gone.
+
+    Decision made on March 2017. See
+    https://github.com/webcompat/webcompat.com/issues/1437
+    """
+    msg = """
+    All those moments will be lost in time…
+    like tears in rain…
+    Time to die.
+    – Blade Runner
+
+    This resource doesn't exist anymore."""
+    return (msg, 410, {"content-type": "text/plain; charset=utf-8"})
+
 
 if app.config['LOCALHOST']:
     @app.route('/uploads/<path:filename>')
     def download_file(filename):
-        '''Route just for local environments to send uploaded images.
+        """Route just for local environments to send uploaded images.
 
         In production, nginx handles this without needing to touch the
         Python app.
-        '''
+        """
         return send_from_directory(
             app.config['UPLOADS_DEFAULT_DEST'], filename)
 
+    @app.route('/test-files/<path:filename>')
+    def get_test_helper(filename):
+        """Route to get ahold of test-related files, only on localhost."""
+        path = os.path.join(app.config['BASE_DIR'], 'tests')
+        return send_from_directory(path, filename)
+
 
 @app.route('/about')
+@cache_policy(private=True, uri_max_age=0, must_revalidate=True)
 def about():
-    '''Route to display about page.'''
+    """Route to display about page."""
     if g.user:
         get_user_info()
     return render_template('about.html')
 
 
 @app.route('/privacy')
+@cache_policy(private=True, uri_max_age=0, must_revalidate=True)
 def privacy():
-    '''Route to display privacy page.'''
+    """Route to display privacy page."""
     if g.user:
         get_user_info()
     return render_template('privacy.html')
 
 
 @app.route('/contributors')
+@cache_policy(private=True, uri_max_age=0, must_revalidate=True)
 def contributors():
-    '''Route to display contributors page.'''
+    """Route to display contributors page."""
     if g.user:
         get_user_info()
     return render_template('contributors.html')
@@ -278,5 +330,24 @@ def contributors():
 
 @app.route('/tools/cssfixme')
 def cssfixme():
-    '''Route for CSS Fix me tool'''
+    """Route for CSS Fix me tool."""
     return render_template('cssfixme.html')
+
+
+@app.route('/csp-report', methods=['POST'])
+def log_csp_report():
+    """Route to record CSP header violations.
+
+    This route can be enabled/disabled by setting CSP_LOG to True/False
+    in config/__init__.py. It's enabled by default.
+    """
+    expected_mime = 'application/csp-report'
+
+    if app.config['CSP_LOG']:
+        if expected_mime not in request.headers.get('content-type', ''):
+            return ('Wrong Content-Type.', 400)
+        with open(app.config['CSP_REPORTS_LOG'], 'a') as r:
+            r.write(request.data + '\n')
+        return ('', 204)
+    else:
+        return ('Forbidden.', 403)

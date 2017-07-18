@@ -1,0 +1,9 @@
+{%- extends "layout.html" -%}
+{% block title %}New Issue{% endblock %}
+{%- block body -%}
+{% include "topbar.html" %}
+<main role="main">
+  <div class="wc-Loader js-Loader"></div>
+  {% include "home-page/form.html" %}
+</main>
+{% endblock %}

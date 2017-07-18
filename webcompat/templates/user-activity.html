@@ -1,13 +1,12 @@
 {% extends "layout.html" %}
+{% block title %}{{user}}'s Activity{% endblock %}
 {% block body %}
 {% include "shared/nav.html" %}
 <main role="main">
   <div class="wc-Loader js-loader"></div>
   <section class="wc-UISection">
     <div class="wc-UIContent">
-      <div style="text-align: center">
-        <h1 class="wc-Title wc-Title--l wc-ResetOffsetBottom">{{user}}'s activity</h1>
-      </div>
+      <h1 class="wc-Title wc-Title--l wc-ResetOffsetBottom js-username">{{user}}'s activity</h1>
     </div>
   </section>
   <section class="wc-UISection wc-UISection--backgroundColor js-list-issue">
