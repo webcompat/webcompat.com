@@ -485,7 +485,7 @@ function BugForm() {
       // grab the data URI from background-image property, since it's already
       // in the DOM: 'url("data:image/....")'
       this.previewEl.get(0).style.backgroundImage.slice(5, -2),
-      function(response) {
+      _.bind(function(response) {
         this.addImageURL(
           response,
           _.bind(function() {
@@ -501,7 +501,7 @@ function BugForm() {
             formEl.submit();
           }, this)
         );
-      }
+      }, this)
     );
   }, this);
 

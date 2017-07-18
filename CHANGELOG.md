@@ -4,6 +4,15 @@
 2. New features: affect minor number
 3. API endpoint changes or dependency version updates: affect major number
 
+## 5.4.0 - 2017-07-18
+
+* Fix wrong years in CHANGELOG [Pull #1663](https://github.com/webcompat/webcompat.com/pull/1663)
+* Add `npm test`to package.json[Pull #1657](https://github.com/webcompat/webcompat.com/pull/1657)
+* Add newline to STR in reported form[Pull #1653](https://github.com/webcompat/webcompat.com/pull/1653)
+* Change order of metadata in reported form [Pull #1652](https://github.com/webcompat/webcompat.com/pull/1652)
+* Don't upload image until form submission [Pull #1645](https://github.com/webcompat/webcompat.com/pull/1645)
+* Description placeholder update [Pull #1639](https://github.com/webcompat/webcompat.com/pull/1639)
+
 ## 5.3.1 - 2017-07-11
 
 * Add tests for form.py [Pull #1644](https://github.com/webcompat/webcompat.com/pull/1644)

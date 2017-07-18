@@ -233,13 +233,15 @@ def build_formdata(form_object):
     # Preparing the body
     body = u"""{metadata}
 **URL**: {url}
+
 **Browser / Version**: {browser}
 **Operating System**: {os}
 **Tested Another Browser**: {browser_test_type}
 
 **Problem type**: {problem_type}
 **Description**: {description}
-**Steps to Reproduce** {steps_reproduce}
+**Steps to Reproduce**:
+{steps_reproduce}
 
 """.format(**formdata)
     # Add the image, if there was one.
