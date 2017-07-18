@@ -22,17 +22,17 @@
 * Add pagination below issue list [Pull #1589](https://github.com/webcompat/webcompat.com/pull/1589)
 * New form redesign [Pull #1578](https://github.com/webcompat/webcompat.com/pull/1578)
 
-## 5.2.2 - 2018-06-23
+## 5.2.2 - 2017-06-23
 
 * Check form validation in image upload success handler [Pull #1614](https://github.com/webcompat/webcompat.com/pull/1614)
 * Fix padding issue in Markdown[Pull #1606](https://github.com/webcompat/webcompat.com/pull/1606)
 * Updates CONTRIBUTING.md tests section for mock login [Pull #1604](https://github.com/webcompat/webcompat.com/pull/1604)
 
-## 5.2.1 - 2018-06-20
+## 5.2.1 - 2017-06-20
 
 * Ensure label editor button can receive click events [Pull #1602](https://github.com/webcompat/webcompat.com/pull/1602)
 
-## 5.2.0 - 2018-06-20
+## 5.2.0 - 2017-06-20
 
 (Not deployed, caused a regression. v5.2.1 is the good release)
 
@@ -43,7 +43,7 @@
 * Remove test_login unit test (obsolete now) [Pull #1598](https://github.com/webcompat/webcompat.com/pull/1598)
 * Remove unused query-params.js file [Pull #1599](https://github.com/webcompat/webcompat.com/pull/1599)
 
-## 5.1.0 - 2018-05-24
+## 5.1.0 - 2017-05-24
 
 * Prevent overflow in code elements in issue description [Pull #1568](https://github.com/webcompat/webcompat.com/pull/1568)
 * Improves webhooks to send labels at once [Pull #1566](https://github.com/webcompat/webcompat.com/pull/1566)
@@ -51,7 +51,7 @@
 * Adds thumbnails to image upload and link them [Pull #1557](https://github.com/webcompat/webcompat.com/pull/1557)
 * Fixes length and quote style issues [Pull #1500](https://github.com/webcompat/webcompat.com/pull/1500)
 
-## 5.0.0 - 2018-05-12
+## 5.0.0 - 2017-05-12
 
 * Fix regression that prevents closing or re-opening an issue. [Pull #1561](https://github.com/webcompat/webcompat.com/pull/1561)
 * Restrict comments and constrain the closing of issue (updates to issues and edit API endpoints)[Pull #1559](https://github.com/webcompat/webcompat.com/pull/1559)
@@ -59,7 +59,7 @@
 * Removes dead code and method [Pull #1555](https://github.com/webcompat/webcompat.com/pull/1555)
 * Fixes length and quote style issues [Pull #1500](https://github.com/webcompat/webcompat.com/pull/1500)
 
-## 4.0.3 - 2018-05-08
+## 4.0.3 - 2017-05-08
 
 * Add GitHub API to CSP connect-src [Pull #1550](https://github.com/webcompat/webcompat.com/pull/1550)
 * Fix UTF-8 decoding error [Pull #1545](https://github.com/webcompat/webcompat.com/pull/1545)
@@ -67,12 +67,12 @@
 * Remove main dropdown from issues page [Pull #1531](https://github.com/webcompat/webcompat.com/pull/1531)
 * Fix SVG overflow for small viewports [Pull #1511](https://github.com/webcompat/webcompat.com/pull/1511)
 
-## 4.0.2 - 2018-04-25
+## 4.0.2 - 2017-04-25
 
 * Fix a disappearing label gear [Pull #1525](https://github.com/webcompat/webcompat.com/pull/1525)
 * Adds a list of files to ignore for deploy [Pull #1524](https://github.com/webcompat/webcompat.com/pull/1524)
 
-## 4.0.1 - 2018-04-24
+## 4.0.1 - 2017-04-24
 
 * Fixed encoding param bugs [Pull #1518](https://github.com/webcompat/webcompat.com/pull/1518)
 * Unified code for UA string version parsing [Pull #1504](https://github.com/webcompat/webcompat.com/pull/1504)
