@@ -3,7 +3,7 @@
 ## Our Pledge
 
 In the interest of fostering an open and welcoming environment, we as
-contributors and maintainers pledge to making participation in our project and
+contributors and maintainers pledge to make participation in our project and
 our community a harassment-free experience for everyone, regardless of age, body
 size, disability, ethnicity, gender identity and expression, level of experience,
 nationality, personal appearance, race, religion, or sexual identity and
@@ -11,7 +11,7 @@ orientation.
 
 ## Our Standards
 
-Examples of behavior that contributes to creating a positive environment
+Examples of behavior that contribute to creating a positive environment
 include:
 
 * Using welcoming and inclusive language
@@ -40,7 +40,7 @@ response to any instances of unacceptable behavior.
 Project maintainers have the right and responsibility to remove, edit, or
 reject comments, commits, code, wiki edits, issues, and other contributions
 that are not aligned to this Code of Conduct, or to ban temporarily or
-permanently any contributor for other behaviors that they deem inappropriate,
+permanently any contributor for other behavior that they deem inappropriate,
 threatening, offensive, or harmful.
 
 ## Scope
@@ -54,8 +54,8 @@ further defined and clarified by project maintainers.
 
 ## Enforcement
 
-Instances of abusive, harassing, or otherwise unacceptable behavior may be
-reported by contacting the project team at ogasidlo@mozilla.com. All
+Instances of abuse, harassment, or otherwise unacceptable behavior may be
+reported by contacting the project team at [Ola](mailto:ogasidlo@mozilla.com) / [@zoepage](https://github.com/zoepage) or [Dennis](mailto:DSchubert@mozilla.com) / [@denschub](https://github.com/denschub). All
 complaints will be reviewed and investigated and will result in a response that
 is deemed necessary and appropriate to the circumstances. The project team is
 obligated to maintain confidentiality with regard to the reporter of an incident.
