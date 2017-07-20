@@ -1,13 +1,13 @@
 <script type="text/template" id="label-editor-tmpl">
   <div class="wc-LabelEditor-header">
     <input class="form-control wc-LabelEditor-search" placeholder="filter label">
-      <button class="wc-LabelEditor-button r-ResetButton">Save &amp; Close</button>
+    <button class="wc-LabelEditor-button r-ResetButton" tabindex="0">Save &amp; Close</button>
   </div>
-  <div class="wc-LabelEditor-list">
+  <div class="wc-LabelEditor-list" tabindex="-1">
     <% _.each(labels, function(label) { %>
-      <label class="wc-LabelEditor-list-item">
+      <label class="wc-LabelEditor-list-item" tabindex="0">
         <span class="wc-LabelEditor-list-item-squareColor" style="background-color:#<%=label.color%>">
-          <input class="wc-LabelEditor-list-item-checkbox" type="checkbox" name="<%= label.name %>" data-color="<%=label.color%>" data-remotename="<%= label.remoteName %>">
+          <input class="wc-LabelEditor-list-item-checkbox" type="checkbox" name="<%= label.name %>" data-color="<%=label.color%>" data-remotename="<%= label.remoteName %>" tabindex="-1">
         </span>
         <span class="wc-LabelEditor-list-item-name"><%= label.name %></span>
       </label>

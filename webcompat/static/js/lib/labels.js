@@ -92,7 +92,12 @@ issues.LabelEditorView = Backbone.View.extend({
   events: {
     "change input[type=checkbox]": "updateView",
     "click button": "closeEditor",
-    "keyup .wc-LabelEditor-search": "filterLabels"
+    keyup: "closeEditor",
+    "keyup .wc-LabelEditor-search": "filterLabels",
+    "keyup .wc-LabelEditor-list-item": "checkUncheckLabels",
+    "keydown .wc-LabelEditor-search": "focusSaveClose",
+    "keydown .wc-LabelEditor-list-item": "removeFocus",
+    "keydown .wc-LabelEditor-list-item:visible:last": "backToTop"
   },
   keyboardEvents: {
     esc: "closeEditor"
@@ -180,16 +185,28 @@ issues.LabelEditorView = Backbone.View.extend({
     });
     this.reRender({ labels: _.uniq(modelUpdate) });
   },
-  closeEditor: function() {
-    var checked = $("input[type=checkbox]:checked");
-    var labelsArray = _.pluck(checked, "name");
-    this.issueView.editorButton.removeClass("is-active");
-    this.issueView.model.updateLabels(labelsArray);
-    // detach() (vs remove()) here because we don't want to lose events if the
-    // user reopens the editor.
-    this.$el.children().detach();
+  closeEditor: function(e) {
+    if (e.keyCode === 27 || e.keyCode === undefined) {
+      var checked = $("input[type=checkbox]:checked");
+      var labelsArray = _.pluck(checked, "name");
+      this.issueView.editorButton.removeClass("is-active");
+      this.issueView.model.updateLabels(labelsArray);
+      // detach() (vs remove()) here because we don't want to lose events if the
+      // user reopens the editor.
+      this.$el.children().detach();
+    }
   },
   filterLabels: _.debounce(function(e) {
+    setTimeout(function() {
+      if (e.keyCode === 13) {
+        $(".wc-LabelEditor-list-item:visible:first").focus();
+        // if you call the focus() function in a label element,'
+        // the focus automatically goes to the input.
+        // that's why we need to add the focused class.
+        $(".wc-LabelEditor-list-item:visible:first").addClass("focused");
+      }
+    }, 100);
+
     var escape = function(s) {
       return s.replace(/[-\/\\^$*+?:.()|[\]{}]/g, "\\$&");
     };
@@ -207,5 +224,27 @@ issues.LabelEditorView = Backbone.View.extend({
         .closest(".wc-LabelEditor-list-item")
         .hide();
     });
-  }, 100)
+  }, 100),
+  checkUncheckLabels: _.debounce(function(e) {
+    if (e.keyCode === 13) {
+      $(e.target).click();
+      $(e.target).addClass("focused");
+    }
+  }, 100),
+  focusSaveClose: _.debounce(function(e) {
+    if (e.keyCode === 9) {
+      // Safari workaround.
+      $(".wc-LabelEditor-button.r-ResetButton").focus();
+    }
+  }, 1),
+  removeFocus: _.debounce(function(e) {
+    if (e.keyCode === 9) {
+      $(e.target).closest("label").removeClass("focused");
+    }
+  }, 100),
+  backToTop: _.debounce(function(e) {
+    if (e.keyCode === 9) {
+      this.$el.find(".wc-LabelEditor-search").focus();
+    }
+  }, 1)
 });
