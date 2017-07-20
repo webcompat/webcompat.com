@@ -31,22 +31,38 @@ define(["intern"], function(intern, topic) {
     // A fully qualified URL to the Intern proxy
     proxyUrl: "http://127.0.0.1:9090/",
     siteRoot: siteRoot,
-    tunnel: "SeleniumTunnel",
-    tunnelOptions: {
-      // this tells SeleniumTunnel to download geckodriver
-      drivers: ["firefox", "chrome"]
+
+    capabilities: {
+      //"browserstack.local": false for running tests on travis
+      "browserstack.local": true,
+      "browserstack.video": false,
+      fixSessionCapabilities: false
     },
+
+    // Required for BrowserStack, maximum number of simultaneous integration tests allowed
+    maxConcurrency: 2,
 
     environments: [
       {
-        browserName: "firefox",
-        marionette: true
+        browser: "firefox",
+        browser_version: "54",
+        os: "OS X",
+        os_version: "Sierra"
       },
       {
-        browserName: "chrome",
-        marionette: true
+        browser: "chrome",
+        browser_version: "59",
+        os: "OS X",
+        os_version: "Sierra"
       }
     ],
+
+    tunnel: "BrowserStackTunnel",
+    tunnelOptions: {
+      verbose: true,
+      username: args.BROWSERSTACK_USERNAME,
+      accessKey: args.BROWSERSTACK_ACCESS_KEY
+    },
 
     filterErrorStack: true,
     reporters: ["Pretty"],
