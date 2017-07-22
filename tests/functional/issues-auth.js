@@ -63,13 +63,13 @@ define(
         )
           .findByCssSelector("body")
           .click()
-          .type("l")
-          .sleep(1000)
+          .pressKeys("l")
           .end()
           .findByCssSelector(".js-LabelEditorLauncher")
-          .getAttribute("class")
-          .then(function(className) {
-            assert.include(className, "is-active");
+          .then(function(element) {
+            element.getAttribute("class").then(function(classList) {
+              assert.include(classList, "is-active");
+            });
           })
           .end();
       }
