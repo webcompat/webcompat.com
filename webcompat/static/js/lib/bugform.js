@@ -11,6 +11,7 @@ function BugForm() {
   this.UPLOAD_LIMIT = 1024 * 1024 * 4;
   this.clickedButton = null;
   this.hasImage = null;
+  this.uploadLabel = $(".wc-UploadForm");
 
   this.inputs = {
     url: {
@@ -75,6 +76,8 @@ function BugForm() {
       _.bind(this.checkDescriptionValidity, this)
     );
     this.problemType.on("change", _.bind(this.checkProblemTypeValidity, this));
+    this.uploadLabel.on("drop", _.bind(this.handleImageDrop, this));
+    this.uploadLabel.on("dragover", _.bind(this.handleImageDrag, this));
     this.uploadField.on("change", _.bind(this.checkImageTypeValidity, this));
     this.osField
       .add(this.browserField)
@@ -111,6 +114,31 @@ function BugForm() {
       }, this),
       false
     );
+  };
+
+  // Event handler for image file drop; purpose to prevent multiple drops
+  this.handleImageDrop = function(ev) {
+    // console.log("start drop event");
+
+    if (this.hasImage) {
+      // console.log("want to prevent image drop");
+      ev.preventDefault();
+    } else {
+      // console.log("want to allow image drop");
+      // console.log("image was dropped");
+    }
+  };
+
+  // Event handler for image file dragover; purpose to prevent multiple drops
+  this.handleImageDrag = function(ev) {
+    // console.log("start drag event");
+
+    if (this.hasImage) {    
+      // console.log("want to prevent image drop (from drag)");
+      ev.preventDefault();
+    } else {
+      // console.log("want to allow image drop (from drag)");
+    }
   };
 
   this.showUploadPreview = _.bind(function(dataURI) {
