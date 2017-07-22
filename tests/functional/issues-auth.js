@@ -61,9 +61,10 @@ define(
           url("/issues/70"),
           ".wc-Issue-commentSubmit"
         )
-          .findByCssSelector(".wc-Issue-labels")
+          .findByCssSelector("body")
           .click()
           .type("l")
+          .sleep(1000)
           .end()
           .findByCssSelector(".js-LabelEditorLauncher")
           .getAttribute("class")
