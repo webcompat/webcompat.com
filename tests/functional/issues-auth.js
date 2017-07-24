@@ -61,14 +61,15 @@ define(
           url("/issues/70"),
           ".wc-Issue-commentSubmit"
         )
-          .findByCssSelector(".wc-Issue-labels")
+          .findByCssSelector("body")
           .click()
-          .type("l")
+          .pressKeys("l")
           .end()
           .findByCssSelector(".js-LabelEditorLauncher")
-          .getAttribute("class")
-          .then(function(className) {
-            assert.include(className, "is-active");
+          .then(function(element) {
+            element.getAttribute("class").then(function(classList) {
+              assert.include(classList, "is-active");
+            });
           })
           .end();
       }

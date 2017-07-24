@@ -34,12 +34,19 @@ define(["intern"], function(intern, topic) {
     tunnel: "SeleniumTunnel",
     tunnelOptions: {
       // this tells SeleniumTunnel to download geckodriver
-      drivers: ["firefox"]
+      drivers: ["firefox", "chrome"]
     },
+
+    // Only one browser at a time. Takes longer, but gets less intermittent errors.
+    maxConcurrency: 1,
 
     environments: [
       {
         browserName: "firefox",
+        marionette: true
+      },
+      {
+        browserName: "chrome",
         marionette: true
       }
     ],
