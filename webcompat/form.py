@@ -59,14 +59,6 @@ desc_message = u'An issue description is required.'
 url_label = u'Site URL <span class="wc-Form-required">*</span>'
 browser_test_label = u'Did you test in another browser?'
 
-steps_default = u"""For example,
-1. I've tried to log in.
-2. I've filled out the form details.
-3. I clicked on the submit button.
-4. Nothing happened.
-"""
-
-
 class IssueForm(FlaskForm):
     """Define form fields and validation for our bug reporting form."""
     url = StringField(url_label,
@@ -78,8 +70,7 @@ class IssueForm(FlaskForm):
     description = StringField(desc_label,
                               [InputRequired(message=desc_message)])
 
-    steps_reproduce = TextAreaField(u'How did you get there?', [Optional()],
-                                    default=steps_default)
+    steps_reproduce = TextAreaField(u'How did you get there?', [Optional()])
     problem_category = RadioField([InputRequired(message=radio_message)],
                                   choices=problem_choices)
     browser_test = RadioField(browser_test_label, [Optional()],

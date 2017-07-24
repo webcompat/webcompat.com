@@ -62,7 +62,8 @@
             </span>
           </div>
           <div class="wc-Form-group js-Form-group">
-            {{ form.steps_reproduce.label(class_='wc-Form-label') }} {{ form.steps_reproduce(class_='wc-Form-item wc-Form-item--textarea js-autoExpand', rows=4) }}
+            <label class="wc-Form-label" for="steps_reproduce">How did you get there?</label>
+            <textarea class="wc-Form-item wc-Form-item--textarea js-autoExpand" id="steps_reproduce" name="steps_reproduce" rows="4" placeholder="Steps to reproduce the issue"></textarea>
           </div>
         </div>
         <div class="r-Grid-cell r-minM--1of2">
