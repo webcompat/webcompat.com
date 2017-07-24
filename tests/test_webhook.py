@@ -11,6 +11,8 @@ import os
 import sys
 import unittest
 
+import flask
+
 from webcompat import app
 from webcompat.webhooks import helpers
 
@@ -20,6 +22,12 @@ import webcompat  # nopep8
 
 # The key is being used for testing and computing the signature.
 key = app.config['HOOK_SECRET_KEY']
+
+# a fake type-media issues list for testing
+ISSUES_LIST = ['600 NS_ERROR_DOM_MEDIA_DEMUXER_ERR www.chia-anime.tv',
+               '430 NS_ERROR_DOM_MEDIA_METADATA_ERR example.com',
+               '9 NS_ERROR_DOM_MEDIA_DEMUXER_ERR example.com',
+               '69 NS_ERROR_DOM_MEDIA_DEMUXER_ERR example.org']
 
 
 # Some machinery for opening our test files
@@ -38,7 +46,7 @@ def event_data(filename):
 class TestWebhook(unittest.TestCase):
     def setUp(self):
         webcompat.app.config['TESTING'] = True
-        self.app = webcompat.app.test_client()
+        self.client = webcompat.app.test_client()
         self.headers = {'content-type': 'application/json'}
         self.test_url = '/webhooks/labeler'
         self.issue_body = """
@@ -59,13 +67,13 @@ class TestWebhook(unittest.TestCase):
 
     def test_forbidden_get(self):
         """GET is forbidden on labeler webhook."""
-        rv = self.app.get(self.test_url, headers=self.headers)
+        rv = self.client.get(self.test_url, headers=self.headers)
         self.assertEqual(rv.status_code, 404)
 
     def test_fail_on_missing_signature(self):
         """POST without signature on labeler webhook is forbidden."""
         self.headers.update({'X-GitHub-Event': 'ping'})
-        rv = self.app.post(self.test_url, headers=self.headers)
+        rv = self.client.post(self.test_url, headers=self.headers)
         self.assertEqual(rv.status_code, 401)
 
     def test_fail_on_bogus_signature(self):
@@ -73,9 +81,9 @@ class TestWebhook(unittest.TestCase):
         json_event, signature = event_data('new_event_valid.json')
         self.headers.update({'X-GitHub-Event': 'ping',
                              'X-Hub-Signature': 'Boo!'})
-        rv = self.app.post(self.test_url,
-                           data=json_event,
-                           headers=self.headers)
+        rv = self.client.post(self.test_url,
+                              data=json_event,
+                              headers=self.headers)
         self.assertEqual(rv.status_code, 401)
 
     def test_fail_on_invalid_event_type(self):
@@ -83,9 +91,9 @@ class TestWebhook(unittest.TestCase):
         json_event, signature = event_data('new_event_valid.json')
         self.headers.update({'X-GitHub-Event': 'failme',
                              'X-Hub-Signature': signature})
-        rv = self.app.post(self.test_url,
-                           data=json_event,
-                           headers=self.headers)
+        rv = self.client.post(self.test_url,
+                              data=json_event,
+                              headers=self.headers)
         self.assertEqual(rv.status_code, 403)
 
     def test_success_on_ping_event(self):
@@ -93,22 +101,22 @@ class TestWebhook(unittest.TestCase):
         json_event, signature = event_data('new_event_valid.json')
         self.headers.update({'X-GitHub-Event': 'ping',
                              'X-Hub-Signature': signature})
-        rv = self.app.post(self.test_url,
-                           data=json_event,
-                           headers=self.headers)
+        rv = self.client.post(self.test_url,
+                              data=json_event,
+                              headers=self.headers)
         self.assertEqual(rv.status_code, 200)
         self.assertIn('pong', rv.data)
 
-    def test_fails_on_action_not_opened(self):
+    def test_fails_on_not_known_action(self):
         """POST with action different of opened fails."""
         json_event, signature = event_data('new_event_invalid.json')
         self.headers.update({'X-GitHub-Event': 'issues',
                              'X-Hub-Signature': signature})
-        rv = self.app.post(self.test_url,
-                           data=json_event,
-                           headers=self.headers)
-        self.assertEqual(rv.status_code, 200)
-        self.assertIn('cool story, bro.', rv.data)
+        rv = self.client.post(self.test_url,
+                              data=json_event,
+                              headers=self.headers)
+        self.assertEqual(rv.status_code, 403)
+        self.assertIn('Not an interesting hook', rv.data)
 
     def test_extract_browser_label(self):
         """Extract browser label name."""
@@ -116,6 +124,121 @@ class TestWebhook(unittest.TestCase):
         self.assertEqual(browser_label, 'browser-firefox')
         browser_label_none = helpers.extract_browser_label(self.issue_body2)
         self.assertEqual(browser_label_none, None)
+
+    def test_is_github_hook(self):
+        """Define if the GitHub request is valid."""
+        json_event, signature = event_data('new_event_invalid.json')
+        # Lack the X-GitHub-Event
+        with webcompat.app.test_client() as client:
+            headers = self.headers.copy()
+            headers.update({'X-Hub-Signature': signature})
+            client.post(self.test_url,
+                        data=json_event,
+                        headers=headers)
+            webhook_request = helpers.is_github_hook(flask.request)
+            self.assertFalse(webhook_request)
+        # Lack the X-Hub-Signature
+        with webcompat.app.test_client() as client:
+            headers = self.headers.copy()
+            headers.update({'X-GitHub-Event': 'issues'})
+            client.post(self.test_url,
+                        data=json_event,
+                        headers=headers)
+            webhook_request = helpers.is_github_hook(flask.request)
+            self.assertFalse(webhook_request)
+        # X-Hub-Signature is wrong
+        with webcompat.app.test_client() as client:
+            headers = self.headers.copy()
+            headers.update({'X-GitHub-Event': 'issues',
+                            'X-Hub-Signature': 'failme'})
+            client.post(self.test_url,
+                        data=json_event,
+                        headers=headers)
+            webhook_request = helpers.is_github_hook(flask.request)
+            self.assertFalse(webhook_request)
+        # Everything is fine
+        with webcompat.app.test_client() as client:
+            headers = self.headers.copy()
+            headers.update({'X-GitHub-Event': 'issues',
+                            'X-Hub-Signature': signature})
+            client.post(self.test_url,
+                        data=json_event,
+                        headers=headers)
+            webhook_request = helpers.is_github_hook(flask.request)
+            self.assertTrue(webhook_request)
+
+    def test_extract_media_error(self):
+        """Extract the information for type-media issue."""
+        json_event, signature = event_data('type-media-event.json')
+        payload = json.loads(json_event)
+        body = payload['issue']['body']
+        expected = 'NS_ERROR_DOM_MEDIA_DEMUXER_ERR'
+        actual = helpers.extract_media_error(body)
+        self.assertEqual(expected, actual)
+
+    def test_extract_media_error_fail(self):
+        """Fails scenario for type-media parsing."""
+        body = ''
+        actual = helpers.extract_media_error(body)
+        self.assertIsNone(actual)
+
+    def test_known_type_media(self):
+        """Check if the issue is already in the list of known type-media.
+
+        Scenarios:
+        1. the issue is already in the list with the same issue number.
+           (nothing to do. Might happen with change of labels.)
+           True
+        2. the issue is in the list with same error code and domain,
+           but different issue number. (duplicate)
+           True
+        3. the issue is not in the list, add it.
+        """
+        # Domain is known and has the same issue number
+        # It should never happened. We just return True.
+        json_event, signature = event_data('type-media-event-error.json')
+        payload = json.loads(json_event)
+        actual = helpers.is_known_media(payload, ISSUES_LIST)
+        self.assertIsNone(actual)
+        # The domain is not in the list of known domains. True
+        json_event, signature = event_data('type-media-event-not-known.json')
+        payload = json.loads(json_event)
+        expected = (False, {'action': u'labeled',
+                            'domain': u'example.net',
+                            'media_error': u'Foobar',
+                            'number': 666})
+        actual = helpers.is_known_media(payload, ISSUES_LIST)
+        self.assertTupleEqual(expected, actual)
+        # The domain is in the list of known domains
+        # with the same error message.
+        json_event, signature = event_data('type-media-event.json')
+        payload = json.loads(json_event)
+        expected = (True, {'action': u'labeled',
+                           'initial_issue': 600,
+                           'domain': u'www.chia-anime.tv',
+                           'media_error': u'NS_ERROR_DOM_MEDIA_DEMUXER_ERR',
+                           'number': 700})
+        actual = helpers.is_known_media(payload, ISSUES_LIST)
+        self.assertTupleEqual(expected, actual)
+
+    def test_get_issue_info(self):
+        """Extract the right information from an issue."""
+        json_event, signature = event_data('type-media-event.json')
+        payload = json.loads(json_event)
+        expected = {'number': 700,
+                    'action': 'labeled',
+                    'domain': 'www.chia-anime.tv',
+                    'media_error': 'NS_ERROR_DOM_MEDIA_DEMUXER_ERR'}
+        actual = helpers.get_issue_info(payload)
+        self.assertDictEqual(expected, actual)
+
+    def test_handle_type_media(self):
+        """Testing the results of type-media handling."""
+        json_event, signature = event_data('type-media-event-not-known.json')
+        payload = json.loads(json_event)
+        actual = helpers.handle_type_media(payload)
+        expected = 'Added'
+        self.assertEqual(actual, expected)
 
 
 if __name__ == '__main__':

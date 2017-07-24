@@ -11,13 +11,13 @@ See https://developer.github.com/webhooks/ for what is possible."""
 import json
 import logging
 
-from flask import abort
 from flask import Blueprint
 from flask import request
 
-from helpers import extract_browser_label
-from helpers import set_labels
-from helpers import signature_check
+from helpers import is_github_hook
+from helpers import handle_type_media
+from helpers import get_issue_info
+from helpers import new_opened_issue
 
 from webcompat import app
 
@@ -28,46 +28,35 @@ webhooks = Blueprint('webhooks', __name__, url_prefix='/webhooks')
 def hooklistener():
     """Listen for the "issues" webhook event.
 
-    - Only in response to the 'opened' action (for now).
-    - Add label needstriage to the issue
-    - Add label for the browser name
+    By default, we return a 403.
     """
+    if not is_github_hook(request):
+        return ('Nothing to see here', 401, {'Content-Type': 'plain/text'})
+    payload = json.loads(request.data)
     event_type = request.headers.get('X-GitHub-Event')
-    post_signature = request.headers.get('X-Hub-Signature')
-    if post_signature:
-        key = app.config['HOOK_SECRET_KEY']
-        payload = json.loads(request.data)
-        if not signature_check(key, post_signature, request.data):
-            abort(401)
-        if event_type == 'issues':
-            if payload.get('action') == 'opened':
-                # Setting "Needs Triage" label by default
-                # to all the new issues raised
-                labels = ['status-needstriage']
-                issue_body = payload.get('issue')['body']
-                issue_number = payload.get('issue')['number']
-                browser_label = extract_browser_label(issue_body)
-                if browser_label:
-                    labels.append(browser_label)
-                # Sending a request to set labels
-                response = set_labels(labels, issue_number)
-                if response.status_code == 200:
-                    return ('gracias, amigo.', 200,
-                            {'Content-Type': 'plain/text'})
-                else:
-                    # Logging the ip and url for investigation
-                    log = app.logger
-                    log.setLevel(logging.INFO)
-                    msg = 'failed to set labels on issue {issue}'.format(
-                        issue=issue_number)
-                    log.info(msg)
+    # Treating events related to issues
+    if event_type == 'issues':
+        issue = get_issue_info(payload)
+        # A new issue has been created
+        if issue['action'] == 'opened':
+            # we are setting things on each new open issues
+            response = new_opened_issue(payload)
+            if response.status_code == 200:
+                return ('gracias, amigo.', 200, {'Content-Type': 'plain/text'})
             else:
-                return ('cool story, bro.', 200,
-                        {'Content-Type': 'plain/text'})
-        elif event_type == 'ping':
-            return ('pong', 200, {'Content-Type': 'plain/text'})
-        else:
-            abort(403)
-    else:
-        # No signature.
-        abort(401)
+                log = app.logger
+                log.setLevel(logging.INFO)
+                msg = 'failed to set labels on issue {issue}'.format(
+                    issue['number'])
+                log.info(msg)
+                return ('ooops', 400, {'Content-Type': 'plain/text'})
+        # A label has been added to an issue.
+        elif issue['action'] == 'labeled':
+            # will return Duplicate if already existing
+            # and Added if not
+            response = handle_type_media(payload)
+            return (response, 200, {'Content-Type': 'plain/text'})
+    elif event_type == 'ping':
+        return ('pong', 200, {'Content-Type': 'plain/text'})
+    # If nothing worked as expected, the default response is 403.
+    return ('Not an interesting hook', 403, {'Content-Type': 'plain/text'})
