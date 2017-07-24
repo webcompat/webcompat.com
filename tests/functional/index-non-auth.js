@@ -45,7 +45,12 @@ define(
             .findByCssSelector("#js-ReportBug")
             .click()
             .end()
-            .findDisplayedByCssSelector("#js-ReportForm")
+            .sleep(1000)
+            .findByCssSelector("#js-ReportForm")
+            .isDisplayed()
+            .then(function(isDisplayed) {
+              assert.equal(isDisplayed, true, "The form is displayed");
+            })
             .end()
             .findByCssSelector("#js-ReportBug")
             .click()

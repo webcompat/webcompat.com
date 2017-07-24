@@ -145,31 +145,35 @@ define(
       },
 
       "Search from the homepage": function() {
-        return FunctionalHelpers.openPage(this, url("/"), ".js-SearchBarOpen")
-          .get(require.toUrl(url("/")))
-          .findByCssSelector(".js-SearchBarOpen")
-          .click()
-          .end()
-          .findByCssSelector(".js-SearchBar input")
-          .click()
-          .type("vladvlad")
-          .type(keys.ENTER)
-          .end()
-          .findDisplayedByCssSelector(".wc-IssueList:only-of-type a")
-          .getVisibleText()
-          .then(function(text) {
-            assert.include(
-              text,
-              "vladvlad",
-              "The search query results show up on the page."
-            );
-          })
-          .end()
-          .getCurrentUrl()
-          .then(function(currUrl) {
-            assert.include(currUrl, "page=1", "Default params got merged.");
-          })
-          .end();
+        return (
+          FunctionalHelpers.openPage(this, url("/"), ".js-SearchBarOpen")
+            .get(require.toUrl(url("/")))
+            .findByCssSelector(".js-SearchBarOpen")
+            .click()
+            .end()
+            // Wait for animation to complete.
+            .sleep(1000)
+            .findByCssSelector(".js-SearchBar input")
+            .click()
+            .type("vladvlad")
+            .type(keys.ENTER)
+            .end()
+            .findDisplayedByCssSelector(".wc-IssueList:only-of-type a")
+            .getVisibleText()
+            .then(function(text) {
+              assert.include(
+                text,
+                "vladvlad",
+                "The search query results show up on the page."
+              );
+            })
+            .end()
+            .getCurrentUrl()
+            .then(function(currUrl) {
+              assert.include(currUrl, "page=1", "Default params got merged.");
+            })
+            .end()
+        );
       },
 
       "Search with a dash works": function() {
