@@ -23,6 +23,7 @@
     "suitcss-utils-display": "^0.4.0"
   },
   "devDependencies": {
+    "browserstack-local": "^1.3.0",
     "eslint": "^3.4.0",
     "eslint-config-prettier": "^1.6.0",
     "eslint-plugin-prettier": "^2.0.1",

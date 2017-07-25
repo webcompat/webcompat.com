@@ -59,4 +59,4 @@ before_script:
 script:
   - nosetests
   - if [ "$TRAVIS_SECURE_ENV_VARS" == "false" ] ; then node_modules/.bin/intern-runner config=tests/intern reporters=Console functionalSuites=tests/functional-nonauth ; fi
-  - if [ "$TRAVIS_SECURE_ENV_VARS" == "true" ] ; then node_modules/.bin/intern-runner config=tests/intern reporters=Console user="$USER" pw="$PW" ; fi
+  - if [ "$TRAVIS_SECURE_ENV_VARS" == "true" ] ; then node_modules/.bin/intern-runner config=tests/browserstack-remote reporters=Console user="$USER" pw="$PW" BROWSERSTACK_USERNAME="$BROWSERSTACK_USERNAME" BROWSERSTACK_ACCESS_KEY="$BROWSERSTACK_ACCESS_KEY" ; fi
