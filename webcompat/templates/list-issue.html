@@ -3,7 +3,7 @@
 {% block body %}
 <div class="wc-SearchIssue js-SearchIssue" data-username="{{ session.username }}">
   {% include "shared/nav.html" %}
-  <main role="main" data-repo-path="{{config['ISSUES_REPO_URI']}}">
+  <main role="main">
 
     <div class="wc-Loader js-loader"></div>
 
@@ -34,6 +34,7 @@
 
 {% endblock %}
 {% block extrascripts %}
+<script>var repoPath="{{config['ISSUES_REPO_URI']}}";</script>
 {%- if config.PRODUCTION or config.STAGING -%}
 <script src="{{ url_for('static', filename='js/issue-list.min.js')|bust_cache }}"></script>
 {% else %}

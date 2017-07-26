@@ -2,10 +2,7 @@
 {% block title %}Issue #{{ number }}{% endblock %}
 {% block body %}
   {% include "shared/nav.html" %}
-  <main class="wc-UISection wc-UISection--backgroundColor" role="main"
-        data-issue-number={{ number }}
-        data-repo-path="{{config['ISSUES_REPO_URI']}}"
-        >
+  <main class="wc-UISection wc-UISection--backgroundColor" role="main">
     <div class="wc-Issue">
       <section class="wc-UIContent js-Issue is-hidden">
         {% include "issue/issue-aside.html" %}
@@ -32,6 +29,8 @@
   </main>
 {% endblock %}
 {% block extrascripts %}
+<script>var issueNumber={{ number }};
+var repoPath="{{config['ISSUES_REPO_URI']}}";</script>
 {%- if config.PRODUCTION or config.STAGING -%}
 <script src="{{ url_for('static', filename='js/issues.min.js')|bust_cache }}"></script>
 {% else %}
