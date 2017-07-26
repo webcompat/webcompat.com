@@ -393,7 +393,7 @@ issues.MainView = Backbone.View.extend({
   _isNSFW: undefined,
   initialize: function() {
     $(document.body).addClass("language-html");
-    var issueNum = { number: issueNumber };
+    var issueNum = { number: $("main").data("issueNumber") };
     this.issue = new issues.Issue(issueNum);
     this.comments = new issues.CommentsCollection({ pageNumber: 1 });
     this.initSubViews();
@@ -418,6 +418,8 @@ issues.MainView = Backbone.View.extend({
     }
   },
   githubWarp: function(e) {
+    var repoPath = $("main").data("repoPath");
+
     if (e.target.nodeName === "TEXTAREA") {
       return;
     } else {
