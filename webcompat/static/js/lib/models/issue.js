@@ -239,6 +239,7 @@ issueList.IssueCollection = Backbone.Collection.extend({
       mentioned: "mentions"
     };
     var sitesearchRegExp = /site:([\w-\.]+(:\d+)?)/g;
+    var repoPath = $("main").data("repoPath");
 
     if (_.isString(paramsArg)) {
       var paramsArray = _.uniq(paramsArg.split("&"));
