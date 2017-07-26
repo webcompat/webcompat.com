@@ -26,7 +26,7 @@ issues.CommentView = Backbone.View.extend({
   id: function() {
     return this.model.get("commentLinkId");
   },
-  template: _.template($("#comment-tmpl").html()),
+  template: wcTmpl["webcompat/templates/issue/issue-comment-list.tmpl"],
   render: function() {
     this.$el.html(this.template(this.model.toJSON()));
     return this;

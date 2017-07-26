@@ -1,0 +1,9 @@
+<script type="text/template" id="needstriage-tmpl">
+  <% if (issues.length) { %>
+    <% _.each(issues, function(issue) { %>
+      {% include "web_modules/issue-list.html" %}
+    <% }); %>
+  <% } else { %>
+  <p>Nothing here currently, cool!</p>
+<% } %>
+</script>

@@ -13,32 +13,11 @@
   <label for="wc-Comment-text" class="wc-Accessibility">Comment Text</label>
     <textarea class="wc-Comment-submit js-Comment-text mousetrap js-autoExpand" placeholder="Leave a comment"></textarea>
     <div class="wc-Form-group js-ImageUploadView">
-      <script type="text/template" id="upload-input-tmpl">
-        <form>
-          <label class="wc-UploadForm wc-UploadForm--new" for="image">
-            <div class="wc-UploadForm-wrapper">
-              <div class="wc-UploadForm-label wc-UploadForm-label--uploadForm">
-                Attach images by <span class="wc-UploadForm-label--link">selecting them</span>
-              </div>
-              <input
-                accept=".jpe,.jpg,.jpeg,.gif,.png,.bmp"
-                class="wc-ButtonUpload js-buttonUpload"
-                id="image"
-                name="image"
-                type="file"
-              />
-            </div>
-            <img class="wc-Upload-Loader wc-Issue-Loader js-Upload-Loader"
-                 src="/img/upload-loader.svg" alt="Uploading image">
-          </label>
-        </form>
-      </script>
+      {% include "issue/upload-image.tmpl" %}
     </div>
     <div class="wc-Comment-button">
       <button class="wc-Button wc-Button--action js-Issue-state-button">
-        <script type="text/template" id="state-button-tmpl">
-        <span class="js-comment-<%= stateClass %>"><%= state %></span>
-        </script>
+        {% include "issue/state-button.tmpl" %}
       </button>
       <button value="comment" class="wc-Button wc-Button--default js-Issue-comment-button" type="submit">Comment</button>
     </div>

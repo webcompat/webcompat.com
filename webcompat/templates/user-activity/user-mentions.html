@@ -6,14 +6,6 @@
     {% include "web_modules/pagination.html" %}
   </div>
   <div id="issue-mentions">
-    <script type="text/template" id="issue-mentions-tmpl">
-      <% if (issueMentions.length) { %>
-        <% _.each(issueMentions, function(issue) { %>
-          {% include "web_modules/issue-list.html" %}
-        <% }); %>
-      <% } else { %>
-      <p>Nothing here currently.</p>
-      <% } %>
-    </script>
+    {% include "user-activity/issue-mentions.tmpl" %}
   </div>
 </div>

@@ -11,7 +11,7 @@
         {% include "issue/issue-aside.html" %}
         {% include "issue/issue-information.html" %}
         <div class="wc-Issue-commentList js-Issue-commentList">
-          {% include "issue/issue-comment-list.html" %}
+          {% include "issue/issue-comment-list.tmpl" %}
         </div>
         {% if session.user_id and session.avatar_url %}
           <div class="wc-Issue-commentSubmit">

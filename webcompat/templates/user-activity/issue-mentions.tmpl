@@ -1,0 +1,9 @@
+<script type="text/template" id="issue-mentions-tmpl">
+  <% if (issueMentions.length) { %>
+    <% _.each(issueMentions, function(issue) { %>
+      {% include "web_modules/issue-list.html" %}
+    <% }); %>
+  <% } else { %>
+  <p>Nothing here currently.</p>
+  <% } %>
+</script>

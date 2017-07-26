@@ -1,0 +1,14 @@
+<script type="text/template" id="dropdown-tmpl">
+  <button type="button" class="wc-Dropdown-toggle js-Dropdown-toggle">
+     <h1 class="wc-Dropdown-label js-Dropdown-label"><%= dropdownTitle %></h1> <span class="wc-Icon wc-Icon--chevron-down"></span>
+  </button>
+  <ul class="wc-Dropdown-content js-Dropdown-options" aria-hidden="false">
+    <% _.each(dropdownOptions, function(option) { %>
+    <li class="wc-Dropdown-item js-Dropdown-item">
+      <a href="#" class="wc-Dropdown-link js-Dropdown-link" data-params="<%= option.params %>">
+        <%= option.title %>
+      </a>
+    </li>
+    <% }); %>
+  </ul>
+</script>
