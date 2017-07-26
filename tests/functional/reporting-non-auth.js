@@ -255,8 +255,24 @@ define(
         );
       },
 
+      // tests a scenario where bug reported from firefox nightly Report Site Issue button
+      "details param adds stylo pref to text area": function() {
+        return FunctionalHelpers.openPage(
+          this,
+          url("/issues/new?details=layout.css.servo.enabled%3A+true"),
+          ".wc-ReportForm-actions-button"
+        )
+          .findByCssSelector("#steps_reproduce")
+          .getProperty("value")
+          .then(function(text) {
+            assert.include(text, "layout.css.servo.enabled: true");
+          })
+          .end();
+      },
+
       // tests a scenario where bug reported from firefox nightly media type tool
       "problem_type param selects problem type": function() {
+        this.skip("former media type reporting test");
         return FunctionalHelpers.openPage(
           this,
           url("/issues/new?problem_type=video_bug"),
@@ -271,6 +287,9 @@ define(
       },
 
       "details param adds info to description": function() {
+        this.skip(
+          "former media type reporting test - NS_ERROR_DOM_MEDIA_DEMUXER_ERR"
+        );
         return FunctionalHelpers.openPage(
           this,
           url("/issues/new?details=" + DETAILS_STRING),
@@ -288,6 +307,9 @@ define(
       },
 
       "details param: + decoded as space": function() {
+        this.skip(
+          "former media type reporting test - NS_ERROR_DOM_MEDIA_DEMUXER_ERR2"
+        );
         return FunctionalHelpers.openPage(
           this,
           url("/issues/new?details=" + DETAILS_STRING2),

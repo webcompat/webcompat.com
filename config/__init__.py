@@ -65,4 +65,5 @@ for cat_label in cat_labels:
 EXTRA_LABELS = [
     'type-media',
     'type-webvr',
+    'type-stylo'
 ]
