@@ -4,6 +4,15 @@
 2. New features: affect minor number
 3. API endpoint changes or dependency version updates: affect major number
 
+## 5.4.1 - 2017-07-26
+
+* Update EXTRA_LABELS whitelist w/ type-stylo [Pull #1676](https://github.com/webcompat/webcompat.com/pull/1676)
+* Gets tests to with Chrome as well as Firefox. Travis and Local [Pull #1671](https://github.com/webcompat/webcompat.com/pull/1671)
+* Disallow inline scripts via CSP [Pull #1667](https://github.com/webcompat/webcompat.com/pull/1667)
+* Add a Code of Conduct [Pull #1660](https://github.com/webcompat/webcompat.com/pull/1660)
+* handle multiple image drops [Pull #1634](https://github.com/webcompat/webcompat.com/pull/1634)
+* Add keyboard navigation to label editor [Pull #1541](https://github.com/webcompat/webcompat.com/pull/1541)
+
 ## 5.4.0 - 2017-07-18
 
 * Fix wrong years in CHANGELOG [Pull #1663](https://github.com/webcompat/webcompat.com/pull/1663)
