@@ -63,9 +63,7 @@
                          filename='functional/lib/window-helpers.js') }}"></script>
 {%- endif %}{%- endif %}
 {% for category, message in get_flashed_messages(with_categories=True) %}
-<script src="{{ url_for('static', filename='js/lib/flashed-messages.js') }}"
-        data-category="{{ category }}"
-        data-message="{{ message }}"></script>
+<script>wcEvents.trigger('flash:{{ category }}', {message: '{{ message }}', timeout: 4000});</script>
 {% endfor %}
 {% block extrascripts %}{% endblock %}
 </body>

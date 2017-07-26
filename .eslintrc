@@ -16,6 +16,7 @@
     "Backbone": true,
     "console": true,
     "define": true,
+    "issueNumber": true,
     "markdownitEmoji": true,
     "markdownitSanitizer": true,
     "md": true,
@@ -25,6 +26,7 @@
     "PaginationMixin": true,
     "Prism": true,
     "Promise": true,
+    "repoPath": true,
     "require": true,
     "wcEvents": true,
     "WindowHelpers": true
