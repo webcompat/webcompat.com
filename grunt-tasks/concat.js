@@ -22,7 +22,8 @@ module.exports = function(grunt) {
         "<%= jsPath %>/vendor/backbone.mousetrap.js",
         "<%= jsPath %>/lib/flash-message.js",
         "<%= jsPath %>/lib/homepage.js",
-        "<%= jsPath %>/lib/bugform.js"
+        "<%= jsPath %>/lib/bugform.js",
+        "<%= jsPath %>/templates.js"
       ],
       dest: "<%= jsPath %>/<%= pkg.name %>.js"
     },

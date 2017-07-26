@@ -5,6 +5,7 @@
 module.exports = function(grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON("package.json"),
+    tmplPath: "webcompat/templates/",
     jsPath: "webcompat/static/js",
     cssPath: "webcompat/static/css",
     imgPath: "webcompat/static/img",
@@ -24,6 +25,7 @@ module.exports = function(grunt) {
   // Default task.
   grunt.registerTask("default", [
     "checkDependencies",
+    "jst",
     "concat",
     "uglify",
     "postcss",
@@ -33,6 +35,7 @@ module.exports = function(grunt) {
   // Task used before doing a deploy (same as default, but does image optimization)
   grunt.registerTask("deploy", [
     "checkDependencies",
+    "jst",
     "concat",
     "uglify",
     "postcss",
