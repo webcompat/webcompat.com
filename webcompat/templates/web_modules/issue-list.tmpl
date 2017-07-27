@@ -1,6 +1,6 @@
-<script type="text/template" id="my-issues-tmpl">
-  <% if (myIssues.length) { %>
-    <% _.each(myIssues, function(issue) { %>
+<script type="text/template" id="issue-list-tmpl">
+  <% if (issues.length) { %>
+    <% _.each(issues, function(issue) { %>
       <article class="wc-IssueList wc-IssueList--<%= issue.stateClass %> wc-IssueList--large js-IssueList">
         <div class="wc-IssueList-section">
           <header class="wc-IssueList-header">
@@ -25,5 +25,5 @@
     <% }); %>
   <% } else { %>
   <p>Nothing here currently, go report something!</p>
-  <% } %>
+<% } %>
 </script>

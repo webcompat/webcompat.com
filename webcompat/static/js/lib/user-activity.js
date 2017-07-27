@@ -36,11 +36,11 @@ issueList.MyIssuesView = Backbone.View.extend(
       );
       this.fetchAndRenderIssues({ url: this.issues.url });
     },
-    template: wcTmpl["webcompat/templates/user-activity/my-issues.tmpl"],
+    template: wcTmpl["webcompat/templates/web_modules/issue-list.tmpl"],
     render: function() {
       this.$el.html(
         this.template({
-          myIssues: this.issues.toJSON()
+          issues: this.issues.toJSON()
         })
       );
 
@@ -107,11 +107,11 @@ issueList.IssueMentionsView = Backbone.View.extend(
       );
       this.fetchAndRenderIssues({ url: this.issues.url });
     },
-    template: wcTmpl["webcompat/templates/user-activity/issue-mentions.tmpl"],
+    template: wcTmpl["webcompat/templates/web_modules/issue-list.tmpl"],
     render: function() {
       this.$el.html(
         this.template({
-          issueMentions: this.issues.toJSON()
+          issues: this.issues.toJSON()
         })
       );
       return this;
