@@ -1,5 +1,12 @@
 <script type="text/template" id="issuelist-search-tmpl">
   <div class="wc-UIContent">
-    {% include "web_modules/issue-search.html" %}
+    <div class="wc-SearchForm-content">
+      <label for="wc-SearchForm-input" class="wc-Accessibility">Search By Keyword</label>
+      <input type="text" id="js-SearchForm-input" class="wc-SearchForm-item mousetrap" placeholder="Search by keyword">
+      <button role="button" type="submit" class="r-ResetButton wc-SearchForm-button js-SearchForm-button">
+        <span class="wc-Accessibility">Search</span>
+        <span class="wc-Icon wc-Icon--search" aria-hidden="true"></span>
+      </button>
+    </div>
   </div>
 </script>

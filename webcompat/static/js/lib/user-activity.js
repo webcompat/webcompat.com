@@ -107,9 +107,7 @@ issueList.IssueMentionsView = Backbone.View.extend(
       );
       this.fetchAndRenderIssues({ url: this.issues.url });
     },
-    template: ["wcTmpl"][
-      "webcompat/templates/user-activity/issue-mentions.tmpl"
-    ],
+    template: wcTmpl["webcompat/templates/user-activity/issue-mentions.tmpl"],
     render: function() {
       this.$el.html(
         this.template({

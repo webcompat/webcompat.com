@@ -21,7 +21,9 @@
       <div class="wc-SearchIssue-sorting">
         {% include "list-issue/search-issue-sorting.html" %}
       </div>
-      {% include "list-issue/issue-list.html" %}
+      <div class="wc-UIContent js-list-issue">
+        {% include "list-issue/issuelist-issue.tmpl" %}
+      </div>
       <div class="wc-SearchIssue-sorting">
         <div class="wc-UIContent">
           {% include "web_modules/pagination.html" %}

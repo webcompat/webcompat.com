@@ -1,7 +1,27 @@
 <script type="text/template" id="issuelist-issue-tmpl">
 <% if (issues.length) { %>
   <% _.each(issues, function(issue) { %>
-    {% include "web_modules/issue-list.html" %}
+    <article class="wc-IssueList wc-IssueList--<%= issue.stateClass %> wc-IssueList--large js-IssueList">
+      <div class="wc-IssueList-section">
+        <header class="wc-IssueList-header">
+          <a class="wc-Link" href="/issues/<%= issue.number %>">
+            <span class="wc-IssueList-count">Issue <%= issue.number %></span>: <%- issue.title %>
+          </a>
+        </header>
+        <p>
+          <span class="wc-IssueList-metadata">Opened: <time><%= issue.createdAt %></time></span>
+          <span class="wc-IssueList-metadata">Comments: <%= issue.commentNumber %></span>
+        </p>
+      </div>
+      <div class="wc-IssueList-section">
+        <span class="wc-IssueList-label js-Issue-label">
+        <% _.each(issue.labels, function(label) { %>
+          <a href="/issues?q=label:<%= label.remoteName %>"
+             class="wc-Labels" data-remotename="<%= label.remoteName %>"
+             title="Labels : <%= label.name %>"><%= label.name %></a>
+        <% }); %></span>
+      </div>
+    </article>
   <% }); %>
 <% } else { %>
   <div class="wc-SearchIssue-noResults">

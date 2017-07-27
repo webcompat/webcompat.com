@@ -23,7 +23,7 @@ diagnose.NeedsTriageView = Backbone.View.extend({
       })
       .error(function() {});
   },
-  template: _.template($("#needstriage-tmpl").html()),
+  template: wcTmpl["webcompat/templates/home-page/needstriage.tmpl"],
   render: function() {
     this.$el.html(
       this.template({
