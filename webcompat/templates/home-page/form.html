@@ -94,6 +94,9 @@
           </div>
 
             <div class="js-image-upload wc-Form-group js-Form-group {% if form.image.errors %}is-error{% endif %}">
+              <div class="wc-Image-Editor-edit-btn js-edit-img-open-btn is-hidden">
+                  <span class="wc-Navbar-link-icon wc-Icon wc-Icon--edit-img" aria-hidden="true"></span>
+              </div>
               <label
                 class="wc-UploadForm wc-UploadForm--homePage js-image-upload-label"
                 for="image"
@@ -159,5 +162,24 @@
       </div>
       {{ form.hidden_tag() }}
     </form>
+  <!-- The Modal -->
+  <div id="imageEditor" class="modal is-hidden">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+      <div class="wc-Image-Editor-header">
+        <div class="close js-edit-img-close-btn">&times;</div>
+      </div>
+      <div class="wc-Image-Editor-toolbar">
+        <div class="wc-Image-Editor-button js-highlight-button is-active">
+          <div class="wc-Image-Editor-yellow-rect"></div>
+        </div>
+        <div class="wc-Image-Editor-button js-redact-button">
+          <div class="wc-Image-Editor-black-rect"></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
   </div>
 </section>
