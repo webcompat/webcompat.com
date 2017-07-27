@@ -35,15 +35,16 @@ define(["intern"], function(intern, topic) {
     capabilities: {
       //"browserstack.local": false for running tests on travis
       "browserstack.local": true,
-      "browserstack.video": false,
-      fixSessionCapabilities: false
+      "browserstack.video": true,
+      fixSessionCapabilities: true,
+      remoteFiles: true
     },
 
     // Required for BrowserStack, maximum number of simultaneous integration tests allowed
     maxConcurrency: 2,
 
     environments: [
-      {
+      /*{
         browser: "firefox",
         browser_version: "54",
         os: "OS X",
@@ -54,7 +55,19 @@ define(["intern"], function(intern, topic) {
         browser_version: "59",
         os: "OS X",
         os_version: "Sierra"
+      },*/
+      {
+        browser: "safari",
+        browser_version: "10.1",
+        os: "OS X",
+        os_version: "Sierra"
       }
+      /*{
+        browser: "edge",
+        browser_version: "15",
+        os: "WINDOWS",
+        os_version: "10"
+      }*/
     ],
 
     tunnel: "BrowserStackTunnel",
