@@ -15,10 +15,15 @@ module.exports = function(grunt) {
           src = src.replace(/<script type="text\/template">/, "");
           src = src.replace(/<\/script>/, "");
           return src.trim();
+        },
+        processName: function(filename) {
+          // make this a bit less redunant when we have to refer back
+          // to the pre-compiled template function names.
+          return filename.split("webcompat/templates/")[1];
         }
       },
       files: {
-        "<%= jsPath %>/templates.js": ["<%= tmplPath %>/**/*.tmpl"]
+        "<%= jsPath %>/templates.js": ["<%= tmplPath %>/**/*.jst"]
       }
     }
   });

@@ -38,7 +38,7 @@ issueList.DropdownView = Backbone.View.extend({
       _.bind(this.selectDropdownOption, this)
     );
   },
-  template: wcTmpl["webcompat/templates/list-issue/dropdown.tmpl"],
+  template: wcTmpl["list-issue/dropdown.jst"],
   render: function() {
     this.$el.html(this.template(this.model.toJSON()));
     return this;
@@ -154,7 +154,7 @@ issueList.SearchView = Backbone.View.extend({
     issueList.events.on("search:clear", _.bind(this.clearSearchBox, this));
     issueList.events.on("search:current", _.bind(this.currentSearch, this));
   },
-  template: wcTmpl["webcompat/templates/list-issue/issuelist-search.tmpl"],
+  template: wcTmpl["list-issue/issuelist-search.jst"],
   render: function(cb) {
     this.$el.html(this.template());
     this.input = this.$el.find("input");
@@ -245,7 +245,7 @@ issueList.SortingView = Backbone.View.extend({
       model: this.sortModel
     });
   },
-  template: wcTmpl["webcompat/templates/list-issue/issuelist-sorting.tmpl"],
+  template: wcTmpl["list-issue/issuelist-sorting.jst"],
   render: function() {
     this.$el.html(this.template());
     this.paginationDropdown
@@ -290,7 +290,7 @@ issueList.IssueView = Backbone.View.extend(
       issuesPagination.initMixin(this, this.issues, $("main"));
       this.loadIssues();
     },
-    template: wcTmpl["webcompat/templates/list-issue/issuelist-issue.tmpl"],
+    template: wcTmpl["list-issue/issuelist-issue.jst"],
     loadIssues: function() {
       // Attemps to load model state from URL params, if present,
       // otherwise grab model defaults and load issues

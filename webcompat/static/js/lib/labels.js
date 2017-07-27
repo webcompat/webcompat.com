@@ -35,7 +35,7 @@ issues.LabelsView = Backbone.View.extend({
       this.editLabels();
     }
   },
-  template: wcTmpl["webcompat/templates/issue/issue-labels.tmpl"],
+  template: wcTmpl["issue/issue-labels.jst"],
   // this subTemplate will need to be kept in sync with
   // relavant parts in $('#issue-labels-tmpl')
   // TODO: put subTemplate in its own .tmpl file
@@ -106,7 +106,7 @@ issues.LabelEditorView = Backbone.View.extend({
   initialize: function(options) {
     this.issueView = options.issueView;
   },
-  template: wcTmpl["webcompat/templates/web_modules/label-editor.tmpl"],
+  template: wcTmpl["web_modules/label-editor.jst"],
   render: function() {
     this.$el.html(this.template(this.model));
     this.resizeEditorHeight();
