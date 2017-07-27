@@ -579,6 +579,8 @@ issueList.MainView = Backbone.View.extend({
     this.initSubViews();
   },
   githubWarp: function(e) {
+    var repoPath = $("main").data("repoPath");
+
     // make sure we're not typing in the search input.
     if (e.target.nodeName === "INPUT") {
       return;

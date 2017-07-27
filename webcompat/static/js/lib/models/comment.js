@@ -17,6 +17,7 @@ if (!window.md) {
 
 issues.Comment = Backbone.Model.extend({
   url: function() {
+    var issueNumber = $("main").data("issueNumber");
     return "/api/issues/" + issueNumber + "/comments";
   },
   parse: function(response, jqXHR) {
