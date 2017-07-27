@@ -44,7 +44,7 @@ define(["intern"], function(intern, topic) {
     maxConcurrency: 2,
 
     environments: [
-      /*{
+      {
         browser: "firefox",
         browser_version: "54",
         os: "OS X",
@@ -55,19 +55,19 @@ define(["intern"], function(intern, topic) {
         browser_version: "59",
         os: "OS X",
         os_version: "Sierra"
-      },*/
+      },
       {
         browser: "safari",
         browser_version: "10.1",
         os: "OS X",
         os_version: "Sierra"
-      }
-      /*{
+      },
+      {
         browser: "edge",
         browser_version: "15",
         os: "WINDOWS",
         os_version: "10"
-      }*/
+      }
     ],
 
     tunnel: "BrowserStackTunnel",
