@@ -78,3 +78,39 @@ def get_payload_signature(key, payload):
     """Compute the payload signature given a key."""
     mac = hmac.new(key, msg=payload, digestmod=hashlib.sha1)
     return mac.hexdigest()
+
+
+def is_github_hook(request):
+    """Validate the github webhook HTTP POST request."""
+    if request.headers.get('X-GitHub-Event') is None:
+        return False
+    post_signature = request.headers.get('X-Hub-Signature')
+    if post_signature:
+        key = app.config['HOOK_SECRET_KEY']
+        return signature_check(key, post_signature, request.data)
+    return False
+
+
+def get_issue_info(payload):
+    """Extract all information we need when handling webhooks for issues."""
+    # Extract the title and the body
+    title = payload.get('issue')['title']
+    # Create the issue dictionary
+    return {'action': payload.get('action'),
+            'number': payload.get('issue')['number'],
+            'domain': title.partition(' ')[0]}
+
+
+def new_opened_issue(payload):
+    '''When a new issue is opened, we set a couple of things.
+
+    - Browser label
+    - status-needstriage
+    '''
+    labels = ['status-needstriage']
+    issue_body = payload.get('issue')['body']
+    issue_number = payload.get('issue')['number']
+    browser_label = extract_browser_label(issue_body)
+    if browser_label:
+        labels.append(browser_label)
+    return set_labels(labels, issue_number)
