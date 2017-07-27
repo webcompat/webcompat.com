@@ -14,11 +14,12 @@ from webcompat.helpers import proxy_request
 
 
 def extract_browser_label(body):
-    '''Parse the labels from the body in comment:
+    """Parse the labels from the body in comment:
 
-    <!-- @browser: value -->. Currently this only handles a single label,
+    <!-- @browser: value -->.
+    Currently this only handles a single label,
     because that's all that we set in webcompat.com.
-    '''
+    """
     match_list = re.search(r'<!--\s@(\w+):\s([^\d]+?)\s[\d\.]+\s-->', body)
     if match_list:
         # perhaps we do something more interesting depending on
@@ -33,11 +34,11 @@ def extract_browser_label(body):
 
 
 def set_labels(payload, issue_number):
-    '''Do a GitHub POST request to set a label for the issue.
+    """Does a GitHub POST request to set a label for the issue.
 
     POST /repos/:owner/:repo/issues/:number/labels
     ['Label1', 'Label2']
-    '''
+    """
     headers = {
         'Authorization': 'token {0}'.format(app.config['OAUTH_TOKEN'])
     }
@@ -49,8 +50,7 @@ def set_labels(payload, issue_number):
 
 
 def compare_digest(x, y):
-    '''Approximates hmac.compare_digest (Py 2.7.7+) until we
-    upgrade.'''
+    """Approximates hmac.compare_digest (Py 2.7.7+) until we upgrade."""
     if not (isinstance(x, bytes) and isinstance(y, bytes)):
         raise TypeError("both inputs should be instances of bytes")
     if len(x) != len(y):
@@ -62,7 +62,7 @@ def compare_digest(x, y):
 
 
 def signature_check(key, post_signature, payload):
-    '''Checks the HTTP POST legitimacy.'''
+    """Checks the HTTP POST legitimacy."""
     if post_signature.startswith('sha1='):
         sha_name, signature = post_signature.split('=')
     else:
@@ -75,6 +75,6 @@ def signature_check(key, post_signature, payload):
 
 
 def get_payload_signature(key, payload):
-    '''Compute the payload signature given a key.'''
+    """Compute the payload signature given a key."""
     mac = hmac.new(key, msg=payload, digestmod=hashlib.sha1)
     return mac.hexdigest()
