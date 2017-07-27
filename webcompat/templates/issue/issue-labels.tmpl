@@ -3,12 +3,12 @@
     <div class="wc-Issue-labelEditor-title">
       Labels
     </div>
-    {% if session.user_id and session.avatar_url %}
+    <% if ($("body").data("username")) { %>
     <span class="wc-Issue-labelEditor-button js-Issue-labelEditor">
       <button class="wc-LabelEditorLauncher r-ResetButton wc-Icon wc-Icon--gear js-LabelEditorLauncher" aria-hidden="true">
         <span class="wc-Accessibility">Edit Labels</span></button>
     </span>
-    {% endif %}
+    <% } %>
   </header>
    <div class="js-Label-list">
   <% _.each(labels, function(label) { %>
