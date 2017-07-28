@@ -8,23 +8,20 @@
 
 import json
 import os
-import sys
 import unittest
 
-from webcompat import app
+import flask
+
+import webcompat
 from webcompat.webhooks import helpers
 
-# Add webcompat module to import path
-sys.path.append(os.path.realpath(os.pardir))
-import webcompat  # nopep8
-
 # The key is being used for testing and computing the signature.
-key = app.config['HOOK_SECRET_KEY']
+key = webcompat.app.config['HOOK_SECRET_KEY']
 
 
 # Some machinery for opening our test files
 def event_data(filename):
-    '''return a tuple with the content and its signature.'''
+    """return a tuple with the content and its signature."""
     current_root = os.path.realpath(os.curdir)
     events_path = 'tests/fixtures/webhooks'
     path = os.path.join(current_root, events_path, filename)
@@ -37,6 +34,8 @@ def event_data(filename):
 
 class TestWebhook(unittest.TestCase):
     def setUp(self):
+        # sets a more detailed message when testing.
+        self.longMessage = True
         webcompat.app.config['TESTING'] = True
         self.app = webcompat.app.test_client()
         self.headers = {'content-type': 'application/json'}
@@ -67,6 +66,8 @@ class TestWebhook(unittest.TestCase):
         self.headers.update({'X-GitHub-Event': 'ping'})
         rv = self.app.post(self.test_url, headers=self.headers)
         self.assertEqual(rv.status_code, 401)
+        self.assertEqual(rv.data, 'Nothing to see here')
+        self.assertEqual(rv.mimetype, 'text/plain')
 
     def test_fail_on_bogus_signature(self):
         """POST without bogus signature on labeler webhook is forbidden."""
@@ -77,6 +78,8 @@ class TestWebhook(unittest.TestCase):
                            data=json_event,
                            headers=self.headers)
         self.assertEqual(rv.status_code, 401)
+        self.assertEqual(rv.data, 'Nothing to see here')
+        self.assertEqual(rv.mimetype, 'text/plain')
 
     def test_fail_on_invalid_event_type(self):
         """POST with event not being 'issues' or 'ping' fails."""
@@ -87,6 +90,8 @@ class TestWebhook(unittest.TestCase):
                            data=json_event,
                            headers=self.headers)
         self.assertEqual(rv.status_code, 403)
+        self.assertEqual(rv.mimetype, 'text/plain')
+        self.assertEqual(rv.data, 'Not an interesting hook')
 
     def test_success_on_ping_event(self):
         """POST with PING events just return a 200 and contains pong."""
@@ -99,16 +104,17 @@ class TestWebhook(unittest.TestCase):
         self.assertEqual(rv.status_code, 200)
         self.assertIn('pong', rv.data)
 
-    def test_fails_on_action_not_opened(self):
-        """POST with action different of opened fails."""
+    def test_fails_on_not_known_action(self):
+        """POST with an unknown action fails."""
         json_event, signature = event_data('new_event_invalid.json')
         self.headers.update({'X-GitHub-Event': 'issues',
                              'X-Hub-Signature': signature})
         rv = self.app.post(self.test_url,
                            data=json_event,
                            headers=self.headers)
-        self.assertEqual(rv.status_code, 200)
-        self.assertIn('cool story, bro.', rv.data)
+        self.assertEqual(rv.status_code, 403)
+        self.assertEqual(rv.mimetype, 'text/plain')
+        self.assertEqual(rv.data, 'Not an interesting hook')
 
     def test_extract_browser_label(self):
         """Extract browser label name."""
@@ -116,6 +122,59 @@ class TestWebhook(unittest.TestCase):
         self.assertEqual(browser_label, 'browser-firefox')
         browser_label_none = helpers.extract_browser_label(self.issue_body2)
         self.assertEqual(browser_label_none, None)
+
+    def test_is_github_hook(self):
+        """Validation tests for GitHub Webhooks."""
+        json_event, signature = event_data('new_event_invalid.json')
+        # Lack the X-GitHub-Event
+        with self.app as client:
+            headers = self.headers.copy()
+            headers.update({'X-Hub-Signature': signature})
+            client.post(self.test_url,
+                        data=json_event,
+                        headers=headers)
+            webhook_request = helpers.is_github_hook(flask.request)
+            self.assertFalse(webhook_request, 'X-GitHub-Event is missing')
+        # Lack the X-Hub-Signature
+        with self.app as client:
+            headers = self.headers.copy()
+            headers.update({'X-GitHub-Event': 'issues'})
+            client.post(self.test_url,
+                        data=json_event,
+                        headers=headers)
+            webhook_request = helpers.is_github_hook(flask.request)
+            self.assertFalse(webhook_request, 'X-Hub-Signature is missing')
+        # X-Hub-Signature is wrong
+        with self.app as client:
+            headers = self.headers.copy()
+            headers.update({'X-GitHub-Event': 'issues',
+                            'X-Hub-Signature': 'failme'})
+            client.post(self.test_url,
+                        data=json_event,
+                        headers=headers)
+            webhook_request = helpers.is_github_hook(flask.request)
+            self.assertFalse(webhook_request, 'X-Hub-Signature is wrong')
+        # Everything is fine
+        with self.app as client:
+            headers = self.headers.copy()
+            headers.update({'X-GitHub-Event': 'issues',
+                            'X-Hub-Signature': signature})
+            client.post(self.test_url,
+                        data=json_event,
+                        headers=headers)
+            webhook_request = helpers.is_github_hook(flask.request)
+            self.assertTrue(webhook_request,
+                            'X-GitHub-Event and X-Hub-Signature are correct')
+
+    def test_get_issue_info(self):
+        """Extract the right information from an issue."""
+        json_event, signature = event_data('new_event_invalid.json')
+        payload = json.loads(json_event)
+        expected = {'number': 600,
+                    'action': 'foobar',
+                    'domain': 'www.chia-anime.tv'}
+        actual = helpers.get_issue_info(payload)
+        self.assertDictEqual(expected, actual)
 
 
 if __name__ == '__main__':
