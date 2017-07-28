@@ -21,7 +21,7 @@ See the [CHANGELOG](https://github.com/webcompat/webcompat.com/blob/master/CHANG
 
 ## Contributing
 
-Contributions in the form of code, feature requests, bugs or other kinds of issues are welcome. Please check out [CONTRIBUTING.md]( https://github.com/webcompat/webcompat.com/blob/master/CONTRIBUTING.md) for more instructions.
+Contributions in the form of code, feature requests, bugs or other kinds of issues are welcome. Please check out [CONTRIBUTING.md]( https://github.com/webcompat/webcompat.com/blob/master/CONTRIBUTING.md) for more instructions. Everyone interacting in our codebases, issue trackers, and any other form of communication, including chat rooms and mailing lists, is expected to follow our [code of conduct](https://github.com/webcompat/webcompat.com/blob/master/CODE_OF_CONDUCT.md) so we can all enjoy the effort we put into this project.
 
 ### Assets & Design
 
