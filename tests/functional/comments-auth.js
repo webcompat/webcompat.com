@@ -140,7 +140,7 @@ define(
           ".wc-Comment-body"
         )
           .findById("image")
-          .type("tests/fixtures/green_square.png")
+          .type(require.toUrl("../fixtures/green_square.png"))
           .sleep(1000)
           .end()
           .findByCssSelector(".js-Comment-text")

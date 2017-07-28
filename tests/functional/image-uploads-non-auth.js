@@ -66,7 +66,7 @@ define(
       "uploaded image file preview": function() {
         return FunctionalHelpers.openPage(this, url, ".js-image-upload-label")
           .findById("image")
-          .type("tests/fixtures/green_square.png")
+          .type(require.toUrl("../fixtures/green_square.png"))
           .sleep(1000)
           .end()
           .findByCssSelector(".js-image-upload-label")
@@ -126,7 +126,7 @@ define(
       "uploaded image file doesn't upload before form submission": function() {
         return FunctionalHelpers.openPage(this, url, ".js-image-upload-label")
           .findById("image")
-          .type("tests/fixtures/green_square.png")
+          .type(require.toUrl("../fixtures/green_square.png"))
           .sleep(1000)
           .end()
           .findByCssSelector("#steps_reproduce")
