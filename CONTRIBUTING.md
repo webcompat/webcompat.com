@@ -14,6 +14,7 @@ You are welcome to contribute to this project. Here are the guidelines we try to
 * [Production Server Setup](docs/prod-server.md)
 * [Acknowledgements](#acknowledgements)
 
+Please note that everyone interacting in our codebases, issue trackers, and any other form of communication, including chat rooms and mailing lists, is expected to follow our [code of conduct](https://github.com/webcompat/webcompat.com/blob/master/CODE_OF_CONDUCT.md) so we can all enjoy the effort we put into this project.
 
 ## Questions or Problems
 
