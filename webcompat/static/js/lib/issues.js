@@ -383,7 +383,6 @@ issues.MainView = Backbone.View.extend({
   el: $(".js-Issue"),
   events: {
     "click .js-Issue-comment-button": "addNewComment",
-    click: "closeLabelEditor",
     "click .wc-Comment-content-nsfw": "toggleNSFW"
   },
   keyboardEvents: {
@@ -392,11 +391,18 @@ issues.MainView = Backbone.View.extend({
   _supportsFormData: "FormData" in window,
   _isNSFW: undefined,
   initialize: function() {
-    $(document.body).addClass("language-html");
+    var body = $(document.body);
+    body.addClass("language-html");
     var issueNum = { number: $("main").data("issueNumber") };
     this.issue = new issues.Issue(issueNum);
     this.comments = new issues.CommentsCollection({ pageNumber: 1 });
-    this.initSubViews();
+    this.initSubViews(
+      _.bind(function() {
+        // set listener for closing label editor only after its
+        // been initialized.
+        body.click(_.bind(this.closeLabelEditor, this));
+      }, this)
+    );
     this.fetchModels();
     this.handleKeyShortcuts();
     this.autoExpand();
@@ -428,7 +434,7 @@ issues.MainView = Backbone.View.extend({
       return (location.href = warpPipe);
     }
   },
-  initSubViews: function() {
+  initSubViews: function(callback) {
     var issueModel = { model: this.issue };
     this.metadata = new issues.MetaDataView(issueModel);
     this.body = new issues.BodyView(_.extend(issueModel, { mainView: this }));
@@ -439,6 +445,8 @@ issues.MainView = Backbone.View.extend({
     this.stateButton = new issues.StateButtonView(
       _.extend(issueModel, { mainView: this })
     );
+
+    callback();
   },
   fetchModels: function() {
     var headersBag = { headers: { Accept: "application/json" } };
