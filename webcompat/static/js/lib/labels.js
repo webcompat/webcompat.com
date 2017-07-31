@@ -224,8 +224,7 @@ issues.LabelEditorView = Backbone.View.extend({
   }, 100),
   checkUncheckLabels: _.debounce(function(e) {
     if (e.keyCode === 13) {
-      $(e.target).click();
-      $(e.target).addClass("focused");
+      $(e.target).click().addClass("focused");
     }
   }, 100),
   focusSaveClose: _.debounce(function(e) {
