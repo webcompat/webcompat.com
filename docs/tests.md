@@ -68,6 +68,13 @@ Start the application server in test mode:
 ```bash
 source env/bin/activate && python run.py -t
 ```
+
+or with the short form
+
+```bash
+npm run start:test
+```
+
 > We start the server in test mode to mock the communications with GitHub API servers using local fixture data. The files in `/tests/fixtures/` directory will be served as responses.
 
 In a separate terminal window or tab, run the tests:
