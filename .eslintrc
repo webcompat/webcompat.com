@@ -27,6 +27,7 @@
     "Promise": true,
     "require": true,
     "wcEvents": true,
+    "wcTmpl": true,
     "WindowHelpers": true
   },
   "rules": {

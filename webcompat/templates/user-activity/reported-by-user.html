@@ -3,17 +3,9 @@
     <h2 class="wc-Title wc-Title--l">Issues reported by {{user}}</h2>
   </div>
   <div class="wc-ListIssue-pagination">
-      {% include "web_modules/pagination.html" %}
+    {% include "web_modules/pagination.html" %}
   </div>
   <div id="my-issues">
-    <script type="text/template" id="my-issues-tmpl">
-      <% if (myIssues.length) { %>
-        <% _.each(myIssues, function(issue) { %>
-          {% include "web_modules/issue-list.html" %}
-        <% }); %>
-      <% } else { %>
-      <p>Nothing here currently, go report something!</p>
-      <% } %>
-    </script>
+    {% include "web_modules/issue-list.jst" %}
   </div>
 </div>

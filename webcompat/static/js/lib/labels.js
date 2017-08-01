@@ -35,18 +35,10 @@ issues.LabelsView = Backbone.View.extend({
       this.editLabels();
     }
   },
-  template: _.template($("#issue-labels-tmpl").html()),
+  template: wcTmpl["issue/issue-labels.jst"],
   // this subTemplate will need to be kept in sync with
-  // relavant parts in $('#issue-labels-tmpl')
-  subTemplate: _.template(
-    [
-      "<% _.each(labels, function(label) { %>",
-      '<span class="wc-Label wc-Label--badge js-Label" style="background-color:#<%=label.color%>">',
-      "<%= label.name %>",
-      "</span>",
-      "<% }); %>"
-    ].join("")
-  ),
+  // relavant parts in issue/issue-labels.jst
+  subTemplate: wcTmpl["issue/issue-labels-sub.jst"],
   render: function() {
     this.$el.html(this.template(this.model.toJSON()));
     this.fetchLabels();
@@ -105,7 +97,7 @@ issues.LabelEditorView = Backbone.View.extend({
   initialize: function(options) {
     this.issueView = options.issueView;
   },
-  template: _.template($("#label-editor-tmpl").html()),
+  template: wcTmpl["web_modules/label-editor.jst"],
   render: function() {
     this.$el.html(this.template(this.model));
     this.resizeEditorHeight();

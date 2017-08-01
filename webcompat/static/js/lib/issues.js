@@ -100,7 +100,7 @@ issues.MetaDataView = Backbone.View.extend({
       }, this)
     );
   },
-  template: _.template($("#metadata-tmpl").html()),
+  template: wcTmpl["issue/metadata.jst"],
   render: function() {
     this.$el.html(this.template(this.model.toJSON()));
     return this;
@@ -117,7 +117,7 @@ issues.AsideView = Backbone.View.extend({
       }, this)
     );
   },
-  template: _.template($("#aside-tmpl").html()),
+  template: wcTmpl["issue/aside.jst"],
   render: function() {
     this.$el.html(this.template(this.model.toJSON()));
     return this;
@@ -127,7 +127,7 @@ issues.AsideView = Backbone.View.extend({
 issues.BodyView = Backbone.View.extend({
   el: $(".wc-Issue-report"),
   mainView: null,
-  template: _.template($("#issue-info-tmpl").html()),
+  template: wcTmpl["issue/issue-report.jst"],
   initialize: function(options) {
     this.mainView = options.mainView;
   },
@@ -184,7 +184,7 @@ issues.ImageUploadView = Backbone.View.extend({
   },
   _submitButton: $(".js-Issue-comment-button"),
   _loaderImage: $(".js-Upload-Loader"),
-  template: _.template($("#upload-input-tmpl").html()),
+  template: wcTmpl["issue/upload-image.jst"],
   render: function() {
     this.$el.html(this.template()).insertAfter($("textarea"));
     return this;
@@ -352,7 +352,7 @@ issues.StateButtonView = Backbone.View.extend({
       }, this)
     );
   },
-  template: _.template($("#state-button-tmpl").html()),
+  template: wcTmpl["issue/state-button.jst"],
   render: function() {
     var buttonText;
     if (this.model.get("state") === "open") {

@@ -1,28 +1,9 @@
 <aside class="wc-Issue-aside">
   <div class="wc-Issue-information wc-Issue-information--fullWidth" id="js-Issue-aside">
-    <script type="text/template" id="aside-tmpl">
-      <header class="wc-Issue-information-header wc-Issue-information-header--<%= stateClass %>">
-        <div><%= issueState %></div>
-        <div>#<%= number %></div>
-      </header>
-      <div class="wc-Issue-information-content">
-        <h1 class="wc-Issue-title js-Issue-title">
-          <%= title %>
-        </h1>
-      </div>
-      <div class="wc-Issue-information-content">
-        <div>Opened: <%= createdAt %></div>
-        <div>
-          Reporter:
-          <span class="wc-Issue-reporter js-Issue-reporter">
-            <a class="wc-Link" href="https://github.com/<%= reporter %>"><%= reporter %></a>
-          </span>
-        </div>
-        <div>Comments: <%= commentNumber %></div>
-      </div>
-    </script>
+    {% include "issue/aside.jst" %}
   </div>
   <div class="wc-Issue-labels js-Issue-labels">
-    {% include "issue/issue-labels.html" %}
+    {% include "issue/issue-labels.jst" %}
+    {% include "web_modules/label-editor.jst" %}
   </div>
 </aside>

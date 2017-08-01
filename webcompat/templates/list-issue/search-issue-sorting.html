@@ -1,13 +1,8 @@
-{% from "web_modules/dropdown.html" import dropdown with context %}
-
 <div class="wc-UIContent">
   <div class="r-Grid">
     <div class="r-Grid-cell r-all--1of2">
       <div class="js-SearchIssue-sorting">
-        <script type="text/template" id="issuelist-sorting-tmpl">
-          {{ dropdown('js-Dropdown-pagination') }}
-          {{ dropdown('js-Dropdown-sort') }}
-        </script>
+      {% include "list-issue/issuelist-sorting.jst" %}
       </div>
     </div>
     <div class="r-Grid-cell r-all--1of2">
