@@ -498,7 +498,11 @@ issues.MainView = Backbone.View.extend({
       )
       .error(function(response) {
         var msg;
-        if (response.responseJSON.message === "API call. Not Found") {
+        if (
+          response &&
+          response.responseJSON &&
+          response.responseJSON.message === "API call. Not Found"
+        ) {
           location.href = "/404";
           return;
         } else {
