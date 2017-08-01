@@ -4,6 +4,16 @@
 2. New features: affect minor number
 3. API endpoint changes or dependency version updates: affect major number
 
+## 5.5.0 - 2017-08-01
+
+* Add npm script for firing up test server [Pull #1692](https://github.com/webcompat/webcompat.com/pull/1692)
+* Check if response is defined [Pull #1691](https://github.com/webcompat/webcompat.com/pull/1691)
+* Handle non-keyboard event invocations of closeEditor [Pull #1689](https://github.com/webcompat/webcompat.com/pull/1689)
+* Upgrade npm dependencies [Pull #1687](https://github.com/webcompat/webcompat.com/pull/1687)
+* Link to Code of Conduct [Pull #1684](https://github.com/webcompat/webcompat.com/pull/1684)
+* Remove unsafe-eval directive from our CSP policy [Pull #1682](https://github.com/webcompat/webcompat.com/pull/1682)
+* Improves the webhook code flexibility [Pull #1681](https://github.com/webcompat/webcompat.com/pull/1681)
+
 ## 5.4.1 - 2017-07-26
 
 * Update EXTRA_LABELS whitelist w/ type-stylo [Pull #1676](https://github.com/webcompat/webcompat.com/pull/1676)
