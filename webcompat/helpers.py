@@ -489,7 +489,8 @@ def add_csp(response):
     This should be used in @app.after_request to ensure the header is
     added to all responses.'''
     response.headers['Content-Security-Policy'] = (
-        "default-src 'none'; " +
+        "default-src 'self'; " +
+        "object-src 'none'; " +
         "connect-src 'self' https://api.github.com; " +
         "font-src 'self'; " +
         "img-src 'self' https://www.google-analytics.com https://*.githubusercontent.com data:; " +  # nopep8

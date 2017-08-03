@@ -175,7 +175,7 @@ issues.LabelEditorView = Backbone.View.extend({
     this.reRender({ labels: _.uniq(modelUpdate) });
   },
   closeEditor: function(e) {
-    if (!e || (e && e.keyCode === 27)) {
+    if (!e || (e && (e.keyCode === 27 || !e.keyCode))) {
       var checked = $("input[type=checkbox]:checked");
       var labelsArray = _.pluck(checked, "name");
       this.issueView.editorButton.removeClass("is-active");

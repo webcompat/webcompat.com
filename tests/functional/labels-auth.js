@@ -93,6 +93,27 @@ define(
               assert.notInclude("is-active", className);
             })
             .end();
+        },
+
+        "Clicking close button actually closes it?": function() {
+          return FunctionalHelpers.openPage(
+            this,
+            url("/issues/2"),
+            ".js-LabelEditorLauncher",
+            true /* longerTimeout */
+          )
+            .findByCssSelector(".js-LabelEditorLauncher")
+            .click()
+            .end()
+            .findByCssSelector(".js-LabelEditor-close")
+            .click()
+            .end()
+            .findByCssSelector(".js-LabelEditorLauncher")
+            .getAttribute("class")
+            .then(function(className) {
+              assert.notInclude("is-active", className);
+            })
+            .end();
         }
       };
     });
