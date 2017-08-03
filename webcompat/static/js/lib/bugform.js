@@ -11,6 +11,7 @@ function BugForm() {
   this.UPLOAD_LIMIT = 1024 * 1024 * 4;
   this.clickedButton = null;
   this.hasImage = null;
+  this.textAreaModified = false;
 
   this.inputs = {
     url: {
@@ -75,13 +76,21 @@ function BugForm() {
       _.bind(this.checkDescriptionValidity, this)
     );
     this.problemType.on("change", _.bind(this.checkProblemTypeValidity, this));
+    this.stepsToReproduceField.on(
+      "change",
+      _.bind(this.updateTextAreaModified, this)
+    );
+    this.stepsToReproduceField.on(
+      "focus",
+      _.bind(this.clearStepsToReproducePlaceholder, this)
+    );
     this.uploadField.on("change", _.bind(this.checkImageTypeValidity, this));
     this.osField
       .add(this.browserField)
       .on("blur input", _.bind(this.checkOptionalNonEmpty, this));
     this.submitButtons.on("click", _.bind(this.storeClickedButton, this));
     this.submitButtons.on("click", _.bind(this.loadingIndicator.show, this));
-    this.form.on("submit", _.bind(this.maybeUploadImage, this));
+    this.form.on("submit", _.bind(this.onFormSubmit, this));
 
     // See if the user already has a valid form
     // (after a page refresh, back button, etc.)
@@ -179,20 +188,6 @@ function BugForm() {
       $("[value=" + problemType[1] + "]").click();
     }
 
-    // If we got a details param, add that to the end of the steps to reproduce field
-    var details = location.href.match(/details=([^&]*)/);
-    if (details !== null) {
-      this.stepsToReproduceField.val(function(idx, value) {
-        return (
-          value +
-          "\n" +
-          // The content of the details param may be encoded via
-          // application/x-www-form-urlencoded, so we need to change the
-          // + (SPACE) to %20 before decoding
-          decodeURIComponent(details[1].replace(/\+/g, "%20"))
-        );
-      });
-    }
   };
 
   this.storeClickedButton = function(event) {
@@ -224,6 +219,20 @@ function BugForm() {
       this.makeInvalid("problem_type");
     } else {
       this.makeValid("problem_type");
+    }
+  };
+
+  this.updateTextAreaModified = function(ev) {
+    if (ev.target.value.length) {
+      this.textAreaModified = true;
+    }
+  };
+
+  this.clearStepsToReproducePlaceholder = function() {
+    if (!this.textAreaModified) {
+      this.stepsToReproduceField.val(function() {
+        return "";
+      });
     }
   };
 
@@ -472,7 +481,23 @@ function BugForm() {
     );
   };
 
-  this.maybeUploadImage = _.bind(function(event) {
+  this.onFormSubmit = _.bind(function(event) {
+    this.clearStepsToReproducePlaceholder();
+    // If we got a details param, add that to the end of the steps to reproduce field
+    var details = location.href.match(/details=([^&]*)/);
+    if (details !== null) {
+      this.stepsToReproduceField.val(function(idx, value) {
+        return (
+          value +
+          "\n" +
+          // The content of the details param may be encoded via
+          // application/x-www-form-urlencoded, so we need to change the
+          // + (SPACE) to %20 before decoding
+          decodeURIComponent(details[1].replace(/\+/g, "%20"))
+        );
+      });
+    }
+
     if (!this.hasImage) {
       // nothing to do if there's no image, so form submission
       // can happen regularly.

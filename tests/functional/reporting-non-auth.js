@@ -15,8 +15,6 @@ define(
     var cwd = intern.config.basePath;
     var VALID_IMAGE_PATH = path.join(cwd, "tests/fixtures", "green_square.png");
     var BAD_IMAGE_PATH = path.join(cwd, "tests/fixtures", "evil.py");
-    var DETAILS_STRING =
-      "Encountered error: NS_ERROR_DOM_MEDIA_DEMUXER_ERR (0x806e000c)%0ALocation: virtual%0ARefPtrMP4Demuxer::InitPromise mozilla::MP4Demuxer::Init()%0AError information:%0AIncomplete MP4 metadata%0AMedia URL: file:///Users/potch/Documents/mozilla/media.mp4";
     var DETAILS_STRING2 = "Encountered+error:+NS_ERROR_DOM_MEDIA_DEMUXER_ERR";
 
     var url = function(path) {
@@ -255,21 +253,6 @@ define(
         );
       },
 
-      // tests a scenario where bug reported from firefox nightly Report Site Issue button
-      "details param adds stylo pref to text area": function() {
-        return FunctionalHelpers.openPage(
-          this,
-          url("/issues/new?details=layout.css.servo.enabled%3A+true"),
-          ".wc-ReportForm-actions-button"
-        )
-          .findByCssSelector("#steps_reproduce")
-          .getProperty("value")
-          .then(function(text) {
-            assert.include(text, "layout.css.servo.enabled: true");
-          })
-          .end();
-      },
-
       // tests a scenario where bug reported from firefox nightly media type tool
       "problem_type param selects problem type": function() {
         this.skip("former media type reporting test");
@@ -327,6 +310,40 @@ define(
               text,
               "Encountered error: NS_ERROR_DOM_MEDIA_DEMUXER_ERR",
               "+ replaced with space"
+            );
+          })
+          .end();
+      },
+
+      "clicking text area clears default value": function() {
+        return FunctionalHelpers.openPage(
+          this,
+          url("/issues/new"),
+          ".wc-ReportForm-actions-button"
+        )
+          .findByCssSelector("#steps_reproduce")
+          .click()
+          .sleep(500)
+          .getProperty("value")
+          .then(function(text) {
+            assert.lengthOf(text, 0, "clicking default text area clears value");
+          })
+          .end();
+      },
+
+      "details param: not added to text area": function() {
+        return FunctionalHelpers.openPage(
+          this,
+          url("/issues/new?details=" + DETAILS_STRING2),
+          "#description"
+        )
+          .findByCssSelector("#steps_reproduce")
+          .getProperty("value")
+          .then(function(text) {
+            assert.notInclude(
+              text,
+              DETAILS_STRING2,
+              "+ not found in decoded string"
             );
           })
           .end();
