@@ -13,8 +13,16 @@
 .wc-Icon {
   display: inline-block;
   vertical-align: middle;
-  font: normal normal 400 normal 1em/1 webcompat;
+
+  /* to prevent a webcompat regression issue in Safari 10.1.1., we do not use the short form
+  https://bugs.webkit.org/show_bug.cgi?id=165594 */
+  font-style: normal;
+  font-variant: normal;
+  font-weight: 400;
+  font-stretch: normal;
+  font-size: 1em;
   line-height: 1;
+  font-family: webcompat;
   text-rendering: auto;
   -webkit-font-smoothing: antialiased; /* Better Font Rendering */
   -moz-osx-font-smoothing: grayscale; /* Better Font Rendering */

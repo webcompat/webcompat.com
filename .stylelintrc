@@ -51,9 +51,13 @@
         "media-feature-colon-space-before": "never",
         "media-feature-colon-space-after": "always",
         "declaration-block-no-duplicate-properties": true,
+        "declaration-block-no-redundant-longhand-properties": [ true, {"ignoreShorthands": "font"} ],
         "no-eol-whitespace": true
     },
     "ignoreFiles": [
       "./webcompat/static/css/development/vendor/prism.css"
+    ],
+    "ignoreShorthands": [
+        "font"
     ]
 }
