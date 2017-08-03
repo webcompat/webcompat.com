@@ -2,6 +2,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
+//var doc = global.document;
 function BugForm() {
   this.form = $("#js-ReportForm form");
   this.submitButtons = $("#js-ReportForm .js-Button");
@@ -11,6 +12,18 @@ function BugForm() {
   this.UPLOAD_LIMIT = 1024 * 1024 * 4;
   this.clickedButton = null;
   this.hasImage = null;
+  // image editor props
+  this.editImageButton = $(".js-edit-img-open-btn");
+  this.editImageModal = $(".modal");
+  this.editImageCloseButton = $(".js-edit-img-close-btn");
+  this.editImageHighlightButton = $(".js-highlight-button");
+  this.editImageRedactButton = $(".js-redact-button");
+  this.canvas = $("#mCanvas");
+  this.curEditorStateOn = true;
+  this.curEditorActiveControl = "highlight";
+  this.initMouseDownPos = {};
+  this.mouseClickDragActive = false;
+  this.mouseDown = false;
 
   this.inputs = {
     url: {
@@ -82,6 +95,11 @@ function BugForm() {
     this.submitButtons.on("click", _.bind(this.storeClickedButton, this));
     this.submitButtons.on("click", _.bind(this.loadingIndicator.show, this));
     this.form.on("submit", _.bind(this.maybeUploadImage, this));
+    // image editor listeners
+    this.editImageButton.on("click", _.bind(this.openImageEditor, this));
+    this.editImageCloseButton.on("click", _.bind(this.closeImageEditor, this));
+    this.editImageHighlightButton.on("click", _.bind(this.setImageEditorHighlight, this));
+    this.editImageRedactButton.on("click", _.bind(this.setImageEditorRedact, this));
 
     // See if the user already has a valid form
     // (after a page refresh, back button, etc.)
@@ -417,6 +435,8 @@ function BugForm() {
     var reader = new FileReader();
     reader.onload = _.bind(function(event) {
       var dataURI = event.target.result;
+      // storing URI to use for Image Editor background
+      //this.dataURI = dataURI;
       callback(dataURI);
     }, this);
     reader.readAsDataURL(blobOrFile);
@@ -444,6 +464,7 @@ function BugForm() {
     var uploadWrapper = $(".wc-UploadForm-wrapper");
     var uploadIcon = $(".wc-UploadForm-icon");
     var uploadLabel = $(".wc-UploadForm-label");
+    var editImageButton = $(".js-edit-img-open-btn");
 
     // hide upload image errors (this will no-op if the user never saw one)
     $(".wc-Form-helpMessage--imageUpload").remove();
@@ -454,6 +475,7 @@ function BugForm() {
     uploadIcon.addClass("is-hidden");
     uploadLabel.addClass("is-hidden");
     uploadLabel.hide();
+    editImageButton.removeClass("is-hidden");
     removeBanner.on(
       "click",
       _.bind(function() {
@@ -465,6 +487,7 @@ function BugForm() {
         uploadLabel.removeClass("is-hidden");
         uploadLabel.show();
         uploadWrapper.removeClass("is-hidden");
+        editImageButton.addClass("is-hidden");
         removeBanner.off("click");
 
         this.hasImage = false;
@@ -480,6 +503,9 @@ function BugForm() {
     }
 
     event.preventDefault();
+    // clear settings for Image Editor
+    this.curScreenshotWidth = 0;
+    this.curScreenshotHeight = 0;
 
     this.uploadImage(
       // grab the data URI from background-image property, since it's already
@@ -572,6 +598,179 @@ function BugForm() {
       $(this).css({ overflow: "hidden", height: this.scrollHeight + "px" });
     });
   };
+
+  // functions for Image Editor
+  this.openImageEditor = function() {
+    var canvas = document.createElement('canvas');
+    var ctx = canvas.getContext('2d');
+    var modalContent = document.querySelector('.modal-content');
+
+    var img = new Image();
+    // grab the data URI from background-image property, since it's already
+    // in the DOM: 'url("data:image/....")'
+    img.src = this.previewEl.get(0).style.backgroundImage.slice(5, -2);
+    this.editImageModal.removeClass("is-hidden");
+
+    ctx.imageSmoothingEnabled = false;
+    ctx.webkitImageSmoothingEnabled = false;
+    ctx.msImageSmoothingEnabled = false;
+    ctx.imageSmoothingEnabled = false;
+
+    img.onload = _.bind(function() {
+      // used to resize screenshot for Image Editor
+      this.curScreenshotWidth = img.width || null;
+      this.curScreenshotHeight = img.height || null;
+
+      var canvasDimensions = this.calcCanvasDimensions();
+      canvas.width = canvasDimensions.width;
+      canvas.height = canvasDimensions.height;
+      modalContent.appendChild(canvas);
+      if (this.curScreenshotWidth && this.curScreenshotWidth < canvas.width) {
+        ctx.drawImage(img, 0, 0);
+      } else {
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+      }
+
+      var domCanvas = $("canvas");
+      domCanvas.on("mousedown", {ctx: ctx}, _.bind(this.canvasMouseDown, this));
+      domCanvas.on("mousemove", {ctx: ctx}, _.bind(this.canvasMouseDrag, this));
+      domCanvas.on("mouseup", {ctx: ctx}, _.bind(this.canvasMouseUp, this));
+    }, this);
+  }
+
+  this.closeImageEditor = function() {
+    var canvas = document.querySelector('canvas');
+ 
+    this.dataURI = canvas.toDataURL();
+    this.editImageModal.addClass("is-hidden");
+    this.addPreviewBackground(this.dataURI);
+    canvas.remove();
+  }
+
+  this.setImageEditorHighlight = function() {
+    var imageEditorHighlightBtn = $(".js-highlight-button");
+    var imageEditorRedactBtn = $(".js-redact-button");
+
+    imageEditorHighlightBtn.toggleClass("is-active");
+    imageEditorRedactBtn.toggleClass("is-active");
+    this.curEditorActiveControl = "highlight";
+  }
+
+  this.setImageEditorRedact = function() {
+    var imageEditorHighlightBtn = $(".js-highlight-button");
+    var imageEditorRedactBtn = $(".js-redact-button");
+
+    imageEditorRedactBtn.toggleClass("is-active");
+    imageEditorHighlightBtn.toggleClass("is-active");
+    this.curEditorActiveControl = "redact";
+  }
+
+  this.canvasMouseDown = function(ev) {
+    var canvas = ev.target;
+    var mPos = this.getMousePos(canvas, ev);
+    var canvasWidth = canvas.offsetWidth + 1;
+    var canvasHeight = canvas.offsetHeight + 1;
+
+    this.initMouseDownPos = mPos;
+    this.mouseDown = true;
+    // used to store image version before shapes drawn during drag events
+    this.canvasImageData = ev.data.ctx.getImageData(0, 0, canvasWidth, canvasHeight);
+  }
+
+  this.canvasMouseDrag = function(ev) {
+    var canvas = ev.target;
+    var mPos = this.getMousePos(canvas, ev);
+
+    // drawing lines for shape border
+    // 1 need to draw the first 5px line separately
+    if (this.mouseDown && mPos.x <= this.initMouseDownPos.x - 5 || mPos.x >= this.initMouseDownPos.x + 5 || mPos.y <= this.initMouseDownPos.y - 5 || mPos.y >= this.initMouseDownPos.y + 5) {
+      this.mouseClickDragActive = true;
+
+      // case draw highlight rect
+      if (this.curEditorActiveControl === "highlight") {
+        ev.data.ctx.lineWidth = 2;
+        ev.data.ctx.strokeStyle =  '#ffff27';
+
+        ev.data.ctx.beginPath();
+        ev.data.ctx.moveTo(this.initMouseDownPos.x, this.initMouseDownPos.y);
+        ev.data.ctx.lineTo(this.initMouseDownPos.x, mPos.y);
+        ev.data.ctx.stroke();
+
+        ev.data.ctx.beginPath();
+        ev.data.ctx.moveTo(this.initMouseDownPos.x, this.initMouseDownPos.y);
+        ev.data.ctx.lineTo(mPos.x, this.initMouseDownPos.y);
+        ev.data.ctx.stroke();
+
+      } else {
+        ev.data.ctx.strokeStyle = '#000';
+        ev.data.ctx.fillStyle = '#000';
+        ev.data.ctx.fillRect(this.initMouseDownPos.x, this.initMouseDownPos.y, (mPos.x - this.initMouseDownPos.x), (mPos.y - this.initMouseDownPos.y));
+      }
+    }
+  }
+
+  this.canvasMouseUp = function(ev) {
+    var canvas = ev.target;
+    var mPos = this.getMousePos(canvas, ev);
+    var canvasWidth = canvas.offsetWidth + 1;
+    var canvasHeight = canvas.offsetHeight + 1;
+
+    if (mPos.x <= this.initMouseDownPos.x - 5 || mPos.x >= this.initMouseDownPos.x + 5 || mPos.y <= this.initMouseDownPos.y - 5 || mPos.y >= this.initMouseDownPos.y + 5) {
+
+      // revert to the image from mousedown, clearing images drawn on drag
+      // handles case where drawn shape should be smaller than drawn on drag
+      ev.data.ctx.putImageData(this.canvasImageData, 0, 0);
+
+      // case draw highlight rect
+      if (this.curEditorActiveControl === "highlight") {
+        //ev.data.ctx.restore();
+        ev.data.ctx.strokeStyle =  '#ffff27';
+        ev.data.ctx.lineWidth = 3;
+        ev.data.ctx.strokeRect(this.initMouseDownPos.x, this.initMouseDownPos.y, (mPos.x - this.initMouseDownPos.x), (mPos.y - this.initMouseDownPos.y));
+      }
+
+      // case draw redact rect
+      if (this.curEditorActiveControl === "redact") {
+        ev.data.ctx.strokeStyle = '#000';
+        ev.data.ctx.fillStyle = '#000';
+        ev.data.ctx.fillRect(this.initMouseDownPos.x, this.initMouseDownPos.y, (mPos.x - this.initMouseDownPos.x), (mPos.y - this.initMouseDownPos.y));
+      }
+    }
+
+    this.mouseClickDragActive = false;
+    this.mouseDown = false;
+    this.initMouseDownPos = {};
+
+  }
+
+  //HELPERS
+  /** Gets the mouse position relative to the canvas. Corrects for the white rectangle around the canvas.*/
+  this.getMousePos = function(canvas, evt) {
+    var rect = canvas.getBoundingClientRect();
+    return {
+      x: evt.clientX - rect.left,
+      y: evt.clientY - rect.top
+    };
+  }
+
+  // Uses original screenshot dimensions and viewport width to get canvas dimensions
+  this.calcCanvasDimensions = function() {
+    var canvasDimensions = {};
+    var curScreenshotDimensionRatio;
+    var viewportWidth = window.innerWidth;
+    var viewportHeight = window.innerHeight;
+
+    if (this.curScreenshotWidth && this.curScreenshotHeight) {
+      curScreenshotDimensionRatio = this.curScreenshotWidth / this.curScreenshotHeight;
+    } else {
+      // case where the screenshot image dimensions are not available, scale to viewport
+      curScreenshotDimensionRatio = viewportWidth / viewportHeight;
+    }
+
+    canvasDimensions.width = 0.8 * viewportWidth;
+    canvasDimensions.height = canvasDimensions.width / curScreenshotDimensionRatio;
+    return canvasDimensions;
+  }
 
   return this.init();
 }

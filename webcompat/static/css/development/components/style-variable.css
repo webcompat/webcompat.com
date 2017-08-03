@@ -11,8 +11,12 @@
   --base-maxWidth: 120rem;
   --base-widthContent: 73.75rem;
   --base-colorDark: #ffc900; /* Dark Yellow */
+  --base-colorDarkest: #000;
+  --base-variantColorExtraDarkOpacity: rgba(0,0,0,0.4); /* Black opacity */
   --base-variantColorDark: #404040; /* Dark Gray */
-  --base-variantColorLight: #c2c2c2; /* Dark Light */
+  --base-variantColorMed: #999; /* Med Gray */
+  --base-variantColorMedLight: #fefefe; /* Med Light Gray */
+  --base-variantColorLight: #c2c2c2; /* Light Gray*/
   --base-stateNeedsTriage: #f90; /* orange */
   --base-stateNeedsDiagnosis: #efce82;  /* light brown */
   --base-stateNeedsContact: #b9edce; /* light green */
@@ -21,4 +25,8 @@
   --base-stateClosed: #c5d1d5; /* light gray */
   --base-stateFixed: #dda0dd; /* light purple */
   --base-stateWorksForMe: #cfb53b; /* light yellow */
+  --base-highlightBtnCenter: #ffff27; /* bright yellow */
+  --base-redactBtnCenter: #000;
+  --base-activeBoxShadow: rgba(0, 0, 0, .075);
+  --base-activeBoxShadow2: rgba(102, 175, 233, .6);
 }
