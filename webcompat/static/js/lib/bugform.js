@@ -81,7 +81,7 @@ function BugForm() {
       .on("blur input", _.bind(this.checkOptionalNonEmpty, this));
     this.submitButtons.on("click", _.bind(this.storeClickedButton, this));
     this.submitButtons.on("click", _.bind(this.loadingIndicator.show, this));
-    this.form.on("submit", _.bind(this.maybeUploadImage, this));
+    this.form.on("submit", _.bind(this.onFormSubmit, this));
 
     // See if the user already has a valid form
     // (after a page refresh, back button, etc.)
@@ -472,37 +472,33 @@ function BugForm() {
     );
   };
 
-  this.maybeUploadImage = _.bind(function(event) {
-    if (!this.hasImage) {
-      // nothing to do if there's no image, so form submission
-      // can happen regularly.
-      return;
-    }
-
+  this.onFormSubmit = _.bind(function(event) {
     event.preventDefault();
 
-    this.uploadImage(
-      // grab the data URI from background-image property, since it's already
-      // in the DOM: 'url("data:image/....")'
-      this.previewEl.get(0).style.backgroundImage.slice(5, -2),
-      _.bind(function(response) {
-        this.addImageURL(
-          response,
-          _.bind(function() {
-            var formEl = this.form.get(0);
-            // Calling submit() manually on the form won't contain details
-            // about which <button> was clicked (since one wasn't clicked).
-            // So we create a hidden <input> to pass along in the form data.
-            var hiddenEl = document.createElement("input");
-            hiddenEl.type = "hidden";
-            hiddenEl.name = "submit-type";
-            hiddenEl.value = this.clickedButton;
-            formEl.appendChild(hiddenEl);
-            formEl.submit();
-          }, this)
-        );
-      }, this)
-    );
+    if (this.hasImage) {
+      this.uploadImage(
+        // grab the data URI from background-image property, since it's already
+        // in the DOM: 'url("data:image/....")'
+        this.previewEl.get(0).style.backgroundImage.slice(5, -2),
+        _.bind(function(response) {
+          this.addImageURL(
+            response,
+            _.bind(function() {
+              var formEl = this.form.get(0);
+              // Calling submit() manually on the form won't contain details
+              // about which <button> was clicked (since one wasn't clicked).
+              // So we create a hidden <input> to pass along in the form data.
+              var hiddenEl = document.createElement("input");
+              hiddenEl.type = "hidden";
+              hiddenEl.name = "submit-type";
+              hiddenEl.value = this.clickedButton;
+              formEl.appendChild(hiddenEl);
+              formEl.submit();
+            }, this)
+          );
+        }, this)
+      );
+    }
   }, this);
 
   /*
