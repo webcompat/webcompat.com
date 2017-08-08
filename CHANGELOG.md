@@ -4,6 +4,10 @@
 2. New features: affect minor number
 3. API endpoint changes or dependency version updates: affect major number
 
+## 5.5.1 - 2017-0-08
+
+* Fix Save and Close label editor regression [Pull #1698](https://github.com/webcompat/webcompat.com/pull/1698)
+
 ## 5.5.0 - 2017-08-01
 
 * Add npm script for firing up test server [Pull #1692](https://github.com/webcompat/webcompat.com/pull/1692)
