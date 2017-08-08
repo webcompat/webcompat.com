@@ -11,6 +11,7 @@ function BugForm() {
   this.UPLOAD_LIMIT = 1024 * 1024 * 4;
   this.clickedButton = null;
   this.hasImage = null;
+  this.detailsParamValue = null;
 
   this.inputs = {
     url: {
@@ -83,6 +84,10 @@ function BugForm() {
     this.submitButtons.on("click", _.bind(this.loadingIndicator.show, this));
     this.form.on("submit", _.bind(this.onFormSubmit, this));
     this.stepsToReproduceField.val(this.inputs.steps_reproduce.helpText);
+    this.stepsToReproduceField.on(
+      "focus",
+      _.bind(this.clearTextAreaPlaceholder, this)
+    );
 
     // See if the user already has a valid form
     // (after a page refresh, back button, etc.)
@@ -181,18 +186,12 @@ function BugForm() {
     }
 
     // If we got a details param, add that to the end of the steps to reproduce field
+    // this will have to happen during onFormSubmit.
     var details = location.href.match(/details=([^&]*)/);
     if (details !== null) {
-      this.stepsToReproduceField.val(function(idx, value) {
-        return (
-          value +
-          "\n" +
-          // The content of the details param may be encoded via
-          // application/x-www-form-urlencoded, so we need to change the
-          // + (SPACE) to %20 before decoding
-          decodeURIComponent(details[1].replace(/\+/g, "%20"))
-        );
-      });
+      this.detailsParamValue = decodeURIComponent(
+        details[1].replace(/\+/g, "%20")
+      );
     }
   };
 
@@ -473,8 +472,35 @@ function BugForm() {
     );
   };
 
+  this.clearTextAreaPlaceholder = function(options) {
+    if (options.beforeSubmit) {
+      if (
+        this.stepsToReproduceField.val() ===
+        this.inputs.steps_reproduce.helpText
+      ) {
+        this.stepsToReproduceField.val("Not provided.");
+      }
+
+      if (this.detailsParamValue) {
+        this.stepsToReproduceField.val(
+          _.bind(function(idx, value) {
+            return value + "\n" + this.detailsParamValue;
+          }, this)
+        );
+      }
+    } else {
+      if (!this.placeholderIsDirty) {
+        this.stepsToReproduceField.val("");
+        this.placeholderIsDirty = true;
+      }
+    }
+  };
+
   this.onFormSubmit = _.bind(function(event) {
+    this.form.off("submit");
     event.preventDefault();
+
+    this.clearTextAreaPlaceholder({ beforeSubmit: true });
 
     if (this.hasImage) {
       this.uploadImage(
@@ -485,22 +511,30 @@ function BugForm() {
           this.addImageURL(
             response,
             _.bind(function() {
-              var formEl = this.form.get(0);
-              // Calling submit() manually on the form won't contain details
-              // about which <button> was clicked (since one wasn't clicked).
-              // So we create a hidden <input> to pass along in the form data.
-              var hiddenEl = document.createElement("input");
-              hiddenEl.type = "hidden";
-              hiddenEl.name = "submit-type";
-              hiddenEl.value = this.clickedButton;
-              formEl.appendChild(hiddenEl);
-              formEl.submit();
+              this.submitWithType();
             }, this)
           );
         }, this)
       );
+    } else {
+      this.submitWithType();
     }
   }, this);
+
+  /*
+    Calling submit() manually on the form won't contain details
+    about which <button> was clicked (since one wasn't clicked).
+    So we create a hidden <input> to pass along in the form data.
+  */
+  this.submitWithType = function() {
+    var formEl = this.form.get(0);
+    var hiddenEl = document.createElement("input");
+    hiddenEl.type = "hidden";
+    hiddenEl.name = "submit-type";
+    hiddenEl.value = this.clickedButton;
+    formEl.appendChild(hiddenEl);
+    formEl.submit();
+  };
 
   /*
      Upload the image before form submission so we can
