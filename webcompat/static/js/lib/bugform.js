@@ -31,7 +31,7 @@ function BugForm() {
     steps_reproduce: {
       el: $("#steps_reproduce"),
       valid: true,
-      helpText: null
+      helpText: "For example,\n1. I've tried to log in.\n2. I've filled out the form details.\n3. I clicked on the submit button.\n4. Nothing happened."
     },
     image: {
       el: $("#image"),
@@ -82,6 +82,7 @@ function BugForm() {
     this.submitButtons.on("click", _.bind(this.storeClickedButton, this));
     this.submitButtons.on("click", _.bind(this.loadingIndicator.show, this));
     this.form.on("submit", _.bind(this.onFormSubmit, this));
+    this.stepsToReproduceField.val(this.inputs.steps_reproduce.helpText);
 
     // See if the user already has a valid form
     // (after a page refresh, back button, etc.)
