@@ -134,25 +134,42 @@ define(
       },
 
       "Add a screenshot to a comment": function() {
-        return FunctionalHelpers.openPage(
+        var remote = FunctionalHelpers.openPage(
           this,
           url("/issues/100"),
-          ".wc-Comment-body"
-        )
-          .findById("image")
-          .type("tests/fixtures/green_square.png")
-          .sleep(1000)
-          .end()
-          .findByCssSelector(".js-Comment-text")
-          .getProperty("value")
-          .then(function(val) {
-            assert.include(
-              val,
-              "[![Screenshot Description](http://localhost:5000/uploads/",
-              "The image was correctly uploaded and its URL was copied to the comment text."
-            );
-          })
-          .end();
+          ".wc-Comment-body",
+            true
+          );
+          return (
+            remote
+              // Find image upload input.
+              .findById("image")
+              .then(function(el) {
+                el
+                  // Type fixture image path into it.
+                  .type(require.toUrl("../fixtures/green_square.png"))
+                  .then(function() {
+                    remote
+                      .end()
+                      // Find the comment textarea.
+                      .findByCssSelector(".js-Comment-text")
+                      .then(function(el) {
+                        el
+                          // Get it's value.
+                          .getProperty("value")
+                          .then(function(val) {
+                            // Check that the value is what expected.
+                            assert.include(
+                              val,
+                              "[![Screenshot Description](http://localhost:5000/uploads/",
+                              "The image was correctly uploaded and its URL was copied to the comment text."
+                            );
+                          });
+                      });
+                  });
+              })
+              .end()
+          );
       },
 
       "Pressing 'g' inside of comment textarea *doesn't* go to github issue": function() {
