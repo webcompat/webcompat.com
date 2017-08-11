@@ -98,8 +98,6 @@ def config_validator():
 
 
 if __name__ == '__main__':
-    # testing the config file
-    config_validator()
     # Parsing arguments
     parser = argparse.ArgumentParser()
     parser.add_argument('-t', '--testmode', action='store_true',
@@ -107,6 +105,13 @@ if __name__ == '__main__':
     parser.add_argument('--backup', action='store_true',
                         help='backup existing issues.db.')
     args = parser.parse_args()
+
+    if not args.testmode:
+        # testing the config file.
+        # this file is only important in non-test mode.
+        # in test mode everything must be mocked, 
+        # so there is no external api communication.
+        config_validator()
 
     if args.testmode:
         # disable HttpOnly setting for session cookies so Selenium
