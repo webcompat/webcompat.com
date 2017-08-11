@@ -48,6 +48,10 @@ define(["intern"], function(intern, topic) {
       {
         browserName: "chrome",
         marionette: true
+      },
+      {
+        browserName: "safari",
+        marionette: true
       }
     ],
 
