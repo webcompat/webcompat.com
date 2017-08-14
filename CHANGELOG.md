@@ -4,7 +4,15 @@
 2. New features: affect minor number
 3. API endpoint changes or dependency version updates: affect major number
 
-## 5.5.1 - 2017-0-08
+## 5.6.0 - 2017-08-14
+
+* Remove form textarea boilerplate text. [Pull #1712](https://github.com/webcompat/webcompat.com/pull/1712)
+* Get tests to work from forks [Pull #1710](https://github.com/webcompat/webcompat.com/pull/1710)
+* Change default-src policy to self and set object-src to none [Pull #1703](https://github.com/webcompat/webcompat.com/pull/1703)
+* Unbreak Save & close label editor button. [Pull #1698](https://github.com/webcompat/webcompat.com/pull/1698)
+* Get all unittests to be network independent. [Pull #1697](https://github.com/webcompat/webcompat.com/pull/1697)
+
+## 5.5.1 - 2017-08-08
 
 * Fix Save and Close label editor regression [Pull #1698](https://github.com/webcompat/webcompat.com/pull/1698)
 
