@@ -470,6 +470,7 @@ function BugForm() {
         uploadLabel.show();
         uploadWrapper.removeClass("is-hidden");
         removeBanner.off("click");
+        removeBanner.get(0).blur();
 
         this.hasImage = false;
       }, this)
