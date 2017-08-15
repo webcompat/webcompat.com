@@ -19,6 +19,8 @@ define(["intern"], function(intern, topic) {
         marionette: true
       });
     });
+  } else {
+    throw new Error("Please, specify which browsers to test with.");
   }
 
   if (topic) {
