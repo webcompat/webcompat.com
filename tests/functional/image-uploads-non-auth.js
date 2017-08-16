@@ -180,6 +180,32 @@ define(
             })
             .end()
         );
+      },
+
+      "double image select works": function() {
+        return FunctionalHelpers.openPage(this, url, ".wc-UploadForm-button")
+          .findById("image")
+          .type("tests/fixtures/green_square.png")
+          .sleep(1000)
+          .end()
+          .findByCssSelector(".js-image-upload-label .wc-UploadForm-button")
+          .click()
+          .sleep(1000)
+          .end()
+          .findById("image")
+          .type("tests/fixtures/green_square.png")
+          .end()
+          .sleep(1000)
+          .findByCssSelector(".js-image-upload-label")
+          .getAttribute("style")
+          .then(function(inlineStyle) {
+            assert.include(
+              inlineStyle,
+              "data:image/png;base64,iVBOR",
+              "Preview is shown"
+            );
+          })
+          .end();
       }
     });
   }
