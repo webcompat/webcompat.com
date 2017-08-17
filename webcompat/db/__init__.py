@@ -24,32 +24,6 @@ session_engine = create_engine('sqlite:///' + os.path.join(
 session_db = scoped_session(sessionmaker(autocommit=False,
                                          autoflush=False,
                                          bind=session_engine))
-
-issue_engine = create_engine('sqlite:///' + os.path.join(
-    app.config['BASE_DIR'], 'issues.db'))
-issue_db = scoped_session(sessionmaker(autocommit=False,
-                                       autoflush=False,
-                                       bind=issue_engine))
-IssueBase = declarative_base()
-IssueBase.query = issue_db.query_property()
-
-
-class WCIssue(IssueBase):
-    __tablename__ = 'webcompat_issues'
-
-    issue_id = Column(String(128), unique=True, primary_key=True)
-    summary = Column(String(256))
-    url = Column(String(1024))
-    body = Column(String(2048))
-
-    def __init__(self, issue_id, summary, url, body):
-        self.issue_id = issue_id
-        self.summary = summary
-        self.url = url
-        self.body = body
-
-IssueBase.metadata.create_all(bind=issue_engine)
-
 UsersBase = declarative_base()
 UsersBase.query = session_db.query_property()
 
