@@ -6,12 +6,13 @@
 
 import argparse
 import pkg_resources
-from pkg_resources import DistributionNotFound, VersionConflict
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session
 from sqlalchemy.orm import sessionmaker
 import time
 import os
+from pkg_resources import DistributionNotFound
+from pkg_resources import VersionConflict
 import sys
 
 IMPORT_ERROR = '''
@@ -35,7 +36,7 @@ https://github.com/webcompat/webcompat.com/blob/master/CONTRIBUTING.md#configuri
 
 try:
     from webcompat import app
-except ImportError, e:
+except ImportError as e:
     if 'import_name' in e and e.import_name == 'config':
         # config not found, did you forget to copy config.py.example?
         raise ImportError('{0}\n\n{1}'.format(e, NO_CONF_ERROR))
