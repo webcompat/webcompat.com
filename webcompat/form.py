@@ -161,7 +161,7 @@ def domain_name(url):
     url = url.lstrip()
     # testing if it's an http URL
     if url.startswith(SCHEMES):
-        domain = urlparse.urlparse(url).netloc
+        domain = urlparse.urlsplit(url).netloc
     else:
         domain = None
     return domain
