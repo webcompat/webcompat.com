@@ -62,7 +62,7 @@
 
 /* modifier */
 .wc-Button--default {
-  border: solid 4px var(--Button-defaultColor);
+  border: solid 4px var(--Button-actionColor);
 }
 
 .wc-Button--default:hover:not(.is-disabled),
