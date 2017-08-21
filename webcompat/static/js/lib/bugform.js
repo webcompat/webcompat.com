@@ -246,6 +246,10 @@ function BugForm() {
         this.convertToDataURI(event.target.files[0], this.showUploadPreview);
       }
     }
+
+    // null out input.value so we get a consistent
+    // change event across browsers
+    event.target.value = null;
   };
 
   this.isReportableURL = function(url) {
@@ -466,6 +470,7 @@ function BugForm() {
         uploadLabel.show();
         uploadWrapper.removeClass("is-hidden");
         removeBanner.off("click");
+        removeBanner.get(0).blur();
 
         this.hasImage = false;
       }, this)
