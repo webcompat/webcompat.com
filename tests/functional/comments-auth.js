@@ -141,8 +141,8 @@ define(
         )
           .findById("image")
           .type("tests/fixtures/green_square.png")
-          .sleep(1000)
           .end()
+          .sleep(2000)
           .findByCssSelector(".js-Comment-text")
           .getProperty("value")
           .then(function(val) {
