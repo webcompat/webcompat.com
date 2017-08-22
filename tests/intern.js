@@ -10,6 +10,19 @@ define(["intern"], function(intern, topic) {
   var args = intern.args;
   var siteRoot = args.siteRoot ? args.siteRoot : "http://localhost:5000";
 
+  var environments = [];
+  if (args.browsers) {
+    var browsers = args.browsers.replace(/\s/g, "").split(",");
+    browsers.forEach(function(b) {
+      environments.push({
+        browserName: b,
+        marionette: true
+      });
+    });
+  } else {
+    throw new Error("Please, specify which browsers to test with.");
+  }
+
   if (topic) {
     topic.subscribe("/suite/start", function(suite) {
       /* eslint-disable no-console*/
@@ -32,24 +45,11 @@ define(["intern"], function(intern, topic) {
     proxyUrl: "http://127.0.0.1:9090/",
     siteRoot: siteRoot,
     tunnel: "SeleniumTunnel",
-    tunnelOptions: {
-      // this tells SeleniumTunnel to download geckodriver
-      drivers: ["firefox", "chrome"]
-    },
 
     // Only one browser at a time. Takes longer, but gets less intermittent errors.
     maxConcurrency: 1,
 
-    environments: [
-      {
-        browserName: "firefox",
-        marionette: true
-      },
-      {
-        browserName: "chrome",
-        marionette: true
-      }
-    ],
+    environments: environments,
 
     filterErrorStack: true,
     reporters: ["Pretty"],

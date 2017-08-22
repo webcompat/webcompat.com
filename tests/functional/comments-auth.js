@@ -19,177 +19,181 @@ define(
     registerSuite({
       name: "Comments (auth)",
 
-      setup: function() {
-        return FunctionalHelpers.login(this);
+      setup: async function() {
+        await FunctionalHelpers.login(this);
       },
 
-      teardown: function() {
-        return FunctionalHelpers.logout(this);
+      teardown: async function() {
+        await FunctionalHelpers.logout(this);
       },
 
-      "Comments form visible when logged in": function() {
-        return (
-          FunctionalHelpers.openPage(this, url("/issues/100"), ".js-Issue")
-            // Comment form visible for logged in users.
-            .findDisplayedByCssSelector(".js-Comment-form")
-            .end()
+      "Comments form visible when logged in": async function() {
+        await FunctionalHelpers.openPage(this, url("/issues/100"), ".js-Issue");
+
+        let commentForm = await this.remote.findDisplayedByCssSelector(
+          ".js-Comment-form"
+        );
+        let commentFormVisibility = await commentForm.isDisplayed();
+        assert.isOk(commentFormVisibility);
+      },
+
+      "Empty vs non-empty comment button text (open issue)": async function() {
+        await FunctionalHelpers.openPage(this, url("/issues/100"), ".js-Issue");
+
+        let button = await this.remote.findDisplayedByCssSelector(
+          ".js-Issue-state-button"
+        );
+        let buttonText = await button.getVisibleText();
+        assert.strictEqual("Close Issue", buttonText);
+
+        let textarea = await this.remote.findByCssSelector(
+          "textarea.js-Comment-text"
+        );
+        await textarea.type("test comment");
+
+        let updatedButton = await this.remote.findDisplayedByCssSelector(
+          ".js-comment-close-and-comment"
+        );
+        let updatedButtonText = await updatedButton.getVisibleText();
+        assert.strictEqual("Close and comment", updatedButtonText);
+      },
+
+      "Empty vs non-empty comment button text (closed issue)": async function() {
+        await FunctionalHelpers.openPage(this, url("/issues/101"), ".js-Issue");
+
+        let button = await this.remote.findDisplayedByCssSelector(
+          ".js-comment-reopen-issue"
+        );
+        let buttonText = await button.getVisibleText();
+        assert.strictEqual("Reopen Issue", buttonText);
+
+        let textarea = await this.remote.findByCssSelector(
+          "textarea.js-Comment-text"
+        );
+        await textarea.type("test comment");
+
+        let updatedButton = await this.remote.findDisplayedByCssSelector(
+          ".js-comment-reopen-and-comment"
+        );
+        let updatedButtonText = await updatedButton.getVisibleText();
+        assert.strictEqual("Reopen and comment", updatedButtonText);
+      },
+
+      "Posting a comment": async function() {
+        await FunctionalHelpers.openPage(this, url("/issues/100"), ".js-Issue");
+
+        let originalComments = await this.remote.findAllByCssSelector(
+          ".js-Issue-comment"
+        );
+        let originalCommentsLength = originalComments.length;
+
+        let textarea = await this.remote.findDisplayedByCssSelector(
+          "textarea.js-Comment-text"
+        );
+        await textarea.click();
+        await textarea.type("test comment");
+
+        let button = await this.remote.findDisplayedByCssSelector(
+          ".js-Issue-comment-button"
+        );
+        await button.click();
+
+        let updatedComments = await this.remote.findAllByCssSelector(
+          ".js-Issue-comment"
+        );
+        let updatedCommentsLength = updatedComments.length;
+
+        assert.isBelow(
+          originalCommentsLength,
+          updatedCommentsLength,
+          "Comment was successfully left."
         );
       },
 
-      "Empty vs non-empty comment button text (open issue)": function() {
-        return FunctionalHelpers.openPage(this, url("/issues/100"), ".js-Issue")
-          .findDisplayedByCssSelector(".js-Issue-state-button")
-          .getVisibleText()
-          .then(function(text) {
-            assert.equal("Close Issue", text);
-            assert.notEqual("Close and comment", text);
-          })
-          .end()
-          .findByCssSelector("textarea.js-Comment-text")
-          .type("test comment")
-          .end()
-          .findDisplayedByCssSelector(".js-comment-close-and-comment")
-          .getVisibleText()
-          .then(function(text) {
-            assert.equal("Close and comment", text);
-            assert.notEqual("Close Issue", text);
-          });
-      },
+      "Posting an empty comment fails": async function() {
+        await FunctionalHelpers.openPage(this, url("/issues/100"), ".js-Issue");
 
-      "Empty vs non-empty comment button text (closed issue)": function() {
-        return FunctionalHelpers.openPage(this, url("/issues/101"), ".js-Issue")
-          .findDisplayedByCssSelector(".js-comment-reopen-issue")
-          .getVisibleText()
-          .then(function(text) {
-            assert.equal("Reopen Issue", text);
-            assert.notEqual("Reopen and comment", text);
-          })
-          .end()
-          .findByCssSelector("textarea.js-Comment-text")
-          .type("test comment")
-          .end()
-          .findDisplayedByCssSelector(".js-comment-reopen-and-comment")
-          .getVisibleText()
-          .then(function(text) {
-            assert.equal("Reopen and comment", text);
-            assert.notEqual("Reopen Issue", text);
-          });
-      },
+        let originalComments = await this.remote.findAllByCssSelector(
+          ".js-Issue-comment"
+        );
+        let originalCommentsLength = originalComments.length;
 
-      "Posting a comment": function() {
-        var originalCommentsLength;
-        var allCommentsLength;
-        return (
-          FunctionalHelpers.openPage(this, url("/issues/100"), ".js-Issue")
-            .findAllByCssSelector(".js-Issue-comment")
-            .then(function(elms) {
-              originalCommentsLength = elms.length;
-            })
-            .end()
-            .findByCssSelector("textarea.js-Comment-text")
-            .type("Today's date is " + new Date().toDateString())
-            .end()
-            .findDisplayedByCssSelector(".js-comment-close-and-comment")
-            .end()
-            // click the comment button
-            .findByCssSelector(".js-Issue-comment-button")
-            .click()
-            .end()
-            .sleep(1000)
-            .findAllByCssSelector(".js-Issue-comment")
-            .then(function(elms) {
-              allCommentsLength = elms.length;
-              assert(
-                originalCommentsLength < allCommentsLength,
-                "Comment was successfully left."
-              );
-            })
+        let button = await this.remote.findByCssSelector(
+          ".js-Issue-comment-button"
+        );
+        await button.click();
+
+        let updatedComments = await this.remote.findAllByCssSelector(
+          ".js-Issue-comment"
+        );
+        let updatedCommentsLength = updatedComments.length;
+
+        assert.strictEqual(
+          originalCommentsLength,
+          updatedCommentsLength,
+          "Comment was not successfully left."
         );
       },
 
-      "Posting an empty comment fails": function() {
-        var originalCommentsLength;
-        var allCommentsLength;
-        return (
-          FunctionalHelpers.openPage(this, url("/issues/100"), ".js-Issue")
-            .findAllByCssSelector(".js-Issue-comment")
-            .then(function(elms) {
-              originalCommentsLength = elms.length;
-            })
-            .end()
-            // click the comment button
-            .findByCssSelector(".js-Issue-comment-button")
-            .click()
-            .end()
-            .sleep(2000)
-            .findAllByCssSelector(".js-Issue-comment")
-            .then(function(elms) {
-              allCommentsLength = elms.length;
-              assert(
-                originalCommentsLength === allCommentsLength,
-                "Comment was not successfully left."
-              );
-            })
-        );
-      },
-
-      "Add a screenshot to a comment": function() {
-        return FunctionalHelpers.openPage(
+      "Add a screenshot to a comment": async function() {
+        await FunctionalHelpers.openPage(
           this,
           url("/issues/100"),
           ".wc-Comment-body"
-        )
-          .findById("image")
-          .type("tests/fixtures/green_square.png")
-          .sleep(1000)
-          .end()
-          .findByCssSelector(".js-Comment-text")
-          .getProperty("value")
-          .then(function(val) {
-            assert.include(
-              val,
-              "[![Screenshot Description](http://localhost:5000/uploads/",
-              "The image was correctly uploaded and its URL was copied to the comment text."
-            );
-          })
-          .end();
+        );
+
+        let input = await this.remote.findById("image");
+        await input.type(require.toUrl("../fixtures/green_square.png"));
+
+        let textarea = await this.remote.findByCssSelector(".js-Comment-text");
+        let text = await textarea.getProperty("value");
+
+        assert.include(
+          text,
+          "[![Screenshot Description](http://localhost:5000/uploads/",
+          "The image was correctly uploaded and its URL was copied to the comment text."
+        );
       },
 
-      "Pressing 'g' inside of comment textarea *doesn't* go to github issue": function() {
-        return FunctionalHelpers.openPage(
+      "Pressing 'g' inside of comment textarea *doesn't* go to github issue": async function() {
+        await FunctionalHelpers.openPage(
           this,
           url("/issues/100"),
           ".wc-Comment-submit"
-        )
-          .findByCssSelector(".wc-Comment-submit")
-          .click()
-          .type("g")
-          .end()
-          .setFindTimeout(2000)
-          .findByCssSelector(".repo-container .issues-listing")
-          .then(assert.fail, function(err) {
-            assert.isTrue(/NoSuchElement/.test(String(err)));
-          })
-          .end();
+        );
+
+        let textarea = await this.remote.findByCssSelector(
+          ".wc-Comment-submit"
+        );
+        await textarea.click();
+        await textarea.type("g");
+
+        let currentUrl = await this.remote.getCurrentUrl();
+
+        assert.notInclude("github.com", currentUrl);
       },
 
-      "Pressing 'l' inside of comment textarea *doesn't* open the label editor box": function() {
-        return FunctionalHelpers.openPage(
+      "Pressing 'l' inside of comment textarea *doesn't* open the label editor box": async function() {
+        await FunctionalHelpers.openPage(
           this,
           url("/issues/100"),
           ".wc-Comment-submit"
-        )
-          .findByCssSelector(".wc-Comment-submit")
-          .click()
-          .type("l")
-          .end()
-          .setFindTimeout(2000)
-          .findByCssSelector(".js-LabelEditorLauncher")
-          .getAttribute("class")
-          .then(function(className) {
-            assert.notInclude(className, "is-active");
-          })
-          .end();
+        );
+
+        let textarea = await this.remote.findByCssSelector(
+          ".wc-Comment-submit"
+        );
+        await textarea.click();
+        await textarea.type("l");
+
+        let labelEditorLauncher = await this.remote.findByCssSelector(
+          ".js-LabelEditorLauncher"
+        );
+        let labelEditorLauncherClasses = await labelEditorLauncher.getAttribute(
+          "class"
+        );
+
+        assert.notInclude(labelEditorLauncherClasses, "is-active");
       }
     });
   }
