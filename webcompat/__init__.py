@@ -4,14 +4,14 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-'''This module powers the webcompat.com Flask application.'''
+"""This module powers the webcompat.com Flask application."""
 
 import logging
 
+from flask import Flask
 from flask_github import GitHub
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
-from flask import Flask
 
 app = Flask(__name__, static_url_path='')
 app.config.from_object('config')
@@ -25,7 +25,7 @@ github = GitHub(app)
 limiter = Limiter(app, key_func=get_remote_address)
 
 # import views after we initialize our github object
-import webcompat.views
+import webcompat.views  # nopep8
 
 # register blueprints
 from api.endpoints import api
