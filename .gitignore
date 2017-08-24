@@ -13,9 +13,8 @@ uploads/
 config/secrets.py
 package-lock.json
 
-# backup folder contains the issues.db backup file with issues dump
-# for the previous versions
-backups/*.db
+# data folder contains everything we are not interested
+data/*
 
 # these are our 'dist' files
 # checking them into the repo is silly
