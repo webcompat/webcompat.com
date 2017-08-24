@@ -3,6 +3,7 @@
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
+"""GitHub Webhook module for assigning priority to sites."""
 
 import base64
 import datetime
@@ -16,12 +17,12 @@ from xml.dom.minidom import parseString
 
 import requests
 from requests.exceptions import ConnectionError
-from sqlalchemy import create_engine
 from sqlalchemy import Column
-from sqlalchemy import Integer
-from sqlalchemy import String
+from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy import Integer
 from sqlalchemy.orm import sessionmaker
+from sqlalchemy import String
 
 # Add webcompat module to import path
 sys.path.append(os.path.realpath(os.pardir))
@@ -57,6 +58,7 @@ session = Session()
 
 class Site(Base):
     """SQLAchemy base object for an Alexa top site."""
+
     __tablename__ = "topsites"
 
     url = Column(String, primary_key=True)
@@ -65,6 +67,7 @@ class Site(Base):
     ranking = Column(Integer)
 
     def __init__(self, url, priority, country_code, ranking):
+        """Initialize parameters of the Alexa top site DB."""
         self.url = url
         self.priority = priority
         self.country_code = country_code
@@ -168,7 +171,7 @@ def build_query_string(country_code, start_ranking):
 
 
 def gen_sign(data):
-    """Computes RFC 2104-compliant HMAC signature."""
+    """Compute RFC 2104-compliant HMAC signature."""
     dig = hmac.new(ats_secret_key, data, hashlib.sha256).digest()
     return base64.b64encode(dig)
 
