@@ -37,6 +37,9 @@ ATS_DATEFORMAT = '%Y-%m-%dT%H:%M:%S.%f'
 ATS_HASH_ALGORITHM = 'HmacSHA256'
 ATS_COUNT = 100
 
+# Location of the DB and its backup.
+DB_PATH = app.config['DATA_PATH']
+
 # Regions to dump to topsites.db
 REGIONS = ['GLOBAL', 'US', 'FR', 'IN', 'DE', 'TW', 'ID', 'HK', 'SG', 'PL',
            'GB', 'RU']
@@ -49,8 +52,7 @@ ats_secret_key = None
 # Cache parsed sites, change priority if raised
 topsites = {}
 
-engine = create_engine('sqlite:///' + os.path.join(
-    app.config['BASE_DIR'], 'topsites-new.db'))
+engine = create_engine('sqlite:///' + os.path.join(DB_PATH, 'topsites-new.db'))
 Base = declarative_base()
 Session = sessionmaker(bind=engine)
 session = Session()
@@ -202,8 +204,8 @@ if __name__ == "__main__":
     # Archive topsites.db and rename topsites-new.db to topsites.db
     session.close()
     archive_date = time.strftime("%Y%m%d", time.localtime())
-    os.rename(os.path.join(app.config['BASE_DIR'], 'topsites.db'),
-              os.path.join(app.config['BASE_DIR'],
+    os.rename(os.path.join(DB_PATH, 'topsites.db'),
+              os.path.join(DB_PATH,
                            'topsites-archive-{}.db'.format(archive_date)))
-    os.rename(os.path.join(app.config['BASE_DIR'], 'topsites-new.db'),
-              os.path.join(app.config['BASE_DIR'], 'topsites.db'))
+    os.rename(os.path.join(DB_PATH, 'topsites-new.db'),
+              os.path.join(DB_PATH, 'topsites.db'))

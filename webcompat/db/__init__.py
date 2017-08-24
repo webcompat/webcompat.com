@@ -20,7 +20,7 @@ from sqlalchemy import String
 from webcompat import app
 
 session_engine = create_engine('sqlite:///' + os.path.join(
-    app.config['BASE_DIR'], 'session.db'))
+    app.config['DATA_PATH'], 'session.db'))
 session_db = scoped_session(sessionmaker(autocommit=False,
                                          autoflush=False,
                                          bind=session_engine))
