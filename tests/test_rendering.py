@@ -4,7 +4,7 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-'''Tests for our URI endpoints' rendering.'''
+"""Tests for our URI endpoints' rendering."""
 
 import os.path
 import sys
@@ -21,15 +21,19 @@ headers = {'HTTP_USER_AGENT': ('Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; '
 
 
 class TestURLs(unittest.TestCase):
+    """Tests for the content once HTML remplates are rendered."""
+
     def setUp(self):
+        """Set up the tests."""
         webcompat.app.config['TESTING'] = True
         self.app = webcompat.app.test_client()
 
     def tearDown(self):
+        """Tear down the tests."""
         pass
 
     def test_titles(self):
-        '''Page title format for different URIs.'''
+        """Page title format for different URIs."""
         issueNum = '1000'
         defaultTitle = 'Web Compatibility'
         website_uris = [
