@@ -27,6 +27,7 @@ def extract_browser_label(body):
         # right now, match_list.groups(0) should look like:
         # ('browser', 'firefox')
         browser = match_list.groups(0)[1].lower()
+        browser = browser.translate(None, '()')
         dash_browser = '-'.join(browser.split())
         return 'browser-{name}'.format(name=dash_browser)
     else:
