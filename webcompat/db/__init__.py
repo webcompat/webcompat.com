@@ -4,7 +4,7 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-"""Databases initialization."""
+"""Database initialization."""
 
 from hashlib import sha512
 import os
@@ -20,7 +20,7 @@ from sqlalchemy import String
 from webcompat import app
 
 session_engine = create_engine('sqlite:///' + os.path.join(
-    app.config['BASE_DIR'], 'session.db'))
+    app.config['DATA_PATH'], 'session.db'))
 session_db = scoped_session(sessionmaker(autocommit=False,
                                          autoflush=False,
                                          bind=session_engine))
@@ -29,12 +29,15 @@ UsersBase.query = session_db.query_property()
 
 
 class User(UsersBase):
+    """Define the user DB holding the sessions."""
+
     __tablename__ = 'users'
 
     user_id = Column(String(128), unique=True, primary_key=True)
     access_token = Column(String(128), unique=True)
 
     def __init__(self, access_token):
+        """Initialize the user db parameters."""
         self.access_token = access_token
         # We use the user_id in the session cookie to identify auth'd users.
         # Here we salt and hash the GitHub access token so you can't get

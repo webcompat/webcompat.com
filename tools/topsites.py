@@ -3,6 +3,7 @@
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
+"""GitHub Webhook module for assigning priority to sites."""
 
 import base64
 import datetime
@@ -16,12 +17,12 @@ from xml.dom.minidom import parseString
 
 import requests
 from requests.exceptions import ConnectionError
-from sqlalchemy import create_engine
 from sqlalchemy import Column
-from sqlalchemy import Integer
-from sqlalchemy import String
+from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy import Integer
 from sqlalchemy.orm import sessionmaker
+from sqlalchemy import String
 
 # Add webcompat module to import path
 sys.path.append(os.path.realpath(os.pardir))
@@ -36,6 +37,9 @@ ATS_DATEFORMAT = '%Y-%m-%dT%H:%M:%S.%f'
 ATS_HASH_ALGORITHM = 'HmacSHA256'
 ATS_COUNT = 100
 
+# Location of the DB and its backup.
+DB_PATH = app.config['DATA_PATH']
+
 # Regions to dump to topsites.db
 REGIONS = ['GLOBAL', 'US', 'FR', 'IN', 'DE', 'TW', 'ID', 'HK', 'SG', 'PL',
            'GB', 'RU']
@@ -48,8 +52,7 @@ ats_secret_key = None
 # Cache parsed sites, change priority if raised
 topsites = {}
 
-engine = create_engine('sqlite:///' + os.path.join(
-    app.config['BASE_DIR'], 'topsites-new.db'))
+engine = create_engine('sqlite:///' + os.path.join(DB_PATH, 'topsites-new.db'))
 Base = declarative_base()
 Session = sessionmaker(bind=engine)
 session = Session()
@@ -57,6 +60,7 @@ session = Session()
 
 class Site(Base):
     """SQLAchemy base object for an Alexa top site."""
+
     __tablename__ = "topsites"
 
     url = Column(String, primary_key=True)
@@ -65,6 +69,7 @@ class Site(Base):
     ranking = Column(Integer)
 
     def __init__(self, url, priority, country_code, ranking):
+        """Initialize parameters of the Alexa top site DB."""
         self.url = url
         self.priority = priority
         self.country_code = country_code
@@ -168,7 +173,7 @@ def build_query_string(country_code, start_ranking):
 
 
 def gen_sign(data):
-    """Computes RFC 2104-compliant HMAC signature."""
+    """Compute RFC 2104-compliant HMAC signature."""
     dig = hmac.new(ats_secret_key, data, hashlib.sha256).digest()
     return base64.b64encode(dig)
 
@@ -199,8 +204,8 @@ if __name__ == "__main__":
     # Archive topsites.db and rename topsites-new.db to topsites.db
     session.close()
     archive_date = time.strftime("%Y%m%d", time.localtime())
-    os.rename(os.path.join(app.config['BASE_DIR'], 'topsites.db'),
-              os.path.join(app.config['BASE_DIR'],
+    os.rename(os.path.join(DB_PATH, 'topsites.db'),
+              os.path.join(DB_PATH,
                            'topsites-archive-{}.db'.format(archive_date)))
-    os.rename(os.path.join(app.config['BASE_DIR'], 'topsites-new.db'),
-              os.path.join(app.config['BASE_DIR'], 'topsites.db'))
+    os.rename(os.path.join(DB_PATH, 'topsites-new.db'),
+              os.path.join(DB_PATH, 'topsites.db'))
