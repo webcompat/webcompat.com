@@ -31,7 +31,7 @@ from webcompat import app
 ATS_ACTION_NAME = 'TopSites'
 ATS_RESPONSE_GROUP_NAME = 'Country'
 ATS_SERVICE_HOST = 'ats.amazonaws.com'
-ATS_AWS_BASE_URL = 'http://' + ATS_SERVICE_HOST + '/?'
+ATS_AWS_BASE_URL = 'https://' + ATS_SERVICE_HOST + '/?'
 ATS_DATEFORMAT = '%Y-%m-%dT%H:%M:%S.%f'
 ATS_HASH_ALGORITHM = 'HmacSHA256'
 ATS_COUNT = 100
@@ -155,8 +155,8 @@ def build_query_string(country_code, start_ranking):
     # Alexa top site only accept request with ordered query parameters
     # Keep the order!
     query_params = [
-        ('Action', ATS_ACTION_NAME),
         ('AWSAccessKeyId', ats_access_key),
+        ('Action', ATS_ACTION_NAME),
         ('Count', ATS_COUNT),
         ('CountryCode', country_code),
         ('ResponseGroup', ATS_RESPONSE_GROUP_NAME),
