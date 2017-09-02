@@ -5,13 +5,8 @@
 /*eslint no-console: ["error", { allow: ["log", "error"] }] */
 
 define(
-  [
-    "intern",
-    "intern!object",
-    "require",
-    "intern/dojo/node!leadfoot/helpers/pollUntil"
-  ],
-  function(intern, registerSuite, require, pollUntil) {
+  ["intern", "intern!object", "require", "intern/dojo/node!http"],
+  function(intern, registerSuite, require, http) {
     "use strict";
     var config = intern.config;
 
@@ -49,90 +44,68 @@ define(
       );
     }
 
-    // TODO: when https://github.com/mozilla/geckodriver/issues/308 is fixed,
-    // remove this ugliness.
+    /* 
+    This method makes a call to our API to check that the server is returning fixture data,
+    it will also check if there's anything wrong with the server.
+  */
+    function checkServer() {
+      return new Promise(function(resolve, reject) {
+        var request = http.get(url("/api/issues/100"), function(response) {
+          response.on("data", function(data) {
+            var json = JSON.parse(data);
+            if (!json.hasOwnProperty("_fixture")) {
+              reject(
+                new Error(
+                  `
+                =======================================================
+                It seems like you didn't start the server in test mode.
+                Open another terminal and window type: 
+               \x1b[32m npm run start:test\x1b[0m
+                or
+               \x1b[32m python run.py -t\x1b[0m
+                =======================================================
+                `
+                )
+              );
+            } else {
+              resolve("All is well!");
+            }
+          });
+        });
+
+        // Handle connection errors.
+        request.on("error", function() {
+          reject(
+            new Error(
+              `
+            ======================================================
+            Oops, something went wrong. Try restarting the server.
+            Open another terminal and window type: 
+           \x1b[32m npm run start:test\x1b[0m
+            or
+           \x1b[32m python run.py -t\x1b[0m
+            ======================================================
+            `
+            )
+          );
+        });
+        request.end();
+      });
+    }
 
     function login(context) {
-      return openPage(context, url("/login"), "body")
-        .setFindTimeout(config.wc.pageLoadTimeout)
-        .getCurrentUrl()
-        .then(function(url) {
-          // is this the "normal" login flow?
-          if (url.includes("return_to")) {
-            return (
-              context.remote
-                .findByCssSelector("#login_field")
-                .click()
-                .type(config.wc.user)
-                .end()
-                .findByCssSelector("#password")
-                .click()
-                .type(config.wc.pw)
-                .end()
-                .findByCssSelector("input[type=submit]")
-                .click()
-                .end()
-                // *Sometimes* GitHub can bring up an extra verification
-                // page if it detects that our test user is requesting
-                // access too much.
-                .findByCssSelector(".oauth-review-permissions")
-                .then(
-                  function() {
-                    // In this case, there's an extra button to click to convince
-                    // GitHub we're totally not a bot. >_>
-                    return context.remote
-                      .sleep(3000)
-                      .findByCssSelector("button.btn-primary")
-                      .click()
-                      .end();
-                  },
-                  function(err) {
-                    // Otherwise, we swallow the NoSuchElement error.
-                    return new Promise(function(resolve) {
-                      if (/NoSuchElement/.test(String(err))) {
-                        resolve(true);
-                      } else {
-                        throw err;
-                      }
-                    });
-                  }
-                )
-                .end()
-                // ...Now make sure the logged-in avatar is shown so we know we're
-                // back at the home page before we end.
-                .findByCssSelector(".wc-Navbar-avatar")
-                .end()
-            );
-          }
-        })
-        .end();
+      return openPage(context, url("/login"), "body").end();
     }
 
     function logout(context) {
       return openPage(context, url("/logout"), "body").clearCookies().end();
     }
 
-    function visibleByClass(selector) {
-      var elem;
-      return pollUntil(
-        function(selector) {
-          elem = document.getElementsByClassName(selector);
-          if (!elem || elem.length === 0) {
-            return null;
-          }
-          elem = elem[0];
-          return elem.offsetWidth > 0 && elem.offsetHeight > 0 ? true : null;
-        },
-        [selector],
-        10000
-      );
-    }
-
     return {
-      login: login,
-      logout: logout,
       openPage: openPage,
-      visibleByClass: visibleByClass
+      checkServer: checkServer,
+      login: login,
+      logout: logout
     };
   }
 );
