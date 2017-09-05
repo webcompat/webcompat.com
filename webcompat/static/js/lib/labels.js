@@ -32,7 +32,7 @@ issues.LabelsView = issues.CategoryView.extend({
     this.$el.html(this.template(this.model.toJSON()));
   },
   fetchItems: function() {
-    this.editorButton = $(".js-LabelEditorLauncher");
+    this.editorButton = $(".js-CategoryEditorLauncher");
     this.labelEditor = new issues.LabelEditorView({
       model: issues.allLabels,
       issueView: this
@@ -48,7 +48,7 @@ issues.LabelsView = issues.CategoryView.extend({
   editItems: function() {
     this.editorButton.addClass("is-active");
     this.$el
-      .find(".js-LabelEditorLauncher")
+      .find(".js-CategoryEditorLauncher")
       .after(this.labelEditor.render().el);
     var toBeChecked = _.intersection(
       this.getIssueLabels(),

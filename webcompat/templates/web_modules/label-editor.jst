@@ -1,23 +1,23 @@
 <script type="text/template">
-  <div class="wc-LabelEditor-header">
-    <input class="form-control wc-LabelEditor-search" placeholder="filter label">
-    <button class="wc-LabelEditor-button r-ResetButton js-LabelEditor-close"
+  <div class="wc-CategoryEditor-header">
+    <input class="form-control wc-CategoryEditor-search" placeholder="filter label">
+    <button class="wc-CategoryEditor-button r-ResetButton js-CategoryEditor-close"
             tabindex="0">
       Save &amp; Close
     </button>
   </div>
-  <div class="wc-LabelEditor-list" tabindex="-1">
+  <div class="wc-CategoryEditor-list" tabindex="-1">
     <% _.each(labels, function(label) { %>
-      <label class="wc-LabelEditor-list-item" tabindex="0">
-        <span class="wc-LabelEditor-list-item-squareColor"
+      <label class="wc-CategoryEditor-list-item" tabindex="0">
+        <span class="wc-CategoryEditor-list-item-squareColor"
               style="background-color:#<%=label.color%>">
-          <input class="wc-LabelEditor-list-item-checkbox"
+          <input class="wc-CategoryEditor-list-item-checkbox"
                  type="checkbox" name="<%= label.name %>"
                  data-color="<%=label.color%>"
                  data-remotename="<%= label.remoteName %>"
                  tabindex="-1">
         </span>
-        <span class="wc-LabelEditor-list-item-name"><%= label.name %></span>
+        <span class="wc-CategoryEditor-list-item-name"><%= label.name %></span>
       </label>
     <% }); %>
   </div>

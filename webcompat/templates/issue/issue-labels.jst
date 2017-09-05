@@ -1,16 +1,16 @@
 <script type="text/template">
-  <header class="wc-Issue-labelEditor">
-    <div class="wc-Issue-labelEditor-title">
+  <header class="wc-Issue-categoryEditor">
+    <div class="wc-Issue-categoryEditor-title">
       Labels
     </div>
     <% if ($("body").data("username")) { %>
-    <span class="wc-Issue-labelEditor-button js-Issue-labelEditor">
-      <button class="wc-LabelEditorLauncher r-ResetButton wc-Icon wc-Icon--gear js-LabelEditorLauncher" aria-hidden="true">
+    <span class="wc-Issue-categoryEditor-button js-Issue-categoryEditor">
+      <button class="wc-CategoryEditorLauncher r-ResetButton wc-Icon wc-Icon--gear js-CategoryEditorLauncher js-LabelEditorLauncher" aria-hidden="true">
         <span class="wc-Accessibility">Edit Labels</span></button>
     </span>
     <% } %>
   </header>
-   <div class="js-Label-list">
+   <div class="js-Category-list">
   <% _.each(labels, function(label) { %>
     <span class="wc-Label wc-Label--badge js-Label" style="background-color:#<%=label.color%>">
       <%= label.name %>

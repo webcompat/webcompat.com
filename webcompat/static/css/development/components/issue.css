@@ -142,7 +142,7 @@
   padding: 1em;
 }
 
-/* FullScreen LabelEditor */
+/* FullScreen CategoryEditor */
 @media all and (max-width: 23.43em) {
   .wc-Issue-labels {
     position: relative;
@@ -160,8 +160,8 @@
   margin: 4em 0 0;
 }
 
-/* labeleditor wrapper */
-.wc-Issue-labelEditor {
+/* categoryeditor wrapper */
+.wc-Issue-categoryEditor {
   position: relative;
   display: flex;
   align-items: center;
@@ -170,8 +170,8 @@
 }
 
 @media all and (max-width: 23.43em) {
-  .wc-Issue-labelEditor {
-    position: static; /* position of label_editor not depend of this class */
+  .wc-Issue-categoryEditor {
+    position: static; /* position of categoryeditor not depend of this class */
   }
 }
 

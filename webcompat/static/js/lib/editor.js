@@ -14,8 +14,8 @@ issues.CategoryView = Backbone.View.extend({
   _isLoggedIn: $("body").data("username"),
   editorButton: null,
   events: {
-    "click .js-LabelEditorLauncher:not(.is-active)": "editItems",
-    "click .js-LabelEditorLauncher.is-active": "closeEditor"
+    "click .js-CategoryEditorLauncher:not(.is-active)": "editItems",
+    "click .js-CategoryEditorLauncher.is-active": "closeEditor"
   },
   // template/subTemplate is defined in child class
   openLabelEditor: function(e) {
@@ -40,24 +40,23 @@ issues.CategoryView = Backbone.View.extend({
     * updateView
 */
 issues.CategoryEditorView = Backbone.View.extend({
-  // todo, change these classes to be itemeditor, etc.
-  className: "wc-LabelEditor js-LabelEditor",
+  className: "wc-CategoryEditor js-CategoryEditor",
   events: {
     "change input[type=checkbox]": "updateView",
     "click button": "closeEditor",
     keyup: "closeEditor",
-    "keyup .wc-LabelEditor-search": "filterItems",
-    "keyup .wc-LabelEditor-list-item": "checkUncheckItems",
-    "keydown .wc-LabelEditor-search": "focusSaveClose",
-    "keydown .wc-LabelEditor-list-item": "removeFocus",
-    "keydown .wc-LabelEditor-list-item:visible:last": "backToTop"
+    "keyup .wc-CategoryEditor-search": "filterItems",
+    "keyup .wc-CategoryEditor-list-item": "checkUncheckItems",
+    "keydown .wc-CategoryEditor-search": "focusSaveClose",
+    "keydown .wc-CategoryEditor-list-item": "removeFocus",
+    "keydown .wc-CategoryEditor-list-item:visible:last": "backToTop"
   },
   render: function() {
     this.$el.html(this.template(this.model));
     this.resizeEditorHeight();
     _.defer(
       _.bind(function() {
-        this.$el.find(".wc-LabelEditor-search").focus();
+        this.$el.find(".wc-CategoryEditor-search").focus();
       }, this)
     );
     return this;
@@ -65,9 +64,9 @@ issues.CategoryEditorView = Backbone.View.extend({
   reRender: function(data) {
     //only re-render the items into the items wrapper
     this.issueView.$el
-      .find(".js-Label-list")
+      .find(".js-Category-list")
       .html(this.issueView.subTemplate(data));
-    this.issueView.$el.find(".js-LabelEditorLauncher").addClass("is-active");
+    this.issueView.$el.find(".js-CategoryEditorLauncher").addClass("is-active");
   },
   resizeEditorHeight: function() {
     var getBreakpoint = function() {
@@ -87,15 +86,17 @@ issues.CategoryEditorView = Backbone.View.extend({
 
     if (getBreakpoint()) {
       _.defer(function() {
-        var labelEditorheight = parseInt(
-          $(".wc-LabelEditor").css("height"),
+        var categoryEditorheight = parseInt(
+          $(".wc-CategoryEditor").css("height"),
           10
         );
-        var labelHeaderheight = parseInt(
-          $(".wc-LabelEditor-header").css("height"),
+        var categoryHeaderheight = parseInt(
+          $(".wc-CategoryEditor-header").css("height"),
           10
         );
-        $(".wc-LabelEditor-list").height(labelEditorheight - labelHeaderheight);
+        $(".wc-CategoryEditor-list").height(
+          categoryEditorheight - categoryHeaderheight
+        );
         $("html, body").animate({ scrollTop: 0 }, 0);
       });
     }
@@ -103,11 +104,11 @@ issues.CategoryEditorView = Backbone.View.extend({
   filterItems: _.debounce(function(e) {
     setTimeout(function() {
       if (e.keyCode === 13) {
-        $(".wc-LabelEditor-list-item:visible:first").focus();
+        $(".wc-CategoryEditor-list-item:visible:first").focus();
         // if you call the focus() function in a label element,'
         // the focus automatically goes to the input.
         // that's why we need to add the focused class.
-        $(".wc-LabelEditor-list-item:visible:first").addClass("focused");
+        $(".wc-CategoryEditor-list-item:visible:first").addClass("focused");
       }
     }, 100);
 
@@ -120,12 +121,12 @@ issues.CategoryEditorView = Backbone.View.extend({
     });
 
     // make sure everything is showing
-    $(".wc-LabelEditor-list-item").show();
+    $(".wc-CategoryEditor-list-item").show();
 
     // hide the non-filter matches
     _.each(toHide, function(name) {
       $("input[name=" + escape(name) + "]")
-        .closest(".wc-LabelEditor-list-item")
+        .closest(".wc-CategoryEditor-list-item")
         .hide();
     });
   }, 100),
@@ -137,7 +138,7 @@ issues.CategoryEditorView = Backbone.View.extend({
   focusSaveClose: _.debounce(function(e) {
     if (e.keyCode === 9) {
       // Safari workaround.
-      $(".wc-LabelEditor-button.r-ResetButton").focus();
+      $(".wc-CategoryEditor-button.r-ResetButton").focus();
     }
   }, 1),
   removeFocus: _.debounce(function(e) {
@@ -147,7 +148,7 @@ issues.CategoryEditorView = Backbone.View.extend({
   }, 100),
   backToTop: _.debounce(function(e) {
     if (e.keyCode === 9) {
-      this.$el.find(".wc-LabelEditor-search").focus();
+      this.$el.find(".wc-CategoryEditor-search").focus();
     }
   }, 1)
 });
