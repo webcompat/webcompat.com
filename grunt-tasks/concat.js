@@ -38,6 +38,7 @@ module.exports = function(grunt) {
     issues: {
       src: [
         "<%= jsPath %>/lib/models/label-list.js",
+        "<%= jsPath %>/lib/editor.js",
         "<%= jsPath %>/lib/labels.js",
         "<%= jsPath %>/lib/models/issue.js",
         "<%= jsPath %>/lib/models/comment.js",
