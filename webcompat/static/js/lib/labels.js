@@ -24,7 +24,15 @@ issues.LabelsView = issues.CategoryView.extend({
   // this subTemplate will need to be kept in sync with
   // relavant parts in issue/issue-labels.jst
   subTemplate: wcTmpl["issue/issue-labels-sub.jst"],
-
+  openLabelEditor: function(e) {
+    // make sure we're not typing in the search input.
+    if (e.target.nodeName === "TEXTAREA") {
+      return;
+    } else {
+      e.preventDefault();
+      this.editItems();
+    }
+  },
   closeEditor: function() {
     this.labelEditor.closeEditor();
   },

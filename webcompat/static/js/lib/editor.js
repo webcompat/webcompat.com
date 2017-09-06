@@ -18,15 +18,6 @@ issues.CategoryView = Backbone.View.extend({
     "click .js-CategoryEditorLauncher.is-active": "closeEditor"
   },
   // template/subTemplate is defined in child class
-  openLabelEditor: function(e) {
-    // make sure we're not typing in the search input.
-    if (e.target.nodeName === "TEXTAREA") {
-      return;
-    } else {
-      e.preventDefault();
-      this.editItems();
-    }
-  },
   render: function() {
     this.$el.html(this.template(this.model.toJSON()));
     this.fetchItems();
