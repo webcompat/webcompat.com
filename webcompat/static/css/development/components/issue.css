@@ -136,7 +136,8 @@
   line-height: 1.5em;
 }
 
-.wc-Issue-labels {
+.wc-Issue-labels,
+.wc-Issue-milestones {
   background-color: #fff;
   margin: 2px 0;
   padding: 1em;
@@ -144,7 +145,8 @@
 
 /* FullScreen CategoryEditor */
 @media all and (max-width: 23.43em) {
-  .wc-Issue-labels {
+  .wc-Issue-labels,
+  .wc-Issue-milestones {
     position: relative;
   }
 }

@@ -40,6 +40,7 @@ module.exports = function(grunt) {
         "<%= jsPath %>/lib/models/label-list.js",
         "<%= jsPath %>/lib/editor.js",
         "<%= jsPath %>/lib/labels.js",
+        "<%= jsPath %>/lib/milestones.js",
         "<%= jsPath %>/lib/models/issue.js",
         "<%= jsPath %>/lib/models/comment.js",
         "<%= jsPath %>/lib/comments.js",

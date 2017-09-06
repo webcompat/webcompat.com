@@ -367,6 +367,7 @@ issues.MainView = Backbone.View.extend({
     this.body = new issues.BodyView(_.extend(issueModel, { mainView: this }));
     this.aside = new issues.AsideView(issueModel);
     this.labels = new issues.LabelsView(issueModel);
+    this.milestones = new issues.MilestonesView(issueModel);
     this.textArea = new issues.TextAreaView();
     this.imageUpload = new issues.ImageUploadView();
 
@@ -384,12 +385,16 @@ issues.MainView = Backbone.View.extend({
             this.issue.get("labels"),
             _.matchesProperty("name", "nsfw")
           );
-          _.each([this.metadata, this.labels, this.body, this], function(elm) {
-            elm.render();
-            _.each($(".js-Issue-markdown code"), function(elm) {
-              Prism.highlightElement(elm);
-            });
-          });
+
+          _.each(
+            [this.metadata, this.labels, this.milestones, this.body, this],
+            function(elm) {
+              elm.render();
+              _.each($(".js-Issue-markdown code"), function(elm) {
+                Prism.highlightElement(elm);
+              });
+            }
+          );
 
           if (this._supportsFormData) {
             this.imageUpload.render();
