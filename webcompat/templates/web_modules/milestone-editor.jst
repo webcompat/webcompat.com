@@ -7,17 +7,17 @@
     </button>
   </div>
   <div class="wc-CategoryEditor-list" tabindex="-1">
-    <% _.each(labels, function(label) { %>
+    <% _.each(milestones, function(milestone) { %>
       <label class="wc-CategoryEditor-list-item" tabindex="0">
         <span class="wc-CategoryEditor-list-item-squareColor"
-              style="background-color:#<%=label.color%>">
+              style="background-color:orangered">
           <input class="wc-CategoryEditor-list-item-checkbox"
-                 type="checkbox" name="<%= label.name %>"
-                 data-color="<%=label.color%>"
-                 data-remotename="<%= label.remoteName %>"
+                 type="checkbox" name="<%= milestone.name %>"
+                 data-color="orangered"
+                 data-remotename="<%= milestone.remoteName %>"
                  tabindex="-1">
         </span>
-        <span class="wc-CategoryEditor-list-item-name"><%= label.name %></span>
+        <span class="wc-CategoryEditor-list-item-name"><%= milestone.name %></span>
       </label>
     <% }); %>
   </div>

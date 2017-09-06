@@ -30,7 +30,6 @@ module.exports = function(grunt) {
     diagnose: {
       src: [
         "<%= jsPath %>/lib/models/label-list.js",
-        "<%= jsPath %>/lib/labels.js",
         "<%= jsPath %>/lib/models/issue.js",
         "<%= jsPath %>/lib/diagnose.js"
       ],
@@ -39,7 +38,9 @@ module.exports = function(grunt) {
     issues: {
       src: [
         "<%= jsPath %>/lib/models/label-list.js",
+        "<%= jsPath %>/lib/editor.js",
         "<%= jsPath %>/lib/labels.js",
+        "<%= jsPath %>/lib/milestones.js",
         "<%= jsPath %>/lib/models/issue.js",
         "<%= jsPath %>/lib/models/comment.js",
         "<%= jsPath %>/lib/comments.js",
@@ -50,7 +51,6 @@ module.exports = function(grunt) {
     issueList: {
       src: [
         "<%= jsPath %>/lib/models/label-list.js",
-        "<%= jsPath %>/lib/labels.js",
         "<%= jsPath %>/lib/models/issue.js",
         "<%= jsPath %>/lib/mixins/pagination.js",
         "<%= jsPath %>/lib/issue-list.js"
