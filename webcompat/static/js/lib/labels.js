@@ -36,9 +36,6 @@ issues.LabelsView = issues.CategoryView.extend({
   closeEditor: function() {
     this.labelEditor.closeEditor();
   },
-  renderLabels: function() {
-    this.$el.html(this.template(this.model.toJSON()));
-  },
   fetchItems: function() {
     this.editorButton = $(".js-CategoryEditorLauncher");
     this.labelEditor = new issues.LabelEditorView({
