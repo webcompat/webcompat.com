@@ -3,12 +3,20 @@
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
+"""Starter file for the project."""
 
 import argparse
+import json
+import os
 import pkg_resources
 from pkg_resources import DistributionNotFound
 from pkg_resources import VersionConflict
 import sys
+import urlparse
+
+import requests
+
+from config.environment import STATUSES
 
 IMPORT_ERROR = '''
 ==============================================
@@ -26,6 +34,10 @@ Please create a copy of config.py.example and customize it accordingly.
 For details, please see
 https://github.com/webcompat/webcompat.com/blob/master/CONTRIBUTING.md#configuring-the-server
 ==============================================
+'''
+
+MILESTONE_ERROR = '''It failed with {msg}!
+We will read from data/milestones.json.
 '''
 
 
@@ -70,11 +82,11 @@ pip install name==1.2.1
 
 
 def check_pip_deps():
-    '''Check installed pip dependencies.
+    """Check installed pip dependencies.
 
     Make sure that the installed pip packages match what is in
     requirements.txt, prompting the user to upgrade if not.
-    '''
+    """
     for req in open("./config/requirements.txt"):
         try:
             pkg_resources.require(req)
@@ -87,10 +99,53 @@ def check_pip_deps():
 
 
 def config_validator():
-    '''Make sure the config file is ready.'''
+    """Make sure the config file is ready."""
     # Checking if oauth token is configured
     if app.config['OAUTH_TOKEN'] == '':
         sys.exit(TOKEN_HELP)
+
+
+def initialize_status(statuses):
+    """Map the status name with the milestone id on GitHub.
+
+    The project needs the mapping in between milestones and their id
+    to be able to query status related things. It uses a backup version
+    when the request to GitHub fails.
+    """
+    print('Statuses Initialization…')
+    REPO_ROOT = app.config['ISSUES_REPO_URI'].rpartition('/issues')[0]
+    milestones_path = os.path.join('repos', REPO_ROOT, 'milestones')
+    milestones_url = urlparse.urlunparse(
+        ('https', 'api.github.com', milestones_path, '', '', ''))
+    milestones_file = os.path.join(app.config['DATA_PATH'], 'milestones.json')
+    try:
+        # Get the milestone from the network
+        print('Fetching milestones from Github…')
+        r = requests.get(milestones_url)
+        milestones_content = r.content
+        if r.status_code == 200:
+            with open(milestones_file, 'w') as f:
+                f.write(r.content)
+            print('Milestones saved in data/')
+        r.raise_for_status()
+    except requests.exceptions.HTTPError as error:
+        # Not working, let's use the cached copy
+        print(MILESTONE_ERROR.format(msg=error))
+        with open(milestones_file, 'r') as f:
+            milestones_content = f.read()
+    finally:
+        # save in data/ the current version
+        print('Milestones in memory')
+        app.config.update(STATUSES=convert_milestones(milestones_content))
+        app.config.update(JSON_STATUSES=json.dumps(app.config['STATUSES']))
+
+
+def convert_milestones(milestones_file):
+    """Convert the JSON milestones from GitHub to a simple dict."""
+    milestone_full = json.loads(milestones_file)
+    for milestone in milestone_full:
+        STATUSES[milestone['title']]['id'] = milestone['number']
+    return STATUSES
 
 
 if __name__ == '__main__':
@@ -101,6 +156,8 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     if check_pip_deps():
+        # We need the milestones
+        initialize_status(app.config['STATUSES'])
         if not args.testmode:
             # testing the config file.
             # this file is only important in non-test mode.

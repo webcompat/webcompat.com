@@ -21,3 +21,20 @@ PRODUCTION = os.environ.get('PRODUCTION')
 STAGING = os.environ.get('DEVELOPMENT')
 # Are we serving the app from localhost?
 LOCALHOST = not PRODUCTION and not STAGING
+
+# BUG STATUS
+# The id will be initialized when the app is started.
+STATUSES = {
+    u'needstriage': {'id': 0, 'order': 1, 'state': 'open', 'color': ''},
+    u'needsdiagnosis': {'id': 0, 'order': 2, 'state': 'open', 'color': ''},
+    u'needscontact': {'id': 0, 'order': 3, 'state': 'open', 'color': ''},
+    u'contactready': {'id': 0, 'order': 4, 'state': 'open', 'color': ''},
+    u'sitewait': {'id': 0, 'order': 5, 'state': 'open', 'color': ''},
+    u'duplicate': {'id': 0, 'order': 1, 'state': 'closed', 'color': ''},
+    u'fixed': {'id': 0, 'order': 2, 'state': 'closed', 'color': ''},
+    u'incomplete': {'id': 0, 'order': 3, 'state': 'closed', 'color': ''},
+    u'invalid': {'id': 0, 'order': 4, 'state': 'closed', 'color': ''},
+    u'non-compat': {'id': 0, 'order': 5, 'state': 'closed', 'color': ''},
+    u'wontfix': {'id': 0, 'order': 6, 'state': 'closed', 'color': ''},
+    u'worksforme': {'id': 0, 'order': 7, 'state': 'closed', 'color': ''}
+    }
