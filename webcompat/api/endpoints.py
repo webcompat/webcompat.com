@@ -132,13 +132,6 @@ def get_issue_category(issue_category):
     elif issue_category == 'closed':
         params['state'] = 'closed'
         return api_request('get', issues_path, params=params)
-    # Note that 'needstriage' here is primarily used on the homepage.
-    # For paginated results on the /issues page,
-    # see /issues/search/needstriage.
-    # We abort with 301 here because the new endpoint has
-    # been replaced with needstriage.
-    elif issue_category == 'new':
-        abort(301)
     else:
         # The path doesn’t exist. 404 Not Found.
         abort(404)
