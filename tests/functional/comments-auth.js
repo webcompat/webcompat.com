@@ -36,46 +36,6 @@ define(
         );
       },
 
-      "Empty vs non-empty comment button text (open issue)": function() {
-        return FunctionalHelpers.openPage(this, url("/issues/100"), ".js-Issue")
-          .findDisplayedByCssSelector(".js-Issue-state-button")
-          .getVisibleText()
-          .then(function(text) {
-            assert.equal("Close Issue", text);
-            assert.notEqual("Close and comment", text);
-          })
-          .end()
-          .findByCssSelector("textarea.js-Comment-text")
-          .type("test comment")
-          .end()
-          .findDisplayedByCssSelector(".js-comment-close-and-comment")
-          .getVisibleText()
-          .then(function(text) {
-            assert.equal("Close and comment", text);
-            assert.notEqual("Close Issue", text);
-          });
-      },
-
-      "Empty vs non-empty comment button text (closed issue)": function() {
-        return FunctionalHelpers.openPage(this, url("/issues/101"), ".js-Issue")
-          .findDisplayedByCssSelector(".js-comment-reopen-issue")
-          .getVisibleText()
-          .then(function(text) {
-            assert.equal("Reopen Issue", text);
-            assert.notEqual("Reopen and comment", text);
-          })
-          .end()
-          .findByCssSelector("textarea.js-Comment-text")
-          .type("test comment")
-          .end()
-          .findDisplayedByCssSelector(".js-comment-reopen-and-comment")
-          .getVisibleText()
-          .then(function(text) {
-            assert.equal("Reopen and comment", text);
-            assert.notEqual("Reopen Issue", text);
-          });
-      },
-
       "Posting a comment": function() {
         var originalCommentsLength;
         var allCommentsLength;
@@ -88,8 +48,6 @@ define(
             .end()
             .findByCssSelector("textarea.js-Comment-text")
             .type("Today's date is " + new Date().toDateString())
-            .end()
-            .findDisplayedByCssSelector(".js-comment-close-and-comment")
             .end()
             // click the comment button
             .findByCssSelector(".js-Issue-comment-button")

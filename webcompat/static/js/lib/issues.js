@@ -307,78 +307,6 @@ issues.ImageUploadView = Backbone.View.extend({
   }
 });
 
-// TODO: add comment before closing if there's a comment.
-issues.StateButtonView = Backbone.View.extend({
-  el: $(".js-Issue-state-button"),
-  events: {
-    click: "toggleState"
-  },
-  hasComment: false,
-  mainView: null,
-  initialize: function(options) {
-    this.mainView = options.mainView;
-
-    issues.events.on(
-      "textarea:content",
-      _.bind(function() {
-        this.hasComment = true;
-        var buttonText;
-        if (this.model.get("state") === "open") {
-          buttonText = "Close and comment";
-        } else {
-          buttonText = "Reopen and comment";
-        }
-        this.$el.html(
-          this.template({
-            state: buttonText,
-            stateClass: buttonText.split(" ").join("-").toLowerCase()
-          })
-        );
-      }, this)
-    );
-
-    issues.events.on(
-      "textarea:empty",
-      _.bind(function() {
-        // Remove the "and comment" text if there's no comment.
-        this.render();
-      }, this)
-    );
-
-    this.model.on(
-      "change:state",
-      _.bind(function() {
-        this.render();
-      }, this)
-    );
-  },
-  template: wcTmpl["issue/state-button.jst"],
-  render: function() {
-    var buttonText;
-    if (this.model.get("state") === "open") {
-      buttonText = "Close Issue";
-    } else {
-      buttonText = "Reopen Issue";
-    }
-    this.$el.html(
-      this.template({
-        state: buttonText,
-        stateClass: buttonText.split(" ").join("-").toLowerCase()
-      })
-    );
-    return this;
-  },
-  toggleState: function() {
-    if (this.hasComment) {
-      this.model.toggleState(
-        _.bind(this.mainView.addNewComment, this.mainView)
-      );
-    } else {
-      this.model.toggleState();
-    }
-  }
-});
-
 issues.MainView = Backbone.View.extend({
   el: $(".js-Issue"),
   events: {
@@ -441,9 +369,6 @@ issues.MainView = Backbone.View.extend({
     this.labels = new issues.LabelsView(issueModel);
     this.textArea = new issues.TextAreaView();
     this.imageUpload = new issues.ImageUploadView();
-    this.stateButton = new issues.StateButtonView(
-      _.extend(issueModel, { mainView: this })
-    );
 
     callback();
   },
@@ -459,15 +384,12 @@ issues.MainView = Backbone.View.extend({
             this.issue.get("labels"),
             _.matchesProperty("name", "nsfw")
           );
-          _.each(
-            [this.metadata, this.labels, this.body, this.stateButton, this],
-            function(elm) {
-              elm.render();
-              _.each($(".js-Issue-markdown code"), function(elm) {
-                Prism.highlightElement(elm);
-              });
-            }
-          );
+          _.each([this.metadata, this.labels, this.body, this], function(elm) {
+            elm.render();
+            _.each($(".js-Issue-markdown code"), function(elm) {
+              Prism.highlightElement(elm);
+            });
+          });
 
           if (this._supportsFormData) {
             this.imageUpload.render();
