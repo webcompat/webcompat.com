@@ -144,13 +144,13 @@ issues.LabelEditorView = Backbone.View.extend({
     }
   },
   updateView: function(evt) {
-    // We try to make sure only one "status" or "priority"-type label is set
-    // If the change event comes from a "status" or "priority"-type label,
-    // enumerate all checked "status" or "priority"-type labels and uncheck
+    // We try to make sure only one priority"-type label is set
+    // If the change event comes from a "priority"-type label,
+    // enumerate all checked priority"-type labels and uncheck
     // the others.
     var checked;
     var remotename = $(evt.target).data("remotename");
-    if (remotename.match(/^(status|priority)/) && evt.target.checked) {
+    if (remotename.match(/^(priority)/) && evt.target.checked) {
       var prefix = remotename.split("-")[0];
       checked = $(
         'input[type=checkbox][data-remotename^="' + prefix + '"]:checked'
