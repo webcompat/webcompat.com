@@ -27,6 +27,7 @@ define(
     "./functional/search-auth.js",
     "./functional/issues-auth.js",
     "./functional/labels-auth.js",
+    "./functional/milestones-auth.js",
     "./functional/reporting-auth.js",
     "./functional/user-activity-auth.js",
     "./functional/user-activity-non-auth.js"
