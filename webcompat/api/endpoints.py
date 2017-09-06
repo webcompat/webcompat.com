@@ -4,10 +4,11 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-'''Flask Blueprint for our "API" module
+"""Flask Blueprint for our "API" module.
 
 This is used to make API calls to GitHub, either via a logged-in users
-credentials or as a proxy on behalf of anonymous or unauthenticated users.'''
+credentials or as a proxy on behalf of anonymous or unauthenticated users.
+"""
 
 
 import json
@@ -19,13 +20,13 @@ from flask import request
 from flask import session
 
 from webcompat import app
-from webcompat import limiter
 from webcompat.helpers import api_request
 from webcompat.helpers import get_comment_data
 from webcompat.helpers import get_response_headers
 from webcompat.helpers import mockable_response
 from webcompat.helpers import normalize_api_params
 from webcompat.helpers import proxy_request
+from webcompat import limiter
 
 api = Blueprint('api', __name__, url_prefix='/api')
 JSON_MIME = 'application/json'
@@ -36,10 +37,10 @@ REPO_PATH = ISSUES_PATH[:-7]
 @api.route('/issues/<int:number>')
 @mockable_response
 def proxy_issue(number):
-    '''XHR endpoint to get issue data from GitHub.
+    """XHR endpoint to get issue data from GitHub.
 
     either as an authed user, or as one of our proxy bots.
-    '''
+    """
     path = 'repos/{0}/{1}'.format(ISSUES_PATH, number)
     return api_request('get', path)
 
@@ -47,11 +48,11 @@ def proxy_issue(number):
 @api.route('/issues/<int:number>/edit', methods=['PATCH'])
 @mockable_response
 def edit_issue(number):
-    '''XHR endpoint to push back edits to GitHub for a single issue.
+    """XHR endpoint to push back edits to GitHub for a single issue.
 
     Note: this is always proxied to allow any logged in user to be able to
     edit issues.
-    '''
+    """
     path = 'repos/{0}/{1}'.format(ISSUES_PATH, number)
     # we can only change the state of the issue: closed or open
     states_list = ['closed', 'open']
@@ -68,7 +69,7 @@ def edit_issue(number):
 @api.route('/issues')
 @mockable_response
 def proxy_issues():
-    '''API endpoint to list all issues from GitHub.'''
+    """List all issues from GitHub on the API endpoint."""
     params = request.args.copy()
 
     # If there's a q param, then we need to use the Search API
@@ -87,14 +88,14 @@ def proxy_issues():
 @api.route('/issues/<username>/<parameter>')
 @mockable_response
 def get_user_activity_issues(username, parameter):
-    '''API endpoint to return issues related to a user.
+    """Return issues related to a user at the API endpoint.
 
     cf. https://developer.github.com/v3/issues/#list-issues-for-a-repository
     This is only used for "creator" and "mentioned" right now.
 
     Any logged in user can see details for any other logged in user. We can
     extend this to non-logged in users in the future if we want.
-    '''
+    """
     if not g.user:
         abort(401)
     # copy the params so we can add to the dict.
@@ -108,7 +109,7 @@ def get_user_activity_issues(username, parameter):
 @api.route('/issues/category/<issue_category>')
 @mockable_response
 def get_issue_category(issue_category):
-    '''Return all issues for a specific category.
+    """Return all issues for a specific category.
 
     issue_category can be of N types:
     * needstriage
@@ -117,7 +118,7 @@ def get_issue_category(issue_category):
     * needscontact
     * needsdiagnosis
     * sitewait
-    '''
+    """
     category_list = ['contactready', 'needscontact',
                      'needsdiagnosis', 'needstriage', 'sitewait']
     issues_path = 'repos/{0}'.format(ISSUES_PATH)
@@ -151,7 +152,7 @@ def get_issue_category(issue_category):
 @limiter.limit('30/minute',
                key_func=lambda: session.get('username', 'proxy-user'))
 def get_search_results(query_string=None, params=None):
-    '''XHR endpoint to get results from GitHub's Search API.
+    """XHR endpoint to get results from GitHub's Search API.
 
     We're specifically searching "issues" here, which seems to make the most
     sense. Note that the rate limit is different for Search: 30 requests per
@@ -162,7 +163,7 @@ def get_search_results(query_string=None, params=None):
 
     This method can take a query_string argument, to be called from other
     endpoints, or the query_string can be passed in via the Request object.
-    '''
+    """
     params = params or request.args.copy()
     query_string = query_string or params.get('q')
     # Fail early if no appropriate query_string
@@ -181,12 +182,12 @@ def get_search_results(query_string=None, params=None):
 
 @api.route('/issues/search/<issue_category>')
 def get_category_from_search(issue_category):
-    '''XHR endpoint to get issues categories from GitHub's Search API.
+    """XHR endpoint to get issues categories from GitHub's Search API.
 
     It's also possible to use /issues/category/<issue_category> for a category
     that maps to a label. This uses the Issues API, which is less costly than
     the Search API.
-    '''
+    """
     category_list = ['contactready', 'needscontact',
                      'needsdiagnosis', 'needstriage', 'sitewait']
     params = request.args.copy()
@@ -212,10 +213,10 @@ def get_category_from_search(issue_category):
 @api.route('/issues/<int:number>/comments', methods=['GET', 'POST'])
 @mockable_response
 def proxy_comments(number):
-    '''XHR endpoint to get issues comments from GitHub.
+    """XHR endpoint to get issues comments from GitHub.
 
     Either as an authed user, or as one of our proxy bots.
-    '''
+    """
     params = request.args.copy()
     if request.method == 'POST' and g.user:
         path = 'repos/{0}/{1}/comments'.format(ISSUES_PATH, number)
@@ -228,12 +229,12 @@ def proxy_comments(number):
 
 @api.route('/issues/<int:number>/labels', methods=['POST'])
 def modify_labels(number):
-    '''XHR endpoint to modify issue labels.
+    """XHR endpoint to modify issue labels.
 
     Sending in an empty array removes them all as well.
     This method is always proxied because non-repo collabs
     can't normally edit labels for an issue.
-    '''
+    """
     if g.user:
         path = 'repos/{0}/{1}/labels'.format(ISSUES_PATH, number)
         labels = proxy_request('put', path, data=request.data)
@@ -246,8 +247,7 @@ def modify_labels(number):
 @api.route('/issues/labels')
 @mockable_response
 def get_repo_labels():
-    '''XHR endpoint to get all possible labels in a repo.
-    '''
+    """XHR endpoint to get all possible labels in a repo."""
     params = request.args.copy()
     path = 'repos/{0}/labels'.format(REPO_PATH)
     return api_request('get', path, params=params)
