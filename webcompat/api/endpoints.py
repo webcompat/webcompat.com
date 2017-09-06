@@ -170,36 +170,6 @@ def get_search_results(query_string=None, params=None):
     return api_request('get', path, params=params)
 
 
-@api.route('/issues/search/<issue_category>')
-def get_category_from_search(issue_category):
-    """XHR endpoint to get issues categories from GitHub's Search API.
-
-    It's also possible to use /issues/category/<issue_category> for a category
-    that maps to a label. This uses the Issues API, which is less costly than
-    the Search API.
-    """
-    category_list = ['contactready', 'needscontact',
-                     'needsdiagnosis', 'needstriage', 'sitewait']
-    params = request.args.copy()
-    query_string = ''
-
-    if issue_category in category_list:
-        # add "status-" before the issue_category to match
-        # the naming scheme of the repo labels.
-        query_string += 'label:{0}'.format('status-' + issue_category)
-        return get_search_results(query_string, params)
-    elif issue_category == 'closed':
-        query_string += ' state:closed '
-        return get_search_results(query_string, params)
-    # We abort with 301 here because the new endpoint has
-    # been replaced with needstriage.
-    elif issue_category == 'new':
-        abort(301)
-    else:
-        # no known keyword we send not found
-        abort(404)
-
-
 @api.route('/issues/<int:number>/comments', methods=['GET', 'POST'])
 @mockable_response
 def proxy_comments(number):

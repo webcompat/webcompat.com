@@ -56,12 +56,6 @@ class TestAPIURLs(unittest.TestCase):
         """Tear down the tests."""
         pass
 
-    def test_api_issues_search(self):
-        '''API issue search with bad keywords returns JSON 404.'''
-        rv = self.app.get('/api/issues/search/foobar', environ_base=headers)
-        self.assertEqual(rv.status_code, 404)
-        self.assertEqual(rv.content_type, 'application/json')
-
     def test_api_issues_out_of_range(self):
         """API issue for a non existent number returns JSON 404."""
         with patch('webcompat.helpers.proxy_request') as github_data:
