@@ -109,25 +109,14 @@ def get_user_activity_issues(username, parameter):
 @api.route('/issues/category/<issue_category>')
 @mockable_response
 def get_issue_category(issue_category):
-    """Return all issues for a specific category.
-
-    issue_category can be of N types:
-    * needstriage
-    * closed
-    * contactready
-    * needscontact
-    * needsdiagnosis
-    * sitewait
-    """
-    category_list = ['contactready', 'needscontact',
-                     'needsdiagnosis', 'needstriage', 'sitewait']
+    """Return all issues for a specific category."""
+    category_list = app.config['OPEN_STATUSES']
     issues_path = 'repos/{0}'.format(ISSUES_PATH)
     params = request.args.copy()
 
     if issue_category in category_list:
-        # add "status-" before the filter param to match the naming scheme
-        # of the repo labels.
-        params.add('labels', 'status-' + issue_category)
+        STATUSES = app.config['STATUSES']
+        params.add('milestone', STATUSES[issue_category]['id'])
         return api_request('get', issues_path, params=params)
     elif issue_category == 'closed':
         params['state'] = 'closed'
