@@ -128,9 +128,6 @@ def get_issue_category(issue_category):
         # add "status-" before the filter param to match the naming scheme
         # of the repo labels.
         params.add('labels', 'status-' + issue_category)
-        # Turns out the GitHub API considers &labels=x&labels=y an OR query
-        # &labels=x,y is an AND query. Join the labels with a comma
-        params['labels'] = ','.join(params.getlist('labels'))
         return api_request('get', issues_path, params=params)
     elif issue_category == 'closed':
         params['state'] = 'closed'
