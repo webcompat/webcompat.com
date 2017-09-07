@@ -17,6 +17,24 @@ issues.MilestonesModel = Backbone.Model.extend({
 
     this.set("milestones", milestones);
   },
+  updateMilestones: function(data) {
+    $.ajax({
+      contentType: "application/json",
+      data: JSON.stringify(data),
+      type: "PATCH",
+      url: "/api/issues/" + $("main").data("issueNumber") + "/edit",
+      success: _.bind(function() {
+        var milestone = _.find(this.get("milestones"), function(status) {
+          return status.id === data.id;
+        });
+        this.set("milestone", milestone);
+      }, this),
+      error: function() {
+        var msg = "There was an error editing this issues's status.";
+        wcEvents.trigger("flash:error", { message: msg, timeout: 4000 });
+      }
+    });
+  },
   toArray: function() {
     return _.pluck(this.get("milestones"), "name");
   }
@@ -83,14 +101,19 @@ issues.MilestoneEditorView = issues.CategoryEditorView.extend({
   },
   closeEditor: function(e) {
     if (!e || (e && (e.keyCode === 27 || !e.keyCode))) {
-      // var checked = $("input[type=checkbox]:checked");
-      // var milestonesArray = _.pluck(checked, "name");
-      this.issueView.editorButton.removeClass("is-active");
-      // TODO: make this work
-      // this.issueView.model.updateMilestones(milestonesArray);
+      var checked = $("input[type=checkbox]:checked").prop("name");
+      var statusObject = _.find(this.model.get("milestones"), function(status) {
+        return status.name === checked;
+      });
+
+      this.model.updateMilestones({
+        milestone: statusObject.id,
+        state: statusObject.state
+      });
       // detach() (vs remove()) here because we don't want to lose events if the
       // user reopens the editor.
       this.$el.children().detach();
+      this.issueView.editorButton.removeClass("is-active");
     }
   }
 });
