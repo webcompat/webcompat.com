@@ -60,14 +60,8 @@ issues.MilestonesView = issues.CategoryView.extend({
     this.$el
       .find(".js-CategoryEditorLauncher")
       .after(this.milestoneEditor.render().el);
-    var toBeChecked = _.intersection(
-      this.getIssueMilestones(),
-      // TODO... fix this?
-      issues.allLabels.toArray()
-    );
-    _.each(toBeChecked, function(labelName) {
-      $('[name="' + labelName + '"]').prop("checked", true);
-    });
+
+    $('[name="' + this.model.get("milestone") + '"]').prop("checked", true);
   }
 });
 
