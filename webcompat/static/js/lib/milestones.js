@@ -4,6 +4,24 @@
 
 var issues = issues || {}; // eslint-disable-line no-use-before-define
 
+issues.MilestonesModel = Backbone.Model.extend({
+  initialize: function(options) {
+    // transform the format from the server into something that our templates
+    // are expecting.
+    var milestones = [];
+    _.forOwn(options.statuses, function(value, key) {
+      var milestone = {};
+      milestone["name"] = key;
+      milestones.push(_.merge(milestone, value));
+    });
+
+    this.set("milestones", milestones);
+  },
+  toArray: function() {
+    return _.pluck(this.get("milestones"), "name");
+  }
+});
+
 issues.MilestonesView = issues.CategoryView.extend({
   el: $(".js-Issue-milestones"),
   keyboardEvents: {
@@ -26,37 +44,24 @@ issues.MilestonesView = issues.CategoryView.extend({
     this.milestoneEditor.closeEditor();
   },
   fetchItems: function() {
-    var milestonesModel = [
-      { name: "needsdiagnosis", id: 2, state: "open", order: 1 },
-      { name: "wontfix", id: 3, state: "closed", order: 2 }
-    ];
     this.editorButton = $(".js-CategoryEditorLauncher");
     this.milestoneEditor = new issues.MilestoneEditorView({
-      model: milestonesModel,
+      model: new issues.MilestonesModel({
+        statuses: $("main").data("statuses")
+      }),
       issueView: this
     });
     if (this._isLoggedIn) {
-      //this.issueLabels = this.getIssueMilestones();
       this.editorButton.show();
     }
-  },
-  getIssueMilestones: function() {
-    // TODO: have this do the right thing...
-    return _.pluck(this.model.get("labels"), "name");
   },
   editItems: function() {
     this.editorButton.addClass("is-active");
     this.$el
       .find(".js-CategoryEditorLauncher")
       .after(this.milestoneEditor.render().el);
-    var toBeChecked = _.intersection(
-      this.getIssueMilestones(),
-      // TODO... fix this?
-      issues.allLabels.toArray()
-    );
-    _.each(toBeChecked, function(labelName) {
-      $('[name="' + labelName + '"]').prop("checked", true);
-    });
+
+    $('[name="' + this.model.get("milestone") + '"]').prop("checked", true);
   }
 });
 
@@ -67,8 +72,7 @@ issues.MilestoneEditorView = issues.CategoryEditorView.extend({
   template: wcTmpl["web_modules/milestone-editor.jst"],
   updateView: function() {}, // no-op
   render: function() {
-    // TODO, create a milestones model that parses the data we get from the server.
-    this.$el.html(this.template({ milestones: this.model }));
+    this.$el.html(this.template(this.model.toJSON()));
     this.resizeEditorHeight();
     _.defer(
       _.bind(function() {

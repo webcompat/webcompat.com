@@ -1,5 +1,3 @@
-<!-- note: it might not make sense to get this data from the model... i need currently selected milestone, which i already have -->
-
 <script type="text/template">
   <header class="wc-Issue-categoryEditor">
     <div class="wc-Issue-categoryEditor-title">
@@ -8,13 +6,13 @@
     <% if ($("body").data("username")) { %>
     <span class="wc-Issue-categoryEditor-button js-Issue-categoryEditor">
       <button class="wc-CategoryEditorLauncher r-ResetButton wc-Icon wc-Icon--gear js-CategoryEditorLauncher js-MilestoneEditorLauncher" aria-hidden="true">
-        <span class="wc-Accessibility">Edit Milestones</span></button>
+        <span class="wc-Accessibility">Edit Statuses</span></button>
     </span>
     <% } %>
   </header>
    <div class="js-Category-list">
     <span class="wc-Label wc-Label--badge js-Label" style="background-color:orangered">
-      <%= milestone %> 
+      <%= milestone %>
     </span>
   </span>
 </script>
