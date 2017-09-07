@@ -38,3 +38,7 @@ STATUSES = {
     u'wontfix': {'id': 0, 'order': 6, 'state': 'closed', 'color': ''},
     u'worksforme': {'id': 0, 'order': 7, 'state': 'closed', 'color': ''}
     }
+
+# We don't need to compute for every requests.
+OPEN_STATUSES = [status for status in STATUSES
+                 if STATUSES[status]['state'] == 'open']
