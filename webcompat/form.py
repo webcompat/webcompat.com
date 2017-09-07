@@ -185,17 +185,18 @@ def build_formdata(form_object):
     as labels like mobile, desktop, tablet.
 
     Here's a description of what the Issues API expects to create an issue
-    (as of March 25, 2014):
 
-    -------------------------------------------------------------------
-    | title | string             | The title of the issue. Required.    |
-    | body  | string             | The contents of the issue.           |
-    | labels| array of strings   | Labels to associate with this issue. |
-    -------------------------------------------------------------------
+    --------------------------------------------------------------------------
+    | title    | string            | The title of the issue. Required.       |
+    | body     | string            | The contents of the issue.              |
+    | labels   | array of strings  | Labels to associate with this issue.    |
+    | milestone| integer           | Milestone to associate with this issue. |
+    --------------------------------------------------------------------------
 
     NOTE: Only users with push access can set labels for new issues.
     Labels are silently dropped otherwise.
-    NOTE: intentionally leaving out `milestone` and `assignee`.
+    NOTE: intentionally leaving out `assignee`.
+    NOTE: Add milestone "needstriage" when create new issue
     """
     # Do domain extraction for adding to the summary/title
     url = form_object.get('url')
@@ -242,7 +243,8 @@ def build_formdata(form_object):
             image_url=form_object.get('image_upload').get('url'))
     # Append "from webcompat.com" message to bottom (for GitHub issue viewers)
     body += u'\n\n{0}'.format(GITHUB_HELP)
-    rv = {'title': summary, 'body': body}
+    rv = {'title': summary, 'body': body,
+          'milestone': app.config['STATUSES']['needstriage']['id']}
     extra_label = form_object.get('label', None)
     if extra_label and extra_label in app.config['EXTRA_LABELS']:
         rv.update({'labels': [extra_label]})
