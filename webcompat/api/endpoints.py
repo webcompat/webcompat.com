@@ -50,20 +50,24 @@ def proxy_issue(number):
 def edit_issue(number):
     """XHR endpoint to push back edits to GitHub for a single issue.
 
-    Note: this is always proxied to allow any logged in user to be able to
-    edit issues.
+    - It only allows change of state and change of milestones.
+    - It is always proxied to allow any logged in user
+      to be able to edit issues.
+      Format: {'milestone': 2, 'state': 'open'}
     """
     path = 'repos/{0}/{1}'.format(ISSUES_PATH, number)
-    # we can only change the state of the issue: closed or open
-    states_list = ['closed', 'open']
     patch_data = json.loads(request.data)
-    # check to see if we're trying to change state from/to closed or open
-    # and make sure that's the only thing we're trying to change
-    if patch_data.get('state') in states_list and len(patch_data) == 1:
+    # Create a list of associated milestones id with their mandatory state.
+    STATUSES = app.config['STATUSES']
+    valid_statuses = [(STATUSES[status]['id'], STATUSES[status]['state'])
+                      for status in STATUSES]
+    data_check = (patch_data['milestone'], patch_data['state'])
+    # The PATCH data can only be of length: 2
+    if data_check in valid_statuses and len(patch_data) == 2:
         edit = proxy_request('patch', path, data=request.data)
         return (edit.content, edit.status_code, {'content-type': JSON_MIME})
-    else:
-        abort(403)
+    # Default will be 403 for this route
+    abort(403)
 
 
 @api.route('/issues')
