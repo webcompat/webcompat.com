@@ -1,6 +1,6 @@
 [
   {
-    "_fixture": "true",
+    "_fixture": true,
     "url": "https://api.github.com/repos/webcompat/webcompat-tests/issues/408",
     "repository_url": "https://api.github.com/repos/webcompat/webcompat-tests",
     "labels_url": "https://api.github.com/repos/webcompat/webcompat-tests/issues/408/labels{/name}",
@@ -42,12 +42,46 @@
     "assignees": [
 
     ],
-    "milestone": null,
+    "milestone": {
+    "url": "https://api.github.com/repos/webcompat/webcompat-tests/milestones/1",
+    "html_url": "https://github.com/webcompat/webcompat-tests/milestone/1",
+    "labels_url": "https://api.github.com/repos/webcompat/webcompat-tests/milestones/1/labels",
+    "id": 2744172,
+    "number": 1,
+    "title": "needstriage",
+    "description": "Issues which needs to be triaged",
+    "creator": {
+      "login": "karlcow",
+      "id": 505230,
+      "avatar_url": "https://avatars0.githubusercontent.com/u/505230?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/karlcow",
+      "html_url": "https://github.com/karlcow",
+      "followers_url": "https://api.github.com/users/karlcow/followers",
+      "following_url": "https://api.github.com/users/karlcow/following{/other_user}",
+      "gists_url": "https://api.github.com/users/karlcow/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/karlcow/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/karlcow/subscriptions",
+      "organizations_url": "https://api.github.com/users/karlcow/orgs",
+      "repos_url": "https://api.github.com/users/karlcow/repos",
+      "events_url": "https://api.github.com/users/karlcow/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/karlcow/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "open_issues": 114,
+    "closed_issues": 0,
+    "state": "open",
+    "created_at": "2017-09-05T03:39:06Z",
+    "updated_at": "2017-09-07T03:48:10Z",
+    "due_on": null,
+    "closed_at": null
+  },
     "comments": 0,
     "created_at": "2016-06-28T19:34:29Z",
     "updated_at": "2016-06-30T20:20:27Z",
     "closed_at": null,
-    "body": "<!-- @browser: Firefox 47.0 -->\n<!-- @ua_header: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:47.0) Gecko/20100101 Firefox/47.0 -->\n\n**URL**: www.roadrunner.com\n**Browser / Version**: Firefox 47.0\n**Operating System**: Ubuntu\n**Problem type**: Desktop site instead of mobile site\n\n**Steps to Reproduce**\n1) Navigate to: www.roadrunner.com\r\n2) …\r\nwww.roadrunner.com\r\n(browser-chrome)\r\n(browser-firefox)\r\nExpected Behavior:\r\n\r\nActual Behavior:\r\n\n\n\n\n_From [webcompat.com](https://webcompat.com/) with ❤️_"
+    "body": "<!-- @browser: Firefox 47.0 -->\n<!-- @ua_header: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:47.0) Gecko/20100101 Firefox/47.0 -->\n\n**URL**: www.roadrunner.com\n**Browser / Version**: Firefox 47.0\n**Operating System**: Ubuntu\n**Problem type**: Desktop site instead of mobile site\n\n**Steps to Reproduce**\n1) Navigate to: www.roadrunner.com\r\n2) â€¦\r\nwww.roadrunner.com\r\n(browser-chrome)\r\n(browser-firefox)\r\nExpected Behavior:\r\n\r\nActual Behavior:\r\n\n\n\n\n_From [webcompat.com](https://webcompat.com/) with â¤ï¸_"
   },
   {
     "url": "https://api.github.com/repos/webcompat/webcompat-tests/issues/407",
@@ -91,12 +125,46 @@
     "assignees": [
 
     ],
-    "milestone": null,
+    "milestone": {
+    "url": "https://api.github.com/repos/webcompat/webcompat-tests/milestones/1",
+    "html_url": "https://github.com/webcompat/webcompat-tests/milestone/1",
+    "labels_url": "https://api.github.com/repos/webcompat/webcompat-tests/milestones/1/labels",
+    "id": 2744172,
+    "number": 1,
+    "title": "needstriage",
+    "description": "Issues which needs to be triaged",
+    "creator": {
+      "login": "karlcow",
+      "id": 505230,
+      "avatar_url": "https://avatars0.githubusercontent.com/u/505230?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/karlcow",
+      "html_url": "https://github.com/karlcow",
+      "followers_url": "https://api.github.com/users/karlcow/followers",
+      "following_url": "https://api.github.com/users/karlcow/following{/other_user}",
+      "gists_url": "https://api.github.com/users/karlcow/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/karlcow/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/karlcow/subscriptions",
+      "organizations_url": "https://api.github.com/users/karlcow/orgs",
+      "repos_url": "https://api.github.com/users/karlcow/repos",
+      "events_url": "https://api.github.com/users/karlcow/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/karlcow/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "open_issues": 114,
+    "closed_issues": 0,
+    "state": "open",
+    "created_at": "2017-09-05T03:39:06Z",
+    "updated_at": "2017-09-07T03:48:10Z",
+    "due_on": null,
+    "closed_at": null
+  },
     "comments": 0,
     "created_at": "2016-06-27T15:47:32Z",
     "updated_at": "2016-06-27T15:48:54Z",
     "closed_at": null,
-    "body": "<!-- @browser: Firefox 47.0 -->\n<!-- @ua_header: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:47.0) Gecko/20100101 Firefox/47.0 -->\n\n**URL**: www.dragonballz.com\n**Browser / Version**: Firefox 47.0\n**Operating System**: Ubuntu\n**Problem type**: Video doesn't play\n\n**Steps to Reproduce**\n1) Navigate to: www.dragonballz.com\r\n2) …\r\nwww.dragonballz.com\r\nExpected Behavior:\r\n\r\nActual Behavior:\r\n\n\n\n\n_From [webcompat.com](https://webcompat.com/) with ❤️_"
+    "body": "<!-- @browser: Firefox 47.0 -->\n<!-- @ua_header: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:47.0) Gecko/20100101 Firefox/47.0 -->\n\n**URL**: www.dragonballz.com\n**Browser / Version**: Firefox 47.0\n**Operating System**: Ubuntu\n**Problem type**: Video doesn't play\n\n**Steps to Reproduce**\n1) Navigate to: www.dragonballz.com\r\n2) â€¦\r\nwww.dragonballz.com\r\nExpected Behavior:\r\n\r\nActual Behavior:\r\n\n\n\n\n_From [webcompat.com](https://webcompat.com/) with â¤ï¸_"
   },
   {
     "url": "https://api.github.com/repos/webcompat/webcompat-tests/issues/406",
@@ -140,12 +208,46 @@
     "assignees": [
 
     ],
-    "milestone": null,
+    "milestone": {
+    "url": "https://api.github.com/repos/webcompat/webcompat-tests/milestones/1",
+    "html_url": "https://github.com/webcompat/webcompat-tests/milestone/1",
+    "labels_url": "https://api.github.com/repos/webcompat/webcompat-tests/milestones/1/labels",
+    "id": 2744172,
+    "number": 1,
+    "title": "needstriage",
+    "description": "Issues which needs to be triaged",
+    "creator": {
+      "login": "karlcow",
+      "id": 505230,
+      "avatar_url": "https://avatars0.githubusercontent.com/u/505230?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/karlcow",
+      "html_url": "https://github.com/karlcow",
+      "followers_url": "https://api.github.com/users/karlcow/followers",
+      "following_url": "https://api.github.com/users/karlcow/following{/other_user}",
+      "gists_url": "https://api.github.com/users/karlcow/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/karlcow/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/karlcow/subscriptions",
+      "organizations_url": "https://api.github.com/users/karlcow/orgs",
+      "repos_url": "https://api.github.com/users/karlcow/repos",
+      "events_url": "https://api.github.com/users/karlcow/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/karlcow/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "open_issues": 114,
+    "closed_issues": 0,
+    "state": "open",
+    "created_at": "2017-09-05T03:39:06Z",
+    "updated_at": "2017-09-07T03:48:10Z",
+    "due_on": null,
+    "closed_at": null
+  },
     "comments": 0,
     "created_at": "2016-06-10T01:23:33Z",
     "updated_at": "2016-06-30T20:20:58Z",
     "closed_at": null,
-    "body": "URL: browserstacktesting.com\r\nBrowser / Version: Firefox 46.0\r\nOperating System: Ubuntu\r\nProblem type: Mobile site is not usable\r\n\r\nFunctional Test for auth search, \"Search Works\"\r\n\r\nSteps to Reproduce\r\n1) Navigate to: browserstacktesting.com\r\n2) …\r\n\r\nExpected Behavior:\r\n\r\nActual Behavior:\r\n\r\nFrom webcompat.com with ❤️"
+    "body": "URL: browserstacktesting.com\r\nBrowser / Version: Firefox 46.0\r\nOperating System: Ubuntu\r\nProblem type: Mobile site is not usable\r\n\r\nFunctional Test for auth search, \"Search Works\"\r\n\r\nSteps to Reproduce\r\n1) Navigate to: browserstacktesting.com\r\n2) â€¦\r\n\r\nExpected Behavior:\r\n\r\nActual Behavior:\r\n\r\nFrom webcompat.com with â¤ï¸"
   },
   {
     "url": "https://api.github.com/repos/webcompat/webcompat-tests/issues/405",
@@ -189,12 +291,46 @@
     "assignees": [
 
     ],
-    "milestone": null,
+    "milestone": {
+    "url": "https://api.github.com/repos/webcompat/webcompat-tests/milestones/1",
+    "html_url": "https://github.com/webcompat/webcompat-tests/milestone/1",
+    "labels_url": "https://api.github.com/repos/webcompat/webcompat-tests/milestones/1/labels",
+    "id": 2744172,
+    "number": 1,
+    "title": "needstriage",
+    "description": "Issues which needs to be triaged",
+    "creator": {
+      "login": "karlcow",
+      "id": 505230,
+      "avatar_url": "https://avatars0.githubusercontent.com/u/505230?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/karlcow",
+      "html_url": "https://github.com/karlcow",
+      "followers_url": "https://api.github.com/users/karlcow/followers",
+      "following_url": "https://api.github.com/users/karlcow/following{/other_user}",
+      "gists_url": "https://api.github.com/users/karlcow/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/karlcow/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/karlcow/subscriptions",
+      "organizations_url": "https://api.github.com/users/karlcow/orgs",
+      "repos_url": "https://api.github.com/users/karlcow/repos",
+      "events_url": "https://api.github.com/users/karlcow/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/karlcow/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "open_issues": 114,
+    "closed_issues": 0,
+    "state": "open",
+    "created_at": "2017-09-05T03:39:06Z",
+    "updated_at": "2017-09-07T03:48:10Z",
+    "due_on": null,
+    "closed_at": null
+  },
     "comments": 0,
     "created_at": "2016-06-08T15:05:33Z",
     "updated_at": "2016-06-11T12:30:04Z",
     "closed_at": null,
-    "body": "<!-- @browser: Firefox 46.0 -->\n<!-- @ua_header: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:46.0) Gecko/20100101 Firefox/46.0 -->\n\n**URL**: apple.com\n**Browser / Version**: Firefox 46.0\n**Operating System**: Ubuntu\n**Problem type**: Mobile site is not usable\n\n**Steps to Reproduce**\n1) Navigate to: apple.com\r\n2) …timtom.com\r\n\r\nExpected Behavior:\r\n\r\nActual Behavior:\r\n\n\n\n\n_From [webcompat.com](https://webcompat.com/) with ❤️_"
+    "body": "<!-- @browser: Firefox 46.0 -->\n<!-- @ua_header: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:46.0) Gecko/20100101 Firefox/46.0 -->\n\n**URL**: apple.com\n**Browser / Version**: Firefox 46.0\n**Operating System**: Ubuntu\n**Problem type**: Mobile site is not usable\n\n**Steps to Reproduce**\n1) Navigate to: apple.com\r\n2) â€¦timtom.com\r\n\r\nExpected Behavior:\r\n\r\nActual Behavior:\r\n\n\n\n\n_From [webcompat.com](https://webcompat.com/) with â¤ï¸_"
   },
   {
     "url": "https://api.github.com/repos/webcompat/webcompat-tests/issues/404",
@@ -238,7 +374,41 @@
     "assignees": [
 
     ],
-    "milestone": null,
+    "milestone": {
+    "url": "https://api.github.com/repos/webcompat/webcompat-tests/milestones/1",
+    "html_url": "https://github.com/webcompat/webcompat-tests/milestone/1",
+    "labels_url": "https://api.github.com/repos/webcompat/webcompat-tests/milestones/1/labels",
+    "id": 2744172,
+    "number": 1,
+    "title": "needstriage",
+    "description": "Issues which needs to be triaged",
+    "creator": {
+      "login": "karlcow",
+      "id": 505230,
+      "avatar_url": "https://avatars0.githubusercontent.com/u/505230?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/karlcow",
+      "html_url": "https://github.com/karlcow",
+      "followers_url": "https://api.github.com/users/karlcow/followers",
+      "following_url": "https://api.github.com/users/karlcow/following{/other_user}",
+      "gists_url": "https://api.github.com/users/karlcow/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/karlcow/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/karlcow/subscriptions",
+      "organizations_url": "https://api.github.com/users/karlcow/orgs",
+      "repos_url": "https://api.github.com/users/karlcow/repos",
+      "events_url": "https://api.github.com/users/karlcow/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/karlcow/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "open_issues": 114,
+    "closed_issues": 0,
+    "state": "open",
+    "created_at": "2017-09-05T03:39:06Z",
+    "updated_at": "2017-09-07T03:48:10Z",
+    "due_on": null,
+    "closed_at": null
+  },
     "comments": 0,
     "created_at": "2016-06-06T04:17:28Z",
     "updated_at": "2016-06-06T04:17:28Z",
@@ -287,12 +457,46 @@
     "assignees": [
 
     ],
-    "milestone": null,
+    "milestone": {
+    "url": "https://api.github.com/repos/webcompat/webcompat-tests/milestones/1",
+    "html_url": "https://github.com/webcompat/webcompat-tests/milestone/1",
+    "labels_url": "https://api.github.com/repos/webcompat/webcompat-tests/milestones/1/labels",
+    "id": 2744172,
+    "number": 1,
+    "title": "needstriage",
+    "description": "Issues which needs to be triaged",
+    "creator": {
+      "login": "karlcow",
+      "id": 505230,
+      "avatar_url": "https://avatars0.githubusercontent.com/u/505230?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/karlcow",
+      "html_url": "https://github.com/karlcow",
+      "followers_url": "https://api.github.com/users/karlcow/followers",
+      "following_url": "https://api.github.com/users/karlcow/following{/other_user}",
+      "gists_url": "https://api.github.com/users/karlcow/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/karlcow/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/karlcow/subscriptions",
+      "organizations_url": "https://api.github.com/users/karlcow/orgs",
+      "repos_url": "https://api.github.com/users/karlcow/repos",
+      "events_url": "https://api.github.com/users/karlcow/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/karlcow/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "open_issues": 114,
+    "closed_issues": 0,
+    "state": "open",
+    "created_at": "2017-09-05T03:39:06Z",
+    "updated_at": "2017-09-07T03:48:10Z",
+    "due_on": null,
+    "closed_at": null
+  },
     "comments": 0,
     "created_at": "2016-06-05T19:36:00Z",
     "updated_at": "2016-06-30T20:20:14Z",
     "closed_at": null,
-    "body": "<!-- @browser: Firefox 46.0 -->\n<!-- @ua_header: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:46.0) Gecko/20100101 Firefox/46.0 -->\n\n**URL**: tomandjerry.com\n**Browser / Version**: Firefox 46.0\n**Operating System**: Ubuntu\n**Problem type**: Video doesn't play\n\n**Steps to Reproduce**\n1) Navigate to: tomandjerry.com\r\n2) …\r\n\r\nExpected Behavior:\r\n\r\nActual Behavior:\r\n\n\n\n\n_From [webcompat.com](https://webcompat.com/) with ❤️_"
+    "body": "<!-- @browser: Firefox 46.0 -->\n<!-- @ua_header: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:46.0) Gecko/20100101 Firefox/46.0 -->\n\n**URL**: tomandjerry.com\n**Browser / Version**: Firefox 46.0\n**Operating System**: Ubuntu\n**Problem type**: Video doesn't play\n\n**Steps to Reproduce**\n1) Navigate to: tomandjerry.com\r\n2) â€¦\r\n\r\nExpected Behavior:\r\n\r\nActual Behavior:\r\n\n\n\n\n_From [webcompat.com](https://webcompat.com/) with â¤ï¸_"
   },
   {
     "url": "https://api.github.com/repos/webcompat/webcompat-tests/issues/400",
@@ -351,12 +555,46 @@
     "assignees": [
 
     ],
-    "milestone": null,
+    "milestone": {
+    "url": "https://api.github.com/repos/webcompat/webcompat-tests/milestones/1",
+    "html_url": "https://github.com/webcompat/webcompat-tests/milestone/1",
+    "labels_url": "https://api.github.com/repos/webcompat/webcompat-tests/milestones/1/labels",
+    "id": 2744172,
+    "number": 1,
+    "title": "needstriage",
+    "description": "Issues which needs to be triaged",
+    "creator": {
+      "login": "karlcow",
+      "id": 505230,
+      "avatar_url": "https://avatars0.githubusercontent.com/u/505230?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/karlcow",
+      "html_url": "https://github.com/karlcow",
+      "followers_url": "https://api.github.com/users/karlcow/followers",
+      "following_url": "https://api.github.com/users/karlcow/following{/other_user}",
+      "gists_url": "https://api.github.com/users/karlcow/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/karlcow/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/karlcow/subscriptions",
+      "organizations_url": "https://api.github.com/users/karlcow/orgs",
+      "repos_url": "https://api.github.com/users/karlcow/repos",
+      "events_url": "https://api.github.com/users/karlcow/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/karlcow/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "open_issues": 114,
+    "closed_issues": 0,
+    "state": "open",
+    "created_at": "2017-09-05T03:39:06Z",
+    "updated_at": "2017-09-07T03:48:10Z",
+    "due_on": null,
+    "closed_at": null
+  },
     "comments": 1,
     "created_at": "2016-05-31T12:50:17Z",
     "updated_at": "2016-07-05T06:54:49Z",
     "closed_at": null,
-    "body": "<!-- @browser: Firefox 46.0 -->\n<!-- @ua_header: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:46.0) Gecko/20100101 Firefox/46.0 -->\n\n**URL**: http://www.example.com\n**Browser / Version**: Firefox 46.0\n**Operating System**: Windows 8.1\n**Problem type**: Something else - I'll add details below\n\n**Steps to Reproduce**\n1) Navigate to: http://www.example.com\r\n2) Test labels on webcompat.com\r\n\r\nExpected Behavior: foo\r\n\r\nActual Behavior: bar\r\n\n\n\n\n_From [webcompat.com](https://webcompat.com/) with ❤️_"
+    "body": "<!-- @browser: Firefox 46.0 -->\n<!-- @ua_header: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:46.0) Gecko/20100101 Firefox/46.0 -->\n\n**URL**: http://www.example.com\n**Browser / Version**: Firefox 46.0\n**Operating System**: Windows 8.1\n**Problem type**: Something else - I'll add details below\n\n**Steps to Reproduce**\n1) Navigate to: http://www.example.com\r\n2) Test labels on webcompat.com\r\n\r\nExpected Behavior: foo\r\n\r\nActual Behavior: bar\r\n\n\n\n\n_From [webcompat.com](https://webcompat.com/) with â¤ï¸_"
   },
   {
     "url": "https://api.github.com/repos/webcompat/webcompat-tests/issues/398",
@@ -420,12 +658,46 @@
     "assignees": [
 
     ],
-    "milestone": null,
+    "milestone": {
+    "url": "https://api.github.com/repos/webcompat/webcompat-tests/milestones/1",
+    "html_url": "https://github.com/webcompat/webcompat-tests/milestone/1",
+    "labels_url": "https://api.github.com/repos/webcompat/webcompat-tests/milestones/1/labels",
+    "id": 2744172,
+    "number": 1,
+    "title": "needstriage",
+    "description": "Issues which needs to be triaged",
+    "creator": {
+      "login": "karlcow",
+      "id": 505230,
+      "avatar_url": "https://avatars0.githubusercontent.com/u/505230?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/karlcow",
+      "html_url": "https://github.com/karlcow",
+      "followers_url": "https://api.github.com/users/karlcow/followers",
+      "following_url": "https://api.github.com/users/karlcow/following{/other_user}",
+      "gists_url": "https://api.github.com/users/karlcow/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/karlcow/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/karlcow/subscriptions",
+      "organizations_url": "https://api.github.com/users/karlcow/orgs",
+      "repos_url": "https://api.github.com/users/karlcow/repos",
+      "events_url": "https://api.github.com/users/karlcow/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/karlcow/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "open_issues": 114,
+    "closed_issues": 0,
+    "state": "open",
+    "created_at": "2017-09-05T03:39:06Z",
+    "updated_at": "2017-09-07T03:48:10Z",
+    "due_on": null,
+    "closed_at": null
+  },
     "comments": 112,
     "created_at": "2016-05-26T16:06:32Z",
     "updated_at": "2016-06-05T18:54:00Z",
     "closed_at": null,
-    "body": "<!-- @browser: Firefox 46.0 -->\n<!-- @ua_header: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:46.0) Gecko/20100101 Firefox/46.0 -->\n\n**URL**: youtube.com\n**Browser / Version**: Firefox 46.0\n**Operating System**: Ubuntu\n**Problem type**: Desktop site instead of mobile site\n\n**Steps to Reproduce**\n1) Navigate to: youtube.com\r\n2) …\r\n\r\nExpected Behavior:\r\n\r\nshould load the video\r\n\r\nActual Behavior:\r\n\r\nvideo formatting not proper\r\n\n\n\n\n_From [webcompat.com](https://webcompat.com/) with ❤️_"
+    "body": "<!-- @browser: Firefox 46.0 -->\n<!-- @ua_header: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:46.0) Gecko/20100101 Firefox/46.0 -->\n\n**URL**: youtube.com\n**Browser / Version**: Firefox 46.0\n**Operating System**: Ubuntu\n**Problem type**: Desktop site instead of mobile site\n\n**Steps to Reproduce**\n1) Navigate to: youtube.com\r\n2) â€¦\r\n\r\nExpected Behavior:\r\n\r\nshould load the video\r\n\r\nActual Behavior:\r\n\r\nvideo formatting not proper\r\n\n\n\n\n_From [webcompat.com](https://webcompat.com/) with â¤ï¸_"
   },
   {
     "url": "https://api.github.com/repos/webcompat/webcompat-tests/issues/393",
@@ -469,12 +741,46 @@
     "assignees": [
 
     ],
-    "milestone": null,
+    "milestone": {
+    "url": "https://api.github.com/repos/webcompat/webcompat-tests/milestones/1",
+    "html_url": "https://github.com/webcompat/webcompat-tests/milestone/1",
+    "labels_url": "https://api.github.com/repos/webcompat/webcompat-tests/milestones/1/labels",
+    "id": 2744172,
+    "number": 1,
+    "title": "needstriage",
+    "description": "Issues which needs to be triaged",
+    "creator": {
+      "login": "karlcow",
+      "id": 505230,
+      "avatar_url": "https://avatars0.githubusercontent.com/u/505230?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/karlcow",
+      "html_url": "https://github.com/karlcow",
+      "followers_url": "https://api.github.com/users/karlcow/followers",
+      "following_url": "https://api.github.com/users/karlcow/following{/other_user}",
+      "gists_url": "https://api.github.com/users/karlcow/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/karlcow/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/karlcow/subscriptions",
+      "organizations_url": "https://api.github.com/users/karlcow/orgs",
+      "repos_url": "https://api.github.com/users/karlcow/repos",
+      "events_url": "https://api.github.com/users/karlcow/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/karlcow/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "open_issues": 114,
+    "closed_issues": 0,
+    "state": "open",
+    "created_at": "2017-09-05T03:39:06Z",
+    "updated_at": "2017-09-07T03:48:10Z",
+    "due_on": null,
+    "closed_at": null
+  },
     "comments": 0,
     "created_at": "2016-05-18T22:56:24Z",
     "updated_at": "2016-06-30T20:19:18Z",
     "closed_at": null,
-    "body": "<!-- @browser: Firefox 46.0 -->\n<!-- @ua_header: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:46.0) Gecko/20100101 Firefox/46.0 -->\n\n**URL**: https://www.mozilla.org/en-US/firefox/46.0.1/firstrun/learnmore/\n**Browser / Version**: Firefox 46.0\n**Operating System**: Mac OS X 10.11\n**Problem type**: Video doesn't play\n\n**Steps to Reproduce**\n1) Navigate to: https://www.mozilla.org/en-US/firefox/46.0.1/firstrun/learnmore/\r\n2) …\r\n\r\nExpected Behavior:\r\n\r\nActual Behavior:\r\n\n\n\n\n![Screenshot of the site issue](http://staging.webcompat.com/uploads/2016/5/44b0a75d-0609-472e-b136-a1ef354cda4f.png)\n\n_From [webcompat.com](https://webcompat.com/) with ❤️_"
+    "body": "<!-- @browser: Firefox 46.0 -->\n<!-- @ua_header: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:46.0) Gecko/20100101 Firefox/46.0 -->\n\n**URL**: https://www.mozilla.org/en-US/firefox/46.0.1/firstrun/learnmore/\n**Browser / Version**: Firefox 46.0\n**Operating System**: Mac OS X 10.11\n**Problem type**: Video doesn't play\n\n**Steps to Reproduce**\n1) Navigate to: https://www.mozilla.org/en-US/firefox/46.0.1/firstrun/learnmore/\r\n2) â€¦\r\n\r\nExpected Behavior:\r\n\r\nActual Behavior:\r\n\n\n\n\n![Screenshot of the site issue](http://staging.webcompat.com/uploads/2016/5/44b0a75d-0609-472e-b136-a1ef354cda4f.png)\n\n_From [webcompat.com](https://webcompat.com/) with â¤ï¸_"
   },
   {
     "url": "https://api.github.com/repos/webcompat/webcompat-tests/issues/331",
@@ -518,11 +824,45 @@
     "assignees": [
 
     ],
-    "milestone": null,
+    "milestone": {
+    "url": "https://api.github.com/repos/webcompat/webcompat-tests/milestones/1",
+    "html_url": "https://github.com/webcompat/webcompat-tests/milestone/1",
+    "labels_url": "https://api.github.com/repos/webcompat/webcompat-tests/milestones/1/labels",
+    "id": 2744172,
+    "number": 1,
+    "title": "needstriage",
+    "description": "Issues which needs to be triaged",
+    "creator": {
+      "login": "karlcow",
+      "id": 505230,
+      "avatar_url": "https://avatars0.githubusercontent.com/u/505230?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/karlcow",
+      "html_url": "https://github.com/karlcow",
+      "followers_url": "https://api.github.com/users/karlcow/followers",
+      "following_url": "https://api.github.com/users/karlcow/following{/other_user}",
+      "gists_url": "https://api.github.com/users/karlcow/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/karlcow/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/karlcow/subscriptions",
+      "organizations_url": "https://api.github.com/users/karlcow/orgs",
+      "repos_url": "https://api.github.com/users/karlcow/repos",
+      "events_url": "https://api.github.com/users/karlcow/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/karlcow/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "open_issues": 114,
+    "closed_issues": 0,
+    "state": "open",
+    "created_at": "2017-09-05T03:39:06Z",
+    "updated_at": "2017-09-07T03:48:10Z",
+    "due_on": null,
+    "closed_at": null
+  },
     "comments": 0,
     "created_at": "2016-03-09T17:49:35Z",
     "updated_at": "2016-06-30T08:17:28Z",
     "closed_at": null,
-    "body": "<!-- @browser: Firefox Mobile 45.0 (Tablet) -->\n<!-- @ua_header: Mozilla/5.0 (Android 6.0; Tablet; rv:45.0) Gecko/45.0 Firefox/45.0 -->\n\n**URL**: www.tacos.com\n**Browser / Version**: Firefox Mobile 45.0 (Tablet)\n**Operating System**: Android 6.0\n**Problem type**: Mobile site is not usable\n\n**Steps to Reproduce**\n1) Navigate to: www.tacos.com\r\n2) …\r\n\r\nExpected Behavior: Get a taco\r\n\r\nActual Behavior: No tacos!\r\n\n"
+    "body": "<!-- @browser: Firefox Mobile 45.0 (Tablet) -->\n<!-- @ua_header: Mozilla/5.0 (Android 6.0; Tablet; rv:45.0) Gecko/45.0 Firefox/45.0 -->\n\n**URL**: www.tacos.com\n**Browser / Version**: Firefox Mobile 45.0 (Tablet)\n**Operating System**: Android 6.0\n**Problem type**: Mobile site is not usable\n\n**Steps to Reproduce**\n1) Navigate to: www.tacos.com\r\n2) â€¦\r\n\r\nExpected Behavior: Get a taco\r\n\r\nActual Behavior: No tacos!\r\n\n"
   }
 ]
