@@ -4,6 +4,23 @@
 2. New features: affect minor number
 3. API endpoint changes or dependency version updates: affect major number
 
+## 5.7.0 - 2017-09-08
+
+* Warns user and aborts tests if server isn't right or if it's not in test mode [Pull #1743](https://github.com/webcompat/webcompat.com/pull/1743)
+* Remove all Browserstack related content from website and repo [Pull #1741](https://github.com/webcompat/webcompat.com/pull/1741)
+* Remove templates.js [Pull #1739](https://github.com/webcompat/webcompat.com/pull/1739)
+* Un-skip Reporting (non-auth) tests [Pull #1728](https://github.com/webcompat/webcompat.com/pull/1728)
+* Removes the GitHub link from issues list [Pull #1735](https://github.com/webcompat/webcompat.com/pull/1735)
+* Adds test for activity page [Pull #1727](https://github.com/webcompat/webcompat.com/pull/1727)
+* Adds a data/ path logic to the code [Pull #1725](https://github.com/webcompat/webcompat.com/pull/1725)
+* Removes npm i -g grunt-cli from travis.yml [Pull #1724](https://github.com/webcompat/webcompat.com/pull/1724)
+* Removes references to autoExpand in issues.js and bugform.js [Pull #1723](https://github.com/webcompat/webcompat.com/pull/1723)
+* change urlparse to urlsplit [Pull #1722](https://github.com/webcompat/webcompat.com/pull/1722)
+* Removes unused issues.db from the code [Pull #1720](https://github.com/webcompat/webcompat.com/pull/1720)
+* Ensure change event fires when same image is selected [Pull #1718](https://github.com/webcompat/webcompat.com/pull/1718)
+* Give Report Anonymously button a gray border [Pull #1713](https://github.com/webcompat/webcompat.com/pull/1713)
+* Alexa webhook for priority label [Pull #1615](https://github.com/webcompat/webcompat.com/pull/1615)
+
 ## 5.6.0 - 2017-08-14
 
 * Remove form textarea boilerplate text. [Pull #1712](https://github.com/webcompat/webcompat.com/pull/1712)
