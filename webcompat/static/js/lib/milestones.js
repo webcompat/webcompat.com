@@ -67,7 +67,7 @@ issues.MilestonesView = issues.CategoryView.extend({
     this.milestoneEditor.closeEditor();
   },
   fetchItems: function() {
-    this.editorButton = $(".js-CategoryEditorLauncher");
+    this.editorButton = $(".js-MilestoneEditorLauncher");
     this.milestoneEditor = new issues.MilestoneEditorView({
       model: new issues.MilestonesModel({
         statuses: $("main").data("statuses")
@@ -81,7 +81,7 @@ issues.MilestonesView = issues.CategoryView.extend({
   editItems: function() {
     this.editorButton.addClass("is-active");
     this.$el
-      .find(".js-CategoryEditorLauncher")
+      .find(".js-MilestoneEditorLauncher")
       .after(this.milestoneEditor.render().el);
 
     $('[name="' + this.model.get("milestone") + '"]').prop("checked", true);
