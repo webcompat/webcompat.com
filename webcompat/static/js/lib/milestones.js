@@ -88,7 +88,30 @@ issues.MilestoneEditorView = issues.CategoryEditorView.extend({
     this.issueView = options.issueView;
   },
   template: wcTmpl["web_modules/milestone-editor.jst"],
-  updateView: function() {}, // no-op
+  updateView: function(evt) {
+    // We try to make sure only one milestone is set
+    // enumerate all checked milestones and uncheck the others.
+    var checked = $(
+      'input[type=checkbox][data-remotename^="milestone"]:checked'
+    );
+    _.each(checked, function(item) {
+      if (item !== evt.target) {
+        item.checked = false;
+      }
+    });
+    // we do the "real" save when you close the editor.
+    // this just updates the UI responsively
+    checked = $("input[type=checkbox]:checked");
+    // build up an array of objects that have
+    // .name and .color props that the templates expect
+    var modelUpdate = [];
+    _.each(checked, function(item) {
+      //item already has a .name property
+      item.color = $(item).data("color");
+      modelUpdate.push(item);
+    });
+    this.reRender({ labels: _.uniq(modelUpdate) });
+  },
   render: function() {
     this.$el.html(this.template(this.model.toJSON()));
     this.resizeEditorHeight();
