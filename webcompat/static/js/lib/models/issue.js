@@ -79,6 +79,7 @@ issues.Issue = Backbone.Model.extend({
     return "Needs Triage";
   },
   parse: function(response) {
+    var milestoneColors = $("main").data("statuses");
     var labelList = new issues.LabelList({ labels: response.labels });
     var labels = labelList.get("labels");
     this.set({
@@ -88,6 +89,7 @@ issues.Issue = Backbone.Model.extend({
       issueState: this.getState(response.state, labels),
       labels: labels,
       milestone: response.milestone ? response.milestone.title : "",
+      milestoneColors: milestoneColors,
       number: response.number,
       reporter: response.user.login,
       reporterAvatar: response.user.avatar_url,

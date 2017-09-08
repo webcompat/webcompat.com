@@ -12,7 +12,7 @@ issues.MilestonesView = issues.CategoryView.extend({
   template: wcTmpl["issue/issue-milestones.jst"],
   // this subTemplate will need to be kept in sync with
   // relavant parts in issue/issue-labels.jst
-  subTemplate: wcTmpl["issue/issue-labels-sub.jst"],
+  subTemplate: wcTmpl["issue/issue-milestones-sub.jst"],
   openMilestoneEditor: function(e) {
     // make sure we're not typing in the search input.
     if (e.target.nodeName === "TEXTAREA") {
@@ -63,18 +63,10 @@ issues.MilestoneEditorView = issues.CategoryEditorView.extend({
         item.checked = false;
       }
     });
+    checked = $("input[type=checkbox]:checked");
     // we do the "real" save when you close the editor.
     // this just updates the UI responsively
-    checked = $("input[type=checkbox]:checked");
-    // build up an array of objects that have
-    // .name and .color props that the templates expect
-    var modelUpdate = [];
-    _.each(checked, function(item) {
-      //item already has a .name property
-      item.color = $(item).data("color");
-      modelUpdate.push(item);
-    });
-    this.reRender({ labels: _.uniq(modelUpdate) });
+    this.reRender({ name: checked.prop("name"), color: checked.data("color") });
   },
   render: function() {
     this.$el.html(this.template(this.model.toJSON()));
