@@ -4,7 +4,11 @@
 2. New features: affect minor number
 3. API endpoint changes or dependency version updates: affect major number
 
-## 5.7.0 - 2017-09-08
+## 5.7.1 - 2017-09-08
+
+* Fix pep8 whitespace errors. No issue.
+
+## 5.7.0 - 2017-09-08 (not deployed)
 
 * Warns user and aborts tests if server isn't right or if it's not in test mode [Pull #1743](https://github.com/webcompat/webcompat.com/pull/1743)
 * Remove all Browserstack related content from website and repo [Pull #1741](https://github.com/webcompat/webcompat.com/pull/1741)
