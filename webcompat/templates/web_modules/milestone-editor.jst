@@ -10,10 +10,9 @@
     <% _.each(milestones, function(milestone) { %>
       <label class="wc-CategoryEditor-list-item" tabindex="0">
         <span class="wc-CategoryEditor-list-item-squareColor"
-              style="background-color:orangered">
+              style="background-color:<%= milestone.color %>">
           <input class="wc-CategoryEditor-list-item-checkbox"
                  type="checkbox" name="<%= milestone.name %>"
-                 data-color="orangered"
                  data-remotename="milestone-<%= milestone.name %>"
                  tabindex="-1">
         </span>
