@@ -204,8 +204,9 @@ if __name__ == "__main__":
     # Archive topsites.db and rename topsites-new.db to topsites.db
     session.close()
     archive_date = time.strftime("%Y%m%d", time.localtime())
-    os.rename(os.path.join(DB_PATH, 'topsites.db'),
-              os.path.join(DB_PATH,
-                           'topsites-archive-{}.db'.format(archive_date)))
+    if os.path.isfile(os.path.join(DB_PATH, 'topsites.db')):
+        os.rename(os.path.join(DB_PATH, 'topsites.db'),
+                  os.path.join(DB_PATH,
+                               'topsites-archive-{}.db'.format(archive_date)))
     os.rename(os.path.join(DB_PATH, 'topsites-new.db'),
               os.path.join(DB_PATH, 'topsites.db'))
