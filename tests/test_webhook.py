@@ -140,7 +140,8 @@ class TestWebhook(unittest.TestCase):
         browser_label_paren = helpers.extract_browser_label(self.issue_body3)
         self.assertEqual(browser_label_paren, 'browser-firefox-mobile-tablet')
         browser_label_unicode = helpers.extract_browser_label(self.issue_body4)
-        self.assertEqual(browser_label_paren, 'browser-firefox-mobile-tablet')
+        self.assertEqual(
+            browser_label_unicode, 'browser-firefox-mobile-tablet')
 
     def test_is_github_hook(self):
         """Validation tests for GitHub Webhooks."""
