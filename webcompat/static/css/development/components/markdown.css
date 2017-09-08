@@ -1,4 +1,6 @@
-/** @define Markdown */
+/* This Source Code Form is subject to the terms of the Mozilla Public
+* License, v. 2.0. If a copy of the MPL was not distributed with this
+* file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 :root {
   --Markdown-fontSize: 1rem;
@@ -13,159 +15,156 @@
   line-height: 1.7em;
 }
 
-  /* state */
-  .wc-Markdown .is-hidden {
-    display: none;
-  }
+/* state */
+.wc-Markdown .is-hidden {
+  display: none;
+}
 
-  /* all element */
-  .wc-Markdown * {
-    font-size: var(--Markdown-fontSize) !important;
-    word-wrap: break-word;
-    white-space: normal;
-    overflow: hidden;
-  }
+/* all element */
+.wc-Markdown * { /* stylelint-disable selector-no-universal */
+  font-size: var(--Markdown-fontSize) !important; /* stylelint-disable declaration-no-important */
+  overflow: hidden;
+}
 
-  /* link */
-  .wc-Markdown a {
-    color: var(--Markdown-color);
-    text-decoration: underline;
-    word-wrap: break-word;
-  }
+/* link */
+.wc-Markdown a { /* stylelint-disable  selector-no-type */
+  color: var(--Markdown-color);
+  text-decoration: underline;
+  word-wrap: break-word;
+}
 
-    /* event */
-    .wc-Markdown a:hover,
-    .wc-Markdown a:focus {
-      color: var(--Markdown-colorHover);
-    }
+/* event */
+.wc-Markdown a:hover,
+.wc-Markdown a:focus {
+  color: var(--Markdown-colorHover);
+}
 
-  .wc-Markdown strong {
-    font-weight: bold !important;
-  }
+.wc-Markdown strong {
+  font-weight: 700 !important;
+}
 
-  /* Markdown img */
-  .wc-Markdown img {
-    display: block;
-    max-width: 100%;
-    max-height: 100%;
-  }
+/* Markdown img */
+.wc-Markdown img {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+}
 
-  .wc-Markdown .wc-Comment-content-nsfw {
-    position: relative;
-  }
+.wc-Markdown .wc-Comment-content-nsfw {
+  position: relative;
+}
 
-  .wc-Markdown .wc-Comment-content-nsfw::after {
-    display: block;
-    content: "Click to show image";
-    cursor: pointer;
-    text-align: center;
-    color: var(--Markdown-colorNSFW);
-    background: var(--Markdown-bgColorNSFW);
-    width: 50%;
-    padding: 1em;
-    position: absolute;
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-  }
+.wc-Markdown .wc-Comment-content-nsfw::after {
+  display: block;
+  content: "Click to show image";
+  cursor: pointer;
+  text-align: center;
+  color: var(--Markdown-colorNSFW);
+  background: var(--Markdown-bgColorNSFW);
+  width: 50%;
+  padding: 1em;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
 
-  .wc-Markdown .wc-Comment-content-nsfw img {
-    filter: blur(50px);
-  }
+.wc-Markdown .wc-Comment-content-nsfw img {
+  filter: blur(50px);
+}
 
-    .wc-Markdown .wc-Comment-content-nsfw--display img {
-      filter: blur(0);
-    }
+.wc-Markdown .wc-Comment-content-nsfw--display img {
+  filter: blur(0);
+}
 
-    .wc-Markdown .wc-Comment-content-nsfw--display::after {
-      display: none;
-    }
+.wc-Markdown .wc-Comment-content-nsfw--display::after {
+  display: none;
+}
 
-  .wc-Markdown code {
-    font-family: monospace;
-    font-size: 90%;
-    white-space: normal;
-  }
+/* list style */
+.wc-Markdown ul,
+.wc-Markdown ol {
+  list-style: inside;
+}
 
-  .wc-Markdown p > code {
-    color: inherit;
-    background-color: #F5F5F5;
-    padding: 0.25em;
-  }
+.wc-Markdown li {
+  margin-bottom: 1em;
+}
 
-  /* list style */
-  .wc-Markdown ul,
-  .wc-Markdown ol {
-    list-style: inside;
-  }
+/* ol */
+.wc-Markdown ol {
+  list-style-type: decimal;
+}
 
-  .wc-Markdown li {
-    margin-bottom: 1em;
-  }
+/* pre / code */
+.wc-Markdown code { /* stylelint-disable no-duplicate-selectors */
+  font-family: monospace;
+  font-size: 90%;
+  white-space: normal;
+}
 
-  /* ol */
-  .wc-Markdown ol {
-    list-style-type: decimal;
-  }
+.wc-Markdown p > code {
+  color: inherit;
+  background-color: #f5f5f5;
+  padding: .25em;
+  white-space: normal;
+}
 
-  /* pre / code */
-  .wc-Markdown pre,
-  .wc-Markdown code {
-    padding: 1em;
-    margin: 0.5em 0px;
-    overflow: auto;
-    background: #F5F2F0;
-  }
+.wc-Markdown pre,
+.wc-Markdown code {
+  padding: 0 1em;
+  margin: 1.5em 0;
+  overflow: auto;
+  background: #f5f2f0;
+}
 
-  .wc-Markdown code {
-    padding: 0;
-  }
+.wc-Markdown pre > code {
+  white-space: pre !important;
+}
 
-    .wc-Markdown p > code {
-      white-space: normal;
-    }
+/* title */
+.wc-Markdown h1 {
+  font-size: 2em;
+  font-weight: 600;
+  margin: 1em 0;
+}
 
-  /* title */
-  .wc-Markdown h1 {
-    font-size: 2em;
-    font-weight: 600;
-    margin: 1em 0;
-  }
+.wc-Markdown h2 {
+  font-size: 1.5em;
+  font-weight: 600;
+  margin: 1em 0;
+}
 
-  .wc-Markdown h2 {
-    font-size: 1.5em;
-    font-weight: 600;
-    margin: 1em 0;
-  }
+.wc-Markdown h3 {
+  font-size: 1.2em;
+  font-weight: 600;
+  margin: 1em 0;
+}
 
-  .wc-Markdown h3 {
-    font-size: 1.2em;
-    font-weight: 600;
-    margin: 1em 0;
-  }
+/* paragraph */
+.wc-Markdown p {
+  overflow: hidden;
+  margin: 0;
+}
 
-  /* paragraph */
-  .wc-Markdown p {
-    overflow: hidden;
-    margin: 0;
-  }
-  .wc-Markdown p + p {
-    margin-top: 1em;
-  }
+.wc-Markdown p + p {
+  margin-top: 1em;
+}
 
-  .wc-Markdown p:not(.is-hidden) + p {
-    font-size: 1em;
-    margin-top: 2em;
-  }
+.wc-Markdown p:not(.is-hidden) + p {
+  font-size: 1em;
+  margin-top: 2em;
+}
 
-  /* blockquote */
-  .wc-Markdown blockquote {
-    border-left: 4px solid var(--base-colorDark);
-    padding: 0px 1em;
-    margin: 1em 0px;
-    color: #6a6a6a;
-  }
+/* blockquote */
+.wc-Markdown blockquote {
+  border-left: 4px solid var(--base-colorDark);
+  padding: 0 1em;
+  margin: 1em 0;
+  color: #6a6a6a;
+}
 
-  /* GitHub username */
-  .wc-Markdown .github__username {
-    font-weight: bold;
-  }
+/* GitHub username */
+.wc-Markdown .github__username {
+  font-weight: 700;
+}

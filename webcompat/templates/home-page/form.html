@@ -15,9 +15,25 @@
       <div class="r-Grid r-Grid--withGutter">
         <div class="r-Grid-cell r-minM--1of2">
           <div class="wc-Form-group js-Form-group">
+            <div class="wc-Form-information">
+              {{ form.url.label(class_='wc-Form-label') }}
+              {% if form.url.errors %}
+                {% for error in form.url.errors %}
+                  <span class="wc-Form-helpMessage">{{ error }}</span>
+                {% endfor %}
+              {% endif %}
+            </div>
+            <span class="wc-Form-validation">
+            {{ form.url(class_='wc-Form-item required',
+               placeholder='e.g. https://example.com',
+               required=True, type='url', pattern='') }}
+            </span>
+          </div>
+
+          <div class="wc-Form-group js-Form-group">
             <fieldset class="{% if form.problem_category.errors %}is-error{% endif %}">
               <div class="wc-Form-information">
-                <label class="wc-Form-label">What seems to be the trouble? <span class="wc-Form-required">*</span></label>
+                <label class="wc-Form-label" for="problem_type">Type of bug <span class="wc-Form-required">*</span></label>
                 {% if form.problem_category.errors %}{% for error in form.problem_category.errors %}
                 <span class="wc-Form-helpMessage">{{ error }}</span>
                 {% endfor %}{% endif %}
@@ -29,44 +45,54 @@
                 {% endfor %}
             </fieldset>
           </div>
-        </div>
-        <div class="r-Grid-cell r-minM--1of2">
-          <div class="wc-Form-group wc-Form-group--biggerOffset js-Form-group {% if form.url.errors %}is-error{% endif %}">
+
+          <div class="wc-Form-group js-Form-group">
             <div class="wc-Form-information">
-              {{ form.url.label(class_='wc-Form-label') }}
-              {% if form.url.errors %}
-                {% for error in form.url.errors %}
+              {{ form.description.label(class_='wc-Form-label') }}
+              {% if form.description.errors %}
+                {% for error in form.description.errors %}
                   <span class="wc-Form-helpMessage">{{ error }}</span>
                 {% endfor %}
               {% endif %}
             </div>
             <span class="wc-Form-validation">
-            {{ form.url(class_='wc-Form-item required',
-               placeholder='e.g., http://www.example.com',
-               required=True, type='url', pattern='') }}
+            {{ form.description(class_='wc-Form-item required',
+               placeholder="e.g. The video doesn't play",
+               required=True, type='text', pattern='') }}
             </span>
           </div>
-          <div class="wc-Form-group wc-Form-group--biggerOffset js-Form-group">
+          <div class="wc-Form-group js-Form-group">
+            {{ form.steps_reproduce.label(class_='wc-Form-label') }} {{ form.steps_reproduce(class_='wc-Form-item wc-Form-item--textarea', rows=4) }}
+          </div>
+        </div>
+        <div class="r-Grid-cell r-minM--1of2">
+
+          <div class="wc-Form-group wc-Form-group--biggerOffset js-Form-group {% if form.url.errors %}is-error{% endif %}">
             {{ form.browser.label(class_='wc-Form-label') }}
             <span class="wc-Form-validation">
             {{ form.browser(class_='wc-Form-item') }}
             </span>
-          </div>
-          <div class="wc-Form-group wc-Form-group--biggerOffset js-Form-group">
-            {{ form.os.label(class_='wc-Form-label') }}
-            <span class="wc-Form-validation">
+            <span class="wc-Form-validation js-bug-form-os">
             {{ form.os(class_='wc-Form-item') }}
             </span>
           </div>
-        </div>
-      </div>
-      <div class="r-Grid r-Grid--withGutter ">
-        <div class="r-Grid-cell r-Grid-cell--alignBottom r-minS--1of2">
-            <div class="wc-Form-group js-Form-group">
-              {{ form.description.label(class_='wc-Form-label') }} {{ form.description(class_='wc-Form-item wc-Form-item--textarea js-autoExpand', rows=7) }}
-            </div>
-        </div>
-        <div class="r-Grid-cell r-Grid-cell--alignBottom r-minS--1of2">
+
+          <div class="wc-Form-group js-Form-group">
+            <fieldset class="{% if form.browser_test.errors %}is-error{% endif %}">
+              <div class="wc-Form-information">
+                {{ form.browser_test.label(class_='wc-Form-label') }}
+                {% if form.browser_test.errors %}{% for error in form.browser_test.errors %}
+                <span class="wc-Form-helpMessage">{{ error }}</span>
+                {% endfor %}{% endif %}
+              </div>
+                <div class="wc-Form-radio">
+                {% for subradio in form.browser_test %}
+                  {{ subradio }} {{ subradio.label }}
+                {% endfor %}
+                </div>
+            </fieldset>
+          </div>
+
             <div class="js-image-upload wc-Form-group js-Form-group {% if form.image.errors %}is-error{% endif %}">
               <label
                 class="wc-UploadForm wc-UploadForm--homePage js-image-upload-label"
@@ -76,7 +102,7 @@
                   <div class="wc-UploadForm-icon" aria-hidden="true">
                     <span class="wc-Icon wc-Icon--cloud-upload"></span>
                   </div>
-                  <label class="wc-UploadForm-label">Attach a screenshot image</label>
+                  <label class="wc-UploadForm-label">Upload screenshot</label>
                   {% if form.image.errors %}
                     {% for error in form.image.errors %}
                     <span class="wc-Form-helpMessage--imageUpload">{{ error }}</span>
@@ -99,6 +125,28 @@
                   </button>
               </label>
             </div>
+
+            <div class="wc-ReportForm-actions">
+              <div class="wc-ReportForm-actions-button">
+                <button name="submit-type"
+                        value="github-proxy-report"
+                        class="wc-Button wc-Button--default js-Button"
+                        id="submitanon"
+                >
+                        Report Anonymously
+                </button>
+                <button name="submit-type"
+                        value="github-auth-report"
+                        class="wc-Button wc-Button--action js-Button"
+                        id="submitgithub"
+                        type="submit"
+                >
+                  {% if session.username %}Report as {{ session.username }}{% else %}Report via GitHub{% endif %}
+                </button>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
       <div class="wc-Form-item is-hidden" aria-hidden="true">
@@ -108,27 +156,6 @@
             {% endfor %}{% endif %}
             {{ form.username(class_='u-formInput') }}
           </div>
-      </div>
-      <div class="wc-ReportForm-actions">
-        <div class="wc-ReportForm-actions-button">
-          <button name="submit-type"
-                  value="github-auth-report"
-                  class="wc-Button wc-Button--default js-Button"
-                  id="submitgithub"
-                  type="submit"
-          >
-            {% if session.username %}Report as {{ session.username }}{% else %}Report via GitHub{% endif %}
-          </button>
-        </div>
-        <div class="wc-ReportForm-actions-button">
-          <button name="submit-type"
-                  value="github-proxy-report"
-                  class="wc-Button wc-Button--action js-Button"
-                  id="submitanon"
-          >
-                  Report Anonymously
-          </button>
-        </div>
       </div>
       {{ form.hidden_tag() }}
     </form>

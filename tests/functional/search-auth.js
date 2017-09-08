@@ -145,29 +145,83 @@ define(
       },
 
       "Search from the homepage": function() {
-        return FunctionalHelpers.openPage(this, url("/"), ".js-SearchBarOpen")
-          .get(require.toUrl(url("/")))
-          .findByCssSelector(".js-SearchBarOpen")
+        return (
+          FunctionalHelpers.openPage(this, url("/"), ".js-SearchBarOpen")
+            .get(require.toUrl(url("/")))
+            .findByCssSelector(".js-SearchBarOpen")
+            .click()
+            .end()
+            // Wait for animation to complete.
+            .sleep(1000)
+            .findByCssSelector(".js-SearchBar input")
+            .click()
+            .type("vladvlad")
+            .type(keys.ENTER)
+            .end()
+            .findDisplayedByCssSelector(".wc-IssueList:only-of-type a")
+            .getVisibleText()
+            .then(function(text) {
+              assert.include(
+                text,
+                "vladvlad",
+                "The search query results show up on the page."
+              );
+            })
+            .end()
+            .getCurrentUrl()
+            .then(function(currUrl) {
+              assert.include(currUrl, "page=1", "Default params got merged.");
+            })
+            .end()
+        );
+      },
+
+      "Search with a dash works": function() {
+        // load up a garbage search, so we can more easily detect when
+        // the search values we want are loaded.
+        var searchParam = "?q=jfdkjfkdjfkdjfdkjfkd";
+        return FunctionalHelpers.openPage(
+          this,
+          url("/issues", searchParam),
+          ".wc-SearchIssue-noResults-title"
+        )
+          .findByCssSelector("#js-SearchForm-input")
+          .clearValue()
           .click()
-          .end()
-          .findByCssSelector(".js-SearchBar input")
-          .click()
-          .type("vladvlad")
+          .type("label:status-tacos")
           .type(keys.ENTER)
           .end()
-          .findDisplayedByCssSelector(".wc-IssueList:only-of-type a")
+          .findDisplayedByCssSelector(
+            ".wc-IssueList:first-of-type .js-Issue-label"
+          )
           .getVisibleText()
           .then(function(text) {
             assert.include(
               text,
-              "vladvlad",
-              "The search query results show up on the page."
+              "tacos",
+              "The label:status-tacos search worked."
             );
           })
-          .end()
-          .getCurrentUrl()
-          .then(function(currUrl) {
-            assert.include(currUrl, "page=1", "Default params got merged.");
+          .end();
+      },
+
+      "Search input is loaded from q param (with dashes)": function() {
+        // load up a garbage search, so we can more easily detect when
+        // the search values we want are loaded.
+        var searchParam = "?q=one:two-three";
+        return FunctionalHelpers.openPage(
+          this,
+          url("/issues", searchParam),
+          ".wc-SearchIssue-noResults-title"
+        )
+          .findByCssSelector("#js-SearchForm-input")
+          .getProperty("value")
+          .then(function(text) {
+            assert.include(
+              text,
+              "one:two-three",
+              "The q param populated the search input."
+            );
           })
           .end();
       }

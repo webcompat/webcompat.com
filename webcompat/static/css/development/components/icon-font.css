@@ -1,78 +1,101 @@
-/** @define Icon */
+/* This Source Code Form is subject to the terms of the Mozilla Public
+* License, v. 2.0. If a copy of the MPL was not distributed with this
+* file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 @font-face {
-  font-family: 'webcompat';
-  src:url('../font/webcompat/webcompat.eot?ccpilb');
-  src:url('../font/webcompat/webcompat.eot?#iefixccpilb') format('embedded-opentype'),
-      url('../font/webcompat/webcompat.woff?ccpilb') format('woff'),
-      url('../font/webcompat/webcompat.ttf?ccpilb') format('truetype'),
-      url('../font/webcompat/webcompat.svg?ccpilb#icomoon') format('svg');
-  font-weight: normal;
+  font-family: webcompat;
+  src: url("../font/webcompat/webcompat.eot?ccpilb");
+  src: url("../font/webcompat/webcompat.eot?#iefixccpilb") format("embedded-opentype"), url("../font/webcompat/webcompat.woff?ccpilb") format("woff"), url("../font/webcompat/webcompat.ttf?ccpilb") format("truetype"), url("../font/webcompat/webcompat.svg?ccpilb#icomoon") format("svg");
+  font-weight: 400;
   font-style: normal;
 }
 
 .wc-Icon {
   display: inline-block;
-  font: normal normal normal 1em/1 webcompat;
-  font-size: inherit;
+  vertical-align: middle;
+
+  /* to prevent a webcompat regression issue in Safari 10.1.1., we do not use the short form
+  https://bugs.webkit.org/show_bug.cgi?id=165594 */
+  font-style: normal;
+  font-variant: normal;
+  font-weight: 400;
+  font-stretch: normal;
+  font-size: 1em;
+  line-height: 1;
+  font-family: webcompat;
   text-rendering: auto;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  vertical-align:middle;
+  -webkit-font-smoothing: antialiased; /* Better Font Rendering */
+  -moz-osx-font-smoothing: grayscale; /* Better Font Rendering */
 }
 
-.wc-Icon:not(button) {
+.wc-Icon:not(.wc-Button) {
   pointer-events: none;
 }
 
-.wc-Icon--cloud-download:before {
+.wc-Icon--cloud-download::before {
   content: "\f0ed";
 }
-.wc-Icon--arrow-circle-right:before {
+
+.wc-Icon--arrow-circle-right::before {
   content: "\f0a9";
 }
-.wc-Icon--bug:before {
+
+.wc-Icon--bug::before {
   content: "\f188";
 }
-.wc-Icon--times:before {
+
+.wc-Icon--times::before {
   content: "\f00d";
 }
-.wc-Icon--gear:before {
+
+.wc-Icon--gear::before {
   content: "\f013";
 }
-.wc-Icon--plus:before {
+
+.wc-Icon--plus::before {
   content: "\f067";
 }
-.wc-Icon--minus:before {
+
+.wc-Icon--minus::before {
   content: "\f068";
 }
-.wc-Icon--chevron-up:before {
+
+.wc-Icon--chevron-up::before {
   content: "\f077";
 }
-.wc-Icon--chevron-down:before {
+
+.wc-Icon--chevron-down::before {
   content: "\f078";
 }
-.wc-Icon--search:before {
+
+.wc-Icon--search::before {
   content: "\f002";
 }
-.wc-Icon--home:before {
+
+.wc-Icon--home::before {
   content: "\f015";
 }
-.wc-Icon--list:before {
+
+.wc-Icon--list::before {
   content: "\f03a";
 }
-.wc-Icon--qrcode:before {
+
+.wc-Icon--qrcode::before {
   content: "\f029";
 }
-.wc-Icon--cloud-upload:before {
+
+.wc-Icon--cloud-upload::before {
   content: "\f0ee";
 }
-.wc-Icon--arrow-right:before {
+
+.wc-Icon--arrow-right::before {
   content: "\e601";
 }
-.wc-Icon--arrow-down:before {
+
+.wc-Icon--arrow-down::before {
   content: "\e602";
 }
-.wc-Icon--arrow-left:before {
+
+.wc-Icon--arrow-left::before {
   content: "\e603";
 }

@@ -8,9 +8,10 @@ define(
     "intern!object",
     "intern/chai!assert",
     "require",
-    "tests/functional/lib/helpers"
+    "tests/functional/lib/helpers",
+    "intern/dojo/node!leadfoot/keys"
   ],
-  function(intern, registerSuite, assert, require, FunctionalHelpers) {
+  function(intern, registerSuite, assert, require, FunctionalHelpers, keys) {
     "use strict";
     registerSuite(function() {
       var url = function(path) {
@@ -28,7 +29,7 @@ define(
           return FunctionalHelpers.logout(this);
         },
 
-        "Label widget opens": function() {
+        "Label editor opens then closes (clicks)": function() {
           return FunctionalHelpers.openPage(
             this,
             url("/issues/2"),
@@ -39,6 +40,79 @@ define(
             .click()
             .end()
             .findByCssSelector(".js-LabelEditor")
+            .end()
+            .findByCssSelector(".js-LabelEditorLauncher")
+            .click()
+            .getAttribute("class")
+            .then(function(className) {
+              assert.notInclude("is-active", className);
+            })
+            .end();
+        },
+
+        "Label editor opens then closes (key events)": function() {
+          return FunctionalHelpers.openPage(
+            this,
+            url("/issues/2"),
+            ".js-LabelEditorLauncher",
+            true /* longerTimeout */
+          )
+            .findByCssSelector("body")
+            .type("l")
+            .end()
+            .findByCssSelector(".wc-LabelEditor-search")
+            .type(keys.ESCAPE)
+            .end()
+            .findByCssSelector(".js-LabelEditorLauncher")
+            .click()
+            .getAttribute("class")
+            .then(function(className) {
+              assert.notInclude("is-active", className);
+            })
+            .end();
+        },
+
+        "Clicking outside label editor closes it": function() {
+          return FunctionalHelpers.openPage(
+            this,
+            url("/issues/2"),
+            ".js-LabelEditorLauncher",
+            true /* longerTimeout */
+          )
+            .findByCssSelector(".js-LabelEditorLauncher")
+            .click()
+            .end()
+            .findByCssSelector(".js-LabelEditor")
+            .end()
+            .findByCssSelector("main")
+            .click()
+            .end()
+            .findByCssSelector(".js-LabelEditorLauncher")
+            .getAttribute("class")
+            .then(function(className) {
+              assert.notInclude("is-active", className);
+            })
+            .end();
+        },
+
+        "Clicking close button actually closes it?": function() {
+          return FunctionalHelpers.openPage(
+            this,
+            url("/issues/2"),
+            ".js-LabelEditorLauncher",
+            true /* longerTimeout */
+          )
+            .findByCssSelector(".js-LabelEditorLauncher")
+            .click()
+            .end()
+            .findByCssSelector(".js-LabelEditor-close")
+            .click()
+            .end()
+            .findByCssSelector(".js-LabelEditorLauncher")
+            .getAttribute("class")
+            .then(function(className) {
+              assert.notInclude("is-active", className);
+            })
             .end();
         }
       };

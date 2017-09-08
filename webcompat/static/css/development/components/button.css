@@ -1,7 +1,9 @@
-/** @define Button */
+/* This Source Code Form is subject to the terms of the Mozilla Public
+* License, v. 2.0. If a copy of the MPL was not distributed with this
+* file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 :root {
-  --Button-disabledOpacity: 0.5;
+  --Button-disabledOpacity: .5;
   --Button-defaultColor: var(--base-colorDark);
   --Button-defaultColorHover: var(--Button-defaultColor);
   --Button-actionColor: var(--base-variantColorLight);
@@ -24,66 +26,68 @@
   background-color: transparent;
   background-image: none;
   user-select: none;
-  -webkit-appearance: none;
-  margin: 0 1em .5em 1em;
+  appearance: none;
+  margin: 0 1em .5em;
 }
-  /**
-  * Remove excess padding and border in Firefox 4+
-  */
-  .wc-Button::-moz-focus-inner {
-    border: 0;
-    padding: 0;
-  }
 
-  /*outline chrome */
-  .wc-Button:focus {outline:none;}
+/**
+* Remove excess padding and border in Firefox 4+
+*/
+.wc-Button::-moz-focus-inner {
+  border: 0;
+  padding: 0;
+}
 
-  .wc-Button:hover:not(.is-disabled),
-  .wc-Button:focus:not(.is-disabled),
-  .wc-Button:active:not(.is-disabled) {
-    text-decoration: none;
-  }
+/* outline chrome */
+.wc-Button:focus {
+  outline: none;
+}
 
-  .wc-Button:hover:not(.is-disabled),
-  .wc-Button:focus:not(.is-disabled) {
-    color:#fff;
-  }
+.wc-Button:hover:not(.is-disabled),
+.wc-Button:focus:not(.is-disabled),
+.wc-Button:active:not(.is-disabled) {
+  text-decoration: none;
+}
 
-  .wc-Button:disabled,
-  .wc-Button.is-disabled {
-    cursor: default;
-    opacity: var(--Button-disabledOpacity);
-  }
+.wc-Button:hover:not(.is-disabled),
+.wc-Button:focus:not(.is-disabled) {
+  color: #fff;
+}
 
-  /* modifier */
-  .wc-Button--default {
-    border: solid 4px var(--Button-defaultColor);
-  }
+.wc-Button:disabled,
+.wc-Button.is-disabled {
+  cursor: default;
+  opacity: var(--Button-disabledOpacity);
+}
 
-  .wc-Button--default:hover:not(.is-disabled),
-  .wc-Button--default:focus:not(.is-disabled) {
-    background-color: var(--Button-defaultColorHover);
-  }
+/* modifier */
+.wc-Button--default {
+  border: solid 4px var(--Button-actionColor);
+}
 
-  .wc-Button--action {
-    border: solid 4px var(--Button-actionColor);
-  }
+.wc-Button--default:hover:not(.is-disabled),
+.wc-Button--default:focus:not(.is-disabled) {
+  background-color: var(--Button-defaultColorHover);
+}
 
-  .wc-Button--action:hover:not(.is-disabled),
-  .wc-Button--action:focus:not(.is-disabled) {
-    background-color: var(--Button-actionColorHover);
-  }
+.wc-Button--action {
+  border: solid 4px var(--Button-actionColor);
+}
 
+.wc-Button--action:hover:not(.is-disabled),
+.wc-Button--action:focus:not(.is-disabled) {
+  background-color: var(--Button-actionColorHover);
+}
 
-  /* Upload Button */
-  .wc-ButtonUpload {
-    position: absolute;
-    opacity: 0;
-    z-index: 1;
-    width: 100%;
-    top:0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    cursor: pointer;
-  }
+/* Upload Button */
+.wc-ButtonUpload {
+  position: absolute;
+  opacity: 0;
+  z-index: 1;
+  width: 100%;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  cursor: pointer;
+}

@@ -1,0 +1,8 @@
+<script type="text/template">
+<% _.each(labels, function(label) { %>
+  <span class="wc-Label wc-Label--badge js-Label"
+        style="background-color:#<%=label.color%>">
+    <%= label.name %>
+  </span>
+<% }); %>
+</script>

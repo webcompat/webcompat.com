@@ -100,17 +100,20 @@ logto = $LOGS/uwsgi.log
 buffer-size = 8192
 ```
 
-and `staging.ini`
+and `development.ini`
 
 ```ini
 [uwsgi]
 
-socket = $FOO/uwsgi2.sock
-chmod-socket = 666
-chdir = $HOME/staging.webcompat.com/
+socket = $FOO/uwsgi-staging.sock
+chmod-socket = 664
+gid = webcompat
+uid = webcompat
+chdir = $FOO/staging.webcompat.com/
 env = DEVELOPMENT=1
 module = webcompat
 callable = app
-logto = $LOGS/staging-uwsgi.log
+logto = $FOO/staging-uwsgi.log
 buffer-size = 8192
+
 ```

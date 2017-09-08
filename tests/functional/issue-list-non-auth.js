@@ -186,24 +186,25 @@ define(
       },
 
       "Pressing g goes to github issues": function() {
-        return (
-          FunctionalHelpers.openPage(
-            this,
-            url("/issues"),
-            ".js-Pagination-controls"
-          )
-            .findByCssSelector("body")
-            .click()
-            .type("g")
-            .end()
-            // look for the issues container on github.com/foo/bar/issues
-            .findByCssSelector(".issues-listing")
-            .isDisplayed()
-            .then(function(isDisplayed) {
-              assert.equal(isDisplayed, true, "We're at GitHub now.");
-            })
-            .end()
-        );
+        return FunctionalHelpers.openPage(
+          this,
+          url("/issues"),
+          ".js-Pagination-controls"
+        )
+          .findByCssSelector("body")
+          .click()
+          .type("g")
+          .end()
+          .sleep(500)
+          .getCurrentUrl()
+          .then(function(url) {
+            assert.match(
+              url,
+              /[https://github.com/^*/^*/issues/]/,
+              "We're at GitHub now."
+            );
+          })
+          .end();
       },
 
       "Pressing g inside of search input *doesn't* go to github issues": function() {
@@ -317,7 +318,9 @@ define(
             .end()
             // find something so we know issues have been loaded
             .findByCssSelector(".js-IssueList:nth-of-type(1)")
-            .goBack()
+            .execute(function() {
+              history.back();
+            })
             .getCurrentUrl()
             .then(function(currUrl) {
               assert.include(

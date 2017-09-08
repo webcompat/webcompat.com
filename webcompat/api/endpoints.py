@@ -45,6 +45,7 @@ def proxy_issue(number):
 
 
 @api.route('/issues/<int:number>/edit', methods=['PATCH'])
+@mockable_response
 def edit_issue(number):
     '''XHR endpoint to push back edits to GitHub for a single issue.
 
@@ -84,6 +85,7 @@ def proxy_issues():
 
 
 @api.route('/issues/<username>/<parameter>')
+@mockable_response
 def get_user_activity_issues(username, parameter):
     '''API endpoint to return issues related to a user.
 

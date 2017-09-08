@@ -1,4 +1,6 @@
-/** @define Pagination */
+/* This Source Code Form is subject to the terms of the Mozilla Public
+* License, v. 2.0. If a copy of the MPL was not distributed with this
+* file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 :root {
   --Pagination-fontSize: var(--base-fontSize);
@@ -6,38 +8,31 @@
 }
 
 .wc-Pagination {
-  font-size:var(--Pagination-fontSize);
-  text-align:right;
+  font-size: var(--Pagination-fontSize);
+  text-align: right;
 }
 
-  .wc-Pagination-link {
-    display:inline-block;
-    cursor:pointer;
-    color: inherit;
-    vertical-align:middle;
-    padding: 0.7em 0px;
-    font-weight:700;
-    font-size:1em;
-    margin-top:.2em;
-    text-decoration: none;
-  }
+.wc-Pagination-link {
+  display: inline-block;
+  cursor: pointer;
+  color: inherit;
+  vertical-align: middle;
+  padding: .7em 0;
+  font-weight: 700;
+  font-size: 1em;
+  margin-top: .2em;
+  text-decoration: none;
+}
 
-    /* event */
-    .wc-Pagination-link:focus:not(.is-disabled),
-    .wc-Pagination-link:hover:not(.is-disabled) {
-      color: var(--Pagination-colorHover);
-    }
+/* event */
+.wc-Pagination-link:hover:not(.is-disabled) {
+  color: var(--Pagination-colorHover);
+}
 
-    /* state */
-    .wc-Pagination-link.is-disabled {
-      cursor:inherit;
-      opacity:.6;
-      text-decoration:none;
-    }
-    .wc-Pagination-link.is-hidden {
-      display: none;
-    }
+.wc-Pagination-link.is-hidden {
+  display: none;
+}
 
-    .wc-Pagination-link + .wc-Pagination-link {
-      margin-left:1em;
-    }
+.wc-Pagination-link + .wc-Pagination-link {
+  margin-left: 1em;
+}

@@ -103,6 +103,41 @@ define(
           .end();
       },
 
+      "Description validation": function() {
+        return (
+          FunctionalHelpers.openPage(
+            this,
+            url("/issues/new"),
+            ".wc-ReportForm-actions-button"
+          )
+            .findByCssSelector("#description")
+            .click()
+            .end()
+            .execute(function() {
+              var elm = document.querySelector("#description");
+              WindowHelpers.sendEvent(elm, "input");
+            })
+            .sleep(500)
+            .findByCssSelector(".wc-Form-helpMessage")
+            .getVisibleText()
+            .then(function(text) {
+              assert.include(
+                text,
+                "Description required.",
+                "Description validation message is shown"
+              );
+            })
+            .end()
+            // enter a bug description
+            .findByCssSelector("#description")
+            .type("bug description")
+            .end()
+            // validation message should be gone
+            .waitForDeletedByCssSelector(".wc-Form-helpMessage")
+            .end()
+        );
+      },
+
       "(optional) browser + os validation": function() {
         return (
           FunctionalHelpers.openPage(
@@ -114,9 +149,7 @@ define(
             .execute(function() {
               return window
                 .getComputedStyle(
-                  document.querySelector(
-                    "div.wc-Form-group:nth-child(2) > span:nth-child(2)"
-                  ),
+                  document.querySelector(".js-bug-form-os"),
                   ":after"
                 )
                 .getPropertyValue("background-image");
@@ -125,7 +158,7 @@ define(
               assert.include(
                 bgImage,
                 "valid.svg",
-                "The valid checkbox psuedo is visible"
+                "The valid checkbox pseudo is visible"
               );
             })
             .end()
@@ -140,9 +173,7 @@ define(
             .execute(function() {
               return window
                 .getComputedStyle(
-                  document.querySelector(
-                    "div.wc-Form-group:nth-child(3) > span:nth-child(2)"
-                  ),
+                  document.querySelector(".js-bug-form-os"),
                   ":after"
                 )
                 .getPropertyValue("background-image");
@@ -151,41 +182,9 @@ define(
               assert.notInclude(
                 bgImage,
                 "valid.svg",
-                "The valid checkbox psuedo is not visible"
+                "The valid checkbox pseudo is not visible"
               );
             })
-            .end()
-        );
-      },
-
-      "Problem type validation": function() {
-        return (
-          FunctionalHelpers.openPage(
-            this,
-            url("/issues/new"),
-            ".wc-ReportForm-actions-button"
-          )
-            .execute(function() {
-              var elm = document.querySelector("#description");
-              WindowHelpers.sendEvent(elm, "focus");
-            })
-            .end()
-            .findByCssSelector(".wc-Form-helpMessage")
-            .getVisibleText()
-            .then(function(text) {
-              assert.include(
-                text,
-                "Problem type required",
-                "Problem type validation message is shown"
-              );
-            })
-            .end()
-            // pick a problem type
-            .findByCssSelector("#problem_category-0")
-            .click()
-            .end()
-            // validation message should be gone
-            .waitForDeletedByCssSelector(".wc-Form-helpMessage")
             .end()
         );
       },
@@ -239,7 +238,8 @@ define(
             .click()
             .end()
             .findByCssSelector("#description")
-            .click()
+            .type("test for desktop site")
+            //.click()
             .end()
             // wait a bit
             .sleep(250)
@@ -255,6 +255,22 @@ define(
         );
       },
 
+      // tests a scenario where bug reported from firefox nightly Report Site Issue button
+      "details param adds stylo pref to text area": function() {
+        return FunctionalHelpers.openPage(
+          this,
+          url("/issues/new?details=layout.css.servo.enabled%3A+true"),
+          ".wc-ReportForm-actions-button"
+        )
+          .findByCssSelector("#steps_reproduce")
+          .getProperty("value")
+          .then(function(text) {
+            assert.include(text, "layout.css.servo.enabled: true");
+          })
+          .end();
+      },
+
+      // tests a scenario where bug reported from firefox nightly media type tool
       "problem_type param selects problem type": function() {
         return FunctionalHelpers.openPage(
           this,
@@ -275,7 +291,7 @@ define(
           url("/issues/new?details=" + DETAILS_STRING),
           "#description"
         )
-          .findByCssSelector("#description")
+          .findByCssSelector("#steps_reproduce")
           .getProperty("value")
           .then(function(text) {
             assert.include(
@@ -292,7 +308,7 @@ define(
           url("/issues/new?details=" + DETAILS_STRING2),
           "#description"
         )
-          .findByCssSelector("#description")
+          .findByCssSelector("#steps_reproduce")
           .getProperty("value")
           .then(function(text) {
             assert.notInclude(

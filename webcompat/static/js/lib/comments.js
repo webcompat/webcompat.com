@@ -7,6 +7,7 @@ var issues = issues || {}; // eslint-disable-line no-use-before-define
 issues.CommentsCollection = Backbone.Collection.extend({
   model: issues.Comment,
   url: function() {
+    var issueNumber = $("main").data("issueNumber");
     return "/api/issues/" + issueNumber + "/comments?page=" + this.pageNumber;
   },
   initialize: function(options) {
@@ -25,7 +26,7 @@ issues.CommentView = Backbone.View.extend({
   id: function() {
     return this.model.get("commentLinkId");
   },
-  template: _.template($("#comment-tmpl").html()),
+  template: wcTmpl["issue/issue-comment-list.jst"],
   render: function() {
     this.$el.html(this.template(this.model.toJSON()));
     return this;

@@ -43,35 +43,6 @@ define(
         );
       },
 
-      "Results are loaded from the query params": function() {
-        var params = "?q=vladvlad";
-
-        return FunctionalHelpers.openPage(
-          this,
-          url("/issues", params),
-          ".wc-IssueList:only-of-type a"
-        )
-          .findDisplayedByCssSelector(".wc-IssueList:only-of-type a")
-          .getVisibleText()
-          .then(function(text) {
-            assert.include(
-              text,
-              "vladvlad",
-              "The search query results show up on the page."
-            );
-          })
-          .end()
-          .getCurrentUrl()
-          .then(function(currUrl) {
-            assert.include(
-              currUrl,
-              "q=vladvlad",
-              "Our params didn't go anywhere."
-            );
-          })
-          .end();
-      },
-
       "Clicking on label search adds query parameter to the URL": function() {
         return FunctionalHelpers.openPage(
           this,
@@ -126,56 +97,6 @@ define(
               isDisplayed,
               true,
               "Search input is visible for non-authed users."
-            );
-          })
-          .end();
-      },
-
-      "Search with a dash works": function() {
-        // load up a garbage search, so we can more easily detect when
-        // the search values we want are loaded.
-        var searchParam = "?q=jfdkjfkdjfkdjfdkjfkd";
-        return FunctionalHelpers.openPage(
-          this,
-          url("/issues", searchParam),
-          ".wc-SearchIssue-noResults-title"
-        )
-          .findByCssSelector("#js-SearchForm-input")
-          .clearValue()
-          .click()
-          .type("label:status-tacos")
-          .type(keys.ENTER)
-          .end()
-          .findDisplayedByCssSelector(
-            ".wc-IssueList:first-of-type .js-Issue-label"
-          )
-          .getVisibleText()
-          .then(function(text) {
-            assert.include(
-              text,
-              "tacos",
-              "The label:status-tacos search worked."
-            );
-          })
-          .end();
-      },
-
-      "Search input is loaded from q param (with dashes)": function() {
-        // load up a garbage search, so we can more easily detect when
-        // the search values we want are loaded.
-        var searchParam = "?q=one:two-three";
-        return FunctionalHelpers.openPage(
-          this,
-          url("/issues", searchParam),
-          ".wc-SearchIssue-noResults-title"
-        )
-          .findByCssSelector("#js-SearchForm-input")
-          .getProperty("value")
-          .then(function(text) {
-            assert.include(
-              text,
-              "one:two-three",
-              "The q param populated the search input."
             );
           })
           .end();

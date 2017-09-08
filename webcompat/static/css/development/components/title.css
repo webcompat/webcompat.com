@@ -1,37 +1,39 @@
-/** @define Title */
+/* This Source Code Form is subject to the terms of the Mozilla Public
+* License, v. 2.0. If a copy of the MPL was not distributed with this
+* file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 .wc-Title {
   margin: 0;
   font-size: inherit;
 }
 
-  /* size xl */
+/* size xl */
+.wc-Title--xl {
+  font-size: 3.5em;
+  font-weight: 700;
+}
+
+@media all and (max-width: 48.12em) {
   .wc-Title--xl {
-    font-size: 3.5em;
-    font-weight: 700;
+    font-size: 3em;
   }
-  @media all and (max-width: 48.12em) {
-    
-    .wc-Title--xl  {
-      font-size: 3em;
-    }
-  }
+}
 
-  /* size l */
-  .wc-Title--l {
-    font-size: 2em;
-    font-weight: 600;
-    margin-bottom: 1em;
-  }
+/* size l */
+.wc-Title--l {
+  font-size: 2em;
+  font-weight: 600;
+  margin-bottom: 1em;
+}
 
-  /* size m */
-  .wc-Title--m {
-    font-size: 1.5em;
-  }
+/* size m */
+.wc-Title--m {
+  font-size: 1.5em;
+}
 
-  /* size s */
-  .wc-Title--s {
-    font-size: 1.25em;
-    margin: 0.75em 0 1em;
-    font-weight: 700;
-  }
+/* size s */
+.wc-Title--s {
+  font-size: 1.25em;
+  margin: .75em 0 1em;
+  font-weight: 700;
+}

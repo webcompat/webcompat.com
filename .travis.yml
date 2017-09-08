@@ -18,14 +18,9 @@ cache:
 git:
   depth: 5
 
-addons:
-  firefox: "50.1.0"
-
 env:
   global:
     - ISSUES_REPO_URI=webcompat/webcompat-tests/issues
-    - FAKE_ID=e80a666fbf1fa9ea18db
-    - FAKE_SECRET=688c4546f09624f8c44773b22268064dfca19a59
     # grab latest 4.x release, which is LTS for now
     - TRAVIS_NODE_VERSION="4"
 
@@ -35,7 +30,6 @@ before_install:
 
 install:
   - rm -rf ~/.nvm && git clone https://github.com/creationix/nvm.git ~/.nvm && (cd ~/.nvm && git checkout `git describe --abbrev=0 --tags`) && source ~/.nvm/nvm.sh && nvm install $TRAVIS_NODE_VERSION
-  - travis_retry npm install -g grunt-cli
   - travis_retry npm install
   - travis_retry npm run pip
   - travis_retry npm run config
@@ -54,9 +48,6 @@ before_script:
   - npm run build
 
 # now run the tests!
-# if this is a pull request from a fork, TRAVIS_SECURE_ENV_VARS will be false, so
-# just run the non-auth tests. otherwise, run everything.
 script:
   - nosetests
-  - if [ "$TRAVIS_SECURE_ENV_VARS" == "false" ] ; then node_modules/.bin/intern-runner config=tests/intern reporters=Console functionalSuites=tests/functional-nonauth ; fi
-  - if [ "$TRAVIS_SECURE_ENV_VARS" == "true" ] ; then node_modules/.bin/intern-runner config=tests/intern reporters=Console user="$USER" pw="$PW" ; fi
+  - node_modules/.bin/intern-runner config=tests/intern reporters=Console

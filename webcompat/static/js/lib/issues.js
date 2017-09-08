@@ -100,7 +100,7 @@ issues.MetaDataView = Backbone.View.extend({
       }, this)
     );
   },
-  template: _.template($("#metadata-tmpl").html()),
+  template: wcTmpl["issue/metadata.jst"],
   render: function() {
     this.$el.html(this.template(this.model.toJSON()));
     return this;
@@ -117,7 +117,7 @@ issues.AsideView = Backbone.View.extend({
       }, this)
     );
   },
-  template: _.template($("#aside-tmpl").html()),
+  template: wcTmpl["issue/aside.jst"],
   render: function() {
     this.$el.html(this.template(this.model.toJSON()));
     return this;
@@ -127,7 +127,7 @@ issues.AsideView = Backbone.View.extend({
 issues.BodyView = Backbone.View.extend({
   el: $(".wc-Issue-report"),
   mainView: null,
-  template: _.template($("#issue-info-tmpl").html()),
+  template: wcTmpl["issue/issue-report.jst"],
   initialize: function(options) {
     this.mainView = options.mainView;
   },
@@ -184,7 +184,7 @@ issues.ImageUploadView = Backbone.View.extend({
   },
   _submitButton: $(".js-Issue-comment-button"),
   _loaderImage: $(".js-Upload-Loader"),
-  template: _.template($("#upload-input-tmpl").html()),
+  template: wcTmpl["issue/upload-image.jst"],
   render: function() {
     this.$el.html(this.template()).insertAfter($("textarea"));
     return this;
@@ -352,7 +352,7 @@ issues.StateButtonView = Backbone.View.extend({
       }, this)
     );
   },
-  template: _.template($("#state-button-tmpl").html()),
+  template: wcTmpl["issue/state-button.jst"],
   render: function() {
     var buttonText;
     if (this.model.get("state") === "open") {
@@ -383,7 +383,6 @@ issues.MainView = Backbone.View.extend({
   el: $(".js-Issue"),
   events: {
     "click .js-Issue-comment-button": "addNewComment",
-    click: "closeLabelEditor",
     "click .wc-Comment-content-nsfw": "toggleNSFW"
   },
   keyboardEvents: {
@@ -392,14 +391,20 @@ issues.MainView = Backbone.View.extend({
   _supportsFormData: "FormData" in window,
   _isNSFW: undefined,
   initialize: function() {
-    $(document.body).addClass("language-html");
-    var issueNum = { number: issueNumber };
+    var body = $(document.body);
+    body.addClass("language-html");
+    var issueNum = { number: $("main").data("issueNumber") };
     this.issue = new issues.Issue(issueNum);
     this.comments = new issues.CommentsCollection({ pageNumber: 1 });
-    this.initSubViews();
+    this.initSubViews(
+      _.bind(function() {
+        // set listener for closing label editor only after its
+        // been initialized.
+        body.click(_.bind(this.closeLabelEditor, this));
+      }, this)
+    );
     this.fetchModels();
     this.handleKeyShortcuts();
-    this.autoExpand();
   },
   closeLabelEditor: function(e) {
     var target = $(e.target);
@@ -418,6 +423,8 @@ issues.MainView = Backbone.View.extend({
     }
   },
   githubWarp: function(e) {
+    var repoPath = $("main").data("repoPath");
+
     if (e.target.nodeName === "TEXTAREA") {
       return;
     } else {
@@ -426,7 +433,7 @@ issues.MainView = Backbone.View.extend({
       return (location.href = warpPipe);
     }
   },
-  initSubViews: function() {
+  initSubViews: function(callback) {
     var issueModel = { model: this.issue };
     this.metadata = new issues.MetaDataView(issueModel);
     this.body = new issues.BodyView(_.extend(issueModel, { mainView: this }));
@@ -437,6 +444,8 @@ issues.MainView = Backbone.View.extend({
     this.stateButton = new issues.StateButtonView(
       _.extend(issueModel, { mainView: this })
     );
+
+    callback();
   },
   fetchModels: function() {
     var headersBag = { headers: { Accept: "application/json" } };
@@ -496,7 +505,11 @@ issues.MainView = Backbone.View.extend({
       )
       .error(function(response) {
         var msg;
-        if (response.responseJSON.message === "API call. Not Found") {
+        if (
+          response &&
+          response.responseJSON &&
+          response.responseJSON.message === "API call. Not Found"
+        ) {
           location.href = "/404";
           return;
         } else {
@@ -577,15 +590,6 @@ issues.MainView = Backbone.View.extend({
 
   handleKeyShortcuts: function() {
     Mousetrap.bind("mod+enter", _.bind(this.addNewComment, this));
-  },
-
-  // See function autoExpand in bugform.js
-  autoExpand: function() {
-    var initialHeight = $("textarea.js-autoExpand").height();
-    $("textarea.js-autoExpand").on("input", function() {
-      $(this).css("height", initialHeight);
-      $(this).css({ overflow: "hidden", height: this.scrollHeight + "px" });
-    });
   }
 });
 

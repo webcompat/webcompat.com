@@ -29,19 +29,6 @@ define(
           .end();
       },
 
-      "copyURL works": function() {
-        return FunctionalHelpers.openPage(this, url("/?open=1"), "#url")
-          .findDisplayedByCssSelector("#url")
-          .type("zombo.com")
-          .end()
-          .findByCssSelector("#description")
-          .getProperty("value")
-          .then(function(value) {
-            assert.include(value, "zombo");
-          })
-          .end();
-      },
-
       "reporter addon link is shown": function() {
         return FunctionalHelpers.openPage(this, url("/"), ".js-Hero-title")
           .findByCssSelector(".js-Navbar-link")
@@ -58,7 +45,12 @@ define(
             .findByCssSelector("#js-ReportBug")
             .click()
             .end()
-            .findDisplayedByCssSelector("#js-ReportForm")
+            .sleep(1000)
+            .findByCssSelector("#js-ReportForm")
+            .isDisplayed()
+            .then(function(isDisplayed) {
+              assert.equal(isDisplayed, true, "The form is displayed");
+            })
             .end()
             .findByCssSelector("#js-ReportBug")
             .click()

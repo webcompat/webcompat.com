@@ -5,27 +5,33 @@
 // Learn more about configuring this file at <https://github.com/theintern/intern/wiki/Configuring-Intern>.
 // These default settings work OK for most people. The options that *must* be changed below are the
 // packages, suites, excludeInstrumentation, and (if you want functional tests) functionalSuites.
-define(["intern"], function(intern, topic) {
+
+define(["intern"], function(intern) {
   "use strict";
   var args = intern.args;
   var siteRoot = args.siteRoot ? args.siteRoot : "http://localhost:5000";
-
-  if (topic) {
-    topic.subscribe("/suite/start", function(suite) {
-      /* eslint-disable no-console*/
-      console.log("Running: " + suite.name);
-    });
-  }
 
   return {
     // Configuration object for webcompat
     wc: {
       pageLoadTimeout: args.wcPageLoadTimeout
         ? parseInt(args.wcPageLoadTimeout, 10)
-        : 10000,
-      // user and pw need to be passed in as command-line arguments. See CONTRIBUTING.md
-      user: args.user || "some username",
-      pw: args.pw || "some password"
+        : 10000
+    },
+
+    setup: function() {
+      define("FunctionalHelpers", ["tests/functional/lib/helpers"], function(
+        FunctionalHelpers
+      ) {
+        return {
+          checkServer: FunctionalHelpers.checkServer
+        };
+      });
+      var serverPromise;
+      require(["FunctionalHelpers"], function(FunctionalHelpers) {
+        serverPromise = FunctionalHelpers.checkServer();
+      });
+      return serverPromise;
     },
 
     // The port on which the instrumenting proxy will listen
@@ -36,13 +42,20 @@ define(["intern"], function(intern, topic) {
     siteRoot: siteRoot,
     tunnel: "SeleniumTunnel",
     tunnelOptions: {
-      // this tells SeleniumTunnel to download geckodriver
-      drivers: ["firefox"]
+      // this tells SeleniumTunnel to download geckodriver and chromedriver
+      drivers: ["firefox", "chrome"]
     },
+
+    // Only one browser at a time. Takes longer, but gets less intermittent errors.
+    maxConcurrency: 1,
 
     environments: [
       {
         browserName: "firefox",
+        marionette: true
+      },
+      {
+        browserName: "chrome",
         marionette: true
       }
     ],

@@ -4,7 +4,86 @@
 2. New features: affect minor number
 3. API endpoint changes or dependency version updates: affect major number
 
-## 5.1.0 - 2018-05-24
+## 5.6.0 - 2017-08-14
+
+* Remove form textarea boilerplate text. [Pull #1712](https://github.com/webcompat/webcompat.com/pull/1712)
+* Get tests to work from forks [Pull #1710](https://github.com/webcompat/webcompat.com/pull/1710)
+* Change default-src policy to self and set object-src to none [Pull #1703](https://github.com/webcompat/webcompat.com/pull/1703)
+* Unbreak Save & close label editor button. [Pull #1698](https://github.com/webcompat/webcompat.com/pull/1698)
+* Get all unittests to be network independent. [Pull #1697](https://github.com/webcompat/webcompat.com/pull/1697)
+
+## 5.5.1 - 2017-08-08
+
+* Fix Save and Close label editor regression [Pull #1698](https://github.com/webcompat/webcompat.com/pull/1698)
+
+## 5.5.0 - 2017-08-01
+
+* Add npm script for firing up test server [Pull #1692](https://github.com/webcompat/webcompat.com/pull/1692)
+* Check if response is defined [Pull #1691](https://github.com/webcompat/webcompat.com/pull/1691)
+* Handle non-keyboard event invocations of closeEditor [Pull #1689](https://github.com/webcompat/webcompat.com/pull/1689)
+* Upgrade npm dependencies [Pull #1687](https://github.com/webcompat/webcompat.com/pull/1687)
+* Link to Code of Conduct [Pull #1684](https://github.com/webcompat/webcompat.com/pull/1684)
+* Remove unsafe-eval directive from our CSP policy [Pull #1682](https://github.com/webcompat/webcompat.com/pull/1682)
+* Improves the webhook code flexibility [Pull #1681](https://github.com/webcompat/webcompat.com/pull/1681)
+
+## 5.4.1 - 2017-07-26
+
+* Update EXTRA_LABELS whitelist w/ type-stylo [Pull #1676](https://github.com/webcompat/webcompat.com/pull/1676)
+* Gets tests to with Chrome as well as Firefox. Travis and Local [Pull #1671](https://github.com/webcompat/webcompat.com/pull/1671)
+* Disallow inline scripts via CSP [Pull #1667](https://github.com/webcompat/webcompat.com/pull/1667)
+* Add a Code of Conduct [Pull #1660](https://github.com/webcompat/webcompat.com/pull/1660)
+* handle multiple image drops [Pull #1634](https://github.com/webcompat/webcompat.com/pull/1634)
+* Add keyboard navigation to label editor [Pull #1541](https://github.com/webcompat/webcompat.com/pull/1541)
+
+## 5.4.0 - 2017-07-18
+
+* Fix wrong years in CHANGELOG [Pull #1663](https://github.com/webcompat/webcompat.com/pull/1663)
+* Add `npm test`to package.json[Pull #1657](https://github.com/webcompat/webcompat.com/pull/1657)
+* Add newline to STR in reported form[Pull #1653](https://github.com/webcompat/webcompat.com/pull/1653)
+* Change order of metadata in reported form [Pull #1652](https://github.com/webcompat/webcompat.com/pull/1652)
+* Don't upload image until form submission [Pull #1645](https://github.com/webcompat/webcompat.com/pull/1645)
+* Description placeholder update [Pull #1639](https://github.com/webcompat/webcompat.com/pull/1639)
+
+## 5.3.1 - 2017-07-11
+
+* Add tests for form.py [Pull #1644](https://github.com/webcompat/webcompat.com/pull/1644)
+* Update description placeholder [Pull #1639](https://github.com/webcompat/webcompat.com/pull/1639)
+* Update regex and target field for text url removal [Pull #1632](https://github.com/webcompat/webcompat.com/pull/1632)
+* Add coco.fr to abuse list >:| [Pull #1628](https://github.com/webcompat/webcompat.com/pull/1628)
+
+## 5.3.0 - 2017-07-07
+
+* Change to validation logic for form description [Pull #1633](https://github.com/webcompat/webcompat.com/pull/1633)
+* Fix "going back in history" test [Pull #1626](https://github.com/webcompat/webcompat.com/pull/1626)
+* Get functional tests to work offline [Pull #1625](https://github.com/webcompat/webcompat.com/pull/1625)
+* Staging docs update [Pull #1624](https://github.com/webcompat/webcompat.com/pull/1624)
+* Add priority labels for ranking [Pull #1612](https://github.com/webcompat/webcompat.com/pull/1612)
+* Add script to populate a database with Alexa top info [Pull #1591](https://github.com/webcompat/webcompat.com/pull/1591)
+* Add pagination below issue list [Pull #1589](https://github.com/webcompat/webcompat.com/pull/1589)
+* New form redesign [Pull #1578](https://github.com/webcompat/webcompat.com/pull/1578)
+
+## 5.2.2 - 2017-06-23
+
+* Check form validation in image upload success handler [Pull #1614](https://github.com/webcompat/webcompat.com/pull/1614)
+* Fix padding issue in Markdown[Pull #1606](https://github.com/webcompat/webcompat.com/pull/1606)
+* Updates CONTRIBUTING.md tests section for mock login [Pull #1604](https://github.com/webcompat/webcompat.com/pull/1604)
+
+## 5.2.1 - 2017-06-20
+
+* Ensure label editor button can receive click events [Pull #1602](https://github.com/webcompat/webcompat.com/pull/1602)
+
+## 5.2.0 - 2017-06-20
+
+(Not deployed, caused a regression. v5.2.1 is the good release)
+
+* Add CSS linter [Pull #1509](https://github.com/webcompat/webcompat.com/pull/1509)
+* Add pre-commit linter [Pull #1538](https://github.com/webcompat/webcompat.com/pull/1538)
+* Fix broke code layout in issue page [Pull #1583](https://github.com/webcompat/webcompat.com/pull/1583)
+* Get mock GitHub login working [Pull #1588](https://github.com/webcompat/webcompat.com/pull/1588)
+* Remove test_login unit test (obsolete now) [Pull #1598](https://github.com/webcompat/webcompat.com/pull/1598)
+* Remove unused query-params.js file [Pull #1599](https://github.com/webcompat/webcompat.com/pull/1599)
+
+## 5.1.0 - 2017-05-24
 
 * Prevent overflow in code elements in issue description [Pull #1568](https://github.com/webcompat/webcompat.com/pull/1568)
 * Improves webhooks to send labels at once [Pull #1566](https://github.com/webcompat/webcompat.com/pull/1566)
@@ -12,7 +91,7 @@
 * Adds thumbnails to image upload and link them [Pull #1557](https://github.com/webcompat/webcompat.com/pull/1557)
 * Fixes length and quote style issues [Pull #1500](https://github.com/webcompat/webcompat.com/pull/1500)
 
-## 5.0.0 - 2018-05-12
+## 5.0.0 - 2017-05-12
 
 * Fix regression that prevents closing or re-opening an issue. [Pull #1561](https://github.com/webcompat/webcompat.com/pull/1561)
 * Restrict comments and constrain the closing of issue (updates to issues and edit API endpoints)[Pull #1559](https://github.com/webcompat/webcompat.com/pull/1559)
@@ -20,7 +99,7 @@
 * Removes dead code and method [Pull #1555](https://github.com/webcompat/webcompat.com/pull/1555)
 * Fixes length and quote style issues [Pull #1500](https://github.com/webcompat/webcompat.com/pull/1500)
 
-## 4.0.3 - 2018-05-08
+## 4.0.3 - 2017-05-08
 
 * Add GitHub API to CSP connect-src [Pull #1550](https://github.com/webcompat/webcompat.com/pull/1550)
 * Fix UTF-8 decoding error [Pull #1545](https://github.com/webcompat/webcompat.com/pull/1545)
@@ -28,12 +107,12 @@
 * Remove main dropdown from issues page [Pull #1531](https://github.com/webcompat/webcompat.com/pull/1531)
 * Fix SVG overflow for small viewports [Pull #1511](https://github.com/webcompat/webcompat.com/pull/1511)
 
-## 4.0.2 - 2018-04-25
+## 4.0.2 - 2017-04-25
 
 * Fix a disappearing label gear [Pull #1525](https://github.com/webcompat/webcompat.com/pull/1525)
 * Adds a list of files to ignore for deploy [Pull #1524](https://github.com/webcompat/webcompat.com/pull/1524)
 
-## 4.0.1 - 2018-04-24
+## 4.0.1 - 2017-04-24
 
 * Fixed encoding param bugs [Pull #1518](https://github.com/webcompat/webcompat.com/pull/1518)
 * Unified code for UA string version parsing [Pull #1504](https://github.com/webcompat/webcompat.com/pull/1504)

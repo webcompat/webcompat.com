@@ -21,7 +21,7 @@ See the [CHANGELOG](https://github.com/webcompat/webcompat.com/blob/master/CHANG
 
 ## Contributing
 
-Contributions in the form of code, feature requests, bugs or other kinds of issues are welcome. Please check out [CONTRIBUTING.md]( https://github.com/webcompat/webcompat.com/blob/master/CONTRIBUTING.md) for more instructions.
+Contributions in the form of code, feature requests, bugs or other kinds of issues are welcome. Please check out [CONTRIBUTING.md]( https://github.com/webcompat/webcompat.com/blob/master/CONTRIBUTING.md) for more instructions. Everyone interacting in our codebases, issue trackers, and any other form of communication, including chat rooms and mailing lists, is expected to follow our [code of conduct](https://github.com/webcompat/webcompat.com/blob/master/CODE_OF_CONDUCT.md) so we can all enjoy the effort we put into this project.
 
 ### Assets & Design
 
@@ -52,7 +52,3 @@ All icons are public domain or licensed from The Noun Project.
 [Lightswitch](http://thenounproject.com/term/light-switch/2235/) designed by Jeremy Lloyd.  (Public domain)
 
 [Contribute icon](https://thenounproject.com/search/?q=group&i=876004) designed by Tjaša Kimovec. (Licensed)
-
-### Thanks
-
-Thanks to [BrowserStack](https://www.browserstack.com/) for providing the infrastructure that allows us to test in real browsers.

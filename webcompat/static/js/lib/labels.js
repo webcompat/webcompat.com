@@ -35,18 +35,10 @@ issues.LabelsView = Backbone.View.extend({
       this.editLabels();
     }
   },
-  template: _.template($("#issue-labels-tmpl").html()),
+  template: wcTmpl["issue/issue-labels.jst"],
   // this subTemplate will need to be kept in sync with
-  // relavant parts in $('#issue-labels-tmpl')
-  subTemplate: _.template(
-    [
-      "<% _.each(labels, function(label) { %>",
-      '<span class="wc-Label wc-Label--badge js-Label" style="background-color:#<%=label.color%>">',
-      "<%= label.name %>",
-      "</span>",
-      "<% }); %>"
-    ].join("")
-  ),
+  // relavant parts in issue/issue-labels.jst
+  subTemplate: wcTmpl["issue/issue-labels-sub.jst"],
   render: function() {
     this.$el.html(this.template(this.model.toJSON()));
     this.fetchLabels();
@@ -92,15 +84,17 @@ issues.LabelEditorView = Backbone.View.extend({
   events: {
     "change input[type=checkbox]": "updateView",
     "click button": "closeEditor",
-    "keyup .wc-LabelEditor-search": "filterLabels"
-  },
-  keyboardEvents: {
-    esc: "closeEditor"
+    keyup: "closeEditor",
+    "keyup .wc-LabelEditor-search": "filterLabels",
+    "keyup .wc-LabelEditor-list-item": "checkUncheckLabels",
+    "keydown .wc-LabelEditor-search": "focusSaveClose",
+    "keydown .wc-LabelEditor-list-item": "removeFocus",
+    "keydown .wc-LabelEditor-list-item:visible:last": "backToTop"
   },
   initialize: function(options) {
     this.issueView = options.issueView;
   },
-  template: _.template($("#label-editor-tmpl").html()),
+  template: wcTmpl["web_modules/label-editor.jst"],
   render: function() {
     this.$el.html(this.template(this.model));
     this.resizeEditorHeight();
@@ -150,15 +144,17 @@ issues.LabelEditorView = Backbone.View.extend({
     }
   },
   updateView: function(evt) {
-    // We try to make sure only one "status"-type label is set
-    // If the change event comes from a "status"-type label,
-    // enumerate all checked "status"-type labels and uncheck
+    // We try to make sure only one "status" or "priority"-type label is set
+    // If the change event comes from a "status" or "priority"-type label,
+    // enumerate all checked "status" or "priority"-type labels and uncheck
     // the others.
     var checked;
-    if (
-      $(evt.target).data("remotename").match(/^status/) && evt.target.checked
-    ) {
-      checked = $('input[type=checkbox][data-remotename^="status"]:checked');
+    var remotename = $(evt.target).data("remotename");
+    if (remotename.match(/^(status|priority)/) && evt.target.checked) {
+      var prefix = remotename.split("-")[0];
+      checked = $(
+        'input[type=checkbox][data-remotename^="' + prefix + '"]:checked'
+      );
       _.each(checked, function(item) {
         if (item !== evt.target) {
           item.checked = false;
@@ -178,16 +174,28 @@ issues.LabelEditorView = Backbone.View.extend({
     });
     this.reRender({ labels: _.uniq(modelUpdate) });
   },
-  closeEditor: function() {
-    var checked = $("input[type=checkbox]:checked");
-    var labelsArray = _.pluck(checked, "name");
-    this.issueView.editorButton.removeClass("is-active");
-    this.issueView.model.updateLabels(labelsArray);
-    // detach() (vs remove()) here because we don't want to lose events if the
-    // user reopens the editor.
-    this.$el.children().detach();
+  closeEditor: function(e) {
+    if (!e || (e && (e.keyCode === 27 || !e.keyCode))) {
+      var checked = $("input[type=checkbox]:checked");
+      var labelsArray = _.pluck(checked, "name");
+      this.issueView.editorButton.removeClass("is-active");
+      this.issueView.model.updateLabels(labelsArray);
+      // detach() (vs remove()) here because we don't want to lose events if the
+      // user reopens the editor.
+      this.$el.children().detach();
+    }
   },
   filterLabels: _.debounce(function(e) {
+    setTimeout(function() {
+      if (e.keyCode === 13) {
+        $(".wc-LabelEditor-list-item:visible:first").focus();
+        // if you call the focus() function in a label element,'
+        // the focus automatically goes to the input.
+        // that's why we need to add the focused class.
+        $(".wc-LabelEditor-list-item:visible:first").addClass("focused");
+      }
+    }, 100);
+
     var escape = function(s) {
       return s.replace(/[-\/\\^$*+?:.()|[\]{}]/g, "\\$&");
     };
@@ -205,5 +213,26 @@ issues.LabelEditorView = Backbone.View.extend({
         .closest(".wc-LabelEditor-list-item")
         .hide();
     });
-  }, 100)
+  }, 100),
+  checkUncheckLabels: _.debounce(function(e) {
+    if (e.keyCode === 13) {
+      $(e.target).click().addClass("focused");
+    }
+  }, 100),
+  focusSaveClose: _.debounce(function(e) {
+    if (e.keyCode === 9) {
+      // Safari workaround.
+      $(".wc-LabelEditor-button.r-ResetButton").focus();
+    }
+  }, 1),
+  removeFocus: _.debounce(function(e) {
+    if (e.keyCode === 9) {
+      $(e.target).closest("label").removeClass("focused");
+    }
+  }, 100),
+  backToTop: _.debounce(function(e) {
+    if (e.keyCode === 9) {
+      this.$el.find(".wc-LabelEditor-search").focus();
+    }
+  }, 1)
 });

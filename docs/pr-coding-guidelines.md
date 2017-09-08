@@ -19,15 +19,15 @@ All code contributions should come in the form of a pull request, as a topic bra
 
     ```bash
     # makes sure, you are on the master branch
-    git checkout master 
-    
+    git checkout master
+
     # if you are SURE your fork is up-to-date
     git pull origin master
-    
-    # OR 
+
+    # OR
     # if you are NOT SURE your fork is up-to-date
     git pull upstream master  
-    
+
     # creates new branch
     git checkout -b issues/NumberOfIssue/VersionOfPR  
     ```
@@ -35,18 +35,18 @@ All code contributions should come in the form of a pull request, as a topic bra
 5. Create your patch; commit your changes. Referencing the issue number you're working on from the message is recommended.
 
     > Note: Please keep the title under 50 chars. If you'd like to provide more information, just add the details to the commit body.
-    
+
     ```bash
     # check for changed files
     git status
-    
+
     # add files to commit, e.g. as following
-    git add file.js foldername/foldername2/file2.js 
-    
+    git add file.js foldername/foldername2/file2.js
+
     # add commit message including issue number
     git commit -m 'Issue #NumberOfIssue - Fixes broken layout on mobile browsers'    
     ```
-    
+
 6. Push your branch to GitHub:
 
     `git push origin issues/NumberOfIssue/VersionOfPR`
@@ -148,7 +148,18 @@ The js folder contains two subfolders: `lib` contains all project source files a
 
 > Note: All code changes should be made to the files in `lib`
 
-@@something to write by miketaylr@@
+#### Linting
 
+To make it easier for everyone to contribute, we use [eslint](http://eslint.org/) for JavaScript and [stylelint](https://stylelint.io/) for CSS to keep the code base steady. You can view the JavaScript's rules in our [ESLint config](https://github.com/webcompat/webcompat.com/blob/master/.eslintrc#L34) and the CSS's rules in our [stylelint config](https://github.com/webcompat/webcompat.com/blob/master/.stylelintrc#L3). For further explanation of the rules, please have a look at the [ESLint documentation](http://eslint.org/docs/rules/) and [stylelint documentation](https://stylelint.io/user-guide/rules/).
+
+For the linting process, we use [Prettier](http://jlongster.com/A-Prettier-Formatter).
+
+In order to avoid errors during a Pull Request, `npm run lint` will be executed before each commit.
+
+`npm run lint` checks all relevant JavaScript and CSS files and displays, if something needs to be fixed.
+
+If you get an error displayed, there are two ways to fix it.
+1. You can run `npm run fix` automatically (only for JavaScript), which is great for small issues like missing spaces or lines in various files.
+2. You can correct it manually as every error message includes the file and line of the error as well as the rule which was violated will be displayed..
 
 Hopefully this will help you clear up a few struggles.

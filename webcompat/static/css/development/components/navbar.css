@@ -1,4 +1,6 @@
-/** @define Navbar */
+/* This Source Code Form is subject to the terms of the Mozilla Public
+* License, v. 2.0. If a copy of the MPL was not distributed with this
+* file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 :root {
   --Navbar-fontSize: var(--base-fontSize);
@@ -8,102 +10,112 @@
 .wc-Navbar {
   font-size: var(--Navbar-fontSize);
   background-color: var(--Navbar-backgroundColor);
-  padding: 1.25em 0.5em;
+  padding: 1.25em .5em;
 }
-  .wc-Navbar-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  .wc-Navbar-link,
-  .wc-Navbar-linkDropdown {
-    display: inline-block;
-    color: #414042;
-    font-weight:700;
-    text-decoration:none;
-    cursor: pointer;
-  }
-  .wc-Navbar-linkDropdown {
-    display: block;
-  }
-    .wc-Navbar-link:hover,
-    .wc-Navbar-link:focus {
-      color: #fff;
-    }
-    .wc-Navbar-linkDropdown:hover {
-      text-decoration: underline;
-    }
-    /* space between */
-    .wc-Navbar-link + .wc-Navbar-link {
-      margin-left:1em;
-    }
-      @media all and (max-width: 30em) {
-        .wc-Navbar-link + .wc-Navbar-link {
-          margin-left: 0.5em;
-        }
-      }
-    /* label */
-    .wc-Navbar-link-label {
-      display:inline-block;
-      vertical-align:middle;
-      margin-left:.3em;
-    }
-      @media all and (max-width: 47.25em) {
-        .wc-Navbar-link-label {
-          position: absolute;
-          top: -9999px;
-          left: -9999px;
-        }
-      }
-    /*icon */
-    .wc-Navbar-link-icon {
-      font-size:1.2em;
-      display: inline-block;
-      background-repeat: no-repeat;
-      background-position: center center;
-      position: relative;
-    }
 
-  /* "Contribute" link icon */
-  .wc-Icon--contribute {
-    background-image: url(/img/contribute.svg);
-    height: 1.7em;
-    width: 1.4em;
-    top: 0.1em;
-  }
+.wc-Navbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 
-  .wc-Navbar-link:hover .wc-Icon--contribute,
-  .wc-Navbar-link:focus .wc-Icon--contribute {
-    background-image: url(/img/contribute-white.svg);
-  }
+.wc-Navbar-link,
+.wc-Navbar-linkDropdown {
+  display: inline-block;
+  color: #414042;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+}
 
-  /* avatar */
-  .wc-Navbar-avatar {
-    height: 20px;
-    display: inline-block;
-    border-radius: 3px;
-    vertical-align: middle;
-    margin-left: .3em;
-  }
+.wc-Navbar-linkDropdown {
+  display: block;
+}
 
-  /* link download addon browser */
-  .wc-Navbar-linkDownload-label {
-    vertical-align: middle;
-  }
+.wc-Navbar-link:hover,
+.wc-Navbar-link:focus {
+  color: #fff;
+}
 
-  /* .is-hidden class added when add-on is already installed */
-  .wc-Navbar-link.is-hidden {
-    display: none
-  }
+.wc-Navbar-linkDropdown:hover {
+  text-decoration: underline;
+}
 
-  @media all and (max-width: 30em) {
-    .wc-Navbar-linkDownload-label-word {
-      display: none;
-    }
-  }
+/* space between */
+.wc-Navbar-link + .wc-Navbar-link {
+  margin-left: 1em;
+}
 
-  @media all and (min-width: 30em) {
-    .wc-Navbar-linkDownload-icon {
-        display: none;
-    }
+@media all and (max-width: 30em) {
+  .wc-Navbar-link + .wc-Navbar-link {
+    margin-left: .5em;
   }
+}
+
+/* label */
+.wc-Navbar-link-label {
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: .3em;
+}
+
+@media all and (max-width: 47.25em) {
+  .wc-Navbar-link-label {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+  }
+}
+
+/* icon */
+.wc-Navbar-link-icon {
+  font-size: 1.2em;
+  display: inline-block;
+  background-repeat: no-repeat;
+  background-position: center center;
+  position: relative;
+}
+
+/* "Contribute" link icon */
+.wc-Icon--contribute {
+  background-image: url("../../../img/contribute.svg");
+  height: 1.7em;
+  width: 1.4em;
+  top: .1em;
+}
+
+.wc-Navbar-link:hover .wc-Icon--contribute,
+.wc-Navbar-link:focus .wc-Icon--contribute {
+  background-image: url("../../../img/contribute-white.svg");
+}
+
+/* avatar */
+.wc-Navbar-avatar {
+  height: 20px;
+  display: inline-block;
+  border-radius: 3px;
+  vertical-align: middle;
+  margin-left: .3em;
+}
+
+/* link download addon browser */
+.wc-Navbar-linkDownload-label {
+  vertical-align: middle;
+}
+
+/* .is-hidden class added when add-on is already installed */
+.wc-Navbar-link.is-hidden {
+  display: none;
+}
+
+@media all and (max-width: 30em) {
+  .wc-Navbar-linkDownload-label-word {
+    display: none;
+  }
+}
+
+@media all and (min-width: 30em) {
+  .wc-Navbar-linkDownload-icon {
+    display: none;
+  }
+}

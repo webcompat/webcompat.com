@@ -81,7 +81,7 @@ define(
           .end();
       },
 
-      "postMessaged dataURI image upload worked": function() {
+      "postMessaged dataURI image doesn't upload before form submission": function() {
         return (
           FunctionalHelpers.openPage(this, url, ".js-image-upload-label")
             // send a small base64 encoded green test square
@@ -89,20 +89,20 @@ define(
               'postMessage("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAIAAABLixI0AAAACXBIWXMAAA7DAAAOwwHHb6hkAAAAB3RJTUUH3gYSAig452t/EQAAAClJREFUOMvtzkENAAAMg0A25ZU+E032AQEXoNcApCGFLX5paWlpaWl9dqq9AS6CKROfAAAAAElFTkSuQmCC", "http://localhost:5000")'
             )
             .sleep(1000)
-            .findByCssSelector("#description")
+            .findByCssSelector("#steps_reproduce")
             .getProperty("value")
             .then(function(val) {
-              assert.include(
+              assert.notInclude(
                 val,
                 "[![Screenshot Description](http://localhost:5000/uploads/",
-                "The data URI was correctly uploaded and its URL was copied to the bug description."
+                "The data URI was not uploaded before form submission."
               );
             })
             .end()
         );
       },
 
-      "postMessaged blob image upload worked": function() {
+      "postMessaged blob image doesn't upload before form submission": function() {
         return (
           FunctionalHelpers.openPage(this, url, ".js-image-upload-label")
             // Build up a green test square in canvas, toBlob that, and then postMessage the blob
@@ -110,32 +110,32 @@ define(
               WindowHelpers.getBlob().then(WindowHelpers.sendBlob);
             })
             .sleep(1000)
-            .findByCssSelector("#description")
+            .findByCssSelector("#steps_reproduce")
             .getProperty("value")
             .then(function(val) {
-              assert.include(
+              assert.notInclude(
                 val,
                 "[![Screenshot Description](http://localhost:5000/uploads/",
-                "The data URI was correctly uploaded and its URL was copied to the bug description."
+                "The data URI was not uploaded before form submission."
               );
             })
             .end()
         );
       },
 
-      "uploaded image file upload worked": function() {
+      "uploaded image file doesn't upload before form submission": function() {
         return FunctionalHelpers.openPage(this, url, ".js-image-upload-label")
           .findById("image")
           .type("tests/fixtures/green_square.png")
           .sleep(1000)
           .end()
-          .findByCssSelector("#description")
+          .findByCssSelector("#steps_reproduce")
           .getProperty("value")
           .then(function(val) {
-            assert.include(
+            assert.notInclude(
               val,
               "[![Screenshot Description](http://localhost:5000/uploads/",
-              "The data URI was correctly uploaded and its URL was copied to the bug description."
+              "The data URI was not uploaded before form submission."
             );
           })
           .end();
@@ -169,7 +169,7 @@ define(
               );
             })
             .end()
-            .findByCssSelector("#description")
+            .findByCssSelector("#steps_reproduce")
             .getProperty("value")
             .then(function(val) {
               assert.notInclude(
@@ -180,6 +180,32 @@ define(
             })
             .end()
         );
+      },
+
+      "double image select works": function() {
+        return FunctionalHelpers.openPage(this, url, ".wc-UploadForm-button")
+          .findById("image")
+          .type("tests/fixtures/green_square.png")
+          .sleep(1000)
+          .end()
+          .findByCssSelector(".js-image-upload-label .wc-UploadForm-button")
+          .click()
+          .sleep(1000)
+          .end()
+          .findById("image")
+          .type("tests/fixtures/green_square.png")
+          .end()
+          .sleep(1000)
+          .findByCssSelector(".js-image-upload-label")
+          .getAttribute("style")
+          .then(function(inlineStyle) {
+            assert.include(
+              inlineStyle,
+              "data:image/png;base64,iVBOR",
+              "Preview is shown"
+            );
+          })
+          .end();
       }
     });
   }

@@ -1,6 +1,10 @@
 /** @define Grid */
 
 :root {
-  --r-Grid-baseFontSize : 1rem;
-  --r-Grid-gutter : 2%;
+  --r-Grid-baseFontSize: 1rem;
+  --r-Grid-gutter: 2%;
+}
+
+.r-Grid--alignMiddle > .r-Grid-cell {
+  vertical-align: middle;
 }

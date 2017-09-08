@@ -73,10 +73,15 @@ def format_date(datestring):
 @app.route('/login')
 def login():
     if session.get('user_id', None) is None:
-        # manually set the referer so we know where to come back to
-        # when we return from GitHub
-        set_referer(request)
-        return github.authorize('public_repo')
+        if app.config['TESTING']:
+            session['username'] = 'testuser'
+            session['avatar_url'] = '/test-files/fixtures/avatar.png?'
+            return authorized()
+        else:
+            # manually set the referer so we know where to come back to
+            # when we return from GitHub
+            set_referer(request)
+            return github.authorize('public_repo')
     else:
         return redirect(g.referer)
 
@@ -93,6 +98,8 @@ def logout():
 @app.route('/callback')
 @github.authorized_handler
 def authorized(access_token):
+    if app.config['TESTING']:
+        access_token = 'thisisatest'
     if access_token is None:
         flash(u'Something went wrong trying to sign into GitHub. :(', 'error')
         return redirect(g.referer)
@@ -179,7 +186,8 @@ def create_issue():
         abort(400)
     # see https://github.com/webcompat/webcompat.com/issues/1141
     # see https://github.com/webcompat/webcompat.com/issues/1237
-    spamlist = ['qiangpiaoruanjian', 'cityweb.de']
+    # see https://github.com/webcompat/webcompat.com/issues/1627
+    spamlist = ['qiangpiaoruanjian', 'cityweb.de', 'coco.fr']
     for spam in spamlist:
         if spam in form.get('url'):
             msg = (u'Anonymous reporting for domain {0} '

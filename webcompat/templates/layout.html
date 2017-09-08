@@ -58,12 +58,15 @@
 <script src="{{ url_for('static', filename='js/lib/flash-message.js') }}"></script>
 <script src="{{ url_for('static', filename='js/lib/homepage.js') }}"></script>
 <script src="{{ url_for('static', filename='js/lib/bugform.js') }}"></script>
+<script src="{{ url_for('static', filename='js/templates.js') }}"></script>
 {%- if config['LOCALHOST'] -%}
 <script src="{{ url_for('get_test_helper',
                          filename='functional/lib/window-helpers.js') }}"></script>
 {%- endif %}{%- endif %}
 {% for category, message in get_flashed_messages(with_categories=True) %}
-<script>wcEvents.trigger('flash:{{ category }}', {message: '{{ message }}', timeout: 4000});</script>
+<script src="{{ url_for('static', filename='js/lib/flashed-messages.js') }}"
+        data-category="{{ category }}"
+        data-message="{{ message }}"></script>
 {% endfor %}
 {% block extrascripts %}{% endblock %}
 </body>
