@@ -326,28 +326,43 @@ issues.MainView = Backbone.View.extend({
     this.comments = new issues.CommentsCollection({ pageNumber: 1 });
     this.initSubViews(
       _.bind(function() {
-        // set listener for closing label editor only after its
+        // set listener for closing category editor only after its
         // been initialized.
-        body.click(_.bind(this.closeLabelEditor, this));
+        body.click(_.bind(this.closeCategoryEditor, this));
       }, this)
     );
     this.fetchModels();
     this.handleKeyShortcuts();
   },
-  closeLabelEditor: function(e) {
+  closeCategoryEditor: function(e) {
     var target = $(e.target);
     // early return if the editor is closed,
     if (
-      !this.$el.find(".js-LabelEditor").is(":visible") ||
+      // If no category editor is visible
+      !this.$el.find(".js-CategoryEditor").is(":visible") ||
       // or we've clicked on the button to open it,
       (target[0].nodeName === "BUTTON" &&
-        target.hasClass("js-LabelEditorLauncher")) ||
+        target.hasClass("js-CategoryEditorLauncher")) ||
       // or clicked anywhere inside the label editor
-      target.parents(".js-LabelEditor").length
+      target.parents(".js-CategoryEditor").length
     ) {
+      // Clicking on one launcher will force to close the other one
+      if (
+        target[0].nodeName === "BUTTON" &&
+        target.hasClass("js-LabelEditorLauncher")
+      ) {
+        this.milestones.closeEditor();
+      } else if (
+        target[0].nodeName === "BUTTON" &&
+        target.hasClass("js-MilestoneEditorLauncher")
+      ) {
+        this.labels.closeEditor();
+      }
       return;
     } else {
+      // Click outside, close both editors
       this.labels.closeEditor();
+      this.milestones.closeEditor();
     }
   },
   githubWarp: function(e) {
