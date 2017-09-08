@@ -24,7 +24,7 @@ key = webcompat.app.config['HOOK_SECRET_KEY']
 
 # Some machinery for opening our test files
 def event_data(filename):
-    """return a tuple with the content and its signature."""
+    """Return a tuple with the content and its signature."""
     current_root = os.path.realpath(os.curdir)
     events_path = 'tests/fixtures/webhooks'
     path = os.path.join(current_root, events_path, filename)
@@ -36,7 +36,10 @@ def event_data(filename):
 
 
 class TestWebhook(unittest.TestCase):
+    """Tests for our WebHook code."""
+
     def setUp(self):
+        """Set up tests."""
         # sets a more detailed message when testing.
         self.longMessage = True
         webcompat.app.config['TESTING'] = True
@@ -65,6 +68,7 @@ class TestWebhook(unittest.TestCase):
         """
 
     def tearDown(self):
+        """Tear down tests."""
         pass
 
     def test_forbidden_get(self):
