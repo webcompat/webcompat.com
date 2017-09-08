@@ -14,10 +14,13 @@ import logging
 from flask import Blueprint
 from flask import request
 
+from helpers import extract_browser_label
+from helpers import extract_priority_label
 from helpers import is_github_hook
 from helpers import get_issue_info
 from helpers import new_opened_issue
-
+from helpers import set_labels
+from helpers import signature_check
 
 from webcompat import app
 
@@ -34,6 +37,7 @@ def hooklistener():
         return ('Nothing to see here', 401, {'Content-Type': 'text/plain'})
     payload = json.loads(request.data)
     event_type = request.headers.get('X-GitHub-Event')
+
     # Treating events related to issues
     if event_type == 'issues':
         issue = get_issue_info(payload)

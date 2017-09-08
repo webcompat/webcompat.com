@@ -11,9 +11,12 @@ import os
 import unittest
 
 import flask
+from mock import patch
 
 import webcompat
+from webcompat.db import Site
 from webcompat.webhooks import helpers
+
 
 # The key is being used for testing and computing the signature.
 key = webcompat.app.config['HOOK_SECRET_KEY']
@@ -53,6 +56,7 @@ class TestWebhook(unittest.TestCase):
         <!-- @browser: Foobar -->
         """
         self.issue_body3 = """
+        **URL**: https://www.google.com/
         <!-- @browser: Firefox Mobile (Tablet) 40.0 -->
         """
 
@@ -180,6 +184,16 @@ class TestWebhook(unittest.TestCase):
                     'domain': 'www.chia-anime.tv'}
         actual = helpers.get_issue_info(payload)
         self.assertDictEqual(expected, actual)
+
+    def test_extract_priority_label(self):
+        """Extract priority label."""
+        with patch('webcompat.db.site_db.query') as db_mock:
+            db_mock.return_value.filter_by.return_value = [
+                Site('google.com', 1, '', 1)]
+            priority_label = helpers.extract_priority_label(self.issue_body3)
+            self.assertEqual(priority_label, 'priority-critical')
+        priority_label_none = helpers.extract_priority_label(self.issue_body)
+        self.assertEqual(priority_label_none, None)
 
 
 if __name__ == '__main__':

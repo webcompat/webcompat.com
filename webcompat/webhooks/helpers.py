@@ -10,6 +10,10 @@ import json
 import re
 
 from webcompat import app
+from webcompat.db import Site
+from webcompat.db import site_db
+from webcompat.form import domain_name
+from webcompat.helpers import extract_url
 from webcompat.helpers import proxy_request
 
 
@@ -80,7 +84,27 @@ def get_payload_signature(key, payload):
     mac = hmac.new(key, msg=payload, digestmod=hashlib.sha1)
     return mac.hexdigest()
 
+  
+def extract_priority_label(body):
+    """Parse url from body and query the priority labels."""
+    hostname = domain_name(extract_url(body))
+    if hostname:
+        priorities = ['critical', 'important', 'normal']
+        # Find host_name in DB
+        for site in site_db.query(Site).filter_by(url=hostname):
+            return 'priority-{}'.format(priorities[site.priority-1])
+        # No host_name in DB, find less-level domain (>2)
+        # If host_name is lv4.lv3.example.com, find lv3.example.com/example.com
+        subparts = hostname.split('.')
+        domains = ['.'.join(subparts[i:])
+                   for i, subpart in enumerate(subparts)
+                   if 0 < i < hostname.count('.')]
+        for domain in domains:
+            for site in site_db.query(Site).filter_by(url=domain):
+                return 'priority-{}'.format(priorities[site.priority-1])
+    return None
 
+  
 def is_github_hook(request):
     """Validate the github webhook HTTP POST request."""
     if request.headers.get('X-GitHub-Event') is None:
@@ -112,6 +136,9 @@ def new_opened_issue(payload):
     issue_body = payload.get('issue')['body']
     issue_number = payload.get('issue')['number']
     browser_label = extract_browser_label(issue_body)
+    priority_label = extract_priority_label(issue_body)
     if browser_label:
         labels.append(browser_label)
+    if priority_label:
+        labels.append(priority_label)
     return set_labels(labels, issue_number)

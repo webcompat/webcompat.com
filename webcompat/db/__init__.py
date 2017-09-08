@@ -13,6 +13,7 @@ from uuid import uuid4
 from sqlalchemy import Column
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy import Integer
 from sqlalchemy.orm import scoped_session
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import String
@@ -24,6 +25,14 @@ session_engine = create_engine('sqlite:///' + os.path.join(
 session_db = scoped_session(sessionmaker(autocommit=False,
                                          autoflush=False,
                                          bind=session_engine))
+
+site_engine = create_engine('sqlite:///' + os.path.join(
+    app.config['BASE_DIR'], 'topsites.db'))
+site_db = scoped_session(sessionmaker(autocommit=False,
+                                      autoflush=False,
+                                      bind=site_engine))
+
+
 UsersBase = declarative_base()
 UsersBase.query = session_db.query_property()
 
@@ -46,3 +55,24 @@ class User(UsersBase):
 
 
 UsersBase.metadata.create_all(bind=session_engine)
+
+SiteBase = declarative_base()
+SiteBase.query = site_db.query_property()
+
+
+class Site(SiteBase):
+    """SQLAchemy base object for an Alexa top site."""
+    __tablename__ = 'topsites'
+
+    url = Column(String, primary_key=True)
+    priority = Column(Integer)
+    country_code = Column(String)
+    ranking = Column(Integer)
+
+    def __init__(self, url, priority, country_code, ranking):
+        self.url = url
+        self.priority = priority
+        self.country_code = country_code
+        self.ranking = ranking
+
+SiteBase.metadata.create_all(bind=site_engine)
