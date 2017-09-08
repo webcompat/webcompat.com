@@ -84,7 +84,7 @@ def get_payload_signature(key, payload):
     mac = hmac.new(key, msg=payload, digestmod=hashlib.sha1)
     return mac.hexdigest()
 
-  
+
 def extract_priority_label(body):
     """Parse url from body and query the priority labels."""
     hostname = domain_name(extract_url(body))
@@ -92,7 +92,7 @@ def extract_priority_label(body):
         priorities = ['critical', 'important', 'normal']
         # Find host_name in DB
         for site in site_db.query(Site).filter_by(url=hostname):
-            return 'priority-{}'.format(priorities[site.priority-1])
+            return 'priority-{}'.format(priorities[site.priority - 1])
         # No host_name in DB, find less-level domain (>2)
         # If host_name is lv4.lv3.example.com, find lv3.example.com/example.com
         subparts = hostname.split('.')
@@ -101,10 +101,10 @@ def extract_priority_label(body):
                    if 0 < i < hostname.count('.')]
         for domain in domains:
             for site in site_db.query(Site).filter_by(url=domain):
-                return 'priority-{}'.format(priorities[site.priority-1])
+                return 'priority-{}'.format(priorities[site.priority - 1])
     return None
 
-  
+
 def is_github_hook(request):
     """Validate the github webhook HTTP POST request."""
     if request.headers.get('X-GitHub-Event') is None:
