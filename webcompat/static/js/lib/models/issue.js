@@ -87,7 +87,7 @@ issues.Issue = Backbone.Model.extend({
       createdAt: response.created_at.slice(0, 10),
       issueState: this.getState(response.state, labels),
       labels: labels,
-      milestone: response.milestone.title,
+      milestone: response.milestone ? response.milestone.title : "",
       number: response.number,
       reporter: response.user.login,
       reporterAvatar: response.user.avatar_url,
