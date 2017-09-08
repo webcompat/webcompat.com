@@ -15,7 +15,14 @@ issues.MilestonesModel = Backbone.Model.extend({
       milestones.push(_.merge(milestone, value));
     });
 
-    this.set("milestones", milestones);
+    var orderedMilestones = _.sortByOrder(
+      milestones,
+      // sort first by state, in desc order (because open comes after closed, alphabetically)
+      // then sort by order, in ascending order to get 1, 2, 3... etc.
+      ["state", "order"],
+      ["desc", "asc"]
+    );
+    this.set("milestones", orderedMilestones);
   },
   updateMilestones: function(data) {
     // prevent talking to server in case we somehow got bogus data
