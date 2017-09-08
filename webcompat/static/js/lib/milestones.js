@@ -18,6 +18,11 @@ issues.MilestonesModel = Backbone.Model.extend({
     this.set("milestones", milestones);
   },
   updateMilestones: function(data) {
+    // prevent talking to server in case we somehow got bogus data
+    if (!_.isObject(data)) {
+      return;
+    }
+
     $.ajax({
       contentType: "application/json",
       data: JSON.stringify(data),
@@ -129,10 +134,14 @@ issues.MilestoneEditorView = issues.CategoryEditorView.extend({
         return status.name === checked;
       });
 
-      this.model.updateMilestones({
-        milestone: statusObject.id,
-        state: statusObject.state
-      });
+      // Don't bother to update the server if nothing changed.
+      if (checked !== this.issueView.model.get("milestone")) {
+        this.model.updateMilestones({
+          milestone: statusObject.id,
+          state: statusObject.state
+        });
+      }
+
       // detach() (vs remove()) here because we don't want to lose events if the
       // user reopens the editor.
       this.$el.children().detach();
