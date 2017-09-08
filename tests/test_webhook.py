@@ -59,6 +59,10 @@ class TestWebhook(unittest.TestCase):
         **URL**: https://www.google.com/
         <!-- @browser: Firefox Mobile (Tablet) 40.0 -->
         """
+        self.issue_body4 = u"""
+        **URL**: https://www.google.com/
+        <!-- @browser: Firefox Mobile (Tablet) 40.0 -->
+        """
 
     def tearDown(self):
         pass
@@ -130,6 +134,8 @@ class TestWebhook(unittest.TestCase):
         browser_label_none = helpers.extract_browser_label(self.issue_body2)
         self.assertEqual(browser_label_none, None)
         browser_label_paren = helpers.extract_browser_label(self.issue_body3)
+        self.assertEqual(browser_label_paren, 'browser-firefox-mobile-tablet')
+        browser_label_unicode = helpers.extract_browser_label(self.issue_body4)
         self.assertEqual(browser_label_paren, 'browser-firefox-mobile-tablet')
 
     def test_is_github_hook(self):
