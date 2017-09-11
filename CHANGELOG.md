@@ -4,6 +4,11 @@
 2. New features: affect minor number
 3. API endpoint changes or dependency version updates: affect major number
 
+## 5.7.3 - 2017-09-11
+
+* Change application `SECRET_KEY` to force-evict sessions. [Pull #1818](https://github.com/webcompat/webcompat.com/issues/1818)
+* Fixes bogus test for webhook [Pull #1814](https://github.com/webcompat/webcompat.com/pull/1814)
+
 ## 5.7.2 - 2017-09-08
 
 * Fixes the issue with unicode translate [Pull #1812](https://github.com/webcompat/webcompat.com/pull/1812)
