@@ -55,6 +55,7 @@
     "setup": "npm run module && npm run virtualenv && npm install && npm run config",
     "watch": "grunt watch",
     "build": "grunt",
+    "jst": "grunt jst",
     "lint": "npm run lint:JS && npm run lint:CSS && grunt travis-lint",
     "lint:JS": "eslint ./Gruntfile.js ./tests ./grunt-tasks ./webcompat/static/js/lib",
     "lint:CSS": "stylelint './webcompat/static/css/development/**/*.css'",
