@@ -92,14 +92,6 @@ md.renderer.rules.link_open = function(tokens, idx, options, env, self) {
 
 issues.MetaDataView = Backbone.View.extend({
   el: $("#js-Issue-information"),
-  initialize: function() {
-    this.model.on(
-      "change:issueState",
-      _.bind(function() {
-        this.render();
-      }, this)
-    );
-  },
   template: wcTmpl["issue/metadata.jst"],
   render: function() {
     this.$el.html(this.template(this.model.toJSON()));
