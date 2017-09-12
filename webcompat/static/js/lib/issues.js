@@ -117,16 +117,12 @@ issues.AsideView = Backbone.View.extend({
 });
 
 issues.BodyView = Backbone.View.extend({
-  el: $(".wc-Issue-report"),
   mainView: null,
-  template: wcTmpl["issue/issue-report.jst"],
   initialize: function(options) {
     this.mainView = options.mainView;
   },
   render: function() {
-    this.$el.html(this.template(this.model.toJSON()));
     // hide metadata
-
     var issueDesc = $(".js-Issue-markdown");
     issueDesc
       .contents()
