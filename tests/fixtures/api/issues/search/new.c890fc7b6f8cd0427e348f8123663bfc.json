@@ -999,8 +999,8 @@
       },
       "labels": [
         {
-          "url": "https://api.github.com/repos/webcompat/webcompat-tests/labels/status-bug",
-          "name": "status-bug",
+          "url": "https://api.github.com/repos/webcompat/webcompat-tests/labels/status-new",
+          "name": "status-new",
           "color": "fc2929"
         }
       ],
@@ -1087,8 +1087,8 @@
       },
       "labels": [
         {
-          "url": "https://api.github.com/repos/webcompat/webcompat-tests/labels/status-bug",
-          "name": "status-bug",
+          "url": "https://api.github.com/repos/webcompat/webcompat-tests/labels/status-new",
+          "name": "status-new",
           "color": "fc2929"
         }
       ],
@@ -1464,7 +1464,7 @@
         {
           "url": "https://api.github.com/repos/webcompat/webcompat-tests/labels/status-new",
           "name": "status-new",
-          "color": "006b75"
+          "color": "fc2929"
         }
       ],
       "state": "open",
@@ -2085,8 +2085,8 @@
       },
       "labels": [
         {
-          "url": "https://api.github.com/repos/webcompat/webcompat-tests/labels/status-bug",
-          "name": "status-bug",
+          "url": "https://api.github.com/repos/webcompat/webcompat-tests/labels/status-new",
+          "name": "status-new",
           "color": "fc2929"
         }
       ],

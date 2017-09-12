@@ -33,7 +33,9 @@
         "state": "open",
         "locked": false,
         "assignee": null,
-        "milestone": null,
+        "milestone": {
+        "title": "needsdiagnosis"
+      },
         "comments": 11,
         "created_at": "2015-09-16T01:58:09Z",
         "updated_at": "2015-10-07T21:27:59Z",
@@ -72,7 +74,9 @@
         "state": "open",
         "locked": false,
         "assignee": null,
-        "milestone": null,
+        "milestone": {
+        "title": "needsdiagnosis"
+      },
         "comments": 1,
         "created_at": "2015-08-31T22:36:38Z",
         "updated_at": "2015-09-11T21:20:05Z",
@@ -111,7 +115,9 @@
         "state": "open",
         "locked": false,
         "assignee": null,
-        "milestone": null,
+        "milestone": {
+        "title": "needsdiagnosis"
+      },
         "comments": 1,
         "created_at": "2015-08-27T15:52:20Z",
         "updated_at": "2015-09-02T18:23:29Z",
@@ -150,7 +156,9 @@
         "state": "open",
         "locked": false,
         "assignee": null,
-        "milestone": null,
+        "milestone": {
+        "title": "needsdiagnosis"
+      },
         "comments": 0,
         "created_at": "2015-08-27T15:50:29Z",
         "updated_at": "2015-08-27T15:50:29Z",
@@ -189,7 +197,9 @@
         "state": "open",
         "locked": false,
         "assignee": null,
-        "milestone": null,
+        "milestone": {
+        "title": "needsdiagnosis"
+      },
         "comments": 7,
         "created_at": "2015-08-25T20:58:08Z",
         "updated_at": "2015-09-12T00:14:49Z",
@@ -228,7 +238,9 @@
         "state": "open",
         "locked": false,
         "assignee": null,
-        "milestone": null,
+        "milestone": {
+        "title": "needsdiagnosis"
+      },
         "comments": 0,
         "created_at": "2015-08-21T01:25:53Z",
         "updated_at": "2015-08-21T01:25:53Z",
@@ -267,7 +279,9 @@
         "state": "open",
         "locked": false,
         "assignee": null,
-        "milestone": null,
+        "milestone": {
+        "title": "needsdiagnosis"
+      },
         "comments": 0,
         "created_at": "2015-08-20T17:37:30Z",
         "updated_at": "2015-08-20T17:37:30Z",
@@ -306,7 +320,9 @@
         "state": "open",
         "locked": false,
         "assignee": null,
-        "milestone": null,
+        "milestone": {
+        "title": "needsdiagnosis"
+      },
         "comments": 0,
         "created_at": "2015-08-20T16:15:09Z",
         "updated_at": "2015-08-20T16:15:09Z",
@@ -345,7 +361,9 @@
         "state": "open",
         "locked": false,
         "assignee": null,
-        "milestone": null,
+        "milestone": {
+        "title": "needsdiagnosis"
+      },
         "comments": 2,
         "created_at": "2015-08-20T04:10:58Z",
         "updated_at": "2015-09-28T08:51:52Z",
@@ -384,7 +402,9 @@
         "state": "open",
         "locked": false,
         "assignee": null,
-        "milestone": null,
+        "milestone": {
+        "title": "needsdiagnosis"
+      },
         "comments": 0,
         "created_at": "2015-08-18T20:32:09Z",
         "updated_at": "2015-08-18T20:32:09Z",
@@ -423,7 +443,9 @@
         "state": "open",
         "locked": false,
         "assignee": null,
-        "milestone": null,
+        "milestone": {
+        "title": "needsdiagnosis"
+      },
         "comments": 0,
         "created_at": "2015-08-18T20:04:03Z",
         "updated_at": "2015-08-18T20:04:03Z",
@@ -462,7 +484,9 @@
         "state": "open",
         "locked": false,
         "assignee": null,
-        "milestone": null,
+        "milestone": {
+        "title": "needsdiagnosis"
+      },
         "comments": 0,
         "created_at": "2015-08-17T20:48:42Z",
         "updated_at": "2015-08-17T20:48:42Z",
@@ -501,7 +525,9 @@
         "state": "open",
         "locked": false,
         "assignee": null,
-        "milestone": null,
+        "milestone": {
+        "title": "needsdiagnosis"
+      },
         "comments": 0,
         "created_at": "2015-08-17T20:48:01Z",
         "updated_at": "2015-08-17T20:48:01Z",
@@ -540,7 +566,9 @@
         "state": "open",
         "locked": false,
         "assignee": null,
-        "milestone": null,
+        "milestone": {
+        "title": "needsdiagnosis"
+      },
         "comments": 0,
         "created_at": "2015-08-14T18:51:21Z",
         "updated_at": "2015-08-14T18:51:21Z",
@@ -579,7 +607,9 @@
         "state": "open",
         "locked": false,
         "assignee": null,
-        "milestone": null,
+        "milestone": {
+        "title": "needsdiagnosis"
+      },
         "comments": 0,
         "created_at": "2015-08-14T18:36:39Z",
         "updated_at": "2015-08-14T18:36:39Z",
@@ -618,7 +648,9 @@
         "state": "open",
         "locked": false,
         "assignee": null,
-        "milestone": null,
+        "milestone": {
+        "title": "needsdiagnosis"
+      },
         "comments": 0,
         "created_at": "2015-08-12T21:27:53Z",
         "updated_at": "2015-08-12T21:27:53Z",
@@ -657,7 +689,9 @@
         "state": "open",
         "locked": false,
         "assignee": null,
-        "milestone": null,
+        "milestone": {
+        "title": "needsdiagnosis"
+      },
         "comments": 0,
         "created_at": "2015-08-12T21:18:26Z",
         "updated_at": "2015-08-12T21:18:26Z",
@@ -696,7 +730,9 @@
         "state": "open",
         "locked": false,
         "assignee": null,
-        "milestone": null,
+        "milestone": {
+        "title": "needsdiagnosis"
+      },
         "comments": 0,
         "created_at": "2015-08-12T21:17:12Z",
         "updated_at": "2015-08-12T21:17:12Z",
@@ -735,7 +771,9 @@
         "state": "open",
         "locked": false,
         "assignee": null,
-        "milestone": null,
+        "milestone": {
+        "title": "needsdiagnosis"
+      },
         "comments": 0,
         "created_at": "2015-08-12T21:14:56Z",
         "updated_at": "2015-08-12T21:14:56Z",
@@ -774,7 +812,9 @@
         "state": "open",
         "locked": false,
         "assignee": null,
-        "milestone": null,
+        "milestone": {
+        "title": "needsdiagnosis"
+      },
         "comments": 0,
         "created_at": "2015-08-11T22:19:55Z",
         "updated_at": "2015-08-11T22:19:55Z",
@@ -813,7 +853,9 @@
         "state": "open",
         "locked": false,
         "assignee": null,
-        "milestone": null,
+        "milestone": {
+        "title": "needsdiagnosis"
+      },
         "comments": 0,
         "created_at": "2015-08-11T22:19:29Z",
         "updated_at": "2015-08-11T22:19:29Z",
@@ -852,7 +894,9 @@
         "state": "open",
         "locked": false,
         "assignee": null,
-        "milestone": null,
+        "milestone": {
+        "title": "needsdiagnosis"
+      },
         "comments": 1,
         "created_at": "2015-08-10T23:05:47Z",
         "updated_at": "2015-08-10T23:09:03Z",
@@ -902,7 +946,9 @@
         "state": "open",
         "locked": false,
         "assignee": null,
-        "milestone": null,
+        "milestone": {
+        "title": "needsdiagnosis"
+      },
         "comments": 0,
         "created_at": "2015-07-31T02:51:09Z",
         "updated_at": "2015-08-27T21:49:28Z",
@@ -941,7 +987,9 @@
         "state": "open",
         "locked": false,
         "assignee": null,
-        "milestone": null,
+        "milestone": {
+        "title": "needsdiagnosis"
+      },
         "comments": 0,
         "created_at": "2015-07-29T21:47:02Z",
         "updated_at": "2015-07-29T21:47:02Z",
@@ -1001,7 +1049,9 @@
         "state": "open",
         "locked": false,
         "assignee": null,
-        "milestone": null,
+        "milestone": {
+        "title": "needsdiagnosis"
+      },
         "comments": 0,
         "created_at": "2015-07-29T18:17:26Z",
         "updated_at": "2015-08-04T20:06:25Z",
@@ -1046,7 +1096,9 @@
         "state": "open",
         "locked": false,
         "assignee": null,
-        "milestone": null,
+        "milestone": {
+        "title": "needsdiagnosis"
+      },
         "comments": 1,
         "created_at": "2015-07-22T14:52:15Z",
         "updated_at": "2015-08-14T20:25:05Z",
@@ -1091,7 +1143,9 @@
         "state": "open",
         "locked": false,
         "assignee": null,
-        "milestone": null,
+        "milestone": {
+        "title": "needsdiagnosis"
+      },
         "comments": 0,
         "created_at": "2015-07-09T02:35:29Z",
         "updated_at": "2015-07-21T04:02:30Z",
@@ -1130,7 +1184,9 @@
         "state": "open",
         "locked": false,
         "assignee": null,
-        "milestone": null,
+        "milestone": {
+        "title": "needsdiagnosis"
+      },
         "comments": 13,
         "created_at": "2015-04-15T19:21:08Z",
         "updated_at": "2015-06-10T17:58:32Z",
@@ -1175,7 +1231,9 @@
         "state": "open",
         "locked": false,
         "assignee": null,
-        "milestone": null,
+        "milestone": {
+        "title": "needsdiagnosis"
+      },
         "comments": 18,
         "created_at": "2015-03-09T22:01:56Z",
         "updated_at": "2015-06-19T22:10:58Z",
@@ -1214,7 +1272,9 @@
         "state": "open",
         "locked": false,
         "assignee": null,
-        "milestone": null,
+        "milestone": {
+        "title": "needsdiagnosis"
+      },
         "comments": 9,
         "created_at": "2015-03-08T07:17:51Z",
         "updated_at": "2015-07-30T18:59:11Z",
@@ -1259,7 +1319,9 @@
         "state": "open",
         "locked": false,
         "assignee": null,
-        "milestone": null,
+        "milestone": {
+        "title": "needsdiagnosis"
+      },
         "comments": 0,
         "created_at": "2015-03-06T22:53:05Z",
         "updated_at": "2015-07-30T19:19:09Z",
@@ -1304,7 +1366,9 @@
         "state": "open",
         "locked": false,
         "assignee": null,
-        "milestone": null,
+        "milestone": {
+        "title": "needsdiagnosis"
+      },
         "comments": 0,
         "created_at": "2015-03-05T21:16:04Z",
         "updated_at": "2015-07-30T19:19:08Z",
@@ -1349,7 +1413,9 @@
         "state": "open",
         "locked": false,
         "assignee": null,
-        "milestone": null,
+        "milestone": {
+        "title": "needsdiagnosis"
+      },
         "comments": 8,
         "created_at": "2015-03-05T19:45:49Z",
         "updated_at": "2015-07-30T19:19:08Z",
@@ -1394,7 +1460,9 @@
         "state": "open",
         "locked": false,
         "assignee": null,
-        "milestone": null,
+        "milestone": {
+        "title": "needsdiagnosis"
+      },
         "comments": 0,
         "created_at": "2015-03-05T19:44:50Z",
         "updated_at": "2015-07-30T19:19:08Z",
@@ -1439,7 +1507,9 @@
         "state": "open",
         "locked": false,
         "assignee": null,
-        "milestone": null,
+        "milestone": {
+        "title": "needsdiagnosis"
+      },
         "comments": 1,
         "created_at": "2015-03-05T19:43:28Z",
         "updated_at": "2015-09-09T16:35:57Z",
@@ -1494,7 +1564,9 @@
         "state": "open",
         "locked": false,
         "assignee": null,
-        "milestone": null,
+        "milestone": {
+        "title": "needsdiagnosis"
+      },
         "comments": 0,
         "created_at": "2015-03-05T19:22:07Z",
         "updated_at": "2015-08-04T18:16:06Z",
@@ -1554,7 +1626,9 @@
         "state": "open",
         "locked": false,
         "assignee": null,
-        "milestone": null,
+        "milestone": {
+        "title": "needsdiagnosis"
+      },
         "comments": 0,
         "created_at": "2015-03-05T19:19:05Z",
         "updated_at": "2015-10-01T11:23:40Z",
@@ -1614,7 +1688,9 @@
         "state": "open",
         "locked": false,
         "assignee": null,
-        "milestone": null,
+        "milestone": {
+        "title": "needsdiagnosis"
+      },
         "comments": 1,
         "created_at": "2015-02-13T07:37:53Z",
         "updated_at": "2015-07-29T18:19:10Z",
@@ -1664,7 +1740,9 @@
         "state": "open",
         "locked": false,
         "assignee": null,
-        "milestone": null,
+        "milestone": {
+        "title": "needsdiagnosis"
+      },
         "comments": 2,
         "created_at": "2015-01-15T15:21:17Z",
         "updated_at": "2015-07-30T19:10:23Z",
@@ -1709,7 +1787,9 @@
         "state": "open",
         "locked": false,
         "assignee": null,
-        "milestone": null,
+        "milestone": {
+        "title": "needsdiagnosis"
+      },
         "comments": 7,
         "created_at": "2015-01-15T15:15:01Z",
         "updated_at": "2015-07-30T19:19:29Z",
@@ -1754,7 +1834,9 @@
         "state": "open",
         "locked": false,
         "assignee": null,
-        "milestone": null,
+        "milestone": {
+        "title": "needsdiagnosis"
+      },
         "comments": 0,
         "created_at": "2015-01-15T15:14:52Z",
         "updated_at": "2015-07-30T19:19:29Z",
@@ -1811,7 +1893,9 @@
             "type": "User",
             "site_admin": false
         },
-        "milestone": null,
+        "milestone": {
+        "title": "needsdiagnosis"
+      },
         "comments": 1,
         "created_at": "2014-12-05T05:01:40Z",
         "updated_at": "2014-12-18T16:42:56Z",
@@ -1856,7 +1940,9 @@
         "state": "open",
         "locked": false,
         "assignee": null,
-        "milestone": null,
+        "milestone": {
+        "title": "needsdiagnosis"
+      },
         "comments": 0,
         "created_at": "2014-12-04T22:55:10Z",
         "updated_at": "2015-08-04T18:15:00Z",
@@ -1901,7 +1987,9 @@
         "state": "open",
         "locked": false,
         "assignee": null,
-        "milestone": null,
+        "milestone": {
+        "title": "needsdiagnosis"
+      },
         "comments": 0,
         "created_at": "2014-12-04T22:50:25Z",
         "updated_at": "2014-12-04T22:50:25Z",
@@ -1946,7 +2034,9 @@
         "state": "open",
         "locked": false,
         "assignee": null,
-        "milestone": null,
+        "milestone": {
+        "title": "needsdiagnosis"
+      },
         "comments": 0,
         "created_at": "2014-12-04T22:47:43Z",
         "updated_at": "2015-07-30T19:19:29Z",
@@ -1991,7 +2081,9 @@
         "state": "open",
         "locked": false,
         "assignee": null,
-        "milestone": null,
+        "milestone": {
+        "title": "needsdiagnosis"
+      },
         "comments": 0,
         "created_at": "2014-12-04T22:44:23Z",
         "updated_at": "2015-07-30T19:19:29Z",
@@ -2030,7 +2122,9 @@
         "state": "open",
         "locked": false,
         "assignee": null,
-        "milestone": null,
+        "milestone": {
+        "title": "needsdiagnosis"
+      },
         "comments": 0,
         "created_at": "2014-12-04T00:57:08Z",
         "updated_at": "2014-12-04T00:57:08Z",
@@ -2069,7 +2163,9 @@
         "state": "open",
         "locked": false,
         "assignee": null,
-        "milestone": null,
+        "milestone": {
+        "title": "needsdiagnosis"
+      },
         "comments": 0,
         "created_at": "2014-11-09T10:24:07Z",
         "updated_at": "2015-07-30T19:05:37Z",
@@ -2114,7 +2210,9 @@
         "state": "open",
         "locked": false,
         "assignee": null,
-        "milestone": null,
+        "milestone": {
+        "title": "needsdiagnosis"
+      },
         "comments": 0,
         "created_at": "2014-11-08T15:08:16Z",
         "updated_at": "2015-08-04T18:14:19Z",
@@ -2153,7 +2251,9 @@
         "state": "open",
         "locked": false,
         "assignee": null,
-        "milestone": null,
+        "milestone": {
+        "title": "needsdiagnosis"
+      },
         "comments": 1,
         "created_at": "2014-11-08T14:47:37Z",
         "updated_at": "2015-07-30T19:05:37Z",

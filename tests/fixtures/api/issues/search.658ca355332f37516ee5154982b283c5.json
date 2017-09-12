@@ -42,7 +42,9 @@
       "state": "open",
       "locked": true,
       "assignee": null,
-      "milestone": null,
+      "milestone": {
+        "title": "needsdiagnosis"
+      },
       "comments": 9,
       "created_at": "2014-07-15T22:14:21Z",
       "updated_at": "2014-07-21T14:56:05Z",
