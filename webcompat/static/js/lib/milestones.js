@@ -66,7 +66,10 @@ issues.MilestoneEditorView = issues.CategoryEditorView.extend({
     checked = $("input[type=checkbox]:checked");
     // we do the "real" save when you close the editor.
     // this just updates the UI responsively
-    this.reRender({ name: checked.prop("name"), color: checked.data("color") });
+    this.reRender({
+      milestone: checked.prop("name"),
+      color: checked.data("color")
+    });
   },
   render: function() {
     this.$el.html(this.template(this.model.toJSON()));

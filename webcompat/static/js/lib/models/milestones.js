@@ -36,10 +36,11 @@ issues.MilestonesModel = Backbone.Model.extend({
       type: "PATCH",
       url: "/api/issues/" + $("main").data("issueNumber") + "/edit",
       success: _.bind(function() {
-        var milestone = _.find(this.get("milestones"), function(status) {
+        var currentMilestone = _.find(this.get("milestones"), function(status) {
           return status.id === data.id;
         });
-        this.set("milestone", milestone);
+
+        this.set("milestone", currentMilestone);
       }, this),
       error: function() {
         var msg = "There was an error editing this issues's status.";
