@@ -24,26 +24,6 @@ issues.Issue = Backbone.Model.extend({
   urlRoot: function() {
     return "/api/issues/" + this.get("number");
   },
-  initialize: function() {
-    this.on(
-      "change:state",
-      _.bind(function() {
-        this.set(
-          "issueState",
-          this.getState(this.get("state"), this.get("labels"))
-        );
-      }, this)
-    );
-    this.on(
-      "change:labels",
-      _.bind(function() {
-        this.set(
-          "issueState",
-          this.getState(this.get("state"), this.get("milestone"))
-        );
-      }, this)
-    );
-  },
   getState: function(state, milestone) {
     if (state === "closed") {
       this.set("stateClass", "closed");
@@ -89,6 +69,16 @@ issues.Issue = Backbone.Model.extend({
       state: response.state,
       title: response.title
     });
+
+    this.on(
+      "change:milestone",
+      _.bind(function() {
+        this.set(
+          "issueState",
+          this.getState(this.get("state"), this.get("milestone"))
+        );
+      }, this)
+    );
   },
 
   updateLabels: function(labelsArray) {
