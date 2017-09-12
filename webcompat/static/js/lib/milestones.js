@@ -84,16 +84,8 @@ issues.MilestoneEditorView = issues.CategoryEditorView.extend({
   closeEditor: function(e) {
     if (!e || (e && (e.keyCode === 27 || !e.keyCode))) {
       var checked = $("input[type=checkbox]:checked").prop("name");
-      var statusObject = _.find(this.model.get("milestones"), function(status) {
-        return status.name === checked;
-      });
-
-      // Don't bother to update the server if nothing changed.
       if (checked !== this.issueView.model.get("milestone")) {
-        this.model.updateMilestones({
-          milestone: statusObject.id,
-          state: statusObject.state
-        });
+        this.model.updateMilestone(checked);
       }
 
       // detach() (vs remove()) here because we don't want to lose events if the
