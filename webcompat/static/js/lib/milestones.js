@@ -56,7 +56,7 @@ issues.MilestoneEditorView = issues.CategoryEditorView.extend({
   updateView: function(evt) {
     // We try to make sure only one milestone is set
     // enumerate all checked milestones and uncheck the others.
-    var checked = $(
+    var checked = this.$el.find(
       'input[type=checkbox][data-remotename^="milestone"]:checked'
     );
     _.each(checked, function(item) {
@@ -64,7 +64,7 @@ issues.MilestoneEditorView = issues.CategoryEditorView.extend({
         item.checked = false;
       }
     });
-    checked = $("input[type=checkbox]:checked");
+    checked = this.$el.find("input[type=checkbox]:checked");
     // we do the "real" save when you close the editor.
     // this just updates the UI responsively
     this.reRender({
@@ -84,7 +84,7 @@ issues.MilestoneEditorView = issues.CategoryEditorView.extend({
   },
   closeEditor: function(e) {
     if (!e || (e && (e.keyCode === 27 || !e.keyCode))) {
-      var checked = $("input[type=checkbox]:checked").prop("name");
+      var checked = this.$el.find("input[type=checkbox]:checked").prop("name");
       this.model.updateMilestone(checked);
 
       // detach() (vs remove()) here because we don't want to lose events if the
