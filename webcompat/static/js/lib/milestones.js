@@ -29,7 +29,8 @@ issues.MilestonesView = issues.CategoryView.extend({
     this.editorButton = $(".js-MilestoneEditorLauncher");
     this.milestoneEditor = new issues.MilestoneEditorView({
       model: new issues.MilestonesModel({
-        statuses: $("main").data("statuses")
+        statuses: $("main").data("statuses"),
+        issueModel: this.model
       }),
       issueView: this
     });
@@ -84,9 +85,7 @@ issues.MilestoneEditorView = issues.CategoryEditorView.extend({
   closeEditor: function(e) {
     if (!e || (e && (e.keyCode === 27 || !e.keyCode))) {
       var checked = $("input[type=checkbox]:checked").prop("name");
-      if (checked !== this.issueView.model.get("milestone")) {
-        this.model.updateMilestone(checked);
-      }
+      this.model.updateMilestone(checked);
 
       // detach() (vs remove()) here because we don't want to lose events if the
       // user reopens the editor.
