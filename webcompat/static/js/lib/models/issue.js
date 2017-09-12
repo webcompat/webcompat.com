@@ -21,6 +21,7 @@ if (!window.md) {
 
 issues.Issue = Backbone.Model.extend({
   _namespaceRegex: /(browser|closed|os|status)-/i,
+  _statuses: $("main").data("statuses"),
   urlRoot: function() {
     return "/api/issues/" + this.get("number");
   },
@@ -73,9 +74,10 @@ issues.Issue = Backbone.Model.extend({
     this.on(
       "change:milestone",
       _.bind(function() {
+        var milestone = this.get("milestone");
         this.set(
           "issueState",
-          this.getState(this.get("state"), this.get("milestone"))
+          this.getState(this._statuses[milestone].state, milestone)
         );
       }, this)
     );
