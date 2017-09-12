@@ -39,56 +39,49 @@ issues.Issue = Backbone.Model.extend({
       _.bind(function() {
         this.set(
           "issueState",
-          this.getState(this.get("state"), this.get("labels"))
+          this.getState(this.get("state"), this.get("milestone"))
         );
       }, this)
     );
   },
-  getState: function(state, labels) {
-    var labelsNames = _.pluck(labels, "name");
+  getState: function(state, milestone) {
     if (state === "closed") {
       this.set("stateClass", "closed");
-      return "Closed";
+      return "Closed: " + milestone[0].toUpperCase() + milestone.slice(1);
     }
-    if (labelsNames.indexOf("sitewait") > -1) {
+    if (milestone === "sitewait") {
       this.set("stateClass", "sitewait");
       return "Site Contacted";
     }
-    if (labelsNames.indexOf("contactready") > -1) {
+    if (milestone === "contactready") {
       this.set("stateClass", "ready");
       return "Ready for Outreach";
     }
-    if (labelsNames.indexOf("needsdiagnosis") > -1) {
+    if (milestone === "needsdiagnosis") {
       this.set("stateClass", "needsDiagnosis");
       return "Needs Diagnosis";
     }
-    if (labelsNames.indexOf("needscontact") > -1) {
+    if (milestone === "needscontact") {
       this.set("stateClass", "needsContact");
       return "Needs Contact";
     }
-    if (labelsNames.indexOf("fixed") > -1) {
-      this.set("stateClass", "fixed");
-      return "Fixed";
-    }
-    if (labelsNames.indexOf("worksforme") > -1) {
-      this.set("stateClass", "worksforme");
-      return "Appears to work";
-    }
+
     //Needs Triage is the default value.
     this.set("stateClass", "needstriage");
     return "Needs Triage";
   },
   parse: function(response) {
     var milestoneColors = $("main").data("statuses");
+    var milestone = response.milestone ? response.milestone.title : "";
     var labelList = new issues.LabelList({ labels: response.labels });
     var labels = labelList.get("labels");
     this.set({
       body: md.render(response.body),
       commentNumber: response.comments,
       createdAt: response.created_at.slice(0, 10),
-      issueState: this.getState(response.state, labels),
+      issueState: this.getState(response.state, milestone),
       labels: labels,
-      milestone: response.milestone ? response.milestone.title : "",
+      milestone: milestone,
       milestoneColors: milestoneColors,
       number: response.number,
       reporter: response.user.login,
