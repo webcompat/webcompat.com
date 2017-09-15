@@ -169,11 +169,14 @@ class TestAPIURLs(unittest.TestCase):
                                 environ_base=headers)
             self.assertEqual(rv.status_code, 403)
             # Valid request
-            data = {'state': 'open', 'milestone': 2}
-            patch_data = json.dumps(data)
-            rv = self.app.patch('/api/issues/1/edit', data=patch_data,
-                                environ_base=headers)
-            self.assertEqual(rv.status_code, 200)
+            with patch('webcompat.api.endpoints.proxy_request') as github_data:
+                github_data.return_value = mock_api_response(
+                    {'status_code': 200, 'content': '[]'})
+                data = {'state': 'open', 'milestone': 2}
+                patch_data = json.dumps(data)
+                rv = self.app.patch('/api/issues/1/edit', data=patch_data,
+                                    environ_base=headers)
+                self.assertEqual(rv.status_code, 200)
 
 
 if __name__ == '__main__':
