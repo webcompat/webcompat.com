@@ -6,6 +6,7 @@ var issues = issues || {}; // eslint-disable-line no-use-before-define
 
 issues.MilestonesModel = Backbone.Model.extend({
   initialize: function(options) {
+    this.issueModel = options.issueModel;
     // transform the format from the server into something that our templates
     // are expecting.
     var milestones = [];
@@ -24,22 +25,35 @@ issues.MilestonesModel = Backbone.Model.extend({
     );
     this.set("milestones", orderedMilestones);
   },
-  updateMilestones: function(data) {
-    // prevent talking to server in case we somehow got bogus data
-    if (!_.isObject(data)) {
+
+  updateMilestone: function(newMilestone) {
+    // prevent talking to server in case we somehow got useless data
+    if (
+      !_.isString(newMilestone) ||
+      newMilestone === this.issueModel.get("milestone")
+    ) {
       return;
     }
 
+    var statusObject = _.find(this.get("milestones"), function(status) {
+      return status.name === newMilestone;
+    });
+
     $.ajax({
       contentType: "application/json",
-      data: JSON.stringify(data),
+      data: JSON.stringify({
+        milestone: statusObject.id,
+        state: statusObject.state
+      }),
       type: "PATCH",
       url: "/api/issues/" + $("main").data("issueNumber") + "/edit",
       success: _.bind(function() {
-        var milestone = _.find(this.get("milestones"), function(status) {
-          return status.id === data.id;
+        var currentMilestone = _.find(this.get("milestones"), function(status) {
+          return status.id === statusObject.id;
         });
-        this.set("milestone", milestone);
+
+        this.set("milestone", currentMilestone);
+        this.issueModel.set("milestone", currentMilestone.name);
       }, this),
       error: function() {
         var msg = "There was an error editing this issues's status.";

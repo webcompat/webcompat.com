@@ -79,7 +79,7 @@ issues.LabelEditorView = issues.CategoryEditorView.extend({
     var remotename = $(evt.target).data("remotename");
     if (remotename.match(/^(priority)/) && evt.target.checked) {
       var prefix = remotename.split("-")[0];
-      checked = $(
+      checked = this.$el.find(
         'input[type=checkbox][data-remotename^="' + prefix + '"]:checked'
       );
       _.each(checked, function(item) {
@@ -90,7 +90,7 @@ issues.LabelEditorView = issues.CategoryEditorView.extend({
     }
     // we do the "real" save when you close the editor.
     // this just updates the UI responsively
-    checked = $("input[type=checkbox]:checked");
+    checked = this.$el.find("input[type=checkbox]:checked");
     // build up an array of objects that have
     // .name and .color props that the templates expect
     var modelUpdate = [];
@@ -103,7 +103,7 @@ issues.LabelEditorView = issues.CategoryEditorView.extend({
   },
   closeEditor: function(e) {
     if (!e || (e && (e.keyCode === 27 || !e.keyCode))) {
-      var checked = $("input[type=checkbox]:checked");
+      var checked = this.$el.find("input[type=checkbox]:checked");
       var labelsArray = _.pluck(checked, "name");
       this.issueView.editorButton.removeClass("is-active");
       this.issueView.model.updateLabels(labelsArray);

@@ -92,14 +92,6 @@ md.renderer.rules.link_open = function(tokens, idx, options, env, self) {
 
 issues.MetaDataView = Backbone.View.extend({
   el: $("#js-Issue-information"),
-  initialize: function() {
-    this.model.on(
-      "change:issueState",
-      _.bind(function() {
-        this.render();
-      }, this)
-    );
-  },
   template: wcTmpl["issue/metadata.jst"],
   render: function() {
     this.$el.html(this.template(this.model.toJSON()));
@@ -125,16 +117,12 @@ issues.AsideView = Backbone.View.extend({
 });
 
 issues.BodyView = Backbone.View.extend({
-  el: $(".wc-Issue-report"),
   mainView: null,
-  template: wcTmpl["issue/issue-report.jst"],
   initialize: function(options) {
     this.mainView = options.mainView;
   },
   render: function() {
-    this.$el.html(this.template(this.model.toJSON()));
     // hide metadata
-
     var issueDesc = $(".js-Issue-markdown");
     issueDesc
       .contents()

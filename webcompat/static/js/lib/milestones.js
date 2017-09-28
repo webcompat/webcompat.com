@@ -29,7 +29,8 @@ issues.MilestonesView = issues.CategoryView.extend({
     this.editorButton = $(".js-MilestoneEditorLauncher");
     this.milestoneEditor = new issues.MilestoneEditorView({
       model: new issues.MilestonesModel({
-        statuses: $("main").data("statuses")
+        statuses: $("main").data("statuses"),
+        issueModel: this.model
       }),
       issueView: this
     });
@@ -55,7 +56,7 @@ issues.MilestoneEditorView = issues.CategoryEditorView.extend({
   updateView: function(evt) {
     // We try to make sure only one milestone is set
     // enumerate all checked milestones and uncheck the others.
-    var checked = $(
+    var checked = this.$el.find(
       'input[type=checkbox][data-remotename^="milestone"]:checked'
     );
     _.each(checked, function(item) {
@@ -63,10 +64,13 @@ issues.MilestoneEditorView = issues.CategoryEditorView.extend({
         item.checked = false;
       }
     });
-    checked = $("input[type=checkbox]:checked");
+    checked = this.$el.find("input[type=checkbox]:checked");
     // we do the "real" save when you close the editor.
     // this just updates the UI responsively
-    this.reRender({ name: checked.prop("name"), color: checked.data("color") });
+    this.reRender({
+      milestone: checked.prop("name"),
+      color: checked.data("color")
+    });
   },
   render: function() {
     this.$el.html(this.template(this.model.toJSON()));
@@ -80,18 +84,8 @@ issues.MilestoneEditorView = issues.CategoryEditorView.extend({
   },
   closeEditor: function(e) {
     if (!e || (e && (e.keyCode === 27 || !e.keyCode))) {
-      var checked = $("input[type=checkbox]:checked").prop("name");
-      var statusObject = _.find(this.model.get("milestones"), function(status) {
-        return status.name === checked;
-      });
-
-      // Don't bother to update the server if nothing changed.
-      if (checked !== this.issueView.model.get("milestone")) {
-        this.model.updateMilestones({
-          milestone: statusObject.id,
-          state: statusObject.state
-        });
-      }
+      var checked = this.$el.find("input[type=checkbox]:checked").prop("name");
+      this.model.updateMilestone(checked);
 
       // detach() (vs remove()) here because we don't want to lose events if the
       // user reopens the editor.
