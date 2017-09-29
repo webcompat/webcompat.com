@@ -7,21 +7,12 @@ var issues = issues || {}; // eslint-disable-line no-use-before-define
 issues.MilestonesView = issues.CategoryView.extend({
   el: $(".js-Issue-milestones"),
   keyboardEvents: {
-    m: "openMilestoneEditor"
+    m: "openEditor"
   },
   template: wcTmpl["issue/issue-milestones.jst"],
   // this subTemplate will need to be kept in sync with
   // relavant parts in issue/issue-labels.jst
   subTemplate: wcTmpl["issue/issue-milestones-sub.jst"],
-  openMilestoneEditor: function(e) {
-    // make sure we're not typing in the search input.
-    if (e.target.nodeName === "TEXTAREA") {
-      return;
-    } else {
-      e.preventDefault();
-      this.openEditor();
-    }
-  },
   closeEditor: function() {
     this.milestoneEditor.closeEditor();
   },
@@ -38,7 +29,12 @@ issues.MilestonesView = issues.CategoryView.extend({
       this.editorButton.show();
     }
   },
-  editItems: function() {
+  openEditor: function(e) {
+    // make sure we're not typing in the comment textfield.
+    if (e && e.target.nodeName === "TEXTAREA") {
+      return;
+    }
+
     this.editorButton.addClass("is-active");
     this.$el
       .find(".js-MilestoneEditorLauncher")
