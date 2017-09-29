@@ -19,7 +19,7 @@ issues.MilestonesView = issues.CategoryView.extend({
       return;
     } else {
       e.preventDefault();
-      this.editItems();
+      this.openEditor();
     }
   },
   closeEditor: function() {

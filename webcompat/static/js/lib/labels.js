@@ -30,7 +30,7 @@ issues.LabelsView = issues.CategoryView.extend({
       return;
     } else {
       e.preventDefault();
-      this.editItems();
+      this.openEditor();
     }
   },
   closeEditor: function() {
@@ -50,7 +50,7 @@ issues.LabelsView = issues.CategoryView.extend({
   getIssueLabels: function() {
     return _.pluck(this.model.get("labels"), "name");
   },
-  editItems: function() {
+  openEditor: function() {
     this.editorButton.addClass("is-active");
     this.$el
       .find(".js-LabelEditorLauncher")
