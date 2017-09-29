@@ -31,6 +31,7 @@ issues.CategoryView = Backbone.View.extend({
     * updateView
 */
 issues.CategoryEditorView = Backbone.View.extend({
+  isOpen: false,
   className: "wc-CategoryEditor js-CategoryEditor",
   events: {
     "change input[type=checkbox]": "updateView",

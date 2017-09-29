@@ -35,6 +35,7 @@ issues.MilestonesView = issues.CategoryView.extend({
       return;
     }
 
+    this.milestoneEditor.isOpen = true;
     this.editorButton.addClass("is-active");
     this.$el
       .find(".js-MilestoneEditorLauncher")
@@ -79,14 +80,19 @@ issues.MilestoneEditorView = issues.CategoryEditorView.extend({
     return this;
   },
   closeEditor: function(e) {
-    if (!e || (e && (e.keyCode === 27 || !e.keyCode))) {
-      var checked = this.$el.find("input[type=checkbox]:checked").prop("name");
-      this.model.updateMilestone(checked);
+    if (this.isOpen) {
+      if (!e || (e && (e.keyCode === 27 || !e.keyCode))) {
+        this.isOpen = false;
+        var checked = this.$el
+          .find("input[type=checkbox]:checked")
+          .prop("name");
+        this.model.updateMilestone(checked);
 
-      // detach() (vs remove()) here because we don't want to lose events if the
-      // user reopens the editor.
-      this.$el.children().detach();
-      this.issueView.editorButton.removeClass("is-active");
+        // detach() (vs remove()) here because we don't want to lose events if the
+        // user reopens the editor.
+        this.$el.children().detach();
+        this.issueView.editorButton.removeClass("is-active");
+      }
     }
   }
 });

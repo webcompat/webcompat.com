@@ -47,6 +47,7 @@ issues.LabelsView = issues.CategoryView.extend({
       return;
     }
 
+    this.labelEditor.isOpen = true;
     this.editorButton.addClass("is-active");
     this.$el
       .find(".js-LabelEditorLauncher")
@@ -98,14 +99,18 @@ issues.LabelEditorView = issues.CategoryEditorView.extend({
     this.reRender({ labels: _.uniq(modelUpdate) });
   },
   closeEditor: function(e) {
-    if (!e || (e && (e.keyCode === 27 || !e.keyCode))) {
-      var checked = this.$el.find("input[type=checkbox]:checked");
-      var labelsArray = _.pluck(checked, "name");
-      this.issueView.editorButton.removeClass("is-active");
-      this.issueView.model.updateLabels(labelsArray);
-      // detach() (vs remove()) here because we don't want to lose events if the
-      // user reopens the editor.
-      this.$el.children().detach();
+    if (this.isOpen) {
+      if (!e || (e && (e.keyCode === 27 || !e.keyCode))) {
+        this.isOpen = false;
+        var checked = this.$el.find("input[type=checkbox]:checked");
+        var labelsArray = _.pluck(checked, "name");
+        this.issueView.editorButton.removeClass("is-active");
+        this.issueView.model.updateLabels(labelsArray);
+
+        // detach() (vs remove()) here because we don't want to lose events if the
+        // user reopens the editor.
+        this.$el.children().detach();
+      }
     }
   }
 });
