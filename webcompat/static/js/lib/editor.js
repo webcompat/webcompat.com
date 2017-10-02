@@ -5,7 +5,7 @@ var issues = issues || {}; // eslint-disable-line no-use-before-define
 
 /* Child classes need to define the following methods/properties:
     * closeEditor
-    * editItems
+    * openEditor
     * fetchItems (to get data from model)
     * template
     * subTemplate
@@ -14,7 +14,7 @@ issues.CategoryView = Backbone.View.extend({
   _isLoggedIn: $("body").data("username"),
   editorButton: null,
   events: {
-    "click .js-CategoryEditorLauncher:not(.is-active)": "editItems",
+    "click .js-CategoryEditorLauncher:not(.is-active)": "openEditor",
     "click .js-CategoryEditorLauncher.is-active": "closeEditor"
   },
   // template/subTemplate is defined in child class
@@ -31,6 +31,7 @@ issues.CategoryView = Backbone.View.extend({
     * updateView
 */
 issues.CategoryEditorView = Backbone.View.extend({
+  isOpen: false,
   className: "wc-CategoryEditor js-CategoryEditor",
   events: {
     "change input[type=checkbox]": "updateView",

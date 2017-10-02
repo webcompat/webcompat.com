@@ -18,21 +18,12 @@ if (!issues.allLabels) {
 issues.LabelsView = issues.CategoryView.extend({
   el: $(".js-Issue-labels"),
   keyboardEvents: {
-    l: "openLabelEditor"
+    l: "openEditor"
   },
   template: wcTmpl["issue/issue-labels.jst"],
   // this subTemplate will need to be kept in sync with
   // relavant parts in issue/issue-labels.jst
   subTemplate: wcTmpl["issue/issue-labels-sub.jst"],
-  openLabelEditor: function(e) {
-    // make sure we're not typing in the search input.
-    if (e.target.nodeName === "TEXTAREA") {
-      return;
-    } else {
-      e.preventDefault();
-      this.editItems();
-    }
-  },
   closeEditor: function() {
     this.labelEditor.closeEditor();
   },
@@ -50,7 +41,13 @@ issues.LabelsView = issues.CategoryView.extend({
   getIssueLabels: function() {
     return _.pluck(this.model.get("labels"), "name");
   },
-  editItems: function() {
+  openEditor: function(e) {
+    // make sure we're not typing in the comment textfield.
+    if (e && e.target.nodeName === "TEXTAREA") {
+      return;
+    }
+
+    this.labelEditor.isOpen = true;
     this.editorButton.addClass("is-active");
     this.$el
       .find(".js-LabelEditorLauncher")
@@ -102,14 +99,18 @@ issues.LabelEditorView = issues.CategoryEditorView.extend({
     this.reRender({ labels: _.uniq(modelUpdate) });
   },
   closeEditor: function(e) {
-    if (!e || (e && (e.keyCode === 27 || !e.keyCode))) {
-      var checked = this.$el.find("input[type=checkbox]:checked");
-      var labelsArray = _.pluck(checked, "name");
-      this.issueView.editorButton.removeClass("is-active");
-      this.issueView.model.updateLabels(labelsArray);
-      // detach() (vs remove()) here because we don't want to lose events if the
-      // user reopens the editor.
-      this.$el.children().detach();
+    if (this.isOpen) {
+      if (!e || (e && (e.keyCode === 27 || !e.keyCode))) {
+        this.isOpen = false;
+        var checked = this.$el.find("input[type=checkbox]:checked");
+        var labelsArray = _.pluck(checked, "name");
+        this.issueView.editorButton.removeClass("is-active");
+        this.issueView.model.updateLabels(labelsArray);
+
+        // detach() (vs remove()) here because we don't want to lose events if the
+        // user reopens the editor.
+        this.$el.children().detach();
+      }
     }
   }
 });
