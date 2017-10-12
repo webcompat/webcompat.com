@@ -105,7 +105,7 @@ def config_validator():
         sys.exit(TOKEN_HELP)
 
 
-def initialize_status(statuses):
+def initialize_status():
     """Map the status name with the milestone id on GitHub.
 
     The project needs the mapping in between milestones and their id
@@ -114,35 +114,41 @@ def initialize_status(statuses):
     """
     print('Statuses Initialization…')
     REPO_ROOT = app.config['ISSUES_REPO_URI'].rpartition('/issues')[0]
-    milestones_path = os.path.join('repos', REPO_ROOT, 'milestones')
+    milestones_url_path = os.path.join('repos', REPO_ROOT, 'milestones')
     milestones_url = urlparse.urlunparse(
-        ('https', 'api.github.com', milestones_path, '', '', ''))
-    milestones_file = os.path.join(app.config['DATA_PATH'], 'milestones.json')
+        ('https', 'api.github.com', milestones_url_path, '', '', ''))
+    milestones_path = os.path.join(app.config['DATA_PATH'], 'milestones.json')
     try:
         # Get the milestone from the network
         print('Fetching milestones from Github…')
         r = requests.get(milestones_url)
         milestones_content = r.content
+        print(r.status_code)
         if r.status_code == 200:
-            with open(milestones_file, 'w') as f:
+            with open(milestones_path, 'w') as f:
                 f.write(r.content)
             print('Milestones saved in data/')
         r.raise_for_status()
     except requests.exceptions.HTTPError as error:
         # Not working, let's use the cached copy
+        # This might fail the first time.
         print(MILESTONE_ERROR.format(msg=error))
-        with open(milestones_file, 'r') as f:
+        with open(milestones_path, 'r') as f:
             milestones_content = f.read()
     finally:
         # save in data/ the current version
-        print('Milestones in memory')
-        app.config.update(STATUSES=convert_milestones(milestones_content))
-        app.config.update(JSON_STATUSES=json.dumps(app.config['STATUSES']))
+        if milestones_content:
+            app.config.update(STATUSES=convert_milestones(milestones_content))
+            app.config.update(JSON_STATUSES=json.dumps(app.config['STATUSES']))
+            print('Milestones in memory')
+            return True
+        else:
+            return False
 
 
-def convert_milestones(milestones_file):
+def convert_milestones(milestones_content):
     """Convert the JSON milestones from GitHub to a simple dict."""
-    milestone_full = json.loads(milestones_file)
+    milestone_full = json.loads(milestones_content)
     for milestone in milestone_full:
         STATUSES[milestone['title']]['id'] = milestone['number']
     return STATUSES
@@ -157,7 +163,8 @@ if __name__ == '__main__':
 
     if check_pip_deps():
         # We need the milestones
-        initialize_status(app.config['STATUSES'])
+        if not initialize_status():
+            sys.exit('Milestones are not initialized.')
         if not args.testmode:
             # testing the config file.
             # this file is only important in non-test mode.
