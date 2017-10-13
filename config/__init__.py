@@ -4,7 +4,7 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-'''This module handles application configuration and secrets.'''
+"""This module handles application configuration and secrets."""
 
 from collections import namedtuple
 import json
