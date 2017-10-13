@@ -17,6 +17,10 @@ import requests
 from environment import *  # nopep8
 from secrets import *  # nopep8
 
+MILESTONE_ERROR = '''It failed with {msg}!
+We will read from data/milestones.json.
+'''
+
 
 def initialize_status():
     """Map the status name with the milestone id on GitHub.

@@ -30,10 +30,6 @@ https://github.com/webcompat/webcompat.com/blob/master/CONTRIBUTING.md#configuri
 ==============================================
 '''
 
-MILESTONE_ERROR = '''It failed with {msg}!
-We will read from data/milestones.json.
-'''
-
 
 try:
     from webcompat import app
