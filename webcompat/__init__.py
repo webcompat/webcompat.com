@@ -13,9 +13,11 @@ from flask_github import GitHub
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 
+# Define the application
 app = Flask(__name__, static_url_path='')
-app.config.from_object('config')
 
+# Configurations
+app.config.from_object('config')
 # set limit of 5.5MB for file uploads
 # in practice, this is ~4MB (5.5 / 1.37)
 # after the data URI is saved to disk
