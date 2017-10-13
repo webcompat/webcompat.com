@@ -6,17 +6,11 @@
 """Starter file for the project."""
 
 import argparse
-import json
-import os
 import pkg_resources
 from pkg_resources import DistributionNotFound
 from pkg_resources import VersionConflict
 import sys
-import urlparse
 
-import requests
-
-from config.environment import STATUSES
 
 IMPORT_ERROR = '''
 ==============================================
@@ -105,55 +99,6 @@ def config_validator():
         sys.exit(TOKEN_HELP)
 
 
-def initialize_status():
-    """Map the status name with the milestone id on GitHub.
-
-    The project needs the mapping in between milestones and their id
-    to be able to query status related things. It uses a backup version
-    when the request to GitHub fails.
-    """
-    print('Statuses Initialization…')
-    REPO_ROOT = app.config['ISSUES_REPO_URI'].rpartition('/issues')[0]
-    milestones_url_path = os.path.join('repos', REPO_ROOT, 'milestones')
-    milestones_url = urlparse.urlunparse(
-        ('https', 'api.github.com', milestones_url_path, '', '', ''))
-    milestones_path = os.path.join(app.config['DATA_PATH'], 'milestones.json')
-    try:
-        # Get the milestone from the network
-        print('Fetching milestones from Github…')
-        r = requests.get(milestones_url)
-        milestones_content = r.content
-        print(r.status_code)
-        if r.status_code == 200:
-            with open(milestones_path, 'w') as f:
-                f.write(r.content)
-            print('Milestones saved in data/')
-        r.raise_for_status()
-    except requests.exceptions.HTTPError as error:
-        # Not working, let's use the cached copy
-        # This might fail the first time.
-        print(MILESTONE_ERROR.format(msg=error))
-        with open(milestones_path, 'r') as f:
-            milestones_content = f.read()
-    finally:
-        # save in data/ the current version
-        if milestones_content:
-            app.config.update(STATUSES=convert_milestones(milestones_content))
-            app.config.update(JSON_STATUSES=json.dumps(app.config['STATUSES']))
-            print('Milestones in memory')
-            return True
-        else:
-            return False
-
-
-def convert_milestones(milestones_content):
-    """Convert the JSON milestones from GitHub to a simple dict."""
-    milestone_full = json.loads(milestones_content)
-    for milestone in milestone_full:
-        STATUSES[milestone['title']]['id'] = milestone['number']
-    return STATUSES
-
-
 if __name__ == '__main__':
     # Parsing arguments
     parser = argparse.ArgumentParser()
@@ -162,9 +107,6 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     if check_pip_deps():
-        # We need the milestones
-        if not initialize_status():
-            sys.exit('Milestones are not initialized.')
         if not args.testmode:
             # testing the config file.
             # this file is only important in non-test mode.
