@@ -4,6 +4,11 @@
 2. New features: affect minor number
 3. API endpoint changes or dependency version updates: affect major number
 
+## 5.7.4 - 2017-10-23
+
+* Clarify textarea in bugform with a placeholder and a new label [Pull #1843](https://github.com/webcompat/webcompat.com/pull/1843)
+* If no existing topsites.db, no archive [Pull #1815](https://github.com/webcompat/webcompat.com/pull/1815)
+
 ## 5.7.3 - 2017-09-11
 
 * Change application `SECRET_KEY` to force-evict sessions. [Pull #1818](https://github.com/webcompat/webcompat.com/issues/1818)
