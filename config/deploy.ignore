@@ -2,6 +2,7 @@
 selenium*
 fabfile.py*
 *.pyc
+data/
 docs/
 git_modules/
 grunt-tasks/
