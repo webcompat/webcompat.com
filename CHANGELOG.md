@@ -4,6 +4,10 @@
 2. New features: affect minor number
 3. API endpoint changes or dependency version updates: affect major number
 
+## 6.0.0 - 2017-10-30
+
+* Use Milestones for issue status [Pull #1841](https://github.com/webcompat/webcompat.com/pull/1841)
+
 ## 5.7.4 - 2017-10-23
 
 * Clarify textarea in bugform with a placeholder and a new label [Pull #1843](https://github.com/webcompat/webcompat.com/pull/1843)
