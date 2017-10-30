@@ -21,98 +21,68 @@ if (!window.md) {
 
 issues.Issue = Backbone.Model.extend({
   _namespaceRegex: /(browser|closed|os|status)-/i,
+  _statuses: $("main").data("statuses"),
   urlRoot: function() {
     return "/api/issues/" + this.get("number");
   },
-  initialize: function() {
-    this.on(
-      "change:state",
-      _.bind(function() {
-        this.set(
-          "issueState",
-          this.getState(this.get("state"), this.get("labels"))
-        );
-      }, this)
-    );
-    this.on(
-      "change:labels",
-      _.bind(function() {
-        this.set(
-          "issueState",
-          this.getState(this.get("state"), this.get("labels"))
-        );
-      }, this)
-    );
-  },
-  getState: function(state, labels) {
-    var labelsNames = _.pluck(labels, "name");
+  getState: function(state, milestone) {
     if (state === "closed") {
       this.set("stateClass", "closed");
-      return "Closed";
+      return "Closed: " + milestone[0].toUpperCase() + milestone.slice(1);
     }
-    if (labelsNames.indexOf("sitewait") > -1) {
+    if (milestone === "sitewait") {
       this.set("stateClass", "sitewait");
       return "Site Contacted";
     }
-    if (labelsNames.indexOf("contactready") > -1) {
+    if (milestone === "contactready") {
       this.set("stateClass", "ready");
       return "Ready for Outreach";
     }
-    if (labelsNames.indexOf("needsdiagnosis") > -1) {
+    if (milestone === "needsdiagnosis") {
       this.set("stateClass", "needsDiagnosis");
       return "Needs Diagnosis";
     }
-    if (labelsNames.indexOf("needscontact") > -1) {
+    if (milestone === "needscontact") {
       this.set("stateClass", "needsContact");
       return "Needs Contact";
     }
-    if (labelsNames.indexOf("fixed") > -1) {
-      this.set("stateClass", "fixed");
-      return "Fixed";
-    }
-    if (labelsNames.indexOf("worksforme") > -1) {
-      this.set("stateClass", "worksforme");
-      return "Appears to work";
-    }
+
     //Needs Triage is the default value.
     this.set("stateClass", "needstriage");
     return "Needs Triage";
   },
   parse: function(response) {
+    var milestoneColors = $("main").data("statuses");
+    var milestone = response.milestone ? response.milestone.title : "";
     var labelList = new issues.LabelList({ labels: response.labels });
     var labels = labelList.get("labels");
     this.set({
       body: md.render(response.body),
       commentNumber: response.comments,
       createdAt: response.created_at.slice(0, 10),
-      issueState: this.getState(response.state, labels),
+      issueState: this.getState(response.state, milestone),
       labels: labels,
+      milestone: milestone,
+      milestoneColors: milestoneColors,
       number: response.number,
       reporter: response.user.login,
       reporterAvatar: response.user.avatar_url,
       state: response.state,
       title: response.title
     });
+
+    this.on(
+      "change:milestone",
+      _.bind(function() {
+        var milestone = this.get("milestone");
+        this.set(
+          "issueState",
+          this.getState(this._statuses[milestone].state, milestone)
+        );
+      }, this)
+    );
   },
-  toggleState: function(callback) {
-    var newState = this.get("state") === "open" ? "closed" : "open";
-    $.ajax({
-      contentType: "application/json",
-      data: JSON.stringify({ state: newState }),
-      type: "PATCH",
-      url: "/api/issues/" + this.get("number") + "/edit",
-      success: _.bind(function() {
-        this.set("state", newState);
-        if (callback) {
-          callback();
-        }
-      }, this),
-      error: function() {
-        var msg = "There was an error editing this issues's status.";
-        wcEvents.trigger("flash:error", { message: msg, timeout: 4000 });
-      }
-    });
-  },
+
   updateLabels: function(labelsArray) {
     // Save ourselves some requests in case nothing has changed.
     if (

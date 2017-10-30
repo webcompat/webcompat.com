@@ -4,7 +4,8 @@
   {% include "shared/nav.html" %}
   <main class="wc-UISection wc-UISection--backgroundColor" role="main"
         data-issue-number={{ number }}
-        data-repo-path="{{config['ISSUES_REPO_URI']}}"
+        data-repo-path="{{ config['ISSUES_REPO_URI'] }}"
+        data-statuses="{{ config['JSON_STATUSES'] }}"
         >
     <div class="wc-Issue">
       <section class="wc-UIContent js-Issue is-hidden">
@@ -36,7 +37,10 @@
 <script src="{{ url_for('static', filename='js/issues.min.js')|bust_cache }}"></script>
 {% else %}
 <script src="{{ url_for('static', filename='js/lib/models/label-list.js') }}"></script>
+<script src="{{ url_for('static', filename='js/lib/editor.js') }}"></script>
 <script src="{{ url_for('static', filename='js/lib/labels.js') }}"></script>
+<script src="{{ url_for('static', filename='js/lib/models/milestones.js') }}"></script>
+<script src="{{ url_for('static', filename='js/lib/milestones.js') }}"></script>
 <script src="{{ url_for('static', filename='js/lib/models/issue.js') }}"></script>
 <script src="{{ url_for('static', filename='js/lib/models/comment.js') }}"></script>
 <script src="{{ url_for('static', filename='js/lib/comments.js') }}"></script>

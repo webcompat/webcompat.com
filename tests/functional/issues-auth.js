@@ -27,34 +27,6 @@ define(
         return FunctionalHelpers.logout(this);
       },
 
-      "Closing and reopening an issue": function() {
-        return FunctionalHelpers.openPage(
-          this,
-          url("/issues/70"),
-          ".wc-Issue-commentSubmit",
-          true
-        )
-          .findDisplayedByCssSelector(".js-Issue-state-button")
-          .click()
-          .end()
-          .sleep(1000)
-          .findByCssSelector(".js-Issue-state-button")
-          .getVisibleText()
-          .then(function(text) {
-            assert.equal(text, "Reopen Issue", "Button says Reopen not Close");
-          })
-          .end()
-          .findByCssSelector(".js-Issue-state-button")
-          .click()
-          .end()
-          .sleep(1000)
-          .findByCssSelector(".js-Issue-state-button")
-          .getVisibleText()
-          .then(function(text) {
-            assert.equal(text, "Close Issue", "Button says Close not Reopen");
-          });
-      },
-
       "Pressing 'l' opens the label editor box": function() {
         return FunctionalHelpers.openPage(
           this,

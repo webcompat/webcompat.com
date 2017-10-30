@@ -57,7 +57,9 @@
     "assignees": [
 
     ],
-    "milestone": null,
+    "milestone": {
+  "title": "sitewait"
+},
     "comments": 0,
     "created_at": "2015-07-29T18:17:26Z",
     "updated_at": "2015-08-04T20:06:25Z",
@@ -106,7 +108,9 @@
     "assignees": [
 
     ],
-    "milestone": null,
+    "milestone": {
+  "title": "sitewait"
+},
     "comments": 0,
     "created_at": "2014-08-01T08:13:38Z",
     "updated_at": "2015-07-30T19:22:35Z",
@@ -155,7 +159,9 @@
     "assignees": [
 
     ],
-    "milestone": null,
+    "milestone": {
+  "title": "sitewait"
+},
     "comments": 0,
     "created_at": "2014-08-01T08:04:51Z",
     "updated_at": "2015-07-30T19:22:35Z",
@@ -204,7 +210,9 @@
     "assignees": [
 
     ],
-    "milestone": null,
+    "milestone": {
+  "title": "sitewait"
+},
     "comments": 0,
     "created_at": "2014-08-01T08:02:19Z",
     "updated_at": "2015-07-30T19:22:35Z",
@@ -253,7 +261,9 @@
     "assignees": [
 
     ],
-    "milestone": null,
+    "milestone": {
+  "title": "sitewait"
+},
     "comments": 0,
     "created_at": "2014-08-01T07:45:19Z",
     "updated_at": "2015-07-30T19:22:35Z",
@@ -302,7 +312,9 @@
     "assignees": [
 
     ],
-    "milestone": null,
+    "milestone": {
+  "title": "sitewait"
+},
     "comments": 0,
     "created_at": "2014-08-01T00:16:43Z",
     "updated_at": "2015-07-30T19:22:35Z",
@@ -356,7 +368,9 @@
     "assignees": [
 
     ],
-    "milestone": null,
+    "milestone": {
+  "title": "sitewait"
+},
     "comments": 0,
     "created_at": "2014-07-31T23:04:48Z",
     "updated_at": "2015-07-30T19:22:35Z",

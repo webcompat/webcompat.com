@@ -19,7 +19,7 @@ define(
       };
 
       return {
-        name: "Labels (auth)",
+        name: "Milestones (auth)",
 
         setup: function() {
           return FunctionalHelpers.login(this);
@@ -29,19 +29,19 @@ define(
           return FunctionalHelpers.logout(this);
         },
 
-        "Label editor opens then closes (clicks)": function() {
+        "Milestone editor opens then closes (clicks)": function() {
           return FunctionalHelpers.openPage(
             this,
             url("/issues/2"),
-            ".js-LabelEditorLauncher",
+            ".js-MilestoneEditorLauncher",
             true /* longerTimeout */
           )
-            .findByCssSelector(".js-LabelEditorLauncher")
+            .findByCssSelector(".js-MilestoneEditorLauncher")
             .click()
             .end()
             .findByCssSelector(".js-CategoryEditor")
             .end()
-            .findByCssSelector(".js-LabelEditorLauncher")
+            .findByCssSelector(".js-MilestoneEditorLauncher")
             .click()
             .getAttribute("class")
             .then(function(className) {
@@ -50,20 +50,20 @@ define(
             .end();
         },
 
-        "Label editor opens then closes (key events)": function() {
+        "Milestone editor opens then closes (key events)": function() {
           return FunctionalHelpers.openPage(
             this,
             url("/issues/2"),
-            ".js-LabelEditorLauncher",
+            ".js-MilestoneEditorLauncher",
             true /* longerTimeout */
           )
             .findByCssSelector("body")
-            .type("l")
+            .type("m")
             .end()
             .findByCssSelector(".wc-CategoryEditor-search")
             .type(keys.ESCAPE)
             .end()
-            .findByCssSelector(".js-LabelEditorLauncher")
+            .findByCssSelector(".js-MilestoneEditorLauncher")
             .click()
             .getAttribute("class")
             .then(function(className) {
@@ -72,14 +72,14 @@ define(
             .end();
         },
 
-        "Clicking outside label editor closes it": function() {
+        "Clicking outside milestone editor closes it": function() {
           return FunctionalHelpers.openPage(
             this,
             url("/issues/2"),
-            ".js-LabelEditorLauncher",
+            ".js-MilestoneEditorLauncher",
             true /* longerTimeout */
           )
-            .findByCssSelector(".js-LabelEditorLauncher")
+            .findByCssSelector(".js-MilestoneEditorLauncher")
             .click()
             .end()
             .findByCssSelector(".js-CategoryEditor")
@@ -87,7 +87,7 @@ define(
             .findByCssSelector("main")
             .click()
             .end()
-            .findByCssSelector(".js-LabelEditorLauncher")
+            .findByCssSelector(".js-MilestoneEditorLauncher")
             .getAttribute("class")
             .then(function(className) {
               assert.notInclude("is-active", className);
@@ -99,16 +99,16 @@ define(
           return FunctionalHelpers.openPage(
             this,
             url("/issues/2"),
-            ".js-LabelEditorLauncher",
+            ".js-MilestoneEditorLauncher",
             true /* longerTimeout */
           )
-            .findByCssSelector(".js-LabelEditorLauncher")
+            .findByCssSelector(".js-MilestoneEditorLauncher")
             .click()
             .end()
             .findByCssSelector(".js-CategoryEditor-close")
             .click()
             .end()
-            .findByCssSelector(".js-LabelEditorLauncher")
+            .findByCssSelector(".js-MilestoneEditorLauncher")
             .getAttribute("class")
             .then(function(className) {
               assert.notInclude("is-active", className);

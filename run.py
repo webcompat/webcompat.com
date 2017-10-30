@@ -3,12 +3,14 @@
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
+"""Starter file for the project."""
 
 import argparse
 import pkg_resources
 from pkg_resources import DistributionNotFound
 from pkg_resources import VersionConflict
 import sys
+
 
 IMPORT_ERROR = '''
 ==============================================
@@ -70,11 +72,11 @@ pip install name==1.2.1
 
 
 def check_pip_deps():
-    '''Check installed pip dependencies.
+    """Check installed pip dependencies.
 
     Make sure that the installed pip packages match what is in
     requirements.txt, prompting the user to upgrade if not.
-    '''
+    """
     for req in open("./config/requirements.txt"):
         try:
             pkg_resources.require(req)
@@ -87,7 +89,7 @@ def check_pip_deps():
 
 
 def config_validator():
-    '''Make sure the config file is ready.'''
+    """Make sure the config file is ready."""
     # Checking if oauth token is configured
     if app.config['OAUTH_TOKEN'] == '':
         sys.exit(TOKEN_HELP)

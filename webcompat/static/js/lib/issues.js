@@ -92,14 +92,6 @@ md.renderer.rules.link_open = function(tokens, idx, options, env, self) {
 
 issues.MetaDataView = Backbone.View.extend({
   el: $("#js-Issue-information"),
-  initialize: function() {
-    this.model.on(
-      "change:issueState",
-      _.bind(function() {
-        this.render();
-      }, this)
-    );
-  },
   template: wcTmpl["issue/metadata.jst"],
   render: function() {
     this.$el.html(this.template(this.model.toJSON()));
@@ -125,16 +117,12 @@ issues.AsideView = Backbone.View.extend({
 });
 
 issues.BodyView = Backbone.View.extend({
-  el: $(".wc-Issue-report"),
   mainView: null,
-  template: wcTmpl["issue/issue-report.jst"],
   initialize: function(options) {
     this.mainView = options.mainView;
   },
   render: function() {
-    this.$el.html(this.template(this.model.toJSON()));
     // hide metadata
-
     var issueDesc = $(".js-Issue-markdown");
     issueDesc
       .contents()
@@ -307,78 +295,6 @@ issues.ImageUploadView = Backbone.View.extend({
   }
 });
 
-// TODO: add comment before closing if there's a comment.
-issues.StateButtonView = Backbone.View.extend({
-  el: $(".js-Issue-state-button"),
-  events: {
-    click: "toggleState"
-  },
-  hasComment: false,
-  mainView: null,
-  initialize: function(options) {
-    this.mainView = options.mainView;
-
-    issues.events.on(
-      "textarea:content",
-      _.bind(function() {
-        this.hasComment = true;
-        var buttonText;
-        if (this.model.get("state") === "open") {
-          buttonText = "Close and comment";
-        } else {
-          buttonText = "Reopen and comment";
-        }
-        this.$el.html(
-          this.template({
-            state: buttonText,
-            stateClass: buttonText.split(" ").join("-").toLowerCase()
-          })
-        );
-      }, this)
-    );
-
-    issues.events.on(
-      "textarea:empty",
-      _.bind(function() {
-        // Remove the "and comment" text if there's no comment.
-        this.render();
-      }, this)
-    );
-
-    this.model.on(
-      "change:state",
-      _.bind(function() {
-        this.render();
-      }, this)
-    );
-  },
-  template: wcTmpl["issue/state-button.jst"],
-  render: function() {
-    var buttonText;
-    if (this.model.get("state") === "open") {
-      buttonText = "Close Issue";
-    } else {
-      buttonText = "Reopen Issue";
-    }
-    this.$el.html(
-      this.template({
-        state: buttonText,
-        stateClass: buttonText.split(" ").join("-").toLowerCase()
-      })
-    );
-    return this;
-  },
-  toggleState: function() {
-    if (this.hasComment) {
-      this.model.toggleState(
-        _.bind(this.mainView.addNewComment, this.mainView)
-      );
-    } else {
-      this.model.toggleState();
-    }
-  }
-});
-
 issues.MainView = Backbone.View.extend({
   el: $(".js-Issue"),
   events: {
@@ -398,28 +314,43 @@ issues.MainView = Backbone.View.extend({
     this.comments = new issues.CommentsCollection({ pageNumber: 1 });
     this.initSubViews(
       _.bind(function() {
-        // set listener for closing label editor only after its
+        // set listener for closing category editor only after its
         // been initialized.
-        body.click(_.bind(this.closeLabelEditor, this));
+        body.click(_.bind(this.closeCategoryEditor, this));
       }, this)
     );
     this.fetchModels();
     this.handleKeyShortcuts();
   },
-  closeLabelEditor: function(e) {
+  closeCategoryEditor: function(e) {
     var target = $(e.target);
     // early return if the editor is closed,
     if (
-      !this.$el.find(".js-LabelEditor").is(":visible") ||
+      // If no category editor is visible
+      !this.$el.find(".js-CategoryEditor").is(":visible") ||
       // or we've clicked on the button to open it,
       (target[0].nodeName === "BUTTON" &&
-        target.hasClass("js-LabelEditorLauncher")) ||
+        target.hasClass("js-CategoryEditorLauncher")) ||
       // or clicked anywhere inside the label editor
-      target.parents(".js-LabelEditor").length
+      target.parents(".js-CategoryEditor").length
     ) {
+      // Clicking on one launcher will force to close the other one
+      if (
+        target[0].nodeName === "BUTTON" &&
+        target.hasClass("js-LabelEditorLauncher")
+      ) {
+        this.milestones.closeEditor();
+      } else if (
+        target[0].nodeName === "BUTTON" &&
+        target.hasClass("js-MilestoneEditorLauncher")
+      ) {
+        this.labels.closeEditor();
+      }
       return;
     } else {
+      // Click outside, close both editors
       this.labels.closeEditor();
+      this.milestones.closeEditor();
     }
   },
   githubWarp: function(e) {
@@ -439,11 +370,9 @@ issues.MainView = Backbone.View.extend({
     this.body = new issues.BodyView(_.extend(issueModel, { mainView: this }));
     this.aside = new issues.AsideView(issueModel);
     this.labels = new issues.LabelsView(issueModel);
+    this.milestones = new issues.MilestonesView(issueModel);
     this.textArea = new issues.TextAreaView();
     this.imageUpload = new issues.ImageUploadView();
-    this.stateButton = new issues.StateButtonView(
-      _.extend(issueModel, { mainView: this })
-    );
 
     callback();
   },
@@ -459,8 +388,9 @@ issues.MainView = Backbone.View.extend({
             this.issue.get("labels"),
             _.matchesProperty("name", "nsfw")
           );
+
           _.each(
-            [this.metadata, this.labels, this.body, this.stateButton, this],
+            [this.metadata, this.labels, this.milestones, this.body, this],
             function(elm) {
               elm.render();
               _.each($(".js-Issue-markdown code"), function(elm) {

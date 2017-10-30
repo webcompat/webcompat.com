@@ -1,0 +1,19 @@
+<script type="text/template">
+  <header class="wc-Issue-categoryEditor">
+    <div class="wc-Issue-categoryEditor-title">
+      Status
+    </div>
+    <% if ($("body").data("username")) { %>
+    <span class="wc-Issue-categoryEditor-button js-Issue-categoryEditor">
+      <button class="wc-CategoryEditorLauncher r-ResetButton wc-Icon wc-Icon--gear js-CategoryEditorLauncher js-MilestoneEditorLauncher" aria-hidden="true">
+        <span class="wc-Accessibility">Edit Statuses</span></button>
+    </span>
+    <% } %>
+  </header>
+   <div class="js-Category-list">
+    <span class="wc-Label wc-Label--badge js-Milestone"
+          style="background-color:<%= milestoneColors[milestone].color %>">
+      <%= milestone %>
+    </span>
+  </span>
+</script>

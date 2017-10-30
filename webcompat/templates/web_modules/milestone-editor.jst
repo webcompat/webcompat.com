@@ -1,23 +1,23 @@
 <script type="text/template">
   <div class="wc-CategoryEditor-header">
-    <input class="form-control wc-CategoryEditor-search" placeholder="filter label">
+    <input class="form-control wc-CategoryEditor-search" placeholder="filter status">
     <button class="wc-CategoryEditor-button r-ResetButton js-CategoryEditor-close"
             tabindex="0">
       Save &amp; Close
     </button>
   </div>
   <div class="wc-CategoryEditor-list" tabindex="-1">
-    <% _.each(labels, function(label) { %>
+    <% _.each(milestones, function(milestone) { %>
       <label class="wc-CategoryEditor-list-item" tabindex="0">
         <span class="wc-CategoryEditor-list-item-squareColor"
-              style="background-color:#<%=label.color%>">
+              style="background-color:<%= milestone.color %>">
           <input class="wc-CategoryEditor-list-item-checkbox"
-                 type="checkbox" name="<%= label.name %>"
-                 data-color="<%=label.color%>"
-                 data-remotename="<%= label.remoteName %>"
+                 type="checkbox" name="<%= milestone.name %>"
+                 data-color="<%= milestone.color %>"
+                 data-remotename="milestone-<%= milestone.name %>"
                  tabindex="-1">
         </span>
-        <span class="wc-CategoryEditor-list-item-name"><%= label.name %></span>
+        <span class="wc-CategoryEditor-list-item-name"><%= milestone.name %></span>
       </label>
     <% }); %>
   </div>

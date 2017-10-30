@@ -20,6 +20,11 @@
              class="wc-Labels" data-remotename="<%= label.remoteName %>"
              title="Labels : <%= label.name %>"><%= label.name %></a>
         <% }); %></span>
+        <span class="wc-IssueList-status js-Issue-status">
+          <a href="/issues?q=milestone:<%= issue.milestone %>"
+             class="wc-Labels" data-remotename="<%= issue.milestone %>"
+             title="Status : <%= issue.milestone %>"><%= issue.milestone %></a>
+        </span>
       </div>
     </article>
   <% }); %>

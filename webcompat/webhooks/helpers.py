@@ -131,9 +131,8 @@ def new_opened_issue(payload):
     '''When a new issue is opened, we set a couple of things.
 
     - Browser label
-    - status-needstriage
     '''
-    labels = ['status-needstriage']
+    labels = []
     issue_body = payload.get('issue')['body']
     issue_number = payload.get('issue')['number']
     browser_label = extract_browser_label(issue_body)

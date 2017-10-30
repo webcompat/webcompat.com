@@ -38,7 +38,7 @@
     "grunt-postcss": "^0.8.0",
     "grunt-travis-lint": "0.0.3",
     "husky": "^0.13.4",
-    "intern": "3.4.0",
+    "intern": "^3.4.6",
     "lint-staged": "^3.6.1",
     "load-grunt-tasks": "^3.5.2",
     "postcss": "^5.2.17",
