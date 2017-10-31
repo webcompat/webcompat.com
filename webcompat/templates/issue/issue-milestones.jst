@@ -12,7 +12,7 @@
   </header>
    <div class="js-Category-list">
     <span class="wc-Label wc-Label--badge js-Milestone"
-          style="background-color:<%= milestoneColors[milestone].color %>">
+          style="background-color:<%= milestoneColors[milestone] ? milestoneColors[milestone].color : 'red' %>">
       <%= milestone %>
     </span>
   </span>
