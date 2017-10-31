@@ -143,4 +143,6 @@ def new_opened_issue(payload):
         labels.append(browser_label)
     if priority_label:
         labels.append(priority_label)
-    return set_labels(labels, issue_number)
+    milestone = app.config['STATUSES']['needstriage']['id']
+    return update_issue({'labels': labels, 'milestone': milestone},
+                        issue_number)
