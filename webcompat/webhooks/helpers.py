@@ -133,6 +133,8 @@ def new_opened_issue(payload):
     '''When a new issue is opened, we set a couple of things.
 
     - Browser label
+    - Priority label
+    - Issue milestone
     '''
     labels = []
     issue_body = payload.get('issue')['body']

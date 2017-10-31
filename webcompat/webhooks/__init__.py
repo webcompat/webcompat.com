@@ -19,7 +19,6 @@ from helpers import extract_priority_label
 from helpers import is_github_hook
 from helpers import get_issue_info
 from helpers import new_opened_issue
-from helpers import set_labels
 from helpers import signature_check
 
 from webcompat import app
