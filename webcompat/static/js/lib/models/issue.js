@@ -53,7 +53,9 @@ issues.Issue = Backbone.Model.extend({
   },
   parse: function(response) {
     var milestoneColors = $("main").data("statuses");
-    var milestone = response.milestone ? response.milestone.title : "";
+    var milestone = response.milestone
+      ? response.milestone.title
+      : "Error: no status for this issue";
     var labelList = new issues.LabelList({ labels: response.labels });
     var labels = labelList.get("labels");
     this.set({
