@@ -4,6 +4,12 @@
 2. New features: affect minor number
 3. API endpoint changes or dependency version updates: affect major number
 
+## 6.0.1 - 2017-10-31
+
+### Halloween disappearing issue bugfix edition 🎃👻
+
+* Render an issue even if milestone failed to get set. [Pull #1853](https://github.com/webcompat/webcompat.com/pull/1853)
+
 ## 6.0.0 - 2017-10-30
 
 * Use Milestones for issue status [Pull #1841](https://github.com/webcompat/webcompat.com/pull/1841)
