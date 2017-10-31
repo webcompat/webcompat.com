@@ -39,18 +39,20 @@ def extract_browser_label(body):
         return None
 
 
-def set_labels(payload, issue_number):
-    """Does a GitHub POST request to set a label for the issue.
+def update_issue(payload, issue_number):
+    """Does a GitHub PATCH request to set labels and milestone for the issue.
 
-    POST /repos/:owner/:repo/issues/:number/labels
-    ['Label1', 'Label2']
+    PATCH /repos/:owner/:repo/issues/:number
+    {
+        "milestone": 2,
+        "labels": ['Label1', 'Label2']
+    }
     """
     headers = {
         'Authorization': 'token {0}'.format(app.config['OAUTH_TOKEN'])
     }
-    path = 'repos/{0}/{1}/labels'.format(
-        app.config['ISSUES_REPO_URI'], issue_number)
-    return proxy_request('post', path,
+    path = 'repos/{0}/{1}'.format(app.config['ISSUES_REPO_URI'], issue_number)
+    return proxy_request('patch', path,
                          headers=headers,
                          data=json.dumps(payload))
 
