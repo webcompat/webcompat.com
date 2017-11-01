@@ -39,18 +39,20 @@ def extract_browser_label(body):
         return None
 
 
-def set_labels(payload, issue_number):
-    """Does a GitHub POST request to set a label for the issue.
+def update_issue(payload, issue_number):
+    """Does a GitHub PATCH request to set labels and milestone for the issue.
 
-    POST /repos/:owner/:repo/issues/:number/labels
-    ['Label1', 'Label2']
+    PATCH /repos/:owner/:repo/issues/:number
+    {
+        "milestone": 2,
+        "labels": ['Label1', 'Label2']
+    }
     """
     headers = {
         'Authorization': 'token {0}'.format(app.config['OAUTH_TOKEN'])
     }
-    path = 'repos/{0}/{1}/labels'.format(
-        app.config['ISSUES_REPO_URI'], issue_number)
-    return proxy_request('post', path,
+    path = 'repos/{0}/{1}'.format(app.config['ISSUES_REPO_URI'], issue_number)
+    return proxy_request('patch', path,
                          headers=headers,
                          data=json.dumps(payload))
 
@@ -131,6 +133,8 @@ def new_opened_issue(payload):
     '''When a new issue is opened, we set a couple of things.
 
     - Browser label
+    - Priority label
+    - Issue milestone
     '''
     labels = []
     issue_body = payload.get('issue')['body']
@@ -141,4 +145,6 @@ def new_opened_issue(payload):
         labels.append(browser_label)
     if priority_label:
         labels.append(priority_label)
-    return set_labels(labels, issue_number)
+    milestone = app.config['STATUSES']['needstriage']['id']
+    return update_issue({'labels': labels, 'milestone': milestone},
+                        issue_number)

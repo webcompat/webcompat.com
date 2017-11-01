@@ -244,8 +244,7 @@ def build_formdata(form_object):
             image_url=form_object.get('image_upload').get('url'))
     # Append "from webcompat.com" message to bottom (for GitHub issue viewers)
     body += u'\n\n{0}'.format(GITHUB_HELP)
-    rv = {'title': summary, 'body': body,
-          'milestone': app.config['STATUSES']['needstriage']['id']}
+    rv = {'title': summary, 'body': body}
     extra_label = form_object.get('label', None)
     if extra_label and extra_label in app.config['EXTRA_LABELS']:
         rv.update({'labels': [extra_label]})
