@@ -51,13 +51,15 @@ class TestURIContent(unittest.TestCase):
             ('/issues', 'Issues'),
             ('issues/new', 'New Issue'),
             ('/privacy', 'Privacy Policy'),
+            ('/dashboard/triage', 'Triage Dashboard'),
             ('/404', defaultTitle)
         ]
-        for uri, title in website_uris:
-            rv = self.app.get(uri, environ_base=headers)
-            expected = '<title>{title} | webcompat.com</title>'.format(
-                title=title)
-            self.assertTrue(expected in rv.data)
+        with webcompat.app.app_context():
+            for uri, title in website_uris:
+                rv = self.app.get(uri, environ_base=headers)
+                expected = '<title>{title} | webcompat.com</title>'.format(
+                    title=title)
+                self.assertTrue(expected in rv.data)
 
     def test_user_title_pages(self):
         """Testing user activity page title."""
