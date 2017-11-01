@@ -132,6 +132,29 @@ class TestURLs(unittest.TestCase):
         rv = self.app.post('/issues/new', data=data)
         self.assertEqual(rv.status_code, 400)
 
+    def test_dashboard_triage(self):
+        """Request to /dashboard/triage should be 200."""
+        rv = self.app.get('/dashboard/triage')
+        self.assertEqual(rv.status_code, 200)
+        self.assertTrue('<h1>Triage Dashboard</h1>' in rv.data)
+        self.assertTrue('text/html' in rv.content_type)
+
+    def test_dashboard_route(self):
+        """Request to /dashboard should be 404.
+
+        For now, the dashboard route has no purpose.
+        """
+        rv = self.app.get('/dashboard/')
+        content_test = 'Lost in Punk Cat Space (404)' in rv.data
+        self.assertEqual(rv.status_code, 404)
+        self.assertTrue('text/html' in rv.content_type)
+        self.assertTrue(content_test)
+        rv = self.app.get('/dashboard')
+        content_test = 'Lost in Punk Cat Space (404)' in rv.data
+        self.assertEqual(rv.status_code, 404)
+        self.assertTrue('text/html' in rv.content_type)
+        self.assertTrue(content_test)
+
 
 if __name__ == '__main__':
     unittest.main()
