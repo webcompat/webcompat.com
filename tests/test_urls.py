@@ -4,7 +4,7 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-'''Tests for our URL endpoints.'''
+"""Tests for our URL endpoints."""
 
 import os.path
 import sys
@@ -21,44 +21,48 @@ headers = {'HTTP_USER_AGENT': ('Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; '
 
 
 class TestURLs(unittest.TestCase):
+    """Test for routes in the the project."""
+
     def setUp(self):
+        """Set up the tests."""
         webcompat.app.config['TESTING'] = True
         self.app = webcompat.app.test_client()
 
     def tearDown(self):
+        """Tear down the tests."""
         pass
 
     def test_home(self):
-        '''Test that the home page exists.'''
+        """Test that the home page exists."""
         rv = self.app.get('/', environ_base=headers)
         self.assertEqual(rv.status_code, 200)
 
     def test_new_issue(self):
-        '''Test that /issues/new exists.'''
+        """Test that /issues/new exists."""
         rv = self.app.get('/issues/new', environ_base=headers)
         self.assertEqual(rv.status_code, 200)
 
     def test_about(self):
-        '''Test that /about exists.'''
+        """Test that /about exists."""
         rv = self.app.get('/about')
         self.assertEqual(rv.status_code, 200)
 
     def test_privacy(self):
-        '''Test that /privacy exists.'''
+        """Test that /privacy exists."""
         rv = self.app.get('/privacy')
         self.assertEqual(rv.status_code, 200)
 
     def test_activity_page_401_if_not_logged_in(self):
-        '''Test that asks user to log in before displaying activity.'''
+        """Test that asks user to log in before displaying activity."""
         rv = self.app.get('/me')
         self.assertEqual(rv.status_code, 401)
 
     def test_issue_int(self):
-        '''Test issues and integer for:
+        """Test if issues are really integer.
 
         * an issue only displays if <number> is an integer
         * /issues/<number> exists, and does not redirect.
-        '''
+        """
         rv = self.app.get('/issues/3')
         self.assertEqual(rv.status_code, 200)
         self.assertNotEqual(rv.status_code, 404)
@@ -67,58 +71,58 @@ class TestURLs(unittest.TestCase):
         self.assertNotEqual(rv.status_code, 200)
 
     def test_issue_redirect(self):
-        '''Test that the /issues/<number> exists, and does not redirect.'''
+        """Test that the /issues/<number> exists, and does not redirect."""
         rv = self.app.get('/issues/3')
         self.assertEqual(rv.status_code, 200)
         self.assertNotEqual(rv.status_code, 307)
 
     def test_issues_list_page(self):
-        '''Test that the /issues route gets 200 and does not redirect.'''
+        """Test that the /issues route gets 200 and does not redirect."""
         rv = self.app.get('/issues')
         self.assertEqual(rv.status_code, 200)
         self.assertNotEqual(rv.status_code, 307)
 
     def test_csp_report_uri(self):
-        '''Test POST to /csp-report w/ correct content-type returns 204.'''
+        """Test POST to /csp-report w/ correct content-type returns 204."""
         headers = {'Content-Type': 'application/csp-report'}
         rv = self.app.post('/csp-report', headers=headers)
         self.assertEqual(rv.status_code, 204)
 
     def test_csp_report_uri_bad_content_type(self):
-        '''Test POST w/ wrong content-type to /csp-report returns 400.'''
+        """Test POST w/ wrong content-type to /csp-report returns 400."""
         headers = {'Content-Type': 'application/json'}
         rv = self.app.post('/csp-report', headers=headers)
         self.assertNotEqual(rv.status_code, 204)
         self.assertEqual(rv.status_code, 400)
 
     def test_tools_cssfixme(self):
-        '''Test that the /tools/cssfixme route gets 200.'''
+        """Test that the /tools/cssfixme route gets 200."""
         rv = self.app.get('/tools/cssfixme')
         self.assertEqual(rv.status_code, 200)
 
     def test_rate_limit(self):
-        '''Rate Limit URI sends 410 Gone.'''
+        """Rate Limit URI sends 410 Gone."""
         rv = self.app.get('/rate_limit')
         self.assertEqual(rv.status_code, 410)
 
     def test_tools_cssfixme_with_URL(self):
-        '''Test that the /tools/cssfixme route gets 200 with ?url query.'''
+        """Test that the /tools/cssfixme route gets 200 with ?url query."""
         url = '/tools/cssfixme?url=https://webcompat.com/css/webcompat.min.css'
         rv = self.app.get(url)
         self.assertEqual(rv.status_code, 200)
 
     def test_tools_cssfixme_with_nonsense_URL(self):
-        '''Test that the /tools/cssfixme route gets 200 with bad ?url query.'''
+        """Test that the /tools/cssfixme route gets 200 with bad ?url query."""
         rv = self.app.get('/tools/cssfixme?url=foobar')
         self.assertEqual(rv.status_code, 200)
 
     def test_missing_parameters_for_new_issue(self):
-        '''Sends 400 to POST on /issues/new with missing parameters.'''
+        """Sends 400 to POST on /issues/new with missing parameters."""
         rv = self.app.post('/issues/new', data=dict(url='foo'))
         self.assertEqual(rv.status_code, 400)
 
     def test_new_issue_should_not_crash(self):
-        '''/issues/new POST exit with 400 if missing parameters.'''
+        """/issues/new POST exit with 400 if missing parameters."""
         data = {'problem_category': u'mobile_site_bug',
                 'description': u'foo',
                 'submit-type': u'github-proxy-report',
