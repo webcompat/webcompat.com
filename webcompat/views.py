@@ -341,6 +341,12 @@ def cssfixme():
     return render_template('cssfixme.html')
 
 
+@app.route('/dashboard/triage')
+def dashboard_triage():
+    """Route to handle dashboard triage."""
+    return render_template('dashboard-triage.html')
+
+
 @app.route('/csp-report', methods=['POST'])
 def log_csp_report():
     """Route to record CSP header violations.
