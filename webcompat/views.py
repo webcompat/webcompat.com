@@ -353,7 +353,7 @@ def dashboard_triage():
 @app.route('/dashboard/triage')
 def dashboard_triage():
     """Route to handle dashboard triage."""
-    return render_template('dashboard-triage.html')
+    return render_template('dashboard/triage.html')
 
 
 @app.route('/csp-report', methods=['POST'])
