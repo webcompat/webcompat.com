@@ -27,6 +27,7 @@ from flask import request
 from flask import session
 from ua_parser import user_agent_parser
 
+from webcompat import api
 from webcompat import app
 from webcompat import github
 
@@ -543,3 +544,11 @@ def cache_policy(private=True, uri_max_age=86400, must_revalidate=False):
             return response
         return update_wrapper(policy, view)
     return set_policy
+
+
+def get_milestone_list(milestone_name, params=None):
+    """Return a dictionary of issues in the milestone."""
+    raw_response = api.endpoints.get_issue_category(
+        milestone_name, other_params=params)
+    milestone_list = json.loads(raw_response[0])
+    return milestone_list
