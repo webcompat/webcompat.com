@@ -17,6 +17,7 @@ from flask import send_from_directory
 from flask import session
 from flask import url_for
 
+from dashboard import filter_needstriage
 from form import AUTH_REPORT
 from form import get_form
 from form import PROXY_REPORT
@@ -24,6 +25,7 @@ from helpers import add_csp
 from helpers import add_sec_headers
 from helpers import cache_policy
 from helpers import get_browser_name
+from helpers import get_milestone_list
 from helpers import get_referer
 from helpers import get_user_info
 from helpers import set_referer
@@ -353,7 +355,15 @@ def dashboard_triage():
 @app.route('/dashboard/triage')
 def dashboard_triage():
     """Route to handle dashboard triage."""
-    return render_template('dashboard/triage.html')
+    if g.user:
+        get_user_info()
+    params = {'per_page': 100, 'sort': 'created', 'direction': 'asc'}
+    needstriage_issues = get_milestone_list('needstriage', params)
+    needstriage_list, total, priority = filter_needstriage(needstriage_issues)
+    return render_template(
+        'dashboard/triage.html',
+        needstriage_list=needstriage_list,
+        stats={'total': total, 'urgent': priority})
 
 
 @app.route('/csp-report', methods=['POST'])
