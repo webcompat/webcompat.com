@@ -112,12 +112,14 @@ def get_user_activity_issues(username, parameter):
 
 @api.route('/issues/category/<issue_category>')
 @mockable_response
-def get_issue_category(issue_category):
+def get_issue_category(issue_category, other_params=None):
     """Return all issues for a specific category."""
     category_list = app.config['OPEN_STATUSES']
     issues_path = 'repos/{0}'.format(ISSUES_PATH)
     params = request.args.copy()
-
+    # Used by the dashboard to adjust the list of issues
+    if other_params:
+        params.update(other_params)
     if issue_category in category_list:
         STATUSES = app.config['STATUSES']
         params.add('milestone', STATUSES[issue_category]['id'])
