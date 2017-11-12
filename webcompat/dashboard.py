@@ -17,7 +17,7 @@ from datetime import timedelta
 def filter_needstriage(milestone_list):
     """Filter out only the necessary data for the triage dashboard."""
     needstriage_list = []
-    date48h = datetime.utcnow() - timedelta(hours=48)
+    control_date = get_control_date(48)
     for issue in milestone_list:
         # Working on labels
         labels = [label['name'] for label in issue['labels']]
@@ -26,7 +26,7 @@ def filter_needstriage(milestone_list):
         # flag for issues with status-needinfo
         needinfo = has_needinfo(labels)
         # flag for issues which are older than 48h
-        priority = is_older(issue['created_at'], date48h)
+        priority = is_older(issue['created_at'], control_date)
         needstriage_list.append({
             'number': issue['number'],
             'title': issue['title'],
@@ -69,3 +69,8 @@ def is_older(issue_date, time_gap):
     if created < time_gap:
         priority = True
     return priority
+
+
+def get_control_date(hours):
+    """Return the date minus a certain number of hours."""
+    return datetime.utcnow() - timedelta(hours=hours)
