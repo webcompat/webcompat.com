@@ -330,8 +330,7 @@ def contributors():
 
 @app.route('/tools/cssfixme')
 def cssfixme():
-    """Route for CSS Fix me tool."""
-    return render_template('cssfixme.html')
+    return ('This tool is not being maintained anymore. See https://github.com/webcompat/css-fixme/ for more details.', 410)
 
 
 @app.route('/csp-report', methods=['POST'])

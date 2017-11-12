@@ -47,7 +47,6 @@ class TestURIContent(unittest.TestCase):
             ('/', defaultTitle),
             ('/about', 'About'),
             ('/contributors', 'Contributors'),
-            ('/tools/cssfixme', 'CSS Fix Me'),
             ('/issues/' + issueNum, 'Issue #' + issueNum),
             ('/issues', 'Issues'),
             ('issues/new', 'New Issue'),

@@ -94,23 +94,12 @@ class TestURLs(unittest.TestCase):
     def test_tools_cssfixme(self):
         '''Test that the /tools/cssfixme route gets 200.'''
         rv = self.app.get('/tools/cssfixme')
-        self.assertEqual(rv.status_code, 200)
+        self.assertEqual(rv.status_code, 410)
 
     def test_rate_limit(self):
         '''Rate Limit URI sends 410 Gone.'''
         rv = self.app.get('/rate_limit')
         self.assertEqual(rv.status_code, 410)
-
-    def test_tools_cssfixme_with_URL(self):
-        '''Test that the /tools/cssfixme route gets 200 with ?url query.'''
-        url = '/tools/cssfixme?url=https://webcompat.com/css/webcompat.min.css'
-        rv = self.app.get(url)
-        self.assertEqual(rv.status_code, 200)
-
-    def test_tools_cssfixme_with_nonsense_URL(self):
-        '''Test that the /tools/cssfixme route gets 200 with bad ?url query.'''
-        rv = self.app.get('/tools/cssfixme?url=foobar')
-        self.assertEqual(rv.status_code, 200)
 
     def test_missing_parameters_for_new_issue(self):
         '''Sends 400 to POST on /issues/new with missing parameters.'''
