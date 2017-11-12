@@ -330,7 +330,11 @@ def contributors():
 
 @app.route('/tools/cssfixme')
 def cssfixme():
-    return ('This tool is not being maintained anymore. See https://github.com/webcompat/css-fixme/ for more details.', 410)
+    msg = """
+    This resource doesn't exist anymore.
+    See https://github.com/webcompat/css-fixme/ 
+    for more details."""
+    return (msg, 410, {"content-type": "text/plain; charset=utf-8"})
 
 
 @app.route('/csp-report', methods=['POST'])
