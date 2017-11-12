@@ -51,8 +51,6 @@ We use [Grunt](http://gruntjs.com/) as a task runner to perform certain things (
 git clone https://github.com/<username>/webcompat.com.git #replace your github username
 # change to directory
 cd webcompat.com
-# check out submodules
-npm run module
 # initializing project
 npm run setup
 ```
