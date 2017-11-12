@@ -332,7 +332,7 @@ def contributors():
 def cssfixme():
     msg = """
     This resource doesn't exist anymore.
-    See https://github.com/webcompat/css-fixme/ 
+    See https://github.com/webcompat/css-fixme/
     for more details."""
     return (msg, 410, {"content-type": "text/plain; charset=utf-8"})
 
