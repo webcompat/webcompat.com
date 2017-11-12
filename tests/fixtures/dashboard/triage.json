@@ -16,21 +16,21 @@
         "name": "status-needinfo"
       }
     ],
-    "number": 1298,
+    "number": 1,
     "assignee": null,
     "repository_url": "https://api.github.com/repos/webcompat/webcompat-tests",
     "closed_at": null,
-    "id": 270043595,
-    "title": "blah blah blah - site is not usable",
+    "id": 1,
+    "title": "example.org - dashboard test",
     "comments": 0,
     "state": "open",
-    "body": "<!-- @browser: Firefox 57.0 -->\n<!-- @ua_header: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:57.0) Gecko/20100101 Firefox/57.0 -->\n<!-- @reported_with: web -->\n\n**URL**: blah blah blah\n\n**Browser / Version**: Firefox 57.0\n**Operating System**: Mac OS X 10.13\n**Tested Another Browser**: No\n\n**Problem type**: Site is not usable\n**Description**: testing things...\n**Steps to Reproduce**:\n\n\n\n\n_From [webcompat.com](https://webcompat.com/) with ❤️_",
-    "events_url": "https://api.github.com/repos/webcompat/webcompat-tests/issues/1298/events",
-    "labels_url": "https://api.github.com/repos/webcompat/webcompat-tests/issues/1298/labels{/name}",
+    "body": "<!-- @browser: Firefox 57.0 -->\n<!-- @ua_header: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:57.0) Gecko/20100101 Firefox/57.0 -->\n<!-- @reported_with: web -->\n\n**URL**: http://example.org/dashboard\n\n**Browser / Version**: Firefox 57.0\n**Operating System**: Mac OS X 10.13\n**Tested Another Browser**: No\n\n**Problem type**: Site is not usable\n**Description**: testing the dashboard...\n**Steps to Reproduce**:\n\n\n\n\n_From [webcompat.com](https://webcompat.com/) with ❤️_",
+    "events_url": "https://api.github.com/repos/webcompat/webcompat-tests/issues/1/events",
+    "labels_url": "https://api.github.com/repos/webcompat/webcompat-tests/issues/1/labels{/name}",
     "author_association": "MEMBER",
-    "comments_url": "https://api.github.com/repos/webcompat/webcompat-tests/issues/1298/comments",
-    "html_url": "https://github.com/webcompat/webcompat-tests/issues/1298",
-    "updated_at": "2017-11-08T06:26:23Z",
+    "comments_url": "https://api.github.com/repos/webcompat/webcompat-tests/issues/1/comments",
+    "html_url": "https://github.com/webcompat/webcompat-tests/issues/1",
+    "updated_at": "2017-11-10T12:00:00Z",
     "user": {
       "following_url": "https://api.github.com/users/webcompat-bot/following{/other_user}",
       "events_url": "https://api.github.com/users/webcompat-bot/events{/privacy}",
@@ -86,8 +86,8 @@
       "id": 2744172
     },
     "locked": false,
-    "url": "https://api.github.com/repos/webcompat/webcompat-tests/issues/1298",
-    "created_at": "2017-11-05T17:13:56Z",
+    "url": "https://api.github.com/repos/webcompat/webcompat-tests/issues/1",
+    "created_at": "2015-02-01T12:00:00Z",
     "assignees": []
   },
 {
@@ -107,21 +107,21 @@
         "name": "browser-firefox"
       }
     ],
-    "number": 1299,
+    "number": 2,
     "assignee": null,
     "repository_url": "https://api.github.com/repos/webcompat/webcompat-tests",
     "closed_at": null,
-    "id": 272086578,
+    "id": 2,
     "title": "dashboard.example.com - site is not usable",
     "comments": 0,
     "state": "open",
     "body": "<!-- @browser: Firefox 58.0 -->\n<!-- @ua_header: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:58.0) Gecko/20100101 Firefox/58.0 -->\n<!-- @reported_with: web -->\n\n**URL**: http://dashboard.example.com/\n\n**Browser / Version**: Firefox 58.0\n**Operating System**: Mac OS X 10.13\n**Tested Another Browser**: Yes\n\n**Problem type**: Site is not usable\n**Description**: triage dashboard testing\n**Steps to Reproduce**:\n\n\n\n\n_From [webcompat.com](https://webcompat.com/) with ❤️_",
-    "events_url": "https://api.github.com/repos/webcompat/webcompat-tests/issues/1299/events",
-    "labels_url": "https://api.github.com/repos/webcompat/webcompat-tests/issues/1299/labels{/name}",
+    "events_url": "https://api.github.com/repos/webcompat/webcompat-tests/issues/2/events",
+    "labels_url": "https://api.github.com/repos/webcompat/webcompat-tests/issues/2/labels{/name}",
     "author_association": "MEMBER",
-    "comments_url": "https://api.github.com/repos/webcompat/webcompat-tests/issues/1299/comments",
-    "html_url": "https://github.com/webcompat/webcompat-tests/issues/1299",
-    "updated_at": "2017-11-08T06:22:27Z",
+    "comments_url": "https://api.github.com/repos/webcompat/webcompat-tests/issues/2/comments",
+    "html_url": "https://github.com/webcompat/webcompat-tests/issues/2",
+    "updated_at": "2015-02-20T12:00:00Z",
     "user": {
       "following_url": "https://api.github.com/users/karlcow/following{/other_user}",
       "events_url": "https://api.github.com/users/karlcow/events{/privacy}",
@@ -177,8 +177,8 @@
       "id": 2744172
     },
     "locked": false,
-    "url": "https://api.github.com/repos/webcompat/webcompat-tests/issues/1299",
-    "created_at": "2017-11-08T06:21:45Z",
+    "url": "https://api.github.com/repos/webcompat/webcompat-tests/issues/2",
+    "created_at": "2015-02-20T12:00:00Z",
     "assignees": []
   }
 ]
