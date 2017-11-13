@@ -52,7 +52,7 @@
     "stylelint-config-standard": "^16.0.0"
   },
   "scripts": {
-    "setup": "npm run module && npm run virtualenv && npm install && npm run config",
+    "setup": "npm run virtualenv && npm install && npm run config",
     "watch": "grunt watch",
     "build": "grunt",
     "jst": "grunt jst",
