@@ -280,7 +280,7 @@ def show_rate_limit():
     – Blade Runner
 
     This resource doesn't exist anymore."""
-    return (msg, 410, {"content-type": "text/plain; charset=utf-8"})
+    return (msg, 410, {'content-type': 'text/plain; charset=utf-8'})
 
 
 if app.config['LOCALHOST']:
@@ -334,7 +334,7 @@ def cssfixme():
     This resource doesn't exist anymore.
     See https://github.com/webcompat/css-fixme/
     for more details."""
-    return (msg, 410, {"content-type": "text/plain; charset=utf-8"})
+    return (msg, 410, {'content-type': 'text/plain; charset=utf-8'})
 
 
 @app.route('/csp-report', methods=['POST'])
