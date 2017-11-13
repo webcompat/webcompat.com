@@ -52,7 +52,7 @@
     "stylelint-config-standard": "^16.0.0"
   },
   "scripts": {
-    "setup": "npm run module && npm run virtualenv && npm install && npm run config",
+    "setup": "npm run virtualenv && npm install && npm run config",
     "watch": "grunt watch",
     "build": "grunt",
     "jst": "grunt jst",
@@ -62,7 +62,6 @@
     "fix": "npm run lint:fix:JS",
     "lint:fix:JS": "eslint --fix ./Gruntfile.js ./tests ./grunt-tasks ./webcompat/static/js/lib",
     "imagemin": "grunt imagemin",
-    "module": "git submodule init && git submodule update",
     "prestart": "npm run build",
     "start": "source env/bin/activate || . env/bin/activate && python run.py",
     "start:test": "npm run build && source env/bin/activate || . env/bin/activate && python run.py -t",

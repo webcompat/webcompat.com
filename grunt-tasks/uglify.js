@@ -31,10 +31,6 @@ module.exports = function(grunt) {
     contributors: {
       src: "<%= jsPath %>/lib/contributors.js",
       dest: "<%= jsPath %>/contributors.min.js"
-    },
-    cssFixmeLibs: {
-      src: "<%= concat.cssFixmeLibs.dest %>",
-      dest: "<%= jsPath %>/cssfixme.min.js"
     }
   });
 };

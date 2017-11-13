@@ -66,14 +66,6 @@ module.exports = function(grunt) {
         "<%= jsPath %>/lib/user-activity.js"
       ],
       dest: "<%= jsPath %>/user-activity.js"
-    },
-    cssFixmeLibs: {
-      src: [
-        "git_modules/css-fixme/js/css-browserside.js",
-        "git_modules/css-fixme/js/css-fixme.js",
-        "<%= jsPath %>/lib/css-fixme-ui.js"
-      ],
-      dest: "<%= jsPath %>/cssfixme.js"
     }
   });
 };

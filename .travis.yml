@@ -38,7 +38,6 @@ install:
   - firefox --version
   # lint python
   - pep8 --ignore=E402 webcompat/ tests/ config/secrets.py.example
-  - npm run module
   - python run.py -t &
 
 before_script:
