@@ -55,7 +55,7 @@ cd webcompat.com
 npm run setup
 ```
 
-**Note**: if you got an error message, you may need to [install pip](#installing-pip) before running `make install` again.
+**Note**: if you got an error message, you may need to [install pip](#installing-pip) before running `npm run setup` again.
 
 **Note**: if you get an error message about missing rights to install the setup through npm, please *do not run `sudo npm`*. You just need to [fix you permissions](https://coderwall.com/p/t2mc9g/don-t-sudo-npm) for `usr/local`.
 
@@ -92,17 +92,14 @@ Windows users should simply download the most recent Python 2.7 installer and ru
 #### Installing Project source code
 
 ```bash
-# clone the repo. Change username to your Github username
-git clone git@github.com:username/webcompat.com.git
+# clone the repo. Change <username> to your Github username
+git clone git@github.com:<username>/webcompat.com.git
 # change to directory
 cd webcompat.com
-# check out submodules
-git submodule init
-git submodule update
 # set up virtual environment
 [sudo] virtualenv env
 source env/bin/activate
-# install Pillow image lib dependencies (if you plan on hacking on image upload features)
+# install Pillow image lib dependencies (optional: only required if you plan on hacking on image upload features)
 #  OSX: http://pillow.readthedocs.org/en/3.0.x/installation.html#os-x-installation
 #  Windows: http://pillow.readthedocs.org/en/3.0.x/installation.html#windows-installation
 #  Linux: http://pillow.readthedocs.org/en/3.0.x/installation.html#linux-installation
@@ -124,7 +121,7 @@ Install npm dependencies:
 npm install
 ```
 
-Then run grunt through npm (if you miss this step, when you try to start the server and view the site locally or run functional tests, you won't get the css!):
+Then run grunt through npm (if you miss this step, when you try to start the server and view the site locally or run functional tests, you won't get the compiled css or templates!):
 
 ```bash
 npm run build
@@ -167,7 +164,7 @@ You can now edit `secrets.py` and
   > Note: You can ignore the `FAKE_ID` and `FAKE_SECRET` environment variables, we use that as a hack for automated tests.
 
 4. Click on login to authorize the application and get access to the issues.
-![Login](https://cldup.com/HHtMlPhAod.png) 
+![Login](https://cldup.com/HHtMlPhAod.png)
 
 
 > **Note**: If you get a 404 at GitHub when clicking "Login", it means you haven't filled in the `GITHUB_CLIENT_ID` or `GITHUB_CLIENT_SECRET` in secrets.py.
