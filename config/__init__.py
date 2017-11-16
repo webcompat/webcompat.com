@@ -17,9 +17,14 @@ import requests
 from environment import *  # nopep8
 from secrets import *  # nopep8
 
-MILESTONE_ERROR = '''It failed with {msg}!
+MILESTONE_ERROR = """It failed with {msg}!
 We will read from data/milestones.json.
-'''
+"""
+MILESTONE_MISSING_FILE = """Oooops.
+We can't find {path}
+Double check that everything is configured properly
+in config/secrets.py and try again. Good luck!
+"""
 
 
 def initialize_status():
@@ -49,8 +54,7 @@ def initialize_status():
         # Not working, let's use the cached copy
         # This might fail the first time.
         print(MILESTONE_ERROR.format(msg=error))
-        with open(milestones_path, 'r') as f:
-            milestones_content = f.read()
+        milestones_content = milestones_from_file(milestones_path)
     finally:
         # save in data/ the current version
         if milestones_content:
@@ -60,6 +64,17 @@ def initialize_status():
             return True
         else:
             return False
+
+
+def milestones_from_file(milestones_path):
+    """Attempt to read the milestones data from the filesystem."""
+    if os.path.isfile(milestones_path):
+        with open(milestones_path, 'r') as f:
+            milestones_content = f.read()
+        return milestones_content
+    else:
+        print(MILESTONE_MISSING_FILE.format(path=milestones_path))
+        return None
 
 
 def convert_milestones(milestones_content):
