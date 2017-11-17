@@ -7,7 +7,7 @@
           </a>
         </li>
         <li class="footer-item{% if request.url_rule.endpoint == 'privacy' %} active{% endif %}">
-          <a class="footer-item-link" href="{{ url_for('privacy') }}">
+          <a class="footer-item-link" aria-label="go to privacy policy" href="{{ url_for('privacy') }}">
             Privacy Policy
           </a>
         </li>
@@ -17,14 +17,14 @@
           </a>
         </li>
         <li class="footer-item{% if request.url_rule.endpoint == 'contributors' %} active{% endif %}">
-          <a class="footer-item-link" href="{{ url_for('contributors') }}">
+          <a class="footer-item-link" aria-label="go to contributors" href="{{ url_for('contributors') }}">
             Contribute
           </a>
         </li>
       </ul>
       <ul class="grid-cell x1 footer-sub-icons">
         <li class="footer-icon icon-twitter">
-          <a class="footer-item-link" aria-label="open twitter in a new tab" href="https://twitter.com/webcompat/with_replies" target="_blank">
+          <a class="footer-item-link" aria-label="open Twitter in a new tab" href="https://twitter.com/webcompat/with_replies" target="_blank">
               <svg class="icon" role="presentation" aria-role="hide" viewBox="0 0 30 30">
                   <title>Twitter</title>
                   <use href="#svg-twitter-2">Twitter</use>
@@ -32,7 +32,7 @@
           </a>
         </li>
         <li class="footer-icon icon-twitter">
-          <a class="footer-item-link" aria-label="open github in a new tab" href=" https://github.com/webcompat/webcompat.com/" target="_blank">
+          <a class="footer-item-link" aria-label="open Github in a new tab" href=" https://github.com/webcompat/webcompat.com/" target="_blank">
               <svg class="icon" role="presentation" aria-role="hide" viewBox="0 0 30 30">
                   <title>github</title>
                   <use href="#svg-github">Github</use>
