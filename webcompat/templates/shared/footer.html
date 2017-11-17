@@ -1,40 +1,44 @@
-<footer class="wc-Footer" role="contentinfo">
-  <div class="wc-UIContent wc-UIContent--footer">
-    <div class="wc-Footer-wrapper">
-      <ul class="wc-Footer-list r-ResetList">
-        <li class="wc-Footer-item">
-          <a class="wc-Footer-link wc-Footer-link--separator" href="{{ url_for('about') }}">
-            <span class="wc-Footer-link-label">About</span>
+<footer id="footer" class="grid">
+  <section class="grid-row">
+      <ul class="grid-cell x2 footer-list">
+        <li class="footer-item{% if request.url_rule.endpoint == 'about' %} active{% endif %}">
+          <a class="footer-item-link" href="{{ url_for('about') }}">
+            About
           </a>
         </li>
-        <li class="wc-Footer-item">
-          <a class="wc-Footer-link wc-Footer-link--separator" href="{{ url_for('privacy') }}">
-            <span class="wc-Footer-link-label">Privacy Policy</span>
+        <li class="footer-item{% if request.url_rule.endpoint == 'privacy' %} active{% endif %}">
+          <a class="footer-item-link" href="{{ url_for('privacy') }}">
+            Privacy Policy
           </a>
         </li>
-        <li class="wc-Footer-item">
-          <a class="wc-Footer-link wc-Footer-link--separator" href="/humans.txt">
-            <span class="wc-Footer-link-label">Contact</span>
+        <li class="footer-item">
+          <a class="footer-item-link" aria-label="this is a txt file with all contacts" href="/humans.txt">
+            Contact
           </a>
         </li>
-        <li class="wc-Footer-item">
-          <a class="wc-Footer-link" href="{{ url_for('contributors') }}">
-            <span class="wc-Footer-link-label">Contribute</span>
-          </a>
-        </li>
-      </ul>
-      <ul class="wc-Footer-list wc-Footer-list--right r-ResetList">
-        <li class="wc-Footer-item wc-Footer-item--follow">
-          <a class="wc-Footer-link" href="https://twitter.com/webcompat/with_replies" target="_blank">
-            <span class="wc-Footer-icon wc-Footer-icon--twitter">Follow on Twitter</span>
-          </a>
-        </li>
-        <li class="wc-Footer-item wc-Footer-item--follow">
-          <a class="wc-Footer-link" href=" https://github.com/webcompat/webcompat.com/" target="_blank">
-            <span class="wc-Footer-icon wc-Footer-icon--github">See on Github</span>
+        <li class="footer-item{% if request.url_rule.endpoint == 'contributors' %} active{% endif %}">
+          <a class="footer-item-link" href="{{ url_for('contributors') }}">
+            Contribute
           </a>
         </li>
       </ul>
-    </div>
-  </div>
+      <ul class="grid-cell x1 footer-sub-icons">
+        <li class="footer-icon icon-twitter">
+          <a class="footer-item-link" aria-label="open twitter in a new tab" href="https://twitter.com/webcompat/with_replies" target="_blank">
+              <svg class="icon" role="presentation" aria-role="hide" viewBox="0 0 30 30">
+                  <title>Twitter</title>
+                  <use href="#twitter-2">Twitter</use>
+              </svg>
+          </a>
+        </li>
+        <li class="footer-icon icon-twitter">
+          <a class="footer-item-link" aria-label="open github in a new tab" href=" https://github.com/webcompat/webcompat.com/" target="_blank">
+              <svg class="icon" role="presentation" aria-role="hide" viewBox="0 0 30 30">
+                  <title>github</title>
+                  <use href="#github">Github</use>
+              </svg>
+          </a>
+        </li>
+      </ul>
+  </section>
 </footer>
