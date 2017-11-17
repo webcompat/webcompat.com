@@ -1,38 +1,58 @@
+<li class="nav-item">
+    <a href="/" title="Navigate to main page.">
+        <svg class="icon nav-icon" viewBox="0 0 30 30" role="presentation">
+            <title>Home</title>
+            <use href="#svg-home2">home</use>
+        </svg>
+        <span class="link-text">Home</span>
+    </a>
+</li>
+
+
 {%- if browser == 'firefox' %}
-<a href="https://addons.mozilla.org/en-US/firefox/addon/webcompatcom-reporter/" title="Download our Firefox Add-on" class="js-Navbar-link">
-  <svg class="icon" role="presentation" aria-role="hide" viewbox="0 0 30 30">
-    <title>cloud-download</title>
-    <use href="#svg-cloud-download"></use>
-  </svg>
-  <span class="link-text">Download our Firefox Add-on</span>
-</a>
+<li class="nav-item">
+    <a href="https://addons.mozilla.org/en-US/firefox/addon/webcompatcom-reporter/"
+       title="Navigate to firefox addon store">
+        <svg class="icon nav-icon" viewBox="0 0 30 30" role="presentation">
+            <title>Firefox addons</title>
+            <use href="#svg-cloud">firefox addons</use>
+        </svg>
+        <span class="link-text">Download our Firefox Add-on</span>
+    </a>
+</li>
 {%- elif browser == 'firefox mobile' -%}
-<a href="https://addons.mozilla.org/en-US/android/addon/webcompatcom-mobile-reporter/" title="Download our Firefox for Android Add-on"
-  class="js-Navbar-link">
-  <svg class="icon" role="presentation" aria-role="hide" viewbox="0 0 30 30">
-    <title>cloud-download</title>
-    <use href="#svg-cloud-download"></use>
-  </svg>
-  <span class="link-text">Download our Firefox for Android Add-on</span>
-</a>
+<li class="nav-item">
+    <a href="https://addons.mozilla.org/en-US/android/addon/webcompatcom-mobile-reporter/"
+       title="Navigate to firefox addon store">
+        <svg class="icon nav-icon" viewBox="0 0 30 30" role="presentation">
+            <title> Firefox for Android addons</title>
+            <use href="#svg-cloud"> Firefox for Android addons</use>
+        </svg>
+        <span class="link-text">Download our Firefox for Android Add-on</span>
+    </a>
+</li>
 {%- elif browser == 'chrome' -%}
-<a href="https://chrome.google.com/webstore/detail/webcompatcom-reporter/ffnnhckjcpbbjlmgfjigknkoffakclol" title="Download our Chrome Extension"
-  class="js-Navbar-link">
-  <svg class="icon" role="presentation" aria-role="hide" viewbox="0 0 30 30">
-    <title>cloud-download</title>
-    <use href="#svg-cloud-download"></use>
-  </svg>
-  <span class="link-text">Download our Chrome Extension</span>
-</a>
+<li class="nav-item">
+    <a href="https://chrome.google.com/webstore/detail/webcompatcom-reporter/ffnnhckjcpbbjlmgfjigknkoffakclol"
+       title="Navigate to chrome webstore">
+        <svg class="icon nav-icon" viewBox="0 0 30 30" role="presentation">
+            <title>Chrome webstore</title>
+            <use href="#svg-cloud">Chrome webstore</use>
+        </svg>
+        <span class="link-text">Download our Chrome Extension</span>
+    </a>
+</li>
 {%- elif browser == 'opera' -%}
-<a href="https://addons.opera.com/en/extensions/details/webcompatcom-reporter/?display=en" title="Download our Opera Extension"
-  class="js-Navbar-link">
-  <svg class="icon" role="presentation" aria-role="hide" viewbox="0 0 30 30">
-    <title>cloud-download</title>
-    <use href="#svg-cloud-download"></use>
-  </svg>
-  <span class="link-text">Download our Opera Extension</span>
-</a>
+<li class="nav-item">
+    <a href="https://addons.opera.com/en/extensions/details/webcompatcom-reporter/?display=en"
+       title="Navigate to opera addons">
+        <svg class="icon nav-icon" viewBox="0 0 30 30" role="presentation">
+            <title>Opera Extension</title>
+            <use href="#svg-cloud"> Opera Extension</use>
+        </svg>
+        <span class="link-text">Download our  Opera Extension</span>
+    </a>
+</li>
 {%- else -%}
 <li class="nav-item">
     <a href="https://github.com/webcompat/webcompat.com/issues?state=open" title="Navigate to github issues">
