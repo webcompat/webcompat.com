@@ -33,6 +33,7 @@
   <link href="https://webcompat.github.io/design/css/main.css" type="text/css" rel="stylesheet">
 </head>
 <body data-username="{{ session.username }}">
+  {% include "shared/svg-icons.html" %}
 <div class="wc-UIViewport">
   {% block body %}{% endblock %}
   {% include "shared/footer.html" %}
