@@ -1,41 +1,6 @@
 <footer id="footer" class="grid">
   <section class="grid-row">
       <ul class="grid-cell x2 footer-list">
-<<<<<<< HEAD
-        <li class="footer-item{% if request.url_rule.endpoint == 'index' %} active{% endif %}">
-          <a class="footer-item-link" aria-label="go to home" href="{{ url_for('index') }}">
-            Home
-          </a>
-        </li>
-        <li class="footer-item{% if request.url_rule.endpoint == 'show_issues' %} active{% endif %}">
-          <a class="footer-item-link" aria-label="go to list of isses" href="{{ url_for('show_issues') }}">
-            List of issues
-          </a>
-        </li>
-        <li class="footer-item{% if request.url_rule.endpoint == 'about' %} active{% endif %}">
-          <a class="footer-item-link" aria-label="go to about" href="{{ url_for('about') }}">
-            About
-          </a>
-        </li>
-        <li class="footer-item{% if request.url_rule.endpoint == 'contributors' %} active{% endif %}">
-          <a class="footer-item-link" aria-label="go to contribute" href="{{ url_for('contributors') }}">
-            Contribute
-          </a>
-        </li>
-        <li class="footer-item">
-          <a class="footer-item-link" aria-label="get contact information" href="./contact">
-            Contact
-          </a>
-        </li>
-        <li class="footer-item{% if request.url_rule.endpoint == 'privacy' %} active{% endif %}">
-          <a class="footer-item-link" aria-label="go to privacy policy" href="{{ url_for('privacy') }}">
-            Privacy Policy
-          </a>
-        </li>
-        <li class="footer-item">
-          <a class="footer-item-link" aria-label="go to code of conduct" href="https://github.com/webcompat/webcompat.com/blob/master/CODE_OF_CONDUCT.md">
-            Code of Conduct
-=======
         <li class="footer-item{% if request.url_rule.endpoint == 'about' %} active{% endif %}">
           <a class="footer-item-link" href="{{ url_for('about') }}">
             About
@@ -54,38 +19,23 @@
         <li class="footer-item{% if request.url_rule.endpoint == 'contributors' %} active{% endif %}">
           <a class="footer-item-link" href="{{ url_for('contributors') }}">
             Contribute
->>>>>>> Issue #1892 - Refactor footer.html to use the new markup
           </a>
         </li>
       </ul>
       <ul class="grid-cell x1 footer-sub-icons">
         <li class="footer-icon icon-twitter">
-<<<<<<< HEAD
-          <a class="footer-item-link" aria-label="open Twitter in a new tab" href="https://twitter.com/webcompat/with_replies" target="_blank">
-              <svg class="icon" role="presentation" aria-role="hide" viewBox="0 0 30 30">
-                  <title>Twitter</title>
-                  <use href="#svg-twitter">Twitter</use>
-=======
           <a class="footer-item-link" aria-label="open twitter in a new tab" href="https://twitter.com/webcompat/with_replies" target="_blank">
               <svg class="icon" role="presentation" aria-role="hide" viewBox="0 0 30 30">
                   <title>Twitter</title>
-                  <use href="#twitter-2">Twitter</use>
->>>>>>> Issue #1892 - Refactor footer.html to use the new markup
+                  <use href="#svg-twitter-2">Twitter</use>
               </svg>
           </a>
         </li>
         <li class="footer-icon icon-twitter">
-<<<<<<< HEAD
-          <a class="footer-item-link" aria-label="open Github in a new tab" href=" https://github.com/webcompat/webcompat.com/" target="_blank">
-              <svg class="icon" role="presentation" aria-role="hide" viewBox="0 0 30 30">
-                  <title>github</title>
-                  <use href="#svg-github2">Github</use>
-=======
           <a class="footer-item-link" aria-label="open github in a new tab" href=" https://github.com/webcompat/webcompat.com/" target="_blank">
               <svg class="icon" role="presentation" aria-role="hide" viewBox="0 0 30 30">
                   <title>github</title>
-                  <use href="#github">Github</use>
->>>>>>> Issue #1892 - Refactor footer.html to use the new markup
+                  <use href="#svg-github">Github</use>
               </svg>
           </a>
         </li>
