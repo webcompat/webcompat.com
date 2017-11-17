@@ -52,11 +52,10 @@ radio_message = u'Problem type required.'
 username_message = u'A valid username must be {0} characters long'.format(
     random.randrange(0, 99))
 
-desc_label = (u'Please describe what was wrong'
-              u' <span class="wc-Form-required">*</span>')
+desc_label = u'Please describe what was wrong'
 desc_message = u'An issue description is required.'
 
-url_label = u'Site URL <span class="wc-Form-required">*</span>'
+url_label = u'Site URL'
 browser_test_label = u'Did you test in another browser?'
 textarea_label = u'What steps did you take before this problem occurred?'
 
