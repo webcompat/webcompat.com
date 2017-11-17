@@ -1,47 +1,38 @@
 {%- if browser == 'firefox' %}
-<a class="wc-Navbar-link js-Navbar-link"
-   href="https://addons.mozilla.org/en-US/firefox/addon/webcompatcom-reporter/"
->
-  <span class="wc-Navbar-linkDownload-icon" aria-hidden="true">
-    <span class="wc-Icon wc-Icon--cloud-download"></span>
-  </span>
-  <span class="wc-Navbar-linkDownload-label">
-    <span class="wc-Navbar-linkDownload-label-word">Download our</span> Firefox Add-on
- </span>
+<a href="https://addons.mozilla.org/en-US/firefox/addon/webcompatcom-reporter/" title="Download our Firefox Add-on" class="js-Navbar-link">
+  <svg class="icon" role="presentation" aria-role="hide" viewbox="0 0 30 30">
+    <title>cloud-download</title>
+    <use href="#cloud-download"></use>
+  </svg>
+  <span class="link-text">Download our Firefox Add-on</span>
 </a>
 {%- elif browser == 'firefox mobile' -%}
-<a class="wc-Navbar-link js-Navbar-link"
-   href="https://addons.mozilla.org/en-US/android/addon/webcompatcom-mobile-reporter/"
->
-  <span class="wc-Navbar-linkDownload-icon" aria-hidden="true">
-    <span class="wc-Icon wc-Icon--cloud-download"></span>
-  </span>
-   <span class="wc-Navbar-linkDownload-label">
-     <span class="wc-Navbar-linkDownload-label-word">Download our Firefox for</span> Android Add-on
-  </span>
+<a href="https://addons.mozilla.org/en-US/android/addon/webcompatcom-mobile-reporter/" title="Download our Firefox for Android Add-on"
+  class="js-Navbar-link">
+  <svg class="icon" role="presentation" aria-role="hide" viewbox="0 0 30 30">
+    <title>cloud-download</title>
+    <use href="#cloud-download"></use>
+  </svg>
+  <span class="link-text">Download our Firefox for Android Add-on</span>
 </a>
 {%- elif browser == 'chrome' -%}
-<a class="wc-Navbar-link js-Navbar-link"
-    href="https://chrome.google.com/webstore/detail/webcompatcom-reporter/ffnnhckjcpbbjlmgfjigknkoffakclol"
->
-  <span class="wc-Navbar-linkDownload-icon" aria-hidden="true">
-    <span class="wc-Icon wc-Icon--cloud-download"></span>
-  </span>
-  <span class="wc-Navbar-linkDownload-label">
-    <span class="wc-Navbar-linkDownload-label-word">Download our</span> Chrome Extension
- </span>
+<a href="https://chrome.google.com/webstore/detail/webcompatcom-reporter/ffnnhckjcpbbjlmgfjigknkoffakclol" title="Download our Chrome Extension"
+  class="js-Navbar-link">
+  <svg class="icon" role="presentation" aria-role="hide" viewbox="0 0 30 30">
+    <title>cloud-download</title>
+    <use href="#cloud-download"></use>
+  </svg>
+  <span class="link-text">Download our Chrome Extension</span>
 </a>
 {%- elif browser == 'opera' -%}
-<a class="wc-Navbar-link js-Navbar-link"
-   href="https://addons.opera.com/en/extensions/details/webcompatcom-reporter/?display=en"
->
-  <span class="wc-Navbar-linkDownload-icon" aria-hidden="true">
-    <span class="wc-Icon wc-Icon--cloud-download"></span>
-  </span>
-  <span class="wc-Navbar-linkDownload-label">
-    <span class="wc-Navbar-linkDownload-label-word">Download our </span> Opera Extension
- </span>
+<a href="https://addons.opera.com/en/extensions/details/webcompatcom-reporter/?display=en" title="Download our Opera Extension"
+  class="js-Navbar-link">
+  <svg class="icon" role="presentation" aria-role="hide" viewbox="0 0 30 30">
+    <title>cloud-download</title>
+    <use href="#cloud-download"></use>
+  </svg>
+  <span class="link-text">Download our Opera Extension</span>
 </a>
 {%- else -%}
-<a class="wc-Navbar-link js-Navbar-link" href="https://github.com/webcompat/webcompat.com/issues?state=open">Give Feedback</a>
+<a class="js-Navbar-link" href="https://github.com/webcompat/webcompat.com/issues?state=open">Give Feedback</a>
 {%- endif -%}
