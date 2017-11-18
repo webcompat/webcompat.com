@@ -12,12 +12,12 @@
           </a>
         </li>
         <li class="footer-item">
-          <a class="footer-item-link" aria-label="this is a txt file with all contacts" href="/humans.txt">
+          <a class="footer-item-link" aria-label="downloads a text file with all conributors and contacts" href="/humans.txt">
             Contact
           </a>
         </li>
         <li class="footer-item{% if request.url_rule.endpoint == 'contributors' %} active{% endif %}">
-          <a class="footer-item-link" aria-label="go to contributors" href="{{ url_for('contributors') }}">
+          <a class="footer-item-link" aria-label="go to contribute" href="{{ url_for('contributors') }}">
             Contribute
           </a>
         </li>
