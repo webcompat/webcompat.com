@@ -1,3 +1,42 @@
-<ul class="contributors__list">
-  <li class="contributors__list__item"><span>Head on over to <a href="https://github.com/webcompat/webcompat.com/issues/">GitHub</a> to file an issue for bugs or new features. <a href="https://github.com/webcompat/webcompat.com/blob/master/CONTRIBUTING.md">Contributions welcome!</a></span></li>
-</ul>
+{% extends "layout.html" %}
+{% block title %}Contributors{% endblock %}
+{% block body %}
+<div>
+  {% include "shared/nav.html" %}
+  <main role="main">
+    <section class="grid grid-show-gap">
+      <div class="grid-row">
+        <aside class="grid-cell x1-fix">
+          <ol class="sub-nav" class="sub-nav">
+            <li class="sub-nav-header">Table of Contents</li>
+            <li><a href="/contributors">Join Us</a></li>
+            <li>
+              Get Started
+              <ol class="nested-sub-nav">
+                <li><a href="/contributors/reproduce-bug">Reproduce a Bug</a></li>
+                <li><a href="/contributors/diagnose-bug">Diagnose a Bug</a></li>
+                <li><a href="/contributors/site-outreach">Site outreach</a></li>
+                <li class="sub-nav-active"><a href="/contributors/contribute">Contribute</a></li>
+              </ol>
+            </li>
+          </ol>
+        </aside>
+        <div class="grid-cell x1">
+          <section>
+            <ul class="contributors__list">
+              <li class="contributors__list__item"><span>Head on over to <a href="https://github.com/webcompat/webcompat.com/issues/">GitHub</a> to file an issue for bugs or new features. <a href="https://github.com/webcompat/webcompat.com/blob/master/CONTRIBUTING.md">Contributions welcome!</a></span></li>
+            </ul>
+          </section>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+{% endblock %}
+{%- block extrascripts -%}
+{%- if config.PRODUCTION or config.STAGING -%}
+<script src="{{ url_for('static', filename='js/contributors.min.js')|bust_cache }}"></script>
+{% else %}
+<script src="{{ url_for('static', filename='js/lib/contributors.js') }}"></script>
+{%- endif %}
+{%- endblock %}
