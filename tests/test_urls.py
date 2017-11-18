@@ -48,6 +48,11 @@ class TestURLs(unittest.TestCase):
         rv = self.app.get('/privacy')
         self.assertEqual(rv.status_code, 200)
 
+    def test_contact(self):
+        '''Test that /contact exists.'''
+        rv = self.app.get('/contact')
+        self.assertEqual(rv.status_code, 200)
+
     def test_activity_page_401_if_not_logged_in(self):
         '''Test that asks user to log in before displaying activity.'''
         rv = self.app.get('/me')
