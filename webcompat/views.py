@@ -329,6 +329,14 @@ def privacy():
         get_user_info()
     return render_template('privacy.html')
 
+@app.route('/contact')
+@cache_policy(private=True, uri_max_age=0, must_revalidate=True)
+def contact():
+    """Route to display contact page."""
+    if g.user:
+        get_user_info()
+    return render_template('contact.html')
+
 
 @app.route('/contributors')
 @cache_policy(private=True, uri_max_age=0, must_revalidate=True)
