@@ -52,7 +52,6 @@ class TestURLs(unittest.TestCase):
         rv = self.app.get('/privacy')
         self.assertEqual(rv.status_code, 200)
 
-<<<<<<< HEAD:tests/unit/test_urls.py
     def test_contributors(self):
         '''Test that /contributors exists.'''
         rv = self.app.get('/contributors')
