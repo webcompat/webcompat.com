@@ -1,27 +1,39 @@
-<a class="wc-Navbar-link js-Navbar-link" href="/#contribute">
-  <span class="wc-Navbar-link-icon wc-Icon wc-Icon--contribute" aria-hidden="true"></span>
-  <span class="wc-Navbar-link-label">Contribute</span>
-</a>
-<a class="wc-Navbar-link js-issues-link"
-    href="{{ url_for('show_issues') }}?page=1&per_page=50&state=open&stage=all&sort=created&direction=desc"
->
-  <span class="wc-Navbar-link-icon wc-Icon wc-Icon--list" aria-hidden="true"></span>
-  <span class="wc-Navbar-link-label">All issues</span>
-</a>
+<li class="nav-item">
+    <a href="/#contribute" title="Contribute to our project.">
+        <svg class="icon nav-icon" viewBox="0 0 30 30" role="presentation">
+            <use href="#svg-users">Contribute</use>
+        </svg>
+        <span class="link-text">Contribute</span>
+    </a>
+</li>
+<li class="nav-item">
+    <a href="{{ url_for('show_issues') }}?page=1&per_page=50&state=open&stage=all&sort=created&direction=desc" title="Take a look at all filed issues.">
+        <svg class="icon nav-icon" viewBox="0 0 30 30" role="presentation">
+            <use href="#svg-list">All issues</use>
+        </svg>
+        <span class="link-text">All issues</span>
+    </a>
+</li>
 {% if not session.user_id %}
-  <a class="wc-Navbar-link js-login-link" href="{{ url_for('login') }}">
-    <span class="wc-Navbar-link-icon wc-Icon wc-Icon--arrow-circle-right" aria-hidden="true"></span>
-    <span class="wc-Navbar-link-label">Log in</span>
-  </a>
+<li class="nav-item">
+    <a href="{{ url_for('login') }}" class="js-login-link" title="Log in with your Github account.">
+        <svg class="icon nav-icon" viewBox="0 0 30 30" role="presentation">
+            <use href="#svg-arrow">Log in</use>
+        </svg>
+        <span class="link-text">Log in</span>
+    </a>
+</li>
 {% else %}
-  <div class="r-ResetButton wc-Navbar-link js-login-link wc-DropdownHeader">
-    <button class="r-ResetButton" aria-pressed="false">
-      <img class="wc-Navbar-avatar" src="{{ session.avatar_url }}s=50" alt="User Avatar">
-      <span class="wc-Navbar-link-icon wc-Icon wc-Icon--chevron-down" aria-hidden="true"></span>
-    </button>
-    <div class="wc-DropdownHeader-content">
-      <a class="wc-Navbar-linkDropdown" href="{{ url_for('me_redirect') }}">My Activity</a>
-      <a class="wc-Navbar-linkDropdown" href="{{ url_for('logout') }}">Logout</a>
+<li class="nav-item">
+    <div class="r-ResetButton wc-Navbar-link js-login-link wc-DropdownHeader">
+        <button class="r-ResetButton" aria-pressed="false">
+            <img class="wc-Navbar-avatar" src="{{ session.avatar_url }}s=50" alt="User Avatar">
+            <span class="wc-Navbar-link-icon wc-Icon wc-Icon--chevron-down" aria-hidden="true"></span>
+        </button>
+        <div class="wc-DropdownHeader-content">
+            <a class="wc-Navbar-linkDropdown" href="{{ url_for('me_redirect') }}">My Activity</a>
+            <a class="wc-Navbar-linkDropdown" href="{{ url_for('logout') }}">Logout</a>
+        </div>
     </div>
-  </div>
+</li>
 {% endif %}
