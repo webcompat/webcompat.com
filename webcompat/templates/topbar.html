@@ -1,5 +1,5 @@
 <nav id="Nav" class="nav">
-    <div class="nav-container  js-SearchBar">
+    <div class="nav-container js-SearchBar">
         <ul class="nav-left">
             {%- if request.url_rule.endpoint == 'create_issue' %}
 
@@ -20,11 +20,12 @@
             <li class="nav-item">
                 <button title="Search for an item.">
                     <svg class="icon nav-icon" viewBox="0 0 30 30" role="presentation">
-                        <use href="#search">Search</use>
+                        <use href="#svg-search">Search</use>
                     </svg>
                     <span class="link-text">Search</span>
                 </button>
             </li>
+            {% include "shared/shared-nav-links.html" %}
         </ul>
 
 <!--
