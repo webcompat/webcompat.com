@@ -338,6 +338,37 @@ def contributors():
         get_user_info()
     return render_template('contributors.html')
 
+@app.route('/contributors/contribute')
+@cache_policy(private=True, uri_max_age=0, must_revalidate=True)
+def contributors_contribute():
+    """Route to display contributors/contribute page."""
+    if g.user:
+        get_user_info()
+    return render_template('contributors/contribute.html')
+
+@app.route('/contributors/diagnose-bug')
+@cache_policy(private=True, uri_max_age=0, must_revalidate=True)
+def contributors_diagnose_bug():
+    """Route to display contributors/diagnose-bug page."""
+    if g.user:
+        get_user_info()
+    return render_template('contributors/diagnose-bug.html')
+
+@app.route('/contributors/reproduce-bug')
+@cache_policy(private=True, uri_max_age=0, must_revalidate=True)
+def contributors_reproduce_bug():
+    """Route to display contributors/reproduce-bug page."""
+    if g.user:
+        get_user_info()
+    return render_template('contributors/reproduce-bug.html')
+
+@app.route('/contributors/site-outreach')
+@cache_policy(private=True, uri_max_age=0, must_revalidate=True)
+def contributors_site_outreach():
+    """Route to display contributors/site-outreach page."""
+    if g.user:
+        get_user_info()
+    return render_template('contributors/site-outreach.html')
 
 @app.route('/tools/cssfixme')
 def cssfixme():
