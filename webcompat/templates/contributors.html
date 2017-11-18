@@ -2,80 +2,29 @@
 {% block title %}Contributors{% endblock %}
 {% block body %}
 <div>
-{% include "shared/nav.html" %}
-<main role="main">
-  <div class="wc-Hero wc-Hero--contributors">
-    <div class="wc-UIContent">
-      <div class="wc-Hero-wrapper">
-        <div class="wc-Hero-textContributors ">
-          <h1 class="wc-Title wc-Title--xl">
-            <span class="wc-Hero-title js-Hero-title">Welcome aboard!<br/>Get started below...</span>
-          </h1>
-        </div>
-        <div class="wc-Hero-SVG is-active js-Hero-svg">
-          {# TODO - we removed outdated images - include "shared/LightbulbwithBug.svg" #}
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="contributors">
-    <div class="contributors__item">
-      <div class="contributors__item__header">
-        <div class="wc-UIContent contributors__item__title">
-          <h2 id="reproduce">
-            <button class="contributors__item__btn is-active r-ResetButton" type="button">
-              How to Reproduce a Bug
-              <span class="wc-Icon wc-Icon--contributors wc-Icon--contributors--disabled wc-Icon--minus" aria-hidden="true"></span>
-              <span class="wc-Icon wc-Icon--contributors wc-Icon--contributors--active wc-Icon--plus" aria-hidden="true"></span>
-            </button>
-          </h2>
+  {% include "shared/nav.html" %}
+  <main role="main">
+    <section class="grid grid-show-gap">
+      <div class="grid-row">
+        <aside class="grid-cell x1-fix">
+          <ol class="sub-nav" class="sub-nav">
+            <li class="sub-nav-header">Table of Contents</li>
+            <li><a href="/contributors/contribute/"></a>Join Us</a></li>
+            <li>
+              Get Started
+              <ol class="nested-sub-nav">
+                <li class="sub-nav-active"><a href="/contributors/reproduce-a-bug/">Reproduce a Bug</a></li>
+                <li><a href="/contributors/diagnose-a-bug/">Diagnose a Bug</a></li>
+                <li><a href="/contributors/site-outreach/">Site outreach</a></li>
+              </ol>
+            </li>
+          </ol>
+        </aside>
+        <div class="grid-cell x1">
+          <section>{% include "contributors/reproduce-bug.html" %}</section>
         </div>
       </div>
-      <div class="contributors__item__content wc-UIContent is-open">{% include "contributors/reproduce-bug.html" %}</div>
-    </div>
-    <div class="contributors__item">
-      <div class="contributors__item__header">
-        <div class="wc-UIContent contributors__item__title">
-          <h2 id="diagnose">
-            <button class="contributors__item__btn r-ResetButton" type="button">
-              How to Diagnose a Bug
-              <span class="wc-Icon wc-Icon--contributors wc-Icon--contributors--disabled wc-Icon--minus" aria-hidden="true"></span>
-              <span class="wc-Icon wc-Icon--contributors wc-Icon--contributors--active wc-Icon--plus" aria-hidden="true"></span>
-            </button>
-          </h2>
-        </div>
-      </div>
-      <div class="contributors__item__content wc-UIContent">{% include "contributors/diagnose-bug.html" %}</div>
-    </div>
-    <div class="contributors__item">
-      <div class="contributors__item__header">
-        <div class="wc-UIContent contributors__item__title">
-          <h2 id="outreach">
-            <button class="contributors__item__btn r-ResetButton" type="button">
-              How to Do Site Outreach
-              <span class="wc-Icon wc-Icon--contributors wc-Icon--contributors--disabled wc-Icon--minus" aria-hidden="true"></span>
-              <span class="wc-Icon wc-Icon--contributors wc-Icon--contributors--active wc-Icon--plus" aria-hidden="true"></span>
-            </button>
-          </h2>
-        </div>
-      </div>
-      <div class="contributors__item__content wc-UIContent">{% include "contributors/site-outreach.html" %}</div>
-    </div>
-    <div class="contributors__item">
-      <div class="contributors__item__header">
-        <div class="wc-UIContent contributors__item__title">
-          <h2 id="contribute">
-            <button class="contributors__item__btn r-ResetButton" type="button">
-              Contribute to this site
-              <span class="wc-Icon wc-Icon--contributors wc-Icon--contributors--disabled wc-Icon--minus" aria-hidden="true"></span>
-              <span class="wc-Icon wc-Icon--contributors wc-Icon--contributors--active wc-Icon--plus" aria-hidden="true"></span>
-            </button>
-          </h2>
-        </div>
-      </div>
-      <div class="contributors__item__content page wc-UIContent">{% include "contributors/contribute.html" %}</div>
-    </div>
-  </div>
+    </section>
   </main>
 </div>
 {% endblock %}
