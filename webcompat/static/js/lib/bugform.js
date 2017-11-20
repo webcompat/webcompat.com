@@ -70,6 +70,7 @@ function BugForm() {
     this.checkParams();
     this.disableSubmits();
     this.urlField.on("blur input", _.bind(this.checkURLValidity, this));
+    this.urlField.on("input", _.bind(this.showSimilarBugs, this));
     this.descField.on(
       "blur input",
       _.bind(this.checkDescriptionValidity, this)
@@ -214,6 +215,34 @@ function BugForm() {
   this.enableSubmits = function() {
     this.submitButtons.prop("disabled", false);
     this.submitButtons.removeClass("is-disabled");
+  };
+
+  this.showSimilarBugs = function() {
+    var url = null;
+    try {
+      url = new URL(this.urlField.val());
+      if (url.hostname.length > 7) {
+        var query = `https://api.github.com/search/issues?page=1&per_page=10&stage=all&sort=created&q=${url.hostname}+in:title+repo%3Awebcompat%2Fweb-bugs&order=desc`;
+
+        fetch(query)
+          .then(function(response) {
+            var contentType = response.headers.get("content-type");
+            if (contentType && contentType.includes("application/json")) {
+              return response.json();
+            }
+          })
+          .then(function(issues) {
+            for (var item in issues.items) {
+              var issue = issues.items[item];
+              // Just for example we can have issue number here
+              // eslint-disable-next-line no-console
+              console.log(`#${issue.number} - ${issue.title}`);
+            }
+          });
+      }
+    } catch (e) {
+      // Do nothing here if not a valid URL
+    }
   };
 
   this.checkProblemTypeValidity = function() {
