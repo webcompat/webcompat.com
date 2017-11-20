@@ -1,0 +1,66 @@
+<style>
+  .wc-Stats {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .wc-Stats-article {
+    padding: 1em;
+  }
+
+  .wc-Stat {
+    display: inline-flex;
+    background-color: #404040;
+    text-align: center;
+    min-width: 18.75em;
+    padding: 1em;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .wc-Stat-container {
+
+  }
+
+  .wc-Stat-title {
+    position: absolute;
+    font-size: 1.5em;
+    color: #646464;
+    margin: 0;
+    width: 100%;
+    left: 0;
+  }
+
+  .wc-Stat-total {
+    font-size: 10em;
+    color: #ffc400;
+    font-weight: 900;
+  }
+
+</style>
+
+<section class="wc-Stats">
+  <article class="wc-Stats-article">
+    <div class="wc-Stat">
+      <div class="wc-Stat-container">
+        <h2 class="wc-Stat-title">Needstriage issues</h2>
+        <div class="wc-Stat-total">
+          {{ stats.total }}
+        </div>
+      </div>
+    </div>
+  </article>
+  <article class="wc-Stats-article">
+    <div class="wc-Stat">
+      <div class="wc-Stat-container">
+        <h2 class="wc-Stat-title">Older than 48h</h2>
+        <div class="wc-Stat-total">
+          {{ stats.urgent }}
+        </div>
+      </div>
+    </div>
+  </article>
+</section>

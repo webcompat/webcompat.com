@@ -1,0 +1,35 @@
+<style>
+  .wc-Filters {
+    display: flex;
+    font-size: 1rem;
+    margin: 1.2em 0;
+  }
+  
+  .wc-Filter {
+    padding: 0 1em;    
+  }
+</style>
+
+
+<section class="wc-Filters" id="js-Filters">
+    <div class="wc-Filter">
+      <select name="browsers">
+        <option value="">All browsers</option>
+        <option value="firefox">Firefox</option>
+        <option value="chrome">Chrome</option>
+      </select>
+    </div>
+    <div class="wc-Filter">
+      <select name="state">
+        <option value="priority" selected="selected">Priority</option>
+        <option value="needinfo">Needinfo</option>
+      </select>
+    </div>
+    <div class="wc-Filter">
+      <select name="sort">
+        <option>Sort</option>
+        <option value="newest" selected="selected">Newest</option>
+        <option value="oldest">Oldest</option>
+      </select>
+    </div>
+</section>

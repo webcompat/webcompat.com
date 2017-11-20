@@ -1,48 +1,26 @@
 {% extends "dashboard/layout.html" %}
 {% block title %}Triage Dashboard{% endblock %}
 {% block body %}
-  <main role="main">
-    <section>
-      <h1>Triage Dashboard</h1>
-    </section>
-    <article>
-        <dl>
-            <dt class="total description">Needstriage issues</dt>
-            <dd class="total">{{ stats.total }}</dd>
-            <dt class="h48 description">Older than 48h</dt>
-            <dd class="h48">{{ stats.urgent }}</dd>
-        </dl>
-        <table>
-            <thead>
-            <tr>
-                <th class="number">Issue</th>
-                <th class="title">Description</td>
-                <th class="created">Created</td>
-                <th class="updated">Updated</td>
-                <th class="browser">Browser</td>
-                <th class="t48h">48h</td>
-                <th class="needinfo">Needinfo</td>
-            </tr>
-            </thead>
-            <tbody>
-            {% for issue in needstriage_list %}
-            <tr>
-                <th class="number">{{ issue['number'] }}</th>
-                <td class="title"><a href="/issues/{{ issue['number'] }}">{{ issue['title'] }}</a></td>
-                <td class="created">{{ issue['created_at'] }}</td>
-                <td class="updated">{{ issue['updated_at'] }}</td>
-                <td class="browser">
-                    {% for browser in issue['browsers'] %}
-                        <span class="browser-name">{{ browser }} </span>
-                    {% endfor %}
-                </td>
-                <td class="t48h">{{ issue['priority'] }}</td>
-                <td class="needinfo">{{ issue['needinfo'] }}</td>
-            </tr>
-            {% endfor %}
-            </tbody>
-            <caption>48 hours issues list @@blabla@@</caption>
-        </table>
-    </article>
+  {% include "dashboard/triage/top-bar.html" %}
+  <main style="margin-top: 50px; padding: 0px 50px;" role="main">
+    <div style="background-color: #fff; 0% 0%; padding: 1.2em;">
+      {% include "dashboard/triage/stats.html" %}
+      {% include "dashboard/triage/filters.html" %}
+      {% include "dashboard/triage/activity-indicator.html" %}
+      {% include "dashboard/triage/needstriage-list.html" %}
+    </div>
   </main>
+<script type="text/javascript">
+  document.getElementById("js-Filters").addEventListener("change", function(e) {
+     refreshList()
+  })
+  
+  function refreshList() {
+     
+  }
+  
+  refreshList() {
+    
+  }
+</script>
 {% endblock %}
