@@ -71,6 +71,7 @@ function BugForm() {
     this.disableSubmits();
     this.urlField.on("blur input", _.bind(this.checkURLValidity, this));
     this.urlField.on("input", _.bind(this.showSimilarBugs, this));
+    this.urlField.on("blur", _.bind(this.hideSimilarBugs, this));
     this.descField.on(
       "blur input",
       _.bind(this.checkDescriptionValidity, this)
@@ -232,17 +233,26 @@ function BugForm() {
             }
           })
           .then(function(issues) {
-            for (var item in issues.items) {
-              var issue = issues.items[item];
-              // Just for example we can have issue number here
-              // eslint-disable-next-line no-console
-              console.log(`#${issue.number} - ${issue.title}`);
+            if (issues.items) {
+              $("#similarbugs").show();
+              $("#buglist").empty();
+              for (var item in issues.items) {
+                var issue = issues.items[item];
+                $("#buglist").append(
+                  `<li>#${issue.number} - ${issue.title}</li>`
+                );
+              }
             }
           });
       }
     } catch (e) {
       // Do nothing here if not a valid URL
     }
+  };
+
+  this.hideSimilarBugs = function() {
+    $("#buglist").empty();
+    $("#similarbugs").hide();
   };
 
   this.checkProblemTypeValidity = function() {
