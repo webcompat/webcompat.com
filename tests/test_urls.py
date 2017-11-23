@@ -71,6 +71,10 @@ class TestURLs(unittest.TestCase):
     def test_contributors_site_outreach(self):
         '''Test that /contributors/site-outreach exists.'''
         rv = self.app.get('/contributors/site-outreach')
+
+    def test_contact(self):
+        '''Test that /contact exists.'''
+        rv = self.app.get('/contact')
         self.assertEqual(rv.status_code, 200)
 
     def test_activity_page_401_if_not_logged_in(self):
