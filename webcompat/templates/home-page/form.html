@@ -28,7 +28,9 @@
                placeholder='e.g. https://example.com',
                required=True, type='url', pattern='', autocomplete='off') }}
             </span>
-            <div id="similarbugs" style="outline:1px solid grey; display:none"><ul id="buglist"></ul></div>
+            <div id="bugListWrapper" style="outline:1px solid grey; display:none; position: absolute; z-index: 100; background-color: white; width: 100%">
+              <ul id="bugList"></ul>
+            </div>
           </div>
 
           <div class="wc-Form-group js-Form-group">
