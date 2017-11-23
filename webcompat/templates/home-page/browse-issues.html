@@ -1,11 +1,11 @@
-<section class="wc-UISection wc-UISection--backgroundColor">
-  <div class="wc-UIContent">
-    <h2 class="wc-Title wc-Title--l">Latest Untriaged Issues</h2>
+<article class="grid-row">
+  <div class="grid-cell x3">
+    <h2 class="headline-1">Latest Untriaged Issues</h2>
     <div id="js-lastIssue">
       {% include "web_modules/issue-list.jst" %}
     </div>
-    <p class="wc-IssueItem-linkMoreIssues">
-      <a class="wc-Link" href="{{ url_for("show_issues") }}">View All</a>
+    <p class="highlight">
+      <a href="{{ url_for("show_issues") }}" title ="view all issues">View All Issues</a>
     </p>
   </div>
 </section>
