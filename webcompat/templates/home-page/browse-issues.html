@@ -1,14 +1,11 @@
-<div id="js-lastIssue" class="grid issues-list">
-	<div class="grid-row issue label-<%= issue.stateClass %> js-IssueList">
-    	<article class="grid-cell x3">
-    		<h3 class="headline-4">Latest issues</h3>
-    	</article>
+<article class="grid-row">
+  <div class="grid-cell x3">
+    <h2 class="headline-1">Latest Untriaged Issues</h2>
+    <div id="js-lastIssue">
+      {% include "web_modules/issue-list.jst" %}
     </div>
-  {% include "web_modules/issue-list.jst" %}
-
-  <div class="grid-row issue label-<%= issue.stateClass %> js-IssueList">
-    	<article class="grid-cell x3">
-		  <a class="highlight" href="{{ url_for("show_issues") }}" title ="view all issues">View All Issues</a>
-    	</article>
-    </div>	
-</div>
+    <p class="highlight">
+      <a href="{{ url_for("show_issues") }}" title ="view all issues">View All Issues</a>
+    </p>
+  </div>
+</section>
