@@ -48,6 +48,30 @@ class TestURLs(unittest.TestCase):
         rv = self.app.get('/privacy')
         self.assertEqual(rv.status_code, 200)
 
+    def test_contributors(self):
+        '''Test that /contributors exists.'''
+        rv = self.app.get('/contributors')
+        self.assertEqual(rv.status_code, 200)
+
+    def test_contributors_contribute(self):
+        '''Test that /contributors/contribute exists.'''
+        rv = self.app.get('/contributors/contribute')
+        self.assertEqual(rv.status_code, 200)
+
+    def test_contributors_diagnose_bug(self):
+        '''Test that /contributors/diagnose-bug exists.'''
+        rv = self.app.get('/contributors/diagnose-bug')
+        self.assertEqual(rv.status_code, 200)
+
+    def test_contributors_reproduce_bug(self):
+        '''Test that /contributors/reproduce-bug exists.'''
+        rv = self.app.get('/contributors/reproduce-bug')
+        self.assertEqual(rv.status_code, 200)
+
+    def test_contributors_site_outreach(self):
+        '''Test that /contributors/site-outreach exists.'''
+        rv = self.app.get('/contributors/site-outreach')
+
     def test_contact(self):
         '''Test that /contact exists.'''
         rv = self.app.get('/contact')
