@@ -1,8 +1,16 @@
+<style>
+@media all and (min-width: 27.5em) {
+  .wc-UIMain {
+    margin-top: 50px;
+    padding: 0px 50px;
+  }
+}
+</style>
 {% extends "dashboard/layout.html" %}
 {% block title %}Triage Dashboard{% endblock %}
 {% block body %}
   {% include "dashboard/triage/top-bar.html" %}
-  <main style="margin-top: 50px; padding: 0px 50px;" role="main">
+  <main class="wc-UIMain" role="main">
     <div style="background-color: #fff; 0% 0%; padding: 1.2em;">
       {% include "dashboard/triage/stats.html" %}
       {% include "dashboard/triage/filters.html" %}
@@ -11,16 +19,91 @@
     </div>
   </main>
 <script type="text/javascript">
-  document.getElementById("js-Filters").addEventListener("change", function(e) {
-     refreshList()
+  /* added an event onSubmit form */
+  document.getElementById("js-Filters").addEventListener("submit", (e) => {
+    e.preventDefault()
+     filteringList()
   })
-  
-  function refreshList() {
-     
+
+  /* handle render or not render ActivityIndicator*/
+  const shouldRenderActivityIndicator = (render = true) => {
+    const ActivityIndicator = document.getElementById("js-ActiviyIndicator")
+    if(render) {
+      ActivityIndicator.classList.remove("is-hidden")
+    }
+    if(!render) {
+      ActivityIndicator.classList.add("is-hidden")
+    }
   }
-  
-  refreshList() {
-    
+
+  /* handle render or not render NeedsTriageList*/
+  const shouldRenderNeedsTriageList = (render = true) => {
+    const Triages = document.getElementById("js-Triages")
+    if(render) {
+      Triages.classList.remove("is-hidden")
+    }
+    if(!render) {
+      Triages.classList.add("is-hidden")
+    }
   }
+
+  const filteringSort = () => {
+    const select = document.getElementById("js-Filter-sort")
+    const Triages = document.getElementById("js-Triages")
+    switch (select.value) {
+      case "":
+        Triages.classList.remove("is-oldest")
+        break;
+      case "oldest":
+        Triages.classList.add("is-oldest")
+        break;
+      default:
+        alert("tri non supporté")
+    }
+  }
+
+  /* filteringList */
+  const filteringList = (renderActivityIndicator = true) => {
+    if(renderActivityIndicator) {
+      shouldRenderActivityIndicator()
+    }
+    /* liste triage */
+    const triageList = Array.from(document.getElementsByClassName("wc-Triage"))
+    /* save config from every triage */
+    triageList.forEach((issue) => {
+      let mustBeHidden = false
+      /* save state of selectors */
+      const selectList = Array.from(document.getElementsByClassName("wc-Filter-select"))
+      selectList.forEach((select) => {
+        // test value
+        if(select.value && !issue.classList.contains(select.value)) {
+          mustBeHidden = true
+          return
+        }
+      })
+      // Show or hide
+      if(mustBeHidden) {
+        issue.classList.add("is-hidden")
+      } else {
+        issue.classList.remove("is-hidden")
+      }
+      // Sort
+      filteringSort()
+    })
+    /* render components */
+    shouldRenderActivityIndicator(false)
+    shouldRenderNeedsTriageList()
+  }
+
+  /* readable date*/
+  (() => {
+    const dateList = Array.from(document.getElementsByClassName("wc-Triage-date"))
+    dateList.forEach((element) => {
+      element.textContent = element.getAttribute("datetime").slice(0,10)
+    })
+  })()
+
+  // init
+  filteringList(false)
 </script>
 {% endblock %}
