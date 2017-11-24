@@ -16,6 +16,7 @@
       {% include "dashboard/triage/filters.html" %}
       {% include "dashboard/triage/activity-indicator.html" %}
       {% include "dashboard/triage/needstriage-list.html" %}
+      {% include "dashboard/triage/no-result.html" %}
     </div>
   </main>
 <script type="text/javascript">
@@ -33,6 +34,17 @@
     }
     if(!render) {
       ActivityIndicator.classList.add("is-hidden")
+    }
+  }
+
+  /* Handle visibility of NoResult */
+  const shouldRenderNoResult = (render = true) => {
+    const NoResult = document.getElementById("js-NoResult")
+    if(render) {
+      NoResult.classList.remove("is-hidden")
+    }
+    if(!render) {
+      NoResult.classList.add("is-hidden")
     }
   }
 
@@ -65,6 +77,10 @@
 
   /* Filtering List of triage */
   const filteringList = (renderActivityIndicator = true) => {
+    /* init nbItem visible */
+    let nbItemVisible = 0
+
+
     if(renderActivityIndicator) {
       shouldRenderActivityIndicator()
     }
@@ -86,13 +102,15 @@
         issue.classList.add("is-hidden")
       } else {
         issue.classList.remove("is-hidden")
+        nbItemVisible += 1
       }
       /* Filtering Sort, it's a global fiilter */
       filteringSort()
     })
     /* Render components */
     shouldRenderActivityIndicator(false)
-    shouldRenderNeedsTriageList()
+    shouldRenderNoResult(nbItemVisible == 0)
+    shouldRenderNeedsTriageList( nbItemVisible > 0)
   }
 
   /* Readable date */
