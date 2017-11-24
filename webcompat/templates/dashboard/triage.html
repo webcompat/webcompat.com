@@ -19,13 +19,13 @@
     </div>
   </main>
 <script type="text/javascript">
-  /* added an event onSubmit form */
+  /* Added an event onSubmit form */
   document.getElementById("js-Filters").addEventListener("submit", (e) => {
     e.preventDefault()
      filteringList()
   })
 
-  /* handle render or not render ActivityIndicator*/
+  /* Handle visibility of ActivityIndicator */
   const shouldRenderActivityIndicator = (render = true) => {
     const ActivityIndicator = document.getElementById("js-ActiviyIndicator")
     if(render) {
@@ -36,7 +36,7 @@
     }
   }
 
-  /* handle render or not render NeedsTriageList*/
+  /* Handle visibility of NeedsTriageList */
   const shouldRenderNeedsTriageList = (render = true) => {
     const Triages = document.getElementById("js-Triages")
     if(render) {
@@ -47,6 +47,7 @@
     }
   }
 
+  /* Filtering (newest or oldest) list of Triage */
   const filteringSort = () => {
     const select = document.getElementById("js-Filter-sort")
     const Triages = document.getElementById("js-Triages")
@@ -58,44 +59,43 @@
         Triages.classList.add("is-oldest")
         break;
       default:
-        alert("tri non supporté")
+        console.warn("Sorting not supported")
     }
   }
 
-  /* filteringList */
+  /* Filtering List of triage */
   const filteringList = (renderActivityIndicator = true) => {
     if(renderActivityIndicator) {
       shouldRenderActivityIndicator()
     }
-    /* liste triage */
+    /* Triage list */
     const triageList = Array.from(document.getElementsByClassName("wc-Triage"))
-    /* save config from every triage */
     triageList.forEach((issue) => {
+      /* By default all element are visible */
       let mustBeHidden = false
-      /* save state of selectors */
       const selectList = Array.from(document.getElementsByClassName("wc-Filter-select"))
       selectList.forEach((select) => {
-        // test value
+        /* test value */
         if(select.value && !issue.classList.contains(select.value)) {
           mustBeHidden = true
           return
         }
       })
-      // Show or hide
+      /* Show or hide */
       if(mustBeHidden) {
         issue.classList.add("is-hidden")
       } else {
         issue.classList.remove("is-hidden")
       }
-      // Sort
+      /* Filtering Sort, it's a global fiilter */
       filteringSort()
     })
-    /* render components */
+    /* Render components */
     shouldRenderActivityIndicator(false)
     shouldRenderNeedsTriageList()
   }
 
-  /* readable date*/
+  /* Readable date */
   (() => {
     const dateList = Array.from(document.getElementsByClassName("wc-Triage-date"))
     dateList.forEach((element) => {
@@ -103,7 +103,7 @@
     })
   })()
 
-  // init
+  /* init list with filters by default */
   filteringList(false)
 </script>
 {% endblock %}
