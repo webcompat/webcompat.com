@@ -10,14 +10,7 @@
   .wc-Triages.is-hidden {
     display: none;
   }
-
-  .wc-Triages.is-oldest {
-    -webkit-box-orient: horizontal;
-    -webkit-box-direction: reverse;
-        -ms-flex-direction: row-reverse;
-            flex-direction: row-reverse;
-  }
-
+  
   .wc-Triage {
     font-size: 16px;
     font-size: 1rem;
@@ -96,6 +89,7 @@
 <section class="wc-Triages is-hidden" id="js-Triages">
     {% for issue in needstriage_list %}
   <article
+    data-number="{{ issue['number'] }}"
     class="
       wc-Triage
       {% if issue['priority'] %} priority {% endif %}

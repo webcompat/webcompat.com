@@ -60,26 +60,23 @@
   }
 
   /* Filtering (newest or oldest) list of Triage */
-  const filteringSort = () => {
+  const filteringSort = issuesNumber => {
     const select = document.getElementById("js-Filter-sort")
-    const Triages = document.getElementById("js-Triages")
-    switch (select.value) {
-      case "":
-        Triages.classList.remove("is-oldest")
-        break;
-      case "oldest":
-        Triages.classList.add("is-oldest")
-        break;
-      default:
-        console.warn("Sorting not supported")
+    if("oldest" == select.value) {
+      issuesNumber.reverse()
     }
+    const triageList = Array.from(document.getElementsByClassName("wc-Triage"))
+    triageList.forEach((issue) => {
+      issue.style.order = issuesNumber.indexOf(issue.dataset["number"])
+    })
   }
 
   /* Filtering List of triage */
   const filteringList = (renderActivityIndicator = true) => {
     /* init nbItem visible */
     let nbItemVisible = 0
-
+    /* init an array of list of issue */
+    const issuesNumber = []
 
     if(renderActivityIndicator) {
       shouldRenderActivityIndicator()
@@ -89,6 +86,8 @@
     triageList.forEach((issue) => {
       /* By default all element are visible */
       let mustBeHidden = false
+      /* push issue number */
+      issuesNumber.push(issue.dataset["number"])
       const selectList = Array.from(document.getElementsByClassName("wc-Filter-select"))
       selectList.forEach((select) => {
         /* test value */
@@ -104,9 +103,9 @@
         issue.classList.remove("is-hidden")
         nbItemVisible += 1
       }
-      /* Filtering Sort, it's a global fiilter */
-      filteringSort()
     })
+    /* Filtering Sort, it's a global fiilter */
+    filteringSort(issuesNumber)
     /* Render components */
     shouldRenderActivityIndicator(false)
     shouldRenderNoResult(nbItemVisible == 0)
