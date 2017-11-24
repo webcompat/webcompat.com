@@ -1,14 +1,14 @@
-<style>
-@media all and (min-width: 27.5em) {
-  .wc-UIMain {
-    margin-top: 50px;
-    padding: 0px 50px;
-  }
-}
-</style>
 {% extends "dashboard/layout.html" %}
 {% block title %}Triage Dashboard{% endblock %}
 {% block body %}
+  <style>
+  @media all and (min-width: 27.5em) {
+    .wc-UIMain {
+      margin-top: 50px;
+      padding: 0px 50px;
+    }
+  }
+  </style>
   {% include "dashboard/triage/top-bar.html" %}
   <main class="wc-UIMain" role="main">
     <div style="background-color: #fff; 0% 0%; padding: 1.2em;">

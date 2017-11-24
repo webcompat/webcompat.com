@@ -1,31 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <title>{% block title %}Web Compatibility{% endblock %} | webcompat.com</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="WebCompat.com Triage dashboard">
-
-  <style>
-    html {box-sizing: border-box}
-    body {
-      font-family: HelveticaNeue-Light,"Helvetica Neue Light","Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
-      font-weight: 300;
-      font-size: 1em;
-      padding: 0;
-      margin: 0;
-      color: #404040;
-      background-color: #ececec;
-    }
-    *,
-    *:before,
-    *:after {
-      box-sizing: inherit;
-    }
-  </style>
-</head>
-<body>
-  {% block body %}{% endblock %}
-  {% include "dashboard/footer.html" %}
-</body>
+  <head>
+    <title>{% block title %}Web Compatibility{% endblock %} | webcompat.com</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="WebCompat.com Triage dashboard">
+    <style>
+      html {box-sizing: border-box}
+      body {
+        font-family: HelveticaNeue-Light,"Helvetica Neue Light","Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
+        font-weight: 300;
+        font-size: 1em;
+        padding: 0;
+        margin: 0;
+        color: #404040;
+        background-color: #ececec;
+      }
+      *,
+      *:before,
+      *:after {
+        box-sizing: inherit;
+      }
+    </style>
+  </head>
+  <body>
+    {% block body %}{% endblock %}
+    {% include "dashboard/footer.html" %}
+  </body>
 </html>
