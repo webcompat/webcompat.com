@@ -220,6 +220,11 @@ function BugForm() {
   };
 
   this.showSimilarBugs = function() {
+    if (!$("body").data("username")) {
+      // Not login
+      return;
+    }
+
     if (this.suggestDelay) {
       clearTimeout(this.suggestDelay);
     }
@@ -266,7 +271,6 @@ function BugForm() {
       $("#bugList").empty();
       $("#bugListWrapper").hide();
     }, 250);
-    
   };
 
   this.checkProblemTypeValidity = function() {
