@@ -14,9 +14,9 @@
         </article>
         <aside class="grid-cell x1 issue-labels">
           <% _.each(issue.labels, function(label) { %>
-            <span class="label js-Issue-label">
+            <span class="label js-Issue-label label-<%= label.remoteName %>">
               <a href="/issues?q=label:<%= label.remoteName %>"
-                 class="label-<%= label.remoteName %>" data-remotename="<%= label.remoteName %>"
+                 data-remotename="<%= label.remoteName %>"
                  title="Labels : <%= label.name %>"><%= label.name %></a>
             </span>
           <% }); %>
