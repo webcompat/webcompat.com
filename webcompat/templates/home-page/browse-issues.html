@@ -1,11 +1,19 @@
-<article class="grid-row">
-  <div class="grid-cell x3">
-    <h2 class="headline-1">Latest Untriaged Issues</h2>
+<section class="grid issues-list">
+	<article class="grid-row">
+	  	<div class="grid-cell x3">
+	    	<h2 class="headline-1">Latest Untriaged Issues</h2>
+		</div>
+	</article>
+
     <div id="js-lastIssue">
       {% include "web_modules/issue-list.jst" %}
     </div>
-    <p class="highlight">
-      <a href="{{ url_for("show_issues") }}" title ="view all issues">View All Issues</a>
-    </p>
-  </div>
+
+    <div class="grid-row">
+	    <p class="highlight grid-cell x3">
+	      <a href="{{ url_for("show_issues") }}" title ="view all issues">View All Issues</a>
+	    </p>
+    </div>
+
+
 </section>
