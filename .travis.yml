@@ -3,6 +3,11 @@
 sudo: required
 dist: trusty
 
+# Only run travis on the master branch (and PRs), not all branches
+branches:
+  only:
+    - master
+
 language: python
 
 python:
