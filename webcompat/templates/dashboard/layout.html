@@ -26,5 +26,6 @@
   <body>
     {% block body %}{% endblock %}
     {% include "dashboard/footer.html" %}
+    <script src="{{ url_for('static', filename='js/lib/dashboard.js') }}"></script>
   </body>
 </html>
