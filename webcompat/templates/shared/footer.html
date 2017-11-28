@@ -1,9 +1,29 @@
 <footer id="footer" class="grid">
   <section class="grid-row">
       <ul class="grid-cell x2 footer-list">
+        <li class="footer-item{% if request.url_rule.endpoint == 'index' %} active{% endif %}">
+          <a class="footer-item-link" aria-label="go to home" href="{{ url_for('index') }}">
+            Home
+          </a>
+        </li>
+        <li class="footer-item{% if request.url_rule.endpoint == 'show_issues' %} active{% endif %}">
+          <a class="footer-item-link" aria-label="go to list of isses" href="{{ url_for('show_issues') }}">
+            List of issues 
+          </a>
+        </li>
         <li class="footer-item{% if request.url_rule.endpoint == 'about' %} active{% endif %}">
-          <a class="footer-item-link" href="{{ url_for('about') }}">
+          <a class="footer-item-link" aria-label="go to about" href="{{ url_for('about') }}">
             About
+          </a>
+        </li>
+        <li class="footer-item{% if request.url_rule.endpoint == 'contributors' %} active{% endif %}">
+          <a class="footer-item-link" aria-label="go to contribute" href="{{ url_for('contributors') }}">
+            Contribute
+          </a>
+        </li>
+        <li class="footer-item">
+          <a class="footer-item-link" aria-label="get contact information" href="/contact">
+            Contact
           </a>
         </li>
         <li class="footer-item{% if request.url_rule.endpoint == 'privacy' %} active{% endif %}">
@@ -12,13 +32,8 @@
           </a>
         </li>
         <li class="footer-item">
-          <a class="footer-item-link" aria-label="get contact information" href="/contact">
-            Contact
-          </a>
-        </li>
-        <li class="footer-item{% if request.url_rule.endpoint == 'contributors' %} active{% endif %}">
-          <a class="footer-item-link" aria-label="go to contribute" href="{{ url_for('contributors') }}">
-            Contribute
+          <a class="footer-item-link" aria-label="go to code of conduct" href="https://github.com/webcompat/webcompat.com/blob/master/CODE_OF_CONDUCT.md">
+            Code of Conduct
           </a>
         </li>
       </ul>
