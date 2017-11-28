@@ -17,26 +17,42 @@ from webcompat.helpers import extract_url
 from webcompat.helpers import proxy_request
 
 
-def extract_browser_label(body):
-    """Parse the labels from the body in comment:
+def extract_metadata(body):
+    """Parse all the hidden comments for issue metadata
 
-    <!-- @browser: value -->.
-    Currently this only handles a single label,
-    because that's all that we set in webcompat.com.
+    <!-- @foo: bar -->.
+    Returns a dict with all such comments as members,
+    with foo, bar as key, value.
     """
-    match_list = re.search(r'<!--\s@(\w+):\s([^\d]+?)\s[\d\.]+\s-->', body)
-    if match_list:
-        # perhaps we do something more interesting depending on
-        # what groups(n)[0] is in the future.
-        # right now, match_list.groups(0) should look like:
-        # ('browser', 'firefox')
-        browser = match_list.groups(0)[1].lower()
+    match_list = re.findall(r'<!--\s@(\w+):\s(.+)\s-->', body)
+    # Reverse the list before creating a dict, because we want to keep
+    # the first instance (in case there are duplicates added by the user after)
+    metadata_dict = dict(reversed(match_list))
+    return metadata_dict
+
+
+def extract_browser_label(metadata_dict):
+    """Return the browser label from metadata_dict."""
+    browser = metadata_dict.get('browser', None)
+    # Only proceed if browser looks like "FooBrowser 99.0"
+    if browser and re.search(r'([^\d]+?)\s[\d\.]+', browser):
+        browser = browser.lower()
+        browser = browser.rsplit(' ', 1)[0]
         browser = browser.encode('utf-8')
         browser = browser.translate(None, '()')
         dash_browser = '-'.join(browser.split())
         return 'browser-{name}'.format(name=dash_browser)
     else:
         return None
+
+
+def extract_extra_label(metadata_dict):
+    """Return the 'extra' label from metadata_dict"""
+    extra_label = metadata_dict.get('extra_label', None)
+    if extra_label:
+        extra_label = extra_label.lower()
+        extra_label = extra_label.encode('utf-8')
+    return extra_label
 
 
 def update_issue(payload, issue_number):
@@ -136,15 +152,14 @@ def new_opened_issue(payload):
     - Priority label
     - Issue milestone
     '''
-    labels = []
     issue_body = payload.get('issue')['body']
     issue_number = payload.get('issue')['number']
-    browser_label = extract_browser_label(issue_body)
+    metadata_dict = extract_metadata_labels(issue_body)
+    browser_label = extract_browser_label(metadata_dict)
+    extra_label = extract_extra_label(metadata_dict)
     priority_label = extract_priority_label(issue_body)
-    if browser_label:
-        labels.append(browser_label)
-    if priority_label:
-        labels.append(priority_label)
+    labels = [label for label in (browser_label, extra_label, priority_label)
+              if label is not None]
     milestone = app.config['STATUSES']['needstriage']['id']
     return update_issue({'labels': labels, 'milestone': milestone},
                         issue_number)
