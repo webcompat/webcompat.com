@@ -50,11 +50,13 @@ class TestWebhook(unittest.TestCase):
         <!-- @browser: Firefox 55.0 -->
         <!-- @ua_header: Mozilla/5.0 (what) Gecko/20100101 Firefox/55.0 -->
         <!-- @reported_with: web -->
+        <!-- @extra_label: type-media -->
 
         **URL**: https://www.example.com/
         **Browser / Version**: Firefox 55.0
         <!-- @browser: Chrome 48.0 -->
         """
+
         self.issue_body2 = """
         <!-- @browser: Foobar -->
         """
@@ -131,17 +133,37 @@ class TestWebhook(unittest.TestCase):
         self.assertEqual(rv.mimetype, 'text/plain')
         self.assertEqual(rv.data, 'Not an interesting hook')
 
+    def test_extract_metadata(self):
+        expected = {'reported_with': 'web', 'extra_label': 'type-media',
+            'ua_header': 'Mozilla/5.0 (what) Gecko/20100101 Firefox/55.0',
+            'browser': 'Firefox 55.0'}
+        actual = helpers.extract_metadata(self.issue_body)
+        self.assertEqual(expected, actual)
+
     def test_extract_browser_label(self):
         """Extract browser label name."""
-        browser_label = helpers.extract_browser_label(self.issue_body)
-        self.assertEqual(browser_label, 'browser-firefox')
-        browser_label_none = helpers.extract_browser_label(self.issue_body2)
-        self.assertEqual(browser_label_none, None)
-        browser_label_paren = helpers.extract_browser_label(self.issue_body3)
-        self.assertEqual(browser_label_paren, 'browser-firefox-mobile-tablet')
-        browser_label_unicode = helpers.extract_browser_label(self.issue_body4)
-        self.assertEqual(
-            browser_label_unicode, 'browser-firefox-mobile-tablet')
+        metadata_tests = [
+            ({'browser': 'Firefox'}, None),
+            ({'browser': 'Firefox Mobile'}, None),
+            ({'browser': 'Firefox99.0'}, None),
+            ({'browser': 'Firefox (tablet)'}, None),
+            ({'browser': 'Firefox 30.0'}, 'browser-firefox'),
+            ({'browser': 'Firefox Mobile 30.0'}, 'browser-firefox-mobile'),
+            ({'browser': 'Firefox Mobile (Tablet) 88.0'}, 'browser-firefox-mobile-tablet')
+        ]
+        for metadata_dict, expected in metadata_tests:
+            actual = helpers.extract_browser_label(metadata_dict)
+            self.assertEqual(expected, actual)
+
+    def test_extract_extra_label(self):
+        """Extract 'extra' label."""
+        metadata_tests = [
+            ({'extra_label': 'type-media'}, 'type-media'),
+            ({'burgers': 'french fries'}, None)
+        ]
+        for metadata_dict, expected in metadata_tests:
+            actual = helpers.extract_extra_label(metadata_dict)
+            self.assertEqual(expected, actual)
 
     def test_extract_priority_label(self):
         """Extract priority label."""
