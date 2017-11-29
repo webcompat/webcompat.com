@@ -143,6 +143,16 @@ class TestWebhook(unittest.TestCase):
         self.assertEqual(
             browser_label_unicode, 'browser-firefox-mobile-tablet')
 
+    def test_extract_priority_label(self):
+        """Extract priority label."""
+        with patch('webcompat.db.site_db.query') as db_mock:
+            db_mock.return_value.filter_by.return_value = [
+                Site('google.com', 1, '', 1)]
+            priority_label = helpers.extract_priority_label(self.issue_body3)
+            self.assertEqual(priority_label, 'priority-critical')
+        priority_label_none = helpers.extract_priority_label(self.issue_body)
+        self.assertEqual(priority_label_none, None)
+
     def test_is_github_hook(self):
         """Validation tests for GitHub Webhooks."""
         json_event, signature = event_data('new_event_invalid.json')
@@ -195,16 +205,6 @@ class TestWebhook(unittest.TestCase):
                     'domain': 'www.chia-anime.tv'}
         actual = helpers.get_issue_info(payload)
         self.assertDictEqual(expected, actual)
-
-    def test_extract_priority_label(self):
-        """Extract priority label."""
-        with patch('webcompat.db.site_db.query') as db_mock:
-            db_mock.return_value.filter_by.return_value = [
-                Site('google.com', 1, '', 1)]
-            priority_label = helpers.extract_priority_label(self.issue_body3)
-            self.assertEqual(priority_label, 'priority-critical')
-        priority_label_none = helpers.extract_priority_label(self.issue_body)
-        self.assertEqual(priority_label_none, None)
 
 
 if __name__ == '__main__':

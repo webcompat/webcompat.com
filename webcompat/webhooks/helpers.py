@@ -55,6 +55,26 @@ def extract_extra_label(metadata_dict):
     return extra_label
 
 
+def extract_priority_label(body):
+    """Parse url from body and query the priority labels."""
+    hostname = domain_name(extract_url(body))
+    if hostname:
+        priorities = ['critical', 'important', 'normal']
+        # Find host_name in DB
+        for site in site_db.query(Site).filter_by(url=hostname):
+            return 'priority-{}'.format(priorities[site.priority - 1])
+        # No host_name in DB, find less-level domain (>2)
+        # If host_name is lv4.lv3.example.com, find lv3.example.com/example.com
+        subparts = hostname.split('.')
+        domains = ['.'.join(subparts[i:])
+                   for i, subpart in enumerate(subparts)
+                   if 0 < i < hostname.count('.')]
+        for domain in domains:
+            for site in site_db.query(Site).filter_by(url=domain):
+                return 'priority-{}'.format(priorities[site.priority - 1])
+    return None
+
+
 def update_issue(payload, issue_number):
     """Does a GitHub PATCH request to set labels and milestone for the issue.
 
@@ -102,26 +122,6 @@ def get_payload_signature(key, payload):
     """Compute the payload signature given a key."""
     mac = hmac.new(key, msg=payload, digestmod=hashlib.sha1)
     return mac.hexdigest()
-
-
-def extract_priority_label(body):
-    """Parse url from body and query the priority labels."""
-    hostname = domain_name(extract_url(body))
-    if hostname:
-        priorities = ['critical', 'important', 'normal']
-        # Find host_name in DB
-        for site in site_db.query(Site).filter_by(url=hostname):
-            return 'priority-{}'.format(priorities[site.priority - 1])
-        # No host_name in DB, find less-level domain (>2)
-        # If host_name is lv4.lv3.example.com, find lv3.example.com/example.com
-        subparts = hostname.split('.')
-        domains = ['.'.join(subparts[i:])
-                   for i, subpart in enumerate(subparts)
-                   if 0 < i < hostname.count('.')]
-        for domain in domains:
-            for site in site_db.query(Site).filter_by(url=domain):
-                return 'priority-{}'.format(priorities[site.priority - 1])
-    return None
 
 
 def is_github_hook(request):
