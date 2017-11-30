@@ -1,5 +1,5 @@
 <section
-  class="wc-UISection js-ReportForm wc-ReportForm {% if form.errors %}is-opened{% else %}is-closed{% endif %} grid"
+  class="js-ReportForm {% if form.errors %}is-opened{% else %}is-closed{% endif %} grid"
   id="js-ReportForm"
 >
   {%- if request.url_rule.endpoint == 'create_issue' %}
