@@ -1,35 +1,34 @@
 <script type="text/template">
   <% if (issues.length) { %>
     <% _.each(issues, function(issue) { %>
-      <article class="wc-IssueList wc-IssueList--<%= issue.stateClass %> wc-IssueList--large js-IssueList">
-        <div class="wc-IssueList-section">
-          <header class="wc-IssueList-header">
-            <a class="wc-Link" href="/issues/<%= issue.number %>">
-              <span class="wc-IssueList-count">Issue <%= issue.number %></span>: <%- issue.title %>
+      <div class="grid-row issue label-<%= issue.stateClass %> js-IssueList">
+        <article class="grid-cell x2 issue-description">
+            <a href="/issues/<%= issue.number %>">
+              <span class="issue-number">Issue <%= issue.number %></span> <br />
+              <span class="issue-url issue-type"><%- issue.title %></span> <br />
             </a>
-          </header>
           <p>
-            <span class="wc-IssueList-metadata">Opened: <time><%= issue.createdAt %></time></span>
-            <span class="wc-IssueList-metadata">Comments: <%= issue.commentNumber %></span>
+            <span class="issue-date-open">Opened: <time><%= issue.createdAt %></time></span>
+            <span class="issue-comments">Comments: <%= issue.commentNumber %></span>
           </p>
-        </div>
-        <div class="wc-IssueList-section">
-          <span class="wc-IssueList-label js-Issue-label">
+        </article>
+        <aside class="grid-cell x1 issue-labels">
           <% _.each(issue.labels, function(label) { %>
-            <a href="/issues?q=label:<%= label.remoteName %>"
-               class="wc-Labels" data-remotename="<%= label.remoteName %>"
-               title="Labels : <%= label.name %>"><%= label.name %></a>
-          <% }); %></span>
-          <span class="wc-IssueList-status js-Issue-status">
-            <a href="/issues?q=milestone:<%= issue.milestone %>"
-               class="wc-Labels" data-remotename="<%= issue.milestone %>"
-               title="Status : <%= issue.milestone %>"><%= issue.milestone %></a>
-          </span>
-
-        </div>
-      </article>
+            <span class="label js-Issue-label label-<%= label.remoteName %>">
+              <a href="/issues?q=label:<%= label.remoteName %>"
+                 data-remotename="<%= label.remoteName %>"
+                 title="Labels : <%= label.name %>"><%= label.name %></a>
+            </span>
+          <% }); %>
+        </aside>
+      </div>
     <% }); %>
   <% } else { %>
-  <p>Nothing here currently, go report something!</p>
+  <div class="grid-row">
+    <article class="grid-cell x3">
+      <p>Nothing here currently, go report something!</p>
+    </article>
+  </div>
 <% } %>
 </script>
+      
