@@ -349,12 +349,6 @@ def cssfixme():
 @app.route('/dashboard/triage')
 def dashboard_triage():
     """Route to handle dashboard triage."""
-    return render_template('dashboard/triage.html')
-
-
-@app.route('/dashboard/triage')
-def dashboard_triage():
-    """Route to handle dashboard triage."""
     if g.user:
         get_user_info()
     params = {'per_page': 100, 'sort': 'created', 'direction': 'asc'}
