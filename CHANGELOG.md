@@ -4,6 +4,14 @@
 2. New features: affect minor number
 3. API endpoint changes or dependency version updates: affect major number
 
+## 7.0.0 - 2017-11-30
+
+* Add a NeedsTriage Issues Dashboard [Pull #1947](https://github.com/webcompat/webcompat.com/pull/1947)
+* Add "extra labels" in new issue webhook [Pull #1944](https://github.com/webcompat/webcompat.com/pull/1944)
+* Handle when data/milestones.json doesn't exist [Pull #1878](https://github.com/webcompat/webcompat.com/pull/1878)
+* Update dev-env-setup docs [Pull #1874](https://github.com/webcompat/webcompat.com/pull/1874)
+* Remove css-fixme [Pull #1869](https://github.com/webcompat/webcompat.com/pull/1869)
+
 ## 6.0.3 - 2017-11-07
 
 * Add styles for milestone on issue list [Pull #1855](https://github.com/webcompat/webcompat.com/pull/1855)
