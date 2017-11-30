@@ -3,7 +3,7 @@
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
-
+"""Module for the main routes of webcompat.com."""
 import logging
 import os
 
@@ -17,30 +17,34 @@ from flask import send_from_directory
 from flask import session
 from flask import url_for
 
+from dashboard import filter_needstriage
 from form import AUTH_REPORT
-from form import PROXY_REPORT
 from form import get_form
+from form import PROXY_REPORT
 from helpers import add_csp
 from helpers import add_sec_headers
 from helpers import cache_policy
 from helpers import get_browser_name
+from helpers import get_milestone_list
 from helpers import get_referer
 from helpers import get_user_info
 from helpers import set_referer
 from issues import report_issue
 from webcompat import app
-from webcompat import github
-from webcompat.db import User
 from webcompat.db import session_db
+from webcompat.db import User
+from webcompat import github
 
 
 @app.teardown_appcontext
 def shutdown_session(exception=None):
+    """Clear the session."""
     session_db.remove()
 
 
 @app.before_request
 def before_request():
+    """Set parameters in g before each request."""
     g.user = None
     if 'user_id' in session:
         g.user = User.query.get(session['user_id'])
@@ -50,6 +54,7 @@ def before_request():
 
 @app.after_request
 def after_request(response):
+    """Remove/Add a couple of things after the request."""
     session_db.remove()
     add_sec_headers(response)
     add_csp(response)
@@ -58,6 +63,7 @@ def after_request(response):
 
 @github.access_token_getter
 def token_getter():
+    """Grab the user token."""
     user = g.user
     if user is not None:
         return user.access_token
@@ -72,6 +78,7 @@ def format_date(datestring):
 
 @app.route('/login')
 def login():
+    """Set the login route."""
     if session.get('user_id', None) is None:
         if app.config['TESTING']:
             session['username'] = 'testuser'
@@ -88,6 +95,7 @@ def login():
 
 @app.route('/logout')
 def logout():
+    """Set the logout route."""
     session.clear()
     flash(u'You were successfully logged out.', 'info')
     return redirect(g.referer)
@@ -98,6 +106,7 @@ def logout():
 @app.route('/callback')
 @github.authorized_handler
 def authorized(access_token):
+    """Set the callback route for oauth2 with GitHub."""
     if app.config['TESTING']:
         access_token = 'thisisatest'
     if access_token is None:
@@ -130,7 +139,7 @@ def file_issue():
 
 @app.route('/', methods=['GET'])
 def index():
-    """Main view where people come to report issues."""
+    """Set the main view where people come to report issues."""
     ua_header = request.headers.get('User-Agent')
     bug_form = get_form(ua_header)
     # browser_name is used in topbar.html to show the right add-on link
@@ -237,7 +246,7 @@ def show_issue(number):
 
 @app.route('/me')
 def me_redirect():
-    """This route redirects to /activity/<username>, for logged in users."""
+    """Set a redirect to /activity/<username>, for logged in users."""
     if not g.user:
         abort(401)
     get_user_info()
@@ -246,7 +255,7 @@ def me_redirect():
 
 @app.route('/activity/<username>')
 def show_user_page(username):
-    """The logic for this route is as follows.
+    """Set the route for user activity.
 
     (this dupes some of the functionality of /me, but allows directly visiting
     this endpoint via a bookmark)
@@ -335,6 +344,20 @@ def cssfixme():
     See https://github.com/webcompat/css-fixme/
     for more details."""
     return (msg, 410, {'content-type': 'text/plain; charset=utf-8'})
+
+
+@app.route('/dashboard/triage')
+def dashboard_triage():
+    """Route to handle dashboard triage."""
+    if g.user:
+        get_user_info()
+    params = {'per_page': 100, 'sort': 'created', 'direction': 'asc'}
+    needstriage_issues = get_milestone_list('needstriage', params)
+    needstriage_list, total, priority = filter_needstriage(needstriage_issues)
+    return render_template(
+        'dashboard/triage.html',
+        needstriage_list=needstriage_list,
+        stats={'total': total, 'urgent': priority})
 
 
 @app.route('/csp-report', methods=['POST'])

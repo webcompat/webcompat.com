@@ -1,0 +1,69 @@
+<style>
+  .wc-Filters {
+    font-size: 16px;
+    font-size: 1rem;
+    margin: 1.2em 0;
+  }
+
+  .wc-Filters-form {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+  }
+
+  .wc-Filter {
+    padding: 1em;
+  }
+</style>
+
+<section class="wc-Filters" id="js-Filters">
+  <form
+    class="wc-Filters-form"
+    id="js-Filters-form"
+    method="get"
+    action=""
+    role="form"
+  >
+    <div class="wc-Filter">
+      <select
+        class="wc-Filter-select"
+        name="browsers"
+        id="js-Filter-browsers"
+      >
+        <option value="">All browsers</option>
+        <option value="firefox">Firefox</option>
+        <option value="chrome">Chrome</option>
+        <option value="Edge">Edge</option>
+        <option value="safari">Safari</option>
+      </select>
+    </div>
+    <div class="wc-Filter">
+      <select
+        class="wc-Filter-select"
+        name="state"
+        id="js-Filter-state"
+      >
+        <option value="priority" selected="selected">Priority</option>
+        <option value="needinfo">Needinfo</option>
+      </select>
+    </div>
+    <div class="wc-Filter">
+      <select
+        class="wc-Filter-sort"
+        name="sort"
+        id="js-Filter-sort"
+      >
+        <option value="">Sort</option>
+        <option value="" selected="selected">Newest</option>
+        <option value="oldest">Oldest</option>
+      </select>
+    </div>
+    <div class="wc-Filter">
+      <button type="submit" role="button">
+        Filtered
+      </button>
+    </div>
+  </form>
+</section>

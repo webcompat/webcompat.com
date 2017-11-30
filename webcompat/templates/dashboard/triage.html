@@ -1,0 +1,22 @@
+{% extends "dashboard/layout.html" %}
+{% block title %}Triage Dashboard{% endblock %}
+{% block body %}
+  <style>
+  @media all and (min-width: 27.5em) {
+    .wc-UIMain {
+      margin-top: 50px;
+      padding: 0px 50px;
+    }
+  }
+  </style>
+  {% include "dashboard/triage/top-bar.html" %}
+  <main class="wc-UIMain" role="main">
+    <div style="background-color: #fff; 0% 0%; padding: 1.2em;">
+      {% include "dashboard/triage/stats.html" %}
+      {% include "dashboard/triage/filters.html" %}
+      {% include "dashboard/triage/activity-indicator.html" %}
+      {% include "dashboard/triage/needstriage-list.html" %}
+      {% include "dashboard/triage/no-result.html" %}
+    </div>
+  </main>
+{% endblock %}
