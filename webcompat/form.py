@@ -210,9 +210,13 @@ def build_formdata(form_object):
     else:
         summary = '{0} - {1}'.format(normalized_url, problem_summary)
 
+    metadata_keys = ['browser', 'ua_header', 'reported_with']
+    extra_label = form_object.get('extra_label', None)
+    if extra_label in app.config['EXTRA_LABELS']:
+        metadata_keys.append('extra_label')
+
     formdata = {
-        'metadata': get_metadata(('browser', 'ua_header', 'reported_with'),
-                                 form_object),
+        'metadata': get_metadata(metadata_keys, form_object),
         'url': form_object.get('url'),
         'browser': form_object.get('browser'),
         'os': form_object.get('os'),
@@ -245,7 +249,4 @@ def build_formdata(form_object):
     # Append "from webcompat.com" message to bottom (for GitHub issue viewers)
     body += u'\n\n{0}'.format(GITHUB_HELP)
     rv = {'title': summary, 'body': body}
-    extra_label = form_object.get('label', None)
-    if extra_label and extra_label in app.config['EXTRA_LABELS']:
-        rv.update({'labels': [extra_label]})
     return rv

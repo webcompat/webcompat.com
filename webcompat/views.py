@@ -198,7 +198,7 @@ def create_issue():
             return redirect(url_for('index'))
     form['ua_header'] = request.headers.get('User-Agent')
     form['reported_with'] = session.pop('src', 'web')
-    form['label'] = session.pop('label', None)
+    form['extra_label'] = session.pop('label', None)
     # Logging the ip and url for investigation
     log = app.logger
     log.setLevel(logging.INFO)
