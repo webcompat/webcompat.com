@@ -135,8 +135,9 @@ class TestWebhook(unittest.TestCase):
 
     def test_extract_metadata(self):
         expected = {'reported_with': 'web', 'extra_label': 'type-media',
-            'ua_header': 'Mozilla/5.0 (what) Gecko/20100101 Firefox/55.0',
-            'browser': 'Firefox 55.0'}
+                    'ua_header': ('Mozilla/5.0 (what) Gecko/20100101 '
+                                  'Firefox/55.0'),
+                    'browser': 'Firefox 55.0'}
         actual = helpers.extract_metadata(self.issue_body)
         self.assertEqual(expected, actual)
 
@@ -149,7 +150,8 @@ class TestWebhook(unittest.TestCase):
             ({'browser': 'Firefox (tablet)'}, None),
             ({'browser': 'Firefox 30.0'}, 'browser-firefox'),
             ({'browser': 'Firefox Mobile 30.0'}, 'browser-firefox-mobile'),
-            ({'browser': 'Firefox Mobile (Tablet) 88.0'}, 'browser-firefox-mobile-tablet')
+            ({'browser': 'Firefox Mobile (Tablet) 88.0'},
+                'browser-firefox-mobile-tablet')
         ]
         for metadata_dict, expected in metadata_tests:
             actual = helpers.extract_browser_label(metadata_dict)
