@@ -4,6 +4,10 @@
 2. New features: affect minor number
 3. API endpoint changes or dependency version updates: affect major number
 
+## 7.0.1 - 2017-12-04
+
+* Fix a major webhook issue [Pull #1953](https://github.com/webcompat/webcompat.com/pull/1953)
+
 ## 7.0.0 - 2017-11-30
 
 * Add a NeedsTriage Issues Dashboard [Pull #1947](https://github.com/webcompat/webcompat.com/pull/1947)
