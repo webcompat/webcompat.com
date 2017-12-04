@@ -4,9 +4,10 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-"""Flask Blueprint for our "webhooks" module.webhooks
+"""Flask Blueprint for our "webhooks" module.webhooks.
 
-See https://developer.github.com/webhooks/ for what is possible."""
+See https://developer.github.com/webhooks/ for what is possible.
+"""
 
 import json
 import logging
@@ -14,12 +15,9 @@ import logging
 from flask import Blueprint
 from flask import request
 
-from helpers import extract_browser_label
-from helpers import extract_priority_label
-from helpers import is_github_hook
 from helpers import get_issue_info
+from helpers import is_github_hook
 from helpers import new_opened_issue
-from helpers import signature_check
 
 from webcompat import app
 
@@ -51,7 +49,7 @@ def hooklistener():
                 log = app.logger
                 log.setLevel(logging.INFO)
                 msg = 'failed to set labels on issue {issue}'.format(
-                    issue['number'])
+                    issue=issue['number'])
                 log.info(msg)
                 return ('ooops', 400, {'Content-Type': 'text/plain'})
     elif event_type == 'ping':
