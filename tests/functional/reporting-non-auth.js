@@ -255,21 +255,6 @@ define(
         );
       },
 
-      // tests a scenario where bug reported from firefox nightly Report Site Issue button
-      "details param adds stylo pref to text area": function() {
-        return FunctionalHelpers.openPage(
-          this,
-          url("/issues/new?details=layout.css.servo.enabled%3A+true"),
-          ".wc-ReportForm-actions-button"
-        )
-          .findByCssSelector("#steps_reproduce")
-          .getProperty("value")
-          .then(function(text) {
-            assert.include(text, "layout.css.servo.enabled: true");
-          })
-          .end();
-      },
-
       // tests a scenario where bug reported from firefox nightly media type tool
       "problem_type param selects problem type": function() {
         return FunctionalHelpers.openPage(
