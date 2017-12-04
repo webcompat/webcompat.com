@@ -3,6 +3,7 @@
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
+"""Helpers methods for webhooks."""
 
 import hashlib
 import hmac
@@ -18,7 +19,7 @@ from webcompat.helpers import proxy_request
 
 
 def extract_metadata(body):
-    """Parse all the hidden comments for issue metadata
+    """Parse all the hidden comments for issue metadata.
 
     <!-- @foo: bar -->.
     Returns a dict with all such comments as members,
@@ -47,7 +48,7 @@ def extract_browser_label(metadata_dict):
 
 
 def extract_extra_label(metadata_dict):
-    """Return the 'extra' label from metadata_dict"""
+    """Return the 'extra' label from metadata_dict."""
     extra_label = metadata_dict.get('extra_label', None)
     if extra_label:
         extra_label = extra_label.lower()
@@ -76,7 +77,7 @@ def extract_priority_label(body):
 
 
 def update_issue(payload, issue_number):
-    """Does a GitHub PATCH request to set labels and milestone for the issue.
+    """Send a GitHub PATCH to set labels and milestone for the issue.
 
     PATCH /repos/:owner/:repo/issues/:number
     {
@@ -94,7 +95,10 @@ def update_issue(payload, issue_number):
 
 
 def compare_digest(x, y):
-    """Approximates hmac.compare_digest (Py 2.7.7+) until we upgrade."""
+    """Create a hmac comparison.
+
+    Approximates hmac.compare_digest (Py 2.7.7+) until we upgrade.
+    """
     if not (isinstance(x, bytes) and isinstance(y, bytes)):
         raise TypeError("both inputs should be instances of bytes")
     if len(x) != len(y):
@@ -106,7 +110,7 @@ def compare_digest(x, y):
 
 
 def signature_check(key, post_signature, payload):
-    """Checks the HTTP POST legitimacy."""
+    """Check the HTTP POST legitimacy."""
     if post_signature.startswith('sha1='):
         sha_name, signature = post_signature.split('=')
     else:
@@ -146,12 +150,14 @@ def get_issue_info(payload):
 
 
 def new_opened_issue(payload):
-    '''When a new issue is opened, we set a couple of things.
+    """Set the core actions on new opened issues.
+
+    When a new issue is opened, we set a couple of things.
 
     - Browser label
     - Priority label
     - Issue milestone
-    '''
+    """
     issue_body = payload.get('issue')['body']
     issue_number = payload.get('issue')['number']
     metadata_dict = extract_metadata(issue_body)
