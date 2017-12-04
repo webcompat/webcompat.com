@@ -154,7 +154,7 @@ def new_opened_issue(payload):
     '''
     issue_body = payload.get('issue')['body']
     issue_number = payload.get('issue')['number']
-    metadata_dict = extract_metadata_labels(issue_body)
+    metadata_dict = extract_metadata(issue_body)
     browser_label = extract_browser_label(metadata_dict)
     extra_label = extract_extra_label(metadata_dict)
     priority_label = extract_priority_label(issue_body)
