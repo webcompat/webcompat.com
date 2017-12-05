@@ -68,8 +68,16 @@ const filteringList = (renderActivityIndicator = true) => {
       document.getElementsByClassName("wc-Filter-select")
     );
     selectList.forEach(select => {
-      /* test value */
-      if (select.value && !issue.classList.contains(select.value)) {
+      /* no value */
+      if (!select.value) {
+        return;
+      }
+      /* value does not contain in class list */
+      const classList = Array.from(issue.classList);
+      const result = classList.filter(className =>
+        className.match(select.value)
+      );
+      if (result.length === 0) {
         mustBeHidden = true;
         return;
       }
