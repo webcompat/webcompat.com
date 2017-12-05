@@ -1,36 +1,31 @@
-<header class="wc-Navbar" role="banner">
-  <nav class="wc-UIContent" role="navigation">
-    <div class="wc-SearchBar js-SearchBar">
-      <div class="wc-SearchBar-face wc-SearchBar-face--front">
-        <div class="wc-Navbar-container">
-          <div class="wc-Navbar-section">
-          {%- if request.url_rule.endpoint == 'create_issue' %}
-          <a class="wc-Navbar-link js-Navbar-link" href="/">
-            <span class="wc-Navbar-link-icon wc-Icon wc-Icon--home" aria-hidden="true"></span>
-            <span class="wc-Navbar-link-label">Home</span>
-          </a>
-          {%- else %}
-            {% include "addon-links.html" %}
-          {%- endif %}
-          </div>
-          <div class="wc-Navbar-section">
-            <button class="r-ResetButton wc-Navbar-link js-SearchBarOpen">
-              <span class="wc-Navbar-link-icon wc-Icon wc-Icon--search" aria-hidden="true"></span>
-              <span class="wc-Navbar-link-label">Search</span>
-            </button>
+<nav id="Nav" class="nav">
+    <div class="nav-container js-SearchBar">
+        <ul class="nav-left">
+            {%- if request.url_rule.endpoint == 'create_issue' %}
+
+            <li class="nav-item">
+                <a class="js-Navbar-link" href="/" title="Navigate to main page.">
+                    <svg class="icon nav-icon" viewBox="0 0 30 30" role="presentation">
+                        <title>Home</title>
+                        <use href="#svg-home2">home</use>
+                    </svg>
+                    <span class="link-text">Home</span>
+                </a>
+            </li>
+            {%- else %}
+                {% include "addon-links.html" %}
+            {%- endif %}
+        </ul>
+        <ul class="nav-right">
+            <li class="nav-item">
+                <button title="Search for an item.">
+                    <svg class="icon nav-icon" viewBox="0 0 30 30" role="presentation">
+                        <use href="#svg-search">Search</use>
+                    </svg>
+                    <span class="link-text">Search</span>
+                </button>
+            </li>
             {% include "shared/shared-nav-links.html" %}
-          </div>
-        </div>
-      </div>
-      <form class="wc-SearchBar-face wc-SearchBar-face--back" method="get" action="/issues">
-        <div class="wc-SearchBar-icon" aria-hidden="true">
-          <span class="wc-Navbar-link-icon wc-Icon wc-Icon--search" aria-hidden="true"></span>
-        </div>
-        <input class="wc-SearchBar-input" name="q" placeholder="Search by keyword"/>
-        <button class="r-ResetButton wc-SearchBar-icon wc-SearchBar-icon--button js-SearchBarClose" aria-hidden="true" type="button">
-          <span class="wc-Icon wc-Icon--times"></span>
-        </button>
-      </form>
+        </ul>
     </div>
-  </nav>
-</header>
+</nav>
