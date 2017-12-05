@@ -1,11 +1,11 @@
-<div class="wc-UIContent" id="user-reported-issues">
-  <div class="wc-ListIssue-subtitle">
-    <h2 class="wc-Title wc-Title--l">Issues reported by {{user}}</h2>
-  </div>
-  <div class="wc-ListIssue-pagination">
-    {% include "web_modules/pagination.html" %}
-  </div>
-  <div id="my-issues">
-    {% include "web_modules/issue-list.jst" %}
-  </div>
-</div>
+<article class="grid">
+	<div class="grid-row" id="user-reported-issues">
+	  <div class="grid-cell x3">
+	  	<h2 class="headline-2">Issues reported by {{user}}</h2>
+	    {% include "web_modules/pagination.html" %}
+	  </div>
+	</div>
+	<div id="my-issues">
+		{% include "web_modules/issue-list.jst" %}
+	</div>
+</article>
