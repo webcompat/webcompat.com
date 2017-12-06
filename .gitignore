@@ -10,6 +10,7 @@ docs/build/
 screenshots/
 uploads/
 .idea/
+.vscode/
 config/secrets.py
 package-lock.json
 
