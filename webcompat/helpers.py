@@ -8,18 +8,16 @@
 
 We collect them in that module.
 """
-from datetime import datetime
+
 from functools import update_wrapper
 from functools import wraps
 import hashlib
 import json
-import math
 import os
 import re
 import requests
 import urlparse
 
-from babel.dates import format_timedelta
 from flask import abort
 from flask import g
 from flask import make_response
@@ -42,13 +40,6 @@ JSON_MIME = 'application/json'
 REPO_URI = app.config['ISSUES_REPO_URI']
 
 cache_dict = {}
-
-
-@app.template_filter('format_delta')
-def format_delta_filter(timestamp):
-    """Jinja2 fiter to format a unix timestamp to a time delta string."""
-    delta = datetime.now() - datetime.fromtimestamp(timestamp)
-    return format_timedelta(delta, locale='en_US')
 
 
 @app.template_filter('bust_cache')
@@ -81,17 +72,6 @@ def md5_checksum(file_path):
                 break
             m.update(data)
         return m.hexdigest()
-
-
-def format_delta_seconds(timestamp):
-    """Return a timedelta by seconds.
-
-    The timedelta is a negative float, so we round up the absolute value and
-    cast it to an integer to be more human friendly.
-    """
-    delta = datetime.now() - datetime.fromtimestamp(timestamp)
-    seconds = delta.total_seconds()
-    return abs(int(math.ceil(seconds)))
 
 
 def get_user_info():
