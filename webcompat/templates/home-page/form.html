@@ -1,7 +1,6 @@
-<!-- <div class="wc-Loader js-Loader"></div> -->
-  {%- if request.url_rule.endpoint == 'create_issue' %}
-    <h1 class="headline-1">Report Site Issue</h1>
-  {%- endif %}
+{%- if request.url_rule.endpoint == 'create_issue' %}
+  <h1 class="headline-1">Report Site Issue</h1>
+{%- endif %}
 
 <form
   action="/issues/new"
