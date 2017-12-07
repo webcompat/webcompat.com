@@ -129,6 +129,7 @@ def wrap_metadata(metadata):
 def get_metadata(metadata_keys, form_object):
     """Return relevant metadata hanging off the form as a single string."""
     metadata = [(key, form_object.get(key)) for key in metadata_keys]
+    metadata = [(md[0], normalize_metadata(md[1])) for md in metadata]
     # Now, "wrap the metadata" and return them all as a single string
     return ''.join([wrap_metadata(md) for md in metadata])
 
@@ -156,6 +157,22 @@ def normalize_url(url):
         else:
             url = 'http://{}'.format(url)
     return url
+
+
+def normalize_metadata(metadata_value):
+    """Normalize the metadata received from the form."""
+    # Removing closing comments.
+    if metadata_value is None:
+        return None
+    if '-->' in metadata_value:
+        metadata_value = metadata_value.replace('-->', '')
+        metadata_value = normalize_metadata(metadata_value)
+    # Let's avoid html tags in
+    if ('<' or '>') in metadata_value and '-->' not in metadata_value:
+            metadata_value = ''
+    if len(metadata_value) > 200:
+        metadata_value = ''
+    return metadata_value.strip()
 
 
 def domain_name(url):
@@ -222,8 +239,8 @@ def build_formdata(form_object):
     formdata = {
         'metadata': get_metadata(metadata_keys, form_object),
         'url': form_object.get('url'),
-        'browser': form_object.get('browser'),
-        'os': form_object.get('os'),
+        'browser': normalize_metadata(form_object.get('browser')),
+        'os': normalize_metadata(form_object.get('os')),
         'problem_type': get_radio_button_label(
             form_object.get('problem_category'), problem_choices),
         'browser_test_type': get_radio_button_label(form_object.get(
