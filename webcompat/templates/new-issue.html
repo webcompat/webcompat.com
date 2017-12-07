@@ -1,6 +1,15 @@
 {%- extends "layout.html" -%}
 {% block title %}New Issue{% endblock %}
 {%- block body -%}
+<<<<<<< HEAD
 {% include "topbar.html" %}
 {% include "home-page/form.html" %}
 {% endblock %}
+=======
+{% include "nav/topbar.html" %}
+<main role="main">
+  <div class="wc-Loader js-Loader"></div>
+  {% include "home-page/form.html" %}
+</main>
+{% endblock %}
+>>>>>>> Issue #1966 - refactor navigation
