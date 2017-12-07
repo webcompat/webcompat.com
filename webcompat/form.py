@@ -4,8 +4,11 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-"""This module contains the base IssueForm class and helper methods that
-power the issue reporting form on webcompat.com."""
+"""IssueForm class module.
+
+The module powers the issue reporting form on webcompat.com.
+It includes helper methods.
+"""
 
 import random
 import urlparse
@@ -13,9 +16,9 @@ import urlparse
 from helpers import get_browser
 from helpers import get_os
 
-from flask_wtf import FlaskForm
 from flask_wtf.file import FileAllowed
 from flask_wtf.file import FileField
+from flask_wtf import FlaskForm
 from wtforms import RadioField
 from wtforms import StringField
 from wtforms import TextAreaField
@@ -23,8 +26,8 @@ from wtforms.validators import InputRequired
 from wtforms.validators import Length
 from wtforms.validators import Optional
 
-from webcompat import app
 from webcompat.api.uploads import Upload
+from webcompat import app
 
 AUTH_REPORT = 'github-auth-report'
 PROXY_REPORT = 'github-proxy-report'
@@ -63,6 +66,7 @@ textarea_label = u'What steps did you take before this problem occurred?'
 
 class IssueForm(FlaskForm):
     """Define form fields and validation for our bug reporting form."""
+
     url = StringField(url_label,
                       [InputRequired(message=url_message)])
     browser = StringField(u'Is this information correct?', [Optional()])
@@ -104,7 +108,7 @@ def get_radio_button_label(field_value, label_list):
 
 
 def get_problem_summary(category):
-    """Creates the summary for the issue title."""
+    """Create the summary for the issue title."""
     if category == 'unknown_bug':
         # In this case, we need a special message
         return u'see bug description'
@@ -115,7 +119,7 @@ def get_problem_summary(category):
 
 
 def wrap_metadata(metadata):
-    """Helper method to wrap metadata and its type in an HTML comment.
+    """Wrap metadata and its type in an HTML comment.
 
     We use it to hide potentially (un)interesting metadata from the UI.
     """
@@ -130,7 +134,7 @@ def get_metadata(metadata_keys, form_object):
 
 
 def normalize_url(url):
-    """normalize URL for consistency."""
+    """Normalize URL for consistency."""
     if not url:
         return None
     url = url.strip()

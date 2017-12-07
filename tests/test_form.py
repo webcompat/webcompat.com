@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-'''Tests for form validation.'''
+"""Tests for form validation."""
 
 import unittest
 
@@ -12,16 +12,19 @@ FIREFOX_UA = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:48.0) Gecko/20100
 
 
 class TestForm(unittest.TestCase):
+    """Module for testing the form."""
 
     def setUp(self):
+        """Set up."""
         webcompat.app.config['TESTING'] = True
         self.app = webcompat.app.test_client()
 
     def tearDown(self):
+        """Tear down."""
         pass
 
     def test_normalize_url(self):
-        """Checks that URL is normalized."""
+        """Check that URL is normalized."""
         r = form.normalize_url('http://example.com')
         self.assertEqual(r, 'http://example.com')
 
@@ -50,7 +53,7 @@ class TestForm(unittest.TestCase):
         self.assertIsNone(r)
 
     def test_domain_name(self):
-        """Checks that domain name is extracted."""
+        """Check that domain name is extracted."""
         r = form.domain_name('http://example.com')
         self.assertEqual(r, 'example.com')
 
@@ -61,7 +64,7 @@ class TestForm(unittest.TestCase):
         self.assertIsNone(r)
 
     def test_metadata_wrapping(self):
-        """Checks that metadata is processed and wrapped."""
+        """Check that metadata is processed and wrapped."""
         TEST_DICT = {'cool': 'dude', 'wow': 'ok'}
         EXPECTED_SINGLE = '<!-- @cool: dude -->\n'
         EXPECTED_MULTIPLE = '<!-- @cool: dude -->\n<!-- @wow: ok -->\n'
@@ -73,7 +76,7 @@ class TestForm(unittest.TestCase):
         self.assertEqual(r, EXPECTED_MULTIPLE)
 
     def test_radio_button_label(self):
-        '''Checks that appropriate radio button label is returned.'''
+        """Check that appropriate radio button label is returned."""
         TEST_LABELS_LIST = [
             (u'detection_bug', u'Desktop site instead of mobile site'),
             (u'unknown_bug', u'Something else')
