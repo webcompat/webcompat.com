@@ -1,8 +1,8 @@
 {% extends "layout.html" %}
 {% block title %}Issues{% endblock %}
 {% block body %}
-<div class="js-SearchIssue" data-username="{{ session.username }}">
-  {% include "shared/nav.html" %}
+<div class="wc-SearchIssue js-SearchIssue" data-username="{{ session.username }}">
+  {% include "nav/nav.html" %}
   <main role="main" data-repo-path="{{config['ISSUES_REPO_URI']}}">
 
     <!-- <div class="wc-Loader js-loader"></div> -->
