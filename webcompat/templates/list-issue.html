@@ -2,7 +2,7 @@
 {% block title %}Issues{% endblock %}
 {% block body %}
 <div class="wc-SearchIssue js-SearchIssue" data-username="{{ session.username }}">
-  {% include "shared/nav.html" %}
+  {% include "nav/nav.html" %}
   <main role="main" data-repo-path="{{config['ISSUES_REPO_URI']}}">
 
     <div class="wc-Loader js-loader"></div>
