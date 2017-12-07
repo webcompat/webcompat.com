@@ -4,6 +4,13 @@
 2. New features: affect minor number
 3. API endpoint changes or dependency version updates: affect major number
 
+## 7.0.2 - 2017-12-07
+
+* Remove dead code from rate_limit [Pull #1970](https://github.com/webcompat/webcompat.com/pull/1970)
+* Add type-webrender-enabled to EXTRA_LABELS list [Pull #1962](https://github.com/webcompat/webcompat.com/pull/1962)
+* Fix browser filtering for triage dashboard [Pull #1961](https://github.com/webcompat/webcompat.com/pull/1961)
+* Remove redundant test for details param [Pull #1956](https://github.com/webcompat/webcompat.com/pull/1956)
+
 ## 7.0.1 - 2017-12-04
 
 * Fix a major webhook issue [Pull #1953](https://github.com/webcompat/webcompat.com/pull/1953)
