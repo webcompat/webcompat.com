@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% block title %}Issue #{{ number }}{% endblock %}
 {% block body %}
-  {% include "shared/nav.html" %}
+  {% include "nav/nav.html" %}
   <main class="wc-UISection wc-UISection--backgroundColor" role="main"
         data-issue-number={{ number }}
         data-repo-path="{{ config['ISSUES_REPO_URI'] }}"
