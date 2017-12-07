@@ -112,6 +112,20 @@ class TestForm(unittest.TestCase):
         expected = u'<!-- @sky: blue -->\n<!-- @earth: None -->\n'
         self.assertEqual(actual, expected)
 
+    def test_normalize_metadata(self):
+        """Avoid some type of strings."""
+        cases = [('blue sky -->', 'blue sky'),
+                 ('blue sky ---->>', 'blue sky'),
+                 ('', ''),
+                 ('blue sky ', 'blue sky'),
+                 ('bad_bird <script>', ''),
+                 ('bad_bird <script-->>', ''),
+                 ('a' * 300, ''),
+                 (None, None)
+                 ]
+        for meta_value, expected in cases:
+            self.assertEqual(form.normalize_metadata(meta_value), expected)
+
     def test_build_formdata(self):
         """The data body sent to GitHub API."""
         form_object = {'foo': 'bar'}
