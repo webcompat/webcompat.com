@@ -4,8 +4,11 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-"""This module contains the base IssueForm class and helper methods that
-power the issue reporting form on webcompat.com."""
+"""IssueForm class module.
+
+The module powers the issue reporting form on webcompat.com.
+It includes helper methods.
+"""
 
 import random
 import urlparse
@@ -13,9 +16,9 @@ import urlparse
 from helpers import get_browser
 from helpers import get_os
 
-from flask_wtf import FlaskForm
 from flask_wtf.file import FileAllowed
 from flask_wtf.file import FileField
+from flask_wtf import FlaskForm
 from wtforms import RadioField
 from wtforms import StringField
 from wtforms import TextAreaField
@@ -23,8 +26,8 @@ from wtforms.validators import InputRequired
 from wtforms.validators import Length
 from wtforms.validators import Optional
 
-from webcompat import app
 from webcompat.api.uploads import Upload
+from webcompat import app
 
 AUTH_REPORT = 'github-auth-report'
 PROXY_REPORT = 'github-proxy-report'
@@ -63,6 +66,7 @@ textarea_label = u'What steps did you take before this problem occurred?'
 
 class IssueForm(FlaskForm):
     """Define form fields and validation for our bug reporting form."""
+
     url = StringField(url_label,
                       [InputRequired(message=url_message)])
     browser = StringField(u'Is this information correct?', [Optional()])
@@ -104,7 +108,7 @@ def get_radio_button_label(field_value, label_list):
 
 
 def get_problem_summary(category):
-    """Creates the summary for the issue title."""
+    """Create the summary for the issue title."""
     if category == 'unknown_bug':
         # In this case, we need a special message
         return u'see bug description'
@@ -115,7 +119,7 @@ def get_problem_summary(category):
 
 
 def wrap_metadata(metadata):
-    """Helper method to wrap metadata and its type in an HTML comment.
+    """Wrap metadata and its type in an HTML comment.
 
     We use it to hide potentially (un)interesting metadata from the UI.
     """
@@ -125,12 +129,13 @@ def wrap_metadata(metadata):
 def get_metadata(metadata_keys, form_object):
     """Return relevant metadata hanging off the form as a single string."""
     metadata = [(key, form_object.get(key)) for key in metadata_keys]
+    metadata = [(md[0], normalize_metadata(md[1])) for md in metadata]
     # Now, "wrap the metadata" and return them all as a single string
     return ''.join([wrap_metadata(md) for md in metadata])
 
 
 def normalize_url(url):
-    """normalize URL for consistency."""
+    """Normalize URL for consistency."""
     if not url:
         return None
     url = url.strip()
@@ -152,6 +157,22 @@ def normalize_url(url):
         else:
             url = 'http://{}'.format(url)
     return url
+
+
+def normalize_metadata(metadata_value):
+    """Normalize the metadata received from the form."""
+    # Removing closing comments.
+    if metadata_value is None:
+        return None
+    if '-->' in metadata_value:
+        metadata_value = metadata_value.replace('-->', '')
+        metadata_value = normalize_metadata(metadata_value)
+    # Let's avoid html tags in
+    if ('<' or '>') in metadata_value and '-->' not in metadata_value:
+            metadata_value = ''
+    if len(metadata_value) > 200:
+        metadata_value = ''
+    return metadata_value.strip()
 
 
 def domain_name(url):
@@ -218,8 +239,8 @@ def build_formdata(form_object):
     formdata = {
         'metadata': get_metadata(metadata_keys, form_object),
         'url': form_object.get('url'),
-        'browser': form_object.get('browser'),
-        'os': form_object.get('os'),
+        'browser': normalize_metadata(form_object.get('browser')),
+        'os': normalize_metadata(form_object.get('os')),
         'problem_type': get_radio_button_label(
             form_object.get('problem_category'), problem_choices),
         'browser_test_type': get_radio_button_label(form_object.get(
