@@ -11,6 +11,7 @@ function BugForm() {
   this.UPLOAD_LIMIT = 1024 * 1024 * 4;
   this.clickedButton = null;
   this.hasImage = null;
+  this.suggestDelay = null;
 
   this.inputs = {
     url: {
@@ -70,6 +71,8 @@ function BugForm() {
     this.checkParams();
     this.disableSubmits();
     this.urlField.on("blur input", _.bind(this.checkURLValidity, this));
+    this.urlField.on("input", _.bind(this.showSimilarBugs, this));
+    this.urlField.on("blur", _.bind(this.hideSimilarBugs, this));
     this.descField.on(
       "blur input",
       _.bind(this.checkDescriptionValidity, this)
@@ -214,6 +217,60 @@ function BugForm() {
   this.enableSubmits = function() {
     this.submitButtons.prop("disabled", false);
     this.submitButtons.removeClass("is-disabled");
+  };
+
+  this.showSimilarBugs = function() {
+    if (!$("body").data("username")) {
+      // Not login
+      return;
+    }
+
+    if (this.suggestDelay) {
+      clearTimeout(this.suggestDelay);
+    }
+    var bugform = this;
+    this.suggestDelay = setTimeout(function() {
+      try {
+        var url = new URL(bugform.urlField.val());
+        if (url.hostname.length > 7) {
+          var query = `https://api.github.com/search/issues?page=1&per_page=10&stage=all&sort=created&q=${url.hostname}+in:title+repo%3Awebcompat%2Fweb-bugs&order=desc`;
+
+          fetch(query)
+            .then(function(response) {
+              var contentType = response.headers.get("content-type");
+              if (contentType && contentType.includes("application/json")) {
+                return response.json();
+              }
+            })
+            .then(function(issues) {
+              if (issues.items) {
+                $("#bugListWrapper").show();
+                $("#bugList").empty();
+                for (var item in issues.items) {
+                  var issue = issues.items[item];
+                  $("#bugList").append(
+                    `<li><a href='https://webcompat.com/issues/${issue.number}' target='_blank'>#${issue.number} - ${issue.title}</a></li>`
+                  );
+                }
+              } else {
+                bugform.hideSimilarBugs();
+              }
+            });
+        } else {
+          bugform.hideSimilarBugs();
+        }
+      } catch (e) {
+        // Hide bug list if not a valid URL
+        bugform.hideSimilarBugs();
+      }
+    }, 500);
+  };
+
+  this.hideSimilarBugs = function() {
+    setTimeout(function() {
+      $("#bugList").empty();
+      $("#bugListWrapper").hide();
+    }, 250);
   };
 
   this.checkProblemTypeValidity = function() {
