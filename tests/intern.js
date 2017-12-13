@@ -61,16 +61,6 @@ define(["intern"], function(intern) {
     // Only one browser at a time. Takes longer, but gets less intermittent errors.
     maxConcurrency: 1,
 
-    // Note: this is temporary until the fix for the following is released (should be Firefox 56):
-    // https://github.com/mozilla/geckodriver/issues/858. It can be removed then.
-    capabilities: {
-      "moz:firefoxOptions": {
-        prefs: {
-          "dom.file.createInChild": true
-        }
-      }
-    },
-
     environments: environments,
 
     filterErrorStack: true,
