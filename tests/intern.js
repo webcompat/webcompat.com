@@ -11,6 +11,18 @@ define(["intern"], function(intern) {
   var args = intern.args;
   var siteRoot = args.siteRoot ? args.siteRoot : "http://localhost:5000";
 
+  var environments = [];
+  var browsers = args.browsers
+    ? args.browsers.replace(/\s/g, "").split(",")
+    : ["chrome", "firefox"];
+
+  browsers.forEach(function(b) {
+    environments.push({
+      browserName: b.toLowerCase(),
+      marionette: true
+    });
+  });
+
   return {
     // Configuration object for webcompat
     wc: {
@@ -59,15 +71,7 @@ define(["intern"], function(intern) {
       }
     },
 
-    environments: [
-      {
-        browserName: "firefox",
-        marionette: true
-      },
-      {
-        browserName: "chrome"
-      }
-    ],
+    environments: environments,
 
     filterErrorStack: true,
     reporters: ["Pretty"],
