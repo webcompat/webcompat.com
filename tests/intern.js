@@ -14,7 +14,7 @@ define(["intern"], function(intern) {
   var environments = [];
   var browsers = args.browsers
     ? args.browsers.replace(/\s/g, "").split(",")
-    : ["chrome", "firefox"];
+    : ["firefox"];
 
   browsers.forEach(function(b) {
     environments.push({
