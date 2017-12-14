@@ -11,6 +11,18 @@ define(["intern"], function(intern) {
   var args = intern.args;
   var siteRoot = args.siteRoot ? args.siteRoot : "http://localhost:5000";
 
+  var environments = [];
+  var browsers = args.browsers
+    ? args.browsers.replace(/\s/g, "").split(",")
+    : ["firefox"];
+
+  browsers.forEach(function(b) {
+    environments.push({
+      browserName: b.toLowerCase(),
+      marionette: true
+    });
+  });
+
   return {
     // Configuration object for webcompat
     wc: {
@@ -49,25 +61,7 @@ define(["intern"], function(intern) {
     // Only one browser at a time. Takes longer, but gets less intermittent errors.
     maxConcurrency: 1,
 
-    // Note: this is temporary until the fix for the following is released (should be Firefox 56):
-    // https://github.com/mozilla/geckodriver/issues/858. It can be removed then.
-    capabilities: {
-      "moz:firefoxOptions": {
-        prefs: {
-          "dom.file.createInChild": true
-        }
-      }
-    },
-
-    environments: [
-      {
-        browserName: "firefox",
-        marionette: true
-      },
-      {
-        browserName: "chrome"
-      }
-    ],
+    environments: environments,
 
     filterErrorStack: true,
     reporters: ["Pretty"],
