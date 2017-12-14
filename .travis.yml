@@ -3,6 +3,9 @@
 sudo: required
 dist: trusty
 
+addons:
+  firefox: "57.0"
+
 # Only run travis on the master branch (and PRs), not all branches
 branches:
   only:
