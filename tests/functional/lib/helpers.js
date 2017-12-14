@@ -15,6 +15,18 @@ define(
       return params ? base + params : base;
     };
 
+    /**
+     * Take a screen shot, write a base64 encoded image to the console
+     */
+    function takeScreenshot() {
+      return function() {
+        return this.parent.takeScreenshot().then(function(buffer) {
+          console.error("Capturing base64 screenshot:");
+          console.error(buffer.toString("base64"));
+        });
+      };
+    }
+
     /*
     Use this method to make sure a page is loaded before trying to find
     things inside of it. The optional boolean longer arg at the end can
@@ -23,15 +35,12 @@ define(
     function openPage(context, url, readySelector, longerTimeout) {
       var timeout = longerTimeout ? 20000 : config.wc.pageLoadTimeout;
 
-      console.log(context, url, readySelector, longerTimeout);
-
       return (
         context.remote
           .get(require.toUrl(url))
           .setFindTimeout(timeout)
           // Wait until the `readySelector` element is found to return.
           .findByCssSelector(readySelector)
-          .then()
           .end()
           .then(null, function(err) {
             return context.remote
@@ -40,6 +49,7 @@ define(
                 console.log("Error fetching %s", resultUrl);
               })
               .end()
+              .then(takeScreenshot())
               .then(function() {
                 throw err;
               });
