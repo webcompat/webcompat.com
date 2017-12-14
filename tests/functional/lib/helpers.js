@@ -31,6 +31,7 @@ define(
           .findByCssSelector(readySelector)
           .end()
           .then(null, function(err) {
+            console.log(err);
             return context.remote
               .getCurrentUrl()
               .then(function(resultUrl) {
