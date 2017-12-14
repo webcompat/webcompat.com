@@ -32,10 +32,6 @@ env:
     # grab latest 4.x release, which is LTS for now
     - TRAVIS_NODE_VERSION="4"
 
-before_install:
-  - "export DISPLAY=:99.0"
-  - "sh -e /etc/init.d/xvfb start"
-
 install:
   - rm -rf ~/.nvm && git clone https://github.com/creationix/nvm.git ~/.nvm && (cd ~/.nvm && git checkout `git describe --abbrev=0 --tags`) && source ~/.nvm/nvm.sh && nvm install $TRAVIS_NODE_VERSION
   - travis_retry npm install
@@ -58,4 +54,4 @@ before_script:
 # now run the tests!
 script:
   - nosetests
-  - node_modules/.bin/intern-runner config=tests/intern reporters=Console
+  - MOZ_HEADLESS=1 node_modules/.bin/intern-runner config=tests/intern reporters=Console
