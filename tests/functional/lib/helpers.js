@@ -23,15 +23,19 @@ define(
     function openPage(context, url, readySelector, longerTimeout) {
       var timeout = longerTimeout ? 20000 : config.wc.pageLoadTimeout;
 
+      console.log(context, url, readySelector, longerTimeout);
+
       return (
         context.remote
           .get(require.toUrl(url))
+          .then(data => console.log(data), err => console.log(err))
           .setFindTimeout(timeout)
+          .then(data => console.log(data), err => console.log(err))
           // Wait until the `readySelector` element is found to return.
           .findByCssSelector(readySelector)
+          .then(data => console.log(data), err => console.log(err))
           .end()
-          .then(null, function(err) {
-            console.log(err);
+          .then(data => console.log(data), function(err) {
             return context.remote
               .getCurrentUrl()
               .then(function(resultUrl) {
