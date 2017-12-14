@@ -41,7 +41,6 @@ define(
           .setFindTimeout(timeout)
           // Wait until the `readySelector` element is found to return.
           .findByCssSelector(readySelector)
-          .end()
           .then(null, function(err) {
             return context.remote
               .getCurrentUrl()
@@ -54,6 +53,7 @@ define(
                 throw err;
               });
           })
+          .end()
       );
     }
 
