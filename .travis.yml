@@ -51,7 +51,7 @@ before_script:
   - npm run lint
   - npm run build
   # Check that server is actually running
-  - curl localhost:5000/issues/new
+  - curl localhost:5000
 
 # now run the tests!
 script:

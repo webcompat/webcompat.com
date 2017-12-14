@@ -28,14 +28,12 @@ define(
       return (
         context.remote
           .get(require.toUrl(url))
-          .then(data => console.log(data), err => console.log(err))
           .setFindTimeout(timeout)
-          .then(data => console.log(data), err => console.log(err))
           // Wait until the `readySelector` element is found to return.
           .findByCssSelector(readySelector)
-          .then(data => console.log(data), err => console.log(err))
+          .then()
           .end()
-          .then(data => console.log(data), function(err) {
+          .then(null, function(err) {
             return context.remote
               .getCurrentUrl()
               .then(function(resultUrl) {
