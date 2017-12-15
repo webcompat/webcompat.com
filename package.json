@@ -1,4 +1,4 @@
-{
+  {
   "title": "webcompat.com",
   "name": "webcompat",
   "description": "The webcompat.com is a tool to gather web compatibility bugs, inform the community and help to fix the web.",
@@ -37,7 +37,7 @@
     "grunt-contrib-watch": "^1.0.0",
     "grunt-postcss": "^0.8.0",
     "husky": "^0.13.4",
-    "intern": "^3.4.6",
+    "intern": "^4.1.4",
     "lint-staged": "^3.6.1",
     "load-grunt-tasks": "^3.5.2",
     "postcss": "^5.2.17",
