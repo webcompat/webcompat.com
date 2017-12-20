@@ -39,6 +39,68 @@ define(
             assert.include(text, "Report as"); //Report as FooUser (logged in)
           })
           .end();
+      },
+
+      "Duplicate issue - buglist shows on focus, hides on blur": function() {
+        return FunctionalHelpers.openPage(
+          this,
+          url("/issues/new"),
+          ".wc-ReportForm-actions-button"
+        )
+          .findById("url")
+          .click()
+          .type("https://test.")
+          .sleep(500)
+          .end()
+          .findById("description")
+          .click()
+          .end()
+          .sleep(500)
+          .findById("bugList")
+          .getVisibleText()
+          .then(function(text) {
+            assert.equal(text, "");
+          });
+      },
+
+      "Duplicate issue - 3 issues with url found": function() {
+        return FunctionalHelpers.openPage(
+          this,
+          url("/issues/new"),
+          ".wc-ReportForm-actions-button"
+        )
+          .findById("url")
+          .click()
+          .type("https://test.")
+          .sleep(500)
+          .end()
+          .findById("bugList")
+          .findAllByCssSelector("li a")
+          .getVisibleText()
+          .then(function(texts) {
+            assert.isAtLeast(texts.length, 3, "found 3 issues");
+          })
+          .end();
+      },
+
+      "Duplicate issue - no issue with url found": function() {
+        return FunctionalHelpers.openPage(
+          this,
+          url("/issues/new"),
+          ".wc-ReportForm-actions-button"
+        )
+          .findById("url")
+          .click()
+          .type("https://webctest1234567890")
+          .sleep(500)
+          .end()
+          .findById("bugList")
+          .findAllByCssSelector("li a")
+          .getVisibleText()
+          .then(function(texts) {
+            assert.equal(texts.length, 0, "No results returned.");
+          })
+          .end();
       }
     });
   }
