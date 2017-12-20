@@ -232,11 +232,9 @@ function BugForm() {
 
       this.suggestDelay = setTimeout(function() {
         try {
-          // url got removed the http protocol, so the url works as a keyword. Shortest url.hostname is something like www.
-
           var url = new URL(bugform.urlField.val());
 
-          if (url.hostname.length > 7) {
+          if (url.hostname.length > 3) {
             var query =
               "https://api.github.com/search/issues?page=1&per_page=10&stage=all&sort=created&q=" +
               url.hostname +
