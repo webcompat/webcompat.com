@@ -29,6 +29,12 @@ class TestForm(unittest.TestCase):
         r = form.normalize_url('http://example.com')
         self.assertEqual(r, 'http://example.com')
 
+        r = form.normalize_url(u'愛')
+        self.assertEqual(r, u'http://愛')
+
+        r = form.normalize_url(u'http://愛')
+        self.assertEqual(r, u'http://愛')
+
         r = form.normalize_url('https://example.com')
         self.assertEqual(r, 'https://example.com')
 
