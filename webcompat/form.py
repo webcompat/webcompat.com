@@ -145,7 +145,7 @@ def normalize_url(url):
         # if url starts with a bad scheme, parsed.netloc will be empty,
         # so we use parsed.path instead
         path = parsed.path.lstrip('/')
-        url = '{}://{}'.format(parsed.scheme, path)
+        url = u'{}://{}'.format(parsed.scheme, path)
         if parsed.query:
             url += '?' + parsed.query
         if parsed.fragment:
@@ -153,9 +153,9 @@ def normalize_url(url):
     elif not parsed.scheme:
         # We assume that http is missing not https
         if url.startswith("//"):
-            url = "http://{}".format(url[2:])
+            url = u"http://{}".format(url[2:])
         else:
-            url = 'http://{}'.format(url)
+            url = u'http://{}'.format(url)
     return url
 
 
