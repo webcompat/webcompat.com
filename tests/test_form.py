@@ -17,6 +17,7 @@ class TestForm(unittest.TestCase):
     def setUp(self):
         """Set up."""
         webcompat.app.config['TESTING'] = True
+        self.maxDiff = None
         self.app = webcompat.app.test_client()
 
     def tearDown(self):
@@ -48,6 +49,12 @@ class TestForm(unittest.TestCase):
 
         r = form.normalize_url('//example.com')
         self.assertEqual(r, 'http://example.com')
+
+        r = form.normalize_url('http://https://bad.example.com')
+        self.assertEqual(r, 'https://bad.example.com')
+
+        r = form.normalize_url('http://param.example.com/?q=foo#bar')
+        self.assertEqual(r, 'http://param.example.com/?q=foo#bar')
 
         r = form.normalize_url('')
         self.assertIsNone(r)
@@ -135,4 +142,9 @@ class TestForm(unittest.TestCase):
         # even if the data are empty
         expected = {'body': u'<!-- @browser: None -->\n<!-- @ua_header: None -->\n<!-- @reported_with: None -->\n\n**URL**: None\n\n**Browser / Version**: None\n**Operating System**: None\n**Tested Another Browser**: Unknown\n\n**Problem type**: Unknown\n**Description**: None\n**Steps to Reproduce**:\nNone\n\n\n\n_From [webcompat.com](https://webcompat.com/) with \u2764\ufe0f_', 'title': 'None - unknown'}  # nopep8
         self.assertIs(type(actual), dict)
+        self.assertEqual(actual, expected)
+        form_object = {'url': 'http://https://example.com/'}
+        actual = form.build_formdata(form_object)
+        # testing with a strange URL.
+        expected = {'body': u'<!-- @browser: None -->\n<!-- @ua_header: None -->\n<!-- @reported_with: None -->\n\n**URL**: https://example.com/\n\n**Browser / Version**: None\n**Operating System**: None\n**Tested Another Browser**: Unknown\n\n**Problem type**: Unknown\n**Description**: None\n**Steps to Reproduce**:\nNone\n\n\n\n_From [webcompat.com](https://webcompat.com/) with \u2764\ufe0f_', 'title': 'example.com - unknown'}  # nopep8
         self.assertEqual(actual, expected)
