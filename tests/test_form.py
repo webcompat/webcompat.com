@@ -16,6 +16,7 @@ class TestForm(unittest.TestCase):
 
     def setUp(self):
         """Set up."""
+        self.maxDiff = None
         webcompat.app.config['TESTING'] = True
         self.app = webcompat.app.test_client()
 
@@ -27,6 +28,12 @@ class TestForm(unittest.TestCase):
         """Check that URL is normalized."""
         r = form.normalize_url('http://example.com')
         self.assertEqual(r, 'http://example.com')
+
+        r = form.normalize_url(u'愛')
+        self.assertEqual(r, u'http://愛')
+
+        r = form.normalize_url(u'http://愛')
+        self.assertEqual(r, u'http://愛')
 
         r = form.normalize_url('https://example.com')
         self.assertEqual(r, 'https://example.com')
@@ -135,4 +142,9 @@ class TestForm(unittest.TestCase):
         # even if the data are empty
         expected = {'body': u'<!-- @browser: None -->\n<!-- @ua_header: None -->\n<!-- @reported_with: None -->\n\n**URL**: None\n\n**Browser / Version**: None\n**Operating System**: None\n**Tested Another Browser**: Unknown\n\n**Problem type**: Unknown\n**Description**: None\n**Steps to Reproduce**:\nNone\n\n\n\n_From [webcompat.com](https://webcompat.com/) with \u2764\ufe0f_', 'title': 'None - unknown'}  # nopep8
         self.assertIs(type(actual), dict)
+        self.assertEqual(actual, expected)
+        # testing with unicode strings.
+        expected = {'body': u'<!-- @browser: None -->\n<!-- @ua_header: None -->\n<!-- @reported_with: None -->\n\n**URL**: \u611b\n\n**Browser / Version**: None\n**Operating System**: None\n**Tested Another Browser**: Unknown\n\n**Problem type**: Unknown\n**Description**: None\n**Steps to Reproduce**:\nNone\n\n\n\n_From [webcompat.com](https://webcompat.com/) with \u2764\ufe0f_', 'title': u'\u611b - unknown'}  # nopep8
+        form_object = {'url': u'愛'}
+        actual = form.build_formdata(form_object)
         self.assertEqual(actual, expected)
