@@ -8,5 +8,9 @@ module.exports = function(grunt) {
       files: "<%= cssPath %>/development/**/*.css",
       tasks: ["postcss"]
     }
+    templates: {
+      files: "<%= tmplPath %>/**/*.jst",
+      tasks: ["jst"]
+    }
  });
 };
