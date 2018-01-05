@@ -7,10 +7,10 @@ module.exports = function(grunt) {
     css: {
       files: "<%= cssPath %>/development/**/*.css",
       tasks: ["postcss"]
-    },
-    script: {
-      files: "<%= jshint.beforeconcat %>",
-      tasks: ["jshint:beforeconcat"]
     }
-  });
+    templates: {
+      files: "<%= tmplPath %>/**/*.jst",
+      tasks: ["jst"]
+    }
+ });
 };
