@@ -140,7 +140,10 @@ def normalize_url(url):
         return None
     url = url.strip()
     parsed = urlparse.urlparse(url)
-
+    # Handle the case when URL has the form http://https://example.com
+    if parsed.netloc in ['http:', 'https:'] and parsed.path.startswith('//'):
+        url = url.split('//', 1)[1]
+    # Clean the URL.
     if url.startswith(BAD_SCHEMES) and not url.startswith(SCHEMES):
         # if url starts with a bad scheme, parsed.netloc will be empty,
         # so we use parsed.path instead
@@ -239,7 +242,7 @@ def build_formdata(form_object):
 
     formdata = {
         'metadata': get_metadata(metadata_keys, form_object),
-        'url': form_object.get('url'),
+        'url': normalized_url,
         'browser': normalize_metadata(form_object.get('browser')),
         'os': normalize_metadata(form_object.get('os')),
         'problem_type': get_radio_button_label(
