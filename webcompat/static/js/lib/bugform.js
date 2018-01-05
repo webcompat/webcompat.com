@@ -176,17 +176,25 @@ function BugForm() {
       $("[value=" + problemType[1] + "]").click();
     }
 
-    // If we got a details param, add that to the end of the steps to reproduce field
-    var details = location.href.match(/details=([^&]*)/);
+    // If we have one or more details params,
+    // add that to the end of the steps to reproduce textarea
+    var details = location.href.match(/details=([^&]*)/g);
     if (details !== null) {
       this.stepsToReproduceField.val(function(idx, value) {
         return (
           value +
           "\n" +
-          // The content of the details param may be encoded via
-          // application/x-www-form-urlencoded, so we need to change the
-          // + (SPACE) to %20 before decoding
-          decodeURIComponent(details[1].replace(/\+/g, "%20"))
+          decodeURIComponent(
+            details
+              .map(function(item) {
+                return item.replace(/details=/, "");
+              })
+              .join("\n")
+              // The content of the details param may be encoded via
+              // application/x-www-form-urlencoded, so we need to change the
+              // + (SPACE) to %20 before decoding
+              .replace(/\+/g, "%20")
+          )
         );
       });
     }
