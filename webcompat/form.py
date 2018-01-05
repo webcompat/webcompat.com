@@ -148,7 +148,7 @@ def normalize_url(url):
         # if url starts with a bad scheme, parsed.netloc will be empty,
         # so we use parsed.path instead
         path = parsed.path.lstrip('/')
-        url = '{}://{}'.format(parsed.scheme, path)
+        url = u'{}://{}'.format(parsed.scheme, path)
         if parsed.query:
             url += '?' + parsed.query
         if parsed.fragment:
@@ -156,9 +156,9 @@ def normalize_url(url):
     elif not parsed.scheme:
         # We assume that http is missing not https
         if url.startswith("//"):
-            url = "http://{}".format(url[2:])
+            url = u"http://{}".format(url[2:])
         else:
-            url = 'http://{}'.format(url)
+            url = u'http://{}'.format(url)
     return url
 
 
@@ -224,15 +224,16 @@ def build_formdata(form_object):
     NOTE: Add milestone "needstriage" when create new issue
     """
     # Do domain extraction for adding to the summary/title
+    # form_object always returns a unicode string
     url = form_object.get('url')
     normalized_url = normalize_url(url)
     domain = domain_name(normalized_url)
     problem_summary = get_problem_summary(form_object.get('problem_category'))
 
     if domain:
-        summary = '{0} - {1}'.format(domain, problem_summary)
+        summary = u'{0} - {1}'.format(domain, problem_summary)
     else:
-        summary = '{0} - {1}'.format(normalized_url, problem_summary)
+        summary = u'{0} - {1}'.format(normalized_url, problem_summary)
 
     metadata_keys = ['browser', 'ua_header', 'reported_with']
     extra_label = form_object.get('extra_label', None)
@@ -268,7 +269,7 @@ def build_formdata(form_object):
 """.format(**formdata)
     # Add the image, if there was one.
     if form_object.get('image_upload') is not None:
-        body += '\n\n![Screenshot of the site issue]({image_url})'.format(
+        body += u'\n\n![Screenshot of the site issue]({image_url})'.format(
             image_url=form_object.get('image_upload').get('url'))
     # Append "from webcompat.com" message to bottom (for GitHub issue viewers)
     body += u'\n\n{0}'.format(GITHUB_HELP)
