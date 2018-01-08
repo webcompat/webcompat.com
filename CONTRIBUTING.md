@@ -29,6 +29,7 @@ If you're using webcompat.com and something is confusing, broken, or you think i
 * Search the [issues list](https://github.com/webcompat/webcompat.com/issues) for existing similar issues.  Consider adding to an existing issue if you find one.
 * Choose a descriptive title.
 * Provide a test, snippet of code or screenshot that illustrates the problem. This small gesture goes a long way towards getting a speedy fix.
+* If you are able to, please always add a `type` label to the issue. If it fits, you also can add a `scope` and / or `language` label. Feel free to take a look at the [label list](https://github.com/webcompat/webcompat.com/labels) first.
 
 ## Triaging Issues
 
@@ -37,20 +38,20 @@ One way to contribute is to triage issues. This could be as simple as confirming
 ## Finding an Issue to Work On
 
 The logic for the issue tracker is this -
-* [*Milestones*](https://github.com/webcompat/webcompat.com/milestones) - initiatives in priority order (ignore the dates)
+* [*Milestones*](https://github.com/webcompat/webcompat.com/milestones) - just look for the current quarter.
 
 Anything labeled ["status: good-first-bug"](https://github.com/webcompat/webcompat.com/labels/status:%20good%20first%20bug) is perfect for getting started!
 
-There's also a `good-next-bug` issue when you're ready to tackle something more complex.
+There's also a `"prio: good-next-bug"` issue when you're ready to tackle something more complex or `"prio: important"` when you are an experienced open source contributor.
 
-> Note: We do not recommend working on more than two `good-first-bugs`. Take it slow and your time to get into the projects' own flow. 
+> Note: We do not recommend working on more than two `good-first-bugs`, just one when you are a first time contributor. Take it slow and your time to get into the projects' own flow. 
 
 
 ## Feature Requests
 
-You can request a new feature by [submitting an issue](#filing-an-issue) to our repo.  If you would like to implement a new feature then consider what kind of change it is:
+You can request a new feature by [submitting an issue](#filing-an-issue) to our repo. If you would like to implement a new feature then consider what kind of change it is:
 
-* **Major Changes** that you wish to contribute to the project should be discussed first in an issue or irc so that we can better coordinate our efforts, prevent duplication of work, and help you to craft the change so that it is successfully accepted into the project.
+* **Major Changes** that you wish to contribute to the project should be discussed first in an issue so that we can better coordinate our efforts, prevent duplication of work, and help you to craft the change so that it is successfully accepted into the project.
 * **Small Changes** can be crafted and submitted as a Pull Request.
 
 
