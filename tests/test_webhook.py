@@ -135,6 +135,7 @@ class TestWebhook(unittest.TestCase):
         self.assertEqual(rv.data, 'Not an interesting hook')
 
     def test_extract_metadata(self):
+        """Extract dictionary of metadata for an issue body."""
         expected = {'reported_with': 'web',
                     'extra_labels': 'type-media, type-stylo',
                     'ua_header': ('Mozilla/5.0 (what) Gecko/20100101 '
