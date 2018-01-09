@@ -1,7 +1,6 @@
 # See https://blog.travis-ci.com/2017-12-12-new-trusty-images-q4-launch
 sudo: required
 dist: trusty
-group: deprecated-2017Q4
 
 # Only run travis on the master branch (and PRs), not all branches
 branches:
@@ -28,10 +27,9 @@ env:
     - ISSUES_REPO_URI=webcompat/webcompat-tests/issues
     # grab latest 4.x release, which is LTS for now
     - TRAVIS_NODE_VERSION="4"
-    - MOZ_HEADLESS=1
 
 addons:
-  firefox: 56.0
+  firefox: 55.0
 
 before_install:
   - "export DISPLAY=:99.0"
