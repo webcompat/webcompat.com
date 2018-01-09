@@ -76,6 +76,12 @@ define(
             })
             .end()
             // click the comment button
+            .execute(function() {
+              // this probably wont work
+              document
+                .querySelector(".js-Isssue-comment-button")
+                .scrollIntoView();
+            })
             .findByCssSelector(".js-Issue-comment-button")
             .click()
             .end()
