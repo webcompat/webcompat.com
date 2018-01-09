@@ -30,7 +30,6 @@ env:
 
 addons:
   firefox: 55.0
-  chrome: 60.0
 
 before_install:
   - "export DISPLAY=:99.0"
