@@ -28,6 +28,10 @@ env:
     - ISSUES_REPO_URI=webcompat/webcompat-tests/issues
     # grab latest 4.x release, which is LTS for now
     - TRAVIS_NODE_VERSION="4"
+    - MOZ_HEADLESS=1
+
+addons:
+  firefox: 56.0
 
 before_install:
   - "export DISPLAY=:99.0"
