@@ -128,8 +128,15 @@ def wrap_metadata(metadata):
 
 def get_metadata(metadata_keys, form_object):
     """Return relevant metadata hanging off the form as a single string."""
+    extra_labels = []
+    if 'extra_labels' in metadata_keys:
+        extra_labels = [normalize_metadata(label)
+                        for label in form_object.get('extra_labels')
+                        if label in app.config['EXTRA_LABELS']]
+        metadata_keys.remove('extra_labels')
     metadata = [(key, form_object.get(key)) for key in metadata_keys]
     metadata = [(md[0], normalize_metadata(md[1])) for md in metadata]
+    metadata.extend(extra_labels)
     # Now, "wrap the metadata" and return them all as a single string
     return ''.join([wrap_metadata(md) for md in metadata])
 
@@ -236,9 +243,9 @@ def build_formdata(form_object):
         summary = u'{0} - {1}'.format(normalized_url, problem_summary)
 
     metadata_keys = ['browser', 'ua_header', 'reported_with']
-    extra_label = form_object.get('extra_label', None)
-    if extra_label in app.config['EXTRA_LABELS']:
-        metadata_keys.append('extra_label')
+    extra_labels = form_object.get('extra_labels', None)
+    if extra_labels:
+        metadata_keys.append('extra_labels')
 
     formdata = {
         'metadata': get_metadata(metadata_keys, form_object),

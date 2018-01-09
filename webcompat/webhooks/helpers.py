@@ -47,13 +47,16 @@ def extract_browser_label(metadata_dict):
         return None
 
 
-def extract_extra_label(metadata_dict):
-    """Return the 'extra' label from metadata_dict."""
-    extra_label = metadata_dict.get('extra_label', None)
-    if extra_label:
-        extra_label = extra_label.lower()
-        extra_label = extra_label.encode('utf-8')
-    return extra_label
+def extract_extra_labels(metadata_dict):
+    """Return the 'extra_labels' labels from metadata_dict, as a list."""
+    labels = metadata_dict.get('extra_labels', None)
+    if labels:
+        extra_labels = labels.split(', ')
+        extra_labels = [label.lower().encode('utf-8')
+                        for label in extra_labels]
+    else:
+        extra_labels = labels
+    return extra_labels
 
 
 def extract_priority_label(body):
@@ -149,6 +152,20 @@ def get_issue_info(payload):
             'domain': title.partition(' ')[0]}
 
 
+def get_issue_labels(issue_body):
+    """Extract the list of labels from an issue body to be sent to GitHub."""
+    metadata_dict = extract_metadata(issue_body)
+    browser_label = extract_browser_label(metadata_dict)
+    extra_labels = extract_extra_labels(metadata_dict)
+    priority_label = extract_priority_label(issue_body)
+    labelslist = []
+    labelslist.extend([browser_label, priority_label])
+    if extra_labels:
+        labelslist.extend(extra_labels)
+    labelslist = [label for label in labelslist if label is not None]
+    return labelslist
+
+
 def new_opened_issue(payload):
     """Set the core actions on new opened issues.
 
@@ -157,15 +174,11 @@ def new_opened_issue(payload):
     - Browser label
     - Priority label
     - Issue milestone
+    - Any "extra" labels, set from GET params
     """
     issue_body = payload.get('issue')['body']
     issue_number = payload.get('issue')['number']
-    metadata_dict = extract_metadata(issue_body)
-    browser_label = extract_browser_label(metadata_dict)
-    extra_label = extract_extra_label(metadata_dict)
-    priority_label = extract_priority_label(issue_body)
-    labels = [label for label in (browser_label, extra_label, priority_label)
-              if label is not None]
+    labels = get_issue_labels(issue_body)
     milestone = app.config['STATUSES']['needstriage']['id']
     return update_issue({'labels': labels, 'milestone': milestone},
                         issue_number)

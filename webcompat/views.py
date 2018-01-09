@@ -176,9 +176,10 @@ def create_issue():
         # HTML <form>, so we stick them in the session cookie so they survive
         # the scenario where the user decides to do authentication, and they
         # can then be passed on to form.py
-        for param in ['src', 'label']:
-            if request.args.get(param):
-                session[param] = request.args.get(param)
+        if request.args.get('src'):
+            session['src'] = request.args.get('src')
+        if request.args.get('label'):
+            session['label'] = request.args.getlist('label')
         return render_template('new-issue.html', form=bug_form)
     # copy the form so we can add the full UA string to it.
     if request.form:
@@ -207,7 +208,8 @@ def create_issue():
             return redirect(url_for('index'))
     form['ua_header'] = request.headers.get('User-Agent')
     form['reported_with'] = session.pop('src', 'web')
-    form['extra_label'] = session.pop('label', None)
+    # Reminder: label is a list, if it exists
+    form['extra_labels'] = session.pop('label', None)
     # Logging the ip and url for investigation
     log = app.logger
     log.setLevel(logging.INFO)
