@@ -66,8 +66,7 @@ define(["intern"], function(intern) {
         marionette: true
       },
       {
-        browserName: "chrome",
-        chromeOptions: { args: ["headless", "disable-gpu"] }
+        browserName: "chrome"
       }
     ],
 
