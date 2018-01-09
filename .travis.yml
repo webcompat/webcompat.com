@@ -29,7 +29,7 @@ env:
     - TRAVIS_NODE_VERSION="4"
 
 addons:
-  firefox: 55.0
+  firefox: 57.0
 
 before_install:
   - "export DISPLAY=:99.0"
