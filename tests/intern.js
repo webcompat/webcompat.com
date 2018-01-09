@@ -55,7 +55,8 @@ define(["intern"], function(intern) {
       "moz:firefoxOptions": {
         prefs: {
           "dom.file.createInChild": true
-        }
+        },
+        args: ["-headless"]
       }
     },
 
