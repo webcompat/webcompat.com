@@ -79,7 +79,7 @@ define(
             .execute(function() {
               // this probably wont work
               document
-                .querySelector(".js-Isssue-comment-button")
+                .querySelector(".js-Issue-comment-button")
                 .scrollIntoView();
             })
             .findByCssSelector(".js-Issue-comment-button")
