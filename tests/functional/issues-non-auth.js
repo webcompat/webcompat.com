@@ -66,6 +66,11 @@ define(
 
       "Pressing g goes to the github issue page": function() {
         return FunctionalHelpers.openPage(this, url("/issues/100"), ".js-Issue")
+          .execute(function() {
+            // workaround for Chrome bug
+            // https://bugs.chromium.org/p/chromedriver/issues/detail?id=1852
+            document.querySelector("body").scrollIntoView();
+          })
           .findByCssSelector("body")
           .click()
           .type("g")
