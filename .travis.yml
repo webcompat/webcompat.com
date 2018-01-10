@@ -1,5 +1,4 @@
-# Need to use "trusty" for Java 1.8
-# ref: https://blog.travis-ci.com/2015-10-14-opening-up-ubuntu-trusty-beta/
+# See https://blog.travis-ci.com/2017-12-12-new-trusty-images-q4-launch
 sudo: required
 dist: trusty
 
@@ -9,6 +8,9 @@ branches:
     - master
 
 language: python
+
+addons:
+  firefox: 55.0
 
 python:
   - "2.7"
@@ -26,15 +28,12 @@ git:
 env:
   global:
     - ISSUES_REPO_URI=webcompat/webcompat-tests/issues
-    # grab latest 4.x release, which is LTS for now
-    - TRAVIS_NODE_VERSION="4"
 
 before_install:
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
 
 install:
-  - rm -rf ~/.nvm && git clone https://github.com/creationix/nvm.git ~/.nvm && (cd ~/.nvm && git checkout `git describe --abbrev=0 --tags`) && source ~/.nvm/nvm.sh && nvm install $TRAVIS_NODE_VERSION
   - travis_retry npm install
   - travis_retry npm run pip
   - travis_retry npm run config

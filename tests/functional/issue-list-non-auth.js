@@ -191,9 +191,7 @@ define(
           url("/issues"),
           ".js-Pagination-controls"
         )
-          .findByCssSelector("body")
-          .click()
-          .type("g")
+          .pressKeys("g")
           .end()
           .sleep(500)
           .getCurrentUrl()
