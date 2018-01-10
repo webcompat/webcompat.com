@@ -66,9 +66,7 @@ define(
 
       "Pressing g goes to the github issue page": function() {
         return FunctionalHelpers.openPage(this, url("/issues/100"), ".js-Issue")
-          .findByCssSelector("body")
-          .click()
-          .type("g")
+          .pressKeys("g")
           .end()
           .sleep(500)
           .getCurrentUrl()
