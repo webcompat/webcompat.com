@@ -103,6 +103,13 @@ define(
             assert.include(className, "wc-Comment-content-nsfw");
             assert.notInclude(className, "wc-Comment-content-nsfw--display");
           })
+          .execute(function() {
+            // workaround for Chrome bug
+            // https://bugs.chromium.org/p/chromedriver/issues/detail?id=1852
+            document
+              .querySelector(".js-Issue-commentList .js-Comment-content p")
+              .scrollIntoView();
+          })
           .click()
           .end()
           .findByCssSelector(".js-Issue-commentList .js-Comment-content p")

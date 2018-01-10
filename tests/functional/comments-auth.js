@@ -77,7 +77,8 @@ define(
             .end()
             // click the comment button
             .execute(function() {
-              // this probably wont work
+              // workaround for Chrome bug
+              // https://bugs.chromium.org/p/chromedriver/issues/detail?id=1852
               document
                 .querySelector(".js-Issue-comment-button")
                 .scrollIntoView();
