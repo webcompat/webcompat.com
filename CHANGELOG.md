@@ -4,6 +4,17 @@
 2. New features: affect minor number
 3. API endpoint changes or dependency version updates: affect major number
 
+## 7.1.0 - 2018-01-10
+
+* Make tweaks to get tests passing on master [Pull 2014](https://github.com/webcompat/webcompat.com/pull/2014)
+* Add support for multiple label and details params [Pull #2007](https://github.com/webcompat/webcompat.com/pull/2007)
+* Updates to build docs [Pull #2005](https://github.com/webcompat/webcompat.com/pull/2005)
+* Updates to contribute docs [Pull #2002](https://github.com/webcompat/webcompat.com/pull/2002)
+* Handle double schemes in URL [Pull #2001](https://github.com/webcompat/webcompat.com/pull/2001)
+* Add proper unicode handling for form data [Pull #1998](https://github.com/webcompat/webcompat.com/pull/1998)
+* Add templates watching Grunt task [Pull #1994](https://github.com/webcompat/webcompat.com/pull/1994)
+* Add normalization of metadata values [Pull #1974](https://github.com/webcompat/webcompat.com/pull/1974)
+
 ## 7.0.2 - 2017-12-07
 
 * Remove dead code from rate_limit [Pull #1970](https://github.com/webcompat/webcompat.com/pull/1970)
