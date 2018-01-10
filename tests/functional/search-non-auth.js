@@ -28,6 +28,11 @@ define(
             url("/issues"),
             "#js-SearchForm-input"
           )
+            .execute(function() {
+              // workaround for Chrome bug
+              // https://bugs.chromium.org/p/chromedriver/issues/detail?id=1852
+              document.querySelector("#js-SearchForm-input").scrollIntoView();
+            })
             .findByCssSelector("#js-SearchForm-input")
             .click()
             .type("g")
@@ -49,6 +54,13 @@ define(
           url("/issues"),
           "[data-remotename=browser-android"
         )
+          .execute(function() {
+            // workaround for Chrome bug
+            // https://bugs.chromium.org/p/chromedriver/issues/detail?id=1852
+            document
+              .querySelector("[data-remotename=browser-android]")
+              .scrollIntoView();
+          })
           .findByCssSelector("[data-remotename=browser-android]")
           .click()
           .end()
@@ -69,6 +81,13 @@ define(
           url("/issues"),
           "[data-remotename=browser-android"
         )
+          .execute(function() {
+            // workaround for Chrome bug
+            // https://bugs.chromium.org/p/chromedriver/issues/detail?id=1852
+            document
+              .querySelector("[data-remotename=browser-android]")
+              .scrollIntoView();
+          })
           .findByCssSelector("[data-remotename=browser-android]")
           .click()
           .end()

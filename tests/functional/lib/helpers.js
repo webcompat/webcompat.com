@@ -44,7 +44,7 @@ define(
       );
     }
 
-    /* 
+    /*
     This method makes a call to our API to check that the server is returning fixture data,
     it will also check if there's anything wrong with the server.
   */
@@ -59,7 +59,7 @@ define(
                   `
                 =======================================================
                 It seems like you didn't start the server in test mode.
-                Open another terminal and window type: 
+                Open another terminal and window type:
                \x1b[32m npm run start:test\x1b[0m
                 or
                \x1b[32m python run.py -t\x1b[0m
@@ -80,7 +80,7 @@ define(
               `
             ======================================================
             Oops, something went wrong. Try restarting the server.
-            Open another terminal and window type: 
+            Open another terminal and window type:
            \x1b[32m npm run start:test\x1b[0m
             or
            \x1b[32m python run.py -t\x1b[0m

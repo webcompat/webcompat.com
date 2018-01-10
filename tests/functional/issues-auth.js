@@ -33,8 +33,9 @@ define(
           url("/issues/70"),
           ".wc-Issue-commentSubmit"
         )
-          .findByCssSelector("body")
-          .click()
+          .execute(function() {
+            document.body.focus();
+          })
           .pressKeys("l")
           .end()
           .findByCssSelector(".js-LabelEditorLauncher")

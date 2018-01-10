@@ -76,6 +76,13 @@ define(
             })
             .end()
             // click the comment button
+            .execute(function() {
+              // workaround for Chrome bug
+              // https://bugs.chromium.org/p/chromedriver/issues/detail?id=1852
+              document
+                .querySelector(".js-Issue-comment-button")
+                .scrollIntoView();
+            })
             .findByCssSelector(".js-Issue-comment-button")
             .click()
             .end()
@@ -119,6 +126,11 @@ define(
           url("/issues/100"),
           ".wc-Comment-submit"
         )
+          .execute(function() {
+            // workaround for Chrome bug
+            // https://bugs.chromium.org/p/chromedriver/issues/detail?id=1852
+            document.querySelector(".wc-Comment-submit").scrollIntoView();
+          })
           .findByCssSelector(".wc-Comment-submit")
           .click()
           .type("g")

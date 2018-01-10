@@ -66,8 +66,9 @@ define(
 
       "Pressing g goes to the github issue page": function() {
         return FunctionalHelpers.openPage(this, url("/issues/100"), ".js-Issue")
-          .findByCssSelector("body")
-          .click()
+          .execute(function() {
+            document.body.focus();
+          })
           .type("g")
           .end()
           .sleep(500)
@@ -95,6 +96,13 @@ define(
 
       "Clicking NSFW images toggles between blurry and not-blurry": function() {
         return FunctionalHelpers.openPage(this, url("/issues/396"), ".js-Issue")
+          .execute(function() {
+            // workaround for Chrome bug
+            // https://bugs.chromium.org/p/chromedriver/issues/detail?id=1852
+            document
+              .querySelector(".js-Issue-commentList .js-Comment-content p")
+              .scrollIntoView();
+          })
           .findDisplayedByCssSelector(
             ".js-Issue-commentList .js-Comment-content p"
           )

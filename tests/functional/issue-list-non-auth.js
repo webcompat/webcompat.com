@@ -191,8 +191,9 @@ define(
           url("/issues"),
           ".js-Pagination-controls"
         )
-          .findByCssSelector("body")
-          .click()
+          .execute(function() {
+            document.body.focus();
+          })
           .type("g")
           .end()
           .sleep(500)
@@ -213,6 +214,11 @@ define(
           url("/issues"),
           "#js-SearchForm-input"
         )
+          .execute(function() {
+            // workaround for Chrome bug
+            // https://bugs.chromium.org/p/chromedriver/issues/detail?id=1852
+            document.querySelector("#js-SearchForm-input").scrollIntoView();
+          })
           .findByCssSelector("#js-SearchForm-input")
           .click()
           .type("g")

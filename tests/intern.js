@@ -43,7 +43,18 @@ define(["intern"], function(intern) {
     tunnel: "SeleniumTunnel",
     tunnelOptions: {
       // this tells SeleniumTunnel to download geckodriver and chromedriver
-      drivers: ["firefox", "chrome"]
+      drivers: [
+        {
+          name: "firefox",
+          version: "0.19.1"
+        },
+        {
+          name: "chrome",
+          vesion: "2.34"
+        }
+      ],
+      // version of Selenium
+      version: "3.6.0"
     },
 
     // Only one browser at a time. Takes longer, but gets less intermittent errors.
@@ -55,7 +66,8 @@ define(["intern"], function(intern) {
       "moz:firefoxOptions": {
         prefs: {
           "dom.file.createInChild": true
-        }
+        },
+        args: ["-headless"]
       }
     },
 
