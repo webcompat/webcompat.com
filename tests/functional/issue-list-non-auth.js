@@ -192,12 +192,8 @@ define(
           ".js-Pagination-controls"
         )
           .execute(function() {
-            // workaround for Chrome bug
-            // https://bugs.chromium.org/p/chromedriver/issues/detail?id=1852
-            document.querySelector("body").scrollIntoView();
+            document.body.focus();
           })
-          .findByCssSelector("body")
-          .click()
           .type("g")
           .end()
           .sleep(500)
