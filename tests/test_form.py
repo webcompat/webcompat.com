@@ -81,10 +81,14 @@ class TestForm(unittest.TestCase):
         """Check that metadata is processed and wrapped."""
         TEST_DICT = {'cool': 'dude', 'wow': 'ok'}
         EXPECTED_SINGLE = '<!-- @cool: dude -->\n'
+        EXPECTED_SINGLE_COMMA = '<!-- @cool: dude, wow -->\n'
         EXPECTED_MULTIPLE = '<!-- @cool: dude -->\n<!-- @wow: ok -->\n'
 
         r = form.wrap_metadata(('cool', 'dude'))
         self.assertEqual(r, EXPECTED_SINGLE)
+
+        r = form.wrap_metadata(('cool', 'dude, wow'))
+        self.assertEqual(r, EXPECTED_SINGLE_COMMA)
 
         r = form.get_metadata(('cool', 'wow'), TEST_DICT)
         self.assertEqual(r, EXPECTED_MULTIPLE)
@@ -135,7 +139,7 @@ class TestForm(unittest.TestCase):
                  ('bad_bird <script>', ''),
                  ('bad_bird <script-->>', ''),
                  ('a' * 300, ''),
-                 (None, None)
+                 (None, None),
                  ]
         for meta_value, expected in cases:
             self.assertEqual(form.normalize_metadata(meta_value), expected)

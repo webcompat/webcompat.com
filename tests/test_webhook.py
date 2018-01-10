@@ -50,7 +50,7 @@ class TestWebhook(unittest.TestCase):
         <!-- @browser: Firefox 55.0 -->
         <!-- @ua_header: Mozilla/5.0 (what) Gecko/20100101 Firefox/55.0 -->
         <!-- @reported_with: web -->
-        <!-- @extra_label: type-media -->
+        <!-- @extra_labels: type-media, type-stylo -->
 
         **URL**: https://www.example.com/
         **Browser / Version**: Firefox 55.0
@@ -59,6 +59,7 @@ class TestWebhook(unittest.TestCase):
 
         self.issue_body2 = """
         <!-- @browser: Foobar -->
+        <!-- @extra_labels: type-foobar -->
         """
         self.issue_body3 = """
         **URL**: https://www.google.com/
@@ -134,7 +135,9 @@ class TestWebhook(unittest.TestCase):
         self.assertEqual(rv.data, 'Not an interesting hook')
 
     def test_extract_metadata(self):
-        expected = {'reported_with': 'web', 'extra_label': 'type-media',
+        """Extract dictionary of metadata for an issue body."""
+        expected = {'reported_with': 'web',
+                    'extra_labels': 'type-media, type-stylo',
                     'ua_header': ('Mozilla/5.0 (what) Gecko/20100101 '
                                   'Firefox/55.0'),
                     'browser': 'Firefox 55.0'}
@@ -157,14 +160,16 @@ class TestWebhook(unittest.TestCase):
             actual = helpers.extract_browser_label(metadata_dict)
             self.assertEqual(expected, actual)
 
-    def test_extract_extra_label(self):
+    def test_extract_extra_labels(self):
         """Extract 'extra' label."""
         metadata_tests = [
-            ({'extra_label': 'type-media'}, 'type-media'),
-            ({'burgers': 'french fries'}, None)
+            ({'extra_labels': 'type-media'}, ['type-media']),
+            ({'extra_labels': 'cool, dude'}, ['cool', 'dude']),
+            ({'extra_labels': u'weather-☁'}, ['weather-\xe2\x98\x81']),
+            ({'burgers': 'french fries'}, None),
         ]
         for metadata_dict, expected in metadata_tests:
-            actual = helpers.extract_extra_label(metadata_dict)
+            actual = helpers.extract_extra_labels(metadata_dict)
             self.assertEqual(expected, actual)
 
     def test_extract_priority_label(self):
@@ -176,6 +181,17 @@ class TestWebhook(unittest.TestCase):
             self.assertEqual(priority_label, 'priority-critical')
         priority_label_none = helpers.extract_priority_label(self.issue_body)
         self.assertEqual(priority_label_none, None)
+
+    def test_get_issue_labels(self):
+        """Extract list of labels from an issue body."""
+        labels_tests = [
+            (self.issue_body, ['browser-firefox', 'type-media', 'type-stylo']),
+            (self.issue_body2, ['type-foobar']),
+            (self.issue_body3, ['browser-firefox-mobile-tablet'])
+        ]
+        for issue_body, expected in labels_tests:
+            actual = helpers.get_issue_labels(issue_body)
+            self.assertEqual(sorted(expected), sorted(actual))
 
     def test_is_github_hook(self):
         """Validation tests for GitHub Webhooks."""
