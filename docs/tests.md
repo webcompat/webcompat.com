@@ -101,6 +101,18 @@ To run a single test suite, where foo.js is the file found in the `tests/functio
 node_modules/.bin/intern-runner config=tests/intern functionalSuites=tests/functional/foo.js 
 ```
 
+Right now the tests are running in Chrome and Firefox as a default. You can specify which browsers you want to test with using the `browsers` argument. Like this:
+
+```bash
+npm run test:js browsers=safari,firefox
+
+or 
+
+node_modules/.bin/intern-runner config=tests/intern browsers=safari,firefox
+```
+
+For a list of the recognized browser names, just refer to [Browser enum](http://seleniumhq.github.io/selenium/docs/api/javascript/module/selenium-webdriver/index_exports_Browser.html)
+
 ## Adding Fixtures
 
 To indicate that the app should send fixture data, use the `@mockable_response` decorator for an API endpoint.

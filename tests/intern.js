@@ -11,6 +11,18 @@ define(["intern"], function(intern) {
   var args = intern.args;
   var siteRoot = args.siteRoot ? args.siteRoot : "http://localhost:5000";
 
+  var environments = [];
+  var browsers = args.browsers
+    ? args.browsers.replace(/\s/g, "").split(",")
+    : ["firefox"];
+
+  browsers.forEach(function(b) {
+    environments.push({
+      browserName: b.toLowerCase(),
+      marionette: true
+    });
+  });
+
   return {
     // Configuration object for webcompat
     wc: {
@@ -43,7 +55,7 @@ define(["intern"], function(intern) {
     tunnel: "SeleniumTunnel",
     tunnelOptions: {
       // this tells SeleniumTunnel to download geckodriver and chromedriver
-      drivers: ["firefox", "chrome"]
+      drivers: ["firefox"]
     },
 
     // Only one browser at a time. Takes longer, but gets less intermittent errors.
@@ -59,15 +71,7 @@ define(["intern"], function(intern) {
       }
     },
 
-    environments: [
-      {
-        browserName: "firefox",
-        marionette: true
-      },
-      {
-        browserName: "chrome"
-      }
-    ],
+    environments: environments,
 
     filterErrorStack: true,
     reporters: ["Pretty"],

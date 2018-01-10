@@ -2,6 +2,10 @@
 # ref: https://blog.travis-ci.com/2015-10-14-opening-up-ubuntu-trusty-beta/
 sudo: required
 dist: trusty
+group: deprecated-2017Q4
+
+addons:
+  firefox: "55.0.2"
 
 # Only run travis on the master branch (and PRs), not all branches
 branches:
@@ -26,21 +30,19 @@ git:
 env:
   global:
     - ISSUES_REPO_URI=webcompat/webcompat-tests/issues
-    # grab latest 4.x release, which is LTS for now
-    - TRAVIS_NODE_VERSION="4"
 
 before_install:
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
 
 install:
-  - rm -rf ~/.nvm && git clone https://github.com/creationix/nvm.git ~/.nvm && (cd ~/.nvm && git checkout `git describe --abbrev=0 --tags`) && source ~/.nvm/nvm.sh && nvm install $TRAVIS_NODE_VERSION
+  - rm -rf ~/.nvm && git clone https://github.com/creationix/nvm.git ~/.nvm && (cd ~/.nvm && git checkout `git describe --abbrev=0 --tags`) && source ~/.nvm/nvm.sh && nvm install node
+  - node --version
   - travis_retry npm install
   - travis_retry npm run pip
   - travis_retry npm run config
   - which firefox
   - java -version
-  - firefox --version
   # lint python
   - pep8 --ignore=E402 webcompat/ tests/ config/secrets.py.example
   - python run.py -t &
@@ -48,8 +50,10 @@ install:
 before_script:
   - "sleep 2"
   # lint JS in default eslint task
-  - npm run lint
-  - npm run build
+  - npm run lint --force
+  - npm run build --force
+  # Check that server is actually running
+  - curl localhost:5000
 
 # now run the tests!
 script:
