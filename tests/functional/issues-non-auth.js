@@ -95,6 +95,13 @@ define(
 
       "Clicking NSFW images toggles between blurry and not-blurry": function() {
         return FunctionalHelpers.openPage(this, url("/issues/396"), ".js-Issue")
+          .execute(function() {
+            // workaround for Chrome bug
+            // https://bugs.chromium.org/p/chromedriver/issues/detail?id=1852
+            document
+              .querySelector(".js-Issue-commentList .js-Comment-content p")
+              .scrollIntoView();
+          })
           .findDisplayedByCssSelector(
             ".js-Issue-commentList .js-Comment-content p"
           )
@@ -102,13 +109,6 @@ define(
           .then(function(className) {
             assert.include(className, "wc-Comment-content-nsfw");
             assert.notInclude(className, "wc-Comment-content-nsfw--display");
-          })
-          .execute(function() {
-            // workaround for Chrome bug
-            // https://bugs.chromium.org/p/chromedriver/issues/detail?id=1852
-            document
-              .querySelector(".js-Issue-commentList .js-Comment-content p")
-              .scrollIntoView();
           })
           .click()
           .end()
