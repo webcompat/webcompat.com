@@ -9,7 +9,7 @@ function HomePage() {
   var searchBar = $(".js-SearchBar");
   var searchBarOpen = $(".js-SearchBarOpen");
   var searchBarClose = $(".js-SearchBarClose");
-  var navDropDown = $(".wc-Navbar-link.wc-DropdownHeader");
+  var navDropDown = $(".js-DropdownHeader");
 
   this.init = function() {
     reportButton.add(reportLink).on("click", this.toggleForm);
