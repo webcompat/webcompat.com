@@ -11,11 +11,9 @@
       </h1>
     </div>
   </section>
-  <section class="wc-UISection wc-UISection--backgroundColor js-list-issue">
-    <div id="browse-issues-wrapper">
-      {% include "user-activity/reported-by-user.html" %}
-      {% include "user-activity/user-mentions.html" %}
-    </div>
+  <section id="browse-issues-wrapper" class="js-list-issue">
+    {% include "user-activity/reported-by-user.html" %}
+    {% include "user-activity/user-mentions.html" %}
   </section>
 </div>
 {% endblock %}
