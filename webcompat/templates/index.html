@@ -4,7 +4,9 @@
 <main role="main">
 <!--   <div class="wc-Loader js-Loader"></div> -->  
  	{% include "home-page/hero.html" %}
-  	{% include "home-page/form.html" %}
+  	<section id="js-ReportForm" class="js-ReportForm {% if form.errors %}is-opened{% else %}is-closed{% endif %} grid">
+		{% include "home-page/form.html" %}
+	</section>
   	{% include "home-page/how-it-works.html" %}
   	{% include "home-page/browse-issues.html" %}
 </main>
