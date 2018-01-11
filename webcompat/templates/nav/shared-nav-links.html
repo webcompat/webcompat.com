@@ -24,49 +24,91 @@
     </a>
 </li>
 {% else %}
-<li class="nav-item login js-login-link">
-    <button class="nav-button" aria-pressed="false">
+<li class="nav-item login js-login-link js-DropdownHeader">
+    <button class="nav-button nav-link" aria-pressed="false">
         <img class="login-avatar-img" src="{{ session.avatar_url }}0" alt="User Avatar">
         <svg class="icon nav-icon" viewBox="0 0 30 30" role="presentation">
             <use href="#svg-chevron-right">Log in</use>
         </svg>
     </button>
-    <ul class="nav-dropdown">
-        <li class="nav-dropdown-item">
-            <a class="nav-link" href="{{ url_for('me_redirect') }}">My Activity</a>
-        </li>
-        <li class="nav-dropdown-item">
-            <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
-        </li>
-    </ul>
+    <div class="nav-dropdown-wrapper">
+        <ul class="nav-dropdown">
+            <li class="nav-dropdown-item">
+                <a class="nav-link" href="{{ url_for('me_redirect') }}">My Activity</a>
+            </li>
+            <li class="nav-dropdown-item">
+                <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
+            </li>
+        </ul>
+    </div>
 </li>
 {% endif %}
 
 <style type="text/css">
 
-.nav-button{
+.nav-button {
     border: none;
     padding: 0;
     background-color: transparent;
     cursor: pointer;
+    color: var(--color-second);
+    font-family: "Open Sans", sans-serif;
 }
 
 .nav-right {
     text-align: right;
 }
 
-.nav-dropdown {    
+.nav-right .nav-item {
+    margin-right: 0;
+    padding-right: 0;
+}
+
+.nav-left {
+    margin-top: 5px;
+}
+
+.nav-dropdown-wrapper {
+    display: none;
+}
+
+.is-active .nav-dropdown-wrapper {
+    display: inline-block;
     position: absolute;
-    min-width: calc(var(--unit-gap) * 3);
-    text-align: left;
+    width: var(--unit-modul-l);
+    right: 0;
+    left: 0;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 48px;
+}
+
+.nav-dropdown {
+    position: relative;
+    width: var(--unit-modul-s);
+    margin-left: auto;
+    margin-right: var(--unit-gutter);
 }
 
 .nav-dropdown .nav-dropdown-item {
-    background-color: var(--color-bg-box);
-    margin-bottom: 1px;
+    background-color: var(--color-first);
+    margin-bottom: 2px;
+    padding-right: 5px;
+}
+
+.login .nav-button .nav-icon {
+    transform: rotate(90deg);
+}
+
+.login.is-active .nav-button .nav-icon {
+    transform: rotate(-90deg);
 }
 
 .login-avatar-img {
   width: 20px;
+  position: relative;
+  top: 6px;
 }
+
+
 </style>
