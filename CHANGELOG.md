@@ -4,6 +4,11 @@
 2. New features: affect minor number
 3. API endpoint changes or dependency version updates: affect major number
 
+## 7.1.1 - 2018-01-12
+
+* Append extra labels in correct format [Pull #2020](https://github.com/webcompat/webcompat.com/pull/2020)
+* Prevent form submission when pressing enter [Pull #2003](https://github.com/webcompat/webcompat.com/pull/2003)
+
 ## 7.1.0 - 2018-01-10
 
 * Make tweaks to get tests passing on master [Pull 2014](https://github.com/webcompat/webcompat.com/pull/2014)
