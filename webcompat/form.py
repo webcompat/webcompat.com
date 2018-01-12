@@ -136,7 +136,8 @@ def get_metadata(metadata_keys, form_object):
         metadata_keys.remove('extra_labels')
     metadata = [(key, form_object.get(key)) for key in metadata_keys]
     metadata = [(md[0], normalize_metadata(md[1])) for md in metadata]
-    metadata.extend(extra_labels)
+    if extra_labels:
+        metadata.append(('extra_labels', u', '.join(extra_labels)))
     # Now, "wrap the metadata" and return them all as a single string
     return ''.join([wrap_metadata(md) for md in metadata])
 
