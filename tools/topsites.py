@@ -30,12 +30,19 @@ from webcompat import app
 
 # Constant for alexa top site API
 ATS_ACTION_NAME = 'TopSites'
+ATS_ALGORITHM = 'AWS4-HMAC-SHA256'
+ATS_COUNT = 100
+ATS_DATEFORMAT_AWS = '%Y%m%dT%H%M%SZ'
+ATS_DATEFORMAT_CREDENTIAL = '%Y%m%d'
+ATS_HASH_ALGORITHM = 'HmacSHA256'
 ATS_RESPONSE_GROUP_NAME = 'Country'
 ATS_SERVICE_HOST = 'ats.amazonaws.com'
-ATS_AWS_BASE_URL = 'https://' + ATS_SERVICE_HOST + '/?'
-ATS_DATEFORMAT = '%Y-%m-%dT%H:%M:%S.%f'
-ATS_HASH_ALGORITHM = 'HmacSHA256'
-ATS_COUNT = 100
+ATS_SERVICE_ENDPOINT = 'ats.us-west-1.amazonaws.com'
+ATS_SERVICE_URI = '/api'
+ATS_SERVICE_REGION = 'us-west-1'
+ATS_SERVICE_NAME = 'AlexaTopSites'
+ATS_SIGNED_HEADERS = 'host;x-amz-date'
+ATS_AWS_BASE_URL = 'https://' + ATS_SERVICE_HOST + ATS_SERVICE_URI
 
 # Location of the DB and its backup.
 DB_PATH = app.config['DATA_PATH']
@@ -82,29 +89,29 @@ Base.metadata.create_all(engine)
 def query_topsites(country_code, count=1000):
     """Query top sites with given country code and count."""
     for index in range(1, count, 100):
-        uri = build_uri(country_code, index)
+        uri, authorization, timestamp = build_request(country_code, index)
         try:
-            response = requests.get(uri)
+            headers = {'x-amz-date': timestamp, 'Authorization': authorization}
+            response = requests.get(uri, headers=headers)
             dom = parseString(response.content)
 
             if response.status_code == 200:
-                # See http://docs.aws.amazon.com/AlexaTopSites/latest/index.html?QUERY_QueryRequests.html  # nopep8
+                # See https://docs.aws.amazon.com/AlexaTopSites/latest/QUERY_QueryRequests.html  # nopep8
                 sites = dom.getElementsByTagName('aws:Site')
                 for site in sites:
-                    parse_site(site)
+                    parse_site(site, country_code)
                 session.commit()
             else:
                 # Get error code and message from response
-                # See http://docs.aws.amazon.com/AlexaTopSites/latest/index.html?QUERY_QueryAuthenticationErrors.html  # nopep8
-                code = node_text(dom, 'Code')
-                message = node_text(dom, 'Message')
-                print('Send request to {} get error: {}.\nMessage: {}'.format(
-                      uri, code, message))
+                # See https://docs.aws.amazon.com/AlexaTopSites/latest/Authentication.html  # nopep8
+                message = node_text(dom, 'aws:ErrorCode')
+                print('Send request to {} get error message: \n{}'.format(
+                      uri, message))
         except ConnectionError:
             print('Unable send request to {}'.format(uri))
 
 
-def parse_site(site):
+def parse_site(site, country_code):
     """Parse given dom object."""
     url = node_text(site, 'aws:DataUrl')
     rank = int(node_text(site, 'aws:Rank'))
@@ -135,47 +142,90 @@ def parse_site(site):
             site_row.ranking = rank
 
 
-def build_uri(country_code, start_ranking):
+def build_request(country_code, start_ranking):
     """Build Alexa top site URI with given country code and start ranking."""
-    # Build query string
-    query_string = build_query_string(country_code, start_ranking)
+    # Prepare timestamp & datestamp
+    nowtime = datetime.datetime.utcnow()
+    timestamp = nowtime.strftime(ATS_DATEFORMAT_AWS)
+    datestamp = nowtime.strftime(ATS_DATEFORMAT_CREDENTIAL)
 
-    # String to sign
-    to_sign = 'GET\n{}\n/\n{}'.format(ATS_SERVICE_HOST, query_string)
-    signature = gen_sign(to_sign)
+    # Build request
+    canonical_query = build_query_string(country_code, start_ranking)
+    canonical_headers = 'host:{host}\nx-amz-date:{amzdate}\n'.format(
+        host=ATS_SERVICE_ENDPOINT,
+        amzdate=timestamp)
+    payload_hash = get_sha256_hex("")
 
-    # URI with signature
-    uri = '{base}{query}&{signature}'.format(
+    canonical_request = 'GET\n{service_uri}\n{query}\n{headers}\n{signed_headers}\n{payload_hash}'.format(
+        service_uri=ATS_SERVICE_URI,
+        query=canonical_query,
+        headers=canonical_headers,
+        signed_headers=ATS_SIGNED_HEADERS,
+        payload_hash=payload_hash)
+
+    # Create string to sign from request
+    credential_scope = '{datestamp}/{service_region}/{service_name}/aws4_request'.format(
+        datestamp=datestamp,
+        service_region=ATS_SERVICE_REGION,
+        service_name=ATS_SERVICE_NAME)
+    to_sign = '{algorithm}\n{timestamp}\n{scope}\n{sha_request}'.format(
+        algorithm=ATS_ALGORITHM,
+        timestamp=timestamp,
+        scope=credential_scope,
+        sha_request=get_sha256_hex(canonical_request))
+
+    # Calculate signature
+    key = get_sign_key(ats_secret_key, datestamp, ATS_SERVICE_REGION, ATS_SERVICE_NAME)
+    signature = gen_sign_hex(key, to_sign)
+
+    uri = '{base}?{query}'.format(
         base=ATS_AWS_BASE_URL,
-        query=query_string,
-        signature=urlencode({"Signature": signature}, "UTF-8"))
-    return uri
+        query=canonical_query)
+
+    authorization = '{algorithm} Credential={access_key}/{scope}, SignedHeaders={signed_headers}, Signature={signature}'.format(
+        algorithm=ATS_ALGORITHM,
+        access_key=ats_access_key,
+        scope=credential_scope,
+        signed_headers=ATS_SIGNED_HEADERS,
+        signature=signature)
+
+    return uri, authorization, timestamp
 
 
 def build_query_string(country_code, start_ranking):
     """Build query string for request with start ranking and count."""
-    nowtime = datetime.datetime.utcnow()
-    timestamp = '{}Z'.format(nowtime.strftime(ATS_DATEFORMAT)[:-3])
-
     # Alexa top site only accept request with ordered query parameters
     # Keep the order!
     query_params = [
-        ('AWSAccessKeyId', ats_access_key),
         ('Action', ATS_ACTION_NAME),
         ('Count', ATS_COUNT),
         ('CountryCode', country_code),
         ('ResponseGroup', ATS_RESPONSE_GROUP_NAME),
-        ('SignatureMethod', ATS_HASH_ALGORITHM),
-        ('SignatureVersion', 2),
-        ('Start', start_ranking),
-        ('Timestamp', timestamp)]
+        ('Start', start_ranking)]
     return urlencode(query_params)
 
 
-def gen_sign(data):
+def get_sign_key(key, datestamp, region_name, service_name):
+    """AWS sign key from key, datestamp, region and service"""
+    date = gen_sign(('AWS4' + key).encode('utf-8'), datestamp)
+    region = gen_sign(date, region_name)
+    service = gen_sign(region, service_name)
+    sign_key = gen_sign(service, 'aws4_request')
+    return sign_key
+
+
+def get_sha256_hex(data):
+    return hashlib.sha256(data).hexdigest()
+
+
+def gen_sign(key, data):
     """Compute RFC 2104-compliant HMAC signature."""
-    dig = hmac.new(ats_secret_key, data, hashlib.sha256).digest()
-    return base64.b64encode(dig)
+    return hmac.new(key, data.encode('utf-8'), hashlib.sha256).digest()
+
+
+def gen_sign_hex(key, data):
+    """Compute RFC 2104-compliant HMAC signature."""
+    return hmac.new(key, data.encode('utf-8'), hashlib.sha256).hexdigest()
 
 
 def node_text(tree, tag_name):
