@@ -67,14 +67,6 @@ function BugForm() {
   this.stepsToReproduceField = this.inputs.steps_reproduce.el;
 
   this.init = function() {
-    // prevent accidental submission with the Enter key
-    // (for now, just the description input)
-    Mousetrap.bind("enter", function(e) {
-      if (e.target.className.indexOf("js-Desc") !== -1) {
-        e.preventDefault();
-      }
-    });
-
     this.checkParams();
     this.disableSubmits();
     this.urlField.on("blur input", _.bind(this.checkURLValidity, this));
