@@ -53,4 +53,4 @@ before_script:
 # now run the tests!
 script:
   - nosetests
-  - node_modules/.bin/intern-runner config=tests/intern reporters=Console
+  - node ./tests/functional/_intern.js reporters="runner"

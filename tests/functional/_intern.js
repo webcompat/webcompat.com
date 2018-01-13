@@ -56,7 +56,7 @@ intern.configure({
   environments: environments,
 
   filterErrorStack: true,
-  reporters: ["pretty"],
+  reporters: [args.reporters ? args.reporters : "pretty"],
 
   functionalSuites: ["./tests/functional/*.js"]
 });
