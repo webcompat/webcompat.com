@@ -1,4 +1,4 @@
-  {
+{
   "title": "webcompat.com",
   "name": "webcompat",
   "description": "The webcompat.com is a tool to gather web compatibility bugs, inform the community and help to fix the web.",
@@ -14,6 +14,7 @@
     "node": ">= 4.x"
   },
   "dependencies": {
+    "amd-to-commonjs-codemod": "^1.2.0",
     "cssrecipes-custom-media-queries": "0.3.0",
     "cssrecipes-defaults": "^0.5.0",
     "cssrecipes-grid": "^1.0.0",
@@ -70,7 +71,7 @@
     "project-update": "pip install --upgrade pip && npm update",
     "precommit": "lint-staged",
     "test": "npm run test:js && npm run test:python",
-    "test:js": "node_modules/.bin/intern-runner config=tests/intern",
+    "test:js": "node ./tests/functional/_intern.js",
     "test:python": "nosetests"
   },
   "lint-staged": {
