@@ -33,7 +33,15 @@
         -ms-flex-pack: center;
             justify-content: center;
   }
-  
+
+  .wc-Stat--alert {
+    background-color: #c12600;
+  }
+
+  .wc-Stat--alert * {
+    color: #fff !important;
+  }
+
   .wc-Stat-title {
     position: absolute;
     font-size: 1.5em;
@@ -52,7 +60,7 @@
 
 <section class="wc-Stats">
   <article class="wc-Stats-article">
-    <div class="wc-Stat">
+    <div class="wc-Stat {% if stats.total > 50 %} wc-Stat--alert {% endif %}">
       <div class="wc-Stat-container">
         <h2 class="wc-Stat-title">Needstriage issues</h2>
         <div class="wc-Stat-total">
