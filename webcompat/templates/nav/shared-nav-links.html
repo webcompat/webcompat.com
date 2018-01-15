@@ -91,12 +91,16 @@
 }
 
 .nav-dropdown .nav-dropdown-item {
-    background-color: var(--color-first);
-    margin-bottom: 2px;
-    border-bottom: 1px solid var(--color-bg-page);
+    background-color: var(--color-bg-box);
+    border-right: 1px solid var(--color-default);
     padding-right: 5px;
 }
 
+    .nav-dropdown .nav-dropdown-item:hover {
+        background-color: var(--color-bg-page);
+        border-right: 1px solid var(--color-first);
+        padding-right: 5px;
+    }
 .login .nav-button .nav-icon {
     transform: rotate(90deg);
     transition: all .1s ease 0s;
