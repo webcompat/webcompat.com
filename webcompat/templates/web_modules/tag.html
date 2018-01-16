@@ -2,17 +2,36 @@
 
   {% if type == 'filter' %}
 
-    <button
-      type="button"
-      class="wc-Tag wc-Tag--filter wc-Tag--{{ category.name }} r-ResetButton js-Tag"
-      data-filter="{{ category.dataAttribute }}"
-    >
-      <span class="wc-Tag-count"></span> {{ category.label }}</span>
-    </button>
+    <li class="{{ category.name }} js-Tag" data-filter="{{ category.dataAttribute }}">
+    
+       {{ category.label }}
+
+    </li>
 
   {% elif type == 'tag' %}
 
-    <div class="wc-Tag wc-Tag--label wc-Tag--<%= stateClass %>"><%= issueState %></div>
+    <div class="<%= stateClass %>"><%= issueState %></div>
 
   {% endif %}
 {% endmacro %}
+
+<!-- <ul class="filter-label">
+  <li class="needs-triage">
+    Needs Triage
+  </li>
+  <li class="needs-diagnosis active">
+    Needs Diagnosis
+  </li>
+  <li class="needs-contact">
+    Needs Contact
+  </li>
+  <li class="outreach">
+    Ready for Outreach
+  </li>
+  <li class="site-contacted">
+    Site Contacted
+  </li>
+  <li class="closed">
+    Closed
+  </li>
+</ul> -->
