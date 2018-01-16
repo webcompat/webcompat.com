@@ -14,6 +14,7 @@
     "node": ">= 4.x"
   },
   "dependencies": {
+    "amd-to-commonjs-codemod": "^1.2.0",
     "cssrecipes-custom-media-queries": "0.3.0",
     "cssrecipes-defaults": "^0.5.0",
     "cssrecipes-grid": "^1.0.0",
@@ -37,7 +38,7 @@
     "grunt-contrib-watch": "^1.0.0",
     "grunt-postcss": "^0.8.0",
     "husky": "^0.13.4",
-    "intern": "^3.4.6",
+    "intern": "^4.1.4",
     "lint-staged": "^3.6.1",
     "load-grunt-tasks": "^3.5.2",
     "postcss": "^5.2.17",
@@ -70,7 +71,7 @@
     "project-update": "pip install --upgrade pip && npm update",
     "precommit": "lint-staged",
     "test": "npm run test:js && npm run test:python",
-    "test:js": "node_modules/.bin/intern-runner config=tests/intern",
+    "test:js": "node ./tests/functional/_intern.js",
     "test:python": "nosetests"
   },
   "lint-staged": {
