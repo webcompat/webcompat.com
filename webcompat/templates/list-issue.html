@@ -1,34 +1,34 @@
 {% extends "layout.html" %}
 {% block title %}Issues{% endblock %}
 {% block body %}
-<div class="wc-SearchIssue js-SearchIssue" data-username="{{ session.username }}">
+<div class="js-SearchIssue" data-username="{{ session.username }}">
   {% include "shared/nav.html" %}
   <main role="main" data-repo-path="{{config['ISSUES_REPO_URI']}}">
 
-    <div class="wc-Loader js-loader"></div>
+    <!-- <div class="wc-Loader js-loader"></div> -->
 
-    <section class="wc-UISection">
+    <section class="grid">
       <div class="wc-UIContent js-SearchIssue-filter">
         {% include "list-issue/search-issue-filter.html" %}
       </div>
     </section>
 
-    <section>
+<!--     <section>
       {% include "list-issue/search-issue-search-form.html" %}
-    </section>
+    </section> -->
 
-    <section class="wc-UISection wc-UISection--backgroundColor">
-      <div class="wc-SearchIssue-sorting">
+    <section class="grid">
+      <!-- <div class="wc-SearchIssue-sorting">
         {% include "list-issue/search-issue-sorting.html" %}
-      </div>
+      </div> -->
       <div class="wc-UIContent js-list-issue">
         {% include "list-issue/issuelist-issue.jst" %}
       </div>
-      <div class="wc-SearchIssue-sorting">
+   <!--    <div class="wc-SearchIssue-sorting">
         <div class="wc-UIContent">
           {% include "web_modules/pagination.html" %}
         </div>
-      </div>
+      </div> -->
     </section>
 
   </main>
