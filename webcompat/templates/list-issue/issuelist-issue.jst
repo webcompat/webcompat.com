@@ -1,65 +1,58 @@
 <script type="text/template">
 <% if (issues.length) { %>
   <% _.each(issues, function(issue) { %>
-    <article class="wc-IssueList wc-IssueList--<%= issue.stateClass %> wc-IssueList--large js-IssueList">
-      <div class="wc-IssueList-section">
-        <header class="wc-IssueList-header">
-          <a class="wc-Link" href="/issues/<%= issue.number %>">
-            <span class="wc-IssueList-count">Issue <%= issue.number %></span>: <%- issue.title %>
-          </a>
-        </header>
+    <div class="grid-row issue label-<%= issue.stateClass %> js-IssueList">
+      <article class="grid-cell x2 issue-description">
+        <a href="/issues/<%= issue.number %>">
+          <span class="issue-number">Issue <%= issue.number %></span> <br />
+          <span class="issue-url issue-type"><%- issue.title %></span> <br />
+        </a>
         <p>
-          <span class="wc-IssueList-metadata">Opened: <time><%= issue.createdAt %></time></span>
-          <span class="wc-IssueList-metadata">Comments: <%= issue.commentNumber %></span>
+          <span class="issue-date-open">Opened: <time><%= issue.createdAt %></time></span>
+          <span class="issue-comments">Comments: <%= issue.commentNumber %></span>
         </p>
-      </div>
-      <div class="wc-IssueList-section">
-        <span class="wc-IssueList-label js-Issue-label">
+      </article>
+      <aside class="grid-cell x1 issue-labels">
         <% _.each(issue.labels, function(label) { %>
+        <span class="label js-Issue-label label-<%= label.remoteName %>">
           <a href="/issues?q=label:<%= label.remoteName %>"
-             class="wc-Labels" data-remotename="<%= label.remoteName %>"
-             title="Labels : <%= label.name %>"><%= label.name %></a>
-        <% }); %></span>
-        <span class="wc-IssueList-status js-Issue-status">
-          <a href="/issues?q=milestone:<%= issue.milestone %>"
-             class="wc-Labels" data-remotename="<%= issue.milestone %>"
-             title="Status : <%= issue.milestone %>"><%= issue.milestone %></a>
-        </span>
-      </div>
-    </article>
+                 data-remotename="<%= label.remoteName %>"
+                 title="Labels : <%= label.name %>"><%= label.name %></a>
+        </span><% }); %>
+      </aside>
+    </div>
   <% }); %>
 <% } else { %>
-  <div class="wc-SearchIssue-noResults">
-    <div class="wc-SearchIssue-noResults-title">Sorry, no results were found.</div>
-     <ul class="wc-SearchIssue-noResults-list">
-       <li class="wc-SearchIssue-noResults-list-item">Check your spelling</li>
-       <li class="wc-SearchIssue-noResults-list-item">Try a more general search</li>
-       <li class="wc-SearchIssue-noResults-list-item">Search for popular labels</li>
-       <li class="wc-SearchIssue-noResults-list-item wc-SearchIssue-noResults-list-item--label">
-         <ul class="r-ResetList wc-SearchIssue-noResults-list-labels">
-           <li class="wc-SearchIssue-noResults-list-labelsItem js-Issue-label" >
-             <a class="wc-Labels" href="#" title="Labels : android"
-                data-remotename="browser-android"
-                style="border-color: #48DE20">android</a>
-            </li>
-           <li class="wc-SearchIssue-noResults-list-labelsItem js-Issue-label">
-             <a class="wc-Labels" href="#" title="Labels : chrome"
-                data-remotename="browser-chrome"
-                style="border-color: #FFA500">chrome</a>
-            </li>
-           <li class="wc-SearchIssue-noResults-list-labelsItem js-Issue-label">
-             <a class="wc-Labels" href="#" title="Labels : firefox"
-                data-remotename="browser-firefox"
-                style="border-color: #E50000">firefox</a>
-           </li>
-           <li class="wc-SearchIssue-noResults-list-labelsItem js-Issue-label">
-             <a class="wc-Labels" href="#" title="Labels : ie"
-                data-remotename="browser-ie"
-                style="border-color: #3E8AE5">ie</a>
-            </li>
-         </ul>
-       </li>
-     </ul>
+  <div class="grid-cell issue x3">
+    <h1 class="headline-1">Sorry, no results were found.</h1>
+     <p class="issue-labels">
+      Please check your spelling or try a more general search. <br />
+      You can also search for popular labels like: 
+
+      <a class="label label-browser-android" 
+        href="#" 
+        title="Labels : android"
+        data-remotename="browser-android"
+      >android</a>
+
+      <a class="label label-browser-chrome" 
+        href="#" 
+        title="Labels : chrome"
+        data-remotename="browser-chrome"
+      >chrome</a>
+
+      <a class="label label-browser-firefox" 
+        href="#" 
+        title="Labels : firefox"
+        data-remotename="browser-firefox"
+      >firefox</a>
+
+      <a class="label label-browser-ie" 
+        href="#" 
+        title="Labels : ie"
+        data-remotename="browser-ie"
+      >ie</a>
+     </p>
   </div>
 <% } %>
 </script>

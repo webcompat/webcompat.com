@@ -2,10 +2,8 @@
 
   {% if type == 'filter' %}
 
-    <li class="{{ category.name }} js-Tag" data-filter="{{ category.dataAttribute }}">
-    
+    <li class="{{ category.name }} js-Tag" data-filter="{{ category.dataAttribute }}">    
        {{ category.label }}
-
     </li>
 
   {% elif type == 'tag' %}
@@ -14,24 +12,3 @@
 
   {% endif %}
 {% endmacro %}
-
-<!-- <ul class="filter-label">
-  <li class="needs-triage">
-    Needs Triage
-  </li>
-  <li class="needs-diagnosis active">
-    Needs Diagnosis
-  </li>
-  <li class="needs-contact">
-    Needs Contact
-  </li>
-  <li class="outreach">
-    Ready for Outreach
-  </li>
-  <li class="site-contacted">
-    Site Contacted
-  </li>
-  <li class="closed">
-    Closed
-  </li>
-</ul> -->
