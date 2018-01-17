@@ -80,7 +80,9 @@ function PaginationMixin() {
     // disable the buttons and add .is-disabled classes.
     var nextButton = this.paginationControls.el.find(".js-Pagination-next");
     var prevButton = this.paginationControls.el.find(".js-Pagination-previous");
-    var paginationButtons = this.paginationControls.el.find(".js-Pagination-controls");
+    var paginationButtons = this.paginationControls.el.find(
+      ".js-Pagination-controls"
+    );
     var nextPage = issuesCollection.getNextPage();
     var prevPage = issuesCollection.getPrevPage();
 
@@ -99,8 +101,7 @@ function PaginationMixin() {
       return;
     }
 
-    paginationButtons
-      .removeClass("is-hidden");
+    paginationButtons.removeClass("is-hidden");
     nextButton
       .prop("disabled", isLastPage())
       .toggleClass("is-disabled", isLastPage());
