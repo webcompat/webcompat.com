@@ -39,11 +39,11 @@ issues.Issue = Backbone.Model.extend({
       return "Ready for Outreach";
     }
     if (milestone === "needsdiagnosis") {
-      this.set("stateClass", "needsDiagnosis");
+      this.set("stateClass", "needsdiagnosis");
       return "Needs Diagnosis";
     }
     if (milestone === "needscontact") {
-      this.set("stateClass", "needsContact");
+      this.set("stateClass", "needscontact");
       return "Needs Contact";
     }
 
