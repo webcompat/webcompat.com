@@ -1,4 +1,31 @@
-<div class="wc-Pagination js-Pagination-controls">
-  <a class="wc-Pagination-link js-Pagination-previous" href="">previous</a>
-  <a class="wc-Pagination-link js-Pagination-next" href="">next</a>
+<div class="grid-cell x3">
+  	<a class="pagination-previous js-Pagination-previous" href="">
+  		<svg class="icon nav-icon" viewBox="0 0 30 30" role="presentation">
+            <title>bug</title>
+            <use href="#svg-chevrons-right">bug</use>
+        </svg>
+  		previous
+	</a>
+  	<a class="pagination-next js-Pagination-next" href="">
+  		next
+  		<svg class="icon nav-icon" viewBox="0 0 30 30" role="presentation">
+            <title>bug</title>
+            <use href="#svg-chevrons-right">bug</use>
+        </svg>
+  	</a>
 </div>
+
+<style type="text/css">
+	.pagination-previous .nav-icon {
+		transform: rotateY(180deg);
+	}
+
+	.pagination-next {
+		padding-left: 25px;
+	}
+
+	.pagination-previous,
+	.pagination-next {
+		text-decoration: none;
+	}
+</style>
