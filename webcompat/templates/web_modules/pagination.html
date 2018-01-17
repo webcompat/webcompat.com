@@ -1,18 +1,18 @@
 <div class="grid-cell x3">
-  	<a class="pagination-previous js-Pagination-previous" href="">
+  	<button class="pagination-previous js-Pagination-previous" href="">
   		<svg class="icon nav-icon" viewBox="0 0 30 30" role="presentation">
             <title>bug</title>
             <use href="#svg-chevrons-right">bug</use>
         </svg>
   		previous
-	</a>
-  	<a class="pagination-next js-Pagination-next" href="">
+	</button>
+  	<button class="pagination-next js-Pagination-next" href="">
   		next
   		<svg class="icon nav-icon" viewBox="0 0 30 30" role="presentation">
             <title>bug</title>
             <use href="#svg-chevrons-right">bug</use>
         </svg>
-  	</a>
+  	</button>
 </div>
 
 <style type="text/css">
@@ -27,5 +27,10 @@
 	.pagination-previous,
 	.pagination-next {
 		text-decoration: none;
+		border: 0 none;
+		background-color: transparent;
+		font-family: "Open Sans", sans-serif;
+		font-size: 16px;
+		line-height: 1.8em;
 	}
 </style>
