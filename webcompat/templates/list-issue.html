@@ -17,18 +17,19 @@
       {% include "list-issue/search-issue-search-form.html" %}
     </section> -->
 
-    <section>
-      <!-- <div class="wc-SearchIssue-sorting">
-        {% include "list-issue/search-issue-sorting.html" %}
-      </div> -->
-      <div class="grid issues-list js-list-issue">
-        {% include "list-issue/issuelist-issue.jst" %}
-      </div>
-   <!--    <div class="wc-SearchIssue-sorting">
-        <div class="wc-UIContent">
+    <section class="grid">
+      <div class="wc-SearchIssue-sorting">
+        {% include "list-issue/issuelist-sorting.jst" %}
+        <div class="grid-row js-Pagination-controls">
           {% include "web_modules/pagination.html" %}
         </div>
-      </div> -->
+      </div>
+      <div class="issues-list js-list-issue">
+        {% include "list-issue/issuelist-issue.jst" %}
+      </div>
+        <div class="grid-row js-Pagination-controls">
+          {% include "web_modules/pagination.html" %}
+        </div>
     </section>
 
   </main>

@@ -80,8 +80,10 @@ function PaginationMixin() {
     // disable the buttons and add .is-disabled classes.
     var nextButton = this.paginationControls.el.find(".js-Pagination-next");
     var prevButton = this.paginationControls.el.find(".js-Pagination-previous");
+    var paginationButtons = this.paginationControls.el.find(".js-Pagination-controls");
     var nextPage = issuesCollection.getNextPage();
     var prevPage = issuesCollection.getPrevPage();
+
     var isLastPage = function() {
       return nextPage == null;
     };
@@ -93,17 +95,16 @@ function PaginationMixin() {
     if (!issuesCollection.length || isSinglePage) {
       // hide pagination buttons if there are no results,
       // or the results are limited to a single page.
-      nextButton.addClass("is-hidden");
-      prevButton.addClass("is-hidden");
+      paginationButtons.addClass("is-hidden");
       return;
     }
 
+    paginationButtons
+      .removeClass("is-hidden");
     nextButton
-      .removeClass("is-hidden")
       .prop("disabled", isLastPage())
       .toggleClass("is-disabled", isLastPage());
     prevButton
-      .removeClass("is-hidden")
       .prop("disabled", isFirstPage())
       .toggleClass("is-disabled", isFirstPage());
 
