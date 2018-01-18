@@ -18,18 +18,25 @@
     </section> -->
 
     <section class="grid">
-      <div class="wc-SearchIssue-sorting">
-        {% include "list-issue/issuelist-sorting.jst" %}
-        <div class="grid-row js-Pagination-controls">
-          {% include "web_modules/pagination.html" %}
+      <div class="grid-row sorting">
+        <div class="grid-cell x2 js-SearchIssue-sorting">
+          {% include "list-issue/issuelist-sorting.jst" %}
+        </div>
+        <div class="grid-cell x1 pagination">
+          <div class="js-Pagination-controls">
+            {% include "web_modules/pagination.html" %}
+          </div>
         </div>
       </div>
       <div class="issues-list js-list-issue">
         {% include "list-issue/issuelist-issue.jst" %}
       </div>
-        <div class="grid-row js-Pagination-controls">
+      <div class="grid-row js-Pagination-controls">
+        <div class="grid-cell x2">&nbsp;</div>
+        <div class="grid-cell pagination x1">
           {% include "web_modules/pagination.html" %}
         </div>
+      </div>
     </section>
 
   </main>
