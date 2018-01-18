@@ -1,11 +1,11 @@
 <script type="text/template">
-  <button type="button" class="wc-Dropdown-toggle js-Dropdown-toggle">
-     <h1 class="wc-Dropdown-label js-Dropdown-label"><%= dropdownTitle %></h1> <span class="wc-Icon wc-Icon--chevron-down"></span>
+  <button type="button" class="button js-Dropdown-toggle">
+     <span class="js-Dropdown-label"><%= dropdownTitle %></span>
   </button>
-  <ul class="wc-Dropdown-content js-Dropdown-options" aria-hidden="false">
+  <ul class="sort-dropdown-options js-Dropdown-options" aria-hidden="false">
     <% _.each(dropdownOptions, function(option) { %>
-    <li class="wc-Dropdown-item js-Dropdown-item">
-      <a href="#" class="wc-Dropdown-link js-Dropdown-link" data-params="<%= option.params %>">
+    <li class="js-Dropdown-item">
+      <a href="#" class="js-Dropdown-link" data-params="<%= option.params %>">
         <%= option.title %>
       </a>
     </li>
