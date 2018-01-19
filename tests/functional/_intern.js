@@ -23,10 +23,21 @@ const browsers = args.browsers
   : ["firefox", "chrome"];
 
 browsers.forEach(function(b) {
-  environments.push({
-    browserName: b.toLowerCase(),
-    marionette: true
-  });
+  if (b.toLowerCase() === "firefox") {
+    environments.push({
+      browserName: "firefox",
+      marionette: true
+    });
+  } else if (b.toLowerCase() === "chrome") {
+    environments.push({
+      browserName: "chrome",
+      chromeOptions: { args: ["headless", "disable-gpu"] }
+    });
+  } else {
+    environments.push({
+      browserName: b.toLowerCase()
+    });
+  }
 });
 
 intern.configure({
@@ -54,6 +65,11 @@ intern.configure({
   },
 
   environments: environments,
+  capabilities: {
+    "moz:firefoxOptions": {
+      args: ["-headless"]
+    }
+  },
 
   filterErrorStack: true,
   reporters: [args.reporters ? args.reporters : "pretty"],
