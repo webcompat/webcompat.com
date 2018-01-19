@@ -455,6 +455,13 @@ def api_request(method, path, params=None, data=None):
     resource = request_method(method, path, headers=request_headers,
                               params=params, data=data)
     if resource.status_code != 404:
+        try:
+            if 'pull_request' in json.loads(resource.content):
+                return (json.dumps({'message': 'Pull Requests are Forbidden.',
+                                    'status': 403}),
+                        403, get_response_headers(resource))
+        except:
+            pass
         return (resource.content, resource.status_code,
                 get_response_headers(resource))
     else:
