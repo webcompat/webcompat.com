@@ -4,6 +4,12 @@
 2. New features: affect minor number
 3. API endpoint changes or dependency version updates: affect major number
 
+## 8.0.0 - 2018-01-12
+
+* Upgrade to Intern 4 [Pull #1987](https://github.com/webcompat/webcompat.com/pull/1987)
+* Change style if untriaged issues > 50 [Pull #2016](https://github.com/webcompat/webcompat.com/pull/2016)
+* Update topsites.py for IAM user credential [Pull #2021](https://github.com/webcompat/webcompat.com/pull/2021)
+
 ## 7.1.2 - 2018-01-12
 
 *Revert #2003 [Pull #2022](https://github.com/webcompat/webcompat.com/pull/2022)
