@@ -5,7 +5,6 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 """GitHub Webhook module for assigning priority to sites."""
 
-import base64
 import datetime
 import hashlib
 import hmac
@@ -105,7 +104,9 @@ def query_topsites(country_code, count=1000):
                 # Get error code and message from response
                 # See https://docs.aws.amazon.com/AlexaTopSites/latest/Authentication.html  # nopep8
                 message = node_text(dom, 'aws:ErrorCode')
-                print('Send request to {} get error message: \n{}'.format(
+                error_template = """Send request to {uri} get error message:
+                {message}"""
+                print(error_template.format(
                       uri, message))
         except ConnectionError:
             print('Unable send request to {}'.format(uri))
@@ -151,12 +152,20 @@ def build_request(country_code, start_ranking):
 
     # Build request
     canonical_query = build_query_string(country_code, start_ranking)
-    canonical_headers = 'host:{host}\nx-amz-date:{amzdate}\n'.format(
+    canonical_headers = """host:{host}
+x-amz-date:{amzdate}
+""".format(
         host=ATS_SERVICE_ENDPOINT,
         amzdate=timestamp)
     payload_hash = get_sha256_hex("")
 
-    canonical_request = 'GET\n{service_uri}\n{query}\n{headers}\n{signed_headers}\n{payload_hash}'.format(
+    request_template = """GET
+{service_uri}
+{query}
+{headers}
+{signed_headers}
+{payload_hash}"""
+    canonical_request = request_template.format(
         service_uri=ATS_SERVICE_URI,
         query=canonical_query,
         headers=canonical_headers,
@@ -164,25 +173,30 @@ def build_request(country_code, start_ranking):
         payload_hash=payload_hash)
 
     # Create string to sign from request
-    credential_scope = '{datestamp}/{service_region}/{service_name}/aws4_request'.format(
-        datestamp=datestamp,
-        service_region=ATS_SERVICE_REGION,
-        service_name=ATS_SERVICE_NAME)
-    to_sign = '{algorithm}\n{timestamp}\n{scope}\n{sha_request}'.format(
+    credential_scope = '{dt}/{region}/{name}/aws4_request'.format(
+        dt=datestamp,
+        region=ATS_SERVICE_REGION,
+        name=ATS_SERVICE_NAME)
+    to_sign = """{algorithm}
+{timestamp}
+{scope}
+{sha_request}""".format(
         algorithm=ATS_ALGORITHM,
         timestamp=timestamp,
         scope=credential_scope,
         sha_request=get_sha256_hex(canonical_request))
 
     # Calculate signature
-    key = get_sign_key(ats_secret_key, datestamp, ATS_SERVICE_REGION, ATS_SERVICE_NAME)
+    key = get_sign_key(
+        ats_secret_key, datestamp, ATS_SERVICE_REGION, ATS_SERVICE_NAME)
     signature = gen_sign_hex(key, to_sign)
 
     uri = '{base}?{query}'.format(
         base=ATS_AWS_BASE_URL,
         query=canonical_query)
 
-    authorization = '{algorithm} Credential={access_key}/{scope}, SignedHeaders={signed_headers}, Signature={signature}'.format(
+    authorization_template = '{algorithm} Credential={access_key}/{scope}, SignedHeaders={signed_headers}, Signature={signature}'  # nopep8
+    authorization = authorization_template.format(
         algorithm=ATS_ALGORITHM,
         access_key=ats_access_key,
         scope=credential_scope,
@@ -206,7 +220,7 @@ def build_query_string(country_code, start_ranking):
 
 
 def get_sign_key(key, datestamp, region_name, service_name):
-    """AWS sign key from key, datestamp, region and service"""
+    """AWS sign key from key, datestamp, region and service."""
     date = gen_sign(('AWS4' + key).encode('utf-8'), datestamp)
     region = gen_sign(date, region_name)
     service = gen_sign(region, service_name)
@@ -215,6 +229,7 @@ def get_sign_key(key, datestamp, region_name, service_name):
 
 
 def get_sha256_hex(data):
+    """Compute the hash as hex."""
     return hashlib.sha256(data).hexdigest()
 
 

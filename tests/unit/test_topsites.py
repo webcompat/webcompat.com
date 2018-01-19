@@ -23,12 +23,16 @@ TEST_QUERY_TIMESTAMP = '20060101T000000Z'
 
 
 class TestTopsites(unittest.TestCase):
+    """Tests for Top Sites Tools."""
+
     def setUp(self):
+        """Set up the tests."""
         self.dom = parseString(TEST_XML)
         topsites.ats_access_key = '1234567890ABCDEFGHIJ'
         topsites.ats_secret_key = 'JIHGFEDCBA0987654321'
 
     def test_build_request(self):
+        """Build a request."""
         testdt = datetime.datetime(2006, 1, 1, 0, 0, 0, 0)
         with patch('datetime.datetime') as dt_mock:
             dt_mock.utcnow.return_value = testdt
@@ -38,6 +42,7 @@ class TestTopsites(unittest.TestCase):
             self.assertEqual(timestamp, TEST_QUERY_TIMESTAMP)
 
     def test_build_query_string(self):
+        """Build a Query String."""
         testdt = datetime.datetime(2006, 1, 1, 0, 0, 0, 0)
         with patch('datetime.datetime') as dt_mock:
             dt_mock.utcnow.return_value = testdt
@@ -45,6 +50,7 @@ class TestTopsites(unittest.TestCase):
                              TEST_QUERY_STRING)
 
     def test_node_text(self):
+        """Extract text from a node."""
         site = self.dom.getElementsByTagName('aws:Site')[0]
         self.assertEqual(topsites.node_text(site, 'aws:DataUrl'), 'baidu.com')
         self.assertEqual(topsites.node_text(site, 'aws:Rank'), '1')
