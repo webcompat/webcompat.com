@@ -52,7 +52,8 @@ class TestURIContent(unittest.TestCase):
             ('issues/new', 'New Issue'),
             ('/privacy', 'Privacy Policy'),
             ('/dashboard/triage', 'Triage Dashboard'),
-            ('/404', defaultTitle)
+            ('/404', defaultTitle),
+            ('/error/403', defaultTitle)
         ]
         with webcompat.app.app_context():
             for uri, title in website_uris:
