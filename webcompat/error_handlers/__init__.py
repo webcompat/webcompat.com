@@ -42,14 +42,11 @@ def error_response(code, req=request):
                            error_message=ERROR_DICT[code]), code
 
 
-def api_call(request):
+def api_call(req):
     '''Helper method to check if the request originates from an API call'''
-    if (request.path.startswith('/api/') and
-            request.accept_mimetypes.accept_json and
-            not request.accept_mimetypes.accept_html):
-        return True
-    else:
-        return False
+    return bool(req.path.startswith('/api/') and
+                req.accept_mimetypes.accept_json and
+                not req.accept_mimetypes.accept_html)
 
 
 @error_handlers.app_errorhandler(400)
