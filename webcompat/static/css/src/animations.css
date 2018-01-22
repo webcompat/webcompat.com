@@ -69,7 +69,11 @@
     transform: translate3d(130px, -20px, 0) rotateZ(0) scale3d(1, 1, 1);
   }
   98% {
+<<<<<<< HEAD
     transform: translate3d(130px, 215px, 0) rotateZ(0) scale3d(1, 1, 1);
+=======
+     transform: translate3d(130px, 215px, 0) rotateZ(0) scale3d(1, 1, 1);
+>>>>>>> Issue 2017 - move CSS from design to this repo
   }
   100% {
     transform: translate3d(130px, 215px, 0) rotateZ(0) scale3d(1, 0, 1);

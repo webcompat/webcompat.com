@@ -4,8 +4,8 @@
   </button>
   <ul class="sort-dropdown-options js-Dropdown-options" aria-hidden="false">
     <% _.each(dropdownOptions, function(option) { %>
-    <li class="js-Dropdown-item">
-      <a href="#" class="js-Dropdown-link" data-params="<%= option.params %>">
+    <li class="js-Dropdown-item dropdown-item">
+      <a href="#" class="js-Dropdown-link dropdown-link" data-params="<%= option.params %>">
         <%= option.title %>
       </a>
     </li>

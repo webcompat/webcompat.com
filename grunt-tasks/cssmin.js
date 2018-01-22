@@ -12,7 +12,7 @@ module.exports = function(grunt) {
         // output
         "<%= cssPath %>/webcompat.min.css": [
           // input
-          "<%= cssPath %>/dist/webcompat.dev.css"
+          "<%= cssPath %>/main.css"
         ]
       }
     }
