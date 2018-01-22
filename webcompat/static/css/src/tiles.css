@@ -1,0 +1,76 @@
+/*
+* tiles
+*
+----------------
+* DEPENDENCIES:
+----------------
+* colors.css
+*/
+
+.hero-tile {
+  background-color: var(--color-bg-box);
+}
+
+.tiles {
+  display: flex;
+  flex-flow: row wrap;
+  width: 100%;
+}
+
+.tile-item {
+  display: inline-flex;
+  width: 100%;
+  min-height: 5em;
+  text-align: center;
+  justify-content: center;
+  flex-direction: column;
+  border-radius: 5px;
+}
+
+/* checkerboard pattern */
+.tile-item:nth-child(odd) {
+  background-color: var(--color-fourth);
+}
+
+@media screen and (min-width: 665px) {
+  .tile-item {
+    min-height: 9.5em;
+  }
+  .tiles-x3 .tile-item {
+    flex: 1 0 50%;
+  }
+
+  .tile-item:nth-child(odd) {
+    background-color: transparent;
+  }
+
+  /* every forth element starting by one
+     plus every forth element starting by four
+     to have a checkerboard pattern for 50% tile-item
+     */
+  .tile-item:nth-child(4n+1),
+  .tile-item:nth-child(4n+4) {
+    background-color: var(--color-fourth);
+  }
+}
+
+@media screen and (min-width: 998px) {
+  .tiles-x3 .tile-item {
+    flex-basis: 33.33%;
+  }
+
+  .tile-item:nth-child(4n+1),
+  .tile-item:nth-child(4n+4) {
+    background-color: transparent;
+  }
+
+  /* checkerboard pattern */
+  .tile-item:nth-child(odd) {
+    background-color: var(--color-fourth);
+  }
+
+  /* checkerboard pattern */
+  .tile-item:nth-child(even) {
+    color: var(--color-second);
+  }
+}

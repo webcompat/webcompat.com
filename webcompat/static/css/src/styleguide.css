@@ -1,0 +1,46 @@
+/* Small helpers to visualize living style guide and have nothing to do with actual FW */
+.bg-color-1 {
+  background-color: #c0ffee;
+}
+
+.bg-color-2 {
+  background-color: rgb(255, 200, 0);
+}
+
+.separator {
+  background-color: #ddd;
+  border-color: #ddd;
+  color: #ddd;
+  border: 0;
+  border-bottom: 1px solid;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.hide {
+  display: none;
+}
+
+.off-screen {
+  position: absolute;
+  top: -9999px;
+  left: -9999px;
+}
+
+.icon-description {
+  padding: 10px 20px;
+  display: inline-block;
+  min-width: 12em;
+  text-align: center;
+  border: 1px solid #eee;
+}
+
+.icon-description-item {
+  display: inline-block;
+}

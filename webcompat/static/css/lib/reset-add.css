@@ -1,0 +1,35 @@
+/* Adds Fonts for Headlines */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Source Sans Pro", "Open Sans", sans-serif;
+}
+
+/* Adds color for links  */
+a {
+  color: var(--color-second);
+}
+
+/* Allows vertical scrolling */
+pre {
+  overflow-y: scroll;
+}
+
+svg {
+  fill: var(--color-second);
+}
+
+/* Sets Boxmodel overall the project */
+*, 
+*::after,
+*::before {
+  box-sizing: border-box;
+}
+
+ol,
+ol li{
+  list-style: decimal;
+}

@@ -1,0 +1,15 @@
+.color-first {
+  color: var(--color-first);
+}
+
+.color-first-bg {
+  background-color: var(--color-first);
+}
+
+.color-second-bg {
+  background-color: var(--color-second);
+}
+
+.color-third-bg {
+  background-color: var(--color-third);
+}

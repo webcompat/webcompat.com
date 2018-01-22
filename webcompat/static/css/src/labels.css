@@ -1,0 +1,51 @@
+.issue.label-needstriage .x2 {
+  border-color: var(--label-needs-triage);
+}
+
+.issue.label-needsdiagnosis .x2 {
+  border-color: var(--label-needs-diagnosis);
+}
+
+.issue.label-needscontact .x2 {
+  border-color: var(--label-needs-contact);
+}
+
+.issue.label-ready .x2 {
+  border-color: var(--label-outreach);
+}
+
+.issue.label-sitewait .x2 {
+  border-color: var(--label-site-contacted);
+}
+
+.issue.label-closed .x2 {
+  border-color: var(--label-closed);
+}
+
+.issue .label[class*='label-type'] {
+  border-color: var(--label-color-type);
+}
+
+.issue .label[class*='label-browser'] {
+  border-color: var(--label-color-browser);
+}
+
+.issue .label[class*='label-status'] {
+  border-color: var(--label-color-status);
+}
+
+.issue .label[class*='label-priority'] {
+  border-color: var(--label-color-priority);
+}
+
+.issue .label[class*='label-nsfw'] {
+  border-color: var(--label-color-nsfw);
+}
+
+.issue .label[class*='label-device'] {
+  border-color: var(--label-color-device);
+}
+
+.issue .label[class*='label-os'] {
+  border-color: var(--label-color-os);
+}

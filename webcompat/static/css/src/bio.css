@@ -1,0 +1,34 @@
+.bio .bio-img {
+  min-width: 144px;
+  min-height: 144px;
+  max-width: var(--unit-modul-s);
+  max-height: var(--unit-modul-s);
+  width: 250px;
+  height: 250px;
+  border-radius: 15px;
+  padding: 10px;
+}
+
+.bio .headline-2 {
+  margin-top: 5px;
+  margin-bottom: 15px;
+}
+
+.bio .headline-3 {
+  margin-top: 0;
+}
+
+.bio .bio-links {
+  align-self: center;
+}
+
+@media screen and (min-width: 998px) {
+  .bio .bio-img {
+    filter: grayscale(100%);
+  }
+  
+  .bio .bio-img:hover {
+    filter: grayscale(0%);
+  }
+}
+
