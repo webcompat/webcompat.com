@@ -434,19 +434,17 @@ issues.MainView = Backbone.View.extend({
         }, this)
       )
       .error(function(response) {
-        var msg;
-        if (
-          response &&
-          response.responseJSON &&
-          response.responseJSON.message === "API call. Not Found"
-        ) {
-          location.href = "/404";
-          return;
-        } else {
-          msg =
-            "There was an error retrieving the issue. Please reload to try again.";
-          wcEvents.trigger("flash:error", { message: msg, timeout: 4000 });
+        if (response && response.status === 404) {
+          return (location.href = "/error/404");
         }
+
+        if (response && response.status === 403) {
+          return (location.href = "/error/403");
+        }
+
+        var msg =
+          "There was an error retrieving the issue. Please reload to try again.";
+        wcEvents.trigger("flash:error", { message: msg, timeout: 4000 });
       });
   },
 

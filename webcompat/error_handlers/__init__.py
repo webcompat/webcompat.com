@@ -13,12 +13,12 @@ from flask import request
 
 from webcompat import app
 
-error_handlers = Blueprint('error_handlers', __name__)
+error_handlers = Blueprint('error', __name__, url_prefix='/error')
 
 ERROR_DICT = {
     400: 'Bad Request.',
     401: 'Unauthorized. Please log in.',
-    403: 'Forbidden. Maybe that looking at private stuff?',
+    403: 'Forbidden. Tsk tsk.',
     404: 'Not Found. Lost in Punk Cat Space',
     429: 'Cool your jets! Please wait {0} seconds before making '
          'another search.',
@@ -26,9 +26,15 @@ ERROR_DICT = {
 }
 
 
-def error_response(request, code):
-    '''Helper method to prepare the error response.'''
-    if api_call(request):
+@error_handlers.route('/<int:code>')
+def error_response(code, req=request):
+    """Helper method to prepare the error response.
+
+    Unknown codes will be treated as 500.
+    """
+    if code not in ERROR_DICT:
+        return error_response(500, req)
+    if api_call(req):
         resp = jsonify({'status': code, 'message': ERROR_DICT[code]})
         resp.status_code = code
         return resp
@@ -36,14 +42,11 @@ def error_response(request, code):
                            error_message=ERROR_DICT[code]), code
 
 
-def api_call(request):
+def api_call(req):
     '''Helper method to check if the request originates from an API call'''
-    if (request.path.startswith('/api/') and
-            request.accept_mimetypes.accept_json and
-            not request.accept_mimetypes.accept_html):
-        return True
-    else:
-        return False
+    return bool(req.path.startswith('/api/') and
+                req.accept_mimetypes.accept_json and
+                not req.accept_mimetypes.accept_html)
 
 
 @error_handlers.app_errorhandler(400)
@@ -52,16 +55,15 @@ def api_call(request):
 @error_handlers.app_errorhandler(404)
 @error_handlers.app_errorhandler(500)
 def custom_error_handler(err):
-    # log the exception stack trace
-    # (but don't bother for localhost because the
-    # Flask debugger is already enabled)
+    """Log the exception stack trace (but don't bother for localhost because
+    the Flask debugger is already enabled)"""
     if not app.config['LOCALHOST']:
         app.logger.exception('Exception thrown:')
     try:
-        return error_response(request, err.code)
+        return error_response(err.code, request)
     except AttributeError:
         # Somethign bad happened, we're not dealing with an HTTPError
-        return error_response(request, 500)
+        return error_response(500, request)
 
 
 @error_handlers.app_errorhandler(429)

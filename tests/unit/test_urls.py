@@ -144,6 +144,26 @@ class TestURLs(unittest.TestCase):
         self.assertTrue('text/html' in rv.content_type)
         self.assertTrue(content_test)
 
+    def test_error_routes(self):
+        """Request to /error/<int> should return proper statuses.
+
+        Undefined <int> statuses return 500."""
+        rv = self.app.get('/error/404')
+        self.assertEqual(rv.status_code, 404)
+        rv = self.app.get('/error/403')
+        self.assertEqual(rv.status_code, 403)
+        rv = self.app.get('/error/4000')
+        self.assertEqual(rv.status_code, 500)
+        rv = self.app.get('/error/🤷')
+        self.assertEqual(rv.status_code, 404)
+
+    def test_catchall_404(self):
+        """Unknown routes should always return 404."""
+        rv = self.app.get('/xkxkdjdjdllkj;a;slkdjf')
+        self.assertEqual(rv.status_code, 404)
+        rv = self.app.get('/🤷')
+        self.assertEqual(rv.status_code, 404)
+
 
 if __name__ == '__main__':
     unittest.main()
