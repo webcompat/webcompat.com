@@ -80,23 +80,24 @@
   right: 0;
 }
 
- .is-active #search-bar {
+.is-active #search-bar {
   transform: rotateY(0);
   transition: all .5s ease 0s;
- }
+}
 
-  #search-bar .text-field {
-    background-color: var(--color-bg-box);
-    padding: var(--unit-space);
-  }
+#search-bar .text-field {
+  background-color: var(--color-bg-box);
+  padding: var(--unit-space);
+}
 
-  #search-bar .nav-button {
-    position: relative;
-    top: -35px;
-    float: right;
-    z-index: 300;
-    right: 10px;
-  }
+#search-bar .nav-button {
+  position: relative;
+  top: -35px;
+  float: right;
+  z-index: 300;
+  right: 10px;
+}
+
 @media screen and (min-width: 665px) {
   .nav-item .link-text {
     visibility: visible;
