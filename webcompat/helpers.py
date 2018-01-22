@@ -499,7 +499,7 @@ def add_csp(response):
         get_img_src_policy() +
         "manifest-src 'self'; " +
         "script-src 'self' https://www.google-analytics.com https://api.github.com; " +  # nopep8
-        "style-src 'self' 'unsafe-inline' https://webcompat.github.io https://fonts.googleapis.com; " +
+        "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; " +
         "report-uri /csp-report"
     )
 
