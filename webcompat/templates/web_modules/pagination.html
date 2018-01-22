@@ -1,4 +1,72 @@
-<div class="wc-Pagination js-Pagination-controls">
-  <a class="wc-Pagination-link js-Pagination-previous" href="">previous</a>
-  <a class="wc-Pagination-link js-Pagination-next" href="">next</a>
-</div>
+<button class="pagination-previous js-Pagination-previous" href="">
+	<svg class="icon nav-icon" viewBox="0 0 30 30" role="presentation">
+    <title>bug</title>
+    <use href="#svg-chevrons-right">bug</use>
+</svg>
+	previous
+</button>
+<button class="pagination-next js-Pagination-next" href="">
+	next
+	<svg class="icon nav-icon" viewBox="0 0 30 30" role="presentation">
+    <title>bug</title>
+    <use href="#svg-chevrons-right">bug</use>
+</svg>
+</button>
+
+<style type="text/css">
+	.pagination-previous .nav-icon {
+		transform: rotateY(180deg);
+	}
+
+	.pagination .pagination-next {
+		padding-left: 25px;
+	}
+
+	.pagination-previous,
+	.pagination-next,
+	.sort-dropdown .button {
+		text-decoration: none;
+		border: 0 none;
+		background-color: transparent;
+		font-family: "Open Sans", sans-serif;
+		font-size: 16px;
+		line-height: 1.8em;
+		padding: 0;
+	}
+}
+
+	.pagination {
+		text-align: right;
+	}
+
+	.sorting {
+		margin-bottom: 5px;
+	}
+
+	.sort-dropdown {
+		display: inline-block;
+	}
+
+	.sort-dropdown-options {
+		display: none;
+	}
+
+	.is-active .sort-dropdown-options {
+		display: inline-block;
+		position: absolute;
+		background: white;
+		padding: 12px 16px;
+		margin-left: -62px;
+		margin-top: 30px;
+	}
+
+	.sort-dropdown-options-item {
+		padding-bottom: 8px;
+		margin-bottom: 2px;
+
+	}
+
+	.sort-dropdown:last-child {
+		margin-left: 20px;
+	}
+</style>

@@ -123,8 +123,8 @@ CSP_REPORTS_LOG = '/tmp/webcompat-csp-reports.log'
 Category = namedtuple('Category', ['name', 'dataAttribute', 'label'])
 CATEGORIES = []
 cat_labels = [('needstriage', 'needstriage', 'Needs Triage'),
-              ('needsDiagnosis', 'needsdiagnosis', 'Needs Diagnosis'),
-              ('needsContact', 'needscontact', 'Needs Contact'),
+              ('needsdiagnosis', 'needsdiagnosis', 'Needs Diagnosis'),
+              ('needscontact', 'needscontact', 'Needs Contact'),
               ('ready', 'contactready', 'Ready for Outreach'),
               ('sitewait', 'sitewait', 'Site Contacted'),
               ('close', 'closed', 'Closed')]
