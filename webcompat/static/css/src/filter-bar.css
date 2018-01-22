@@ -115,10 +115,6 @@
   position: absolute;
   left: .25em;
   top: .25em;
-<<<<<<< HEAD
-=======
-
->>>>>>> Issue 2017 - move CSS from design to this repo
   display: flex;
   white-space: nowrap;
 }

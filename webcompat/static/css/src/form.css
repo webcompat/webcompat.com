@@ -72,11 +72,7 @@
   content: "";
   background-repeat: no-repeat;
   background-size: contain;
-<<<<<<< HEAD
-  background-image: url("../../img/svg/icons/svg-checkmark.svg");
-=======
   background-image: url("../../svg/icons/svg-checkmark.svg");
->>>>>>> Issue 2017 - move CSS from design to this repo
 }
 
 .error::after {
@@ -86,11 +82,7 @@
   content: "";
   background-repeat: no-repeat;
   background-size: contain;
-<<<<<<< HEAD
-  background-image: url("../../img/svg/icons/svg-cross2.svg");
-=======
   background-image: url("../../svg/icons/svg-cross2.svg");
->>>>>>> Issue 2017 - move CSS from design to this repo
 }
 
 /* form-input-validation check error */
@@ -182,9 +174,5 @@
 
 
 #js-ReportForm.is-closed {
-<<<<<<< HEAD
   display: none;
-=======
-    display: none;
->>>>>>> Issue 2017 - move CSS from design to this repo
 }
