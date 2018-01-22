@@ -1,0 +1,22 @@
+
+.icon {
+  width: 16px;
+  height: 16px;
+}
+
+.icon-middle {
+  width: 32px;
+  height: 32px;
+}
+
+.icon-big {
+  width: 48px;
+  height: 48px;
+}
+
+.illustration {
+  max-width: 6em;
+}
+
+/* icons */
+
