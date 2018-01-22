@@ -488,7 +488,7 @@ def add_csp(response):
         "img-src 'self' https://www.google-analytics.com https://*.githubusercontent.com https://webcompat.github.io data:; " +  # nopep8
         "manifest-src 'self'; " +
         "script-src 'self' https://www.google-analytics.com https://api.github.com; " +  # nopep8
-        "style-src 'self' 'unsafe-inline' https://webcompat.github.io https://fonts.googleapis.com; " +
+        "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; " +
         "report-uri /csp-report"
     )
 
