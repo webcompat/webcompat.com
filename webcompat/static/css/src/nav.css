@@ -1,0 +1,122 @@
+.navigation {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  z-index: 100;
+  transform: translateX(-50%);
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  box-sizing: border-box;
+  background-color: var(--color-first);
+  color: var(--color-second);
+}
+
+.nav-container {
+  max-width: var(--unit-modul-l);
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0 var(--unit-gutter);
+}
+
+.nav .grid {
+  max-width: 100%;
+}
+
+.nav-left .nav-item {
+  padding: 1px 5px 5px;
+}
+
+.nav-item {
+  text-decoration: none;
+  list-style: none;
+  display: inline;
+  margin: 0 4px;
+}
+
+.nav-item:first-child {
+  margin: 0;
+}
+
+.nav-item:last-child {
+  margin: 0;
+}
+
+.nav-item .nav-link {
+  display: inline-block;
+  padding: 5px;
+  text-decoration: none;
+}
+
+.nav-icon {
+  width: 22px;
+  height: auto;
+  vertical-align: middle;
+}
+
+.nav-item .link-text {
+  display: inline-block;
+  visibility: hidden;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  vertical-align: middle;
+}
+
+#search-bar {
+  position: absolute;
+  top: -15px;
+  z-index: 200;
+  max-width: var(--unit-modul-l);
+  min-width: var(--unit-modul-s);
+  width: 100%;
+  transform: rotateY(-90deg);
+  transition: all .2s ease 0s;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+}
+
+ .is-active #search-bar {
+  transform: rotateY(0);
+  transition: all .5s ease 0s;
+ }
+
+  #search-bar .text-field {
+    background-color: var(--color-bg-box);
+    padding: var(--unit-space);
+  }
+
+  #search-bar .nav-button {
+    position: relative;
+    top: -35px;
+    float: right;
+    z-index: 300;
+    right: 10px;
+  }
+@media screen and (min-width: 665px) {
+  .nav-item .link-text {
+    visibility: visible;
+    width: auto;
+    height: auto;
+  }
+
+  .nav-icon {
+    width: 16px;
+  }
+}
+
+@media screen and (min-width: 998px) {
+  .navigation {
+    width: 100%;
+  }
+  
+  .nav-left .nav-item {
+    padding: 5px;
+  }
+}
+
+/* add icons to nav, right + left with x1-fix : x2, pseudo-links, sticky nav */

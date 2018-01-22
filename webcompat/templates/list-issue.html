@@ -13,16 +13,15 @@
       </div>
     </section>
 
-<!--     <section>
-      {% include "list-issue/search-issue-search-form.html" %}
-    </section> -->
-
     <section class="grid">
       <div class="grid-row sorting">
-        <div class="grid-cell x2 js-SearchIssue-sorting">
+        <div class="grid-cell x1 js-SearchIssue-sorting">
           {% include "list-issue/issuelist-sorting.jst" %}
         </div>
-        <div class="grid-cell x1 pagination">
+        <div class="grid-cell x1 nav-right">
+          {% include "list-issue/search-issue-search-form.html" %}
+        </div>
+        <div class="grid-cell x1 pagination nav-right">
           <div class="js-Pagination-controls">
             {% include "web_modules/pagination.html" %}
           </div>
@@ -31,7 +30,7 @@
       <div class="issues-list js-list-issue">
         {% include "list-issue/issuelist-issue.jst" %}
       </div>
-      <div class="grid-row js-Pagination-controls">
+      <div class="grid-row js-Pagination-controls nav-right">
         <div class="grid-cell x2">&nbsp;</div>
         <div class="grid-cell pagination x1">
           {% include "web_modules/pagination.html" %}

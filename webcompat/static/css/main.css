@@ -1,0 +1,59 @@
+/* imports for vendor files that should be imported first */
+@import "lib/reset.css";
+@import "lib/reset-add.css";
+/* @import "lib/a11y-en.css"; */
+
+/* custom src files */
+@import 'src/variables.css';
+@import 'src/typo.css';
+@import 'src/grid.css';
+@import 'src/colors.css';
+@import 'src/icons.css';
+@import 'src/button.css';
+@import 'src/nav.css';
+@import 'src/sub-nav.css';
+@import 'src/bio.css';
+@import 'src/hero.css';
+@import 'src/tiles.css';
+@import 'src/form.css';
+@import 'src/issue.css';
+@import 'src/labels.css';
+@import 'src/filter.css';
+@import 'src/filter-bar.css';
+@import 'src/issues-list.css';
+@import 'src/footer.css';
+@import 'src/notification-bar.css';
+@import 'src/animations.css';
+@import 'src/sub-nav.css';
+@import 'src/pagination.css';
+
+/* imports for other vendor files */
+@import "lib/prism-gh-theme.css";
+
+
+#body-webcompat {
+  background-color: var(--color-bg-page);
+  margin-top: var(--navi-height);
+}
+
+@media screen and (min-width: 665px) {
+  #body-webcompat {
+    padding: var(--navi-height) 19px 50px;
+  }
+}
+
+@media screen and (min-width: 998px) {
+  #body-webcompat {
+    padding: 0;
+  }
+}
+
+.main {
+  width: 100%;
+  overflow: hidden;
+}
+
+/* helper to hide meta elements */
+.is-hidden {
+  display: none;
+}
