@@ -69,7 +69,7 @@
     transform: translate3d(130px, -20px, 0) rotateZ(0) scale3d(1, 1, 1);
   }
   98% {
-     transform: translate3d(130px, 215px, 0) rotateZ(0) scale3d(1, 1, 1);
+    transform: translate3d(130px, 215px, 0) rotateZ(0) scale3d(1, 1, 1);
   }
   100% {
     transform: translate3d(130px, 215px, 0) rotateZ(0) scale3d(1, 0, 1);
