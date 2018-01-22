@@ -115,7 +115,6 @@
   position: absolute;
   left: .25em;
   top: .25em;
-
   display: flex;
   white-space: nowrap;
 }
