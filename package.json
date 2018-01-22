@@ -49,17 +49,21 @@
     "postcss-url": "^5.1.2",
     "prettier": "1.1.0",
     "stylelint": "^7.13.0",
-    "stylelint-config-standard": "^16.0.0"
+    "stylelint-config-standard": "^16.0.0",
+    "svg-sprite-generator": "0.0.7",
+    "svgo": "^0.7.2"
   },
   "scripts": {
     "setup": "npm run virtualenv && npm install && npm run config",
     "watch": "grunt watch",
     "build": "grunt",
+    "build:svg": "npm run build:svg:clean-svg && npm run build:svg:svg-sprite && rm -rf ./webcompat/static/img/svg/tmp",
+    "build:svg:clean-svg": "svgo -f ./webcompat/static/img/svg/icons -o ./webcompat/static/img/svg/tmp",
+    "build:svg:svg-sprite": "svg-sprite-generate -d ./webcompat/static/img/svg/tmp -o ./webcompat/static/img/svg/sprite.svg",
     "jst": "grunt jst",
     "lint": "npm run lint:JS && npm run lint:CSS && grunt travis-lint",
     "lint:JS": "eslint ./Gruntfile.js ./tests ./grunt-tasks ./webcompat/static/js/lib",
     "lint:CSS": "stylelint './webcompat/static/css/**/*.css'",
-    "lint:CSS:fix": "stylelint --fix './webcompat/static/css/**/*.css'",
     "fix": "npm run lint:fix:JS",
     "lint:fix:JS": "eslint --fix ./Gruntfile.js ./tests ./grunt-tasks ./webcompat/static/js/lib",
     "imagemin": "grunt imagemin",
