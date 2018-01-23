@@ -1,11 +1,15 @@
 <script type="text/template">
   <button type="button" class="button js-Dropdown-toggle">
      <span class="js-Dropdown-label"><%= dropdownTitle %></span>
+
+     <svg class="icon nav-icon" viewBox="0 0 30 30" role="presentation">
+        <use href="#svg-chevron-right">dropdown</use>
+    </svg>
   </button>
-  <ul class="sort-dropdown-options js-Dropdown-options" aria-hidden="false">
+  <ul class="dropdown js-Dropdown-options" aria-hidden="false">
     <% _.each(dropdownOptions, function(option) { %>
-    <li class="js-Dropdown-item dropdown-item">
-      <a href="#" class="js-Dropdown-link dropdown-link" data-params="<%= option.params %>">
+    <li class="js-Dropdown-item nav-dropdown-item">
+      <a href="#" class="js-Dropdown-link nav-link" data-params="<%= option.params %>">
         <%= option.title %>
       </a>
     </li>
