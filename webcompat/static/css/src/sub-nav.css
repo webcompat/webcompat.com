@@ -1,48 +1,7 @@
 .sub-nav {
-<<<<<<< HEAD
-  color: var(--color-second);
-  font-size: 1em;
-  padding-left: 0;
-}
-
-.sub-nav,
-.sub-nav .sub-nav-item,
-.nested-sub-nav-item {
-  list-style: none;
-}
-
-.sub-nav .sub-nav-item .link-text,
-.nested-sub-nav-item .link-text{
-  text-decoration: none;
-}
-
-.nested-sub::after {
-  content: " ";
-  background-image: url("../../img/svg/icons/svg-chevron-right.svg");
-  /*transform: rotate(90deg);*/
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-position: 0;
-  width: 20px;
-  height: 2em;
-  position: absolute;
-  opacity: 0.7;
-  margin-left: 3px; 
-}
-
-.nested-sub-nav {
-  display: none;
-}
-.active .nested-sub-nav {
-  display: inline-block;
-}
-
-.active .nested-sub::after {
-  transform: rotate(90deg);
-=======
   padding-left: calc(var(--unit-space) * 2);
   border-left: calc(var(--unit-space) / 2) solid var(--color-default);
-  color: var(--color-hint);
+  color: var(--color-second);
   font-size: .875em;
 }
 
@@ -62,7 +21,6 @@
   height: 18px;
   top: 5px;
   margin-left: calc(var(--unit-space) * 2);
->>>>>>> Issue 2017 - move CSS from design to this repo
 }
 
 /* var(--page-size-s) = 320px - vars not usable in queries */
@@ -73,22 +31,11 @@
 }
 
 .nested-sub-nav {
-<<<<<<< HEAD
-  padding-left: var(--unit-space);
-  list-style: none;
-=======
   padding-left: calc(var(--unit-space) * 2);
->>>>>>> Issue 2017 - move CSS from design to this repo
 }
 
 .sub-nav-active {
   font-weight: 700;
-<<<<<<< HEAD
-  border-left: 2px solid var(--color-first);
-  color: var(--color-second);
-  padding-left: var(--unit-space);
-}
-=======
   border-image: linear-gradient(var(--color-first), var(--color-first)) 10;
   border-left: 5px solid;
   margin-left: -5px;
@@ -99,4 +46,66 @@
 .nested-sub-nav .sub-nav-active {
   border-image-outset: 8;
 }
->>>>>>> Issue 2017 - move CSS from design to this repo
+
+.nav-button {
+    border: none;
+    padding: 0;
+    background-color: transparent;
+    cursor: pointer;
+    color: var(--color-second);
+    font-family: "Open Sans", sans-serif;
+}
+
+.nav-right {
+    text-align: right;
+}
+
+.nav-right .nav-item {
+    margin-right: 0;
+    padding-right: 0;
+}
+
+.nav-left {
+    margin-top: 3px;
+}
+
+.nav-dropdown-wrapper {
+    display: none;
+}
+
+.login.is-active .nav-dropdown-wrapper {
+    display: inline-block;
+    position: absolute;
+    width: var(--unit-modul-l);
+    right: 0;
+    left: 0;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 48px;
+}
+
+.login .nav-button .nav-icon {
+    transform: rotate(90deg);
+    transition: all .1s ease 0s;
+}
+
+.login.is-active .nav-button .nav-icon {
+    transform: rotate(-90deg);
+    transition: all .2s ease 0s;
+}
+
+.login-avatar-img {
+  width: 20px;
+  position: relative;
+  top: 6px;
+}
+
+.nav-addon {
+    display: none;
+}
+
+@media screen and (min-width: 490px) {
+    .nav-addon {
+        display: inline-block;
+    }
+}

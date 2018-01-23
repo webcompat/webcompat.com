@@ -2,14 +2,13 @@
   opacity: 0.7;
   text-decoration: none;
 }
-<<<<<<< HEAD
 
 .pagination-previous .nav-icon {
 	transform: rotateY(180deg);
 }
 
 .pagination .pagination-next {
-	float: right;
+	padding-left: 25px;
 }
 
 .pagination-previous,
@@ -23,5 +22,7 @@
 	line-height: 1.8em;
 	padding: 0;
 }
-=======
->>>>>>> Issue 2017 - move CSS from design to this repo
+
+.pagination {
+	text-align: right;
+}

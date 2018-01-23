@@ -31,11 +31,7 @@ body {
   line-height: 1.4em;
   margin-top: .3em;
   text-align: center;
-<<<<<<< HEAD
-  background-image: url("../../img/svg/icons/svg-leaf_left.svg"), url("../../img/svg/icons/svg-leaf_right.svg");
-=======
   background-image: url("../../svg/icons/svg-leaf_left.svg"), url("../../svg/icons/svg-leaf_right.svg");
->>>>>>> Issue 2017 - move CSS from design to this repo
   background-repeat: no-repeat;
   background-position: center left, center right;
   padding: 0 40px;
@@ -53,11 +49,7 @@ body {
 }
 
 .hint-text {
-<<<<<<< HEAD
   color: var(--color-default);
-=======
-  color: var(--color-hint);
->>>>>>> Issue 2017 - move CSS from design to this repo
   font-style: italic;
   font-family: Palatino, Garamond, serif;
   font-size: 1.025em;
