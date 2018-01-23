@@ -5,7 +5,7 @@
 module.exports = function(grunt) {
   grunt.config("watch", {
     css: {
-      files: "<%= cssPath %>/development/**/*.css",
+      files: "<%= cssPath %>/**/*.css",
       tasks: ["postcss"]
     },
     script: {
