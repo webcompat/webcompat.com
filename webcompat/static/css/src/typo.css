@@ -49,7 +49,7 @@ body {
 }
 
 .hint-text {
-  color: var(--color-hint);
+  color: var(--color-default);
   font-style: italic;
   font-family: Palatino, Garamond, serif;
   font-size: 1.025em;

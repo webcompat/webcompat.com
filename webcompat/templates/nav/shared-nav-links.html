@@ -32,7 +32,7 @@
         </svg>
     </button>
     <div class="nav-dropdown-wrapper">
-        <ul class="nav-dropdown">
+        <ul class="dropdown">
             <li class="nav-dropdown-item">
                 <a class="nav-link" href="{{ url_for('me_redirect') }}">My Activity</a>
             </li>
@@ -43,87 +43,3 @@
     </div>
 </li>
 {% endif %}
-
-<style type="text/css">
-
-.nav-button {
-    border: none;
-    padding: 0;
-    background-color: transparent;
-    cursor: pointer;
-    color: var(--color-second);
-    font-family: "Open Sans", sans-serif;
-}
-
-.nav-right {
-    text-align: right;
-}
-
-.nav-right .nav-item {
-    margin-right: 0;
-    padding-right: 0;
-}
-
-.nav-left {
-    margin-top: 3px;
-}
-
-.nav-dropdown-wrapper {
-    display: none;
-}
-
-.login.is-active .nav-dropdown-wrapper {
-    display: inline-block;
-    position: absolute;
-    width: var(--unit-modul-l);
-    right: 0;
-    left: 0;
-    margin-right: auto;
-    margin-left: auto;
-    margin-top: 48px;
-}
-
-.nav-dropdown {
-    position: relative;
-    width: var(--unit-modul-s);
-    margin-left: auto;
-    margin-right: var(--unit-gutter);
-}
-
-.nav-dropdown .nav-dropdown-item {
-    background-color: var(--color-bg-box);
-    border-right: 1px solid var(--color-default);
-    padding-right: 5px;
-}
-
-    .nav-dropdown .nav-dropdown-item:hover {
-        background-color: var(--color-bg-page);
-        border-right: 1px solid var(--color-first);
-        padding-right: 5px;
-    }
-.login .nav-button .nav-icon {
-    transform: rotate(90deg);
-    transition: all .1s ease 0s;
-}
-
-.login.is-active .nav-button .nav-icon {
-    transform: rotate(-90deg);
-    transition: all .2s ease 0s;
-}
-
-.login-avatar-img {
-  width: 20px;
-  position: relative;
-  top: 6px;
-}
-
-.nav-addon {
-    display: none;
-}
-
-@media screen and (min-width: 490px) {
-    .nav-addon {
-        display: inline-block;
-    }  
-}
-</style>
