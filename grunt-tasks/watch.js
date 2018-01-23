@@ -7,10 +7,6 @@ module.exports = function(grunt) {
     css: {
       files: "<%= cssPath %>/**/*.css",
       tasks: ["postcss"]
-    },
-    script: {
-      files: "<%= jshint.beforeconcat %>",
-      tasks: ["jshint:beforeconcat"]
     }
   });
 };
