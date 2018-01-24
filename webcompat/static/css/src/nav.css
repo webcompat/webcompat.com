@@ -67,8 +67,8 @@
 
 #search-bar {
   position: absolute;
-  top: -15px;
-  z-index: 200;
+  top: -27px;
+  z-index: 1200;
   max-width: var(--unit-modul-l);
   min-width: var(--unit-modul-s);
   width: 100%;
@@ -94,7 +94,7 @@
   position: relative;
   top: -35px;
   float: right;
-  z-index: 300;
+  z-index: 1300;
   right: 10px;
 }
 
