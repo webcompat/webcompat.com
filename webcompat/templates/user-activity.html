@@ -2,22 +2,13 @@
 {% block title %}{{user}}'s Activity{% endblock %}
 {% block body %}
 {% include "nav/nav.html" %}
-<main role="main" class="body-webcompat" data-repo-path="{{config['ISSUES_REPO_URI']}}">
-  <!-- <div class="wc-Loader js-loader"></div> -->
-  <section class="grid">
-    <header class="grid-row">
-      <div class="grid-cell x3">
-        <h1 class="headline-1 highlight js-username">
-          {{user}}'s activity
-        </h1>
-      </div>
-    </header>
-  </section>
+<main class="grid" role="main" data-repo-path="{{config['ISSUES_REPO_URI']}}">
+ <!--  <div class="wc-Loader js-loader"></div> -->
   <section id="browse-issues-wrapper" class="js-list-issue">
     {% include "user-activity/reported-by-user.html" %}
     {% include "user-activity/user-mentions.html" %}
   </section>
-</div>
+</main>
 {% endblock %}
 {% block extrascripts %}
 {%- if config.PRODUCTION or config.STAGING -%}
