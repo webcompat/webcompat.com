@@ -8,6 +8,7 @@ function BugForm() {
   this.loadingIndicator = $(".js-Loader");
   this.reportButton = $("#js-ReportBug");
   this.uploadLoader = $(".js-Upload-Loader");
+  this.previewEl = $(".js-image-upload");
   this.UPLOAD_LIMIT = 1024 * 1024 * 4;
   this.clickedButton = null;
   this.hasImage = null;
@@ -372,7 +373,7 @@ function BugForm() {
         inlineHelp
           .removeClass("wc-Form-helpMessage")
           .addClass("wc-Form-helpMessage--imageUpload")
-          .insertAfter(".js-image-upload-label");
+          .appendTo(this.previewEl);
 
         $(".wc-UploadForm-label").hide();
         // "reset" the form field, because the file would get rejected
@@ -436,7 +437,6 @@ function BugForm() {
       return;
     }
 
-    this.previewEl = $(".js-image-upload").find("label").eq(0);
     this.previewEl.css({
       background: "url(" + dataURI + ") no-repeat center / contain",
       "background-color": "#eee"
@@ -448,7 +448,7 @@ function BugForm() {
   /*
     Allow users to remove an image from the form upload.
   */
-  this.showRemoveUpload = function(label) {
+  this.showRemoveUpload = function(preview) {
     var removeBanner = $(".wc-UploadForm-button");
     var uploadWrapper = $(".wc-UploadForm-wrapper");
     var uploadIcon = $(".wc-UploadForm-icon");
@@ -467,7 +467,7 @@ function BugForm() {
       "click",
       _.bind(function() {
         // remove the preview and hide the banner
-        label.css("background", "none");
+        preview.css("background", "none");
         removeBanner.addClass("is-hidden");
         removeBanner.attr("tabIndex", "-1");
         uploadIcon.removeClass("is-hidden");
