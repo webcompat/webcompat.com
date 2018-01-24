@@ -14,13 +14,13 @@ registerSuite("Image Uploads (non-auth)", {
   tests: {
     "postMessaged dataURI preview"() {
       return (
-        FunctionalHelpers.openPage(this, url, ".js-image-upload-label")
+        FunctionalHelpers.openPage(this, url, ".js-image-upload")
           // send a small base64 encoded green test square
           .execute(
             'postMessage("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAIAAABLixI0AAAACXBIWXMAAA7DAAAOwwHHb6hkAAAAB3RJTUUH3gYSAig452t/EQAAAClJREFUOMvtzkENAAAMg0A25ZU+E032AQEXoNcApCGFLX5paWlpaWl9dqq9AS6CKROfAAAAAElFTkSuQmCC", "http://localhost:5000")'
           )
           .sleep(1000)
-          .findByCssSelector(".js-image-upload-label")
+          .findByCssSelector(".js-image-upload")
           .getAttribute("style")
           .then(function(inlineStyle) {
             assert.include(
@@ -35,14 +35,14 @@ registerSuite("Image Uploads (non-auth)", {
 
     "postMessaged blob preview"() {
       return (
-        FunctionalHelpers.openPage(this, url, ".js-image-upload-label")
+        FunctionalHelpers.openPage(this, url, ".js-image-upload")
           // Build up a green test square in canvas, toBlob that, and then postMessage the blob
           // see window-helpers.js for more details.
           .execute(function() {
             WindowHelpers.getBlob().then(WindowHelpers.sendBlob);
           })
           .sleep(1000)
-          .findByCssSelector(".js-image-upload-label")
+          .findByCssSelector(".js-image-upload")
           .getAttribute("style")
           .then(function(inlineStyle) {
             assert.include(
@@ -56,12 +56,12 @@ registerSuite("Image Uploads (non-auth)", {
     },
 
     "uploaded image file preview"() {
-      return FunctionalHelpers.openPage(this, url, ".js-image-upload-label")
+      return FunctionalHelpers.openPage(this, url, ".js-image-upload")
         .findById("image")
         .type("tests/fixtures/green_square.png")
         .sleep(1000)
         .end()
-        .findByCssSelector(".js-image-upload-label")
+        .findByCssSelector(".js-image-upload")
         .getAttribute("style")
         .then(function(inlineStyle) {
           assert.include(
@@ -75,7 +75,7 @@ registerSuite("Image Uploads (non-auth)", {
 
     "postMessaged dataURI image doesn't upload before form submission"() {
       return (
-        FunctionalHelpers.openPage(this, url, ".js-image-upload-label")
+        FunctionalHelpers.openPage(this, url, ".js-image-upload")
           // send a small base64 encoded green test square
           .execute(
             'postMessage("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAIAAABLixI0AAAACXBIWXMAAA7DAAAOwwHHb6hkAAAAB3RJTUUH3gYSAig452t/EQAAAClJREFUOMvtzkENAAAMg0A25ZU+E032AQEXoNcApCGFLX5paWlpaWl9dqq9AS6CKROfAAAAAElFTkSuQmCC", "http://localhost:5000")'
@@ -96,7 +96,7 @@ registerSuite("Image Uploads (non-auth)", {
 
     "postMessaged blob image doesn't upload before form submission"() {
       return (
-        FunctionalHelpers.openPage(this, url, ".js-image-upload-label")
+        FunctionalHelpers.openPage(this, url, ".js-image-upload")
           // Build up a green test square in canvas, toBlob that, and then postMessage the blob
           .execute(function() {
             WindowHelpers.getBlob().then(WindowHelpers.sendBlob);
@@ -116,7 +116,7 @@ registerSuite("Image Uploads (non-auth)", {
     },
 
     "uploaded image file doesn't upload before form submission"() {
-      return FunctionalHelpers.openPage(this, url, ".js-image-upload-label")
+      return FunctionalHelpers.openPage(this, url, ".js-image-upload")
         .findById("image")
         .type("tests/fixtures/green_square.png")
         .sleep(1000)
@@ -141,17 +141,17 @@ registerSuite("Image Uploads (non-auth)", {
             'postMessage("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAIAAABLixI0AAAACXBIWXMAAA7DAAAOwwHHb6hkAAAAB3RJTUUH3gYSAig452t/EQAAAClJREFUOMvtzkENAAAMg0A25ZU+E032AQEXoNcApCGFLX5paWlpaWl9dqq9AS6CKROfAAAAAElFTkSuQmCC", "http://localhost:5000")'
           )
           .sleep(1000)
-          .findByCssSelector(".js-image-upload-label .wc-UploadForm-button")
+          .findByCssSelector(".js-image-upload .wc-UploadForm-button")
           .isDisplayed()
           .then(function(isDisplayed) {
             assert.equal(isDisplayed, true, "Remove button is displayed");
           })
           .end()
-          .findByCssSelector(".js-image-upload-label .wc-UploadForm-button")
+          .findByCssSelector(".js-image-upload .wc-UploadForm-button")
           .click()
           .sleep(1000)
           .end()
-          .findByCssSelector(".js-image-upload-label")
+          .findByCssSelector(".js-image-upload")
           .getAttribute("style")
           .then(function(inlineStyle) {
             assert.notInclude(
@@ -180,7 +180,7 @@ registerSuite("Image Uploads (non-auth)", {
         .type("tests/fixtures/green_square.png")
         .sleep(1000)
         .end()
-        .findByCssSelector(".js-image-upload-label .wc-UploadForm-button")
+        .findByCssSelector(".js-image-upload .wc-UploadForm-button")
         .click()
         .sleep(1000)
         .end()
@@ -188,7 +188,7 @@ registerSuite("Image Uploads (non-auth)", {
         .type("tests/fixtures/green_square.png")
         .end()
         .sleep(1000)
-        .findByCssSelector(".js-image-upload-label")
+        .findByCssSelector(".js-image-upload")
         .getAttribute("style")
         .then(function(inlineStyle) {
           assert.include(
