@@ -4,13 +4,6 @@
 {% include "nav/nav.html" %}
 <main class="grid" role="main" data-repo-path="{{config['ISSUES_REPO_URI']}}">
  <!--  <div class="wc-Loader js-loader"></div> -->
-  <section class="grid-row">
-    <div class="grid-cell x3">
-      <h1 class="headline-1 js-username">
-        {{user}}'s activity
-      </h1>
-    </div>
-  </section>
   <section id="browse-issues-wrapper" class="js-list-issue">
     {% include "user-activity/reported-by-user.html" %}
     {% include "user-activity/user-mentions.html" %}
