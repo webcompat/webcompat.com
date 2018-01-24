@@ -19,6 +19,7 @@
 	display: inline-block;
 	position: absolute;
 	margin-top: -9px;
+	z-index: 900;
 }
 
 .sort-dropdown .nav-dropdown-item {
