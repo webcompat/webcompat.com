@@ -4,6 +4,7 @@
 
 .sort-dropdown {
 	display: inline-block;
+	margin-top: -5px;
 }
 
 .sort-dropdown:last-child {
@@ -17,11 +18,12 @@
 .is-active.sort-dropdown .dropdown {
 	display: inline-block;
 	position: absolute;
+	margin-top: -9px;
 }
 
-.dropdown-item {
-	border-bottom: 1px solid var(--color-default);
-	padding: 12px 10px;
+.sort-dropdown .nav-dropdown-item {
+	padding-right: 0;
+	padding: 10px 5px;
 }
 
 .dropdown .nav-link {
@@ -43,13 +45,8 @@
     padding-right: 5px;
 }
 
-.sort-dropdown .nav-dropdown-item {
-	padding-right: 0;
-	padding-left: 5px;
-}
-
     .dropdown .nav-dropdown-item:hover {
         background-color: var(--color-bg-page);
-        border-right: 1px solid var(--color-first);
+        border-right: 2px solid var(--color-first);
         padding-right: 5px;
     }

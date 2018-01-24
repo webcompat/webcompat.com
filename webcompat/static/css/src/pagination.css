@@ -8,7 +8,7 @@
 }
 
 .pagination .pagination-next {
-	padding-left: 25px;
+	float: right;
 }
 
 .pagination-previous,
@@ -21,8 +21,4 @@
 	font-size: 16px;
 	line-height: 1.8em;
 	padding: 0;
-}
-
-.pagination {
-	text-align: right;
 }
