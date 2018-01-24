@@ -26,7 +26,6 @@ webcompat/static/js/user-activity.js
 webcompat/static/js/templates.js
 webcompat/**/*.min.js
 webcompat/**/*.min.css
-webcompat/**/*.dev.css
 
 #selenium server
 *.jar
