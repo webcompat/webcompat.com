@@ -1,12 +1,20 @@
 <script type="text/template">
-  <div class="wc-UIContent">
-    <div class="wc-SearchForm-content">
-      <label for="wc-SearchForm-input" class="wc-Accessibility">Search By Keyword</label>
-      <input type="text" id="js-SearchForm-input" class="wc-SearchForm-item mousetrap" placeholder="Search by keyword">
-      <button role="button" type="submit" class="r-ResetButton wc-SearchForm-button js-SearchForm-button">
-        <span class="wc-Accessibility">Search</span>
-        <span class="wc-Icon wc-Icon--search" aria-hidden="true"></span>
-      </button>
-    </div>
-  </div>
+<!--
+      <label for="js-SearchForm-input" class="is-hidden">Search By Keyword</label>
+      <input type="text" id="js-SearchForm-input" class="form-field text-field is-hidden mousetrap" placeholder="Search by keyword">
+      <button role="button" class="nav-button nav-link js-SearchForm-button" title="Search for an item.">
+        <svg class="icon nav-icon" viewBox="0 0 30 30" role="presentation">
+            <use href="#svg-search2">Search</use>
+        </svg>
+    </button>
+--->
+  <form id="x-search-bar" method="get" action="/issues">
+        <input class="form-field text-field" name="q" placeholder="Search issues by keyword"/>
+        <button class="nav-button js-SearchBarClose" aria-hidden="true" type="button">
+          <svg class="icon nav-icon" viewBox="0 0 30 30" role="presentation">
+            <title>Close search</title>
+            <use href="#svg-x">Close search</use>
+          </svg>
+        </button>
+    </form>
 </script>

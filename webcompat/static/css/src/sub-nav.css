@@ -1,0 +1,111 @@
+.sub-nav {
+  padding-left: calc(var(--unit-space) * 2);
+  border-left: calc(var(--unit-space) / 2) solid var(--color-default);
+  color: var(--color-second);
+  font-size: .875em;
+}
+
+.sub-nav-header {
+  text-transform: uppercase;
+  font-weight: 700;
+  position: relative;
+}
+
+.sub-nav-header::after {
+  content: "";
+  position: absolute;
+  background-image: url("../../img/svg/icons/svg-circle-down.svg");
+  background-repeat: no-repeat;
+  background-size: contain;
+  width: 18px;
+  height: 18px;
+  top: 5px;
+  margin-left: calc(var(--unit-space) * 2);
+}
+
+/* var(--page-size-s) = 320px - vars not usable in queries */
+@media (min-width: 320px) {
+  .sub-nav-header::after {
+    content: none;
+  }
+}
+
+.nested-sub-nav {
+  padding-left: calc(var(--unit-space) * 2);
+}
+
+.sub-nav-active {
+  font-weight: 700;
+  border-image: linear-gradient(var(--color-first), var(--color-first)) 10;
+  border-left: 5px solid;
+  margin-left: -5px;
+  color: var(--color-second);
+  border-image-outset: 4;
+}
+
+.nested-sub-nav .sub-nav-active {
+  border-image-outset: 8;
+}
+
+.nav-button {
+    border: none;
+    padding: 0;
+    background-color: transparent;
+    cursor: pointer;
+    color: var(--color-second);
+    font-family: "Open Sans", sans-serif;
+}
+
+.nav-right {
+    text-align: right;
+}
+
+.nav-right .nav-item {
+    margin-right: 0;
+    padding-right: 0;
+}
+
+.nav-left {
+    margin-top: 3px;
+}
+
+.nav-dropdown-wrapper {
+    display: none;
+}
+
+.login.is-active .nav-dropdown-wrapper {
+    display: inline-block;
+    position: absolute;
+    width: var(--unit-modul-l);
+    right: 0;
+    left: 0;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 48px;
+}
+
+.login .nav-button .nav-icon {
+    transform: rotate(90deg);
+    transition: all .1s ease 0s;
+}
+
+.login.is-active .nav-button .nav-icon {
+    transform: rotate(-90deg);
+    transition: all .2s ease 0s;
+}
+
+.login-avatar-img {
+  width: 20px;
+  position: relative;
+  top: 6px;
+}
+
+.nav-addon {
+    display: none;
+}
+
+@media screen and (min-width: 490px) {
+    .nav-addon {
+        display: inline-block;
+    }  
+}

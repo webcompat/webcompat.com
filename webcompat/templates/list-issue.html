@@ -13,14 +13,13 @@
       </div>
     </section>
 
-<!--     <section>
-      {% include "list-issue/search-issue-search-form.html" %}
-    </section> -->
-
     <section class="grid">
       <div class="grid-row sorting">
-        <div class="grid-cell x2 js-SearchIssue-sorting">
+        <div class="grid-cell x1 js-SearchIssue-sorting">
           {% include "list-issue/issuelist-sorting.jst" %}
+        </div>
+        <div class="grid-cell x1 nav-right js-SearchForm">
+          {% include "list-issue/issuelist-search.jst" %}
         </div>
         <div class="grid-cell x1 pagination">
           <div class="js-Pagination-controls">
