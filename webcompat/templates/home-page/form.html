@@ -89,21 +89,18 @@
       {% endfor %}
     </div>
     <div class="form-upload form-element js-image-upload js-Form-group">
-      <label class="wc-UploadForm wc-UploadForm--homePage js-image-upload-label" for="image">
-        {{ form.image(class_='form-input input-upload wc-ButtonUpload', accept='.jpe,.jpg,.jpeg,.gif,.png,.bmp') }}
+        {{ form.image(class_='form-input input-upload', accept='.jpe,.jpg,.jpeg,.gif,.png,.bmp', id='image') }}
         {% if form.image.errors %}
           {% for error in form.image.errors %}
           <span class="wc-Form-helpMessage--imageUpload">{{ error }}</span>
           {% endfor %}
         {% endif %}
-        <div class="wc-UploadForm-wrapper">
-          <label class="form-label label-upload wc-UploadForm-label">
-            <svg class="icon icon-big wc-UploadForm-icon" role="presentation">
-              <use class="icon-upload" href="#svg-upload-2">Upload</use>
-            </svg>
-            Upload screenshot
-          </label>
-        </div>
+        <label class="form-label label-upload" for="image">
+          <svg class="icon icon-big wc-UploadForm-icon" role="presentation">
+            <use class="icon-upload" href="#svg-upload-2">Upload</use>
+          </svg>
+          Upload Screenshot
+        </label>
         <button
           class="wc-UploadForm-button is-hidden r-ResetButton"
           role="button"
@@ -117,7 +114,6 @@
           >
           Remove image upload
         </button>
-      </label>
     </div>
     <div class="form-button form-element js-Form-group">
       <button
