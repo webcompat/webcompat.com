@@ -14,7 +14,7 @@
 .sub-nav-header::after {
   content: "";
   position: absolute;
-  background-image: url("../../svg/icons/svg-circle-down.svg");
+  background-image: url("../../img/svg/icons/svg-circle-down.svg");
   background-repeat: no-repeat;
   background-size: contain;
   width: 18px;

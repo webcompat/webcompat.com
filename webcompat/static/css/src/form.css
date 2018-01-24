@@ -72,7 +72,7 @@
   content: "";
   background-repeat: no-repeat;
   background-size: contain;
-  background-image: url("../../svg/icons/svg-checkmark.svg");
+  background-image: url("../../img/svg/icons/svg-checkmark.svg");
 }
 
 .error::after {
@@ -82,7 +82,7 @@
   content: "";
   background-repeat: no-repeat;
   background-size: contain;
-  background-image: url("../../svg/icons/svg-cross2.svg");
+  background-image: url("../../img/svg/icons/svg-cross2.svg");
 }
 
 /* form-input-validation check error */
