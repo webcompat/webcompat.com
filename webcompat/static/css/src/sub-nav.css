@@ -10,10 +10,6 @@
   list-style: none;
 }
 
-.sub-nav.active .link-text {
-  font-weight: 700;
-}
-
 .sub-nav .sub-nav-item .link-text,
 .nested-sub-nav-item .link-text{
   text-decoration: none;
@@ -31,6 +27,17 @@
   position: absolute;
   opacity: 0.7;
   margin-left: 3px; 
+}
+
+.nested-sub-nav {
+  display: none;
+}
+.active .nested-sub-nav {
+  display: inline-block;
+}
+
+.active .nested-sub::after {
+  transform: rotate(90deg);
 }
 
 /* var(--page-size-s) = 320px - vars not usable in queries */
