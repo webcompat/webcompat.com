@@ -92,7 +92,7 @@
         {{ form.image(class_='form-input input-upload', accept='.jpe,.jpg,.jpeg,.gif,.png,.bmp', id='image') }}
         {% if form.image.errors %}
           {% for error in form.image.errors %}
-          <span class="wc-Form-helpMessage--imageUpload">{{ error }}</span>
+          <span class="upload-error">{{ error }}</span>
           {% endfor %}
         {% endif %}
         <label class="form-label label-upload" for="image">

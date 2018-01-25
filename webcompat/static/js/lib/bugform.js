@@ -368,11 +368,11 @@ function BugForm() {
         break;
       case "image":
         // hide the error in case we already saw one
-        $(".wc-Form-helpMessage--imageUpload").remove();
+        $(".upload-error").remove();
 
         inlineHelp
           .removeClass("wc-Form-helpMessage")
-          .addClass("wc-Form-helpMessage--imageUpload")
+          .addClass("upload-error")
           .appendTo(this.previewEl);
 
         $(".wc-UploadForm-label").hide();
