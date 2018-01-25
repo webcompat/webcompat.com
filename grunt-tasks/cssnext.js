@@ -23,7 +23,7 @@ module.exports = function(grunt) {
     },
     dist: {
       files: {
-        "<%= cssPath %>/webcompat.min.css": "<%= cssPath %>/webcompat.dev.css"
+        "<%= cssPath %>/dist/webcompat.min.css": "<%= cssPath %>/webcompat.dev.css"
       }
     }
   });
