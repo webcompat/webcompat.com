@@ -58,3 +58,7 @@
 .is-hidden {
   display: none;
 }
+
+.visually-hidden {
+  visibility: hidden;
+}

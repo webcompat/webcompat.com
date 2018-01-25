@@ -135,19 +135,19 @@ registerSuite("Image Uploads (non-auth)", {
 
     "remove image upload button"() {
       return (
-        FunctionalHelpers.openPage(this, url, ".wc-UploadForm-button")
+        FunctionalHelpers.openPage(this, url, ".remove-upload")
           // send a small base64 encoded green test square
           .execute(
             'postMessage("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAIAAABLixI0AAAACXBIWXMAAA7DAAAOwwHHb6hkAAAAB3RJTUUH3gYSAig452t/EQAAAClJREFUOMvtzkENAAAMg0A25ZU+E032AQEXoNcApCGFLX5paWlpaWl9dqq9AS6CKROfAAAAAElFTkSuQmCC", "http://localhost:5000")'
           )
           .sleep(1000)
-          .findByCssSelector(".js-image-upload .wc-UploadForm-button")
+          .findByCssSelector(".js-image-upload .remove-upload")
           .isDisplayed()
           .then(function(isDisplayed) {
             assert.equal(isDisplayed, true, "Remove button is displayed");
           })
           .end()
-          .findByCssSelector(".js-image-upload .wc-UploadForm-button")
+          .findByCssSelector(".js-image-upload .remove-upload")
           .click()
           .sleep(1000)
           .end()
@@ -175,12 +175,12 @@ registerSuite("Image Uploads (non-auth)", {
     },
 
     "double image select works"() {
-      return FunctionalHelpers.openPage(this, url, ".wc-UploadForm-button")
+      return FunctionalHelpers.openPage(this, url, ".remove-upload")
         .findById("image")
         .type("tests/fixtures/green_square.png")
         .sleep(1000)
         .end()
-        .findByCssSelector(".js-image-upload .wc-UploadForm-button")
+        .findByCssSelector(".js-image-upload .remove-upload")
         .click()
         .sleep(1000)
         .end()
