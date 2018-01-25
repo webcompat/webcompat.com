@@ -449,20 +449,16 @@ function BugForm() {
     Allow users to remove an image from the form upload.
   */
   this.showRemoveUpload = function(preview) {
-    var removeBanner = $(".wc-UploadForm-button");
-    var uploadWrapper = $(".wc-UploadForm-wrapper");
-    var uploadIcon = $(".wc-UploadForm-icon");
-    var uploadLabel = $(".wc-UploadForm-label");
+    var removeBanner = $(".remove-upload");
+    var uploadLabel = $(".label-upload");
 
     // hide upload image errors (this will no-op if the user never saw one)
-    $(".wc-Form-helpMessage--imageUpload").remove();
-    $(".wc-UploadForm-label").show();
+    $(".upload-error").remove();
+    uploadLabel.removeClass("visually-hidden");
 
     removeBanner.removeClass("is-hidden");
     removeBanner.attr("tabIndex", "0");
-    uploadIcon.addClass("is-hidden");
-    uploadLabel.addClass("is-hidden");
-    uploadLabel.hide();
+    uploadLabel.addClass("visually-hidden");
     removeBanner.on(
       "click",
       _.bind(function() {
@@ -470,10 +466,7 @@ function BugForm() {
         preview.css("background", "none");
         removeBanner.addClass("is-hidden");
         removeBanner.attr("tabIndex", "-1");
-        uploadIcon.removeClass("is-hidden");
-        uploadLabel.removeClass("is-hidden");
-        uploadLabel.show();
-        uploadWrapper.removeClass("is-hidden");
+        uploadLabel.removeClass("visually-hidden");
         removeBanner.off("click");
         removeBanner.get(0).blur();
 
