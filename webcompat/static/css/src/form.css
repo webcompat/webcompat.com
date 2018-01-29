@@ -72,7 +72,7 @@
   z-index: 0;
 }
 
-.check::after {
+.is-validated .check::after {
   display: inline-block;
   width: 16px;
   height: 16px;
@@ -82,7 +82,7 @@
   background-image: url("../../img/svg/icons/svg-checkmark.svg");
 }
 
-.error::after {
+.is-error .error::after {
   display: inline-block;
   width: 16px;
   height: 16px;
