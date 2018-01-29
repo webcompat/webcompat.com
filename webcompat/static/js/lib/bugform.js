@@ -179,22 +179,25 @@ function BugForm() {
     // If we have details, JSON decode it and add it to the end of STR textarea
     var details = location.href.match(/details=([^&]*)/);
     if (details) {
-      this.stepsToReproduceField.val(function(idx, value) {
-        return (
-          value +
-          "\n" +
-          JSON.parse(
-            decodeURIComponent(
-              details[1]
-                // The content of the details param may be encoded via
-                // application/x-www-form-urlencoded, so we need to change the
-                // + (SPACE) to %20 before decoding
-                .replace(/\+/g, "%20")
-            )
-          ).join("\n")
-        );
-      });
+      this.stepsToReproduceField.val(
+        _.bind(function(idx, value) {
+          return value + "\n" + this.buildDetails(details[1]);
+        }, this)
+      );
     }
+  };
+
+  this.buildDetails = function(detailsParam) {
+    // The content of the details param may be encoded via
+    // application/x-www-form-urlencoded, so we need to change the
+    // + (SPACE) to %20 before decoding
+    var decoded = decodeURIComponent(detailsParam.replace(/\+/g, "%20"));
+    var details = JSON.parse(decoded);
+    var rv = "";
+    Object.keys(details).forEach(function(prop) {
+      rv += prop + ": " + details[prop] + "\n";
+    });
+    return rv;
   };
 
   this.storeClickedButton = function(event) {
