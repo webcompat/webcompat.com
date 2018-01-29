@@ -15,7 +15,7 @@
         {{ form.url.label(class_='form-label form-required') }}
         {% if form.url.errors %}
           {% for error in form.url.errors %}
-            <span class="wc-Form-helpMessage">{{ error }}</span>
+            <small class="form-message-error">{{ error }}</small>
           {% endfor %}
         {% endif %}
       </div>
@@ -30,7 +30,7 @@
         <label class="form-label form-required" for="problem_category">Type of bug</label>
         {% if form.problem_category.errors %}
           {% for error in form.problem_category.errors %}
-            <span class="wc-Form-helpMessage">{{ error }}</span>
+            <small class="form-message-error">{{ error }}</small>
           {% endfor %}
         {% endif %}
       </div>
@@ -45,7 +45,7 @@
         {{ form.description.label(class_='form-label form-required') }}
         {% if form.description.errors %}
           {% for error in form.description.errors %}
-            <span class="wc-Form-helpMessage">{{ error }}</span>
+            <small class="form-message-error">{{ error }}</small>
           {% endfor %}
         {% endif %}
       </div>
@@ -79,7 +79,7 @@
         {{ form.browser_test.label(class_='form-label') }}
         {% if form.browser_test.errors %}
           {% for error in form.browser_test.errors %}
-            <span class="wc-Form-helpMessage">{{ error }}</span>
+            <small class="form-message-error">{{ error }}</small>
           {% endfor %}
         {% endif %}
       </div>
@@ -92,7 +92,7 @@
         {{ form.image(class_='form-input input-upload', accept='.jpe,.jpg,.jpeg,.gif,.png,.bmp', id='image') }}
         {% if form.image.errors %}
           {% for error in form.image.errors %}
-          <span class="upload-error">{{ error }}</span>
+          <span class="form-upload-error">{{ error }}</span>
           {% endfor %}
         {% endif %}
         <label class="form-label label-upload" for="image">
@@ -102,7 +102,7 @@
           Upload Screenshot
         </label>
         <button
-          class="remove-upload is-hidden"
+          class="form-remove-upload is-hidden"
           role="button"
           type="button"
           tabindex="-1"
@@ -140,7 +140,7 @@
         {{ form.username.label(class_='form-label') }}
         {% if form.username.errors %}
           {% for error in form.username.errors %}
-            <span class="wc-Form-helpMessage">{{ error }}</span>
+            <small class="form-message-error">{{ error }}</small>
           {% endfor %}
         {% endif %}
         {{ form.username(class_='u-formInput') }}
