@@ -11,9 +11,9 @@ const path = require("path");
 var cwd = intern.config.basePath;
 var VALID_IMAGE_PATH = path.join(cwd, "tests/fixtures", "green_square.png");
 var BAD_IMAGE_PATH = path.join(cwd, "tests/fixtures", "evil.py");
+// DETAILS_STRING is a URL encoded array, stringified to JSON.
 var DETAILS_STRING =
-  "Encountered error: NS_ERROR_DOM_MEDIA_DEMUXER_ERR (0x806e000c)%0ALocation: virtual%0ARefPtrMP4Demuxer::InitPromise mozilla::MP4Demuxer::Init()%0AError information:%0AIncomplete MP4 metadata%0AMedia URL: file:///Users/potch/Documents/mozilla/media.mp4";
-var DETAILS_STRING2 = "Encountered+error:+NS_ERROR_DOM_MEDIA_DEMUXER_ERR";
+  "%5B%22gfx.webrender.all%3A+false%22%2C%22gfx.webrender.blob-images%3A+2%22%2C%22gfx.webrender.enabled%3A+false%22%2C%22image.mem.shared%3A+2%22%2C%22layout.css.servo.enabled%3A+true%22%5D";
 
 var url = function(path) {
   return intern.config.siteRoot + path;
@@ -271,35 +271,17 @@ registerSuite("Reporting (non-auth)", {
         .findByCssSelector("#steps_reproduce")
         .getProperty("value")
         .then(function(text) {
-          assert.include(
-            text,
-            "Encountered error: NS_ERROR_DOM_MEDIA_DEMUXER_ERR (0x806e000c)\nLocation: virtual\nRefPtrMP4Demuxer::InitPromise mozilla::MP4Demuxer::Init()\nError information:\nIncomplete MP4 metadata\nMedia URL: file:///Users/potch/Documents/mozilla/media.mp4"
-          );
-        })
-        .end();
-    },
-
-    "details param: + decoded as space"() {
-      return FunctionalHelpers.openPage(
-        this,
-        url("/issues/new?details=" + DETAILS_STRING2),
-        "#description"
-      )
-        .findByCssSelector("#steps_reproduce")
-        .getProperty("value")
-        .then(function(text) {
           assert.notInclude(
             text,
-            "Encountered+error:+NS_ERROR_DOM_MEDIA_DEMUXER_ERR",
+            "gfx.webrender.all:+false",
             "+ not found in decoded string"
           );
           assert.include(
             text,
-            "Encountered error: NS_ERROR_DOM_MEDIA_DEMUXER_ERR",
+            "gfx.webrender.all: false\ngfx.webrender.blob-images: 2",
             "+ replaced with space"
           );
-        })
-        .end();
+        });
     }
   }
 });
