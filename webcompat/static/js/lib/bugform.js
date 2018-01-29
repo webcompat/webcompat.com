@@ -368,11 +368,11 @@ function BugForm() {
         break;
       case "image":
         // hide the error in case we already saw one
-        $(".upload-error").remove();
+        $(".form-upload-error").remove();
 
         inlineHelp
           .removeClass("form-message-error")
-          .addClass("upload-error")
+          .addClass("form-upload-error")
           .appendTo(this.previewEl);
 
         $(".wc-UploadForm-label").hide();
@@ -449,11 +449,11 @@ function BugForm() {
     Allow users to remove an image from the form upload.
   */
   this.showRemoveUpload = function(preview) {
-    var removeBanner = $(".remove-upload");
+    var removeBanner = $(".form-remove-upload");
     var uploadLabel = $(".label-upload");
 
     // hide upload image errors (this will no-op if the user never saw one)
-    $(".upload-error").remove();
+    $(".form-upload-error").remove();
     uploadLabel.removeClass("visually-hidden");
 
     removeBanner.removeClass("is-hidden");
