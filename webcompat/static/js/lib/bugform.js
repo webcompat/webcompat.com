@@ -343,8 +343,8 @@ function BugForm() {
       return;
     }
 
-    var inlineHelp = $("<span></span>", {
-      class: "wc-Form-helpMessage",
+    var inlineHelp = $("<small></small>", {
+      class: "form-message-error",
       text: opts && opts.altHelp
         ? this.inputs[id].altHelpText
         : this.inputs[id].helpText
@@ -374,7 +374,7 @@ function BugForm() {
         $(".upload-error").remove();
 
         inlineHelp
-          .removeClass("wc-Form-helpMessage")
+          .removeClass("form-message-error")
           .addClass("upload-error")
           .appendTo(this.previewEl);
 
@@ -399,7 +399,7 @@ function BugForm() {
 
     this.inputs[id].el
       .parents(".js-Form-group")
-      .find(".wc-Form-helpMessage")
+      .find(".form-message-error")
       .remove();
 
     if (

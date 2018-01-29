@@ -34,6 +34,13 @@
 .form-required::after {
   color: var(--color-error);
   content: "*";
+  padding-right: 7px;
+}
+
+/* form message: error */
+.form-message-error {
+  color: var(--color-error);
+  font-weight: bold;
 }
 
 /* * Form input[type="text"], textarea (text-field) */
@@ -167,7 +174,7 @@
   fill: var(--color-form);
 }
 
-.remove-upload {
+.form-remove-upload {
   position: absolute;
   width: 100%;
   bottom: 0;
@@ -186,7 +193,7 @@
   z-index: 10;
 }
 
-.upload-error {
+.form-upload-error {
   position: absolute;
   width: 100%;
   bottom: 0;
@@ -202,6 +209,7 @@
   text-align: center;
   text-decoration: underline;
 }
+
 
 .form-upload:hover .icon-upload {
   fill: var(--color-first);

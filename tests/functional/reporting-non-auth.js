@@ -81,7 +81,7 @@ registerSuite("Reporting (non-auth)", {
           WindowHelpers.sendEvent(elm, "input");
         })
         .sleep(500)
-        .findByCssSelector(".wc-Form-helpMessage")
+        .findByCssSelector(".form-message-error")
         .getVisibleText()
         .then(function(text) {
           assert.include(
@@ -94,7 +94,7 @@ registerSuite("Reporting (non-auth)", {
         .findByCssSelector("#url")
         .type("sup")
         .end()
-        .waitForDeletedByCssSelector(".wc-Form-helpMessage")
+        .waitForDeletedByCssSelector(".form-message-error")
         .end();
     },
 
@@ -113,7 +113,7 @@ registerSuite("Reporting (non-auth)", {
             WindowHelpers.sendEvent(elm, "input");
           })
           .sleep(500)
-          .findByCssSelector(".wc-Form-helpMessage")
+          .findByCssSelector(".form-message-error")
           .getVisibleText()
           .then(function(text) {
             assert.include(
@@ -128,7 +128,7 @@ registerSuite("Reporting (non-auth)", {
           .type("bug description")
           .end()
           // validation message should be gone
-          .waitForDeletedByCssSelector(".wc-Form-helpMessage")
+          .waitForDeletedByCssSelector(".form-message-error")
           .end()
       );
     },
@@ -194,7 +194,7 @@ registerSuite("Reporting (non-auth)", {
           .findByCssSelector("#image")
           .type(BAD_IMAGE_PATH)
           .end()
-          .findByCssSelector(".wc-Form-helpMessage--imageUpload")
+          .findByCssSelector(".form-upload-error")
           .getVisibleText()
           .then(function(text) {
             assert.include(
@@ -209,7 +209,7 @@ registerSuite("Reporting (non-auth)", {
           .type(VALID_IMAGE_PATH)
           .end()
           // validation message should be gone
-          .waitForDeletedByCssSelector(".wc-Form-helpMessage--imageUpload")
+          .waitForDeletedByCssSelector(".form-upload-error")
           .end()
       );
     },
