@@ -12,7 +12,7 @@
   <div class="grid-cell">
     <div class="form-text form-element js-Form-group">
       <div class="js-Form-information">
-        {{ form.url.label(class_='form-label form-required wc-Form-label') }}
+        {{ form.url.label(class_='form-label form-required') }}
         {% if form.url.errors %}
           {% for error in form.url.errors %}
             <span class="wc-Form-helpMessage">{{ error }}</span>
@@ -27,7 +27,7 @@
     </div>
     <div class="form-radio form-element js-Form-group">
       <div class="js-Form-information">
-        <label class="form-label form-required wc-Form-label" for="problem_category">Type of bug</label>
+        <label class="form-label form-required" for="problem_category">Type of bug</label>
         {% if form.problem_category.errors %}
           {% for error in form.problem_category.errors %}
             <span class="wc-Form-helpMessage">{{ error }}</span>
@@ -42,7 +42,7 @@
     </div>
     <div class="form-text form-element js-Form-group">
       <div class="js-Form-information">
-        {{ form.description.label(class_='form-label form-required wc-Form-label') }}
+        {{ form.description.label(class_='form-label form-required') }}
         {% if form.description.errors %}
           {% for error in form.description.errors %}
             <span class="wc-Form-helpMessage">{{ error }}</span>
@@ -56,7 +56,7 @@
       </span>
     </div>
     <div class="form-text form-element js-Form-group">
-      {{ form.steps_reproduce.label(class_='form-label wc-Form-label') }}
+      {{ form.steps_reproduce.label(class_='form-label') }}
       {{ form.steps_reproduce(class_='form-field text-field wc-Form-item',
          rows=4,
          placeholder="Please be as detailed as possible.") }}
@@ -64,7 +64,7 @@
   </div>
   <div class="grid-cell">
     <div class="form-text form-element js-Form-group">
-      {{ form.browser.label(class_='wc-Form-label') }}
+      {{ form.browser.label(class_='form-label') }}
       <span class="wc-Form-validation">
         {{ form.browser(class_='form-field text-field wc-Form-item') }}
         <span class="form-input-validation check"></span>
@@ -76,7 +76,7 @@
     </div>
     <div class="form-radio form-element js-Form-group">
       <div class="js-Form-information">
-        {{ form.browser_test.label(class_='wc-Form-label') }}
+        {{ form.browser_test.label(class_='form-label') }}
         {% if form.browser_test.errors %}
           {% for error in form.browser_test.errors %}
             <span class="wc-Form-helpMessage">{{ error }}</span>
@@ -96,7 +96,7 @@
           {% endfor %}
         {% endif %}
         <label class="form-label label-upload" for="image">
-          <svg class="icon icon-big wc-UploadForm-icon" role="presentation">
+          <svg class="icon icon-big" role="presentation">
             <use class="icon-upload" href="#svg-upload-2">Upload</use>
           </svg>
           Upload Screenshot
@@ -117,7 +117,7 @@
     </div>
     <div class="form-button form-element js-Form-group">
       <button
-        class="button button-primary wc-Button wc-Button--default js-Button"
+        class="button button-third js-Button"
         id="submitanon"
         name="submit-type"
         type="submit"
@@ -126,7 +126,7 @@
         Report Anonymously
       </button>
       <button
-        class="button button-primary wc-Button wc-Button--default js-Button"
+        class="button button-primary js-Button"
         id="submitgithub"
         name="submit-type"
         type="submit"
@@ -137,7 +137,7 @@
     </div>
     <div class="is-hidden" aria-hidden="true">
       <div class="form-text form-element js-Form-group">
-        {{ form.username.label(class_='form-label wc-Form-label') }}
+        {{ form.username.label(class_='form-label') }}
         {% if form.username.errors %}
           {% for error in form.username.errors %}
             <span class="wc-Form-helpMessage">{{ error }}</span>
