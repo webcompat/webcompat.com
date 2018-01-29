@@ -1,0 +1,38 @@
+<ol class="sub-nav" class="sub-nav">
+  <li class="sub-nav-item {% if request.url_rule.endpoint == 'contributors' %} sub-nav-active{% endif %}">
+    <a class="link-text" href="/contributors">
+      Join Us
+    </a>
+  </li>
+
+  <li class="sub-nav-item {% if request.url_rule.endpoint in ['contributors_reproduce_bug', 'contributors_diagnose_bug', 'contributors_site_outreach', 'contributors_contribute'] %} active {% endif %}">
+    <a class="link-text" href="/contributors/reproduce-bug">
+      Get Started <span class="nested-sub"></span>
+    </a>
+    <ol class="nested-sub-nav">
+      <li class="nested-sub-nav-item {% if request.url_rule.endpoint == 'contributors_reproduce_bug' %} sub-nav-active{% endif %}">
+        <a class="link-text" href="/contributors/reproduce-bug">
+          Reproduce a Bug
+        </a>
+      </li>
+
+      <li class="nested-sub-nav-item {% if request.url_rule.endpoint == 'contributors_diagnose_bug' %} sub-nav-active{% endif %}">
+        <a class="link-text" href="/contributors/diagnose-bug">
+          Diagnose a Bug
+        </a>
+      </li>
+
+      <li class="nested-sub-nav-item {% if request.url_rule.endpoint == 'contributors_site_outreach' %} sub-nav-active{% endif %}">
+        <a class="link-text" href="/contributors/site-outreach">
+          Site outreach
+        </a>
+      </li>
+      
+      <li class="nested-sub-nav-item {% if request.url_rule.endpoint == 'contributors_contribute' %} sub-nav-active{% endif %}">
+        <a class="link-text" href="/contributors/contribute">
+          Contribute
+        </a>
+      </li>
+    </ol>
+  </li>
+</ol>
