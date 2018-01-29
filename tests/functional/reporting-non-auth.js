@@ -11,9 +11,9 @@ const path = require("path");
 var cwd = intern.config.basePath;
 var VALID_IMAGE_PATH = path.join(cwd, "tests/fixtures", "green_square.png");
 var BAD_IMAGE_PATH = path.join(cwd, "tests/fixtures", "evil.py");
-// DETAILS_STRING is a URL encoded array, stringified to JSON.
+// DETAILS_STRING is a URL encoded object, stringified to JSON.
 var DETAILS_STRING =
-  "%5B%22gfx.webrender.all%3A+false%22%2C%22gfx.webrender.blob-images%3A+2%22%2C%22gfx.webrender.enabled%3A+false%22%2C%22image.mem.shared%3A+2%22%2C%22layout.css.servo.enabled%3A+true%22%5D";
+  '{"gfx.webrender.all"%3Afalse%2C"gfx.webrender.blob-images"%3A2%2C"gfx.webrender.enabled"%3Afalse%2C"image.mem.shared"%3A2%2C"layout.css.servo.enabled"%3Atrue}';
 
 var url = function(path) {
   return intern.config.siteRoot + path;
@@ -278,7 +278,7 @@ registerSuite("Reporting (non-auth)", {
           );
           assert.include(
             text,
-            "gfx.webrender.all: false\ngfx.webrender.blob-images: 2",
+            "gfx.webrender.all: false\ngfx.webrender.blob-images: 2\ngfx.webrender.enabled: false\nimage.mem.shared: 2\nlayout.css.servo.enabled: true\n",
             "+ replaced with space"
           );
         });
