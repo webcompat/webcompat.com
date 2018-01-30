@@ -4,6 +4,11 @@
 2. New features: affect minor number
 3. API endpoint changes or dependency version updates: affect major number
 
+## 8.1.0 - 20181-01-30
+
+* Handle incoming details as JSON object [Pull #2040](https://github.com/webcompat/webcompat.com/pull/2044)
+* Handle a single details param as JSON encoded data [Pull #2041](https://github.com/webcompat/webcompat.com/pull/2041)
+
 ## 8.0.0 - 2018-01-12
 
 * Upgrade to Intern 4 [Pull #1987](https://github.com/webcompat/webcompat.com/pull/1987)
