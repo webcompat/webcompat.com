@@ -375,7 +375,7 @@ function BugForm() {
           .addClass("form-upload-error")
           .appendTo(this.previewEl);
 
-        $(".wc-UploadForm-label").hide();
+        $(".form-label").hide();
         // "reset" the form field, because the file would get rejected
         // from the server anyways.
         this.uploadField.val(this.uploadField.get(0).defaultValue);
@@ -448,8 +448,8 @@ function BugForm() {
     Allow users to remove an image from the form upload.
   */
   this.showRemoveUpload = function(preview) {
-    var removeBanner = $(".form-remove-upload");
-    var uploadLabel = $(".label-upload");
+    var removeBanner = $(".js-remove-upload");
+    var uploadLabel = $(".js-label-upload");
 
     // hide upload image errors (this will no-op if the user never saw one)
     $(".form-upload-error").remove();
