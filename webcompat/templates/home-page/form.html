@@ -57,11 +57,11 @@
     <div class="form-text form-element js-Form-group">
       {{ form.steps_reproduce.label(class_='form-label') }}
       {{ form.steps_reproduce(class_='form-field text-field',
-         rows=4,
+         rows=3,
          placeholder="Please be as detailed as possible.") }}
     </div>
   </div>
-  <div class="grid-cell">
+  <div class="grid-cell form-element-bottom">
     <div class="form-text form-element js-Form-group">
       {{ form.browser.label(class_='form-label') }}
       {{ form.browser(class_='form-field text-field') }}
@@ -85,26 +85,55 @@
     </div>
     <div class="form-upload js-image-upload js-Form-group">
         {{ form.image(class_='form-input input-upload', accept='.jpe,.jpg,.jpeg,.gif,.png,.bmp', id='image') }}
+        <div class="label-icon label-upload js-label-upload">
+          <svg class="icon icon-big" role="presentation" title="Upload Screenshot">
+            <use class="icon-upload" href="#svg-plus">Upload Screenshot</use>
+          </svg>
+          <small class="label-icon-message">Upload screenshot</small>
+        </div>
+
+        <div class="label-icon label-remove is-hidden js-remove-upload">
+          <svg class="icon icon-big" role="presentation" title="Remove Screenshot">
+            <use class="icon-remove" href="#svg-x">Remove Screenshot</use>
+          </svg>
+          <small class="label-icon-message">Remove screenshot</small>
+        </div>
+
         {% if form.image.errors %}
           {% for error in form.image.errors %}
-          <span class="form-upload-error">{{ error }}</span>
+            <div class="label-icon label-error">
+              <svg class="icon icon-big" role="presentation" title="An error occoured">
+                <use class="icon-warning" href="#svg-warning">An error occoured</use>
+              </svg>
+              <small class="label-icon-message">{{ error }}</small>
+            </div>
           {% endfor %}
         {% endif %}
-        <label class="form-label form-element label-upload" for="image">
+
+<!-- <div class="form-upload js-image-upload js-Form-group">
+        {{ form.image(class_='form-input input-upload label-upload', accept='.jpe,.jpg,.jpeg,.gif,.png,.bmp', id='image') }}
+          {% if form.image.errors %}
+          {% for error in form.image.errors %}
+          <small class="form-upload-error label-upload">{{ error }}</small>
+          {% endfor %}
+        {% endif %}
+        <p>
           <svg class="icon icon-big" role="presentation">
             <use class="icon-upload" href="#svg-upload-2">Upload</use>
           </svg>
           Upload Screenshot
-        </label>
+        </p>
+        <label class="label-upload js-image-upload-label form-label form-element is-hidden" for="image"></label>
         <button
           class="form-remove-upload is-hidden"
           role="button"
           type="button"
           tabindex="-1"
         >
-          Remove image upload
+          Remove image from upload
         </button>
-    </div>
+    </div> -->
+</div>
     <div class="form-button form-element js-Form-group">
       <button
         class="button button-third js-Button"
@@ -136,6 +165,6 @@
         {{ form.username(class_='u-formInput') }}
       </div>
     </div>
-  </div>
+  
   {{ form.hidden_tag() }}
 </form>

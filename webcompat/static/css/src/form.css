@@ -7,17 +7,29 @@
 * colors.css
 */
 
+.form {
+  padding: 10px 0 35px;
+}
+
+.form-element-bottom {
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+.form-element-bottom .form-button {
+  margin-top: auto;
+}
+
 .form-element {
   position: relative;
   max-width: 100%;
   margin: 0;
-  padding: 20px 0;
+  padding: 0;
 }
 
 .form-field {
   background: none;
   color: inherit;
-  margin-bottom: 5px;
 }
 
 .form-field ::placeholder {
@@ -25,10 +37,20 @@
   opacity: 1;
 }
 
+.form-element .form-text:last-child {
+  margin-top: -13px;
+}
+
+.form-radio {
+  margin-bottom: 20px;
+}
+
 .form-label {
   display: block;
   text-align: left;
   cursor: pointer;
+  margin-bottom: 5px;
+  line-height: 1.7em;
 }
 
 .form-required::after {
@@ -150,11 +172,74 @@
 }
 
 .input-upload {
-  position: absolute;
+  position: relative;
   opacity: 0;
+  z-index: 30;
+  color: var(--color-fourth);
+  width: 100%;
+  height: 180px;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  cursor: pointer;
 }
 
-.label-upload {
+.form-upload .label-icon {
+  position: absolute;
+  z-index: 20;
+  text-align: center;
+  width: 29.5%;
+  margin-top: -120px;
+  height: 100px;
+}
+
+.label-icon .icon {
+  display: block;
+  margin: 0 auto;
+}
+
+.icon-upload {
+  fill: var(--color-form);
+}
+
+.form-upload:hover .icon-upload {
+  fill: var(--color-first);
+  transition: all 350ms ease;
+}
+
+.is-validated.no-js-error .label-upload,
+.is-validated.no-js-error:hover .label-upload {
+  visibility: hidden;
+}
+
+.label-remove {
+  visibility: hidden;
+}
+
+.is-validated .label-remove {
+  visibility:  visible;
+  z-index: 40;
+  cursor: pointer;
+  border: 0 none;
+  outline: none;
+}
+
+.icon-remove,
+.label-remove .label-icon-message {
+    fill: var(--color-second);
+    color: var(--color-second);
+    transition: all 350ms ease;
+}
+
+.is-validated:hover .icon-remove,
+.is-validated:hover .label-remove .label-icon-message {
+    fill: var(--color-first);
+    color: var(--color-first);
+    transition: all 350ms ease;
+}
+
+/*.label-upload {
   text-align: center;
   color: var(--color-second);
   min-height: 180px;
@@ -165,15 +250,7 @@
   transition: all 350ms ease;
 }
 
-.form-upload .icon {
-  display: block;
-  width: 60%;
-  margin: 20px auto 15px;
-}
 
-.icon-upload {
-  fill: var(--color-form);
-}
 
 .form-remove-upload {
   width: 100%;
@@ -184,30 +261,21 @@
   transform: translateY(0);
   transition: transform .2s linear 0s;
   z-index: 10;
+  color: var(--color-second);
 }
 
 .form-upload-error {
-  position: absolute;
   width: 100%;
-  bottom: 0;
-  left: 0;
-  right: 0;
   padding: 1em 0;
   font-weight: 700;
   background-color: var(--color-error);
   border-bottom-left-radius: 4px;
   border-bottom-right-radius: 4px;
-  color: #fff;
+  color: var(--color-bg-box);
+  z-index: 11;
   cursor: pointer;
-  text-align: center;
-  text-decoration: underline;
 }
-
-
-.form-upload:hover .icon-upload {
-  fill: var(--color-first);
-  transition: all 350ms ease;
-}
+*/
 
 
 #js-ReportForm.is-closed {
