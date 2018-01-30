@@ -47,6 +47,24 @@ const filteringSort = issuesNumber => {
   });
 };
 
+/* viewMode */
+const viewMode = (forcedMode = null) => {
+  const view = forcedMode
+    ? forcedMode
+    : document.getElementById("js-Filter-view").value;
+  const Triages = document.getElementById("js-Triages");
+  const currentView = document.getElementById("js-Triages").dataset["view"];
+  if (currentView === view) {
+    return;
+  }
+  if (null != forcedMode) {
+    const select = document.getElementById("js-Filter-view");
+    select.value = view;
+  }
+  /* set value */
+  Triages.dataset["view"] = view;
+};
+
 /* Filtering List of triage */
 const filteringList = (renderActivityIndicator = true) => {
   /* init nbItem visible */
@@ -90,8 +108,8 @@ const filteringList = (renderActivityIndicator = true) => {
       nbItemVisible += 1;
     }
   });
-  /* Filtering Sort, it's a global fiilter */
   filteringSort(issuesNumber);
+  viewMode();
   /* Render components */
   shouldRenderActivityIndicator(false);
   shouldRenderNoResult(nbItemVisible === 0);
@@ -107,6 +125,8 @@ const filteringList = (renderActivityIndicator = true) => {
     element.textContent = element.getAttribute("datetime").slice(0, 10);
   });
 })();
+
+/* init View */
 
 /* init list with filters by default */
 filteringList(false);
