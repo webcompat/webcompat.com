@@ -438,8 +438,7 @@ function BugForm() {
     }
 
     this.previewEl.css({
-      background: "url(" + dataURI + ") no-repeat center / contain",
-      "background-color": "#eee"
+      background: "url(" + dataURI + ") no-repeat center / contain"
     });
 
     this.hasImage = true;

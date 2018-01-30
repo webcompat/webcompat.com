@@ -83,14 +83,14 @@
         {{ subradio.label(class_='form-label label-radio') }}
       {% endfor %}
     </div>
-    <div class="form-upload form-element js-image-upload js-Form-group">
+    <div class="form-upload js-image-upload js-Form-group">
         {{ form.image(class_='form-input input-upload', accept='.jpe,.jpg,.jpeg,.gif,.png,.bmp', id='image') }}
         {% if form.image.errors %}
           {% for error in form.image.errors %}
           <span class="form-upload-error">{{ error }}</span>
           {% endfor %}
         {% endif %}
-        <label class="form-label label-upload" for="image">
+        <label class="form-label form-element label-upload" for="image">
           <svg class="icon icon-big" role="presentation">
             <use class="icon-upload" href="#svg-upload-2">Upload</use>
           </svg>
