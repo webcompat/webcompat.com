@@ -48,21 +48,24 @@ const filteringSort = issuesNumber => {
 };
 
 /* viewMode */
-const viewMode = (forcedMode = null) => {
-  const view = forcedMode
-    ? forcedMode
-    : document.getElementById("js-Filter-view").value;
+const viewMode = () => {
+  const view = document.getElementById("js-Filter-view").value;
   const Triages = document.getElementById("js-Triages");
   const currentView = document.getElementById("js-Triages").dataset["view"];
   if (currentView === view) {
     return;
   }
-  if (null != forcedMode) {
-    const select = document.getElementById("js-Filter-view");
-    select.value = view;
-  }
   /* set value */
   Triages.dataset["view"] = view;
+  localStorage.setItem("DashboardTriageView", view);
+};
+
+const setView = (view = null) => {
+  if (null == view) {
+    return;
+  }
+  const select = document.getElementById("js-Filter-view");
+  select.value = view;
 };
 
 /* Filtering List of triage */
@@ -129,8 +132,8 @@ const filteringList = (renderActivityIndicator = true) => {
 /* init View */
 
 /* init list with filters by default */
+setView(localStorage.getItem("DashboardTriageView"));
 filteringList(false);
-
 /* Added an event onSubmit form */
 document.getElementById("js-Filters").addEventListener("submit", e => {
   e.preventDefault();
