@@ -109,30 +109,6 @@
             </div>
           {% endfor %}
         {% endif %}
-
-<!-- <div class="form-upload js-image-upload js-Form-group">
-        {{ form.image(class_='form-input input-upload label-upload', accept='.jpe,.jpg,.jpeg,.gif,.png,.bmp', id='image') }}
-          {% if form.image.errors %}
-          {% for error in form.image.errors %}
-          <small class="form-upload-error label-upload">{{ error }}</small>
-          {% endfor %}
-        {% endif %}
-        <p>
-          <svg class="icon icon-big" role="presentation">
-            <use class="icon-upload" href="#svg-upload-2">Upload</use>
-          </svg>
-          Upload Screenshot
-        </p>
-        <label class="label-upload js-image-upload-label form-label form-element is-hidden" for="image"></label>
-        <button
-          class="form-remove-upload is-hidden"
-          role="button"
-          type="button"
-          tabindex="-1"
-        >
-          Remove image from upload
-        </button>
-    </div> -->
 </div>
     <div class="form-button form-element js-Form-group">
       <button
@@ -145,7 +121,7 @@
         Report Anonymously
       </button>
       <button
-        class="button button-primary js-Button"
+        class="button button-primary right js-Button"
         id="submitgithub"
         name="submit-type"
         type="submit"

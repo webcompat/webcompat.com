@@ -1,6 +1,6 @@
 .notification-bar {
-  position: absolute;
-  z-index: 101;
+  position: fixed;
+  z-index: 3101;
   top: 0;
   left: 0;
   right: 0;
