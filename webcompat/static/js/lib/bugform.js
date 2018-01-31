@@ -122,18 +122,13 @@ function BugForm() {
         timeout: 5000
       });
 
-      // we changed the upload from upload-on-choosing-file to upload-on-form-submit
-      // Now, the upload limit is ignored. this looks like a regression.
-      // Until we decide on how to handle this, the downsample is disabled by the return statement
-      return;
-
-      // this.downsampleImage(
-      //   dataURI,
-      //   _.bind(function(downsampledData) {
-      //     // Recurse until it's small enough for us to upload.
-      //     this.showUploadPreview(downsampledData);
-      //   }, this)
-      // );
+      this.downsampleImage(
+        dataURI,
+        _.bind(function(downsampledData) {
+          // Recurse until it's small enough for us to upload.
+          this.showUploadPreview(downsampledData);
+        }, this)
+      );
     } else {
       this.addPreviewBackground(dataURI);
     }
@@ -351,7 +346,7 @@ function BugForm() {
     }
 
     var inlineHelp = $("<small></small>", {
-      class: "form-message-error",
+      class: "label-icon-message",
       text: opts && opts.altHelp
         ? this.inputs[id].altHelpText
         : this.inputs[id].helpText
