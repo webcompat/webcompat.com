@@ -30,7 +30,10 @@ from helpers import get_referer
 from helpers import get_user_info
 from helpers import set_referer
 from issues import report_issue
+from webcompat import api
 from webcompat import app
+from webcompat.db import Issues
+from webcompat.db import issues_db
 from webcompat.db import session_db
 from webcompat.db import User
 from webcompat import github
@@ -243,6 +246,46 @@ def show_issue(number):
     if session.get('show_thanks'):
         flash(number, 'thanks')
         session.pop('show_thanks')
+    # All of this is just prototype pseudo-working-code
+    # to explain the concept. It needs to be distributed
+    # in definitions with their own set of tests.
+    # The pull request on webcompat-tests is 516.
+    # We query the issues.db which is a kind of progressive cache.
+    # aka we do not have to run an out of process to build the issues.db
+    # It becomes better little by little with what is really used.
+    # It also can be empty and it will not fail.
+    # Benefits of the two worlds.
+    # We could add more stuff to it and slowly have an issue db
+    # that would speed up our full process and make search easy
+    issue = Issues.query.filter_by(issue_number=number).first()
+    # The issue at first request will never exist.
+    # So we are going to request directly GitHub, but only once.
+    if issue is None:
+        # fetch the JSON
+        raw_response = api.endpoints.proxy_issue(number)
+        import json
+        issue_data = json.loads(raw_response[0])
+        # We set the title
+        title = issue_data['title']
+        # define status
+        is_issue = True
+        if 'pull' in issue_data['html_url']:
+            is_issue = False
+        # save in the DB.
+        issue = Issues(number, title, is_issue)
+        issues_db.add(issue)
+        issues_db.commit()
+    # we found the issue number in the DB.
+    else:
+        # if not an issue (such as pull request), 403.
+        if not issue.is_issue:
+            abort(403)
+        # This is really an issue.
+        else:
+            # Optional: to be used in the template
+            title = issue.title
+    # Potential new return statement.
+    # return render_template('issue.html', number=number, title=title)
     return render_template('issue.html', number=number)
 
 
@@ -341,6 +384,7 @@ def contributors():
 
 @app.route('/tools/cssfixme')
 def cssfixme():
+    """Return a 410 for the defunct cssfixme tool."""
     msg = """
     This resource doesn't exist anymore.
     See https://github.com/webcompat/css-fixme/
