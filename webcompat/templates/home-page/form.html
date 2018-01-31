@@ -102,14 +102,14 @@
         
         <div class="label-icon label-error is-hidden js-error-upload">
           <svg class="icon icon-big" role="presentation" title="An error occoured">
-            <use class="icon-warning" href="#svg-warning">An error occoured</use>
+            <use class="icon-error" href="#svg-warning">An error occoured</use>
           </svg>
           {% if form.image.errors %}
-      {% for error in form.image.errors %}
-          <small class="label-icon-message">{{ error }}</small>
-      {% endfor %}
-    {% endif %}
-    </div>
+            {% for error in form.image.errors %}
+              <small class="label-icon-message">{{ error }}</small>
+            {% endfor %}
+          {% endif %}
+        </div>
     </div>
 
     <div class="form-button form-element js-Form-group">
