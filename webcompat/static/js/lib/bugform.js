@@ -117,13 +117,23 @@ function BugForm() {
     // so, bytes = (encoded_string.length - 814) / 1.37)
     // see https://en.wikipedia.org/wiki/Base64#MIME
     if (String(dataURI).length - 814 / 1.37 > this.UPLOAD_LIMIT) {
-      this.downsampleImage(
-        dataURI,
-        _.bind(function(downsampledData) {
-          // Recurse until it's small enough for us to upload.
-          this.showUploadPreview(downsampledData);
-        }, this)
-      );
+      wcEvents.trigger("flash:error", {
+        message: this.inputs.image.altHelpText,
+        timeout: 5000
+      });
+
+      // we changed the upload from upload-on-choosing-file to upload-on-form-submit
+      // Now, the upload limit is ignored. this looks like a regression.
+      // Until we decide on how to handle this, the downsample is disabled by the return statement
+      return;
+
+      // this.downsampleImage(
+      //   dataURI,
+      //   _.bind(function(downsampledData) {
+      //     // Recurse until it's small enough for us to upload.
+      //     this.showUploadPreview(downsampledData);
+      //   }, this)
+      // );
     } else {
       this.addPreviewBackground(dataURI);
     }
@@ -375,7 +385,8 @@ function BugForm() {
           .addClass("form-upload-error")
           .appendTo(this.previewEl);
 
-        $(".form-label").hide();
+        $(".form-message-error").hide();
+        $(".form-input-validation .error").hide();
         // "reset" the form field, because the file would get rejected
         // from the server anyways.
         this.uploadField.val(this.uploadField.get(0).defaultValue);
