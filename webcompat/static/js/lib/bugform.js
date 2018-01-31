@@ -117,11 +117,6 @@ function BugForm() {
     // so, bytes = (encoded_string.length - 814) / 1.37)
     // see https://en.wikipedia.org/wiki/Base64#MIME
     if (String(dataURI).length - 814 / 1.37 > this.UPLOAD_LIMIT) {
-      wcEvents.trigger("flash:error", {
-        message: this.inputs.image.altHelpText,
-        timeout: 5000
-      });
-
       this.downsampleImage(
         dataURI,
         _.bind(function(downsampledData) {
@@ -378,7 +373,11 @@ function BugForm() {
         inlineHelp
           .removeClass("form-message-error")
           .addClass("form-upload-error")
-          .appendTo(this.previewEl);
+          .appendTo(".js-error-upload");
+
+        $(".js-label-upload").removeClass("is-hidden").addClass("is-hidden");
+        $(".js-remove-upload").removeClass("is-hidden").addClass("is-hidden");
+        $(".js-error-upload").removeClass("is-hidden");
 
         $(".form-message-error").hide();
         $(".form-input-validation .error").hide();
@@ -456,9 +455,12 @@ function BugForm() {
   this.showRemoveUpload = function(preview) {
     var removeBanner = $(".js-remove-upload");
     var uploadLabel = $(".js-label-upload");
+    var errorLabel = $(".js-error-upload");
 
     // hide upload image errors (this will no-op if the user never saw one)
     $(".form-upload-error").remove();
+
+    errorLabel.addClass("is-hidden");
     uploadLabel.removeClass("visually-hidden");
 
     removeBanner.removeClass("is-hidden");
@@ -471,7 +473,7 @@ function BugForm() {
         preview.css("background", "none");
         removeBanner.addClass("is-hidden");
         removeBanner.attr("tabIndex", "-1");
-        uploadLabel.removeClass("visually-hidden");
+        uploadLabel.removeClass("visually-hidden").removeClass("is-hidden");
         removeBanner.off("click");
         removeBanner.get(0).blur();
 
