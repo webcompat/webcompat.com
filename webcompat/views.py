@@ -341,6 +341,7 @@ def contributors():
 
 @app.route('/tools/cssfixme')
 def cssfixme():
+    """Define unused cssfixme route as a 410."""
     msg = """
     This resource doesn't exist anymore.
     See https://github.com/webcompat/css-fixme/

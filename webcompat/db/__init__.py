@@ -62,6 +62,7 @@ SiteBase.query = site_db.query_property()
 
 class Site(SiteBase):
     """SQLAchemy base object for an Alexa top site."""
+
     __tablename__ = 'topsites'
 
     url = Column(String, primary_key=True)
@@ -70,6 +71,7 @@ class Site(SiteBase):
     ranking = Column(Integer)
 
     def __init__(self, url, priority, country_code, ranking):
+        """Initialize topsites db."""
         self.url = url
         self.priority = priority
         self.country_code = country_code

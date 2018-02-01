@@ -4,7 +4,7 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-'''Tests for helper methods in webcompat/helpers.py.'''
+"""Tests for helper methods in webcompat/helpers.py."""
 
 import os.path
 import sys
@@ -15,8 +15,8 @@ sys.path.append(os.path.realpath(os.pardir))
 
 import webcompat
 from webcompat.helpers import format_link_header
-from webcompat.helpers import get_browser_name
 from webcompat.helpers import get_browser
+from webcompat.helpers import get_browser_name
 from webcompat.helpers import get_name
 from webcompat.helpers import get_os
 from webcompat.helpers import get_version_string
@@ -48,15 +48,19 @@ CHROME_TABLET_UA = 'Mozilla/5.0 (Linux; Android 4.0.4; Galaxy Nexus Build/IMM76B
 
 
 class TestHelpers(unittest.TestCase):
+    """Tests for helpers."""
+
     def setUp(self):
+        """Set up the tests."""
         webcompat.app.config['TESTING'] = True
         self.app = webcompat.app.test_client()
 
     def tearDown(self):
+        """Tear down the tests."""
         pass
 
     def test_rewrite_link(self):
-        '''Test we're correctly rewriting the passed in link.'''
+        """Test we're correctly rewriting the passed in link."""
         self.assertEqual(rewrite_links(GITHUB_ISSUES_LINK_HEADER),
                          REWRITTEN_ISSUES_LINK_HEADER)
         self.assertEqual(rewrite_links(GITHUB_SEARCH_LINK_HEADER),
@@ -65,17 +69,18 @@ class TestHelpers(unittest.TestCase):
                          REWRITTEN_COMMENTS_LINK_HEADER)
 
     def test_sanitize_link(self):
-        '''Test that we're removing access_token parameters.'''
+        """Test that we're removing access_token parameters."""
         self.assertNotIn('access_token=', sanitize_link(ACCESS_TOKEN_LINK))
 
     def test_rewrite_and_sanitize_link(self):
+        """Rewrite and sanitize link."""
         self.assertNotIn('access_token=',
                          rewrite_and_sanitize_link(ACCESS_TOKEN_LINK))
         self.assertEqual(rewrite_and_sanitize_link(ACCESS_TOKEN_LINK),
                          REWRITTEN_ISSUES_LINK_HEADER)
 
     def test_normalize_api_params_converts_correctly(self):
-        '''Test that API params are correctly converted to Search API.'''
+        """Test that API params are correctly converted to Search API."""
         self.assertEqual(normalize_api_params({'direction': u'desc'}),
                          {'order': u'desc'})
         self.assertNotIn('direction',
@@ -109,7 +114,7 @@ class TestHelpers(unittest.TestCase):
         self.assertEqual(normalize_api_params(multi_before), multi_after)
 
     def test_normalize_api_params_ignores_unknown_params(self):
-        '''normalize_api_params shouldn't transform unknown params.'''
+        """normalize_api_params shouldn't transform unknown params."""
         self.assertEqual({'foo': u'bar'},
                          normalize_api_params({'foo': u'bar'}))
         self.assertEqual({'order': u'desc', 'foo': u'bar'},
@@ -117,19 +122,19 @@ class TestHelpers(unittest.TestCase):
                                               'direction': u'desc'}))
 
     def test_parse_http_link_headers(self):
-        '''Test HTTP Links parsing for GitHub only.'''
+        """Test HTTP Links parsing for GitHub only."""
         link_header = GITHUB_ISSUES_LINK_HEADER
         parsed_headers = PARSED_LINKED_HEADERS
         self.assertEqual(parse_link_header(link_header), parsed_headers)
 
     def test_format_http_link_headers(self):
-        '''Test HTTP Links formating.'''
+        """Test HTTP Links formating."""
         parsed_headers = PARSED_LINKED_HEADERS
         link_header = GITHUB_ISSUES_LINK_HEADER
         self.assertEqual(format_link_header(parsed_headers), link_header)
 
     def test_get_browser_name(self):
-        '''Test browser name parsing via get_browser_name helper method.'''
+        """Test browser name parsing via get_browser_name helper method."""
         self.assertEqual(get_browser_name(FIREFOX_UA), 'firefox')
         self.assertEqual(get_browser_name(FIREFOX_MOBILE_UA), 'firefox mobile')
         self.assertEqual(get_browser_name(FIREFOX_MOBILE_UA_OLD),
@@ -152,7 +157,7 @@ class TestHelpers(unittest.TestCase):
         self.assertEqual(get_browser_name(None), 'unknown')
 
     def test_get_browser(self):
-        '''Test browser parsing via get_browser helper method.'''
+        """Test browser parsing via get_browser helper method."""
         self.assertEqual(get_browser(FIREFOX_UA), 'Firefox 48.0')
         self.assertEqual(get_browser(FIREFOX_MOBILE_UA), 'Firefox Mobile 40.0')
         self.assertEqual(get_browser_name(FIREFOX_MOBILE_UA_OLD),
@@ -175,7 +180,7 @@ class TestHelpers(unittest.TestCase):
         self.assertEqual(get_browser(None), 'Unknown')
 
     def test_get_os(self):
-        '''Test OS parsing via get_os helper method.'''
+        """Test OS parsing via get_os helper method."""
         self.assertEqual(get_os(FIREFOX_UA), 'Mac OS X 10.11')
         self.assertEqual(get_os(FIREFOX_MOBILE_UA), 'Android 6.0.1')
         self.assertEqual(get_os(FIREFOX_MOBILE_UA_OLD), 'Android')
@@ -196,9 +201,7 @@ class TestHelpers(unittest.TestCase):
         self.assertEqual(get_os(None), 'Unknown')
 
     def test_get_version_string(self):
-        '''Test version string composition from Dict
-        via get_version_string helper method.
-        '''
+        """Test version string composition for browsers."""
         tests = [
             [{'major': '10', 'minor': '4', 'patch': '3'}, '10.4.3'],
             [{'major': '10', 'minor': '4', 'patch': None}, '10.4'],
@@ -213,7 +216,7 @@ class TestHelpers(unittest.TestCase):
             self.assertEqual(get_version_string(test[0]), test[1])
 
     def test_get_name(self):
-        '''Test name extraction from Dict via get_name helper method.'''
+        """Test name extraction from Dict via get_name helper method."""
         self.assertEqual(get_name({'family': 'Chrome'}), 'Chrome')
         self.assertEqual(get_name({'family': 'Mac OS X'}), 'Mac OS X')
         self.assertEqual(get_name({'family': 'Other'}), 'Unknown')
