@@ -124,6 +124,7 @@ issues.BodyView = Backbone.View.extend({
   render: function() {
     // hide metadata
     var issueDesc = $(".js-Issue-markdown");
+
     issueDesc
       .contents()
       .filter(function() {
