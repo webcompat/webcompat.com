@@ -10,6 +10,7 @@ from hashlib import sha512
 import os
 from uuid import uuid4
 
+from sqlalchemy import Boolean
 from sqlalchemy import Column
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
@@ -20,19 +21,28 @@ from sqlalchemy import String
 
 from webcompat import app
 
+# Sessions database for logged in users
 session_engine = create_engine('sqlite:///' + os.path.join(
     app.config['DATA_PATH'], 'session.db'))
 session_db = scoped_session(sessionmaker(autocommit=False,
                                          autoflush=False,
                                          bind=session_engine))
 
+# Amazon Top Sites priority ranking database
 site_engine = create_engine('sqlite:///' + os.path.join(
     app.config['DATA_PATH'], 'topsites.db'))
 site_db = scoped_session(sessionmaker(autocommit=False,
                                       autoflush=False,
                                       bind=site_engine))
 
+# Issues database
+issues_engine = create_engine('sqlite:///' + os.path.join(
+    app.config['DATA_PATH'], 'issues.db'))
+issues_db = scoped_session(sessionmaker(autocommit=False,
+                                        autoflush=False,
+                                        bind=issues_engine))
 
+# Sessions DB initialization
 UsersBase = declarative_base()
 UsersBase.query = session_db.query_property()
 
@@ -56,6 +66,7 @@ class User(UsersBase):
 
 UsersBase.metadata.create_all(bind=session_engine)
 
+# Topsites DB initialization
 SiteBase = declarative_base()
 SiteBase.query = site_db.query_property()
 
@@ -71,10 +82,33 @@ class Site(SiteBase):
     ranking = Column(Integer)
 
     def __init__(self, url, priority, country_code, ranking):
-        """Initialize topsites db."""
+        """Initialize the topsite db parameters."""
         self.url = url
         self.priority = priority
         self.country_code = country_code
         self.ranking = ranking
 
 SiteBase.metadata.create_all(bind=site_engine)
+
+
+# Issues DB initialization
+IssuesBase = declarative_base()
+IssuesBase.query = issues_db.query_property()
+
+
+class Issues(IssuesBase):
+    """SQLAchemy base object for Issues."""
+
+    __tablename__ = 'issues'
+
+    issue_number = Column(Integer, primary_key=True)
+    title = Column(String)
+    is_issue = Column(Boolean, default=True)
+
+    def __init__(self, issue_number, title, is_issue):
+        """Initialize the topsite db parameters."""
+        self.issue_number = issue_number
+        self.title = title
+        self.is_issue = is_issue
+
+IssuesBase.metadata.create_all(bind=issues_engine)
