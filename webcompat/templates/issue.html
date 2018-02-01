@@ -2,34 +2,59 @@
 {% block title %}Issue #{{ number }}{% endblock %}
 {% block body %}
   {% include "nav/nav.html" %}
-  <main class="wc-UISection wc-UISection--backgroundColor" role="main"
+  <main class="grid grid-show-gap" role="main"
         data-issue-number={{ number }}
         data-repo-path="{{ config['ISSUES_REPO_URI'] }}"
         data-statuses="{{ config['JSON_STATUSES'] }}"
         >
-    <div class="wc-Issue">
-      <section class="wc-UIContent js-Issue is-hidden">
+
+<!-- <section " class="grid">
+  <div class="grid-row issue label-closed">
+    <article class="grid-cell x2 issue-description">
+      <p class="issue-number"> Issue 71234: </p>
+      <p class="issue-url"> https://unicornjs.com </p>
+      <p class="issue-type"> Audio / media does not play </p>
+      <p class="issue-date-open"> Opened: 2017-11-12 </p>
+      <p class="issue-date-closed"> Closed: 2017-11-14 </p>
+      <p class="issue-date-comments"> Comments: 12 </p>
+    </article>
+    <aside class="grid-cell x1 issue-labels" >
+      <p>
+        <span class="label label-browser"> browser-firefox </span>
+        <span class="label label-device"> device-mobile </span>
+        <span class="label label-os"> od-android </span>
+      </p>
+    </aside>
+  </div>
+</section> -->
+
+    <section id="issue" class="grid-row js-Issue">
+      <article id="js-Issue-information" class="grid-cell x2 issue-labels">
+      {% include "issue/issue-information.html" %}
+      </article>
+      <aside class="grid-cell x1 issue-description">
         {% include "issue/issue-aside.html" %}
-        {% include "issue/issue-information.html" %}
-        <div class="wc-Issue-commentList js-Issue-commentList">
-          {% include "issue/issue-comment-list.jst" %}
+      </aside>
+      
+      
+      <!-- <div class="grid-cell x2 js-Issue-commentList">
+        {% include "issue/issue-comment-list.jst" %}
+      </div>
+      {% if session.user_id and session.avatar_url %}
+        <div class="grid-cell x2">
+          {% include "issue/issue-comment-submit.html" %}
         </div>
-        {% if session.user_id and session.avatar_url %}
-          <div class="wc-Issue-commentSubmit">
-            {% include "issue/issue-comment-submit.html" %}
-          </div>
-        {% else %}
-          <p class="wc-Issue-login">Please <a class="wc-Link" href="{{ url_for('login') }}">login</a> to edit issues.</p>
-        {% endif %}
-        <p>
-          <a class="wc-Link wc-GithubLink" href="https://github.com/{{ config['ISSUES_REPO_URI'] }}/{{ number }}"><span class="wc-GithubLink-Icon"></span>View issue on Github</a>
-        </p>
-        <p>
-          <span class="wc-GithubLink-DesktopOnly">Shortcut: Press <b>l</b> on your keyboard to open the label editor.</span> <br />
-          <span class="wc-GithubLink-DesktopOnly">Shortcut: Press <b>g</b> on your keyboard to be taken to the GitHub view of this page.</span>
-        </p>
-      </section>
-    </div>
+      {% else %}
+        <p class="grid-cell x3">Please <a class="" href="{{ url_for('login') }}">login</a> to edit issues.</p>
+      {% endif %}
+      <p>
+        <a class="grid-cell x3" href="https://github.com/{{ config['ISSUES_REPO_URI'] }}/{{ number }}"><span class="wc-GithubLink-Icon"></span>View issue on Github</a>
+      </p>
+      <p>
+        <span class="wc-GithubLink-DesktopOnly">Shortcut: Press <b>l</b> on your keyboard to open the label editor.</span> <br />
+        <span class="wc-GithubLink-DesktopOnly">Shortcut: Press <b>g</b> on your keyboard to be taken to the GitHub view of this page.</span>
+      </p> -->
+    </section>
   </main>
 {% endblock %}
 {% block extrascripts %}
