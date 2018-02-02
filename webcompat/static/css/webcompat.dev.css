@@ -58,3 +58,11 @@
 .is-hidden {
   display: none;
 }
+
+.visually-hidden {
+  visibility: hidden;
+}
+
+.right {
+  float: right;
+}
