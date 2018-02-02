@@ -48,8 +48,8 @@
     "postcss-reporter": "^3.0.0",
     "postcss-url": "^5.1.2",
     "prettier": "1.1.0",
-    "stylelint": "^7.13.0",
-    "stylelint-config-standard": "^16.0.0",
+    "stylelint": "^8.4.0",
+    "stylelint-config-standard": "^18.0.0",
     "svg-sprite-generator": "0.0.7",
     "svgo": "^0.7.2"
   },
