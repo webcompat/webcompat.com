@@ -22,7 +22,7 @@ issues.CommentsCollection = Backbone.Collection.extend({
 });
 
 issues.CommentView = Backbone.View.extend({
-  className: "issue-comment js-Issue-comment",
+  className: "issue-comment js-Issue-comment grid-cell x2",
   id: function() {
     return this.model.get("commentLinkId");
   },
