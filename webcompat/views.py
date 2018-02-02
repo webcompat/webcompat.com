@@ -25,6 +25,7 @@ from helpers import add_csp
 from helpers import add_sec_headers
 from helpers import cache_policy
 from helpers import get_browser_name
+from helpers import get_issue_data
 from helpers import get_milestone_list
 from helpers import get_referer
 from helpers import get_user_info
@@ -238,6 +239,9 @@ def create_issue():
 @cache_policy(private=True, uri_max_age=0, must_revalidate=True)
 def show_issue(number):
     """Route to display a single issue."""
+    issue_data = get_issue_data(number)
+    if not issue_data['is_issue']:
+        abort(403)
     if g.user:
         get_user_info()
     if session.get('show_thanks'):
