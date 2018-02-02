@@ -32,7 +32,7 @@ var FlashMessageView = Backbone.View.extend({
     var timeout = opts.timeout || 4000;
     var message = opts.message;
 
-    this.$el.addClass("notification-information");
+    this.$el.addClass("notification");
     this.render(message);
     setTimeout(_.bind(this.hide, this), timeout);
   },
@@ -47,7 +47,7 @@ var FlashMessageView = Backbone.View.extend({
   },
   showThanks: function(opts) {
     var buildTemplate = wcTmpl["issue/thanks.jst"];
-    this.$el.addClass("is-active notification-information");
+    this.$el.addClass("is-active notification-thanks");
     this.$el
       .html(buildTemplate({ number: opts.message }))
       .insertBefore("#js-Issue-information")
