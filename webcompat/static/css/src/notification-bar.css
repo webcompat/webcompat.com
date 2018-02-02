@@ -9,13 +9,17 @@
   line-height: 3.8;
 }
 
+.notication {
+  border-bottom: 5px solid;
+}
+
 .notification-information {
   background-color: var(--color-first-transparent);
-  border-bottom: 5px solid var(--color-first);
+  border-bottom-color: var(--color-first);
 }
 
 .notification-alert {
   background-color: var(--color-error-transparent);
-  border-bottom: 5px solid var(--color-error);
+  border-bottom-color: var(--color-error);
   color: var(--color-bg-box);
 }
