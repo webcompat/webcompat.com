@@ -76,6 +76,12 @@ class TestURLs(unittest.TestCase):
         self.assertEqual(rv.status_code, 200)
         self.assertNotEqual(rv.status_code, 307)
 
+    def test_issue_pull_request(self):
+        """Test that the /issues/<number> returns 403 for GitHub PRs."""
+        rv = self.app.get('/issues/516')
+        self.assertEqual(rv.status_code, 403)
+        self.assertNotEqual(rv.status_code, 200)
+
     def test_issues_list_page(self):
         """Test that the /issues route gets 200 and does not redirect."""
         rv = self.app.get('/issues')
