@@ -6,6 +6,7 @@
 
 """Tests for helper methods in webcompat/helpers.py."""
 
+from mock import patch
 import os.path
 import sys
 import unittest
@@ -14,12 +15,15 @@ import unittest
 sys.path.append(os.path.realpath(os.pardir))
 
 import webcompat
+from webcompat.db import Issues
 from webcompat.helpers import format_link_header
 from webcompat.helpers import get_browser
 from webcompat.helpers import get_browser_name
+from webcompat.helpers import get_issue_data
 from webcompat.helpers import get_name
 from webcompat.helpers import get_os
 from webcompat.helpers import get_version_string
+from webcompat.helpers import is_issue
 from webcompat.helpers import normalize_api_params
 from webcompat.helpers import parse_link_header
 from webcompat.helpers import rewrite_and_sanitize_link
@@ -45,6 +49,15 @@ SAFARI_TABLET_UA = 'Mozilla/5.0 (iPad; CPU OS 5_1_1 like Mac OS X) AppleWebKit/5
 CHROME_UA = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2720.0 Safari/537.36'  # nopep8
 CHROME_MOBILE_UA = 'Mozilla/5.0 (Linux; Android 4.0.4; Galaxy Nexus Build/IMM76B) AppleWebKit/535.19 (KHTML, like Gecko) Chrome/18.0.1025.133 Mobile Safari/535.19'  # nopep8
 CHROME_TABLET_UA = 'Mozilla/5.0 (Linux; Android 4.0.4; Galaxy Nexus Build/IMM76B) AppleWebKit/535.19 (KHTML, like Gecko) Chrome/18.0.1025.133 Safari/535.19'  # nopep8
+GITHUB_PR_ISSUE = {
+    "body": "This really creates a Pull Request issue.",
+    "closed_at": "2017-02-02T00:24:36Z",
+    "created_at": "2017-02-02T00:24:21Z",
+    "html_url": "https://github.com/webcompat/webcompat-tests/pull/516",
+    "number": 516,
+    "state": "closed",
+    "title": "Updates README",
+    "updated_at": "2018-01-19T22:51:25Z"}
 
 
 class TestHelpers(unittest.TestCase):
@@ -220,6 +233,51 @@ class TestHelpers(unittest.TestCase):
         self.assertEqual(get_name({'family': 'Chrome'}), 'Chrome')
         self.assertEqual(get_name({'family': 'Mac OS X'}), 'Mac OS X')
         self.assertEqual(get_name({'family': 'Other'}), 'Unknown')
+
+    def test_is_issue(self):
+        """Request to github URIs can be issue or pull request.
+
+        When the request is a PR, the html_url will contain pull.
+        """
+        pr_data = {
+            u'title': u'example.org - valid issue',
+            u'html_url': u'https://github.com/owner/repos/pull/100',
+            u'number': 100}
+        issue_data = {
+            u'title': u'example.org - invalid issue',
+            u'html_url': u'https://github.com/owner/repos/issues/100',
+            u'number': 100}
+        self.assertFalse(is_issue(pr_data))
+        self.assertTrue(is_issue(issue_data))
+
+    @patch('webcompat.helpers.get_db_issue')
+    def test_get_issue_data(self, issue_mock):
+        """Return a dictionary for an issue in DB.
+
+        The data are representative of the issue.
+        """
+        issue_mock.return_value = Issues(100, 'Rainy days', True)
+        issue_data = get_issue_data(100)
+        self.assertIs(type(issue_data), dict)
+        self.assertTrue('is_issue' in issue_data)
+        self.assertTrue(issue_data['is_issue'])
+        self.assertEqual(issue_data['title'], "Rainy days")
+
+    @patch('webcompat.helpers.get_github_issue')
+    @patch('webcompat.helpers.get_db_issue')
+    def test_get_not_in_db_issue(self, issue_mock, gh_issue):
+        """Return a dictionary for an issue not in DB.
+
+        The data are representative of the issue.
+        """
+        issue_mock.return_value = None
+        gh_issue.return_value = GITHUB_PR_ISSUE
+        issue_data = get_issue_data(516)
+        self.assertIs(type(issue_data), dict)
+        self.assertTrue('is_issue' in issue_data)
+        self.assertFalse(issue_data['is_issue'])
+        self.assertEqual(issue_data['title'], "Updates README")
+
 
 if __name__ == '__main__':
     unittest.main()
