@@ -474,6 +474,17 @@ def add_sec_headers(response):
     response.headers['X-Frame-Options'] = 'DENY'
 
 
+def get_img_src_policy():
+    """Return the img-src policy directive, depending on environment.
+
+    We allow webcompat.com-hosted images on localhost servers for convenience.
+    """
+    policy = "img-src 'self' https://www.google-analytics.com https://*.githubusercontent.com data:; "  # nopep8
+    if app.config['LOCALHOST']:
+        policy = "img-src 'self' https://webcompat.com https://www.google-analytics.com https://*.githubusercontent.com data:; "  # nopep8
+    return policy
+
+
 def add_csp(response):
     """Add a Content-Security-Policy header to response.
 
@@ -484,8 +495,8 @@ def add_csp(response):
         "default-src 'self'; " +
         "object-src https://webcompat.github.io; " +
         "connect-src 'self' https://api.github.com; " +
-        "font-src 'self' https://fonts.gstatic.com; " +
-        "img-src 'self' https://www.google-analytics.com https://*.githubusercontent.com https://webcompat.github.io data:; " +  # nopep8
+        "font-src 'self'; " +
+        get_img_src_policy() +
         "manifest-src 'self'; " +
         "script-src 'self' https://www.google-analytics.com https://api.github.com; " +  # nopep8
         "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; " +
