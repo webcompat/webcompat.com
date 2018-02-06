@@ -58,3 +58,19 @@
 .is-hidden {
   display: none;
 }
+
+.off-screen {
+  position: absolute;
+  top: -9999px;
+  left: -9999px; 
+}
+
+.desktop-only {
+  display: none;
+}
+
+@media screen and (min-width: 665px) {
+  .desktop-only {
+    display: inline-block;
+  }
+}
