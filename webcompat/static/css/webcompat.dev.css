@@ -59,10 +59,18 @@
   display: none;
 }
 
-.visually-hidden {
-  visibility: hidden;
+.off-screen {
+  position: absolute;
+  top: -9999px;
+  left: -9999px;
 }
 
-.right {
-  float: right;
+.desktop-only {
+  display: none;
+}
+
+@media screen and (min-width: 665px) {
+  .desktop-only {
+    display: inline-block;
+  }
 }
