@@ -42,6 +42,7 @@
 
 .x2 {
   flex-basis: var(--unit-modul-m);
+  max-width: var(--unit-modul-m);
 }
 
 .x3 {
