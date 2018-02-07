@@ -4,29 +4,54 @@
     display: -ms-flexbox;
     display: flex;
     -ms-flex-wrap: wrap;
-        flex-wrap: wrap;
+    flex-wrap: wrap;
+  }
+
+  .wc-Triages[data-view="lists"] {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
   }
 
   .wc-Triages.is-hidden {
     display: none;
   }
-  
+
   .wc-Triage {
     font-size: 16px;
+    font-size: 16px;
     font-size: 1rem;
-    width: 30%;
-    min-width: 320px;
+    padding: 0 1.2em;
+  }
+
+  .wc-Triages[data-view="cards"]  .wc-Triage {
     margin: 0 0 1.2em 0;
-    padding: 1.2em 1.2em 1.2em;
+    padding-top: 1.2em;
+    padding-bottom: 1.2em;
+  }
+
+  @media all and (min-width: 360px) {
+    .wc-Triages[data-view="cards"]  .wc-Triage {
+      width: 30%;
+      min-width: 320px;
+    }
+  }
+
+  .wc-Triages[data-view="lists"]  .wc-Triage {
+    max-width: 840px;
+    margin: .1em 0 0 0;
   }
 
   .wc-Triage-container {
     border: 1px solid #e9e9e9;
     background-color: #fff;
     border-radius: 2px;
-    -webkit-box-shadow: 0 1px 6px rgba(0, 0, 0, 0.2);
-            box-shadow: 0 1px 6px rgba(0, 0, 0, 0.2);
-    border-color: rgba(0, 0, 0, 0.2);
+    box-shadow: 0 1px 6px rgba(0, 0, 0, .2);
+    border-color: rgba(0, 0, 0, .2);
   }
 
   .wc-Triage.is-hidden {
@@ -35,6 +60,7 @@
 
   .wc-Triage-title {
     font-size: .875em;
+    margin: 0;
     border-bottom: 1px solid #e9e9e9;
     padding: 1em;
     text-overflow: ellipsis;
@@ -52,41 +78,76 @@
     text-decoration: underline;
   }
 
-  .wc-Triage-infos {
-    padding: 1.2em;
+  .wc-Triages[data-view="cards"] .wc-Triage-infos {
+    padding: 1.2em 0;
   }
 
   .wc-Triage-metas {
     font-size: .75em;
   }
 
+  .wc-Triages[data-view="lists"]  .wc-Triage-metas {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+  }
+
+  .wc-Triages[data-view="lists"] .wc-Triage-metas > * + * {
+    margin: 0 0 0 .8em;
+  }
+
   .wc-Triage-metas-infos {
     font-weight: bold;
+  }
+
+  .wc-Triages[data-view="cards"] .wc-Triage-metas {
     margin: .4em 0 0 0;
+  }
+
+  .wc-Triage-wrapper {
+    padding: 0 1.2em;
+  }
+
+  .wc-Triages[data-view="lists"] .wc-Triage-wrapper {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+    padding-top: 1.2em;
+    padding-bottom: 1.2em;
   }
 
   .wc-Triage-footer {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
-    -webkit-box-pack: justify;
-        -ms-flex-pack: justify;
-            justify-content: space-between;
     font-size: .75em;
-    padding: 0 1.2em 1.2em 1.2em;
   }
 
-  .wc-Triage-link {
-    color: #49a9ee;
-    text-decoration: none;
+  .wc-Triages[data-view="cards"] .wc-Triage-footer {
+    padding: 0 0 1.2em 0;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
   }
 
-  .wc-Triage-link:hover {
-    text-decoration: underline;
+  .wc-Triages[data-view="lists"] .wc-Triage-footer {
+    margin: 0 0 0 .8em;
+  }
+
+  .wc-Triages[data-view="lists"] .wc-Triage-footer > * + * {
+    margin: 0 0 0 .4em;
   }
 </style>
 
-<section class="wc-Triages is-hidden" id="js-Triages">
+<section
+  class="wc-Triages is-hidden"
+  id="js-Triages"
+>
     {% for issue in needstriage_list %}
   <article
     data-number="{{ issue['number'] }}"
@@ -101,54 +162,47 @@
   >
     <div class="wc-Triage-container">
       <h2 class="wc-Triage-title">
-          <a
-            href="/issues/{{ issue['number'] }}"
-            title="{{ issue['title'] }}"
-          >
-            {{ issue['number'] }}: {{ issue['title'] }}
-          </a>
-        </h2>
-      <div class="wc-Triage-infos">
-        <div class="wc-Triage-metas">
+        <a
+          href="/issues/{{ issue['number'] }}"
+          title="{{ issue['title'] }}"
+        >
+          {{ issue['number'] }}: {{ issue['title'] }}
+        </a>
+      </h2>
+      <div class="wc-Triage-wrapper">
+        <div class="wc-Triage-infos">
+          <div class="wc-Triage-metas">
+            <div>
+              Created:
+              <time
+                class="wc-Triage-date"
+                datetime="{{ issue['created_at'] }}"
+              >
+               {{ issue['created_at'] }}
+              </time>
+            </div>
+            <div>
+              Updated:
+              <time
+                class="wc-Triage-date"
+                datetime="{{ issue['updated_at'] }}"
+              >
+                {{ issue['updated_at'] }}
+              </time>
+            </div>
+            <div class="wc-Triage-metas-infos">
+              {% if issue['priority'] %} Priority {% endif %}
+              {% if issue['needinfo'] %} - Needinfo {% endif %}
+            </div>
+          </div>
+        </div>
+        <footer class="wc-Triage-footer">
           <div>
-            Created:
-            <time
-              class="wc-Triage-date"
-              datetime="{{ issue['created_at'] }}"
-            >
-             {{ issue['created_at'] }}
-            </time>
+            {% for browser in issue['browsers'] %}
+              <span>{{ browser }} </span>
+            {% endfor %}
           </div>
-          <div>
-            Updated:
-            <time
-              class="wc-Triage-date"
-              datetime="{{ issue['updated_at'] }}"
-            >
-              {{ issue['updated_at'] }}
-            </time>
-          </div>
-          <div class="wc-Triage-metas-infos">
-            {% if issue['priority'] %} Priority {% endif %}
-            {% if issue['needinfo'] %} - Needinfo {% endif %}
-          </div>
-        </div>
-      </div>
-      <div class="wc-Triage-footer">
-        <div>
-          {% for browser in issue['browsers'] %}
-            <span>{{ browser }} </span>
-          {% endfor %}
-        </div>
-        <div>
-          <a
-            class="wc-Triage-link"
-            href="/issues/{{ issue['number'] }}"
-            title="{{ issue['title'] }}"
-          >
-            More information
-          </a>
-        </div>
+        </footer>
       </div>
     </div>
   </article>
