@@ -1,4 +1,4 @@
-<form class="x2 js-Comment-form" data-username="{{ session.username }}" data-avatar-url="{{ session.avatar_url }}">
+<form class="js-Comment-form" data-username="{{ session.username }}" data-avatar-url="{{ session.avatar_url }}">
   <header class="comment-header">
     <figure class="comment-author" role="group">
       <img src="{{ session.avatar_url }}" class="comment-avatar" alt="{{ session.username }}">
@@ -7,7 +7,7 @@
       </figcaption>
     </figure>
   </header>
-  <div class="comment-body">
+  <div class="comment-body grid-cell x2">
     <div class="form-text form-element">
       <label for="newComment" class="form-label off-screen">Leave a comment</label>
       <textarea id="newComment" class="form-field text-field light js-Comment-text mousetrap" rows="2" placeholder="Leave a comment"></textarea>

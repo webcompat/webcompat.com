@@ -57,10 +57,6 @@
   justify-content: center;
 }
 
-.grid-nested .issue-comment .comment-body {
-  padding: 10px 10px 10px 12px;
-}
-
 
 /* As we can not add a class to the img right now (markup parsers are complicated), we need to use the element */
 .comment-body img {
