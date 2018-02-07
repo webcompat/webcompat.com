@@ -4,34 +4,34 @@
 
 /* Handle visibility of ActivityIndicator */
 const shouldRenderActivityIndicator = (render = true) => {
-  const ActivityIndicator = document.getElementById("js-ActiviyIndicator");
+  const activityIndicator = document.getElementById("js-ActiviyIndicator");
   if (render) {
-    ActivityIndicator.classList.remove("is-hidden");
+    activityIndicator.classList.remove("is-hidden");
   }
   if (!render) {
-    ActivityIndicator.classList.add("is-hidden");
+    activityIndicator.classList.add("is-hidden");
   }
 };
 
 /* Handle visibility of NoResult */
 const shouldRenderNoResult = (render = true) => {
-  const NoResult = document.getElementById("js-NoResult");
+  const noResult = document.getElementById("js-NoResult");
   if (render) {
-    NoResult.classList.remove("is-hidden");
+    noResult.classList.remove("is-hidden");
   }
   if (!render) {
-    NoResult.classList.add("is-hidden");
+    noResult.classList.add("is-hidden");
   }
 };
 
 /* Handle visibility of NeedsTriageList */
 const shouldRenderNeedsTriageList = (render = true) => {
-  const Triages = document.getElementById("js-Triages");
+  const triages = document.getElementById("js-Triages");
   if (render) {
-    Triages.classList.remove("is-hidden");
+    triages.classList.remove("is-hidden");
   }
   if (!render) {
-    Triages.classList.add("is-hidden");
+    triages.classList.add("is-hidden");
   }
 };
 
@@ -50,13 +50,13 @@ const filteringSort = issuesNumber => {
 /* viewMode */
 const viewMode = () => {
   const view = document.getElementById("js-Filter-view").value;
-  const Triages = document.getElementById("js-Triages");
+  const triages = document.getElementById("js-Triages");
   const currentView = document.getElementById("js-Triages").dataset["view"];
   if (currentView === view) {
     return;
   }
   /* set value */
-  Triages.dataset["view"] = view;
+  triages.dataset["view"] = view;
   localStorage.setItem("DashboardTriageView", view);
 };
 
