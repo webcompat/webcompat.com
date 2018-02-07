@@ -142,15 +142,6 @@
   .wc-Triages[data-view="lists"] .wc-Triage-footer > * + * {
     margin: 0 0 0 .4em;
   }
-
-  .wc-Triage-link {
-    color: #49a9ee;
-    text-decoration: none;
-  }
-
-  .wc-Triage-link:hover {
-    text-decoration: underline;
-  }
 </style>
 
 <section
@@ -210,15 +201,6 @@
             {% for browser in issue['browsers'] %}
               <span>{{ browser }} </span>
             {% endfor %}
-          </div>
-          <div>
-            <a
-              class="wc-Triage-link"
-              href="/issues/{{ issue['number'] }}"
-              title="{{ issue['title'] }}"
-            >
-              More information
-            </a>
           </div>
         </footer>
       </div>
