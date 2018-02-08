@@ -19,6 +19,8 @@
 @import 'src/form.css';
 @import 'src/issue.css';
 @import 'src/labels.css';
+@import 'src/label-box.css';
+@import 'src/label-editor.css';
 @import 'src/filter.css';
 @import 'src/filter-bar.css';
 @import 'src/issues-list.css';
@@ -31,6 +33,10 @@
 /* imports for other vendor files */
 @import "lib/prism-gh-theme.css";
 
+*::after,
+*::before {
+  box-sizing: border-box;
+}
 
 #body-webcompat {
   background-color: var(--color-bg-page);

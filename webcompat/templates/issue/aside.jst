@@ -1,19 +1,19 @@
 <script type="text/template">
-  <header class="wc-Issue-information-header wc-Issue-information-header--<%= stateClass %>">
+  <header class="label-box-header label-<%= stateClass %>">
     <div><%= issueState %></div>
     <div>#<%= number %></div>
   </header>
-  <div class="wc-Issue-information-content">
-    <h1 class="wc-Issue-title js-Issue-title">
+  <div class="label-box-section">
+    <h1 class="headline-2">
       <%= title %>
     </h1>
   </div>
-  <div class="wc-Issue-information-content">
+  <div class="label-box-section">
     <div>Opened: <%= createdAt %></div>
     <div>
       Reporter:
-      <span class="wc-Issue-reporter js-Issue-reporter">
-        <a class="wc-Link" href="https://github.com/<%= reporter %>"><%= reporter %></a>
+      <span class="js-Issue-reporter">
+        <a class="bold" href="https://github.com/<%= reporter %>"><%= reporter %></a>
       </span>
     </div>
     <div>Comments: <%= commentNumber %></div>
