@@ -52,7 +52,7 @@
   line-height: 1em;
   font-size: .8em;
   display: inline;
-  margin-left: calc (var(--unit-gap) / 3);
+  margin-left: calc(var(--unit-gap) / 3);
 }
 
 .issue-description .issue-comments {

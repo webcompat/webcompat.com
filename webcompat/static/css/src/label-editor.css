@@ -1,0 +1,121 @@
+/* Category editor */
+.label-editor {
+  position: absolute;
+  display: none;
+  min-width: 320px;
+  z-index: 5;
+  white-space: nowrap;
+  top: 100%;
+  left: 0;
+  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, .25);
+  border-radius: 6px;
+  background-color: #fff;
+}
+
+/* Category header */
+.label-editor-header {
+  display: flex;
+  background-color: #fff;
+  border-radius: 6px 6px 0 0;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, .1), 0 2px 3px rgba(0, 0, 0, .05);
+  padding: .625em;
+}
+
+/* list category */
+.label-editor-list {
+  background-color: #fff;
+  color: #333;
+  max-height: 18.75em;
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+@media all and (max-width: 23.43em) {
+  .label-editor-list {
+    max-height: inherit;
+  }
+}
+
+/* item category */
+.label-editor-list-item {
+  font-size: 1em;
+  display: block;
+  cursor: pointer;
+  border-top: 1px solid #ddd;
+  margin: 0;
+  padding: .5em .3125em;
+}
+
+.label-editor-list-item:last-child {
+  border-bottom: 1px solid #ddd;
+}
+
+/* event */
+.label-editor-list-item:focus,
+.label-editor-list-item.focused {
+  border-width: 2px;
+  border-style: solid;
+  border-color: Highlight;
+  outline: none;
+}
+
+/* square color */
+.label-editor-list-item-color {
+  display: inline-block;
+  margin: 0 .3125em 0 0;
+  width: 1.5em;
+  height: 1.5em;
+  line-height: 1.25em;
+  text-align: center;
+  border-color: currentColor;
+  border-style: none none none solid;
+  border-width: 0 0 0 4px;
+}
+
+/* checkbox */
+.label-editor-list-item-checkbox {
+  margin: 0;
+  padding: 0;
+}
+
+/* name */
+.label-editor-list-item-name {
+  display: inline-block;
+  font-size: .75em;
+  font-weight: 500;
+  line-height: 1.25em;
+}
+
+/* Launch Category Editor */
+.label-editorLauncher {
+  display: none;
+  border: none;
+  width: 1.3em;
+  height: 1.3em;
+  font-size: 1.4em;
+  padding: 0;
+  opacity: .8;
+}
+
+/* display caret and category only if button is-active */
+.label-editorLauncher.is-active + .label-editor::after,
+.label-editorLauncher.is-active + .label-editor {
+  display: block;
+}
+
+.label-editor-launcher:hover {
+  opacity: 1;
+}
+
+.label-editor-launcher::before {
+  content: "\f013";
+}
+
+.label-editor-launcher.is-active::before {
+  content: "\f00d";
+}
+
+.wc-Issue-categoryEditor-button .label-editorLauncher {
+  pointer-events: auto;
+}
