@@ -329,6 +329,7 @@ def privacy():
         get_user_info()
     return render_template('privacy.html')
 
+
 @app.route('/contact')
 @cache_policy(private=True, uri_max_age=0, must_revalidate=True)
 def contact():
@@ -346,21 +347,15 @@ def contributors():
         get_user_info()
     return render_template('contributors.html')
 
-@app.route('/contributors/contribute')
-@cache_policy(private=True, uri_max_age=0, must_revalidate=True)
-def contributors_contribute():
-    """Route to display contributors/contribute page."""
-    if g.user:
-        get_user_info()
-    return render_template('contributors/contribute.html')
 
-@app.route('/contributors/diagnose-bug')
+@app.route('/contributors/report-bug')
 @cache_policy(private=True, uri_max_age=0, must_revalidate=True)
-def contributors_diagnose_bug():
-    """Route to display contributors/diagnose-bug page."""
+def contributors_report_bug():
+    """Route to display contributors/report-bug page."""
     if g.user:
         get_user_info()
-    return render_template('contributors/diagnose-bug.html')
+    return render_template('contributors/report-bug.html')
+
 
 @app.route('/contributors/reproduce-bug')
 @cache_policy(private=True, uri_max_age=0, must_revalidate=True)
@@ -370,6 +365,16 @@ def contributors_reproduce_bug():
         get_user_info()
     return render_template('contributors/reproduce-bug.html')
 
+
+@app.route('/contributors/diagnose-bug')
+@cache_policy(private=True, uri_max_age=0, must_revalidate=True)
+def contributors_diagnose_bug():
+    """Route to display contributors/diagnose-bug page."""
+    if g.user:
+        get_user_info()
+    return render_template('contributors/diagnose-bug.html')
+
+
 @app.route('/contributors/site-outreach')
 @cache_policy(private=True, uri_max_age=0, must_revalidate=True)
 def contributors_site_outreach():
@@ -378,8 +383,40 @@ def contributors_site_outreach():
         get_user_info()
     return render_template('contributors/site-outreach.html')
 
+
+@app.route('/contributors/build-tools')
+@cache_policy(private=True, uri_max_age=0, must_revalidate=True)
+def contributors_build_tools():
+    """Route to display contributors/build-tools page."""
+    if g.user:
+        get_user_info()
+    return render_template('contributors/build-tools.html')
+
+
+@app.route('/contributors/web-platform-research')
+@cache_policy(private=True, uri_max_age=0, must_revalidate=True)
+def contributors_web_platform_research():
+    """Route to display contributors/web-platform-research page."""
+    if g.user:
+        get_user_info()
+    return render_template('contributors/web-platform-research.html')
+
+
+@app.route('/contributors/organize-webcompat-events')
+@cache_policy(private=True, uri_max_age=0, must_revalidate=True)
+def contributors_organize_webcompat_events():
+    """Route to display contributors/organize-webcompat-events page."""
+    if g.user:
+        get_user_info()
+    return render_template('contributors/organize-webcompat-events.html')
+
+
 @app.route('/tools/cssfixme')
 def cssfixme():
+    """Route for returning 410.
+
+    Previously home of a CSS fixing tool.
+    """
     msg = """
     This resource doesn't exist anymore.
     See https://github.com/webcompat/css-fixme/
