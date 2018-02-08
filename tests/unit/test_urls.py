@@ -53,31 +53,47 @@ class TestURLs(unittest.TestCase):
         self.assertEqual(rv.status_code, 200)
 
     def test_contributors(self):
-        '''Test that /contributors exists.'''
+        """Test that /contributors exists."""
         rv = self.app.get('/contributors')
         self.assertEqual(rv.status_code, 200)
 
-    def test_contributors_contribute(self):
-        '''Test that /contributors/contribute exists.'''
-        rv = self.app.get('/contributors/contribute')
+    def test_contributors_report_bug(self):
+        """Test that /contributors/report-bug exists."""
+        rv = self.app.get('/contributors/report-bug')
         self.assertEqual(rv.status_code, 200)
 
     def test_contributors_diagnose_bug(self):
-        '''Test that /contributors/diagnose-bug exists.'''
+        """Test that /contributors/diagnose-bug exists."""
         rv = self.app.get('/contributors/diagnose-bug')
         self.assertEqual(rv.status_code, 200)
 
     def test_contributors_reproduce_bug(self):
-        '''Test that /contributors/reproduce-bug exists.'''
+        """Test that /contributors/reproduce-bug exists."""
         rv = self.app.get('/contributors/reproduce-bug')
         self.assertEqual(rv.status_code, 200)
 
     def test_contributors_site_outreach(self):
-        '''Test that /contributors/site-outreach exists.'''
+        """Test that /contributors/site-outreach exists."""
         rv = self.app.get('/contributors/site-outreach')
+        self.assertEqual(rv.status_code, 200)
+
+    def test_contributors_build_tools(self):
+        """Test that /contributors/build-tools exists."""
+        rv = self.app.get('/contributors/build-tools')
+        self.assertEqual(rv.status_code, 200)
+
+    def test_contributors_web_research(self):
+        """Test that /contributors/web-platform-research exists."""
+        rv = self.app.get('/contributors/web-platform-research')
+        self.assertEqual(rv.status_code, 200)
+
+    def test_contributors_events(self):
+        """Test that /contributors/organize-webcompat-events exists."""
+        rv = self.app.get('/contributors/organize-webcompat-events')
+        self.assertEqual(rv.status_code, 200)
 
     def test_contact(self):
-        '''Test that /contact exists.'''
+        """Test that /contact exists."""
         rv = self.app.get('/contact')
         self.assertEqual(rv.status_code, 200)
 
