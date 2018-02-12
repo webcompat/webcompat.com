@@ -8,6 +8,7 @@ function BugForm() {
   this.loadingIndicator = $(".js-Loader");
   this.reportButton = $("#js-ReportBug");
   this.uploadLoader = $(".js-Upload-Loader");
+  this.previewEl = $(".js-image-upload");
   this.UPLOAD_LIMIT = 1024 * 1024 * 4;
   this.clickedButton = null;
   this.hasImage = null;
@@ -176,28 +177,28 @@ function BugForm() {
       $("[value=" + problemType[1] + "]").click();
     }
 
-    // If we have one or more details params,
-    // add that to the end of the steps to reproduce textarea
-    var details = location.href.match(/details=([^&]*)/g);
-    if (details !== null) {
-      this.stepsToReproduceField.val(function(idx, value) {
-        return (
-          value +
-          "\n" +
-          decodeURIComponent(
-            details
-              .map(function(item) {
-                return item.replace(/details=/, "");
-              })
-              .join("\n")
-              // The content of the details param may be encoded via
-              // application/x-www-form-urlencoded, so we need to change the
-              // + (SPACE) to %20 before decoding
-              .replace(/\+/g, "%20")
-          )
-        );
-      });
+    // If we have details, JSON decode it and add it to the end of STR textarea
+    var details = location.href.match(/details=([^&]*)/);
+    if (details) {
+      this.stepsToReproduceField.val(
+        _.bind(function(idx, value) {
+          return value + "\n" + this.buildDetails(details[1]);
+        }, this)
+      );
     }
+  };
+
+  this.buildDetails = function(detailsParam) {
+    // The content of the details param may be encoded via
+    // application/x-www-form-urlencoded, so we need to change the
+    // + (SPACE) to %20 before decoding
+    var decoded = decodeURIComponent(detailsParam.replace(/\+/g, "%20"));
+    var details = JSON.parse(decoded);
+    var rv = "";
+    Object.keys(details).forEach(function(prop) {
+      rv += prop + ": " + details[prop] + "\n";
+    });
+    return rv;
   };
 
   this.storeClickedButton = function(event) {
@@ -339,8 +340,8 @@ function BugForm() {
       return;
     }
 
-    var inlineHelp = $("<span></span>", {
-      class: "wc-Form-helpMessage",
+    var inlineHelp = $("<small></small>", {
+      class: "label-icon-message",
       text: opts && opts.altHelp
         ? this.inputs[id].altHelpText
         : this.inputs[id].helpText
@@ -367,14 +368,19 @@ function BugForm() {
         break;
       case "image":
         // hide the error in case we already saw one
-        $(".wc-Form-helpMessage--imageUpload").remove();
+        $(".form-upload-error").remove();
 
         inlineHelp
-          .removeClass("wc-Form-helpMessage")
-          .addClass("wc-Form-helpMessage--imageUpload")
-          .insertAfter(".js-image-upload-label");
+          .removeClass("form-message-error")
+          .addClass("form-upload-error")
+          .appendTo(".js-error-upload");
 
-        $(".wc-UploadForm-label").hide();
+        $(".js-label-upload").removeClass("is-hidden").addClass("is-hidden");
+        $(".js-remove-upload").removeClass("is-hidden").addClass("is-hidden");
+        $(".js-error-upload").removeClass("is-hidden");
+
+        $(".form-message-error").hide();
+        $(".form-input-validation .error").hide();
         // "reset" the form field, because the file would get rejected
         // from the server anyways.
         this.uploadField.val(this.uploadField.get(0).defaultValue);
@@ -395,7 +401,7 @@ function BugForm() {
 
     this.inputs[id].el
       .parents(".js-Form-group")
-      .find(".wc-Form-helpMessage")
+      .find(".form-message-error")
       .remove();
 
     if (
@@ -436,10 +442,8 @@ function BugForm() {
       return;
     }
 
-    this.previewEl = $(".js-image-upload").find("label").eq(0);
     this.previewEl.css({
-      background: "url(" + dataURI + ") no-repeat center / contain",
-      "background-color": "#eee"
+      background: "url(" + dataURI + ") no-repeat center / contain"
     });
 
     this.hasImage = true;
@@ -448,32 +452,28 @@ function BugForm() {
   /*
     Allow users to remove an image from the form upload.
   */
-  this.showRemoveUpload = function(label) {
-    var removeBanner = $(".wc-UploadForm-button");
-    var uploadWrapper = $(".wc-UploadForm-wrapper");
-    var uploadIcon = $(".wc-UploadForm-icon");
-    var uploadLabel = $(".wc-UploadForm-label");
+  this.showRemoveUpload = function(preview) {
+    var removeBanner = $(".js-remove-upload");
+    var uploadLabel = $(".js-label-upload");
+    var errorLabel = $(".js-error-upload");
 
     // hide upload image errors (this will no-op if the user never saw one)
-    $(".wc-Form-helpMessage--imageUpload").remove();
-    $(".wc-UploadForm-label").show();
+    $(".form-upload-error").remove();
+
+    errorLabel.addClass("is-hidden");
+    uploadLabel.removeClass("visually-hidden");
 
     removeBanner.removeClass("is-hidden");
     removeBanner.attr("tabIndex", "0");
-    uploadIcon.addClass("is-hidden");
-    uploadLabel.addClass("is-hidden");
-    uploadLabel.hide();
+    uploadLabel.addClass("visually-hidden");
     removeBanner.on(
       "click",
       _.bind(function() {
         // remove the preview and hide the banner
-        label.css("background", "none");
+        preview.css("background", "none");
         removeBanner.addClass("is-hidden");
         removeBanner.attr("tabIndex", "-1");
-        uploadIcon.removeClass("is-hidden");
-        uploadLabel.removeClass("is-hidden");
-        uploadLabel.show();
-        uploadWrapper.removeClass("is-hidden");
+        uploadLabel.removeClass("visually-hidden").removeClass("is-hidden");
         removeBanner.off("click");
         removeBanner.get(0).blur();
 

@@ -7,17 +7,29 @@
 * colors.css
 */
 
+.form {
+  padding: 10px 0 35px;
+}
+
+.form-element-bottom {
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+.form-element-bottom .form-button {
+  margin-top: auto;
+}
+
 .form-element {
   position: relative;
   max-width: 100%;
   margin: 0;
-  padding: 20px 0;
+  padding: 0;
 }
 
 .form-field {
   background: none;
   color: inherit;
-  margin-bottom: 5px;
 }
 
 .form-field ::placeholder {
@@ -25,15 +37,32 @@
   opacity: 1;
 }
 
+.form-element .form-text:last-child {
+  margin-top: -13px;
+}
+
+.form-radio {
+  margin-bottom: 20px;
+}
+
 .form-label {
   display: block;
   text-align: left;
   cursor: pointer;
+  margin-bottom: 5px;
+  line-height: 1.7em;
 }
 
 .form-required::after {
   color: var(--color-error);
   content: "*";
+  padding-right: 7px;
+}
+
+/* form message: error */
+.form-message-error {
+  color: var(--color-error);
+  font-weight: bold;
 }
 
 /* * Form input[type="text"], textarea (text-field) */
@@ -65,7 +94,7 @@
   z-index: 0;
 }
 
-.check::after {
+.is-validated .check::after {
   display: inline-block;
   width: 16px;
   height: 16px;
@@ -75,7 +104,7 @@
   background-image: url("../../img/svg/icons/svg-checkmark.svg");
 }
 
-.error::after {
+.is-error .error::after {
   display: inline-block;
   width: 16px;
   height: 16px;
@@ -143,24 +172,31 @@
 }
 
 .input-upload {
-  position: absolute;
+  position: relative;
   opacity: 0;
+  z-index: 30;
+  color: var(--color-fourth);
+  width: 100%;
+  height: 180px;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  cursor: pointer;
 }
 
-.label-upload {
+.form-upload .label-icon {
+  position: absolute;
+  z-index: 20;
   text-align: center;
-  color: var(--color-second);
+  width: 29.5%;
+  margin-top: -120px;
+  height: 100px;
 }
 
-.form-upload:hover .label-upload {
-  color: var(--color-first);
-  transition: all 350ms ease;
-}
-
-.form-upload .icon {
+.label-icon .icon {
   display: block;
-  width: 60%;
-  margin: 0 auto 15px;
+  margin: 0 auto;
 }
 
 .icon-upload {
@@ -172,6 +208,43 @@
   transition: all 350ms ease;
 }
 
+.is-validated.no-js-error .label-upload,
+.is-validated.no-js-error:hover .label-upload {
+  visibility: hidden;
+}
+
+.label-remove {
+  visibility: hidden;
+}
+
+.is-validated .label-remove {
+  visibility:  visible;
+  z-index: 40;
+  cursor: pointer;
+  border: 0 none;
+  outline: none;
+}
+
+.icon-remove,
+.label-remove .label-icon-message {
+    fill: var(--color-second);
+    color: var(--color-second);
+    transition: all 350ms ease;
+}
+
+.is-validated:hover .icon-remove,
+.is-validated:hover .label-remove .label-icon-message {
+    fill: var(--color-first);
+    color: var(--color-first);
+    transition: all 350ms ease;
+}
+
+.icon-error,
+.label-error .label-icon-message {
+    fill: var(--color-error);
+    color: var(--color-error);
+    transition: all 350ms ease;
+}
 
 #js-ReportForm.is-closed {
   display: none;

@@ -64,7 +64,6 @@
 .is-hidden {
   display: none;
 }
-
 .off-screen {
   position: absolute;
   top: -9999px;
@@ -79,4 +78,11 @@
   .desktop-only {
     display: inline-block;
   }
+  
+.visually-hidden {
+  visibility: hidden;
+}
+
+.right {
+  float: right;
 }

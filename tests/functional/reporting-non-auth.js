@@ -11,9 +11,9 @@ const path = require("path");
 var cwd = intern.config.basePath;
 var VALID_IMAGE_PATH = path.join(cwd, "tests/fixtures", "green_square.png");
 var BAD_IMAGE_PATH = path.join(cwd, "tests/fixtures", "evil.py");
+// DETAILS_STRING is a URL encoded object, stringified to JSON.
 var DETAILS_STRING =
-  "Encountered error: NS_ERROR_DOM_MEDIA_DEMUXER_ERR (0x806e000c)%0ALocation: virtual%0ARefPtrMP4Demuxer::InitPromise mozilla::MP4Demuxer::Init()%0AError information:%0AIncomplete MP4 metadata%0AMedia URL: file:///Users/potch/Documents/mozilla/media.mp4";
-var DETAILS_STRING2 = "Encountered+error:+NS_ERROR_DOM_MEDIA_DEMUXER_ERR";
+  '{"gfx.webrender.all"%3Afalse%2C"gfx.webrender.blob-images"%3A2%2C"gfx.webrender.enabled"%3Afalse%2C"image.mem.shared"%3A2%2C"layout.css.servo.enabled"%3Atrue}';
 
 var url = function(path) {
   return intern.config.siteRoot + path;
@@ -79,7 +79,7 @@ registerSuite("Reporting (non-auth)", {
           WindowHelpers.sendEvent(elm, "input");
         })
         .sleep(500)
-        .findByCssSelector(".wc-Form-helpMessage")
+        .findByCssSelector(".form-message-error")
         .getVisibleText()
         .then(function(text) {
           assert.include(
@@ -92,7 +92,7 @@ registerSuite("Reporting (non-auth)", {
         .findByCssSelector("#url")
         .type("sup")
         .end()
-        .waitForDeletedByCssSelector(".wc-Form-helpMessage")
+        .waitForDeletedByCssSelector(".form-message-error")
         .end();
     },
 
@@ -111,7 +111,7 @@ registerSuite("Reporting (non-auth)", {
             WindowHelpers.sendEvent(elm, "input");
           })
           .sleep(500)
-          .findByCssSelector(".wc-Form-helpMessage")
+          .findByCssSelector(".form-message-error")
           .getVisibleText()
           .then(function(text) {
             assert.include(
@@ -126,7 +126,7 @@ registerSuite("Reporting (non-auth)", {
           .type("bug description")
           .end()
           // validation message should be gone
-          .waitForDeletedByCssSelector(".wc-Form-helpMessage")
+          .waitForDeletedByCssSelector(".form-message-error")
           .end()
       );
     },
@@ -192,7 +192,7 @@ registerSuite("Reporting (non-auth)", {
           .findByCssSelector("#image")
           .type(BAD_IMAGE_PATH)
           .end()
-          .findByCssSelector(".wc-Form-helpMessage--imageUpload")
+          .findByCssSelector(".form-upload-error")
           .getVisibleText()
           .then(function(text) {
             assert.include(
@@ -207,7 +207,7 @@ registerSuite("Reporting (non-auth)", {
           .type(VALID_IMAGE_PATH)
           .end()
           // validation message should be gone
-          .waitForDeletedByCssSelector(".wc-Form-helpMessage--imageUpload")
+          .waitForDeletedByCssSelector(".form-upload-error")
           .end()
       );
     },
@@ -271,35 +271,17 @@ registerSuite("Reporting (non-auth)", {
         .findByCssSelector("#steps_reproduce")
         .getProperty("value")
         .then(function(text) {
-          assert.include(
-            text,
-            "Encountered error: NS_ERROR_DOM_MEDIA_DEMUXER_ERR (0x806e000c)\nLocation: virtual\nRefPtrMP4Demuxer::InitPromise mozilla::MP4Demuxer::Init()\nError information:\nIncomplete MP4 metadata\nMedia URL: file:///Users/potch/Documents/mozilla/media.mp4"
-          );
-        })
-        .end();
-    },
-
-    "details param: + decoded as space"() {
-      return FunctionalHelpers.openPage(
-        this,
-        url("/issues/new?details=" + DETAILS_STRING2),
-        "#description"
-      )
-        .findByCssSelector("#steps_reproduce")
-        .getProperty("value")
-        .then(function(text) {
           assert.notInclude(
             text,
-            "Encountered+error:+NS_ERROR_DOM_MEDIA_DEMUXER_ERR",
+            "gfx.webrender.all:+false",
             "+ not found in decoded string"
           );
           assert.include(
             text,
-            "Encountered error: NS_ERROR_DOM_MEDIA_DEMUXER_ERR",
+            "gfx.webrender.all: false\ngfx.webrender.blob-images: 2\ngfx.webrender.enabled: false\nimage.mem.shared: 2\nlayout.css.servo.enabled: true\n",
             "+ replaced with space"
           );
-        })
-        .end();
+        });
     }
   }
 });
