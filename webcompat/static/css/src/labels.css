@@ -120,3 +120,49 @@
   background-color: var(--label-color-os);
 }
 
+.label-box [class*='label-closed'],
+.label-box [class*='label-status'] {
+  background-color: var(--label-closed);
+}
+/* label editor list for selecting content labels */
+
+.label-box .label-editor-list .label-editor-list-item {
+  background-color: var(--color-bg-box);
+}
+
+.label-box .label-editor-list [class*='label-'] {
+  border-left-color: var(--color-fourth);
+}
+
+.label-box .label-editor-list [class*='label-type'] {
+  border-left-color: var(--label-color-type);
+}
+
+.label-box .label-editor-list [class*='label-browser'] {
+  border-left-color: var(--label-color-browser);
+}
+
+.label-box .label-editor-list [class*='label-status'] {
+  border-left-color: var(--label-color-status);
+}
+
+.label-box .label-editor-list [class*='label-priority'] {
+  border-left-color: var(--label-color-priority);
+}
+
+.label-box .label-editor-list [class*='label-nsfw'] {
+  border-left-color: var(--label-color-nsfw);
+}
+
+.label-box .label-editor-list [class*='label-device'] {
+  border-left-color: var(--label-color-device);
+}
+
+.label-box .label-editor-list [class*='label-os'] {
+  border-left-color: var(--label-color-os);
+}
+
+.label-box .label-editor-list [class*='label-closed'],
+.label-box .label-editor-list [class*='label-status'] {
+  border-left-color: var(--label-closed);
+}

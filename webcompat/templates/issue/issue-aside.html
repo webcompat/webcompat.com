@@ -9,33 +9,3 @@
 	{% include "issue/issue-milestones.jst" %}
 	{% include "web_modules/milestone-editor.jst" %}
 </div>
-
-
-<aside class="grid-cell x1-fix is-hidden">
-     <section class="label-box-section">
-       <div class="label-box-editor">
-         <div class="label-editor" style="display: block">
-           <div class="label-editor-header">
-             <input class="form-field text-field" placeholder="filter label">
-             <div> 
-               <button class="button" tabindex="0">
-                 Save &amp; Close
-               </button>
-             </div>
-           </div>
-           <div class="label-editor-list"  tabindex="-1">
-             <label class="label-editor-list-item" tabindex="0">
-               <span class="label-editor-list-item-color" style="color:#ededed">
-                 <input 
-                   class="label-editor-list-item-checkbox" 
-                   name="all"
-                   tabindex="-1" 
-                   type="checkbox"
-                 >
-               </span>
-               <span class="label-editor-list-item-name">all</span>
-             </label>  
-           </div>                
-         </div>
-       </div>
-     </section>

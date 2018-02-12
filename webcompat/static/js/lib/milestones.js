@@ -74,7 +74,7 @@ issues.MilestoneEditorView = issues.CategoryEditorView.extend({
     this.resizeEditorHeight();
     _.defer(
       _.bind(function() {
-        this.$el.find(".wc-CategoryEditor-search").focus();
+        this.$el.find(".js-MilestoneEditor-search").focus();
       }, this)
     );
     return this;
