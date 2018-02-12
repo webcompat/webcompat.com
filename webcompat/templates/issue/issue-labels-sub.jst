@@ -1,7 +1,6 @@
 <script type="text/template">
 <% _.each(labels, function(label) { %>
-  <span class="wc-Label wc-Label--badge js-Label"
-        style="background-color:#<%=label.color%>">
+  <span class="label label-<%= label.attributes[3].value %> js-Label">
     <%= label.name %>
   </span>
 <% }); %>

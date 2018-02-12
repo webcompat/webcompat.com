@@ -1,23 +1,23 @@
 <script type="text/template">
-  <div class="wc-CategoryEditor-header">
-    <input class="form-control wc-CategoryEditor-search" placeholder="filter status">
-    <button class="wc-CategoryEditor-button r-ResetButton js-CategoryEditor-close"
+  <div class="label-editor-header">
+    <input class="form-field text-field js-MilestoneEditor-search" placeholder="Filter labels">
+    <button class="nav-button js-MilestoneEditor-close"
             tabindex="0">
-      Save &amp; Close
+      <svg class="nav-text icon nav-icon" viewBox="0 0 30 30" role="presentation">
+          <title>Save &amp; close</title>
+          <use href="#svg-sliders">Save &amp; close</use>
+      </svg>
     </button>
   </div>
-  <div class="wc-CategoryEditor-list" tabindex="-1">
+  <div class="label-editor-list" tabindex="-1">
     <% _.each(milestones, function(milestone) { %>
-      <label class="wc-CategoryEditor-list-item" tabindex="0">
-        <span class="wc-CategoryEditor-list-item-squareColor"
-              style="background-color:<%= milestone.color %>">
-          <input class="wc-CategoryEditor-list-item-checkbox"
-                 type="checkbox" name="<%= milestone.name %>"
-                 data-color="<%= milestone.color %>"
-                 data-remotename="milestone-<%= milestone.name %>"
-                 tabindex="-1">
-        </span>
-        <span class="wc-CategoryEditor-list-item-name"><%= milestone.name %></span>
+      <label class="label-editor-list-item label-<%= milestone.name %>" tabindex="0">
+        <input class="label-editor-list-item-checkbox"
+               type="checkbox" name="milestone.name"
+               data-color="<%=milestone.color%>"
+               data-remotename="milestone-<%= milestone.name %>"
+               tabindex="-1">
+        <span class="small"><%= milestone.name %></span>
       </label>
     <% }); %>
   </div>
