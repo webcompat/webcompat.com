@@ -80,3 +80,11 @@
     display: inline-block;
   }
 }
+
+.visually-hidden {
+  visibility: hidden;
+}
+
+.right {
+  float: right;
+}
