@@ -78,6 +78,7 @@
   .desktop-only {
     display: inline-block;
   }
+}
   
 .visually-hidden {
   visibility: hidden;
