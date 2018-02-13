@@ -60,31 +60,41 @@
 }
 
 
-/*******************************
-** Issue - status labels ** 
-*******************************/
+/***************************************
+** Issue - status labels / milestones ** 
+****************************************/
 
-.label-box-header.label-needstriage {
+.label-box-editor .label {
+  background-color: var(--label-closed);
+}
+
+.label-box-header.label-needstriage,
+.label-box-editor .label-needstriage {
   background-color: var(--label-needs-triage);
 }
 
-.label-box-header.label-needsdiagnosis {
+.label-box-header.label-needsdiagnosis,
+.label-box-editor .label-needsdiagnosis {
   background-color: var(--label-needs-diagnosis);
 }
 
-.label-box-header.label-needscontact {
+.label-box-header.label-needscontact,
+.label-box-editor .label-needscontact {
   background-color: var(--label-needs-contact);
 }
 
-.label-box-header.label-ready {
+.label-box-header.label-ready,
+.label-box-editor .label-ready {
   background-color: var(--label-outreach);
 }
 
-.label-box-header.label-sitewait {
+.label-box-header.label-sitewait,
+.label-box-editor .label-sitewait {
   background-color: var(--label-site-contacted);
 }
 
-.label-box-header.label-closed {
+.label-box-header.label-closed,
+.label-box-editor .label-closed {
   background-color: var(--label-closed);
 }
 
