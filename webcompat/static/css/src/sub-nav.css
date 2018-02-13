@@ -10,28 +10,32 @@
   list-style: none;
 }
 
-.sub-nav .sub-nav-item .link-text,
-.nested-sub-nav-item .link-text{
+.nested-sub-nav-item .link-text,
+.sub-nav .sub-nav-item .link-text {
   text-decoration: none;
+}
+
+.nested-sub-nav {
+  display: none;
+  padding-left: var(--unit-space);
+  list-style: none;
 }
 
 .nested-sub::after {
   content: " ";
   background-image: url("../../img/svg/icons/svg-chevron-right.svg");
-  /*transform: rotate(90deg);*/
+
+  /* transform: rotate(90deg); */
   background-repeat: no-repeat;
   background-size: contain;
   background-position: 0;
   width: 20px;
   height: 2em;
   position: absolute;
-  opacity: 0.7;
-  margin-left: 3px; 
+  opacity: .7;
+  margin-left: 3px;
 }
 
-.nested-sub-nav {
-  display: none;
-}
 .active .nested-sub-nav {
   display: inline-block;
 }
@@ -45,11 +49,6 @@
   .sub-nav-header::after {
     content: none;
   }
-}
-
-.nested-sub-nav {
-  padding-left: var(--unit-space);
-  list-style: none;
 }
 
 .sub-nav-active {
