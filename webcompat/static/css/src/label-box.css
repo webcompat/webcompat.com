@@ -21,7 +21,7 @@
 .label-box .label {
   display: block;
   line-height: 1;
-  font-size: 0.75em;
+  font-size: .75em;
   padding: 6px 10px;
   color: var(--color-bg-box);
   border-radius: 4px;

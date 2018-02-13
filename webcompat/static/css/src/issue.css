@@ -57,7 +57,6 @@
   justify-content: center;
 }
 
-
 /* As we can not add a class to the img right now (markup parsers are complicated), we need to use the element */
 .comment-body img,
 .js-Issue-markdown img {

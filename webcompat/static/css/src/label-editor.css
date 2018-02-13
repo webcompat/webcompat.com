@@ -39,7 +39,7 @@
   cursor: pointer;
   border-top: 1px solid var(--color-default);
   border-left: 4px solid;
-  padding: calc(var(--unit-space) * 0.75) calc(var(--unit-space) * 0.5);
+  padding: calc(var(--unit-space) * .75) calc(var(--unit-space) * .5);
   margin: 0;
 }
 
@@ -92,9 +92,10 @@
 }
 
 .label-editor-header .nav-button {
-	margin-top: -10px;
-	margin-left: 10px;
+  margin-top: -10px;
+  margin-left: 10px;
 }
+
 .wc-Issue-categoryEditor-button .label-editorLauncher {
   pointer-events: auto;
 }

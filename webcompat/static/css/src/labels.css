@@ -1,5 +1,5 @@
 /*******************************
-** Issue List - status labels ** 
+** Issue List - status labels **
 *******************************/
 
 .issue.label-needstriage .x2 {
@@ -26,42 +26,40 @@
   border-color: var(--label-closed);
 }
 
-
 /********************************
-** Issue List - context labels ** 
+** Issue List - context labels **
 *********************************/
 
-.issue .label[class*='label-type'] {
+.issue .label[class *= "label-type"] {
   border-color: var(--label-color-type);
 }
 
-.issue .label[class*='label-browser'] {
+.issue .label[class *= "label-browser"] {
   border-color: var(--label-color-browser);
 }
 
-.issue .label[class*='label-status'] {
+.issue .label[class *= "label-status"] {
   border-color: var(--label-color-status);
 }
 
-.issue .label[class*='label-priority'] {
+.issue .label[class *= "label-priority"] {
   border-color: var(--label-color-priority);
 }
 
-.issue .label[class*='label-nsfw'] {
+.issue .label[class *= "label-nsfw"] {
   border-color: var(--label-color-nsfw);
 }
 
-.issue .label[class*='label-device'] {
+.issue .label[class *= "label-device"] {
   border-color: var(--label-color-device);
 }
 
-.issue .label[class*='label-os'] {
+.issue .label[class *= "label-os"] {
   border-color: var(--label-color-os);
 }
 
-
 /***************************************
-** Issue - status labels / milestones ** 
+** Issue - status labels / milestones **
 ****************************************/
 
 .label-box-editor .label {
@@ -98,81 +96,82 @@
   background-color: var(--label-closed);
 }
 
-/*******************************
-** Issue - context labels ** 
-*******************************/
+/***************************
+** Issue - context labels **
+***************************/
 
-.label-box [class*='label-type'] {
+.label-box [class *= "label-type"] {
   background-color: var(--label-color-type);
 }
 
-.label-box [class*='label-browser'] {
+.label-box [class *= "label-browser"] {
   background-color: var(--label-color-browser);
 }
 
-.label-box [class*='label-status'] {
+.label-box [class *= "label-status"] {
   background-color: var(--label-color-status);
 }
 
-.label-box [class*='label-priority'] {
+.label-box [class *= "label-priority"] {
   background-color: var(--label-color-priority);
 }
 
-.label-box [class*='label-nsfw'] {
+.label-box [class *= "label-nsfw"] {
   background-color: var(--label-color-nsfw);
 }
 
-.label-box [class*='label-device'] {
+.label-box [class *= "label-device"] {
   background-color: var(--label-color-device);
 }
 
-.label-box [class*='label-os'] {
+.label-box [class *= "label-os"] {
   background-color: var(--label-color-os);
 }
 
-.label-box [class*='label-closed'],
-.label-box [class*='label-status'] {
+.label-box [class *= "label-closed"],
+.label-box [class *= "label-status"] {
   background-color: var(--label-closed);
 }
+
 /* label editor list for selecting content labels */
 
 .label-box .label-editor-list .label-editor-list-item {
   background-color: var(--color-bg-box);
 }
 
-.label-box .label-editor-list [class*='label-'] {
+.label-box .label-editor-list [class *= "label-"] {
   border-left-color: var(--color-fourth);
 }
 
-.label-box .label-editor-list [class*='label-type'] {
+.label-box .label-editor-list [class *= "label-type"] {
   border-left-color: var(--label-color-type);
 }
 
-.label-box .label-editor-list [class*='label-browser'] {
+.label-box .label-editor-list [class *= "label-browser"] {
   border-left-color: var(--label-color-browser);
 }
 
-.label-box .label-editor-list [class*='label-status'] {
+.label-box .label-editor-list [class *= "label-status"] {
   border-left-color: var(--label-color-status);
 }
 
-.label-box .label-editor-list [class*='label-priority'] {
+.label-box .label-editor-list [class *= "label-priority"] {
   border-left-color: var(--label-color-priority);
 }
 
-.label-box .label-editor-list [class*='label-nsfw'] {
+.label-box .label-editor-list [class *= "label-nsfw"] {
   border-left-color: var(--label-color-nsfw);
 }
 
-.label-box .label-editor-list [class*='label-device'] {
+.label-box .label-editor-list [class *= "label-device"] {
   border-left-color: var(--label-color-device);
 }
 
-.label-box .label-editor-list [class*='label-os'] {
+.label-box .label-editor-list [class *= "label-os"] {
   border-left-color: var(--label-color-os);
 }
 
-.label-box .label-editor-list [class*='label-closed'],
-.label-box .label-editor-list [class*='label-status'] {
+.label-box .label-editor-list [class *= "label-closed"],
+.label-box .label-editor-list [class *= "label-status"] {
   border-left-color: var(--label-closed);
 }

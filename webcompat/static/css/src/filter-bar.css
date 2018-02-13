@@ -44,6 +44,10 @@
 .filter-bar-dropdown-listbox a {
   text-align: left;
   padding: 2px 10px;
+  display: block;
+  min-width: 100%;
+  margin-top: 2px;
+  white-space: nowrap;
 }
 
 .filter-bar-dropdown-input:focus + [data-opens-dropdown],
@@ -74,18 +78,11 @@
   right: 0;
   display: none;
   z-index: 2;
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: rgba(255, 255, 255, .8);
 }
 
 :checked ~ .filter-bar-dropdown-listbox {
   display: block;
-}
-
-.filter-bar-dropdown-listbox a {
-  display: block;
-  min-width: 100%;
-  margin-top: 2px;
-  white-space: nowrap;
 }
 
 .filter-bar-search {

@@ -1,5 +1,5 @@
 .hero-section {
-  padding: calc(var(--unit-gutter) /2) var(--unit-gutter);
+  padding: calc(var(--unit-gutter) / 2) var(--unit-gutter);
   margin-top: -26px;
 }
 
@@ -73,7 +73,7 @@
   .bug-animated {
     animation-name: bug;
     animation-duration: 2s;
-    animation-delay: 0.75s;
+    animation-delay: .75s;
     animation-fill-mode: both;
     animation-timing-function: linear;
     transform-origin: 50% 100%;

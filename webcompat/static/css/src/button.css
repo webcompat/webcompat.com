@@ -16,12 +16,6 @@
   cursor: pointer;
 }
 
-.button:hover,
-.button-primary:hover,
-.button-secondary:hover {
-  opacity: .85;
-}
-
 .button-primary {
   background-color: var(--color-first);
 }
@@ -29,6 +23,12 @@
 .button-secondary {
   background-color: var(--color-second);
   color: var(--color-bg-page);
+}
+
+.button:hover,
+.button-primary:hover,
+.button-secondary:hover {
+  opacity: .85;
 }
 
 .button-icon-hero {

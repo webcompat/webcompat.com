@@ -26,9 +26,8 @@
   .bio .bio-img {
     filter: grayscale(100%);
   }
-  
+
   .bio .bio-img:hover {
     filter: grayscale(0%);
   }
 }
-
