@@ -194,6 +194,10 @@
   height: 100px;
 }
 
+.comment-body .form-upload .label-icon {
+  width: 90%;
+}
+
 .label-icon .icon {
   display: block;
   margin: 0 auto;
