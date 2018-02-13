@@ -63,7 +63,7 @@
     "jst": "grunt jst",
     "lint": "npm run lint:JS && npm run lint:CSS",
     "lint:JS": "eslint ./Gruntfile.js ./tests ./grunt-tasks ./webcompat/static/js/lib",
-    "lint:CSS": "stylelint './webcompat/static/css/src/**/*.css'",
+    "lint:CSS": "stylelint './webcompat/static/css/src/**/*.css' './webcompat/static/css/webcompat.dev.css'",
     "fix": "npm run lint:fix:JS && npm run lint:fix:CSS",
     "lint:fix:JS": "eslint --fix ./Gruntfile.js ./tests ./grunt-tasks ./webcompat/static/js/lib",
     "lint:fix:CSS": "stylelint './webcompat/static/css/src/**/*.css' --fix",

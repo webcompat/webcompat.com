@@ -5,30 +5,30 @@
 /* @import "lib/a11y-en.css"; */
 
 /* custom src files */
-@import 'src/variables.css';
-@import 'src/typo.css';
-@import 'src/grid.css';
-@import 'src/colors.css';
-@import 'src/icons.css';
-@import 'src/button.css';
-@import 'src/nav.css';
-@import 'src/sub-nav.css';
-@import 'src/bio.css';
-@import 'src/hero.css';
-@import 'src/tiles.css';
-@import 'src/form.css';
-@import 'src/issue.css';
-@import 'src/labels.css';
-@import 'src/label-box.css';
-@import 'src/label-editor.css';
-@import 'src/filter.css';
-@import 'src/filter-bar.css';
-@import 'src/issues-list.css';
-@import 'src/pagination.css';
-@import 'src/dropdown.css';
-@import 'src/footer.css';
-@import 'src/notification-bar.css';
-@import 'src/animations.css';
+@import "src/variables.css";
+@import "src/typo.css";
+@import "src/grid.css";
+@import "src/colors.css";
+@import "src/icons.css";
+@import "src/button.css";
+@import "src/nav.css";
+@import "src/sub-nav.css";
+@import "src/bio.css";
+@import "src/hero.css";
+@import "src/tiles.css";
+@import "src/form.css";
+@import "src/issue.css";
+@import "src/labels.css";
+@import "src/label-box.css";
+@import "src/label-editor.css";
+@import "src/filter.css";
+@import "src/filter-bar.css";
+@import "src/issues-list.css";
+@import "src/pagination.css";
+@import "src/dropdown.css";
+@import "src/footer.css";
+@import "src/notification-bar.css";
+@import "src/animations.css";
 
 /* imports for other vendor files */
 @import "lib/prism-gh-theme.css";
@@ -64,10 +64,11 @@
 .is-hidden {
   display: none;
 }
+
 .off-screen {
   position: absolute;
   top: -9999px;
-  left: -9999px; 
+  left: -9999px;
 }
 
 .desktop-only {
@@ -79,7 +80,7 @@
     display: inline-block;
   }
 }
-  
+
 .visually-hidden {
   visibility: hidden;
 }
