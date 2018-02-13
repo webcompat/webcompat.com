@@ -1,7 +1,7 @@
 <script type="text/template">
   <div class="label-editor-header">
     <input class="form-field text-field js-MilestoneEditor-search" placeholder="Filter labels">
-    <button class="nav-button js-MilestoneEditor-close"
+    <button class="nav-button js-CategoryEditor-close"
             tabindex="0">
       <svg class="nav-text icon nav-icon" viewBox="0 0 30 30" role="presentation">
           <title>Save &amp; close</title>
@@ -13,7 +13,7 @@
     <% _.each(milestones, function(milestone) { %>
       <label class="label-editor-list-item label-<%= milestone.name %>" tabindex="0">
         <input class="label-editor-list-item-checkbox"
-               type="checkbox" name="milestone.name"
+               type="checkbox" name="<%= milestone.name %>"
                data-color="<%=milestone.color%>"
                data-remotename="milestone-<%= milestone.name %>"
                tabindex="-1">
