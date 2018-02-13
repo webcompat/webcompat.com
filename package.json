@@ -81,7 +81,8 @@
     "test:python": "nosetests"
   },
   "lint-staged": {
-    "*.js": "lint:JS"
+    "*.js": "lint:JS",
+    "*.css": "lint:CSS"
   },
   "license": "MPL-2.0"
 }
