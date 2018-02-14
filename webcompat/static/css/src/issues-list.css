@@ -92,4 +92,5 @@
   margin-top: -23px;
   position: absolute;
   margin-left: -18px;
+  z-index: 200;
 }
