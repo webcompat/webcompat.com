@@ -8,6 +8,7 @@
   line-height: 3em;
   margin-bottom: 5px;
   border-left: 5px solid;
+  cursor: pointer;
 }
 
 .filter-label .needstriage {
