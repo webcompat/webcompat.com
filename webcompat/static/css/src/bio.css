@@ -29,3 +29,13 @@
   padding-top: 0;
   margin-top: -5px;
 }
+
+@media screen and (min-width: 998px) {
+  .bio .bio-img {
+    filter: grayscale(100%);
+  }
+  
+  .bio .bio-img:hover {
+    filter: grayscale(0%);
+  }
+}
