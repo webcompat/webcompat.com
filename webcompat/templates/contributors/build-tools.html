@@ -1,0 +1,47 @@
+{% extends "layout.html" %}
+{% block title %}Build Tools{% endblock %}
+{% block body %}
+<div>
+  {% include "nav/nav.html" %}
+  <main role="main">
+    <section class="grid grid-show-gap">
+      <div class="grid-row">
+        <aside class="grid-cell x1-fix">
+          {% include "contributors/sub-nav.html" %}
+        </aside>
+        <div class="grid-cell x1">
+          <section>
+            <h1 id="build-tools" class="headline-1 highlight">Build Tools</h1>
+            <p>
+              webcompat is an <a href="https://github.com/webcompat/">open source project</a>. It relies on the effort of <a href="https://wiki.mozilla.org/Compatibility/">Mozilla webcompat team</a> and <a href="https://github.com/orgs/webcompat/people">contributions from volunteers</a> across the world. Microsoft Edge team and Google Chrome team are also participating time to time.
+            </p>
+            
+            <p>
+              There are different areas were you can create an impact on developing tools including:
+            </p>
+
+            <ol>
+              <li>
+                <a href="https://github.com/webcompat/webcompat.com">webcompat.com</a> website itself. It is a mix of python and JavaScript using github as a backend. Anyone with UX, CSS, HTML, python, JavaScript skills are <a href="https://github.com/webcompat/webcompat.com/blob/master/CONTRIBUTING.md">welcome to contribute</a>. Just browse the <a href="https://github.com/webcompat/webcompat.com/issues">issues list</a>.
+              </li>
+              <li>
+                <a href="https://github.com/webcompat/webcompat-reporter-extensions">Webcompat reporter extensions</a> helps to make the reporting directly accessible in browsers.
+              </li>
+              <li>
+                @@Ask mike and others about potential other areas for contributing@@ 
+              </li>
+            </ol>
+          </section>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+{% endblock %}
+{%- block extrascripts -%}
+{%- if config.PRODUCTION or config.STAGING -%}
+<script src="{{ url_for('static', filename='js/contributors.min.js')|bust_cache }}"></script>
+{% else %}
+<script src="{{ url_for('static', filename='js/lib/contributors.js') }}"></script>
+{%- endif %}
+{%- endblock %}

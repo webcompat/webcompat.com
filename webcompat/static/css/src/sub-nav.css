@@ -24,8 +24,6 @@
 .nested-sub::after {
   content: " ";
   background-image: url("../../img/svg/icons/svg-chevron-right.svg");
-
-  /* transform: rotate(90deg); */
   background-repeat: no-repeat;
   background-size: contain;
   background-position: 0;

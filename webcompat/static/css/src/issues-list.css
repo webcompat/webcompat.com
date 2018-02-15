@@ -86,3 +86,11 @@
     padding: 0 calc(var(--unit-gap) * 1.2);
   }
 }
+
+
+#x-search-bar .nav-button {
+  margin-top: -23px;
+  position: absolute;
+  margin-left: -18px;
+  z-index: 200;
+}

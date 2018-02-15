@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-{% block title %}Contributors{% endblock %}
+{% block title %}Diagnose A Webcompat Issue{% endblock %}
 {% block body %}
 <div>
   {% include "nav/nav.html" %}
@@ -11,37 +11,49 @@
         </aside>
         <div class="grid-cell x1">
           <section>
-            <ul class="contributors__list">
-              <li class="contributors__list__item"><span>Find a bug that "<a href="https://webcompat.com/issues?page=1&per_page=50&state=open&stage=needsdiagnosis&sort=created&direction=desc">Needs Diagnosis</a> or <a href="https://webcompat.com/issues?page=1&per_page=50&state=open&stage=needstriage&sort=created&direction=desc">Needs Triage"</a></span>
-                <div class="contributors__list__screenshot">
-                  <img src="../img/1browsesnapshot.png" alt="Browse Issues Screenshot"/>
-                </div></li>
-              <li class="contributors__list__item"><span>Check to see if the bug has been reproduced already</span></li>
-              <li class="contributors__list__item"><span>If not, try to reproduce the bug</span></li>
-              <li class="contributors__list__item"><span>If the bug is NOT reproducible, write a comment on the issue</span></li>
-              <li class="contributors__list__item"><span>If the bug is reproducible, try to reproduce on other browsers or OS</span></li>
-              <li class="contributors__list__item">
-                <span>Check the console to see if there are any errors</span>
-                <div class="contributors__list__screenshot">
-                  <img src="../img/6consolesnapshot.png" alt="Developer Console Screenshot"/>
-                </div>
-              </li>
-              <li class="contributors__list__item"><span>Google any errors</span></li>
-              <li class="contributors__list__item"><span>Write a comment with your findings on the issue</span></li>
-              <li class="contributors__list__item">
-                <span>If you know how to fix the issue, or have information related to a fix, add it in a comment</span>
-                <div class="contributors__list__screenshot">
-                  <img src="../img/9commentsnapshot.png" alt="Bug Comments Screenshot"/>
-                </div>
-              </li>
-              <li class="contributors__list__item"><span>If not, post what you tried on the issue</span></li>
-            </ul>
-            <section id="diagnose-ref" class="references">
-            <p>There are a wide list of references on how to diagnose bugs for desktop and mobile.</p>
-            <ul>
-              <li><a href="https://developer.chrome.com/devtools/docs/remote-debugging">Chrome Remote Debugging (Android)</a></li>
-              <li><a href="https://developer.mozilla.org/en-US/docs/Tools/Remote_Debugging">Firefox Remote Debugging (Android and Firefox OS)</a></li>
-            </ul>
+            <h1 id="diagnose" class="headline-1 highlight">Diagnose A Webcompat Issue</h1>
+            <p>
+              Someone has <a href="/contribute/report">reported a bug</a>. It has been successfully triaged. The issue is now in the <a href="https://webcompat.com/issues?page=1&amp;per_page=50&amp;state=open&amp;stage=needsdiagnosis&amp;sort=created&amp;direction=desc">needs diagnosis list</a>. You can help!
+            </p>
+        </div>
+      </div>
+    </section>
+    <section class="grid">
+      <div class="grid-row">
+        <div class="grid-cell x3"> 
+            <h2 id="neutral" class="headline-1 highlight">Have A Neutral Test Environment</h2>
+
+            <p>
+              To have a successful diagnosis of the issue, you will probably need to have a setup which makes it possible to have a fresh profile of the browser you are testing with. Previous logins, addons or web extensions, changed settings are parameters which might have influence on your ability to diagnose correctly the source of the issue. For example, on firefox you can <a href="http://www.otsukare.info/2014/11/12/configure-webcompat-browser">create a profile which resets</a> which each browser restart.
+            </p>
+        </div>
+      </div>
+    </section>
+    <section class="grid">
+      <div class="grid-row">
+        <div class="grid-cell x3"> 
+            <h2 id="skills" class="headline-1 highlight">Develop Competences, Have Impact</h2>
+            <p>
+              <a href="https://webcompat.com/issues?page=1&amp;per_page=50&amp;state=open&amp;stage=needsdiagnosis&amp;sort=created&amp;direction=desc">Pick up an issue from the list</a> and starts analyzing the reasons. You will probably spend a lot of time in the developer tools of each browser, tweaking values, inserting breakpoints in JavaScript code, reading specifications. Without realizing it, after a while, you will learn a lot about the subtle differences in between browsers.
+            </p>
+
+            <p>
+              You might end up opening an issue on one of the browser reporting systems, because you discovered something off with the core engine of the browsers (such as Gecko on Firefox, Blink on Chrome/Opera and others, and WebKit on Safari). The Web platform will be a better place because of you.
+            </p>
+        </div>
+      </div>
+    </section>
+    <section class="grid">
+      <div class="grid-row">
+        <div class="grid-cell x3"> 
+            <h2 id="verbose" class="headline-1 highlight">Be verbose</h2>
+            <p>
+                Provide as <a href="@@insert link of a good analysis@@">much details as possible</a> during your analysis. Your thought process in diagnosing the issue is as important as your conclusion. It helps other people who are in charge of contacting websites and websites owners to have a better understanding of the issue. It will be quicker to negotiate a fix once all the details are known.
+              </p>
+
+            <p>
+              @@question: provide some links to more in depth articles or maybe we reference a wiki page which has the links (MDN?). This avoid to have to do pull request to adjust the list.@@
+            </p>
           </section>
         </div>
       </div>

@@ -5,11 +5,17 @@
     </a>
   </li>
 
-  <li class="sub-nav-item {% if request.url_rule.endpoint in ['contributors_reproduce_bug', 'contributors_diagnose_bug', 'contributors_site_outreach', 'contributors_contribute'] %} active {% endif %}">
-    <a class="link-text" href="/contributors/reproduce-bug">
-      Get Started <span class="nested-sub"></span>
+  <li class="sub-nav-item {% if request.url_rule.endpoint in ['contributors_report_bug', 'contributors_reproduce_bug', 'contributors_diagnose_bug', 'contributors_site_outreach'] %} active {% endif %}">
+    <a class="link-text" href="/contributors/report-bug">
+      Working with bugs <span class="nested-sub"></span>
     </a>
     <ol class="nested-sub-nav">
+      <li class="nested-sub-nav-item {% if request.url_rule.endpoint == 'contributors_report_bug' %} sub-nav-active{% endif %}">
+        <a class="link-text" href="/contributors/report-bug">
+          Report a Bug
+        </a>
+      </li>
+
       <li class="nested-sub-nav-item {% if request.url_rule.endpoint == 'contributors_reproduce_bug' %} sub-nav-active{% endif %}">
         <a class="link-text" href="/contributors/reproduce-bug">
           Reproduce a Bug
@@ -27,10 +33,29 @@
           Site outreach
         </a>
       </li>
-      
-      <li class="nested-sub-nav-item {% if request.url_rule.endpoint == 'contributors_contribute' %} sub-nav-active{% endif %}">
-        <a class="link-text" href="/contributors/contribute">
-          Contribute
+    </ol>
+  </li>
+
+  <li class="sub-nav-item {% if request.url_rule.endpoint in ['contributors_build_tools', 'contributors_web_platform_research', 'contributors_organize_webcompat_events'] %} active {% endif %}">
+    <a class="link-text" href="/contributors/build-tools">
+      Other ways to contribute <span class="nested-sub"></span>
+    </a>
+    <ol class="nested-sub-nav">
+      <li class="nested-sub-nav-item {% if request.url_rule.endpoint == 'contributors_build_tools' %} sub-nav-active{% endif %}">
+        <a class="link-text" href="/contributors/build-tools">
+          Build Tools
+        </a>
+      </li>
+
+      <li class="nested-sub-nav-item {% if request.url_rule.endpoint == 'contributors_web_platform_research' %} sub-nav-active{% endif %}">
+        <a class="link-text" href="/contributors/web-platform-research">
+          Web Platform Research
+        </a>
+      </li>
+
+      <li class="nested-sub-nav-item {% if request.url_rule.endpoint == 'contributors_organize_webcompat_events' %} sub-nav-active{% endif %}">
+        <a class="link-text" href="/contributors/organize-webcompat-events">
+          Organize Webcompat events
         </a>
       </li>
     </ol>
