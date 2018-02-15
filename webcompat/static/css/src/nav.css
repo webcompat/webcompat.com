@@ -25,10 +25,6 @@
   max-width: 100%;
 }
 
-.nav-left .nav-item {
-  padding: 1px 5px 5px;
-}
-
 .nav-item {
   text-decoration: none;
   list-style: none;
@@ -42,6 +38,10 @@
 
 .nav-item:last-child {
   margin: 0;
+}
+
+.nav-left .nav-item {
+  padding: 1px 5px 5px;
 }
 
 .nav-item .nav-link {
@@ -63,6 +63,15 @@
   height: 0;
   overflow: hidden;
   vertical-align: middle;
+}
+
+.nav-button {
+  border: none;
+  padding: 0;
+  background-color: transparent;
+  cursor: pointer;
+  color: var(--color-second);
+  font-family: "Open Sans", sans-serif;
 }
 
 #search-bar {
@@ -114,58 +123,47 @@
   .navigation {
     width: 100%;
   }
-  
+
   .nav-left .nav-item {
     padding: 5px;
   }
 }
 
-
-.nav-button {
-    border: none;
-    padding: 0;
-    background-color: transparent;
-    cursor: pointer;
-    color: var(--color-second);
-    font-family: "Open Sans", sans-serif;
-}
-
 .nav-right {
-    text-align: right;
+  text-align: right;
 }
 
 .nav-right .nav-item {
-    margin-right: 0;
-    padding-right: 0;
+  margin-right: 0;
+  padding-right: 0;
 }
 
 .nav-left {
-    margin-top: 3px;
+  margin-top: 3px;
 }
 
 .nav-dropdown-wrapper {
-    display: none;
+  display: none;
 }
 
 .login.is-active .nav-dropdown-wrapper {
-    display: inline-block;
-    position: absolute;
-    width: var(--unit-modul-l);
-    right: 0;
-    left: 0;
-    margin-right: auto;
-    margin-right: auto;
-    margin-top: 48px;
+  display: inline-block;
+  position: absolute;
+  width: var(--unit-modul-l);
+  right: 0;
+  left: 0;
+  margin-right: auto;
+  margin-top: 48px;
 }
 
 .login .nav-button .nav-icon {
-    transform: rotate(90deg);
-    transition: all .1s ease 0s;
+  transform: rotate(90deg);
+  transition: all .1s ease 0s;
 }
 
 .login.is-active .nav-button .nav-icon {
-    transform: rotate(-90deg);
-    transition: all .2s ease 0s;
+  transform: rotate(-90deg);
+  transition: all .2s ease 0s;
 }
 
 .login-avatar-img {
@@ -175,11 +173,11 @@
 }
 
 .nav-addon {
-    display: none;
+  display: none;
 }
 
 @media screen and (min-width: 490px) {
-    .nav-addon {
-        display: inline-block;
-    }  
+  .nav-addon {
+    display: inline-block;
+  }
 }
