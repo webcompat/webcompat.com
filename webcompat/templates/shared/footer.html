@@ -16,7 +16,8 @@
             About
           </a>
         </li>
-        <li class="footer-item{% if request.url_rule.endpoint == 'contributors' %} active{% endif %}">
+        <li class="footer-item{% if request.url_rule.endpoint in 
+        ['contributors_build_tools', 'contributors_web_platform_research', 'contributors_organize_webcompat_events', 'contributors', 'contributors_report_bug', 'contributors_reproduce_bug', 'contributors_diagnose_bug', 'contributors_site_outreach'] %} active{% endif %}">
           <a class="footer-item-link" aria-label="go to contribute" href="{{ url_for('contributors') }}">
             Contribute
           </a>
@@ -37,6 +38,40 @@
           </a>
         </li>
       </ul>
+
+<!-- sub nav for contribute / working with bugs -->
+      {% if request.url_rule.endpoint in ['contributors_report_bug', 'contributors_reproduce_bug', 'contributors_diagnose_bug', 'contributors_site_outreach'] %}
+        <ul class="grid-cell x1 footer-sub-list">
+          <li class="footer-sub-item {% if request.url_rule.endpoint == 'contributors_report_bug' %}active{% endif %}">
+            <a class="footer-item-link" href="/contributors/report-bug">Report a Bug</a>
+          </li>
+          <li class="footer-sub-item {% if request.url_rule.endpoint == 'contributors_reproduce_bug' %}active{% endif %}">
+            <a class="footer-item-link" href="/contributors/reproduce-bug">Reproduce a Bug</a>
+          </li>
+          <li class="footer-sub-item {% if request.url_rule.endpoint == 'contributors_diagnose_bug' %}active{% endif %}">
+            <a class="footer-item-link" href="/contributors/diagnose-bug">Diagnose a Bug</a>
+          </li>
+          <li class="footer-sub-item {% if request.url_rule.endpoint == 'contributors_site_outreach' %}active{% endif %}">
+            <a class="footer-item-link" href="/contributors/site-outreach">Site Outreach</a>
+          </li>
+        </ul>
+      {% endif %}
+
+<!-- sub nav for contribute / other contributions -->
+      {% if request.url_rule.endpoint in ['contributors_build_tools', 'contributors_web_platform_research', 'contributors_organize_webcompat_events'] %}
+        <ul class="grid-cell x1 footer-sub-list">
+          <li class="footer-sub-item {% if request.url_rule.endpoint == 'contributors_build_tools' %}active{% endif %}">
+            <a class="footer-item-link" href="/contributors/build-tools">Build Tools</a>
+          </li>
+          <li class="footer-sub-item {% if request.url_rule.endpoint == 'contributors_web_platform_research' %}active{% endif %}">
+            <a class="footer-item-link" href="/contributors/web-platform-research">Web Platform Research</a>
+          </li>
+          <li class="footer-sub-item {% if request.url_rule.endpoint == 'contributors_organize_webcompat_events' %}active{% endif %}">
+            <a class="footer-item-link" href="/contributors/organize-webcompat-events">Organize Webcompat events</a>
+          </li>
+        </ul>
+      {% endif %}
+
       <ul class="grid-cell x1 footer-sub-icons">
         <li class="footer-icon icon-twitter">
           <a class="footer-item-link" aria-label="open Twitter in a new tab" href="https://twitter.com/webcompat/with_replies" target="_blank">
