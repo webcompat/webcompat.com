@@ -76,15 +76,13 @@
 
 #search-bar {
   position: absolute;
-  top: -27px;
   z-index: 1200;
   max-width: var(--unit-modul-l);
   min-width: var(--unit-modul-s);
   width: 100%;
   transform: rotateY(-90deg);
   transition: all .2s ease 0s;
-  margin-left: auto;
-  margin-right: auto;
+  margin: 0 auto;
   left: 0;
   right: 0;
 }
