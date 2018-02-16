@@ -162,6 +162,7 @@
 
 /* * Form upload */
 .form-upload {
+  position: relative;
   border: 1px solid var(--color-form);
   border-radius: 4px;
 }
@@ -190,8 +191,11 @@
   z-index: 20;
   text-align: center;
   width: 29.5%;
-  margin-top: -120px;
   height: 100px;
+  top: 50%;
+  left: 50%;
+  margin: 0;
+  transform: translate(-50%, -50%);
 }
 
 .comment-body .form-upload .label-icon {
