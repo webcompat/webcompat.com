@@ -20,7 +20,7 @@ registerSuite("History navigation", {
           .click()
           .end()
           // check that the page is loaded
-          .findDisplayedByCssSelector(".wc-IssueList:nth-child(11)")
+          .findDisplayedByCssSelector(".js-IssueList:nth-child(11)")
           .end()
           .getCurrentUrl()
           .then(function(url) {
@@ -28,7 +28,7 @@ registerSuite("History navigation", {
           })
           .goBack()
           // now check that we're back at the home page.
-          .findDisplayedByCssSelector(".wc-IssueList:nth-child(1)")
+          .findDisplayedByCssSelector(".js-IssueList:nth-child(1)")
           .end()
           .getCurrentUrl()
           .then(function(url) {
