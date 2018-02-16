@@ -1,3 +1,10 @@
+@media all and (min-width: 893px) {
+  .label-box {
+    position: sticky;
+    top: 50px;
+  }
+}
+
 .grid-cell.x1.label-box {
   padding: 0;
 }
