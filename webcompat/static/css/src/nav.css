@@ -13,6 +13,7 @@
 }
 
 .nav-container {
+  position: relative;
   max-width: var(--unit-modul-l);
   width: 100%;
   display: flex;
