@@ -52,7 +52,7 @@ registerSuite("Milestones (auth)", {
         .findByCssSelector("body")
         .type("m")
         .end()
-        .findByCssSelector(".wc-CategoryEditor-search")
+        .findByCssSelector(".js-MilestoneEditor-search")
         .type("\uE00C")
         .end()
         .findByCssSelector(".js-MilestoneEditorLauncher")
