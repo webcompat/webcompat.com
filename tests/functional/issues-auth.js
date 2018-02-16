@@ -25,7 +25,7 @@ registerSuite("Issues (auth)", {
       return FunctionalHelpers.openPage(
         this,
         url("/issues/70"),
-        ".wc-Issue-commentSubmit"
+        ".js-Issue-comment-button"
       )
         .findByCssSelector("body")
         .click()
