@@ -58,7 +58,9 @@ intern.configure({
   filterErrorStack: true,
   reporters: [args.reporters ? args.reporters : "pretty"],
 
-  functionalSuites: ["./tests/functional/*.js"]
+  functionalSuites: [
+    args.functionalSuites ? args.functionalSuites : "./tests/functional/*.js"
+  ]
 });
 
 intern.run().catch(e => {
