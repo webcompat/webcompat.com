@@ -24,11 +24,13 @@ registerSuite("User Activity (auth)", {
     "We're at the right place"() {
       var username;
       return FunctionalHelpers.openPage(this, url("/me"), ".js-username")
-        .findByCssSelector(".wc-UIContent .wc-Title--l")
+        .findByCssSelector(".js-username")
         .getVisibleText()
         .then(function(text) {
-          var usernameEnd = text.indexOf("'s activity");
-          username = text.slice(0, usernameEnd);
+          var match = text.match(/Issues reported by (.+)/);
+          if (match) {
+            username = match[1];
+          }
         })
         .getCurrentUrl()
         .then(function(currURL) {
@@ -42,32 +44,31 @@ registerSuite("User Activity (auth)", {
     },
 
     "IssueListView renders"() {
-      return FunctionalHelpers.openPage(this, url("/me"), ".js-list-issue")
-        .findDisplayedByCssSelector(".js-list-issue")
+      return FunctionalHelpers.openPage(this, url("/issues"), ".js-IssueList")
+        .findByCssSelector(".js-IssueList")
         .isDisplayed()
         .then(function(isDisplayed) {
           assert.equal(isDisplayed, true, "IssueList container is visible.");
         })
+        .sleep(1000)
         .end()
-        .findDisplayedByCssSelector(".js-list-issue .js-IssueList")
+        .findByCssSelector(".js-list-issue .js-IssueList")
         .isDisplayed()
         .then(function(isDisplayed) {
           assert.equal(isDisplayed, true, "IssueList item is visible.");
         })
         .end()
-        .findByCssSelector(".js-IssueList .wc-IssueList-header")
-        .getVisibleText()
-        .then(function(text) {
-          assert.match(
-            text,
-            /^Issue\s\d+:\s.+$/,
-            "Issue should have a non-empty title"
+        .findByCssSelector(".js-IssueList .js-issue-title")
+        .isDisplayed()
+        .then(function(isDisplayed) {
+          assert.equal(
+            isDisplayed,
+            true,
+            "IssueList item is has non-empty title."
           );
         })
         .end()
-        .findByCssSelector(
-          ".js-IssueList:nth-child(1) > div:nth-child(1) > p:nth-child(2)"
-        )
+        .findByCssSelector(".js-issue-comments")
         .getVisibleText()
         .then(function(text) {
           assert.match(
@@ -75,9 +76,14 @@ registerSuite("User Activity (auth)", {
             /comments:\s\d+$/i,
             "Issue should display number of comments"
           );
+        })
+        .end()
+        .findByCssSelector(".js-issue-date")
+        .getVisibleText()
+        .then(function(text) {
           assert.match(
             text,
-            /^Opened:\s\d{4}\-\d{2}\-\d{2}.+/,
+            /^Opened:\s\d{4}\-\d{2}\-\d{2}/,
             "Issue should display creation date"
           );
         })
@@ -88,9 +94,9 @@ registerSuite("User Activity (auth)", {
       return FunctionalHelpers.openPage(
         this,
         url("/activity/someoneelse"),
-        ".wc-UIContent"
+        "article"
       )
-        .findByCssSelector(".wc-UIContent .wc-Title--l")
+        .findByCssSelector("article .headline-1")
         .getVisibleText()
         .then(function(text) {
           assert.include(
