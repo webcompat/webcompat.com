@@ -52,7 +52,7 @@ registerSuite("Labels (auth)", {
         .findByCssSelector("body")
         .type("l")
         .end()
-        .findByCssSelector(".wc-CategoryEditor-search")
+        .findByCssSelector(".js-label-search")
         .pressKeys("\uE00C")
         .end()
         .findByCssSelector(".js-LabelEditorLauncher")
