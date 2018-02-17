@@ -14,18 +14,21 @@ var url = function(path) {
 registerSuite("Index", {
   tests: {
     "front page loads"() {
-      return FunctionalHelpers.openPage(this, url("/"), ".js-Hero-title")
-        .findByCssSelector(".js-Hero-title")
+      return FunctionalHelpers.openPage(this, url("/"), ".js-hero-title")
+        .findByCssSelector(".js-hero-title")
         .getVisibleText()
         .then(function(text) {
-          assert.equal(text, "Bug reporting\nfor the internet.");
+          assert.equal(
+            text.toLowerCase(),
+            "Bug reporting\nfor the web.".toLowerCase()
+          );
         })
         .end();
     },
 
     "reporter addon link is shown"() {
-      return FunctionalHelpers.openPage(this, url("/"), ".js-Hero-title")
-        .findByCssSelector(".js-Navbar-link")
+      return FunctionalHelpers.openPage(this, url("/"), ".js-hero-title")
+        .findByCssSelector(".js-addon-link")
         .getVisibleText()
         .then(function(text) {
           assert.include(text, "Download our");
@@ -35,7 +38,7 @@ registerSuite("Index", {
 
     "form toggles open then closed"() {
       return (
-        FunctionalHelpers.openPage(this, url("/"), ".js-Hero-title")
+        FunctionalHelpers.openPage(this, url("/"), ".js-hero-title")
           .findByCssSelector("#js-ReportBug")
           .click()
           .end()
@@ -46,6 +49,11 @@ registerSuite("Index", {
             assert.equal(isDisplayed, true, "The form is displayed");
           })
           .end()
+          .execute(function() {
+            // scroll up so the driver doesn't get confused and
+            // click on the addon link
+            window.scrollTo(0, 0);
+          })
           .findByCssSelector("#js-ReportBug")
           .click()
           .end()
@@ -60,39 +68,35 @@ registerSuite("Index", {
     },
 
     "browse issues (needstriage)"() {
-      return FunctionalHelpers.openPage(this, url("/"), ".js-Hero-title")
-        .findAllByCssSelector(
-          "#js-lastIssue .js-IssueList.wc-IssueList--needstriage"
-        )
+      return FunctionalHelpers.openPage(this, url("/"), ".js-hero-title")
+        .findAllByCssSelector("#js-lastIssue .js-IssueList.label-needstriage")
         .then(function(elms) {
           assert.equal(elms.length, 10, "10 issues should be displayed");
         })
         .end()
-        .findByCssSelector(".wc-IssueList--needstriage .wc-IssueList-count")
+        .findByCssSelector(".js-IssueList.label-needstriage .js-issue-number")
         .getVisibleText()
         .then(function(text) {
           assert.match(text, /^Issue\s(\d+)$/, "Issue should have a number");
         })
         .end()
-        .findByCssSelector(".wc-IssueList--needstriage .wc-IssueList-header a")
+        .findByCssSelector(".js-IssueList.label-needstriage .js-issue-desc a")
         .getAttribute("href")
         .then(function(text) {
           assert.match(text, /^\/issues\/\d+$/, "Link should have a number");
         })
         .end()
-        .findByCssSelector(".wc-IssueList--needstriage .wc-IssueList-header")
+        .findByCssSelector(".js-IssueList.label-needstriage .js-issue-desc")
         .getVisibleText()
         .then(function(text) {
           assert.match(
             text,
-            /^Issue\s\d+:\s.+$/,
+            /^Issue\s\d+\n.+/,
             "Issue should have a non-empty title"
           );
         })
         .end()
-        .findByCssSelector(
-          ".wc-IssueList--needstriage .wc-IssueList-metadata:nth-child(1)"
-        )
+        .findByCssSelector(".js-IssueList.label-needstriage .js-issue-date")
         .getVisibleText()
         .then(function(text) {
           assert.match(
@@ -102,9 +106,7 @@ registerSuite("Index", {
           );
         })
         .end()
-        .findByCssSelector(
-          ".wc-IssueList--needstriage .wc-IssueList-metadata:nth-child(2)"
-        )
+        .findByCssSelector(".js-issue-desc .js-issue-comments")
         .getVisibleText()
         .then(function(text) {
           assert.match(
