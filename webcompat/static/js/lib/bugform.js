@@ -341,7 +341,7 @@ function BugForm() {
     }
 
     var inlineHelp = $("<small></small>", {
-      class: "label-icon-message",
+      class: "label-icon-message form-message-error",
       text: opts && opts.altHelp
         ? this.inputs[id].altHelpText
         : this.inputs[id].helpText

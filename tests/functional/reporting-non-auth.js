@@ -25,9 +25,9 @@ registerSuite("Reporting (non-auth)", {
       return FunctionalHelpers.openPage(
         this,
         url("/issues/new"),
-        ".wc-ReportForm-actions-button"
+        ".js-report-buttons"
       )
-        .findAllByCssSelector(".wc-ReportForm-actions-button button")
+        .findAllByCssSelector(".js-report-buttons button")
         .getAttribute("class")
         .then(function(classNames) {
           classNames.forEach(function(className) {
@@ -55,7 +55,7 @@ registerSuite("Reporting (non-auth)", {
       return FunctionalHelpers.openPage(
         this,
         url("/issues/new"),
-        ".wc-ReportForm-actions-button"
+        ".js-report-buttons"
       )
         .findByCssSelector("#submitgithub")
         .getVisibleText()
@@ -69,7 +69,7 @@ registerSuite("Reporting (non-auth)", {
       return FunctionalHelpers.openPage(
         this,
         url("/issues/new"),
-        ".wc-ReportForm-actions-button"
+        ".js-report-buttons"
       )
         .findByCssSelector("#url")
         .click()
@@ -101,7 +101,7 @@ registerSuite("Reporting (non-auth)", {
         FunctionalHelpers.openPage(
           this,
           url("/issues/new"),
-          ".wc-ReportForm-actions-button"
+          ".js-report-buttons"
         )
           .findByCssSelector("#description")
           .click()
@@ -136,7 +136,7 @@ registerSuite("Reporting (non-auth)", {
         FunctionalHelpers.openPage(
           this,
           url("/issues/new"),
-          ".wc-ReportForm-actions-button"
+          ".js-report-buttons"
         )
           // make sure we can see the valid checkbox (i.e. it's background image is non-empty)
           .execute(function() {
@@ -150,7 +150,7 @@ registerSuite("Reporting (non-auth)", {
           .then(function(bgImage) {
             assert.include(
               bgImage,
-              "valid.svg",
+              "checkmark.svg",
               "The valid checkbox pseudo is visible"
             );
           })
@@ -174,7 +174,7 @@ registerSuite("Reporting (non-auth)", {
           .then(function(bgImage) {
             assert.notInclude(
               bgImage,
-              "valid.svg",
+              "checkmark.svg",
               "The valid checkbox pseudo is not visible"
             );
           })
@@ -187,7 +187,7 @@ registerSuite("Reporting (non-auth)", {
         FunctionalHelpers.openPage(
           this,
           url("/issues/new"),
-          ".wc-ReportForm-actions-button"
+          ".js-report-buttons"
         )
           .findByCssSelector("#image")
           .type(BAD_IMAGE_PATH)
@@ -217,7 +217,7 @@ registerSuite("Reporting (non-auth)", {
         FunctionalHelpers.openPage(
           this,
           url("/issues/new"),
-          ".wc-ReportForm-actions-button"
+          ".js-report-buttons"
         )
           // pick a valid file type
           .findByCssSelector("#image")
@@ -227,7 +227,7 @@ registerSuite("Reporting (non-auth)", {
           .type("http://coolguy.biz")
           .end()
           // pick a problem type
-          .findByCssSelector("#problem_category-0")
+          .findByCssSelector("[for=problem_category-0]")
           .click()
           .end()
           .findByCssSelector("#description")
@@ -237,7 +237,7 @@ registerSuite("Reporting (non-auth)", {
           // wait a bit
           .sleep(250)
           // now make sure the buttons aren't disabled anymore
-          .findAllByCssSelector(".wc-ReportForm-actions-button button")
+          .findAllByCssSelector(".js-report-buttons button")
           .getAttribute("class")
           .then(function(classNames) {
             classNames.forEach(function(className) {
@@ -252,7 +252,7 @@ registerSuite("Reporting (non-auth)", {
       return FunctionalHelpers.openPage(
         this,
         url("/issues/new?problem_type=video_bug"),
-        ".wc-ReportForm-actions-button"
+        ".js-report-buttons"
       )
         .findByCssSelector("[value=video_bug]")
         .isSelected()

@@ -65,7 +65,7 @@
     <div class="form-text form-element js-Form-group">
       {{ form.browser.label(class_='form-label') }}
       {{ form.browser(class_='form-field text-field') }}
-      <span class="form-input-validation check"></span>
+      <span class="form-input-validation check js-bug-form-os"></span>
       {{ form.os(class_='form-field text-field') }}
       <span class="form-input-validation check"></span>
     </div>
@@ -99,7 +99,7 @@
           <small class="label-icon-message">Remove screenshot</small>
         </div>
 
-        
+
         <div class="label-icon label-error is-hidden js-error-upload">
           <svg class="icon icon-big" role="presentation" title="An error occoured">
             <use class="icon-error" href="#svg-warning">An error occoured</use>
@@ -112,7 +112,7 @@
         </div>
     </div>
 
-    <div class="form-button form-element js-Form-group">
+    <div class="form-button form-element js-Form-group js-report-buttons">
       <button
         class="button js-Button"
         id="submitanon"
@@ -143,6 +143,6 @@
         {{ form.username(class_='u-formInput') }}
       </div>
     </div>
-  
+
   {{ form.hidden_tag() }}
 </form>
