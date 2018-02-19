@@ -1,8 +1,3 @@
-.is-disabled {
-  opacity: .7;
-  text-decoration: none;
-}
-
 .pagination-previous,
 .pagination-next,
 .sort-dropdown .button {
@@ -13,6 +8,13 @@
   font-size: 16px;
   line-height: 1.8em;
   padding: 0;
+  cursor: pointer;
+}
+
+.is-disabled {
+  opacity: .7;
+  text-decoration: none;
+  cursor: default;
 }
 
 .pagination-previous .nav-icon {
