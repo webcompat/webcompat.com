@@ -22,7 +22,7 @@
       {{ form.url(class_='form-field text-field required',
          placeholder='e.g. https://example.com',
          required=True, type='url', pattern='') }}
-         <span class="form-input-validation error"></span>
+         <span class="form-input-validation check error"></span>
     </div>
     <div class="form-radio form-element js-Form-group">
       <div class="js-Form-information">
@@ -52,7 +52,7 @@
       {{ form.description(class_='form-field text-field required',
          placeholder="e.g. The video doesn't play",
          required=True) }}
-      <span class="form-input-validation error"></span>
+      <span class="form-input-validation check error"></span>
     </div>
     <div class="form-text form-element js-Form-group">
       {{ form.steps_reproduce.label(class_='form-label') }}
