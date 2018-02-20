@@ -85,6 +85,7 @@
   margin: 0 auto;
   left: 0;
   right: 0;
+  top: 1px;
 }
 
 .is-active #search-bar {
