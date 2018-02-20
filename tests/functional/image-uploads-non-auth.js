@@ -7,8 +7,9 @@ const intern = require("intern").default;
 const { assert } = intern.getPlugin("chai");
 const { registerSuite } = intern.getInterface("object");
 const FunctionalHelpers = require("./lib/helpers.js");
+const keys = require("@theintern/leadfoot/keys").default;
 
-const url = intern.config.siteRoot + "/?open=1";
+const url = intern.config.siteRoot + "/issues/new";
 
 // This string is executed by calls to `execute()` in various tests
 // it postMessages a small green test square.
@@ -62,6 +63,7 @@ registerSuite("Image Uploads (non-auth)", {
       return FunctionalHelpers.openPage(this, url, ".js-image-upload")
         .findById("image")
         .type("tests/fixtures/green_square.png")
+        .pressKeys(keys.RETURN)
         .sleep(1000)
         .end()
         .findByCssSelector(".js-image-upload")
@@ -120,7 +122,7 @@ registerSuite("Image Uploads (non-auth)", {
       return FunctionalHelpers.openPage(this, url, ".js-image-upload")
         .findById("image")
         .type("tests/fixtures/green_square.png")
-        .sleep(1000)
+        .pressKeys(keys.RETURN)
         .end()
         .findByCssSelector("#steps_reproduce")
         .getProperty("value")
@@ -134,21 +136,32 @@ registerSuite("Image Uploads (non-auth)", {
         .end();
     },
 
-    "remove image upload button"() {
+    "remove image upload button is shown"() {
       return (
-        FunctionalHelpers.openPage(this, url, ".remove-upload")
+        FunctionalHelpers.openPage(this, url, ".js-remove-upload")
           // send a small base64 encoded green test square
           .execute(POSTMESSAGE_TEST_SQUARE)
           .sleep(1000)
-          .findByCssSelector(".js-image-upload .remove-upload")
+          .findByCssSelector(".js-remove-upload")
           .isDisplayed()
           .then(function(isDisplayed) {
             assert.equal(isDisplayed, true, "Remove button is displayed");
           })
           .end()
-          .findByCssSelector(".js-image-upload .remove-upload")
-          .click()
+      );
+    },
+
+    "clicking remove image upload button removes preview"() {
+      return (
+        FunctionalHelpers.openPage(this, url, ".js-remove-upload")
+          // send a small base64 encoded green test square
+          .execute(POSTMESSAGE_TEST_SQUARE)
           .sleep(1000)
+          .execute(() => {
+            // work around for chrome "Other element would receive the click"
+            // error
+            $(".js-remove-upload")[0].click();
+          })
           .end()
           .findByCssSelector(".js-image-upload")
           .getAttribute("style")
@@ -160,13 +173,28 @@ registerSuite("Image Uploads (non-auth)", {
             );
           })
           .end()
-          .findByCssSelector("#steps_reproduce")
-          .getProperty("value")
-          .then(function(val) {
+      );
+    },
+
+    "clicking remove image upload button removes image URL"() {
+      return (
+        FunctionalHelpers.openPage(this, url, ".js-remove-upload")
+          // send a small base64 encoded green test square
+          .execute(POSTMESSAGE_TEST_SQUARE)
+          .sleep(1000)
+          .execute(() => {
+            // work around for chrome "Other element would receive the click"
+            // error
+            $(".js-remove-upload")[0].click();
+          })
+          .end()
+          .findByCssSelector(".js-image-upload")
+          .getAttribute("style")
+          .then(function(inlineStyle) {
             assert.notInclude(
-              val,
-              "[![Screenshot Description](http://localhost:5000/uploads/",
-              "The url to the image upload was correctly removed."
+              inlineStyle,
+              "data:image/png;base64,iVBOR",
+              "Preview was removed"
             );
           })
           .end()
@@ -174,19 +202,20 @@ registerSuite("Image Uploads (non-auth)", {
     },
 
     "double image select works"() {
-      return FunctionalHelpers.openPage(this, url, ".remove-upload")
+      return FunctionalHelpers.openPage(this, url, ".js-remove-upload")
         .findById("image")
         .type("tests/fixtures/green_square.png")
+        .pressKeys(keys.RETURN)
         .sleep(1000)
         .end()
-        .findByCssSelector(".js-image-upload .remove-upload")
+        .findByCssSelector(".js-remove-upload")
         .click()
-        .sleep(1000)
         .end()
         .findById("image")
         .type("tests/fixtures/green_square.png")
-        .end()
+        .pressKeys(keys.RETURN)
         .sleep(1000)
+        .end()
         .findByCssSelector(".js-image-upload")
         .getAttribute("style")
         .then(function(inlineStyle) {
