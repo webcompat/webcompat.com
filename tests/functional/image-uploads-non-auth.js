@@ -8,7 +8,12 @@ const { assert } = intern.getPlugin("chai");
 const { registerSuite } = intern.getInterface("object");
 const FunctionalHelpers = require("./lib/helpers.js");
 
-var url = intern.config.siteRoot + "/?open=1";
+const url = intern.config.siteRoot + "/?open=1";
+
+// This string is executed by calls to `execute()` in various tests
+// it postMessages a small green test square.
+const POSTMESSAGE_TEST_SQUARE =
+  'postMessage("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAIAAABLixI0AAAACXBIWXMAAA7DAAAOwwHHb6hkAAAAB3RJTUUH3gYSAig452t/EQAAAClJREFUOMvtzkENAAAMg0A25ZU+E032AQEXoNcApCGFLX5paWlpaWl9dqq9AS6CKROfAAAAAElFTkSuQmCC", "http://localhost:5000")';
 
 registerSuite("Image Uploads (non-auth)", {
   tests: {
@@ -16,9 +21,7 @@ registerSuite("Image Uploads (non-auth)", {
       return (
         FunctionalHelpers.openPage(this, url, ".js-image-upload")
           // send a small base64 encoded green test square
-          .execute(
-            'postMessage("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAIAAABLixI0AAAACXBIWXMAAA7DAAAOwwHHb6hkAAAAB3RJTUUH3gYSAig452t/EQAAAClJREFUOMvtzkENAAAMg0A25ZU+E032AQEXoNcApCGFLX5paWlpaWl9dqq9AS6CKROfAAAAAElFTkSuQmCC", "http://localhost:5000")'
-          )
+          .execute(POSTMESSAGE_TEST_SQUARE)
           .sleep(1000)
           .findByCssSelector(".js-image-upload")
           .getAttribute("style")
@@ -77,9 +80,7 @@ registerSuite("Image Uploads (non-auth)", {
       return (
         FunctionalHelpers.openPage(this, url, ".js-image-upload")
           // send a small base64 encoded green test square
-          .execute(
-            'postMessage("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAIAAABLixI0AAAACXBIWXMAAA7DAAAOwwHHb6hkAAAAB3RJTUUH3gYSAig452t/EQAAAClJREFUOMvtzkENAAAMg0A25ZU+E032AQEXoNcApCGFLX5paWlpaWl9dqq9AS6CKROfAAAAAElFTkSuQmCC", "http://localhost:5000")'
-          )
+          .execute(POSTMESSAGE_TEST_SQUARE)
           .sleep(1000)
           .findByCssSelector("#steps_reproduce")
           .getProperty("value")
@@ -137,9 +138,7 @@ registerSuite("Image Uploads (non-auth)", {
       return (
         FunctionalHelpers.openPage(this, url, ".remove-upload")
           // send a small base64 encoded green test square
-          .execute(
-            'postMessage("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAIAAABLixI0AAAACXBIWXMAAA7DAAAOwwHHb6hkAAAAB3RJTUUH3gYSAig452t/EQAAAClJREFUOMvtzkENAAAMg0A25ZU+E032AQEXoNcApCGFLX5paWlpaWl9dqq9AS6CKROfAAAAAElFTkSuQmCC", "http://localhost:5000")'
-          )
+          .execute(POSTMESSAGE_TEST_SQUARE)
           .sleep(1000)
           .findByCssSelector(".js-image-upload .remove-upload")
           .isDisplayed()
