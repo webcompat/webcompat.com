@@ -2,34 +2,53 @@
 {% block title %}Issue #{{ number }}{% endblock %}
 {% block body %}
   {% include "nav/nav.html" %}
-  <main class="wc-UISection wc-UISection--backgroundColor" role="main"
+  <main class="grid grid-show-gap" role="main"
         data-issue-number={{ number }}
         data-repo-path="{{ config['ISSUES_REPO_URI'] }}"
         data-statuses="{{ config['JSON_STATUSES'] }}"
         >
-    <div class="wc-Issue">
-      <section class="wc-UIContent js-Issue is-hidden">
-        {% include "issue/issue-aside.html" %}
-        {% include "issue/issue-information.html" %}
-        <div class="wc-Issue-commentList js-Issue-commentList">
+
+<!-- <section " class="grid">
+  <div class="grid-row issue label-closed">
+    <article class="grid-cell x2 issue-description">
+      <p class="issue-number"> Issue 71234: </p>
+      <p class="issue-url"> https://unicornjs.com </p>
+      <p class="issue-type"> Audio / media does not play </p>
+      <p class="issue-date-open"> Opened: 2017-11-12 </p>
+      <p class="issue-date-closed"> Closed: 2017-11-14 </p>
+      <p class="issue-date-comments"> Comments: 12 </p>
+    </article>
+</section> -->
+
+    <section id="issue" class="grid-row js-Issue">
+      <article class="grid-nested x2 issue-labels">
+        <section id="js-Issue-information" class="grid-cell x2">
+          {% include "issue/issue-information.html" %}
+        </section>
+        <section class="js-Issue-commentList issue-comment x2">
           {% include "issue/issue-comment-list.jst" %}
-        </div>
+        </section>
         {% if session.user_id and session.avatar_url %}
-          <div class="wc-Issue-commentSubmit">
+          <section class="grid-cell x2 issue-comment issue-new-comment">
             {% include "issue/issue-comment-submit.html" %}
-          </div>
+          </section>
         {% else %}
-          <p class="wc-Issue-login">Please <a class="wc-Link" href="{{ url_for('login') }}">login</a> to edit issues.</p>
+        <p class="x2">Please <a class="x2" href="{{ url_for('login') }}">login</a> to edit issues.</p>
         {% endif %}
-        <p>
-          <a class="wc-Link wc-GithubLink" href="https://github.com/{{ config['ISSUES_REPO_URI'] }}/{{ number }}"><span class="wc-GithubLink-Icon"></span>View issue on Github</a>
-        </p>
-        <p>
-          <span class="wc-GithubLink-DesktopOnly">Shortcut: Press <b>l</b> on your keyboard to open the label editor.</span> <br />
-          <span class="wc-GithubLink-DesktopOnly">Shortcut: Press <b>g</b> on your keyboard to be taken to the GitHub view of this page.</span>
-        </p>
-      </section>
-    </div>
+
+      <p class="x2">
+        <a class="x2" href="https://github.com/{{ config['ISSUES_REPO_URI'] }}/{{ number }}">
+          <span class="wc-GithubLink-Icon"></span>View issue on Github</a>
+      </p>
+      <p class="x2">
+        <span class="desktop-only">Shortcut: Press <b>l</b> on your keyboard to open the label editor.</span> <br />
+        <span class="desktop-only">Shortcut: Press <b>g</b> on your keyboard to be taken to the GitHub view of this page.</span>
+      </p>
+      </article>
+      <aside class="x1 label-box">
+        {% include "issue/issue-aside.html" %}
+      </aside>
+    </section>
   </main>
 {% endblock %}
 {% block extrascripts %}

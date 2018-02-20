@@ -26,6 +26,10 @@ body {
   text-decoration: underline;
 }
 
+.small {
+  font-size: .75em;
+}
+
 .headline-1 {
   font-size: 2em;
   line-height: 1.4em;

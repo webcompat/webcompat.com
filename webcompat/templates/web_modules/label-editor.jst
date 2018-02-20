@@ -1,23 +1,23 @@
 <script type="text/template">
-  <div class="wc-CategoryEditor-header">
-    <input class="form-control wc-CategoryEditor-search" placeholder="filter label">
-    <button class="wc-CategoryEditor-button r-ResetButton js-CategoryEditor-close"
+  <div class="label-editor-header">
+    <input class="form-field text-field js-label-search" placeholder="Filter labels">
+    <button class="nav-button js-CategoryEditor-close"
             tabindex="0">
-      Save &amp; Close
+      <svg class="nav-text icon nav-icon" viewBox="0 0 30 30" role="presentation">
+          <title>Save &amp; close</title>
+          <use href="#svg-sliders">Save &amp; close</use>
+      </svg>
     </button>
   </div>
-  <div class="wc-CategoryEditor-list" tabindex="-1">
+  <div class="label-editor-list" tabindex="-1">
     <% _.each(labels, function(label) { %>
-      <label class="wc-CategoryEditor-list-item" tabindex="0">
-        <span class="wc-CategoryEditor-list-item-squareColor"
-              style="background-color:#<%=label.color%>">
-          <input class="wc-CategoryEditor-list-item-checkbox"
-                 type="checkbox" name="<%= label.name %>"
-                 data-color="<%=label.color%>"
-                 data-remotename="<%= label.remoteName %>"
-                 tabindex="-1">
-        </span>
-        <span class="wc-CategoryEditor-list-item-name"><%= label.name %></span>
+      <label class="label-editor-list-item label-<%= label.remoteName %>" tabindex="0">
+        <input class="label-editor-list-item-checkbox"
+               type="checkbox" name="<%= label.name %>"
+               data-color="<%=label.color%>"
+               data-remotename="<%= label.remoteName %>"
+               tabindex="-1">
+        <span class="small"><%= label.name %></span>
       </label>
     <% }); %>
   </div>

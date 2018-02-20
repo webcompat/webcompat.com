@@ -56,3 +56,11 @@
   display: flex;
   justify-content: center;
 }
+
+/* As we can not add a class to the img right now (markup parsers are complicated), we need to use the element */
+.comment-body img,
+.js-Issue-markdown img {
+  max-width: calc(var(--unit-modul-m) - (var(--unit-space) * 4));
+  max-height: calc(var(--unit-modul-m) - (var(--unit-space) * 4));
+}
+

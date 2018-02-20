@@ -124,6 +124,7 @@ issues.BodyView = Backbone.View.extend({
   render: function() {
     // hide metadata
     var issueDesc = $(".js-Issue-markdown");
+
     issueDesc
       .contents()
       .filter(function() {
@@ -482,9 +483,11 @@ issues.MainView = Backbone.View.extend({
       });
     }
   },
-  addNewComment: function() {
+  addNewComment: function(event) {
     var form = $(".js-Comment-form");
     var textarea = $(".js-Comment-text");
+    event.preventDefault();
+
     // Only bother if the textarea isn't empty
     if ($.trim(textarea.val())) {
       var newComment = new issues.Comment({

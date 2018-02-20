@@ -3,6 +3,12 @@
   padding: var(--unit-space) var(--unit-gap);
 }
 
+.footer-sub-item {
+  border-bottom: 1px solid var(--color-first);
+  color: var(--color-first);
+  padding: var(--unit-space) var(--unit-gap);
+}
+
 .footer-item:last-child,
 .footer-sub-item:last-child {
   border: 0 none;
@@ -21,12 +27,6 @@
   border-bottom-color: var(--color-first);
   color: var(--color-first);
   font-weight: 700;
-}
-
-.footer-sub-item {
-  border-bottom: 1px solid var(--color-first);
-  color: var(--color-first);
-  padding: var(--unit-space) var(--unit-gap);
 }
 
 .footer-sub-list {

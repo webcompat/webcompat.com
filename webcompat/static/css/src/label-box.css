@@ -1,0 +1,46 @@
+.grid-cell.x1.label-box {
+  padding: 0;
+}
+
+.label-box-header {
+  display: flex;
+  justify-content: space-between;
+  padding: var(--unit-space);
+}
+
+.label-box-section {
+  padding: var(--unit-gutter);
+  background-color: var(--color-bg-box);
+  word-wrap: break-word;
+}
+
+.label-box-section + .label-box-section {
+  margin: 2px 0 0 0;
+}
+
+.label-box .label {
+  display: block;
+  line-height: 1;
+  font-size: .75em;
+  padding: 6px 10px;
+  color: var(--color-bg-box);
+  border-radius: 4px;
+  font-weight: 700;
+}
+
+.label-box .label + .label {
+  margin: calc(var(--unit-gutter) / 2) 0 0 0;
+}
+
+.label-box-editor {
+  position: relative;
+}
+
+.label-box-editor-button {
+  display: flex;
+  justify-content: space-between;
+}
+
+.label-box-editor-button .nav-button {
+  margin-top: var(--unit-gutter);
+}

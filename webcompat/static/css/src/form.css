@@ -57,12 +57,13 @@
   color: var(--color-error);
   content: "*";
   padding-right: 7px;
+  padding-left: 7px;
 }
 
 /* form message: error */
 .form-message-error {
   color: var(--color-error);
-  font-weight: bold;
+  font-weight: 700;
 }
 
 /* * Form input[type="text"], textarea (text-field) */
@@ -162,6 +163,7 @@
 
 /* * Form upload */
 .form-upload {
+  position: relative;
   border: 1px solid var(--color-form);
   border-radius: 4px;
 }
@@ -190,8 +192,15 @@
   z-index: 20;
   text-align: center;
   width: 29.5%;
-  margin-top: -120px;
   height: 100px;
+  top: 50%;
+  left: 50%;
+  margin: 0;
+  transform: translate(-50%, -50%);
+}
+
+.comment-body .form-upload .label-icon {
+  width: 90%;
 }
 
 .label-icon .icon {
@@ -218,7 +227,7 @@
 }
 
 .is-validated .label-remove {
-  visibility:  visible;
+  visibility: visible;
   z-index: 40;
   cursor: pointer;
   border: 0 none;
@@ -227,23 +236,23 @@
 
 .icon-remove,
 .label-remove .label-icon-message {
-    fill: var(--color-second);
-    color: var(--color-second);
-    transition: all 350ms ease;
-}
-
-.is-validated:hover .icon-remove,
-.is-validated:hover .label-remove .label-icon-message {
-    fill: var(--color-first);
-    color: var(--color-first);
-    transition: all 350ms ease;
+  fill: var(--color-second);
+  color: var(--color-second);
+  transition: all 350ms ease;
 }
 
 .icon-error,
 .label-error .label-icon-message {
-    fill: var(--color-error);
-    color: var(--color-error);
-    transition: all 350ms ease;
+  fill: var(--color-error);
+  color: var(--color-error);
+  transition: all 350ms ease;
+}
+
+.is-validated:hover .icon-remove,
+.is-validated:hover .label-remove .label-icon-message {
+  fill: var(--color-first);
+  color: var(--color-first);
+  transition: all 350ms ease;
 }
 
 #js-ReportForm.is-closed {

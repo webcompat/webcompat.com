@@ -4,7 +4,7 @@
            {%- if request.url_rule.endpoint == 'create_issue' %}
             <ul class="nav-left x1">
                 <li class="nav-item">
-                    <a class="nav-link" href="/" title="Navigate to main page.">
+                    <a class="nav-link js-Navbar-link" href="/" title="Navigate to main page.">
                         <svg class="icon nav-icon" viewBox="0 0 30 30" role="presentation">
                             <title>Home</title>
                             <use href="#svg-home">home</use>
@@ -16,7 +16,7 @@
             {%- else %}
                 {% include "nav/addon-links.html" %}
             {%- endif %}
-            
+
             <ul class="nav-right x2">
                 <li class="nav-item">
                     <button class="nav-button nav-link js-SearchBarOpen" title="Search for an item.">

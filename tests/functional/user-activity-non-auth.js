@@ -17,9 +17,9 @@ registerSuite("User Activity (non-auth)", {
       return FunctionalHelpers.openPage(
         this,
         url("/activity/someoneelse"),
-        ".wc-UIContent"
+        "article"
       )
-        .findByCssSelector(".wc-UIContent .wc-Title--l")
+        .findByCssSelector("article .headline-1")
         .getVisibleText()
         .then(function(text) {
           assert.include(
