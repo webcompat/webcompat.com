@@ -23,6 +23,7 @@
 .issue .issue-description {
   padding-left: var(--unit-gap);
   font-size: 1.1em;
+  word-wrap: break-word;
 }
 
 .issue .issue-description * {
