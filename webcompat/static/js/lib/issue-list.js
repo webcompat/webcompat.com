@@ -262,7 +262,7 @@ issueList.IssueView = Backbone.View.extend(
   _.extend({}, issuesPagination, {
     el: $(".js-list-issue"),
     events: {
-      "click .js-Issue-label .wc-Labels": "labelSearch"
+      "click .js-Issue-label .label": "labelSearch"
     },
     // NOTE: these filters don't need "status-" prefixes because appear in URL params
     _filterRegex: /&*stage=(closed|contactready|needscontact|needsdiagnosis|needstriage|sitewait)&*/i,
