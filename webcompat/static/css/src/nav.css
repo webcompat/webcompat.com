@@ -148,13 +148,9 @@
 }
 
 .login.is-active .nav-dropdown-wrapper {
-  display: inline-block;
+  display: block;
   position: absolute;
-  width: var(--unit-modul-l);
   right: 0;
-  left: 0;
-  margin-right: auto;
-  margin-top: 48px;
 }
 
 .login .nav-button .nav-icon {
