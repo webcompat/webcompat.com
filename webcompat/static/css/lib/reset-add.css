@@ -22,14 +22,19 @@ svg {
   fill: var(--color-second);
 }
 
+/* Prevent svg elements inside buttons from swallowing events */
+button svg {
+  pointer-events: none;
+}
+
 /* Sets Boxmodel overall the project */
-*, 
+*,
 *::after,
 *::before {
   box-sizing: border-box;
 }
 
 ol,
-ol li{
+ol li {
   list-style: decimal;
 }
