@@ -7,7 +7,6 @@ const intern = require("intern").default;
 const { assert } = intern.getPlugin("chai");
 const { registerSuite } = intern.getInterface("object");
 const FunctionalHelpers = require("./lib/helpers.js");
-const keys = require("@theintern/leadfoot/keys").default;
 
 const url = intern.config.siteRoot + "/issues/new";
 
@@ -36,7 +35,6 @@ registerSuite("Image Uploads (non-auth)", {
           .end()
       );
     },
-
     "postMessaged blob preview"() {
       return (
         FunctionalHelpers.openPage(this, url, ".js-image-upload")
@@ -63,9 +61,8 @@ registerSuite("Image Uploads (non-auth)", {
       return FunctionalHelpers.openPage(this, url, ".js-image-upload")
         .findById("image")
         .type("tests/fixtures/green_square.png")
-        .pressKeys(keys.RETURN)
-        .sleep(1000)
         .end()
+        .sleep(1000)
         .findByCssSelector(".js-image-upload")
         .getAttribute("style")
         .then(function(inlineStyle) {
@@ -122,8 +119,8 @@ registerSuite("Image Uploads (non-auth)", {
       return FunctionalHelpers.openPage(this, url, ".js-image-upload")
         .findById("image")
         .type("tests/fixtures/green_square.png")
-        .pressKeys(keys.RETURN)
         .end()
+        .sleep(1000)
         .findByCssSelector("#steps_reproduce")
         .getProperty("value")
         .then(function(val) {
@@ -203,19 +200,17 @@ registerSuite("Image Uploads (non-auth)", {
 
     "double image select works"() {
       return FunctionalHelpers.openPage(this, url, ".js-remove-upload")
-        .findById("image")
-        .type("tests/fixtures/green_square.png")
-        .pressKeys(keys.RETURN)
+        .execute(POSTMESSAGE_TEST_SQUARE)
         .sleep(1000)
-        .end()
-        .findByCssSelector(".js-remove-upload")
-        .click()
-        .end()
-        .findById("image")
-        .type("tests/fixtures/green_square.png")
-        .pressKeys(keys.RETURN)
+        .execute(() => {
+          $(".js-image-upload")[0].click();
+        })
+        .execute(POSTMESSAGE_TEST_SQUARE)
         .sleep(1000)
-        .end()
+        .execute(() => {
+          $(".js-image-upload")[0].click();
+        })
+        .sleep(1000)
         .findByCssSelector(".js-image-upload")
         .getAttribute("style")
         .then(function(inlineStyle) {
