@@ -1,0 +1,43 @@
+:root {
+  --unit-modul-s: 270px;
+  --unit-modul-m: 585px;
+  --unit-modul-l: 900px;
+  --unit-gap: 45px;
+  --unit-space: 10px;
+  --unit-gutter: 15px;
+  --unit-gutter-m: 25px;
+  --unit-gutter-l: 45px;
+  --navi-height: 75px;
+  --input-size: 20px;
+  --page-size-l: 998px;
+  --page-size-m: 665px;
+  --page-size-s: 320px;
+  --color-bg-page: rgba(250, 250, 250, 1); /* #fafafa; */
+  --color-bg-box: rgba(255, 255, 255, 1); /* #ffffff */
+  --color-bg-comment-header: rgba(245, 245, 245, 1); /* #f5f5f5 */
+  --color-first: rgba(255, 201, 0, 1); /* #ffc900 */
+  --color-first-transparent: rgba(255, 201, 1, .8); /* #ffc901 20% transparency */
+  --color-first-light: rgba(255, 200, 3, .55); /* ffc803 45% transparency */
+  --color-second: rgba(64, 64, 64, 1); /* #404040 */
+  --color-third: rgba(240, 240, 240, 1); /* #f0f0f0 */
+  --color-fourth: rgba(192, 255, 238, 1); /* #c0ffee */
+  --color-form: rgba(0, 0, 0, .12); /* #000000 88% transparency */
+  --color-default: rgba(196, 196, 196, 1); /* c4c4c4 */
+  --color-error: rgba(204, 23, 23, 1); /* #CC1717 */
+  --color-error-transparent: rgba(204, 23, 23, .8); /* #CC1717 20% transparency */
+  --color-warning: rgba(255, 144, 0, 1); /* #ff9000 */
+  --color-success: rgba(47, 153, 0, 1); /* #2f9900 */
+  --label-needs-triage: rgba(255, 153, 0, 1); /* #ff9900 */
+  --label-needs-diagnosis: rgba(238, 204, 119, 1) /* #EECC77 */;
+  --label-needs-contact: rgba(187, 238, 204, 1); /* #BBEECC */
+  --label-outreach: rgba(119, 187, 238, 1); /* #77BBEE */
+  --label-site-contacted: rgba(187, 221, 238, 1); /* #BBDDEE */
+  --label-closed: var(--color-default);
+  --label-color-type: rgba(153, 221, 221, 1); /* #99DDDD */
+  --label-color-browser: rgba(255, 204, 0, 1); /* #FFCC00 */
+  --label-color-status: rgba(0, 135, 255), 1; /* #0088FF */
+  --label-color-priority: rgba(17, 170, 153, 1); /* #11AA99 */
+  --label-color-nsfw: rgba(221, 0, 0, 1); /* #DD0000 */
+  --label-color-device: rgba(188, 143, 143, 1); /* rosybrown */
+  --label-color-os: rgba(102, 51, 153, 1); /* rebeccapurple */
+}

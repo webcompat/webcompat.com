@@ -89,7 +89,7 @@ registerSuite("Comments (auth)", {
       return FunctionalHelpers.openPage(
         this,
         url("/issues/100"),
-        ".wc-Comment-body"
+        ".comment-header"
       )
         .findById("image")
         .type("tests/fixtures/green_square.png")
@@ -111,9 +111,9 @@ registerSuite("Comments (auth)", {
       return FunctionalHelpers.openPage(
         this,
         url("/issues/100"),
-        ".wc-Comment-submit"
+        ".js-Comment-text"
       )
-        .findByCssSelector(".wc-Comment-submit")
+        .findByCssSelector(".js-Comment-text")
         .click()
         .type("g")
         .end()
@@ -129,9 +129,9 @@ registerSuite("Comments (auth)", {
       return FunctionalHelpers.openPage(
         this,
         url("/issues/100"),
-        ".wc-Comment-submit"
+        ".js-Comment-text"
       )
-        .findByCssSelector(".wc-Comment-submit")
+        .findByCssSelector(".js-Comment-text")
         .click()
         .type("l")
         .end()

@@ -1,23 +1,14 @@
 {% extends "layout.html" %}
 {% block title %}{{user}}'s Activity{% endblock %}
 {% block body %}
-{% include "shared/nav.html" %}
-<main role="main" data-repo-path="{{config['ISSUES_REPO_URI']}}">
-  <div class="wc-Loader js-loader"></div>
-  <section class="wc-UISection">
-    <div class="wc-UIContent">
-      <h1 class="wc-Title wc-Title--l wc-ResetOffsetBottom js-username">
-        {{user}}'s activity
-      </h1>
-    </div>
+{% include "nav/nav.html" %}
+<main class="grid" role="main" data-repo-path="{{config['ISSUES_REPO_URI']}}">
+ <!--  <div class="wc-Loader js-loader"></div> -->
+  <section id="browse-issues-wrapper" class="js-list-issue">
+    {% include "user-activity/reported-by-user.html" %}
+    {% include "user-activity/user-mentions.html" %}
   </section>
-  <section class="wc-UISection wc-UISection--backgroundColor js-list-issue">
-    <div id="browse-issues-wrapper">
-      {% include "user-activity/reported-by-user.html" %}
-      {% include "user-activity/user-mentions.html" %}
-    </div>
-  </section>
-</div>
+</main>
 {% endblock %}
 {% block extrascripts %}
 {%- if config.PRODUCTION or config.STAGING -%}

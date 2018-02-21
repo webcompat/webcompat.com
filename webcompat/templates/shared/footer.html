@@ -1,40 +1,94 @@
-<footer class="wc-Footer" role="contentinfo">
-  <div class="wc-UIContent wc-UIContent--footer">
-    <div class="wc-Footer-wrapper">
-      <ul class="wc-Footer-list r-ResetList">
-        <li class="wc-Footer-item">
-          <a class="wc-Footer-link wc-Footer-link--separator" href="{{ url_for('about') }}">
-            <span class="wc-Footer-link-label">About</span>
+<footer id="footer" class="grid">
+  <section class="grid-row">
+      <ul class="grid-cell x2 footer-list">
+        <li class="footer-item{% if request.url_rule.endpoint == 'index' %} active{% endif %}">
+          <a class="footer-item-link" aria-label="go to home" href="{{ url_for('index') }}">
+            Home
           </a>
         </li>
-        <li class="wc-Footer-item">
-          <a class="wc-Footer-link wc-Footer-link--separator" href="{{ url_for('privacy') }}">
-            <span class="wc-Footer-link-label">Privacy Policy</span>
+        <li class="footer-item{% if request.url_rule.endpoint == 'show_issues' %} active{% endif %}">
+          <a class="footer-item-link" aria-label="go to list of isses" href="{{ url_for('show_issues') }}">
+            List of issues 
           </a>
         </li>
-        <li class="wc-Footer-item">
-          <a class="wc-Footer-link wc-Footer-link--separator" href="/humans.txt">
-            <span class="wc-Footer-link-label">Contact</span>
+        <li class="footer-item{% if request.url_rule.endpoint == 'about' %} active{% endif %}">
+          <a class="footer-item-link" aria-label="go to about" href="{{ url_for('about') }}">
+            About
           </a>
         </li>
-        <li class="wc-Footer-item">
-          <a class="wc-Footer-link" href="{{ url_for('contributors') }}">
-            <span class="wc-Footer-link-label">Contribute</span>
+        <li class="footer-item{% if request.url_rule.endpoint in 
+        ['contributors_build_tools', 'contributors_web_platform_research', 'contributors_organize_webcompat_events', 'contributors', 'contributors_report_bug', 'contributors_reproduce_bug', 'contributors_diagnose_bug', 'contributors_site_outreach'] %} active{% endif %}">
+          <a class="footer-item-link" aria-label="go to contribute" href="{{ url_for('contributors') }}">
+            Contribute
+          </a>
+        </li>
+        <li class="footer-item{% if request.url_rule.endpoint == 'contact' %} active{% endif %}">
+          <a class="footer-item-link" aria-label="get contact information" href="/contact">
+            Contact
+          </a>
+        </li>
+        <li class="footer-item{% if request.url_rule.endpoint == 'privacy' %} active{% endif %}">
+          <a class="footer-item-link" aria-label="go to privacy policy" href="{{ url_for('privacy') }}">
+            Privacy Policy
+          </a>
+        </li>
+        <li class="footer-item">
+          <a class="footer-item-link" aria-label="go to code of conduct" href="https://github.com/webcompat/webcompat.com/blob/master/CODE_OF_CONDUCT.md">
+            Code of Conduct
           </a>
         </li>
       </ul>
-      <ul class="wc-Footer-list wc-Footer-list--right r-ResetList">
-        <li class="wc-Footer-item wc-Footer-item--follow">
-          <a class="wc-Footer-link" href="https://twitter.com/webcompat/with_replies" target="_blank">
-            <span class="wc-Footer-icon wc-Footer-icon--twitter">Follow on Twitter</span>
+
+<!-- sub nav for contribute / working with bugs -->
+      {% if request.url_rule.endpoint in ['contributors_report_bug', 'contributors_reproduce_bug', 'contributors_diagnose_bug', 'contributors_site_outreach'] %}
+        <ul class="grid-cell x1 footer-sub-list">
+          <li class="footer-sub-item {% if request.url_rule.endpoint == 'contributors_report_bug' %}active{% endif %}">
+            <a class="footer-item-link" href="/contributors/report-bug">Report a Bug</a>
+          </li>
+          <li class="footer-sub-item {% if request.url_rule.endpoint == 'contributors_reproduce_bug' %}active{% endif %}">
+            <a class="footer-item-link" href="/contributors/reproduce-bug">Reproduce a Bug</a>
+          </li>
+          <li class="footer-sub-item {% if request.url_rule.endpoint == 'contributors_diagnose_bug' %}active{% endif %}">
+            <a class="footer-item-link" href="/contributors/diagnose-bug">Diagnose a Bug</a>
+          </li>
+          <li class="footer-sub-item {% if request.url_rule.endpoint == 'contributors_site_outreach' %}active{% endif %}">
+            <a class="footer-item-link" href="/contributors/site-outreach">Site Outreach</a>
+          </li>
+        </ul>
+      {% endif %}
+
+<!-- sub nav for contribute / other contributions -->
+      {% if request.url_rule.endpoint in ['contributors_build_tools', 'contributors_web_platform_research', 'contributors_organize_webcompat_events'] %}
+        <ul class="grid-cell x1 footer-sub-list">
+          <li class="footer-sub-item {% if request.url_rule.endpoint == 'contributors_build_tools' %}active{% endif %}">
+            <a class="footer-item-link" href="/contributors/build-tools">Build Tools</a>
+          </li>
+          <li class="footer-sub-item {% if request.url_rule.endpoint == 'contributors_web_platform_research' %}active{% endif %}">
+            <a class="footer-item-link" href="/contributors/web-platform-research">Web Platform Research</a>
+          </li>
+          <li class="footer-sub-item {% if request.url_rule.endpoint == 'contributors_organize_webcompat_events' %}active{% endif %}">
+            <a class="footer-item-link" href="/contributors/organize-webcompat-events">Organize Webcompat events</a>
+          </li>
+        </ul>
+      {% endif %}
+
+      <ul class="grid-cell x1 footer-sub-icons">
+        <li class="footer-icon icon-twitter">
+          <a class="footer-item-link" aria-label="open Twitter in a new tab" href="https://twitter.com/webcompat/with_replies" target="_blank">
+              <svg class="icon" role="presentation" aria-role="hide" viewBox="0 0 30 30">
+                  <title>Twitter</title>
+                  <use href="#svg-twitter">Twitter</use>
+              </svg>
           </a>
         </li>
-        <li class="wc-Footer-item wc-Footer-item--follow">
-          <a class="wc-Footer-link" href=" https://github.com/webcompat/webcompat.com/" target="_blank">
-            <span class="wc-Footer-icon wc-Footer-icon--github">See on Github</span>
+        <li class="footer-icon icon-twitter">
+          <a class="footer-item-link" aria-label="open Github in a new tab" href=" https://github.com/webcompat/webcompat.com/" target="_blank">
+              <svg class="icon" role="presentation" aria-role="hide" viewBox="0 0 30 30">
+                  <title>github</title>
+                  <use href="#svg-github2">Github</use>
+              </svg>
           </a>
         </li>
       </ul>
-    </div>
-  </div>
+  </section>
 </footer>

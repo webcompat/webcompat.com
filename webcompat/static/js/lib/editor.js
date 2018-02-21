@@ -32,23 +32,23 @@ issues.CategoryView = Backbone.View.extend({
 */
 issues.CategoryEditorView = Backbone.View.extend({
   isOpen: false,
-  className: "wc-CategoryEditor js-CategoryEditor",
+  className: "label-editor js-CategoryEditor",
   events: {
     "change input[type=checkbox]": "updateView",
     "click button": "closeEditor",
     keyup: "closeEditor",
-    "keyup .wc-CategoryEditor-search": "filterItems",
-    "keyup .wc-CategoryEditor-list-item": "checkUncheckItems",
-    "keydown .wc-CategoryEditor-search": "focusSaveClose",
-    "keydown .wc-CategoryEditor-list-item": "removeFocus",
-    "keydown .wc-CategoryEditor-list-item:visible:last": "backToTop"
+    "keyup .label-editor-header .form-field": "filterItems",
+    "keyup .label-editor-list-item": "checkUncheckItems",
+    "keydown .label-editor-header .form-field": "focusSaveClose",
+    "keydown .label-editor-list-item": "removeFocus",
+    "keydown .label-editor-list-item:visible:last": "backToTop"
   },
   render: function() {
     this.$el.html(this.template(this.model));
     this.resizeEditorHeight();
     _.defer(
       _.bind(function() {
-        this.$el.find(".wc-CategoryEditor-search").focus();
+        this.$el.find(".label-editor-header .form-field").focus();
       }, this)
     );
     return this;
@@ -79,14 +79,14 @@ issues.CategoryEditorView = Backbone.View.extend({
     if (getBreakpoint()) {
       _.defer(function() {
         var categoryEditorheight = parseInt(
-          $(".wc-CategoryEditor").css("height"),
+          $(".label-box-editor").css("height"),
           10
         );
         var categoryHeaderheight = parseInt(
-          $(".wc-CategoryEditor-header").css("height"),
+          $(".label-editor-header").css("height"),
           10
         );
-        $(".wc-CategoryEditor-list").height(
+        $(".label-editor-list").height(
           categoryEditorheight - categoryHeaderheight
         );
         $("html, body").animate({ scrollTop: 0 }, 0);
@@ -96,11 +96,11 @@ issues.CategoryEditorView = Backbone.View.extend({
   filterItems: _.debounce(function(e) {
     setTimeout(function() {
       if (e.keyCode === 13) {
-        $(".wc-CategoryEditor-list-item:visible:first").focus();
+        $(".label-editor-list-item:visible:first").focus();
         // if you call the focus() function in a label element,'
         // the focus automatically goes to the input.
         // that's why we need to add the focused class.
-        $(".wc-CategoryEditor-list-item:visible:first").addClass("focused");
+        $(".label-editor-list-item:visible:first").addClass("focused");
       }
     }, 100);
 
@@ -113,12 +113,12 @@ issues.CategoryEditorView = Backbone.View.extend({
     });
 
     // make sure everything is showing
-    $(".wc-CategoryEditor-list-item").show();
+    $(".label-editor-list-item").show();
 
     // hide the non-filter matches
     _.each(toHide, function(name) {
       $("input[name=" + escape(name) + "]")
-        .closest(".wc-CategoryEditor-list-item")
+        .closest(".label-editor-list-item")
         .hide();
     });
   }, 100),
@@ -130,7 +130,7 @@ issues.CategoryEditorView = Backbone.View.extend({
   focusSaveClose: _.debounce(function(e) {
     if (e.keyCode === 9) {
       // Safari workaround.
-      $(".wc-CategoryEditor-button.r-ResetButton").focus();
+      $(".label-editor-header .button").focus();
     }
   }, 1),
   removeFocus: _.debounce(function(e) {
@@ -140,7 +140,7 @@ issues.CategoryEditorView = Backbone.View.extend({
   }, 100),
   backToTop: _.debounce(function(e) {
     if (e.keyCode === 9) {
-      this.$el.find(".wc-CategoryEditor-search").focus();
+      this.$el.find(".label-editor-header .form-field").focus();
     }
   }, 1)
 });

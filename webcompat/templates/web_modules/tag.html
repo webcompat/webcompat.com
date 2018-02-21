@@ -2,17 +2,13 @@
 
   {% if type == 'filter' %}
 
-    <button
-      type="button"
-      class="wc-Tag wc-Tag--filter wc-Tag--{{ category.name }} r-ResetButton js-Tag"
-      data-filter="{{ category.dataAttribute }}"
-    >
-      <span class="wc-Tag-count"></span> {{ category.label }}</span>
-    </button>
+    <li class="{{ category.name }} js-Tag" data-filter="{{ category.dataAttribute }}">    
+       {{ category.label }}
+    </li>
 
   {% elif type == 'tag' %}
 
-    <div class="wc-Tag wc-Tag--label wc-Tag--<%= stateClass %>"><%= issueState %></div>
+    <div class="<%= stateClass %>"><%= issueState %></div>
 
   {% endif %}
 {% endmacro %}

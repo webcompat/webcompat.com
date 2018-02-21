@@ -1,166 +1,148 @@
-<section class="wc-UISection js-ReportForm wc-ReportForm {% if form.errors %}is-opened{% else %}is-closed{% endif %}"
-         id="js-ReportForm"
+{%- if request.url_rule.endpoint == 'create_issue' %}
+  <h1 class="headline-1">Report Site Issue</h1>
+{%- endif %}
+
+<form
+  action="/issues/new"
+  class="form grid-row js-Loader loader"
+  enctype="multipart/form-data"
+  method="post"
+  novalidate
 >
-  <div class="wc-UIContent">
-    <form
-      class="wc-Form"
-      method="post"
-      enctype="multipart/form-data"
-      action="/issues/new"
-      novalidate
-    >
-      {%- if request.url_rule.endpoint == 'create_issue' %}
-      <h3 class="wc-Title--s">Report Site Issue</h3>
-      {%- endif %}
-      <div class="r-Grid r-Grid--withGutter">
-        <div class="r-Grid-cell r-minM--1of2">
-          <div class="wc-Form-group js-Form-group">
-            <div class="wc-Form-information">
-              {{ form.url.label(class_='wc-Form-label') }}
-              {% if form.url.errors %}
-                {% for error in form.url.errors %}
-                  <span class="wc-Form-helpMessage">{{ error }}</span>
-                {% endfor %}
-              {% endif %}
-            </div>
-            <span class="wc-Form-validation">
-            {{ form.url(class_='wc-Form-item required',
-               placeholder='e.g. https://example.com',
-               required=True, type='url', pattern='') }}
-            </span>
-          </div>
-
-          <div class="wc-Form-group js-Form-group">
-            <fieldset class="{% if form.problem_category.errors %}is-error{% endif %}">
-              <div class="wc-Form-information">
-                <label class="wc-Form-label" for="problem_type">Type of bug <span class="wc-Form-required">*</span></label>
-                {% if form.problem_category.errors %}{% for error in form.problem_category.errors %}
-                <span class="wc-Form-helpMessage">{{ error }}</span>
-                {% endfor %}{% endif %}
-              </div>
-                {% for subradio in form.problem_category %}
-                <div class="wc-Form-radio">
-                  {{ subradio }} {{ subradio.label }}
-                </div>
-                {% endfor %}
-            </fieldset>
-          </div>
-
-          <div class="wc-Form-group js-Form-group">
-            <div class="wc-Form-information">
-              {{ form.description.label(class_='wc-Form-label') }}
-              {% if form.description.errors %}
-                {% for error in form.description.errors %}
-                  <span class="wc-Form-helpMessage">{{ error }}</span>
-                {% endfor %}
-              {% endif %}
-            </div>
-            <span class="wc-Form-validation">
-            {{ form.description(class_='wc-Form-item required',
-               placeholder="e.g. The video doesn't play",
-               required=True, type='text', pattern='') }}
-            </span>
-          </div>
-          <div class="wc-Form-group js-Form-group">
-            {{ form.steps_reproduce.label(class_='wc-Form-label') }}
-            {{ form.steps_reproduce(class_='wc-Form-item wc-Form-item--textarea',
-               rows=4,
-               placeholder="Please be as detailed as possible.") }}
-          </div>
-        </div>
-        <div class="r-Grid-cell r-minM--1of2">
-
-          <div class="wc-Form-group wc-Form-group--biggerOffset js-Form-group {% if form.url.errors %}is-error{% endif %}">
-            {{ form.browser.label(class_='wc-Form-label') }}
-            <span class="wc-Form-validation">
-            {{ form.browser(class_='wc-Form-item') }}
-            </span>
-            <span class="wc-Form-validation js-bug-form-os">
-            {{ form.os(class_='wc-Form-item') }}
-            </span>
-          </div>
-
-          <div class="wc-Form-group js-Form-group">
-            <fieldset class="{% if form.browser_test.errors %}is-error{% endif %}">
-              <div class="wc-Form-information">
-                {{ form.browser_test.label(class_='wc-Form-label') }}
-                {% if form.browser_test.errors %}{% for error in form.browser_test.errors %}
-                <span class="wc-Form-helpMessage">{{ error }}</span>
-                {% endfor %}{% endif %}
-              </div>
-                <div class="wc-Form-radio">
-                {% for subradio in form.browser_test %}
-                  {{ subradio }} {{ subradio.label }}
-                {% endfor %}
-                </div>
-            </fieldset>
-          </div>
-
-            <div class="js-image-upload wc-Form-group js-Form-group {% if form.image.errors %}is-error{% endif %}">
-              <label
-                class="wc-UploadForm wc-UploadForm--homePage js-image-upload-label"
-                for="image"
-              >
-                <div class="wc-UploadForm-wrapper">
-                  <div class="wc-UploadForm-icon" aria-hidden="true">
-                    <span class="wc-Icon wc-Icon--cloud-upload"></span>
-                  </div>
-                  <label class="wc-UploadForm-label">Upload screenshot</label>
-                  {% if form.image.errors %}
-                    {% for error in form.image.errors %}
-                    <span class="wc-Form-helpMessage--imageUpload">{{ error }}</span>
-                    {% endfor %}
-                  {% endif %}
-                  {{ form.image(class_='wc-ButtonUpload', accept='.jpe,.jpg,.jpeg,.gif,.png,.bmp') }}
-                </div>
-                <button
-                  class="wc-UploadForm-button is-hidden r-ResetButton"
-                  role="button"
-                  type="button"
-                  tabindex="-1"
-                >
-                  <img
-                    class="wc-Upload-Loader js-Upload-Loader"
-                    src="/img/upload-loader.svg"
-                    alt="Uploading image"
-                  >
-                    Remove image upload
-                  </button>
-              </label>
-            </div>
-
-            <div class="wc-ReportForm-actions">
-              <div class="wc-ReportForm-actions-button">
-                <button name="submit-type"
-                        value="github-proxy-report"
-                        class="wc-Button wc-Button--default js-Button"
-                        id="submitanon"
-                >
-                        Report Anonymously
-                </button>
-                <button name="submit-type"
-                        value="github-auth-report"
-                        class="wc-Button wc-Button--action js-Button"
-                        id="submitgithub"
-                        type="submit"
-                >
-                  {% if session.username %}Report as {{ session.username }}{% else %}Report via GitHub{% endif %}
-                </button>
-              </div>
-            </div>
-          </div>
-
-        </div>
+  <div class="grid-cell">
+    <div class="form-text form-element js-Form-group">
+      <div class="js-Form-information">
+        {{ form.url.label(class_='form-label form-required') }}
+        {% if form.url.errors %}
+          {% for error in form.url.errors %}
+            <small class="form-message-error">{{ error }}</small>
+          {% endfor %}
+        {% endif %}
       </div>
-      <div class="wc-Form-item is-hidden" aria-hidden="true">
-        <div class="wc-Form-group js-Form-group {% if form.username.errors %}is-error{% endif %}">
-          {{ form.username.label }}{% if form.username.errors %}{% for error in form.username.errors %}
-            <span class="wc-Form-helpMessage">{{ error }}</span>
-            {% endfor %}{% endif %}
-            {{ form.username(class_='u-formInput') }}
-          </div>
+      {{ form.url(class_='form-field text-field required',
+         placeholder='e.g. https://example.com',
+         required=True, type='url', pattern='') }}
+         <span class="form-input-validation check error"></span>
+    </div>
+    <div class="form-radio form-element js-Form-group">
+      <div class="js-Form-information">
+        <label class="form-label form-required" for="problem_category">Type of bug</label>
+        {% if form.problem_category.errors %}
+          {% for error in form.problem_category.errors %}
+            <small class="form-message-error">{{ error }}</small>
+          {% endfor %}
+        {% endif %}
       </div>
-      {{ form.hidden_tag() }}
-    </form>
+
+      {% for subradio in form.problem_category %}
+        {{ subradio(class_='input-radio') }}
+        {{ subradio.label(class_='form-label label-radio') }}
+      {% endfor %}
+    </div>
+    <div class="form-text form-element js-Form-group">
+      <div class="js-Form-information">
+        {{ form.description.label(class_='form-label form-required') }}
+        {% if form.description.errors %}
+          {% for error in form.description.errors %}
+            <small class="form-message-error">{{ error }}</small>
+          {% endfor %}
+        {% endif %}
+      </div>
+
+      {{ form.description(class_='form-field text-field required',
+         placeholder="e.g. The video doesn't play",
+         required=True) }}
+      <span class="form-input-validation check error"></span>
+    </div>
+    <div class="form-text form-element js-Form-group">
+      {{ form.steps_reproduce.label(class_='form-label') }}
+      {{ form.steps_reproduce(class_='form-field text-field',
+         rows=3,
+         placeholder="Please be as detailed as possible.") }}
+    </div>
   </div>
-</section>
+  <div class="grid-cell form-element-bottom">
+    <div class="form-text form-element js-Form-group">
+      {{ form.browser.label(class_='form-label') }}
+      {{ form.browser(class_='form-field text-field') }}
+      <span class="form-input-validation check js-bug-form-os"></span>
+      {{ form.os(class_='form-field text-field') }}
+      <span class="form-input-validation check"></span>
+    </div>
+    <div class="form-radio form-element js-Form-group">
+      <div class="js-Form-information">
+        {{ form.browser_test.label(class_='form-label') }}
+        {% if form.browser_test.errors %}
+          {% for error in form.browser_test.errors %}
+            <small class="form-message-error">{{ error }}</small>
+          {% endfor %}
+        {% endif %}
+      </div>
+      {% for subradio in form.browser_test %}
+        {{ subradio(class_='input-radio') }}
+        {{ subradio.label(class_='form-label label-radio') }}
+      {% endfor %}
+    </div>
+    <div class="form-upload js-image-upload js-Form-group">
+        {{ form.image(class_='form-input input-upload', accept='.jpe,.jpg,.jpeg,.gif,.png,.bmp', id='image') }}
+        <div class="label-icon label-upload js-label-upload">
+          <svg class="icon icon-big" role="presentation" title="Upload Screenshot">
+            <use class="icon-upload" href="#svg-plus">Upload Screenshot</use>
+          </svg>
+          <small class="label-icon-message">Upload screenshot</small>
+        </div>
+
+        <div class="label-icon label-remove is-hidden js-remove-upload">
+          <svg class="icon icon-big" role="presentation" title="Remove Screenshot">
+            <use class="icon-remove" href="#svg-x">Remove Screenshot</use>
+          </svg>
+          <small class="label-icon-message">Remove screenshot</small>
+        </div>
+
+
+        <div class="label-icon label-error is-hidden js-error-upload">
+          <svg class="icon icon-big" role="presentation" title="An error occoured">
+            <use class="icon-error" href="#svg-warning">An error occoured</use>
+          </svg>
+          {% if form.image.errors %}
+            {% for error in form.image.errors %}
+              <small class="label-icon-message">{{ error }}</small>
+            {% endfor %}
+          {% endif %}
+        </div>
+    </div>
+
+    <div class="form-button form-element js-Form-group js-report-buttons">
+      <button
+        class="button js-Button"
+        id="submitanon"
+        name="submit-type"
+        type="submit"
+        value="github-proxy-report"
+      >
+        Report Anonymously
+      </button>
+      <button
+        class="button button-primary right js-Button"
+        id="submitgithub"
+        name="submit-type"
+        type="submit"
+        value="github-auth-report"
+      >
+        {% if session.username %}Report as {{ session.username }}{% else %}Report via GitHub{% endif %}
+      </button>
+    </div>
+    <div class="is-hidden" aria-hidden="true">
+      <div class="form-text form-element js-Form-group">
+        {{ form.username.label(class_='form-label') }}
+        {% if form.username.errors %}
+          {% for error in form.username.errors %}
+            <small class="form-message-error">{{ error }}</small>
+          {% endfor %}
+        {% endif %}
+        {{ form.username(class_='u-formInput') }}
+      </div>
+    </div>
+
+  {{ form.hidden_tag() }}
+</form>

@@ -20,7 +20,7 @@ registerSuite("Milestones (non-auth)", {
         ".js-Issue",
         true /* longerTimeout */
       )
-        .findByCssSelector(".js-Issue-title")
+        .findByCssSelector(".js-issue-title")
         .getVisibleText()
         .then(function(text) {
           // check that the title loaded, it won't be there if the page didn't render.
