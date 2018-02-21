@@ -33,6 +33,9 @@ registerSuite("Labels (auth)", {
         .end()
         .findByCssSelector(".js-CategoryEditor")
         .end()
+        .findByCssSelector(".js-CategoryEditor-close")
+        .click()
+        .end()
         .findByCssSelector(".js-LabelEditorLauncher")
         .click()
         .getAttribute("class")
@@ -76,7 +79,7 @@ registerSuite("Labels (auth)", {
         .end()
         .findByCssSelector(".js-CategoryEditor")
         .end()
-        .findByCssSelector("main")
+        .findByCssSelector("footer")
         .click()
         .end()
         .findByCssSelector(".js-LabelEditorLauncher")
@@ -87,16 +90,16 @@ registerSuite("Labels (auth)", {
         .end();
     },
 
-    "Clicking close button actually closes it?": function() {
+    "Clicking close button actually closes it": function() {
       return FunctionalHelpers.openPage(
         this,
         url("/issues/2"),
         ".js-LabelEditorLauncher",
         true /* longerTimeout */
       )
-        .findByCssSelector(".js-LabelEditorLauncher")
-        .click()
-        .end()
+        .execute(() => {
+          $(".js-LabelEditorLauncher")[0].click();
+        })
         .findByCssSelector(".js-CategoryEditor-close")
         .click()
         .end()
