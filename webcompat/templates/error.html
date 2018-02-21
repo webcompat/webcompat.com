@@ -1,13 +1,15 @@
 {% extends "layout.html" %}
 {% block body %}
 {% include "nav/nav.html" %}
-<article class="grid-row">
-  <div class="grid-cell x3">
-    <h1 class="headline-1">Yikes! {{ error_message }} ({{ error_code }})</h1>
-    <h2 class="headline-2">(sound of broken glass)</h2>
-    <br>
-    <br>
-    <a href="/">Return home</a>
-  </div>
-</article>
+<div class="grid">
+  <article class="grid-row">
+    <div class="grid-cell x3">
+      <h1 class="headline-1">Yikes! {{ error_message }} ({{ error_code }})</h1>
+      <h2 class="headline-2">(sound of broken glass)</h2>
+      <br>
+      <br>
+      <a href="/">Return home</a>
+    </div>
+  </article>
+</div>
 {% endblock %}
