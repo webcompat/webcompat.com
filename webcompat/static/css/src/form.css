@@ -222,10 +222,6 @@
   visibility: hidden;
 }
 
-.label-remove {
-  visibility: hidden;
-}
-
 .is-validated .label-remove {
   visibility: visible;
   z-index: 40;

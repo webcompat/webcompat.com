@@ -1,7 +1,9 @@
-"use strict";
 /* This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+
+"use strict";
+
 const intern = require("intern").default;
 const { assert } = intern.getPlugin("chai");
 const { registerSuite } = intern.getInterface("object");
@@ -62,27 +64,26 @@ registerSuite("Comments (auth)", {
     "Posting an empty comment fails"() {
       var originalCommentsLength;
       var allCommentsLength;
-      return (
-        FunctionalHelpers.openPage(this, url("/issues/100"), ".js-Issue")
-          .findAllByCssSelector(".js-Issue-comment")
-          .then(function(elms) {
-            originalCommentsLength = elms.length;
-          })
-          .end()
+      return FunctionalHelpers.openPage(this, url("/issues/100"), ".js-Issue")
+        .findAllByCssSelector(".js-Issue-comment")
+        .then(function(elms) {
+          originalCommentsLength = elms.length;
+        })
+        .end()
+        .execute(() => {
           // click the comment button
-          .findByCssSelector(".js-Issue-comment-button")
-          .click()
-          .end()
-          .sleep(2000)
-          .findAllByCssSelector(".js-Issue-comment")
-          .then(function(elms) {
-            allCommentsLength = elms.length;
-            assert(
-              originalCommentsLength === allCommentsLength,
-              "Comment was not successfully left."
-            );
-          })
-      );
+          $(".js-Issue-comment-button")[0].click();
+        })
+        .end()
+        .sleep(2000)
+        .findAllByCssSelector(".js-Issue-comment")
+        .then(function(elms) {
+          allCommentsLength = elms.length;
+          assert(
+            originalCommentsLength === allCommentsLength,
+            "Comment was not successfully left."
+          );
+        });
     },
 
     "Add a screenshot to a comment"() {
@@ -114,7 +115,6 @@ registerSuite("Comments (auth)", {
         ".js-Comment-text"
       )
         .findByCssSelector(".js-Comment-text")
-        .click()
         .type("g")
         .end()
         .setFindTimeout(2000)
@@ -132,7 +132,6 @@ registerSuite("Comments (auth)", {
         ".js-Comment-text"
       )
         .findByCssSelector(".js-Comment-text")
-        .click()
         .type("l")
         .end()
         .setFindTimeout(2000)
