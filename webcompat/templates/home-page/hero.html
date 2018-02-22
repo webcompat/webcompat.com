@@ -1,24 +1,23 @@
-<div class="wc-Hero">
-  <div class="wc-UIContent">
-    <div class="wc-Hero-wrapper">
-      <div class="wc-Hero-textHome ">
-        <h1 class="wc-Title wc-Title--xl">
-            <span class="wc-Hero-title js-Hero-title">Bug reporting <br>for the internet.</span>
-        </h1>
-        <a id="js-ReportBug"
-           class="wc-Hero-link is-closed"
-           href="{{ url_for("index") }}"
-        >
-          Report bug
-          <span class="wc-Hero-link-icon wc-Hero-link-icon--default" aria-hidden="true">
-            <span class="wc-Icon wc-Icon--arrow-right"></span>
-          </span>
-          <span class="wc-Hero-link-icon wc-Hero-link-icon--active" aria-hidden="true">
-            <span class="wc-Icon wc-Icon--arrow-down"></span>
-          </span>
-        </a>
-      </div>
-        {% include "shared/LightbulbwithBug.svg" %}
-    </div>
-  </div>
-</div>
+<section class="hero-section grid color-first-bg">
+  <article class="hero-text">
+      <h1 class="hero-claim highlight js-hero-title">Bug reporting <br> for the web.</h1>
+      <button id="js-ReportBug" type="button" class="button button-hero is-closed" href="{{ url_for("index") }}">
+        Report bug
+      <svg class="icon-middle" role="presentation" aria-role="hide">
+        <title>circle-right</title>
+          <use class="button-icon-hero" href="#svg-circle-right">Report bug</use>
+      </svg>
+      </button>
+    </article>
+    <aside class="hero-illustration">
+      <svg class="hero-illustration-bulb" role="presentation" viewBox="0 0 160 447" aria-role="hide">
+        <title>bulb_nobug</title>
+        <use href="#svg-bulb_nobug">bulb</use>
+      </svg>
+
+      <svg class="hero-illustration-bug bug-animated" role="presentation" viewBox="0 0 47 65" aria-role="hide">
+        <title>bulb</title>
+        <use href="#svg-bulb">bug</use>
+      </svg>
+    </aside>
+</section>

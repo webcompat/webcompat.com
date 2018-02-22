@@ -1,0 +1,66 @@
+.issue-detail {
+  padding-bottom: calc (var(--unit-space) * 2);
+}
+
+.grid-nested .grid-cell.issue-comment {
+  padding: 0;
+  margin-top: var(--unit-gutter-l);
+}
+
+.issue-comment .comment-header {
+  padding: var(--unit-space) var(--unit-space);
+  background-color: var(--color-bg-comment-header);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.comment-header .comment-author {
+  display: flex;
+  align-items: center;
+  margin: 0;
+}
+
+.comment-header .comment-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  margin-right: 16px;
+}
+
+.comment-header .comment-reporter {
+  line-height: 1.6em;
+}
+
+.issue-new-comment .grid-cell {
+  padding: 0;
+  margin: 0;
+}
+
+.issue-new-comment .form-text {
+  padding: 0;
+}
+
+.issue-new-comment .text-field {
+  box-sizing: border-box;
+  padding: calc(var(--unit-space) * 2);
+  margin-bottom: calc(var(--unit-space) * 2);
+}
+
+.issue-new-comment .form-upload {
+  padding: calc(var(--unit-space) * 2);
+  margin-bottom: calc(var(--unit-space) * 2);
+}
+
+.issue-new-comment .comment-submit {
+  display: flex;
+  justify-content: center;
+}
+
+/* As we can not add a class to the img right now (markup parsers are complicated), we need to use the element */
+.comment-body img,
+.js-Issue-markdown img {
+  max-width: calc(var(--unit-modul-m) - (var(--unit-space) * 4));
+  max-height: calc(var(--unit-modul-m) - (var(--unit-space) * 4));
+}
+

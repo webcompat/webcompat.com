@@ -20,7 +20,7 @@ registerSuite("Issue-list", {
         url("/issues"),
         ".js-SearchIssue-filter"
       )
-        .findAllByCssSelector("button.js-Tag")
+        .findAllByCssSelector(".js-Tag")
         .then(function(elms) {
           assert.equal(elms.length, 6, "All filter buttons are displayed");
         })
@@ -42,19 +42,17 @@ registerSuite("Issue-list", {
           assert.equal(isDisplayed, true, "IssueList item is visible.");
         })
         .end()
-        .findByCssSelector(".js-IssueList .wc-IssueList-header")
-        .getVisibleText()
-        .then(function(text) {
-          assert.match(
-            text,
-            /^Issue\s\d+:\s.+$/,
-            "Issue should have a non-empty title"
+        .findByCssSelector(".js-IssueList .js-issue-title")
+        .isDisplayed()
+        .then(function(isDisplayed) {
+          assert.equal(
+            isDisplayed,
+            true,
+            "IssueList item is has non-empty title."
           );
         })
         .end()
-        .findByCssSelector(
-          ".js-IssueList:nth-child(1) > div:nth-child(1) > p:nth-child(2)"
-        )
+        .findByCssSelector(".js-issue-comments")
         .getVisibleText()
         .then(function(text) {
           assert.match(
@@ -62,9 +60,14 @@ registerSuite("Issue-list", {
             /comments:\s\d+$/i,
             "Issue should display number of comments"
           );
+        })
+        .end()
+        .findByCssSelector(".js-issue-date")
+        .getVisibleText()
+        .then(function(text) {
           assert.match(
             text,
-            /^Opened:\s\d{4}\-\d{2}\-\d{2}.+/,
+            /^Opened:\s\d{4}\-\d{2}\-\d{2}/,
             "Issue should display creation date"
           );
         })
@@ -260,7 +263,7 @@ registerSuite("Issue-list", {
         url("/issues", params),
         ".js-IssueList:nth-of-type(1)"
       )
-        .findByCssSelector(".js-Dropdown-pagination .js-Dropdown-toggle h1")
+        .findByCssSelector(".js-Dropdown-pagination .js-Dropdown-label")
         .getVisibleText()
         .then(function(text) {
           assert.equal(
@@ -270,7 +273,7 @@ registerSuite("Issue-list", {
           );
         })
         .end()
-        .findAllByCssSelector(".js-Dropdown-sort .js-Dropdown-toggle h1")
+        .findAllByCssSelector(".js-Dropdown-sort .js-Dropdown-label")
         .getVisibleText()
         .then(function(text) {
           assert.equal(
@@ -291,7 +294,7 @@ registerSuite("Issue-list", {
           url("/issues", params),
           ".js-IssueList:nth-of-type(1)"
         )
-          .findByCssSelector(".js-Dropdown-pagination .js-Dropdown-toggle h1")
+          .findByCssSelector(".js-Dropdown-pagination .js-Dropdown-label")
           .getVisibleText()
           .then(function(text) {
             assert.equal(
@@ -324,7 +327,7 @@ registerSuite("Issue-list", {
             );
           })
           .end()
-          .findByCssSelector(".js-Dropdown-pagination .js-Dropdown-toggle h1")
+          .findByCssSelector(".js-Dropdown-pagination .js-Dropdown-label")
           .getVisibleText()
           .then(function(text) {
             assert.equal(
@@ -369,7 +372,7 @@ registerSuite("Issue-list", {
           .click()
           .end()
           // find something so we know the page has loaded
-          .findByCssSelector(".wc-IssueList:nth-of-type(1)")
+          .findByCssSelector(".js-IssueList:nth-of-type(1)")
           .end()
           .getCurrentUrl()
           .then(function(currUrl) {
@@ -394,7 +397,7 @@ registerSuite("Issue-list", {
           .click()
           .end()
           // find something so we know the page has loaded
-          .findByCssSelector(".wc-IssueList:nth-of-type(1)")
+          .findByCssSelector(".js-IssueList:nth-of-type(1)")
           .end()
           .findByCssSelector('[data-filter="closed"]')
           .click()
@@ -422,7 +425,7 @@ registerSuite("Issue-list", {
           .click()
           .end()
           // find something so we know the page has loaded
-          .findByCssSelector(".wc-IssueList:nth-of-type(1)")
+          .findByCssSelector(".js-IssueList:nth-of-type(1)")
           .end()
           .findByCssSelector('[data-filter="sitewait"]')
           .click()

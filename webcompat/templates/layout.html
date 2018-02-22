@@ -20,21 +20,23 @@
   <link rel="apple-touch-icon" sizes="120x120" href="{{ url_for('static', filename='favicon/apple-touch-icon-120x120.png') }}">
   <link rel="apple-touch-icon" sizes="76x76" href="{{ url_for('static', filename='favicon/apple-touch-icon-76x76.png') }}">
   <link rel="apple-touch-icon" sizes="152x152" href="{{ url_for('static', filename='favicon/apple-touch-icon-152x152.png') }}">
+  <link rel="mask-icon" href="{{ url_for('static', filename='favicon/safari-pinned-tab.svg') }}" color="#202020">
+
   <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon/favicon-160x160.png') }}" sizes="160x160">
   <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon/favicon-96x96.png') }}" sizes="96x96">
   <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon/favicon-16x16.png') }}" sizes="16x16">
   <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon/favicon-32x32.png') }}" sizes="32x32">
   <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon/favicon-196x196.png') }}" sizes="196x196">
-  <meta name="msapplication-TileColor" content="#e4bc05">
+  <meta name="msapplication-TileColor" content="#202020">
   <meta name="msapplication-TileImage" content="{{ url_for('static', filename='favicon/mstile-144x144.png') }}">
-{%- if config.PRODUCTION or config.STAGING -%}
-  <link href="{{ url_for('static', filename='css/webcompat.min.css')|bust_cache }}" type="text/css" rel="stylesheet">
-{%- else %}
-  <link href="{{ url_for('static', filename='css/webcompat.dev.css') }}" type="text/css" rel="stylesheet">
-{%- endif %}
+
+  <!-- TODO: Remove me once refactoring is done! These are temporary, directly hotlinked to make refactoring work easie. -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600|Source+Sans+Pro:300,400|PT+Mono" rel="stylesheet">
+  <link href="{{ url_for('static', filename='css/dist/webcompat.min.css') }}" type="text/css" rel="stylesheet">
 </head>
-<body data-username="{{ session.username }}">
-<div class="wc-UIViewport">
+<body id="body-webcompat" data-username="{{ session.username }}">
+{% include "shared/svg-icons.html" %}
+<div>
   {% block body %}{% endblock %}
   {% include "shared/footer.html" %}
 </div>

@@ -1,0 +1,60 @@
+{% extends "layout.html" %}
+{% block title %}Web Platform Research{% endblock %}
+{% block body %}
+<div>
+  {% include "nav/nav.html" %}
+  <main role="main">
+    <section class="grid grid-show-gap">
+      <div class="grid-row">
+        <aside class="grid-cell x1-fix">
+          {% include "contributors/sub-nav.html" %}
+        </aside>
+        <div class="grid-cell x1">
+          <h1 id="research" class="headline-1 highlight">Web Platform Research</h1>
+          <p>
+            But why do those bugs happen in first place? Aren't there specifications defined for that?
+          </p>
+        </div>
+      </div>
+    </section>
+    <section class="grid">
+      <div class="grid-row">
+        <div class="grid-cell x3">
+          <h2 id="implementations" class="headline-1 highlight">Implementations Differences</h2>
+
+          <p>
+            Time to time, issues regarding Web compatibility are created by very specific implementation differences in one of the browsers. Either, an implementation bug or a vendor choice, it is worth to understand and document them.
+          </p>
+
+          <p>
+            It often requires to test in multiple browsers to understand the involved differences. Some webcompat issues are difficult to understand if we rely only on the website code. There are too many interactions. The code is fragile on a long term (websites change). Creating a reduced test case exhibiting and isolating the issue becomes then very handy to add to the browser vendor bug tracker or on the specifications issue reporting system.
+          </p>
+          <p>
+            We created the <a href="https://compat.spec.whatwg.org/">compat specification</a> as a transitory space for documenting and describing the behavior of Web platform features resulting in incompatibilities. You can <a href="https://github.com/whatwg/compat/">contribute by opening issues</a> and documenting these differences.
+          </p>
+      </div>
+    </section>
+    <section class="grid">
+      <div class="grid-row">
+        <div class="grid-cell x3">   
+            <h2 id="surveys" class="headline-1 highlight">Web Platform Surveys</h2>
+            <p>
+              Browser vendors try to implement the Web as it currently exists. The Web standards try to give a direction for what the Web should be, but, at the same time, document its state. Having a better understanding on how a Web platform feature (DOM APIs, CSS, HTTP, …) is really used by Web developers becomes key for implementors. There are certain class of issues that are interesting to understand by exploring what Web developers use for creating the site. You may want to address this kind of work by running a survey on a specific feature that could ultimately help to improve the Web platform.
+            </p>
+            <p>
+              @@To be reviewed by mike for its content.@@
+            </p>
+          </section>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+{% endblock %}
+{%- block extrascripts -%}
+{%- if config.PRODUCTION or config.STAGING -%}
+<script src="{{ url_for('static', filename='js/contributors.min.js')|bust_cache }}"></script>
+{% else %}
+<script src="{{ url_for('static', filename='js/lib/contributors.js') }}"></script>
+{%- endif %}
+{%- endblock %}

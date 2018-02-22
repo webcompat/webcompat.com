@@ -1,0 +1,43 @@
+.bio .bio-img {
+  width: 220px;
+  height: 220px;
+  border-radius: 5px;
+}
+
+.bio .headline-2 {
+  margin-top: 5px;
+  margin-bottom: 15px;
+}
+
+.bio .headline-3 {
+  margin-top: 0;
+}
+
+.bio .bio-links {
+  align-self: center;
+}
+
+.bio.grid-row {
+  margin-top: 20px;
+}
+
+.bio .grid-nested:first-child,
+.grid-cell {
+  margin-right: 10px;
+}
+
+.bio .grid-nested:last-child,
+.grid-cell.bio-desc {
+  padding-top: 0;
+  margin-top: -5px;
+}
+
+@media screen and (min-width: 998px) {
+  .bio .bio-img {
+    filter: grayscale(100%);
+  }
+
+  .bio .bio-img:hover {
+    filter: grayscale(0%);
+  }
+}

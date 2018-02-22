@@ -493,13 +493,13 @@ def add_csp(response):
     """
     response.headers['Content-Security-Policy'] = (
         "default-src 'self'; " +
-        "object-src 'none'; " +
+        "object-src https://webcompat.github.io; " +
         "connect-src 'self' https://api.github.com; " +
-        "font-src 'self'; " +
+        "font-src 'self' https://fonts.gstatic.com/s/opensans/; " +
         get_img_src_policy() +
         "manifest-src 'self'; " +
         "script-src 'self' https://www.google-analytics.com https://api.github.com; " +  # nopep8
-        "style-src 'self' 'unsafe-inline'; " +
+        "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; " +
         "report-uri /csp-report"
     )
 

@@ -124,6 +124,7 @@ issues.BodyView = Backbone.View.extend({
   render: function() {
     // hide metadata
     var issueDesc = $(".js-Issue-markdown");
+
     issueDesc
       .contents()
       .filter(function() {
@@ -259,7 +260,7 @@ issues.ImageUploadView = Backbone.View.extend({
 
     this.inputMap[id].valid = false;
     $(this.inputMap[id].elm)
-      .parents(".wc-Form-group")
+      .parents(".js-Form-group")
       .removeClass("wc-Form-noError js-no-error")
       .addClass("wc-Form-error js-form-error");
 
@@ -272,12 +273,12 @@ issues.ImageUploadView = Backbone.View.extend({
   makeValid: function(id) {
     this.inputMap[id].valid = true;
     $(this.inputMap[id].elm)
-      .parents(".wc-Form-group")
+      .parents(".js-Form-group")
       .removeClass("wc-Form-error js-form-error")
       .addClass("wc-Form-noError js-no-error");
 
     $(this.inputMap[id].elm)
-      .parents(".wc-Form-group")
+      .parents(".js-Form-group")
       .find(".wc-Form-helpInline")
       .remove();
 
@@ -482,9 +483,11 @@ issues.MainView = Backbone.View.extend({
       });
     }
   },
-  addNewComment: function() {
+  addNewComment: function(event) {
     var form = $(".js-Comment-form");
     var textarea = $(".js-Comment-text");
+    event.preventDefault();
+
     // Only bother if the textarea isn't empty
     if ($.trim(textarea.val())) {
       var newComment = new issues.Comment({
