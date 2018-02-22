@@ -1,0 +1,77 @@
+.filter-label {
+  width: 100%;
+  text-align: center;
+}
+
+.filter-label * {
+  display: block;
+  line-height: 3em;
+  margin-bottom: 5px;
+  border-left: 5px solid;
+  cursor: pointer;
+}
+
+.filter-label .needstriage {
+  border-color: var(--label-needs-triage);
+}
+
+.filter-label .needstriage:hover,
+.filter-label .needstriage.is-active {
+  background-color: var(--label-needs-triage);
+}
+
+.filter-label .needsdiagnosis {
+  border-color: var(--label-needs-diagnosis);
+}
+
+.filter-label .needsdiagnosis:hover,
+.filter-label .needsdiagnosis.is-active {
+  background-color: var(--label-needs-diagnosis);
+}
+
+.filter-label .needscontact {
+  border-color: var(--label-needs-contact);
+}
+
+.filter-label .needscontact:hover,
+.filter-label .needscontact.is-active {
+  background-color: var(--label-needs-contact);
+}
+
+.filter-label .ready {
+  border-color: var(--label-outreach);
+}
+
+.filter-label .ready:hover,
+.filter-label .ready.is-active {
+  background-color: var(--label-outreach);
+}
+
+.filter-label .sitewait {
+  border-color: var(--label-site-contacted);
+}
+
+.filter-label .sitewait:hover,
+.filter-label .sitewait.is-active {
+  background-color: var(--label-site-contacted);
+}
+
+.filter-label .close {
+  border-color: var(--label-closed);
+}
+
+.filter-label .close:hover,
+.filter-label .close.is-active {
+  background-color: var(--label-closed);
+}
+
+@media screen and (min-width: 960px) {
+  .filter-label * {
+    display: inline-block;
+    padding: 2px 10px;
+    border-top: 5px solid;
+    border-left: 0 none;
+    transition: all ease .8s;
+    line-height: 2.2em;
+  }
+}

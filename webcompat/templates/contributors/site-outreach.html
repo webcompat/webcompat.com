@@ -1,83 +1,184 @@
-<ul class="contributors__list">
-  <li class="contributors__list__item">
-    <span>Find a bug that is labeled "<a href='https://webcompat.com/issues?page=1&per_page=50&state=open&stage=contactready&sort=created&direction=desc'>Ready for Outreach</a>"</span>
-    <div class="contributors__list__screenshot">
-      <img src="../img/1readyforoutreach.png" alt="Ready for Outreach Bugs Screenshot"/>
-    </div>
-  </li>
-  <li class="contributors__list__item"><span>Now it's time to track down someone to help get the fix implemented, but first a few tips on doing outreach:</span></li>
-  <ul class="contributors__list contributors__list--lvl_down">
-    <li class="contributors__list__item contributors__list__item--lvl_down"><span><strong>Be tactful</strong> People we are trying to reach have their own set of constraints, bosses, economic choices, etc. "Your web site sucks" will not lead anywhere, except NOT getting the site fixed.</span></li>
-    <li class="contributors__list__item contributors__list__item--lvl_down"><span><strong>Be humble</strong> We are no better, we also do mistakes in our own practices. We recommend things which might change one day because of the technical/economical circumstances.</span></li>
-    <li class="contributors__list__item contributors__list__item--lvl_down"><span><strong>Let it go</strong> Sometimes it just doesn't work. The person at the end of the other line may say "no" or worse, not answer. It can be very frustrating. Accept it and move on.</span></li>
-    <li class="contributors__list__item contributors__list__item--lvl_down"><span><strong>Be passionate</strong> The passion is in being able to find the right contact in a company without harassing them.  Every effort helps.</span></li>
-    <li class="contributors__list__item contributors__list__item--lvl_down"><span><strong>Share with consideration</strong> Share any contact you attempted or made in the issue comments section.  It helps everyone to know the status so they can pitch in or not repeat work. That said -  be careful to not disclose private information such as names and emails. You may simply say: "I contacted someone at $COMPANY", "Someone from $COMPANY said this..."</span></li>
-  </ul>
-  <li class="contributors__list__item"><span>If it is a browser bug, consider reporting it to the browser vendor:</span></li>
-  <ul class="contributors__list contributors__list--lvl_down">
-    <li class="contributors__list__item contributors__list__item--lvl_down">
-      <span>Chrome bug reports: <a title="Chrome bug reports" href="https://crbug.com/new">http://crbug.com/new</a></span>
-      <div class="contributors__list__screenshot">
-        <img src="../img/chromebugreport.jpg" alt="Chrome Bug Report Screenshot"/>
-      </div>
-    </li>
-    <li class="contributors__list__item contributors__list__item--lvl_down"><span>Firefox bug reports: <a title="Firefox bug reports" href="https://bugzilla.mozilla.org/enter_bug.cgi">https://bugzilla.mozilla.org/enter_bug.cgi</a></span></li>
-    <li class="contributors__list__item contributors__list__item--lvl_down"><span>Safari bug reports: <a title="Safari bug reports" href="http://bugreport.apple.com">http://bugreport.apple.com</a></span></li>
-    <li class="contributors__list__item contributors__list__item--lvl_down"><span>Opera bug reports : <a title="Opera bug reports" href="https://bugs.opera.com/wizard/">https://bugs.opera.com/wizard/</a></span></li>
-    <li class="contributors__list__item contributors__list__item--lvl_down"><span>Internet Explorer bug reports : <a title="IE bug reports" href="https://connect.microsoft.com/IE">https://connect.microsoft.com/IE</a></span></li>
-  </ul>
-  <li class="contributors__list__item"><span>If it's a web site, track down the site owner.  Try:</span></li>
-  <ul class="contributors__list contributors__list--lvl_down">
-    <li class="contributors__list__item contributors__list__item--lvl_down"><span><strong>Does the web site have a Twitter account?</strong> If the Twitter account seems to be run by a person, it can be a good start for initial contact.  Ask who you should contact with the fix.  If the Twitter account is just broadcasting information, move on.</span></li>
-    <li class="contributors__list__item contributors__list__item--lvl_down">
-      <span><strong>Does the web site have a support email or an issue tracker?</strong>  This is a simple one, but there's no guarantee that your request will be addressed.  Most of the time the responses are automatic but it's better than nothing. If in return you get an ID and/or a URI, put it in the issue comments.</span>
-      <div class="contributors__list__screenshot">
-        <img src="../img/2lastbullet_comment.jpg" alt="GitHub Comment Screenshot"/>
-      </div>
-    </li>
-    <li class="contributors__list__item contributors__list__item--lvl_down">
-      <span><strong>Search for a human working there</strong> Try:
-      <ul>
-        <li><strong>LinkedIn.</strong>
-          This doesn't necessary work with all countries, but worth trying. You can start for example in your favorite search engine with:Web developer $COMPANY_NAME site:linkedin.com. This will list names of people who are likely to work there, some of them in their profile will have contact information and often Twitter accounts, personal web sites or emails.
-        </li>
-        <li><strong>Twitter.</strong>
-          Some people put their company affiliation in Twitter.  Tweet or DM them if possible and ask who to contact. Always check if the Twitter account is active. Some people haven't used their account for ages. If so, move on.
-        </li>
-        <li><strong>SlideShare.</strong>
-          When you can't find the information about a developer, you might want to try to search something such as $COMPANY_NAME site:slideshare.net or any appropriate keywords that will make you closer to a contact. Some companies have their developers speaking at conferences about issues with performances, etc. Be careful of talks related to sales or marketing. In the slides, there is often the contact information of the developer.
-          <div class="contributors__list__screenshot">
-            <img src="../img/slideshare.jpg" alt="SlideShare Screenshot"/>
+{% extends "layout.html" %}
+{% block title %}Site Outreach{% endblock %}
+{% block body %}
+<div>
+  {% include "nav/nav.html" %}
+  <main role="main">
+    <section class="grid grid-show-gap">
+      <div class="grid-row">
+        <aside class="grid-cell x1-fix">
+          {% include "contributors/sub-nav.html" %}
+        </aside>
+        <div class="grid-cell x1">
+          <section>
+            <h1 id="outreach" class="headline-1 highlight">Site Outreach</h1>
+            <p>
+                Find a bug that is labeled "<a href='https://webcompat.com/issues?page=1&per_page=50&state=open&stage=contactready&sort=created&direction=desc'>Ready for Outreach</a>
+            </p>
+            <p>
+              If it is a browser bug, consider also reporting it to the browser vendor:
+            </p>
+
+            <ol>
+              <li>
+                <a href="https://crbug.com/new">
+                  Chrome bug reports
+                </a>
+              </li>
+              <li>
+                <a href="https://bugzilla.mozilla.org/enter_bug.cgi">
+                  Firefox bug reports
+                </a>
+              </li>
+              <li>
+                <a href="http://bugreport.apple.com">
+                  Safari bug reports
+                </a>
+              </li>
+              <li>
+                <a href="https://bugs.opera.com/wizard/">
+                  Opera bug reports
+                </a>
+              </li>
+              <li>
+                <a href="https://connect.microsoft.com/IE">
+                  Internet Explorer bug reports
+                </a>
+              </li>
+            </ol>
           </div>
-        </li>
-        <li><strong>GitHub, etc.</strong>
-          Search by individual person or by company names. Many developers have either company projects online and/or their personal projects. As usual be careful to not abuse or harass people with your requests.
-        </li>
-        <li><strong>Web designer.</strong>
-          Sometimes when you can't reach a web developer, you may try to reach web designers who have also their own type of social networks such as <a title="dribbble.com" href="https://dribbble.com/">dribbble.com</a>. Usually they have contacts with web developers and may be able to give an introduction. In some web agencies, the web designer will be a good initial contact. Again, be tactful and don't make the life of the web designer harder in his/her own company.
-          <div class="contributors__list__screenshot">
-            <img src="../img/webdesigner.jpg" alt="Dribble Screenshot"/>
-          </div>
-        </li>
-        <li><strong>Corporate emails.</strong>
-          This may work time to time. When you know the person is working in a specific company (You have last and first name), but you have been unable to find any contacts at all through twitter and so on. You might want to find out through search engines and/or people working at this company how the email addresses have been created. You may find that the pattern is firstname.lastname@company.example.org or lastnameF@ etc. You can try to send an email. The person will be probably surprised on how did you get the email address. So there is a risk to anger the person. Be gentle and explain. Try <a href="http://www.email-format.com/i/browse/" target="_blank">this email format tool</a>.
-        </li>
-        <li><strong>whois.</strong>
-          Some Web sites have their contact information in the <a href="https://www.google.com/search?q=google+whois" target="_blank"> whois</a> of the Web site. It's becoming rarer and rarer, because people receive spam because of it.
-        </li>
-        <li><strong>Check the terms and conditions or privacy policy for email addresses.</strong>
-          There could be hidden in long blocks of text so a search for  @ is helpful.  There may also be links in a website's footer to an investor or media relations page which could have a contact address, but be careful  not to annoy the company by sending mails about bugs to addresses that are clearly not relevant (e.g. investors@example.com).
-        </li>
-        <li><strong>Friend of a friend.</strong>
-          You are likely well connected in the industry. And it's why, if you are a Mozilla contributor in a specific  country, you are a very important asset for the work we are doing. Local social networks in between companies is a lot denser. Search your LinkedIn,  Twitter and Github for connections who might be connected to that company.
-        </li>
-        <li><strong>Find the home site.</strong>
-          Sometimes a Web site belongs to a bigger company (think about a Game company with many brands, or a TV  broadcaster, different services such as Google, Yahoo!, etc.), finding the home site will help understand the structure of the company and might lead to  the department which is really in charge of the Web site.
-        </li>
-        <li><strong>Check for unique technologies that can search for.</strong>
-          Sometimes you may have additional hints about the technology used on the Web site and the type of people related to the site through the hiring page of the company. In small company Web sites, you will discover the programming languages which are used, these will help reduce the search.
-        </li>
-      </ul>
-      </span>
-    </li>
-</ul>
+      </div>
+    </section>
+    <section class="grid">
+      <div class="grid-row">
+        <div class="grid-cell x3">
+            <h2 id="rules" class="headline-1 highlight">Contact Club Rules</h2>
+            <p>
+              Now it's time to track down someone to help get the fix implemented, but first a few tips on doing outreach:
+            </p>
+
+            <dl>
+              <dt class="bold highlight">Be tactful</dt>
+              <dd>
+                People we are trying to reach have their own set of constraints, bosses, economic choices, etc. "Your web site sucks" will not lead anywhere, except NOT getting the site fixed.
+              </dd>
+              
+              <dt class="bold highlight">Be humble</dt>
+              <dd>
+                We are no better, we also do mistakes in our own practices. We recommend things which might change one day because of the technical/economical circumstances.
+              </dd>
+              
+              <dt class="bold highlight">Let it go</dt>
+              <dd>
+                Sometimes it just doesn't work. The person at the end of the other line may say "no" or worse, not answer. It can be very frustrating. Accept it and move on.
+              </dd>
+              
+              <dt class="bold highlight">Be passionate</dt>
+              <dd>
+                The passion is in being able to find the right contact in a company without harassing them.  Every effort helps.
+              </dd>
+              
+              <dt class="bold highlight">Share with consideration</dt>
+              <dd>
+                Share any contact you attempted or made in the issue comments section.  It helps everyone to know the status so they can pitch in or not repeat work. That said -  be careful to not disclose private information such as names and emails. You may simply say: "I contacted someone at $COMPANY", "Someone from $COMPANY said this…"
+              </dd>
+            </dl>
+        </div>
+      </div>
+    </section>
+    <section class="grid">
+      <div class="grid-row">
+        <div class="grid-cell x3">
+          <h2 id="website-issue" class="headline-1 highlight">Website issues</h2>
+          <p>If it is a web site issue, track down the site owner.</p>
+          <p class="highlight bold">Try:</p>
+          <p>
+            <strong class="bold">Does the web site have a Twitter account?</strong> <br />
+            If the Twitter account seems to be run by a person, it can be a good start for initial contact.  Ask who you should contact with the fix.  If the Twitter account is just broadcasting information, move on.
+          </p>
+
+          <p>
+              <strong class="bold">Does the web site have a support email or an issue tracker?</strong>  <br /> 
+              This is a simple one, but there's no guarantee that your request will be addressed.  Most of the time the responses are automatic but it's better than nothing. If in return you get an ID and/or a URI, put it in the issue comments.
+          </p>
+          <figure>
+            <img src="../img/2lastbullet_comment.jpg" alt="GitHub Comment Screenshot" />
+            <figcaption>Leave a comment on the GitHub issue.</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+    <section class="grid">
+      <div class="grid-row">
+        <div class="grid-cell x3">
+            <h2 id="human" class="headline-1 highlight">Search for a human working there</h2>
+            <p>
+              You will get more chances of getting a resolution or understanding what the issue is about by reaching out someone.
+            </p>
+
+            <p>
+              <strong class="bold">LinkedIn:</strong> <br />
+              This doesn't necessary work with all countries, but worth trying. You can start for example in your favorite search engine with:Web developer $COMPANY_NAME site:linkedin.com. This will list names of people who are likely to work there, some of them in their profile will have contact information and often Twitter accounts, personal web sites or emails.
+            </p>
+            <p>
+              <strong class="bold">Twitter:</strong> <br />
+              Some people put their company affiliation in Twitter.  Tweet or DM them if possible and ask who to contact. Always check if the Twitter account is active. Some people haven't used their account for ages. If so, move on.
+            </p>
+            <p>
+              <strong class="bold">SlideShare:</strong> <br />
+              When you can't find the information about a developer, you might want to try to search something such as $COMPANY_NAME site:slideshare.net or any appropriate keywords that will make you closer to a contact. Some companies have their developers speaking at conferences about issues with performances, etc. Be careful of talks related to sales or marketing. In the slides, there is often the contact information of the developer.
+              <figure>
+                <img src="../img/slideshare.jpg" alt="SlideShare Screenshot" />
+                <figcaption>Slideshare Interface</figcaption>
+              </figure>
+            </p>
+            <p>
+                <strong class="bold">GitHub &amp; others:</strong> <br />
+                Search by individual person or by company names. Many developers have either company projects online and/or their personal projects. As usual be careful to not abuse or harass people with your requests.
+            </p>
+            <p>
+              <strong class="bold">Web designer:</strong> <br />
+              Sometimes when you can't reach a web developer, you may try to reach web designers who have also their own type of social networks such as <a title="dribbble.com" href="https://dribbble.com/">dribbble.com</a>. Usually they have contacts with web developers and may be able to give an introduction. In some web agencies, the web designer will be a good initial contact. Again, be tactful and don't make the life of the web designer harder in his/her own company.
+              <figure>
+                <img src="../img/webdesigner.jpg" alt="Dribble Screenshot" />
+                <figcaption>Dribble Interface</figcaption>
+              </figure>
+            </p>
+            <p>
+              <strong class="bold">Corporate emails:</strong> <br />
+              This may work time to time. When you know the person is working in a specific company (You have last and first name), but you have been unable to find any contacts at all through twitter and so on. You might want to find out through search engines and/or people working at this company how the email addresses have been created. You may find that the pattern is firstname.lastname@company.example.org or lastnameF@ etc. You can try to send an email. The person will be probably surprised on how did you get the email address. So there is a risk to anger the person. Be gentle and explain. Try <a href="http://www.email-format.com/i/browse/" target="_blank">this email format tool</a>.
+            </p>
+            <p>
+              <strong class="bold">WHOIS:</strong> <br />
+              Some Web sites have their contact information in the <a href="https://www.google.com/search?q=google+whois" target="_blank"> whois</a> of the Web site. It's becoming rarer and rarer, because people receive spam because of it.
+            </p>
+            <p>
+              <strong class="bold">Check the terms and conditions or privacy policy for email addresses:</strong> <br />
+              There could be hidden in long blocks of text so a search for  @ is helpful.  There may also be links in a website's footer to an investor or media relations page which could have a contact address, but be careful  not to annoy the company by sending mails about bugs to addresses that are clearly not relevant (e.g. investors@example.com).
+            </p>
+            <p>
+              <strong class="bold">Friend of a friend.</strong> <br />
+              You are likely well connected in the industry. And it's why, if you are a Mozilla contributor in a specific  country, you are a very important asset for the work we are doing. Local social networks in between companies is a lot denser. Search your LinkedIn,  Twitter and Github for connections who might be connected to that company.
+            </p>
+            <p>
+              <strong class="bold">Find the home site:</strong> <br />
+              Sometimes a Web site belongs to a bigger company (think about a Game company with many brands, or a TV  broadcaster, different services such as Google, Yahoo!, etc.), finding the home site will help understand the structure of the company and might lead to  the department which is really in charge of the Web site.
+            </p>
+            <p>
+              <strong class="bold">Check for unique technologies that can search for:</strong> <br />
+              Sometimes you may have additional hints about the technology used on the Web site and the type of people related to the site through the hiring page of the company. In small company Web sites, you will discover the programming languages which are used, these will help reduce the search.
+            </p>
+          </section>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+{% endblock %}
+{%- block extrascripts -%}
+{%- if config.PRODUCTION or config.STAGING -%}
+<script src="{{ url_for('static', filename='js/contributors.min.js')|bust_cache }}"></script>
+{% else %}
+<script src="{{ url_for('static', filename='js/lib/contributors.js') }}"></script>
+{%- endif %}
+{%- endblock %}

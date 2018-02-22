@@ -1,0 +1,57 @@
+.sub-nav {
+  color: var(--color-second);
+  font-size: 1em;
+  padding-left: 0;
+}
+
+.sub-nav,
+.sub-nav .sub-nav-item,
+.nested-sub-nav-item {
+  list-style: none;
+}
+
+.nested-sub-nav-item .link-text,
+.sub-nav .sub-nav-item .link-text {
+  text-decoration: none;
+}
+
+.nested-sub-nav {
+  display: none;
+  padding-left: var(--unit-space);
+  list-style: none;
+}
+
+.nested-sub::after {
+  content: " ";
+  background-image: url("../../img/svg/icons/svg-chevron-right.svg");
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: 0;
+  width: 20px;
+  height: 2em;
+  position: absolute;
+  opacity: .7;
+  margin-left: 3px;
+}
+
+.active .nested-sub-nav {
+  display: inline-block;
+}
+
+.active .nested-sub::after {
+  transform: rotate(90deg);
+}
+
+/* var(--page-size-s) = 320px - vars not usable in queries */
+@media (min-width: 320px) {
+  .sub-nav-header::after {
+    content: none;
+  }
+}
+
+.sub-nav-active {
+  font-weight: 700;
+  border-left: 2px solid var(--color-first);
+  color: var(--color-second);
+  padding-left: var(--unit-space);
+}

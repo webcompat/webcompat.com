@@ -1,0 +1,256 @@
+/*
+* form
+*
+----------------
+* DEPENDENCIES:
+----------------
+* colors.css
+*/
+
+.form {
+  padding: 10px 0 35px;
+}
+
+.form-element-bottom {
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+.form-element-bottom .form-button {
+  margin-top: auto;
+}
+
+.form-element {
+  position: relative;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.form-field {
+  background: none;
+  color: inherit;
+}
+
+.form-field ::placeholder {
+  color: #888;
+  opacity: 1;
+}
+
+.form-element .form-text:last-child {
+  margin-top: -13px;
+}
+
+.form-radio {
+  margin-bottom: 20px;
+}
+
+.form-label {
+  display: block;
+  text-align: left;
+  cursor: pointer;
+  margin-bottom: 5px;
+  line-height: 1.7em;
+}
+
+.form-required::after {
+  color: var(--color-error);
+  content: "*";
+  padding-right: 7px;
+  padding-left: 7px;
+}
+
+/* form message: error */
+.form-message-error {
+  color: var(--color-error);
+  font-weight: 700;
+}
+
+/* * Form input[type="text"], textarea (text-field) */
+
+.text-field {
+  display: block;
+  width: 100%;
+  padding: 4px 0;
+  border: none;
+  border-bottom: 1px solid var(--color-form);
+  position: relative;
+  z-index: 2;
+}
+
+.text-field:focus {
+  outline: 1px solid transparent;
+  transition: border-bottom 1s linear;
+  border-bottom: 1px solid var(--color-first);
+}
+
+/* * Form input[type="text"] validation */
+
+.form-input-validation {
+  width: 100%;
+  display: inline-block;
+  position: relative;
+  top: -2em;
+  text-align: right;
+  z-index: 0;
+}
+
+.is-validated .check::after {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  content: "";
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-image: url("../../img/svg/icons/svg-checkmark.svg");
+}
+
+.is-error .error::after {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  content: "";
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-image: url("../../img/svg/icons/svg-cross2.svg");
+}
+
+/* form-input-validation check error */
+
+/* Form radio */
+.input-radio {
+  position: absolute;
+  opacity: 0;
+}
+
+.label-radio {
+  margin-bottom: 5px;
+}
+
+.input-radio + .label-radio::before {
+  content: "";
+  display: inline-block;
+  position: relative;
+  top: 3px;
+  width: var(--input-size);
+  height: var(--input-size);
+  margin-right: 15px;
+  background: transparent;
+  border-radius: 100%;
+  border: 2px solid var(--color-default);
+  vertical-align: top;
+  cursor: pointer;
+  text-align: center;
+  transition: all 250ms ease;
+}
+
+.input-radio:checked + .label-radio::before {
+  background-color: var(--color-first);
+  border-color: var(--color-first);
+  box-shadow: inset 0 0 0 3px var(--color-bg-box);
+}
+
+.input-radio:focus + .label-radio::before {
+  border-color: var(--color-first);
+  box-shadow: inset 0 0 0 3px var(--color-bg-box), 0 0 0 3px var(--color-first-light);
+}
+
+.input-radio:disabled + .label-radio::before {
+  box-shadow: inset 0 0 0 4px var(--color-first);
+  border-color: var(--color-first);
+  background: transparent;
+}
+
+/* * Form upload */
+.form-upload {
+  position: relative;
+  border: 1px solid var(--color-form);
+  border-radius: 4px;
+}
+
+.form-upload:hover {
+  border: 1px solid var(--color-first);
+  transition: all 250ms ease;
+}
+
+.input-upload {
+  position: relative;
+  opacity: 0;
+  z-index: 30;
+  color: var(--color-fourth);
+  width: 100%;
+  height: 180px;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  cursor: pointer;
+}
+
+.form-upload .label-icon {
+  position: absolute;
+  z-index: 20;
+  text-align: center;
+  width: 29.5%;
+  height: 100px;
+  top: 50%;
+  left: 50%;
+  margin: 0;
+  transform: translate(-50%, -50%);
+}
+
+.comment-body .form-upload .label-icon {
+  width: 90%;
+}
+
+.label-icon .icon {
+  display: block;
+  margin: 0 auto;
+}
+
+.icon-upload {
+  fill: var(--color-form);
+}
+
+.form-upload:hover .icon-upload {
+  fill: var(--color-first);
+  transition: all 350ms ease;
+}
+
+.is-validated.no-js-error .label-upload,
+.is-validated.no-js-error:hover .label-upload {
+  visibility: hidden;
+}
+
+.is-validated .label-remove {
+  visibility: visible;
+  z-index: 40;
+  cursor: pointer;
+  border: 0 none;
+  outline: none;
+}
+
+.icon-remove,
+.label-remove .label-icon-message {
+  fill: var(--color-second);
+  color: var(--color-second);
+  transition: all 350ms ease;
+}
+
+.icon-error,
+.label-error .label-icon-message {
+  fill: var(--color-error);
+  color: var(--color-error);
+  transition: all 350ms ease;
+}
+
+.is-validated:hover .icon-remove,
+.is-validated:hover .label-remove .label-icon-message {
+  fill: var(--color-first);
+  color: var(--color-first);
+  transition: all 350ms ease;
+}
+
+#js-ReportForm.is-closed {
+  display: none;
+}

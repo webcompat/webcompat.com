@@ -1,16 +1,122 @@
-<ul class="contributors__list">
-  <li class="contributors__list__item">
-    <span>Find a bug that "<a href="https://webcompat.com/issues?page=1&per_page=50&state=open&stage=needsdiagnosis&sort=created&direction=desc">Needs Diagnosis</a>"</span>
-    <div class="contributors__list__screenshot">
-      <img src="../img/1browsesnapshot.png" alt="Browse Issues Screenshot"/>
-    </div>
-  </li>
-  <li class="contributors__list__item"><span>Make sure you have the same browser/OS running (if possible)</span></li>
-  <li class="contributors__list__item"><span>See if you can reproduce the problem as described</span></li>
-  <li class="contributors__list__item">
-    <span>Comment on the issue with your findings</span>
-    <div class="contributors__list__screenshot">
-      <img src="../img/4issuesnapshot.png" alt="Issue Comment Screenshot"/>
-    </div>
-  </li>
-</ul>
+{% extends "layout.html" %}
+{% block title %}Triage a Webcompat Issue{% endblock %}
+{% block body %}
+<div>
+  {% include "nav/nav.html" %}
+  <main role="main">
+    <section class="grid grid-show-gap">
+      <div class="grid-row">
+        <aside class="grid-cell x1-fix">
+          {% include "contributors/sub-nav.html" %}
+        </aside>
+        <article class="grid-cell x1">
+          <h1 id="triage" class="headline-1 highlight">Triage A Webcompat Issue</h1>
+          <p>
+            Someone has <a href="/contribute/report">reported a bug</a>. The issue is now in the <a href="https://webcompat.com/issues?page=1&amp;per_page=50&amp;state=open&amp;stage=needstriage&amp;sort=created&amp;direction=desc">needs triage list</a>. You can help!
+          </p>
+
+          <p>
+            Triaging is an important step in the process. You will be assessing the quality of the issue. You will notice right away that a lot of issues are either invalid or lack the minimum details for <a href="/contribute/diagnose">being able to investigate and create a diagnosis</a>.
+          </p>
+        </article>
+      </div>
+    </section>
+    <section class="grid">
+      <div class="grid-row">
+        <div class="grid-cell x3"> 
+          <h2 id="neutral" class="headline-1 highlight">Have A Neutral Test Environment</h2>
+          <p>
+            For having a better understanding of the issue, you will probably need to have a setup which makes it possible to have a fresh profile of the browser you are testing with. For example, on firefox you can <a href="http://www.otsukare.info/2014/11/12/configure-webcompat-browser">create a profile which resets</a> which each browser restart.
+          </p>
+        </div>
+      </div>
+    </section>
+    <section class="grid">
+      <div class="grid-row">
+        <div class="grid-cell x3">
+          <h2 id="reproducing" class="headline-1 highlight">Reproducing The Issue</h2>
+          <p>
+            Reproducing the issue is sometimes a very tough game. Some issues are happening because of the local settings of the person who created the report. Geographical location, preferences choices, web extensions and add-ons, OS, network constraints, logged on the services, devices and many other parameters are all possible the source of the breakage as perceived by the reporter.
+          </p>
+
+          <p>
+            Try your best to understand the report and reproduce the issue. If you have a doubt, reach out <a href="/about">someone from the project</a> to help. You may want to add screenshot when there are not available or when you want to share what you see yourself. Think about yourself as another bug reporter.
+          </p>
+        </div>
+      </div>
+    </section>
+    <section class="grid">
+      <div class="grid-row">
+        <div class="grid-cell x3"> 
+          <h2 id="next" class="headline-1 highlight">Possible Next Steps</h2>
+
+          <p>
+            If you <strong class="bold">can not reproduce the issue</strong>, check if it has been opened by an identified reporter or anonymously. If the issue has an identified reported, you may want to ask additional questions and give it one week or two before closing. Do not forget to thank the reporter for opening the issue in the first place. If the issue is anonymous, do not hesitate to close with one of the status below.
+          </p>
+
+          <p>
+            When closing, give information on the rationale for your decision. It doesn't have to be long, but that will help if we decide to reopen or for the reporters to understand the reasoning.
+          </p>
+
+          <dl id="statuses">
+            <dt id="incomplete" class="bold highlight">
+              incomplete
+            </dt>
+            <dd>
+              The issue doesn't have enough details to be able to reproduce in a reasonable way. For example, the reporter gives a final screen which is not working, but it is impossible to infer all the steps for reaching this state.
+            </dd>
+
+            <dt id="non-compat" class="bold highlight">
+              non-compat
+            </dt>
+            <dd id="everywhere">
+              The issue is happening on all browsers and it is probably just bad coding from the website developers. This is out of scope of the webcompat project.
+            </dd>
+
+            <dt id="worksforme" class="bold highlight">
+              worksforme
+            </dt>
+            <dd>
+              To the best of your knowledge and your inability to reproduce, the website is working for you.
+            </dd>
+            
+            <dt class="bold highlight">
+              invalid
+            </dt>
+            <dd>
+              The report is totally unrelated to the work we do on the webcompat project.
+            </dd>
+          </dl>
+
+          <p>
+            If you <strong class="bold">can reproduce the issue</strong>:
+          </p>
+
+          <dl id="statuses">
+            <dt class="bold highlight">
+              duplicate
+            </dt>
+            <dd>
+              A similar issue might exist on the project or there is a known bug on a browser bug tracker to duplicate against. Provide the links to the other webcompat issue or the bug tracker. Leave a comment on the bug tracker to inform that there is a duplicate. On Mozilla bugzilla, you can add the webcompat issue URL to the SeeAlso field.
+            </dd>
+
+            <dt class="bold highlight">
+              needstriage
+            </dt>
+            <dd>
+              Everything has been reproduced and you hand the issue to the diagnosis crew.
+            </dd>
+          </dl>
+        </article>
+      </div>
+    </section>
+  </main>
+</div>
+{% endblock %}
+{%- block extrascripts -%}
+{%- if config.PRODUCTION or config.STAGING -%}
+<script src="{{ url_for('static', filename='js/contributors.min.js')|bust_cache }}"></script>
+{% else %}
+<script src="{{ url_for('static', filename='js/lib/contributors.js') }}"></script>
+{%- endif %}
+{%- endblock %}

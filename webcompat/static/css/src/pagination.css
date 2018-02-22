@@ -1,0 +1,26 @@
+.pagination-previous,
+.pagination-next,
+.sort-dropdown .button {
+  text-decoration: none;
+  border: 0 none;
+  background-color: transparent;
+  font-family: "Open Sans", sans-serif;
+  font-size: 16px;
+  line-height: 1.8em;
+  padding: 0;
+  cursor: pointer;
+}
+
+.is-disabled {
+  opacity: .7;
+  text-decoration: none;
+  cursor: default;
+}
+
+.pagination-previous .nav-icon {
+  transform: rotateY(180deg);
+}
+
+.pagination .pagination-next {
+  float: right;
+}

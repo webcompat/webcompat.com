@@ -1,0 +1,62 @@
+/*
+* Buttons
+*
+-----------------------
+* DEPENDENCIES:
+-----------------------
+* variables.css
+*/
+
+.button {
+  display: inline-block;
+  padding: 12px 23px;
+  color: inherit;
+  border: 0;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.button-primary {
+  background-color: var(--color-first);
+}
+
+.button-secondary {
+  background-color: var(--color-second);
+  color: var(--color-bg-page);
+}
+
+.button:hover,
+.button-primary:hover,
+.button-secondary:hover {
+  opacity: .85;
+}
+
+.button-icon-hero {
+  fill: var(--color-first);
+}
+
+.button-hero .icon-middle {
+  vertical-align: middle;
+}
+
+.button-hero.is-open .icon-middle {
+  transform: rotate(90deg);
+}
+
+.button-hero:hover .icon-middle {
+  transform: rotate(0deg);
+}
+
+.button-hero {
+  border-radius: 10px;
+  font-size: 2em;
+  background-color: var(--color-second);
+  color: var(--color-first);
+  font-weight: 200;
+  width: 250px;
+  vertical-align: middle;
+}
+
+.button-hero:hover {
+  opacity: 1;
+}

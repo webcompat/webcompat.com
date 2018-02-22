@@ -1,18 +1,19 @@
 <script type="text/template">
-  <header class="wc-Issue-categoryEditor">
-    <div class="wc-Issue-categoryEditor-title">
-      Status
-    </div>
+  <header class="label-box-editor-button">
+    <h3 class="headline-3">Status</h3>
     <% if ($("body").data("username")) { %>
-    <span class="wc-Issue-categoryEditor-button js-Issue-categoryEditor">
-      <button class="wc-CategoryEditorLauncher r-ResetButton wc-Icon wc-Icon--gear js-CategoryEditorLauncher js-MilestoneEditorLauncher" aria-hidden="true">
-        <span class="wc-Accessibility">Edit Statuses</span></button>
+    <span class="js-Issue-categoryEditor">
+      <button class="nav-button nav-link icon right js-CategoryEditorLauncher js-MilestoneEditorLauncher">
+        <svg class="nav-text icon nav-icon" viewBox="0 0 30 30" role="presentation">
+            <title>Edit labels</title>
+            <use href="#svg-sliders">Edit labels</use>
+        </svg>
+      </button>
     </span>
     <% } %>
   </header>
    <div class="js-Category-list">
-    <span class="wc-Label wc-Label--badge js-Milestone"
-          style="background-color:<%= milestoneColors[milestone] ? milestoneColors[milestone].color : 'red' %>">
+    <span class="label label-<%= milestone %> js-Milestone">
       <%= milestone %>
     </span>
   </span>

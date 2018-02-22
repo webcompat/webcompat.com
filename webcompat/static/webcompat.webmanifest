@@ -1,17 +1,54 @@
 {
-  "lang": "en",
+  "lang": "en-US",
+  "dir": "ltr",
   "name": "webcompat.com",
   "short_name": "WebCompat",
-  "icons": [
-    {
-      "src": "/favicon/favicon-32x32.png",
-      "sizes": "32x32"
-    }, {
-      "src": "/favicon/favicon-96x96.png",
-      "sizes": "96x96",
-    }
-  ],
-  "start_url": "/?open=1",
+  "start_url": "./?open=1",
   "display": "minimal-ui",
-  "orientation": "portrait"
+  "description": "Web compatibility bug reporting for the web.",
+  "orientation": "portrait",
+  "icons": [
+        {
+            "src": "/favicon/android-chrome-36x36.png",
+            "sizes": "36x36",
+            "type": "image/png"
+        },
+        {
+            "src": "/favicon/android-chrome-48x48.png",
+            "sizes": "48x48",
+            "type": "image/png"
+        },
+        {
+            "src": "/favicon/android-chrome-72x72.png",
+            "sizes": "72x72",
+            "type": "image/png"
+        },
+        {
+            "src": "/favicon/android-chrome-96x96.png",
+            "sizes": "96x96",
+            "type": "image/png"
+        },
+        {
+            "src": "/favicon/android-chrome-144x144.png",
+            "sizes": "144x144",
+            "type": "image/png"
+        },
+        {
+            "src": "/favicon/android-chrome-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "/favicon/android-chrome-256x256.png",
+            "sizes": "256x256",
+            "type": "image/png"
+        },
+        {
+            "src": "/favicon/android-chrome-384x384.png",
+            "sizes": "384x384",
+            "type": "image/png"
+        }
+    ],
+  "theme_color": "#202020",
+  "background_color": "#202020"
 }
