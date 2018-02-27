@@ -192,12 +192,22 @@ function BugForm() {
     // application/x-www-form-urlencoded, so we need to change the
     // + (SPACE) to %20 before decoding
     var decoded = decodeURIComponent(detailsParam.replace(/\+/g, "%20"));
-    var details = JSON.parse(decoded);
-    var rv = "";
-    Object.keys(details).forEach(function(prop) {
-      rv += prop + ": " + details[prop] + "\n";
-    });
-    return rv;
+    var details;
+
+    try {
+      // In theory this is JSON!
+      details = JSON.parse(decoded);
+      var rv = "";
+      Object.keys(details).forEach(function(prop) {
+        rv += prop + ": " + details[prop] + "\n";
+      });
+      return rv;
+    } catch (e) {
+      // If it wasn't JSON, handle older clients prior to
+      // https://github.com/webcompat/webcompat.com/issues/2043 landing.
+      // This can be removed in the not-so-distant future!
+      return decoded;
+    }
   };
 
   this.storeClickedButton = function(event) {
@@ -544,7 +554,10 @@ function BugForm() {
         if (response && response.status === 413) {
           msg =
             "The image is too big! Please choose something smaller than 4MB.";
-          wcEvents.trigger("flash:error", { message: msg, timeout: 5000 });
+          wcEvents.trigger("flash:error", {
+            message: msg,
+            timeout: 5000
+          });
         }
         this.loadingIndicator.hide();
       }, this)
