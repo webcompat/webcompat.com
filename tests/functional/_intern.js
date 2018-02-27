@@ -55,6 +55,10 @@ const config = {
   ]
 };
 
+if (args.grep) {
+  config.grep = new RegExp(args.grep, "i");
+}
+
 intern.configure(config);
 
 intern.run().catch(e => {
