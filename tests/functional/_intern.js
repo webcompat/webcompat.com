@@ -4,16 +4,8 @@
 
 "use strict";
 
+const args = require("yargs").argv;
 const intern = require("intern").default;
-
-const args = {};
-process.argv.forEach((val, index) => {
-  if (val.indexOf("=") !== -1) {
-    args[val.split("=")[0]] = val.split("=")[1];
-  } else {
-    args[index] = val;
-  }
-});
 
 const siteRoot = args.siteRoot ? args.siteRoot : "http://localhost:5000";
 
