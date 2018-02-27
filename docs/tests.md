@@ -99,6 +99,14 @@ Note: the extra `--` is how you pass arguments to the npm script. Don't forget i
 npm run test:js -- --functionalSuites=tests/functional/foo.js
 ```
 
+To filter which tests *within* a single test suite you run, you can use the `--grep` argument:
+
+```bash
+npm run test:js -- --functionalSuites=tests/functional/foo.js --grep=tacos
+```
+
+This will run any test within the foo.js suite that has "tacos" in its name.
+
 Right now the tests are running in Firefox as a default. You can specify which browsers you want to test with using the `browsers` argument. Like this:
 
 ```bash
