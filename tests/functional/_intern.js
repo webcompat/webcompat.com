@@ -29,7 +29,7 @@ browsers.forEach(function(b) {
   });
 });
 
-intern.configure({
+const config = {
   // Configuration object for webcompat
   wc: {
     pageLoadTimeout: args.wcPageLoadTimeout
@@ -61,7 +61,9 @@ intern.configure({
   functionalSuites: [
     args.functionalSuites ? args.functionalSuites : "./tests/functional/*.js"
   ]
-});
+};
+
+intern.configure(config);
 
 intern.run().catch(e => {
   // This might not throw, BUG filed: https://github.com/theintern/intern/issues/868
