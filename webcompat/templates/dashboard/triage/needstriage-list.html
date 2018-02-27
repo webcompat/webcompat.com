@@ -191,8 +191,8 @@
               </time>
             </div>
             <div class="wc-Triage-metas-infos">
-              {% if issue['priority'] %} Priority {% endif %}
-              {% if issue['needinfo'] %} - Needinfo {% endif %}
+              <span title="More than 48h old">{% if issue['priority'] %} ⏰ {% endif %}</span>
+              <span title="Waiting for info">{% if issue['needinfo'] %} 🛎 {% endif %}</span>
             </div>
           </div>
         </div>
