@@ -23,8 +23,8 @@
 .form-element {
   position: relative;
   max-width: 100%;
-  margin: 0;
   padding: 0;
+  margin: 0 0 20px;
 }
 
 .form-field {
@@ -42,7 +42,7 @@
 }
 
 .form-radio {
-  margin-bottom: 20px;
+  margin-bottom: 35px;
 }
 
 .form-label {
