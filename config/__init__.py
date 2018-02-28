@@ -138,7 +138,6 @@ for cat_label in cat_labels:
 # creating an issue.
 EXTRA_LABELS = [
     'type-media',
-    'type-stylo',
     'type-webrender-enabled',
     'type-webvr',
 ]
