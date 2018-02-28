@@ -60,6 +60,10 @@
   padding-left: 7px;
 }
 
+.form-label-message .form-label {
+  display: inline-block;
+}
+
 /* form message: error */
 .form-message-error {
   color: var(--color-error);

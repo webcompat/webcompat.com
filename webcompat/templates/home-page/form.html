@@ -11,7 +11,7 @@
 >
   <div class="grid-cell">
     <div class="form-text form-element js-Form-group">
-      <div class="js-Form-information">
+      <div class="js-Form-information form-label-message">
         {{ form.url.label(class_='form-label form-required') }}
         {% if form.url.errors %}
           {% for error in form.url.errors %}
@@ -25,7 +25,7 @@
          <span class="form-input-validation check error"></span>
     </div>
     <div class="form-radio form-element js-Form-group">
-      <div class="js-Form-information">
+      <div class="js-Form-information form-label-message">
         <label class="form-label form-required" for="problem_category">Type of bug</label>
         {% if form.problem_category.errors %}
           {% for error in form.problem_category.errors %}
@@ -40,7 +40,7 @@
       {% endfor %}
     </div>
     <div class="form-text form-element js-Form-group">
-      <div class="js-Form-information">
+      <div class="js-Form-information form-label-message">
         {{ form.description.label(class_='form-label form-required') }}
         {% if form.description.errors %}
           {% for error in form.description.errors %}
@@ -70,7 +70,7 @@
       <span class="form-input-validation check"></span>
     </div>
     <div class="form-radio form-element js-Form-group">
-      <div class="js-Form-information">
+      <div class="js-Form-information form-label-message">
         {{ form.browser_test.label(class_='form-label') }}
         {% if form.browser_test.errors %}
           {% for error in form.browser_test.errors %}
