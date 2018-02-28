@@ -77,9 +77,14 @@ function BugForm() {
     );
     this.problemType.on("change", _.bind(this.checkProblemTypeValidity, this));
     this.uploadField.on("change", _.bind(this.checkImageTypeValidity, this));
-    this.osField
-      .add(this.browserField)
-      .on("blur input", _.bind(this.checkOptionalNonEmpty, this));
+    this.osField.on(
+      "blur",
+      _.bind(this.checkOptionalNonEmpty, this, this.osField)
+    );
+    this.browserField.on(
+      "blur",
+      _.bind(this.checkOptionalNonEmpty, this, this.browserField)
+    );
     this.submitButtons.on("click", _.bind(this.storeClickedButton, this));
     this.submitButtons.on("click", _.bind(this.loadingIndicator.show, this));
     this.form.on("submit", _.bind(this.maybeUploadImage, this));
@@ -292,18 +297,14 @@ function BugForm() {
 
   /* Check if Browser and OS are empty or not, only
      so we can set them to valid (there is no invalid state) */
-  this.checkOptionalNonEmpty = function() {
-    _.forEach(
-      [this.browserField, this.osField],
-      _.bind(function(input) {
-        var inputId = input.prop("id");
-        if (input.val()) {
-          this.makeValid(inputId);
-        } else {
-          this.makeInvalid(inputId);
-        }
-      }, this)
-    );
+  this.checkOptionalNonEmpty = function(input) {
+    var inputId = input.prop("id");
+
+    if (input.val()) {
+      this.makeValid(inputId);
+    } else {
+      this.makeInvalid(inputId);
+    }
   };
 
   this.checkForm = function() {
@@ -327,8 +328,11 @@ function BugForm() {
       }
     }
     // Make sure we only do this if the inputs exist on the page
-    if (this.browserField.length || this.osField.length) {
-      this.checkOptionalNonEmpty();
+    if (this.browserField.length) {
+      this.checkOptionalNonEmpty(this.browserField);
+    }
+    if (this.osField.length) {
+      this.checkOptionalNonEmpty(this.osField);
     }
   };
 
