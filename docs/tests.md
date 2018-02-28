@@ -80,10 +80,6 @@ npm run start:test
 In a separate terminal window or tab, run the tests:
 
 ```bash
-node_modules/.bin/intern-runner config=tests/intern
-
-or
-
 npm run test:js
 ```
 
@@ -97,18 +93,24 @@ Shortly after running this command, you should see the browser open and various 
 
 To run a single test suite, where foo.js is the file found in the `tests/functional` directory:
 
+Note: the extra `--` is how you pass arguments to the npm script. Don't forget it!
+
 ```bash
-node_modules/.bin/intern-runner config=tests/intern functionalSuites=tests/functional/foo.js 
+npm run test:js -- --functionalSuites=tests/functional/foo.js
 ```
+
+To filter which tests *within* a single test suite you run, you can use the `--grep` argument:
+
+```bash
+npm run test:js -- --functionalSuites=tests/functional/foo.js --grep=tacos
+```
+
+This will run any test within the foo.js suite that has "tacos" in its name.
 
 Right now the tests are running in Firefox as a default. You can specify which browsers you want to test with using the `browsers` argument. Like this:
 
 ```bash
-npm run test:js browsers=chrome,firefox
-
-or
-
-node_modules/.bin/intern-runner config=tests/intern browsers=safari,firefox
+npm run test:js -- --browsers=chrome,firefox
 ```
 
 For a list of the recognized browser names, just refer to [Browser enum](http://seleniumhq.github.io/selenium/docs/api/javascript/module/selenium-webdriver/index_exports_Browser.html)

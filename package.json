@@ -21,7 +21,8 @@
     "cssrecipes-reset": "^0.5.0",
     "cssrecipes-utils": "^0.6.2",
     "suitcss-utils-align": "^1.0.0",
-    "suitcss-utils-display": "^1.0.2"
+    "suitcss-utils-display": "^1.0.2",
+    "yargs": "^11.0.0"
   },
   "devDependencies": {
     "eslint": "~3.19.0",

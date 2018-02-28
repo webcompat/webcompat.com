@@ -54,4 +54,4 @@ before_script:
 # now run the tests!
 script:
   - nosetests
-  - node ./tests/functional/_intern.js reporters="runner"
+  - npm run test:js -- --reporters="runner"
