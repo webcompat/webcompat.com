@@ -59,7 +59,9 @@ intern.configure({
   reporters: [args.reporters ? args.reporters : "pretty"],
 
   functionalSuites: [
-    args.functionalSuites ? args.functionalSuites : "./tests/functional/*.js"
+    args.functionalSuites
+      ? args.functionalSuites
+      : "./tests/functional/*.js"
   ]
 });
 
