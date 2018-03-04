@@ -198,30 +198,11 @@ registerSuite("Search (auth)", {
         .end();
     },
 
-    "Label have correct URL after search without results"() {
-      // load up a garbage search, so we can more easily detect when
-      // the search values we want are loaded.
-      return FunctionalHelpers.openPage(
-        this,
-        url(
-          "/issues",
-          "?page=1&per_page=50&state=open&stage=all&sort=created&direction=desc"
-        ),
-        ".grid"
-      )
+    "After search without results, suggested label appear and have a clickable URL."() {
+      return FunctionalHelpers.openPage(this, url("/issues"), ".grid")
         .findByCssSelector("#js-SearchForm-input")
-        .clearValue()
         .click()
         .type("noExpectedResult123")
-        .submit()
-        .getProperty("value")
-        .then(function(text) {
-          assert.equal(
-            text,
-            "noExpectedResult123",
-            "The q param populated the search input."
-          );
-        })
         .end()
         .findByCssSelector("#x-search-bar")
         .submit()
@@ -232,10 +213,11 @@ registerSuite("Search (auth)", {
         .end()
         .getCurrentUrl()
         .then(function(url) {
-          assert.equal(
-            url,
-            "http://localhost:5000/issues?page=1&per_page=50&state=open&stage=all&sort=created&direction=desc&q=label%3Abrowser-android",
-            "Suggested labels are shown with correct URL."
+          assert(
+            url.includes(
+              "q=label%3Abrowser-android",
+              "Redirect from a suggested label goes to correct URL."
+            )
           );
         });
     },
