@@ -1,0 +1,352 @@
+{
+  "_fixture": true,
+  "total_count": 3,
+  "incomplete_results": false,
+  "items": [
+    {
+      "url": "https://api.github.com/repos/webcompat/webcompat-tests/issues/1371",
+      "repository_url": "https://api.github.com/repos/webcompat/webcompat-tests",
+      "labels_url": "https://api.github.com/repos/webcompat/webcompat-tests/issues/1371/labels{/name}",
+      "comments_url": "https://api.github.com/repos/webcompat/webcompat-tests/issues/1371/comments",
+      "events_url": "https://api.github.com/repos/webcompat/webcompat-tests/issues/1371/events",
+      "html_url": "https://github.com/webcompat/webcompat-tests/issues/1371",
+      "id": 296904917,
+      "number": 1371,
+      "title": "candyforthemassesdbhjsadnasbhjdksbdasbndkbaskbdasbdhasbdas.org - desktop site instead of mobile site",
+      "user": {
+        "login": "webcompat-bot",
+        "id": 8862693,
+        "avatar_url": "https://avatars3.githubusercontent.com/u/8862693?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/webcompat-bot",
+        "html_url": "https://github.com/webcompat-bot",
+        "followers_url": "https://api.github.com/users/webcompat-bot/followers",
+        "following_url": "https://api.github.com/users/webcompat-bot/following{/other_user}",
+        "gists_url": "https://api.github.com/users/webcompat-bot/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/webcompat-bot/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/webcompat-bot/subscriptions",
+        "organizations_url": "https://api.github.com/users/webcompat-bot/orgs",
+        "repos_url": "https://api.github.com/users/webcompat-bot/repos",
+        "events_url": "https://api.github.com/users/webcompat-bot/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/webcompat-bot/received_events",
+        "type": "User",
+        "site_admin": false
+      },
+      "labels": [
+        {
+          "id": 148714215,
+          "url": "https://api.github.com/repos/webcompat/webcompat-tests/labels/browser-android",
+          "name": "browser-android",
+          "color": "f7c6c7",
+          "default": false
+        },
+        {
+          "id": 90454697,
+          "url": "https://api.github.com/repos/webcompat/webcompat-tests/labels/browser-chrome",
+          "name": "browser-chrome",
+          "color": "006b75",
+          "default": false
+        },
+        {
+          "id": 182807004,
+          "url": "https://api.github.com/repos/webcompat/webcompat-tests/labels/browser-firefox",
+          "name": "browser-firefox",
+          "color": "d4c5f9",
+          "default": false
+        }
+      ],
+      "state": "open",
+      "locked": false,
+      "assignee": null,
+      "assignees": [
+
+      ],
+      "milestone": {
+        "url": "https://api.github.com/repos/webcompat/webcompat-tests/milestones/1",
+        "html_url": "https://github.com/webcompat/webcompat-tests/milestone/1",
+        "labels_url": "https://api.github.com/repos/webcompat/webcompat-tests/milestones/1/labels",
+        "id": 2744172,
+        "number": 1,
+        "title": "needstriage",
+        "description": "Issues which needs to be triaged",
+        "creator": {
+          "login": "karlcow",
+          "id": 505230,
+          "avatar_url": "https://avatars0.githubusercontent.com/u/505230?v=4",
+          "gravatar_id": "",
+          "url": "https://api.github.com/users/karlcow",
+          "html_url": "https://github.com/karlcow",
+          "followers_url": "https://api.github.com/users/karlcow/followers",
+          "following_url": "https://api.github.com/users/karlcow/following{/other_user}",
+          "gists_url": "https://api.github.com/users/karlcow/gists{/gist_id}",
+          "starred_url": "https://api.github.com/users/karlcow/starred{/owner}{/repo}",
+          "subscriptions_url": "https://api.github.com/users/karlcow/subscriptions",
+          "organizations_url": "https://api.github.com/users/karlcow/orgs",
+          "repos_url": "https://api.github.com/users/karlcow/repos",
+          "events_url": "https://api.github.com/users/karlcow/events{/privacy}",
+          "received_events_url": "https://api.github.com/users/karlcow/received_events",
+          "type": "User",
+          "site_admin": false
+        },
+        "open_issues": 70,
+        "closed_issues": 0,
+        "state": "open",
+        "created_at": "2017-09-05T03:39:06Z",
+        "updated_at": "2018-03-01T21:15:19Z",
+        "due_on": null,
+        "closed_at": null
+      },
+      "comments": 0,
+      "created_at": "2018-02-13T22:13:52Z",
+      "updated_at": "2018-02-20T09:50:55Z",
+      "closed_at": null,
+      "author_association": "MEMBER",
+      "body": "<!-- @browser: Firefox 60.0 -->\n<!-- @ua_header: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:60.0) Gecko/20100101 Firefox/60.0 -->\n<!-- @reported_with: web -->\n\n**URL**: http://candyforthemasses.org\n\n**Browser / Version**: Firefox 60.0\n**Operating System**: Mac OS X 10.13\n**Tested Another Browser**: Yes\n\n**Problem type**: Desktop site instead of mobile site\n**Description**: nothing, just bored\n**Steps to Reproduce**:\n\n\n\n\n_From [webcompat.com](https://webcompat.com/) with ❤️_",
+      "score": 1.0
+    },
+    {
+      "url": "https://api.github.com/repos/webcompat/webcompat-tests/issues/1367",
+      "repository_url": "https://api.github.com/repos/webcompat/webcompat-tests",
+      "labels_url": "https://api.github.com/repos/webcompat/webcompat-tests/issues/1367/labels{/name}",
+      "comments_url": "https://api.github.com/repos/webcompat/webcompat-tests/issues/1367/comments",
+      "events_url": "https://api.github.com/repos/webcompat/webcompat-tests/issues/1367/events",
+      "html_url": "https://github.com/webcompat/webcompat-tests/issues/1367",
+      "id": 293216830,
+      "number": 1367,
+      "title": "candyforthemassesandlongerurlasweneedtotestsomething.org - desktop site instead of mobile site",
+      "user": {
+        "login": "webcompat-bot",
+        "id": 8862693,
+        "avatar_url": "https://avatars3.githubusercontent.com/u/8862693?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/webcompat-bot",
+        "html_url": "https://github.com/webcompat-bot",
+        "followers_url": "https://api.github.com/users/webcompat-bot/followers",
+        "following_url": "https://api.github.com/users/webcompat-bot/following{/other_user}",
+        "gists_url": "https://api.github.com/users/webcompat-bot/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/webcompat-bot/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/webcompat-bot/subscriptions",
+        "organizations_url": "https://api.github.com/users/webcompat-bot/orgs",
+        "repos_url": "https://api.github.com/users/webcompat-bot/repos",
+        "events_url": "https://api.github.com/users/webcompat-bot/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/webcompat-bot/received_events",
+        "type": "User",
+        "site_admin": false
+      },
+      "labels": [
+        {
+          "id": 148714215,
+          "url": "https://api.github.com/repos/webcompat/webcompat-tests/labels/browser-android",
+          "name": "browser-android",
+          "color": "f7c6c7",
+          "default": false
+        },
+        {
+          "id": 90454697,
+          "url": "https://api.github.com/repos/webcompat/webcompat-tests/labels/browser-chrome",
+          "name": "browser-chrome",
+          "color": "006b75",
+          "default": false
+        },
+        {
+          "id": 764985357,
+          "url": "https://api.github.com/repos/webcompat/webcompat-tests/labels/browser-firefou-abc",
+          "name": "browser-firefou-abc",
+          "color": "ededed",
+          "default": false
+        },
+        {
+          "id": 602787897,
+          "url": "https://api.github.com/repos/webcompat/webcompat-tests/labels/browser-firefox-mobile-(tablet)",
+          "name": "browser-firefox-mobile-(tablet)",
+          "color": "ededed",
+          "default": false
+        },
+        {
+          "id": 86614755,
+          "url": "https://api.github.com/repos/webcompat/webcompat-tests/labels/closed-duplicate",
+          "name": "closed-duplicate",
+          "color": "cccccc",
+          "default": false
+        },
+        {
+          "id": 584072494,
+          "url": "https://api.github.com/repos/webcompat/webcompat-tests/labels/type-media",
+          "name": "type-media",
+          "color": "ededed",
+          "default": false
+        },
+        {
+          "id": 650809601,
+          "url": "https://api.github.com/repos/webcompat/webcompat-tests/labels/type-stylo",
+          "name": "type-stylo",
+          "color": "ededed",
+          "default": false
+        }
+      ],
+      "state": "open",
+      "locked": false,
+      "assignee": null,
+      "assignees": [
+
+      ],
+      "milestone": {
+        "url": "https://api.github.com/repos/webcompat/webcompat-tests/milestones/1",
+        "html_url": "https://github.com/webcompat/webcompat-tests/milestone/1",
+        "labels_url": "https://api.github.com/repos/webcompat/webcompat-tests/milestones/1/labels",
+        "id": 2744172,
+        "number": 1,
+        "title": "needstriage",
+        "description": "Issues which needs to be triaged",
+        "creator": {
+          "login": "karlcow",
+          "id": 505230,
+          "avatar_url": "https://avatars0.githubusercontent.com/u/505230?v=4",
+          "gravatar_id": "",
+          "url": "https://api.github.com/users/karlcow",
+          "html_url": "https://github.com/karlcow",
+          "followers_url": "https://api.github.com/users/karlcow/followers",
+          "following_url": "https://api.github.com/users/karlcow/following{/other_user}",
+          "gists_url": "https://api.github.com/users/karlcow/gists{/gist_id}",
+          "starred_url": "https://api.github.com/users/karlcow/starred{/owner}{/repo}",
+          "subscriptions_url": "https://api.github.com/users/karlcow/subscriptions",
+          "organizations_url": "https://api.github.com/users/karlcow/orgs",
+          "repos_url": "https://api.github.com/users/karlcow/repos",
+          "events_url": "https://api.github.com/users/karlcow/events{/privacy}",
+          "received_events_url": "https://api.github.com/users/karlcow/received_events",
+          "type": "User",
+          "site_admin": false
+        },
+        "open_issues": 70,
+        "closed_issues": 0,
+        "state": "open",
+        "created_at": "2017-09-05T03:39:06Z",
+        "updated_at": "2018-03-01T21:15:19Z",
+        "due_on": null,
+        "closed_at": null
+      },
+      "comments": 12,
+      "created_at": "2018-01-31T16:10:45Z",
+      "updated_at": "2018-02-19T10:02:51Z",
+      "closed_at": null,
+      "author_association": "MEMBER",
+      "body": "<!-- @browser: Firefox 60.0 -->\n<!-- @ua_header: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:60.0) Gecko/20100101 Firefox/60.0 -->\n<!-- @reported_with: web -->\n\n**URL**: http://candyforthemasses.org\n\n**Browser / Version**: Firefox 60.0\n**Operating System**: Mac OS X 10.13\n**Tested Another Browser**: No\n\n**Problem type**: Desktop site instead of mobile site\n**Description**: There is no candy\n**Steps to Reproduce**:\n1\r\n2\r\n3\n\n\n\n_From [webcompat.com](https://webcompat.com/) with ❤️_",
+      "score": 1.0
+    },
+    {
+      "url": "https://api.github.com/repos/webcompat/webcompat-tests/issues/1103",
+      "repository_url": "https://api.github.com/repos/webcompat/webcompat-tests",
+      "labels_url": "https://api.github.com/repos/webcompat/webcompat-tests/issues/1103/labels{/name}",
+      "comments_url": "https://api.github.com/repos/webcompat/webcompat-tests/issues/1103/comments",
+      "events_url": "https://api.github.com/repos/webcompat/webcompat-tests/issues/1103/events",
+      "html_url": "https://github.com/webcompat/webcompat-tests/issues/1103",
+      "id": 245752612,
+      "number": 1103,
+      "title": "example.com - unknown",
+      "user": {
+        "login": "brizental",
+        "id": 25176023,
+        "avatar_url": "https://avatars2.githubusercontent.com/u/25176023?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/brizental",
+        "html_url": "https://github.com/brizental",
+        "followers_url": "https://api.github.com/users/brizental/followers",
+        "following_url": "https://api.github.com/users/brizental/following{/other_user}",
+        "gists_url": "https://api.github.com/users/brizental/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/brizental/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/brizental/subscriptions",
+        "organizations_url": "https://api.github.com/users/brizental/orgs",
+        "repos_url": "https://api.github.com/users/brizental/repos",
+        "events_url": "https://api.github.com/users/brizental/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/brizental/received_events",
+        "type": "User",
+        "site_admin": false
+      },
+      "labels": [
+        {
+          "id": 148714215,
+          "url": "https://api.github.com/repos/webcompat/webcompat-tests/labels/browser-android",
+          "name": "browser-android",
+          "color": "f7c6c7",
+          "default": false
+        },
+        {
+          "id": 602787897,
+          "url": "https://api.github.com/repos/webcompat/webcompat-tests/labels/browser-firefox-mobile-(tablet)",
+          "name": "browser-firefox-mobile-(tablet)",
+          "color": "ededed",
+          "default": false
+        },
+        {
+          "id": 124747710,
+          "url": "https://api.github.com/repos/webcompat/webcompat-tests/labels/browser-ie",
+          "name": "browser-ie",
+          "color": "ededed",
+          "default": false
+        },
+        {
+          "id": 388130717,
+          "url": "https://api.github.com/repos/webcompat/webcompat-tests/labels/nsfw",
+          "name": "nsfw",
+          "color": "b60205",
+          "default": false
+        },
+        {
+          "id": 743991534,
+          "url": "https://api.github.com/repos/webcompat/webcompat-tests/labels/status-needinfo",
+          "name": "status-needinfo",
+          "color": "bfd4f2",
+          "default": false
+        }
+      ],
+      "state": "open",
+      "locked": false,
+      "assignee": null,
+      "assignees": [
+
+      ],
+      "milestone": {
+        "url": "https://api.github.com/repos/webcompat/webcompat-tests/milestones/1",
+        "html_url": "https://github.com/webcompat/webcompat-tests/milestone/1",
+        "labels_url": "https://api.github.com/repos/webcompat/webcompat-tests/milestones/1/labels",
+        "id": 2744172,
+        "number": 1,
+        "title": "needstriage",
+        "description": "Issues which needs to be triaged",
+        "creator": {
+          "login": "karlcow",
+          "id": 505230,
+          "avatar_url": "https://avatars0.githubusercontent.com/u/505230?v=4",
+          "gravatar_id": "",
+          "url": "https://api.github.com/users/karlcow",
+          "html_url": "https://github.com/karlcow",
+          "followers_url": "https://api.github.com/users/karlcow/followers",
+          "following_url": "https://api.github.com/users/karlcow/following{/other_user}",
+          "gists_url": "https://api.github.com/users/karlcow/gists{/gist_id}",
+          "starred_url": "https://api.github.com/users/karlcow/starred{/owner}{/repo}",
+          "subscriptions_url": "https://api.github.com/users/karlcow/subscriptions",
+          "organizations_url": "https://api.github.com/users/karlcow/orgs",
+          "repos_url": "https://api.github.com/users/karlcow/repos",
+          "events_url": "https://api.github.com/users/karlcow/events{/privacy}",
+          "received_events_url": "https://api.github.com/users/karlcow/received_events",
+          "type": "User",
+          "site_admin": false
+        },
+        "open_issues": 70,
+        "closed_issues": 0,
+        "state": "open",
+        "created_at": "2017-09-05T03:39:06Z",
+        "updated_at": "2018-03-01T21:15:19Z",
+        "due_on": null,
+        "closed_at": null
+      },
+      "comments": 0,
+      "created_at": "2017-07-26T15:01:51Z",
+      "updated_at": "2017-11-27T11:26:32Z",
+      "closed_at": null,
+      "author_association": "MEMBER",
+      "body": "<!-- @browser: BarFoo -->\n<!-- @ua_header: werkzeug/0.12.2 -->\n<!-- @reported_with: web -->\n\n**URL**: http://example.com\n\n**Browser / Version**: BarFoo\n**Operating System**: Foobar\n**Tested Another Browser**: Unknown\n\n**Problem type**: Unknown\n**Description**: foo\n**Steps to Reproduce**:\nNone\n\n\n\n_From [webcompat.com](https://webcompat.com/) with ❤️_",
+      "score": 1.0
+    }
+  ]
+}
