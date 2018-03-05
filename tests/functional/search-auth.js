@@ -198,6 +198,30 @@ registerSuite("Search (auth)", {
         .end();
     },
 
+    "After search without results, suggested label appear and have a clickable URL."() {
+      return FunctionalHelpers.openPage(this, url("/issues"), ".grid")
+        .findByCssSelector("#js-SearchForm-input")
+        .click()
+        .type("noExpectedResult123")
+        .end()
+        .findByCssSelector("#x-search-bar")
+        .submit()
+        .end()
+        .sleep(2000)
+        .findDisplayedByCssSelector(".label-browser-android")
+        .click()
+        .end()
+        .getCurrentUrl()
+        .then(function(url) {
+          assert(
+            url.includes(
+              "q=label%3Abrowser-android",
+              "Redirect from a suggested label goes to correct URL."
+            )
+          );
+        });
+    },
+
     "Search input is loaded from q param (with dashes)"() {
       // load up a garbage search, so we can more easily detect when
       // the search values we want are loaded.
