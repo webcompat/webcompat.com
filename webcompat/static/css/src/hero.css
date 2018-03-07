@@ -73,10 +73,15 @@
   .bug-animated {
     animation-name: bug;
     animation-duration: 2s;
-    animation-delay: .75s;
+    animation-delay: 0s;
     animation-fill-mode: both;
     animation-timing-function: linear;
     transform-origin: 50% 100%;
+    animation-play-state: paused;
+  }
+
+  .bug-animated:hover {
+    animation-play-state: running;
   }
 }
 
