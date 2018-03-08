@@ -66,12 +66,12 @@
     transform: translate3d(130px, -20px, 0) rotateZ(5deg) scale3d(1.2, 1.2, 1);
   }
   94% {
-    transform: translate3d(130px, -20px, 0) rotateZ(0) scale3d(1, 1, 1);
+    transform: translate3d(130px, -40px, 0) rotateZ(0) scale3d(1, 1, 1);
   }
   98% {
-    transform: translate3d(130px, 215px, 0) rotateZ(0) scale3d(1, 1, 1);
+    transform: translate3d(130px, -60px, -60px) rotateZ(0) scale3d(1, 0, 1);
   }
   100% {
-    transform: translate3d(130px, 215px, 0) rotateZ(0) scale3d(1, 0, 1);
+    transform: translate3d(130px, -80px, -90px) rotateZ(0) scale3d(1, 0, 1);
   }
 }
