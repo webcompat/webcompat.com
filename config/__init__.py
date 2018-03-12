@@ -34,6 +34,7 @@ def initialize_status():
     to be able to query status related things. It uses a backup version
     when the request to GitHub fails.
     """
+    milestones_content = None
     print('Statuses Initialization…')
     REPO_ROOT = ISSUES_REPO_URI.rpartition('/issues')[0]
     milestones_url_path = os.path.join('repos', REPO_ROOT, 'milestones')
