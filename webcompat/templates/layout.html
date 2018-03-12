@@ -36,10 +36,8 @@
 </head>
 <body id="body-webcompat" data-username="{{ session.username }}">
 {% include "shared/svg-icons.html" %}
-<div>
-  {% block body %}{% endblock %}
-  {% include "shared/footer.html" %}
-</div>
+{% block body %}{% endblock %}
+{% include "shared/footer.html" %}
 {%- if config.PRODUCTION or config.STAGING -%}
 <!-- Google Analytics -->
 <script src="{{ url_for('static', filename='js/vendor/ga.js') }}"></script>
