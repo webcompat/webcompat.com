@@ -27,6 +27,21 @@
   margin: 0 0 20px;
 }
 
+.form-button.form-button-multiple {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap-reverse;
+  justify-content: space-between;
+  margin-left: -10px;
+  margin-right: -10px;
+  max-width: none;
+}
+
+.form-button.form-button-multiple button {
+  flex: 1 1 auto;
+  margin: 20px 10px 0;
+}
+
 .form-field {
   background: none;
   color: inherit;
