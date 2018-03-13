@@ -1,7 +1,9 @@
-@media all and (min-width: 893px) {
+@media all and (min-width: 893px) and (min-height: 550px) {
   .label-box {
     position: sticky;
     top: 50px;
+    max-height: calc(100vh - 44px - 30px);
+    overflow-y: auto;
   }
 }
 
