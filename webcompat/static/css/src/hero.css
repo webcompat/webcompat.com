@@ -1,6 +1,8 @@
 .hero-section {
-  padding: calc(var(--unit-gutter) / 2) var(--unit-gutter);
+  margin-left: -9px;
+  margin-right: -9px;
   margin-top: -34px;
+  padding: calc(var(--unit-gutter) / 2) var(--unit-gutter);
 }
 
 .hero-section .grid-row {
@@ -24,6 +26,13 @@
 
 .hero-illustration {
   display: none;
+}
+
+@media screen and (min-width: 665px) {
+  .hero-section {
+    margin-left: -19px;
+    margin-right: -19px;
+  }
 }
 
 @media screen and (min-width: 998px) {
