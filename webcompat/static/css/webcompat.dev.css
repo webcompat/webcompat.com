@@ -40,12 +40,12 @@
 
 #body-webcompat {
   background-color: var(--color-bg-page);
-  padding: var(--navi-height) 9px 25px;
+  padding: var(--navi-height) var(--grid-edge-s) 25px;
 }
 
 @media screen and (min-width: 665px) {
   #body-webcompat {
-    padding: var(--navi-height) 19px 50px;
+    padding: var(--navi-height) var(--grid-edge-m) 50px;
   }
 }
 

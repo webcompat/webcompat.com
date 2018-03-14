@@ -1,4 +1,6 @@
 :root {
+  --grid-edge-s: 9px;
+  --grid-edge-m: 19px;
   --unit-modul-s: 270px;
   --unit-modul-m: 585px;
   --unit-modul-l: 900px;
