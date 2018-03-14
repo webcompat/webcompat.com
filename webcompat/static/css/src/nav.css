@@ -168,10 +168,6 @@
   top: 6px;
 }
 
-.nav-addon {
-  display: none;
-}
-
 @media screen and (min-width: 490px) {
   .nav-addon {
     display: inline-block;
