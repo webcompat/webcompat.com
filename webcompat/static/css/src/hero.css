@@ -1,6 +1,6 @@
 .hero-section {
-  margin-left: calc(-1 * var(--grid-edge-s));
-  margin-right: calc(-1 * var(--grid-edge-s));
+  margin-left: calc(-1 * var(--grid-outermargin-s));
+  margin-right: calc(-1 * var(--grid-outermargin-s));
   margin-top: -34px;
   padding: calc(var(--unit-gutter) / 2) var(--unit-gutter);
 }
@@ -30,8 +30,8 @@
 
 @media screen and (min-width: 665px) {
   .hero-section {
-    margin-left: calc(-1 * var(--grid-edge-m));
-    margin-right: calc(-1 * var(--grid-edge-m));
+    margin-left: calc(-1 * var(--grid-outermargin-m));
+    margin-right: calc(-1 * var(--grid-outermargin-m));
   }
 }
 
