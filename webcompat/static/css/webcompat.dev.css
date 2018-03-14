@@ -40,18 +40,18 @@
 
 #body-webcompat {
   background-color: var(--color-bg-page);
-  margin-top: var(--navi-height);
+  padding: var(--navi-height) var(--grid-outermargin-s) var(--unit-gutter-m);
 }
 
 @media screen and (min-width: 665px) {
   #body-webcompat {
-    padding: var(--navi-height) 19px 50px;
+    padding: var(--navi-height) var(--grid-outermargin-m) calc(2 * var(--unit-gutter-m));
   }
 }
 
 @media screen and (min-width: 998px) {
   #body-webcompat {
-    padding: 0;
+    padding: var(--navi-height) 0 0;
   }
 }
 

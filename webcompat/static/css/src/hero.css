@@ -1,6 +1,8 @@
 .hero-section {
+  margin-left: calc(-1 * var(--grid-outermargin-s));
+  margin-right: calc(-1 * var(--grid-outermargin-s));
+  margin-top: -34px;
   padding: calc(var(--unit-gutter) / 2) var(--unit-gutter);
-  margin-top: -26px;
 }
 
 .hero-section .grid-row {
@@ -26,8 +28,14 @@
   display: none;
 }
 
-@media screen and (min-width: 998px) {
+@media screen and (min-width: 665px) {
+  .hero-section {
+    margin-left: calc(-1 * var(--grid-outermargin-m));
+    margin-right: calc(-1 * var(--grid-outermargin-m));
+  }
+}
 
+@media screen and (min-width: 998px) {
   .hero-text {
     width: 50%;
   }
