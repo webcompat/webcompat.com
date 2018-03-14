@@ -2,11 +2,10 @@
 .label-editor {
   position: absolute;
   display: block;
-  min-width: 320px;
+  width: 100%;
   z-index: 5;
   white-space: nowrap;
-  top: 13%;
-  left: -49px;
+  left: 0;
   box-shadow: 0 1px 5px 0 rgba(0, 0, 0, .1);
   border-radius: 4px;
   background-color: var(--color-bg-box);
