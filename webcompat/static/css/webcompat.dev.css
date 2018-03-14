@@ -40,7 +40,7 @@
 
 #body-webcompat {
   background-color: var(--color-bg-page);
-  margin-top: var(--navi-height);
+  padding: var(--navi-height) 9px 25px;
 }
 
 @media screen and (min-width: 665px) {
@@ -51,7 +51,7 @@
 
 @media screen and (min-width: 998px) {
   #body-webcompat {
-    padding: 0;
+    padding: var(--navi-height) 0 0;
   }
 }
 
