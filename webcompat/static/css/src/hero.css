@@ -1,6 +1,6 @@
 .hero-section {
   padding: calc(var(--unit-gutter) / 2) var(--unit-gutter);
-  margin-top: -26px;
+  margin-top: -34px;
 }
 
 .hero-section .grid-row {
@@ -27,7 +27,6 @@
 }
 
 @media screen and (min-width: 998px) {
-
   .hero-text {
     width: 50%;
   }
