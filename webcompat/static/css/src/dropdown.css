@@ -5,6 +5,7 @@
 .sort-dropdown {
   display: inline-block;
   margin-top: -5px;
+  position: relative;
 }
 
 .sort-dropdown:last-child {
@@ -24,8 +25,10 @@
 
 .is-active.sort-dropdown .dropdown {
   display: inline-block;
+  left: 100%;
+  margin-top: -10px;
   position: absolute;
-  margin-top: -9px;
+  top: 0;
   z-index: 900;
 }
 
