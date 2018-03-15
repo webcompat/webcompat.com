@@ -2,7 +2,7 @@
 {% block title %}{{user}}'s Activity{% endblock %}
 {% block body %}
 {% include "nav/nav.html" %}
-<main class="grid" role="main" data-repo-path="{{config['ISSUES_REPO_URI']}}">
+<main role="main" data-repo-path="{{config['ISSUES_REPO_URI']}}">
  <!--  <div class="wc-Loader js-loader"></div> -->
   <section id="browse-issues-wrapper" class="js-list-issue">
     {% include "user-activity/reported-by-user.html" %}
