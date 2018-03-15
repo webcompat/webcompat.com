@@ -21,13 +21,8 @@
   margin-top: 20px;
 }
 
-.bio .grid-nested:first-child,
-.grid-cell {
-  margin-right: 10px;
-}
-
 .bio .grid-nested:last-child,
-.grid-cell.bio-desc {
+.bio-desc.grid-cell {
   padding-top: 0;
   margin-top: -5px;
 }

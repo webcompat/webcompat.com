@@ -6,20 +6,8 @@
   <main role="main">
     <section class="grid grid-show-gap">
       <div class="grid-row">
-        <aside class="grid-cell x1-fix">
-          <ol class="sub-nav" class="sub-nav">
-            <li class="sub-nav-header">Table of Contents</li>
-            <li class="sub-nav-active"><a href="/contributors">Join Us</a></li>
-            <li>
-              Get Started
-              <ol class="nested-sub-nav">
-                <li><a href="/contributors/reproduce-bug">Reproduce a Bug</a></li>
-                <li><a href="/contributors/diagnose-bug">Diagnose a Bug</a></li>
-                <li><a href="/contributors/site-outreach">Site outreach</a></li>
-                <li><a href="/contributors/contribute">Contribute</a></li>
-              </ol>
-            </li>
-          </ol>
+        <aside class="grid-cell x1">
+          {% include "contributors/sub-nav.html" %}
         </aside>
         <article class="grid-cell x2">
           <h3 class="headline-1 highlight">The project</h3>
@@ -31,7 +19,7 @@
     </section>
     <section class="grid">
     <div class="grid-row">
-      <div class="grid-cell x3"> 
+      <div class="grid-cell x3">
         <h3 class="headline-1 highlight">The team</h3>
 </div>
 
@@ -134,7 +122,7 @@
           </p>
         </div>
       </article>
-      
+
 <!-- Ioana Chiorean -->
       <article class="grid-row bio">
         <div class="grid-cell x1-fix">
@@ -224,7 +212,7 @@
             <h4 class="headline-2 highlight">Ola Gasidlo</h4>
             <h4 class="headline-3">Germany</h4>
             <p>
-              Loves making the web accessible for everyone, break things and daughter-driven development. 
+              Loves making the web accessible for everyone, break things and daughter-driven development.
             </p>
           </div>
           <p class="grid-cell bio-links x1">
@@ -273,7 +261,7 @@
       </article>
 
       <div class="grid-row">
-        <div class="grid-cell x3"> 
+        <div class="grid-cell x3">
           <a href="https://github.com/orgs/webcompat/people" title="You can find more contributors on Github">and many more...</a>
         </div>
       </div>

@@ -1,24 +1,28 @@
-.grid {
-  margin: 9px 0;
-}
-
 .grid-row {
+  align-items: stretch;
+  background-color: var(--color-bg-box);
+  box-sizing: border-box;
   display: flex;
   flex-flow: row;
   flex-wrap: wrap;
   justify-content: space-between;
-  box-sizing: border-box;
-  background-color: var(--color-bg-box);
+  margin: 0 calc(-1 / 2 * var(--unit-space)) var(--grid-outermargin-s);
 }
 
-.grid-show-gap .grid-row {
-  background-color: transparent;
+.grid-row > .grid-row {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.grid-show-gap {
+  margin: 0 calc(-1 / 2 * var(--unit-space));
 }
 
 .grid-cell {
   box-sizing: border-box;
   padding: var(--unit-space);
-  margin: 0;
+  margin-left: calc(1 / 2 * var(--unit-space));
+  margin-right: calc(1 / 2 * var(--unit-space));
 }
 
 .grid-cell,
@@ -28,12 +32,14 @@
   max-width: var(--unit-modul-l);
 }
 
-.grid-show-gap .grid-cell {
-  background-color: var(--color-bg-box);
+.grid-show-gap .grid-row {
+  background-color: transparent;
+  margin-bottom: 0;
 }
 
-.grid-row > .grid-cell:last-child {
-  margin-right: 0;
+.grid-show-gap .grid-cell {
+  background-color: var(--color-bg-box);
+  margin-bottom: var(--grid-outermargin-s);
 }
 
 .x1-fix {
@@ -42,22 +48,22 @@
 
 .x2 {
   flex-basis: var(--unit-modul-m);
-  max-width: var(--unit-modul-m);
+  max-width: var(--unit-modul-l);
 }
 
 .x3 {
   flex-basis: var(--unit-modul-l);
+  max-width: var(--unit-modul-l);
 }
 
 /* var(--page-size-m) = 665px - vars not usable in queries */
 @media (min-width: 665px) {
-  .grid {
-    margin: 15px 0;
+  .grid-row {
+    margin: 0 calc(-1 / 2 * var(--unit-space)) var(--grid-outermargin-m);
   }
 
-  .grid-cell {
-    margin-right: var(--unit-gutter-m);
-    padding: var(--unit-space);
+  .grid-show-gap .grid-cell {
+    margin-bottom: var(--grid-outermargin-m);
   }
 
   .grid-nested {
@@ -71,33 +77,14 @@
   .grid {
     margin: 30px auto;
     max-width: var(--unit-modul-l);
+    padding: 0 calc(1 / 2 * var(--unit-space));
+  }
+
+  .grid-show-gap {
+    padding: 0;
   }
 
   .grid-cell {
-    padding-left: 20px;
-  }
-
-  .grid-nested:first-child,
-  .grid-cell {
-    margin-right: var(--unit-gutter-l);
-  }
-
-  .grid-nested .grid-cell {
-    margin-right: 0;
-  }
-
-  .grid-cell + .grid-cell {
-    padding-left: 10px;
-  }
-
-  .grid-cell + .grid-cell:last-child {
-    padding-right: calc(var(--unit-space) * 2);
-  }
-  .grid-nested:last-child .grid-cell {
-    padding: var(--unit-space) calc(var(--unit-space) * 2) var(--unit-space) var(--unit-space);
-  }
-
-  .grid-nested:first-child .grid-cell {
-    padding: var(--unit-space) var(--unit-space) var(--unit-space) calc(var(--unit-space) * 2);
+    padding: calc(2 * var(--unit-space));
   }
 }
