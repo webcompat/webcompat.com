@@ -75,7 +75,7 @@
 /* var(--page-size-l) = 998px - vars not usable in queries */
 @media (min-width: 998px) {
   .grid {
-    margin: 30px auto;
+    margin: 0 auto;
     max-width: var(--unit-modul-l);
     padding: 0 calc(1 / 2 * var(--unit-space));
   }
