@@ -5,11 +5,23 @@
   width: 100%;
   z-index: 5;
   white-space: nowrap;
-  top: 21px;
+  top: 20px;
   left: 0;
   box-shadow: 0 1px 5px 0 rgba(0, 0, 0, .1);
   border-radius: 4px;
   background-color: var(--color-bg-box);
+}
+
+@media all and (min-width: 893.01px) {
+  .label-editor {
+    top: 21px;
+  }
+}
+
+@media all and (max-width: 893px) {
+  .label-editor {
+    top: 23px;
+  }
 }
 
 /* Category header */
@@ -93,7 +105,18 @@
 
 .label-editor-header .nav-button {
   margin-top: -10px;
-  margin-right: 5px;
+}
+
+@media all and (min-width: 893.01px) {
+  .label-editor-header .nav-button {
+    margin-right: 5px;
+  }
+}
+
+@media all and (max-width: 893px) {
+  .label-editor-header .nav-button {
+    margin-right: -1px;
+  }
 }
 
 .wc-Issue-categoryEditor-button .label-editorLauncher {
