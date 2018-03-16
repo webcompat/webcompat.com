@@ -32,7 +32,7 @@ var FlashMessageView = Backbone.View.extend({
     var timeout = opts.timeout || 4000;
     var message = opts.message;
 
-    this.$el.addClass("notification");
+    this.$el.addClass("notification-information");
     this.render(message);
     setTimeout(_.bind(this.hide, this), timeout);
   },
