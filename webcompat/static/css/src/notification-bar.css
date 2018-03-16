@@ -9,10 +9,6 @@
   line-height: 3.8;
 }
 
-.notication {
-  border-bottom: 5px solid;
-}
-
 .notification-information {
   background-color: var(--color-first-transparent);
   border-bottom-color: var(--color-first);
