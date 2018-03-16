@@ -6,16 +6,12 @@
   right: 0;
   height: 58px;
   text-align: center;
-  line-height: 3.8;
-}
-
-.notication {
-  border-bottom: 5px solid;
+  line-height: 3;
 }
 
 .notification-information {
-  background-color: var(--color-first-transparent);
-  border-bottom-color: var(--color-first);
+  background-color: var(--color-first-contrast);
+  border-bottom: 5px solid var(--color-first);
 }
 
 .notification-alert {

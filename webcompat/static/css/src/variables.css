@@ -18,6 +18,7 @@
   --color-bg-box: rgba(255, 255, 255, 1); /* #ffffff */
   --color-bg-comment-header: rgba(245, 245, 245, 1); /* #f5f5f5 */
   --color-first: rgba(255, 201, 0, 1); /* #ffc900 */
+  --color-first-contrast: rgba(255, 243, 201, .8);
   --color-first-transparent: rgba(255, 201, 1, .8); /* #ffc901 20% transparency */
   --color-first-light: rgba(255, 200, 3, .55); /* ffc803 45% transparency */
   --color-second: rgba(64, 64, 64, 1); /* #404040 */
