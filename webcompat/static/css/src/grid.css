@@ -32,6 +32,11 @@
   max-width: var(--unit-modul-l);
 }
 
+.grid-nested {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+
 .grid-show-gap .grid-row {
   background-color: transparent;
   margin-bottom: 0;
