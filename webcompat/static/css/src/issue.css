@@ -1,3 +1,7 @@
+#issue.grid-row {
+  align-items: flex-start;
+}
+
 .issue-detail {
   padding-bottom: calc (var(--unit-space) * 2);
 }
@@ -63,4 +67,3 @@
   max-width: calc(var(--unit-modul-m) - (var(--unit-space) * 4));
   max-height: calc(var(--unit-modul-m) - (var(--unit-space) * 4));
 }
-
