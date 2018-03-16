@@ -518,7 +518,7 @@ issues.MainView = Backbone.View.extend({
     $(target).parent().toggleClass("wc-Comment-content-nsfw--display");
   },
   render: function() {
-    this.$el.fadeIn();
+    this.$el.removeClass("is-hidden");
   },
 
   handleKeyShortcuts: function() {
