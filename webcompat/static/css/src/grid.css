@@ -65,6 +65,8 @@
   .grid-nested {
     display: flex;
     flex-wrap: wrap;
+    margin-left: calc(1 / 2 * var(--unit-space));
+    margin-right: calc(1 / 2 * var(--unit-space));
   }
 
   .x1-fix {
