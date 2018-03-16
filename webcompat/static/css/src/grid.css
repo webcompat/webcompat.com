@@ -42,10 +42,6 @@
   margin-bottom: var(--grid-outermargin-s);
 }
 
-.x1-fix {
-  max-width: var(--unit-modul-s);
-}
-
 .x2 {
   flex-basis: var(--unit-modul-m);
   max-width: var(--unit-modul-l);
@@ -69,6 +65,10 @@
   .grid-nested {
     display: flex;
     flex-wrap: wrap;
+  }
+
+  .x1-fix {
+    max-width: var(--unit-modul-s);
   }
 }
 
