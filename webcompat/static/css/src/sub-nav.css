@@ -35,7 +35,7 @@
 }
 
 .active .nested-sub-nav {
-  display: inline-block;
+  display: block;
 }
 
 .active .nested-sub::after {
