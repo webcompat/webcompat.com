@@ -89,6 +89,7 @@
 
 .text-field {
   display: block;
+  min-height: 27px;
   width: 100%;
   padding: 4px 25px 4px 0;
   border: none;
