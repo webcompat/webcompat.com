@@ -9,7 +9,7 @@
 
 .button {
   display: inline-block;
-  padding: 12px 23px;
+  padding: var(--button-primary-padding);
   color: inherit;
   border: 0;
   border-radius: 5px;
@@ -23,6 +23,12 @@
 .button-secondary {
   background-color: var(--color-second);
   color: var(--color-bg-page);
+}
+
+.button-thanks {
+  background-color: var(--color-first);
+  margin-right: 5px;
+  padding: var(--button-thanks-padding);
 }
 
 .button:hover,
