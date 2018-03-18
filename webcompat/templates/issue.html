@@ -23,22 +23,22 @@
     <section id="issue" class="grid-row js-Issue is-hidden">
       <article class="grid-nested x2 issue-labels">
         <div class="grid-row">
-          <section id="js-Issue-information" class="grid-cell x2">
+          <section id="js-Issue-information" class="grid-cell">
             {% include "issue/issue-information.html" %}
           </section>
-          <section class="js-Issue-commentList issue-comment x2">
+          <section class="js-Issue-commentList issue-comment">
             {% include "issue/issue-comment-list.jst" %}
           </section>
           {% if session.user_id and session.avatar_url %}
-            <section class="grid-cell x2 issue-comment issue-new-comment">
+            <section class="grid-cell issue-comment issue-new-comment x3">
               {% include "issue/issue-comment-submit.html" %}
             </section>
           {% else %}
-          <div class="grid-nested">
+          <div class="grid-nested x3">
             <p class="x2">Please <a class="x2" href="{{ url_for('login') }}">login</a> to edit issues.</p>
           </div>
           {% endif %}
-          <div class="grid-nested">
+          <div class="grid-nested x3">
             <p class="x2">
               <a class="x2" href="https://github.com/{{ config['ISSUES_REPO_URI'] }}/{{ number }}">
                 <span class="wc-GithubLink-Icon"></span>View issue on Github</a>
