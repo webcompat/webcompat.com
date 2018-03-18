@@ -1,3 +1,8 @@
+.grid {
+  margin-left: calc(1 / 2 * var(--unit-space));
+  margin-right: calc(1 / 2 * var(--unit-space));
+}
+
 .grid-row {
   align-items: stretch;
   background-color: var(--color-bg-box);
@@ -15,7 +20,8 @@
 }
 
 .grid-show-gap {
-  margin: 0 calc(-1 / 2 * var(--unit-space));
+  margin-left: 0;
+  margin-right: 0;
 }
 
 .grid-cell {
@@ -33,8 +39,8 @@
 }
 
 .grid-nested {
-  flex-grow: 1;
-  flex-shrink: 1;
+  margin-left: calc(1 / 2 * var(--unit-space));
+  margin-right: calc(1 / 2 * var(--unit-space));
 }
 
 .grid-show-gap .grid-row {
@@ -67,12 +73,10 @@
     margin-bottom: var(--grid-outermargin-m);
   }
 
-  .grid-nested {
+  /* .grid-nested {
     display: flex;
     flex-wrap: wrap;
-    margin-left: calc(1 / 2 * var(--unit-space));
-    margin-right: calc(1 / 2 * var(--unit-space));
-  }
+  } */
 
   .x1-fix {
     max-width: var(--unit-modul-s);
