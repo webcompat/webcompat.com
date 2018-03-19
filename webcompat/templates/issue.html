@@ -22,28 +22,33 @@
 
     <section id="issue" class="grid-row js-Issue is-hidden">
       <article class="grid-nested x2 issue-labels">
-        <section id="js-Issue-information" class="grid-cell x2">
-          {% include "issue/issue-information.html" %}
-        </section>
-        <section class="js-Issue-commentList issue-comment x2">
-          {% include "issue/issue-comment-list.jst" %}
-        </section>
-        {% if session.user_id and session.avatar_url %}
-          <section class="grid-cell x2 issue-comment issue-new-comment">
-            {% include "issue/issue-comment-submit.html" %}
+        <div class="grid-row">
+          <section id="js-Issue-information" class="grid-cell">
+            {% include "issue/issue-information.html" %}
           </section>
-        {% else %}
-        <p class="x2">Please <a class="x2" href="{{ url_for('login') }}">login</a> to edit issues.</p>
-        {% endif %}
-
-      <p class="x2">
-        <a class="x2" href="https://github.com/{{ config['ISSUES_REPO_URI'] }}/{{ number }}">
-          <span class="wc-GithubLink-Icon"></span>View issue on Github</a>
-      </p>
-      <p class="x2">
-        <span class="desktop-only">Shortcut: Press <b>l</b> on your keyboard to open the label editor.</span> <br />
-        <span class="desktop-only">Shortcut: Press <b>g</b> on your keyboard to be taken to the GitHub view of this page.</span>
-      </p>
+          <section class="js-Issue-commentList issue-comment">
+            {% include "issue/issue-comment-list.jst" %}
+          </section>
+          {% if session.user_id and session.avatar_url %}
+            <section class="grid-cell issue-comment issue-new-comment x3">
+              {% include "issue/issue-comment-submit.html" %}
+            </section>
+          {% else %}
+          <div class="grid-nested x3">
+            <p class="x2">Please <a class="x2" href="{{ url_for('login') }}">login</a> to edit issues.</p>
+          </div>
+          {% endif %}
+          <div class="grid-nested x3">
+            <p class="x2">
+              <a class="x2" href="https://github.com/{{ config['ISSUES_REPO_URI'] }}/{{ number }}">
+                <span class="wc-GithubLink-Icon"></span>View issue on Github</a>
+            </p>
+            <p class="x2">
+              <span class="desktop-only">Shortcut: Press <b>l</b> on your keyboard to open the label editor.</span> <br />
+              <span class="desktop-only">Shortcut: Press <b>g</b> on your keyboard to be taken to the GitHub view of this page.</span>
+            </p>
+          </div>
+        </div>
       </article>
       <aside class="grid-cell x1 label-box">
         {% include "issue/issue-aside.html" %}

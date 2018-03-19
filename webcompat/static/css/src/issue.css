@@ -10,6 +10,16 @@
   padding: 0;
 }
 
+.issue-labels {
+  max-width: calc(100% - var(--unit-space));
+}
+
+.issue-comment {
+  max-width: calc(100% - 1 / 2 * var(--unit-space));
+  position: relative;
+  width: 100%;
+}
+
 .issue-comment .comment-header {
   padding: var(--unit-space) var(--unit-space);
   background-color: var(--color-bg-comment-header);
@@ -60,9 +70,34 @@
   justify-content: center;
 }
 
+.comment-body {
+  max-width: 100%;
+  overflow: auto;
+}
+
 /* As we can not add a class to the img right now (markup parsers are complicated), we need to use the element */
 .comment-body img,
 .js-Issue-markdown img {
   max-width: calc(var(--unit-modul-m) - (var(--unit-space) * 4));
   max-height: calc(var(--unit-modul-m) - (var(--unit-space) * 4));
+  width: 100%;
+}
+
+/* var(--page-size-m) = 665px - vars not usable in queries */
+@media (min-width: 665px) {
+  #issue.grid-row {
+    flex-wrap: nowrap;
+  }
+
+  #issue > .x2 {
+    flex-basis: 66.66666%;
+    max-width: 66.66666%;
+    min-width: 0;
+  }
+
+  #issue > .x1 {
+    flex-basis: 33.33333%;
+    max-width: 33.33333%;
+    min-width: 0;
+  }
 }
