@@ -15,8 +15,9 @@
 }
 
 .issue-comment {
-  max-width: 100%;
+  max-width: calc(100% - 1 / 2 * var(--unit-space));
   position: relative;
+  width: 100%;
 }
 
 .issue-comment .comment-header {
