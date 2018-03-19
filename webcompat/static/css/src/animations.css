@@ -75,3 +75,24 @@
     transform: translate3d(130px, -80px, -90px) rotateZ(0) scale3d(1, 0, 1);
   }
 }
+
+
+@-webkit-keyframes pulse {
+    0% { opacity: 0.8; }
+    50% { opacity: 0.95; }
+    100% { opacity: 0.8; }
+}
+
+@keyframes pulse {
+    0% { opacity: 0.8; }
+    50% { opacity: 0.95; }
+    100% { opacity: 0.8; }
+}
+
+.loader.is-active {    
+    -webkit-animation: pulse 2s infinite ease-in-out;
+    -o-animation: pulse 2s infinite ease-in-out;
+    -ms-animation: pulse 2s infinite ease-in-out; 
+    -moz-animation: pulse 2s infinite ease-in-out; 
+    animation: pulse 2s infinite ease-in-out;
+}

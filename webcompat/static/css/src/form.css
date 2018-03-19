@@ -68,6 +68,10 @@
   line-height: 1.7em;
 }
 
+.form-upload:hover .visually-hidden {
+  visibility: hidden;
+}
+
 .form-required::after {
   color: var(--color-error);
   content: "*";
