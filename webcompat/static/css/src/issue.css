@@ -6,6 +6,12 @@
   padding-bottom: calc (var(--unit-space) * 2);
 }
 
+@media all and (max-width: 664.99px) {
+  .issue-labels {
+    order: 1;
+  }
+}
+
 .grid-nested .grid-cell.issue-comment {
   padding: 0;
 }
