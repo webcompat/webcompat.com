@@ -5,9 +5,9 @@
 function BugForm() {
   this.form = $("#js-ReportForm form");
   this.submitButtons = $("#js-ReportForm .js-Button");
-  this.loadingIndicator = $(".js-Loader");
+  this.loadingIndicator = $(".js-loader");
   this.reportButton = $("#js-ReportBug");
-  this.uploadLoader = $(".js-Upload-Loader");
+  this.uploadLoader = $(".js-image-loader");
   this.previewEl = $(".js-image-upload");
   this.UPLOAD_LIMIT = 1024 * 1024 * 4;
   this.clickedButton = null;
@@ -526,6 +526,9 @@ function BugForm() {
   this.uploadImage = function(dataURI, callback) {
     this.disableSubmits();
     this.uploadLoader.addClass("is-active");
+
+    $('.js-remove-upload').addClass('is-hidden');
+
     var formdata = new FormData();
     formdata.append("image", dataURI);
 
@@ -550,7 +553,8 @@ function BugForm() {
             "The image is too big! Please choose something smaller than 4MB.";
           wcEvents.trigger("flash:error", { message: msg, timeout: 5000 });
         }
-        this.loadingIndicator.hide();
+
+        this.loadingIndicator.hide;
       }, this)
     });
 
