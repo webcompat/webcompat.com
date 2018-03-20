@@ -24,7 +24,6 @@
   z-index: unset;
   line-height: unset;
   text-align: unset;
-  border-bottom: 1px solid var(--color-third);
 }
 
 .notification-thanks .headline-3 {

@@ -47,10 +47,10 @@ var FlashMessageView = Backbone.View.extend({
   },
   showThanks: function(opts) {
     var buildTemplate = wcTmpl["issue/thanks.jst"];
-    this.$el.addClass("is-active notification-thanks");
+    this.$el.addClass("is-active notification-thanks grid-cell x3");
     this.$el
       .html(buildTemplate({ number: opts.message }))
-      .insertBefore("#js-Issue-information")
+      .insertBefore(".js-Issue")
       .show();
   },
   hide: function() {
