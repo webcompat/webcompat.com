@@ -559,8 +559,6 @@ function BugForm() {
             timeout: 5000
           });
         }
-
-        this.loadingIndicator.hide;
       }, this)
     });
 
