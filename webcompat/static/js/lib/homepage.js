@@ -72,13 +72,15 @@ function HomePage() {
     var isScrolling = false;
     $(window).on("scroll", function() {
       isScrolling = true;
-      clearTimeout(scrollTimeout);
+      window.clearTimeout(scrollTimeout);
       scrollTimeout = window.setTimeout(function() {
         isScrolling = false;
       }, 500);
     });
     window.setInterval(function() {
-      if (!isScrolling) return;
+      if (!isScrolling) {
+        return;
+      }
       if (window.pageYOffset < navbarHeight) {
         $navbar.removeClass("is-offscreen");
         lastScrollY = window.pageYOffset;
