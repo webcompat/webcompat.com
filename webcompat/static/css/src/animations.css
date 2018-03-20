@@ -76,23 +76,12 @@
   }
 }
 
-
-@-webkit-keyframes pulse {
-    0% { opacity: 0.8; }
-    50% { opacity: 0.95; }
-    100% { opacity: 0.8; }
-}
-
 @keyframes pulse {
-    0% { opacity: 0.8; }
-    50% { opacity: 0.95; }
-    100% { opacity: 0.8; }
+  0% { opacity: .8; }
+  50% { opacity: .95; }
+  100% { opacity: .8; }
 }
 
-.loader.is-active {    
-    -webkit-animation: pulse 2s infinite ease-in-out;
-    -o-animation: pulse 2s infinite ease-in-out;
-    -ms-animation: pulse 2s infinite ease-in-out; 
-    -moz-animation: pulse 2s infinite ease-in-out; 
-    animation: pulse 2s infinite ease-in-out;
+.loader.is-active {
+  animation: pulse 2s infinite ease-in-out;
 }
