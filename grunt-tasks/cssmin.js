@@ -10,9 +10,9 @@ module.exports = function(grunt) {
     combine: {
       files: {
         // output
-        "<%= cssPath %>/webcompat.min.css": [
+        "<%= cssPath %>/dist/webcompat.min.css": [
           // input
-          "<%= cssPath %>/dist/webcompat.dev.css"
+          "<%= cssPath %>/webcompat.dev.css"
         ]
       }
     }
