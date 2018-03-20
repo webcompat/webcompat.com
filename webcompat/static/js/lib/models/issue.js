@@ -52,7 +52,6 @@ issues.Issue = Backbone.Model.extend({
     return "Needs Triage";
   },
   parse: function(response) {
-    var milestoneColors = $("main").data("statuses");
     var milestone = response.milestone
       ? response.milestone.title
       : "Error: no status for this issue";
@@ -65,7 +64,6 @@ issues.Issue = Backbone.Model.extend({
       issueState: this.getState(response.state, milestone),
       labels: labels,
       milestone: milestone,
-      milestoneColors: milestoneColors,
       number: response.number,
       reporter: response.user.login,
       reporterAvatar: response.user.avatar_url,
