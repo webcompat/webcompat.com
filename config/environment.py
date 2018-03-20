@@ -25,18 +25,18 @@ LOCALHOST = not PRODUCTION and not STAGING
 # BUG STATUS
 # The id will be initialized when the app is started.
 STATUSES = {
-    u'needstriage': {'id': 0, 'order': 1, 'state': 'open', 'color': '#ff9900'},
-    u'needsdiagnosis': {'id': 0, 'order': 2, 'state': 'open', 'color': '#ff8364'},
-    u'needscontact': {'id': 0, 'order': 3, 'state': 'open', 'color': '#e11d21'},
-    u'contactready': {'id': 0, 'order': 4, 'state': 'open', 'color': '#a1ebbf'},
-    u'sitewait': {'id': 0, 'order': 5, 'state': 'open', 'color': '#006b75'},
-    u'duplicate': {'id': 0, 'order': 1, 'state': 'closed', 'color': '#cccccc'},
-    u'fixed': {'id': 0, 'order': 2, 'state': 'closed', 'color': '#009800'},
-    u'incomplete': {'id': 0, 'order': 3, 'state': 'closed', 'color': '#d93f0b'},
-    u'invalid': {'id': 0, 'order': 4, 'state': 'closed', 'color': '#e6e6e6'},
-    u'non-compat': {'id': 0, 'order': 5, 'state': 'closed', 'color': '#b60205'},
-    u'wontfix': {'id': 0, 'order': 6, 'state': 'closed', 'color': '#000000'},
-    u'worksforme': {'id': 0, 'order': 7, 'state': 'closed', 'color': '#d4c5f9'}
+    u'needstriage': {'id': 0, 'order': 1, 'state': 'open'},
+    u'needsdiagnosis': {'id': 0, 'order': 2, 'state': 'open'},
+    u'needscontact': {'id': 0, 'order': 3, 'state': 'open'},
+    u'contactready': {'id': 0, 'order': 4, 'state': 'open'},
+    u'sitewait': {'id': 0, 'order': 5, 'state': 'open'},
+    u'duplicate': {'id': 0, 'order': 1, 'state': 'closed'},
+    u'fixed': {'id': 0, 'order': 2, 'state': 'closed'},
+    u'incomplete': {'id': 0, 'order': 3, 'state': 'closed'},
+    u'invalid': {'id': 0, 'order': 4, 'state': 'closed'},
+    u'non-compat': {'id': 0, 'order': 5, 'state': 'closed'},
+    u'wontfix': {'id': 0, 'order': 6, 'state': 'closed'},
+    u'worksforme': {'id': 0, 'order': 7, 'state': 'closed'}
     }
 
 # We don't need to compute for every requests.
