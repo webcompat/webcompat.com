@@ -553,8 +553,6 @@ function BugForm() {
             "The image is too big! Please choose something smaller than 4MB.";
           wcEvents.trigger("flash:error", { message: msg, timeout: 5000 });
         }
-
-        this.loadingIndicator.hide;
       }, this)
     });
 
