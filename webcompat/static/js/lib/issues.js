@@ -486,10 +486,9 @@ issues.MainView = Backbone.View.extend({
   addNewComment: function(event) {
     var form = $(".js-Comment-form");
     var textarea = $(".js-Comment-text");
-    event.preventDefault();
 
-    // Only bother if the textarea isn't empty
-    if ($.trim(textarea.val())) {
+    if (form[0].checkValidity()) {
+      event.preventDefault();
       var newComment = new issues.Comment({
         avatarUrl: form.data("avatarUrl"),
         body: md.render(textarea.val()),
