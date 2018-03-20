@@ -89,14 +89,14 @@
         {{ form.image(class_='form-input input-upload', accept='.jpe,.jpg,.jpeg,.gif,.png,.bmp', id='image') }}
         <div class="label-icon label-upload js-label-upload">
           <svg class="icon icon-big" role="presentation" title="Upload Screenshot">
-            <use class="icon-upload" href="#svg-plus">Upload Screenshot</use>
+            <use class="icon-upload" xlink:href="#svg-plus">Upload Screenshot</use>
           </svg>
           <small class="label-icon-message">Upload screenshot</small>
         </div>
 
         <div class="label-icon label-remove is-hidden js-remove-upload">
           <svg class="icon icon-big" role="presentation" title="Remove Screenshot">
-            <use class="icon-remove" href="#svg-x">Remove Screenshot</use>
+            <use class="icon-remove" xlink:href="#svg-x">Remove Screenshot</use>
           </svg>
           <small class="label-icon-message">Remove screenshot</small>
         </div>
@@ -104,7 +104,7 @@
 
         <div class="label-icon label-error is-hidden js-error-upload">
           <svg class="icon icon-big" role="presentation" title="An error occoured">
-            <use class="icon-error" href="#svg-warning">An error occoured</use>
+            <use class="icon-error" xlink:href="#svg-warning">An error occoured</use>
           </svg>
           {% if form.image.errors %}
             {% for error in form.image.errors %}

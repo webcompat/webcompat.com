@@ -8,7 +8,7 @@
         </li>
         <li class="footer-item{% if request.url_rule.endpoint == 'show_issues' %} active{% endif %}">
           <a class="footer-item-link" aria-label="go to list of isses" href="{{ url_for('show_issues') }}">
-            List of issues 
+            List of issues
           </a>
         </li>
         <li class="footer-item{% if request.url_rule.endpoint == 'about' %} active{% endif %}">
@@ -16,7 +16,7 @@
             About
           </a>
         </li>
-        <li class="footer-item{% if request.url_rule.endpoint in 
+        <li class="footer-item{% if request.url_rule.endpoint in
         ['contributors_build_tools', 'contributors_web_platform_research', 'contributors_organize_webcompat_events', 'contributors', 'contributors_report_bug', 'contributors_reproduce_bug', 'contributors_diagnose_bug', 'contributors_site_outreach'] %} active{% endif %}">
           <a class="footer-item-link" aria-label="go to contribute" href="{{ url_for('contributors') }}">
             Contribute
@@ -77,7 +77,7 @@
           <a class="footer-item-link" aria-label="open Twitter in a new tab" href="https://twitter.com/webcompat/with_replies" target="_blank">
               <svg class="icon" role="presentation" aria-role="hide" viewBox="0 0 30 30">
                   <title>Twitter</title>
-                  <use href="#svg-twitter">Twitter</use>
+                  <use xlink:href="#svg-twitter">Twitter</use>
               </svg>
           </a>
         </li>
@@ -85,7 +85,7 @@
           <a class="footer-item-link" aria-label="open Github in a new tab" href=" https://github.com/webcompat/webcompat.com/" target="_blank">
               <svg class="icon" role="presentation" aria-role="hide" viewBox="0 0 30 30">
                   <title>github</title>
-                  <use href="#svg-github2">Github</use>
+                  <use xlink:href="#svg-github2">Github</use>
               </svg>
           </a>
         </li>
