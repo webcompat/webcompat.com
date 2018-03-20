@@ -527,7 +527,7 @@ function BugForm() {
     this.disableSubmits();
     this.uploadLoader.addClass("is-active");
 
-    $('.js-remove-upload').addClass('is-hidden');
+    $(".js-remove-upload").addClass("is-hidden");
 
     var formdata = new FormData();
     formdata.append("image", dataURI);
