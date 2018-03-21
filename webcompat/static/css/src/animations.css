@@ -77,9 +77,9 @@
 }
 
 @keyframes pulse {
-  0% { opacity: .8; }
+  0% { opacity: .3; }
   50% { opacity: .95; }
-  100% { opacity: .8; }
+  100% { opacity: .3; }
 }
 
 .loader.is-active {

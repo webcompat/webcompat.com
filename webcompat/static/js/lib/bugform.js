@@ -86,7 +86,12 @@ function BugForm() {
       _.bind(this.checkOptionalNonEmpty, this, this.browserField)
     );
     this.submitButtons.on("click", _.bind(this.storeClickedButton, this));
-    this.submitButtons.on("click", _.bind(this.loadingIndicator.show, this));
+    this.submitButtons.on(
+      "click",
+      _.bind(function() {
+        this.loadingIndicator.addClass("is-active");
+      }, this)
+    );
     this.form.on("submit", _.bind(this.maybeUploadImage, this));
 
     // See if the user already has a valid form
