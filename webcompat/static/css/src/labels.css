@@ -175,3 +175,27 @@
 .label-box .label-editor-list [class *= "label-status"] {
   border-left-color: var(--label-closed);
 }
+
+.label-box .label-editor-list .label-needstriage {
+  border-left-color: var(--label-needs-triage);
+}
+
+.label-box .label-editor-list .label-needsdiagnosis {
+  border-left-color: var(--label-needs-diagnosis);
+}
+
+.label-box .label-editor-list .label-needscontact {
+  border-left-color: var(--label-needs-contact);
+}
+
+.label-box .label-editor-list .label-ready {
+  border-left-color: var(--label-outreach);
+}
+
+.label-box .label-editor-list .label-sitewait {
+  border-left-color: var(--label-site-contacted);
+}
+
+.label-box .label-editor-list .label-closed {
+  border-left-color: var(--label-closed);
+}
