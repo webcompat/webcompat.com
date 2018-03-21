@@ -12,11 +12,11 @@
         <article class="grid-cell x1">
           <h1 id="triage" class="headline-1 highlight">Triage A Webcompat Issue</h1>
           <p>
-            Someone has <a href="/contribute/report">reported a bug</a>. The issue is now in the <a href="https://webcompat.com/issues?page=1&amp;per_page=50&amp;state=open&amp;stage=needstriage&amp;sort=created&amp;direction=desc">needs triage list</a>. You can help!
+            Someone has <a href="/contributors/report-bug">reported a bug</a>. The issue is now in the <a href="/issues?page=1&amp;per_page=50&amp;state=open&amp;stage=needstriage&amp;sort=created&amp;direction=desc">needs triage list</a>. You can help!
           </p>
 
           <p>
-            Triaging is an important step in the process. You will be assessing the quality of the issue. You will notice right away that a lot of issues are either invalid or lack the minimum details for <a href="/contribute/diagnose">being able to investigate and create a diagnosis</a>.
+            Triaging is an important step in the process. You will be assessing the quality of the issue. You will notice right away that a lot of issues are either invalid or lack the minimum details for <a href="/contributors/diagnose-bug">being able to investigate and create a diagnosis</a>.
           </p>
         </article>
       </div>
@@ -26,7 +26,7 @@
         <div class="grid-cell x3"> 
           <h2 id="neutral" class="headline-1 highlight">Have A Neutral Test Environment</h2>
           <p>
-            For having a better understanding of the issue, you will probably need to have a setup which makes it possible to have a fresh profile of the browser you are testing with. For example, on firefox you can <a href="http://www.otsukare.info/2014/11/12/configure-webcompat-browser">create a profile which resets</a> which each browser restart.
+            For having a better understanding of the issue, you will probably need to have a setup which makes it possible to have a fresh profile of the browser you are testing with. For example, on Firefox you can <a href="http://www.otsukare.info/2014/11/12/configure-webcompat-browser" target="_blank">create a profile which resets each time the browser restarts</a>.
           </p>
         </div>
       </div>
@@ -36,11 +36,11 @@
         <div class="grid-cell x3">
           <h2 id="reproducing" class="headline-1 highlight">Reproducing The Issue</h2>
           <p>
-            Reproducing the issue is sometimes a very tough game. Some issues are happening because of the local settings of the person who created the report. Geographical location, preferences choices, web extensions and add-ons, OS, network constraints, logged on the services, devices and many other parameters are all possible the source of the breakage as perceived by the reporter.
+            Reproducing the issue is sometimes a very tough game. Some issues are happening because of the local settings of the person who created the report. Geographical location, preferences choices, web extensions and add-ons, OS, network constraints, logged on the services, devices and many other parameters are all possibly the source of the breakage as perceived by the reporter.
           </p>
 
           <p>
-            Try your best to understand the report and reproduce the issue. If you have a doubt, reach out <a href="/about">someone from the project</a> to help. You may want to add screenshot when there are not available or when you want to share what you see yourself. Think about yourself as another bug reporter.
+            Try your best to understand the report and reproduce the issue. If you have a doubt, reach out <a href="/contributors">someone from the project</a> to help. You may wish to add a screenshot if one was not provided, or if you are seeing different results from the one that was provided. Think of yourself another bug reporter.
           </p>
         </div>
       </div>
@@ -51,7 +51,7 @@
           <h2 id="next" class="headline-1 highlight">Possible Next Steps</h2>
 
           <p>
-            If you <strong class="bold">can not reproduce the issue</strong>, check if it has been opened by an identified reporter or anonymously. If the issue has an identified reported, you may want to ask additional questions and give it one week or two before closing. Do not forget to thank the reporter for opening the issue in the first place. If the issue is anonymous, do not hesitate to close with one of the status below.
+            If you <strong class="bold">can not reproduce the issue</strong>, check if it has been opened by an identified reporter or anonymously. If the issue has an identified reporter, you may want to ask them additional questions (give them a week or two to answer before closing the issue). If the issue was reported anonymous, do not hesitate to close with one of the statuses below. Please do not forget to thank the reporter for opening the issue in the first place.
           </p>
 
           <p>
@@ -70,7 +70,7 @@
               non-compat
             </dt>
             <dd id="everywhere">
-              The issue is happening on all browsers and it is probably just bad coding from the website developers. This is out of scope of the webcompat project.
+              The issue is happening on all browsers, perhaps due to the site having a programming error, or a server being unreachable or misconfigured.
             </dd>
 
             <dt id="worksforme" class="bold highlight">
@@ -104,7 +104,7 @@
               needstriage
             </dt>
             <dd>
-              Everything has been reproduced and you hand the issue to the diagnosis crew.
+              The issue has been successfully reproduced, and it is time to hand it over to the diagnosis crew.
             </dd>
           </dl>
         </article>
