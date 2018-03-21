@@ -93,7 +93,7 @@ issues.LabelEditorView = issues.CategoryEditorView.extend({
     var modelUpdate = [];
     _.each(checked, function(item) {
       //item already has a .name property
-      item.color = $(item).data("color");
+      item.remoteName = $(item).data("remotename");
       modelUpdate.push(item);
     });
     this.reRender({ labels: _.uniq(modelUpdate) });
