@@ -19,3 +19,11 @@
   border-bottom-color: var(--color-error);
   color: var(--color-bg-box);
 }
+
+.notification-thanks {
+  position: static;
+  z-index: unset;
+  line-height: unset;
+  text-align: unset;
+  height: unset;
+}
