@@ -62,8 +62,9 @@
 
 .issue-new-comment .text-field {
   box-sizing: border-box;
-  padding: 0 calc(var(--unit-space) * 2);
   margin-bottom: calc(var(--unit-space) * 2);
+  padding: calc(var(--unit-space) * 2);
+  min-height: 120px;
 }
 
 .issue-new-comment .form-upload {
@@ -71,9 +72,18 @@
   margin-bottom: calc(var(--unit-space) * 2);
 }
 
+.issue-new-comment .input-upload {
+  height: 60px;
+}
+
+.issue-new-comment .label-upload {
+  height: auto;
+}
+
 .issue-new-comment .comment-submit {
-  display: flex;
-  justify-content: center;
+  display: block;
+  margin: var(--unit-space);
+  width: calc(100% - 2 * var(--unit-space));
 }
 
 .comment-body {
