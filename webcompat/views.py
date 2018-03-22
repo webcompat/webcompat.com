@@ -105,7 +105,7 @@ def logout():
 # If this moves, it needs to change in GitHub settings as well
 @app.route('/callback')
 @github.authorized_handler
-def authorized(access_token):
+def authorized(access_token=None):
     """Set the callback route for oauth2 with GitHub."""
     if app.config['TESTING']:
         access_token = 'thisisatest'
