@@ -140,7 +140,7 @@
 }
 
 .label-box .label-editor-list [class *= "label-"] {
-  border-left-color: var(--color-fourth);
+  border-left-color: var(--label-closed);
 }
 
 .label-box .label-editor-list [class *= "label-type"] {
@@ -188,7 +188,7 @@
   border-left-color: var(--label-needs-contact);
 }
 
-.label-box .label-editor-list .label-ready {
+.label-box .label-editor-list .label-contactready {
   border-left-color: var(--label-outreach);
 }
 
