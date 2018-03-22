@@ -81,8 +81,9 @@
 }
 
 .issue-new-comment .comment-submit {
-  display: flex;
-  justify-content: center;
+  display: block;
+  margin: var(--unit-space);
+  width: calc(100% - 2 * var(--unit-space));
 }
 
 .comment-body {
