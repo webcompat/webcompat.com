@@ -59,6 +59,7 @@ issues.LabelsView = issues.CategoryView.extend({
     _.each(toBeChecked, function(labelName) {
       $('[name="' + labelName + '"]').prop("checked", true);
     });
+    this.$el.closest(".label-box").scrollTop(this.$el.position().top);
   }
 });
 
