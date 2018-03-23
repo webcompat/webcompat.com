@@ -1,5 +1,6 @@
 <style>
 .wc-Stats {
+    max-width: 840px;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -23,7 +24,7 @@
     display: inline-flex;
     background-color: #404040;
     text-align: center;
-    min-width: 18.75em;
+    min-width: 10em;
     padding: 1em;
     position: relative;
     -webkit-box-align: center;
@@ -43,8 +44,7 @@
   }
 
   .wc-Stat-title {
-    position: absolute;
-    font-size: 1.5em;
+    font-size: 1em;
     color: #646464;
     margin: 0;
     width: 100%;
@@ -52,7 +52,7 @@
   }
 
   .wc-Stat-total {
-    font-size: 10em;
+    font-size: 5em;
     color: #ffc400;
     font-weight: 900;
   }
@@ -75,6 +75,16 @@
         <h2 class="wc-Stat-title">Older than 48h</h2>
         <div class="wc-Stat-total">
           {{ stats.older - stats.needinfo }}
+        </div>
+      </div>
+    </div>
+  </article>
+  <article class="wc-Stats-article">
+    <div class="wc-Stat">
+      <div class="wc-Stat-container">
+        <h2 class="wc-Stat-title">Needinfo</h2>
+        <div class="wc-Stat-total">
+          {{ stats.needinfo }}
         </div>
       </div>
     </div>
