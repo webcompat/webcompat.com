@@ -125,7 +125,7 @@ class TestURLs(unittest.TestCase):
         """Request to /dashboard/triage should be 200."""
         rv = self.app.get('/dashboard/triage')
         self.assertEqual(rv.status_code, 200)
-        self.assertTrue('<h1>Triage Dashboard</h1>' in rv.data)
+        self.assertTrue('<h1><a href="/">Webcompat.com</a> // Triage Dashboard</h1>' in rv.data)  # noqa
         self.assertTrue('text/html' in rv.content_type)
 
     def test_dashboard_route(self):
