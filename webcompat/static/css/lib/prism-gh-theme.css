@@ -3,6 +3,7 @@
  * Inspired by Github syntax coloring
  */
 
+
  code[class*="language-"],
  pre[class*="language-"] {
    color: #393a34;

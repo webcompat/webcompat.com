@@ -390,6 +390,7 @@ function BugForm() {
         $(".js-label-upload").removeClass("is-hidden").addClass("is-hidden");
         $(".js-remove-upload").removeClass("is-hidden").addClass("is-hidden");
         $(".js-error-upload").removeClass("is-hidden");
+
         $(".form-message-error").hide();
         $(".form-input-validation .error").hide();
         // "reset" the form field, because the file would get rejected
