@@ -68,6 +68,25 @@ const setView = (view = null) => {
   select.value = view;
 };
 
+/* excluded issue including special filter different from current filter  */
+const handleSpecialFilter = (
+  filterSelected,
+  classList = [],
+  result = [],
+  filterSpecial = ""
+) => {
+  let currentResult = result;
+  if (filterSpecial !== filterSelected) {
+    const result = classList.filter(className =>
+      className.match(filterSpecial)
+    );
+    if (result.length > 0) {
+      return [];
+    }
+  }
+  return currentResult;
+};
+
 /* Filtering List of triage */
 const filteringList = (renderActivityIndicator = true) => {
   /* init nbItem visible */
@@ -89,16 +108,18 @@ const filteringList = (renderActivityIndicator = true) => {
       document.getElementsByClassName("wc-Filter-select")
     );
     selectList.forEach(select => {
+      let result = [];
       /* no value */
       if (!select.value) {
         return;
       }
       /* value does not contain in class list */
       const classList = Array.from(issue.classList);
-      const result = classList.filter(className =>
-        className.match(select.value)
-      );
-      if (result.length === 0 || classList.includes("needinfo")) {
+      /* generic test */
+      result = classList.filter(className => className.match(select.value));
+      /* exclude issue including special filter different from current filter */
+      result = handleSpecialFilter(select.value, classList, result, "needinfo");
+      if (result.length === 0) {
         mustBeHidden = true;
         return;
       }
