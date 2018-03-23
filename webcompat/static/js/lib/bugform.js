@@ -546,6 +546,8 @@ function BugForm() {
       success: callback,
       error: _.bind(function(response) {
         var msg;
+        this.uploadLoader.removeClass(".is-active");
+
         if (response && response.status === 415) {
           wcEvents.trigger("flash:error", {
             message: this.inputs.image.helpText,
@@ -558,6 +560,7 @@ function BugForm() {
             "The image is too big! Please choose something smaller than 4MB.";
           wcEvents.trigger("flash:error", { message: msg, timeout: 5000 });
         }
+        this.loadingIndicator.removeClass("is-active");
       }, this)
     });
 
