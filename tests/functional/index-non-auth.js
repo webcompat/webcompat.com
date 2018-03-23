@@ -31,7 +31,7 @@ registerSuite("Index", {
         .findByCssSelector(".js-addon-link")
         .getVisibleText()
         .then(function(text) {
-          assert.include(text, "Download our");
+          assert.include(text, "Download");
         })
         .end();
     },
