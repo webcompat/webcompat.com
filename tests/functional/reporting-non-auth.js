@@ -75,11 +75,8 @@ registerSuite("Reporting (non-auth)", {
       )
         .findByCssSelector("#url")
         .click()
+        .type("sup")
         .end()
-        .execute(function() {
-          var elm = document.querySelector("#url");
-          WindowHelpers.sendEvent(elm, "input");
-        })
         .sleep(500)
         .findByCssSelector(".form-message-error")
         .getVisibleText()
@@ -92,7 +89,8 @@ registerSuite("Reporting (non-auth)", {
         })
         .end()
         .findByCssSelector("#url")
-        .type("sup")
+        .clearValue()
+        .type("http://sup.com")
         .end()
         .waitForDeletedByCssSelector(".form-message-error")
         .end();
@@ -160,7 +158,7 @@ registerSuite("Reporting (non-auth)", {
           .execute(function() {
             var elm = document.querySelector("#os");
             elm.value = "";
-            WindowHelpers.sendEvent(elm, "input");
+            WindowHelpers.sendEvent(elm, "blur");
           })
           .end()
           .sleep(500)

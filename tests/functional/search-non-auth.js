@@ -60,6 +60,7 @@ registerSuite("Search (non-auth)", {
       )
         .findByCssSelector("[data-remotename=browser-android]")
         .click()
+        .sleep(2000)
         .end()
         .findDisplayedById("js-SearchForm-input")
         .getProperty("value")
@@ -101,14 +102,10 @@ registerSuite("Search (non-auth)", {
         .click()
         .type("")
         .type("\uE007")
-        .sleep(1000)
+        .sleep(3000)
         .getCurrentUrl()
         .then(function(currUrl) {
-          assert.notInclude(
-            currUrl,
-            "q=fffffff",
-            "old search param was removed"
-          );
+          assert.notInclude(currUrl, "fffffff", "old search param was removed");
         })
         .end();
     }
