@@ -14,8 +14,7 @@
 }
 
 .is-offscreen {
-  opacity: 0;
-  transform: translateX(-50%) translateY(-100%) scale(1.2);
+  transform: translateX(-50%) translateY(-100%);
 }
 
 .nav-container {

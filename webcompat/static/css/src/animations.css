@@ -75,3 +75,13 @@
     transform: translate3d(130px, -80px, -90px) rotateZ(0) scale3d(1, 0, 1);
   }
 }
+
+@keyframes pulse {
+  0% { opacity: .3; }
+  50% { opacity: .95; }
+  100% { opacity: .3; }
+}
+
+.loader.is-active {
+  animation: pulse 2s infinite ease-in-out;
+}

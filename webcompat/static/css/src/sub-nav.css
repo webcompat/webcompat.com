@@ -1,7 +1,8 @@
 .sub-nav {
+  padding-left: calc(var(--unit-space) * 2);
+  border-left: calc(var(--unit-space) / 2) solid var(--color-default);
   color: var(--color-second);
-  font-size: 1em;
-  padding-left: 0;
+  font-size: .875em;
 }
 
 .sub-nav,
@@ -51,7 +52,9 @@
 
 .sub-nav-active {
   font-weight: 700;
-  border-left: 2px solid var(--color-first);
+  border-image: linear-gradient(var(--color-first), var(--color-first)) 10;
+  border-left: 5px solid;
+  margin-left: -5px;
   color: var(--color-second);
   padding-left: var(--unit-space);
 }

@@ -42,7 +42,7 @@ const config = {
   tunnel: "selenium",
   tunnelOptions: {
     // this tells SeleniumTunnel to download geckodriver and chromedriver
-    drivers: ["firefox", "chrome"]
+    drivers: ["firefox", { name: "chrome", version: "2.37" }]
   },
 
   environments: environments,

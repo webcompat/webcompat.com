@@ -5,9 +5,9 @@
 function BugForm() {
   this.form = $("#js-ReportForm form");
   this.submitButtons = $("#js-ReportForm .js-Button");
-  this.loadingIndicator = $(".js-Loader");
+  this.loadingIndicator = $(".js-loader");
   this.reportButton = $("#js-ReportBug");
-  this.uploadLoader = $(".js-Upload-Loader");
+  this.uploadLoader = $(".js-image-loader");
   this.previewEl = $(".js-image-upload");
   this.UPLOAD_LIMIT = 1024 * 1024 * 4;
   this.clickedButton = null;
@@ -86,7 +86,12 @@ function BugForm() {
       _.bind(this.checkOptionalNonEmpty, this, this.browserField)
     );
     this.submitButtons.on("click", _.bind(this.storeClickedButton, this));
-    this.submitButtons.on("click", _.bind(this.loadingIndicator.show, this));
+    this.submitButtons.on(
+      "click",
+      _.bind(function() {
+        this.loadingIndicator.addClass("is-active");
+      }, this)
+    );
     this.form.on("submit", _.bind(this.maybeUploadImage, this));
 
     // See if the user already has a valid form
@@ -198,12 +203,22 @@ function BugForm() {
     // application/x-www-form-urlencoded, so we need to change the
     // + (SPACE) to %20 before decoding
     var decoded = decodeURIComponent(detailsParam.replace(/\+/g, "%20"));
-    var details = JSON.parse(decoded);
-    var rv = "";
-    Object.keys(details).forEach(function(prop) {
-      rv += prop + ": " + details[prop] + "\n";
-    });
-    return rv;
+    var details;
+
+    try {
+      // In theory this is JSON!
+      details = JSON.parse(decoded);
+      var rv = "";
+      Object.keys(details).forEach(function(prop) {
+        rv += prop + ": " + details[prop] + "\n";
+      });
+      return rv;
+    } catch (e) {
+      // If it wasn't JSON, handle older clients prior to
+      // https://github.com/webcompat/webcompat.com/issues/2043 landing.
+      // This can be removed in the not-so-distant future!
+      return decoded;
+    }
   };
 
   this.storeClickedButton = function(event) {
@@ -264,14 +279,7 @@ function BugForm() {
   };
 
   this.isReportableURL = function(url) {
-    return (
-      url &&
-      !(_.startsWith(url, "about:") ||
-        _.startsWith(url, "chrome:") ||
-        _.startsWith(url, "file:") ||
-        _.startsWith(url, "resource:") ||
-        _.startsWith(url, "view-source:"))
-    );
+    return url && (_.startsWith(url, "http:") || _.startsWith(url, "https:"));
   };
 
   /* Check to see that the URL input element is not empty,
@@ -382,7 +390,6 @@ function BugForm() {
         $(".js-label-upload").removeClass("is-hidden").addClass("is-hidden");
         $(".js-remove-upload").removeClass("is-hidden").addClass("is-hidden");
         $(".js-error-upload").removeClass("is-hidden");
-
         $(".form-message-error").hide();
         $(".form-input-validation .error").hide();
         // "reset" the form field, because the file would get rejected
@@ -526,6 +533,9 @@ function BugForm() {
   this.uploadImage = function(dataURI, callback) {
     this.disableSubmits();
     this.uploadLoader.addClass("is-active");
+
+    $(".js-remove-upload").addClass("is-hidden");
+
     var formdata = new FormData();
     formdata.append("image", dataURI);
 
@@ -538,6 +548,8 @@ function BugForm() {
       success: callback,
       error: _.bind(function(response) {
         var msg;
+        this.uploadLoader.removeClass(".is-active");
+
         if (response && response.status === 415) {
           wcEvents.trigger("flash:error", {
             message: this.inputs.image.helpText,
@@ -548,9 +560,12 @@ function BugForm() {
         if (response && response.status === 413) {
           msg =
             "The image is too big! Please choose something smaller than 4MB.";
-          wcEvents.trigger("flash:error", { message: msg, timeout: 5000 });
+          wcEvents.trigger("flash:error", {
+            message: msg,
+            timeout: 5000
+          });
         }
-        this.loadingIndicator.hide();
+        this.loadingIndicator.removeClass("is-active");
       }, this)
     });
 

@@ -4,6 +4,14 @@
 2. New features: affect minor number
 3. API endpoint changes or dependency version updates: affect major number
 
+## 8.1.1 - 2018-02-27
+
+* Fix #2032 - Adds icons for filtering on issue age and needinfo [Pull #2190](https://api.github.com/repos/webcompat/webcompat.com/issues/2190)
+* Fixes #2188. Handle legacy details param data. [Pull #2189](https://api.github.com/repos/webcompat/webcompat.com/issues/2189)
+* Fixed #2097 - twitter icon url modified [Pull #2185](https://api.github.com/repos/webcompat/webcompat.com/issues/2185)
+* Fixes #1585. Add a method to define img-src CSP policy directive. [Pull #2046](https://api.github.com/repos/webcompat/webcompat.com/issues/2046)
+* Fixes #2033 - Added mode view [Pull #2045](https://api.github.com/repos/webcompat/webcompat.com/issues/2045)
+
 ## 8.1.0 - 20181-01-30
 
 * Handle incoming details as JSON object [Pull #2040](https://github.com/webcompat/webcompat.com/pull/2044)

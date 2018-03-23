@@ -69,7 +69,7 @@
     </div>
     <div class="form-text form-element js-Form-group">
       {{ form.os(class_='form-field text-field') }}
-      <span class="form-input-validation check"></span>
+      <span class="form-input-validation check js-bug-form-os"></span>
     </div>
     <div class="form-radio form-element js-Form-group">
       <div class="js-Form-information form-label-message">
@@ -85,7 +85,7 @@
         {{ subradio.label(class_='form-label label-radio') }}
       {% endfor %}
     </div>
-    <div class="form-upload js-image-upload js-Form-group">
+    <div class="form-upload js-image-upload js-Form-group loader js-image-loader">
         {{ form.image(class_='form-input input-upload', accept='.jpe,.jpg,.jpeg,.gif,.png,.bmp', id='image') }}
         <div class="label-icon label-upload js-label-upload">
           <svg class="icon icon-big" role="presentation" title="Upload Screenshot">
