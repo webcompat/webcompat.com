@@ -153,8 +153,8 @@
     data-number="{{ issue['number'] }}"
     class="
       wc-Triage
-      {% if issue['priority'] %} priority {% endif %}
-      {% if issue['needinfo'] %} needinfo {% endif %}
+      {% if issue['older'] %} priority {% endif %}
+      {% if issue['needinfo'] %} {{ 'needinfo is-hidden' }} {% endif %}
       {% for browser in issue['browsers'] %}
         {{ browser }}
       {% endfor %}

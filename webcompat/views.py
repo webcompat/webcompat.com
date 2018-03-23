@@ -355,11 +355,11 @@ def dashboard_triage():
         get_user_info()
     params = {'per_page': 100, 'sort': 'created', 'direction': 'asc'}
     needstriage_issues = get_milestone_list('needstriage', params)
-    needstriage_list, total, priority = filter_needstriage(needstriage_issues)
+    needstriage_list, stats = filter_needstriage(needstriage_issues)
     return render_template(
         'dashboard/triage.html',
         needstriage_list=needstriage_list,
-        stats={'total': total, 'urgent': priority})
+        stats=stats)
 
 
 @app.route('/csp-report', methods=['POST'])

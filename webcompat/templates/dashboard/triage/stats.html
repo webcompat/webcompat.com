@@ -64,7 +64,7 @@
       <div class="wc-Stat-container">
         <h2 class="wc-Stat-title">Needstriage issues</h2>
         <div class="wc-Stat-total">
-          {{ stats.total }}
+          {{ stats.total - stats.needinfo }}
         </div>
       </div>
     </div>
@@ -74,7 +74,7 @@
       <div class="wc-Stat-container">
         <h2 class="wc-Stat-title">Older than 48h</h2>
         <div class="wc-Stat-total">
-          {{ stats.urgent }}
+          {{ stats.older - stats.needinfo }}
         </div>
       </div>
     </div>
