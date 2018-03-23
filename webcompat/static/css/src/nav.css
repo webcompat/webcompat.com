@@ -10,7 +10,7 @@
   box-sizing: border-box;
   background-color: var(--color-first);
   color: var(--color-second);
-  transition: transform 400ms ease;
+  transition: transform 400ms ease, opacity 400ms ease;
 }
 
 .is-offscreen {

@@ -493,7 +493,7 @@ def add_csp(response):
     """
     response.headers['Content-Security-Policy'] = (
         "default-src 'self'; " +
-        "object-src 'none'; " +
+        "object-src https://webcompat.github.io; " +
         "connect-src 'self' https://api.github.com; " +
         "font-src 'self' https://fonts.gstatic.com; " +
         get_img_src_policy() +
