@@ -549,6 +549,8 @@ function BugForm() {
       success: callback,
       error: _.bind(function(response) {
         var msg;
+        this.uploadLoader.removeClass(".is-active");
+
         if (response && response.status === 415) {
           wcEvents.trigger("flash:error", {
             message: this.inputs.image.helpText,
@@ -564,6 +566,7 @@ function BugForm() {
             timeout: 5000
           });
         }
+        this.loadingIndicator.removeClass("is-active");
       }, this)
     });
 
