@@ -53,15 +53,16 @@ class TestDashboard(unittest.TestCase):
 
     def test_filter_needstriage(self):
         """Assess the filtering is correct."""
-        expected = [{'needinfo': True, 'title': u'example.org - dashboard test', 'created_at': u'2015-02-01T12:00:00Z', 'updated_at': u'2017-11-10T12:00:00Z', 'number': 1, 'priority': True, 'browsers': ['firefox']}, {'needinfo': False, 'title': u'dashboard.example.com - site is not usable', 'created_at': u'2015-02-20T12:00:00Z', 'updated_at': u'2015-02-20T12:00:00Z', 'number': 2, 'priority': False, 'browsers': ['chrome', 'firefox']}]  # noqa
+        expected = [{'needinfo': True, 'title': u'example.org - dashboard test', 'created_at': u'2015-02-01T12:00:00Z', 'updated_at': u'2017-11-10T12:00:00Z', 'number': 1, 'older': True, 'browsers': ['firefox']}, {'needinfo': False, 'title': u'dashboard.example.com - site is not usable', 'created_at': u'2015-02-20T12:00:00Z', 'updated_at': u'2015-02-20T12:00:00Z', 'number': 2, 'older': False, 'browsers': ['chrome', 'firefox']}]  # noqa
         raw_list = json.loads(json_data('triage.json'))
         testdt = datetime(2015, 2, 19, 12, 0, 0)
         with patch('webcompat.dashboard.get_control_date') as control_date:
             control_date.return_value = testdt
-            filtered_list, total, priority = filter_needstriage(raw_list)
+            filtered_list, dashboard_stats = filter_needstriage(raw_list)
             self.assertListEqual(expected, filtered_list)
-            self.assertEqual(total, 2)
-            self.assertEqual(priority, 1)
+            self.assertEqual(dashboard_stats['total'], 2)
+            self.assertEqual(dashboard_stats['older'], 1)
+            self.assertEqual(dashboard_stats['needinfo'], 1)
 
     def test_has_needinfo(self):
         """Check if a list of labels contains the 'status-needinfo'."""

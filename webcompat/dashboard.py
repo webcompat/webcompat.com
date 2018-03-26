@@ -26,7 +26,7 @@ def filter_needstriage(milestone_list):
         # flag for issues with status-needinfo
         needinfo = has_needinfo(labels)
         # flag for issues which are older than 48h
-        priority = is_older(issue['created_at'], control_date)
+        older = is_older(issue['created_at'], control_date)
         needstriage_list.append({
             'number': issue['number'],
             'title': issue['title'],
@@ -34,13 +34,17 @@ def filter_needstriage(milestone_list):
             'updated_at': issue['updated_at'],
             'browsers': browsers,
             'needinfo': needinfo,
-            'priority': priority})
+            'older': older})
     # Counting issues
-    total_count = len(milestone_list)
-    priority_count = len([issue['priority']
-                         for issue in needstriage_list
-                         if issue['priority'] is True])
-    return needstriage_list, total_count, priority_count
+    dashboard_stats = {}
+    dashboard_stats['total'] = len(milestone_list)
+    dashboard_stats['older'] = len([issue['older']
+                                    for issue in needstriage_list
+                                    if issue['older'] is True])
+    dashboard_stats['needinfo'] = len([issue['needinfo']
+                                      for issue in needstriage_list
+                                      if issue['needinfo'] is True])
+    return needstriage_list, dashboard_stats
 
 
 def has_needinfo(labels):
@@ -64,11 +68,11 @@ def is_older(issue_date, time_gap):
     Return True if the date is older.
     time_gap is defined as a datetime object.
     """
-    priority = False
+    older = False
     created = datetime.strptime(issue_date, "%Y-%m-%dT%H:%M:%SZ")
     if created < time_gap:
-        priority = True
-    return priority
+        older = True
+    return older
 
 
 def get_control_date(hours):
