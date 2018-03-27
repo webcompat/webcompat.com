@@ -14,11 +14,7 @@
   margin: 0 calc(-1 / 2 * var(--unit-space)) var(--grid-outermargin-s);
 }
 
-.grid-row > .grid-row {
-  margin-left: 0;
-  margin-right: 0;
-}
-
+.grid-row > .grid-row,
 .grid-show-gap {
   margin-left: 0;
   margin-right: 0;
@@ -72,11 +68,6 @@
   .grid-show-gap .grid-cell {
     margin-bottom: var(--grid-outermargin-m);
   }
-
-  /* .grid-nested {
-    display: flex;
-    flex-wrap: wrap;
-  } */
 
   .x1-fix {
     max-width: var(--unit-modul-s);

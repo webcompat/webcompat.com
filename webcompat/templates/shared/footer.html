@@ -39,7 +39,7 @@
         </li>
       </ul>
 
-<!-- sub nav for contribute / working with bugs -->
+<!-- sub nav for contribute > working with bugs -->
       {% if request.url_rule.endpoint in ['contributors_report_bug', 'contributors_reproduce_bug', 'contributors_diagnose_bug', 'contributors_site_outreach'] %}
         <ul class="grid-cell x1 footer-sub-list">
           <li class="footer-sub-item {% if request.url_rule.endpoint == 'contributors_report_bug' %}active{% endif %}">
@@ -57,7 +57,7 @@
         </ul>
       {% endif %}
 
-<!-- sub nav for contribute / other contributions -->
+<!-- sub nav for contribute > other contributions -->
       {% if request.url_rule.endpoint in ['contributors_build_tools', 'contributors_web_platform_research', 'contributors_organize_webcompat_events'] %}
         <ul class="grid-cell x1 footer-sub-list">
           <li class="footer-sub-item {% if request.url_rule.endpoint == 'contributors_build_tools' %}active{% endif %}">

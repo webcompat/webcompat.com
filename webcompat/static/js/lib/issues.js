@@ -253,7 +253,8 @@ issues.ImageUploadView = Backbone.View.extend({
       return;
     }
 
-    var inlineHelp = $("<span></span>", {
+    // what is wc-Form-helpInline???
+    var inlineHelp = $("<small></small>", {
       class: "wc-Form-helpInline",
       text: this.inputMap[id].helpText
     });
@@ -261,11 +262,11 @@ issues.ImageUploadView = Backbone.View.extend({
     this.inputMap[id].valid = false;
     $(this.inputMap[id].elm)
       .parents(".js-Form-group")
-      .removeClass("wc-Form-noError js-no-error")
-      .addClass("wc-Form-error js-form-error");
+      .removeClass("js-no-error")
+      .addClass("js-form-error");
 
     if (id === "image") {
-      inlineHelp.insertAfter(".wc-Form-label--upload");
+      inlineHelp.insertAfter(".js-label-upload");
     }
 
     this.disableSubmits();
@@ -274,9 +275,10 @@ issues.ImageUploadView = Backbone.View.extend({
     this.inputMap[id].valid = true;
     $(this.inputMap[id].elm)
       .parents(".js-Form-group")
-      .removeClass("wc-Form-error js-form-error")
-      .addClass("wc-Form-noError js-no-error");
+      .removeClass("js-form-error")
+      .addClass("js-no-error");
 
+    // this can probably go as we do not have wc- styles anymore?
     $(this.inputMap[id].elm)
       .parents(".js-Form-group")
       .find(".wc-Form-helpInline")

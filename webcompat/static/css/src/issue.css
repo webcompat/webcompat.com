@@ -27,7 +27,7 @@
 }
 
 .issue-comment .comment-header {
-  padding: var(--unit-space) var(--unit-space);
+  padding: var(--unit-space);
   background-color: var(--color-bg-comment-header);
   display: flex;
   justify-content: space-between;
@@ -91,7 +91,7 @@
   overflow: auto;
 }
 
-/* As we can not add a class to the img right now (markup parsers are complicated), we need to use the element */
+/* As we can not add a class to the img in the comment right now (markup parsers are complicated), we need to use the img element */
 .comment-body img,
 .js-Issue-markdown img {
   max-width: calc(var(--unit-modul-m) - (var(--unit-space) * 4));
