@@ -38,10 +38,7 @@
   margin: 0 4px;
 }
 
-.nav-item:first-child {
-  margin: 0;
-}
-
+.nav-item:first-child,
 .nav-item:last-child {
   margin: 0;
 }
