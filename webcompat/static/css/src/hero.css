@@ -3,6 +3,7 @@
   margin-right: calc(-1 * var(--grid-outermargin-s));
   margin-top: -34px;
   padding: calc(var(--unit-gutter) / 2) var(--unit-gutter);
+  background-color: var(--color-first);
 }
 
 .hero-section .grid-row {
