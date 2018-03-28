@@ -95,7 +95,6 @@
 .comment-body img,
 .js-Issue-markdown img {
   max-width: calc(var(--unit-modul-m) - (var(--unit-space) * 4));
-  max-height: calc(var(--unit-modul-m) - (var(--unit-space) * 4));
   width: 100%;
 }
 
