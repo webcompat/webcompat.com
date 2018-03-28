@@ -1,10 +1,10 @@
 .navigation {
   position: fixed;
   top: 0;
-  left: 50%;
+  left: 0;
   z-index: 1000;
-  transform: translateX(-50%);
-  width: 100vw;
+  transform: translateY(0);
+  width: 100%;
   display: flex;
   justify-content: center;
   box-sizing: border-box;
@@ -14,7 +14,7 @@
 }
 
 .is-offscreen {
-  transform: translateX(-50%) translateY(-100%);
+  transform: translateY(-100%);
 }
 
 .nav-container {
@@ -122,10 +122,6 @@
 }
 
 @media screen and (min-width: 998px) {
-  .navigation {
-    width: 100%;
-  }
-
   .nav-left .nav-item {
     padding: 5px;
   }
