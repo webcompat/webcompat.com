@@ -253,6 +253,18 @@
   outline: none;
 }
 
+.form-upload .label-remove:not(.is-hidden) {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: center;
+  left: 0;
+  top: 0;
+  transform: none;
+  width: 100%;
+}
+
 .icon-remove,
 .label-remove .label-icon-message {
   fill: var(--color-second);
