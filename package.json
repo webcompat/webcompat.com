@@ -38,6 +38,7 @@
     "grunt-contrib-uglify": "^2.3.0",
     "grunt-contrib-watch": "^1.0.0",
     "grunt-postcss": "^0.8.0",
+    "grunt-purifycss": "^0.1.2",
     "husky": "^0.13.4",
     "intern": "^4.1.4",
     "lint-staged": "^3.6.1",
@@ -56,6 +57,7 @@
   },
   "scripts": {
     "setup": "npm run virtualenv && npm install && npm run config",
+    "clean:css": "grunt purifycss --min",
     "watch": "grunt watch",
     "build": "grunt",
     "build:svg": "npm run build:svg:clean-svg && npm run build:svg:svg-sprite && rm -rf ./webcompat/static/img/svg/tmp",

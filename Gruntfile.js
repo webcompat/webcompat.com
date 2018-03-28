@@ -29,7 +29,8 @@ module.exports = function(grunt) {
     "concat",
     "uglify",
     "postcss",
-    "cssmin"
+    "cssmin",
+    "purifycss"
   ]);
 
   // Task used before doing a deploy (same as default, but does image optimization)
