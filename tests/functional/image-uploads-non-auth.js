@@ -145,6 +145,16 @@ registerSuite("Image Uploads (non-auth)", {
             assert.equal(isDisplayed, true, "Remove button is displayed");
           })
           .end()
+          .findByCssSelector(".js-image-upload")
+          .getAttribute("class")
+          .then(function(className) {
+            assert.notInclude(
+              "is-validated",
+              className,
+              "parent container got the right class after an image was postMessage'd"
+            );
+          })
+          .end()
       );
     },
 
