@@ -88,3 +88,8 @@
 .right {
   float: right;
 }
+
+.img-fit {
+  max-height: 75vh;
+  max-width: 100%;
+}
