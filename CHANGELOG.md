@@ -4,6 +4,10 @@
 2. New features: affect minor number
 3. API endpoint changes or dependency version updates: affect major number
 
+## 9.0.0 - 2018-03-28
+
+* No issue - clean up design + markup, add new content [Comparison](https://github.com/webcompat/webcompat.com/compare/406bd2091e28c72a6ba6433865470af07cdc41b9...refactor)
+
 ## 8.1.2 - 2018-03-28
 
 * Fixes #2215 - Tweaks needinfo filtering and design [Pull #2290](https://api.github.com/repos/webcompat/webcompat.com/issues/2290)
