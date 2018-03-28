@@ -65,7 +65,7 @@ function HomePage() {
   };
 
   this.navbarHandler = function() {
-    var $navbar = $(".navigation");
+    var $navbar = $(".js-navigation");
     var navbarHeight = $navbar.outerHeight();
     var lastScrollY = window.pageYOffset;
     var scrollTimeout = null;
