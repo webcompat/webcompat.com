@@ -135,6 +135,7 @@ function BugForm() {
         }, this)
       );
     } else {
+      this.makeValid("image");
       this.addPreviewBackground(dataURI);
     }
   }, this);
