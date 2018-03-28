@@ -9,7 +9,7 @@ function HomePage() {
   var searchBar = $(".js-SearchBar");
   var searchBarOpen = $(".js-SearchBarOpen");
   var searchBarClose = $(".js-SearchBarClose");
-  var navDropDown = $(".wc-Navbar-link.wc-DropdownHeader");
+  var navDropDown = $(".js-DropdownHeader");
 
   this.init = function() {
     reportButton.add(reportLink).on("click", this.toggleForm);
@@ -32,6 +32,7 @@ function HomePage() {
   this.setUpEvents = function() {
     this.searchHandler();
     this.dropDownHandler();
+    this.navbarHandler();
   };
 
   this.searchHandler = function() {
@@ -61,6 +62,41 @@ function HomePage() {
         navDropDown.removeClass("is-active");
       }
     });
+  };
+
+  this.navbarHandler = function() {
+    var $navbar = $(".js-navigation");
+    var navbarHeight = $navbar.outerHeight();
+    var lastScrollY = window.pageYOffset;
+    var scrollTimeout = null;
+    var isScrolling = false;
+    $(window).on("scroll", function() {
+      isScrolling = true;
+      window.clearTimeout(scrollTimeout);
+      scrollTimeout = window.setTimeout(function() {
+        isScrolling = false;
+      }, 500);
+    });
+    window.setInterval(function() {
+      if (!isScrolling) {
+        return;
+      }
+      if (window.pageYOffset < navbarHeight) {
+        $navbar.removeClass("is-offscreen");
+        lastScrollY = window.pageYOffset;
+        return;
+      }
+      if (window.pageYOffset > lastScrollY + navbarHeight) {
+        $navbar.addClass("is-offscreen");
+        lastScrollY = window.pageYOffset;
+        return;
+      }
+      if (window.pageYOffset < lastScrollY - navbarHeight) {
+        $navbar.removeClass("is-offscreen");
+        lastScrollY = window.pageYOffset;
+        return;
+      }
+    }, 100);
   };
 
   this.toggleForm = function(e) {

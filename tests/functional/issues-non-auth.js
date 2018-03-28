@@ -15,7 +15,7 @@ registerSuite("Issues", {
   tests: {
     "Issue page loads"() {
       return FunctionalHelpers.openPage(this, url("/issues/100"), ".js-Issue")
-        .findDisplayedByCssSelector(".wc-Issue-information-header")
+        .findDisplayedByCssSelector(".js-issue-number")
         .getVisibleText()
         .then(function(text) {
           assert.include(text, "#100", "Issue title displayed");

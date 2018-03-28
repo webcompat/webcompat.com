@@ -42,6 +42,7 @@ issues.MilestonesView = issues.CategoryView.extend({
       .after(this.milestoneEditor.render().el);
 
     $('[name="' + this.model.get("milestone") + '"]').prop("checked", true);
+    this.$el.closest(".label-box").scrollTop(this.$el.position().top);
   }
 });
 
@@ -74,7 +75,7 @@ issues.MilestoneEditorView = issues.CategoryEditorView.extend({
     this.resizeEditorHeight();
     _.defer(
       _.bind(function() {
-        this.$el.find(".wc-CategoryEditor-search").focus();
+        this.$el.find(".js-MilestoneEditor-search").focus();
       }, this)
     );
     return this;

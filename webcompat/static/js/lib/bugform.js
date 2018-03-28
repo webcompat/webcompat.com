@@ -5,9 +5,10 @@
 function BugForm() {
   this.form = $("#js-ReportForm form");
   this.submitButtons = $("#js-ReportForm .js-Button");
-  this.loadingIndicator = $(".js-Loader");
+  this.loadingIndicator = $(".js-loader");
   this.reportButton = $("#js-ReportBug");
-  this.uploadLoader = $(".js-Upload-Loader");
+  this.uploadLoader = $(".js-image-loader");
+  this.previewEl = $(".js-image-upload");
   this.UPLOAD_LIMIT = 1024 * 1024 * 4;
   this.clickedButton = null;
   this.hasImage = null;
@@ -76,11 +77,21 @@ function BugForm() {
     );
     this.problemType.on("change", _.bind(this.checkProblemTypeValidity, this));
     this.uploadField.on("change", _.bind(this.checkImageTypeValidity, this));
-    this.osField
-      .add(this.browserField)
-      .on("blur input", _.bind(this.checkOptionalNonEmpty, this));
+    this.osField.on(
+      "blur",
+      _.bind(this.checkOptionalNonEmpty, this, this.osField)
+    );
+    this.browserField.on(
+      "blur",
+      _.bind(this.checkOptionalNonEmpty, this, this.browserField)
+    );
     this.submitButtons.on("click", _.bind(this.storeClickedButton, this));
-    this.submitButtons.on("click", _.bind(this.loadingIndicator.show, this));
+    this.submitButtons.on(
+      "click",
+      _.bind(function() {
+        this.loadingIndicator.addClass("is-active");
+      }, this)
+    );
     this.form.on("submit", _.bind(this.maybeUploadImage, this));
 
     // See if the user already has a valid form
@@ -124,6 +135,7 @@ function BugForm() {
         }, this)
       );
     } else {
+      this.makeValid("image");
       this.addPreviewBackground(dataURI);
     }
   }, this);
@@ -294,18 +306,14 @@ function BugForm() {
 
   /* Check if Browser and OS are empty or not, only
      so we can set them to valid (there is no invalid state) */
-  this.checkOptionalNonEmpty = function() {
-    _.forEach(
-      [this.browserField, this.osField],
-      _.bind(function(input) {
-        var inputId = input.prop("id");
-        if (input.val()) {
-          this.makeValid(inputId);
-        } else {
-          this.makeInvalid(inputId);
-        }
-      }, this)
-    );
+  this.checkOptionalNonEmpty = function(input) {
+    var inputId = input.prop("id");
+
+    if (input.val()) {
+      this.makeValid(inputId);
+    } else {
+      this.makeInvalid(inputId);
+    }
   };
 
   this.checkForm = function() {
@@ -329,8 +337,11 @@ function BugForm() {
       }
     }
     // Make sure we only do this if the inputs exist on the page
-    if (this.browserField.length || this.osField.length) {
-      this.checkOptionalNonEmpty();
+    if (this.browserField.length) {
+      this.checkOptionalNonEmpty(this.browserField);
+    }
+    if (this.osField.length) {
+      this.checkOptionalNonEmpty(this.osField);
     }
   };
 
@@ -342,8 +353,8 @@ function BugForm() {
       return;
     }
 
-    var inlineHelp = $("<span></span>", {
-      class: "wc-Form-helpMessage",
+    var inlineHelp = $("<small></small>", {
+      class: "label-icon-message form-message-error",
       text: opts && opts.altHelp
         ? this.inputs[id].altHelpText
         : this.inputs[id].helpText
@@ -370,14 +381,19 @@ function BugForm() {
         break;
       case "image":
         // hide the error in case we already saw one
-        $(".wc-Form-helpMessage--imageUpload").remove();
+        $(".form-upload-error").remove();
 
         inlineHelp
-          .removeClass("wc-Form-helpMessage")
-          .addClass("wc-Form-helpMessage--imageUpload")
-          .insertAfter(".js-image-upload-label");
+          .removeClass("form-message-error")
+          .addClass("form-upload-error")
+          .appendTo(".js-error-upload");
 
-        $(".wc-UploadForm-label").hide();
+        $(".js-label-upload").removeClass("is-hidden").addClass("is-hidden");
+        $(".js-remove-upload").removeClass("is-hidden").addClass("is-hidden");
+        $(".js-error-upload").removeClass("is-hidden");
+
+        $(".form-message-error").hide();
+        $(".form-input-validation .error").hide();
         // "reset" the form field, because the file would get rejected
         // from the server anyways.
         this.uploadField.val(this.uploadField.get(0).defaultValue);
@@ -398,7 +414,7 @@ function BugForm() {
 
     this.inputs[id].el
       .parents(".js-Form-group")
-      .find(".wc-Form-helpMessage")
+      .find(".form-message-error")
       .remove();
 
     if (
@@ -439,10 +455,8 @@ function BugForm() {
       return;
     }
 
-    this.previewEl = $(".js-image-upload").find("label").eq(0);
     this.previewEl.css({
-      background: "url(" + dataURI + ") no-repeat center / contain",
-      "background-color": "#eee"
+      background: "url(" + dataURI + ") no-repeat center / contain"
     });
 
     this.hasImage = true;
@@ -451,32 +465,28 @@ function BugForm() {
   /*
     Allow users to remove an image from the form upload.
   */
-  this.showRemoveUpload = function(label) {
-    var removeBanner = $(".wc-UploadForm-button");
-    var uploadWrapper = $(".wc-UploadForm-wrapper");
-    var uploadIcon = $(".wc-UploadForm-icon");
-    var uploadLabel = $(".wc-UploadForm-label");
+  this.showRemoveUpload = function(preview) {
+    var removeBanner = $(".js-remove-upload");
+    var uploadLabel = $(".js-label-upload");
+    var errorLabel = $(".js-error-upload");
 
     // hide upload image errors (this will no-op if the user never saw one)
-    $(".wc-Form-helpMessage--imageUpload").remove();
-    $(".wc-UploadForm-label").show();
+    $(".form-upload-error").remove();
+
+    errorLabel.addClass("is-hidden");
+    uploadLabel.removeClass("visually-hidden");
 
     removeBanner.removeClass("is-hidden");
     removeBanner.attr("tabIndex", "0");
-    uploadIcon.addClass("is-hidden");
-    uploadLabel.addClass("is-hidden");
-    uploadLabel.hide();
+    uploadLabel.addClass("visually-hidden");
     removeBanner.on(
       "click",
       _.bind(function() {
         // remove the preview and hide the banner
-        label.css("background", "none");
+        preview.css("background", "none");
         removeBanner.addClass("is-hidden");
         removeBanner.attr("tabIndex", "-1");
-        uploadIcon.removeClass("is-hidden");
-        uploadLabel.removeClass("is-hidden");
-        uploadLabel.show();
-        uploadWrapper.removeClass("is-hidden");
+        uploadLabel.removeClass("visually-hidden").removeClass("is-hidden");
         removeBanner.off("click");
         removeBanner.get(0).blur();
 
@@ -525,6 +535,9 @@ function BugForm() {
   this.uploadImage = function(dataURI, callback) {
     this.disableSubmits();
     this.uploadLoader.addClass("is-active");
+
+    $(".js-remove-upload").addClass("is-hidden");
+
     var formdata = new FormData();
     formdata.append("image", dataURI);
 
@@ -537,6 +550,8 @@ function BugForm() {
       success: callback,
       error: _.bind(function(response) {
         var msg;
+        this.uploadLoader.removeClass(".is-active");
+
         if (response && response.status === 415) {
           wcEvents.trigger("flash:error", {
             message: this.inputs.image.helpText,
@@ -552,7 +567,7 @@ function BugForm() {
             timeout: 5000
           });
         }
-        this.loadingIndicator.hide();
+        this.loadingIndicator.removeClass("is-active");
       }, this)
     });
 

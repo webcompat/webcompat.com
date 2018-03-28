@@ -1,9 +1,9 @@
 {% from "web_modules/tag.html" import tag with context %}
 
-<div class="wc-SearchIssue-filter">
+<ul class="filter-label">
   {% for category in categories %}
   {{ tag('filter', category) }}
   {% endfor %}
-</div>
+</ul>
 
 {% include "list-issue/dropdown.jst" %}

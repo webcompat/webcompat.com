@@ -4,16 +4,8 @@
 
 "use strict";
 
+const args = require("yargs").argv;
 const intern = require("intern").default;
-
-const args = {};
-process.argv.forEach((val, index) => {
-  if (val.indexOf("=") !== -1) {
-    args[val.split("=")[0]] = val.split("=")[1];
-  } else {
-    args[index] = val;
-  }
-});
 
 const siteRoot = args.siteRoot ? args.siteRoot : "http://localhost:5000";
 
@@ -29,7 +21,7 @@ browsers.forEach(function(b) {
   });
 });
 
-intern.configure({
+const config = {
   // Configuration object for webcompat
   wc: {
     pageLoadTimeout: args.wcPageLoadTimeout
@@ -58,8 +50,16 @@ intern.configure({
   filterErrorStack: true,
   reporters: [args.reporters ? args.reporters : "pretty"],
 
-  functionalSuites: ["./tests/functional/*.js"]
-});
+  functionalSuites: [
+    args.functionalSuites ? args.functionalSuites : "./tests/functional/*.js"
+  ]
+};
+
+if (args.grep) {
+  config.grep = new RegExp(args.grep, "i");
+}
+
+intern.configure(config);
 
 intern.run().catch(e => {
   // This might not throw, BUG filed: https://github.com/theintern/intern/issues/868

@@ -33,6 +33,9 @@ registerSuite("Milestones (auth)", {
         .end()
         .findByCssSelector(".js-CategoryEditor")
         .end()
+        .findByCssSelector(".js-CategoryEditor-close")
+        .click()
+        .end()
         .findByCssSelector(".js-MilestoneEditorLauncher")
         .click()
         .getAttribute("class")
@@ -52,7 +55,7 @@ registerSuite("Milestones (auth)", {
         .findByCssSelector("body")
         .type("m")
         .end()
-        .findByCssSelector(".wc-CategoryEditor-search")
+        .findByCssSelector(".js-MilestoneEditor-search")
         .type("\uE00C")
         .end()
         .findByCssSelector(".js-MilestoneEditorLauncher")
@@ -76,7 +79,7 @@ registerSuite("Milestones (auth)", {
         .end()
         .findByCssSelector(".js-CategoryEditor")
         .end()
-        .findByCssSelector("main")
+        .findByCssSelector("footer")
         .click()
         .end()
         .findByCssSelector(".js-MilestoneEditorLauncher")
@@ -87,16 +90,16 @@ registerSuite("Milestones (auth)", {
         .end();
     },
 
-    "Clicking close button actually closes it?"() {
+    "Clicking close button actually closes it"() {
       return FunctionalHelpers.openPage(
         this,
         url("/issues/2"),
         ".js-MilestoneEditorLauncher",
         true /* longerTimeout */
       )
-        .findByCssSelector(".js-MilestoneEditorLauncher")
-        .click()
-        .end()
+        .execute(() => {
+          $(".js-MilestoneEditorLauncher")[0].click();
+        })
         .findByCssSelector(".js-CategoryEditor-close")
         .click()
         .end()

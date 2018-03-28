@@ -1,0 +1,117 @@
+.filter-bar {
+  position: relative;
+  overflow-y: visible;
+}
+
+.filter-bar-search *,
+.filter-bar-dropdown * {
+  box-sizing: border-box;
+}
+
+.filter-bar-dropdown {
+  position: relative;
+  display: inline-block;
+  margin-left: .5em;
+  padding: .5em;
+}
+
+.filter-bar-dropdown-input {
+  position: absolute;
+  clip: rect(1px, 1px, 1px, 1px);
+  padding: 0;
+  border: 0;
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+}
+
+.filter-bar-dropdown-listbox ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+[data-opens-dropdown] {
+  display: flex;
+  align-items: center;
+  padding: 2px 10px;
+}
+
+[data-opens-dropdown] span:first-of-type {
+  margin-right: .5em;
+}
+
+.filter-bar-dropdown-listbox a {
+  text-align: left;
+  padding: 2px 10px;
+  display: block;
+  min-width: 100%;
+  margin-top: 2px;
+  white-space: nowrap;
+}
+
+.filter-bar-dropdown-input:focus + [data-opens-dropdown],
+.filter-bar-dropdown-listbox a:focus {
+  outline: none;
+  background: var(--color-first);
+}
+
+:checked + label .expanded-text {
+  display: inline;
+}
+
+:checked + label .collapsed-text {
+  display: none;
+}
+
+.filter-bar-dropdown-input:not(:checked) + label .expanded-text {
+  display: none;
+}
+
+.filter-bar-dropdown-input:not(:checked) + label .collapsed-text {
+  display: inline;
+}
+
+.filter-bar-dropdown-listbox {
+  position: absolute;
+  left: 0;
+  right: 0;
+  display: none;
+  z-index: 2;
+  background-color: rgba(255, 255, 255, .8);
+}
+
+:checked ~ .filter-bar-dropdown-listbox {
+  display: block;
+}
+
+.filter-bar-search {
+  position: absolute;
+  white-space: nowrap;
+  overflow: hidden;
+  right: 0;
+  top: 50%;
+  transform: translate(calc(100% - 78px), -50%);
+  transition: transform .2s ease-in-out;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.filter-bar-search.open {
+  transform: translate(0, -50%);
+}
+
+.filter-bar-search-input {
+  border: 0;
+  flex-grow: 1;
+  padding: 10px;
+}
+
+.filter-bar-search-label {
+  position: absolute;
+  left: .25em;
+  top: .25em;
+  display: flex;
+  white-space: nowrap;
+}

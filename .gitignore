@@ -13,6 +13,7 @@ uploads/
 .vscode/
 config/secrets.py
 package-lock.json
+tmp/
 
 # The data folder contains information that shouldn't live in version control.
 data/*
@@ -26,8 +27,7 @@ webcompat/static/js/issue-list.js
 webcompat/static/js/user-activity.js
 webcompat/static/js/templates.js
 webcompat/**/*.min.js
-webcompat/**/*.min.css
-webcompat/**/*.dev.css
+webcompat/**/**/*.min.css
 
 #selenium server
 *.jar

@@ -28,29 +28,29 @@ registerSuite("Search (auth)", {
       return FunctionalHelpers.openPage(
         this,
         url("/issues"),
-        ".wc-SearchForm-item"
+        ".js-SearchForm-button"
       )
-        .findDisplayedByCssSelector(".wc-SearchForm-item")
+        .findDisplayedByCssSelector(".js-SearchForm-button")
         .click()
         .type("taco")
         .end()
-        .findAllByCssSelector("button.wc-Tag--needstriage")
+        .findAllByCssSelector(".needsdiagnosis.js-Tag")
         .click()
         .end()
-        .findByCssSelector(".wc-SearchForm-item")
+        .findByCssSelector("#js-SearchForm-input")
         .getVisibleText()
         .then(function(text) {
           assert.equal(text, "", "Clicking filter should empty search text");
         })
         .end()
-        .findAllByCssSelector("button.wc-Tag--needstriage")
+        .findAllByCssSelector(".needsdiagnosis.js-Tag")
         .click()
         .end()
-        .findByCssSelector(".wc-SearchForm-item")
+        .findByCssSelector(".js-SearchForm-button")
         .click()
         .type("taco")
         .end()
-        .findAllByCssSelector("button.wc-Tag--needstriage")
+        .findAllByCssSelector(".needsdiagnosis.js-Tag")
         .getAttribute("class")
         .then(function(className) {
           assert.notInclude(
@@ -68,9 +68,9 @@ registerSuite("Search (auth)", {
       return FunctionalHelpers.openPage(
         this,
         url("/issues", params),
-        ".wc-IssueList:nth-of-type(1)"
+        ".js-IssueList:nth-of-type(1)"
       )
-        .findDisplayedByCssSelector(".wc-IssueList:nth-of-type(1) .wc-Link")
+        .findDisplayedByCssSelector(".js-IssueList:nth-of-type(1) a")
         .getVisibleText()
         .then(function(text) {
           assert.include(
@@ -95,7 +95,7 @@ registerSuite("Search (auth)", {
       return FunctionalHelpers.openPage(
         this,
         url("/issues"),
-        ".wc-IssueList:nth-of-type(10)"
+        ".js-IssueList:nth-of-type(10)"
       )
         .findByCssSelector(".js-SearchForm input")
         .type("vladvlad")
@@ -103,7 +103,7 @@ registerSuite("Search (auth)", {
         .findByCssSelector(".js-SearchForm button")
         .click()
         .end()
-        .findDisplayedByCssSelector(".wc-IssueList:only-of-type a")
+        .findDisplayedByCssSelector(".js-IssueList:only-of-type a")
         .getVisibleText()
         .then(function(text) {
           assert.include(
@@ -125,7 +125,7 @@ registerSuite("Search (auth)", {
         .type("vladvlad")
         .type("\uE007")
         .end()
-        .findDisplayedByCssSelector(".wc-IssueList:only-of-type a")
+        .findDisplayedByCssSelector(".js-IssueList:only-of-type a")
         .getVisibleText()
         .then(function(text) {
           assert.include(
@@ -151,7 +151,7 @@ registerSuite("Search (auth)", {
           .type("vladvlad")
           .type("\uE007")
           .end()
-          .findDisplayedByCssSelector(".wc-IssueList:only-of-type a")
+          .findDisplayedByCssSelector(".js-IssueList:only-of-type a")
           .getVisibleText()
           .then(function(text) {
             assert.include(
@@ -176,7 +176,7 @@ registerSuite("Search (auth)", {
       return FunctionalHelpers.openPage(
         this,
         url("/issues", searchParam),
-        ".wc-SearchIssue-noResults-title"
+        ".js-no-results"
       )
         .findByCssSelector("#js-SearchForm-input")
         .clearValue()
@@ -185,7 +185,7 @@ registerSuite("Search (auth)", {
         .type("\uE007")
         .end()
         .findDisplayedByCssSelector(
-          ".wc-IssueList:first-of-type .js-Issue-label"
+          ".js-IssueList:first-of-type .js-Issue-label"
         )
         .getVisibleText()
         .then(function(text) {
@@ -198,6 +198,30 @@ registerSuite("Search (auth)", {
         .end();
     },
 
+    "After search without results, suggested label appear and have a clickable URL."() {
+      return FunctionalHelpers.openPage(this, url("/issues"), ".grid")
+        .findByCssSelector("#js-SearchForm-input")
+        .click()
+        .type("noExpectedResult123")
+        .end()
+        .findByCssSelector("#x-search-bar")
+        .submit()
+        .end()
+        .sleep(2000)
+        .findDisplayedByCssSelector(".label-browser-android")
+        .click()
+        .end()
+        .getCurrentUrl()
+        .then(function(url) {
+          assert(
+            url.includes(
+              "q=label%3Abrowser-android",
+              "Redirect from a suggested label goes to correct URL."
+            )
+          );
+        });
+    },
+
     "Search input is loaded from q param (with dashes)"() {
       // load up a garbage search, so we can more easily detect when
       // the search values we want are loaded.
@@ -205,7 +229,7 @@ registerSuite("Search (auth)", {
       return FunctionalHelpers.openPage(
         this,
         url("/issues", searchParam),
-        ".wc-SearchIssue-noResults-title"
+        ".js-no-results"
       )
         .findByCssSelector("#js-SearchForm-input")
         .getProperty("value")

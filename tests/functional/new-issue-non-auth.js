@@ -22,7 +22,7 @@ registerSuite("New Issue Page", {
         .findByCssSelector(".js-Navbar-link")
         .getVisibleText()
         .then(function(text) {
-          assert.equal(text, "Home");
+          assert.include(text, "Home");
           assert.notInclude(text, "Download our");
         })
         .end();

@@ -1,0 +1,118 @@
+#issue.grid-row {
+  align-items: flex-start;
+}
+
+.issue-detail {
+  padding-bottom: calc (var(--unit-space) * 2);
+}
+
+@media all and (max-width: 664.99px) {
+  .issue-labels {
+    order: 1;
+  }
+}
+
+.grid-nested .grid-cell.issue-comment {
+  padding: 0;
+}
+
+.issue-labels {
+  max-width: calc(100% - var(--unit-space));
+}
+
+.issue-comment {
+  max-width: calc(100% - 1 / 2 * var(--unit-space));
+  position: relative;
+  width: 100%;
+}
+
+.issue-comment .comment-header {
+  padding: var(--unit-space);
+  background-color: var(--color-bg-comment-header);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.comment-header .comment-author {
+  display: flex;
+  align-items: center;
+  margin: 0;
+}
+
+.comment-header .comment-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  margin-right: 16px;
+}
+
+.comment-header .comment-reporter {
+  line-height: 1.6em;
+}
+
+.issue-new-comment .grid-cell {
+  padding: 0;
+  margin: 0;
+}
+
+.issue-new-comment .form-text {
+  padding: 0;
+}
+
+.issue-new-comment .text-field {
+  box-sizing: border-box;
+  margin-bottom: calc(var(--unit-space) * 2);
+  padding: calc(var(--unit-space) * 2);
+  min-height: 120px;
+}
+
+.issue-new-comment .form-upload {
+  padding: calc(var(--unit-space) * 2);
+  margin-bottom: calc(var(--unit-space) * 2);
+}
+
+.issue-new-comment .input-upload {
+  height: 60px;
+}
+
+.issue-new-comment .label-upload {
+  height: auto;
+}
+
+.issue-new-comment .comment-submit {
+  display: block;
+  margin: var(--unit-space);
+  width: calc(100% - 2 * var(--unit-space));
+}
+
+.comment-body {
+  max-width: 100%;
+  overflow: auto;
+}
+
+/* As we can not add a class to the img in the comment right now (markup parsers are complicated), we need to use the img element */
+.comment-body img,
+.js-Issue-markdown img {
+  max-width: calc(var(--unit-modul-m) - (var(--unit-space) * 4));
+  width: 100%;
+}
+
+/* var(--page-size-m) = 665px - vars not usable in queries */
+@media (min-width: 665px) {
+  #issue.grid-row {
+    flex-wrap: nowrap;
+  }
+
+  #issue > .x2 {
+    flex-basis: 66.66666%;
+    max-width: 66.66666%;
+    min-width: 0;
+  }
+
+  #issue > .x1 {
+    flex-basis: 33.33333%;
+    max-width: 33.33333%;
+    min-width: 0;
+  }
+}

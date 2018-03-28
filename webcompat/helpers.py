@@ -495,11 +495,11 @@ def add_csp(response):
         "default-src 'self'; " +
         "object-src 'none'; " +
         "connect-src 'self' https://api.github.com; " +
-        "font-src 'self'; " +
+        "font-src 'self' https://fonts.gstatic.com; " +
         get_img_src_policy() +
         "manifest-src 'self'; " +
         "script-src 'self' https://www.google-analytics.com https://api.github.com; " +  # nopep8
-        "style-src 'self' 'unsafe-inline'; " +
+        "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; " +
         "report-uri /csp-report"
     )
 

@@ -124,6 +124,7 @@ issues.BodyView = Backbone.View.extend({
   render: function() {
     // hide metadata
     var issueDesc = $(".js-Issue-markdown");
+
     issueDesc
       .contents()
       .filter(function() {
@@ -252,19 +253,19 @@ issues.ImageUploadView = Backbone.View.extend({
       return;
     }
 
-    var inlineHelp = $("<span></span>", {
-      class: "wc-Form-helpInline",
+    var inlineHelp = $("<small></small>", {
+      class: "form-message-error",
       text: this.inputMap[id].helpText
     });
 
     this.inputMap[id].valid = false;
     $(this.inputMap[id].elm)
-      .parents(".wc-Form-group")
-      .removeClass("wc-Form-noError js-no-error")
-      .addClass("wc-Form-error js-form-error");
+      .parents(".js-Form-group")
+      .removeClass("js-no-error")
+      .addClass("js-form-error");
 
     if (id === "image") {
-      inlineHelp.insertAfter(".wc-Form-label--upload");
+      inlineHelp.insertAfter(".js-label-upload");
     }
 
     this.disableSubmits();
@@ -272,12 +273,13 @@ issues.ImageUploadView = Backbone.View.extend({
   makeValid: function(id) {
     this.inputMap[id].valid = true;
     $(this.inputMap[id].elm)
-      .parents(".wc-Form-group")
-      .removeClass("wc-Form-error js-form-error")
-      .addClass("wc-Form-noError js-no-error");
+      .parents(".js-Form-group")
+      .removeClass("js-form-error")
+      .addClass("js-no-error");
 
+    // this can probably go as we do not have wc- styles anymore?
     $(this.inputMap[id].elm)
-      .parents(".wc-Form-group")
+      .parents(".js-Form-group")
       .find(".wc-Form-helpInline")
       .remove();
 
@@ -482,11 +484,12 @@ issues.MainView = Backbone.View.extend({
       });
     }
   },
-  addNewComment: function() {
+  addNewComment: function(event) {
     var form = $(".js-Comment-form");
     var textarea = $(".js-Comment-text");
-    // Only bother if the textarea isn't empty
-    if ($.trim(textarea.val())) {
+
+    if (form[0].checkValidity()) {
+      event.preventDefault();
       var newComment = new issues.Comment({
         avatarUrl: form.data("avatarUrl"),
         body: md.render(textarea.val()),
@@ -515,7 +518,7 @@ issues.MainView = Backbone.View.extend({
     $(target).parent().toggleClass("wc-Comment-content-nsfw--display");
   },
   render: function() {
-    this.$el.fadeIn();
+    this.$el.removeClass("is-hidden");
   },
 
   handleKeyShortcuts: function() {

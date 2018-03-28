@@ -1,0 +1,29 @@
+.notification-bar {
+  position: fixed;
+  z-index: 2000;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 58px;
+  text-align: center;
+  line-height: 3;
+}
+
+.notification-information {
+  background-color: var(--color-first-contrast);
+  border-bottom: 5px solid var(--color-first);
+}
+
+.notification-alert {
+  background-color: var(--color-error-transparent);
+  border-bottom-color: var(--color-error);
+  color: var(--color-bg-box);
+}
+
+.notification-thanks {
+  position: static;
+  z-index: unset;
+  line-height: unset;
+  text-align: unset;
+  height: unset;
+}

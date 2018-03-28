@@ -59,6 +59,7 @@ issues.LabelsView = issues.CategoryView.extend({
     _.each(toBeChecked, function(labelName) {
       $('[name="' + labelName + '"]').prop("checked", true);
     });
+    this.$el.closest(".label-box").scrollTop(this.$el.position().top);
   }
 });
 
@@ -93,7 +94,7 @@ issues.LabelEditorView = issues.CategoryEditorView.extend({
     var modelUpdate = [];
     _.each(checked, function(item) {
       //item already has a .name property
-      item.color = $(item).data("color");
+      item.remoteName = $(item).data("remotename");
       modelUpdate.push(item);
     });
     this.reRender({ labels: _.uniq(modelUpdate) });

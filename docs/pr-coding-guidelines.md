@@ -159,7 +159,7 @@ In order to avoid errors during a Pull Request, `npm run lint` will be executed 
 `npm run lint` checks all relevant JavaScript and CSS files and displays, if something needs to be fixed.
 
 If you get an error displayed, there are two ways to fix it.
-1. You can run `npm run fix` automatically (only for JavaScript), which is great for small issues like missing spaces or lines in various files.
+1. You can run `npm run lint:fix` automatically, which is great for small issues like missing spaces or lines in various files.
 2. You can correct it manually as every error message includes the file and line of the error as well as the rule which was violated will be displayed..
 
 Hopefully this will help you clear up a few struggles.
