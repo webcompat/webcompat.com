@@ -27,6 +27,8 @@ from ua_parser import user_agent_parser
 
 from webcompat import api
 from webcompat import app
+from webcompat.db import Issues
+from webcompat.db import issues_db
 from webcompat import github
 
 API_URI = 'https://api.github.com/'
@@ -543,3 +545,68 @@ def get_milestone_list(milestone_name, params=None):
         milestone_name, other_params=params)
     milestone_list = json.loads(raw_response[0])
     return milestone_list
+
+
+def is_issue(issue_full_data):
+    """Return True for real issues.
+
+    GitHub repos mixes issues and pull requests.
+    Some issues URIs are pull request. We return 403 for these
+    in webcompat/views.py.
+    """
+    # html_url = "https://github.com/webcompat/webcompat-tests/issues/516"
+    html_url = issue_full_data['html_url']
+    if html_url.split('/')[-2] == 'pull':
+        return False
+    return True
+
+
+def get_issue_data(issue_number):
+    """Return a data dictionary for the GitHub JSON.
+
+    * issue number
+    * is_issue status
+    * issue title
+    """
+    # Check if the issue is in the issues DB
+    issue = get_db_issue(issue_number)
+    # issue is not in the DB
+    if issue is None:
+        # Direct request to GitHub
+        issue_full_data = get_github_issue(issue_number)
+        # Extract the data
+        title = issue_full_data['title']
+        is_issue_flag = is_issue(issue_full_data)
+        add_to_issue_db({'issue_number': issue_number,
+                         'is_issue': is_issue_flag,
+                         'title': title})
+    else:
+        title = issue.title
+        is_issue_flag = issue.is_issue
+    issue_data = {'issue_number': issue_number,
+                  'is_issue': is_issue_flag,
+                  'title': title}
+    return issue_data
+
+
+def get_db_issue(issue_number):
+    """Extract the issue from the DB."""
+    return Issues.query.filter_by(issue_number=issue_number).first()
+
+
+def get_github_issue(issue_number):
+    """Fetch the issue as JSON from GitHub.
+
+    Return a dictionary.
+    """
+    raw_response = api.endpoints.proxy_issue(issue_number)
+    return json.loads(raw_response[0])
+
+
+def add_to_issue_db(issue_data):
+    """Save the data inside the issues DB."""
+    issue = Issues(issue_data['issue_number'],
+                   issue_data['title'],
+                   issue_data['is_issue'])
+    issues_db.add(issue)
+    issues_db.commit()
