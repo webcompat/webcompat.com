@@ -17,7 +17,8 @@
 }
 
 .issue .issue-description {
-  padding-left: var(--unit-gap);
+  margin-left: 0;
+  padding-left: calc(var(--unit-gap) + 1 / 2 * var(--unit-space));
   font-size: 1.1em;
   word-wrap: break-word;
 }
