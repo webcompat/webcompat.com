@@ -35,20 +35,4 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 ### Icons
 
-All icons are public domain or licensed from The Noun Project.
-
-[Lightbulb icon](http://thenounproject.com/term/light-bulb/5370/) designed by Jean-Philippe Cabaroc. (Licensed)
-
-[Bee icon](http://thenounproject.com/term/bee/26569/) designed by Peter Silk. (Licensed)
-
-[Arrow icon](http://thenounproject.com/term/arrow/5438/) designed by Jamison Wieser. (Licensed)
-
-[Form icon](http://thenounproject.com/term/list/14362/) designed by banoshi. (Licensed)
-
-[Diagnose bugs icon](https://thenounproject.com/rockicon/collection/office-line/?i=450639) designed by Rockicon (Licensed)
-
-[Reach out to sites icon](https://thenounproject.com/term/heart-care/518087/) designed by ProSymbols.  (Licensed)
-
-[Lightswitch](http://thenounproject.com/term/light-switch/2235/) designed by Jeremy Lloyd.  (Public domain)
-
-[Contribute icon](https://thenounproject.com/search/?q=group&i=876004) designed by Tjaša Kimovec. (Licensed)
+All icons are from the [Feather icon set](https://github.com/feathericons/feather#feather) and published under the [MIT License](https://github.com/feathericons/feather/blob/master/LICENSE).
