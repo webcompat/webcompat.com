@@ -4,6 +4,14 @@
 2. New features: affect minor number
 3. API endpoint changes or dependency version updates: affect major number
 
+## 8.1.2 - 2018-03-28
+
+* Fixes #2215 - Tweaks needinfo filtering and design [Pull #2290](https://api.github.com/repos/webcompat/webcompat.com/issues/2290)
+* Fixes issue #2203 UnboundLocalError on milestones_content [Pull #2221](https://api.github.com/repos/webcompat/webcompat.com/issues/2221)
+* Refactor isReportableURL function [Pull #2220](https://api.github.com/repos/webcompat/webcompat.com/issues/2220)
+* Fixes #2193: Add support for --grep when running intern tests. [Pull #2194](https://api.github.com/repos/webcompat/webcompat.com/issues/2194)
+* Fixes #740 - Adds tool to create changelog. [Pull #2105](https://api.github.com/repos/webcompat/webcompat.com/issues/2105)
+
 ## 8.1.1 - 2018-02-27
 
 * Fix #2032 - Adds icons for filtering on issue age and needinfo [Pull #2190](https://api.github.com/repos/webcompat/webcompat.com/issues/2190)
