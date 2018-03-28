@@ -253,9 +253,8 @@ issues.ImageUploadView = Backbone.View.extend({
       return;
     }
 
-    // what is wc-Form-helpInline???
     var inlineHelp = $("<small></small>", {
-      class: "wc-Form-helpInline",
+      class: "form-message-error",
       text: this.inputMap[id].helpText
     });
 
