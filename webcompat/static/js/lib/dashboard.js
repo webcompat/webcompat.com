@@ -100,7 +100,7 @@ const filteringList = (renderActivityIndicator = true) => {
   /* Triage list */
   const triageList = Array.from(document.getElementsByClassName("wc-Triage"));
   triageList.forEach(issue => {
-    /* By default all element are visible except for needinfo ones */
+    /* By default all element are visible except for needsinfo ones */
     let mustBeHidden = false;
     /* push issue number */
     issuesNumber.push(issue.dataset["number"]);
@@ -118,7 +118,12 @@ const filteringList = (renderActivityIndicator = true) => {
       /* generic test */
       result = classList.filter(className => className.match(select.value));
       /* exclude issue including special filter different from current filter */
-      result = handleSpecialFilter(select.value, classList, result, "needinfo");
+      result = handleSpecialFilter(
+        select.value,
+        classList,
+        result,
+        "needsinfo"
+      );
       if (result.length === 0) {
         mustBeHidden = true;
         return;
