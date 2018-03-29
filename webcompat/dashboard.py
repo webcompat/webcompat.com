@@ -23,8 +23,8 @@ def filter_needstriage(milestone_list):
         labels = [label['name'] for label in issue['labels']]
         # browsers list
         browsers = browser_labels(labels)
-        # flag for issues with status-needinfo
-        needinfo = has_needinfo(labels)
+        # flag for issues with status-needsinfo
+        needsinfo = has_needsinfo(labels)
         # flag for issues which are older than 48h
         older = is_older(issue['created_at'], control_date)
         needstriage_list.append({
@@ -33,7 +33,7 @@ def filter_needstriage(milestone_list):
             'created_at': issue['created_at'],
             'updated_at': issue['updated_at'],
             'browsers': browsers,
-            'needinfo': needinfo,
+            'needsinfo': needsinfo,
             'older': older})
     # Counting issues
     dashboard_stats = {}
@@ -41,18 +41,18 @@ def filter_needstriage(milestone_list):
     dashboard_stats['older'] = len([issue['older']
                                     for issue in needstriage_list
                                     if issue['older'] is True])
-    dashboard_stats['needinfo'] = len([issue['needinfo']
+    dashboard_stats['needsinfo'] = len([issue['needsinfo']
                                       for issue in needstriage_list
-                                      if issue['needinfo'] is True])
+                                      if issue['needsinfo'] is True])
     return needstriage_list, dashboard_stats
 
 
-def has_needinfo(labels):
-    """Assess if the issue has a needinfo label."""
-    needinfo = False
-    if 'status-needinfo' in labels:
-        needinfo = True
-    return needinfo
+def has_needsinfo(labels):
+    """Assess if the issue has a needsinfo label."""
+    needsinfo = False
+    if 'status-needsinfo' in labels:
+        needsinfo = True
+    return needsinfo
 
 
 def browser_labels(labels):
