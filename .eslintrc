@@ -19,6 +19,7 @@
     "Backbone": true,
     "console": true,
     "define": true,
+    "ga": true,
     "markdownitEmoji": true,
     "markdownitSanitizer": true,
     "md": true,
