@@ -16,7 +16,7 @@ import unittest
 
 from webcompat.dashboard import browser_labels
 from webcompat.dashboard import filter_needstriage
-from webcompat.dashboard import has_needinfo
+from webcompat.dashboard import has_needsinfo
 from webcompat.dashboard import is_older
 
 # Add webcompat module to import path
@@ -53,7 +53,7 @@ class TestDashboard(unittest.TestCase):
 
     def test_filter_needstriage(self):
         """Assess the filtering is correct."""
-        expected = [{'needinfo': True, 'title': u'example.org - dashboard test', 'created_at': u'2015-02-01T12:00:00Z', 'updated_at': u'2017-11-10T12:00:00Z', 'number': 1, 'older': True, 'browsers': ['firefox']}, {'needinfo': False, 'title': u'dashboard.example.com - site is not usable', 'created_at': u'2015-02-20T12:00:00Z', 'updated_at': u'2015-02-20T12:00:00Z', 'number': 2, 'older': False, 'browsers': ['chrome', 'firefox']}]  # noqa
+        expected = [{'needsinfo': True, 'title': u'example.org - dashboard test', 'created_at': u'2015-02-01T12:00:00Z', 'updated_at': u'2017-11-10T12:00:00Z', 'number': 1, 'older': True, 'browsers': ['firefox']}, {'needsinfo': False, 'title': u'dashboard.example.com - site is not usable', 'created_at': u'2015-02-20T12:00:00Z', 'updated_at': u'2015-02-20T12:00:00Z', 'number': 2, 'older': False, 'browsers': ['chrome', 'firefox']}]  # noqa
         raw_list = json.loads(json_data('triage.json'))
         testdt = datetime(2015, 2, 19, 12, 0, 0)
         with patch('webcompat.dashboard.get_control_date') as control_date:
@@ -62,15 +62,15 @@ class TestDashboard(unittest.TestCase):
             self.assertListEqual(expected, filtered_list)
             self.assertEqual(dashboard_stats['total'], 2)
             self.assertEqual(dashboard_stats['older'], 1)
-            self.assertEqual(dashboard_stats['needinfo'], 1)
+            self.assertEqual(dashboard_stats['needsinfo'], 1)
 
-    def test_has_needinfo(self):
-        """Check if a list of labels contains the 'status-needinfo'."""
-        labels = ['browser-firefox', 'browser-chrome', 'status-needinfo']
-        self.assertTrue(has_needinfo(labels))
-        labels = ['needinfo', 'browser-firefox']
-        self.assertFalse(has_needinfo(labels))
-        self.assertFalse(has_needinfo([]))
+    def test_has_needsinfo(self):
+        """Check if a list of labels contains the 'status-needsinfo'."""
+        labels = ['browser-firefox', 'browser-chrome', 'status-needsinfo']
+        self.assertTrue(has_needsinfo(labels))
+        labels = ['needsinfo', 'browser-firefox']
+        self.assertFalse(has_needsinfo(labels))
+        self.assertFalse(has_needsinfo([]))
 
     def test_is_older(self):
         """Check if an issue is older than a certain time gap."""
