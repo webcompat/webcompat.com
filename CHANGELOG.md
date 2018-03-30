@@ -4,6 +4,13 @@
 2. New features: affect minor number
 3. API endpoint changes or dependency version updates: affect major number
 
+## 9.0.1 - 2018-03-30
+
+* Issue #2347 - Break anchor links in issue description and comments [Pull #2349](https://api.github.com/repos/webcompat/webcompat.com/issues/2349)
+* Issue #2344. Switch to @mozilla account GA tracking ID. [Pull #2345](https://api.github.com/repos/webcompat/webcompat.com/issues/2345)
+* Fixes #2339 - Changes the wrong needinfo to needsinfo for Triage dashboard [Pull #2343](https://api.github.com/repos/webcompat/webcompat.com/issues/2343)
+
+
 ## 9.0.0 - 2018-03-28
 
 * No issue - clean up design + markup, add new content [Comparison](https://github.com/webcompat/webcompat.com/compare/406bd2091e28c72a6ba6433865470af07cdc41b9...refactor)
