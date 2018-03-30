@@ -39,7 +39,7 @@
 {% include "shared/footer.html" %}
 {%- if config.PRODUCTION or config.STAGING -%}
 <!-- Google Analytics -->
-<script src="{{ url_for('static', filename='js/vendor/ga.js') }}"></script>
+<script src="{{ url_for('static', filename='js/build/ga.js') }}"></script>
 <script async src='https://www.google-analytics.com/analytics.js'></script>
 <!-- End Google Analytics -->
 <script src="{{ url_for('static', filename='js/webcompat.min.js')|bust_cache }}"></script>

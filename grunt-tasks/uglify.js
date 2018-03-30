@@ -12,6 +12,10 @@ module.exports = function(grunt) {
       src: "<%= concat.dist.dest %>",
       dest: "<%= jsPath %>/<%= pkg.name %>.min.js"
     },
+    ga: {
+      src: "<%= jsPath %>/lib/ga.js",
+      dest: "<%= jsPath %>/build/ga.js"
+    },
     issues: {
       src: "<%= concat.issues.dest %>",
       dest: "<%= jsPath %>/issues.min.js"
