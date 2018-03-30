@@ -155,7 +155,7 @@
     class="
       wc-Triage
       {% if issue['older'] %} priority {% endif %}
-      {% if issue['needinfo'] %} {{ 'needinfo is-hidden' }} {% endif %}
+      {% if issue['needsinfo'] %} {{ 'needsinfo is-hidden' }} {% endif %}
       {% for browser in issue['browsers'] %}
         {{ browser }}
       {% endfor %}
@@ -193,7 +193,7 @@
             </div>
             <div class="wc-Triage-metas-infos">
               <span title="More than 48h old">{% if issue['priority'] %} ⏰ {% endif %}</span>
-              <span title="Waiting for info">{% if issue['needinfo'] %} 🛎 {% endif %}</span>
+              <span title="Waiting for info">{% if issue['needsinfo'] %} 🛎 {% endif %}</span>
             </div>
           </div>
         </div>

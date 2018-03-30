@@ -9,11 +9,11 @@
         "name": "browser-firefox"
       },
       {
-        "url": "https://api.github.com/repos/webcompat/webcompat-tests/labels/status-needinfo",
+        "url": "https://api.github.com/repos/webcompat/webcompat-tests/labels/status-needsinfo",
         "color": "bfd4f2",
         "default": false,
         "id": 743991534,
-        "name": "status-needinfo"
+        "name": "status-needsinfo"
       }
     ],
     "number": 1,
