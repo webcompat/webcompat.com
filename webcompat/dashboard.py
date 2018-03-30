@@ -42,8 +42,8 @@ def filter_needstriage(milestone_list):
                                     for issue in needstriage_list
                                     if issue['older'] is True])
     dashboard_stats['needsinfo'] = len([issue['needsinfo']
-                                      for issue in needstriage_list
-                                      if issue['needsinfo'] is True])
+                                       for issue in needstriage_list
+                                       if issue['needsinfo'] is True])
     return needstriage_list, dashboard_stats
 
 
