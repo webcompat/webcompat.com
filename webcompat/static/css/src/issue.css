@@ -20,6 +20,11 @@
   max-width: calc(100% - var(--unit-space));
 }
 
+.issue-labels a {
+  word-break: break-all;
+  word-wrap: break-word;
+}
+
 .issue-comment {
   max-width: calc(100% - 1 / 2 * var(--unit-space));
   position: relative;
