@@ -20,6 +20,7 @@ data/*
 
 # these are our 'dist' files
 # checking them into the repo is silly
+webcompat/static/js/build/
 webcompat/static/js/webcompat.js
 webcompat/static/js/diagnose.js
 webcompat/static/js/issues.js
