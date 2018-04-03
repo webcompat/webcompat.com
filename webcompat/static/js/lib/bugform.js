@@ -388,8 +388,8 @@ function BugForm() {
           .addClass("form-upload-error")
           .appendTo(".js-error-upload");
 
-        $(".js-label-upload").removeClass("is-hidden").addClass("is-hidden");
-        $(".js-remove-upload").removeClass("is-hidden").addClass("is-hidden");
+        $(".js-label-upload").addClass("is-hidden");
+        $(".js-remove-upload").addClass("is-hidden");
         $(".js-error-upload").removeClass("is-hidden");
 
         $(".form-message-error").hide();
