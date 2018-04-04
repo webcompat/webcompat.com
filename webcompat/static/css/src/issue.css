@@ -2,6 +2,10 @@
   align-items: flex-start;
 }
 
+#issue :not(pre) > code[class *= "language-"] {
+  white-space: pre-wrap;
+}
+
 .issue-detail {
   padding-bottom: calc (var(--unit-space) * 2);
 }
