@@ -18,13 +18,13 @@
 }
 
 .tile-item {
+  border-radius: 5px;
   display: inline-flex;
-  width: 100%;
+  flex-direction: column;
+  justify-content: center;
   min-height: 5em;
   text-align: center;
-  justify-content: center;
-  flex-direction: column;
-  border-radius: 5px;
+  width: 100%;
 }
 
 .tile-item-link {

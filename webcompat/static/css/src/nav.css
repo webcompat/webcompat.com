@@ -1,16 +1,16 @@
 .navigation {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 1000;
-  transform: translateY(0);
-  width: 100%;
+  background-color: var(--color-first);
+  box-sizing: border-box;
+  color: var(--color-second);
   display: flex;
   justify-content: center;
-  box-sizing: border-box;
-  background-color: var(--color-first);
-  color: var(--color-second);
+  left: 0;
+  position: fixed;
+  top: 0;
+  transform: translateY(0);
   transition: transform 400ms ease;
+  width: 100%;
+  z-index: 1000;
 }
 
 .is-offscreen {
@@ -18,13 +18,13 @@
 }
 
 .nav-container {
-  position: relative;
-  max-width: var(--unit-modul-l);
-  width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  max-width: var(--unit-modul-l);
   padding: 0 var(--unit-gutter);
+  position: relative;
+  width: 100%;
 }
 
 .nav .grid {
@@ -32,10 +32,10 @@
 }
 
 .nav-item {
-  text-decoration: none;
-  list-style: none;
   display: inline;
+  list-style: none;
   margin: 0 4px;
+  text-decoration: none;
 }
 
 .nav-item:first-child,
@@ -54,41 +54,41 @@
 }
 
 .nav-icon {
-  width: 22px;
   height: auto;
   vertical-align: middle;
+  width: 22px;
 }
 
 .nav-item .link-text {
   display: inline-block;
-  visibility: hidden;
-  width: 0;
   height: 0;
   overflow: hidden;
   vertical-align: middle;
+  visibility: hidden;
+  width: 0;
 }
 
 .nav-button {
-  border: none;
-  padding: 0;
   background-color: transparent;
-  cursor: pointer;
+  border: none;
   color: var(--color-second);
+  cursor: pointer;
   font-family: "Open Sans", sans-serif;
+  padding: 0;
 }
 
 #search-bar {
-  position: absolute;
-  z-index: 1200;
+  left: 0;
+  margin: 0 auto;
   max-width: var(--unit-modul-l);
   min-width: var(--unit-modul-s);
-  width: 100%;
-  transform: rotateY(-90deg);
-  transition: all .2s ease 0s;
-  margin: 0 auto;
-  left: 0;
+  position: absolute;
   right: 0;
   top: 1px;
+  transform: rotateY(-90deg);
+  transition: all .2s ease 0s;
+  width: 100%;
+  z-index: 1200;
 }
 
 .is-active #search-bar {
@@ -102,18 +102,18 @@
 }
 
 #search-bar .nav-button {
-  position: relative;
-  top: -35px;
   float: right;
-  z-index: 1300;
+  position: relative;
   right: 10px;
+  top: -35px;
+  z-index: 1300;
 }
 
 @media screen and (min-width: 665px) {
   .nav-item .link-text {
+    height: auto;
     visibility: visible;
     width: auto;
-    height: auto;
   }
 
   .nav-icon {
@@ -161,9 +161,9 @@
 }
 
 .login-avatar-img {
-  width: 20px;
   position: relative;
   top: 6px;
+  width: 20px;
 }
 
 @media screen and (min-width: 490px) {

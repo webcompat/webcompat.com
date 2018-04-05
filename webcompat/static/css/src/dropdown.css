@@ -13,10 +13,10 @@
 }
 
 .dropdown {
-  position: relative;
-  width: var(--unit-modul-s);
   margin-left: auto;
   margin-right: var(--unit-gutter);
+  position: relative;
+  width: var(--unit-modul-s);
 }
 
 .sort-dropdown .dropdown {
@@ -37,8 +37,8 @@
 }
 
 .dropdown .nav-link {
-  text-decoration: none;
   padding: 5px;
+  text-decoration: none;
 }
 
 .dropdown .nav-dropdown-item {

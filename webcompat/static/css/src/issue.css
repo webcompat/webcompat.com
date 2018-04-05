@@ -36,24 +36,24 @@
 }
 
 .issue-comment .comment-header {
-  padding: var(--unit-space);
+  align-items: center;
   background-color: var(--color-bg-comment-header);
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  padding: var(--unit-space);
 }
 
 .comment-header .comment-author {
-  display: flex;
   align-items: center;
+  display: flex;
   margin: 0;
 }
 
 .comment-header .comment-avatar {
-  width: 48px;
-  height: 48px;
   border-radius: 50%;
+  height: 48px;
   margin-right: 16px;
+  width: 48px;
 }
 
 .comment-header .comment-reporter {
@@ -61,8 +61,8 @@
 }
 
 .issue-new-comment .grid-cell {
-  padding: 0;
   margin: 0;
+  padding: 0;
 }
 
 .issue-new-comment .form-text {
@@ -72,13 +72,13 @@
 .issue-new-comment .text-field {
   box-sizing: border-box;
   margin-bottom: calc(var(--unit-space) * 2);
-  padding: calc(var(--unit-space) * 2);
   min-height: 120px;
+  padding: calc(var(--unit-space) * 2);
 }
 
 .issue-new-comment .form-upload {
-  padding: calc(var(--unit-space) * 2);
   margin-bottom: calc(var(--unit-space) * 2);
+  padding: calc(var(--unit-space) * 2);
 }
 
 .issue-new-comment .input-upload {

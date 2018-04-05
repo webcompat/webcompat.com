@@ -8,12 +8,12 @@
 */
 
 .button {
-  display: inline-block;
-  padding: var(--button-primary-padding);
-  color: inherit;
   border: 0;
   border-radius: 5px;
+  color: inherit;
   cursor: pointer;
+  display: inline-block;
+  padding: var(--button-primary-padding);
 }
 
 .button-primary {
@@ -54,13 +54,13 @@
 }
 
 .button-hero {
-  border-radius: 10px;
-  font-size: 2em;
   background-color: var(--color-second);
+  border-radius: 10px;
   color: var(--color-first);
+  font-size: 2em;
   font-weight: 200;
-  width: 250px;
   vertical-align: middle;
+  width: 250px;
 }
 
 .button-hero:hover {

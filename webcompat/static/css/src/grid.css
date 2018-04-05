@@ -22,16 +22,16 @@
 
 .grid-cell {
   box-sizing: border-box;
-  padding: var(--unit-space);
   margin-left: calc(1 / 2 * var(--unit-space));
   margin-right: calc(1 / 2 * var(--unit-space));
+  padding: var(--unit-space);
 }
 
 .grid-cell,
 .x1 {
   flex: 1 1 var(--unit-modul-s);
-  min-width: var(--unit-modul-s);
   max-width: var(--unit-modul-l);
+  min-width: var(--unit-modul-s);
 }
 
 .grid-nested {

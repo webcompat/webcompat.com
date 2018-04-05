@@ -1,7 +1,7 @@
 .sub-nav {
-  padding-left: var(--unit-space);
   color: var(--color-second);
   font-size: .95em;
+  padding-left: var(--unit-space);
 }
 
 .sub-nav,
@@ -17,21 +17,21 @@
 
 .nested-sub-nav {
   display: none;
-  padding-left: var(--unit-space);
   list-style: none;
+  padding-left: var(--unit-space);
 }
 
 .nested-sub::after {
-  content: " ";
   background-image: url("../../img/svg/icons/svg-chevron-right.svg");
+  background-position: 0;
   background-repeat: no-repeat;
   background-size: contain;
-  background-position: 0;
-  width: 20px;
+  content: " ";
   height: 2em;
-  position: absolute;
-  opacity: .7;
   margin-left: 3px;
+  opacity: .7;
+  position: absolute;
+  width: 20px;
 }
 
 .active .nested-sub-nav {
@@ -50,10 +50,10 @@
 }
 
 .sub-nav-active {
-  font-weight: 700;
   border-image: linear-gradient(var(--color-first), var(--color-first)) 10;
   border-left: 4px solid;
-  margin-left: -4px;
   color: var(--color-second);
+  font-weight: 700;
+  margin-left: -4px;
   padding-left: var(--unit-space);
 }

@@ -1,5 +1,8 @@
 {
     "extends": "stylelint-config-standard",
+    "plugins": [
+      "stylelint-order"
+    ],
     "rules": {
         "indentation": 2,
         "string-quotes": "double",
@@ -51,7 +54,12 @@
         "media-feature-colon-space-after": "always",
         "declaration-block-no-duplicate-properties": true,
         "declaration-block-no-redundant-longhand-properties": [ true, {"ignoreShorthands": "font"} ],
-        "no-eol-whitespace": true
+        "no-eol-whitespace": true,
+        "order/order": [
+          "custom-properties",
+          "declarations"
+        ],
+        "order/properties-alphabetical-order": true
     },
     "ignoreFiles": [
       "./webcompat/static/css/development/vendor/prism.css"
