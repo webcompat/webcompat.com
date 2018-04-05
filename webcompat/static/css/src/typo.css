@@ -66,3 +66,10 @@ body {
   font-family: monospace;
 }
 
+blockquote {
+  border-left: 5px solid var(--color-default);
+  color: #666;
+  margin-left: 0;
+  margin-right: 0;
+  padding-left: 1em;
+}
