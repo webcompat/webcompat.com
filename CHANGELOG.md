@@ -4,6 +4,16 @@
 2. New features: affect minor number
 3. API endpoint changes or dependency version updates: affect major number
 
+## 9.0.2 - 2018-04-05
+
+* Fixes #2360 - Add blockquote styles [Pull #2366](https://github.com/repos/webcompat/webcompat.com/issues/2366)
+* Fixes #2225 - Add stylelint-order. Fix ordering in CSS src files [Pull #2365](https://github.com/repos/webcompat/webcompat.com/issues/2365)
+* Issue #2303. Add some styling to login + keyboard hints. [Pull #2363](https://github.com/repos/webcompat/webcompat.com/issues/2363)
+* Issue #2271. Use a regular expression to get image upload data URI. [Pull #2362](https://github.com/repos/webcompat/webcompat.com/issues/2362)
+* Fixes #2358 - Inline code multiline wrap on issue template [Pull #2361](https://github.com/repos/webcompat/webcompat.com/issues/2361)
+* fixes #2356 - fixed result when older < needsinfo [Pull #2357](https://github.com/repos/webcompat/webcompat.com/issues/2357)
+* Fixes #2300. Try to respect DNT preference before talking to GA. [Pull #2353](https://github.com/repos/webcompat/webcompat.com/issues/2353)
+
 ## 9.0.1 - 2018-03-30
 
 * Issue #2347 - Break anchor links in issue description and comments [Pull #2349](https://api.github.com/repos/webcompat/webcompat.com/issues/2349)
