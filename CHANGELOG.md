@@ -16,9 +16,9 @@
 
 ## 9.0.1 - 2018-03-30
 
-* Issue #2347 - Break anchor links in issue description and comments [Pull #2349](https://api.github.com/repos/webcompat/webcompat.com/issues/2349)
-* Issue #2344. Switch to @mozilla account GA tracking ID. [Pull #2345](https://api.github.com/repos/webcompat/webcompat.com/issues/2345)
-* Fixes #2339 - Changes the wrong needinfo to needsinfo for Triage dashboard [Pull #2343](https://api.github.com/repos/webcompat/webcompat.com/issues/2343)
+* Issue #2347 - Break anchor links in issue description and comments [Pull #2349](https://github.com/repos/webcompat/webcompat.com/issues/2349)
+* Issue #2344. Switch to @mozilla account GA tracking ID. [Pull #2345](https://github.com/repos/webcompat/webcompat.com/issues/2345)
+* Fixes #2339 - Changes the wrong needinfo to needsinfo for Triage dashboard [Pull #2343](https://github.com/repos/webcompat/webcompat.com/issues/2343)
 
 
 ## 9.0.0 - 2018-03-28
@@ -27,19 +27,19 @@
 
 ## 8.1.2 - 2018-03-28
 
-* Fixes #2215 - Tweaks needinfo filtering and design [Pull #2290](https://api.github.com/repos/webcompat/webcompat.com/issues/2290)
-* Fixes issue #2203 UnboundLocalError on milestones_content [Pull #2221](https://api.github.com/repos/webcompat/webcompat.com/issues/2221)
-* Refactor isReportableURL function [Pull #2220](https://api.github.com/repos/webcompat/webcompat.com/issues/2220)
-* Fixes #2193: Add support for --grep when running intern tests. [Pull #2194](https://api.github.com/repos/webcompat/webcompat.com/issues/2194)
-* Fixes #740 - Adds tool to create changelog. [Pull #2105](https://api.github.com/repos/webcompat/webcompat.com/issues/2105)
+* Fixes #2215 - Tweaks needinfo filtering and design [Pull #2290](https://github.com/repos/webcompat/webcompat.com/issues/2290)
+* Fixes issue #2203 UnboundLocalError on milestones_content [Pull #2221](https://github.com/repos/webcompat/webcompat.com/issues/2221)
+* Refactor isReportableURL function [Pull #2220](https://github.com/repos/webcompat/webcompat.com/issues/2220)
+* Fixes #2193: Add support for --grep when running intern tests. [Pull #2194](https://github.com/repos/webcompat/webcompat.com/issues/2194)
+* Fixes #740 - Adds tool to create changelog. [Pull #2105](https://github.com/repos/webcompat/webcompat.com/issues/2105)
 
 ## 8.1.1 - 2018-02-27
 
-* Fix #2032 - Adds icons for filtering on issue age and needinfo [Pull #2190](https://api.github.com/repos/webcompat/webcompat.com/issues/2190)
-* Fixes #2188. Handle legacy details param data. [Pull #2189](https://api.github.com/repos/webcompat/webcompat.com/issues/2189)
-* Fixed #2097 - twitter icon url modified [Pull #2185](https://api.github.com/repos/webcompat/webcompat.com/issues/2185)
-* Fixes #1585. Add a method to define img-src CSP policy directive. [Pull #2046](https://api.github.com/repos/webcompat/webcompat.com/issues/2046)
-* Fixes #2033 - Added mode view [Pull #2045](https://api.github.com/repos/webcompat/webcompat.com/issues/2045)
+* Fix #2032 - Adds icons for filtering on issue age and needinfo [Pull #2190](https://github.com/repos/webcompat/webcompat.com/issues/2190)
+* Fixes #2188. Handle legacy details param data. [Pull #2189](https://github.com/repos/webcompat/webcompat.com/issues/2189)
+* Fixed #2097 - twitter icon url modified [Pull #2185](https://github.com/repos/webcompat/webcompat.com/issues/2185)
+* Fixes #1585. Add a method to define img-src CSP policy directive. [Pull #2046](https://github.com/repos/webcompat/webcompat.com/issues/2046)
+* Fixes #2033 - Added mode view [Pull #2045](https://github.com/repos/webcompat/webcompat.com/issues/2045)
 
 ## 8.1.0 - 20181-01-30
 
