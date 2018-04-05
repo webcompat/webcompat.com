@@ -1,9 +1,9 @@
 .hero-section {
+  background-color: var(--color-first);
   margin-left: calc(-1 * var(--grid-outermargin-s));
   margin-right: calc(-1 * var(--grid-outermargin-s));
   margin-top: -34px;
   padding: calc(var(--unit-gutter) / 2) var(--unit-gutter);
-  background-color: var(--color-first);
 }
 
 .hero-section .grid-row {
@@ -13,8 +13,8 @@
 .hero-claim {
   font-size: 3.4em;
   line-height: 1.4em;
-  text-transform: uppercase;
   margin-bottom: 1em;
+  text-transform: uppercase;
 }
 
 .hero-text {
@@ -50,43 +50,43 @@
   }
 
   .hero-section {
-    padding: 6em var(--unit-gap) 5.25em;
-    width: 100%;
-    position: relative;
     margin: -32px auto 0;
+    padding: 6em var(--unit-gap) 5.25em;
+    position: relative;
+    width: 100%;
   }
 
   .hero-illustration {
     display: inline-block;
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 40%;
     max-width: calc(var(--unit-modul-l) / 2);
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 40%;
   }
 
   .hero-illustration-bulb {
-    position: absolute;
     height: 19em;
-    top: 0;
+    position: absolute;
     right: 6em;
+    top: 0;
   }
 
   .hero-illustration-bug {
-    position: absolute;
     height: 4em;
-    top: 18em;
+    position: absolute;
     right: 16em;
+    top: 18em;
   }
 
   .bug-animated {
-    animation-name: bug;
-    animation-duration: 1.5s;
     animation-delay: 0s;
+    animation-duration: 1.5s;
     animation-fill-mode: both;
+    animation-name: bug;
+    animation-play-state: paused;
     animation-timing-function: linear;
     transform-origin: 50% 100%;
-    animation-play-state: paused;
   }
 
   .bug-animated:hover {
@@ -95,8 +95,8 @@
 }
 
 .button-icon-hero {
-  fill: var(--color-first);
   border: 1px solid #f0f;
+  fill: var(--color-first);
 }
 
 .button-icon-hero:hover {

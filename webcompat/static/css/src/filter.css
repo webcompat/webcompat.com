@@ -1,14 +1,14 @@
 .filter-label {
-  width: 100%;
   text-align: center;
+  width: 100%;
 }
 
 .filter-label * {
+  border-left: 5px solid;
+  cursor: pointer;
   display: block;
   line-height: 3em;
   margin-bottom: 5px;
-  border-left: 5px solid;
-  cursor: pointer;
 }
 
 .filter-label .needstriage {
@@ -67,11 +67,11 @@
 
 @media screen and (min-width: 960px) {
   .filter-label * {
-    display: inline-block;
-    padding: 2px 10px;
-    border-top: 5px solid;
     border-left: 0 none;
-    transition: all ease .8s;
+    border-top: 5px solid;
+    display: inline-block;
     line-height: 2.2em;
+    padding: 2px 10px;
+    transition: all ease .8s;
   }
 }

@@ -1,9 +1,9 @@
 @media all and (min-width: 665px) {
   .label-box {
-    position: sticky;
-    top: 50px;
     max-height: calc(100vh - 44px - 30px);
     overflow-y: auto;
+    position: sticky;
+    top: 50px;
   }
 }
 
@@ -24,8 +24,8 @@
 }
 
 .label-box-section {
-  padding: var(--unit-gutter);
   background-color: var(--color-bg-box);
+  padding: var(--unit-gutter);
   word-wrap: break-word;
 }
 
@@ -34,13 +34,13 @@
 }
 
 .label-box .label {
-  display: block;
-  line-height: 1;
-  font-size: .75em;
-  padding: 6px 10px;
-  color: var(--color-bg-box);
   border-radius: 4px;
+  color: var(--color-bg-box);
+  display: block;
+  font-size: .75em;
   font-weight: 700;
+  line-height: 1;
+  padding: 6px 10px;
 }
 
 .label-box .label + .label {

@@ -34,8 +34,8 @@
 }
 
 .footer-sub-icons {
-  text-align: right;
   margin-top: auto;
+  text-align: right;
 }
 
 .footer-icon {
@@ -44,13 +44,13 @@
 }
 
 .icon-twitter .icon {
-  width: 24px;
   height: 24px;
+  width: 24px;
 }
 
 .icon-github .icon {
-  width: 24px;
   height: 24px;
+  width: 24px;
 }
 
 @media screen and (min-width: 998px) {

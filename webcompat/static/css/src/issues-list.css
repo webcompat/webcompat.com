@@ -12,14 +12,14 @@
 
 .issue .issue-description,
 .issue .issue-labels {
-  padding-top: calc(var(--unit-gap) / 3);
   padding-bottom: calc(var(--unit-gap) / 3);
+  padding-top: calc(var(--unit-gap) / 3);
 }
 
 .issue .issue-description {
+  font-size: 1.1em;
   margin-left: 0;
   padding-left: calc(var(--unit-gap) + 1 / 2 * var(--unit-space));
-  font-size: 1.1em;
   word-wrap: break-word;
 }
 
@@ -39,9 +39,9 @@
 .issue-description .issue-date-closed,
 .issue-description .issue-comments {
   color: var(--color-default);
-  line-height: 1em;
-  font-size: .8em;
   display: inline;
+  font-size: .8em;
+  line-height: 1em;
 }
 
 .issue-description .issue-date-closed,
@@ -55,9 +55,9 @@
 
 .issue-labels .label {
   border-left: 5px solid;
+  margin-bottom: 2px;
   padding-left: 5px;
   padding-right: 10px;
-  margin-bottom: 2px;
 }
 
 @media screen and (min-width: 998px) {
@@ -74,8 +74,8 @@
 }
 
 #x-search-bar .nav-button {
+  margin-left: -18px;
   margin-top: -23px;
   position: absolute;
-  margin-left: -18px;
   z-index: 200;
 }

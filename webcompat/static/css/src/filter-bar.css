@@ -1,6 +1,6 @@
 .filter-bar {
-  position: relative;
   overflow-y: visible;
+  position: relative;
 }
 
 .filter-bar-search *,
@@ -9,20 +9,20 @@
 }
 
 .filter-bar-dropdown {
-  position: relative;
   display: inline-block;
   margin-left: .5em;
   padding: .5em;
+  position: relative;
 }
 
 .filter-bar-dropdown-input {
-  position: absolute;
-  clip: rect(1px, 1px, 1px, 1px);
-  padding: 0;
   border: 0;
+  clip: rect(1px, 1px, 1px, 1px);
   height: 1px;
-  width: 1px;
   overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
 }
 
 .filter-bar-dropdown-listbox ul {
@@ -32,8 +32,8 @@
 }
 
 [data-opens-dropdown] {
-  display: flex;
   align-items: center;
+  display: flex;
   padding: 2px 10px;
 }
 
@@ -42,18 +42,18 @@
 }
 
 .filter-bar-dropdown-listbox a {
-  text-align: left;
-  padding: 2px 10px;
   display: block;
-  min-width: 100%;
   margin-top: 2px;
+  min-width: 100%;
+  padding: 2px 10px;
+  text-align: left;
   white-space: nowrap;
 }
 
 .filter-bar-dropdown-input:focus + [data-opens-dropdown],
 .filter-bar-dropdown-listbox a:focus {
-  outline: none;
   background: var(--color-first);
+  outline: none;
 }
 
 :checked + label .expanded-text {
@@ -73,12 +73,12 @@
 }
 
 .filter-bar-dropdown-listbox {
-  position: absolute;
-  left: 0;
-  right: 0;
-  display: none;
-  z-index: 2;
   background-color: rgba(255, 255, 255, .8);
+  display: none;
+  left: 0;
+  position: absolute;
+  right: 0;
+  z-index: 2;
 }
 
 :checked ~ .filter-bar-dropdown-listbox {
@@ -86,15 +86,15 @@
 }
 
 .filter-bar-search {
-  position: absolute;
-  white-space: nowrap;
+  align-items: center;
+  display: flex;
   overflow: hidden;
+  position: absolute;
   right: 0;
   top: 50%;
   transform: translate(calc(100% - 78px), -50%);
   transition: transform .2s ease-in-out;
-  display: flex;
-  align-items: center;
+  white-space: nowrap;
   width: 100%;
 }
 
@@ -109,9 +109,9 @@
 }
 
 .filter-bar-search-label {
-  position: absolute;
-  left: .25em;
-  top: .25em;
   display: flex;
+  left: .25em;
+  position: absolute;
+  top: .25em;
   white-space: nowrap;
 }

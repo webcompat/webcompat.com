@@ -1,12 +1,12 @@
 .notification-bar {
-  position: fixed;
-  z-index: 2000;
-  top: 0;
-  left: 0;
-  right: 0;
   height: 58px;
-  text-align: center;
+  left: 0;
   line-height: 3;
+  position: fixed;
+  right: 0;
+  text-align: center;
+  top: 0;
+  z-index: 2000;
 }
 
 .notification-information {
@@ -21,9 +21,9 @@
 }
 
 .notification-thanks {
-  position: static;
-  z-index: unset;
-  line-height: unset;
-  text-align: unset;
   height: unset;
+  line-height: unset;
+  position: static;
+  text-align: unset;
+  z-index: unset;
 }
