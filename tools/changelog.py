@@ -52,7 +52,7 @@ def create_changelog(json_response):
     for issue in json_response:
         title = issue['title']
         number = issue['number']
-        url = issue['url']
+        url = issue['html_url']
         loglines += LINE_TEMPLATE.format(title=title, url=url, number=number)
     return loglines
 
