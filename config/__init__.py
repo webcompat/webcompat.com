@@ -115,6 +115,8 @@ CSP_LOG = True
 # 2015-09-14 20:50:19,185 INFO: Thing_To_Log [in /codepath/views.py:127]
 
 LOG_FILE = '/tmp/webcompat.log'
+if STAGING:
+    LOG_FILE = '/tmp/staging-webcompat.log'
 LOG_FMT = '%(asctime)s tracking %(message)s'
 CSP_REPORTS_LOG = '/tmp/webcompat-csp-reports.log'
 
