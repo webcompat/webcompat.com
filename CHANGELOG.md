@@ -4,6 +4,17 @@
 2. New features: affect minor number
 3. API endpoint changes or dependency version updates: affect major number
 
+## 9.0.3 - 2018-04-11
+
+* Fixes #2352. Add TravisBuddy integration [Pull #2386](https://github.com/webcompat/webcompat.com/pull/2386)
+* Fixes #2383. Use a staging-specific log file. [Pull #2384](https://github.com/webcompat/webcompat.com/pull/2384)
+* Fixes #2378 - add regaddi to contributors [Pull #2379](https://github.com/webcompat/webcompat.com/pull/2379)
+* Issue #2376 - add Swarnava [Pull #2377](https://github.com/webcompat/webcompat.com/pull/2377)
+* Fixes #2367 - Removed explicit hero button width [Pull #2373](https://github.com/webcompat/webcompat.com/pull/2373)
+* Fixes #2368 - Add defined color to pagination buttons [Pull #2371](https://github.com/webcompat/webcompat.com/pull/2371)
+* Fixes #2369 - Fixes the Issue URL in changelog tool [Pull #2370](https://github.com/webcompat/webcompat.com/pull/2370)
+
+
 ## 9.0.2 - 2018-04-05
 
 * Fixes #2360 - Add blockquote styles [Pull #2366](https://github.com/repos/webcompat/webcompat.com/issues/2366)
