@@ -206,11 +206,11 @@ def build_formdata(form_object):
     Version -> part of body
     URL -> part of body
     Category -> labels
-    Detail -> part of body
+    Details -> part of body
     Description -> part of body
     Browser -> part of body, labels
     OS -> part of body, labels
-    Tested Elsewhere -> labels
+    Tested Elsewhere -> body
     Image Upload -> part of body
 
     We'll try to parse the Browser and come up with a browser label, as well
@@ -228,7 +228,7 @@ def build_formdata(form_object):
     NOTE: Only users with push access can set labels for new issues.
     Labels are silently dropped otherwise.
     NOTE: intentionally leaving out `assignee`.
-    NOTE: Add milestone "needstriage" when create new issue
+    NOTE: Add milestone "needstriage" when creating a new issue
     """
     # Do domain extraction for adding to the summary/title
     # form_object always returns a unicode string
