@@ -194,7 +194,7 @@ function BugForm() {
     }
 
     // If we have a problem_type param, and it matches the value, select it for
-    // the user. see https://github.com/webcompat/webcompat.com/blob/master/webcompat/form.py#L31
+    // the user. see https://github.com/webcompat/webcompat.com/blob/34c3b6b1a1116b401a9a442685131ae747045f67/webcompat/form.py#L38
     // for possible matching values
     var problemType = location.href.match(/problem_type=([^&]*)/);
     if (problemType !== null) {
