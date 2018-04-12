@@ -350,7 +350,7 @@ def contributors():
 
 @app.route('/contributors/report-bug')
 @cache_policy(private=True, uri_max_age=0, must_revalidate=True)
-def contributors_report_bug():
+def contributors_bug_report():
     """Route to display contributors/report-bug page."""
     if g.user:
         get_user_info()
@@ -359,7 +359,7 @@ def contributors_report_bug():
 
 @app.route('/contributors/reproduce-bug')
 @cache_policy(private=True, uri_max_age=0, must_revalidate=True)
-def contributors_reproduce_bug():
+def contributors_bug_reproduce():
     """Route to display contributors/reproduce-bug page."""
     if g.user:
         get_user_info()
@@ -368,7 +368,7 @@ def contributors_reproduce_bug():
 
 @app.route('/contributors/diagnose-bug')
 @cache_policy(private=True, uri_max_age=0, must_revalidate=True)
-def contributors_diagnose_bug():
+def contributors_bug_diagnosis():
     """Route to display contributors/diagnose-bug page."""
     if g.user:
         get_user_info()
@@ -377,7 +377,7 @@ def contributors_diagnose_bug():
 
 @app.route('/contributors/site-outreach')
 @cache_policy(private=True, uri_max_age=0, must_revalidate=True)
-def contributors_site_outreach():
+def contributors_bug_outreach():
     """Route to display contributors/site-outreach page."""
     if g.user:
         get_user_info()
@@ -386,7 +386,7 @@ def contributors_site_outreach():
 
 @app.route('/contributors/build-tools')
 @cache_policy(private=True, uri_max_age=0, must_revalidate=True)
-def contributors_build_tools():
+def contributors_other_tools():
     """Route to display contributors/build-tools page."""
     if g.user:
         get_user_info()
@@ -395,7 +395,7 @@ def contributors_build_tools():
 
 @app.route('/contributors/web-platform-research')
 @cache_policy(private=True, uri_max_age=0, must_revalidate=True)
-def contributors_web_platform_research():
+def contributors_other_research():
     """Route to display contributors/web-platform-research page."""
     if g.user:
         get_user_info()
@@ -404,7 +404,7 @@ def contributors_web_platform_research():
 
 @app.route('/contributors/organize-webcompat-events')
 @cache_policy(private=True, uri_max_age=0, must_revalidate=True)
-def contributors_organize_webcompat_events():
+def contributors_other_events():
     """Route to display contributors/organize-webcompat-events page."""
     if g.user:
         get_user_info()
