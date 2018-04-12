@@ -144,10 +144,7 @@ issueList.FilterView = Backbone.View.extend({
 issueList.SearchView = Backbone.View.extend({
   el: $(".js-SearchForm"),
   events: {
-    "click .js-SearchForm-button": "searchIfNotEmpty"
-  },
-  keyboardEvents: {
-    enter: "searchIfNotEmpty"
+    "submit #x-search-bar": "searchIfNotEmpty"
   },
   initialize: function() {
     issueList.events.on("search:update", _.bind(this.updateSearchQuery, this));
@@ -175,10 +172,11 @@ issueList.SearchView = Backbone.View.extend({
   },
   _isEmpty: true,
   _currentSearch: null,
-  searchIfNotEmpty: _.debounce(function(e) {
-    var searchValue = e.type === "click"
-      ? $(e.target).prev().val()
-      : e.target.value;
+  searchIfNotEmpty: function(e) {
+    var searchValue = this.input.val();
+
+    e.preventDefault();
+
     if (searchValue.length) {
       this._isEmpty = false;
       // don't search if nothing has changed
@@ -199,7 +197,7 @@ issueList.SearchView = Backbone.View.extend({
       issueList.events.trigger("filter:clear", { removeQ: true });
       this._isEmpty = true;
     }
-  }, 350),
+  },
   doSearch: _.throttle(function(value) {
     if (!this._isEmpty) {
       issueList.events.trigger("issues:update", { query: value });
