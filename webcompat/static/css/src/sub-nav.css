@@ -50,8 +50,7 @@
 }
 
 .sub-nav-active {
-  border-image: linear-gradient(var(--color-first), var(--color-first)) 10;
-  border-left: 4px solid;
+  border-left: 4px solid var(--color-first);
   color: var(--color-second);
   font-weight: 700;
   margin-left: -4px;
