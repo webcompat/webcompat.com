@@ -7,6 +7,7 @@ module.exports = function(grunt) {
     pkg: grunt.file.readJSON("package.json"),
     tmplPath: "webcompat/templates/",
     jsPath: "webcompat/static/js",
+    jsDistPath: "<%= jsPath %>/dist",
     cssPath: "webcompat/static/css",
     imgPath: "webcompat/static/img",
     banner: "/*! <%= pkg.title %>\n" +
