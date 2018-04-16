@@ -4,6 +4,14 @@
 2. New features: affect minor number
 3. API endpoint changes or dependency version updates: affect major number
 
+## 9.0.4 - 2018-04-16
+
+* Fixes #1834 - Move all generated JS files to js/dist [Pull #2394](https://github.com/webcompat/webcompat.com/pull/2394)
+* Fixes #2388 - Simplify border definition on active sub nav item [Pull #2392](https://github.com/webcompat/webcompat.com/pull/2392)
+* Fixes #2342 - Consolidate submit event handler for issue list search form [Pull #2389](https://github.com/webcompat/webcompat.com/pull/2389)
+* Fixes #2337: Refactor contributor routes for simpler nav/sub-nav templates. [Pull #2387](https://github.com/webcompat/webcompat.com/pull/2387)
+* Fixes #2375. Add some diagnostic logging for checkServer [Pull #2385](https://github.com/webcompat/webcompat.com/pull/2385)
+
 ## 9.0.3 - 2018-04-11
 
 * Fixes #2352. Add TravisBuddy integration [Pull #2386](https://github.com/webcompat/webcompat.com/pull/2386)
