@@ -23,7 +23,7 @@ module.exports = function(grunt) {
         }
       },
       files: {
-        "<%= jsPath %>/templates.js": ["<%= tmplPath %>/**/*.jst"]
+        "<%= jsDistPath %>/templates.js": ["<%= tmplPath %>/**/*.jst"]
       }
     }
   });

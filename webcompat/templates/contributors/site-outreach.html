@@ -62,22 +62,22 @@
               <dd>
                 People we are trying to reach have their own set of constraints, bosses, economic choices etc. "Your web site is bad" will not lead anywhere, except NOT getting the site fixed.
               </dd>
-              
+
               <dt class="bold highlight">Be humble</dt>
               <dd>
                 We are no better, we also make mistakes in practice. Our own recommendations can become outdated as technical or economic circumstances change.
               </dd>
-              
+
               <dt class="bold highlight">Let it go</dt>
               <dd>
                 Sometimes outreach just doesn't work. The person at the end of the other line may say "no" or worse, not answer. It can be very frustrating. It's okay. Accept it and move on.
               </dd>
-              
+
               <dt class="bold highlight">Be passionate</dt>
               <dd>
                 The passion is in being able to find the right contact in a company without harassing them. Every effort helps.
               </dd>
-              
+
               <dt class="bold highlight">Share with consideration</dt>
               <dd>
                 Share any contact you attempted or made in the issue comments section.  It helps everyone to know the status so they can pitch in or not repeat work. That said -  be careful to not disclose private information such as names and emails. You may simply say: "I contacted someone at $COMPANY", "Someone from $COMPANY said this…"
@@ -98,7 +98,7 @@
           </p>
 
           <p>
-              <strong class="bold">Does the web site have a support email or an issue tracker?</strong>  <br /> 
+              <strong class="bold">Does the web site have a support email or an issue tracker?</strong>  <br />
               This is a simple one, but there's no guarantee that your request will be addressed.  Most of the time the responses are automatic but it's better than nothing. If in return you get an ID and/or a URI, put it in the issue comments.
           </p>
           <figure>
@@ -177,7 +177,7 @@
 {% endblock %}
 {%- block extrascripts -%}
 {%- if config.PRODUCTION or config.STAGING -%}
-<script src="{{ url_for('static', filename='js/contributors.min.js')|bust_cache }}"></script>
+<script src="{{ url_for('static', filename='js/dist/contributors.min.js')|bust_cache }}"></script>
 {% else %}
 <script src="{{ url_for('static', filename='js/lib/contributors.js') }}"></script>
 {%- endif %}

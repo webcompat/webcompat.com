@@ -20,15 +20,12 @@ data/*
 
 # these are our 'dist' files
 # checking them into the repo is silly
-webcompat/static/js/build/
-webcompat/static/js/webcompat.js
-webcompat/static/js/diagnose.js
-webcompat/static/js/issues.js
-webcompat/static/js/issue-list.js
-webcompat/static/js/user-activity.js
-webcompat/static/js/templates.js
 webcompat/**/*.min.js
-webcompat/**/**/*.min.css
+webcompat/static/js/*.js
+webcompat/static/js/build/
+webcompat/static/js/dist/
+webcompat/**/*.min.css
+webcompat/static/css/dist/
 
 #selenium server
 *.jar

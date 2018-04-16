@@ -20,7 +20,7 @@
     </section>
     <section class="grid">
       <div class="grid-row">
-        <div class="grid-cell x3"> 
+        <div class="grid-cell x3">
             <h2 id="neutral" class="headline-1 highlight">Have A Neutral Test Environment</h2>
 
             <p>
@@ -31,7 +31,7 @@
     </section>
     <section class="grid">
       <div class="grid-row">
-        <div class="grid-cell x3"> 
+        <div class="grid-cell x3">
             <h2 id="skills" class="headline-1 highlight">Develop Competencies, Have Impact</h2>
             <p>
               <a href="/issues?page=1&amp;per_page=50&amp;state=open&amp;stage=needsdiagnosis&amp;sort=created&amp;direction=desc">Pick up an issue from the list</a> and begin analyzing why it happens. The more issues you analyze, the more familiar you will become with browser developer tools, web site coding practices, web specifications, and just how subtle and whimsical web compatibility issues can be.
@@ -45,7 +45,7 @@
     </section>
     <section class="grid">
       <div class="grid-row">
-        <div class="grid-cell x3"> 
+        <div class="grid-cell x3">
             <h2 id="verbose" class="headline-1 highlight">Be verbose</h2>
             <p>
                 Provide as much detail as possible during your analysis. Your thought process while diagnosing an issue is as important as your final conclusion. The more quickly the issue can be fully understood, the more quickly its fix may be negotiated by the folks doing site outreach.
@@ -59,7 +59,7 @@
 {% endblock %}
 {%- block extrascripts -%}
 {%- if config.PRODUCTION or config.STAGING -%}
-<script src="{{ url_for('static', filename='js/contributors.min.js')|bust_cache }}"></script>
+<script src="{{ url_for('static', filename='js/dist/contributors.min.js')|bust_cache }}"></script>
 {% else %}
 <script src="{{ url_for('static', filename='js/lib/contributors.js') }}"></script>
 {%- endif %}

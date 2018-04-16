@@ -23,7 +23,7 @@
     </section>
     <section class="grid">
       <div class="grid-row">
-        <div class="grid-cell x3"> 
+        <div class="grid-cell x3">
           <h2 id="neutral" class="headline-1 highlight">Have A Neutral Test Environment</h2>
           <p>
             For having a better understanding of the issue, you will probably need to have a setup which makes it possible to have a fresh profile of the browser you are testing with. For example, on Firefox you can <a href="http://www.otsukare.info/2014/11/12/configure-webcompat-browser" target="_blank">create a profile which resets each time the browser restarts</a>.
@@ -47,7 +47,7 @@
     </section>
     <section class="grid">
       <div class="grid-row">
-        <div class="grid-cell x3"> 
+        <div class="grid-cell x3">
           <h2 id="next" class="headline-1 highlight">Possible Next Steps</h2>
 
           <p>
@@ -79,7 +79,7 @@
             <dd>
               To the best of your knowledge and your inability to reproduce, the website is working for you.
             </dd>
-            
+
             <dt class="bold highlight">
               invalid
             </dt>
@@ -115,7 +115,7 @@
 {% endblock %}
 {%- block extrascripts -%}
 {%- if config.PRODUCTION or config.STAGING -%}
-<script src="{{ url_for('static', filename='js/contributors.min.js')|bust_cache }}"></script>
+<script src="{{ url_for('static', filename='js/dist/contributors.min.js')|bust_cache }}"></script>
 {% else %}
 <script src="{{ url_for('static', filename='js/lib/contributors.js') }}"></script>
 {%- endif %}
