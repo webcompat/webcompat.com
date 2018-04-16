@@ -14,8 +14,6 @@ var BAD_IMAGE_PATH = path.join(cwd, "tests/fixtures", "evil.py");
 // DETAILS_STRING is a URL encoded object, stringified to JSON.
 var DETAILS_STRING =
   '{"gfx.webrender.all"%3Afalse%2C"gfx.webrender.blob-images"%3A2%2C"gfx.webrender.enabled"%3Afalse%2C"image.mem.shared"%3A2%2C"layout.css.servo.enabled"%3Atrue}';
-var LEGACY_DETAILS_STRING =
-  "gfx.webrender.all%3A+false%0Agfx.webrender.blob-images%3A+2";
 
 var url = function(path) {
   return intern.config.siteRoot + path;
@@ -262,7 +260,7 @@ registerSuite("Reporting (non-auth)", {
         .end();
     },
 
-    "details param adds info to description"() {
+    "details param doesn't add info to description"() {
       return FunctionalHelpers.openPage(
         this,
         url("/issues/new?details=" + DETAILS_STRING),
@@ -273,33 +271,8 @@ registerSuite("Reporting (non-auth)", {
         .then(function(text) {
           assert.notInclude(
             text,
-            "gfx.webrender.all:+false",
-            "+ not found in decoded string"
-          );
-          assert.include(
-            text,
-            "gfx.webrender.all: false\ngfx.webrender.blob-images: 2"
-          );
-        });
-    },
-
-    "(legacy) details param adds info to description"() {
-      return FunctionalHelpers.openPage(
-        this,
-        url("/issues/new?details=" + LEGACY_DETAILS_STRING),
-        "#description"
-      )
-        .findByCssSelector("#steps_reproduce")
-        .getProperty("value")
-        .then(function(text) {
-          assert.notInclude(
-            text,
-            "gfx.webrender.all:+false",
-            "+ not found in decoded string"
-          );
-          assert.include(
-            text,
-            "gfx.webrender.all: false\ngfx.webrender.blob-images: 2"
+            "gfx.webrender.all",
+            "details param is added after reporting (legacy or not)"
           );
         });
     }
