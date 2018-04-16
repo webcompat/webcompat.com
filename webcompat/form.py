@@ -10,11 +10,13 @@ The module powers the issue reporting form on webcompat.com.
 It includes helper methods.
 """
 
+import json
 import random
 import urlparse
 
 from helpers import get_browser
 from helpers import get_os
+from helpers import get_str_value
 
 from flask_wtf.file import FileAllowed
 from flask_wtf.file import FileField
@@ -95,6 +97,21 @@ def get_form(ua_header):
     bug_form.browser.data = get_browser(ua_header)
     bug_form.os.data = get_os(ua_header)
     return bug_form
+
+
+def get_details(details_string):
+    """Return details content as a formatted string, if it was JSON. Otherwise,
+    just return the string as-is."""
+    content = details_string
+    rv = ''
+
+    try:
+        details = json.loads(content)
+        rv = ''.join(['{k}: {v}\n'.format(k=k, v=get_str_value(v))
+                     for k, v in details.items()])
+    except ValueError:
+        return content
+    return rv
 
 
 def get_radio_button_label(field_value, label_list):
@@ -274,6 +291,11 @@ def build_formdata(form_object):
 {steps_reproduce}
 
 """.format(**formdata)
+    # Append details info, if any.
+    details = form_object.get('details')
+    if details:
+        body += u'\n\n**Details**\n{details}'.format(
+            details=get_details(details))
     # Add the image, if there was one.
     if form_object.get('image_upload') is not None:
         body += u'\n\n![Screenshot of the site issue]({image_url})'.format(
