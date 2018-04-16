@@ -74,6 +74,15 @@ def md5_checksum(file_path):
         return m.hexdigest()
 
 
+def get_str_value(val):
+    details_map = {False: 'false', True: 'true', None: 'null'}
+    if isinstance(val, (bool, type(None))):
+        return details_map[val]
+    if isinstance(val, unicode):
+        return val
+    return str(val)
+
+
 def get_user_info():
     """Grab the username and avatar URL from GitHub."""
     if session.get('username') and session.get('avatar_url'):
