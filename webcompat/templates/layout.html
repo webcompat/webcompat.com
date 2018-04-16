@@ -42,7 +42,7 @@
 <script src="{{ url_for('static', filename='js/build/ga.js') }}"></script>
 <script async src='https://www.google-analytics.com/analytics.js'></script>
 <!-- End Google Analytics -->
-<script src="{{ url_for('static', filename='js/webcompat.min.js')|bust_cache }}"></script>
+<script src="{{ url_for('static', filename='js/dist/webcompat.min.js')|bust_cache }}"></script>
 {% else %}
 <script src="{{ url_for('static', filename='js/vendor/jquery-1.11.2.min.js') }}"></script>
 <script src="{{ url_for('static', filename='js/vendor/lodash.custom.min.js') }}"></script>

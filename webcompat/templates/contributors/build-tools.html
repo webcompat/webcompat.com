@@ -15,7 +15,7 @@
             <p>
               The webcompat.com project is an <a href="https://github.com/webcompat/" target="_blank">open source project</a>. It relies on the effort of the <a href="https://wiki.mozilla.org/Compatibility/" target="_blank">Mozilla webcompat team</a> and <a href="https://github.com/orgs/webcompat/people" target="_blank">contributions from volunteers</a> across the world. The Microsoft Edge and Google Chrome teams also participate from time to time.
             </p>
-            
+
             <p>
               There are different areas where you can create an impact by developing tools, including:
             </p>
@@ -37,7 +37,7 @@
 {% endblock %}
 {%- block extrascripts -%}
 {%- if config.PRODUCTION or config.STAGING -%}
-<script src="{{ url_for('static', filename='js/contributors.min.js')|bust_cache }}"></script>
+<script src="{{ url_for('static', filename='js/dist/contributors.min.js')|bust_cache }}"></script>
 {% else %}
 <script src="{{ url_for('static', filename='js/lib/contributors.js') }}"></script>
 {%- endif %}

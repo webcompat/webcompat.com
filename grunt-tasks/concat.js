@@ -25,7 +25,7 @@ module.exports = function(grunt) {
         "<%= jsPath %>/lib/bugform.js",
         "<%= jsPath %>/templates.js"
       ],
-      dest: "<%= jsPath %>/<%= pkg.name %>.js"
+      dest: "<%= jsPath %>/dist/<%= pkg.name %>.js"
     },
     diagnose: {
       src: [
@@ -33,7 +33,7 @@ module.exports = function(grunt) {
         "<%= jsPath %>/lib/models/issue.js",
         "<%= jsPath %>/lib/diagnose.js"
       ],
-      dest: "<%= jsPath %>/diagnose.js"
+      dest: "<%= jsPath %>/dist/diagnose.js"
     },
     issues: {
       src: [
@@ -47,7 +47,7 @@ module.exports = function(grunt) {
         "<%= jsPath %>/lib/comments.js",
         "<%= jsPath %>/lib/issues.js"
       ],
-      dest: "<%= jsPath %>/issues.js"
+      dest: "<%= jsPath %>/dist/issues.js"
     },
     issueList: {
       src: [
@@ -56,7 +56,7 @@ module.exports = function(grunt) {
         "<%= jsPath %>/lib/mixins/pagination.js",
         "<%= jsPath %>/lib/issue-list.js"
       ],
-      dest: "<%= jsPath %>/issue-list.js"
+      dest: "<%= jsPath %>/dist/issue-list.js"
     },
     userActivity: {
       src: [
@@ -65,7 +65,7 @@ module.exports = function(grunt) {
         "<%= jsPath %>/lib/mixins/pagination.js",
         "<%= jsPath %>/lib/user-activity.js"
       ],
-      dest: "<%= jsPath %>/user-activity.js"
+      dest: "<%= jsPath %>/dist/user-activity.js"
     }
   });
 };

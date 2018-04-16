@@ -10,7 +10,7 @@ module.exports = function(grunt) {
     },
     dist: {
       src: "<%= concat.dist.dest %>",
-      dest: "<%= jsPath %>/<%= pkg.name %>.min.js"
+      dest: "<%= jsPath %>/dist/<%= pkg.name %>.min.js"
     },
     ga: {
       src: "<%= jsPath %>/lib/ga.js",
@@ -18,23 +18,23 @@ module.exports = function(grunt) {
     },
     issues: {
       src: "<%= concat.issues.dest %>",
-      dest: "<%= jsPath %>/issues.min.js"
+      dest: "<%= jsPath %>/dist/issues.min.js"
     },
     issueList: {
       src: "<%= concat.issueList.dest %>",
-      dest: "<%= jsPath %>/issue-list.min.js"
+      dest: "<%= jsPath %>/dist/issue-list.min.js"
     },
     userActivity: {
       src: "<%= concat.userActivity.dest %>",
-      dest: "<%= jsPath %>/user-activity.min.js"
+      dest: "<%= jsPath %>/dist/user-activity.min.js"
     },
     diagnose: {
       src: "<%= concat.diagnose.dest %>",
-      dest: "<%= jsPath %>/diagnose.min.js"
+      dest: "<%= jsPath %>/dist/diagnose.min.js"
     },
     contributors: {
       src: "<%= jsPath %>/lib/contributors.js",
-      dest: "<%= jsPath %>/contributors.min.js"
+      dest: "<%= jsPath %>/dist/contributors.min.js"
     }
   });
 };

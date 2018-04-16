@@ -49,7 +49,7 @@
 {% endblock %}
 {%- block extrascripts -%}
 {%- if config.PRODUCTION or config.STAGING -%}
-<script src="{{ url_for('static', filename='js/contributors.min.js')|bust_cache }}"></script>
+<script src="{{ url_for('static', filename='js/dist/contributors.min.js')|bust_cache }}"></script>
 {% else %}
 <script src="{{ url_for('static', filename='js/lib/contributors.js') }}"></script>
 {%- endif %}
