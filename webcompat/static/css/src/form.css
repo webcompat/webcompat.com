@@ -193,7 +193,8 @@
   position: relative;
 }
 
-.form-upload:hover {
+.form-upload:hover,
+.form-upload:focus-within {
   border: 1px solid var(--color-first);
   transition: all 250ms ease;
 }
@@ -235,13 +236,15 @@
   fill: var(--color-form);
 }
 
-.form-upload:hover .icon-upload {
+.form-upload:hover .icon-upload,
+.form-upload:focus-within .icon-upload {
   fill: var(--color-first);
   transition: all 350ms ease;
 }
 
 .is-validated.no-js-error .label-upload,
-.is-validated.no-js-error:hover .label-upload {
+.is-validated.no-js-error:hover .label-upload,
+.is-validated.no-js-error:focus-within .label-upload {
   visibility: hidden;
 }
 
@@ -280,7 +283,9 @@
 }
 
 .is-validated:hover .icon-remove,
-.is-validated:hover .label-remove .label-icon-message {
+.is-validated:focus-within .icon-remove,
+.is-validated:hover .label-remove .label-icon-message,
+.is-validated:focus-within .label-remove .label-icon-message {
   color: var(--color-first);
   fill: var(--color-first);
   transition: all 350ms ease;
