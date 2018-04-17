@@ -94,6 +94,17 @@ function BugForm() {
     );
     this.form.on("submit", _.bind(this.maybeUploadImage, this));
 
+    // prevent submit by hitting enter key for single line input fields
+    this.urlField.on("keypress", _.bind(this.preventSubmitByEnter, this));
+    this.problemType.on("keypress", _.bind(this.preventSubmitByEnter, this));
+    this.descField.on("keypress", _.bind(this.preventSubmitByEnter, this));
+    this.browserField.on("keypress", _.bind(this.preventSubmitByEnter, this));
+    this.osField.on("keypress", _.bind(this.preventSubmitByEnter, this));
+    this.browserTestField.on(
+      "keypress",
+      _.bind(this.preventSubmitByEnter, this)
+    );
+
     // See if the user already has a valid form
     // (after a page refresh, back button, etc.)
     this.checkForm();
@@ -119,6 +130,12 @@ function BugForm() {
       }, this),
       false
     );
+  };
+
+  this.preventSubmitByEnter = function(event) {
+    if (event.key === "Enter") {
+      event.preventDefault();
+    }
   };
 
   this.showUploadPreview = _.bind(function(dataURI) {
