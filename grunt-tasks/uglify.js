@@ -14,7 +14,7 @@ module.exports = function(grunt) {
     },
     ga: {
       src: "<%= jsPath %>/lib/ga.js",
-      dest: "<%= jsPath %>/build/ga.js"
+      dest: "<%= jsDistPath %>/ga.js"
     },
     issues: {
       src: "<%= concat.issues.dest %>",
