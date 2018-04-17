@@ -277,12 +277,6 @@ issues.ImageUploadView = Backbone.View.extend({
       .removeClass("js-form-error")
       .addClass("js-no-error");
 
-    // this can probably go as we do not have wc- styles anymore?
-    $(this.inputMap[id].elm)
-      .parents(".js-Form-group")
-      .find(".wc-Form-helpInline")
-      .remove();
-
     if (this.inputMap[id].valid) {
       this.enableSubmits();
     }
