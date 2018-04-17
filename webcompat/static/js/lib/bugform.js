@@ -94,6 +94,13 @@ function BugForm() {
     );
     this.form.on("submit", _.bind(this.maybeUploadImage, this));
 
+    // prevent submit by hitting enter key for single line input fields
+    this.form.on(
+      "keypress",
+      ":input:not(textarea)",
+      _.bind(this.preventSubmitByEnter, this)
+    );
+
     // See if the user already has a valid form
     // (after a page refresh, back button, etc.)
     this.checkForm();
@@ -119,6 +126,12 @@ function BugForm() {
       }, this),
       false
     );
+  };
+
+  this.preventSubmitByEnter = function(event) {
+    if (event.key === "Enter") {
+      event.preventDefault();
+    }
   };
 
   this.showUploadPreview = _.bind(function(dataURI) {
