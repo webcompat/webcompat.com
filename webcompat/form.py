@@ -107,11 +107,21 @@ def get_details(details_string):
 
     try:
         details = json.loads(content)
-        rv = ''.join(['{k}: {v}\n'.format(k=k, v=get_str_value(v))
+        rv = ''.join(['<li>{k}: {v}</li>'.format(k=k, v=get_str_value(v))
                      for k, v in details.items()])
     except ValueError:
         return content
     return rv
+
+
+def build_details(details):
+    """Populate and return the Browser Configuration section template."""
+    return """<details>
+<summary>Browser Configuration</summary>
+<ul>
+  {details}
+</ul>
+</details>""".format(get_details(details))
 
 
 def get_radio_button_label(field_value, label_list):
@@ -294,8 +304,7 @@ def build_formdata(form_object):
     # Append details info, if any.
     details = form_object.get('details')
     if details:
-        body += u'\n\n**Details**\n{details}'.format(
-            details=get_details(details))
+        body += build_details(details)
     # Add the image, if there was one.
     if form_object.get('image_upload') is not None:
         body += u'\n\n![Screenshot of the site issue]({image_url})'.format(
