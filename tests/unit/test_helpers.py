@@ -19,6 +19,7 @@ from webcompat.helpers import get_browser_name
 from webcompat.helpers import get_browser
 from webcompat.helpers import get_name
 from webcompat.helpers import get_os
+from webcompat.helpers import get_str_value
 from webcompat.helpers import get_version_string
 from webcompat.helpers import normalize_api_params
 from webcompat.helpers import parse_link_header
@@ -194,6 +195,19 @@ class TestHelpers(unittest.TestCase):
         self.assertEqual(get_os(True), 'Unknown')
         self.assertEqual(get_os(False), 'Unknown')
         self.assertEqual(get_os(None), 'Unknown')
+
+    def test_get_str_value(self):
+        """Test getting an expected string, including Python to js-style
+        boolean.
+
+        Note: key (output) and value (input) are in an unexpected order,
+        just to keep the data structure valid.
+        """
+        tests = [{'1': 1}, {'null': None}, {'true': True}, {'false': False},
+                 {'': ''}, {'cool': 'cool'}, {u'\U0001f480': u'💀'}]
+        for test in tests:
+            for output, browser_input in test.iteritems():
+                self.assertEqual(get_str_value(browser_input), output)
 
     def test_get_version_string(self):
         '''Test version string composition from Dict

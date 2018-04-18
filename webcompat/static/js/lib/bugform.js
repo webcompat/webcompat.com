@@ -194,46 +194,31 @@ function BugForm() {
     }
 
     // If we have a problem_type param, and it matches the value, select it for
-    // the user. see https://github.com/webcompat/webcompat.com/blob/master/webcompat/form.py#L31
+    // the user. see https://github.com/webcompat/webcompat.com/blob/34c3b6b1a1116b401a9a442685131ae747045f67/webcompat/form.py#L38
     // for possible matching values
     var problemType = location.href.match(/problem_type=([^&]*)/);
     if (problemType !== null) {
       $("[value=" + problemType[1] + "]").click();
     }
 
-    // If we have details, JSON decode it and add it to the end of STR textarea
+    // If we have details, put it inside a hidden input and append it to the
+    // form.
     var details = location.href.match(/details=([^&]*)/);
     if (details) {
-      this.stepsToReproduceField.val(
-        _.bind(function(idx, value) {
-          return value + "\n" + this.buildDetails(details[1]);
-        }, this)
-      );
+      this.addDetails(details[1]);
     }
   };
 
-  this.buildDetails = function(detailsParam) {
+  this.addDetails = _.bind(function(detailsParam) {
+    var input = document.createElement("input");
+    input.type = "hidden";
+    input.name = "details";
     // The content of the details param may be encoded via
     // application/x-www-form-urlencoded, so we need to change the
     // + (SPACE) to %20 before decoding
-    var decoded = decodeURIComponent(detailsParam.replace(/\+/g, "%20"));
-    var details;
-
-    try {
-      // In theory this is JSON!
-      details = JSON.parse(decoded);
-      var rv = "";
-      Object.keys(details).forEach(function(prop) {
-        rv += prop + ": " + details[prop] + "\n";
-      });
-      return rv;
-    } catch (e) {
-      // If it wasn't JSON, handle older clients prior to
-      // https://github.com/webcompat/webcompat.com/issues/2043 landing.
-      // This can be removed in the not-so-distant future!
-      return decoded;
-    }
-  };
+    input.value = decodeURIComponent(detailsParam.replace(/\+/g, "%20"));
+    this.form.get(0).appendChild(input);
+  }, this);
 
   this.storeClickedButton = function(event) {
     this.clickedButton = event.target.value;

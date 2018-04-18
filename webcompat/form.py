@@ -10,11 +10,13 @@ The module powers the issue reporting form on webcompat.com.
 It includes helper methods.
 """
 
+import json
 import random
 import urlparse
 
 from helpers import get_browser
 from helpers import get_os
+from helpers import get_str_value
 
 from flask_wtf.file import FileAllowed
 from flask_wtf.file import FileField
@@ -95,6 +97,31 @@ def get_form(ua_header):
     bug_form.browser.data = get_browser(ua_header)
     bug_form.os.data = get_os(ua_header)
     return bug_form
+
+
+def get_details(details_string):
+    """Return details content as a formatted string, if it was JSON. Otherwise,
+    just return the string as-is."""
+    content = details_string
+    rv = ''
+
+    try:
+        details = json.loads(content)
+        rv = ''.join(['<li>{k}: {v}</li>'.format(k=k, v=get_str_value(v))
+                     for k, v in details.items()])
+    except ValueError:
+        return content
+    return rv
+
+
+def build_details(details):
+    """Populate and return the Browser Configuration section template."""
+    return """<details>
+<summary>Browser Configuration</summary>
+<ul>
+  {details}
+</ul>
+</details>""".format(get_details(details))
 
 
 def get_radio_button_label(field_value, label_list):
@@ -206,11 +233,11 @@ def build_formdata(form_object):
     Version -> part of body
     URL -> part of body
     Category -> labels
-    Detail -> part of body
+    Details -> part of body
     Description -> part of body
     Browser -> part of body, labels
     OS -> part of body, labels
-    Tested Elsewhere -> labels
+    Tested Elsewhere -> body
     Image Upload -> part of body
 
     We'll try to parse the Browser and come up with a browser label, as well
@@ -228,7 +255,7 @@ def build_formdata(form_object):
     NOTE: Only users with push access can set labels for new issues.
     Labels are silently dropped otherwise.
     NOTE: intentionally leaving out `assignee`.
-    NOTE: Add milestone "needstriage" when create new issue
+    NOTE: Add milestone "needstriage" when creating a new issue
     """
     # Do domain extraction for adding to the summary/title
     # form_object always returns a unicode string
@@ -274,6 +301,10 @@ def build_formdata(form_object):
 {steps_reproduce}
 
 """.format(**formdata)
+    # Append details info, if any.
+    details = form_object.get('details')
+    if details:
+        body += build_details(details)
     # Add the image, if there was one.
     if form_object.get('image_upload') is not None:
         body += u'\n\n![Screenshot of the site issue]({image_url})'.format(
