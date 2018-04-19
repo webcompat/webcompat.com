@@ -178,7 +178,6 @@ class TestForm(unittest.TestCase):
         expected = {'body': u'<!-- @browser: None -->\n<!-- @ua_header: None -->\n<!-- @reported_with: None -->\n\n**URL**: http://\u611b\n\n**Browser / Version**: None\n**Operating System**: None\n**Tested Another Browser**: Unknown\n\n**Problem type**: Unknown\n**Description**: None\n**Steps to Reproduce**:\nNone\n\n\n\n_From [webcompat.com](https://webcompat.com/) with \u2764\ufe0f_', 'title': u'\u611b - unknown'}  # nopep8
         self.assertEqual(actual, expected)
 
-
     def test_get_details(self):
         """Assert we handle valid JSON and other values."""
         actual_string_arg = form.get_details('cool')
@@ -188,10 +187,11 @@ class TestForm(unittest.TestCase):
         expected_json_arg = '<li>a: b</li><li>c: false</li>'
         self.assertEqual(actual_json_arg, expected_json_arg)
 
-
     def test_build_details(self):
-        """Assert we return the expected HTML, for a json object or a string."""
-        actual_json_arg = form.build_details(json.dumps({'a': 'b', 'c': False}))
+        """Assert we return the expected HTML, for a json object or a string.
+        """
+        actual_json_arg = form.build_details(json.dumps(
+            {'a': 'b', 'c': False}))
         expected_json_arg = '<details>\n<summary>Browser Configuration</summary>\n<ul>\n  <li>a: b</li><li>c: false</li>\n</ul>\n</details>'  # nopep8
         self.assertEqual(actual_json_arg, expected_json_arg)
         actual_string_arg = form.build_details("cool")
