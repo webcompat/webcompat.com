@@ -3,6 +3,7 @@
 
 """Tests for form validation."""
 
+import json
 import unittest
 
 from werkzeug import MultiDict
@@ -176,3 +177,13 @@ class TestForm(unittest.TestCase):
         actual = form.build_formdata(form_object)
         expected = {'body': u'<!-- @browser: None -->\n<!-- @ua_header: None -->\n<!-- @reported_with: None -->\n\n**URL**: http://\u611b\n\n**Browser / Version**: None\n**Operating System**: None\n**Tested Another Browser**: Unknown\n\n**Problem type**: Unknown\n**Description**: None\n**Steps to Reproduce**:\nNone\n\n\n\n_From [webcompat.com](https://webcompat.com/) with \u2764\ufe0f_', 'title': u'\u611b - unknown'}  # nopep8
         self.assertEqual(actual, expected)
+
+
+    def test_get_details(self):
+        """Assert we handle valid JSON and other values."""
+        actual = form.get_details('cool')
+        expected = 'cool'
+        self.assertEqual(actual, expected)
+        actual_json = form.get_details(json.dumps({'a': 'b', 'c': False}))
+        expected_json = '<li>a: b</li><li>c: false</li>'
+        self.assertEqual(actual_json, expected_json)
