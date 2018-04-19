@@ -181,9 +181,19 @@ class TestForm(unittest.TestCase):
 
     def test_get_details(self):
         """Assert we handle valid JSON and other values."""
-        actual = form.get_details('cool')
-        expected = 'cool'
-        self.assertEqual(actual, expected)
-        actual_json = form.get_details(json.dumps({'a': 'b', 'c': False}))
-        expected_json = '<li>a: b</li><li>c: false</li>'
-        self.assertEqual(actual_json, expected_json)
+        actual_string_arg = form.get_details('cool')
+        expected_string_arg = 'cool'
+        self.assertEqual(actual_string_arg, expected_string_arg)
+        actual_json_arg = form.get_details(json.dumps({'a': 'b', 'c': False}))
+        expected_json_arg = '<li>a: b</li><li>c: false</li>'
+        self.assertEqual(actual_json_arg, expected_json_arg)
+
+
+    def test_build_details(self):
+        """Assert we return the expected HTML, for a json object or a string."""
+        actual_json_arg = form.build_details(json.dumps({'a': 'b', 'c': False}))
+        expected_json_arg = '<details>\n<summary>Browser Configuration</summary>\n<ul>\n  <li>a: b</li><li>c: false</li>\n</ul>\n</details>'  # nopep8
+        self.assertEqual(actual_json_arg, expected_json_arg)
+        actual_string_arg = form.build_details("cool")
+        expected_string_arg = '<details>\n<summary>Browser Configuration</summary>\n<ul>\n  cool\n</ul>\n</details>'  # nopep8
+        self.assertEqual(actual_string_arg, expected_string_arg)
