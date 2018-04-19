@@ -21,14 +21,20 @@ issues.CommentsCollection = Backbone.Collection.extend({
   }
 });
 
-issues.CommentView = Backbone.View.extend({
-  className: "issue-comment js-Issue-comment grid-cell x2",
-  id: function() {
-    return this.model.get("commentLinkId");
-  },
-  template: wcTmpl["issue/issue-comment-list.jst"],
-  render: function() {
-    this.$el.html(this.template(this.model.toJSON()));
-    return this;
-  }
-});
+var commentMarkdownSanitizer = new MarkdownSanitizerMixin();
+
+issues.CommentView = Backbone.View.extend(
+  _.extend({}, commentMarkdownSanitizer, {
+    className: "issue-comment js-Issue-comment grid-cell x2",
+    id: function() {
+      return this.model.get("commentLinkId");
+    },
+    template: wcTmpl["issue/issue-comment-list.jst"],
+    render: function() {
+      var modelData = this.model.toJSON();
+      modelData.body = this.sanitizeMarkdown(modelData.body);
+      this.$el.html(this.template(modelData));
+      return this;
+    }
+  })
+);

@@ -5,6 +5,8 @@
 var issues = issues || {}; // eslint-disable-line no-use-before-define
 issues.events = _.extend({}, Backbone.Events);
 
+var issueMarkdownSanitizer = new MarkdownSanitizerMixin();
+
 if (!window.md) {
   window.md = window
     .markdownit({
@@ -90,14 +92,18 @@ md.renderer.rules.link_open = function(tokens, idx, options, env, self) {
   return defaultLinkOpenRender(tokens, idx, options, env, self);
 };
 
-issues.MetaDataView = Backbone.View.extend({
-  el: $("#js-Issue-information"),
-  template: wcTmpl["issue/metadata.jst"],
-  render: function() {
-    this.$el.html(this.template(this.model.toJSON()));
-    return this;
-  }
-});
+issues.MetaDataView = Backbone.View.extend(
+  _.extend({}, issueMarkdownSanitizer, {
+    el: $("#js-Issue-information"),
+    template: wcTmpl["issue/metadata.jst"],
+    render: function() {
+      var modelData = this.model.toJSON();
+      modelData.body = this.sanitizeMarkdown(modelData.body);
+      this.$el.html(this.template(modelData));
+      return this;
+    }
+  })
+);
 
 issues.AsideView = Backbone.View.extend({
   el: $("#js-Issue-aside"),
@@ -291,234 +297,236 @@ issues.ImageUploadView = Backbone.View.extend({
   }
 });
 
-issues.MainView = Backbone.View.extend({
-  el: $(".js-Issue"),
-  events: {
-    "click .js-Issue-comment-button": "addNewComment",
-    "click .wc-Comment-content-nsfw": "toggleNSFW"
-  },
-  keyboardEvents: {
-    g: "githubWarp"
-  },
-  _supportsFormData: "FormData" in window,
-  _isNSFW: undefined,
-  initialize: function() {
-    var body = $(document.body);
-    body.addClass("language-html");
-    var issueNum = { number: $("main").data("issueNumber") };
-    this.issue = new issues.Issue(issueNum);
-    this.comments = new issues.CommentsCollection({ pageNumber: 1 });
-    this.initSubViews(
-      _.bind(function() {
-        // set listener for closing category editor only after its
-        // been initialized.
-        body.click(_.bind(this.closeCategoryEditor, this));
-      }, this)
-    );
-    this.fetchModels();
-    this.handleKeyShortcuts();
-  },
-  closeCategoryEditor: function(e) {
-    var target = $(e.target);
-    // early return if the editor is closed,
-    if (
-      // If no category editor is visible
-      !this.$el.find(".js-CategoryEditor").is(":visible") ||
-      // or we've clicked on the button to open it,
-      (target[0].nodeName === "BUTTON" &&
-        target.hasClass("js-CategoryEditorLauncher")) ||
-      // or clicked anywhere inside the label editor
-      target.parents(".js-CategoryEditor").length
-    ) {
-      // Clicking on one launcher will force to close the other one
-      if (
-        target[0].nodeName === "BUTTON" &&
-        target.hasClass("js-LabelEditorLauncher")
-      ) {
-        this.milestones.closeEditor();
-      } else if (
-        target[0].nodeName === "BUTTON" &&
-        target.hasClass("js-MilestoneEditorLauncher")
-      ) {
-        this.labels.closeEditor();
-      }
-      return;
-    } else {
-      // Click outside, close both editors
-      this.labels.closeEditor();
-      this.milestones.closeEditor();
-    }
-  },
-  githubWarp: function(e) {
-    var repoPath = $("main").data("repoPath");
-
-    if (e.target.nodeName === "TEXTAREA") {
-      return;
-    } else {
-      var warpPipe =
-        "https://github.com/" + repoPath + "/" + this.issue.get("number");
-      return (location.href = warpPipe);
-    }
-  },
-  initSubViews: function(callback) {
-    var issueModel = { model: this.issue };
-    this.metadata = new issues.MetaDataView(issueModel);
-    this.body = new issues.BodyView(_.extend(issueModel, { mainView: this }));
-    this.aside = new issues.AsideView(issueModel);
-    this.labels = new issues.LabelsView(issueModel);
-    this.milestones = new issues.MilestonesView(issueModel);
-    this.textArea = new issues.TextAreaView();
-    this.imageUpload = new issues.ImageUploadView();
-
-    callback();
-  },
-  fetchModels: function() {
-    var headersBag = { headers: { Accept: "application/json" } };
-    this.issue
-      .fetch(headersBag)
-      .success(
+issues.MainView = Backbone.View.extend(
+  _.extend({}, issueMarkdownSanitizer, {
+    el: $(".js-Issue"),
+    events: {
+      "click .js-Issue-comment-button": "addNewComment",
+      "click .wc-Comment-content-nsfw": "toggleNSFW"
+    },
+    keyboardEvents: {
+      g: "githubWarp"
+    },
+    _supportsFormData: "FormData" in window,
+    _isNSFW: undefined,
+    initialize: function() {
+      var body = $(document.body);
+      body.addClass("language-html");
+      var issueNum = { number: $("main").data("issueNumber") };
+      this.issue = new issues.Issue(issueNum);
+      this.comments = new issues.CommentsCollection({ pageNumber: 1 });
+      this.initSubViews(
         _.bind(function() {
-          // _.find() will return the object if found (which is truthy),
-          // or undefined if not found (which is falsey)
-          this._isNSFW = !!_.find(
-            this.issue.get("labels"),
-            _.matchesProperty("name", "nsfw")
-          );
-
-          _.each(
-            [this.metadata, this.labels, this.milestones, this.body, this],
-            function(elm) {
-              elm.render();
-              _.each($(".js-Issue-markdown code"), function(elm) {
-                Prism.highlightElement(elm);
-              });
-            }
-          );
-
-          if (this._supportsFormData) {
-            this.imageUpload.render();
-          }
-
-          // If there are any comments, go fetch the model data
-          if (this.issue.get("commentNumber") > 0) {
-            this.comments
-              .fetch(headersBag)
-              .success(
-                _.bind(function(response) {
-                  this.addExistingComments();
-                  this.comments.bind("add", _.bind(this.addComment, this));
-                  // If there's a #hash pointing to a comment (or elsewhere)
-                  // scrollTo it.
-                  if (location.hash !== "") {
-                    var _id = $(location.hash);
-                    window.scrollTo(0, _id.offset().top);
-                  }
-                  if (response[0].lastPageNumber > 1) {
-                    this.getRemainingComments(++response[0].lastPageNumber);
-                  }
-                }, this)
-              )
-              .error(function() {
-                var msg =
-                  "There was an error retrieving issue comments. Please reload to try again.";
-                wcEvents.trigger("flash:error", {
-                  message: msg,
-                  timeout: 4000
-                });
-              });
-          }
+          // set listener for closing category editor only after its
+          // been initialized.
+          body.click(_.bind(this.closeCategoryEditor, this));
         }, this)
-      )
-      .error(function(response) {
-        var msg;
+      );
+      this.fetchModels();
+      this.handleKeyShortcuts();
+    },
+    closeCategoryEditor: function(e) {
+      var target = $(e.target);
+      // early return if the editor is closed,
+      if (
+        // If no category editor is visible
+        !this.$el.find(".js-CategoryEditor").is(":visible") ||
+        // or we've clicked on the button to open it,
+        (target[0].nodeName === "BUTTON" &&
+          target.hasClass("js-CategoryEditorLauncher")) ||
+        // or clicked anywhere inside the label editor
+        target.parents(".js-CategoryEditor").length
+      ) {
+        // Clicking on one launcher will force to close the other one
         if (
-          response &&
-          response.responseJSON &&
-          response.responseJSON.message === "API call. Not Found"
+          target[0].nodeName === "BUTTON" &&
+          target.hasClass("js-LabelEditorLauncher")
         ) {
-          location.href = "/404";
-          return;
-        } else {
-          msg =
-            "There was an error retrieving the issue. Please reload to try again.";
-          wcEvents.trigger("flash:error", { message: msg, timeout: 4000 });
+          this.milestones.closeEditor();
+        } else if (
+          target[0].nodeName === "BUTTON" &&
+          target.hasClass("js-MilestoneEditorLauncher")
+        ) {
+          this.labels.closeEditor();
         }
-      });
-  },
+        return;
+      } else {
+        // Click outside, close both editors
+        this.labels.closeEditor();
+        this.milestones.closeEditor();
+      }
+    },
+    githubWarp: function(e) {
+      var repoPath = $("main").data("repoPath");
 
-  getRemainingComments: function(count) {
-    //The first 30 comments for page 1 has already been loaded.
-    //If more than 30 comments are there the remaining comments are rendered in sets of 30
-    //in consecutive pages
+      if (e.target.nodeName === "TEXTAREA") {
+        return;
+      } else {
+        var warpPipe =
+          "https://github.com/" + repoPath + "/" + this.issue.get("number");
+        return (location.href = warpPipe);
+      }
+    },
+    initSubViews: function(callback) {
+      var issueModel = { model: this.issue };
+      this.metadata = new issues.MetaDataView(issueModel);
+      this.body = new issues.BodyView(_.extend(issueModel, { mainView: this }));
+      this.aside = new issues.AsideView(issueModel);
+      this.labels = new issues.LabelsView(issueModel);
+      this.milestones = new issues.MilestonesView(issueModel);
+      this.textArea = new issues.TextAreaView();
+      this.imageUpload = new issues.ImageUploadView();
 
-    _.each(
-      _.range(2, count),
-      function(i) {
-        this.comments.fetchPage({
-          pageNumber: i,
-          headers: { Accept: "application/json" }
+      callback();
+    },
+    fetchModels: function() {
+      var headersBag = { headers: { Accept: "application/json" } };
+      this.issue
+        .fetch(headersBag)
+        .success(
+          _.bind(function() {
+            // _.find() will return the object if found (which is truthy),
+            // or undefined if not found (which is falsey)
+            this._isNSFW = !!_.find(
+              this.issue.get("labels"),
+              _.matchesProperty("name", "nsfw")
+            );
+
+            _.each(
+              [this.metadata, this.labels, this.milestones, this.body, this],
+              function(elm) {
+                elm.render();
+                _.each($(".js-Issue-markdown code"), function(elm) {
+                  Prism.highlightElement(elm);
+                });
+              }
+            );
+
+            if (this._supportsFormData) {
+              this.imageUpload.render();
+            }
+
+            // If there are any comments, go fetch the model data
+            if (this.issue.get("commentNumber") > 0) {
+              this.comments
+                .fetch(headersBag)
+                .success(
+                  _.bind(function(response) {
+                    this.addExistingComments();
+                    this.comments.bind("add", _.bind(this.addComment, this));
+                    // If there's a #hash pointing to a comment (or elsewhere)
+                    // scrollTo it.
+                    if (location.hash !== "") {
+                      var _id = $(location.hash);
+                      window.scrollTo(0, _id.offset().top);
+                    }
+                    if (response[0].lastPageNumber > 1) {
+                      this.getRemainingComments(++response[0].lastPageNumber);
+                    }
+                  }, this)
+                )
+                .error(function() {
+                  var msg =
+                    "There was an error retrieving issue comments. Please reload to try again.";
+                  wcEvents.trigger("flash:error", {
+                    message: msg,
+                    timeout: 4000
+                  });
+                });
+            }
+          }, this)
+        )
+        .error(function(response) {
+          var msg;
+          if (
+            response &&
+            response.responseJSON &&
+            response.responseJSON.message === "API call. Not Found"
+          ) {
+            location.href = "/404";
+            return;
+          } else {
+            msg =
+              "There was an error retrieving the issue. Please reload to try again.";
+            wcEvents.trigger("flash:error", { message: msg, timeout: 4000 });
+          }
         });
-      },
-      this
-    );
-  },
+    },
 
-  addComment: function(comment) {
-    // if there's a nsfw label, add the whatever class.
-    var view = new issues.CommentView({ model: comment });
-    var commentElm = view.render().$el;
-    $(".js-Issue-commentList").append(commentElm);
-    _.each(commentElm.find("code"), function(elm) {
-      Prism.highlightElement(elm);
-    });
+    getRemainingComments: function(count) {
+      //The first 30 comments for page 1 has already been loaded.
+      //If more than 30 comments are there the remaining comments are rendered in sets of 30
+      //in consecutive pages
 
-    if (this._isNSFW) {
-      _.each(commentElm.find("img"), function(elm) {
-        $(elm).closest("p").addClass("wc-Comment-content-nsfw");
+      _.each(
+        _.range(2, count),
+        function(i) {
+          this.comments.fetchPage({
+            pageNumber: i,
+            headers: { Accept: "application/json" }
+          });
+        },
+        this
+      );
+    },
+
+    addComment: function(comment) {
+      // if there's a nsfw label, add the whatever class.
+      var view = new issues.CommentView({ model: comment });
+      var commentElm = view.render().$el;
+      $(".js-Issue-commentList").append(commentElm);
+      _.each(commentElm.find("code"), function(elm) {
+        Prism.highlightElement(elm);
       });
-    }
-  },
-  addNewComment: function(event) {
-    var form = $(".js-Comment-form");
-    var textarea = $(".js-Comment-text");
 
-    if (form[0].checkValidity()) {
-      event.preventDefault();
-      var newComment = new issues.Comment({
-        avatarUrl: form.data("avatarUrl"),
-        body: md.render(textarea.val()),
-        commenter: form.data("username"),
-        createdAt: moment(new Date().toISOString()).fromNow(),
-        commentLinkId: null,
-        rawBody: textarea.val()
-      });
-      this.addComment(newComment);
-      // Now empty out the textarea.
-      textarea.val("");
-      // Push to GitHub
-      newComment.save();
-    }
-  },
-  addExistingComments: function() {
-    this.comments.each(this.addComment, this);
-  },
-  toggleNSFW: function(e) {
-    // make sure we've got a reference to the <img> element,
-    // (small images won't extend to the width of the containing
-    // p.nsfw)
-    var target = e.target.nodeName === "IMG"
-      ? e.target
-      : e.target.nodeName === "P" && e.target.firstElementChild;
-    $(target).parent().toggleClass("wc-Comment-content-nsfw--display");
-  },
-  render: function() {
-    this.$el.removeClass("is-hidden");
-  },
+      if (this._isNSFW) {
+        _.each(commentElm.find("img"), function(elm) {
+          $(elm).closest("p").addClass("wc-Comment-content-nsfw");
+        });
+      }
+    },
+    addNewComment: function(event) {
+      var form = $(".js-Comment-form");
+      var textarea = $(".js-Comment-text");
 
-  handleKeyShortcuts: function() {
-    Mousetrap.bind("mod+enter", _.bind(this.addNewComment, this));
-  }
-});
+      if (form[0].checkValidity()) {
+        event.preventDefault();
+        var newComment = new issues.Comment({
+          avatarUrl: form.data("avatarUrl"),
+          body: this.sanitizeMarkdown(md.render(textarea.val())),
+          commenter: form.data("username"),
+          createdAt: moment(new Date().toISOString()).fromNow(),
+          commentLinkId: null,
+          rawBody: textarea.val()
+        });
+        this.addComment(newComment);
+        // Now empty out the textarea.
+        textarea.val("");
+        // Push to GitHub
+        newComment.save();
+      }
+    },
+    addExistingComments: function() {
+      this.comments.each(this.addComment, this);
+    },
+    toggleNSFW: function(e) {
+      // make sure we've got a reference to the <img> element,
+      // (small images won't extend to the width of the containing
+      // p.nsfw)
+      var target = e.target.nodeName === "IMG"
+        ? e.target
+        : e.target.nodeName === "P" && e.target.firstElementChild;
+      $(target).parent().toggleClass("wc-Comment-content-nsfw--display");
+    },
+    render: function() {
+      this.$el.removeClass("is-hidden");
+    },
+
+    handleKeyShortcuts: function() {
+      Mousetrap.bind("mod+enter", _.bind(this.addNewComment, this));
+    }
+  })
+);
 
 //Not using a router, so kick off things manually
 new issues.MainView();
