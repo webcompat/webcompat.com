@@ -4,6 +4,19 @@
 2. New features: affect minor number
 3. API endpoint changes or dependency version updates: affect major number
 
+## 9.0.5 - 2018-04-19
+
+* Fixes #2408 - Allow additional safe HTML tags in sanitized markdown [Pull #2410](https://github.com/webcompat/webcompat.com/pull/2410)
+* Fixes #2406. Fix KeyError when building details template. [Pull #2407](https://github.com/webcompat/webcompat.com/pull/2407)
+* Fixes #2404 - Prevent upscaling of images in issue comments [Pull #2405](https://github.com/webcompat/webcompat.com/pull/2405)
+* Fixes #2298 - Remove code dealing with non existant element wc-Form-helpInline [Pull #2403](https://github.com/webcompat/webcompat.com/pull/2403)
+* Fixes #2307 - Specific line-height for text-field [Pull #2402](https://github.com/webcompat/webcompat.com/pull/2402)
+* Issue #2399 - Add focus styles to upload area [Pull #2400](https://github.com/webcompat/webcompat.com/pull/2400)
+* Fixes #1794 - Prevent submit by enter in bugform [Pull #2398](https://github.com/webcompat/webcompat.com/pull/2398)
+* Fixes #2396 - Move ga.js to dist folder [Pull #2397](https://github.com/webcompat/webcompat.com/pull/2397)
+* Fixes #2042: Send details params content via a hidden input. [Pull #2395](https://github.com/webcompat/webcompat.com/pull/2395)
+
+
 ## 9.0.4 - 2018-04-16
 
 * Fixes #1834 - Move all generated JS files to js/dist [Pull #2394](https://github.com/webcompat/webcompat.com/pull/2394)
