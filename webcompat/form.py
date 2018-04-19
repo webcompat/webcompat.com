@@ -119,9 +119,9 @@ def build_details(details):
     return """<details>
 <summary>Browser Configuration</summary>
 <ul>
-  {details}
+  {details_list_items}
 </ul>
-</details>""".format(get_details(details))
+</details>""".format(details_list_items=get_details(details))
 
 
 def get_radio_button_label(field_value, label_list):
