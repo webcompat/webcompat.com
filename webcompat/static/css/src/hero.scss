@@ -1,9 +1,9 @@
 .hero-section {
-  background-color: var(--color-first);
-  margin-left: calc(-1 * var(--grid-outermargin-s));
-  margin-right: calc(-1 * var(--grid-outermargin-s));
+  background-color: $color-first;
+  margin-left: -1 * $grid-outermargin-s;
+  margin-right: -1 * $grid-outermargin-s;
   margin-top: -34px;
-  padding: calc(var(--unit-gutter) / 2) var(--unit-gutter);
+  padding: $unit-gutter / 2 $unit-gutter;
 }
 
 .hero-section .grid-row {
@@ -29,14 +29,14 @@
   display: none;
 }
 
-@media screen and (min-width: 665px) {
+@media screen and (min-width: $page-size-m) {
   .hero-section {
-    margin-left: calc(-1 * var(--grid-outermargin-m));
-    margin-right: calc(-1 * var(--grid-outermargin-m));
+    margin-left: -1 * $grid-outermargin-m;
+    margin-right: -1 * $grid-outermargin-m;
   }
 }
 
-@media screen and (min-width: 998px) {
+@media screen and (min-width: $page-size-l) {
   .hero-text {
     width: 50%;
   }
@@ -51,14 +51,14 @@
 
   .hero-section {
     margin: -32px auto 0;
-    padding: 6em var(--unit-gap) 5.25em;
+    padding: 6em $unit-gap 5.25em;
     position: relative;
     width: 100%;
   }
 
   .hero-illustration {
     display: inline-block;
-    max-width: calc(var(--unit-modul-l) / 2);
+    max-width: $unit-modul-l / 2;
     position: absolute;
     right: 0;
     top: 0;
@@ -96,9 +96,9 @@
 
 .button-icon-hero {
   border: 1px solid #f0f;
-  fill: var(--color-first);
+  fill: $color-first;
 }
 
 .button-icon-hero:hover {
-  fill: var(--color-first);
+  fill: $color-first;
 }

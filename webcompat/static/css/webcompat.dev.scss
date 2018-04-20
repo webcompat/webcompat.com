@@ -1,0 +1,96 @@
+@import "src/variables.scss";
+
+/* imports for vendor files that should be imported first */
+@import "lib/reset.css";
+@import "lib/reset-add.scss";
+
+/* @import "lib/a11y-en.css"; */
+
+/* custom src files */
+@import "src/typo.scss";
+@import "src/grid.scss";
+@import "src/icons.scss";
+@import "src/button.scss";
+@import "src/nav.scss";
+@import "src/sub-nav.scss";
+@import "src/bio.scss";
+@import "src/hero.scss";
+@import "src/tiles.scss";
+@import "src/form.scss";
+@import "src/issue.scss";
+@import "src/labels.scss";
+@import "src/label-box.scss";
+@import "src/label-editor.scss";
+@import "src/filter.scss";
+@import "src/filter-bar.scss";
+@import "src/issues-list.scss";
+@import "src/pagination.scss";
+@import "src/dropdown.scss";
+@import "src/footer.scss";
+@import "src/notification-bar.scss";
+@import "src/animations.scss";
+
+/* imports for other vendor files */
+@import "lib/prism-gh-theme.css";
+
+*::after,
+*::before {
+  box-sizing: border-box;
+}
+
+#body-webcompat {
+  background-color: $color-bg-page;
+  -webkit-font-smoothing: antialiased;
+  padding: $navi-height $grid-outermargin-s $unit-gutter-m;
+}
+
+@media screen and (min-width: $page-size-m) {
+  #body-webcompat {
+    padding: $navi-height $grid-outermargin-m 2 * $unit-gutter-m;
+  }
+}
+
+@media screen and (min-width: $page-size-l) {
+  #body-webcompat {
+    padding: $navi-height 0 0;
+  }
+}
+
+.main {
+  overflow: hidden;
+  width: 100%;
+}
+
+/* helper to hide meta elements */
+.is-hidden {
+  display: none;
+}
+
+.off-screen {
+  left: -9999px;
+  position: absolute;
+  top: -9999px;
+}
+
+.desktop-only {
+  display: none;
+}
+
+@media screen and (min-width: $page-size-m) {
+  .desktop-only {
+    display: inline-block;
+  }
+}
+
+.visually-hidden {
+  visibility: hidden;
+}
+
+.right {
+  float: right;
+}
+
+.img-fit {
+  max-height: 75vh;
+  max-width: 100%;
+}

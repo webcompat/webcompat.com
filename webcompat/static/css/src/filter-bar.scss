@@ -52,7 +52,7 @@
 
 .filter-bar-dropdown-input:focus + [data-opens-dropdown],
 .filter-bar-dropdown-listbox a:focus {
-  background: var(--color-first);
+  background: $color-first;
   outline: none;
 }
 

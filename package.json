@@ -39,6 +39,7 @@
     "grunt-contrib-watch": "^1.0.0",
     "grunt-postcss": "^0.8.0",
     "grunt-purifycss": "^0.1.2",
+    "grunt-sass": "^2.1.0",
     "husky": "^0.13.4",
     "intern": "^4.1.4",
     "lint-staged": "^3.6.1",

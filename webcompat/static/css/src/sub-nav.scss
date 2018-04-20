@@ -1,7 +1,7 @@
 .sub-nav {
-  color: var(--color-second);
+  color: $color-second;
   font-size: .95em;
-  padding-left: var(--unit-space);
+  padding-left: $unit-space;
 }
 
 .sub-nav,
@@ -18,7 +18,7 @@
 .nested-sub-nav {
   display: none;
   list-style: none;
-  padding-left: var(--unit-space);
+  padding-left: $unit-space;
 }
 
 .nested-sub::after {
@@ -42,17 +42,16 @@
   transform: rotate(90deg);
 }
 
-/* var(--page-size-s) = 320px - vars not usable in queries */
-@media (min-width: 320px) {
+@media (min-width: $page-size-s) {
   .sub-nav-header::after {
     content: none;
   }
 }
 
 .sub-nav-active {
-  border-left: 4px solid var(--color-first);
-  color: var(--color-second);
+  border-left: 4px solid $color-first;
+  color: $color-second;
   font-weight: 700;
   margin-left: -4px;
-  padding-left: var(--unit-space);
+  padding-left: $unit-space;
 }

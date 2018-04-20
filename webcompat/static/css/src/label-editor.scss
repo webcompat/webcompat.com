@@ -1,6 +1,6 @@
 /* Category editor */
 .label-editor {
-  background-color: var(--color-bg-box);
+  background-color: $color-bg-box;
   border-radius: 4px;
   box-shadow: 0 1px 5px 0 rgba(0, 0, 0, .1);
   display: block;
@@ -26,7 +26,7 @@
 
 /* Category header */
 .label-editor-header {
-  background-color: var(--color-bg-box);
+  background-color: $color-bg-box;
   display: flex;
   padding: .625em;
 }
@@ -48,11 +48,11 @@
 /* item category */
 .label-editor-list-item {
   border-left: 4px solid;
-  border-top: 1px solid var(--color-default);
+  border-top: 1px solid $color-default;
   cursor: pointer;
   display: block;
   margin: 0;
-  padding: calc(var(--unit-space) * .75) calc(var(--unit-space) * .5);
+  padding: $unit-space * .75 $unit-space * .5;
 }
 
 .label-editor-list-item:last-child {

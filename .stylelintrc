@@ -62,7 +62,8 @@
         "order/properties-alphabetical-order": true
     },
     "ignoreFiles": [
-      "./webcompat/static/css/development/vendor/prism.css"
+      "./webcompat/static/css/development/vendor/prism.css",
+      "./webcompat/static/css/dist/webcompat.min.css"
     ],
     "ignoreShorthands": [
         "font"
