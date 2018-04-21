@@ -68,38 +68,43 @@ function BugForm() {
   this.stepsToReproduceField = this.inputs.steps_reproduce.el;
 
   this.init = function() {
+    this.checkURLValidity = this.checkURLValidity.bind(this);
+    this.checkDescriptionValidity = this.checkDescriptionValidity.bind(this);
+    this.checkProblemTypeValidity = this.checkProblemTypeValidity.bind(this);
+    this.checkImageTypeValidity = this.checkImageTypeValidity.bind(this);
+    this.checkOptionalNonEmpty = this.checkOptionalNonEmpty.bind(this);
+    this.storeClickedButton = this.storeClickedButton.bind(this);
+    this.maybeUploadImage = this.maybeUploadImage.bind(this);
+    this.preventSubmitByEnter = this.preventSubmitByEnter.bind(this);
+
     this.checkParams();
     this.disableSubmits();
-    this.urlField.on("blur input", _.bind(this.checkURLValidity, this));
+    this.urlField.on("blur input", this.checkURLValidity);
     this.descField.on(
       "blur input",
       _.bind(this.checkDescriptionValidity, this)
     );
-    this.problemType.on("change", _.bind(this.checkProblemTypeValidity, this));
-    this.uploadField.on("change", _.bind(this.checkImageTypeValidity, this));
+    this.problemType.on("change", this.checkProblemTypeValidity);
+    this.uploadField.on("change", this.checkImageTypeValidity);
     this.osField.on(
       "blur",
-      _.bind(this.checkOptionalNonEmpty, this, this.osField)
+      this.checkOptionalNonEmpty.bind(this, this.osField)
     );
     this.browserField.on(
       "blur",
-      _.bind(this.checkOptionalNonEmpty, this, this.browserField)
+      this.checkOptionalNonEmpty.bind(this, this.browserField)
     );
-    this.submitButtons.on("click", _.bind(this.storeClickedButton, this));
+    this.submitButtons.on("click", this.storeClickedButton);
     this.submitButtons.on(
       "click",
       _.bind(function() {
         this.loadingIndicator.addClass("is-active");
       }, this)
     );
-    this.form.on("submit", _.bind(this.maybeUploadImage, this));
+    this.form.on("submit", this.maybeUploadImage);
 
     // prevent submit by hitting enter key for single line input fields
-    this.form.on(
-      "keypress",
-      ":input:not(textarea)",
-      _.bind(this.preventSubmitByEnter, this)
-    );
+    this.form.on("keypress", ":input:not(textarea)", this.preventSubmitByEnter);
 
     // See if the user already has a valid form
     // (after a page refresh, back button, etc.)
