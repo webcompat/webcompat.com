@@ -458,7 +458,7 @@ function BugForm() {
   /*
     Allow users to remove an image from the form upload.
   */
-  this.showRemoveUpload = function(preview) {
+  this.showRemoveUpload = function(previewEl) {
     var removeBanner = $(".js-remove-upload");
     var uploadLabel = $(".js-label-upload");
     var errorLabel = $(".js-error-upload");
@@ -476,7 +476,7 @@ function BugForm() {
       "click",
       _.bind(function() {
         // remove the preview and hide the banner
-        preview.css("background", "none");
+        previewEl.css("background", "none");
         removeBanner.addClass("is-hidden");
         removeBanner.attr("tabIndex", "-1");
         uploadLabel.removeClass("visually-hidden").removeClass("is-hidden");
