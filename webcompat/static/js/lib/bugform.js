@@ -74,16 +74,13 @@ function BugForm() {
     this.checkImageTypeValidity = this.checkImageTypeValidity.bind(this);
     this.checkOptionalNonEmpty = this.checkOptionalNonEmpty.bind(this);
     this.storeClickedButton = this.storeClickedButton.bind(this);
-    this.maybeUploadImage = this.maybeUploadImage.bind(this);
+    this.onFormSubmit = this.onFormSubmit.bind(this);
     this.preventSubmitByEnter = this.preventSubmitByEnter.bind(this);
 
     this.checkParams();
     this.disableSubmits();
     this.urlField.on("blur input", this.checkURLValidity);
-    this.descField.on(
-      "blur input",
-      _.bind(this.checkDescriptionValidity, this)
-    );
+    this.descField.on("blur input", this.checkDescriptionValidity);
     this.problemType.on("change", this.checkProblemTypeValidity);
     this.uploadField.on("change", this.checkImageTypeValidity);
     this.osField.on(
@@ -95,13 +92,7 @@ function BugForm() {
       this.checkOptionalNonEmpty.bind(this, this.browserField)
     );
     this.submitButtons.on("click", this.storeClickedButton);
-    this.submitButtons.on(
-      "click",
-      _.bind(function() {
-        this.loadingIndicator.addClass("is-active");
-      }, this)
-    );
-    this.form.on("submit", this.maybeUploadImage);
+    this.form.on("submit", this.onFormSubmit);
 
     // prevent submit by hitting enter key for single line input fields
     this.form.on("keypress", ":input:not(textarea)", this.preventSubmitByEnter);
@@ -498,6 +489,19 @@ function BugForm() {
     );
   };
 
+  this.showLoadingIndicator = function() {
+    this.loadingIndicator.addClass("is-active");
+  };
+
+  this.hideLoadingIndicator = function() {
+    this.loadingIndicator.removeClass("is-active");
+  };
+
+  this.onFormSubmit = function(event) {
+    this.addLoadingIndicator();
+    this.maybeUploadImage(event);
+  };
+
   this.maybeUploadImage = _.bind(function(event) {
     if (!this.hasImage) {
       // nothing to do if there's no image, so form submission
@@ -594,7 +598,7 @@ function BugForm() {
             timeout: 5000
           });
         }
-        this.loadingIndicator.removeClass("is-active");
+        this.removeLoadingIndicator();
       }, this)
     });
 
