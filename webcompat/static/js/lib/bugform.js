@@ -129,7 +129,7 @@ function BugForm() {
     }
   };
 
-  this.showUploadPreview = _.bind(function(dataURI) {
+  this.showUploadPreview = function(dataURI) {
     // The final size of Base64-encoded binary data is ~equal to
     // 1.37 times the original data size + 814 bytes (for headers).
     // so, bytes = (encoded_string.length - 814) / 1.37)
@@ -146,7 +146,7 @@ function BugForm() {
       this.makeValid("image");
       this.addPreviewBackground(dataURI);
     }
-  }, this);
+  };
 
   this.downsampleImage = function(dataURI, callback) {
     var img = document.createElement("img");
@@ -492,12 +492,16 @@ function BugForm() {
     this.loadingIndicator.addClass("is-active");
   };
 
+  this.hideLoadingIndicator = function() {
+    this.loadingIndicator.removeClass("is-active");
+  };
+
   this.onFormSubmit = function(event) {
-    this.toggleLoadingIndicator();
+    this.showLoadingIndicator();
     this.maybeUploadImage(event);
   };
 
-  this.maybeUploadImage = _.bind(function(event) {
+  this.maybeUploadImage = function(event) {
     if (!this.hasImage) {
       // nothing to do if there's no image, so form submission
       // can happen regularly.
@@ -528,7 +532,7 @@ function BugForm() {
         );
       }, this)
     );
-  }, this);
+  };
 
   /*
     Grab the data URI portion inside of a serialized data URI
@@ -620,6 +624,9 @@ function BugForm() {
 
     callback();
   };
+
+  this.maybeUploadImage = this.maybeUploadImage.bind(this);
+  this.showUploadPreview = this.showUploadPreview.bind(this);
 
   return this.init();
 }
