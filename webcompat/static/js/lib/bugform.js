@@ -75,6 +75,7 @@ function BugForm() {
     this.checkOptionalNonEmpty = this.checkOptionalNonEmpty.bind(this);
     this.storeClickedButton = this.storeClickedButton.bind(this);
     this.onFormSubmit = this.onFormSubmit.bind(this);
+    this.onReceiveMessage = this.onReceiveMessage.bind(this);
     this.preventSubmitByEnter = this.preventSubmitByEnter.bind(this);
 
     this.checkParams();
@@ -102,26 +103,24 @@ function BugForm() {
     this.checkForm();
 
     // Set up listener for message events from screenshot-enabled add-ons
-    window.addEventListener(
-      "message",
-      _.bind(function(event) {
-        // Make sure the data is coming from ~*inside the house*~!
-        // (i.e., our add-on or some other priviledged code sent it)
-        if (location.origin === event.origin) {
-          // See https://github.com/webcompat/webcompat.com/issues/1252 to track
-          // the work of only accepting blobs, which should simplify things.
-          if (event.data instanceof Blob) {
-            // convertToDataURI sends the resulting string to the upload
-            // callback.
-            this.convertToDataURI(event.data, this.showUploadPreview);
-          } else {
-            // ...the data is already a data URI string
-            this.showUploadPreview(event.data);
-          }
-        }
-      }, this),
-      false
-    );
+    window.addEventListener("message", this.onReceiveMessage, false);
+  };
+
+  this.onReceiveMessage = function(event) {
+    // Make sure the data is coming from ~*inside the house*~!
+    // (i.e., our add-on or some other priviledged code sent it)
+    if (location.origin === event.origin) {
+      // See https://github.com/webcompat/webcompat.com/issues/1252 to track
+      // the work of only accepting blobs, which should simplify things.
+      if (event.data instanceof Blob) {
+        // convertToDataURI sends the resulting string to the upload
+        // callback.
+        this.convertToDataURI(event.data, this.showUploadPreview);
+      } else {
+        // ...the data is already a data URI string
+        this.showUploadPreview(event.data);
+      }
+    }
   };
 
   this.preventSubmitByEnter = function(event) {
@@ -493,12 +492,8 @@ function BugForm() {
     this.loadingIndicator.addClass("is-active");
   };
 
-  this.hideLoadingIndicator = function() {
-    this.loadingIndicator.removeClass("is-active");
-  };
-
   this.onFormSubmit = function(event) {
-    this.addLoadingIndicator();
+    this.toggleLoadingIndicator();
     this.maybeUploadImage(event);
   };
 
