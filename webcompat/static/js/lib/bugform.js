@@ -153,7 +153,7 @@ function BugForm() {
     var canvas = document.createElement("canvas");
     var ctx = canvas.getContext("2d");
 
-    img.onload = _.bind(function() {
+    img.onload = function() {
       // scale the tmp canvas to 50%
       canvas.width = Math.floor(img.width / 2);
       canvas.height = Math.floor(img.height / 2);
@@ -168,7 +168,7 @@ function BugForm() {
       (img = null), (canvas = null);
 
       callback(screenshotData);
-    }, this);
+    };
 
     img.src = dataURI;
   };
@@ -204,7 +204,7 @@ function BugForm() {
     }
   };
 
-  this.addDetails = _.bind(function(detailsParam) {
+  this.addDetails = function(detailsParam) {
     var input = document.createElement("input");
     input.type = "hidden";
     input.name = "details";
@@ -213,7 +213,7 @@ function BugForm() {
     // + (SPACE) to %20 before decoding
     input.value = decodeURIComponent(detailsParam.replace(/\+/g, "%20"));
     this.form.get(0).appendChild(input);
-  }, this);
+  };
 
   this.storeClickedButton = function(event) {
     this.clickedButton = event.target.value;
@@ -436,10 +436,10 @@ function BugForm() {
     }
 
     var reader = new FileReader();
-    reader.onload = _.bind(function(event) {
+    reader.onload = function(event) {
       var dataURI = event.target.result;
       callback(dataURI);
-    }, this);
+    };
     reader.readAsDataURL(blobOrFile);
   };
 
