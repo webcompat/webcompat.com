@@ -12,7 +12,7 @@ module.exports = function(grunt) {
       src: [
         "<%= jsPath %>/vendor/jquery-1.11.2.min.js",
         "<%= jsPath %>/vendor/lodash.custom.min.js",
-        "<%= jsPath %>/vendor/backbone-min.js",
+        "<%= jsPath %>/vendor/backbone-1.3.3.min.js",
         "<%= jsPath %>/vendor/moment-min.js",
         "<%= jsPath %>/vendor/prism.js",
         "<%= jsPath %>/vendor/markdown-it.js",
