@@ -68,64 +68,59 @@ function BugForm() {
   this.stepsToReproduceField = this.inputs.steps_reproduce.el;
 
   this.init = function() {
+    this.checkURLValidity = this.checkURLValidity.bind(this);
+    this.checkDescriptionValidity = this.checkDescriptionValidity.bind(this);
+    this.checkProblemTypeValidity = this.checkProblemTypeValidity.bind(this);
+    this.checkImageTypeValidity = this.checkImageTypeValidity.bind(this);
+    this.checkOptionalNonEmpty = this.checkOptionalNonEmpty.bind(this);
+    this.storeClickedButton = this.storeClickedButton.bind(this);
+    this.onFormSubmit = this.onFormSubmit.bind(this);
+    this.onReceiveMessage = this.onReceiveMessage.bind(this);
+    this.preventSubmitByEnter = this.preventSubmitByEnter.bind(this);
+
     this.checkParams();
     this.disableSubmits();
-    this.urlField.on("blur input", _.bind(this.checkURLValidity, this));
-    this.descField.on(
-      "blur input",
-      _.bind(this.checkDescriptionValidity, this)
-    );
-    this.problemType.on("change", _.bind(this.checkProblemTypeValidity, this));
-    this.uploadField.on("change", _.bind(this.checkImageTypeValidity, this));
+    this.urlField.on("blur input", this.checkURLValidity);
+    this.descField.on("blur input", this.checkDescriptionValidity);
+    this.problemType.on("change", this.checkProblemTypeValidity);
+    this.uploadField.on("change", this.checkImageTypeValidity);
     this.osField.on(
       "blur",
-      _.bind(this.checkOptionalNonEmpty, this, this.osField)
+      this.checkOptionalNonEmpty.bind(this, this.osField)
     );
     this.browserField.on(
       "blur",
-      _.bind(this.checkOptionalNonEmpty, this, this.browserField)
+      this.checkOptionalNonEmpty.bind(this, this.browserField)
     );
-    this.submitButtons.on("click", _.bind(this.storeClickedButton, this));
-    this.submitButtons.on(
-      "click",
-      _.bind(function() {
-        this.loadingIndicator.addClass("is-active");
-      }, this)
-    );
-    this.form.on("submit", _.bind(this.maybeUploadImage, this));
+    this.submitButtons.on("click", this.storeClickedButton);
+    this.form.on("submit", this.onFormSubmit);
 
     // prevent submit by hitting enter key for single line input fields
-    this.form.on(
-      "keypress",
-      ":input:not(textarea)",
-      _.bind(this.preventSubmitByEnter, this)
-    );
+    this.form.on("keypress", ":input:not(textarea)", this.preventSubmitByEnter);
 
     // See if the user already has a valid form
     // (after a page refresh, back button, etc.)
     this.checkForm();
 
     // Set up listener for message events from screenshot-enabled add-ons
-    window.addEventListener(
-      "message",
-      _.bind(function(event) {
-        // Make sure the data is coming from ~*inside the house*~!
-        // (i.e., our add-on or some other priviledged code sent it)
-        if (location.origin === event.origin) {
-          // See https://github.com/webcompat/webcompat.com/issues/1252 to track
-          // the work of only accepting blobs, which should simplify things.
-          if (event.data instanceof Blob) {
-            // convertToDataURI sends the resulting string to the upload
-            // callback.
-            this.convertToDataURI(event.data, this.showUploadPreview);
-          } else {
-            // ...the data is already a data URI string
-            this.showUploadPreview(event.data);
-          }
-        }
-      }, this),
-      false
-    );
+    window.addEventListener("message", this.onReceiveMessage, false);
+  };
+
+  this.onReceiveMessage = function(event) {
+    // Make sure the data is coming from ~*inside the house*~!
+    // (i.e., our add-on or some other priviledged code sent it)
+    if (location.origin === event.origin) {
+      // See https://github.com/webcompat/webcompat.com/issues/1252 to track
+      // the work of only accepting blobs, which should simplify things.
+      if (event.data instanceof Blob) {
+        // convertToDataURI sends the resulting string to the upload
+        // callback.
+        this.convertToDataURI(event.data, this.showUploadPreview);
+      } else {
+        // ...the data is already a data URI string
+        this.showUploadPreview(event.data);
+      }
+    }
   };
 
   this.preventSubmitByEnter = function(event) {
@@ -134,7 +129,7 @@ function BugForm() {
     }
   };
 
-  this.showUploadPreview = _.bind(function(dataURI) {
+  this.showUploadPreview = function(dataURI) {
     // The final size of Base64-encoded binary data is ~equal to
     // 1.37 times the original data size + 814 bytes (for headers).
     // so, bytes = (encoded_string.length - 814) / 1.37)
@@ -151,14 +146,14 @@ function BugForm() {
       this.makeValid("image");
       this.addPreviewBackground(dataURI);
     }
-  }, this);
+  };
 
   this.downsampleImage = function(dataURI, callback) {
     var img = document.createElement("img");
     var canvas = document.createElement("canvas");
     var ctx = canvas.getContext("2d");
 
-    img.onload = _.bind(function() {
+    img.onload = function() {
       // scale the tmp canvas to 50%
       canvas.width = Math.floor(img.width / 2);
       canvas.height = Math.floor(img.height / 2);
@@ -173,7 +168,7 @@ function BugForm() {
       (img = null), (canvas = null);
 
       callback(screenshotData);
-    }, this);
+    };
 
     img.src = dataURI;
   };
@@ -209,7 +204,7 @@ function BugForm() {
     }
   };
 
-  this.addDetails = _.bind(function(detailsParam) {
+  this.addDetails = function(detailsParam) {
     var input = document.createElement("input");
     input.type = "hidden";
     input.name = "details";
@@ -218,7 +213,7 @@ function BugForm() {
     // + (SPACE) to %20 before decoding
     input.value = decodeURIComponent(detailsParam.replace(/\+/g, "%20"));
     this.form.get(0).appendChild(input);
-  }, this);
+  };
 
   this.storeClickedButton = function(event) {
     this.clickedButton = event.target.value;
@@ -441,10 +436,10 @@ function BugForm() {
     }
 
     var reader = new FileReader();
-    reader.onload = _.bind(function(event) {
+    reader.onload = function(event) {
       var dataURI = event.target.result;
       callback(dataURI);
-    }, this);
+    };
     reader.readAsDataURL(blobOrFile);
   };
 
@@ -463,7 +458,7 @@ function BugForm() {
   /*
     Allow users to remove an image from the form upload.
   */
-  this.showRemoveUpload = function(preview) {
+  this.showRemoveUpload = function(previewEl) {
     var removeBanner = $(".js-remove-upload");
     var uploadLabel = $(".js-label-upload");
     var errorLabel = $(".js-error-upload");
@@ -481,7 +476,7 @@ function BugForm() {
       "click",
       _.bind(function() {
         // remove the preview and hide the banner
-        preview.css("background", "none");
+        previewEl.css("background", "none");
         removeBanner.addClass("is-hidden");
         removeBanner.attr("tabIndex", "-1");
         uploadLabel.removeClass("visually-hidden").removeClass("is-hidden");
@@ -493,7 +488,20 @@ function BugForm() {
     );
   };
 
-  this.maybeUploadImage = _.bind(function(event) {
+  this.showLoadingIndicator = function() {
+    this.loadingIndicator.addClass("is-active");
+  };
+
+  this.hideLoadingIndicator = function() {
+    this.loadingIndicator.removeClass("is-active");
+  };
+
+  this.onFormSubmit = function(event) {
+    this.showLoadingIndicator();
+    this.maybeUploadImage(event);
+  };
+
+  this.maybeUploadImage = function(event) {
     if (!this.hasImage) {
       // nothing to do if there's no image, so form submission
       // can happen regularly.
@@ -524,7 +532,7 @@ function BugForm() {
         );
       }, this)
     );
-  }, this);
+  };
 
   /*
     Grab the data URI portion inside of a serialized data URI
@@ -589,7 +597,7 @@ function BugForm() {
             timeout: 5000
           });
         }
-        this.loadingIndicator.removeClass("is-active");
+        this.removeLoadingIndicator();
       }, this)
     });
 
@@ -616,6 +624,9 @@ function BugForm() {
 
     callback();
   };
+
+  this.maybeUploadImage = this.maybeUploadImage.bind(this);
+  this.showUploadPreview = this.showUploadPreview.bind(this);
 
   return this.init();
 }
