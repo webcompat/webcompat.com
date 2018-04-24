@@ -8,6 +8,7 @@
 
 from collections import namedtuple
 import json
+import logging
 import os
 import sys
 import urlparse
@@ -25,6 +26,7 @@ We can't find {path}
 Double check that everything is configured properly
 in config/secrets.py and try again. Good luck!
 """
+MILESTONE_UNMATCHING = """A milestone is missing or has been added: {names}"""
 
 
 def initialize_status():
@@ -59,7 +61,10 @@ def initialize_status():
     finally:
         # save in data/ the current version
         if milestones_content:
-            app.config['STATUSES'] = convert_milestones(milestones_content)
+            updated_statuses = update_status_config(milestones_content)
+            if not updated_statuses:
+                return False
+            app.config['STATUSES'] = updated_statuses
             app.config['JSON_STATUSES'] = json.dumps(app.config['STATUSES'])
             print('Milestones in memory')
             return True
@@ -78,10 +83,17 @@ def milestones_from_file(milestones_path):
         return None
 
 
-def convert_milestones(milestones_content):
+def update_status_config(milestones_content):
     """Convert the JSON milestones from GitHub to a simple dict."""
-    milestone_full = json.loads(milestones_content)
-    for milestone in milestone_full:
+    milestones = json.loads(milestones_content)
+    # Test that GitHub milestones and local definitions are equivalent
+    status_names = sorted(STATUSES.keys())
+    milestone_names = sorted([milestone['title'] for milestone in milestones])
+    if milestone_names != status_names:
+        logging.warning(MILESTONE_UNMATCHING.format(names=milestone_names))
+        return None
+    # Assign the right id to the status.
+    for milestone in milestones:
         STATUSES[milestone['title']]['id'] = milestone['number']
     return STATUSES
 
@@ -148,5 +160,9 @@ EXTRA_LABELS = [
 
 from webcompat import app
 # We need the milestones
+logging.basicConfig(
+    filename=LOG_FILE,
+    format='%(levelname)s %(asctime)s %(message)s',
+    datefmt='%Y-%m-%d %H:%M:%S')
 if not initialize_status():
-    sys.exit('Milestones are not initialized.')
+    sys.exit('Milestones are not initialized. Check logs.')
