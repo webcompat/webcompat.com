@@ -389,7 +389,7 @@ issues.MainView = Backbone.View.extend(
       var headersBag = { headers: { Accept: "application/json" } };
       this.issue
         .fetch(headersBag)
-        .success(
+        .done(
           _.bind(function() {
             // _.find() will return the object if found (which is truthy),
             // or undefined if not found (which is falsey)
@@ -416,7 +416,7 @@ issues.MainView = Backbone.View.extend(
             if (this.issue.get("commentNumber") > 0) {
               this.comments
                 .fetch(headersBag)
-                .success(
+                .done(
                   _.bind(function(response) {
                     this.addExistingComments();
                     this.comments.bind("add", _.bind(this.addComment, this));
@@ -431,7 +431,7 @@ issues.MainView = Backbone.View.extend(
                     }
                   }, this)
                 )
-                .error(function() {
+                .fail(function() {
                   var msg =
                     "There was an error retrieving issue comments. Please reload to try again.";
                   wcEvents.trigger("flash:error", {
@@ -442,7 +442,7 @@ issues.MainView = Backbone.View.extend(
             }
           }, this)
         )
-        .error(function(response) {
+        .fail(function(response) {
           var msg;
           if (
             response &&

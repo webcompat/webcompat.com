@@ -18,10 +18,10 @@ diagnose.NeedsTriageView = Backbone.View.extend({
     this.issues = new diagnose.NeedsTriageCollection();
     this.issues
       .fetch(headersBag)
-      .success(function() {
+      .done(function() {
         self.render();
       })
-      .error(function() {});
+      .fail(function() {});
   },
   template: wcTmpl["web_modules/issue-list.jst"],
   render: function() {
