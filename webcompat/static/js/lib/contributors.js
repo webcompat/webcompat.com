@@ -21,8 +21,14 @@ $(function() {
   // try to open the right section and scroll there.
   var id;
   if ((id = location.hash)) {
-    if (!$(id).find(".contributors__item__btn").hasClass(ACTIVE_CLASS)) {
-      $(id).parent().trigger("click");
+    if (
+      !$(id)
+        .find(".contributors__item__btn")
+        .hasClass(ACTIVE_CLASS)
+    ) {
+      $(id)
+        .parent()
+        .trigger("click");
     }
     window.scrollTo(0, $(id).offset().top);
   }

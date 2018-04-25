@@ -101,7 +101,7 @@ registerSuite("Index", {
         .then(function(text) {
           assert.match(
             text,
-            /^Opened:\s\d{4}\-\d{2}\-\d{2}/,
+            /^Opened:\s\d{4}-\d{2}-\d{2}/,
             "Issue should display creation date"
           );
         })

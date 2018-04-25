@@ -26,15 +26,16 @@ issues.Comment = Backbone.Model.extend({
       body: md.render(response.body),
       commenter: response.user.login,
       commentLinkId: "issuecomment-" + response.id,
-      createdAt: moment(Date.now()).diff(response.created_at, "weeks") > 1
-        ? moment(response.created_at).format("YYYY-MM-DD")
-        : moment(response.created_at).fromNow(),
+      createdAt:
+        moment(Date.now()).diff(response.created_at, "weeks") > 1
+          ? moment(response.created_at).format("YYYY-MM-DD")
+          : moment(response.created_at).fromNow(),
       rawBody: response.body
     });
     var linkHeader = jqXHR.xhr.getResponseHeader("Link");
     if (linkHeader !== null && !!this.parseHeader(linkHeader).last) {
       response.lastPageNumber = this.parseHeader(linkHeader).last.split(
-        "\?page\="
+        "?page="
       )[1];
     } else {
       response.lastPageNumber = "1";
@@ -53,7 +54,7 @@ issues.Comment = Backbone.Model.extend({
     var result = {};
     var entries = linkHeader.split(",");
     var relsRegExp = /\brel="?([^"]+)"?\s*;?/;
-    var keysRegExp = /(\b[0-9a-z\.-]+\b)/g;
+    var keysRegExp = /(\b[0-9a-z.-]+\b)/g;
     var sourceRegExp = /^<(.*)>/;
 
     for (var i = 0; i < entries.length; i++) {

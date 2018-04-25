@@ -105,7 +105,7 @@ issues.CategoryEditorView = Backbone.View.extend({
     }, 100);
 
     var escape = function(s) {
-      return s.replace(/[-\/\\^$*+?:.()|[\]{}]/g, "\\$&");
+      return s.replace(/[-/\\^$*+?:.()|[\]{}]/g, "\\$&");
     };
     var re = new RegExp("^" + escape(e.target.value), "i");
     var toHide = _.filter(this.model.toArray(), function(label) {
@@ -124,7 +124,9 @@ issues.CategoryEditorView = Backbone.View.extend({
   }, 100),
   checkUncheckItems: _.debounce(function(e) {
     if (e.keyCode === 13) {
-      $(e.target).click().addClass("focused");
+      $(e.target)
+        .click()
+        .addClass("focused");
     }
   }, 100),
   focusSaveClose: _.debounce(function(e) {
@@ -135,7 +137,9 @@ issues.CategoryEditorView = Backbone.View.extend({
   }, 1),
   removeFocus: _.debounce(function(e) {
     if (e.keyCode === 9) {
-      $(e.target).closest("label").removeClass("focused");
+      $(e.target)
+        .closest("label")
+        .removeClass("focused");
     }
   }, 100),
   backToTop: _.debounce(function(e) {
