@@ -2,6 +2,8 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
+/*eslint new-cap: ["error", { "capIsNewExceptions": ["Deferred"] }]*/
+
 function BugForm() {
   this.clickedButton = null;
   this.errorLabel = $(".js-error-upload");
@@ -504,40 +506,94 @@ function BugForm() {
 
   this.onFormSubmit = function(event) {
     this.showLoadingIndicator();
-    this.maybeUploadImage(event);
+    this.maybeUploadImage(event).then(this.submitForm, this.handleUploadError);
   };
 
+  /*
+     If we have an image, kick off the uploadImage promise, otherwise
+     resolve immediately.
+  */
   this.maybeUploadImage = function(event) {
+    event.preventDefault();
+    var dfd = $.Deferred();
+
     if (!this.hasImage) {
-      // nothing to do if there's no image, so form submission
-      // can happen regularly.
-      return;
+      return dfd.resolve();
     }
 
-    event.preventDefault();
+    this.uploadImage(this.getDataURIFromPreviewEl())
+      .then(this.addImageURL)
+      .then(dfd.resolve, dfd.reject);
 
-    this.uploadImage(
-      // grab the data URI from background-image property, since it's already
-      // in the DOM: 'url("data:image/....")'
-      this.getDataURIFromPreviewEl(),
-      _.bind(function(response) {
-        this.addImageURL(
-          response,
-          _.bind(function() {
-            var formEl = this.form.get(0);
-            // Calling submit() manually on the form won't contain details
-            // about which <button> was clicked (since one wasn't clicked).
-            // So we create a hidden <input> to pass along in the form data.
-            var hiddenEl = document.createElement("input");
-            hiddenEl.type = "hidden";
-            hiddenEl.name = "submit-type";
-            hiddenEl.value = this.clickedButton;
-            formEl.appendChild(hiddenEl);
-            formEl.submit();
-          }, this)
-        );
-      }, this)
-    );
+    return dfd.promise();
+  };
+
+  /*
+     Upload the image before form submission so we can
+     put an image link in the bug description.
+  */
+  this.uploadImage = function(dataURI) {
+    var dfd = $.Deferred();
+    this.disableSubmits();
+    this.uploadLoader.addClass("is-active");
+
+    $(".js-remove-upload").addClass("is-hidden");
+
+    var formdata = new FormData();
+    formdata.append("image", dataURI);
+
+    $.ajax({
+      contentType: false,
+      processData: false,
+      data: formdata,
+      method: "POST",
+      url: "/upload/"
+    }).then(dfd.resolve, dfd.reject);
+
+    return dfd.promise();
+  };
+
+  /*
+     React to server-side errors related to images by showing a flash
+     message to the user, and clearing out the bad image and preview.
+
+     If we're here, the attempted form submission failed.
+  */
+  this.handleUploadError = function(response) {
+    this.uploadLoader.removeClass(".is-active");
+
+    if (response && response.status === 415) {
+      wcEvents.trigger("flash:error", {
+        message: this.inputs.image.helpText,
+        timeout: 5000
+      });
+    }
+
+    if (response && response.status === 413) {
+      wcEvents.trigger("flash:error", {
+        message: "The image is too big! Please choose something smaller than 4MB.",
+        timeout: 5000
+      });
+    }
+
+    this.hideLoadingIndicator();
+    this.removeUploadPreview();
+  };
+
+  this.submitForm = function() {
+    var dfd = $.Deferred();
+    var formEl = this.form.get(0);
+    // Calling submit() manually on the form won't contain details
+    // about which <button> was clicked (since one wasn't clicked).
+    // So we create a hidden <input> to pass along in the form data.
+    var hiddenEl = document.createElement("input");
+    hiddenEl.type = "hidden";
+    hiddenEl.name = "submit-type";
+    hiddenEl.value = this.clickedButton;
+    formEl.appendChild(hiddenEl);
+    formEl.submit();
+    dfd.resolve();
+    return dfd.promise();
   };
 
   /*
@@ -565,56 +621,11 @@ function BugForm() {
   };
 
   /*
-     Upload the image before form submission so we can
-     put an image link in the bug description.
-  */
-  this.uploadImage = function(dataURI, callback) {
-    this.disableSubmits();
-    this.uploadLoader.addClass("is-active");
-
-    $(".js-remove-upload").addClass("is-hidden");
-
-    var formdata = new FormData();
-    formdata.append("image", dataURI);
-
-    $.ajax({
-      contentType: false,
-      processData: false,
-      data: formdata,
-      method: "POST",
-      url: "/upload/",
-      success: callback,
-      error: _.bind(function(response) {
-        var msg;
-        this.uploadLoader.removeClass(".is-active");
-
-        if (response && response.status === 415) {
-          wcEvents.trigger("flash:error", {
-            message: this.inputs.image.helpText,
-            timeout: 5000
-          });
-        }
-
-        if (response && response.status === 413) {
-          msg =
-            "The image is too big! Please choose something smaller than 4MB.";
-          wcEvents.trigger("flash:error", {
-            message: msg,
-            timeout: 5000
-          });
-        }
-        this.removeLoadingIndicator();
-      }, this)
-    });
-
-    // clear out the input[type=file], because we don't need it anymore.
-    this.uploadField.val(this.uploadField.get(0).defaultValue);
-  };
-  /*
     create the markdown with the URL of a newly uploaded image
     and its thumbnail URL assets to the bug description
   */
-  this.addImageURL = function(response, callback) {
+  this.addImageURL = function(response) {
+    var dfd = $.Deferred();
     var img_url = response.url;
     var thumb_url = response.thumb_url;
     var imageURL = [
@@ -624,15 +635,21 @@ function BugForm() {
       img_url,
       ")"
     ].join("");
+
     this.stepsToReproduceField.val(function(idx, value) {
       return value + "\n" + imageURL;
     });
 
-    callback();
+    dfd.resolve();
+    return dfd.promise();
   };
 
+  this.addImageURL = this.addImageURL.bind(this);
+  this.handleUploadError = this.handleUploadError.bind(this);
   this.maybeUploadImage = this.maybeUploadImage.bind(this);
+  this.removeUploadPreview = this.removeUploadPreview.bind(this);
   this.showUploadPreview = this.showUploadPreview.bind(this);
+  this.submitForm = this.submitForm.bind(this);
 
   return this.init();
 }
