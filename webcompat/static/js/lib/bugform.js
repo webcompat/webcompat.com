@@ -3,15 +3,19 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 function BugForm() {
-  this.form = $("#js-ReportForm form");
-  this.submitButtons = $("#js-ReportForm .js-Button");
-  this.loadingIndicator = $(".js-loader");
-  this.reportButton = $("#js-ReportBug");
-  this.uploadLoader = $(".js-image-loader");
-  this.previewEl = $(".js-image-upload");
-  this.UPLOAD_LIMIT = 1024 * 1024 * 4;
   this.clickedButton = null;
+  this.errorLabel = $(".js-error-upload");
+  this.form = $("#js-ReportForm form");
   this.hasImage = null;
+  this.loadingIndicator = $(".js-loader");
+  this.previewEl = $(".js-image-upload");
+  this.reportButton = $("#js-ReportBug");
+  this.removeBanner = $(".js-remove-upload");
+  this.submitButtons = $("#js-ReportForm .js-Button");
+  this.uploadLabel = $(".js-label-upload");
+  this.uploadLoader = $(".js-image-loader");
+
+  this.UPLOAD_LIMIT = 1024 * 1024 * 4;
 
   this.inputs = {
     url: {
@@ -455,39 +459,39 @@ function BugForm() {
     });
 
     this.hasImage = true;
-    this.showRemoveUpload(this.previewEl);
+    this.showRemoveUpload();
   };
   /*
     Allow users to remove an image from the form upload.
   */
-  this.showRemoveUpload = function(previewEl) {
-    var removeBanner = $(".js-remove-upload");
-    var uploadLabel = $(".js-label-upload");
-    var errorLabel = $(".js-error-upload");
-
+  this.showRemoveUpload = function() {
     // hide upload image errors (this will no-op if the user never saw one)
     $(".form-upload-error").remove();
 
-    errorLabel.addClass("is-hidden");
-    uploadLabel.removeClass("visually-hidden");
+    this.errorLabel.addClass("is-hidden");
+    this.uploadLabel.removeClass("visually-hidden");
 
-    removeBanner.removeClass("is-hidden");
-    removeBanner.attr("tabIndex", "0");
-    uploadLabel.addClass("visually-hidden");
-    removeBanner.on(
-      "click",
-      _.bind(function() {
-        // remove the preview and hide the banner
-        previewEl.css("background", "none");
-        removeBanner.addClass("is-hidden");
-        removeBanner.attr("tabIndex", "-1");
-        uploadLabel.removeClass("visually-hidden").removeClass("is-hidden");
-        removeBanner.off("click");
-        removeBanner.get(0).blur();
+    this.removeBanner.removeClass("is-hidden");
+    this.removeBanner.attr("tabIndex", "0");
+    this.uploadLabel.addClass("visually-hidden");
+    this.removeBanner.on("click", this.removeUploadPreview);
+  };
 
-        this.hasImage = false;
-      }, this)
-    );
+  /*
+    Remove the upload image preview and hide the banner.
+  */
+  this.removeUploadPreview = function() {
+    this.previewEl.css("background", "none");
+    this.removeBanner.addClass("is-hidden");
+    this.removeBanner.attr("tabIndex", "-1");
+    this.uploadLabel.removeClass("visually-hidden").removeClass("is-hidden");
+    this.removeBanner.off("click");
+    this.removeBanner.get(0).blur();
+
+    this.hasImage = false;
+
+    // clear out the input[type=file] as well
+    this.uploadField.val(this.uploadField.get(0).defaultValue);
   };
 
   this.showLoadingIndicator = function() {
