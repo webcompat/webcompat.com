@@ -89,12 +89,21 @@ def update_status_config(milestones_content):
     # Test that GitHub milestones and local definitions are equivalent
     status_names = sorted(STATUSES.keys())
     milestone_names = sorted([milestone['title'] for milestone in milestones])
-    if milestone_names != status_names:
-        logging.warning(MILESTONE_UNMATCHING.format(names=milestone_names))
+    # Check if there is a missing milestone. The app will not start.
+    if not set(status_names).issubset(milestone_names):
+        missing = set(status_names).symmetric_difference(set(milestone_names))
+        logging.warning(MILESTONE_UNMATCHING.format(names=list(missing)))
         return None
+    # Check if there are more milestones than the configured ones.
+    # This is probably fine, but we can log a warning.
+    if set(status_names) < set(milestone_names):
+        # Extract the additional milestones
+        intruder = set(status_names).symmetric_difference(set(milestone_names))
+        logging.warning(MILESTONE_UNMATCHING.format(names=list(intruder)))
     # Assign the right id to the status.
     for milestone in milestones:
-        STATUSES[milestone['title']]['id'] = milestone['number']
+        if milestone['title'] in status_names:
+            STATUSES[milestone['title']]['id'] = milestone['number']
     return STATUSES
 
 
