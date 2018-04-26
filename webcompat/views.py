@@ -130,6 +130,11 @@ def authorized(access_token=None):
 @app.route('/file')
 def file_issue():
     """File an issue on behalf of the user that just gave us authorization."""
+    form_data = session.get('form_data', None)
+    if not session:
+        abort(401)
+    if session and (form_data is None):
+        abort(403)
     response = report_issue(session['form_data'])
     # Get rid of stashed form data
     session.pop('form_data', None)
