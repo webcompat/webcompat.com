@@ -93,7 +93,7 @@ registerSuite("Comments (auth)", {
         .findById("image")
         .type("tests/fixtures/green_square.png")
         .end()
-        .sleep(2000)
+        .sleep(5000)
         .findByCssSelector(".js-Comment-text")
         .getProperty("value")
         .then(function(val) {
