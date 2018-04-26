@@ -51,5 +51,4 @@ class TestConfig(unittest.TestCase):
         # Unknown milestone added to the project
         milestones_json = json_data('milestones_content_plus.json')
         actual = update_status_config(milestones_json)
-        self.assertNotEqual(actual, expected)
-        self.assertIsNone(actual)
+        self.assertEqual(actual, expected)
