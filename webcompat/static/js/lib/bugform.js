@@ -560,7 +560,7 @@ function BugForm() {
      If we're here, the attempted form submission failed.
   */
   this.handleUploadError = function(response) {
-    this.uploadLoader.removeClass(".is-active");
+    this.uploadLoader.removeClass("is-active");
 
     if (response && response.status === 415) {
       wcEvents.trigger("flash:error", {
