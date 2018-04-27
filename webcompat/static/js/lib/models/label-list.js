@@ -5,22 +5,22 @@
 var issues = issues || {}; // eslint-disable-line no-use-before-define
 
 /**
-* A LabelList is a list of labels.
-*
-* It takes care of all namespace prefixing and unprefixing, so that
-* the rest of the app doesn't ever need to worry about those details.
-* To initialize, either pass in a list of labels as an array of strings
-* or an array of objects:
-*
-* new issues.LabelList({labels: ['firefox', 'ie', 'chrome']});
-*
-* new issues.LabelList({labels: [{name:'status-worksforme', url:'...',
-*    color:'cccccc'}]});
-*
-* Or a URL to a JSON file describing the labels:
-*
-* new issues.LabelList({url:'/path/to/labels.json'});
-*/
+ * A LabelList is a list of labels.
+ *
+ * It takes care of all namespace prefixing and unprefixing, so that
+ * the rest of the app doesn't ever need to worry about those details.
+ * To initialize, either pass in a list of labels as an array of strings
+ * or an array of objects:
+ *
+ * new issues.LabelList({labels: ['firefox', 'ie', 'chrome']});
+ *
+ * new issues.LabelList({labels: [{name:'status-worksforme', url:'...',
+ *    color:'cccccc'}]});
+ *
+ * Or a URL to a JSON file describing the labels:
+ *
+ * new issues.LabelList({url:'/path/to/labels.json'});
+ */
 
 issues.LabelList = Backbone.Model.extend({
   initialize: function() {

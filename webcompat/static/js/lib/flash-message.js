@@ -24,7 +24,11 @@ var FlashMessageView = Backbone.View.extend({
     wcEvents.on("flash:thanks", _.bind(this.showThanks, this));
   },
   render: function(message) {
-    this.$el.html(message).addClass("is-active").appendTo("body").show();
+    this.$el
+      .html(message)
+      .addClass("is-active")
+      .appendTo("body")
+      .show();
 
     return this;
   },

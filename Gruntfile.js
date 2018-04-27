@@ -10,7 +10,8 @@ module.exports = function(grunt) {
     jsDistPath: "<%= jsPath %>/dist",
     cssPath: "webcompat/static/css",
     imgPath: "webcompat/static/img",
-    banner: "/*! <%= pkg.title %>\n" +
+    banner:
+      "/*! <%= pkg.title %>\n" +
       ' *  Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author.name %>\n' +
       " *\n" +
       " *  This code is licensed under the MPL 2.0 License, except where\n" +

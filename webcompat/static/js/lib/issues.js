@@ -147,7 +147,10 @@ issues.BodyView = Backbone.View.extend({
       .addClass("is-hidden");
 
     if (this.mainView._isNSFW) {
-      issueDesc.find("img").closest("p").addClass("wc-Comment-content-nsfw");
+      issueDesc
+        .find("img")
+        .closest("p")
+        .addClass("wc-Comment-content-nsfw");
     }
 
     return this;
@@ -189,7 +192,8 @@ issues.ImageUploadView = Backbone.View.extend({
       elm: ".js-buttonUpload",
       // image should be valid by default because it's optional
       valid: true,
-      helpText: "Please select an image of the following type: jpg, png, gif, or bmp."
+      helpText:
+        "Please select an image of the following type: jpg, png, gif, or bmp."
     }
   },
   validateAndUpload: function(e) {
@@ -242,7 +246,9 @@ issues.ImageUploadView = Backbone.View.extend({
   },
   // Adapted from bugform.js
   checkImageTypeValidity: function(input) {
-    var splitImg = $(input).val().split(".");
+    var splitImg = $(input)
+      .val()
+      .split(".");
     var ext = splitImg[splitImg.length - 1];
     var allowed = ["jpg", "jpeg", "jpe", "png", "gif", "bmp"];
     if (!_.includes(allowed, ext)) {
@@ -481,7 +487,9 @@ issues.MainView = Backbone.View.extend(
 
       if (this._isNSFW) {
         _.each(commentElm.find("img"), function(elm) {
-          $(elm).closest("p").addClass("wc-Comment-content-nsfw");
+          $(elm)
+            .closest("p")
+            .addClass("wc-Comment-content-nsfw");
         });
       }
     },
@@ -513,10 +521,13 @@ issues.MainView = Backbone.View.extend(
       // make sure we've got a reference to the <img> element,
       // (small images won't extend to the width of the containing
       // p.nsfw)
-      var target = e.target.nodeName === "IMG"
-        ? e.target
-        : e.target.nodeName === "P" && e.target.firstElementChild;
-      $(target).parent().toggleClass("wc-Comment-content-nsfw--display");
+      var target =
+        e.target.nodeName === "IMG"
+          ? e.target
+          : e.target.nodeName === "P" && e.target.firstElementChild;
+      $(target)
+        .parent()
+        .toggleClass("wc-Comment-content-nsfw--display");
     },
     render: function() {
       this.$el.removeClass("is-hidden");

@@ -38,7 +38,8 @@ function BugForm() {
       el: $("#image"),
       // image should be valid by default because it's optional
       valid: true,
-      helpText: "Image must be one of the following: jpe, jpg, jpeg, png, gif, or bmp.",
+      helpText:
+        "Image must be one of the following: jpe, jpg, jpeg, png, gif, or bmp.",
       altHelpText: "Please choose a smaller image (< 4MB)"
     },
     browser: {
@@ -348,9 +349,10 @@ function BugForm() {
 
     var inlineHelp = $("<small></small>", {
       class: "label-icon-message form-message-error",
-      text: opts && opts.altHelp
-        ? this.inputs[id].altHelpText
-        : this.inputs[id].helpText
+      text:
+        opts && opts.altHelp
+          ? this.inputs[id].altHelpText
+          : this.inputs[id].helpText
     });
 
     this.inputs[id].valid = false;

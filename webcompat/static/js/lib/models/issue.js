@@ -158,7 +158,7 @@ issueList.IssueCollection = Backbone.Collection.extend({
     var result = {};
     var entries = linkHeader.split(",");
     var relsRegExp = /\brel="?([^"]+)"?\s*;?/;
-    var keysRegExp = /(\b[0-9a-z\.-]+\b)/g;
+    var keysRegExp = /(\b[0-9a-z.-]+\b)/g;
     var sourceRegExp = /^<(.*)>/;
 
     for (var i = 0; i < entries.length; i++) {
@@ -208,7 +208,7 @@ issueList.IssueCollection = Backbone.Collection.extend({
       creator: "author",
       mentioned: "mentions"
     };
-    var sitesearchRegExp = /site:([\w-\.]+(:\d+)?)/g;
+    var sitesearchRegExp = /site:([\w-.]+(:\d+)?)/g;
     var repoPath = $("main").data("repoPath");
 
     if (_.isString(paramsArg)) {

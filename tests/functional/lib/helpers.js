@@ -45,7 +45,9 @@ function login(context) {
 }
 
 function logout(context) {
-  return openPage(context, url("/logout"), "body").clearCookies().end();
+  return openPage(context, url("/logout"), "body")
+    .clearCookies()
+    .end();
 }
 
 module.exports = {

@@ -8,9 +8,10 @@ const { registerSuite } = intern.getInterface("object");
 const FunctionalHelpers = require("./lib/helpers.js");
 
 var url = function(path, params) {
-  var fullUrl = params !== undefined
-    ? intern.config.siteRoot + path + params
-    : intern.config.siteRoot + path;
+  var fullUrl =
+    params !== undefined
+      ? intern.config.siteRoot + path + params
+      : intern.config.siteRoot + path;
   return fullUrl;
 };
 

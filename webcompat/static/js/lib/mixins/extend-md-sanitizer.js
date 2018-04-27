@@ -7,7 +7,7 @@ function MarkdownSanitizerMixin() {
     // specify only valid tags. we don't want to inject evil <script> tags or stuff like that
     ["details", "summary"].forEach(function(tag) {
       md = md.replace(
-        new RegExp("&lt;(\/?)" + tag + "&gt;", "g"),
+        new RegExp("&lt;(/?)" + tag + "&gt;", "g"),
         "<$1" + tag + ">"
       );
     });

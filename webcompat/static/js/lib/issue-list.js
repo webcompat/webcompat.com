@@ -71,7 +71,10 @@ issueList.DropdownView = Backbone.View.extend({
       e.preventDefault();
     }
 
-    option.addClass("is-active").siblings().removeClass("is-active");
+    option
+      .addClass("is-active")
+      .siblings()
+      .removeClass("is-active");
   },
   manuallyUpdateDropdownTitle: function(optionElm, e) {
     // make sure we're only updating the title if we're operating
@@ -122,7 +125,10 @@ issueList.FilterView = Backbone.View.extend({
       btn = $(e.target);
     }
 
-    btn.toggleClass("is-active").siblings().removeClass("is-active");
+    btn
+      .toggleClass("is-active")
+      .siblings()
+      .removeClass("is-active");
 
     // Clear the search field
     issueList.events.trigger("search:clear");
