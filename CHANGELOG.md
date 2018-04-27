@@ -4,6 +4,15 @@
 2. New features: affect minor number
 3. API endpoint changes or dependency version updates: affect major number
 
+## 10.0.0 - 2018-04-27
+
+* Fixes #2420 - Adds tolerance on milestones initialization [Pull #2426](https://github.com/webcompat/webcompat.com/pull/2426)
+* Fixes #2424 - Forbids unauthorized and unauthenticated access on /file [Pull #2425](https://github.com/webcompat/webcompat.com/pull/2425)
+* Fixes #2346 - Update eslint and prettier packages. Format JS files [Pull #2423](https://github.com/webcompat/webcompat.com/pull/2423)
+* Fixes #2390. Update privacy policy to include GA data retention settings. [Pull #2418](https://github.com/webcompat/webcompat.com/pull/2418)
+* Fixes #2404. Cleanup bind usage in bugform.js [Pull #2415](https://github.com/webcompat/webcompat.com/pull/2415)
+* Fixes #2411 - Adds Failsafe check for differences in between config and milestones [Pull #2412](https://github.com/webcompat/webcompat.com/pull/2412)
+
 ## 9.0.5 - 2018-04-19
 
 * Fixes #2408 - Allow additional safe HTML tags in sanitized markdown [Pull #2410](https://github.com/webcompat/webcompat.com/pull/2410)
