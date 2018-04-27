@@ -42,7 +42,17 @@ const config = {
   tunnel: "selenium",
   tunnelOptions: {
     // this tells SeleniumTunnel to download geckodriver and chromedriver
-    drivers: ["firefox", { name: "chrome", version: "2.37" }]
+    drivers: ["firefox", { name: "chrome", version: "2.38" }]
+  },
+  capabilities: {
+    "moz:firefoxOptions": {
+      args: ["-headless"],
+      prefs: {
+        // work around geckodriver 0.19 bug
+        // that prevents pollUntil from working
+        "security.csp.enable": false
+      }
+    }
   },
 
   environments: environments,

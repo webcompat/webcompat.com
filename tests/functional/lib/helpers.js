@@ -4,6 +4,8 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 /*eslint no-console: ["error", { allow: ["log", "error"] }] */
 const intern = require("intern").default;
+const pollUntil = require("leadfoot/helpers/pollUntil");
+
 var config = intern.config;
 
 var url = function(path, params) {
@@ -51,7 +53,8 @@ function logout(context) {
 }
 
 module.exports = {
-  openPage: openPage,
   login: login,
-  logout: logout
+  logout: logout,
+  openPage: openPage,
+  pollUntil: pollUntil
 };
