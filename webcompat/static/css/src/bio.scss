@@ -27,7 +27,7 @@
   padding-top: 0;
 }
 
-@media screen and (min-width: 998px) {
+@media screen and (min-width: $page-size-l) {
   .bio .bio-img {
     filter: grayscale(100%);
   }

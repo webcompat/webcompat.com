@@ -13,21 +13,21 @@
   color: inherit;
   cursor: pointer;
   display: inline-block;
-  padding: var(--button-primary-padding);
+  padding: $button-primary-padding;
 }
 
 .button-primary {
-  background-color: var(--color-first);
+  background-color: $color-first;
 }
 
 .button-secondary {
-  background-color: var(--color-second);
-  color: var(--color-bg-page);
+  background-color: $color-second;
+  color: $color-bg-page;
 }
 
 .button-thanks {
   margin-right: 10px;
-  padding: var(--button-thanks-padding);
+  padding: $button-thanks-padding;
   text-decoration: none;
 }
 
@@ -38,7 +38,7 @@
 }
 
 .button-icon-hero {
-  fill: var(--color-first);
+  fill: $color-first;
 }
 
 .button-hero .icon-middle {
@@ -54,9 +54,9 @@
 }
 
 .button-hero {
-  background-color: var(--color-second);
+  background-color: $color-second;
   border-radius: 10px;
-  color: var(--color-first);
+  color: $color-first;
   font-size: 2em;
   font-weight: 200;
   vertical-align: middle;

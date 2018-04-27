@@ -1,7 +1,7 @@
 .navigation {
-  background-color: var(--color-first);
+  background-color: $color-first;
   box-sizing: border-box;
-  color: var(--color-second);
+  color: $color-second;
   display: flex;
   justify-content: center;
   left: 0;
@@ -21,8 +21,8 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  max-width: var(--unit-modul-l);
-  padding: 0 var(--unit-gutter);
+  max-width: $unit-modul-l;
+  padding: 0 $unit-gutter;
   position: relative;
   width: 100%;
 }
@@ -71,7 +71,7 @@
 .nav-button {
   background-color: transparent;
   border: none;
-  color: var(--color-second);
+  color: $color-second;
   cursor: pointer;
   font-family: "Open Sans", sans-serif;
   padding: 0;
@@ -80,8 +80,8 @@
 #search-bar {
   left: 0;
   margin: 0 auto;
-  max-width: var(--unit-modul-l);
-  min-width: var(--unit-modul-s);
+  max-width: $unit-modul-l;
+  min-width: $unit-modul-s;
   position: absolute;
   right: 0;
   top: 1px;
@@ -97,8 +97,8 @@
 }
 
 #search-bar .text-field {
-  background-color: var(--color-bg-box);
-  padding: var(--unit-space);
+  background-color: $color-bg-box;
+  padding: $unit-space;
 }
 
 #search-bar .nav-button {
@@ -109,7 +109,7 @@
   z-index: 1300;
 }
 
-@media screen and (min-width: 665px) {
+@media screen and (min-width: $page-size-m) {
   .nav-item .link-text {
     height: auto;
     visibility: visible;
@@ -121,7 +121,7 @@
   }
 }
 
-@media screen and (min-width: 998px) {
+@media screen and (min-width: $page-size-l) {
   .nav-left .nav-item {
     padding: 5px;
   }

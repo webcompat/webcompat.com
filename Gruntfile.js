@@ -29,6 +29,7 @@ module.exports = function(grunt) {
     "jst",
     "concat",
     "uglify",
+    "sass",
     "postcss",
     "cssmin",
     "purifycss"
@@ -40,6 +41,7 @@ module.exports = function(grunt) {
     "jst",
     "concat",
     "uglify",
+    "sass",
     "postcss",
     "cssmin",
     "imagemin"

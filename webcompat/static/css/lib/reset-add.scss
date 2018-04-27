@@ -10,7 +10,7 @@ h6 {
 
 /* Adds color for links  */
 a {
-  color: var(--color-second);
+  color: $color-second;
 }
 
 /* Allows vertical scrolling */
@@ -19,7 +19,7 @@ pre {
 }
 
 svg {
-  fill: var(--color-second);
+  fill: $color-second;
 }
 
 /* Prevent svg elements inside buttons from swallowing events */

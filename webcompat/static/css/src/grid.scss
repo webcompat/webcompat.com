@@ -1,0 +1,90 @@
+.grid {
+  margin-left: 1 / 2 * $unit-space;
+  margin-right: 1 / 2 * $unit-space;
+}
+
+.grid-row {
+  align-items: stretch;
+  background-color: $color-bg-box;
+  box-sizing: border-box;
+  display: flex;
+  flex-flow: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin: 0 (-1 / 2 * $unit-space) $grid-outermargin-s;
+}
+
+.grid-row > .grid-row,
+.grid-show-gap {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.grid-cell {
+  box-sizing: border-box;
+  margin-left: 1 / 2 * $unit-space;
+  margin-right: 1 / 2 * $unit-space;
+  padding: $unit-space;
+}
+
+.grid-cell,
+.x1 {
+  flex: 1 1 $unit-modul-s;
+  max-width: $unit-modul-l;
+  min-width: $unit-modul-s;
+}
+
+.grid-nested {
+  margin-left: 1 / 2 * $unit-space;
+  margin-right: 1 / 2 * $unit-space;
+}
+
+.grid-show-gap .grid-row {
+  background-color: transparent;
+  margin-bottom: 0;
+}
+
+.grid-show-gap .grid-cell {
+  background-color: $color-bg-box;
+  margin-bottom: $grid-outermargin-s;
+}
+
+.x2 {
+  flex-basis: $unit-modul-m;
+  max-width: $unit-modul-l;
+}
+
+.x3 {
+  flex-basis: $unit-modul-l;
+  max-width: $unit-modul-l;
+}
+
+@media (min-width: $page-size-m) {
+  .grid-row {
+    margin: 0 (-1 / 2 * $unit-space) $grid-outermargin-m;
+  }
+
+  .grid-show-gap .grid-cell {
+    margin-bottom: $grid-outermargin-m;
+  }
+
+  .x1-fix {
+    max-width: $unit-modul-s;
+  }
+}
+
+@media (min-width: $page-size-l) {
+  .grid {
+    margin: 0 auto;
+    max-width: $unit-modul-l;
+    padding: 0 (1 / 2 * $unit-space);
+  }
+
+  .grid-show-gap {
+    padding: 0;
+  }
+
+  .grid-cell {
+    padding: 2 * $unit-space;
+  }
+}

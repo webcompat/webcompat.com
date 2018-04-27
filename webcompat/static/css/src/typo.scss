@@ -1,5 +1,5 @@
 body {
-  color: var(--color-second);
+  color: $color-second;
   font-family: "Open Sans", sans-serif;
   font-size: 16px;
   line-height: 1.8em;
@@ -53,7 +53,7 @@ body {
 }
 
 .hint-text {
-  color: var(--color-default);
+  color: $color-default;
   font-family: Palatino, Garamond, serif;
   font-size: 1.025em;
   font-style: italic;
@@ -67,7 +67,7 @@ body {
 }
 
 blockquote {
-  border-left: 5px solid var(--color-default);
+  border-left: 5px solid $color-default;
   color: #666;
   margin-left: 0;
   margin-right: 0;

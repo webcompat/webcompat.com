@@ -1,5 +1,5 @@
 .issues-list .issue {
-  border-bottom: 5px solid var(--color-bg-page);
+  border-bottom: 5px solid $color-bg-page;
 }
 
 .issue .x2 {
@@ -12,14 +12,14 @@
 
 .issue .issue-description,
 .issue .issue-labels {
-  padding-bottom: calc(var(--unit-gap) / 3);
-  padding-top: calc(var(--unit-gap) / 3);
+  padding-bottom: $unit-gap / 3;
+  padding-top: $unit-gap / 3;
 }
 
 .issue .issue-description {
   font-size: 1.1em;
   margin-left: 0;
-  padding-left: calc(var(--unit-gap) + 1 / 2 * var(--unit-space));
+  padding-left: $unit-gap + 1 / 2 * $unit-space;
   word-wrap: break-word;
 }
 
@@ -38,7 +38,7 @@
 .issue-description .issue-date-open,
 .issue-description .issue-date-closed,
 .issue-description .issue-comments {
-  color: var(--color-default);
+  color: $color-default;
   display: inline;
   font-size: .8em;
   line-height: 1em;
@@ -46,7 +46,7 @@
 
 .issue-description .issue-date-closed,
 .issue-description .issue-comments {
-  margin-left: calc(var(--unit-gap) / 3);
+  margin-left: $unit-gap / 3;
 }
 
 .issue .issue-labels {
@@ -60,16 +60,16 @@
   padding-right: 10px;
 }
 
-@media screen and (min-width: 998px) {
+@media screen and (min-width: $page-size-l) {
   .issue-labels .label {
     display: block;
   }
 }
 
-@media screen and (max-width: 999px) {
+@media screen and (max-width: $page-size-l - 1px) {
   .issue .issue-labels {
     font-size: .9em;
-    padding: 0 calc(var(--unit-gap) * 1.2);
+    padding: 0 $unit-gap * 1.2;
   }
 }
 

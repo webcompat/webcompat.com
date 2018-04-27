@@ -8,7 +8,7 @@
 */
 
 .hero-tile {
-  background-color: var(--color-bg-box);
+  background-color: $color-bg-box;
 }
 
 .tiles {
@@ -33,15 +33,15 @@
 
 /* checkerboard pattern */
 .tile-item:nth-child(odd) {
-  background-color: var(--color-second);
+  background-color: $color-second;
 }
 
 /* checkerboard pattern */
 .tile-item:nth-child(odd) .tile-item-link {
-  color: var(--color-first);
+  color: $color-first;
 }
 
-@media screen and (min-width: 665px) {
+@media screen and (min-width: $page-size-m) {
   .tile-item {
     min-height: 10.5em;
   }
@@ -54,7 +54,7 @@
   }
 
   .tile-item:nth-child(odd) .tile-item-link {
-    color: var(--color-second);
+    color: $color-second;
   }
 
   /* every forth element starting by one
@@ -63,16 +63,16 @@
      */
   .tile-item:nth-child(4n+1),
   .tile-item:nth-child(4n+4) {
-    background-color: var(--color-second);
+    background-color: $color-second;
   }
 
   .tile-item:nth-child(4n+1) .tile-item-link,
   .tile-item:nth-child(4n+4) .tile-item-link {
-    color: var(--color-first);
+    color: $color-first;
   }
 }
 
-@media screen and (min-width: 998px) {
+@media screen and (min-width: $page-size-l) {
   .tiles-x3 .tile-item {
     flex-basis: 33.33%;
   }
@@ -84,18 +84,18 @@
 
   /* checkerboard pattern */
   .tile-item:nth-child(odd) {
-    background-color: var(--color-second);
-    color: var(--color-first);
+    background-color: $color-second;
+    color: $color-first;
   }
 
   /* checkerboard pattern */
   .tile-item:nth-child(odd) .tile-item-link {
-    color: var(--color-first);
+    color: $color-first;
   }
 
   /* checkerboard pattern */
   .tile-item:nth-child(even),
   .tile-item:nth-child(even) .tile-item-link {
-    color: var(--color-second);
+    color: $color-second;
   }
 }

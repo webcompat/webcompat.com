@@ -5,8 +5,8 @@
 module.exports = function(grunt) {
   grunt.config("watch", {
     css: {
-      files: "<%= cssPath %>/**/*.css",
-      tasks: ["postcss"]
+      files: "<%= cssPath %>/**/*.scss",
+      tasks: ["sass", "postcss"]
     },
     templates: {
       files: "<%= tmplPath %>/**/*.jst",

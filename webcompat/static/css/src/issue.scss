@@ -7,10 +7,10 @@
 }
 
 .issue-detail {
-  padding-bottom: calc (var(--unit-space) * 2);
+  padding-bottom: calc ($unit-space * 2);
 }
 
-@media all and (max-width: 664.99px) {
+@media all and (max-width: $page-size-m - 1px) {
   .issue-labels {
     order: 1;
   }
@@ -21,7 +21,7 @@
 }
 
 .issue-labels {
-  max-width: calc(100% - var(--unit-space));
+  max-width: calc(100% - #{$unit-space});
 }
 
 .issue-labels a {
@@ -30,17 +30,17 @@
 }
 
 .issue-comment {
-  max-width: calc(100% - 1 / 2 * var(--unit-space));
+  max-width: calc(100% - 1 / 2 * #{$unit-space});
   position: relative;
   width: 100%;
 }
 
 .issue-comment .comment-header {
   align-items: center;
-  background-color: var(--color-bg-comment-header);
+  background-color: $color-bg-comment-header;
   display: flex;
   justify-content: space-between;
-  padding: var(--unit-space);
+  padding: $unit-space;
 }
 
 .comment-header .comment-author {
@@ -71,14 +71,14 @@
 
 .issue-new-comment .text-field {
   box-sizing: border-box;
-  margin-bottom: calc(var(--unit-space) * 2);
+  margin-bottom: $unit-space * 2;
   min-height: 120px;
-  padding: calc(var(--unit-space) * 2);
+  padding: $unit-space * 2;
 }
 
 .issue-new-comment .form-upload {
-  margin-bottom: calc(var(--unit-space) * 2);
-  padding: calc(var(--unit-space) * 2);
+  margin-bottom: $unit-space * 2;
+  padding: $unit-space * 2;
 }
 
 .issue-new-comment .input-upload {
@@ -91,8 +91,8 @@
 
 .issue-new-comment .comment-submit {
   display: block;
-  margin: var(--unit-space);
-  width: calc(100% - 2 * var(--unit-space));
+  margin: $unit-space;
+  width: calc(100% - 2 * #{$unit-space});
 }
 
 .comment-body {
@@ -103,11 +103,10 @@
 /* As we can not add a class to the img in the comment right now (markup parsers are complicated), we need to use the img element */
 .comment-body img,
 .js-Issue-markdown img {
-  max-width: calc(var(--unit-modul-m) - (var(--unit-space) * 4));
+  max-width: $unit-modul-m - ($unit-space * 4);
 }
 
-/* var(--page-size-m) = 665px - vars not usable in queries */
-@media (min-width: 665px) {
+@media (min-width: $page-size-m) {
   #issue.grid-row {
     flex-wrap: nowrap;
   }
