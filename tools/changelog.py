@@ -29,8 +29,8 @@ HEADERS = {'Accept': 'application/vnd.github.v3+json',
            'Authorization': 'token {token}'.format(token=OAUTH_TOKEN),
            'User-Agent': 'webcompat/webcompat-bot'}
 # Templates for producing the changelog
-LINE_TEMPLATE = '* {title} [Pull #{number}]({url})\n'
-LOG_TEMPLATE = """
+LINE_TEMPLATE = u'* {title} [Pull #{number}]({url})\n'
+LOG_TEMPLATE = u"""
 
 ## X.X.X - {date}
 
