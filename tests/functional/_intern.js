@@ -69,6 +69,12 @@ if (args.grep) {
   config.grep = new RegExp(args.grep, "i");
 }
 
+// custom Firefox binary location, if specified then the default is ignored.
+// ref: https://code.google.com/p/selenium/wiki/DesiredCapabilities#WebDriver
+if (args.firefoxBinary) {
+  config.capabilities["moz:firefoxOptions"].binary = args.firefoxBinary;
+}
+
 intern.configure(config);
 
 intern.run().catch(e => {
