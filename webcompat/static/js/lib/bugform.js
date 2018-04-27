@@ -571,7 +571,8 @@ function BugForm() {
 
     if (response && response.status === 413) {
       wcEvents.trigger("flash:error", {
-        message: "The image is too big! Please choose something smaller than 4MB.",
+        message:
+          "The image is too big! Please choose something smaller than 4MB.",
         timeout: 5000
       });
     }
