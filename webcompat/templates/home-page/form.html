@@ -118,18 +118,14 @@
       <button
         class="button button-secondary js-Button"
         id="submitanon"
-        name="submit-type"
         type="submit"
-        value="github-proxy-report"
       >
         Report Anonymously
       </button>
       <button
         class="button button-primary right js-Button"
         id="submitgithub"
-        name="submit-type"
         type="submit"
-        value="github-auth-report"
       >
         {% if session.username %}Report as {{ session.username }}{% else %}Report via GitHub{% endif %}
       </button>

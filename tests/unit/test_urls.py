@@ -159,7 +159,7 @@ class TestURLs(unittest.TestCase):
         """/issues/new POST exit with 400 if missing parameters."""
         data = {'problem_category': u'mobile_site_bug',
                 'description': u'foo',
-                'submit-type': u'github-proxy-report',
+                'submit_type': u'github-proxy-report',
                 'url': u'http://example.com',
                 'os': u'Foobar',
                 'browser': u'BarFoo'}

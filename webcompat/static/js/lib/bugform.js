@@ -6,6 +6,7 @@
 
 function BugForm() {
   this.clickedButton = null;
+  this.detailsInput = $("#details:hidden");
   this.errorLabel = $(".js-error-upload");
   this.form = $("#js-ReportForm form");
   this.hasImage = null;
@@ -14,6 +15,7 @@ function BugForm() {
   this.reportButton = $("#js-ReportBug");
   this.removeBanner = $(".js-remove-upload");
   this.submitButtons = $("#js-ReportForm .js-Button");
+  this.submitTypeInput = $("#submit_type:hidden");
   this.uploadLabel = $(".js-label-upload");
   this.uploadLoader = $(".js-image-loader");
 
@@ -212,14 +214,12 @@ function BugForm() {
   };
 
   this.addDetails = function(detailsParam) {
-    var input = document.createElement("input");
-    input.type = "hidden";
-    input.name = "details";
     // The content of the details param may be encoded via
     // application/x-www-form-urlencoded, so we need to change the
     // + (SPACE) to %20 before decoding
-    input.value = decodeURIComponent(detailsParam.replace(/\+/g, "%20"));
-    this.form.get(0).appendChild(input);
+    this.detailsInput.val(
+      decodeURIComponent(detailsParam.replace(/\+/g, "%20"))
+    );
   };
 
   this.storeClickedButton = function(event) {
@@ -586,12 +586,8 @@ function BugForm() {
     var formEl = this.form.get(0);
     // Calling submit() manually on the form won't contain details
     // about which <button> was clicked (since one wasn't clicked).
-    // So we create a hidden <input> to pass along in the form data.
-    var hiddenEl = document.createElement("input");
-    hiddenEl.type = "hidden";
-    hiddenEl.name = "submit-type";
-    hiddenEl.value = this.clickedButton;
-    formEl.appendChild(hiddenEl);
+    // So we send that with the form data via a hidden input.
+    this.submitTypeInput.val(this.clickedButton);
     formEl.submit();
     dfd.resolve();
     return dfd.promise();
