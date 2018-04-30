@@ -82,27 +82,6 @@ registerSuite("Comments (auth)", {
         });
     },
 
-    "Add a screenshot to a comment"() {
-      return FunctionalHelpers.openPage(
-        this,
-        url("/issues/100"),
-        ".js-buttonUpload"
-      )
-        .findById("image")
-        .type("tests/fixtures/green_square.png")
-        .end()
-        .sleep(5000)
-        .execute(() => document.querySelector("textarea").value)
-        .then(val => {
-          assert.include(
-            val,
-            "[![Screenshot Description](http://localhost:5000/uploads/",
-            "The image was correctly uploaded and its URL was copied to the comment text."
-          );
-        })
-        .end();
-    },
-
     "Pressing 'g' inside of comment textarea *doesn't* go to github issue"() {
       return FunctionalHelpers.openPage(
         this,
