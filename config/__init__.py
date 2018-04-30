@@ -163,6 +163,8 @@ for cat_label in cat_labels:
 EXTRA_LABELS = [
     'type-media',
     'type-stylo',
+    'type-tracking-protection-basic',
+    'type-tracking-protection-strict',
     'type-webrender-enabled',
     'type-webvr',
 ]
