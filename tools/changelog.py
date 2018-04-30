@@ -8,6 +8,7 @@
 import argparse
 import datetime
 import os
+import re
 import sys
 from urllib import quote_plus
 from urlparse import urlunsplit
@@ -46,11 +47,11 @@ def get_remote_file(url):
     return json_response
 
 
-def create_changelog(json_response):
+def create_changelog(changes):
     """Extract the number of open issues."""
     loglines = ''
-    for issue in json_response:
-        title = issue['title']
+    for issue in changes:
+        title = normalize_title(issue['title'])
         number = issue['number']
         url = issue['html_url']
         loglines += LINE_TEMPLATE.format(title=title, url=url, number=number)
@@ -61,6 +62,18 @@ def delete_label(url):
     """Delete the label for an issue."""
     r = requests.delete(url, headers=HEADERS)
     return r.status_code
+
+
+def normalize_title(title):
+    """Attempt at normalizing the title.
+
+    Using a regex to match a number of cases.
+    See the test suite for the potential matches.
+    """
+    regex = r"[^ ]?\#(?P<number>\d+)[^\w]+(?P<prose>.*)"
+    m = re.search(regex, title)
+    title = 'Fixes #{msg[number]} - {msg[prose]}'.format(msg=m.groupdict())
+    return title
 
 
 def main():
