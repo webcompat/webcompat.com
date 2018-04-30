@@ -15,10 +15,19 @@ const browsers = args.browsers
   : ["firefox", "chrome"];
 
 browsers.forEach(function(b) {
-  environments.push({
-    browserName: b.toLowerCase(),
-    marionette: true
-  });
+  if (b.toLowerCase() === "chrome") {
+    environments.push({
+      browserName: b.toLowerCase(),
+      chromeOptions: { args: ["headless", "disable-gpu"] }
+    });
+  }
+
+  if (b.toLowerCase() === "firefox") {
+    environments.push({
+      browserName: b.toLowerCase(),
+      marionette: true
+    });
+  }
 });
 
 const config = {
@@ -73,6 +82,16 @@ if (args.grep) {
 // ref: https://code.google.com/p/selenium/wiki/DesiredCapabilities#WebDriver
 if (args.firefoxBinary) {
   config.capabilities["moz:firefoxOptions"].binary = args.firefoxBinary;
+}
+
+// clear out the headless options arguments
+if (args.showBrowser) {
+  config.capabilities["moz:firefoxOptions"].args = [];
+  config.environments.forEach(obj => {
+    if (obj.browserName === "chrome") {
+      obj.chromeOptions.args = [];
+    }
+  });
 }
 
 intern.configure(config);
