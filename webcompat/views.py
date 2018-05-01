@@ -193,7 +193,7 @@ def create_issue():
         # if one essential is missing, it's a bad request
         must_parameters = set(['url', 'problem_category', 'description',
                                'os', 'browser',
-                               'username', 'submit-type'])
+                               'username', 'submit_type'])
         if not must_parameters.issubset(form.keys()):
             abort(400)
     else:
@@ -221,7 +221,7 @@ def create_issue():
     log.info('{ip} {url}'.format(ip=request.remote_addr,
                                  url=form['url'].encode('utf-8')))
     # form submission for 3 scenarios: authed, to be authed, anonymous
-    if form.get('submit-type') == AUTH_REPORT:
+    if form.get('submit_type') == AUTH_REPORT:
         if g.user:  # If you're already authed, submit the bug.
             response = report_issue(form)
             session['show_thanks'] = True
@@ -230,7 +230,7 @@ def create_issue():
         else:  # Stash form data into session, go do GitHub auth
             session['form_data'] = form
             return redirect(url_for('login'))
-    elif form.get('submit-type') == PROXY_REPORT:
+    elif form.get('submit_type') == PROXY_REPORT:
         response = report_issue(form, proxy=True).json()
         session['show_thanks'] = True
         return redirect(url_for('show_issue', number=response.get('number')))

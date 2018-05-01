@@ -11,7 +11,7 @@ branches:
 language: python
 
 addons:
-  firefox: latest
+  firefox: "58.0"
   chrome: stable
 
 python:
@@ -59,4 +59,4 @@ before_script:
 # now run the tests!
 script:
   - nosetests
-  - npm run test:js -- --reporters="runner"
+  - npm run test:js -- --reporters="runner" --firefoxBinary=`which firefox`

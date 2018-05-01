@@ -364,14 +364,14 @@ issueList.IssueView = Backbone.View.extend(
       this._loadingIndicator.addClass("is-active");
       this.issues
         .fetch(headers)
-        .success(
+        .done(
           _.bind(function() {
             this._loadingIndicator.removeClass("is-active");
             this.render(this.issues);
             issuesPagination.initPaginationLinks(this.issues);
           }, this)
         )
-        .error(
+        .fail(
           _.bind(function(e) {
             var message;
             var timeout;

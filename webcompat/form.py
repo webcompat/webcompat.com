@@ -21,6 +21,7 @@ from helpers import get_str_value
 from flask_wtf.file import FileAllowed
 from flask_wtf.file import FileField
 from flask_wtf import FlaskForm
+from wtforms import HiddenField
 from wtforms import RadioField
 from wtforms import StringField
 from wtforms import TextAreaField
@@ -88,6 +89,8 @@ class IssueForm(FlaskForm):
     image = FileField(u'Attach a screenshot image',
                       [Optional(),
                        FileAllowed(Upload.ALLOWED_FORMATS, image_message)])
+    details = HiddenField()
+    submit_type = HiddenField(default="submitanon")
 
 
 def get_form(ua_header):
@@ -108,7 +111,7 @@ def get_details(details_string):
     try:
         details = json.loads(content)
         rv = ''.join(['<li>{k}: {v}</li>'.format(k=k, v=get_str_value(v))
-                     for k, v in details.items()])
+                      for k, v in details.items()])
     except ValueError:
         return content
     return rv
@@ -206,7 +209,7 @@ def normalize_metadata(metadata_value):
         metadata_value = normalize_metadata(metadata_value)
     # Let's avoid html tags in
     if ('<' or '>') in metadata_value and '-->' not in metadata_value:
-            metadata_value = ''
+        metadata_value = ''
     if len(metadata_value) > 200:
         metadata_value = ''
     return metadata_value.strip()

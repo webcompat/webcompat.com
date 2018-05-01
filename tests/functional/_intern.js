@@ -15,10 +15,19 @@ const browsers = args.browsers
   : ["firefox", "chrome"];
 
 browsers.forEach(function(b) {
-  environments.push({
-    browserName: b.toLowerCase(),
-    marionette: true
-  });
+  if (b.toLowerCase() === "chrome") {
+    environments.push({
+      browserName: b.toLowerCase(),
+      chromeOptions: { args: ["headless", "disable-gpu"] }
+    });
+  }
+
+  if (b.toLowerCase() === "firefox") {
+    environments.push({
+      browserName: b.toLowerCase(),
+      marionette: true
+    });
+  }
 });
 
 const config = {
@@ -42,7 +51,17 @@ const config = {
   tunnel: "selenium",
   tunnelOptions: {
     // this tells SeleniumTunnel to download geckodriver and chromedriver
-    drivers: ["firefox", { name: "chrome", version: "2.37" }]
+    drivers: ["firefox", { name: "chrome", version: "2.38" }]
+  },
+  capabilities: {
+    "moz:firefoxOptions": {
+      args: ["-headless"],
+      prefs: {
+        // work around geckodriver 0.19 bug
+        // that prevents pollUntil from working
+        "security.csp.enable": false
+      }
+    }
   },
 
   environments: environments,
@@ -57,6 +76,22 @@ const config = {
 
 if (args.grep) {
   config.grep = new RegExp(args.grep, "i");
+}
+
+// custom Firefox binary location, if specified then the default is ignored.
+// ref: https://code.google.com/p/selenium/wiki/DesiredCapabilities#WebDriver
+if (args.firefoxBinary) {
+  config.capabilities["moz:firefoxOptions"].binary = args.firefoxBinary;
+}
+
+// clear out the headless options arguments
+if (args.showBrowser) {
+  config.capabilities["moz:firefoxOptions"].args = [];
+  config.environments.forEach(obj => {
+    if (obj.browserName === "chrome") {
+      obj.chromeOptions.args = [];
+    }
+  });
 }
 
 intern.configure(config);

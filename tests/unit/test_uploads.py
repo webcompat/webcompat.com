@@ -6,6 +6,7 @@
 
 '''Tests for image upload API endpoint.'''
 
+import json
 import os.path
 import sys
 import unittest
@@ -19,6 +20,30 @@ from werkzeug.datastructures import MultiDict
 sys.path.append(os.path.realpath(os.pardir))
 
 from webcompat import app  # nopep8
+
+
+def check_rv_format(self, resp):
+    """Check that the server gave us JSON in the expected format.
+
+    expected format:
+     '{"url": "http://localhost:5000/uploads/...ade311d4.jpg",
+     "thumb_url": "http://localhost:5000/uploads/...e311d4-thumb.jpg",
+     "filename": "ca589794-875b-44bd-9cd9-ed6cade311d4.jpg"}'
+    """
+    if resp.status_code == 201:
+        response = json.loads(resp.data)
+        self.assertTrue(
+            'url' in response and
+            'http://localhost:5000/uploads/' in response.get('url')
+        )
+        self.assertTrue(
+            'thumb_url' in response and
+            '-thumb.' in response.get('thumb_url')
+        )
+        self.assertTrue(
+            'filename' in response and
+            response.get('filename') in response.get('url')
+        )
 
 
 class TestingFileStorage(FileStorage):
@@ -41,6 +66,7 @@ class TestingFileStorage(FileStorage):
 
     taken from https://github.com/srusskih/flask-uploads/blob/master/flaskext/uploads.py#L476 # nopep8
     """
+
     def __init__(self, stream=None, filename=None, name=None,
                  content_type='application/octet-stream', content_length=-1,
                  headers=None):
@@ -114,6 +140,7 @@ class TestUploads(unittest.TestCase):
 
             rv = test_client.post('/upload/', data=dict())
             self.assertEqual(rv.status_code, status_code)
+            check_rv_format(self, rv)
 
     def test_base64_screenshot_uploads(self):
         '''Test that Base64 screenshots return the expected status codes.'''
@@ -143,6 +170,7 @@ class TestUploads(unittest.TestCase):
 
             rv = test_client.post('/upload/', data=dict())
             self.assertEqual(rv.status_code, status_code)
+            check_rv_format(self, rv)
 
 
 if __name__ == '__main__':

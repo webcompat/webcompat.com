@@ -107,10 +107,16 @@ npm run test:js -- --functionalSuites=tests/functional/foo.js --grep=tacos
 
 This will run any test within the foo.js suite that has "tacos" in its name.
 
-Right now the tests are running in Firefox as a default. You can specify which browsers you want to test with using the `browsers` argument. Like this:
+Right now the tests are running in Firefox and Chrome as a default. You can specify which browsers you want to test with using the `browsers` argument. Like this:
 
 ```bash
-npm run test:js -- --browsers=chrome,firefox
+npm run test:js -- --browsers=chrome
+```
+
+By default, Chrome and Firefox will run in headless mode. To display the browser UI when running tests, use the `--showBrowser` arguement:
+
+```bash
+npm run test:js -- --showBrowser
 ```
 
 For a list of the recognized browser names, just refer to [Browser enum](http://seleniumhq.github.io/selenium/docs/api/javascript/module/selenium-webdriver/index_exports_Browser.html)

@@ -7,9 +7,7 @@ const { assert } = intern.getPlugin("chai");
 const { registerSuite } = intern.getInterface("object");
 const FunctionalHelpers = require("./lib/helpers.js");
 
-var url = function(path) {
-  return intern.config.siteRoot + path;
-};
+var url = path => intern.config.siteRoot + path;
 
 registerSuite("Comments (auth)", {
   before() {
@@ -34,13 +32,13 @@ registerSuite("Comments (auth)", {
       var originalCommentsLength;
       var allCommentsLength;
       return (
-        FunctionalHelpers.openPage(this, url("/issues/100"), ".js-Issue")
+        FunctionalHelpers.openPage(this, url("/issues/100"), ".js-image-upload")
           .findAllByCssSelector(".js-Issue-comment")
-          .then(function(elms) {
+          .then(elms => {
             originalCommentsLength = elms.length;
           })
           .end()
-          .findByCssSelector("textarea.js-Comment-text")
+          .findByCssSelector("textarea")
           .type("Today's date is " + new Date().toDateString())
           .end()
           // click the comment button
@@ -49,7 +47,7 @@ registerSuite("Comments (auth)", {
           .end()
           .sleep(1000)
           .findAllByCssSelector(".js-Issue-comment")
-          .then(function(elms) {
+          .then(elms => {
             allCommentsLength = elms.length;
             assert(
               originalCommentsLength < allCommentsLength,
@@ -64,7 +62,7 @@ registerSuite("Comments (auth)", {
       var allCommentsLength;
       return FunctionalHelpers.openPage(this, url("/issues/100"), ".js-Issue")
         .findAllByCssSelector(".js-Issue-comment")
-        .then(function(elms) {
+        .then(elms => {
           originalCommentsLength = elms.length;
         })
         .end()
@@ -75,35 +73,13 @@ registerSuite("Comments (auth)", {
         .end()
         .sleep(2000)
         .findAllByCssSelector(".js-Issue-comment")
-        .then(function(elms) {
+        .then(elms => {
           allCommentsLength = elms.length;
           assert(
             originalCommentsLength === allCommentsLength,
             "Comment was not successfully left."
           );
         });
-    },
-
-    "Add a screenshot to a comment"() {
-      return FunctionalHelpers.openPage(
-        this,
-        url("/issues/100"),
-        ".comment-header"
-      )
-        .findById("image")
-        .type("tests/fixtures/green_square.png")
-        .end()
-        .sleep(2000)
-        .findByCssSelector(".js-Comment-text")
-        .getProperty("value")
-        .then(function(val) {
-          assert.include(
-            val,
-            "[![Screenshot Description](http://localhost:5000/uploads/",
-            "The image was correctly uploaded and its URL was copied to the comment text."
-          );
-        })
-        .end();
     },
 
     "Pressing 'g' inside of comment textarea *doesn't* go to github issue"() {
@@ -117,7 +93,7 @@ registerSuite("Comments (auth)", {
         .end()
         .setFindTimeout(2000)
         .findByCssSelector(".repo-container .issues-listing")
-        .then(assert.fail, function(err) {
+        .then(assert.fail, err => {
           assert.isTrue(/NoSuchElement/.test(String(err)));
         })
         .end();
@@ -135,7 +111,7 @@ registerSuite("Comments (auth)", {
         .setFindTimeout(2000)
         .findByCssSelector(".js-LabelEditorLauncher")
         .getAttribute("class")
-        .then(function(className) {
+        .then(className => {
           assert.notInclude(className, "is-active");
         })
         .end();

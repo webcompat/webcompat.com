@@ -21,6 +21,8 @@ data/*
 # these are our 'dist' files
 # checking them into the repo is silly
 webcompat/**/*.min.js
+# but don't ignore minified js code in the /vendor/ directory
+!webcompat/**/vendor/*.min.js
 webcompat/static/js/*.js
 webcompat/static/js/build/
 webcompat/static/js/dist/
