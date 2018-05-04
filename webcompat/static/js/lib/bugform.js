@@ -255,7 +255,7 @@ function BugForm() {
       return;
     }
 
-    var url = location.href.match(this.urlParamRegExp);
+    var url = location.href.match(/url=([^&]*)/);
     if (url !== null) {
       url = this.trimWyciwyg(decodeURIComponent(url[1]));
       this.urlField.val(url);
@@ -292,7 +292,9 @@ function BugForm() {
   };
 
   this.trimWyciwyg = function(url) {
-    //trim wyciwyg://N/ from URL.
+    // Trim wyciwyg://N/ from URL, if found.
+    // See https://bugzilla.mozilla.org/show_bug.cgi?id=1098037 &
+    // https://en.wikipedia.org/wiki/WYCIWYG
     var wyciwygRe = /(wyciwyg:\/\/\d+\/)/i;
     if (url.search(wyciwygRe) !== 0) {
       return url;
