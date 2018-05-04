@@ -4,7 +4,7 @@
 
 var issues = issues || {}; // eslint-disable-line no-use-before-define
 var issueList = issueList || {}; // eslint-disable-line no-use-before-define
-var loadingIndicator = $(".js-Loader");
+var loadingIndicator = $(".js-loader");
 issueList.user = $("body").data("username");
 
 var myIssuesPagination = new PaginationMixin();
