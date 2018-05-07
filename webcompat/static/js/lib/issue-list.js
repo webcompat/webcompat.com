@@ -273,7 +273,7 @@ issueList.IssueView = Backbone.View.extend(
     _searchRegex: /&*q=(?:([^&=]+))&*/i,
     _githubSearchEndpoint: "https://api.github.com/search/issues",
     _isLoggedIn: $("body").data("username"),
-    _loadingIndicator: $(".js-Loader"),
+    _loadingIndicator: $(".js-loader"),
     _urlParams: undefined,
     initialize: function() {
       this.issues = new issueList.IssueCollection();

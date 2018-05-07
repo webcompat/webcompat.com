@@ -181,7 +181,7 @@ issues.ImageUploadView = Backbone.View.extend({
     "change .js-buttonUpload": "validateAndUpload"
   },
   _submitButton: $(".js-Issue-comment-button"),
-  _loaderImage: $(".js-Upload-Loader"),
+  _loadingIndicator: $(".js-loader"),
   template: wcTmpl["issue/upload-image.jst"],
   render: function() {
     this.$el.html(this.template()).insertAfter($("textarea"));
@@ -201,7 +201,7 @@ issues.ImageUploadView = Backbone.View.extend({
       // The assumption here is that FormData is supported, otherwise
       // the upload view is not shown to the user.
       var formdata = new FormData($("form").get(0));
-      this._loaderImage.show();
+      this._loadingIndicator.addClass("is-active");
       $.ajax({
         // File upload will fail if we pass contentType: multipart/form-data
         // to jQuery (because it won't have the boundary string and then all
@@ -213,12 +213,12 @@ issues.ImageUploadView = Backbone.View.extend({
         url: "/upload/",
         success: _.bind(function(response) {
           this.addImageUploadComment(response);
-          this._loaderImage.hide();
+          this._loadingIndicator.removeClass("is-active");
         }, this),
         error: _.bind(function() {
           var msg = "There was an error trying to upload the image.";
           wcEvents.trigger("flash:error", { message: msg, timeout: 4000 });
-          this._loaderImage.hide();
+          this._loadingIndicator.removeClass("is-active");
         }, this)
       });
     }

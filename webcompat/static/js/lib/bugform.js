@@ -17,7 +17,6 @@ function BugForm() {
   this.submitButtons = $("#js-ReportForm .js-Button");
   this.submitTypeInput = $("#submit_type:hidden");
   this.uploadLabel = $(".js-label-upload");
-  this.uploadLoader = $(".js-image-loader");
 
   this.UPLOAD_LIMIT = 1024 * 1024 * 4;
 
@@ -535,7 +534,6 @@ function BugForm() {
   this.uploadImage = function(dataURI) {
     var dfd = $.Deferred();
     this.disableSubmits();
-    this.uploadLoader.addClass("is-active");
 
     $(".js-remove-upload").addClass("is-hidden");
 
@@ -560,8 +558,6 @@ function BugForm() {
      If we're here, the attempted form submission failed.
   */
   this.handleUploadError = function(response) {
-    this.uploadLoader.removeClass("is-active");
-
     if (response && response.status === 415) {
       wcEvents.trigger("flash:error", {
         message: this.inputs.image.helpText,
