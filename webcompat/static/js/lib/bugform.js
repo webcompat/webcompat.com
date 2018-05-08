@@ -5,6 +5,7 @@
 /*eslint new-cap: ["error", { "capIsNewExceptions": ["Deferred"] }]*/
 
 function BugForm() {
+  this.autogrowField = $(".js-autogrow-field");
   this.clickedButton = null;
   this.detailsInput = $("#details:hidden");
   this.errorLabel = $(".js-error-upload");
@@ -81,6 +82,7 @@ function BugForm() {
     this.checkProblemTypeValidity = this.checkProblemTypeValidity.bind(this);
     this.checkImageTypeValidity = this.checkImageTypeValidity.bind(this);
     this.checkOptionalNonEmpty = this.checkOptionalNonEmpty.bind(this);
+    this.handleAutogrowField = this.handleAutogrowField.bind(this);
     this.storeClickedButton = this.storeClickedButton.bind(this);
     this.onFormSubmit = this.onFormSubmit.bind(this);
     this.onReceiveMessage = this.onReceiveMessage.bind(this);
@@ -88,6 +90,7 @@ function BugForm() {
 
     this.checkParams();
     this.disableSubmits();
+    this.initAutogrowFields();
     this.urlField.on("blur input", this.checkURLValidity);
     this.descField.on("blur input", this.checkDescriptionValidity);
     this.problemType.on("change", this.checkProblemTypeValidity);
@@ -112,6 +115,46 @@ function BugForm() {
 
     // Set up listener for message events from screenshot-enabled add-ons
     window.addEventListener("message", this.onReceiveMessage, false);
+  };
+
+  this.initAutogrowFields = function() {
+    // store initial rows attribute value in dataset of each element
+    // because rows attribute will be overwritten later when autogrowing
+    this.autogrowField.each(function(index, el) {
+      el.dataset.minRows = parseInt(el.getAttribute("rows"), 10);
+    });
+    this.autogrowField.on("keyup input", this.handleAutogrowField);
+  };
+
+  this.handleAutogrowField = function(event) {
+    var target = event.target;
+    var $target = $(target);
+    var contentHeight =
+      target.scrollHeight -
+      parseInt($target.css("padding-top"), 10) -
+      parseInt($target.css("padding-bottom"), 10);
+    // either use initially calculated rowHeight or calculate on first event occurence
+    var rowHeight =
+      target.dataset.rowHeight ||
+      contentHeight / parseInt(target.getAttribute("rows"), 10);
+    // don't let textarea grow more than half the screen size
+    var MAX_HEIGHT = window.innerHeight / 2;
+    var MAX_ROWS = Math.floor(MAX_HEIGHT / rowHeight);
+    var MIN_ROWS = target.dataset.minRows;
+    // determine amount of used rows to shrink back if necessary
+    var usedRows = target.value.split("\n").length;
+    var rows = Math.min(Math.ceil(contentHeight / rowHeight), usedRows);
+
+    // store initially calculated row height if not already present
+    if (!target.dataset.rowHeight) {
+      target.dataset.rowHeight = rowHeight;
+    }
+
+    // update rows attribute and respect minimum and maximum values
+    target.setAttribute(
+      "rows",
+      rows < MIN_ROWS ? MIN_ROWS : rows > MAX_ROWS ? MAX_ROWS : rows
+    );
   };
 
   this.onReceiveMessage = function(event) {
