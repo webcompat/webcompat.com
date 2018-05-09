@@ -103,7 +103,7 @@
 /* As we can not add a class to the img in the comment right now (markup parsers are complicated), we need to use the img element */
 .comment-body img,
 .js-Issue-markdown img {
-  max-width: calc(var(--unit-modul-m) - (var(--unit-space) * 4));
+  max-width: 100%;
 }
 
 /* var(--page-size-m) = 665px - vars not usable in queries */
