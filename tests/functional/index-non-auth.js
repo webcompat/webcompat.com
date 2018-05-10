@@ -26,16 +26,6 @@ registerSuite("Index", {
         .end();
     },
 
-    "reporter addon link is shown"() {
-      return FunctionalHelpers.openPage(this, url("/"), ".js-hero-title")
-        .findByCssSelector(".js-addon-link")
-        .getVisibleText()
-        .then(function(text) {
-          assert.include(text, "Download");
-        })
-        .end();
-    },
-
     "form toggles open then closed"() {
       return (
         FunctionalHelpers.openPage(this, url("/"), ".js-hero-title")
