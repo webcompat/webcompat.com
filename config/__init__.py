@@ -175,5 +175,7 @@ logging.basicConfig(
     filename=LOG_FILE,
     format='%(levelname)s %(asctime)s %(message)s',
     datefmt='%Y-%m-%d %H:%M:%S')
-if not initialize_status():
+if initialize_status():
+    print('Server is running at http://localhost:5000/')
+else:
     sys.exit('Milestones are not initialized. Check logs.')
