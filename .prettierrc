@@ -1,0 +1,6 @@
+# See https://prettier.io/docs/en/options.html for available options
+
+# We actually don’t need to configure anything in here, because we adapt the default settings of prettier.
+# But we need this file, because otherwise prettier will search up the file tree until to find a config file.
+# This will lead to problems if one has settings different from the default settings defined in ~/.prettierrc.
+# See https://github.com/webcompat/webcompat.com/issues/2459
