@@ -15,7 +15,7 @@ For testing code locally, you will need a very basic setup. There are a few requ
 
 * [Python](https://www.python.org/) 2.7
 * [Node.js](https://nodejs.org/en/download/) Current LTS version
-* [Github](https://github.com) account
+* [GitHub](https://github.com) account
 
 > Note: If you install Python on Windows using the MSI installer, it is highly recommended to check the "Add to path"-box during installation. If you have not done so, see if one of the answers to the StackOverflow post [Adding Python path on Windows 7](http://stackoverflow.com/questions/6318156/adding-python-path-on-windows-7) can help you - it should also work fine for later versions of Windows.
 >
@@ -23,7 +23,7 @@ For testing code locally, you will need a very basic setup. There are a few requ
 >
 > As an alternative to Windows, a cloud IDE such as [Cloud 9](https://c9.io) can be used for a relatively easier setup. If you take this route, please update to the latest Python version with the following. (This is to avoid `InsecurePlatformWarning` errors that arise when the default Python 2.7.6 is used).
 
-```
+```shell
 sudo apt-add-repository ppa:fkrull/deadsnakes-python2.7
 sudo apt-get update
 sudo apt-get install python2.7 python2.7-dev
@@ -31,7 +31,7 @@ sudo apt-get install python2.7 python2.7-dev
 
 In Ubuntu, sometimes even after installing Node.js, the command `node -v` does not show the installed version. To complete installation, a symbolic link has to be created to the sbin folder.
 
-```
+```shell
 #remove old symbolic links if any
 sudo rm -r /usr/bin/node
 
@@ -131,7 +131,13 @@ npm run build
 
 ### Configuring The Server
 
-To test issue submission, you need to create a repository on GitHub. Create a new repository make note of the name. For example, the user `miketaylr` has created a repository called "[test-repo](https://github.com/miketaylr/test-repo)" for this purpose.
+### Test repository
+
+You need to create a repository on GitHub which is used to submit issues via the GitHub API. For example, the user `miketaylr` has created a repository called "[test-repo](https://github.com/miketaylr/test-repo)" for this purpose.
+
+**Important:** Your repository needs to have the same milestones like we have in our [test-repository](https://github.com/webcompat/webcompat-tests/milestones).
+
+### Store your settings
 
 ```bash
 # set up secrets.py, filling in appropriate secrets and pointers to repos
@@ -185,7 +191,13 @@ or
 npm run start
 ```
 
-You should now have a local instance of the site running at `http://localhost:5000/`. Please [file bugs](https://github.com/webcompat/webcompat.com/issues/new) if something went wrong!
+You should now have a local instance of the site running at `http://localhost:5000/`.
+
+#### Getting error messages?
+
+Please [file bugs](https://github.com/webcompat/webcompat.com/issues/new) in case you need further assistance.
+First you should have a look at the logs. They are located at `/tmp/webcompat.log`.
+
 
 ### Building the Project
 
