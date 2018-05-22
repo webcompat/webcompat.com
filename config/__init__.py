@@ -8,7 +8,6 @@
 
 from collections import namedtuple
 import json
-import logging
 import os
 import sys
 import urlparse
@@ -92,14 +91,14 @@ def update_status_config(milestones_content):
     # Check if there is a missing milestone. The app will not start.
     if not set(status_names).issubset(milestone_names):
         missing = set(status_names).symmetric_difference(set(milestone_names))
-        logging.warning(MILESTONE_UNMATCHING.format(names=list(missing)))
+        print(MILESTONE_UNMATCHING.format(names=list(missing)))
         return None
     # Check if there are more milestones than the configured ones.
     # This is probably fine, but we can log a warning.
     if set(status_names) < set(milestone_names):
         # Extract the additional milestones
         intruder = set(status_names).symmetric_difference(set(milestone_names))
-        logging.warning(MILESTONE_UNMATCHING.format(names=list(intruder)))
+        print(MILESTONE_UNMATCHING.format(names=list(intruder)))
     # Assign the right id to the status.
     for milestone in milestones:
         if milestone['title'] in status_names:
@@ -171,9 +170,5 @@ EXTRA_LABELS = [
 
 from webcompat import app
 # We need the milestones
-logging.basicConfig(
-    filename=LOG_FILE,
-    format='%(levelname)s %(asctime)s %(message)s',
-    datefmt='%Y-%m-%d %H:%M:%S')
 if not initialize_status():
     sys.exit('Milestones are not initialized. Check logs.')
