@@ -26,7 +26,7 @@ The config.py file seems to be missing.
 
 Please create a copy of config.py.example and customize it accordingly.
 For details, please see
-https://github.com/webcompat/webcompat.com/blob/master/CONTRIBUTING.md#configuring-the-server
+https://github.com/webcompat/webcompat.com/blob/master/.github/CONTRIBUTING.md#configuring-the-server
 ==============================================
 '''
 
