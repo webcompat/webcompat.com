@@ -44,7 +44,7 @@ def extract_browser_label(metadata_dict):
         dash_browser = '-'.join(browser.split())
         return 'browser-{name}'.format(name=dash_browser)
     else:
-        return None
+        return 'browser-fixme'
 
 
 def extract_extra_labels(metadata_dict):

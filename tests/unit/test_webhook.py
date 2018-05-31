@@ -147,10 +147,10 @@ class TestWebhook(unittest.TestCase):
     def test_extract_browser_label(self):
         """Extract browser label name."""
         metadata_tests = [
-            ({'browser': 'Firefox'}, None),
-            ({'browser': 'Firefox Mobile'}, None),
-            ({'browser': 'Firefox99.0'}, None),
-            ({'browser': 'Firefox (tablet)'}, None),
+            ({'browser': 'Firefox'}, 'browser-fixme'),
+            ({'browser': 'Firefox Mobile'}, 'browser-fixme'),
+            ({'browser': 'Firefox99.0'}, 'browser-fixme'),
+            ({'browser': 'Firefox (tablet)'}, 'browser-fixme'),
             ({'browser': 'Firefox 30.0'}, 'browser-firefox'),
             ({'browser': 'Firefox Mobile 30.0'}, 'browser-firefox-mobile'),
             ({'browser': 'Firefox Mobile (Tablet) 88.0'},
