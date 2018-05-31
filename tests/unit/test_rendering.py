@@ -82,28 +82,28 @@ class TestURIContent(unittest.TestCase):
         headers = {'HTTP_USER_AGENT': FIREFOX_UA}
         rv = self.app.get('/', environ_base=headers)
         expected = '<span class="link-text">Download Firefox Add-on</span>'
-        expected2 = '<use xlink:href="#svg-download2">Firefox addons</use>'
+        expected2 = '<use xlink:href="#svg-download2"/>'
         self.assertTrue(expected in rv.data)
         self.assertTrue(expected2 in rv.data)
         # testing for Firefox Androidpe
         headers = {'HTTP_USER_AGENT': FIREFOX_AND_UA}
         rv = self.app.get('/', environ_base=headers)
         expected = '<span class="link-text">Download Firefox Add-on</span>'
-        expected2 = '<use xlink:href="#svg-download2">Firefox for Android addons</use>'  # noqa
+        expected2 = '<use xlink:href="#svg-download2"/>'  # noqa
         self.assertTrue(expected in rv.data)
         self.assertTrue(expected2 in rv.data)
         # testing for Chrome
         headers = {'HTTP_USER_AGENT': CHROME_UA}
         rv = self.app.get('/', environ_base=headers)
         expected = '<span class="link-text">Download Chrome Add-on</span>'
-        expected2 = '<use xlink:href="#svg-download2">Chrome webstore</use>'
+        expected2 = '<use xlink:href="#svg-download2"/>'
         self.assertTrue(expected in rv.data)
         self.assertTrue(expected2 in rv.data)
         # testing for Opera
         headers = {'HTTP_USER_AGENT': OPERA_UA}
         rv = self.app.get('/', environ_base=headers)
         expected = '<span class="link-text">Download Opera Add-on</span>'
-        expected2 = '<use xlink:href="#svg-download2">Opera Extension</use>'
+        expected2 = '<use xlink:href="#svg-download2"/>'
         self.assertTrue(expected in rv.data)
         self.assertTrue(expected2 in rv.data)
         # testing for unknown browser
