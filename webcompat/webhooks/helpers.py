@@ -17,6 +17,8 @@ from webcompat.form import domain_name
 from webcompat.helpers import extract_url
 from webcompat.helpers import proxy_request
 
+BROWSERS = ['blackberry', 'brave', 'chrome', 'edge', 'firefox', 'iceweasel', 'ie', 'lynx', 'myie', 'opera', 'puffin', 'qq', 'safari', 'samsung', 'seamonkey', 'uc', 'vivaldi']  # noqa
+
 
 def extract_metadata(body):
     """Parse all the hidden comments for issue metadata.
@@ -35,16 +37,32 @@ def extract_metadata(body):
 def extract_browser_label(metadata_dict):
     """Return the browser label from metadata_dict."""
     browser = metadata_dict.get('browser', None)
+    dash_browser = 'fixme'
     # Only proceed if browser looks like "FooBrowser 99.0"
     if browser and re.search(r'([^\d]+?)\s[\d\.]+', browser):
         browser = browser.lower()
-        browser = browser.rsplit(' ', 1)[0]
         browser = browser.encode('utf-8')
+        # Remove parenthesis from the name
         browser = browser.translate(None, '()')
-        dash_browser = '-'.join(browser.split())
-        return 'browser-{name}'.format(name=dash_browser)
-    else:
-        return 'browser-fixme'
+        # Before returning a label, we need to clean up a bit
+        label_data = browser.split(' ')
+        name = label_data[0]
+        remainder = label_data[1:]
+        # Let's focus on the known browsers.
+        if name in BROWSERS:
+            dash_browser = label_data[0]
+            # Let's find a type for the browser.
+            remainder = label_data[1:]
+            browser_type = None
+            if 'mobile' in remainder:
+                browser_type = 'mobile'
+            if 'tablet' in remainder:
+                browser_type = 'tablet'
+            if browser_type:
+                dash_browser = '{dash_browser}-{browser_type}'.format(
+                    dash_browser=dash_browser,
+                    browser_type=browser_type)
+    return 'browser-{name}'.format(name=dash_browser)
 
 
 def extract_extra_labels(metadata_dict):

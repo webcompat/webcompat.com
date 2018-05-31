@@ -153,8 +153,13 @@ class TestWebhook(unittest.TestCase):
             ({'browser': 'Firefox (tablet)'}, 'browser-fixme'),
             ({'browser': 'Firefox 30.0'}, 'browser-firefox'),
             ({'browser': 'Firefox Mobile 30.0'}, 'browser-firefox-mobile'),
-            ({'browser': 'Firefox Mobile (Tablet) 88.0'},
-                'browser-firefox-mobile-tablet')
+            ({'browser': 'Firefox Mobile (Tablet) 88.0'}, 'browser-firefox-tablet'),  # noqa
+            ({'browser': 'Firefox Mobile Nightly 59.0a1 (2017-12-04)'}, 'browser-firefox-mobile'),  # noqa
+            ({'browser': 'Mozilla/5.0 (Android 8.0.0; Mobile; rv:58.0) Gecko/58.0 Firefox/58.0'}, 'browser-fixme'),  # noqa
+            ({'browser': 'Firefox Developer Edition 60.0b14 (64-bit)'}, 'browser-firefox'),  # noqa
+            ({'browser': 'Firefox Mobile Nightly 61.0 & Firefox PC Nightly'}, 'browser-firefox-mobile'),  # noqa
+            ({'browser': 'LOL Mobile 55.0'}, 'browser-fixme'),
+            ({}, 'browser-fixme'),
         ]
         for metadata_dict, expected in metadata_tests:
             actual = helpers.extract_browser_label(metadata_dict)
@@ -186,8 +191,8 @@ class TestWebhook(unittest.TestCase):
         """Extract list of labels from an issue body."""
         labels_tests = [
             (self.issue_body, ['browser-firefox', 'type-media', 'type-stylo']),
-            (self.issue_body2, ['type-foobar']),
-            (self.issue_body3, ['browser-firefox-mobile-tablet'])
+            (self.issue_body2, ['browser-fixme', 'type-foobar']),
+            (self.issue_body3, ['browser-firefox-tablet'])
         ]
         for issue_body, expected in labels_tests:
             actual = helpers.get_issue_labels(issue_body)
