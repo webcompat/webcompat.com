@@ -1,7 +1,7 @@
 .notification-bar {
-  height: 58px;
   left: 0;
   line-height: 3;
+  min-height: 58px;
   position: fixed;
   right: 0;
   text-align: center;
