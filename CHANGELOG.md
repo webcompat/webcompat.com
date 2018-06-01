@@ -4,7 +4,11 @@
 2. New features: affect minor number
 3. API endpoint changes or dependency version updates: affect major number
 
-## 11.0.0 - 2018-06-01
+## 11.0.1 - 2018-06-01 (known broken, don't deploy)
+
+* No issue. Add env/ to files to be ignored during deploy.
+
+## 11.0.0 - 2018-06-01 (known broken, don't deploy)
 
 * Fixes #2475 - Fixes the lack of python 2.7 dependency in npm run setup [Pull #2476](https://github.com/webcompat/webcompat.com/pull/2476)
 * Fixes #2464 - Allow notification-bar to expand in height, if necessary [Pull #2469](https://github.com/webcompat/webcompat.com/pull/2469)
