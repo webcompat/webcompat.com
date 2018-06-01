@@ -4,6 +4,23 @@
 2. New features: affect minor number
 3. API endpoint changes or dependency version updates: affect major number
 
+## 11.0.0 - 2018-06-01
+
+* Fixes #2475 - Fixes the lack of python 2.7 dependency in npm run setup [Pull #2476](https://github.com/webcompat/webcompat.com/pull/2476)
+* Fixes #2464 - Allow notification-bar to expand in height, if necessary [Pull #2469](https://github.com/webcompat/webcompat.com/pull/2469)
+* Fixes #2466 - Fix broken links to contribution guidelines [Pull #2467](https://github.com/webcompat/webcompat.com/pull/2467)
+* Fixes #2445 - Re-enables logging capabilities and initialization message [Pull #2462](https://github.com/webcompat/webcompat.com/pull/2462)
+* Fixes #2460 - Add pull request template [Pull #2461](https://github.com/webcompat/webcompat.com/pull/2461)
+* Fixes #2459 - Add .prettierrc [Pull #2458](https://github.com/webcompat/webcompat.com/pull/2458)
+* Fixes #2441 - max-width of images in issue comments to 100% [Pull #2448](https://github.com/webcompat/webcompat.com/pull/2448)
+* Fixes #2437 - Upgrades python ua-parser version to 0.8 [Pull #2444](https://github.com/webcompat/webcompat.com/pull/2444)
+* Fixes #2422 - Add autogrow to bugform steps to reproduce field [Pull #2442](https://github.com/webcompat/webcompat.com/pull/2442)
+* Fixes #2421 - Consolidate usage of js-loader [Pull #2438](https://github.com/webcompat/webcompat.com/pull/2438)
+* Fixes #2434 - Add `type-tracking-protection-{basic,strict}` to EXTRA_LABELS [Pull #2436](https://github.com/webcompat/webcompat.com/pull/2436)
+* Fixes #2431 - Adds changelog title normalization. [Pull #2433](https://github.com/webcompat/webcompat.com/pull/2433)
+* Fixes #2430 - Make {LINE,LOG}_TEMPLATE unicode literals. [Pull #2432](https://github.com/webcompat/webcompat.com/pull/2432)
+* Fixes #2288 - Refactor how we do form submission [Pull #2419](https://github.com/webcompat/webcompat.com/pull/2419)
+
 ## 10.0.0 - 2018-04-27
 
 * Fixes #2420 - Adds tolerance on milestones initialization [Pull #2426](https://github.com/webcompat/webcompat.com/pull/2426)
