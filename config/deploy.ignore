@@ -4,6 +4,7 @@ fabfile.py*
 *.pyc
 data/
 docs/
+env/
 git_modules/
 grunt-tasks/
 node_modules/
