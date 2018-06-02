@@ -18,7 +18,7 @@ function BugForm() {
   this.submitButtons = $("#js-ReportForm .js-Button");
   this.submitTypeInput = $("#submit_type:hidden");
   this.uploadLabel = $(".js-label-upload");
-  this.urlParamRegExp = /url=([^&]*)/;
+  this.urlParamRegExp = /url=([^&]+)/;
 
   this.UPLOAD_LIMIT = 1024 * 1024 * 4;
 
@@ -238,8 +238,9 @@ function BugForm() {
   };
 
   // Is the user trying to report a site against webcompat.com itself?
-  this.isSelfReport = function() {
-    var url = location.href.match(this.urlParamRegExp);
+  this.isSelfReport = function(href) {
+    href = href || location.href;
+    var url = href.match(this.urlParamRegExp);
     if (url !== null) {
       if (_.includes(decodeURIComponent(url[0]), location.origin)) {
         return true;
@@ -255,7 +256,7 @@ function BugForm() {
       return;
     }
 
-    var url = location.href.match(/url=([^&]*)/);
+    var url = location.href.match(this.urlParamRegExp);
     if (url !== null) {
       url = this.trimWyciwyg(decodeURIComponent(url[1]));
       this.urlField.val(url);
