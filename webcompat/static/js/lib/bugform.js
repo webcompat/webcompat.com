@@ -267,7 +267,7 @@ function BugForm() {
   };
 
   this.storeClickedButton = function(event) {
-    this.clickedButton = event.target.value;
+    this.clickedButton = event.target.name;
   };
 
   this.trimWyciwyg = function(url) {

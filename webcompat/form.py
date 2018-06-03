@@ -90,7 +90,7 @@ class IssueForm(FlaskForm):
                       [Optional(),
                        FileAllowed(Upload.ALLOWED_FORMATS, image_message)])
     details = HiddenField()
-    submit_type = HiddenField(default="submitanon")
+    submit_type = HiddenField()
 
 
 def get_form(ua_header):
