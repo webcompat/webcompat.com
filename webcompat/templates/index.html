@@ -1,7 +1,7 @@
 {%- extends "layout.html" -%}
 {%- block body -%}
 {% include "nav/topbar.html" %}
-<main role="main">
+<main>
  	{% include "home-page/hero.html" %}
   	<section id="js-ReportForm" class="js-ReportForm {% if form.errors %}is-opened{% else %}is-closed{% endif %} grid">
 		{% include "home-page/form.html" %}

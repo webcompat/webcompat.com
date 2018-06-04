@@ -26,7 +26,7 @@
     </div>
     <div class="form-radio form-element js-Form-group">
       <div class="js-Form-information form-label-message">
-        <label class="form-label form-required" for="problem_category">Type of bug</label>
+        <label class="form-label form-required">Type of bug</label>
         {% if form.problem_category.errors %}
           {% for error in form.problem_category.errors %}
             <small class="form-message-error">{{ error }}</small>
@@ -73,7 +73,7 @@
     </div>
     <div class="form-radio form-element js-Form-group">
       <div class="js-Form-information form-label-message">
-        {{ form.browser_test.label(class_='form-label') }}
+        <div class="form-label">Did you test in another browser?</div>
         {% if form.browser_test.errors %}
           {% for error in form.browser_test.errors %}
             <small class="form-message-error">{{ error }}</small>
@@ -88,23 +88,23 @@
     <div class="form-upload js-image-upload js-Form-group">
         {{ form.image(class_='form-input input-upload', accept='.jpe,.jpg,.jpeg,.gif,.png,.bmp', id='image') }}
         <div class="label-icon label-upload js-label-upload">
-          <svg class="icon icon-big" role="presentation" title="Upload Screenshot">
-            <use class="icon-upload" xlink:href="#svg-plus">Upload Screenshot</use>
+          <svg class="icon icon-big" role="presentation">
+            <use class="icon-upload" xlink:href="#svg-plus"/>
           </svg>
           <small class="label-icon-message">Upload screenshot</small>
         </div>
 
         <div class="label-icon label-remove is-hidden js-remove-upload">
-          <svg class="icon icon-big" role="presentation" title="Remove Screenshot">
-            <use class="icon-remove" xlink:href="#svg-x">Remove Screenshot</use>
+          <svg class="icon icon-big" role="presentation">
+            <use class="icon-remove" xlink:href="#svg-x"/>
           </svg>
           <small class="label-icon-message">Remove screenshot</small>
         </div>
 
 
         <div class="label-icon label-error is-hidden js-error-upload">
-          <svg class="icon icon-big" role="presentation" title="An error occoured">
-            <use class="icon-error" xlink:href="#svg-warning">An error occoured</use>
+          <svg class="icon icon-big" role="presentation">
+            <use class="icon-error" xlink:href="#svg-warning"/>
           </svg>
           {% if form.image.errors %}
             {% for error in form.image.errors %}
@@ -143,6 +143,6 @@
         {{ form.username(class_='u-formInput') }}
       </div>
     </div>
-
+  </div>
   {{ form.hidden_tag() }}
 </form>
