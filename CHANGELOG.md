@@ -4,6 +4,13 @@
 2. New features: affect minor number
 3. API endpoint changes or dependency version updates: affect major number
 
+## 11.0.2 - 2018-06-06
+
+* Fixes #2483 - Markup fixes (SVG alternatives, invalid code, unnecessary `role="button"`, account dropdown trigger) [Pull #2484](https://github.com/webcompat/webcompat.com/pull/2484)
+* Fixes #2474 - Properly send along the submit_type to the server. [Pull #2477](https://github.com/webcompat/webcompat.com/pull/2477)
+* Fixes #2409 - Don't pre-fill forms for "self reports" (webcompat.com) [Pull #2439](https://github.com/webcompat/webcompat.com/pull/2439)
+
+
 ## 11.0.1 - 2018-06-01 (known broken, don't deploy)
 
 * No issue. Add env/ to files to be ignored during deploy.
