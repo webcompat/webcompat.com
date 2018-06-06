@@ -52,7 +52,7 @@ function HomePage() {
     navDropDown.click(function() {
       var $this = $(this);
       $this.toggleClass("is-active");
-      $this.attr("aria-pressed", function() {
+      $this.find("button").attr("aria-expanded", function() {
         return $this.hasClass("is-active") ? "true" : "false";
       });
     });
@@ -61,6 +61,7 @@ function HomePage() {
     $(document).on("click", function(e) {
       if (!$(e.target).closest(navDropDown).length) {
         navDropDown.removeClass("is-active");
+        navDropDown.find("button").attr("aria-expanded", "false");
       }
     });
   };

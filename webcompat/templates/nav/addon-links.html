@@ -2,10 +2,9 @@
     {%- if browser == 'firefox' %}
     <li class="nav-item">
         <a class="nav-link js-addon-link" href="https://addons.mozilla.org/en-US/firefox/addon/webcompatcom-reporter/"
-           title="Navigate to firefox addon store">
-            <svg class="icon nav-icon" viewBox="0 0 30 30" role="presentation">
-                <title>Firefox addons</title>
-                <use xlink:href="#svg-download2">Firefox addons</use>
+           title="Navigate to Firefox Add-on store">
+            <svg class="icon nav-icon" viewBox="0 0 30 30" role="presentation" aria-hidden="true">
+                <use xlink:href="#svg-download2" />
             </svg>
             <span class="link-text">Download Firefox Add-on</span>
         </a>
@@ -13,10 +12,9 @@
     {%- elif browser == 'firefox mobile' -%}
     <li class="nav-item">
         <a class="nav-link js-addon-link" href="https://addons.mozilla.org/en-US/android/addon/webcompatcom-mobile-reporter/"
-           title="Navigate to firefox addon store">
-            <svg class="icon nav-icon" viewBox="0 0 30 30" role="presentation">
-                <title>Firefox for Android addons</title>
-                <use xlink:href="#svg-download2">Firefox for Android addons</use>
+           title="Navigate to Firefox Add-on store">
+            <svg class="icon nav-icon" viewBox="0 0 30 30" role="presentation" aria-hidden="true">
+                <use xlink:href="#svg-download2" />
             </svg>
             <span class="link-text">Download Firefox Add-on</span>
         </a>
@@ -24,10 +22,9 @@
     {%- elif browser == 'chrome' -%}
     <li class="nav-item">
         <a class="nav-link js-addon-link" href="https://chrome.google.com/webstore/detail/webcompatcom-reporter/ffnnhckjcpbbjlmgfjigknkoffakclol"
-           title="Navigate to chrome webstore">
-            <svg class="icon nav-icon" viewBox="0 0 30 30" role="presentation">
-                <title>Chrome webstore</title>
-                <use xlink:href="#svg-download2">Chrome webstore</use>
+           title="Navigate to Chrome webstore">
+            <svg class="icon nav-icon" viewBox="0 0 30 30" role="presentation" aria-hidden="true">
+                <use xlink:href="#svg-download2" />
             </svg>
             <span class="link-text">Download Chrome Add-on</span>
         </a>
@@ -35,17 +32,16 @@
     {%- elif browser == 'opera' -%}
     <li class="nav-item">
         <a class="nav-linknnjs-addon-link" href="https://addons.opera.com/en/extensions/details/webcompatcom-reporter/?display=en"
-           title="Navigate to opera addons">
+           title="Navigate to Opera Add-ons">
             <svg class="icon nav-icon" viewBox="0 0 30 30" role="presentation">
-                <title>Opera Extension</title>
-                <use xlink:href="#svg-download2">Opera Extension</use>
+                <use xlink:href="#svg-download2" />
             </svg>
             <span class="link-text">Download Opera Add-on</span>
         </a>
     </li>
     {%- else -%}
     <li class="nav-item">
-        <a class="nav-link" href="https://github.com/webcompat/webcompat.com/issues?state=open" title="Navigate to github issues">
+        <a class="nav-link" href="https://github.com/webcompat/webcompat.com/issues?state=open" title="Navigate to GitHub issues">
             <span class="link-text">Give Feedback</span>
         </a>
     </li>
