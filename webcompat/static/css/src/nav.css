@@ -87,6 +87,7 @@
   top: 1px;
   transform: rotateY(-90deg);
   transition: all .2s ease 0s;
+  visibility: hidden;
   width: 100%;
   z-index: 1200;
 }
@@ -94,6 +95,7 @@
 .is-active #search-bar {
   transform: rotateY(0);
   transition: all .5s ease 0s;
+  visibility: visible;
 }
 
 #search-bar .text-field {
