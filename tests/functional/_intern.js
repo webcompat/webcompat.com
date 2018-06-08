@@ -18,7 +18,9 @@ browsers.forEach(function(b) {
   if (b.toLowerCase() === "chrome") {
     environments.push({
       browserName: b.toLowerCase(),
-      chromeOptions: { args: ["headless", "disable-gpu"] }
+      chromeOptions: {
+        args: ["headless", "disable-gpu"]
+      }
     });
   }
 
@@ -51,7 +53,13 @@ const config = {
   tunnel: "selenium",
   tunnelOptions: {
     // this tells SeleniumTunnel to download geckodriver and chromedriver
-    drivers: ["firefox", { name: "chrome", version: "2.38" }]
+    drivers: [
+      "firefox",
+      {
+        name: "chrome",
+        version: "2.38"
+      }
+    ]
   },
   capabilities: {
     "moz:firefoxOptions": {
@@ -96,8 +104,19 @@ if (args.showBrowser) {
 
 intern.configure(config);
 
-intern.run().catch(e => {
-  // This might not throw, BUG filed: https://github.com/theintern/intern/issues/868
+try {
+  intern.run().then(
+    () => {
+      console.log("it started, yay!");
+    },
+    err => {
+      console.log("something bad happened inside intern.run()");
+      console.log(err);
+      process.exit(1);
+    }
+  );
+} catch (e) {
+  console.log("caught an error!");
   console.log(e);
   process.exit(1);
-});
+}

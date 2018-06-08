@@ -6,7 +6,6 @@ dist: trusty
 branches:
   only:
     - master
-    - refactor
 
 language: python
 
