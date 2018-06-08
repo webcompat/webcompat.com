@@ -28,6 +28,7 @@ from helpers import get_browser_name
 from helpers import get_milestone_list
 from helpers import get_referer
 from helpers import get_user_info
+from helpers import is_valid_issue_form
 from helpers import set_referer
 from issues import report_issue
 from webcompat import app
@@ -169,8 +170,11 @@ def show_issues():
 def create_issue():
     """Create a new issue.
 
-    GET will return an HTML response for reporting issues
-    POST will create a new issue
+    GET will return an HTML response for reporting issues.
+    POST will create a new issue.
+
+    Any deceptive requests will be ended as a 400.
+    See https://tools.ietf.org/html/rfc7231#section-6.5.1
     """
     if request.method == 'GET':
         bug_form = get_form(request.headers.get('User-Agent'))
@@ -189,12 +193,7 @@ def create_issue():
     # copy the form so we can add the full UA string to it.
     if request.form:
         form = request.form.copy()
-        # To be legit the form needs a couple of parameters
-        # if one essential is missing, it's a bad request
-        must_parameters = set(['url', 'problem_category', 'description',
-                               'os', 'browser',
-                               'username', 'submit_type'])
-        if not must_parameters.issubset(form.keys()):
+        if not is_valid_issue_form(form):
             abort(400)
     else:
         # https://tools.ietf.org/html/rfc7231#section-6.5.1

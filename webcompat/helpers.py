@@ -552,3 +552,22 @@ def get_milestone_list(milestone_name, params=None):
         milestone_name, other_params=params)
     milestone_list = json.loads(raw_response[0])
     return milestone_list
+
+
+def is_valid_issue_form(form):
+    """Check if the issue form follows some requirements.
+
+    To be legit the form needs a couple of parameters
+    if one essential is missing, it's a bad request.
+    We may add more constraints in the future.
+    """
+    must_parameters = [
+        'browser',
+        'description',
+        'os',
+        'problem_category',
+        'submit_type',
+        'url',
+        'username',
+        ]
+    return set(must_parameters).issubset(form.keys())
