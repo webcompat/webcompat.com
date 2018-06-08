@@ -4,6 +4,13 @@
 2. New features: affect minor number
 3. API endpoint changes or dependency version updates: affect major number
 
+## 12.0.0 - 2018-06-08
+
+* Fixes #2490 - inversed name of buttons [Pull #2491](https://github.com/webcompat/webcompat.com/pull/2491)
+* Fixes #2487 - webcompat site: tweak/remove aria-label in footer links, make search form in top nav only focusable when visible [Pull #2489](https://github.com/webcompat/webcompat.com/pull/2489)
+* Fixes #2484 - Fix typo in footer SVG markup [Pull #2486](https://github.com/webcompat/webcompat.com/pull/2486)
+* Fixes #2465 - Upgrades Flask to 1.0.2 [Pull #2485](https://github.com/webcompat/webcompat.com/pull/2485)
+
 ## 11.0.2 - 2018-06-06
 
 * Fixes #2483 - Markup fixes (SVG alternatives, invalid code, unnecessary `role="button"`, account dropdown trigger) [Pull #2484](https://github.com/webcompat/webcompat.com/pull/2484)
