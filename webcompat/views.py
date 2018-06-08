@@ -176,6 +176,10 @@ def create_issue():
     Any deceptive requests will be ended as a 400.
     See https://tools.ietf.org/html/rfc7231#section-6.5.1
     """
+    # Starting a logger
+    log = app.logger
+    log.setLevel(logging.INFO)
+    # GET Requests
     if request.method == 'GET':
         bug_form = get_form(request.headers.get('User-Agent'))
         if g.user:
@@ -190,14 +194,20 @@ def create_issue():
         if request.args.get('label'):
             session['label'] = request.args.getlist('label')
         return render_template('new-issue.html', form=bug_form)
-    # copy the form so we can add the full UA string to it.
+    # POST Requests
     if request.form:
+        # Copy the form to add the full UA string.
         form = request.form.copy()
         if not is_valid_issue_form(form):
             abort(400)
     else:
-        # https://tools.ietf.org/html/rfc7231#section-6.5.1
+        log.info('POST request without form.')
         abort(400)
+    # Logging the ip and url for investigation
+    log.info('{ip} {url}'.format(
+        ip=request.remote_addr,
+        url=form['url'].encode('utf-8'))
+        )
     # see https://github.com/webcompat/webcompat.com/issues/1141
     # see https://github.com/webcompat/webcompat.com/issues/1237
     # see https://github.com/webcompat/webcompat.com/issues/1627
@@ -214,11 +224,6 @@ def create_issue():
     form['reported_with'] = session.pop('src', 'web')
     # Reminder: label is a list, if it exists
     form['extra_labels'] = session.pop('label', None)
-    # Logging the ip and url for investigation
-    log = app.logger
-    log.setLevel(logging.INFO)
-    log.info('{ip} {url}'.format(ip=request.remote_addr,
-                                 url=form['url'].encode('utf-8')))
     # form submission for 3 scenarios: authed, to be authed, anonymous
     if form.get('submit_type') == AUTH_REPORT:
         if g.user:  # If you're already authed, submit the bug.
