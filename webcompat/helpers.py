@@ -571,3 +571,12 @@ def is_valid_issue_form(form):
         'username',
         ]
     return set(must_parameters).issubset(form.keys())
+
+
+def is_blacklisted_domain(domain):
+    """Check if the domain is part of an exclusion list."""
+    # see https://github.com/webcompat/webcompat.com/issues/1141
+    # see https://github.com/webcompat/webcompat.com/issues/1237
+    # see https://github.com/webcompat/webcompat.com/issues/1627
+    spamlist = ['qiangpiaoruanjian', 'cityweb.de', 'coco.fr']
+    return domain in spamlist

@@ -213,3 +213,8 @@ class TestForm(unittest.TestCase):
             ('username', u''),
             ])
         self.assertTrue(helpers.is_valid_issue_form(valid_form))
+
+    def test_is_blacklisted_domain(self):
+        """Assert domains validity in issue reporting."""
+        self.assertTrue(helpers.is_blacklisted_domain('coco.fr'))
+        self.assertFalse(helpers.is_blacklisted_domain('w3.org'))

@@ -28,6 +28,7 @@ from helpers import get_browser_name
 from helpers import get_milestone_list
 from helpers import get_referer
 from helpers import get_user_info
+from helpers import is_blacklisted_domain
 from helpers import is_valid_issue_form
 from helpers import set_referer
 from issues import report_issue
@@ -208,18 +209,14 @@ def create_issue():
         ip=request.remote_addr,
         url=form['url'].encode('utf-8'))
         )
-    # see https://github.com/webcompat/webcompat.com/issues/1141
-    # see https://github.com/webcompat/webcompat.com/issues/1237
-    # see https://github.com/webcompat/webcompat.com/issues/1627
-    spamlist = ['qiangpiaoruanjian', 'cityweb.de', 'coco.fr']
-    for spam in spamlist:
-        if spam in form.get('url'):
-            msg = (u'Anonymous reporting for domain {0} '
-                   'is temporarily disabled. Please contact '
-                   'miket@mozilla.com '
-                   'for more details.').format(spam)
-            flash(msg, 'notimeout')
-            return redirect(url_for('index'))
+    # Checking blacklisted domains
+    if is_blacklisted_domain(form['url']):
+        msg = (u'Anonymous reporting for domain {0} '
+               'is temporarily disabled. Please contact '
+               'miket@mozilla.com '
+               'for more details.').format(form['url'])
+        flash(msg, 'notimeout')
+        return redirect(url_for('index'))
     form['ua_header'] = request.headers.get('User-Agent')
     form['reported_with'] = session.pop('src', 'web')
     # Reminder: label is a list, if it exists
