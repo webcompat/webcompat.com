@@ -213,6 +213,20 @@ class TestForm(unittest.TestCase):
             ('username', u''),
             ])
         self.assertTrue(helpers.is_valid_issue_form(valid_form))
+        # The value for submit-Type can be only:
+        # - github-auth-report
+        # - github-proxy-report
+        wrong_value_form = MultiDict([
+            ('browser', u'Firefox 61.0'),
+            ('description', u'streamlining the form.'),
+            ('details', u''),
+            ('os', u'Mac OS X 10.13'),
+            ('problem_category', u'unknown_bug'),
+            ('submit_type', u'wrong-value'),
+            ('url', u'http://2479.example.com'),
+            ('username', u''),
+            ])
+        self.assertFalse(helpers.is_valid_issue_form(wrong_value_form))
 
     def test_is_blacklisted_domain(self):
         """Assert domains validity in issue reporting."""
