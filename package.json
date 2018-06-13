@@ -28,7 +28,7 @@
     "eslint": "^4.19.1",
     "eslint-config-prettier": "^2.9.0",
     "eslint-plugin-prettier": "^2.6.0",
-    "grunt": "^1.0.1",
+    "grunt": "^1.0.3",
     "grunt-check-dependencies": "^1.0.0",
     "grunt-cli": "^1.2.0",
     "grunt-contrib-concat": "^1.0.0",
