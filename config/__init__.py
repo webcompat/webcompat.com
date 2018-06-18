@@ -10,6 +10,7 @@ from collections import namedtuple
 import json
 import os
 import sys
+import tempfile
 import urlparse
 
 import requests
@@ -134,11 +135,16 @@ CSP_LOG = True
 # it will create a line with the following format
 # 2015-09-14 20:50:19,185 INFO: Thing_To_Log [in /codepath/views.py:127]
 
-LOG_FILE = '/tmp/webcompat.log'
+# set the tempdir to somewhere predictable, no matter the platform
+tempfile.tempdir = os.path.join(os.getcwd(), 'tmp')
+print('Writing logs to: {}'.format(tempfile.gettempdir()))
+
+LOG_FILE = os.path.join(tempfile.gettempdir(), 'webcompat.log')
 if STAGING:
-    LOG_FILE = '/tmp/staging-webcompat.log'
+    LOG_FILE = os.path.join(tempfile.gettempdir(), 'staging-webcompat.log')
 LOG_FMT = '%(asctime)s tracking %(message)s'
-CSP_REPORTS_LOG = '/tmp/webcompat-csp-reports.log'
+CSP_REPORTS_LOG = os.path.join(
+    tempfile.gettempdir(), 'webcompat-csp-reports.log')
 
 # Status categories used in the project
 # 'new', 'needsdiagnosis', 'needscontact', 'contactready' , 'sitewait', 'close'

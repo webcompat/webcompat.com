@@ -184,10 +184,6 @@ You can now edit `secrets.py` and
 
 ![Auth 404](https://i.cloudup.com/8FDA5bVc7l.png)
 
-### Updating __init__.py file
-
-Make sure `tmp` folder is updated with `temp` for Windows 
-
 ### Starting The Server
 
 ```bash
@@ -207,7 +203,16 @@ You should now have a local instance of the site running at `http://localhost:50
 #### Getting error messages?
 
 Please [file bugs](https://github.com/webcompat/webcompat.com/issues/new) in case you need further assistance.
-First you should have a look at the logs. They are located at `/tmp/webcompat.log` (Linux/Mac) or `/temp/webcompat.log` (Windows).
+First you should have a look at the logs located in `webcompat.com/tmp`.
+
+When you start the local server, it will also print the location to the console:
+
+```bash
+> python run.py
+Statuses Initialization…
+Writing logs to: /Users/acooluser/projects/webcompat.com/tmp
+…
+```
 
 
 ### Building the Project
