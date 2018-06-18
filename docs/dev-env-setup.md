@@ -101,6 +101,7 @@ cd webcompat.com
 # set up virtual environment
 [sudo] virtualenv env
 source env/bin/activate
+# on Windows: source env/Scripts/activate or .env/Scripts/activate
 # install Pillow image lib dependencies (optional: only required if you plan on hacking on image upload features)
 #  OSX: http://pillow.readthedocs.org/en/3.0.x/installation.html#os-x-installation
 #  Windows: http://pillow.readthedocs.org/en/3.0.x/installation.html#windows-installation
