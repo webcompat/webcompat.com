@@ -50,16 +50,12 @@ intern.registerPlugin("checkServer", function() {
     });
 
     // Handle connection errors.
-    request.on("error", function() {
+    request.on("error", function(err) {
       reject(
         new Error(
           `
         ======================================================
-        Oops, something went wrong. Try restarting the server.
-        Open another terminal and window type:
-       \x1b[32m npm run start:test\x1b[0m
-        or
-       \x1b[32m python run.py -t\x1b[0m
+        Intern checkServer Connection Error: ${err}
         ======================================================
         `
         )
