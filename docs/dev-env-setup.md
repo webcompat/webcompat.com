@@ -16,6 +16,7 @@ For testing code locally, you will need a very basic setup. There are a few requ
 * [Python](https://www.python.org/) 2.7
 * [Node.js](https://nodejs.org/en/download/) Current LTS version
 * [GitHub](https://github.com) account
+* [Git](https://git-scm.com/download/win)
 
 > Note: If you install Python on Windows using the MSI installer, it is highly recommended to check the "Add to path"-box during installation. If you have not done so, see if one of the answers to the StackOverflow post [Adding Python path on Windows 7](http://stackoverflow.com/questions/6318156/adding-python-path-on-windows-7) can help you - it should also work fine for later versions of Windows.
 >
@@ -64,10 +65,11 @@ npm run setup
 
 We use `pip` to install other Python packages. You may need to install `pip` if you haven't done so for another project or Python development.
 
-To determine if you need to install pip, type the following command into the terminal:
+To determine if you need to install pip and pip2, type the following command into the terminal:
 
 ```bash
 pip --version
+pip2 --version
 ```
 
 If you get an error message, Mac/Linux users can try to install `pip` with this command:
@@ -140,6 +142,10 @@ You need to create a repository on GitHub which is used to submit issues via the
 ### Store your settings
 
 ```bash
+
+### Store your settings
+
+```bash
 # set up secrets.py, filling in appropriate secrets and pointers to repos
 # Mac / Linux
 cp config/secrets.py.example config/secrets.py
@@ -177,6 +183,10 @@ You can now edit `secrets.py` and
 
 ![Auth 404](https://i.cloudup.com/8FDA5bVc7l.png)
 
+### Updating __init__.py file
+
+Make sure `tmp` folder is updated with `temp` for Windows 
+
 ### Starting The Server
 
 ```bash
@@ -196,7 +206,7 @@ You should now have a local instance of the site running at `http://localhost:50
 #### Getting error messages?
 
 Please [file bugs](https://github.com/webcompat/webcompat.com/issues/new) in case you need further assistance.
-First you should have a look at the logs. They are located at `/tmp/webcompat.log`.
+First you should have a look at the logs. They are located at `/tmp/webcompat.log` (Linux/Mac) or `/temp/webcompat.log` (Windows).
 
 
 ### Building the Project
