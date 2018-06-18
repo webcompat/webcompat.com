@@ -1,10 +1,11 @@
 * [Simple setup](#simple-setup-mac-os-and-linux)
     * [Installing Project source code](#initializing-project-source-code)
   * [Detailed setup](#detailed-setup-all-platforms)
+    * [Installing Windows Substem for Linux](#installing-windows-subsytem-for-linux)
     * [Installing pip](#installing-pip)
     * [Installing virtualenv](#installing-virtualenv)
     * [Installing Project source code](#installing-project-source-code)
-    * [Installing Grunt](#installing-grunt)
+    * [Installing npm dependencies](#installing-npm-dependencies)
   * [Configuring The Server](#configuring-the-server)
   * [Starting The Server](#starting-the-server)
   * [Building the Project](#building-the-project)
@@ -18,11 +19,9 @@ For testing code locally, you will need a very basic setup. There are a few requ
 * [GitHub](https://github.com) account
 * [Git](https://git-scm.com/download/win)
 
-> Note: If you install Python on Windows using the MSI installer, it is highly recommended to check the "Add to path"-box during installation. If you have not done so, see if one of the answers to the StackOverflow post [Adding Python path on Windows 7](http://stackoverflow.com/questions/6318156/adding-python-path-on-windows-7) can help you - it should also work fine for later versions of Windows.
->
-> Windows typically doesn't have the *make* tool installed. Windows users without *make* should look at the "detailed setup" section below.
->
-> As an alternative to Windows, a cloud IDE such as [Cloud 9](https://c9.io) can be used for a relatively easier setup. If you take this route, please update to the latest Python version with the following. (This is to avoid `InsecurePlatformWarning` errors that arise when the default Python 2.7.6 is used).
+> Note: Windows users should install the [Windows Subsystem for Linux](https://docs.microsoft.com/en-us/windows/wsl/install-win10) with the Ubuntu distribution and continue setup in the [Installing Windows Substem for Linux](#installing-windows-subsytem-for-linux) section. It may be possible to get the application running via other means, but we don't offer support for other setups.
+
+> Note: A cloud IDE such as [Cloud 9](https://c9.io) can also be used. If you take this route, please update to the latest Python version with the following. (This is to avoid `InsecurePlatformWarning` errors that arise when the default Python 2.7.6 is used).
 
 ```shell
 sudo apt-add-repository ppa:fkrull/deadsnakes-python2.7
@@ -42,10 +41,8 @@ sudo ln -s /usr/bin/nodejs /usr/sbin/node
 ```
 
 
-### Simple setup (Mac OS and Linux)
+### Simple setup
 #### Initializing Project source code
-
-We use [Grunt](http://gruntjs.com/) as a task runner to perform certain things (minify + concat JS assets, for example). You need to have [Node.js](https://nodejs.org/en/download/) to be able to run Grunt.
 
 ```bash
 # clone the repo
@@ -61,34 +58,49 @@ npm run setup
 **Note**: if you get an error message about missing rights to install the setup through npm, please *do not run `sudo npm`*. You just need to [fix you permissions](https://coderwall.com/p/t2mc9g/don-t-sudo-npm) for `usr/local`.
 
 ### Detailed setup (All platforms)
-#### Installing pip
 
-We use `pip` to install other Python packages. You may need to install `pip` if you haven't done so for another project or Python development.
+#### Installing Windows Substem for Linux
 
-To determine if you need to install pip and pip2, type the following command into the terminal:
+Once [Windows Subsystem for Linux](https://docs.microsoft.com/en-us/windows/wsl/install-win10) and Ubuntu distribution are installed, open the Ubuntu terminal and finish any installation prompts, if necessary.
+
+From the terminal, you can install python, pip, and nodejs and npm with the following commands:
 
 ```bash
-pip --version
+sudo apt-get update
+sudo apt-get install python
+sudo apt-get install python-pip
+sudo apt-get install nodejs
+sudo apt install npm
+```
+
+It's a good idea to update npm after this (to speed up `npm install`): `sudo npm install npm -g`
+
+At this point, you can skip over the [Installing pip](#installing-pip) section and continue with the [Installing virtualenv](#installing-virtualenv) directions.
+
+#### Installing pip
+
+We use `pip2` to install other Python packages. You may need to install `pip2` if you haven't done so for another project or Python development, or only have Python 3 installed on your system.
+
+To determine if you need to install `pip2`, type the following command into the terminal:
+
+```bash
 pip2 --version
 ```
 
-If you get an error message, Mac/Linux users can try to install `pip` with this command:
+If you get an error message, follow the docs on [installing Pip](https://pip.pypa.io/en/stable/installing/) for your platform.
+
+Note: Windows and Linux users can do the following via the terminal:
 
 ```bash
-# (Mac/Linux)
-sudo easy_install pip
+sudo apt install python-pip
 ```
-
-(If `easy_install` isn't installed, you'll need to [install setuptools](https://pypi.python.org/pypi/setuptools#unix-wget).)
-
-Windows users should simply download the most recent Python 2.7 installer and run it again, it installs `pip` by default.
 
 #### Installing virtualenv
 [Virtual Environment]( https://virtualenv.pypa.io/en/stable/) is a tool to create isolated environments for different projects so as to prevent conflicts.
 
 ```bash
 # Install virtualenv
-[sudo] pip install virtualenv
+[sudo] pip2 install virtualenv
 ```
 
 #### Installing Project source code
@@ -99,24 +111,22 @@ git clone git@github.com:<username>/webcompat.com.git
 # change to directory
 cd webcompat.com
 # set up virtual environment
-[sudo] virtualenv env
+virtualenv env
 source env/bin/activate
-# on Windows: source env/Scripts/activate or .env/Scripts/activate
-# install Pillow image lib dependencies (optional: only required if you plan on hacking on image upload features)
+# optionally install Pillow image lib dependencies (only required if you plan on hacking on image upload features)
 #  OSX: http://pillow.readthedocs.org/en/3.0.x/installation.html#os-x-installation
 #  Windows: http://pillow.readthedocs.org/en/3.0.x/installation.html#windows-installation
 #  Linux: http://pillow.readthedocs.org/en/3.0.x/installation.html#linux-installation
 # install rest of dependencies
-pip install -r config/requirements.txt
+pip2 install -r config/requirements.txt
 # In Ubuntu: if ImportError: No module named flask.ext.github occurs, it means the dependencies in requirements.txt are installed in /usr/lib instead of <project_repository>/env/python<version>/site-packages.
 # In this case, use virtual environment's pip from <project_repository>/env/lib/pip folder of the project repository instead of the global pip.
 ```
 
 
-#### Installing Grunt
+#### Installing npm dependencies
 
-We use [Grunt](http://gruntjs.com/) as a task runner to perform certain tasks (minify + concat JS assets, for example). You need to have [Node.js](https://nodejs.org/en/download/) installed to be able to run Grunt. Once that's done, `npm` can be used to install Grunt and other build dependencies.
-
+We use a handful of npm packages to build the project.
 
 Install npm dependencies:
 
@@ -124,7 +134,7 @@ Install npm dependencies:
 npm install
 ```
 
-Then run grunt through npm (if you miss this step, when you try to start the server and view the site locally or run functional tests, you won't get the compiled css or templates!):
+When that is done, you can build the site via the `npm run build` command (if you miss this step, when you try to start the server and view the site locally or run functional tests, you won't get the compiled css or templates!):
 
 ```bash
 npm run build
