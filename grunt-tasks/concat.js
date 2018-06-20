@@ -22,6 +22,7 @@ module.exports = function(grunt) {
         "<%= jsPath %>/vendor/backbone.mousetrap.js",
         "<%= jsPath %>/lib/flash-message.js",
         "<%= jsPath %>/lib/homepage.js",
+        "<%= jsPath %>/lib/autogrow-textfield.js",
         "<%= jsPath %>/lib/bugform.js",
         "<%= jsDistPath %>/templates.js"
       ],
@@ -46,6 +47,7 @@ module.exports = function(grunt) {
         "<%= jsPath %>/lib/models/issue.js",
         "<%= jsPath %>/lib/models/comment.js",
         "<%= jsPath %>/lib/comments.js",
+        "<%= jsPath %>/lib/autogrow-textfield.js",
         "<%= jsPath %>/lib/issues.js"
       ],
       dest: "<%= jsDistPath %>/issues.js"

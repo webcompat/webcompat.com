@@ -5,7 +5,6 @@
 /*eslint new-cap: ["error", { "capIsNewExceptions": ["Deferred"] }]*/
 
 function BugForm() {
-  this.autogrowField = $(".js-autogrow-field");
   this.clickedButton = null;
   this.detailsInput = $("#details:hidden");
   this.errorLabel = $(".js-error-upload");
@@ -83,7 +82,6 @@ function BugForm() {
     this.checkProblemTypeValidity = this.checkProblemTypeValidity.bind(this);
     this.checkImageTypeValidity = this.checkImageTypeValidity.bind(this);
     this.checkOptionalNonEmpty = this.checkOptionalNonEmpty.bind(this);
-    this.handleAutogrowField = this.handleAutogrowField.bind(this);
     this.storeClickedButton = this.storeClickedButton.bind(this);
     this.onFormSubmit = this.onFormSubmit.bind(this);
     this.onReceiveMessage = this.onReceiveMessage.bind(this);
@@ -96,7 +94,6 @@ function BugForm() {
     }
 
     this.disableSubmits();
-    this.initAutogrowFields();
     this.urlField.on("blur input", this.checkURLValidity);
     this.descField.on("blur input", this.checkDescriptionValidity);
     this.problemType.on("change", this.checkProblemTypeValidity);
@@ -121,48 +118,6 @@ function BugForm() {
 
     // Set up listener for message events from screenshot-enabled add-ons
     window.addEventListener("message", this.onReceiveMessage, false);
-  };
-
-  this.initAutogrowFields = function() {
-    // store initial rows attribute value in dataset of each element
-    // because rows attribute will be overwritten later when autogrowing
-    this.autogrowField.each(function(index, el) {
-      var minRows = parseInt(el.getAttribute("rows"), 10);
-      el.dataset.minRows = minRows;
-    });
-    this.autogrowField.on("focus keyup input", this.handleAutogrowField);
-  };
-
-  this.handleAutogrowField = function(event) {
-    var target = event.target;
-    var $target = $(target);
-    var MIN_ROWS = target.dataset.minRows;
-    var contentHeight =
-      target.scrollHeight -
-      parseInt($target.css("padding-top"), 10) -
-      parseInt($target.css("padding-bottom"), 10);
-
-    // store initially calculated row height if not already present
-    if (event.type === "focus" && !target.dataset.rowHeight) {
-      target.dataset.rowHeight = contentHeight / MIN_ROWS;
-    }
-
-    var rowHeight = target.dataset.rowHeight;
-    // don't let textarea grow more than half the screen size
-    var MAX_HEIGHT = window.innerHeight / 2;
-    var MAX_ROWS = Math.floor(MAX_HEIGHT / rowHeight);
-    // determine amount of used rows to shrink back if necessary
-    var usedRows = target.value.split("\n").length;
-    var rows = Math.max(Math.ceil(contentHeight / rowHeight), usedRows);
-    var newRowsValue =
-      rows < MIN_ROWS ? MIN_ROWS : rows > MAX_ROWS ? MAX_ROWS : rows;
-
-    // update rows attribute and respect minimum and maximum values
-    target.setAttribute("rows", newRowsValue);
-    if (newRowsValue * rowHeight > parseInt(target.style.height, 10)) {
-      // reset element style height
-      target.style.height = "";
-    }
   };
 
   this.onReceiveMessage = function(event) {
