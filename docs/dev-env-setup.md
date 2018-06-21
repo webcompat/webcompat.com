@@ -40,6 +40,18 @@ sudo ln -s /usr/bin/nodejs /usr/bin/node
 sudo ln -s /usr/bin/nodejs /usr/sbin/node
 ```
 
+> Note: If in Windows 10 you receive an error message about already having node installed, it can be fixed by removing existing installations and installing again. You probably only want to do this if you don't rely on existing node setups for other projects.
+
+```shell
+# removing existing nodejs installations
+sudo apt-get --purge remove node
+sudo apt-get --purge remove nodejs
+
+# installing
+curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
+sudo apt-get install -y nodejs
+sudo apt-get install -y build-essential
+
 
 ### Simple setup
 #### Initializing Project source code
