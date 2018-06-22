@@ -33,6 +33,8 @@
 
 /* list category */
 .label-editor-list {
+  display: flex;
+  flex-direction: column;
   max-height: 18.75em;
   -webkit-overflow-scrolling: touch;
   overflow-x: hidden;
@@ -52,7 +54,20 @@
   cursor: pointer;
   display: block;
   margin: 0;
+  order: 2;
   padding: calc(var(--unit-space) * .75) calc(var(--unit-space) * .5);
+}
+
+.label-editor-list-item .small {
+  vertical-align: middle;
+}
+
+.label-editor-list-item::before {
+  content: "☐";
+  display: inline-block;
+  font-size: 1.5em;
+  margin-top: -4px;
+  vertical-align: middle;
 }
 
 .label-editor-list-item:last-child {
@@ -70,8 +85,15 @@
 
 /* checkbox */
 .label-editor-list-item-checkbox {
-  margin: 0;
-  padding: 0;
+  display: none;
+}
+
+.label-editor-list-item-checkbox:checked + .label-editor-list-item::before {
+  content: "︎☑︎";
+}
+
+.label-editor-list-item-checkbox:checked + .label-editor-list-item {
+  order: 1;
 }
 
 /* Launch Category Editor */
