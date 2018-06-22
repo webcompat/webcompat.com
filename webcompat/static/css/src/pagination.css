@@ -24,4 +24,5 @@
 
 .pagination .pagination-next {
   float: right;
+  margin-left: 40px;
 }

@@ -1,3 +1,20 @@
+.issue-controls {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+}
+
+.issue-controls > .grid-cell {
+  flex: 1 0 100%;
+  min-width: 0;
+}
+
+@media screen and (min-width: 665px) {
+  .issue-controls > .grid-cell {
+    flex: 1 0 auto;
+  }
+}
+
 .issues-list .issue {
   border-bottom: 5px solid var(--color-bg-page);
 }
