@@ -105,7 +105,7 @@ issues.CategoryEditorView = Backbone.View.extend({
     }, 100);
 
     var escape = function(s) {
-      return s.replace(/[-/\\^$*+?:.()|[\]{}]/g, "\\$&");
+      return s.replace(/[-&:/.\s()]/g, "\\$&");
     };
     var re = new RegExp("^" + escape(e.target.value), "i");
     var toHide = _.filter(this.model.toArray(), function(label) {

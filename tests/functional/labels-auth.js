@@ -109,6 +109,35 @@ registerSuite("Labels (auth)", {
           assert.notInclude("is-active", className);
         })
         .end();
+    },
+
+    "Label editor filters label list based on entered text": function() {
+      var count = 0;
+      return FunctionalHelpers.openPage(
+        this,
+        url("/issues/100"),
+        ".js-LabelEditorLauncher",
+        true /* longerTimeout */
+      )
+        .findByCssSelector(".js-LabelEditorLauncher")
+        .click()
+        .end()
+        .findByCssSelector(".js-label-search")
+        .type("tacos")
+        .end()
+        .sleep(1000)
+        .findAllByXpath(
+          '//label[contains (@class, "label-editor-list-item") and not(@style="display: none;")]'
+        )
+        .then(function(elements) {
+          count = elements.length;
+          assert.deepEqual(
+            1,
+            count,
+            "Entering label name in search box filters to matching label"
+          );
+        })
+        .end();
     }
   }
 });
