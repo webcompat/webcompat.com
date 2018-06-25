@@ -72,7 +72,6 @@
 .issue-new-comment .text-field {
   box-sizing: border-box;
   margin-bottom: calc(var(--unit-space) * 2);
-  min-height: 120px;
   padding: calc(var(--unit-space) * 2);
 }
 
@@ -101,23 +100,23 @@
 }
 
 /* As we can not add a class to the img in the comment right now (markup parsers are complicated), we need to use the img element */
+
 .comment-body img,
 .js-Issue-markdown img {
   max-width: 100%;
 }
 
 /* var(--page-size-m) = 665px - vars not usable in queries */
+
 @media (min-width: 665px) {
   #issue.grid-row {
     flex-wrap: nowrap;
   }
-
   #issue > .x2 {
     flex-basis: 66.66666%;
     max-width: 66.66666%;
     min-width: 0;
   }
-
   #issue > .x1 {
     flex-basis: 33.33333%;
     max-width: 33.33333%;
