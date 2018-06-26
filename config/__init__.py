@@ -138,11 +138,12 @@ CSP_LOG = True
 
 # set the tempdir to somewhere predictable, no matter the platform
 try:
-    os.makedirs(os.path.join(os.getcwd(), 'tmp'))
+    tmp_path = os.path.join(os.getcwd(), 'tmp')
+    os.makedirs(tmp_path)
 except OSError as exception:
     if exception.errno != errno.EEXIST:
         raise
-tempfile.tempdir = os.path.join(os.getcwd(), 'tmp')
+tempfile.tempdir = tmp_path
 print('Writing logs to: {}'.format(tempfile.gettempdir()))
 
 LOG_FILE = os.path.join(tempfile.gettempdir(), 'webcompat.log')
