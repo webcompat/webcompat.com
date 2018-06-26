@@ -7,6 +7,7 @@
 """This module handles application configuration and secrets."""
 
 from collections import namedtuple
+import errno
 import json
 import os
 import sys
@@ -136,7 +137,13 @@ CSP_LOG = True
 # 2015-09-14 20:50:19,185 INFO: Thing_To_Log [in /codepath/views.py:127]
 
 # set the tempdir to somewhere predictable, no matter the platform
-tempfile.tempdir = os.path.join(os.getcwd(), 'tmp')
+try:
+    tmp_path = os.path.join(os.getcwd(), 'tmp')
+    os.makedirs(tmp_path)
+except OSError as exception:
+    if exception.errno != errno.EEXIST:
+        raise
+tempfile.tempdir = tmp_path
 print('Writing logs to: {}'.format(tempfile.gettempdir()))
 
 LOG_FILE = os.path.join(tempfile.gettempdir(), 'webcompat.log')
