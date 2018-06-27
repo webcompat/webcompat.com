@@ -568,8 +568,7 @@ def is_valid_issue_form(form):
         'problem_category',
         'submit_type',
         'url',
-        'username',
-        ]
+        'username', ]
     form_submit_values = ['github-auth-report', 'github-proxy-report']
     parameters_check = set(must_parameters).issubset(form.keys())
     if parameters_check:

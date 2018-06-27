@@ -209,8 +209,7 @@ def create_issue():
     # Logging the ip and url for investigation
     log.info('{ip} {url}'.format(
         ip=request.remote_addr,
-        url=form['url'].encode('utf-8'))
-        )
+        url=form['url'].encode('utf-8')))
     # Checking blacklisted domains
     if is_blacklisted_domain(form['url']):
         msg = (u'Anonymous reporting for domain {0} '

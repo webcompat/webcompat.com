@@ -189,7 +189,7 @@ class TestForm(unittest.TestCase):
         self.assertEqual(actual_json_arg, expected_json_arg)
 
     def test_build_details(self):
-        """Assert we return the expected HTML, for a json object or a string."""
+        """Expected HTML is returned for a json object or a string."""
         actual_json_arg = form.build_details(json.dumps(
             {'a': 'b', 'c': False}))
         expected_json_arg = '<details>\n<summary>Browser Configuration</summary>\n<ul>\n  <li>a: b</li><li>c: false</li>\n</ul>\n</details>'  # nopep8
@@ -210,8 +210,7 @@ class TestForm(unittest.TestCase):
             ('problem_category', u'unknown_bug'),
             ('submit_type', u'github-auth-report'),
             ('url', u'http://2479.example.com'),
-            ('username', u''),
-            ])
+            ('username', u''), ])
         self.assertTrue(helpers.is_valid_issue_form(valid_form))
         # The value for submit-Type can be only:
         # - github-auth-report
@@ -224,8 +223,7 @@ class TestForm(unittest.TestCase):
             ('problem_category', u'unknown_bug'),
             ('submit_type', u'wrong-value'),
             ('url', u'http://2479.example.com'),
-            ('username', u''),
-            ])
+            ('username', u''), ])
         self.assertFalse(helpers.is_valid_issue_form(wrong_value_form))
 
     def test_is_blacklisted_domain(self):
