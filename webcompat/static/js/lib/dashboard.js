@@ -36,14 +36,23 @@ const shouldRenderNeedsTriageList = (render = true) => {
 };
 
 /* Filtering (newest or oldest) list of Triage */
-const filteringSort = issuesNumber => {
+const filteringSort = (issuesNumber, initForm = false) => {
   const select = document.getElementById("js-Filter-sort");
-  if ("oldest" === select.value) {
-    issuesNumber.reverse();
+  const lastSelectvalue = issuesNumber.selectValue;
+  // By default the oldest option is selected
+  // But if someone selects oldest option and refresh it browser
+  // the current option selected is save
+  // so we must test the value for the initform
+  if (initForm && select.value === "newest") {
+    issuesNumber.list.reverse();
+  } else if (select.value !== lastSelectvalue && null !== lastSelectvalue) {
+    issuesNumber.list.reverse();
   }
+  // save select value
+  issuesNumber.selectValue = select.value;
   const triageList = Array.from(document.getElementsByClassName("wc-Triage"));
   triageList.forEach(issue => {
-    issue.style.order = issuesNumber.indexOf(issue.dataset["number"]);
+    issue.style.order = issuesNumber.list.indexOf(issue.dataset["number"]);
   });
 };
 
@@ -88,13 +97,11 @@ const handleSpecialFilter = (
 };
 
 /* Filtering List of triage */
-const filteringList = (renderActivityIndicator = true) => {
+const filteringList = (initForm = false, issuesNumber) => {
   /* init nbItem visible */
   let nbItemVisible = 0;
-  /* init an array of list of issue */
-  const issuesNumber = [];
 
-  if (renderActivityIndicator) {
+  if (!initForm) {
     shouldRenderActivityIndicator();
   }
   /* Triage list */
@@ -103,7 +110,9 @@ const filteringList = (renderActivityIndicator = true) => {
     /* By default all element are visible except for needsinfo ones */
     let mustBeHidden = false;
     /* push issue number */
-    issuesNumber.push(issue.dataset["number"]);
+    if (initForm) {
+      issuesNumber.list.push(issue.dataset["number"]);
+    }
     const selectList = Array.from(
       document.getElementsByClassName("wc-Filter-select")
     );
@@ -137,7 +146,7 @@ const filteringList = (renderActivityIndicator = true) => {
       nbItemVisible += 1;
     }
   });
-  filteringSort(issuesNumber);
+  filteringSort(issuesNumber, initForm);
   viewMode();
   /* Render components */
   shouldRenderActivityIndicator(false);
@@ -156,12 +165,16 @@ const filteringList = (renderActivityIndicator = true) => {
 })();
 
 /* init View */
-
+/* init an object of list of issue */
+const issuesNumber = {
+  list: [],
+  selectValue: null
+};
 /* init list with filters by default */
 setView(localStorage.getItem("DashboardTriageView"));
-filteringList(false);
+filteringList(true, issuesNumber);
 /* Added an event onSubmit form */
 document.getElementById("js-Filters").addEventListener("submit", e => {
   e.preventDefault();
-  filteringList();
+  filteringList(false, issuesNumber);
 });
