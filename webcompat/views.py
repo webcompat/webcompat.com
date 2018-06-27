@@ -180,9 +180,11 @@ def create_issue():
     # Starting a logger
     log = app.logger
     log.setLevel(logging.INFO)
+    # Get the User-Agent
+    user_agent = request.headers.get('User-Agent')
     # GET Requests
     if request.method == 'GET':
-        bug_form = get_form(request.headers.get('User-Agent'))
+        bug_form = get_form(user_agent)
         if g.user:
             get_user_info()
         # Note: `src` and `label` are special GET params that can pass
@@ -217,7 +219,8 @@ def create_issue():
                'for more details.').format(form['url'])
         flash(msg, 'notimeout')
         return redirect(url_for('index'))
-    form['ua_header'] = request.headers.get('User-Agent')
+    # Feeding the form with request data
+    form['ua_header'] = user_agent
     form['reported_with'] = session.pop('src', 'web')
     # Reminder: label is a list, if it exists
     form['extra_labels'] = session.pop('label', None)

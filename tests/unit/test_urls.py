@@ -6,9 +6,17 @@
 
 """Tests for our URL endpoints."""
 
+import json
 import os.path
 import sys
 import unittest
+
+from mock import MagicMock
+from mock import patch
+from requests import Response
+
+
+from webcompat.views import report_issue
 
 # Add webcompat module to import path
 sys.path.append(os.path.realpath(os.pardir))
@@ -18,6 +26,17 @@ import webcompat  # nopep8
 # on the index route, will need to include the following: environ_base=headers
 headers = {'HTTP_USER_AGENT': ('Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; '
                                'rv:31.0) Gecko/20100101 Firefox/31.0')}
+
+POST_RESPONSE = {
+    u'labels': [],
+    u'number': 1544,
+    u'title': u'testing-form.example.com - see bug description',
+    u'state': u'open',
+    u'body': u'<!-- @browser: Firefox 62.0 -->\n<!-- @ua_header: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:62.0) Gecko/20100101 Firefox/62.0 -->\n<!-- @reported_with: web -->\n\n**URL**: http://testing-form.example.com/\n\n**Browser / Version**: Firefox 62.0\n**Operating System**: Mac OS X 10.13\n**Tested Another Browser**: Unknown\n\n**Problem type**: Something else\n**Description**: testing form and github response.\n**Steps to Reproduce**:\n\n\n\n\n_From [webcompat.com](https://webcompat.com/) with \u2764\ufe0f_',
+    u'updated_at': u'2018-06-14T22:50:31Z',
+    u'milestone': None,
+    u'created_at': u'2018-06-14T22:50:31Z',
+    }
 
 
 class TestURLs(unittest.TestCase):
@@ -41,6 +60,43 @@ class TestURLs(unittest.TestCase):
         """Test that /issues/new exists."""
         rv = self.app.get('/issues/new', environ_base=headers)
         self.assertEqual(rv.status_code, 200)
+
+    @patch('webcompat.views.report_issue')
+    def test_successful_post_new_issue(self, mock_proxy):
+        """Test that post is working on /issues/new."""
+        mock_proxy.return_value = POST_RESPONSE
+        rv = self.app.post(
+            '/issues/new',
+            environ_base=headers,
+            data=dict(
+                browser='Firefox Mobile 45.0',
+                description='testing 2971',
+                os='macos',
+                problem_category='yada',
+                submit_type='github-proxy-report',
+                url='http://testing.example.org',
+                username='yeeha'
+                )
+            )
+        self.assertEqual(rv.status_code, 302)
+        self.assertEqual(
+            rv.headers['Location'], 'http://localhost/issues/1544')
+        self.assertTrue(
+            '<a href="/issues/1544">/issues/1544</a>' in rv.data)
+
+    @patch('webcompat.issues.proxy_request')
+    def test_fail_post_new_issue(self, mock_proxy):
+        """Test that post is not working on /issues/new."""
+        mock_proxy = MagicMock(spec=Response)
+        mock_proxy = json.dumps(POST_RESPONSE)
+        rv = self.app.post(
+            '/issues/new',
+            environ_base=headers,
+            data=dict(
+                browser='Firefox Mobile 45.0',
+                )
+            )
+        self.assertEqual(rv.status_code, 400)
 
     def test_about(self):
         """Test that /about exists."""
