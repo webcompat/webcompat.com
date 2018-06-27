@@ -11,14 +11,14 @@
     </section>
 
     <section class="grid">
-      <div class="grid-row sorting">
-        <div class="grid-cell x1 js-SearchIssue-sorting">
+      <div class="grid-row sorting issue-controls">
+        <div class="grid-cell js-SearchIssue-sorting">
           {% include "list-issue/issuelist-sorting.jst" %}
         </div>
-        <div class="grid-cell x1 nav-right js-SearchForm">
+        <div class="grid-cell nav-right js-SearchForm">
           {% include "list-issue/issuelist-search.jst" %}
         </div>
-        <div class="grid-cell x1 pagination">
+        <div class="grid-cell pagination">
           <div class="js-Pagination-controls">
             {% include "web_modules/pagination.html" %}
           </div>
