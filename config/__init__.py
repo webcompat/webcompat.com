@@ -40,7 +40,8 @@ def initialize_status():
     milestones_content = None
     print('Statuses Initialization…')
     REPO_ROOT = ISSUES_REPO_URI.rpartition('/issues')[0]
-    milestones_url_path = os.path.join('repos', REPO_ROOT, 'milestones')
+    milestones_url_path = os.path.normcase(
+        os.path.join('repos', REPO_ROOT, 'milestones'))
     milestones_url = urlparse.urlunparse(
         ('https', 'api.github.com', milestones_url_path, '', '', ''))
     milestones_path = os.path.join(DATA_PATH, 'milestones.json')
