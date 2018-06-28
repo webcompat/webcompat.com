@@ -68,7 +68,9 @@ class TestDashboard(unittest.TestCase):
         """Check if a list of labels contains the 'status-needsinfo'."""
         labels = ['browser-firefox', 'browser-chrome', 'status-needsinfo']
         self.assertTrue(has_needsinfo(labels))
-        labels = ['browser-safari', 'status-needsinfo', 'browser-firefox-mobile', 'status-needsinfo-karcow', 'priority-critical', 'status-needsinfo-and-guacamole']
+        labels = ['browser-safari', 'status-needsinfo',
+                  'browser-firefox-mobile', 'status-needsinfo-karcow',
+                  'priority-critical', 'status-needsinfo-and-guacamole']
         self.assertTrue(has_needsinfo(labels))
         labels = ['needsinfo', 'browser-firefox']
         self.assertFalse(has_needsinfo(labels))

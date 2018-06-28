@@ -42,15 +42,16 @@ def filter_needstriage(milestone_list):
                                     for issue in needstriage_list
                                     if issue['older'] is True])
     dashboard_stats['needsinfo'] = len([issue['needsinfo']
-                                       for issue in needstriage_list
-                                       if issue['needsinfo'] is True])
+                                        for issue in needstriage_list
+                                        if issue['needsinfo'] is True])
     return needstriage_list, dashboard_stats
 
 
 def has_needsinfo(labels):
     """Assess if the issue has a needsinfo label."""
     print(labels)
-    needsinfo = (label for label in labels if label.startswith('status-needsinfo'))
+    needsinfo = (label for label in labels if label.startswith(
+        'status-needsinfo'))
     if next(needsinfo, False):
         return True
     return False
