@@ -44,33 +44,31 @@ def initialize_status():
     milestones_url = urlparse.urlunparse(
         ('https', 'api.github.com', milestones_url_path, '', '', ''))
     milestones_path = os.path.join(DATA_PATH, 'milestones.json')
-    try:
-        # Get the milestone from the network
-        print('Fetching milestones from Github…')
-        r = requests.get(milestones_url)
-        milestones_content = r.content
-        if r.status_code == 200:
-            with open(milestones_path, 'w') as f:
-                f.write(r.content)
-            print('Milestones saved in data/')
-        r.raise_for_status()
-    except requests.exceptions.HTTPError as error:
-        # Not working, let's use the cached copy
-        # This might fail the first time.
-        print(MILESTONE_ERROR.format(msg=error))
-        milestones_content = milestones_from_file(milestones_path)
-    finally:
-        # save in data/ the current version
-        if milestones_content:
-            updated_statuses = update_status_config(milestones_content)
-            if not updated_statuses:
-                return False
-            app.config['STATUSES'] = updated_statuses
-            app.config['JSON_STATUSES'] = json.dumps(app.config['STATUSES'])
-            print('Milestones in memory')
-            return True
-        else:
+    # Attempt to fetch from data/milestones.json
+    milestones_content = milestones_from_file(milestones_path)
+    if not milestones_content:
+        try:
+            # Get the milestone from the network
+            print('Fetching milestones from Github…')
+            r = requests.get(milestones_url)
+            milestones_content = r.content
+            if r.status_code == 200:
+                with open(milestones_path, 'w') as f:
+                    f.write(r.content)
+                print('Milestones saved in data/')
+            r.raise_for_status()
+        except requests.exceptions.HTTPError as error:
+            # Not working, we exit the program.
+            print(MILESTONE_ERROR.format(msg=error))
             return False
+    # milestones_content exists
+    updated_statuses = update_status_config(milestones_content)
+    if not updated_statuses:
+        return False
+    app.config['STATUSES'] = updated_statuses
+    app.config['JSON_STATUSES'] = json.dumps(app.config['STATUSES'])
+    print('Milestones in memory')
+    return True
 
 
 def milestones_from_file(milestones_path):
