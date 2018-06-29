@@ -4,6 +4,24 @@
 2. New features: affect minor number
 3. API endpoint changes or dependency version updates: affect major number
 
+## 12.0.1 - 2018-06-29
+
+* Fixes #2519 - Changes the logic for initializing milestones [Pull #2530](https://github.com/webcompat/webcompat.com/pull/2530)
+* Fixes #2497 - Normalizes path for windows developers. [Pull #2529](https://github.com/webcompat/webcompat.com/pull/2529)
+* Fixes #2526 - fixed filteringSort function [Pull #2527](https://github.com/webcompat/webcompat.com/pull/2527)
+* Fixes #2517 - Fixes typo in SVG markup [Pull #2523](https://github.com/webcompat/webcompat.com/pull/2523)
+* Fixes #2515 - Make tmp path if it doesn't already exist. [Pull #2516](https://github.com/webcompat/webcompat.com/pull/2516)
+* Fixes #2506 - Extract autogrow feature from bugform and apply to comment [Pull #2513](https://github.com/webcompat/webcompat.com/pull/2513)
+* Fixes #2375 - Wait a little longer before doing some things on Travis. [Pull #2504](https://github.com/webcompat/webcompat.com/pull/2504)
+* Fixes #2267 - Document how to get the server working on Windows 10 [Pull #2503](https://github.com/webcompat/webcompat.com/pull/2503)
+* Fixes #2501 - Make temporary logfile location platform independent. [Pull #2502](https://github.com/webcompat/webcompat.com/pull/2502)
+* Fixes #2498 - Updated documentation for Windows users [Pull #2500](https://github.com/webcompat/webcompat.com/pull/2500)
+* Fixes #2498 - Edited "Installing Project source code" for Windows [Pull #2499](https://github.com/webcompat/webcompat.com/pull/2499)
+* Fixes #2453 - Changes regex to fix progressive label filtering [Pull #2496](https://github.com/webcompat/webcompat.com/pull/2496)
+* Fixes #2493 - Update some npm deps. [Pull #2495](https://github.com/webcompat/webcompat.com/pull/2495)
+* Fixes #2375 - Investigate intermittent Travis failures. [Pull #2492](https://github.com/webcompat/webcompat.com/pull/2492)
+
+
 ## 12.0.0 - 2018-06-08
 
 * Fixes #2490 - inversed name of buttons [Pull #2491](https://github.com/webcompat/webcompat.com/pull/2491)
