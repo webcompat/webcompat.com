@@ -4,6 +4,10 @@
 2. New features: affect minor number
 3. API endpoint changes or dependency version updates: affect major number
 
+## 12.0.2 - 2018-06-29
+
+* Fixes #2505 - Custom checkbox & flexbox order to move checked labels up [Pull #2521](https://github.com/webcompat/webcompat.com/pull/2521)
+
 ## 12.0.1 - 2018-06-29
 
 * Fixes #2519 - Changes the logic for initializing milestones [Pull #2530](https://github.com/webcompat/webcompat.com/pull/2530)
