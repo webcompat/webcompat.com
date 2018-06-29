@@ -118,7 +118,7 @@ issues.CategoryEditorView = Backbone.View.extend({
     // hide the non-filter matches
     _.each(toHide, function(name) {
       $("input[name=" + escape(name) + "]")
-        .closest(".label-editor-list-item")
+        .next(".label-editor-list-item")
         .hide();
     });
   }, 100),

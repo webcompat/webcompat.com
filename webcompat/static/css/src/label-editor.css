@@ -79,13 +79,19 @@
 .label-editor-list-item.focused {
   border-color: Highlight;
   border-style: solid;
-  border-width: 2px;
+  border-width: 2px 2px 2px 4px;
   outline: none;
 }
 
 /* checkbox */
 .label-editor-list-item-checkbox {
-  display: none;
+  clip: rect(0 0 0 0);
+  height: 0;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  visibility: hidden;
+  width: 0;
 }
 
 .label-editor-list-item-checkbox:checked + .label-editor-list-item::before {
