@@ -173,8 +173,9 @@ const issuesNumber = {
 /* init list with filters by default */
 setView(localStorage.getItem("DashboardTriageView"));
 filteringList(true, issuesNumber);
-/* Added an event onSubmit form */
-document.getElementById("js-Filters").addEventListener("submit", e => {
+
+/* Added an event onChane form elements */
+document.getElementById("js-Filters").addEventListener("change", e => {
   e.preventDefault();
   filteringList(false, issuesNumber);
 });
