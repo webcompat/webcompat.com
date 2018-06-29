@@ -10,7 +10,7 @@ branches:
 language: python
 
 addons:
-  firefox: "58.0"
+  firefox: latest
   chrome: stable
 
 python:
