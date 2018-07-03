@@ -11,12 +11,13 @@
   </div>
   <div class="label-editor-list" tabindex="-1">
     <% _.each(milestones, function(milestone) { %>
-      <label class="label-editor-list-item label-<%= milestone.name %>" tabindex="0">
-        <input class="label-editor-list-item-checkbox"
-               type="checkbox" name="<%= milestone.name %>"
-               data-color="<%=milestone.color%>"
-               data-remotename="milestone-<%= milestone.name %>"
-               tabindex="-1">
+      <input class="label-editor-list-item-checkbox"
+              type="checkbox" name="<%= milestone.name %>"
+              id="milestone-<%= milestone.name %>"
+              data-color="<%=milestone.color%>"
+              data-remotename="milestone-<%= milestone.name %>"
+              tabindex="-1">
+      <label class="label-editor-list-item label-<%= milestone.name %>" tabindex="0" for="milestone-<%= milestone.name %>">
         <span class="small"><%= milestone.name %></span>
       </label>
     <% }); %>
