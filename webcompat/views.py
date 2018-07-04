@@ -28,6 +28,8 @@ from helpers import get_browser_name
 from helpers import get_milestone_list
 from helpers import get_referer
 from helpers import get_user_info
+from helpers import is_blacklisted_domain
+from helpers import is_valid_issue_form
 from helpers import set_referer
 from issues import report_issue
 from webcompat import app
@@ -135,11 +137,11 @@ def file_issue():
         abort(401)
     if session and (form_data is None):
         abort(403)
-    response = report_issue(session['form_data'])
+    json_response = report_issue(session['form_data'])
     # Get rid of stashed form data
     session.pop('form_data', None)
     session['show_thanks'] = True
-    return redirect(url_for('show_issue', number=response.get('number')))
+    return redirect(url_for('show_issue', number=json_response.get('number')))
 
 
 @app.route('/', methods=['GET'])
@@ -169,11 +171,20 @@ def show_issues():
 def create_issue():
     """Create a new issue.
 
-    GET will return an HTML response for reporting issues
-    POST will create a new issue
+    GET will return an HTML response for reporting issues.
+    POST will create a new issue.
+
+    Any deceptive requests will be ended as a 400.
+    See https://tools.ietf.org/html/rfc7231#section-6.5.1
     """
+    # Starting a logger
+    log = app.logger
+    log.setLevel(logging.INFO)
+    # Get the User-Agent
+    user_agent = request.headers.get('User-Agent')
+    # GET Requests
     if request.method == 'GET':
-        bug_form = get_form(request.headers.get('User-Agent'))
+        bug_form = get_form(user_agent)
         if g.user:
             get_user_info()
         # Note: `src` and `label` are special GET params that can pass
@@ -186,54 +197,47 @@ def create_issue():
         if request.args.get('label'):
             session['label'] = request.args.getlist('label')
         return render_template('new-issue.html', form=bug_form)
-    # copy the form so we can add the full UA string to it.
+    # POST Requests
     if request.form:
+        # Copy the form to add the full UA string.
         form = request.form.copy()
-        # To be legit the form needs a couple of parameters
-        # if one essential is missing, it's a bad request
-        must_parameters = set(['url', 'problem_category', 'description',
-                               'os', 'browser',
-                               'username', 'submit_type'])
-        if not must_parameters.issubset(form.keys()):
+        if not is_valid_issue_form(form):
             abort(400)
     else:
-        # https://tools.ietf.org/html/rfc7231#section-6.5.1
+        log.info('POST request without form.')
         abort(400)
-    # see https://github.com/webcompat/webcompat.com/issues/1141
-    # see https://github.com/webcompat/webcompat.com/issues/1237
-    # see https://github.com/webcompat/webcompat.com/issues/1627
-    spamlist = ['qiangpiaoruanjian', 'cityweb.de', 'coco.fr']
-    for spam in spamlist:
-        if spam in form.get('url'):
-            msg = (u'Anonymous reporting for domain {0} '
-                   'is temporarily disabled. Please contact '
-                   'miket@mozilla.com '
-                   'for more details.').format(spam)
-            flash(msg, 'notimeout')
-            return redirect(url_for('index'))
-    form['ua_header'] = request.headers.get('User-Agent')
+    # Logging the ip and url for investigation
+    log.info('{ip} {url}'.format(
+        ip=request.remote_addr,
+        url=form['url'].encode('utf-8')))
+    # Checking blacklisted domains
+    if is_blacklisted_domain(form['url']):
+        msg = (u'Anonymous reporting for domain {0} '
+               'is temporarily disabled. Please contact '
+               'miket@mozilla.com '
+               'for more details.').format(form['url'])
+        flash(msg, 'notimeout')
+        return redirect(url_for('index'))
+    # Feeding the form with request data
+    form['ua_header'] = user_agent
     form['reported_with'] = session.pop('src', 'web')
     # Reminder: label is a list, if it exists
     form['extra_labels'] = session.pop('label', None)
-    # Logging the ip and url for investigation
-    log = app.logger
-    log.setLevel(logging.INFO)
-    log.info('{ip} {url}'.format(ip=request.remote_addr,
-                                 url=form['url'].encode('utf-8')))
     # form submission for 3 scenarios: authed, to be authed, anonymous
     if form.get('submit_type') == AUTH_REPORT:
         if g.user:  # If you're already authed, submit the bug.
-            response = report_issue(form)
+            json_response = report_issue(form)
             session['show_thanks'] = True
             return redirect(url_for('show_issue',
-                                    number=response.get('number')))
+                                    number=json_response.get('number')))
         else:  # Stash form data into session, go do GitHub auth
             session['form_data'] = form
             return redirect(url_for('login'))
     elif form.get('submit_type') == PROXY_REPORT:
-        response = report_issue(form, proxy=True).json()
+        json_response = report_issue(form, proxy=True)
         session['show_thanks'] = True
-        return redirect(url_for('show_issue', number=response.get('number')))
+        return redirect(url_for('show_issue',
+                                number=json_response.get('number')))
     else:
         # if anything wrong, we assume it is a bad forged request
         abort(400)

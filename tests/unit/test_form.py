@@ -10,6 +10,7 @@ from werkzeug import MultiDict
 
 import webcompat
 from webcompat import form
+from webcompat import helpers
 
 FIREFOX_UA = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:48.0) Gecko/20100101 Firefox/48.0'  # nopep8
 
@@ -188,8 +189,7 @@ class TestForm(unittest.TestCase):
         self.assertEqual(actual_json_arg, expected_json_arg)
 
     def test_build_details(self):
-        """Assert we return the expected HTML, for a json object or a string.
-        """
+        """Expected HTML is returned for a json object or a string."""
         actual_json_arg = form.build_details(json.dumps(
             {'a': 'b', 'c': False}))
         expected_json_arg = '<details>\n<summary>Browser Configuration</summary>\n<ul>\n  <li>a: b</li><li>c: false</li>\n</ul>\n</details>'  # nopep8
@@ -197,3 +197,36 @@ class TestForm(unittest.TestCase):
         actual_string_arg = form.build_details("cool")
         expected_string_arg = '<details>\n<summary>Browser Configuration</summary>\n<ul>\n  cool\n</ul>\n</details>'  # nopep8
         self.assertEqual(actual_string_arg, expected_string_arg)
+
+    def test_is_valid_issue_form(self):
+        """Assert that we get the form parameters we want."""
+        incomplete_form = MultiDict([('problem_category', u'unknown_bug')])
+        self.assertFalse(helpers.is_valid_issue_form(incomplete_form))
+        valid_form = MultiDict([
+            ('browser', u'Firefox 61.0'),
+            ('description', u'streamlining the form.'),
+            ('details', u''),
+            ('os', u'Mac OS X 10.13'),
+            ('problem_category', u'unknown_bug'),
+            ('submit_type', u'github-auth-report'),
+            ('url', u'http://2479.example.com'),
+            ('username', u''), ])
+        self.assertTrue(helpers.is_valid_issue_form(valid_form))
+        # The value for submit-Type can be only:
+        # - github-auth-report
+        # - github-proxy-report
+        wrong_value_form = MultiDict([
+            ('browser', u'Firefox 61.0'),
+            ('description', u'streamlining the form.'),
+            ('details', u''),
+            ('os', u'Mac OS X 10.13'),
+            ('problem_category', u'unknown_bug'),
+            ('submit_type', u'wrong-value'),
+            ('url', u'http://2479.example.com'),
+            ('username', u''), ])
+        self.assertFalse(helpers.is_valid_issue_form(wrong_value_form))
+
+    def test_is_blacklisted_domain(self):
+        """Assert domains validity in issue reporting."""
+        self.assertTrue(helpers.is_blacklisted_domain('coco.fr'))
+        self.assertFalse(helpers.is_blacklisted_domain('w3.org'))
