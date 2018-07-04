@@ -172,6 +172,7 @@ for cat_label in cat_labels:
 # labels that we allow to be added via a `label` GET param, when
 # creating an issue.
 EXTRA_LABELS = [
+    'browser-focus-geckoview',
     'type-media',
     'type-stylo',
     'type-tracking-protection-basic',
