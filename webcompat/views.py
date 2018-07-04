@@ -137,11 +137,11 @@ def file_issue():
         abort(401)
     if session and (form_data is None):
         abort(403)
-    response = report_issue(session['form_data'])
+    json_response = report_issue(session['form_data'])
     # Get rid of stashed form data
     session.pop('form_data', None)
     session['show_thanks'] = True
-    return redirect(url_for('show_issue', number=response.get('number')))
+    return redirect(url_for('show_issue', number=json_response.get('number')))
 
 
 @app.route('/', methods=['GET'])
@@ -226,17 +226,18 @@ def create_issue():
     # form submission for 3 scenarios: authed, to be authed, anonymous
     if form.get('submit_type') == AUTH_REPORT:
         if g.user:  # If you're already authed, submit the bug.
-            response = report_issue(form)
+            json_response = report_issue(form)
             session['show_thanks'] = True
             return redirect(url_for('show_issue',
-                                    number=response.get('number')))
+                                    number=json_response.get('number')))
         else:  # Stash form data into session, go do GitHub auth
             session['form_data'] = form
             return redirect(url_for('login'))
     elif form.get('submit_type') == PROXY_REPORT:
-        response = report_issue(form, proxy=True).json()
+        json_response = report_issue(form, proxy=True)
         session['show_thanks'] = True
-        return redirect(url_for('show_issue', number=response.get('number')))
+        return redirect(url_for('show_issue',
+                                number=json_response.get('number')))
     else:
         # if anything wrong, we assume it is a bad forged request
         abort(400)

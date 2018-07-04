@@ -20,7 +20,12 @@ def report_issue(form, proxy=False):
     # /repos/:owner/:repo/issues
     path = 'repos/{0}'.format(REPO_URI)
     if proxy:
-        return proxy_request('post', path,
-                             data=json.dumps(build_formdata(form)))
+        # Return a Response object.
+        response = proxy_request('post',
+                                 path,
+                                 data=json.dumps(build_formdata(form)))
+        json_response = response.json()
     else:
-        return github.post(path, build_formdata(form))
+        # Return JSON data as a dict
+        json_response = github.post(path, build_formdata(form))
+    return json_response
