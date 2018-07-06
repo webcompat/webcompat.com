@@ -44,7 +44,11 @@ registerSuite("User Activity (auth)", {
     },
 
     "IssueListView renders"() {
-      return FunctionalHelpers.openPage(this, url("/issues"), ".js-IssueList")
+      return FunctionalHelpers.openPage(
+        this,
+        url("/activity/testuser"),
+        ".js-IssueList"
+      )
         .findByCssSelector(".js-IssueList")
         .isDisplayed()
         .then(function(isDisplayed) {
