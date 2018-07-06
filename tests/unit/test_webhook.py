@@ -159,6 +159,10 @@ class TestWebhook(unittest.TestCase):
             ({'browser': 'Firefox Developer Edition 60.0b14 (64-bit)'}, 'browser-firefox'),  # noqa
             ({'browser': 'Firefox Mobile Nightly 61.0 & Firefox PC Nightly'}, 'browser-firefox-mobile'),  # noqa
             ({'browser': 'LOL Mobile 55.0'}, 'browser-fixme'),
+            ({'browser': 'LOL Mobile 55.0',
+             'extra_labels': 'browser-focus-geckoview'}, 'browser-fixme'),
+             ({'browser': 'Firefox 30.0',
+             'extra_labels': 'browser-focus-geckoview'}, 'browser-firefox'),
             ({}, 'browser-fixme'),
         ]
         for metadata_dict, expected in metadata_tests:
@@ -169,6 +173,8 @@ class TestWebhook(unittest.TestCase):
         """Extract 'extra' label."""
         metadata_tests = [
             ({'extra_labels': 'type-media'}, ['type-media']),
+            ({'extra_labels': 'browser-focus-geckoview'},
+             ['browser-focus-geckoview']),
             ({'extra_labels': 'cool, dude'}, ['cool', 'dude']),
             ({'extra_labels': u'weather-☁'}, ['weather-\xe2\x98\x81']),
             ({'burgers': 'french fries'}, None),
