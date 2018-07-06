@@ -94,6 +94,31 @@ registerSuite("User Activity (auth)", {
         .end();
     },
 
+    "needsinfo section renders"() {
+      return FunctionalHelpers.openPage(
+        this,
+        url("/activity/testuser"),
+        ".js-IssueList"
+      )
+        .findByCssSelector("#needsinfo-issues")
+        .isDisplayed()
+        .then(function(isDisplayed) {
+          assert.equal(
+            isDisplayed,
+            true,
+            "needsinfo IssueList container is visible"
+          );
+        })
+        .sleep(1000)
+        .end()
+        .findByCssSelector(".label-status-needsinfo-testuser")
+        .isDisplayed()
+        .then(function(isDisplayed) {
+          assert.equal(isDisplayed, true, "A needsinfo label is visible");
+        })
+        .end();
+    },
+
     "Trying to view someone else's activity fails (logged in)"() {
       return FunctionalHelpers.openPage(
         this,
