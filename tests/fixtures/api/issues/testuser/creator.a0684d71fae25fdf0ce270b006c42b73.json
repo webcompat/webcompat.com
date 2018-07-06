@@ -1,5 +1,6 @@
 [
   {
+    "_fixture": true,
     "url": "https://api.github.com/repos/webcompat/web-bugs/issues/279",
     "repository_url": "https://api.github.com/repos/webcompat/web-bugs",
     "labels_url": "https://api.github.com/repos/webcompat/web-bugs/issues/279/labels{/name}",
