@@ -509,6 +509,9 @@ def add_csp(response):
         "manifest-src 'self'; " +
         "script-src 'self' https://www.google-analytics.com https://api.github.com; " +  # nopep8
         "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; " +
+        "base-uri 'self'; " +
+        "frame-ancestors 'self'; " +
+        "form-action 'self'; " +
         "report-uri /csp-report"
     )
 
