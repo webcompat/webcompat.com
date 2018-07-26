@@ -4,6 +4,11 @@
 2. New features: affect minor number
 3. API endpoint changes or dependency version updates: affect major number
 
+## 12.1.1 - 2018-07-26
+
+* Issue #2557 - Remove form-action until we better understand issue #2557. [Pull #2558](https://github.com/webcompat/webcompat.com/pull/2558)
+
+
 ## 12.1.0 - 2018-07-26
 
 * Fixes #2555 - Add type-google to the EXTRA_LABELS list [Pull #2556](https://github.com/webcompat/webcompat.com/pull/2556)
