@@ -511,7 +511,6 @@ def add_csp(response):
         "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; " +
         "base-uri 'self'; " +
         "frame-ancestors 'self'; " +
-        "form-action 'self'; " +
         "report-uri /csp-report"
     )
 
