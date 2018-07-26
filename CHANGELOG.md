@@ -4,6 +4,17 @@
 2. New features: affect minor number
 3. API endpoint changes or dependency version updates: affect major number
 
+## 12.1.0 - 2018-07-26
+
+* Fixes #2555 - Add type-google to the EXTRA_LABELS list [Pull #2556](https://github.com/webcompat/webcompat.com/pull/2556)
+* Fixes #2552 - Adds additional csp directives [Pull #2553](https://github.com/webcompat/webcompat.com/pull/2553)
+* Fixes #2537 - Add browser-focus-geckoview to EXTRA_LABELS [Pull #2542](https://github.com/webcompat/webcompat.com/pull/2542)
+* Fixes #2538 - Apply HTML change to milestones [Pull #2539](https://github.com/webcompat/webcompat.com/pull/2539)
+* Fixes #2535 - Use latest Firefox on Travis [Pull #2536](https://github.com/webcompat/webcompat.com/pull/2536)
+* Fixes #2511 - Triage dashboard 'needsinfo' label category doesn't include 'needsinfo-xxx' labels [Pull #2533](https://github.com/webcompat/webcompat.com/pull/2533)
+* Fixes #2479 - Refactors the form to be more testable [Pull #2528](https://github.com/webcompat/webcompat.com/pull/2528)
+
+
 ## 12.0.2 - 2018-06-29
 
 * Fixes #2505 - Custom checkbox & flexbox order to move checked labels up [Pull #2521](https://github.com/webcompat/webcompat.com/pull/2521)
