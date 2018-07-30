@@ -38,6 +38,7 @@ var sharedViewProps = {
   },
   fetchAndRenderIssues: function(options) {
     var headers = { headers: { Accept: "application/json" } };
+    var instance = options.instance;
     if (options && options.url) {
       this.issues.url = options.url;
     } else {
@@ -51,7 +52,7 @@ var sharedViewProps = {
         _.bind(function() {
           this._loadingIndicator.removeClass("is-active");
           this.render(this.issues);
-          myIssuesPagination.initPaginationLinks(this.issues);
+          instance.initPaginationLinks(this.issues);
         }, this)
       )
       .fail(
@@ -85,7 +86,10 @@ issueList.NeedsInfoView = Backbone.View.extend(
         params: "per_page=10"
       });
       needsinfoPagination.initMixin(this, this.issues, $("#needsinfo-section"));
-      this.fetchAndRenderIssues({ url: this.issues.url });
+      this.fetchAndRenderIssues({
+        url: this.issues.url,
+        instance: needsinfoPagination
+      });
     }
   })
 );
@@ -103,7 +107,10 @@ issueList.MyIssuesView = Backbone.View.extend(
         this.issues,
         $("#user-reported-issues")
       );
-      this.fetchAndRenderIssues({ url: this.issues.url });
+      this.fetchAndRenderIssues({
+        url: this.issues.url,
+        instance: myIssuesPagination
+      });
     }
   })
 );
@@ -122,7 +129,10 @@ issueList.IssueMentionsView = Backbone.View.extend(
         this.issues,
         $("#user-mentioned-issues")
       );
-      this.fetchAndRenderIssues({ url: this.issues.url });
+      this.fetchAndRenderIssues({
+        url: this.issues.url,
+        instance: mentionsPagination
+      });
     }
   })
 );

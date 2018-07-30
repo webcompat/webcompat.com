@@ -138,7 +138,7 @@ function PaginationMixin() {
       pageNum = this.getPageNumberFromURL(nextPage);
       this.view.updateModelParams(pageNum);
       // we pass along the entire URL from the Link header
-      this.view.fetchAndRenderIssues({ url: nextPage });
+      this.view.fetchAndRenderIssues({ url: nextPage, instance: this });
     }
   };
 
@@ -156,7 +156,7 @@ function PaginationMixin() {
       pageNum = this.getPageNumberFromURL(prevPage);
       this.view.updateModelParams(pageNum);
       // we pass along the entire URL from the Link header
-      this.view.fetchAndRenderIssues({ url: prevPage });
+      this.view.fetchAndRenderIssues({ url: prevPage, instance: this });
     }
   };
 
