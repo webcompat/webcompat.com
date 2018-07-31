@@ -122,9 +122,11 @@ DEBUG = False
 if not PRODUCTION:
     DEBUG = True
 
-# localhost runs on HTTP, use secure flag on session cookie otherwise.
+# localhost runs on HTTP
+# use secure and samesite flags on session cookie otherwise
 if not LOCALHOST:
     SESSION_COOKIE_SECURE = True
+    SESSION_COOKIE_SAMESITE = 'Strict'
 
 # By default, we want to log CSP violations. See /csp-report in views.py.
 CSP_LOG = True
