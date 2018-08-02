@@ -4,6 +4,11 @@
 2. New features: affect minor number
 3. API endpoint changes or dependency version updates: affect major number
 
+## 12.2.0 - 2018-08-02
+
+* Fixes #2560 - Add browser-firefox-reality to EXTRA_LABELS [Pull #2562](https://github.com/webcompat/webcompat.com/pull/2562)
+* Fixes #2550 - Adds samesite attribute to session cookie [Pull #2551](https://github.com/webcompat/webcompat.com/pull/2551)
+
 ## 12.1.1 - 2018-07-26
 
 * Issue #2557 - Remove form-action until we better understand issue #2557. [Pull #2558](https://github.com/webcompat/webcompat.com/pull/2558)
