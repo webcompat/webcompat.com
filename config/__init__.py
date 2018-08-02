@@ -175,6 +175,7 @@ for cat_label in cat_labels:
 # creating an issue.
 EXTRA_LABELS = [
     'browser-focus-geckoview',
+    'browser-firefox-reality',
     'type-google',
     'type-media',
     'type-stylo',
