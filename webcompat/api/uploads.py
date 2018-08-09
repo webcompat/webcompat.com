@@ -120,7 +120,7 @@ class Upload(object):
         self.image_object.save(file_dest, **save_parameters)
         # Creating the thumbnail
         size = (1024, 1024)
-        self.image_object.thumbnail(size, Image.BILINEAR)
+        self.image_object.thumbnail(size, Image.HAMMING)
         self.image_object.save(thumb_dest, **save_parameters)
 
 
