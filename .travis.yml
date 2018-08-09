@@ -47,7 +47,6 @@ install:
   - firefox --version
   # lint python
   - pep8 --ignore=E402 webcompat/ tests/ config/secrets.py.example
-  - python run.py -t &
 
 before_script:
   - sleep 5
@@ -58,5 +57,6 @@ before_script:
 # now run the tests!
 script:
   - nosetests
+  - python run.py -t &
   - sleep 5
   - npm run test:js -- --reporters="runner" --firefoxBinary=`which firefox`
