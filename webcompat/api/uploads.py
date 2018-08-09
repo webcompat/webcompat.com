@@ -104,6 +104,9 @@ class Upload(object):
         dest_dir = os.path.dirname(file_dest)
         if not os.path.exists(dest_dir):
             os.makedirs(dest_dir)
+        # Alpha channels are not supported in JPEG
+        if (self.image_object.format == 'PNG'):
+            self.image_object = self.image_object.convert('RGB')
         # Optimize further the image compression for these formats
         if self.image_object.format in ['JPEG', 'JPG', 'JPE', 'PNG']:
             save_parameters['optimize'] = True
