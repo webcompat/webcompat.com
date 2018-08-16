@@ -44,7 +44,11 @@ registerSuite("User Activity (auth)", {
     },
 
     "IssueListView renders"() {
-      return FunctionalHelpers.openPage(this, url("/issues"), ".js-IssueList")
+      return FunctionalHelpers.openPage(
+        this,
+        url("/activity/testuser"),
+        ".js-IssueList"
+      )
         .findByCssSelector(".js-IssueList")
         .isDisplayed()
         .then(function(isDisplayed) {
@@ -86,6 +90,31 @@ registerSuite("User Activity (auth)", {
             /^Opened:\s\d{4}-\d{2}-\d{2}/,
             "Issue should display creation date"
           );
+        })
+        .end();
+    },
+
+    "needsinfo section renders"() {
+      return FunctionalHelpers.openPage(
+        this,
+        url("/activity/testuser"),
+        ".js-IssueList"
+      )
+        .findByCssSelector("#needsinfo-issues")
+        .isDisplayed()
+        .then(function(isDisplayed) {
+          assert.equal(
+            isDisplayed,
+            true,
+            "needsinfo IssueList container is visible"
+          );
+        })
+        .sleep(1000)
+        .end()
+        .findByCssSelector(".label-status-needsinfo-testuser")
+        .isDisplayed()
+        .then(function(isDisplayed) {
+          assert.equal(isDisplayed, true, "A needsinfo label is visible");
         })
         .end();
     },

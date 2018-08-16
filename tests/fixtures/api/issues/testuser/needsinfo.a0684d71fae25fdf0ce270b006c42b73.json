@@ -1,0 +1,110 @@
+[
+  {
+    "_fixture": true,
+    "url": "https://api.github.com/repos/webcompat/webcompat-tests/issues/1585",
+    "repository_url": "https://api.github.com/repos/webcompat/webcompat-tests",
+    "labels_url": "https://api.github.com/repos/webcompat/webcompat-tests/issues/1585/labels{/name}",
+    "comments_url": "https://api.github.com/repos/webcompat/webcompat-tests/issues/1585/comments",
+    "events_url": "https://api.github.com/repos/webcompat/webcompat-tests/issues/1585/events",
+    "html_url": "https://github.com/webcompat/webcompat-tests/issues/1585",
+    "id": 338093783,
+    "node_id": "MDU6SXNzdWUzMzgwOTM3ODM=",
+    "number": 1585,
+    "title": "2479.example.com - desktop site instead of mobile site",
+    "user": {
+      "login": "karlcow",
+      "id": 505230,
+      "node_id": "MDQ6VXNlcjUwNTIzMA==",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/505230?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/karlcow",
+      "html_url": "https://github.com/karlcow",
+      "followers_url": "https://api.github.com/users/karlcow/followers",
+      "following_url": "https://api.github.com/users/karlcow/following{/other_user}",
+      "gists_url": "https://api.github.com/users/karlcow/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/karlcow/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/karlcow/subscriptions",
+      "organizations_url": "https://api.github.com/users/karlcow/orgs",
+      "repos_url": "https://api.github.com/users/karlcow/repos",
+      "events_url": "https://api.github.com/users/karlcow/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/karlcow/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "labels": [
+      {
+        "id": 182807004,
+        "node_id": "MDU6TGFiZWwxODI4MDcwMDQ=",
+        "url": "https://api.github.com/repos/webcompat/webcompat-tests/labels/browser-firefox",
+        "name": "browser-firefox",
+        "color": "d4c5f9",
+        "default": false
+      },
+      {
+        "id": 985385411,
+        "node_id": "MDU6TGFiZWw5ODUzODU0MTE=",
+        "url": "https://api.github.com/repos/webcompat/webcompat-tests/labels/status-needsinfo-karlcow",
+        "name": "status-needsinfo-karlcow",
+        "color": "5319e7",
+        "default": false
+      },
+      {
+        "id": 985333885,
+        "node_id": "MDU6TGFiZWw5ODUzMzM4ODU=",
+        "url": "https://api.github.com/repos/webcompat/webcompat-tests/labels/status-needsinfo-testuser",
+        "name": "status-needsinfo-testuser",
+        "color": "d93f0b",
+        "default": false
+      }
+    ],
+    "state": "open",
+    "locked": false,
+    "assignee": null,
+    "assignees": [
+
+    ],
+    "milestone": {
+      "url": "https://api.github.com/repos/webcompat/webcompat-tests/milestones/1",
+      "html_url": "https://github.com/webcompat/webcompat-tests/milestone/1",
+      "labels_url": "https://api.github.com/repos/webcompat/webcompat-tests/milestones/1/labels",
+      "id": 2744172,
+      "node_id": "MDk6TWlsZXN0b25lMjc0NDE3Mg==",
+      "number": 1,
+      "title": "needstriage",
+      "description": "Issues which needs to be triaged",
+      "creator": {
+        "login": "karlcow",
+        "id": 505230,
+        "node_id": "MDQ6VXNlcjUwNTIzMA==",
+        "avatar_url": "https://avatars0.githubusercontent.com/u/505230?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/karlcow",
+        "html_url": "https://github.com/karlcow",
+        "followers_url": "https://api.github.com/users/karlcow/followers",
+        "following_url": "https://api.github.com/users/karlcow/following{/other_user}",
+        "gists_url": "https://api.github.com/users/karlcow/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/karlcow/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/karlcow/subscriptions",
+        "organizations_url": "https://api.github.com/users/karlcow/orgs",
+        "repos_url": "https://api.github.com/users/karlcow/repos",
+        "events_url": "https://api.github.com/users/karlcow/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/karlcow/received_events",
+        "type": "User",
+        "site_admin": false
+      },
+      "open_issues": 49,
+      "closed_issues": 0,
+      "state": "open",
+      "created_at": "2017-09-05T03:39:06Z",
+      "updated_at": "2018-07-06T11:54:49Z",
+      "due_on": null,
+      "closed_at": null
+    },
+    "comments": 0,
+    "created_at": "2018-07-04T00:29:52Z",
+    "updated_at": "2018-07-06T01:47:58Z",
+    "closed_at": null,
+    "author_association": "MEMBER",
+    "body": "<!-- @browser: Firefox 63.0 -->\n<!-- @ua_header: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:63.0) Gecko/20100101 Firefox/63.0 -->\n<!-- @reported_with: web -->\n\n**URL**: http://2479.example.com\n\n**Browser / Version**: Firefox 63.0\n**Operating System**: Mac OS X 10.13\n**Tested Another Browser**: Unknown\n\n**Problem type**: Desktop site instead of mobile site\n**Description**: testing the response data (anonymously)\n**Steps to Reproduce**:\n\r\n[![Screenshot Description](http://localhost:5000/uploads/2018/7/ccc14fad-099b-4a1a-8dd5-165d8fe1a5b6-thumb.jpg)](http://localhost:5000/uploads/2018/7/ccc14fad-099b-4a1a-8dd5-165d8fe1a5b6.jpg)\n\n\n\n_From [webcompat.com](https://webcompat.com/) with ❤️_"
+  }
+]
