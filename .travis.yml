@@ -45,18 +45,18 @@ install:
   - which firefox
   - java -version
   - firefox --version
-  # lint python
-  - pep8 --ignore=E402 webcompat/ tests/ config/secrets.py.example
-  - python run.py -t &
 
 before_script:
   - sleep 5
   # lint JS in default eslint task
   - npm run lint
   - npm run build
+  # lint python
+  - pep8 --ignore=E402 webcompat/ tests/ config/secrets.py.example
 
 # now run the tests!
 script:
   - nosetests
+  - python run.py -t &
   - sleep 5
   - npm run test:js -- --reporters="runner" --firefoxBinary=`which firefox`

@@ -104,6 +104,9 @@ class Upload(object):
         dest_dir = os.path.dirname(file_dest)
         if not os.path.exists(dest_dir):
             os.makedirs(dest_dir)
+        # Alpha channels are not supported in JPEG
+        if (self.image_object.format == 'PNG'):
+            self.image_object = self.image_object.convert('RGB')
         # Optimize further the image compression for these formats
         if self.image_object.format in ['JPEG', 'JPG', 'JPE', 'PNG']:
             save_parameters['optimize'] = True
@@ -116,8 +119,8 @@ class Upload(object):
         # unpacking save_parameters
         self.image_object.save(file_dest, **save_parameters)
         # Creating the thumbnail
-        size = (700, 700)
-        self.image_object.thumbnail(size, Image.BILINEAR)
+        size = (1024, 1024)
+        self.image_object.thumbnail(size, Image.HAMMING)
         self.image_object.save(thumb_dest, **save_parameters)
 
 

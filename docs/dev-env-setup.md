@@ -32,10 +32,10 @@ sudo apt-get install python2.7 python2.7-dev
 In Ubuntu, sometimes even after installing Node.js, the command `node -v` does not show the installed version. To complete installation, a symbolic link has to be created to the sbin folder.
 
 ```shell
-#remove old symbolic links if any
+# remove old symbolic links if any
 sudo rm -r /usr/bin/node
 
-#add new symbolic link
+# add new symbolic link
 sudo ln -s /usr/bin/nodejs /usr/bin/node
 sudo ln -s /usr/bin/nodejs /usr/sbin/node
 ```
@@ -51,7 +51,7 @@ sudo apt-get --purge remove nodejs
 curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
 sudo apt-get install -y nodejs
 sudo apt-get install -y build-essential
-
+```
 
 ### Simple setup
 #### Initializing Project source code
@@ -118,7 +118,7 @@ sudo apt install python-pip
 #### Installing Project source code
 
 ```bash
-# clone the repo. Change <username> to your Github username
+# clone the repo. Change <username> to your GitHub username
 git clone git@github.com:<username>/webcompat.com.git
 # change to directory
 cd webcompat.com
@@ -154,7 +154,7 @@ npm run build
 
 **Note**: if you get an error message about missing rights to install the setup through npm, please *do not run `sudo npm`*. You just need to [fix you permissions](https://coderwall.com/p/t2mc9g/don-t-sudo-npm) for `usr/local`.
 
-### Configuring The Server
+### Configuring the Server
 
 ### Test repository
 
@@ -176,37 +176,37 @@ cp config/secrets.py.example config/secrets.py
 copy config/secrets.py.example config/secrets.py
 ```
 
-> Note: If you are using Cloud 9, you have to update run.py and replace `app.run(host=os.getenv("IP", "0.0.0.0"), port=int(os.getenv("PORT", 8080)))`.
+> Note: If you are using Cloud 9, you have to update `run.py` and replace `app.run(host=os.getenv("IP", "0.0.0.0"), port=int(os.getenv("PORT", 8080)))`.
 
 You can now edit `secrets.py` and
 
 1. Add the right values to the repo issues URIs. `ISSUES_REPO_URI = "<user>/<repo>/issues"`. For example, miketaylr's setup needs to say `ISSUES_REPO_URI = "miketaylr/test-repo/issues"`
 
-2. You have the option of creating a "bot account" (a dummy account for the purpose of testing), or using your own account for local development. Either way, you'll need a personal access token to proceed &mdash; this is the oauth token we use to report issues on behalf of people who don't want to give GitHub oauth access (or don't have GitHub accounts).
+2. You have the option of creating a "bot account" (a dummy account for the purpose of testing), or using your own account for local development. Either way, you'll need a personal access token to proceed &mdash; this is the oauth token we use to report issues on behalf of people who don't want to give GitHub OAuth access (or don't have GitHub accounts).
 
-  The [instructions for creating a personal access token](http://help.github.com/articles/creating-an-access-token-for-command-line-use) are given on GitHub. Select public_repo to grant access to the public repositories through the personal access token.  Once you have created the token you can add it in the variable `OAUTH_TOKEN = ""`. More advanced users might want to create an environment variable called `OAUTH_TOKEN`. Either way is fine.
+  The [instructions for creating a personal-access token](http://help.github.com/articles/creating-an-access-token-for-command-line-use) are given on GitHub. Select public_repo to grant access to the public repositories through the personal access token.  Once you have created the token you can add it in the variable `OAUTH_TOKEN = ""`. More advanced users might want to create an environment variable called `OAUTH_TOKEN`. Either way is fine.
 
-3. Add the client id and client secret to secrets.py. If you're part of the webcompat GitHub organization, you can [get the client id and client secret from GitHub](https://github.com/organizations/webcompat/settings/applications/). Otherwise, create your own test and production applications ([instructions here](https://github.com/settings/applications/new)) &mdash; when prompted for a "Authorization callback URL", use `http://localhost:5000/callback`,(Cloud 9 users should use `http://yourapp.c9users.io:8000/callback`instead) and take note of the client id and client secret GitHub gives you.
+3. Add the client ID and client secret to `secrets.py`. If you're part of the [webcompat GitHub organization](https://github.com/webcompat), you can [get the client ID and client secret from GitHub](https://github.com/organizations/webcompat/settings/applications/). Otherwise, create your own test and production applications ([instructions here](https://github.com/settings/applications/new)) &mdash; when prompted for an "Authorization callback URL", use `http://localhost:5000/callback` (Cloud 9 users should use `http://yourapp.c9users.io:8000/callback`instead), and take note of the client ID and client secret GitHub give you.
 
-  When you have the client id and client secret put them in the corresponding lines in secrets.py for the localhost application:
+  When you have the client ID and client secret, put them in the corresponding lines in `secrets.py` for the localhost application:
 
-  ```
+  ```py
   # We're running on localhost, use the test application
   GITHUB_CLIENT_ID = os.environ.get('FAKE_ID') or "<client id goes here>"
   GITHUB_CLIENT_SECRET = os.environ.get('FAKE_SECRET') or  "<client secret goes here>"
   ```
 
-  > Note: You can ignore the `FAKE_ID` and `FAKE_SECRET` environment variables, we use that as a hack for automated tests.
+  > Note: You can ignore the `FAKE_ID` and `FAKE_SECRET` environment variables; we use that as a hack for automated tests.
 
-4. Click on login to authorize the application and get access to the issues.
+4. Click on **Log in** to authorize the application and get access to the issues.
 ![Login](https://cldup.com/HHtMlPhAod.png)
 
 
-> **Note**: If you get a 404 at GitHub when clicking "Login", it means you haven't filled in the `GITHUB_CLIENT_ID` or `GITHUB_CLIENT_SECRET` in secrets.py.
+> **Note**: If you get a 404 at GitHub when clicking **Log in**, it means you haven't filled in the `GITHUB_CLIENT_ID` or `GITHUB_CLIENT_SECRET` in `secrets.py`.
 
 ![Auth 404](https://i.cloudup.com/8FDA5bVc7l.png)
 
-### Starting The Server
+### Starting the Server
 
 ```bash
 # start local server
@@ -243,11 +243,11 @@ After certain kinds of changes are made, you need to build the project before se
 
 * CSS: a build will run cssnext, combine custom media queries, and concat all source files into webcompat.dev.css. You'll need to re-build the CSS to see any changes, so it's recommended to use a watch task (see `npm run watch`).
 * JS: a build will run eslint, minify and concat source files.
-* JS templates (.jst files): if you are making changes to a Backbone template in a `.jst` file, you will need to re-run the `build` command to update the pre-compiled `templates.js` file before you will see the results.
-* HTML templates: the changes should be served from disk without the need for rebuilding
+* JS templates (`.jst` files): if you are making changes to a Backbone template in a `.jst` file, you will need to re-run the `build` command to update the pre-compiled `templates.js` file before you will see the results.
+* HTML templates: the changes should be served from disk without the need for rebuilding.
 * Python: the Flask local server will detect changes and restart automatically. No need to re-build.
 
-You can build the entire project (CSS and JavaScript files and optimize images) by executing this command on Mac/Linux:
+You can build the entire project (CSS stylesheets, JavaScript scripts, and optimized images) by executing this command on macOS/Linux:
 
 ```bash
 npm run build
@@ -259,14 +259,14 @@ and this command on Windows:
 npm run watch
 ```
 
-Linting static JS files with project coding styles.
+Linting static JS files with project coding styles:
 
 ```bash
 # linting style JS
 npm run lint
 ```
 
-Fixing static JS files with project coding styles, if an error occurs.
+Fixing static JS files with project coding styles, if an error occurs:
 
 ```bash
 # fixing linting style JS

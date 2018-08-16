@@ -4,6 +4,18 @@
 2. New features: affect minor number
 3. API endpoint changes or dependency version updates: affect major number
 
+## 13.0.0 - 2018-08-10
+
+* Fixes #2564 - Change to lax value for samesite cookies. [Issue #2564](https://github.com/webcompat/webcompat.com/commit/6ce9f32bed8f87b934396e222554f149512edf0b)
+* Fixes #2567 - Starts the server for functional tests after nosetests. [Pull #2568](https://github.com/webcompat/webcompat.com/pull/2568)
+* Fixes #1942 - Modifies the Image saving parameters for better quality [Pull #2566](https://github.com/webcompat/webcompat.com/pull/2566)
+
+
+## 12.2.0 - 2018-08-02
+
+* Fixes #2560 - Add browser-firefox-reality to EXTRA_LABELS [Pull #2562](https://github.com/webcompat/webcompat.com/pull/2562)
+* Fixes #2550 - Adds samesite attribute to session cookie [Pull #2551](https://github.com/webcompat/webcompat.com/pull/2551)
+
 ## 12.1.1 - 2018-07-26
 
 * Issue #2557 - Remove form-action until we better understand issue #2557. [Pull #2558](https://github.com/webcompat/webcompat.com/pull/2558)
