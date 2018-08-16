@@ -126,7 +126,7 @@ if not PRODUCTION:
 # use secure and samesite flags on session cookie otherwise
 if not LOCALHOST:
     SESSION_COOKIE_SECURE = True
-    SESSION_COOKIE_SAMESITE = 'Strict'
+    SESSION_COOKIE_SAMESITE = 'Lax'
 
 # By default, we want to log CSP violations. See /csp-report in views.py.
 CSP_LOG = True

@@ -4,6 +4,7 @@
 {% include "nav/nav.html" %}
 <main role="main" data-repo-path="{{config['ISSUES_REPO_URI']}}">
   <section id="browse-issues-wrapper" class="js-list-issue issues-list loader js-loader is-active">
+    {% include "user-activity/needsinfo.html" %}
     {% include "user-activity/reported-by-user.html" %}
     {% include "user-activity/user-mentions.html" %}
   </section>

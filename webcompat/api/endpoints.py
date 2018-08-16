@@ -95,7 +95,10 @@ def get_user_activity_issues(username, parameter):
     """Return issues related to a user at the API endpoint.
 
     cf. https://developer.github.com/v3/issues/#list-issues-for-a-repository
-    This is only used for "creator" and "mentioned" right now.
+    This is used for "creator" and "mentioned". A special "needsinfo" parameter
+    value is converted into a request for labels of the format:
+
+    `status-needsinfo-username`
 
     Any logged in user can see details for any other logged in user. We can
     extend this to non-logged in users in the future if we want.
@@ -105,7 +108,10 @@ def get_user_activity_issues(username, parameter):
     # copy the params so we can add to the dict.
     params = request.args.copy()
     params['state'] = 'all'
-    params['{0}'.format(parameter)] = '{0}'.format(username)
+    if parameter == 'needsinfo':
+        params['labels'] = 'status-needsinfo-{0}'.format(username)
+    else:
+        params[parameter] = username
     path = 'repos/{path}'.format(path=ISSUES_PATH)
     return api_request('get', path, params=params)
 
