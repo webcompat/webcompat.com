@@ -4,6 +4,15 @@
 2. New features: affect minor number
 3. API endpoint changes or dependency version updates: affect major number
 
+## 13.1.0 - 2018-08-22
+
+* Fixes #2547 - Fix typo in addons link of template for opera [Pull #2570](https://github.com/webcompat/webcompat.com/pull/2570)
+* Fixes #2341 - Improves the layout for list and cards [Pull #2569](https://github.com/webcompat/webcompat.com/pull/2569)
+* Fixes #2567 - Starts the server for functional tests after nosetests. [Pull #2568](https://github.com/webcompat/webcompat.com/pull/2568)
+* Fixes #1942 - Modifies the Image saving parameters for better quality [Pull #2566](https://github.com/webcompat/webcompat.com/pull/2566)
+* Fixes #1336 - Add target=_blank to reported URL (only) [Pull #2548](https://github.com/webcompat/webcompat.com/pull/2548)
+* Fixes #2507 - Display needsinfo requests in user activity page [Pull #2544](https://github.com/webcompat/webcompat.com/pull/2544)
+
 ## 13.0.0 - 2018-08-10
 
 * Fixes #2564 - Change to lax value for samesite cookies. [Issue #2564](https://github.com/webcompat/webcompat.com/commit/6ce9f32bed8f87b934396e222554f149512edf0b)
