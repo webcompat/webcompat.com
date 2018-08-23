@@ -178,7 +178,6 @@ EXTRA_LABELS = [
     'browser-firefox-reality',
     'type-google',
     'type-media',
-    'type-stylo',
     'type-tracking-protection-basic',
     'type-tracking-protection-strict',
     'type-webrender-enabled',

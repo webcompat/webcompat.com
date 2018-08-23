@@ -136,7 +136,7 @@ class TestForm(unittest.TestCase):
         form_object = MultiDict([
             ('reported_with', u'desktop-reporter'),
             ('url', u'http://localhost:5000/issues/new'),
-            ('extra_labels', [u'type-stylo', u'type-webrender-enabled']),
+            ('extra_labels', u'type-webrender-enabled'),
             ('ua_header', u'Mozilla/5.0...Firefox 59.0'),
             ('browser', u'Firefox 59.0')])
         metadata_keys = ['browser', 'ua_header', 'reported_with',
