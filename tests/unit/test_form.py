@@ -142,7 +142,7 @@ class TestForm(unittest.TestCase):
         metadata_keys = ['browser', 'ua_header', 'reported_with',
                          'extra_labels']
         actual = form.get_metadata(metadata_keys, form_object)
-        expected = u'<!-- @browser: Firefox 59.0 -->\n<!-- @ua_header: Mozilla/5.0...Firefox 59.0 -->\n<!-- @reported_with: desktop-reporter -->\n<!-- @extra_labels: type-stylo, type-webrender-enabled -->\n'  # nopep8
+        expected = u'<!-- @browser: Firefox 59.0 -->\n<!-- @ua_header: Mozilla/5.0...Firefox 59.0 -->\n<!-- @reported_with: desktop-reporter -->\n<!-- @extra_labels: type-webrender-enabled -->\n'  # nopep8
         self.assertEqual(actual, expected)
 
     def test_get_metadata_browser_as_extra(self):
@@ -150,13 +150,13 @@ class TestForm(unittest.TestCase):
         form_object = MultiDict([
             ('reported_with', u'desktop-reporter'),
             ('url', u'http://localhost:5000/issues/new'),
-            ('extra_labels', [u'type-stylo', u'browser-focus-geckoview']),
+            ('extra_labels', u'browser-focus-geckoview'),
             ('ua_header', u'Mozilla/5.0...Firefox 59.0'),
             ('browser', u'Firefox 59.0')])
         metadata_keys = ['browser', 'ua_header', 'reported_with',
                          'extra_labels']
         actual = form.get_metadata(metadata_keys, form_object)
-        expected = u'<!-- @browser: Firefox 59.0 -->\n<!-- @ua_header: Mozilla/5.0...Firefox 59.0 -->\n<!-- @reported_with: desktop-reporter -->\n<!-- @extra_labels: type-stylo, browser-focus-geckoview -->\n'  # nopep8
+        expected = u'<!-- @browser: Firefox 59.0 -->\n<!-- @ua_header: Mozilla/5.0...Firefox 59.0 -->\n<!-- @reported_with: desktop-reporter -->\n<!-- @extra_labels: browser-focus-geckoview -->\n'  # nopep8
         self.assertEqual(actual, expected)
 
     def test_normalize_metadata(self):
