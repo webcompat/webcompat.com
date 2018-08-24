@@ -169,10 +169,32 @@ def show_issues():
 
 @app.route('/issues/new', methods=['GET', 'POST'])
 def create_issue():
-    """Create a new issue.
+    """Create a new issue or prefill a form for submission.
 
-    GET will return an HTML response for reporting issues.
-    POST will create a new issue.
+    * HTTP GET with (optional) parameters
+      * create a form with prefiled data.
+      * parameters:
+        * url: URL of the Web site
+        * src: source of the request (web, addon, etc.)
+        * label: controled list of labels
+    * HTTP POST with a JSON payload
+      * create a form with prefiled data
+      * content-type is application/json
+      * json may include:
+        * title
+        * User agent string
+        * OS identification
+        * labels list
+        * type of bugs
+        * short summary
+        * full description
+        * tested in another browser
+        * body
+    * HTTP POST with an attached form
+      * submit a form to GitHub to create a new issue
+      * form submit type:
+        * authenticated: Github authentification
+        * anonymous: handled by webcompat-bot
 
     Any deceptive requests will be ended as a 400.
     See https://tools.ietf.org/html/rfc7231#section-6.5.1
