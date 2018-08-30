@@ -585,3 +585,21 @@ def is_blacklisted_domain(domain):
     # see https://github.com/webcompat/webcompat.com/issues/1627
     spamlist = ['qiangpiaoruanjian', 'cityweb.de', 'coco.fr']
     return domain in spamlist
+
+def form_type(form_request):
+    """Check the type of form request for /issues/new.
+
+    It can return either:
+    * 'prefill'
+    * 'create'
+    """
+    method = form_request.method
+    content_type = form_request.content_type
+    if method == 'GET':
+        return 'prefill'
+    elif method == 'POST' and content_type == 'application/json':
+        return 'prefill'
+    elif method == 'POST' and content_type.startswith('multipart/form-data'):
+        return 'create'
+    else:
+        return None
