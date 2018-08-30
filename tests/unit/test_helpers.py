@@ -10,10 +10,13 @@ import os.path
 import sys
 import unittest
 
+import flask
+
 # Add webcompat module to import path
 sys.path.append(os.path.realpath(os.pardir))
 
 import webcompat
+from webcompat.helpers import form_type
 from webcompat.helpers import format_link_header
 from webcompat.helpers import get_browser
 from webcompat.helpers import get_browser_name
@@ -232,6 +235,30 @@ class TestHelpers(unittest.TestCase):
         self.assertEqual(get_name({'family': 'Chrome'}), 'Chrome')
         self.assertEqual(get_name({'family': 'Mac OS X'}), 'Mac OS X')
         self.assertEqual(get_name({'family': 'Other'}), 'Unknown')
+
+    def test_form_type(self):
+        """Define which type of request for /issues/new."""
+        with webcompat.app.test_request_context(
+                '/issues/new?url=http://example.com/',
+                method='GET'):
+            self.assertEqual(form_type(flask.request), 'prefill')
+        with webcompat.app.test_request_context(
+                '/issues/new',
+                json={'url': 'http://example.com/'},
+                method='POST'):
+            self.assertEqual(form_type(flask.request), 'prefill')
+        with webcompat.app.test_request_context(
+                '/issues/new',
+                content_type='multipart/form-data',
+                data={'foo': 'blah'},
+                method='POST'):
+            self.assertEqual(form_type(flask.request), 'create')
+        with webcompat.app.test_request_context(
+                '/issues/new',
+                data={'url': 'http://example.com/'},
+                method='POST'):
+            self.assertEqual(form_type(flask.request), None)
+
 
 if __name__ == '__main__':
     unittest.main()
