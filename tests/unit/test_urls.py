@@ -66,6 +66,7 @@ class TestURLs(unittest.TestCase):
         mock_proxy.return_value = POST_RESPONSE
         rv = self.app.post(
             '/issues/new',
+            content_type='multipart/form-data',
             environ_base=headers,
             data=dict(
                 browser='Firefox Mobile 45.0',
@@ -89,6 +90,7 @@ class TestURLs(unittest.TestCase):
         rv = self.app.post(
             '/issues/new',
             environ_base=headers,
+            content_type='multipart/form-data',
             data=dict(
                 browser='Firefox Mobile 45.0', ))
         self.assertEqual(rv.status_code, 400)
@@ -203,7 +205,9 @@ class TestURLs(unittest.TestCase):
 
     def test_missing_parameters_for_new_issue(self):
         """Sends 400 to POST on /issues/new with missing parameters."""
-        rv = self.app.post('/issues/new', data=dict(url='foo'))
+        rv = self.app.post('/issues/new',
+                           content_type='multipart/form-data',
+                           data=dict(url='foo'))
         self.assertEqual(rv.status_code, 400)
 
     def test_new_issue_should_not_crash(self):
@@ -214,7 +218,9 @@ class TestURLs(unittest.TestCase):
                 'url': u'http://example.com',
                 'os': u'Foobar',
                 'browser': u'BarFoo'}
-        rv = self.app.post('/issues/new', data=data)
+        rv = self.app.post('/issues/new',
+                           content_type='multipart/form-data',
+                           data=data)
         self.assertEqual(rv.status_code, 400)
 
     def test_dashboard_triage(self):
