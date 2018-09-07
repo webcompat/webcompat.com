@@ -26,6 +26,7 @@ from webcompat.helpers import get_str_value
 from webcompat.helpers import get_version_string
 from webcompat.helpers import normalize_api_params
 from webcompat.helpers import parse_link_header
+from webcompat.helpers import prepare_form
 from webcompat.helpers import rewrite_and_sanitize_link
 from webcompat.helpers import rewrite_links
 from webcompat.helpers import sanitize_link
@@ -259,6 +260,50 @@ class TestHelpers(unittest.TestCase):
                 method='POST'):
             self.assertEqual(form_type(flask.request), None)
 
+    def test_prepare_form_get(self):
+        """Extract information of a form request with a GET."""
+        form_data = {'extra_labels': [u'type-stylo'],
+                     'src': u'web',
+                     'user_agent': u'Burger',
+                     'url': u'http://example.net/',
+                     }
+        with webcompat.app.test_request_context(
+            '/issues/new?url=http://example.net/&src=web&label=type-stylo',
+            method='GET',
+            headers={'User-agent': 'Burger'}):
+            self.assertEqual(prepare_form(flask.request), form_data)
+        # Testing that we keep even when some parameters are not defined.
+        with webcompat.app.test_request_context(
+            '/issues/new?src=web&label=type-stylo',
+            method='GET',
+            headers={'User-agent': 'Burger'}):
+            # URL is not defined
+            form_data['url'] = None
+            self.assertEqual(prepare_form(flask.request), form_data)
+        # Testing with non-valid extra-labels. For now we keep them.
+        # They are filtered by form.py
+        with webcompat.app.test_request_context(
+            '/issues/new?src=web&label=type-punkcat&label=type-webvr',
+            method='GET',
+            headers={'User-agent': 'Burger'}):
+            form_data['url'] = None
+            form_data['extra_labels'] = [u'type-punkcat', u'type-webvr']
+            self.assertEqual(prepare_form(flask.request), form_data)
+
+    def test_prepare_form_post(self):
+        """Extract information of a form request with a POST."""
+        json_data = {'extra_labels': [u'type-webvr', u'type-media'],
+                     'src': u'addon',
+                     'user_agent': u'BurgerJSON',
+                     'url': u'http://json.example.net/',
+                     }
+        with webcompat.app.test_request_context(
+            '/issues/new?url=http://example.net/&src=web&label=type-stylo',
+            headers={'User-agent': 'Burger',
+                     'Content-Type': 'application/json'},
+            json=json_data,
+            method='POST'):
+            self.assertEqual(prepare_form(flask.request), json_data)
 
 if __name__ == '__main__':
     unittest.main()

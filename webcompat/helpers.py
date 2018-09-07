@@ -603,3 +603,24 @@ def form_type(form_request):
         return 'create'
     else:
         return None
+
+def prepare_form(form_request):
+    """Extract all known information from the form request.
+
+    This is called by /issues/new to prepare needed by the form
+    before being posted on GitHub.
+    For HTTP POST:
+    The JSON content will override any existing URL parameters.
+    The URL parameters will be kept if non-existent in the JSON.
+    """
+    form_data = {}
+    form_data['user_agent'] = request.headers.get('User-Agent')
+    form_data['src'] = request.args.get('src')
+    form_data['extra_labels'] = request.args.getlist('label')
+    form_data['url'] = request.args.get('url')
+    # we rely here on the fact we receive the right POST
+    # because we tested it with form_type(request)
+    if form_request.method == 'POST':
+        json_data = form_request.get_json()
+        form_data.update(json_data)
+    return form_data
