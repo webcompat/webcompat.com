@@ -118,8 +118,10 @@ class TestForm(unittest.TestCase):
 
     def test_get_form(self):
         """Checks we return the right form with the appropriate data."""
-        with webcompat.app.test_request_context('/'):
-            actual = form.get_form(FIREFOX_UA)
+        with webcompat.app.test_request_context('/issues/new'):
+            form_data = {'user_agent': FIREFOX_UA,
+                         'url': 'http://example.net/'}
+            actual = form.get_form(form_data)
             expected_browser = 'Firefox 48.0'
             expected_os = 'Mac OS X 10.11'
             self.assertIsInstance(actual, form.IssueForm)
