@@ -24,12 +24,14 @@ from form import PROXY_REPORT
 from helpers import add_csp
 from helpers import add_sec_headers
 from helpers import cache_policy
+from helpers import form_type
 from helpers import get_browser_name
 from helpers import get_milestone_list
 from helpers import get_referer
 from helpers import get_user_info
 from helpers import is_blacklisted_domain
 from helpers import is_valid_issue_form
+from helpers import prepare_form
 from helpers import set_referer
 from issues import report_issue
 from webcompat import app
@@ -120,7 +122,7 @@ def authorized(access_token=None):
         session_db.add(user)
     session_db.commit()
     session['user_id'] = user.user_id
-    if session.get('form_data', None) is not None:
+    if session.get('form', None) is not None:
         return redirect(url_for('file_issue'))
     else:
         return redirect(g.referer)
@@ -132,14 +134,14 @@ def authorized(access_token=None):
 @app.route('/file')
 def file_issue():
     """File an issue on behalf of the user that just gave us authorization."""
-    form_data = session.get('form_data', None)
+    form_data = session.get('form', None)
     if not session:
         abort(401)
     if session and (form_data is None):
         abort(403)
-    json_response = report_issue(session['form_data'])
+    json_response = report_issue(session['form'])
     # Get rid of stashed form data
-    session.pop('form_data', None)
+    session.pop('form', None)
     session['show_thanks'] = True
     return redirect(url_for('show_issue', number=json_response.get('number')))
 
@@ -148,7 +150,7 @@ def file_issue():
 def index():
     """Set the main view where people come to report issues."""
     ua_header = request.headers.get('User-Agent')
-    bug_form = get_form(ua_header)
+    bug_form = get_form({'user_agent': ua_header})
     # browser_name is used in topbar.html to show the right add-on link
     browser_name = get_browser_name(ua_header)
     # GET means you want to file a report.
@@ -202,66 +204,60 @@ def create_issue():
     # Starting a logger
     log = app.logger
     log.setLevel(logging.INFO)
-    # Get the User-Agent
-    user_agent = request.headers.get('User-Agent')
-    # GET Requests
-    if request.method == 'GET':
-        bug_form = get_form(user_agent)
-        if g.user:
-            get_user_info()
-        # Note: `src` and `label` are special GET params that can pass
-        # in extra information about a bug report. They're not part of the
-        # HTML <form>, so we stick them in the session cookie so they survive
-        # the scenario where the user decides to do authentication, and they
-        # can then be passed on to form.py
-        if request.args.get('src'):
-            session['src'] = request.args.get('src')
-        if request.args.get('label'):
-            session['label'] = request.args.getlist('label')
+    if g.user:
+        get_user_info()
+    # We define which type of requests we are dealing with.
+    request_type = form_type(request)
+    # Form Prefill section
+    if request_type == 'prefill':
+        form_data = prepare_form(request)
+        bug_form = get_form(form_data)
+        session['form_data'] = form_data
         return render_template('new-issue.html', form=bug_form)
-    # POST Requests
-    if request.form:
-        # Copy the form to add the full UA string.
+    # Issue Creation section
+    elif request_type == 'create':
+        # Check if there is a form
+        if not request.form:
+            log.info('POST request without form.')
+            abort(400)
+        # Adding parameters to the form
         form = request.form.copy()
+        form_data = session.pop('form_data', None)
+        if form_data:
+            form['extra_labels'] = form_data.get('extra_labels', None)
+        # Logging the ip and url for investigation
+        log.info('{ip} {url}'.format(
+            ip=request.remote_addr,
+            url=form['url'].encode('utf-8')))
+        # Checking blacklisted domains
+        if is_blacklisted_domain(form['url']):
+            msg = (u'Anonymous reporting for domain {0} '
+                   'is temporarily disabled. Please contact '
+                   'miket@mozilla.com '
+                   'for more details.').format(form['url'])
+            flash(msg, 'notimeout')
+            return redirect(url_for('index'))
+        # Check if the form is valid
         if not is_valid_issue_form(form):
             abort(400)
-    else:
-        log.info('POST request without form.')
-        abort(400)
-    # Logging the ip and url for investigation
-    log.info('{ip} {url}'.format(
-        ip=request.remote_addr,
-        url=form['url'].encode('utf-8')))
-    # Checking blacklisted domains
-    if is_blacklisted_domain(form['url']):
-        msg = (u'Anonymous reporting for domain {0} '
-               'is temporarily disabled. Please contact '
-               'miket@mozilla.com '
-               'for more details.').format(form['url'])
-        flash(msg, 'notimeout')
-        return redirect(url_for('index'))
-    # Feeding the form with request data
-    form['ua_header'] = user_agent
-    form['reported_with'] = session.pop('src', 'web')
-    # Reminder: label is a list, if it exists
-    form['extra_labels'] = session.pop('label', None)
-    # form submission for 3 scenarios: authed, to be authed, anonymous
-    if form.get('submit_type') == AUTH_REPORT:
-        if g.user:  # If you're already authed, submit the bug.
+        # Anonymous reporting
+        if form.get('submit_type') == PROXY_REPORT:
             json_response = report_issue(form)
             session['show_thanks'] = True
-            return redirect(url_for('show_issue',
-                                    number=json_response.get('number')))
-        else:  # Stash form data into session, go do GitHub auth
-            session['form_data'] = form
-            return redirect(url_for('login'))
-    elif form.get('submit_type') == PROXY_REPORT:
-        json_response = report_issue(form, proxy=True)
-        session['show_thanks'] = True
-        return redirect(url_for('show_issue',
-                                number=json_response.get('number')))
+            return redirect(
+                url_for('show_issue', number=json_response.get('number')))
+        # Authentified reporting
+        if form.get('submit_type') == AUTH_REPORT:
+            if g.user:  # If you're already authed, submit the bug.
+                json_response = report_issue(form)
+                session['show_thanks'] = True
+                return redirect(url_for('show_issue',
+                                        number=json_response.get('number')))
+            else:
+                # Stash form data into session, go do GitHub auth
+                session['form'] = form
+                return redirect(url_for('login'))
     else:
-        # if anything wrong, we assume it is a bad forged request
         abort(400)
 
 
