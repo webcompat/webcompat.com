@@ -104,6 +104,14 @@ class TestURIContent(unittest.TestCase):
         expected = '<span class="link-text">Give Feedback</span>'
         self.assertTrue(expected in rv.data)
 
+    def test_form_rendering(self):
+        """Double Check that the form is properly populated."""
+        url = '/issues/new?url=http://example.com/&label=type-stylo'
+        headers = {'HTTP_USER_AGENT': FIREFOX_UA}
+        rv = self.app.get(url, environ_base=headers)
+        self.assertTrue('Firefox 61.0' in rv.data)
+        self.assertTrue('Mac OS X 10.13' in rv.data)
+        self.assertTrue('http://example.com/' in rv.data)
 
 if __name__ == '__main__':
     unittest.main()
