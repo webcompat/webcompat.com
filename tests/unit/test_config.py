@@ -52,3 +52,6 @@ class TestConfig(unittest.TestCase):
         milestones_json = json_data('milestones_content_plus.json')
         actual = update_status_config(milestones_json)
         self.assertEqual(actual, expected)
+
+if __name__ == '__main__':
+    unittest.main()
