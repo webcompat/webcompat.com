@@ -4,15 +4,14 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-"""Flask Blueprint for our "webhooks" module.webhooks.
+"""WebHooks module
 
-See https://developer.github.com/webhooks/ for what is possible.
+See https://developer.github.com/ for what is possible.
 """
 
 import json
 import logging
 
-from flask import Blueprint
 from flask import request
 
 from helpers import get_issue_info
@@ -21,10 +20,8 @@ from helpers import new_opened_issue
 
 from webcompat import app
 
-webhooks = Blueprint('webhooks', __name__, url_prefix='/webhooks')
 
-
-@webhooks.route('/labeler', methods=['POST'])
+@app.route('/webhooks/labeler', methods=['POST'])
 def hooklistener():
     """Listen for the "issues" webhook event.
 
