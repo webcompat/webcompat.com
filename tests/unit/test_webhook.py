@@ -257,6 +257,18 @@ class TestWebhook(unittest.TestCase):
         actual = helpers.get_issue_info(payload)
         self.assertDictEqual(expected, actual)
 
+    def test_signature_check(self):
+        """Test the signature check function for WebHooks."""
+        payload = 'A body'
+        secret_key = 'SECRET'
+        post_signature = 'sha1=3ed5d2f74f4555cef6d72c7679370a4bebf86628'
+        self.assertTrue(helpers.signature_check(key, post_signature, payload))
+        post_signature = '3ed5d2f74f4555cef6d72c7679370a4bebf86628'
+        self.assertFalse(helpers.signature_check(key, post_signature, payload))
+        post_signature = 'sha1='
+        self.assertFalse(helpers.signature_check(key, post_signature, payload))
+        post_signature = 'sha1=wrong'
+        self.assertFalse(helpers.signature_check(key, post_signature, payload))
 
 if __name__ == '__main__':
     unittest.main()
