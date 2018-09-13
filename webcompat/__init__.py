@@ -33,9 +33,8 @@ import webcompat.views  # nopep8
 from api.endpoints import api
 from api.uploads import uploads
 from error_handlers import error_handlers
-from webhooks import webhooks
 
-for blueprint in [api, error_handlers, uploads, webhooks]:
+for blueprint in [api, error_handlers, uploads]:
     app.register_blueprint(blueprint)
 
 

@@ -97,24 +97,6 @@ def extract_priority_label(body):
     return None
 
 
-def update_issue(payload, issue_number):
-    """Send a GitHub PATCH to set labels and milestone for the issue.
-
-    PATCH /repos/:owner/:repo/issues/:number
-    {
-        "milestone": 2,
-        "labels": ['Label1', 'Label2']
-    }
-    """
-    headers = {
-        'Authorization': 'token {0}'.format(app.config['OAUTH_TOKEN'])
-    }
-    path = 'repos/{0}/{1}'.format(app.config['ISSUES_REPO_URI'], issue_number)
-    return proxy_request('patch', path,
-                         headers=headers,
-                         data=json.dumps(payload))
-
-
 def compare_digest(x, y):
     """Create a hmac comparison.
 
@@ -193,10 +175,26 @@ def new_opened_issue(payload):
     - Priority label
     - Issue milestone
     - Any "extra" labels, set from GET params
+
+    Then Send a GitHub PATCH to set labels and milestone for the issue.
+
+    PATCH /repos/:owner/:repo/issues/:number
+    {
+        "milestone": 2,
+        "labels": ['Label1', 'Label2']
+    }
     """
     issue_body = payload.get('issue')['body']
     issue_number = payload.get('issue')['number']
     labels = get_issue_labels(issue_body)
     milestone = app.config['STATUSES']['needstriage']['id']
-    return update_issue({'labels': labels, 'milestone': milestone},
-                        issue_number)
+    # Preparing the proxy request
+    headers = {'Authorization': 'token {0}'.format(app.config['OAUTH_TOKEN'])}
+    path = 'repos/{0}/{1}'.format(app.config['ISSUES_REPO_URI'], issue_number)
+    payload_request = {'labels': labels, 'milestone': milestone}
+    proxy_response = proxy_request(
+        'patch',
+        path,
+        headers=headers,
+        data=json.dumps(payload_request))
+    return proxy_response
