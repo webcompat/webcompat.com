@@ -260,15 +260,33 @@ class TestWebhook(unittest.TestCase):
     def test_signature_check(self):
         """Test the signature check function for WebHooks."""
         payload = 'A body'
-        secret_key = 'SECRET'
-        post_signature = 'sha1=3ed5d2f74f4555cef6d72c7679370a4bebf86628'
+        key = 'SECRET'
+        post_signature = 'sha1=abacb5cff87d9e0122683d0d1d18a150809ac700'
         self.assertTrue(helpers.signature_check(key, post_signature, payload))
-        post_signature = '3ed5d2f74f4555cef6d72c7679370a4bebf86628'
+        post_signature = 'abacb5cff87d9e0122683d0d1d18a150809ac700'
         self.assertFalse(helpers.signature_check(key, post_signature, payload))
         post_signature = 'sha1='
         self.assertFalse(helpers.signature_check(key, post_signature, payload))
         post_signature = 'sha1=wrong'
         self.assertFalse(helpers.signature_check(key, post_signature, payload))
+
+    def test_new_opened_issue(self):
+        """Test the core actions on new opened issues for WebHooks."""
+        # A 200 response
+        json_event, signature = event_data('new_event_valid.json')
+        payload = json.loads(json_event)
+        with patch('webcompat.webhooks.helpers.proxy_request') as proxy:
+            proxy.return_value.status_code = 200
+            response = helpers.new_opened_issue(payload)
+            self.assertEqual(response.status_code, 200)
+            # A 401 response
+            proxy.return_value.status_code = 401
+            proxy.return_value.content = '{"message":"Bad credentials","documentation_url":"https://developer.github.com/v3"}'  # noqa
+            with patch.dict('webcompat.webhooks.helpers.app.config',
+                            {'OAUTH_TOKEN': ''}):
+                response = helpers.new_opened_issue(payload)
+                self.assertEqual(response.status_code, 401)
+                self.assertTrue('Bad credentials' in response.content)
 
 if __name__ == '__main__':
     unittest.main()
