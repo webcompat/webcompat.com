@@ -4,6 +4,12 @@
 2. New features: affect minor number
 3. API endpoint changes or dependency version updates: affect major number
 
+## 13.2.0 - 2018-09-14
+
+* Fixes #1835 - Handles unused well-known routes with a 404 [Pull #2578](https://github.com/webcompat/webcompat.com/pull/2578)
+* Fixes #1955 - Adds missing tests to webhooks [Pull #2577](https://github.com/webcompat/webcompat.com/pull/2577)
+* Fixes #2051 - Remove type-stylo from EXTRA_LABELS allow-list [Pull #2573](https://github.com/webcompat/webcompat.com/pull/2573)
+
 ## 13.1.0 - 2018-08-22
 
 * Fixes #2547 - Fix typo in addons link of template for opera [Pull #2570](https://github.com/webcompat/webcompat.com/pull/2570)
