@@ -464,3 +464,17 @@ def log_csp_report():
         return ('', 204)
     else:
         return ('Forbidden.', 403)
+
+
+@app.route('/.well-known/<path:subpath>')
+@cache_policy(private=False, uri_max_age=31104000, must_revalidate=False)
+def wellknown():
+    """Route for returning 404 for the currently unused well-known routes."""
+    msg = """
+    Sorry dear bot,
+    the route /.well-known/{subpath} doesn't exist.
+
+    Nothing behind me, everything ahead of me, as is ever so on the road.
+    - Jack Kerouac, On the Road.
+    """.format(subpath=subpath)
+    return (msg, 404, {'content-type': 'text/plain; charset=utf-8'})
