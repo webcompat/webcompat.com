@@ -240,6 +240,17 @@ class TestURLs(unittest.TestCase):
         self.assertTrue('text/html' in rv.content_type)
         self.assertTrue(content_test)
 
+    def test_webhooks_route(self):
+        """Request to /webhooks/labeler should be 401.
+
+        Without identification it sends a 401.
+        It also proves the route exists.
+        """
+        rv = self.app.post('/webhooks/labeler')
+        content_test = 'Nothing to see here' in rv.data
+        self.assertEqual(rv.status_code, 401)
+        self.assertTrue('text/plain' in rv.content_type)
+        self.assertTrue(content_test)
 
 if __name__ == '__main__':
     unittest.main()
