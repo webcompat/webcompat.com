@@ -4,6 +4,10 @@
 2. New features: affect minor number
 3. API endpoint changes or dependency version updates: affect major number
 
+## 13.2.1 - 2018-09-17
+
+* Fixes #2580 - Adds the missing webhooks route to the app [Pull #2581](https://github.com/webcompat/webcompat.com/pull/2581)
+
 ## 13.2.0 - 2018-09-14
 
 * Fixes #1835 - Handles unused well-known routes with a 404 [Pull #2578](https://github.com/webcompat/webcompat.com/pull/2578)
