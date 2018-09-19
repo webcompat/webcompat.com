@@ -6,17 +6,11 @@
 
 """Tests for our URL endpoints."""
 
-import json
 import os.path
 import sys
 import unittest
 
-from mock import MagicMock
 from mock import patch
-from requests import Response
-
-
-from webcompat.views import report_issue
 
 # Add webcompat module to import path
 sys.path.append(os.path.realpath(os.pardir))
@@ -84,15 +78,20 @@ class TestURLs(unittest.TestCase):
 
     @patch('webcompat.issues.proxy_request')
     def test_fail_post_new_issue(self, mock_proxy):
-        """Test that post is not working on /issues/new."""
-        mock_proxy = MagicMock(spec=Response)
-        mock_proxy = json.dumps(POST_RESPONSE)
+        """Test that post is not working on /issues/new.
+
+        It will fail with a 400 because the URL is missing."""
         rv = self.app.post(
             '/issues/new',
             environ_base=headers,
             content_type='multipart/form-data',
             data=dict(
-                browser='Firefox Mobile 45.0', ))
+                browser='Firefox Mobile 45.0',
+                description='http POST will fail.',
+                os='macOS',
+                problem_category='what',
+                submit_type='github-proxy-report',
+                username='PunkCat',))
         self.assertEqual(rv.status_code, 400)
 
     def test_about(self):
