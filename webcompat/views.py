@@ -174,13 +174,13 @@ def create_issue():
     """Create a new issue or prefill a form for submission.
 
     * HTTP GET with (optional) parameters
-      * create a form with prefiled data.
+      * create a form with prefilled data.
       * parameters:
         * url: URL of the Web site
         * src: source of the request (web, addon, etc.)
         * label: controled list of labels
     * HTTP POST with a JSON payload
-      * create a form with prefiled data
+      * create a form with prefilled data
       * content-type is application/json
       * json may include:
         * title
@@ -246,7 +246,7 @@ def create_issue():
             session['show_thanks'] = True
             return redirect(
                 url_for('show_issue', number=json_response.get('number')))
-        # Authentified reporting
+        # Authenticated reporting
         if form.get('submit_type') == AUTH_REPORT:
             if g.user:  # If you're already authed, submit the bug.
                 json_response = report_issue(form)

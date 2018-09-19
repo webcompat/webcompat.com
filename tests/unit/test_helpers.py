@@ -267,7 +267,8 @@ class TestHelpers(unittest.TestCase):
                 method='GET',
                 headers={'User-agent': 'Burger'}):
             self.assertEqual(prepare_form(flask.request), form_data)
-        # Testing that we keep even when some parameters are not defined.
+        # Testing that we keep processing
+        # even when some parameters are not defined.
         with webcompat.app.test_request_context(
                 '/issues/new?src=web&label=type-stylo',
                 method='GET',
