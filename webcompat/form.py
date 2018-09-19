@@ -14,14 +14,9 @@ import json
 import random
 import urlparse
 
-from helpers import get_browser
-from helpers import get_os
-from helpers import get_str_value
-
+from flask_wtf import FlaskForm
 from flask_wtf.file import FileAllowed
 from flask_wtf.file import FileField
-from flask_wtf import FlaskForm
-from wtforms import FieldList
 from wtforms import HiddenField
 from wtforms import RadioField
 from wtforms import StringField
@@ -30,8 +25,11 @@ from wtforms.validators import InputRequired
 from wtforms.validators import Length
 from wtforms.validators import Optional
 
-from webcompat.api.uploads import Upload
 from webcompat import app
+from webcompat.api.uploads import Upload
+from webcompat.helpers import get_browser
+from webcompat.helpers import get_os
+from webcompat.helpers import get_str_value
 
 AUTH_REPORT = 'github-auth-report'
 PROXY_REPORT = 'github-proxy-report'
@@ -114,8 +112,11 @@ def get_form(form_data):
 
 
 def get_details(details_string):
-    """Return details content as a formatted string, if it was JSON. Otherwise,
-    just return the string as-is."""
+    """Return details content.
+
+    * If JSON as a formatted string
+    * Otherwise as a string as-is.
+    """
     content = details_string
     rv = ''
 

@@ -15,7 +15,6 @@ import hashlib
 import json
 import os
 import re
-import requests
 import urlparse
 
 from flask import abort
@@ -23,6 +22,7 @@ from flask import g
 from flask import make_response
 from flask import request
 from flask import session
+import requests
 from ua_parser import user_agent_parser
 
 from webcompat import api
@@ -586,6 +586,7 @@ def is_blacklisted_domain(domain):
     spamlist = ['qiangpiaoruanjian', 'cityweb.de', 'coco.fr']
     return domain in spamlist
 
+
 def form_type(form_request):
     """Check the type of form request for /issues/new.
 
@@ -603,6 +604,7 @@ def form_type(form_request):
         return 'create'
     else:
         return None
+
 
 def prepare_form(form_request):
     """Extract all known information from the form request.

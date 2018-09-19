@@ -6,14 +6,9 @@
 
 """Tests for helper methods in webcompat/helpers.py."""
 
-import os.path
-import sys
 import unittest
 
 import flask
-
-# Add webcompat module to import path
-sys.path.append(os.path.realpath(os.pardir))
 
 import webcompat
 from webcompat.helpers import form_type
@@ -268,24 +263,24 @@ class TestHelpers(unittest.TestCase):
                      'url': u'http://example.net/',
                      }
         with webcompat.app.test_request_context(
-            '/issues/new?url=http://example.net/&src=web&label=type-stylo',
-            method='GET',
-            headers={'User-agent': 'Burger'}):
+                '/issues/new?url=http://example.net/&src=web&label=type-stylo',
+                method='GET',
+                headers={'User-agent': 'Burger'}):
             self.assertEqual(prepare_form(flask.request), form_data)
         # Testing that we keep even when some parameters are not defined.
         with webcompat.app.test_request_context(
-            '/issues/new?src=web&label=type-stylo',
-            method='GET',
-            headers={'User-agent': 'Burger'}):
+                '/issues/new?src=web&label=type-stylo',
+                method='GET',
+                headers={'User-agent': 'Burger'}):
             # URL is not defined
             form_data['url'] = None
             self.assertEqual(prepare_form(flask.request), form_data)
         # Testing with non-valid extra-labels. For now we keep them.
         # They are filtered by form.py
         with webcompat.app.test_request_context(
-            '/issues/new?src=web&label=type-punkcat&label=type-webvr',
-            method='GET',
-            headers={'User-agent': 'Burger'}):
+                '/issues/new?src=web&label=type-punkcat&label=type-webvr',
+                method='GET',
+                headers={'User-agent': 'Burger'}):
             form_data['url'] = None
             form_data['extra_labels'] = [u'type-punkcat', u'type-webvr']
             self.assertEqual(prepare_form(flask.request), form_data)
@@ -298,11 +293,11 @@ class TestHelpers(unittest.TestCase):
                      'url': u'http://json.example.net/',
                      }
         with webcompat.app.test_request_context(
-            '/issues/new?url=http://example.net/&src=web&label=type-stylo',
-            headers={'User-agent': 'Burger',
-                     'Content-Type': 'application/json'},
-            json=json_data,
-            method='POST'):
+                '/issues/new?url=http://example.net/&src=web&label=type-stylo',
+                headers={'User-agent': 'Burger',
+                         'Content-Type': 'application/json'},
+                json=json_data,
+                method='POST'):
             self.assertEqual(prepare_form(flask.request), json_data)
 
 if __name__ == '__main__':
