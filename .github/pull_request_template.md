@@ -1,5 +1,5 @@
 <!--IMPORTANT: Please do not create a Pull Request without creating an issue first. -->
-This PR fixes issue `#nnnn`
+This PR fixes issue #nnnn
 
 ## Proposed PR background
 
