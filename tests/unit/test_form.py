@@ -83,43 +83,45 @@ class TestForm(unittest.TestCase):
 
     def test_metadata_wrapping(self):
         """Check that metadata is processed and wrapped."""
-        TEST_DICT = {'cool': 'dude', 'wow': 'ok'}
-        EXPECTED_SINGLE = '<!-- @cool: dude -->\n'
-        EXPECTED_SINGLE_COMMA = '<!-- @cool: dude, wow -->\n'
-        EXPECTED_MULTIPLE = '<!-- @cool: dude -->\n<!-- @wow: ok -->\n'
+        test_dict = {'cool': 'dude', 'wow': 'ok'}
+        expected_single = '<!-- @cool: dude -->\n'
+        expected_single_comma = '<!-- @cool: dude, wow -->\n'
+        expected_multiple = '<!-- @cool: dude -->\n<!-- @wow: ok -->\n'
 
         r = form.wrap_metadata(('cool', 'dude'))
-        self.assertEqual(r, EXPECTED_SINGLE)
+        self.assertEqual(r, expected_single)
 
         r = form.wrap_metadata(('cool', 'dude, wow'))
-        self.assertEqual(r, EXPECTED_SINGLE_COMMA)
+        self.assertEqual(r, expected_single_comma)
 
-        r = form.get_metadata(('cool', 'wow'), TEST_DICT)
-        self.assertEqual(r, EXPECTED_MULTIPLE)
+        r = form.get_metadata(('cool', 'wow'), test_dict)
+        self.assertEqual(r, expected_multiple)
 
     def test_radio_button_label(self):
         """Check that appropriate radio button label is returned."""
-        TEST_LABELS_LIST = [
+        test_labels_list = [
             (u'detection_bug', u'Desktop site instead of mobile site'),
             (u'unknown_bug', u'Something else')
         ]
 
-        r = form.get_radio_button_label('unknown_bug', TEST_LABELS_LIST)
+        r = form.get_radio_button_label('unknown_bug', test_labels_list)
         self.assertEqual(r, u'Something else')
 
-        r = form.get_radio_button_label(u'detection_bug', TEST_LABELS_LIST)
+        r = form.get_radio_button_label(u'detection_bug', test_labels_list)
         self.assertEqual(r, u'Desktop site instead of mobile site')
 
-        r = form.get_radio_button_label(None, TEST_LABELS_LIST)
+        r = form.get_radio_button_label(None, test_labels_list)
         self.assertEqual(r, u'Unknown')
 
-        r = form.get_radio_button_label('failme', TEST_LABELS_LIST)
+        r = form.get_radio_button_label('failme', test_labels_list)
         self.assertEqual(r, u'Unknown')
 
     def test_get_form(self):
-        """Checks we return the right form with the appropriate data."""
-        with webcompat.app.test_request_context('/'):
-            actual = form.get_form(FIREFOX_UA)
+        """Check we return the right form with the appropriate data."""
+        with webcompat.app.test_request_context('/issues/new'):
+            form_data = {'user_agent': FIREFOX_UA,
+                         'url': 'http://example.net/'}
+            actual = form.get_form(form_data)
             expected_browser = 'Firefox 48.0'
             expected_os = 'Mac OS X 10.11'
             self.assertIsInstance(actual, form.IssueForm)
@@ -244,6 +246,23 @@ class TestForm(unittest.TestCase):
         """Assert domains validity in issue reporting."""
         self.assertTrue(helpers.is_blacklisted_domain('coco.fr'))
         self.assertFalse(helpers.is_blacklisted_domain('w3.org'))
+
+    def test_report_issue_anonymous_fails_with_wrong_credentials(self):
+        """Report issue should not be working if wrong credentials."""
+        with webcompat.app.app_context():
+            rv = self.app.post(
+                '/issues/new',
+                content_type='multipart/form-data',
+                data=dict(
+                    browser='Firefox Mobile 45.0',
+                    description='testing 2971',
+                    os='macos',
+                    problem_category='yada',
+                    submit_type='punkcat-submit',
+                    url='http://testing.example.org',
+                    username='yeeha'))
+            self.assertEqual(rv.status_code, 400)
+
 
 if __name__ == '__main__':
     unittest.main()

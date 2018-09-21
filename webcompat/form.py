@@ -14,13 +14,9 @@ import json
 import random
 import urlparse
 
-from helpers import get_browser
-from helpers import get_os
-from helpers import get_str_value
-
+from flask_wtf import FlaskForm
 from flask_wtf.file import FileAllowed
 from flask_wtf.file import FileField
-from flask_wtf import FlaskForm
 from wtforms import HiddenField
 from wtforms import RadioField
 from wtforms import StringField
@@ -29,8 +25,11 @@ from wtforms.validators import InputRequired
 from wtforms.validators import Length
 from wtforms.validators import Optional
 
-from webcompat.api.uploads import Upload
 from webcompat import app
+from webcompat.api.uploads import Upload
+from webcompat.helpers import get_browser
+from webcompat.helpers import get_os
+from webcompat.helpers import get_str_value
 
 AUTH_REPORT = 'github-auth-report'
 PROXY_REPORT = 'github-proxy-report'
@@ -90,21 +89,34 @@ class IssueForm(FlaskForm):
                       [Optional(),
                        FileAllowed(Upload.ALLOWED_FORMATS, image_message)])
     details = HiddenField()
+    reported_with = HiddenField()
+    ua_header = HiddenField()
     submit_type = HiddenField()
 
 
-def get_form(ua_header):
-    """Return an instance of flask_wtf.FlaskForm with browser and os info."""
+def get_form(form_data):
+    """Return an instance of flask_wtf.FlaskForm.
+
+    It receives a dictionary of everything which needs to be fed to the form.
+    """
     bug_form = IssueForm()
-    # add browser and version to bug_form object data
+    ua_header = form_data['user_agent']
+    # Populate the form
     bug_form.browser.data = get_browser(ua_header)
+    bug_form.extra_labels = form_data.get('extra_labels', None)
     bug_form.os.data = get_os(ua_header)
+    bug_form.reported_with.data = form_data.get('src', 'web')
+    bug_form.ua_header.data = ua_header
+    bug_form.url.data = form_data.get('url', None)
     return bug_form
 
 
 def get_details(details_string):
-    """Return details content as a formatted string, if it was JSON. Otherwise,
-    just return the string as-is."""
+    """Return details content.
+
+    * If JSON as a formatted string
+    * Otherwise as a string as-is.
+    """
     content = details_string
     rv = ''
 

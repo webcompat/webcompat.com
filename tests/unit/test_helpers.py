@@ -4,25 +4,24 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-'''Tests for helper methods in webcompat/helpers.py.'''
+"""Tests for helper methods in webcompat/helpers.py."""
 
-import os.path
-import sys
 import unittest
 
-# Add webcompat module to import path
-sys.path.append(os.path.realpath(os.pardir))
+import flask
 
 import webcompat
+from webcompat.helpers import form_type
 from webcompat.helpers import format_link_header
-from webcompat.helpers import get_browser_name
 from webcompat.helpers import get_browser
+from webcompat.helpers import get_browser_name
 from webcompat.helpers import get_name
 from webcompat.helpers import get_os
 from webcompat.helpers import get_str_value
 from webcompat.helpers import get_version_string
 from webcompat.helpers import normalize_api_params
 from webcompat.helpers import parse_link_header
+from webcompat.helpers import prepare_form
 from webcompat.helpers import rewrite_and_sanitize_link
 from webcompat.helpers import rewrite_links
 from webcompat.helpers import sanitize_link
@@ -57,7 +56,7 @@ class TestHelpers(unittest.TestCase):
         pass
 
     def test_rewrite_link(self):
-        '''Test we're correctly rewriting the passed in link.'''
+        """Test we're correctly rewriting the passed in link."""
         self.assertEqual(rewrite_links(GITHUB_ISSUES_LINK_HEADER),
                          REWRITTEN_ISSUES_LINK_HEADER)
         self.assertEqual(rewrite_links(GITHUB_SEARCH_LINK_HEADER),
@@ -66,17 +65,18 @@ class TestHelpers(unittest.TestCase):
                          REWRITTEN_COMMENTS_LINK_HEADER)
 
     def test_sanitize_link(self):
-        '''Test that we're removing access_token parameters.'''
+        """Test that we're removing access_token parameters."""
         self.assertNotIn('access_token=', sanitize_link(ACCESS_TOKEN_LINK))
 
     def test_rewrite_and_sanitize_link(self):
+        """Rewrite and Sanitize Links test."""
         self.assertNotIn('access_token=',
                          rewrite_and_sanitize_link(ACCESS_TOKEN_LINK))
         self.assertEqual(rewrite_and_sanitize_link(ACCESS_TOKEN_LINK),
                          REWRITTEN_ISSUES_LINK_HEADER)
 
     def test_normalize_api_params_converts_correctly(self):
-        '''Test that API params are correctly converted to Search API.'''
+        """Test that API params are correctly converted to Search API."""
         self.assertEqual(normalize_api_params({'direction': u'desc'}),
                          {'order': u'desc'})
         self.assertNotIn('direction',
@@ -110,7 +110,7 @@ class TestHelpers(unittest.TestCase):
         self.assertEqual(normalize_api_params(multi_before), multi_after)
 
     def test_normalize_api_params_ignores_unknown_params(self):
-        '''normalize_api_params shouldn't transform unknown params.'''
+        """normalize_api_params shouldn't transform unknown params."""
         self.assertEqual({'foo': u'bar'},
                          normalize_api_params({'foo': u'bar'}))
         self.assertEqual({'order': u'desc', 'foo': u'bar'},
@@ -118,19 +118,19 @@ class TestHelpers(unittest.TestCase):
                                               'direction': u'desc'}))
 
     def test_parse_http_link_headers(self):
-        '''Test HTTP Links parsing for GitHub only.'''
+        """Test HTTP Links parsing for GitHub only."""
         link_header = GITHUB_ISSUES_LINK_HEADER
         parsed_headers = PARSED_LINKED_HEADERS
         self.assertEqual(parse_link_header(link_header), parsed_headers)
 
     def test_format_http_link_headers(self):
-        '''Test HTTP Links formating.'''
+        """Test HTTP Links formating."""
         parsed_headers = PARSED_LINKED_HEADERS
         link_header = GITHUB_ISSUES_LINK_HEADER
         self.assertEqual(format_link_header(parsed_headers), link_header)
 
     def test_get_browser_name(self):
-        '''Test browser name parsing via get_browser_name helper method.'''
+        """Test browser name parsing via get_browser_name helper method."""
         self.assertEqual(get_browser_name(FIREFOX_UA), 'firefox')
         self.assertEqual(get_browser_name(FIREFOX_MOBILE_UA), 'firefox mobile')
         self.assertEqual(get_browser_name(FIREFOX_MOBILE_UA_OLD),
@@ -153,7 +153,7 @@ class TestHelpers(unittest.TestCase):
         self.assertEqual(get_browser_name(None), 'unknown')
 
     def test_get_browser(self):
-        '''Test browser parsing via get_browser helper method.'''
+        """Test browser parsing via get_browser helper method."""
         self.assertEqual(get_browser(FIREFOX_UA), 'Firefox 48.0')
         self.assertEqual(get_browser(FIREFOX_MOBILE_UA), 'Firefox Mobile 40.0')
         self.assertEqual(get_browser_name(FIREFOX_MOBILE_UA_OLD),
@@ -176,7 +176,7 @@ class TestHelpers(unittest.TestCase):
         self.assertEqual(get_browser(None), 'Unknown')
 
     def test_get_os(self):
-        '''Test OS parsing via get_os helper method.'''
+        """Test OS parsing via get_os helper method."""
         self.assertEqual(get_os(FIREFOX_UA), 'Mac OS X 10.11')
         self.assertEqual(get_os(FIREFOX_MOBILE_UA), 'Android 6.0.1')
         self.assertEqual(get_os(FIREFOX_MOBILE_UA_OLD), 'Android')
@@ -197,8 +197,7 @@ class TestHelpers(unittest.TestCase):
         self.assertEqual(get_os(None), 'Unknown')
 
     def test_get_str_value(self):
-        """Test getting an expected string, including Python to js-style
-        boolean.
+        """Get an expected string, including Python to js-style boolean.
 
         Note: key (output) and value (input) are in an unexpected order,
         just to keep the data structure valid.
@@ -210,9 +209,10 @@ class TestHelpers(unittest.TestCase):
                 self.assertEqual(get_str_value(browser_input), output)
 
     def test_get_version_string(self):
-        '''Test version string composition from Dict
-        via get_version_string helper method.
-        '''
+        """Test version string composition.
+
+        From Dict via get_version_string helper method.
+        """
         tests = [
             [{'major': '10', 'minor': '4', 'patch': '3'}, '10.4.3'],
             [{'major': '10', 'minor': '4', 'patch': None}, '10.4'],
@@ -227,10 +227,79 @@ class TestHelpers(unittest.TestCase):
             self.assertEqual(get_version_string(test[0]), test[1])
 
     def test_get_name(self):
-        '''Test name extraction from Dict via get_name helper method.'''
+        """Test name extraction from Dict via get_name helper method."""
         self.assertEqual(get_name({'family': 'Chrome'}), 'Chrome')
         self.assertEqual(get_name({'family': 'Mac OS X'}), 'Mac OS X')
         self.assertEqual(get_name({'family': 'Other'}), 'Unknown')
+
+    def test_form_type(self):
+        """Define which type of request for /issues/new."""
+        with webcompat.app.test_request_context(
+                '/issues/new?url=http://example.com/',
+                method='GET'):
+            self.assertEqual(form_type(flask.request), 'prefill')
+        with webcompat.app.test_request_context(
+                '/issues/new',
+                json={'url': 'http://example.com/'},
+                method='POST'):
+            self.assertEqual(form_type(flask.request), 'prefill')
+        with webcompat.app.test_request_context(
+                '/issues/new',
+                content_type='multipart/form-data',
+                data={'foo': 'blah'},
+                method='POST'):
+            self.assertEqual(form_type(flask.request), 'create')
+        with webcompat.app.test_request_context(
+                '/issues/new',
+                data={'url': 'http://example.com/'},
+                method='POST'):
+            self.assertEqual(form_type(flask.request), None)
+
+    def test_prepare_form_get(self):
+        """Extract information of a form request with a GET."""
+        form_data = {'extra_labels': [u'type-stylo'],
+                     'src': u'web',
+                     'user_agent': u'Burger',
+                     'url': u'http://example.net/',
+                     }
+        with webcompat.app.test_request_context(
+                '/issues/new?url=http://example.net/&src=web&label=type-stylo',
+                method='GET',
+                headers={'User-agent': 'Burger'}):
+            self.assertEqual(prepare_form(flask.request), form_data)
+        # Testing that we keep processing
+        # even when some parameters are not defined.
+        with webcompat.app.test_request_context(
+                '/issues/new?src=web&label=type-stylo',
+                method='GET',
+                headers={'User-agent': 'Burger'}):
+            # URL is not defined
+            form_data['url'] = None
+            self.assertEqual(prepare_form(flask.request), form_data)
+        # Testing with non-valid extra-labels. For now we keep them.
+        # They are filtered by form.py
+        with webcompat.app.test_request_context(
+                '/issues/new?src=web&label=type-punkcat&label=type-webvr',
+                method='GET',
+                headers={'User-agent': 'Burger'}):
+            form_data['url'] = None
+            form_data['extra_labels'] = [u'type-punkcat', u'type-webvr']
+            self.assertEqual(prepare_form(flask.request), form_data)
+
+    def test_prepare_form_post(self):
+        """Extract information of a form request with a POST."""
+        json_data = {'extra_labels': [u'type-webvr', u'type-media'],
+                     'src': u'addon',
+                     'user_agent': u'BurgerJSON',
+                     'url': u'http://json.example.net/',
+                     }
+        with webcompat.app.test_request_context(
+                '/issues/new?url=http://example.net/&src=web&label=type-stylo',
+                headers={'User-agent': 'Burger',
+                         'Content-Type': 'application/json'},
+                json=json_data,
+                method='POST'):
+            self.assertEqual(prepare_form(flask.request), json_data)
 
 if __name__ == '__main__':
     unittest.main()

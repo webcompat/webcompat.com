@@ -15,7 +15,6 @@ import hashlib
 import json
 import os
 import re
-import requests
 import urlparse
 
 from flask import abort
@@ -23,6 +22,7 @@ from flask import g
 from flask import make_response
 from flask import request
 from flask import session
+import requests
 from ua_parser import user_agent_parser
 
 from webcompat import api
@@ -585,3 +585,44 @@ def is_blacklisted_domain(domain):
     # see https://github.com/webcompat/webcompat.com/issues/1627
     spamlist = ['qiangpiaoruanjian', 'cityweb.de', 'coco.fr']
     return domain in spamlist
+
+
+def form_type(form_request):
+    """Check the type of form request for /issues/new.
+
+    It can return either:
+    * 'prefill'
+    * 'create'
+    """
+    method = form_request.method
+    content_type = form_request.content_type
+    if method == 'GET':
+        return 'prefill'
+    elif method == 'POST' and content_type == 'application/json':
+        return 'prefill'
+    elif method == 'POST' and content_type.startswith('multipart/form-data'):
+        return 'create'
+    else:
+        return None
+
+
+def prepare_form(form_request):
+    """Extract all known information from the form request.
+
+    This is called by /issues/new to prepare needed by the form
+    before being posted on GitHub.
+    For HTTP POST:
+    The JSON content will override any existing URL parameters.
+    The URL parameters will be kept if non-existent in the JSON.
+    """
+    form_data = {}
+    form_data['user_agent'] = request.headers.get('User-Agent')
+    form_data['src'] = request.args.get('src')
+    form_data['extra_labels'] = request.args.getlist('label')
+    form_data['url'] = request.args.get('url')
+    # we rely here on the fact we receive the right POST
+    # because we tested it with form_type(request)
+    if form_request.method == 'POST':
+        json_data = form_request.get_json()
+        form_data.update(json_data)
+    return form_data

@@ -8,11 +8,11 @@
 
 import json
 import os.path
+from StringIO import StringIO
 import sys
 import unittest
 
 from flask import Request
-from StringIO import StringIO
 from werkzeug import FileStorage
 from werkzeug.datastructures import MultiDict
 
@@ -47,7 +47,8 @@ def check_rv_format(self, resp):
 
 
 class TestingFileStorage(FileStorage):
-    """
+    """Test-only File Storage class.
+
     This is a helper for testing upload behavior in your application. You
     can manually create it, and its save method is overloaded to set `saved`
     to the name of the file it was saved to. All of these parameters are
@@ -76,7 +77,8 @@ class TestingFileStorage(FileStorage):
         self.saved = None
 
     def save(self, dst, buffer_size=16384):
-        """
+        """File save feature.
+
         This marks the file as saved by setting the `saved` attribute to the
         name of the file it was saved to.
 
@@ -90,7 +92,10 @@ class TestingFileStorage(FileStorage):
 
 
 class TestUploads(unittest.TestCase):
-    '''Modified from http://prschmid.blogspot.com/2013/05/unit-testing-flask-file-uploads-without.html  # nopep8'''
+    '''Test-only Uploads Class.
+
+    Modified from http://prschmid.blogspot.com/2013/05/unit-testing-flask-file-uploads-without.html  # nopep8
+    '''
 
     def setUp(self):
         app.config['TESTING'] = True
@@ -124,8 +129,11 @@ class TestUploads(unittest.TestCase):
             # we can ensure that the filename that we are "uploading"
             # is the same as the one being used by the application
             class TestingRequest(Request):
-                """A testing request to use that will return a
-                TestingFileStorage to test the uploading."""
+                """Test-only Request Class.
+
+                A testing request to use that will return a TestingFileStorage
+                to test the uploading.
+                """
                 @property
                 def files(self):
                     d = MultiDict()
@@ -156,8 +164,9 @@ class TestUploads(unittest.TestCase):
                 (PILE_OF_POO, 415)):
 
             class TestingRequest(Request):
-                """A testing request to use that allows us to manipulate
-                request.form to send screenshot data.
+                """A testing-only request class.
+
+                It allows to manipulate request.form to send screenshot data.
                 """
                 @property
                 def form(self):

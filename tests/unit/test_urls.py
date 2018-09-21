@@ -6,17 +6,11 @@
 
 """Tests for our URL endpoints."""
 
-import json
 import os.path
 import sys
 import unittest
 
-from mock import MagicMock
 from mock import patch
-from requests import Response
-
-
-from webcompat.views import report_issue
 
 # Add webcompat module to import path
 sys.path.append(os.path.realpath(os.pardir))
@@ -66,6 +60,7 @@ class TestURLs(unittest.TestCase):
         mock_proxy.return_value = POST_RESPONSE
         rv = self.app.post(
             '/issues/new',
+            content_type='multipart/form-data',
             environ_base=headers,
             data=dict(
                 browser='Firefox Mobile 45.0',
@@ -83,14 +78,20 @@ class TestURLs(unittest.TestCase):
 
     @patch('webcompat.issues.proxy_request')
     def test_fail_post_new_issue(self, mock_proxy):
-        """Test that post is not working on /issues/new."""
-        mock_proxy = MagicMock(spec=Response)
-        mock_proxy = json.dumps(POST_RESPONSE)
+        """Test that post is not working on /issues/new.
+
+        It will fail with a 400 because the URL is missing."""
         rv = self.app.post(
             '/issues/new',
             environ_base=headers,
+            content_type='multipart/form-data',
             data=dict(
-                browser='Firefox Mobile 45.0', ))
+                browser='Firefox Mobile 45.0',
+                description='http POST will fail.',
+                os='macOS',
+                problem_category='what',
+                submit_type='github-proxy-report',
+                username='PunkCat',))
         self.assertEqual(rv.status_code, 400)
 
     def test_about(self):
@@ -203,7 +204,9 @@ class TestURLs(unittest.TestCase):
 
     def test_missing_parameters_for_new_issue(self):
         """Sends 400 to POST on /issues/new with missing parameters."""
-        rv = self.app.post('/issues/new', data=dict(url='foo'))
+        rv = self.app.post('/issues/new',
+                           content_type='multipart/form-data',
+                           data=dict(url='foo'))
         self.assertEqual(rv.status_code, 400)
 
     def test_new_issue_should_not_crash(self):
@@ -214,7 +217,9 @@ class TestURLs(unittest.TestCase):
                 'url': u'http://example.com',
                 'os': u'Foobar',
                 'browser': u'BarFoo'}
-        rv = self.app.post('/issues/new', data=data)
+        rv = self.app.post('/issues/new',
+                           content_type='multipart/form-data',
+                           data=data)
         self.assertEqual(rv.status_code, 400)
 
     def test_dashboard_triage(self):
