@@ -247,5 +247,22 @@ class TestForm(unittest.TestCase):
         self.assertTrue(helpers.is_blacklisted_domain('coco.fr'))
         self.assertFalse(helpers.is_blacklisted_domain('w3.org'))
 
+    def test_report_issue_anonymous_fails_with_wrong_credentials(self):
+        """Report issue should not be working if wrong credentials."""
+        with webcompat.app.app_context():
+            rv = self.app.post(
+                '/issues/new',
+                content_type='multipart/form-data',
+                data=dict(
+                    browser='Firefox Mobile 45.0',
+                    description='testing 2971',
+                    os='macos',
+                    problem_category='yada',
+                    submit_type='punkcat-submit',
+                    url='http://testing.example.org',
+                    username='yeeha'))
+            self.assertEqual(rv.status_code, 400)
+
+
 if __name__ == '__main__':
     unittest.main()

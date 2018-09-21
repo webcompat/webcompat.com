@@ -242,7 +242,7 @@ def create_issue():
             abort(400)
         # Anonymous reporting
         if form.get('submit_type') == PROXY_REPORT:
-            json_response = report_issue(form)
+            json_response = report_issue(form, proxy=True)
             session['show_thanks'] = True
             return redirect(
                 url_for('show_issue', number=json_response.get('number')))

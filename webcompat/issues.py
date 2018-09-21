@@ -11,6 +11,8 @@ It handles authenticated users and webcompat-bot (proxy) case.
 
 import json
 
+from flask import abort
+
 from webcompat import github
 from webcompat.form import build_formdata
 from webcompat.helpers import proxy_request
@@ -21,13 +23,16 @@ def report_issue(form, proxy=False):
     """Report an issue, as a logged in user or anonymously."""
     # /repos/:owner/:repo/issues
     path = 'repos/{0}'.format(REPO_URI)
-    if proxy:
+    submit_type = form.get('submit_type')
+    if proxy and submit_type == 'github-proxy-report':
         # Return a Response object.
         response = proxy_request('post',
                                  path,
                                  data=json.dumps(build_formdata(form)))
         json_response = response.json()
-    else:
+    elif (not proxy) and submit_type == 'github-auth-report':
         # Return JSON data as a dict
         json_response = github.post(path, build_formdata(form))
+    else:
+        abort(400)
     return json_response
