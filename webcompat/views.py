@@ -212,7 +212,7 @@ def create_issue():
     if request_type == 'prefill':
         form_data = prepare_form(request)
         bug_form = get_form(form_data)
-        session['form_data'] = form_data
+        session['extra_labels'] = form_data['extra_labels']
         return render_template('new-issue.html', form=bug_form)
     # Issue Creation section
     elif request_type == 'create':
@@ -222,9 +222,9 @@ def create_issue():
             abort(400)
         # Adding parameters to the form
         form = request.form.copy()
-        form_data = session.pop('form_data', None)
-        if form_data:
-            form['extra_labels'] = form_data.get('extra_labels', None)
+        extra_labels = session.pop('extra_labels', None)
+        if extra_labels:
+            form['extra_labels'] = extra_labels
         # Logging the ip and url for investigation
         log.info('{ip} {url}'.format(
             ip=request.remote_addr,
