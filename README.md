@@ -8,7 +8,6 @@
 [![Built with Grunt](https://cdn.gruntjs.com/builtwith.svg)](http://gruntjs.com/)
 [![Travis Build Status](https://travis-ci.org/webcompat/webcompat.com.svg?branch=master)](https://travis-ci.org/webcompat/webcompat.com)
 
-[![Waffle Stories in Ready](https://badge.waffle.io/webcompat/webcompat.com.png?label=ready&title=Ready)](https://waffle.io/webcompat/webcompat.com)
 [![Twitter](https://img.shields.io/twitter/url/https/github.com/webcompat/webcompat.com.svg?style=social)](https://twitter.com/webcompat)
 
 
