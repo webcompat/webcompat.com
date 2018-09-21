@@ -4,6 +4,14 @@
 2. New features: affect minor number
 3. API endpoint changes or dependency version updates: affect major number
 
+## 14.0.0 - 2018-09-21
+
+* Fixes #2380 - Removes waffle.io from README.md [Pull #2588](https://github.com/webcompat/webcompat.com/pull/2588)
+* Fixes #2559 - Adds Kate to contributors [Pull #2583](https://github.com/webcompat/webcompat.com/pull/2583)
+* Fixes #2024 - Adds the ability to receive POST data with a JSON Payload [Pull #2582](https://github.com/webcompat/webcompat.com/pull/2582)
+* Fixes #2580 - Adds the missing webhooks route to the app [Pull #2581](https://github.com/webcompat/webcompat.com/pull/2581)
+
+
 ## 13.2.1 - 2018-09-17
 
 * Fixes #2580 - Adds the missing webhooks route to the app [Pull #2581](https://github.com/webcompat/webcompat.com/pull/2581)
