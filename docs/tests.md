@@ -25,7 +25,7 @@ We use [Intern](http://theintern.io/) to run functional tests.
 
 > Note: This version is known to work with Firefox 50.1.0. If things aren't working with the current stable version of Firefox, please [file a bug!](https://github.com/webcompat/webcompat.com/issues/new).
 
-Be sure that you have installed local npm dependencies and run the build before trying to run functional tests - if not, you will notice problems with the css. [See dev env setup](#installing-grunt) for details.
+Be sure that you have installed local npm dependencies and run the build before trying to run functional tests - if not, you will notice problems with the css. [See dev env setup](https://github.com/webcompat/webcompat.com/blob/master/docs/dev-env-setup.md) for details.
 
 
 #### Installing Java
