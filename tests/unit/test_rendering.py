@@ -113,5 +113,12 @@ class TestURIContent(unittest.TestCase):
         self.assertTrue('Mac OS X 10.13' in rv.data)
         self.assertTrue('http://example.com/' in rv.data)
 
+    def test_wellknown_subpath(self):
+        """Test that the /.wellknown/subpath route gets 404."""
+        rv = self.app.get('/.well-known/test-route')
+        expected = 'test-route'
+        self.assertEqual(rv.status_code, 404)
+        self.assertTrue(expected in rv.data)
+
 if __name__ == '__main__':
     unittest.main()

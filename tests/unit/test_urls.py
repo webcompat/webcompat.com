@@ -193,7 +193,7 @@ class TestURLs(unittest.TestCase):
         self.assertEqual(rv.status_code, 400)
 
     def test_tools_cssfixme(self):
-        """Test that the /tools/cssfixme route gets 200."""
+        """Test that the /tools/cssfixme route gets 410."""
         rv = self.app.get('/tools/cssfixme')
         self.assertEqual(rv.status_code, 410)
 
