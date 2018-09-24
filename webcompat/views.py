@@ -486,7 +486,7 @@ def log_csp_report():
 
 @app.route('/.well-known/<path:subpath>')
 @cache_policy(private=False, uri_max_age=31104000, must_revalidate=False)
-def wellknown():
+def wellknown(subpath):
     """Route for returning 404 for the currently unused well-known routes."""
     msg = """
     Sorry dear bot,
