@@ -26,15 +26,13 @@ All code contributions should come in the form of a pull request, as a topic bra
 
     # OR
     # if you are NOT SURE your fork is up-to-date
-    git pull upstream master  
+    git pull upstream master
 
     # creates new branch
-    git checkout -b issues/NumberOfIssue/VersionOfPR  
+    git checkout -b issues/NumberOfIssue/VersionOfPR
     ```
 
-5. Create your patch; commit your changes. Referencing the issue number you're working on from the message is recommended.
-
-    > Note: Please keep the title under 50 chars. If you'd like to provide more information, just add the details to the commit body.
+5. Create your patch and commit your changes.
 
     ```bash
     # check for changed files
@@ -44,8 +42,13 @@ All code contributions should come in the form of a pull request, as a topic bra
     git add file.js foldername/foldername2/file2.js
 
     # add commit message including issue number
-    git commit -m 'Issue #NumberOfIssue - Fixes broken layout on mobile browsers'    
+    git commit -m 'Issue #1207 - Fixes broken layout on mobile browsers'
     ```
+
+    Commit messages **must** be written according to the following template:
+    ``Issue #NumberOfIssue -  Short message explaining what the commit does``
+
+    >   Note: Please keep the title under 50 chars. If you'd like to provide more information, just add the details to the commit body.
 
 6. Push your branch to GitHub:
 
