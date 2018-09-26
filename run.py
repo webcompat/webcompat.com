@@ -46,7 +46,7 @@ The OAUTH_TOKEN is not configured in your config file.
 You will need to set up one on github for testing your
 local developments.
 Read Instructions at
-https://github.com/webcompat/webcompat.com/blob/master/CONTRIBUTING.md#configuring-the-server
+https://github.com/webcompat/webcompat.com/blob/master/docs/dev-env-setup.md#configuring-the-server
 '''
 
 DEPS_VERSION_HELP = '''
