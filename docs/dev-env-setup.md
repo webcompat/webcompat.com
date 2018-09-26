@@ -160,7 +160,7 @@ npm run build
 
 You need to create a repository on GitHub which is used to submit issues via the GitHub API. For example, the user `miketaylr` has created a repository called "[test-repo](https://github.com/miketaylr/test-repo)" for this purpose.
 
-**Important:** Your repository needs to have the same milestones like we have in our [test-repository](https://github.com/webcompat/webcompat-tests/milestones).
+**Important:** Your repository needs to have exactly the same milestones like we have in our [test-repository](https://github.com/webcompat/webcompat-tests/milestones): needstriage, sitewait, duplicate, incomplete, contactready, needscontact, invalid, needsdiagnosis, wontfix, worksforme, non-compat and fixed.
 
 ### Store your settings
 
