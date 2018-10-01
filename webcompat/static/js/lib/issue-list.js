@@ -150,7 +150,8 @@ issueList.FilterView = Backbone.View.extend({
 issueList.SearchView = Backbone.View.extend({
   el: $(".js-SearchForm"),
   events: {
-    "submit #x-search-bar": "searchIfNotEmpty"
+    "submit #x-search-bar": "searchIfNotEmpty",
+    "click button": "focusInputIfEmpty"
   },
   initialize: function() {
     issueList.events.on("search:update", _.bind(this.updateSearchQuery, this));
@@ -178,6 +179,11 @@ issueList.SearchView = Backbone.View.extend({
   },
   _isEmpty: true,
   _currentSearch: null,
+  focusInputIfEmpty: function() {
+    if (!this.input.val()) {
+      this.input.focus();
+    }
+  },
   searchIfNotEmpty: function(e) {
     var searchValue = this.input.val();
 
