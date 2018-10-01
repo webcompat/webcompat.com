@@ -258,15 +258,16 @@
 }
 
 .form-upload .label-remove:not(.is-hidden) {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  justify-content: center;
-  left: 0;
+  background-color: #fff;
+  border: 1px solid rgba(255, 201, 0, 1);
+  border-radius: 50%;
+  cursor: pointer;
+  left: auto;
+  padding: .8em;
+  position: absolute;
+  right: 0;
   top: 0;
-  transform: none;
-  width: 100%;
+  transform: translate(50%, -50%);
 }
 
 .icon-remove,
