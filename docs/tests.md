@@ -83,13 +83,13 @@ In a separate terminal window or tab, run the tests:
 npm run test:js
 ```
 
-You can also run the functional tests as well as the python tests in a seperate tab, after starting the server with:
+You can also run the functional tests as well as the python tests in a separate tab, after starting the server, with:
 
 ```
 npm test
 ```
 
-Shortly after running this command, you should see the browser open and various pages appear and disappear automatically for a minute or two. The tests are complete when the browser window closes and you see a report of how many passed or failed in the terminal window that you ran the `intern-runner` command in.
+Shortly after running this command, a progress indicator should appear in the terminal window and spin through each functional test in Firefox and then in Chrome. When all the tests complete, you'll see the final report of passes and failures in the terminal window that you ran the `intern-runner` command in.
 
 To run a single test suite, where foo.js is the file found in the `tests/functional` directory:
 
@@ -113,7 +113,7 @@ Right now the tests are running in Firefox and Chrome as a default. You can spec
 npm run test:js -- --browsers=chrome
 ```
 
-By default, Chrome and Firefox will run in headless mode. To display the browser UI when running tests, use the `--showBrowser` arguement:
+By default, Chrome and Firefox will run in headless mode. To display the browser UI when running tests, use the `--showBrowser` argument:
 
 ```bash
 npm run test:js -- --showBrowser
@@ -144,22 +144,22 @@ Contributions that add or modify major functionality to the project should typic
 
 ### Python Unit Tests
 
-Our Python unit tests are vanilla flavored [`unittest`](https://docs.python.org/2/library/unittest.html) tests. Unit tests placed in the `tests` directory will be automatically detected by nose&mdash;no manual registration is necessary.
+Our Python unit tests are vanilla flavored [`unittest`](https://docs.python.org/2/library/unittest.html) tests. Unit tests placed in the `tests` directory will be automatically detected by nose&mdash; no manual registration is necessary.
 
 Unit tests are preferred for features or functionality that are independent of the browser front-end, i.e., API responses, application routes, etc.
 
 Important documentation links:
 * [Writing nose tests](https://nose.readthedocs.org/en/latest/writing_tests.html)
 * [`unittest`](https://docs.python.org/2/library/unittest.html)
-* [Testing Flask](http://flask.pocoo.org/docs/0.10/testing/)
+* [Testing Flask](http://flask.pocoo.org/docs/1.0/testing/)
 
 ### JS Functional Tests
 
-Functional tests are written in JavaScript, using [Intern](http://theintern.io/). There's a nice [guide on the Intern wiki](https://github.com/theintern/intern/wiki/Writing-Tests-with-Intern#functional-testing) that should explain enough to get you started.
+Functional tests are written in JavaScript, using [Intern](http://theintern.io/). There's a nice [guide on the Intern wiki](https://theintern.io/docs.html#Intern/4/docs/docs%2Fwriting_tests.md/functional-tests) that should explain enough to get you started.
 
 Important documentation links:
 * [Leadfoot](https://theintern.github.io/leadfoot/): the library that drives the browser (via Selenium).
 * [ChaiJS](http://chaijs.com/api/assert/): the library used for assertions.
-* [Intern wiki](https://github.com/theintern/intern/wiki): contains useful examples.
+* [Intern docs](https://theintern.io/docs.html#Intern/4/docs/README.md): contains useful examples.
 
 It's also recommended to look at the other test files in the `tests/functional` directory to see how things are commonly done.
