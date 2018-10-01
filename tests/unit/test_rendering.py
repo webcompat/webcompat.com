@@ -119,5 +119,12 @@ class TestURIContent(unittest.TestCase):
         self.assertEqual(rv.status_code, 404)
         self.assertTrue(expected in rv.data)
 
+    def test_wellknown_security(self):
+        """Test that the /.wellknown/security.txt exists."""
+        rv = self.app.get('/.well-known/security.txt')
+        expected = 'Contact: mailto:kdubost+securitywebc'
+        self.assertEqual(rv.status_code, 200)
+        self.assertTrue(expected in rv.data)
+
 if __name__ == '__main__':
     unittest.main()
