@@ -11,7 +11,7 @@
   --page-size-l: 998px;
   --page-size-m: 665px;
   --page-size-s: 320px;
-  --unit-modul-l: calc(910px - var(--unit-space)); /* x3 grid unit */
+  --unit-modul-l: calc(1080px - var(--unit-space)); /* x3 grid unit */
   --unit-modul-m: calc(2 / 3 * var(--unit-modul-l) - var(--unit-space)); /* x2 grid unit */
   --unit-modul-s: calc(1 / 3 * var(--unit-modul-l) - var(--unit-space)); /* x1 grid unit */
   --button-primary-padding: 12px 23px;
