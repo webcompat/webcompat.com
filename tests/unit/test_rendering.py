@@ -44,18 +44,18 @@ class TestURIContent(unittest.TestCase):
 
     def test_titles(self):
         """Page title format for different URIs."""
-        issueNum = '1000'
-        defaultTitle = 'Web Compatibility'
+        issue_number = '1000'
+        default_title = 'Web Compatibility'
         website_uris = [
-            ('/', defaultTitle),
+            ('/', default_title),
             ('/about', 'About'),
             ('/contributors', 'Contributors'),
-            ('/issues/' + issueNum, 'Issue #' + issueNum),
+            ('/issues/' + issue_number, 'Issue #' + issue_number),
             ('/issues', 'Issues'),
             ('issues/new', 'New Issue'),
             ('/privacy', 'Privacy Policy'),
             ('/dashboard/triage', 'Triage Dashboard'),
-            ('/404', defaultTitle)
+            ('/404', default_title)
         ]
         with webcompat.app.app_context():
             for uri, title in website_uris:
@@ -77,7 +77,6 @@ class TestURIContent(unittest.TestCase):
 
         This depends on the user agent string.
         """
-
         # testing Firefox addon
         headers = {'HTTP_USER_AGENT': FIREFOX_UA}
         rv = self.app.get('/', environ_base=headers)
