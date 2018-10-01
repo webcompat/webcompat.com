@@ -34,12 +34,13 @@ issues.MilestonesView = issues.CategoryView.extend({
     if (e && e.target.nodeName === "TEXTAREA") {
       return;
     }
-
     this.milestoneEditor.isOpen = true;
     this.editorButton.addClass("is-active");
     this.$el
       .find(".js-MilestoneEditorLauncher")
       .after(this.milestoneEditor.render().el);
+    this.$el.find(".label-editor").addClass("is-open");
+    $("#body-webcompat").addClass("is-label-editor-open");
 
     $('[name="' + this.model.get("milestone") + '"]').prop("checked", true);
     this.$el.closest(".label-box").scrollTop(this.$el.position().top);
@@ -93,6 +94,8 @@ issues.MilestoneEditorView = issues.CategoryEditorView.extend({
         // user reopens the editor.
         this.$el.children().detach();
         this.issueView.editorButton.removeClass("is-active");
+        this.$el.removeClass("is-open");
+        $("#body-webcompat").removeClass("is-label-editor-open");
       }
     }
   }

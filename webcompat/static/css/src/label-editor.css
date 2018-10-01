@@ -1,27 +1,37 @@
-/* Category editor */
-.label-editor {
-  background-color: var(--color-bg-box);
-  border-radius: 4px;
-  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, .1);
-  display: block;
-  left: 0;
-  position: absolute;
-  top: 20px;
-  white-space: nowrap;
-  width: 100%;
-  z-index: 5;
-}
-
-@media all and (min-width: 893.01px) {
-  .label-editor {
-    top: 21px;
+@media (min-width: 665px) {
+  .label-editor.is-open {
+    align-items: center;
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    left: 0;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 10001; /* todo: decrease this value, depends of the header */
   }
 }
 
-@media all and (max-width: 893px) {
-  .label-editor {
+@media (max-width: 664px) {
+
+  /* Category editor */
+  .label-editor.is-open {
+    display: block;
+    left: 0;
+    position: absolute;
     top: 23px;
+    white-space: nowrap;
+    width: 100%;
+    z-index: 5;
   }
+}
+
+/* Category editor */
+.label-editor-container {
+  background-color: var(--color-bg-box);
+  border-radius: 2px;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, .24), 0 0 2px rgba(0, 0, 0, .12);
+  padding: 1em;
 }
 
 /* Category header */

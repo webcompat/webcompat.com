@@ -52,6 +52,8 @@ issues.LabelsView = issues.CategoryView.extend({
     this.$el
       .find(".js-LabelEditorLauncher")
       .after(this.labelEditor.render().el);
+    this.$el.find(".label-editor").addClass("is-open");
+    $("#body-webcompat").addClass("is-label-editor-open");
     var toBeChecked = _.intersection(
       this.getIssueLabels(),
       issues.allLabels.toArray()
@@ -111,6 +113,8 @@ issues.LabelEditorView = issues.CategoryEditorView.extend({
         // detach() (vs remove()) here because we don't want to lose events if the
         // user reopens the editor.
         this.$el.children().detach();
+        this.$el.removeClass("is-open");
+        $("#body-webcompat").removeClass("is-label-editor-open");
       }
     }
   }
