@@ -44,6 +44,12 @@
 }
 
 @media screen and (min-width: 665px) {
+  #body-webcompat.is-label-editor-open {
+    overflow: hidden;
+  }
+}
+
+@media screen and (min-width: 665px) {
   #body-webcompat {
     padding: var(--navi-height) var(--grid-outermargin-m) calc(2 * var(--unit-gutter-m));
   }

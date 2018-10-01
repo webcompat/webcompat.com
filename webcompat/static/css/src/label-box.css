@@ -4,6 +4,9 @@
     overflow-y: auto;
     position: sticky;
     top: 50px;
+
+    /* new stacking context */
+    z-index: 30;
   }
 }
 
