@@ -4,6 +4,18 @@
 2. New features: affect minor number
 3. API endpoint changes or dependency version updates: affect major number
 
+## 14.0.1 - 2018-10-01
+
+* Fixes #2576 - fixed white gap visible in homepage [Pull #2609](https://github.com/webcompat/webcompat.com/pull/2609)
+* Fixes #2604 - Fixed the broken link in `run.py` [Pull #2605](https://github.com/webcompat/webcompat.com/pull/2605)
+* Fixes #2602 - Adds a list of milestones [Pull #2603](https://github.com/webcompat/webcompat.com/pull/2603)
+* Fixes #2595 - Clarifies commit message format [Pull #2600](https://github.com/webcompat/webcompat.com/pull/2600)
+* Fixes #2563 - Fixes status change instructions [Pull #2598](https://github.com/webcompat/webcompat.com/pull/2598)
+* Fixes #2585 - Adds tmp/ to deploy.ignore [Pull #2594](https://github.com/webcompat/webcompat.com/pull/2594)
+* Fixes #2587 - Adds subpath parameter to the wellknown function [Pull #2593](https://github.com/webcompat/webcompat.com/pull/2593)
+* Fixes #2590 - Fixes the link in docs/tests.md [Pull #2591](https://github.com/webcompat/webcompat.com/pull/2591)
+* Fixes #2468 - Removes backticks from from PR template [Pull #2589](https://github.com/webcompat/webcompat.com/pull/2589)
+
 ## 14.0.0 - 2018-09-21
 
 * Fixes #2380 - Removes waffle.io from README.md [Pull #2588](https://github.com/webcompat/webcompat.com/pull/2588)
