@@ -488,11 +488,10 @@ def log_csp_report():
 @cache_policy(private=False, uri_max_age=31104000, must_revalidate=False)
 def wellknown(subpath):
     """Route for returning 404 for the currently unused well-known routes."""
-    msg = """
-    Sorry dear bot,
-    the route /.well-known/{subpath} doesn't exist.
-
-    Nothing behind me, everything ahead of me, as is ever so on the road.
-    - Jack Kerouac, On the Road.
-    """.format(subpath=subpath)
-    return (msg, 404, {'content-type': 'text/plain; charset=utf-8'})
+    if subpath == 'security.txt':
+        msg = app.config['WELL_KNOWN_SECURITY']
+        status_code = 200
+    else:
+        msg = app.config['WELL_KNOWN_ALL'].format(subpath=subpath)
+        status_code = 404
+    return (msg, status_code, {'content-type': 'text/plain; charset=utf-8'})

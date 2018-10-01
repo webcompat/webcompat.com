@@ -36,9 +36,20 @@ STATUSES = {
     u'invalid': {'id': 0, 'order': 4, 'state': 'closed'},
     u'non-compat': {'id': 0, 'order': 5, 'state': 'closed'},
     u'wontfix': {'id': 0, 'order': 6, 'state': 'closed'},
-    u'worksforme': {'id': 0, 'order': 7, 'state': 'closed'}
-    }
+    u'worksforme': {'id': 0, 'order': 7, 'state': 'closed'}}
 
 # We don't need to compute for every requests.
 OPEN_STATUSES = [status for status in STATUSES
                  if STATUSES[status]['state'] == 'open']
+
+# Messages Configuration
+
+WELL_KNOWN_ALL = """
+    Sorry dear bot,
+    the route /.well-known/{subpath} doesn't exist.
+
+    Nothing behind me, everything ahead of me, as is ever so on the road.
+    - Jack Kerouac, On the Road."""
+WELL_KNOWN_SECURITY = """Contact: mailto:kdubost+securitywebc@mozilla.com
+Contact: mailto:miket@mozilla.com
+"""
