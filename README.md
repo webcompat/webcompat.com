@@ -6,7 +6,7 @@
 [![devDependency Status](https://david-dm.org/webcompat/webcompat.com/dev-status.svg)](https://david-dm.org/webcompat/webcompat.com/)
 
 [![Built with Grunt](https://cdn.gruntjs.com/builtwith.svg)](http://gruntjs.com/)
-[![Travis Build Status](https://travis-ci.org/webcompat/webcompat.com.svg?branch=master)](https://travis-ci.org/webcompat/webcompat.com)
+[![CircleCI](https://circleci.com/gh/webcompat/webcompat.com.svg?style=svg)](https://circleci.com/gh/webcompat/webcompat.com)
 
 [![Twitter](https://img.shields.io/twitter/url/https/github.com/webcompat/webcompat.com.svg?style=social)](https://twitter.com/webcompat)
 
