@@ -53,3 +53,21 @@ WELL_KNOWN_ALL = """
 WELL_KNOWN_SECURITY = """Contact: mailto:kdubost+securitywebc@mozilla.com
 Contact: mailto:miket@mozilla.com
 """
+
+# Database backup path.
+if LOCALHOST:
+    BACKUP_DEFAULT_DEST = BASE_DIR + '/backups/'
+else:
+    BACKUP_DEFAULT_DEST = ''
+
+if LOCALHOST:
+    UPLOADS_DEFAULT_DEST = BASE_DIR + '/uploads/'
+    UPLOADS_DEFAULT_URL = 'http://localhost:5000/uploads/'
+
+# Production GitHub Issues repo URI. Can be ignored for local testing.
+if PRODUCTION:
+    ISSUES_REPO_URI = 'webcompat/web-bugs/issues'
+# Staging and Local instances use the same test repo
+else:
+    ISSUES_REPO_URI = os.environ.get(
+        'ISSUES_REPO_URI') or 'webcompat/webcompat-tests/issues'

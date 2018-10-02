@@ -56,7 +56,8 @@ before_script:
 
 # now run the tests!
 script:
-  - nosetests
   - python run.py -t &
+  - sleep 5
+  - nosetests
   - sleep 5
   - npm run test:js -- --reporters="runner" --firefoxBinary=`which firefox`

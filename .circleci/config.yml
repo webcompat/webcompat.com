@@ -21,13 +21,14 @@ jobs:
           - v1-pip-{{ checksum "config/requirements.txt" }}
           # fallback to using the latest cache if no exact match is found
           - v1-pip-
+          - v1-npm-{{ checksum "package.json" }}
+          - v1-npm-
 
       - run:
           name: install python deps
           command: |
-            pip install virtualenv
             virtualenv venv
-            . env/bin/activate
+            . venv/bin/activate
             npm run pip
             npm run config
 
@@ -36,13 +37,28 @@ jobs:
             - ./venv
           key: v1-pip-{{ checksum "config/requirements.txt" }}
 
+      - run:
+          name: install npm deps
+          command: |
+            npm install
+
+      - save_cache:
+          paths:
+            - ./node_modules
+          key: v1-npm-{{ checksum "package.json" }}
+
       # run tests!
       - run:
           name: run tests
           command: |
-            . env/bin/activate
+            . venv/bin/activate
             pep8 --ignore=E402 webcompat/ tests/ config/secrets.py.example
+            python run.py -t &
+            sleep 5
             nosetests
+            npm run lint
+            npm run build
+            npm run test:js -- --reporters="runner" --firefoxBinary=`which firefox`
 
       - store_artifacts:
           path: test-reports
