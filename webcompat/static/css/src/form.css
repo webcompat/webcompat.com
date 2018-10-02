@@ -92,13 +92,14 @@
 /* * Form input[type="text"], textarea (text-field) */
 
 .text-field {
-  border: none;
-  border-bottom: 1px solid var(--color-form);
+  border: 1px solid var(--color-form);
+  border-radius: 2px;
   display: block;
   font-family: "Open Sans", sans-serif;
+  font-size: 90%;
   line-height: 1.2;
   min-height: 27px;
-  padding: 4px 25px 4px 0;
+  padding: 8px 24px 8px 8px;
   position: relative;
   width: 100%;
   z-index: 2;
@@ -128,6 +129,7 @@
   content: "";
   display: inline-block;
   height: 16px;
+  margin-right: 4px;
   width: 16px;
 }
 
@@ -138,6 +140,7 @@
   content: "";
   display: inline-block;
   height: 16px;
+  margin-right: 4px;
   width: 16px;
 }
 
