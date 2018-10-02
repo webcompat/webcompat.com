@@ -79,7 +79,7 @@ registerSuite("Labels (auth)", {
         .end()
         .findByCssSelector(".js-CategoryEditor")
         .end()
-        .findByCssSelector("footer")
+        .findByCssSelector(".navigation")
         .click()
         .end()
         .findByCssSelector(".js-LabelEditorLauncher")
