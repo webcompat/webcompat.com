@@ -25,9 +25,8 @@ jobs:
       - run:
           name: install python deps
           command: |
-            pip install virtualenv
             virtualenv venv
-            . env/bin/activate
+            . venv/bin/activate
             npm run pip
             npm run config
 
@@ -40,7 +39,7 @@ jobs:
       - run:
           name: run tests
           command: |
-            . env/bin/activate
+            . venv/bin/activate
             pep8 --ignore=E402 webcompat/ tests/ config/secrets.py.example
             nosetests
 
