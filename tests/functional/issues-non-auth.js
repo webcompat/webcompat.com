@@ -114,6 +114,20 @@ registerSuite("Issues", {
           assert.notInclude(className, "wc-Comment-content-nsfw--display");
         })
         .end();
+    },
+
+    "Simple title concatenation"() {
+      return FunctionalHelpers.openPage(this, url("/issues/15000"), ".js-Issue")
+        .findDisplayedByCssSelector(".js-issue-title")
+        .getVisibleText()
+        .then(function(text) {
+          assert.equal(
+            text,
+            "www.prudential.com.sg - Text rendering missing",
+            "The title has been concatenated."
+          );
+        })
+        .end();
     }
   }
 });
