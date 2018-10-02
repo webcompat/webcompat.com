@@ -68,7 +68,11 @@ issues.Issue = Backbone.Model.extend({
       reporter: response.user.login,
       reporterAvatar: response.user.avatar_url,
       state: response.state,
-      title: response.title
+      title: this.getTitle(
+        this.getDomain(response.title),
+        this.getDescription(response.body),
+        response.title
+      )
     });
 
     this.on(
@@ -81,6 +85,29 @@ issues.Issue = Backbone.Model.extend({
         );
       }, this)
     );
+  },
+
+  getDescription: function(body) {
+    // Get the Description of the body
+    var regex = /\*\*Description\*\*: ([^*]+)/;
+    var description = regex.exec(body);
+    return description != null ? description[1].slice(0, 74) : null;
+  },
+
+  getDomain: function(title) {
+    // Get the domain name from the title
+    var regex = /^([^ ]+)/;
+    var domain = regex.exec(title);
+    return domain != null ? domain[1] : null;
+  },
+
+  getTitle: function(domain, description, title) {
+    // Return a title for the issue aside
+    var issue_title = title != null ? title : "";
+    if (description) {
+      issue_title = domain + " - " + description;
+    }
+    return issue_title;
   },
 
   updateLabels: function(labelsArray) {
