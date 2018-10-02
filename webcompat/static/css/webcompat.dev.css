@@ -2,8 +2,6 @@
 @import "lib/reset.css";
 @import "lib/reset-add.css";
 
-/* @import "lib/a11y-en.css"; */
-
 /* custom src files */
 @import "src/variables.css";
 @import "src/typo.css";
