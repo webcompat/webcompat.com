@@ -123,3 +123,7 @@
     min-width: 0;
   }
 }
+
+.issue-details {
+  word-break: break-all;
+}
