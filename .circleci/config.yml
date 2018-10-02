@@ -41,6 +41,8 @@ jobs:
           command: |
             . venv/bin/activate
             pep8 --ignore=E402 webcompat/ tests/ config/secrets.py.example
+            python run.py -t &
+            sleep 5
             nosetests
 
       - store_artifacts:
