@@ -1,6 +1,5 @@
 # webcompat.com
 
-
 [![GitHub version](https://badge.fury.io/gh/webcompat%2Fwebcompat.com.svg)](https://badge.fury.io/gh/webcompat%2Fwebcompat.com)
 [![Dependency Status](https://david-dm.org/webcompat/webcompat.com.svg)](https://david-dm.org/webcompat/webcompat.com)
 [![devDependency Status](https://david-dm.org/webcompat/webcompat.com/dev-status.svg)](https://david-dm.org/webcompat/webcompat.com/)
