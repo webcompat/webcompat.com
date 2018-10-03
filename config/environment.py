@@ -22,6 +22,36 @@ STAGING = os.environ.get('DEVELOPMENT')
 # Are we serving the app from localhost?
 LOCALHOST = not PRODUCTION and not STAGING
 
+if PRODUCTION:
+    GITHUB_CLIENT_ID = os.environ.get('PROD_GITHUB_CLIENT_ID')
+    GITHUB_CLIENT_SECRET = os.environ.get('PROD_GITHUB_CLIENT_SECRET')
+    GITHUB_CALLBACK_URL = os.environ.get('PROD_GITHUB_CALLBACK_URL')
+    HOOK_SECRET_KEY = os.environ.get('HOOK_SECRET_KEY')
+    ISSUES_REPO_URI = 'webcompat/web-bugs/issues'
+    OAUTH_TOKEN = os.environ.get('PROD_OAUTH_TOKEN')
+    SECRET_KEY = os.environ.get('PROD_SECRET_KEY')
+    UPLOADS_DEFAULT_DEST = os.environ.get('PROD_UPLOADS_DEFAULT_DEST')
+    UPLOADS_DEFAULT_URL = os.environ.get('PROD_UPLOADS_DEFAULT_URL')
+
+if STAGING:
+    GITHUB_CLIENT_ID = os.environ.get('STAGING_GITHUB_CLIENT_ID')
+    GITHUB_CLIENT_SECRET = os.environ.get('STAGING_GITHUB_CLIENT_SECRET')
+    GITHUB_CALLBACK_URL = os.environ.get('STAGING_GITHUB_CALLBACK_URL')
+    HOOK_SECRET_KEY = os.environ.get('HOOK_SECRET_KEY')
+    ISSUES_REPO_URI = 'webcompat/webcompat-tests/issues'
+    OAUTH_TOKEN = os.environ.get('STAGING_OAUTH_TOKEN')
+    SECRET_KEY = os.environ.get('STAGING_SECRET_KEY')
+    UPLOADS_DEFAULT_DEST = os.environ.get('STAGING_UPLOADS_DEFAULT_DEST')
+    UPLOADS_DEFAULT_URL = os.environ.get('STAGING_UPLOADS_DEFAULT_URL')
+
+# see secrets.py.example for the rest of the config values that need
+# to be modified for localhost development
+if LOCALHOST:
+    ISSUES_REPO_URI = 'webcompat/webcompat-tests/issues'
+    UPLOADS_DEFAULT_DEST = BASE_DIR + '/uploads/'
+    UPLOADS_DEFAULT_URL = 'http://localhost:5000/uploads/'
+
+
 # BUG STATUS
 # The id will be initialized when the app is started.
 STATUSES = {
@@ -53,21 +83,3 @@ WELL_KNOWN_ALL = """
 WELL_KNOWN_SECURITY = """Contact: mailto:kdubost+securitywebc@mozilla.com
 Contact: mailto:miket@mozilla.com
 """
-
-# Database backup path.
-if LOCALHOST:
-    BACKUP_DEFAULT_DEST = BASE_DIR + '/backups/'
-else:
-    BACKUP_DEFAULT_DEST = ''
-
-if LOCALHOST:
-    UPLOADS_DEFAULT_DEST = BASE_DIR + '/uploads/'
-    UPLOADS_DEFAULT_URL = 'http://localhost:5000/uploads/'
-
-# Production GitHub Issues repo URI. Can be ignored for local testing.
-if PRODUCTION:
-    ISSUES_REPO_URI = 'webcompat/web-bugs/issues'
-# Staging and Local instances use the same test repo
-else:
-    ISSUES_REPO_URI = os.environ.get(
-        'ISSUES_REPO_URI') or 'webcompat/webcompat-tests/issues'
