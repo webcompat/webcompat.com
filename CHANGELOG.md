@@ -4,6 +4,10 @@
 2. New features: affect minor number
 3. API endpoint changes or dependency version updates: affect major number
 
+## 14.2.0 - 2018-10-03
+
+* Fixes #2639 - Use env vars for prod and staging configuration [Pull #2640](https://github.com/webcompat/webcompat.com/pull/2640)
+
 ## 14.1.0 - 2018-10-03
 
 * Fixes #2443 - improved readability on field elements [Pull #2625](https://github.com/webcompat/webcompat.com/pull/2625)
