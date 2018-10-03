@@ -4,6 +4,18 @@
 2. New features: affect minor number
 3. API endpoint changes or dependency version updates: affect major number
 
+## 14.1.0 - 2018-10-03
+
+* Fixes #2443 - improved readability on field elements [Pull #2625](https://github.com/webcompat/webcompat.com/pull/2625)
+* Fixes #2622 - break word to avoid overflow with long string [Pull #2623](https://github.com/webcompat/webcompat.com/pull/2623)
+* Fixes #2331 - Remove PurifyCSS. [Pull #2621](https://github.com/webcompat/webcompat.com/pull/2621)
+* Fixes #2078 - increase the general width [Pull #2617](https://github.com/webcompat/webcompat.com/pull/2617)
+* Fixes #2100 - removing button is now a cross on top right [Pull #2616](https://github.com/webcompat/webcompat.com/pull/2616)
+* Fixes #2597 - improve label editor position [Pull #2615](https://github.com/webcompat/webcompat.com/pull/2615)
+* Fixes #2610 - Focus search input when clickon on button. [Pull #2614](https://github.com/webcompat/webcompat.com/pull/2614)
+* Fixes #1297 - Upgrade Markdown-it Emoji to v1.4.0 [Pull #2613](https://github.com/webcompat/webcompat.com/pull/2613)
+* Fixes #2381 - Adds security.txt to /.well-known/ [Pull #2611](https://github.com/webcompat/webcompat.com/pull/2611)
+
 ## 14.0.1 - 2018-10-01
 
 * Fixes #2576 - fixed white gap visible in homepage [Pull #2609](https://github.com/webcompat/webcompat.com/pull/2609)
