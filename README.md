@@ -10,8 +10,6 @@
 
 [![Twitter](https://img.shields.io/twitter/url/https/github.com/webcompat/webcompat.com.svg?style=social)](https://twitter.com/webcompat)
 
-
-
 This repository hosts the code which powers the [webcompat.com Web site](http://webcompat.com/).
 
 ## Changelog
