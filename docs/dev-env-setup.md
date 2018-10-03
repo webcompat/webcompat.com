@@ -186,7 +186,9 @@ You can now edit `secrets.py` and
 
   The [instructions for creating a personal-access token](http://help.github.com/articles/creating-an-access-token-for-command-line-use) are given on GitHub. Select public_repo to grant access to the public repositories through the personal access token.  Once you have created the token you can add it in the variable `OAUTH_TOKEN = ""`. More advanced users might want to create an environment variable called `OAUTH_TOKEN`. Either way is fine.
 
-3. Add the client ID and client secret to `secrets.py`. If you're part of the [webcompat GitHub organization](https://github.com/webcompat), you can [get the client ID and client secret from GitHub](https://github.com/organizations/webcompat/settings/applications/). Otherwise, create your own test and production applications ([instructions here](https://github.com/settings/applications/new)) &mdash; when prompted for an "Authorization callback URL", use `http://localhost:5000/callback` (Cloud 9 users should use `http://yourapp.c9users.io:8000/callback`instead), and take note of the client ID and client secret GitHub give you.
+3. Add the client ID and client secret to `secrets.py`. If you're part of the [webcompat GitHub organization](https://github.com/webcompat), you can [get the client ID and client secret from GitHub](https://github.com/organizations/webcompat/settings/applications/). Otherwise, create your own local application ([instructions here](https://github.com/settings/applications/new)) &mdash; when prompted for an "Authorization callback URL", use `http://localhost:5000/callback`, and take note of the client ID and client secret GitHub give you.
+
+> Note: Cloud 9 users should use `http://yourapp.c9users.io:8000/callback`for the Authorization callback URL instead
 
   When you have the client ID and client secret, put them in the corresponding lines in `secrets.py` for the localhost application:
 
