@@ -8,7 +8,7 @@
 [![Built with Grunt](https://cdn.gruntjs.com/builtwith.svg)](http://gruntjs.com/)
 [![CircleCI](https://circleci.com/gh/webcompat/webcompat.com.svg?style=svg)](https://circleci.com/gh/webcompat/webcompat.com)
 
-[![Twitter](https://img.shields.io/twitter/url/https/github.com/webcompat/webcompat.com.svg?style=social)](https://twitter.com/webcompat)
+[![Twitter](https://img.shields.io/twitter/url/https/github.com/webcompat/webcompat.com.svg?style=social)](https://twitter.com/webcompat) [![Greenkeeper badge](https://badges.greenkeeper.io/webcompat/webcompat.com.svg)](https://greenkeeper.io/)
 
 
 
