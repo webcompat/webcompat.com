@@ -54,12 +54,6 @@ WELL_KNOWN_SECURITY = """Contact: mailto:kdubost+securitywebc@mozilla.com
 Contact: mailto:miket@mozilla.com
 """
 
-# Database backup path.
-if LOCALHOST:
-    BACKUP_DEFAULT_DEST = BASE_DIR + '/backups/'
-else:
-    BACKUP_DEFAULT_DEST = ''
-
 if LOCALHOST:
     UPLOADS_DEFAULT_DEST = BASE_DIR + '/uploads/'
     UPLOADS_DEFAULT_URL = 'http://localhost:5000/uploads/'
