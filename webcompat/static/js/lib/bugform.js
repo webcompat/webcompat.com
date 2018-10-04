@@ -35,7 +35,7 @@ function BugForm() {
     description: {
       el: $("#description"),
       valid: null,
-      helpText: "Description required."
+      helpText: "A problem summary is required."
     },
     steps_reproduce: {
       el: $("#steps_reproduce"),

@@ -114,8 +114,8 @@ registerSuite("Reporting (non-auth)", {
           .then(function(text) {
             assert.include(
               text,
-              "Description required.",
-              "Description validation message is shown"
+              "A problem summary is required",
+              "Problem summary validation message is shown"
             );
           })
           .end()
