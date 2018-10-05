@@ -2,7 +2,7 @@
   background-color: var(--color-first);
   margin-left: calc(-1 * var(--grid-outermargin-s));
   margin-right: calc(-1 * var(--grid-outermargin-s));
-  margin-top: -34px;
+  margin-top: -36px;
   padding: calc(var(--unit-gutter) / 2) var(--unit-gutter);
 }
 
