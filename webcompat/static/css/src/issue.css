@@ -127,3 +127,35 @@
 .issue-details {
   word-break: break-all;
 }
+
+.wc-Comment-content-nsfw {
+  position: relative;
+}
+
+.wc-Comment-content-nsfw::after {
+  background: var(--base-colorDark);
+  color: var(--base-background);
+  content: "Click to show image";
+  cursor: pointer;
+  display: block;
+  left: 50%;
+  padding: 1em;
+  position: absolute;
+  text-align: center;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 50%;
+}
+
+.wc-Comment-content-nsfw img {
+  filter: blur(50px);
+}
+
+.wc-Comment-content-nsfw--display img {
+  filter: blur(0);
+}
+
+.wc-Comment-content-nsfw--display::after {
+  display: none;
+}
+
