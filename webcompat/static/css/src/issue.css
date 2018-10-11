@@ -128,11 +128,11 @@
   word-break: break-all;
 }
 
-.wc-Comment-content-nsfw {
+.issue-details-nsfw {
   position: relative;
 }
 
-.wc-Comment-content-nsfw::after {
+.issue-details-nsfw::after {
   background: var(--base-colorDark);
   color: var(--base-background);
   content: "Click to show image";
@@ -147,15 +147,15 @@
   width: 50%;
 }
 
-.wc-Comment-content-nsfw img {
+.issue-details-nsfw img {
   filter: blur(50px);
 }
 
-.wc-Comment-content-nsfw--display img {
+.issue-details-nsfw--display img {
   filter: blur(0);
 }
 
-.wc-Comment-content-nsfw--display::after {
+.issue-details-nsfw--display::after {
   display: none;
 }
 
