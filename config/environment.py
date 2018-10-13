@@ -74,12 +74,31 @@ OPEN_STATUSES = [status for status in STATUSES
 
 # Messages Configuration
 
+CSS_FIX_ME = """
+    This resource doesn't exist anymore.
+    See https://github.com/webcompat/css-fixme/
+    for more details."""
+
+IS_BLACKLISTED_DOMAIN = (u'Anonymous reporting for domain {0} '
+                        'is temporarily disabled. Please contact '
+                        'miket@mozilla.com '
+                        'for more details.')
+
+SHOW_RATE_LIMIT = """
+    All those moments will be lost in time…
+    like tears in rain…
+    Time to die.
+    – Blade Runner
+
+    This resource doesn't exist anymore."""
+
 WELL_KNOWN_ALL = """
     Sorry dear bot,
     the route /.well-known/{subpath} doesn't exist.
 
     Nothing behind me, everything ahead of me, as is ever so on the road.
     - Jack Kerouac, On the Road."""
+
 WELL_KNOWN_SECURITY = """Contact: mailto:kdubost+securitywebc@mozilla.com
 Contact: mailto:miket@mozilla.com
 """

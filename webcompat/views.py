@@ -231,10 +231,7 @@ def create_issue():
             url=form['url'].encode('utf-8')))
         # Checking blacklisted domains
         if is_blacklisted_domain(form['url']):
-            msg = (u'Anonymous reporting for domain {0} '
-                   'is temporarily disabled. Please contact '
-                   'miket@mozilla.com '
-                   'for more details.').format(form['url'])
+            msg = app.config['IS_BLACKLISTED_DOMAIN'].format(form['url'])
             flash(msg, 'notimeout')
             return redirect(url_for('index'))
         # Check if the form is valid
@@ -311,13 +308,7 @@ def show_rate_limit():
     Decision made on March 2017. See
     https://github.com/webcompat/webcompat.com/issues/1437
     """
-    msg = """
-    All those moments will be lost in time…
-    like tears in rain…
-    Time to die.
-    – Blade Runner
-
-    This resource doesn't exist anymore."""
+    msg = app.config['SHOW_RATE_LIMIT']
     return (msg, 410, {'content-type': 'text/plain; charset=utf-8'})
 
 
@@ -444,10 +435,7 @@ def cssfixme():
 
     Previously home of a CSS fixing tool.
     """
-    msg = """
-    This resource doesn't exist anymore.
-    See https://github.com/webcompat/css-fixme/
-    for more details."""
+    msg = app.config['CSS_FIX_ME']
     return (msg, 410, {'content-type': 'text/plain; charset=utf-8'})
 
 
