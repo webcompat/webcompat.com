@@ -59,9 +59,9 @@ The `firefox` binary will also need to be in your `PATH`. Here's how this can be
 export PATH="/Applications/Firefox.app/Contents/MacOS/:$PATH"
 ```
 
-If you are a member of webcompat organization in GitHub, edit `config/secrets.py`. The value of `ISSUES_REPO_URI` is the path of the repository containing test issues.
+If you are using your own test repo, your tests will fail. Change it back to the default, at least for running tests:
 
-Change the value to : `ISSUES_REPO_URI = 'webcompat/webcompat-tests/issues'`.
+`ISSUES_REPO_URI = 'webcompat/webcompat-tests/issues'`.
 
 Start the application server in test mode:
 
