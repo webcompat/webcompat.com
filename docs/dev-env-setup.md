@@ -158,42 +158,39 @@ npm run build
 
 ### Test repository
 
-You need to create a repository on GitHub which is used to submit issues via the GitHub API. For example, the user `miketaylr` has created a repository called "[test-repo](https://github.com/miketaylr/test-repo)" for this purpose.
+Dy default, environment.py sets `ISSUES_REPO_URI` to `webcompat/webcompat-tests/issues` for local development. This way, we can file test issues without worrying about making noise in the real issues. You probably don't need to change this.
 
-**Important:** Your repository needs to have exactly the same milestones like we have in our [test-repository](https://github.com/webcompat/webcompat-tests/milestones): needstriage, sitewait, duplicate, incomplete, contactready, needscontact, invalid, needsdiagnosis, wontfix, worksforme, non-compat and fixed.
+If you would prefer to have your own sandbox for test issues, you may choose to create a repository on GitHub. For example, the user `miketaylr` has created a repository called "[test-repo](https://github.com/miketaylr/test-repo)" for this purpose.
 
-### Store your settings
-
-```bash
+**Important:** If you do so, your repository needs to have exactly the same milestones like we have in our [test-repository](https://github.com/webcompat/webcompat-tests/milestones): needstriage, sitewait, duplicate, incomplete, contactready, needscontact, invalid, needsdiagnosis, wontfix, worksforme, non-compat and fixed.
 
 ### Store your settings
 
 ```bash
-# set up secrets.py, filling in appropriate secrets and pointers to repos
+
+### Store your settings
+
+```bash
+# set up secrets.py, filling in appropriate secrets
 # Mac / Linux
 cp config/secrets.py.example config/secrets.py
 # Windows
 copy config/secrets.py.example config/secrets.py
 ```
 
-> Note: If you are using Cloud 9, you have to update `run.py` and replace `app.run(host=os.getenv("IP", "0.0.0.0"), port=int(os.getenv("PORT", 8080)))`.
-
 You can now edit `secrets.py` and
 
-1. Add the right values to the repo issues URIs. `ISSUES_REPO_URI = "<user>/<repo>/issues"`. For example, miketaylr's setup needs to say `ISSUES_REPO_URI = "miketaylr/test-repo/issues"`
+1. You have the option of creating a "bot account" (a dummy account for the purpose of testing), or using your own account for local development. Either way, you'll need a personal access token to proceed &mdash; this is the oauth token we use to report issues on behalf of people who don't want to give GitHub OAuth access (or don't have GitHub accounts).
 
-2. You have the option of creating a "bot account" (a dummy account for the purpose of testing), or using your own account for local development. Either way, you'll need a personal access token to proceed &mdash; this is the oauth token we use to report issues on behalf of people who don't want to give GitHub OAuth access (or don't have GitHub accounts).
+  The [instructions for creating a personal-access token](http://help.github.com/articles/creating-an-access-token-for-command-line-use) are given on GitHub. Select public_repo to grant access to the public repositories through the personal access token.  Once you have created the token you can add it in the variable `OAUTH_TOKEN = ""`.
 
-  The [instructions for creating a personal-access token](http://help.github.com/articles/creating-an-access-token-for-command-line-use) are given on GitHub. Select public_repo to grant access to the public repositories through the personal access token.  Once you have created the token you can add it in the variable `OAUTH_TOKEN = ""`. More advanced users might want to create an environment variable called `OAUTH_TOKEN`. Either way is fine.
-
-3. Add the client ID and client secret to `secrets.py`. If you're part of the [webcompat GitHub organization](https://github.com/webcompat), you can [get the client ID and client secret from GitHub](https://github.com/organizations/webcompat/settings/applications/). Otherwise, create your own local application ([instructions here](https://github.com/settings/applications/new)) &mdash; when prompted for an "Authorization callback URL", use `http://localhost:5000/callback`, and take note of the client ID and client secret GitHub give you.
+3. Add values for `GITHUB_CLIENT_ID` and `GITHUB_CLIENT_SECRET`. If you're part of the [webcompat GitHub organization](https://github.com/webcompat), you can [get the client ID and client secret from GitHub](https://github.com/organizations/webcompat/settings/applications/). Otherwise, create your own local application ([instructions here](https://github.com/settings/applications/new)) &mdash; when prompted for an "Authorization callback URL", use `http://localhost:5000/callback`, and take note of the client ID and client secret GitHub give you. 
 
 > Note: Cloud 9 users should use `http://yourapp.c9users.io:8000/callback`for the Authorization callback URL instead
 
-  When you have the client ID and client secret, put them in the corresponding lines in `secrets.py` for the localhost application:
+  When you have the client ID and client secret, put them in the corresponding lines in `secrets.py`:
 
   ```py
-  # We're running on localhost, use the test application
   GITHUB_CLIENT_ID = os.environ.get('FAKE_ID') or "<client id goes here>"
   GITHUB_CLIENT_SECRET = os.environ.get('FAKE_SECRET') or  "<client secret goes here>"
   ```
@@ -221,6 +218,8 @@ or
 # start local server
 npm run start
 ```
+
+> Note: If you are using Cloud 9, you have to update `run.py` and replace `app.run(host=os.getenv("IP", "0.0.0.0"), port=int(os.getenv("PORT", 8080)))`.
 
 You should now have a local instance of the site running at `http://localhost:5000/`.
 
