@@ -1,4 +1,6 @@
 :root {
+  --base-background: #fff;
+  --base-colorDark: #ffc900; /* Dark Yellow */
   --grid-outermargin-s: 9px;
   --grid-outermargin-m: 19px;
   --unit-gap: 45px;

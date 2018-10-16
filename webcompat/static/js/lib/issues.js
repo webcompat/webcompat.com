@@ -173,7 +173,7 @@ issues.BodyView = Backbone.View.extend({
       issueDesc
         .find("img")
         .closest("p")
-        .addClass("wc-Comment-content-nsfw");
+        .addClass("issue-details-nsfw");
     }
 
     return this;
@@ -331,7 +331,7 @@ issues.MainView = Backbone.View.extend(
     el: $(".js-Issue"),
     events: {
       "click .js-Issue-comment-button": "addNewComment",
-      "click .wc-Comment-content-nsfw": "toggleNSFW"
+      "click .issue-details-nsfw": "toggleNSFW"
     },
     keyboardEvents: {
       g: "githubWarp"
@@ -512,7 +512,7 @@ issues.MainView = Backbone.View.extend(
         _.each(commentElm.find("img"), function(elm) {
           $(elm)
             .closest("p")
-            .addClass("wc-Comment-content-nsfw");
+            .addClass("issue-details-nsfw");
         });
       }
     },
@@ -550,7 +550,7 @@ issues.MainView = Backbone.View.extend(
           : e.target.nodeName === "P" && e.target.firstElementChild;
       $(target)
         .parent()
-        .toggleClass("wc-Comment-content-nsfw--display");
+        .toggleClass("issue-details-nsfw--display");
     },
     render: function() {
       this.$el.removeClass("is-hidden");

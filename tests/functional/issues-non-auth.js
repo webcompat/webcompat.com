@@ -82,7 +82,7 @@ registerSuite("Issues", {
         )
         .getAttribute("class")
         .then(function(className) {
-          assert.include(className, "wc-Comment-content-nsfw");
+          assert.include(className, "issue-details-nsfw");
         })
         .end();
     },
@@ -94,24 +94,24 @@ registerSuite("Issues", {
         )
         .getAttribute("class")
         .then(function(className) {
-          assert.include(className, "wc-Comment-content-nsfw");
-          assert.notInclude(className, "wc-Comment-content-nsfw--display");
+          assert.include(className, "issue-details-nsfw");
+          assert.notInclude(className, "issue-details-nsfw--display");
         })
         .click()
         .end()
         .findByCssSelector(".js-Issue-commentList .js-Comment-content p")
         .getAttribute("class")
         .then(function(className) {
-          assert.include(className, "wc-Comment-content-nsfw");
-          assert.include(className, "wc-Comment-content-nsfw--display");
+          assert.include(className, "issue-details-nsfw");
+          assert.include(className, "issue-details-nsfw--display");
         })
         .click()
         .end()
         .findByCssSelector(".js-Issue-commentList .js-Comment-content p")
         .getAttribute("class")
         .then(function(className) {
-          assert.include(className, "wc-Comment-content-nsfw");
-          assert.notInclude(className, "wc-Comment-content-nsfw--display");
+          assert.include(className, "issue-details-nsfw");
+          assert.notInclude(className, "issue-details-nsfw--display");
         })
         .end();
     },

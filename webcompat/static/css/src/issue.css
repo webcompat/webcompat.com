@@ -127,3 +127,35 @@
 .issue-details {
   word-break: break-all;
 }
+
+.issue-details-nsfw {
+  position: relative;
+}
+
+.issue-details-nsfw::after {
+  background: var(--base-colorDark);
+  color: var(--base-background);
+  content: "Click to show image";
+  cursor: pointer;
+  display: block;
+  left: 50%;
+  padding: 1em;
+  position: absolute;
+  text-align: center;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 50%;
+}
+
+.issue-details-nsfw img {
+  filter: blur(50px);
+}
+
+.issue-details-nsfw--display img {
+  filter: blur(0);
+}
+
+.issue-details-nsfw--display::after {
+  display: none;
+}
+
