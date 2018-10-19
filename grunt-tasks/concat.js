@@ -28,13 +28,13 @@ module.exports = function(grunt) {
       ],
       dest: "<%= jsDistPath %>/<%= pkg.name %>.js"
     },
-    diagnose: {
+    untriaged: {
       src: [
         "<%= jsPath %>/lib/models/label-list.js",
         "<%= jsPath %>/lib/models/issue.js",
-        "<%= jsPath %>/lib/diagnose.js"
+        "<%= jsPath %>/lib/untriaged.js"
       ],
-      dest: "<%= jsDistPath %>/diagnose.js"
+      dest: "<%= jsDistPath %>/untriaged.js"
     },
     issues: {
       src: [
