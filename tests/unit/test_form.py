@@ -196,23 +196,45 @@ class TestForm(unittest.TestCase):
         self.assertEqual(actual, expected)
 
     def test_get_details(self):
-        """Assert we handle valid JSON and other values."""
+        """Assert we handle valid dict and other values."""
         actual_string_arg = form.get_details('cool')
         expected_string_arg = 'cool'
         self.assertEqual(actual_string_arg, expected_string_arg)
-        actual_json_arg = form.get_details(json.dumps({'a': 'b', 'c': False}))
-        expected_json_arg = '<li>a: b</li><li>c: false</li>'
-        self.assertEqual(actual_json_arg, expected_json_arg)
+        actual_dict_arg = form.get_details({'a': 'b', 'c': False})
+        expected_dict_arg = '<li>a: b</li><li>c: false</li>'
+        self.assertEqual(actual_dict_arg, expected_dict_arg)
 
     def test_build_details(self):
         """Expected HTML is returned for a json object or a string."""
         actual_json_arg = form.build_details(json.dumps(
             {'a': 'b', 'c': False}))
-        expected_json_arg = '<details>\n<summary>Browser Configuration</summary>\n<ul>\n  <li>a: b</li><li>c: false</li>\n</ul>\n</details>'  # nopep8
+        expected_json_arg = '<details>\n<summary>Browser Configuration</summary>\n<ul>\n  <li>a: b</li><li>c: false</li>\n</ul>\n\n</details>'  # nopep8
         self.assertEqual(actual_json_arg, expected_json_arg)
-        actual_string_arg = form.build_details("cool")
-        expected_string_arg = '<details>\n<summary>Browser Configuration</summary>\n<ul>\n  cool\n</ul>\n</details>'  # nopep8
+        actual_string_arg = form.build_details('cool')
+        expected_string_arg = '<details>\n<summary>Browser Configuration</summary>\n<ul>\n  cool\n</ul>\n\n</details>'  # nopep8
         self.assertEqual(actual_string_arg, expected_string_arg)
+
+    def test_build_details_with_console_logs(self):
+        """Expected HTML is returned for a json object with console logs."""
+        actual_json_arg = form.build_details(json.dumps(
+            {'a': 'b', 'c': False, 'consoleLog': ['console.log(hi)']}))
+        expected_json_arg = '<details>\n<summary>Browser Configuration</summary>\n<ul>\n  <li>a: b</li><li>c: false</li>\n</ul>\n<p>Console Messages:</p>\n<pre>\n[u\'console.log(hi)\']\n</pre>\n</details>'  # nopep8
+        self.assertEqual(actual_json_arg, expected_json_arg)
+        actual_empty_log_arg = form.build_details(json.dumps(
+            {'a': 'b', 'c': False, 'consoleLog': ''}))
+        expected_empty_log_arg = '<details>\n<summary>Browser Configuration</summary>\n<ul>\n  <li>a: b</li><li>c: false</li>\n</ul>\n\n</details>'  # nopep8
+        self.assertEqual(actual_empty_log_arg, expected_empty_log_arg)
+
+    def test_get_console_section(self):
+        """Assert we return an empty string, or a pre with console messages."""
+        actual_empty_arg = form.get_console_section('')
+        expected_empty_arg = ''
+        self.assertEqual(actual_empty_arg, expected_empty_arg)
+        actual_none_arg = form.get_console_section(None)
+        self.assertEqual(actual_none_arg, expected_empty_arg)
+        actual_stringy_arg = form.get_console_section('sup')
+        expected_stringy_arg = '<p>Console Messages:</p>\n<pre>\nsup\n</pre>'
+        self.assertEqual(actual_stringy_arg, expected_stringy_arg)
 
     def test_is_valid_issue_form(self):
         """Assert that we get the form parameters we want."""

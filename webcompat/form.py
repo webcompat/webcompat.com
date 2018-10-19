@@ -103,6 +103,12 @@ def get_form(form_data):
     ua_header = form_data['user_agent']
     # Populate the form
     bug_form.browser.data = get_browser(ua_header)
+    # Note: The details JSON that was POSTed to the new issue endpoint is at
+    # this point a Python dict. We need to re-serialize to JSON when we store
+    # its value in the hidden details form element, otherwise when we attempt
+    # to decode it as JSON on form submission, it will throw (because Python
+    # dicts are not valid JSON)
+    bug_form.details.data = json.dumps(form_data.get('details'), indent=2)
     bug_form.extra_labels = form_data.get('extra_labels', None)
     bug_form.os.data = get_os(ua_header)
     bug_form.reported_with.data = form_data.get('src', 'web')
@@ -111,32 +117,61 @@ def get_form(form_data):
     return bug_form
 
 
-def get_details(details_string):
+def get_details(details):
     """Return details content.
 
-    * If JSON as a formatted string
+    * If a dict, as a formatted string
     * Otherwise as a string as-is.
     """
-    content = details_string
+    content = details
     rv = ''
-
     try:
-        details = json.loads(content)
         rv = ''.join(['<li>{k}: {v}</li>'.format(k=k, v=get_str_value(v))
                       for k, v in details.items()])
-    except ValueError:
+    except AttributeError:
         return content
     return rv
 
 
+def get_console_section(console_logs):
+    """Return a section for console logs, or the empty string.
+
+    This populates the named argument `{console_section}`
+    inside the formatted string that `build_details` returns.
+    """
+    if not console_logs:
+        return ''
+    return """<p>Console Messages:</p>
+<pre>
+{console_logs}
+</pre>""".format(console_logs=console_logs)
+
+
 def build_details(details):
-    """Populate and return the Browser Configuration section template."""
+    """Populate and return the Browser Configuration section template.
+
+    If we get JSON, we try to pull out the console logs before building the
+    rest of the details.
+    """
+
+    console_logs = None
+    content = details
+    try:
+        content = json.loads(details)
+        console_logs = content.pop('consoleLog', None)
+    except ValueError:
+        # if we got a ValueError, details was a string, so just pass it
+        # into get_details below
+        pass
+
     return """<details>
 <summary>Browser Configuration</summary>
 <ul>
   {details_list_items}
 </ul>
-</details>""".format(details_list_items=get_details(details))
+{console_section}
+</details>""".format(details_list_items=get_details(content),
+                     console_section=get_console_section(console_logs))
 
 
 def get_radio_button_label(field_value, label_list):
