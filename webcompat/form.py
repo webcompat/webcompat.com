@@ -103,6 +103,12 @@ def get_form(form_data):
     ua_header = form_data['user_agent']
     # Populate the form
     bug_form.browser.data = get_browser(ua_header)
+    # Note: The details JSON that was POSTed to the new issue endpoint is at
+    # this point a Python dict. We need to re-serialize to JSON when we store
+    # its value in the hidden details form element, otherwise when we attempt
+    # to decode it as JSON on form submission, it will throw (because Python
+    # dicts are not valid JSON)
+    bug_form.details.data = json.dumps(form_data.get('details'), indent=2)
     bug_form.extra_labels = form_data.get('extra_labels', None)
     bug_form.os.data = get_os(ua_header)
     bug_form.reported_with.data = form_data.get('src', 'web')
@@ -119,7 +125,6 @@ def get_details(details_string):
     """
     content = details_string
     rv = ''
-
     try:
         details = json.loads(content)
         rv = ''.join(['<li>{k}: {v}</li>'.format(k=k, v=get_str_value(v))
