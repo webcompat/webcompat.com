@@ -10,6 +10,7 @@ from collections import namedtuple
 import errno
 import json
 import os
+import shutil
 import sys
 import tempfile
 import urlparse
@@ -28,6 +29,10 @@ Double check that everything is configured properly
 in config/secrets.py and try again. Good luck!
 """
 MILESTONE_UNMATCHING = """A milestone is missing or has been added: {names}"""
+MILESTONE_UNMATCHING_ERROR = """Check the milestones names on your Github repository and try again. 
+This error was probably caused by a typo.
+Your milestones.json was erased and a backup copy was created at {path}.
+"""
 
 
 def initialize_status():
@@ -47,6 +52,7 @@ def initialize_status():
     milestones_path = os.path.join(DATA_PATH, 'milestones.json')
     # Attempt to fetch from data/milestones.json
     milestones_content = milestones_from_file(milestones_path)
+    milestones_backup_path = os.path.join(DATA_PATH, 'milestones_backup.json')
     if not milestones_content:
         try:
             # Get the milestone from the network
@@ -65,6 +71,9 @@ def initialize_status():
     # milestones_content exists
     updated_statuses = update_status_config(milestones_content)
     if not updated_statuses:
+        print(MILESTONE_UNMATCHING_ERROR.format(path=milestones_backup_path))
+        shutil.copyfile(milestones_path, milestones_backup_path)
+        os.remove(milestones_path)
         return False
     app.config['STATUSES'] = updated_statuses
     app.config['JSON_STATUSES'] = json.dumps(app.config['STATUSES'])
