@@ -61,7 +61,7 @@ registerSuite("Index", {
       return FunctionalHelpers.openPage(this, url("/"), ".js-hero-title")
         .findAllByCssSelector("#js-lastIssue .js-IssueList.label-needstriage")
         .then(function(elms) {
-          assert.equal(elms.length, 10, "10 issues should be displayed");
+          assert.equal(elms.length, 5, "5 issues should be displayed");
         })
         .end()
         .findByCssSelector(".js-IssueList.label-needstriage .js-issue-number")
