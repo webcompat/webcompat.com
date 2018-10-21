@@ -6,6 +6,7 @@
 """Module for the main routes of webcompat.com."""
 import logging
 import os
+import urlparse
 
 from flask import abort
 from flask import flash
@@ -230,7 +231,7 @@ def create_issue():
             ip=request.remote_addr,
             url=form['url'].encode('utf-8')))
         # Checking blacklisted domains
-        if is_blacklisted_domain(form['url']):
+        if is_blacklisted_domain(urlparse.urlsplit(form['url']).hostname):
             msg = app.config['IS_BLACKLISTED_DOMAIN'].format(form['url'])
             flash(msg, 'notimeout')
             return redirect(url_for('index'))
