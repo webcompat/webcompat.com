@@ -100,6 +100,8 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('-t', '--testmode', action='store_true',
                         help='Run server in "test mode".')
+    parser.add_argument('-l', '--listen', default='localhost',
+                        help='Interface to listen on.')
     args = parser.parse_args()
 
     if check_pip_deps():
@@ -109,7 +111,7 @@ if __name__ == '__main__':
             # in test mode everything must be mocked,
             # so there is no external api communication.
             config_validator()
-            app.run(host='localhost')
+            app.run(host=args.listen)
         else:
             # disable HttpOnly setting for session cookies so Selenium
             # can interact with them. *ONLY* do this for testing.
@@ -117,4 +119,4 @@ if __name__ == '__main__':
             app.config['SESSION_COOKIE_SAMESITE'] = None
             app.config['TESTING'] = True
             print("Starting server in ~*TEST MODE*~")
-            app.run(host='localhost')
+            app.run(host=args.listen)
