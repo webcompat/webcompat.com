@@ -4,6 +4,19 @@
 2. New features: affect minor number
 3. API endpoint changes or dependency version updates: affect major number
 
+## 14.3.0 - 2018-10-24
+
+* Fixes #2663 - Reduce number of untriaged bugs on homepage [Pull #2664](https://github.com/webcompat/webcompat.com/pull/2664)
+* Fixes #2416 - Added contributors Abdul and Reinhart [Pull #2661](https://github.com/webcompat/webcompat.com/pull/2661)
+* Fixes #2653 - Encode details as JSON before filling input [Pull #2658](https://github.com/webcompat/webcompat.com/pull/2658)
+* Fixes #2592 - Fetches a new milestone.json if needed [Pull #2657](https://github.com/webcompat/webcompat.com/pull/2657)
+* Fixes #2651 - Update docs around secrets and environment [Pull #2652](https://github.com/webcompat/webcompat.com/pull/2652)
+* Fixes #2612 - Moved text messages for certain routes to config [Pull #2649](https://github.com/webcompat/webcompat.com/pull/2649)
+* Fixes #2320 - Adds wc-Comment-content-nsfw to new CSS [Pull #2648](https://github.com/webcompat/webcompat.com/pull/2648)
+* Fixes #2576 - fix margin top on small screen [Pull #2643](https://github.com/webcompat/webcompat.com/pull/2643)
+* Fixes #2630 - Tweak description and textarea labels [Pull #2642](https://github.com/webcompat/webcompat.com/pull/2642)
+* Fixes #2639 - Use env vars for prod and staging configuration [Pull #2640](https://github.com/webcompat/webcompat.com/pull/2640)
+
 ## 14.2.0 - 2018-10-03
 
 * Fixes #2639 - Use env vars for prod and staging configuration [Pull #2640](https://github.com/webcompat/webcompat.com/pull/2640)
