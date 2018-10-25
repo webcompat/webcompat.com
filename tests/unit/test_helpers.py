@@ -48,11 +48,15 @@ CHROME_TABLET_UA = 'Mozilla/5.0 (Linux; Android 4.0.4; Galaxy Nexus Build/IMM76B
 
 
 class TestHelpers(unittest.TestCase):
+    """Class for testing helpers."""
+
     def setUp(self):
+        """Set up the tests."""
         webcompat.app.config['TESTING'] = True
         self.app = webcompat.app.test_client()
 
     def tearDown(self):
+        """Tear down the tests."""
         pass
 
     def test_rewrite_link(self):
@@ -110,7 +114,7 @@ class TestHelpers(unittest.TestCase):
         self.assertEqual(normalize_api_params(multi_before), multi_after)
 
     def test_normalize_api_params_ignores_unknown_params(self):
-        """normalize_api_params shouldn't transform unknown params."""
+        """Ignore unknown parameters in normalize_api_params."""
         self.assertEqual({'foo': u'bar'},
                          normalize_api_params({'foo': u'bar'}))
         self.assertEqual({'order': u'desc', 'foo': u'bar'},
