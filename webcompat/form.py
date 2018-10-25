@@ -129,7 +129,7 @@ def get_details(details):
         rv = ''.join(['<li>{k}: {v}</li>'.format(k=k, v=get_str_value(v))
                       for k, v in details.items()])
     except AttributeError:
-        return content
+        return '<li>{content}</li>'.format(content=content)
     return rv
 
 
