@@ -80,7 +80,8 @@ class TestURLs(unittest.TestCase):
     def test_fail_post_new_issue(self, mock_proxy):
         """Test that post is not working on /issues/new.
 
-        It will fail with a 400 because the URL is missing."""
+        It will fail with a 400 because the URL is missing.
+        """
         rv = self.app.post(
             '/issues/new',
             environ_base=headers,
@@ -203,7 +204,7 @@ class TestURLs(unittest.TestCase):
         self.assertEqual(rv.status_code, 410)
 
     def test_missing_parameters_for_new_issue(self):
-        """Sends 400 to POST on /issues/new with missing parameters."""
+        """Send 400 to POST on /issues/new with missing parameters."""
         rv = self.app.post('/issues/new',
                            content_type='multipart/form-data',
                            data=dict(url='foo'))
@@ -230,19 +231,17 @@ class TestURLs(unittest.TestCase):
         self.assertTrue('text/html' in rv.content_type)
 
     def test_dashboard_route(self):
-        """Request to /dashboard should be 404.
+        """Request to /dashboard should exist.
 
-        For now, the dashboard route has no purpose.
+        * 200 on /dashboard
+        * 404 on /dashboard/
         """
         rv = self.app.get('/dashboard/')
-        content_test = 'Lost in Punk Cat Space (404)' in rv.data
         self.assertEqual(rv.status_code, 404)
         self.assertTrue('text/html' in rv.content_type)
-        self.assertTrue(content_test)
         rv = self.app.get('/dashboard')
-        content_test = 'Lost in Punk Cat Space (404)' in rv.data
-        self.assertEqual(rv.status_code, 404)
-        self.assertTrue('text/html' in rv.content_type)
+        content_test = 'Dashboards' in rv.data
+        self.assertEqual(rv.status_code, 200)
         self.assertTrue(content_test)
 
     def test_webhooks_route(self):
