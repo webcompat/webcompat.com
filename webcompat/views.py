@@ -439,6 +439,14 @@ def cssfixme():
     return (msg, 410, {'content-type': 'text/plain; charset=utf-8'})
 
 
+@app.route('/dashboard')
+def dashboard():
+    """Route for dashboards index."""
+    if g.user:
+        get_user_info()
+    return render_template('dashboard/home.html')
+
+
 @app.route('/dashboard/triage')
 def dashboard_triage():
     """Route to handle dashboard triage."""

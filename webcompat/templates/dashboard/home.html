@@ -1,0 +1,26 @@
+{% extends "dashboard/layout.html" %}
+{% block title %}Webcompat Dashboards{% endblock %}
+{% block body %}
+  <style>
+  .wc-UIMain {display:flex;
+    flex-direction: column;
+    align-items: flex-start;
+    background-color: #fff;
+    padding: 1.2em;}
+
+  @media all and (min-width: 33em) {
+    .wc-UIMain {
+      padding-left: 50px;
+      padding-right: 50px;
+    }
+  }
+  </style>
+  {% include "dashboard/home/top-bar.html" %}
+  <main class="wc-UIMain" role="main">
+    <ul>
+      <li><a href="http://adamstevenson.ca/mozilla/reports/">General Report</a></li>
+      <li><a href="/dashboard/triage">Triage</a></li>
+      <li><a href="https://webcompat.github.io/webcompat-metrics-client/">Diagnosis</a></li>
+    </ul>
+  </main>
+{% endblock %}
