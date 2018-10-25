@@ -6,6 +6,7 @@
 
 """Tests for helper methods in webcompat/helpers.py."""
 
+import json
 import unittest
 
 import flask
@@ -19,6 +20,7 @@ from webcompat.helpers import get_name
 from webcompat.helpers import get_os
 from webcompat.helpers import get_str_value
 from webcompat.helpers import get_version_string
+from webcompat.helpers import is_json_object
 from webcompat.helpers import normalize_api_params
 from webcompat.helpers import parse_link_header
 from webcompat.helpers import prepare_form
@@ -304,6 +306,15 @@ class TestHelpers(unittest.TestCase):
                 json=json_data,
                 method='POST'):
             self.assertEqual(prepare_form(flask.request), json_data)
+
+    def test_json_object(self):
+        """Check if we return the right type of each JSON."""
+        # A simple JSON object
+        self.assertTrue(is_json_object(json.loads('{"a": "b"}')))
+        # A more complex JSON object
+        self.assertTrue(is_json_object(json.loads('{"bar":["baz", null, 1.0, 2]}')))  # noqa
+        # A JSON value, which is not an object
+        self.assertFalse(is_json_object(json.loads('null')))
 
 if __name__ == '__main__':
     unittest.main()
