@@ -33,6 +33,7 @@ from helpers import is_blacklisted_domain
 from helpers import is_valid_issue_form
 from helpers import prepare_form
 from helpers import set_referer
+from htmlmin.minify import html_minify
 from issues import report_issue
 from webcompat import app
 from webcompat.db import session_db
@@ -156,7 +157,10 @@ def index():
     # GET means you want to file a report.
     if g.user:
         get_user_info()
-    return render_template('index.html', form=bug_form, browser=browser_name)
+    return html_minify(render_template(
+        'index.html',
+        form=bug_form,
+        browser=browser_name))
 
 
 @app.route('/issues')
@@ -166,7 +170,9 @@ def show_issues():
     if g.user:
         get_user_info()
     categories = app.config['CATEGORIES']
-    return render_template('list-issue.html', categories=categories)
+    return html_minify(render_template(
+        'list-issue.html',
+        categories=categories))
 
 
 @app.route('/issues/new', methods=['GET', 'POST'])
@@ -213,7 +219,7 @@ def create_issue():
         form_data = prepare_form(request)
         bug_form = get_form(form_data)
         session['extra_labels'] = form_data['extra_labels']
-        return render_template('new-issue.html', form=bug_form)
+        return html_minify(render_template('new-issue.html', form=bug_form))
     # Issue Creation section
     elif request_type == 'create':
         # Check if there is a form
@@ -267,7 +273,7 @@ def show_issue(number):
     if session.get('show_thanks'):
         flash(number, 'thanks')
         session.pop('show_thanks')
-    return render_template('issue.html', number=number)
+    return html_minify(render_template('issue.html', number=number))
 
 
 @app.route('/me')
@@ -296,7 +302,9 @@ def show_user_page(username):
         abort(401)
     get_user_info()
     if username == session['username']:
-        return render_template('user-activity.html', user=username)
+        return html_minify(render_template(
+            'user-activity.html',
+            user=username))
     else:
         abort(403)
 
@@ -336,7 +344,7 @@ def about():
     """Route to display about page."""
     if g.user:
         get_user_info()
-    return render_template('about.html')
+    return html_minify(render_template('about.html'))
 
 
 @app.route('/privacy')
@@ -345,7 +353,7 @@ def privacy():
     """Route to display privacy page."""
     if g.user:
         get_user_info()
-    return render_template('privacy.html')
+    return html_minify(render_template('privacy.html'))
 
 
 @app.route('/contact')
@@ -354,7 +362,7 @@ def contact():
     """Route to display contact page."""
     if g.user:
         get_user_info()
-    return render_template('contact.html')
+    return html_minify(render_template('contact.html'))
 
 
 @app.route('/contributors')
@@ -363,7 +371,7 @@ def contributors():
     """Route to display contributors page."""
     if g.user:
         get_user_info()
-    return render_template('contributors.html')
+    return html_minify(render_template('contributors.html'))
 
 
 @app.route('/contributors/report-bug')
@@ -372,7 +380,7 @@ def contributors_bug_report():
     """Route to display contributors/report-bug page."""
     if g.user:
         get_user_info()
-    return render_template('contributors/report-bug.html')
+    return html_minify(render_template('contributors/report-bug.html'))
 
 
 @app.route('/contributors/reproduce-bug')
@@ -381,7 +389,7 @@ def contributors_bug_reproduce():
     """Route to display contributors/reproduce-bug page."""
     if g.user:
         get_user_info()
-    return render_template('contributors/reproduce-bug.html')
+    return html_minify(render_template('contributors/reproduce-bug.html'))
 
 
 @app.route('/contributors/diagnose-bug')
@@ -390,7 +398,7 @@ def contributors_bug_diagnosis():
     """Route to display contributors/diagnose-bug page."""
     if g.user:
         get_user_info()
-    return render_template('contributors/diagnose-bug.html')
+    return html_minify(render_template('contributors/diagnose-bug.html'))
 
 
 @app.route('/contributors/site-outreach')
@@ -399,7 +407,7 @@ def contributors_bug_outreach():
     """Route to display contributors/site-outreach page."""
     if g.user:
         get_user_info()
-    return render_template('contributors/site-outreach.html')
+    return html_minify(render_template('contributors/site-outreach.html'))
 
 
 @app.route('/contributors/build-tools')
@@ -408,7 +416,7 @@ def contributors_other_tools():
     """Route to display contributors/build-tools page."""
     if g.user:
         get_user_info()
-    return render_template('contributors/build-tools.html')
+    return html_minify(render_template('contributors/build-tools.html'))
 
 
 @app.route('/contributors/web-platform-research')
@@ -417,7 +425,8 @@ def contributors_other_research():
     """Route to display contributors/web-platform-research page."""
     if g.user:
         get_user_info()
-    return render_template('contributors/web-platform-research.html')
+    return html_minify(render_template(
+        'contributors/web-platform-research.html'))
 
 
 @app.route('/contributors/organize-webcompat-events')
@@ -426,7 +435,8 @@ def contributors_other_events():
     """Route to display contributors/organize-webcompat-events page."""
     if g.user:
         get_user_info()
-    return render_template('contributors/organize-webcompat-events.html')
+    return html_minify(render_template(
+        'contributors/organize-webcompat-events.html'))
 
 
 @app.route('/tools/cssfixme')
@@ -447,10 +457,10 @@ def dashboard_triage():
     params = {'per_page': 100, 'sort': 'created', 'direction': 'asc'}
     needstriage_issues = get_milestone_list('needstriage', params)
     needstriage_list, stats = filter_needstriage(needstriage_issues)
-    return render_template(
+    return html_minify(render_template(
         'dashboard/triage.html',
         needstriage_list=needstriage_list,
-        stats=stats)
+        stats=stats))
 
 
 @app.route('/csp-report', methods=['POST'])
