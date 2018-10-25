@@ -627,3 +627,8 @@ def prepare_form(form_request):
         json_data = form_request.get_json()
         form_data.update(json_data)
     return form_data
+
+
+def is_json_object(json_data):
+    """Check if the JSON data are an object."""
+    return isinstance(json_data, dict)

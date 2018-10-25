@@ -30,6 +30,7 @@ from webcompat.api.uploads import Upload
 from webcompat.helpers import get_browser
 from webcompat.helpers import get_os
 from webcompat.helpers import get_str_value
+from webcompat.helpers import is_json_object
 
 AUTH_REPORT = 'github-auth-report'
 PROXY_REPORT = 'github-proxy-report'
@@ -153,17 +154,15 @@ def build_details(details):
     If we get JSON, we try to pull out the console logs before building the
     rest of the details.
     """
-
     console_logs = None
-    content = details
     try:
         content = json.loads(details)
-        console_logs = content.pop('consoleLog', None)
+        if is_json_object(content):
+            console_logs = content.pop('consoleLog', None)
     except ValueError:
         # if we got a ValueError, details was a string, so just pass it
         # into get_details below
-        pass
-
+        content = details
     return """<details>
 <summary>Browser Configuration</summary>
 <ul>
