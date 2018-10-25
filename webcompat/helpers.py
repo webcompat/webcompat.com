@@ -75,6 +75,7 @@ def md5_checksum(file_path):
 
 
 def get_str_value(val):
+    """Map values from JSON to python."""
     details_map = {False: 'false', True: 'true', None: 'null'}
     if isinstance(val, (bool, type(None))):
         return details_map[val]
@@ -269,7 +270,7 @@ def normalize_api_params(params):
 
 
 def rewrite_links(link_header):
-    """Rewrites Link header Github API endpoints to our own.
+    """Rewrite Link header Github API endpoints to our own.
 
     <https://api.github.com/repositories/17839063/iss...&page=2>; rel="next",
     <https://api.github.com/repositories/17839063/iss...&page=4>; rel="last"
@@ -626,3 +627,8 @@ def prepare_form(form_request):
         json_data = form_request.get_json()
         form_data.update(json_data)
     return form_data
+
+
+def is_json_object(json_data):
+    """Check if the JSON data are an object."""
+    return isinstance(json_data, dict)

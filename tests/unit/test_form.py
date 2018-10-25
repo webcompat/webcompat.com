@@ -198,7 +198,7 @@ class TestForm(unittest.TestCase):
     def test_get_details(self):
         """Assert we handle valid dict and other values."""
         actual_string_arg = form.get_details('cool')
-        expected_string_arg = 'cool'
+        expected_string_arg = '<li>cool</li>'
         self.assertEqual(actual_string_arg, expected_string_arg)
         actual_dict_arg = form.get_details({'a': 'b', 'c': False})
         expected_dict_arg = '<li>a: b</li><li>c: false</li>'
@@ -206,12 +206,18 @@ class TestForm(unittest.TestCase):
 
     def test_build_details(self):
         """Expected HTML is returned for a json object or a string."""
+        # Test for receiving JSON object as a string
         actual_json_arg = form.build_details(json.dumps(
             {'a': 'b', 'c': False}))
         expected_json_arg = '<details>\n<summary>Browser Configuration</summary>\n<ul>\n  <li>a: b</li><li>c: false</li>\n</ul>\n\n</details>'  # nopep8
         self.assertEqual(actual_json_arg, expected_json_arg)
-        actual_string_arg = form.build_details('cool')
-        expected_string_arg = '<details>\n<summary>Browser Configuration</summary>\n<ul>\n  cool\n</ul>\n\n</details>'  # nopep8
+        # Test for receiving a JSON value which is not an object
+        actual_json_arg = form.build_details('null')
+        expected_json_arg = '<details>\n<summary>Browser Configuration</summary>\n<ul>\n  <li>None</li>\n</ul>\n\n</details>'  # nopep8
+        self.assertEqual(actual_json_arg, expected_json_arg)
+        # Test for receiving a string
+        actual_string_arg = form.build_details(u'cool')
+        expected_string_arg = '<details>\n<summary>Browser Configuration</summary>\n<ul>\n  <li>cool</li>\n</ul>\n\n</details>'  # nopep8
         self.assertEqual(actual_string_arg, expected_string_arg)
 
     def test_build_details_with_console_logs(self):
