@@ -4,7 +4,14 @@
 2. New features: affect minor number
 3. API endpoint changes or dependency version updates: affect major number
 
-## 14.3.0 - 2018-10-24
+## 14.4.0 - 2018-10-26
+
+* Quick test fix - [Added Greenkeeper](https://github.com/webcompat/webcompat.com/pull/2641) and it failed [Pull #2677](https://github.com/webcompat/webcompat.com/pull/2677)
+* Fixes #2670 - Makes sure we are passing a JSON object for processing details. Fixes also v14.3.0 release which was breaking because of #2653. [Pull #2674](https://github.com/webcompat/webcompat.com/pull/2674)
+* Fixes #2668 - Add a flag to specify address to listen on [Pull #2669](https://github.com/webcompat/webcompat.com/pull/2669)
+
+
+## 14.3.0 - 2018-10-24 (known broken, don't deploy)
 
 * Fixes #2663 - Reduce number of untriaged bugs on homepage [Pull #2664](https://github.com/webcompat/webcompat.com/pull/2664)
 * Fixes #2416 - Added contributors Abdul and Reinhart [Pull #2661](https://github.com/webcompat/webcompat.com/pull/2661)
