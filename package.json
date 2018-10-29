@@ -41,7 +41,7 @@
     "husky": "^1.1.0",
     "intern": "^4.2.0",
     "leadfoot": "1.7.6",
-    "lint-staged": "^7.3.0",
+    "lint-staged": "^8.0.0",
     "load-grunt-tasks": "^4.0.0",
     "postcss": "^7.0.5",
     "postcss-browser-reporter": "^0.5.0",
