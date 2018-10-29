@@ -5,17 +5,6 @@
 var issueList = issueList || {}; // eslint-disable-line no-use-before-define
 issueList.events = _.extend({}, Backbone.Events);
 
-if (!window.md) {
-  window.md = window
-    .markdownit({
-      breaks: true,
-      html: true,
-      linkify: true
-    })
-    .use(window.markdownitSanitizer)
-    .use(window.markdownitEmoji);
-}
-
 issueList.DropdownView = Backbone.View.extend({
   events: {
     "click .js-Dropdown-toggle": "openDropdown",
