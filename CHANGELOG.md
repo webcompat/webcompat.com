@@ -4,6 +4,14 @@
 2. New features: affect minor number
 3. API endpoint changes or dependency version updates: affect major number
 
+## 15.0.0 - 2018-10-30
+
+* Fixes #2686 - Upgrade requests [Pull #2687](https://github.com/webcompat/webcompat.com/pull/2687)
+* Fixes #2682 - Removes unused markdown-it in issue-list.js [Pull #2683](https://github.com/webcompat/webcompat.com/pull/2683)
+* Fixes #2571 - Adds a dashboard route with the list of current dashboards [Pull #2675](https://github.com/webcompat/webcompat.com/pull/2675)
+* Fixes #2650 - Modified domain received by `is_blacklisted_domain` [Pull #2667](https://github.com/webcompat/webcompat.com/pull/2667)
+
+
 ## 14.4.0 - 2018-10-26
 
 * Quick test fix - [Added Greenkeeper](https://github.com/webcompat/webcompat.com/pull/2641) and it failed [Pull #2677](https://github.com/webcompat/webcompat.com/pull/2677)
