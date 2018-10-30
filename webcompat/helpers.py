@@ -584,7 +584,9 @@ def is_blacklisted_domain(domain):
     # see https://github.com/webcompat/webcompat.com/issues/1141
     # see https://github.com/webcompat/webcompat.com/issues/1237
     # see https://github.com/webcompat/webcompat.com/issues/1627
-    spamlist = ['qiangpiaoruanjian', 'cityweb.de', 'coco.fr']
+    spamlist = ['www.qiangpiaoruanjian.cn',
+                'mailmanager.cityweb.de',
+                'coco.fr']
     return domain in spamlist
 
 
