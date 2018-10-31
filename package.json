@@ -11,7 +11,7 @@
     "url": "https://github.com/webcompat/webcompat.com.git"
   },
   "engines": {
-    "node": ">= 4.x"
+    "node": ">= 10.13.0"
   },
   "dependencies": {
     "amd-to-commonjs-codemod": "^1.2.0",
