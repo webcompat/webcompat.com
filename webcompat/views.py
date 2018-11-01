@@ -230,16 +230,17 @@ def create_issue():
         log.info('{ip} {url}'.format(
             ip=request.remote_addr,
             url=form['url'].encode('utf-8')))
-        # Checking blacklisted domains
-        if is_blacklisted_domain(urlparse.urlsplit(form['url']).hostname):
-            msg = app.config['IS_BLACKLISTED_DOMAIN'].format(form['url'])
-            flash(msg, 'notimeout')
-            return redirect(url_for('index'))
         # Check if the form is valid
         if not is_valid_issue_form(form):
             abort(400)
-        # Anonymous reporting
         if form.get('submit_type') == PROXY_REPORT:
+            # Checking blacklisted domains
+            domain = urlparse.urlsplit(form['url']).hostname
+            if is_blacklisted_domain(domain):
+                msg = app.config['IS_BLACKLISTED_DOMAIN'].format(form['url'])
+                flash(msg, 'notimeout')
+                return redirect(url_for('index'))
+            # Anonymous reporting
             json_response = report_issue(form, proxy=True)
             session['show_thanks'] = True
             return redirect(
