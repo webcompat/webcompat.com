@@ -554,6 +554,10 @@ issues.MainView = Backbone.View.extend(
     },
     render: function() {
       this.$el.removeClass("is-hidden");
+      // only show issue commenting bits if the issue is not locked
+      if (!this.issue.get("locked")) {
+        this.$el.find(".js-issue-comment-submit").removeClass("is-hidden");
+      }
     },
 
     handleKeyShortcuts: function() {

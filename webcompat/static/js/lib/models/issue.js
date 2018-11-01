@@ -63,6 +63,7 @@ issues.Issue = Backbone.Model.extend({
       createdAt: response.created_at.slice(0, 10),
       issueState: this.getState(response.state, milestone),
       labels: labels,
+      locked: response.locked,
       milestone: milestone,
       number: response.number,
       reporter: response.user.login,
