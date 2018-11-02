@@ -1,6 +1,6 @@
 <script type="text/template">
   <header class="label-box-header label-<%= stateClass %>">
-    <div><%= issueState %></div>
+    <div><% if(locked == true) { %>🔒 <% } else { %><% } %><%= issueState %></div>
     <div class="js-issue-number">#<%= number %></div>
   </header>
   <div class="label-box-section">
