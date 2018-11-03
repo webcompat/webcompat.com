@@ -65,6 +65,20 @@ registerSuite("Reporting (non-auth)", {
         .end();
     },
 
+    "space in domain name validation"() {
+      return FunctionalHelpers.openPage(
+        this,
+        url("/issues/new"),
+        ".js-report-buttons"
+      )
+        .findByCssSelector("#url")
+        .click()
+        .type("http:// example.com")
+        .end()
+        .sleep(500)
+        .findByCssSelector(".form-message-error");
+    },
+
     "URL validation"() {
       return FunctionalHelpers.openPage(
         this,
