@@ -28,6 +28,19 @@ registerSuite("Comments (auth)", {
       );
     },
 
+    "Comments form not visible when the issue is locked"() {
+      return (
+        FunctionalHelpers.openPage(this, url("/issues/23"), ".js-Issue")
+          // Comment form should not be visible for locked issues.
+          .findByCssSelector(".js-issue-comment-submit")
+          .getAttribute("class")
+          .then(className => {
+            assert.include(className, "is-hidden");
+          })
+          .end()
+      );
+    },
+
     "Posting a comment"() {
       var originalCommentsLength;
       var allCommentsLength;

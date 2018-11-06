@@ -17,7 +17,7 @@
             {% include "issue/issue-comment-list.jst" %}
           </section>
           {% if session.user_id and session.avatar_url %}
-            <section class="grid-cell issue-comment issue-new-comment x3">
+            <section class="grid-cell issue-comment issue-new-comment x3 js-issue-comment-submit is-hidden">
               {% include "issue/issue-comment-submit.html" %}
             </section>
           {% endif %}

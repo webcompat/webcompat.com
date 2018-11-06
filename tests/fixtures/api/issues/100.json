@@ -35,7 +35,7 @@
     }
   ],
   "state": "open",
-  "locked": true,
+  "locked": false,
   "assignee": null,
   "milestone": {
     "url": "https://api.github.com/repos/webcompat/webcompat-tests/milestones/1",
