@@ -303,7 +303,9 @@ function BugForm() {
   };
 
   this.isReportableURL = function(url) {
-    return url && (_.startsWith(url, "http:") || _.startsWith(url, "https:"));
+    var ok = url && (_.startsWith(url, "http:") || _.startsWith(url, "https:"));
+    ok &= !(_.startsWith(url, "http:// ") || _.startsWith(url, "https:// "));
+    return ok;
   };
 
   /* Check to see that the URL input element is not empty,
