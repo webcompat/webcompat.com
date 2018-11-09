@@ -96,6 +96,17 @@
   background-color: var(--label-closed);
 }
 
+.label-box-header.label-fix-me-assign-a-status,
+.label-box-editor .label-fix-me-assign-a-status {
+  background-color: var(--label-fix-me-assign-a-status);
+}
+
+.label-box .label.label-no-status-assigned-yet {
+  background-color: var(--base-background);
+  color: var(--color-second);
+  font-weight: 700;
+}
+
 /***************************
 ** Issue - context labels **
 ***************************/
