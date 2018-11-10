@@ -109,6 +109,32 @@ registerSuite("Milestones (auth)", {
           assert.notInclude("is-active", className);
         })
         .end();
+    },
+
+    "Missing status error displays": function() {
+      FunctionalHelpers.openPage(
+        this,
+        url("/issues/9"),
+        ".js-Issue",
+        true /* longerTimeout */
+      )
+        .findByCssSelector(".js-Milestone")
+        .getVisibleText();
+      // console.log(a.text)
+
+      return FunctionalHelpers.openPage(
+        this,
+        url("/issues/9"),
+        ".js-Issue",
+        true /* longerTimeout */
+      )
+        .findByCssSelector(".js-Milestone")
+        .getVisibleText()
+        .then(function(text) {
+          // check that the title loaded, it won't be there if the page didn't render.
+          assert.strictEqual(text, "Fix me: assign a status");
+        })
+        .end();
     }
   }
 });
