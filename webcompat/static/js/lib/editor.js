@@ -4,12 +4,12 @@
 var issues = issues || {}; // eslint-disable-line no-use-before-define
 
 /* Child classes need to define the following methods/properties:
-    * closeEditor
-    * openEditor
-    * fetchItems (to get data from model)
-    * template
-    * subTemplate
-*/
+ * closeEditor
+ * openEditor
+ * fetchItems (to get data from model)
+ * template
+ * subTemplate
+ */
 issues.CategoryView = Backbone.View.extend({
   _isLoggedIn: $("body").data("username"),
   editorButton: null,
@@ -26,10 +26,10 @@ issues.CategoryView = Backbone.View.extend({
 });
 
 /* Child classes need to define the following methods/properties, or this will explode:
-    * closeEditor
-    * template
-    * updateView
-*/
+ * closeEditor
+ * template
+ * updateView
+ */
 issues.CategoryEditorView = Backbone.View.extend({
   isOpen: false,
   className: "label-editor js-CategoryEditor",
