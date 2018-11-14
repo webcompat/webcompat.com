@@ -55,6 +55,9 @@ class TestChangelog(unittest.TestCase):
             u'Fixes #101 — Everything you can imagine is real.')
         expected = u'Fixes #101 - Everything you can imagine is real.'
         self.assertEqual(actual, expected)
+        # GreenKeeper title style
+        actual = changelog.normalize_title(u'Greenkeeper style 🚀')
+        expected = u'NPM update - Greenkeeper style.'
         self.assertEqual(actual, expected)
 
 if __name__ == '__main__':
