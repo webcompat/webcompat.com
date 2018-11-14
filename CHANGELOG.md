@@ -4,6 +4,22 @@
 2. New features: affect minor number
 3. API endpoint changes or dependency version updates: affect major number
 
+## 15.1.0 - 2018-11-14
+
+* Fixes #2704 - pin prettier to 1.14.3 [Pull #2705](https://github.com/webcompat/webcompat.com/pull/2705)
+* Fixes #2662 - URL with a space in the domain name should not be accepted [Pull #2701](https://github.com/webcompat/webcompat.com/pull/2701)
+* Fixes #2698 - Upgrade lint-staged to v8 [Pull #2700](https://github.com/webcompat/webcompat.com/pull/2700)
+* NPM update - Revert "Update lint-staged to the latest version ". [Pull #2697](https://github.com/webcompat/webcompat.com/pull/2697)
+* Fixes #2688 - Only anonymous users should go through the blacklist domain check [Pull #2696](https://github.com/webcompat/webcompat.com/pull/2696)
+* Fixes #2693 - 2694 - Add lock and no-response github apps [Pull #2695](https://github.com/webcompat/webcompat.com/pull/2695)
+* Fixes #2689 - Update minimum node version to 10.13.0 [Pull #2691](https://github.com/webcompat/webcompat.com/pull/2691)
+* Fixes #2686 - Upgrade requests [Pull #2687](https://github.com/webcompat/webcompat.com/pull/2687)
+* NPM update - Update lint-staged to the latest version. [Pull #2685](https://github.com/webcompat/webcompat.com/pull/2685)
+* Fixes #2682 - Removes unused markdown-it in issue-list.js [Pull #2683](https://github.com/webcompat/webcompat.com/pull/2683)
+* Fixes #2571 - Adds a dashboard route with the list of current dashboards [Pull #2675](https://github.com/webcompat/webcompat.com/pull/2675)
+* Fixes #2650 - Modified domain received by `is_blacklisted_domain` [Pull #2667](https://github.com/webcompat/webcompat.com/pull/2667)
+
+
 ## 15.0.0 - 2018-10-30
 
 * Fixes #2686 - Upgrade requests [Pull #2687](https://github.com/webcompat/webcompat.com/pull/2687)
