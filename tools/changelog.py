@@ -17,7 +17,7 @@ import requests
 
 # This will start an initialization process.
 sys.path.append(os.path.realpath(os.getcwd()))
-from config.secrets import OAUTH_TOKEN
+from config.secrets import OAUTH_TOKEN  # noqa
 
 # Config
 GITHUB_API = 'api.github.com'
@@ -69,10 +69,17 @@ def normalize_title(title):
 
     Using a regex to match a number of cases.
     See the test suite for the potential matches.
+    GitHub sends us a unicode string.
     """
-    regex = r"[^ ]?\#(?P<number>\d+)[^\w]+(?P<prose>.*)"
-    m = re.search(regex, title)
-    title = 'Fixes #{msg[number]} - {msg[prose]}'.format(msg=m.groupdict())
+    if u'🚀' in title:
+        title = title.replace(u'🚀', '')
+        title = title.strip()
+        title = u'NPM update - {title}.'.format(title=title)
+    else:
+        regex = r"[^ ]?\#(?P<number>\d+)[^\w]+(?P<prose>.*)"
+        m = re.search(regex, title)
+        log_line = u'Fixes #{msg[number]} - {msg[prose]}'
+        title = log_line.format(msg=m.groupdict())
     return title
 
 
