@@ -85,7 +85,7 @@
         {{ subradio.label(class_='form-label label-radio') }}
       {% endfor %}
     </div>
-    <div class="form-upload js-image-upload js-Form-group">
+    <div class="form-upload form-element js-image-upload js-Form-group">
         {{ form.image(class_='form-input input-upload', accept='.jpe,.jpg,.jpeg,.gif,.png,.bmp', id='image') }}
         <div class="label-icon label-upload js-label-upload">
           <svg class="icon icon-big" role="presentation" title="Upload Screenshot">
@@ -110,6 +110,20 @@
             {% endfor %}
           {% endif %}
         </div>
+    </div>
+
+    <div class="form-text js-Form-group">
+      <div class="js-Form-information form-label-message">
+        {{ form.contact.label(class_='form-label') }}
+        {% if form.contact.errors %}
+          {% for error in form.contact.errors %}
+            <small class="form-message-error">{{ error }}</small>
+          {% endfor %}
+        {% endif %}
+      </div>
+      {{ form.contact(class_='form-field text-field',
+         placeholder='Github nickname') }}
+         <span class="form-input-validation check error"></span>
     </div>
 
     <div class="form-button form-button-multiple form-element js-Form-group js-report-buttons">
