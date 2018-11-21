@@ -47,4 +47,5 @@
   --label-color-nsfw: rgba(221, 0, 0, 1); /* #DD0000 */
   --label-color-device: rgba(188, 143, 143, 1); /* rosybrown */
   --label-color-os: rgba(102, 51, 153, 1); /* rebeccapurple */
+  --label-fix-me-assign-a-status: rgba(255, 0, 0, 1); /* #ff0000 */
 }
