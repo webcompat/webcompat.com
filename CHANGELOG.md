@@ -4,6 +4,13 @@
 2. New features: affect minor number
 3. API endpoint changes or dependency version updates: affect major number
 
+## 15.1.1 - 2018-11-22
+
+* Fixes #2681 - Fixes lists and nested lists display in webcompat.com  [Pull #2715](https://github.com/webcompat/webcompat.com/pull/2715)
+* NPM update - Update stylelint-order to the latest version. [Pull #2714](https://github.com/webcompat/webcompat.com/pull/2714)
+* NPM update - Update prettier to the latest version. [Pull #2711](https://github.com/webcompat/webcompat.com/pull/2711)
+* Fixes #1856 - Better error messaging for unset milestones [Pull #2702](https://github.com/webcompat/webcompat.com/pull/2702)
+
 ## 15.1.0 - 2018-11-14
 
 * Fixes #2704 - pin prettier to 1.14.3 [Pull #2705](https://github.com/webcompat/webcompat.com/pull/2705)
