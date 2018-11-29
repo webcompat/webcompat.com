@@ -18,6 +18,7 @@ function BugForm() {
   this.submitTypeInput = $("#submit_type:hidden");
   this.uploadLabel = $(".js-label-upload");
   this.urlParamRegExp = /url=([^&]+)/;
+  this.githubRegexp = /^[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}$/;
 
   this.UPLOAD_LIMIT = 1024 * 1024 * 4;
 
@@ -64,6 +65,12 @@ function BugForm() {
       el: $("[name=browser_test]"),
       valid: true,
       helpText: null
+    },
+    contact: {
+      el: $("#contact"),
+      valid: null,
+      helpText:
+        "GitHub nicknames are 39 characters max, alphanumeric and hyphens only."
     }
   };
 
@@ -75,12 +82,14 @@ function BugForm() {
   this.descField = this.inputs.description.el;
   this.browserTestField = this.inputs.browser_test_type.el;
   this.stepsToReproduceField = this.inputs.steps_reproduce.el;
+  this.contactField = this.inputs.contact.el;
 
   this.init = function() {
     this.checkURLValidity = this.checkURLValidity.bind(this);
     this.checkDescriptionValidity = this.checkDescriptionValidity.bind(this);
     this.checkProblemTypeValidity = this.checkProblemTypeValidity.bind(this);
     this.checkImageTypeValidity = this.checkImageTypeValidity.bind(this);
+    this.checkGitHubUsername = this.checkGitHubUsername.bind(this);
     this.checkOptionalNonEmpty = this.checkOptionalNonEmpty.bind(this);
     this.storeClickedButton = this.storeClickedButton.bind(this);
     this.onFormSubmit = this.onFormSubmit.bind(this);
@@ -106,6 +115,7 @@ function BugForm() {
       "blur",
       this.checkOptionalNonEmpty.bind(this, this.browserField)
     );
+    this.contactField.on("blur input", this.checkGitHubUsername);
     this.submitButtons.on("click", this.storeClickedButton);
     this.form.on("submit", this.onFormSubmit);
 
@@ -341,6 +351,26 @@ function BugForm() {
     }
   };
 
+  /*
+  Check a string is a valid GitHub username
+    - maximum 39 chars
+    - alphanumerical characters and hyphens
+    - no two consecutive hyphens
+  */
+  this.isValidGitHubUsername = function(contact) {
+    return this.githubRegexp.test(contact);
+  };
+
+  /* Check to see if the GitHub username has the right syntax. */
+  this.checkGitHubUsername = function() {
+    var contact = this.contactField.val();
+    if (this.isValidGitHubUsername(contact)) {
+      this.makeValid("contact");
+    } else {
+      this.makeInvalid("contact");
+    }
+  };
+
   this.checkForm = function() {
     // Run through and see if there's any user input in the
     // required inputs
@@ -356,6 +386,7 @@ function BugForm() {
       this.checkDescriptionValidity();
       this.checkProblemTypeValidity();
       this.checkImageTypeValidity();
+      this.checkGitHubUsername();
       // and open the form, if it's not already open
       if (!this.reportButton.hasClass("is-open")) {
         this.reportButton.click();
