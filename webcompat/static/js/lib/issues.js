@@ -547,8 +547,10 @@ issues.MainView = Backbone.View.extend(
       var target =
         e.target.nodeName === "IMG"
           ? e.target
-          : e.target.nodeName === "P" && e.target.firstElementChild;
+          : e.target.nodeName === "P" && e.target.querySelector("img");
       $(target)
+        .parent()
+        .removeAttr("href")
         .parent()
         .toggleClass("issue-details-nsfw--display");
     },
