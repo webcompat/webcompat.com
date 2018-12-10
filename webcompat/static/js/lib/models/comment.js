@@ -4,17 +4,6 @@
 
 var issues = issues || {}; // eslint-disable-line no-use-before-define
 
-if (!window.md) {
-  window.md = window
-    .markdownit({
-      breaks: true,
-      html: true,
-      linkify: true
-    })
-    .use(window.markdownitSanitizer)
-    .use(window.markdownitEmoji);
-}
-
 issues.Comment = Backbone.Model.extend({
   url: function() {
     var issueNumber = $("main").data("issueNumber");
@@ -23,14 +12,14 @@ issues.Comment = Backbone.Model.extend({
   parse: function(response, jqXHR) {
     this.set({
       avatarUrl: response.user.avatar_url,
-      body: md.render(response.body),
+      body: response.body_html,
       commenter: response.user.login,
       commentLinkId: "issuecomment-" + response.id,
       createdAt:
         moment(Date.now()).diff(response.created_at, "weeks") > 1
           ? moment(response.created_at).format("YYYY-MM-DD")
           : moment(response.created_at).fromNow(),
-      rawBody: response.body
+      rawBody: response.body_html
     });
     var linkHeader = jqXHR.xhr.getResponseHeader("Link");
     if (linkHeader !== null && !!this.parseHeader(linkHeader).last) {

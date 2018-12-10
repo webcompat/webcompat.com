@@ -36,7 +36,7 @@ HOST_WHITELIST = ('webcompat.com', 'staging.webcompat.com',
                   '127.0.0.1', 'localhost')
 FIXTURES_PATH = os.getcwd() + '/tests/fixtures'
 STATIC_PATH = os.getcwd() + '/webcompat/static'
-JSON_MIME = 'application/json'
+JSON_MIME = 'application/vnd.github.v3.html+json'
 REPO_URI = app.config['ISSUES_REPO_URI']
 
 cache_dict = {}

@@ -8,17 +8,6 @@
 var issues = issues || {}; // eslint-disable-line no-use-before-define
 var issueList = issueList || {}; // eslint-disable-line no-use-before-define
 
-if (!window.md) {
-  window.md = window
-    .markdownit({
-      breaks: true,
-      html: true,
-      linkify: true
-    })
-    .use(window.markdownitSanitizer)
-    .use(window.markdownitEmoji);
-}
-
 issues.Issue = Backbone.Model.extend({
   _namespaceRegex: /(browser|closed|os|status)-/i,
   _statuses: $("main").data("statuses"),
@@ -69,7 +58,7 @@ issues.Issue = Backbone.Model.extend({
     var labelList = new issues.LabelList({ labels: response.labels });
     var labels = labelList.get("labels");
     this.set({
-      body: md.render(response.body),
+      body: response.body_html,
       commentNumber: response.comments,
       createdAt: response.created_at.slice(0, 10),
       issueState: this.getState(response.state, milestone),
