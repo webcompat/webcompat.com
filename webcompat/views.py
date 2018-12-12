@@ -212,6 +212,11 @@ def create_issue():
     # Form Prefill section
     if request_type == 'prefill':
         form_data = prepare_form(request)
+        # XXXTemp Hack: if the user clicked on Report Site Issue from Release,
+        # we want to redirect them somewhere else and forget all their data.
+        # See https://bugzilla.mozilla.org/show_bug.cgi?id=1513541
+        if form_data == 'release':
+            return render_template('thanks.html')
         bug_form = get_form(form_data)
         session['extra_labels'] = form_data['extra_labels']
         return render_template('new-issue.html', form=bug_form)
