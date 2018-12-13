@@ -102,6 +102,8 @@ if __name__ == '__main__':
                         help='Run server in "test mode".')
     parser.add_argument('-l', '--listen', default='localhost',
                         help='Interface to listen on.')
+    parser.add_argument('-u', '--updatemockouts', action='store_true',
+                        help='Update test\'s mock outs.')
     args = parser.parse_args()
 
     if check_pip_deps():
@@ -118,5 +120,9 @@ if __name__ == '__main__':
             app.config['SESSION_COOKIE_HTTPONLY'] = False
             app.config['SESSION_COOKIE_SAMESITE'] = None
             app.config['TESTING'] = True
+            app.config['UPDATE_MOCK_OUTS'] = False
             print("Starting server in ~*TEST MODE*~")
+            if args.updatemockouts:
+                app.config['UPDATE_MOCK_OUTS'] = True
+                print('Remember: you have to access each one of the issues you want to fetch.')
             app.run(host=args.listen)

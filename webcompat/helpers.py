@@ -388,6 +388,7 @@ def mockable_response(func):
     """
     @wraps(func)
     def wrapped_func(*args, **kwargs):
+        import json
         if app.config['TESTING']:
             get_args = request.args.copy()
             if get_args:
@@ -397,7 +398,18 @@ def mockable_response(func):
                 file_path = FIXTURES_PATH + request.path + "." + checksum
             else:
                 file_path = FIXTURES_PATH + request.path
-            if not os.path.exists(file_path + '.json'):
+            if app.config['UPDATE_MOCK_OUTS']:
+                data = func(*args, **kwargs)
+                with open(file_path + '.json', 'w') as f:
+                    data_json = json.loads(data[0])
+                    if isinstance(data_json, str):
+                        data_json[0]["_fixture"] = True
+                    if isinstance(data_json, dict):
+                        data_json["_fixture"] = True
+                    data_json = json.dumps(data_json, indent=2)
+                    f.write(data_json)
+                return (data_json, 200, get_fixture_headers(data[0]))
+            elif not os.path.exists(file_path + '.json'):
                 print('Expected fixture file: ' + file_path + '.json')
                 return ('', 404)
             else:
