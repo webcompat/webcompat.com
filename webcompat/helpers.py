@@ -628,6 +628,15 @@ def prepare_form(form_request):
     if form_request.method == 'POST':
         json_data = form_request.get_json()
         form_data.update(json_data)
+    channel = ''
+    details = form_data.get('details')
+    if details:
+        channel = details.get('channel')
+    # XXXTemp Hack: if the user clicked on Report Site Issue from Release,
+    # we want to redirect them somewhere else and forget all their data.
+    # See https://bugzilla.mozilla.org/show_bug.cgi?id=1513541
+    if channel == 'release':
+        form_data = 'release'
     return form_data
 
 

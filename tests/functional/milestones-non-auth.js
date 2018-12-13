@@ -30,6 +30,15 @@ registerSuite("Milestones (non-auth)", {
     },
 
     "Missing status error displays": function() {
+      FunctionalHelpers.openPage(
+        this,
+        url("/issues/9"),
+        ".js-Issue",
+        true /* longerTimeout */
+      )
+        .findByCssSelector(".js-Milestone")
+        .getVisibleText();
+
       return FunctionalHelpers.openPage(
         this,
         url("/issues/9"),
@@ -40,7 +49,7 @@ registerSuite("Milestones (non-auth)", {
         .getVisibleText()
         .then(function(text) {
           // check that the title loaded, it won't be there if the page didn't render.
-          assert.equal(text, "Error: no status for this issue");
+          assert.equal(text, "No status assigned yet");
         })
         .end();
     }

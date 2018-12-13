@@ -52,9 +52,20 @@ issues.Issue = Backbone.Model.extend({
     return "Needs Triage";
   },
   parse: function(response) {
-    var milestone = response.milestone
-      ? response.milestone.title
-      : "Error: no status for this issue";
+    var isLoggedIn = $("body").data("username");
+    var milestone;
+    var milestoneClass;
+    if (response.milestone) {
+      milestone = response.milestone.title;
+    } else {
+      if (isLoggedIn) {
+        milestone = "Fix me: assign a status";
+        milestoneClass = "fix-me-assign-a-status";
+      } else {
+        milestone = "No status assigned yet";
+        milestoneClass = "no-status-assigned-yet";
+      }
+    }
     var labelList = new issues.LabelList({ labels: response.labels });
     var labels = labelList.get("labels");
     this.set({
@@ -65,6 +76,7 @@ issues.Issue = Backbone.Model.extend({
       labels: labels,
       locked: response.locked,
       milestone: milestone,
+      milestoneClass: milestoneClass,
       number: response.number,
       reporter: response.user.login,
       reporterAvatar: response.user.avatar_url,
