@@ -68,7 +68,7 @@ function BugForm() {
     },
     contact: {
       el: $("#contact"),
-      valid: null,
+      valid: true,
       helpText:
         "GitHub nicknames are 39 characters max, alphanumeric and hyphens only."
     }
