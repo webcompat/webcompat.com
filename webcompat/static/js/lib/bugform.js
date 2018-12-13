@@ -432,6 +432,7 @@ function BugForm() {
           .removeClass("is-error js-form-error");
         break;
       case "url":
+      case "contact":
       case "description":
       case "problem_type":
         inlineHelp.insertAfter("label[for=" + id + "]");
