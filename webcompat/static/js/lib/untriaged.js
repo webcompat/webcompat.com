@@ -7,7 +7,7 @@ var issues = issues || {}; // eslint-disable-line no-use-before-define
 
 untriaged.NeedsTriageCollection = Backbone.Collection.extend({
   model: issues.Issue,
-  url: "/api/issues/category/needstriage"
+  url: "/api/issues/category/needstriage?per_page=5"
 });
 
 untriaged.NeedsTriageView = Backbone.View.extend({
