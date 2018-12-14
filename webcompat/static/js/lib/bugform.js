@@ -364,7 +364,7 @@ function BugForm() {
   /* Check to see if the GitHub username has the right syntax. */
   this.checkGitHubUsername = function() {
     var contact = this.contactField.val();
-    if (this.isValidGitHubUsername(contact)) {
+    if (this.isValidGitHubUsername(contact) || $.trim(contact) === "") {
       this.makeValid("contact");
     } else {
       this.makeInvalid("contact");
