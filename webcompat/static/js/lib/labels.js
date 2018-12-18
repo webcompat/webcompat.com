@@ -11,8 +11,11 @@ var issues = issues || {}; // eslint-disable-line no-use-before-define
 // unseen namespaces are added in their local name form.
 // Hence, we set up a single, globally accessible "all labels" model
 // This is set up as early as possible to avoid timing issues
-if (!issues.allLabels) {
-  issues.allLabels = new issues.LabelList();
+
+if ($("body").data("username")) {
+  if (!issues.allLabels) {
+    issues.allLabels = new issues.LabelList();
+  }
 }
 
 issues.LabelsView = issues.CategoryView.extend({
@@ -29,11 +32,11 @@ issues.LabelsView = issues.CategoryView.extend({
   },
   fetchItems: function() {
     this.editorButton = $(".js-LabelEditorLauncher");
-    this.labelEditor = new issues.LabelEditorView({
-      model: issues.allLabels,
-      issueView: this
-    });
     if (this._isLoggedIn) {
+      this.labelEditor = new issues.LabelEditorView({
+        model: issues.allLabels,
+        issueView: this
+      });
       this.issueLabels = this.getIssueLabels();
       this.editorButton.show();
     }
