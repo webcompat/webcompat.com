@@ -289,6 +289,75 @@ registerSuite("Reporting (non-auth)", {
             "details param is added after reporting (legacy or not)"
           );
         });
+    },
+
+    "GitHub contact name with a leading @"() {
+      return FunctionalHelpers.openPage(
+        this,
+        url("/issues/new"),
+        ".js-report-buttons"
+      )
+        .findByCssSelector("#contact")
+        .click()
+        .type("@webcompat-bot")
+        .end()
+        .sleep(500)
+        .findByCssSelector(".form-message-error")
+        .getVisibleText()
+        .then(function(text) {
+          assert.include(
+            text,
+            "GitHub nicknames are 39",
+            "contact validation message is shown"
+          );
+        })
+        .end();
+    },
+
+    "GitHub contact name with two consecutives --"() {
+      return FunctionalHelpers.openPage(
+        this,
+        url("/issues/new"),
+        ".js-report-buttons"
+      )
+        .findByCssSelector("#contact")
+        .click()
+        .type("wrong--name")
+        .end()
+        .sleep(500)
+        .findByCssSelector(".form-message-error")
+        .getVisibleText()
+        .then(function(text) {
+          assert.include(
+            text,
+            "GitHub nicknames are 39",
+            "contact validation message is shown"
+          );
+        })
+        .end();
+    },
+
+    "GitHub contact name too long"() {
+      return FunctionalHelpers.openPage(
+        this,
+        url("/issues/new"),
+        ".js-report-buttons"
+      )
+        .findByCssSelector("#contact")
+        .click()
+        .type("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+        .end()
+        .sleep(500)
+        .findByCssSelector(".form-message-error")
+        .getVisibleText()
+        .then(function(text) {
+          assert.include(
+            text,
+            "GitHub nicknames are 39",
+            "contact validation message is shown"
+          );
+        })
+        .end();
     }
   }
 });

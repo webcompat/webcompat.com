@@ -12,6 +12,7 @@ It includes helper methods.
 
 import json
 import random
+import re
 import urlparse
 
 from flask_wtf import FlaskForm
@@ -24,6 +25,7 @@ from wtforms import TextAreaField
 from wtforms.validators import InputRequired
 from wtforms.validators import Length
 from wtforms.validators import Optional
+from wtforms.validators import Regexp
 
 from webcompat import app
 from webcompat.api.uploads import Upload
@@ -65,6 +67,9 @@ url_label = u'Site URL'
 browser_test_label = u'Did you test in another browser?'
 textarea_label = u'Please describe what happened, including any steps you took before you saw the problem'  # noqa
 
+contact_message = u'There is a mistake in the username.'  # noqa
+contact_label = u'Sharing your GitHub nickname (without signing up) could help us for diagnosis. (publicly visible)'  # noqa
+
 
 class IssueForm(FlaskForm):
     """Define form fields and validation for our bug reporting form."""
@@ -73,8 +78,18 @@ class IssueForm(FlaskForm):
                       [InputRequired(message=url_message)])
     browser = StringField(u'Is this information correct?', [Optional()])
     os = StringField(u'Operating System', [Optional()])
+    # A dummy field to trap common bots. Users do not see that.
     username = StringField(u'Username',
                            [Length(max=0, message=username_message)])
+    # Field for people who want to be contacted, but do not want to login
+    # regex for GitHub usernames
+    username_pattern = r"^[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}$"
+    # Field definition
+    contact = StringField(
+        contact_label,
+        [Regexp(username_pattern,
+                flags=re.IGNORECASE,
+                message=contact_message)])
     description = StringField(desc_label,
                               [InputRequired(message=desc_message)])
 
@@ -333,10 +348,11 @@ def build_formdata(form_object):
         'browser_test_type': get_radio_button_label(form_object.get(
             'browser_test'), tested_elsewhere),
         'description': form_object.get('description'),
-        'steps_reproduce': form_object.get('steps_reproduce')
+        'steps_reproduce': form_object.get('steps_reproduce'),
     }
 
     # Preparing the body
+
     body = u"""{metadata}
 **URL**: {url}
 
@@ -358,6 +374,13 @@ def build_formdata(form_object):
     if form_object.get('image_upload') is not None:
         body += u'\n\n![Screenshot of the site issue]({image_url})'.format(
             image_url=form_object.get('image_upload').get('url'))
+    # Append contact information if available
+    contact = form_object.get('contact', '')
+    # This probably deserves its own function.
+    contact = contact.strip()
+    contact = contact.replace('@', '')
+    if contact:
+        body += u'\n\nReported by @{contact}'.format(contact=contact)
     # Append "from webcompat.com" message to bottom (for GitHub issue viewers)
     body += u'\n\n{0}'.format(GITHUB_HELP)
     rv = {'title': summary, 'body': body}
