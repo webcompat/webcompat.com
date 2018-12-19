@@ -4,6 +4,12 @@
 2. New features: affect minor number
 3. API endpoint changes or dependency version updates: affect major number
 
+## 15.3.0 - 2018-12-19
+
+* Fixes #2729 - Remove labels request when they're unnused [Pull #2745](https://github.com/webcompat/webcompat.com/pull/2745)
+* Fixes #1822 - Adds GitHub contact form for anonymous reporting [Pull #2744](https://github.com/webcompat/webcompat.com/pull/2744)
+* Fixes #2732 - Makes the right number of needstriage requests on webcompat webpage [Pull #2737](https://github.com/webcompat/webcompat.com/pull/2737)
+
 ## 15.2.0 - 2018-12-12
 
 * Fixes #2733 - Redirect Release Report Site Issue users to a landing page [Pull #2734](https://github.com/webcompat/webcompat.com/pull/2734)
