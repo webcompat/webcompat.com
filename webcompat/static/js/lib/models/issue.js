@@ -72,7 +72,7 @@ issues.Issue = Backbone.Model.extend({
       state: response.state,
       title: this.getTitle(
         this.getDomain(response.title),
-        this.getDescription(response.body),
+        this.getDescription(response.body_html),
         response.title
       )
     });
@@ -91,7 +91,7 @@ issues.Issue = Backbone.Model.extend({
 
   getDescription: function(body) {
     // Get the Description of the body
-    var regex = /\*\*Description\*\*: ([^*]+)/;
+    var regex = /<strong>Description<\/strong>: (.+?(?=<br>))/;
     var description = regex.exec(body);
     return description != null ? description[1].slice(0, 74) : null;
   },
