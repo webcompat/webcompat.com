@@ -76,7 +76,7 @@
   "created_at": "2014-06-16T19:12:15Z",
   "updated_at": "2015-10-12T17:20:43Z",
   "closed_at": null,
-  "body": "\n**URL**: www.mmmmm.com\n**Browser**: Firefox\n**Version**: 30\n\nThe site asks me to upgrade",
+  "body_html": "<p><strong>URL</strong>: <a href=\"http://www.mmmmm.com\" rel=\"nofollow\">www.mmmmm.com</a><br> <strong>Browser</strong>: Firefox<br> <strong>Version</strong>: 30</p> <p>The site asks me to upgrade</p>",
   "closed_by": {
     "login": "karlcow",
     "id": 505230,

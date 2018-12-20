@@ -723,7 +723,7 @@
     "created_at": "2016-07-05T07:54:57Z",
     "updated_at": "2016-07-05T22:02:20Z",
     "closed_at": null,
-    "body": "<!-- @browser: browser-android -->\n<!-- @ua_header: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:46.0) Gecko/20100101 Firefox/46.0 -->\n\n**URL**: http://www.sweetbeardreams.com\n**Browser / Version**: browser-android\n**Operating System**: Mac OS X 10.10\n**Problem type**: Mobile site is not usable\n\n**Steps to Reproduce**\n1) Navigate to: http://www.sweetbeardreams.com\r\n2) …\r\n\r\nExpected Behavior:\r\n\r\nActual Behavior:\r\ntrying to resolve failing automated test\r\nmissing issue with selector: [data-remotename=browser-android]\r\n\n\n\n\n_From [webcompat.com](https://webcompat.com/) with ❤️_"
+    "body_html": "<p><strong>URL</strong>: <a href=\"http://www.sweetbeardreams.com%5Cn**Browser\" rel=\"nofollow\">http://www.sweetbeardreams.com\n**Browser</a> / Version**: browser-android\n<strong>Operating System</strong>: Mac OS X 10.10\n<strong>Problem type</strong>: Mobile site is not usable\n\n<strong>Steps to Reproduce</strong>\n1) Navigate to: <a href=\"http://www.sweetbeardreams.com%5Cr%5Cn2\" rel=\"nofollow\">http://www.sweetbeardreams.com\r\n2</a>) …\r\n\r\nExpected Behavior:\r\n\r\nActual Behavior:\r\ntrying to resolve failing automated test\r\nmissing issue with selector: [data-remotename=browser-android]\r\n\n\n\n\n_From <a href=\"https://webcompat.com/\" rel=\"nofollow\">webcompat.com</a> with ❤_</p>"
   },
   {
     "url": "https://api.github.com/repos/webcompat/webcompat-tests/issues/400",

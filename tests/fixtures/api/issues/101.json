@@ -76,7 +76,7 @@
   "created_at": "2014-06-16T19:16:03Z",
   "updated_at": "2015-09-29T09:33:15Z",
   "closed_at": "2015-09-29T09:33:15Z",
-  "body": "\n**URL**: www.mmmmm.com\n**Browser**: Firefox\n**Version**: 30\n\nThe site asks me to upgrade",
+  "body_html": "<p><strong>URL</strong>: <a href=\"http://www.mmmmm.com\" rel=\"nofollow\">www.mmmmm.com</a><br>\n<strong>Browser</strong>: Firefox<br>\n<strong>Version</strong>: 30</p>\n<p>The site asks me to upgrade</p>",
   "closed_by": {
     "login": "miketaylr",
     "id": 67283,

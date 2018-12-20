@@ -26,7 +26,7 @@
     },
     "created_at": "2015-03-10T14:49:52Z",
     "updated_at": "2015-03-10T14:49:52Z",
-    "body": "* one\r\n* two\r\n* three"
+    "body_html": "<ul>\n<li>one</li>\n<li>two</li>\n<li>three</li>\n</ul>"
   },
   {
     "url": "https://api.github.com/repos/webcompat/webcompat-tests/issues/comments/88644516",
@@ -54,7 +54,7 @@
     },
     "created_at": "2015-04-01T21:56:03Z",
     "updated_at": "2015-04-01T21:56:03Z",
-    "body": "hey there this is a test"
+    "body_html": "hey there this is a test"
   },
   {
     "url": "https://api.github.com/repos/webcompat/webcompat-tests/issues/comments/88644575",
@@ -82,7 +82,7 @@
     },
     "created_at": "2015-04-01T21:56:16Z",
     "updated_at": "2015-04-01T21:56:16Z",
-    "body": "I think this is a dupe of #238."
+    "body_html": "<p>I think this is a dupe of <a class=\"issue-link js-issue-link\" data-error-text=\"Failed to load issue title\" data-id=\"51063662\" data-permission-text=\"Issue title is private\" data-url=\"https://github.com/webcompat/webcompat-tests/issues/238\" data-hovercard-type=\"issue\" data-hovercard-url=\"/webcompat/webcompat-tests/issues/238/hovercard\" href=\"https://github.com/webcompat/webcompat-tests/issues/238\">#238</a>.</p>"
   },
   {
     "url": "https://api.github.com/repos/webcompat/webcompat-tests/issues/comments/88646232",
@@ -110,7 +110,7 @@
     },
     "created_at": "2015-04-01T22:02:43Z",
     "updated_at": "2015-04-01T22:02:43Z",
-    "body": "#1\n#2\n#22\n#a"
+    "body_html": "<p><a class=\"issue-link js-issue-link\" data-error-text=\"Failed to load issue title\" data-id=\"29589324\" data-permission-text=\"Issue title is private\" data-url=\"https://github.com/webcompat/webcompat-tests/issues/1\" data-hovercard-type=\"issue\" data-hovercard-url=\"/webcompat/webcompat-tests/issues/1/hovercard\" href=\"https://github.com/webcompat/webcompat-tests/issues/1\">#1</a><br>\n<a class=\"issue-link js-issue-link\" data-error-text=\"Failed to load issue title\" data-id=\"29756002\" data-permission-text=\"Issue title is private\" data-url=\"https://github.com/webcompat/webcompat-tests/issues/2\" data-hovercard-type=\"issue\" data-hovercard-url=\"/webcompat/webcompat-tests/issues/2/hovercard\" href=\"https://github.com/webcompat/webcompat-tests/issues/2\">#2</a><br>\n<a class=\"issue-link js-issue-link\" data-error-text=\"Failed to load issue title\" data-id=\"30343809\" data-permission-text=\"Issue title is private\" data-url=\"https://github.com/webcompat/webcompat-tests/issues/22\" data-hovercard-type=\"issue\" data-hovercard-url=\"/webcompat/webcompat-tests/issues/22/hovercard\" href=\"https://github.com/webcompat/webcompat-tests/issues/22\">#22</a><br>\n#a</p>"
   },
   {
     "url": "https://api.github.com/repos/webcompat/webcompat-tests/issues/comments/88646279",
@@ -138,7 +138,7 @@
     },
     "created_at": "2015-04-01T22:02:59Z",
     "updated_at": "2015-04-01T22:02:59Z",
-    "body": "blah blah #1, number #2, blah #a"
+    "body_html": "<p>blah blah <a class=\"issue-link js-issue-link\" data-error-text=\"Failed to load issue title\" data-id=\"29589324\" data-permission-text=\"Issue title is private\" data-url=\"https://github.com/webcompat/webcompat-tests/issues/1\" data-hovercard-type=\"issue\" data-hovercard-url=\"/webcompat/webcompat-tests/issues/1/hovercard\" href=\"https://github.com/webcompat/webcompat-tests/issues/1\">#1</a>, number <a class=\"issue-link js-issue-link\" data-error-text=\"Failed to load issue title\" data-id=\"29756002\" data-permission-text=\"Issue title is private\" data-url=\"https://github.com/webcompat/webcompat-tests/issues/2\" data-hovercard-type=\"issue\" data-hovercard-url=\"/webcompat/webcompat-tests/issues/2/hovercard\" href=\"https://github.com/webcompat/webcompat-tests/issues/2\">#2</a>, blah #a</p>"
   },
   {
     "url": "https://api.github.com/repos/webcompat/webcompat-tests/issues/comments/88646903",
@@ -166,7 +166,7 @@
     },
     "created_at": "2015-04-01T22:06:14Z",
     "updated_at": "2015-04-01T22:06:14Z",
-    "body": ":shipit:"
+    "body_html": "<p><img class=\"emoji\" title=\":shipit:\" alt=\":shipit:\" src=\"https://github.githubassets.com/images/icons/emoji/shipit.png\" height=\"20\" width=\"20\" align=\"absmiddle\"></p>"
   },
   {
     "url": "https://api.github.com/repos/webcompat/webcompat-tests/issues/comments/88652323",
@@ -194,7 +194,7 @@
     },
     "created_at": "2015-04-01T22:23:09Z",
     "updated_at": "2015-04-01T22:23:09Z",
-    "body": "issue #55"
+    "body_html": "<p>issue <a class=\"issue-link js-issue-link\" data-error-text=\"Failed to load issue title\" data-id=\"34923999\" data-permission-text=\"Issue title is private\" data-url=\"https://github.com/webcompat/webcompat-tests/issues/55\" data-hovercard-type=\"issue\" data-hovercard-url=\"/webcompat/webcompat-tests/issues/55/hovercard\" href=\"https://github.com/webcompat/webcompat-tests/issues/55\">#55</a></p>"
   },
   {
     "url": "https://api.github.com/repos/webcompat/webcompat-tests/issues/comments/88653420",
@@ -222,7 +222,7 @@
     },
     "created_at": "2015-04-01T22:30:55Z",
     "updated_at": "2015-04-01T22:30:55Z",
-    "body": "#1"
+    "body_html": "<p><a class=\"issue-link js-issue-link\" data-error-text=\"Failed to load issue title\" data-id=\"29589324\" data-permission-text=\"Issue title is private\" data-url=\"https://github.com/webcompat/webcompat-tests/issues/1\" data-hovercard-type=\"issue\" data-hovercard-url=\"/webcompat/webcompat-tests/issues/1/hovercard\" href=\"https://github.com/webcompat/webcompat-tests/issues/1\">#1</a></p>"
   },
   {
     "url": "https://api.github.com/repos/webcompat/webcompat-tests/issues/comments/88653432",
@@ -250,7 +250,7 @@
     },
     "created_at": "2015-04-01T22:31:01Z",
     "updated_at": "2015-04-01T22:31:01Z",
-    "body": "issue #1"
+    "body_html": "<p>issue <a class=\"issue-link js-issue-link\" data-error-text=\"Failed to load issue title\" data-id=\"29589324\" data-permission-text=\"Issue title is private\" data-url=\"https://github.com/webcompat/webcompat-tests/issues/1\" data-hovercard-type=\"issue\" data-hovercard-url=\"/webcompat/webcompat-tests/issues/1/hovercard\" href=\"https://github.com/webcompat/webcompat-tests/issues/1\">#1</a></p>"
   },
   {
     "url": "https://api.github.com/repos/webcompat/webcompat-tests/issues/comments/88654352",
@@ -278,7 +278,7 @@
     },
     "created_at": "2015-04-01T22:37:51Z",
     "updated_at": "2015-04-01T22:37:51Z",
-    "body": "test xx22"
+    "body_html": "<p>test xx22</p>"
   },
   {
     "url": "https://api.github.com/repos/webcompat/webcompat-tests/issues/comments/90227158",
@@ -306,7 +306,7 @@
     },
     "created_at": "2015-04-06T20:14:54Z",
     "updated_at": "2015-04-06T20:14:54Z",
-    "body": "blah @miketaylr blah @miketaylr blah\nblah"
+    "body_html": "<p>blah <a class=\"user-mention\" data-hovercard-type=\"user\" data-hovercard-url=\"/hovercards?user_id=67283\" data-octo-click=\"hovercard-link-click\" data-octo-dimensions=\"link_type:self\" href=\"https://github.com/miketaylr\">@miketaylr</a> blah <a class=\"user-mention\" data-hovercard-type=\"user\" data-hovercard-url=\"/hovercards?user_id=67283\" data-octo-click=\"hovercard-link-click\" data-octo-dimensions=\"link_type:self\" href=\"https://github.com/miketaylr\">@miketaylr</a> blah<br>\nblah</p>"
   },
   {
     "url": "https://api.github.com/repos/webcompat/webcompat-tests/issues/comments/90227301",
@@ -334,7 +334,7 @@
     },
     "created_at": "2015-04-06T20:15:43Z",
     "updated_at": "2015-04-06T20:15:43Z",
-    "body": "blah *ok*"
+    "body_html": "<p>blah <em>ok</em></p>"
   },
   {
     "url": "https://api.github.com/repos/webcompat/webcompat-tests/issues/comments/90227326",
@@ -362,7 +362,7 @@
     },
     "created_at": "2015-04-06T20:15:48Z",
     "updated_at": "2015-04-06T20:15:48Z",
-    "body": "*ok*"
+    "body_html": "<p><em>ok</em></p>"
   },
   {
     "url": "https://api.github.com/repos/webcompat/webcompat-tests/issues/comments/90227552",
@@ -390,7 +390,7 @@
     },
     "created_at": "2015-04-06T20:16:26Z",
     "updated_at": "2015-04-06T20:16:26Z",
-    "body": "@miketaylr"
+    "body_html": "<p><a class=\"user-mention\" data-hovercard-type=\"user\" data-hovercard-url=\"/hovercards?user_id=67283\" data-octo-click=\"hovercard-link-click\" data-octo-dimensions=\"link_type:self\" href=\"https://github.com/miketaylr\">@miketaylr</a></p>"
   },
   {
     "url": "https://api.github.com/repos/webcompat/webcompat-tests/issues/comments/92498279",
@@ -418,7 +418,7 @@
     },
     "created_at": "2015-04-13T21:04:48Z",
     "updated_at": "2015-04-13T21:04:48Z",
-    "body": "boo"
+    "body_html": "<p>boo</p>"
   },
   {
     "url": "https://api.github.com/repos/webcompat/webcompat-tests/issues/comments/92513388",
@@ -446,7 +446,7 @@
     },
     "created_at": "2015-04-13T22:03:06Z",
     "updated_at": "2015-04-13T22:03:06Z",
-    "body": "what"
+    "body_html": "<p>what</p>"
   },
   {
     "url": "https://api.github.com/repos/webcompat/webcompat-tests/issues/comments/92514470",
@@ -474,7 +474,7 @@
     },
     "created_at": "2015-04-13T22:09:18Z",
     "updated_at": "2015-04-13T22:09:18Z",
-    "body": "hi"
+    "body_html": "<p>hi</p>"
   },
   {
     "url": "https://api.github.com/repos/webcompat/webcompat-tests/issues/comments/113658120",
@@ -502,6 +502,6 @@
     },
     "created_at": "2015-06-19T22:10:58Z",
     "updated_at": "2015-06-19T22:10:58Z",
-    "body": "vivaldi"
+    "body_html": "<p>vivaldi</p>"
   }
 ]

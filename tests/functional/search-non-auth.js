@@ -36,7 +36,7 @@ registerSuite("Search (non-auth)", {
       return FunctionalHelpers.openPage(
         this,
         url("/issues"),
-        "[data-remotename=browser-android"
+        "[data-remotename=browser-android]"
       )
         .findByCssSelector("[data-remotename=browser-android]")
         .click()

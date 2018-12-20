@@ -27,6 +27,6 @@
     "created_at": "2017-10-31T15:21:15Z",
     "updated_at": "2017-10-31T15:21:15Z",
     "author_association": "OWNER",
-    "body": "This issue should **not** have a milestone set, or tests will fail."
+    "body_html": "<p>This issue should <strong>not</strong> have a milestone set, or tests will fail.</p>"
   }
 ]
