@@ -4,9 +4,11 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 """Module for the main routes of webcompat.com."""
+from hashlib import sha1
 import logging
 import os
 import urlparse
+from uuid import uuid4
 
 from flask import abort
 from flask import flash
@@ -55,6 +57,7 @@ def before_request():
         g.user = User.query.get(session['user_id'])
     g.referer = get_referer(request) or url_for('index')
     g.request_headers = request.headers
+    request.nonce = sha1(uuid4().hex).hexdigest()
 
 
 @app.after_request
