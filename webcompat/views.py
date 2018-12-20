@@ -196,6 +196,7 @@ def create_issue():
         * full description
         * tested in another browser
         * body
+        * utm_ params for Google Analytics
     * HTTP POST with an attached form
       * submit a form to GitHub to create a new issue
       * form submit type:
@@ -222,7 +223,10 @@ def create_issue():
             return render_template('thanks.html')
         bug_form = get_form(form_data)
         session['extra_labels'] = form_data['extra_labels']
-        return render_template('new-issue.html', form=bug_form)
+        source = form_data.pop('utm_source', None)
+        campaign = form_data.pop('utm_campaign', None)
+        return render_template('new-issue.html', form=bug_form, source=source,
+                               campaign=campaign, nonce=request.nonce)
     # Issue Creation section
     elif request_type == 'create':
         # Check if there is a form
