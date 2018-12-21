@@ -7,6 +7,7 @@
 """Tests for our URL endpoints."""
 
 import os.path
+import re
 import sys
 import unittest
 
@@ -255,6 +256,77 @@ class TestURLs(unittest.TestCase):
         self.assertEqual(rv.status_code, 401)
         self.assertTrue('text/plain' in rv.content_type)
         self.assertTrue(content_test)
+
+    def test_extracted_ga_params_end_up_as_inline_js(self):
+        """Extract GA params (utm_foo) information of a form request with a POST.
+
+        We also test that the nonce in the CSP matches the nonce in the
+        inline style.
+        """
+        nonce_re = r'(?:nonce\-)(?P<nonce>[a-z0-9]+)'
+        json_data = {
+            'user_agent': u'BurgerJSON',
+            'utm_source': u'mcdonalds',
+            'utm_campaign': u'the mcrib is back'
+        }
+        rv = self.app.post(
+            '/issues/new?url=http://example.net/&src=web&label=type-stylo',
+            headers=headers, json=json_data)
+        self.assertEqual(rv.status_code, 200)
+        # do we have a nonce-hash in our CSP?
+        self.assertIn('nonce-', rv.headers['Content-Security-Policy'])
+        # do we have a <script nonce=hash> in our response body?
+        self.assertIn('<script nonce=', rv.data)
+        # parse out the nonce from CSP, and verify it matches the one in the
+        # response body
+        nonce = re.search(
+            nonce_re, rv.headers['Content-Security-Policy']).group('nonce')
+        self.assertIn(nonce, rv.data)
+
+    def test_missing_ga_params_results_in_no_inline_ga_js(self):
+        """Test that we don't render inline ga JS if we're missing
+        one of the two utm_foo params.
+        """
+        nonce_re = r'(?:nonce\-)(?P<nonce>[a-z0-9]+)'
+        json_data = {
+            'user_agent': u'BurgerJSON',
+            'utm_campaign': u'the mcrib is back'
+        }
+        rv = self.app.post(
+            '/issues/new?url=http://example.net/&src=web&label=type-stylo',
+            headers=headers, json=json_data)
+        self.assertEqual(rv.status_code, 200)
+        # do we have a nonce-hash in our CSP?
+        self.assertIn('nonce-', rv.headers['Content-Security-Policy'])
+        # do we have a <script nonce=hash> in our response body?
+        self.assertNotIn('<script nonce=', rv.data)
+        # parse out the nonce from CSP, and verify it matches the one in the
+        # response body
+        nonce = re.search(
+            nonce_re, rv.headers['Content-Security-Policy']).group('nonce')
+        self.assertNotIn(nonce, rv.data)
+        # test with only the other utm_ param
+        json_data = {
+            'user_agent': u'BurgerJSON',
+            'utm_source': u'the mcrib is back'
+        }
+        rv = self.app.post(
+            '/issues/new?url=http://example.net/&src=web&label=type-stylo',
+            headers=headers, json=json_data)
+        self.assertEqual(rv.status_code, 200)
+        # do we not have a <script nonce=hash> in our response body?
+        self.assertNotIn('<script nonce=', rv.data)
+        # test with no utm_ param
+        json_data = {
+            'user_agent': u'BurgerJSON',
+        }
+        rv = self.app.post(
+            '/issues/new?url=http://example.net/&src=web&label=type-stylo',
+            headers=headers, json=json_data)
+        self.assertEqual(rv.status_code, 200)
+        # do we not have a <script nonce=hash> in our response body?
+        self.assertNotIn('<script nonce=', rv.data)
+
 
 if __name__ == '__main__':
     unittest.main()

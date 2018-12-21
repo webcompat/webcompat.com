@@ -508,7 +508,7 @@ def add_csp(response):
         "font-src 'self' https://fonts.gstatic.com; " +
         get_img_src_policy() +
         "manifest-src 'self'; " +
-        "script-src 'self' https://www.google-analytics.com https://api.github.com; " +  # nopep8
+        "script-src 'self' https://www.google-analytics.com https://api.github.com 'nonce-{nonce}'; ".format(nonce=request.nonce) +  # nopep8
         "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; " +
         "base-uri 'self'; " +
         "frame-ancestors 'self'; " +

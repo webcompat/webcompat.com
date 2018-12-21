@@ -8,3 +8,13 @@
   </section>
 </main>
 {% endblock %}
+{%- block extrascripts -%}
+{% if source and campaign %}
+<script nonce={{nonce}}>
+if (typeof ga == "function") {
+  ga('set', 'campaignName', '{{campaign}}');
+  ga('set', 'campaignSource', '{{source}}');
+}
+</script>
+{% endif %}
+{%- endblock %}
