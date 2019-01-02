@@ -361,11 +361,11 @@ def format_link_header(link_header_data):
 def get_comment_data(request_data):
     """Return a comment ready to send to GitHub.
 
-    We do this by JSON-encoding the rawBody property
+    We do this by JSON-encoding the body property
     of a request's data object.
     """
     comment_data = json.loads(request_data)
-    return json.dumps({"body": comment_data['rawBody']})
+    return json.dumps({"body": comment_data['body']})
 
 
 def get_fixture_headers(file_data):

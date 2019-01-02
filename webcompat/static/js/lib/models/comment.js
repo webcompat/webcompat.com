@@ -18,8 +18,7 @@ issues.Comment = Backbone.Model.extend({
       createdAt:
         moment(Date.now()).diff(response.created_at, "weeks") > 1
           ? moment(response.created_at).format("YYYY-MM-DD")
-          : moment(response.created_at).fromNow(),
-      rawBody: response.body_html
+          : moment(response.created_at).fromNow()
     });
     var linkHeader = jqXHR.xhr.getResponseHeader("Link");
     if (linkHeader !== null && !!this.parseHeader(linkHeader).last) {

@@ -527,8 +527,7 @@ issues.MainView = Backbone.View.extend(
           body: this.sanitizeMarkdown(md.render(textarea.val())),
           commenter: form.data("username"),
           createdAt: moment(new Date().toISOString()).fromNow(),
-          commentLinkId: null,
-          rawBody: textarea.val()
+          commentLinkId: null
         });
         this.addComment(newComment);
         // Now empty out the textarea.
