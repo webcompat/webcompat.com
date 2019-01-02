@@ -91,9 +91,14 @@ issues.Issue = Backbone.Model.extend({
 
   getDescription: function(body) {
     // Get the Description of the body
-    var regex = /<strong>Description<\/strong>: (.+?(?=<br>))/;
-    var description = regex.exec(body);
-    return description != null ? description[1].slice(0, 74) : null;
+    var el = document.createElement("html");
+    el.innerHTML = body;
+    el = el.getElementsByTagName("strong");
+    if (el[5]) {
+      var description = el[5].nextSibling.textContent;
+      description = description.replace(": ", "");
+      return description;
+    }
   },
 
   getDomain: function(title) {
