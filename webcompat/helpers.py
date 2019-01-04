@@ -36,7 +36,7 @@ HOST_WHITELIST = ('webcompat.com', 'staging.webcompat.com',
                   '127.0.0.1', 'localhost')
 FIXTURES_PATH = os.getcwd() + '/tests/fixtures'
 STATIC_PATH = os.getcwd() + '/webcompat/static'
-JSON_MIME = 'application/vnd.github.v3.html+json'
+JSON_MIME = 'application/json'
 REPO_URI = app.config['ISSUES_REPO_URI']
 
 cache_dict = {}
@@ -195,12 +195,12 @@ def get_response_headers(response):
     return headers
 
 
-def get_request_headers(headers):
+def get_request_headers(headers, mime_type=JSON_MIME):
     """Return a dictionary of headers based on the client Request.
 
     This allows us to send back headers to GitHub when we are acting as client.
     """
-    client_headers = {'Accept': JSON_MIME}
+    client_headers = {'Accept': mime_type}
     if 'If-None-Match' in headers:
         etag = headers['If-None-Match'].encode('utf-8')
         client_headers['If-None-Match'] = etag
@@ -447,7 +447,7 @@ def proxy_request(method, path, params=None, headers=None, data=None):
     return req(resource_uri, data=data, params=params, headers=auth_headers)
 
 
-def api_request(method, path, params=None, data=None):
+def api_request(method, path, params=None, data=None, mime_type=JSON_MIME):
     """Handle communication with the  GitHub API.
 
     This method handles both logged-in and proxied requests.
@@ -457,7 +457,7 @@ def api_request(method, path, params=None, data=None):
     function. Flask will turn a tuple of the format
     (content, status_code, response_headers) into a Response object.
     """
-    request_headers = get_request_headers(g.request_headers)
+    request_headers = get_request_headers(g.request_headers, mime_type)
     if g.user:
         request_method = github.raw_request
     else:

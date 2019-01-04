@@ -30,6 +30,7 @@ from webcompat import limiter
 
 api = Blueprint('api', __name__, url_prefix='/api')
 JSON_MIME = 'application/json'
+JSON_MIME_BODY_HTML = 'application/vnd.github.v3.html+json'
 ISSUES_PATH = app.config['ISSUES_REPO_URI']
 REPO_PATH = ISSUES_PATH[:-7]
 
@@ -42,7 +43,7 @@ def proxy_issue(number):
     either as an authed user, or as one of our proxy bots.
     """
     path = 'repos/{0}/{1}'.format(ISSUES_PATH, number)
-    return api_request('get', path)
+    return api_request('get', path, mime_type=JSON_MIME_BODY_HTML)
 
 
 @api.route('/issues/<int:number>/edit', methods=['PATCH'])
@@ -182,10 +183,12 @@ def proxy_comments(number):
     if request.method == 'POST' and g.user:
         path = 'repos/{0}/{1}/comments'.format(ISSUES_PATH, number)
         return api_request('post', path, params=params,
-                           data=get_comment_data(request.data))
+                           data=get_comment_data(request.data),
+                           mime_type=JSON_MIME_BODY_HTML)
     else:
         path = 'repos/{0}/{1}/comments'.format(ISSUES_PATH, number)
-        return api_request('get', path, params=params)
+        return api_request('get', path, params=params,
+                           mime_type=JSON_MIME_BODY_HTML)
 
 
 @api.route('/issues/<int:number>/labels', methods=['POST'])
