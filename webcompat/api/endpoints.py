@@ -216,4 +216,4 @@ def get_repo_labels():
     """XHR endpoint to get all possible labels in a repo."""
     params = request.args.copy()
     path = 'repos/{0}/labels'.format(REPO_PATH)
-    return api_request('get', path, params=params, mime_type=JSON_MIME_HTML)
+    return api_request('get', path, params=params)
