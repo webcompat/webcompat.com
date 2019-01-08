@@ -72,7 +72,7 @@
   "created_at": "2014-03-19T17:48:00Z",
   "updated_at": "2015-10-12T18:11:36Z",
   "closed_at": null,
-  "body": "Used by labels.js functional tests suite. **Do not modify!**\r\nhttps://github.com/webcompat/webcompat.com/blob/master/tests/functional/label.js",
+  "body_html": "<p>Used by labels.js functional tests suite. <strong>Do not modify!</strong><br>\n<a href=\"https://github.com/webcompat/webcompat.com/blob/master/tests/functional/label.js\">https://github.com/webcompat/webcompat.com/blob/master/tests/functional/label.js</a></p>",
   "closed_by": {
     "login": "magsout",
     "id": 1997108,

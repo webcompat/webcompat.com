@@ -527,8 +527,7 @@ issues.MainView = Backbone.View.extend(
           body: this.sanitizeMarkdown(md.render(textarea.val())),
           commenter: form.data("username"),
           createdAt: moment(new Date().toISOString()).fromNow(),
-          commentLinkId: null,
-          rawBody: textarea.val()
+          commentLinkId: null
         });
         this.addComment(newComment);
         // Now empty out the textarea.
@@ -547,8 +546,10 @@ issues.MainView = Backbone.View.extend(
       var target =
         e.target.nodeName === "IMG"
           ? e.target
-          : e.target.nodeName === "P" && e.target.firstElementChild;
+          : e.target.nodeName === "P" && e.target.querySelector("img");
       $(target)
+        .parent()
+        .removeAttr("href")
         .parent()
         .toggleClass("issue-details-nsfw--display");
     },

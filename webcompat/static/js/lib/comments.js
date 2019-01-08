@@ -32,7 +32,6 @@ issues.CommentView = Backbone.View.extend(
     template: wcTmpl["issue/issue-comment-list.jst"],
     render: function() {
       var modelData = this.model.toJSON();
-      modelData.body = this.sanitizeMarkdown(modelData.body);
       this.$el.html(this.template(modelData));
       return this;
     }

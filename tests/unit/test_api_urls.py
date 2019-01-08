@@ -94,7 +94,8 @@ class TestAPIURLs(unittest.TestCase):
                 {'status_code': 200, 'content': '[]'})
             rv = self.app.get('/api/issues/labels', environ_base=headers)
             self.assertEqual(rv.status_code, 200)
-            self.assertEqual(rv.content_type, 'application/json')
+            self.assertEqual(
+                rv.content_type, 'application/json')
 
     def test_api_comments_link_header_auth(self):
         """Pagination in comments Link response header.
@@ -120,14 +121,16 @@ class TestAPIURLs(unittest.TestCase):
                     x in rv.headers.get('link') for x in [
                         'page', 'next', 'last']))
             self.assertEqual(rv.status_code, 200)
-            self.assertEqual(rv.content_type, 'application/json')
+            self.assertEqual(
+                rv.content_type, 'application/json')
             # API access to comments for an issue
             # with < 30 does not return link a header in
             #  the response (until GitHub changes it....?)
             rv = self.app.get('/api/issues/4/comments', environ_base=headers)
             self.assertTrue('link' not in rv.headers)
             self.assertEqual(rv.status_code, 200)
-            self.assertEqual(rv.content_type, 'application/json')
+            self.assertEqual(
+                rv.content_type, 'application/json')
 
     def test_api_set_labels_without_auth(self):
         """API setting labels without auth returns JSON 403 error code."""

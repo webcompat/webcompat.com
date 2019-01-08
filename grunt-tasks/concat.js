@@ -15,9 +15,6 @@ module.exports = function(grunt) {
         "<%= jsPath %>/vendor/backbone-1.3.3.min.js",
         "<%= jsPath %>/vendor/moment-min.js",
         "<%= jsPath %>/vendor/prism.js",
-        "<%= jsPath %>/vendor/markdown-it.js",
-        "<%= jsPath %>/vendor/markdown-it-emoji-1.4.0.js",
-        "<%= jsPath %>/vendor/markdown-it-sanitizer-0.4.1.js",
         "<%= jsPath %>/vendor/mousetrap-min.js",
         "<%= jsPath %>/vendor/backbone.mousetrap.js",
         "<%= jsPath %>/lib/flash-message.js",
@@ -38,7 +35,6 @@ module.exports = function(grunt) {
     },
     issues: {
       src: [
-        "<%= jsPath %>/lib/mixins/extend-md-sanitizer.js",
         "<%= jsPath %>/lib/models/label-list.js",
         "<%= jsPath %>/lib/editor.js",
         "<%= jsPath %>/lib/labels.js",

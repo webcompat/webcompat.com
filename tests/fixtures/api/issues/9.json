@@ -56,7 +56,7 @@
   "updated_at": "2017-10-31T15:25:08Z",
   "closed_at": null,
   "author_association": "OWNER",
-  "body": "**URL**: google.com\n**Browser**: chrome\n**Version**: 88\n**Problem type**: Unknown\n**Site owner**: No\n\n_Steps to Reproduce_\n1. Do this\n2. Do that\n",
+  "body_html": "<p><strong>URL</strong>: google.com<br>\n<strong>Browser</strong>: chrome<br>\n<strong>Version</strong>: 88<br>\n<strong>Problem type</strong>: Unknown<br>\n<strong>Site owner</strong>: No</p>\n<p><em>Steps to Reproduce</em></p>\n<ol>\n<li>Do this</li>\n<li>Do that</li>\n</ol>",
   "closed_by": {
     "login": "miketaylr",
     "id": 67283,

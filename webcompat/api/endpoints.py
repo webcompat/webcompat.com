@@ -10,7 +10,6 @@ This is used to make API calls to GitHub, either via a logged-in users
 credentials or as a proxy on behalf of anonymous or unauthenticated users.
 """
 
-
 import json
 
 from flask import abort
@@ -29,7 +28,7 @@ from webcompat.helpers import proxy_request
 from webcompat import limiter
 
 api = Blueprint('api', __name__, url_prefix='/api')
-JSON_MIME = 'application/json'
+JSON_MIME_HTML = 'application/vnd.github.v3.html+json'
 ISSUES_PATH = app.config['ISSUES_REPO_URI']
 REPO_PATH = ISSUES_PATH[:-7]
 
@@ -42,7 +41,7 @@ def proxy_issue(number):
     either as an authed user, or as one of our proxy bots.
     """
     path = 'repos/{0}/{1}'.format(ISSUES_PATH, number)
-    return api_request('get', path)
+    return api_request('get', path, mime_type=JSON_MIME_HTML)
 
 
 @api.route('/issues/<int:number>/edit', methods=['PATCH'])
@@ -65,7 +64,8 @@ def edit_issue(number):
     # The PATCH data can only be of length: 2
     if data_check in valid_statuses and len(patch_data) == 2:
         edit = proxy_request('patch', path, data=request.data)
-        return (edit.content, edit.status_code, {'content-type': JSON_MIME})
+        return (edit.content, edit.status_code,
+                {'content-type': JSON_MIME_HTML})
     # Default will be 403 for this route
     abort(403)
 
@@ -86,7 +86,7 @@ def proxy_issues():
     elif params.get('q'):
         abort(404)
     path = 'repos/{0}'.format(ISSUES_PATH)
-    return api_request('get', path, params=params)
+    return api_request('get', path, params=params, mime_type=JSON_MIME_HTML)
 
 
 @api.route('/issues/<username>/<parameter>')
@@ -113,7 +113,7 @@ def get_user_activity_issues(username, parameter):
     else:
         params[parameter] = username
     path = 'repos/{path}'.format(path=ISSUES_PATH)
-    return api_request('get', path, params=params)
+    return api_request('get', path, params=params, mime_type=JSON_MIME_HTML)
 
 
 @api.route('/issues/category/<issue_category>')
@@ -129,10 +129,12 @@ def get_issue_category(issue_category, other_params=None):
     if issue_category in category_list:
         STATUSES = app.config['STATUSES']
         params.add('milestone', STATUSES[issue_category]['id'])
-        return api_request('get', issues_path, params=params)
+        return api_request('get', issues_path, params=params,
+                           mime_type=JSON_MIME_HTML)
     elif issue_category == 'closed':
         params['state'] = 'closed'
-        return api_request('get', issues_path, params=params)
+        return api_request('get', issues_path, params=params,
+                           mime_type=JSON_MIME_HTML)
     else:
         # The path doesn’t exist. 404 Not Found.
         abort(404)
@@ -168,7 +170,8 @@ def get_search_results(query_string=None, params=None):
     # convert issues api to search api params here.
     params = normalize_api_params(params)
     path = 'search/issues'
-    return api_request('get', path, params=params)
+    return api_request('get', path, params=params,
+                       mime_type=JSON_MIME_HTML)
 
 
 @api.route('/issues/<int:number>/comments', methods=['GET', 'POST'])
@@ -182,10 +185,12 @@ def proxy_comments(number):
     if request.method == 'POST' and g.user:
         path = 'repos/{0}/{1}/comments'.format(ISSUES_PATH, number)
         return api_request('post', path, params=params,
-                           data=get_comment_data(request.data))
+                           data=get_comment_data(request.data),
+                           mime_type=JSON_MIME_HTML)
     else:
         path = 'repos/{0}/{1}/comments'.format(ISSUES_PATH, number)
-        return api_request('get', path, params=params)
+        return api_request('get', path, params=params,
+                           mime_type=JSON_MIME_HTML)
 
 
 @api.route('/issues/<int:number>/labels', methods=['POST'])
