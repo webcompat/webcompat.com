@@ -4,6 +4,11 @@
 2. New features: affect minor number
 3. API endpoint changes or dependency version updates: affect major number
 
+## 15.4.0 - 2019-01-10
+
+* Fixes #2748 - Pull GA params from POST data and send them inline [Pull #2749](https://github.com/webcompat/webcompat.com/pull/2749)
+* Fixes #2727 - Removes unecessary use of markdown-it [Pull #2731](https://github.com/webcompat/webcompat.com/pull/2731)
+
 ## 15.3.0 - 2018-12-19
 
 * Fixes #2729 - Remove labels request when they're unnused [Pull #2745](https://github.com/webcompat/webcompat.com/pull/2745)
