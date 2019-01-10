@@ -53,7 +53,6 @@ module.exports = function(grunt) {
         "<%= jsPath %>/lib/models/label-list.js",
         "<%= jsPath %>/lib/models/issue.js",
         "<%= jsPath %>/lib/mixins/pagination.js",
-        "<%= jsPath %>/lib/mixins/extend-md-sanitizer.js",
         "<%= jsPath %>/lib/issue-list.js"
       ],
       dest: "<%= jsDistPath %>/issue-list.js"
