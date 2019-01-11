@@ -4,7 +4,11 @@
 2. New features: affect minor number
 3. API endpoint changes or dependency version updates: affect major number
 
-## 15.4.0 - 2019-01-10
+## 15.5.0 - 2019-01-11
+
+* Fixes #2757 - Add markdown-it to issues on production [Pull #2758](https://github.com/webcompat/webcompat.com/pull/2758)
+
+## 15.4.0 - 2019-01-10 (known broken, don't deploy)
 
 * Fixes #2748 - Pull GA params from POST data and send them inline [Pull #2749](https://github.com/webcompat/webcompat.com/pull/2749)
 * Fixes #2727 - Removes unecessary use of markdown-it [Pull #2731](https://github.com/webcompat/webcompat.com/pull/2731)
