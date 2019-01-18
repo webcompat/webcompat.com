@@ -68,7 +68,7 @@ browser_test_label = u'Did you test in another browser?'
 textarea_label = u'Please describe what happened, including any steps you took before you saw the problem'  # noqa
 
 contact_message = u'There is a mistake in the username.'  # noqa
-contact_label = u'Sharing your GitHub nickname (without signing up) could help us for diagnosis. (publicly visible)'  # noqa
+contact_label = u'Sharing your GitHub username—without logging in—could help us with diagnosis. This will be publicly visible.'  # noqa
 
 
 class IssueForm(FlaskForm):
