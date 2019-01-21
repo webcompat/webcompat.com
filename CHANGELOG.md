@@ -4,7 +4,12 @@
 2. New features: affect minor number
 3. API endpoint changes or dependency version updates: affect major number
 
-## 15.5.0 - 2019-01-11
+## 15.6.0 - 2019-01-21
+
+* Fixes #2753 - only show GitHub username field if not logged in [Pull #2765](https://github.com/webcompat/webcompat.com/pull/2765)
+* Fixes #2757 - Adds missing lib to issues on concat.js [Pull #2760](https://github.com/webcompat/webcompat.com/pull/2760)
+
+## 15.5.0 - 2019-01-11 (known broken, don't deploy)
 
 * Fixes #2757 - Add markdown-it to issues on production [Pull #2758](https://github.com/webcompat/webcompat.com/pull/2758)
 
