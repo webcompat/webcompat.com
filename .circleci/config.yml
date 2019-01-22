@@ -59,6 +59,7 @@ jobs:
             npm run lint
             npm run build
             node --max-old-space-size=8192 ./tests/functional/_intern.js --reporters="runner" --firefoxBinary=`which firefox`
+            firefox --version
 
       - store_artifacts:
           path: test-reports
