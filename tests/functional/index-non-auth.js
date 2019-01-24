@@ -67,13 +67,13 @@ registerSuite("Index", {
         .findByCssSelector(".js-IssueList.label-needstriage .js-issue-number")
         .getVisibleText()
         .then(function(text) {
-          assert.match(text, /^Issue\s(\d+)$/, "Issue should have a number");
+          assert.match(text, /Issue\s(\d+)$/, "Issue should have a number");
         })
         .end()
         .findByCssSelector(".js-IssueList.label-needstriage .js-issue-desc a")
         .getAttribute("href")
         .then(function(text) {
-          assert.match(text, /^\/issues\/\d+$/, "Link should have a number");
+          assert.match(text, /\/issues\/\d+$/, "Link should have a number");
         })
         .end()
         .findByCssSelector(".js-IssueList.label-needstriage .js-issue-desc")
@@ -81,7 +81,7 @@ registerSuite("Index", {
         .then(function(text) {
           assert.match(
             text,
-            /^Issue\s\d+\n.+/,
+            /Issue\s\d+\n.+/,
             "Issue should have a non-empty title"
           );
         })
