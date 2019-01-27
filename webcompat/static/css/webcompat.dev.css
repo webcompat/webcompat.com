@@ -29,6 +29,7 @@
 
 /* imports for other vendor files */
 @import "lib/prism-gh-theme.css";
+@import "lib/github-light.css";
 
 *::after,
 *::before {
