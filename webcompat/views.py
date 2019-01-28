@@ -5,6 +5,7 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 """Module for the main routes of webcompat.com."""
 from hashlib import sha1
+import json
 import logging
 import os
 import urlparse
@@ -38,10 +39,10 @@ from helpers import prepare_form
 from helpers import set_referer
 from issues import report_issue
 from webcompat import app
+from webcompat.api import endpoints as api
 from webcompat.db import session_db
 from webcompat.db import User
 from webcompat import github
-
 
 @app.teardown_appcontext
 def shutdown_session(exception=None):
@@ -275,14 +276,17 @@ def create_issue():
 @app.route('/issues/<int:number>')
 @cache_policy(private=True, uri_max_age=0, must_revalidate=True)
 def show_issue(number):
+    print(dir(api))
+    issue_json, issue_status_code, issue_headers = api.proxy_issue(number)
+    issue_json = json.loads(issue_json)
+    print(issue_json)
     """Route to display a single issue."""
     if g.user:
         get_user_info()
     if session.get('show_thanks'):
         flash(number, 'thanks')
         session.pop('show_thanks')
-    return render_template('issue.html', number=number)
-
+    return render_template('issue.html', number=number, issue_body=issue_json['body_html'])
 
 @app.route('/me')
 def me_redirect():
