@@ -11,7 +11,7 @@ from webcompat import app
 
 API_URI = 'https://api.github.com/repos/'
 ISSUES_URI = app.config['ISSUES_REPO_URI'].rpartition('/issues')[0]
-USER_LABELS_URI = API_URI + ISSUES_URI + "/labels"
+USER_LABELS_URI = API_URI + ISSUES_URI + '/labels'
 WEBCOMPAT_LABELS_URI = API_URI + 'webcompat/webcompat-tests/labels'
 AUTH_HEADERS = {'Authorization': 'token {0}'.format(app.config['OAUTH_TOKEN']),
                 'User-Agent': 'webcompat/webcompat-bot'}
@@ -19,9 +19,22 @@ AUTH_HEADERS = {'Authorization': 'token {0}'.format(app.config['OAUTH_TOKEN']),
 
 def get_issue_labels(labels_uri):
     '''Get the issue labels from the given repo.'''
-    response = requests.get(labels_uri)
+    payload = {'page': '1', 'per_page': '100'}
+    response = requests.get(labels_uri, params=payload)
     if not response.status_code == 200:
         response.raise_for_status()
+    if bool(response.links):
+        print('Links has stuff in it...')
+        content = response.content
+        print(content)
+        labels_pagecount = int(response.links['last']['url'][-1:])
+        print('labels_pagecount= ' + str(labels_pagecount))
+        for page in range(2, labels_pagecount + 1):
+            print('looping pages... Page ' + str(page))
+            payload['page'] = page
+            r = requests.get(labels_uri, params=payload)
+            content += r.content
+            print(content)
     return response.json()
 
 
