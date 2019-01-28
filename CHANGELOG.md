@@ -4,6 +4,12 @@
 2. New features: affect minor number
 3. API endpoint changes or dependency version updates: affect major number
 
+## 15.6.1 - 2019-01-28
+
+* Fixes #2774 - Fixes code blocks with language identifiers [Pull #2776](https://github.com/webcompat/webcompat.com/pull/2776)
+* Fixes #2764 - Updates intern dep. to a version that's not broken [Pull #2773](https://github.com/webcompat/webcompat.com/pull/2773)
+* Fixes #2764 - Prints firefox version used by CircleCI [Pull #2766](https://github.com/webcompat/webcompat.com/pull/2766)
+
 ## 15.6.0 - 2019-01-21
 
 * Fixes #2753 - only show GitHub username field if not logged in [Pull #2765](https://github.com/webcompat/webcompat.com/pull/2765)
