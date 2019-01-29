@@ -276,17 +276,19 @@ def create_issue():
 @app.route('/issues/<int:number>')
 @cache_policy(private=True, uri_max_age=0, must_revalidate=True)
 def show_issue(number):
-    print(dir(api))
-    issue_json, issue_status_code, issue_headers = api.proxy_issue(number)
-    issue_json = json.loads(issue_json)
-    print(issue_json)
+    issue_body_json, issue_body_status_code, issue_body_headers = api.proxy_issue(number)
+    issue_body_json = json.loads(issue_body_json)
+
+    issue_comments_json, issue_comments_status_code, issue_comments_headers = api.proxy_comments(number)
+    issue_comments_json = json.loads(issue_comments_json)
+
     """Route to display a single issue."""
     if g.user:
         get_user_info()
     if session.get('show_thanks'):
         flash(number, 'thanks')
         session.pop('show_thanks')
-    return render_template('issue.html', number=number, issue_body=issue_json['body_html'])
+    return render_template('issue.html', number=number, issue_body=issue_body_json['body_html'], issue_comments_json=issue_comments_json)
 
 @app.route('/me')
 def me_redirect():
