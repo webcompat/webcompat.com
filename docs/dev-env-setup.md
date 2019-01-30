@@ -184,27 +184,27 @@ You can now edit `secrets.py` and
 
 1.  You have the option of creating a "bot account" (a dummy account for the purpose of testing), or using your own account for local development. Either way, you'll need a personal access token to proceed &mdash; this is the oauth token we use to report issues on behalf of people who don't want to give GitHub OAuth access (or don't have GitHub accounts).
 
-The [instructions for creating a personal access token](http://help.github.com/articles/creating-an-access-token-for-command-line-use) are given on GitHub. Select public_repo to grant access to the public repositories through the personal access token. Once you have created the token you can add it in the variable `OAUTH_TOKEN = ""`.
+    The [instructions for creating a personal access token](http://help.github.com/articles/creating-an-access-token-for-command-line-use) are given on GitHub. Select public_repo to grant access to the public repositories through the personal access token. Once you have created the token you can add it in the variable `OAUTH_TOKEN = ""`.
 
 2.  Add values for `GITHUB_CLIENT_ID` and `GITHUB_CLIENT_SECRET`. Create your own local application ([instructions here](https://github.com/settings/applications/new)) &mdash; when prompted for an "Authorization callback URL", use `http://localhost:5000/callback`, and take note of the client ID and client secret GitHub gives you.
 
-> **Note**: Cloud 9 users should use `http://yourapp.c9users.io:8000/callback` for the Authorization callback URL instead.
+    > **Note**: Cloud 9 users should use `http://yourapp.c9users.io:8000/callback` for the Authorization callback URL instead.
 
-When you have the client ID and client secret, put them in the corresponding lines in `secrets.py`:
+    When you have the client ID and client secret, put them in the corresponding lines in `secrets.py`:
 
-```py
-GITHUB_CLIENT_ID = os.environ.get('FAKE_ID') or "<client id goes here>"
-GITHUB_CLIENT_SECRET = os.environ.get('FAKE_SECRET') or  "<client secret goes here>"
-```
+    ```py
+    GITHUB_CLIENT_ID = os.environ.get('FAKE_ID') or "<client id goes here>"
+    GITHUB_CLIENT_SECRET = os.environ.get('FAKE_SECRET') or  "<client secret goes here>"
+    ```
 
-> **Note**: You can ignore the `FAKE_ID` and `FAKE_SECRET` environment variables; we use that as a hack for automated tests.
+    > **Note**: You can ignore the `FAKE_ID` and `FAKE_SECRET` environment variables; we use that as a hack for automated tests.
 
 3.  Click on **Log in** to authorize the application and get access to the issues.
     ![Login](https://cldup.com/HHtMlPhAod.png)
 
-> **Note**: If you get a 404 at GitHub when clicking **Log in**, it means you haven't filled in the `GITHUB_CLIENT_ID` or `GITHUB_CLIENT_SECRET` in `secrets.py`.
+    > **Note**: If you get a 404 at GitHub when clicking **Log in**, it means you haven't filled in the `GITHUB_CLIENT_ID` or `GITHUB_CLIENT_SECRET` in `secrets.py`.
 
-![Auth 404](https://i.cloudup.com/8FDA5bVc7l.png)
+    ![Auth 404](https://i.cloudup.com/8FDA5bVc7l.png)
 
 ### Starting the server
 
