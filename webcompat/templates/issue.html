@@ -14,8 +14,8 @@
             {{ issue_body}}
           </section>
 
-          {% for comment in issue_comments_json %}
-            <section class="js-Issue-commentList issue-comment">
+          <section class="js-Issue-commentList issue-comment">
+            {% for comment in issue_comments_json %}
               <header class="comment-header">
                 <figure class="comment-author" role="group">
                   <img src="{{comment['user']['avatar_url']}}" class="comment-avatar" alt="{{comment['user']['login']}}">
@@ -32,8 +32,8 @@
                   {{comment['body_html'] | safe}}
                 </div>
               </div>
-            </section>
-          {%endfor%}
+            {%endfor%}
+          </section>
 
           {% if session.user_id and session.avatar_url %}
             <section class="grid-cell issue-comment issue-new-comment x3 js-issue-comment-submit is-hidden">

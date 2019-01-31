@@ -1,0 +1,18 @@
+<script type="text/template">
+  <header class="comment-header">
+    <figure class="comment-author" role="group">
+      <img src="<%= avatarUrl %>" class="comment-avatar" alt="<%= commenter %>">
+      <figcaption class="js-Comment-owner">
+        <a class="comment-reporter bold" href="https://github.com/<%= commenter %>"><%= commenter %></a>
+      </figcaption>
+    </figure>
+    <div>
+      <a class="comment-time" href="#<%= commentLinkId %>"><%= createdAt %></a>
+    </div>
+  </header>
+  <div class="js-Comment-content comment-body grid-cell">
+    <div class="markdown">
+      <%= body %>
+    </div>
+  </div>
+</script>
