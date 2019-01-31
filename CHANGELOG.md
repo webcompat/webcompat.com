@@ -4,6 +4,13 @@
 2. New features: affect minor number
 3. API endpoint changes or dependency version updates: affect major number
 
+## 15.6.2 - 2019-01-31
+
+* Fixes #2782 - Edit dev-env-setup.md around GH client ID/secret + typos [Pull #2786](https://github.com/webcompat/webcompat.com/pull/2786)
+* Fixes #2747 - Updates Staging to use http2 [Pull #2779](https://github.com/webcompat/webcompat.com/pull/2779)
+* Fixes #2751 - Add gzip settings to Staging [Pull #2777](https://github.com/webcompat/webcompat.com/pull/2777)
+* Fixes #2768 - Renames highlight class so it doesn't interact with the Github class [Pull #2775](https://github.com/webcompat/webcompat.com/pull/2775)
+
 ## 15.6.1 - 2019-01-28
 
 * Fixes #2774 - Fixes code blocks with language identifiers [Pull #2776](https://github.com/webcompat/webcompat.com/pull/2776)
@@ -1209,4 +1216,3 @@ Add namespaces for statuses and browsers to labels. [Pull #640](https://github.c
 ## 1.0.0 - 2014-11-06
 
 First release version for an app that's been released for quite a while. There's lot of stuff in it. ^_^
-
