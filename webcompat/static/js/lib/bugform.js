@@ -18,7 +18,7 @@ function BugForm() {
   this.submitTypeInput = $("#submit_type:hidden");
   this.uploadLabel = $(".js-label-upload");
   this.urlParamRegExp = /url=([^&]+)/;
-  this.githubRegexp = /^[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}$/;
+  this.githubRegexp = /^[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}$/i;
 
   this.UPLOAD_LIMIT = 1024 * 1024 * 4;
 
