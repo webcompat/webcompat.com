@@ -115,19 +115,6 @@ md.renderer.rules.link_open = function(tokens, idx, options, env, self) {
   return defaultLinkOpenRender(tokens, idx, options, env, self);
 };
 
-issues.MetaDataView = Backbone.View.extend(
-  _.extend({}, issueMarkdownSanitizer, {
-    el: $("#js-Issue-information"),
-    template: wcTmpl["issue/metadata.jst"],
-    render: function() {
-      var modelData = this.model.toJSON();
-      modelData.body = this.sanitizeMarkdown(modelData.body);
-      this.$el.html(this.template(modelData));
-      return this;
-    }
-  })
-);
-
 issues.AsideView = Backbone.View.extend({
   el: $("#js-Issue-aside"),
   initialize: function() {
@@ -142,13 +129,6 @@ issues.AsideView = Backbone.View.extend({
   render: function() {
     this.$el.html(this.template(this.model.toJSON()));
     return this;
-  }
-});
-
-issues.BodyView = Backbone.View.extend({
-  mainView: null,
-  initialize: function(options) {
-    this.mainView = options.mainView;
   }
 });
 
@@ -315,7 +295,6 @@ issues.MainView = Backbone.View.extend(
       body.addClass("language-html");
       var issueNum = { number: $("main").data("issueNumber") };
       this.issue = new issues.Issue(issueNum);
-      this.comments = new issues.CommentsCollection({ pageNumber: 1 });
       this.initSubViews(
         _.bind(function() {
           // set listener for closing category editor only after its
@@ -370,8 +349,6 @@ issues.MainView = Backbone.View.extend(
     },
     initSubViews: function(callback) {
       var issueModel = { model: this.issue };
-      this.metadata = new issues.MetaDataView(issueModel);
-      this.body = new issues.BodyView(_.extend(issueModel, { mainView: this }));
       this.aside = new issues.AsideView(issueModel);
       this.labels = new issues.LabelsView(issueModel);
       this.milestones = new issues.MilestonesView(issueModel);
@@ -392,48 +369,15 @@ issues.MainView = Backbone.View.extend(
               this.issue.get("labels"),
               _.matchesProperty("name", "nsfw")
             );
-
-            _.each(
-              [this.metadata, this.labels, this.milestones, this.body, this],
-              function(elm) {
-                elm.render();
-                _.each($(".js-Issue-markdown code"), function(elm) {
-                  Prism.highlightElement(elm);
-                });
-              }
-            );
+            _.each([this.labels, this.milestones, this], function(elm) {
+              elm.render();
+              _.each($(".js-Issue-markdown code"), function(elm) {
+                Prism.highlightElement(elm);
+              });
+            });
 
             if (this._supportsFormData) {
               this.imageUpload.render();
-            }
-
-            // If there are any comments, go fetch the model data
-            if (this.issue.get("commentNumber") > 0) {
-              this.comments
-                .fetch(headersBag)
-                .done(
-                  _.bind(function(response) {
-                    this.addExistingComments();
-                    this.comments.bind("add", _.bind(this.addComment, this));
-                    // If there's a #hash pointing to a comment (or elsewhere)
-                    // scrollTo it.
-                    if (location.hash !== "") {
-                      var _id = $(location.hash);
-                      window.scrollTo(0, _id.offset().top);
-                    }
-                    if (response[0].lastPageNumber > 1) {
-                      this.getRemainingComments(++response[0].lastPageNumber);
-                    }
-                  }, this)
-                )
-                .fail(function() {
-                  var msg =
-                    "There was an error retrieving issue comments. Please reload to try again.";
-                  wcEvents.trigger("flash:error", {
-                    message: msg,
-                    timeout: 4000
-                  });
-                });
             }
           }, this)
         )
@@ -507,9 +451,6 @@ issues.MainView = Backbone.View.extend(
         // Push to GitHub
         newComment.save();
       }
-    },
-    addExistingComments: function() {
-      this.comments.each(this.addComment, this);
     },
     toggleNSFW: function(e) {
       // make sure we've got a reference to the <img> element,

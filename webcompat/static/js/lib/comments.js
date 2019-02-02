@@ -4,23 +4,6 @@
 
 var issues = issues || {}; // eslint-disable-line no-use-before-define
 
-issues.CommentsCollection = Backbone.Collection.extend({
-  model: issues.Comment,
-  url: function() {
-    var issueNumber = $("main").data("issueNumber");
-    return "/api/issues/" + issueNumber + "/comments?page=" + this.pageNumber;
-  },
-  initialize: function(options) {
-    this.pageNumber = options.pageNumber;
-  },
-  fetchPage: function(options) {
-    if (options.pageNumber) {
-      this.pageNumber = options.pageNumber;
-    }
-    return this.fetch(options);
-  }
-});
-
 var commentMarkdownSanitizer = new MarkdownSanitizerMixin();
 
 issues.CommentView = Backbone.View.extend(
