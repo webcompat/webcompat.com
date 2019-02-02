@@ -11,7 +11,7 @@
       <article class="grid-nested x2 issue-labels">
         <div class="grid-row">
           <section id="js-Issue-information" class="grid-cell">
-            {{ issue_body}}
+            {{ issue_body | safe}}
           </section>
 
           <section class="js-Issue-commentList issue-comment">
