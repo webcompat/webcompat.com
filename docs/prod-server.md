@@ -128,6 +128,7 @@ nginx configuration file:
 server {
         server_name staging.webcompat.com;
         root /home/webcompat/staging.webcompat.com;
+        http2_push_preload on;
         error_log /home/webcompat/logs/staging-nginx-error.log;
         client_max_body_size 4M;
 
@@ -165,7 +166,6 @@ server {
                 allow all;
         }
 }
-
 ```
 
 That have the following handlers:
