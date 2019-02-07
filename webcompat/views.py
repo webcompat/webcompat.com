@@ -44,6 +44,7 @@ from webcompat.db import session_db
 from webcompat.db import User
 from webcompat import github
 
+
 @app.teardown_appcontext
 def shutdown_session(exception=None):
     """Clear the session."""
@@ -276,13 +277,13 @@ def create_issue():
 @app.route('/issues/<int:number>')
 @cache_policy(private=True, uri_max_age=0, must_revalidate=True)
 def show_issue(number):
-    issue_body_json, issue_body_status_code, issue_body_headers = api.proxy_issue(number)
+    """Route to display a single issue."""
+    issue_body_json = api.proxy_issue(number)[0]
     issue_body_json = json.loads(issue_body_json)
 
-    issue_comments_json, issue_comments_status_code, issue_comments_headers = api.proxy_comments(number)
+    issue_comments_json = api.proxy_comments(number)[0]
     issue_comments_json = json.loads(issue_comments_json)
 
-    """Route to display a single issue."""
     if g.user:
         get_user_info()
     if session.get('show_thanks'):
