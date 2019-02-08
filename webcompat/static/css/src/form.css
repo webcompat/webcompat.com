@@ -86,6 +86,7 @@
 /* form message: error */
 .form-message-error {
   color: var(--color-error);
+  display: block;
   font-weight: 700;
 }
 
