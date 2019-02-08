@@ -7,7 +7,7 @@
 from hashlib import sha1
 import logging
 import os
-import urlparse
+import urllib.parse
 from uuid import uuid4
 
 from flask import abort
@@ -19,26 +19,26 @@ from flask import request
 from flask import send_from_directory
 from flask import session
 from flask import url_for
-
-from dashboard import filter_needstriage
 from flask_firehose import push
-from form import AUTH_REPORT
-from form import get_form
-from form import PROXY_REPORT
-from helpers import add_csp
-from helpers import add_sec_headers
-from helpers import bust_cache
-from helpers import cache_policy
-from helpers import form_type
-from helpers import get_browser_name
-from helpers import get_milestone_list
-from helpers import get_referer
-from helpers import get_user_info
-from helpers import is_blacklisted_domain
-from helpers import is_valid_issue_form
-from helpers import prepare_form
-from helpers import set_referer
-from issues import report_issue
+
+from webcompat.dashboard import filter_needstriage
+from webcompat.form import AUTH_REPORT
+from webcompat.form import get_form
+from webcompat.form import PROXY_REPORT
+from webcompat.helpers import add_csp
+from webcompat.helpers import add_sec_headers
+from webcompat.helpers import bust_cache
+from webcompat.helpers import cache_policy
+from webcompat.helpers import form_type
+from webcompat.helpers import get_browser_name
+from webcompat.helpers import get_milestone_list
+from webcompat.helpers import get_referer
+from webcompat.helpers import get_user_info
+from webcompat.helpers import is_blacklisted_domain
+from webcompat.helpers import is_valid_issue_form
+from webcompat.helpers import prepare_form
+from webcompat.helpers import set_referer
+from webcompat.issues import report_issue
 from webcompat import app
 from webcompat.db import session_db
 from webcompat.db import User
@@ -107,7 +107,7 @@ def login():
 def logout():
     """Set the logout route."""
     session.clear()
-    flash(u'You were successfully logged out.', 'info')
+    flash('You were successfully logged out.', 'info')
     return redirect(g.referer)
 
 
@@ -120,7 +120,7 @@ def authorized(access_token=None):
     if app.config['TESTING']:
         access_token = 'thisisatest'
     if access_token is None:
-        flash(u'Something went wrong trying to sign into GitHub. :(', 'error')
+        flash('Something went wrong trying to sign into GitHub. :(', 'error')
         return redirect(g.referer)
     user = User.query.filter_by(access_token=access_token).first()
     if user is None:
@@ -285,7 +285,7 @@ def create_issue():
             abort(400)
         if form.get('submit_type') == PROXY_REPORT:
             # Checking blacklisted domains
-            domain = urlparse.urlsplit(form['url']).hostname
+            domain = urllib.parse.urlsplit(form['url']).hostname
             if is_blacklisted_domain(domain):
                 msg = app.config['IS_BLACKLISTED_DOMAIN'].format(form['url'])
                 flash(msg, 'notimeout')

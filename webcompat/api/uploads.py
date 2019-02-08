@@ -58,7 +58,7 @@ class Upload(object):
             if isinstance(imagedata, FileStorage):
                 return Image.open(imagedata)
             # Is this a base64 encoded image (i.e., bug report screenshot)?
-            if (isinstance(imagedata, unicode) and
+            if (isinstance(imagedata, str) and
                     imagedata.startswith('data:image/')):
                 # Chop off 'data:image/.+;base64,' before decoding
                 imagedata = re.sub('^data:image/.+;base64,', '', imagedata)

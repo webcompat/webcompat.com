@@ -13,12 +13,17 @@ import os
 import shutil
 import sys
 import tempfile
-import urlparse
+import urllib.parse
 
 import requests
 
+<<<<<<< 4bcbb9acc4fe7056c13dca6dc8af532492d2174d
 from environment import *  # noqa
 from secrets import *  # noqa
+=======
+from config.environment import *  # nopep8
+from config.secrets import *  # nopep8
+>>>>>>> Issue #2348 - Converts webcompat/ to python 3
 
 MILESTONE_ERROR = """It failed with {msg}!
 We will read from data/milestones.json.
@@ -47,7 +52,7 @@ def initialize_status():
     REPO_ROOT = ISSUES_REPO_URI.rpartition('/issues')[0]
     milestones_url_path = os.path.normcase(
         os.path.join('repos', REPO_ROOT, 'milestones'))
-    milestones_url = urlparse.urlunparse(
+    milestones_url = urllib.parse.urlunparse(
         ('https', 'api.github.com', milestones_url_path, '', '', ''))
     milestones_path = os.path.join(DATA_PATH, 'milestones.json')
     # Attempt to fetch from data/milestones.json
@@ -58,10 +63,12 @@ def initialize_status():
             # Get the milestone from the network
             print('Fetching milestones from Github…')
             r = requests.get(milestones_url)
+            # r.content is bytes
             milestones_content = r.content
             if r.status_code == 200:
                 with open(milestones_path, 'w') as f:
-                    f.write(r.content)
+                    # converting from bytes to str
+                    f.write(milestones_content.decode('utf-8'))
                 print('Milestones saved in data/')
             r.raise_for_status()
         except requests.exceptions.HTTPError as error:
@@ -85,6 +92,7 @@ def milestones_from_file(milestones_path):
     """Attempt to read the milestones data from the filesystem."""
     if os.path.isfile(milestones_path):
         with open(milestones_path, 'r') as f:
+            # returns a str
             milestones_content = f.read()
         return milestones_content
     else:
