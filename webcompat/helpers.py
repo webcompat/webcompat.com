@@ -15,7 +15,7 @@ import hashlib
 import json
 import os
 import re
-import urlparse
+import urllib.parse
 
 from flask import abort
 from flask import g
@@ -79,7 +79,7 @@ def get_str_value(val):
     details_map = {False: 'false', True: 'true', None: 'null'}
     if isinstance(val, (bool, type(None))):
         return details_map[val]
-    if isinstance(val, unicode):
+    if isinstance(val, str):
         return val
     return str(val)
 
@@ -131,7 +131,7 @@ def get_browser(user_agent_string=None):
 
     It will pre-populate the bug reporting form.
     """
-    if user_agent_string and isinstance(user_agent_string, basestring):
+    if user_agent_string and isinstance(user_agent_string, str):
         ua_dict = user_agent_parser.Parse(user_agent_string)
         ua = ua_dict.get('user_agent')
         name = get_name(ua)
@@ -154,7 +154,7 @@ def get_browser_name(user_agent_string=None):
 
     unknown user agents will be reported as "unknown".
     """
-    if user_agent_string and isinstance(user_agent_string, basestring):
+    if user_agent_string and isinstance(user_agent_string, str):
         # get_browser will return something like 'Chrome Mobile 47.0'
         # we just want 'chrome mobile', i.e., the lowercase name
         # w/o the version
@@ -167,7 +167,7 @@ def get_os(user_agent_string=None):
 
     It pre-populates the bug reporting form.
     """
-    if user_agent_string and isinstance(user_agent_string, basestring):
+    if user_agent_string and isinstance(user_agent_string, str):
         ua_dict = user_agent_parser.Parse(user_agent_string)
         os = ua_dict.get('os')
         name = get_name(os)
@@ -216,7 +216,7 @@ def get_referer(request):
     the session for a manually stashed 'referer' key, otherwise return None.
     """
     if request.referrer:
-        host = urlparse.urlparse(request.referrer).hostname
+        host = urllib.parse.urlparse(request.referrer).hostname
         if host in HOST_WHITELIST:
             return request.referrer
         else:
@@ -398,7 +398,8 @@ def mockable_response(func):
             else:
                 file_path = FIXTURES_PATH + request.path
             if not os.path.exists(file_path + '.json'):
-                print('Expected fixture file: ' + file_path + '.json')
+                msg = 'Expected fixture file: {fp}.json'.format(fp=file_path)
+                print(msg)
                 return ('', 404)
             else:
                 with open(file_path + '.json', 'r') as f:
@@ -573,7 +574,7 @@ def is_valid_issue_form(form):
         'url',
         'username', ]
     form_submit_values = ['github-auth-report', 'github-proxy-report']
-    parameters_check = set(must_parameters).issubset(form.keys())
+    parameters_check = set(must_parameters).issubset(list(form.keys()))
     if parameters_check:
         values_check = form['submit_type'] in form_submit_values
     return parameters_check and values_check

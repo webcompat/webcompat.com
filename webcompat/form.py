@@ -13,7 +13,7 @@ It includes helper methods.
 import json
 import random
 import re
-import urlparse
+import urllib.parse
 
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileAllowed
@@ -38,37 +38,37 @@ AUTH_REPORT = 'github-auth-report'
 PROXY_REPORT = 'github-proxy-report'
 SCHEMES = ('http://', 'https://')
 BAD_SCHEMES = ('http:/', 'https:/', 'http:', 'https:')
-GITHUB_HELP = u'_From [webcompat.com](https://webcompat.com/) with ❤️_'
+GITHUB_HELP = '_From [webcompat.com](https://webcompat.com/) with ❤️_'
 
 problem_choices = [
-    (u'detection_bug', u'Desktop site instead of mobile site'),
-    (u'site_bug', u'Site is not usable'),
-    (u'layout_bug', u'Design is broken'),
-    (u'video_bug', u'Video or audio doesn\'t play'),
-    (u'unknown_bug', u'Something else')
+    ('detection_bug', 'Desktop site instead of mobile site'),
+    ('site_bug', 'Site is not usable'),
+    ('layout_bug', 'Design is broken'),
+    ('video_bug', 'Video or audio doesn\'t play'),
+    ('unknown_bug', 'Something else')
 ]
 
 tested_elsewhere = [
-    (u'yes', u'Yes'),
-    (u'no', u'No')
+    ('yes', 'Yes'),
+    ('no', 'No')
 ]
 
-url_message = u'A valid URL is required.'
-image_message = (u'Please select an image of the following type:'
-                 u' jpg, png, gif, or bmp.')
-radio_message = u'Problem type required.'
-username_message = u'A valid username must be {0} characters long'.format(
+url_message = 'A valid URL is required.'
+image_message = ('Please select an image of the following type:'
+                 ' jpg, png, gif, or bmp.')
+radio_message = 'Problem type required.'
+username_message = 'A valid username must be {0} characters long'.format(
     random.randrange(0, 99))
 
-desc_label = u'Please write a short problem summary'
-desc_message = u'A problem summary is required.'
+desc_label = 'Please write a short problem summary'
+desc_message = 'A problem summary is required.'
 
-url_label = u'Site URL'
-browser_test_label = u'Did you test in another browser?'
-textarea_label = u'Please describe what happened, including any steps you took before you saw the problem'  # noqa
+url_label = 'Site URL'
+browser_test_label = 'Did you test in another browser?'
+textarea_label = 'Please describe what happened, including any steps you took before you saw the problem'  # noqa
 
-contact_message = u'There is a mistake in the username.'  # noqa
-contact_label = u'Sharing your GitHub username—without logging in—could help us with diagnosis. This will be publicly visible.'  # noqa
+contact_message = 'There is a mistake in the username.'  # noqa
+contact_label = 'Sharing your GitHub username—without logging in—could help us with diagnosis. This will be publicly visible.'  # noqa
 
 
 class IssueForm(FlaskForm):
@@ -76,10 +76,10 @@ class IssueForm(FlaskForm):
 
     url = StringField(url_label,
                       [InputRequired(message=url_message)])
-    browser = StringField(u'Is this information correct?', [Optional()])
-    os = StringField(u'Operating System', [Optional()])
+    browser = StringField('Is this information correct?', [Optional()])
+    os = StringField('Operating System', [Optional()])
     # A dummy field to trap common bots. Users do not see that.
-    username = StringField(u'Username',
+    username = StringField('Username',
                            [Length(max=0, message=username_message)])
     # Field for people who want to be contacted, but do not want to login
     # regex for GitHub usernames
@@ -101,7 +101,7 @@ class IssueForm(FlaskForm):
     # we filter allowed type in uploads.py
     # Note, we don't use the label programtically for this input[type=file],
     # any changes here need to be updated in form.html.
-    image = FileField(u'Attach a screenshot image',
+    image = FileField('Attach a screenshot image',
                       [Optional(),
                        FileAllowed(Upload.ALLOWED_FORMATS, image_message)])
     details = HiddenField()
@@ -143,7 +143,7 @@ def get_details(details):
     rv = ''
     try:
         rv = ''.join(['<li>{k}: {v}</li>'.format(k=k, v=get_str_value(v))
-                      for k, v in details.items()])
+                      for k, v in list(details.items())])
     except AttributeError:
         return '<li>{content}</li>'.format(content=content)
     return rv
@@ -194,14 +194,14 @@ def get_radio_button_label(field_value, label_list):
         if value == field_value:
             return text
     # Something probably went wrong. Return something safe.
-    return u'Unknown'
+    return 'Unknown'
 
 
 def get_problem_summary(category):
     """Create the summary for the issue title."""
     if category == 'unknown_bug':
         # In this case, we need a special message
-        return u'see bug description'
+        return 'see bug description'
     else:
         # Return the usual message in lowercase
         # because it is not at the start of the summary.
@@ -213,7 +213,7 @@ def wrap_metadata(metadata):
 
     We use it to hide potentially (un)interesting metadata from the UI.
     """
-    return u'<!-- @{0}: {1} -->\n'.format(*metadata)
+    return '<!-- @{0}: {1} -->\n'.format(*metadata)
 
 
 def get_metadata(metadata_keys, form_object):
@@ -227,7 +227,7 @@ def get_metadata(metadata_keys, form_object):
     metadata = [(key, form_object.get(key)) for key in metadata_keys]
     metadata = [(md[0], normalize_metadata(md[1])) for md in metadata]
     if extra_labels:
-        metadata.append(('extra_labels', u', '.join(extra_labels)))
+        metadata.append(('extra_labels', ', '.join(extra_labels)))
     # Now, "wrap the metadata" and return them all as a single string
     return ''.join([wrap_metadata(md) for md in metadata])
 
@@ -237,7 +237,7 @@ def normalize_url(url):
     if not url:
         return None
     url = url.strip()
-    parsed = urlparse.urlparse(url)
+    parsed = urllib.parse.urlparse(url)
     # Handle the case when URL has the form http://https://example.com
     if parsed.netloc in ['http:', 'https:'] and parsed.path.startswith('//'):
         url = url.split('//', 1)[1]
@@ -246,17 +246,17 @@ def normalize_url(url):
         # if url starts with a bad scheme, parsed.netloc will be empty,
         # so we use parsed.path instead
         path = parsed.path.lstrip('/')
-        url = u'{}://{}'.format(parsed.scheme, path)
+        url = '{}://{}'.format(parsed.scheme, path)
         if parsed.query:
             url += '?' + parsed.query
         if parsed.fragment:
             url += '#' + parsed.fragment
     elif not parsed.scheme:
         # We assume that http is missing not https
-        if url.startswith("//"):
-            url = u"http://{}".format(url[2:])
+        if url.startswith('//'):
+            url = 'http://{}'.format(url[2:])
         else:
-            url = u'http://{}'.format(url)
+            url = 'http://{}'.format(url)
     return url
 
 
@@ -284,7 +284,7 @@ def domain_name(url):
     url = url.lstrip()
     # testing if it's an http URL
     if url.startswith(SCHEMES):
-        domain = urlparse.urlsplit(url).netloc
+        domain = urllib.parse.urlsplit(url).netloc
     else:
         domain = None
     return domain
@@ -329,9 +329,9 @@ def build_formdata(form_object):
     problem_summary = get_problem_summary(form_object.get('problem_category'))
 
     if domain:
-        summary = u'{0} - {1}'.format(domain, problem_summary)
+        summary = '{0} - {1}'.format(domain, problem_summary)
     else:
-        summary = u'{0} - {1}'.format(normalized_url, problem_summary)
+        summary = '{0} - {1}'.format(normalized_url, problem_summary)
 
     metadata_keys = ['browser', 'ua_header', 'reported_with']
     extra_labels = form_object.get('extra_labels', None)
@@ -353,7 +353,7 @@ def build_formdata(form_object):
 
     # Preparing the body
 
-    body = u"""{metadata}
+    body = """{metadata}
 **URL**: {url}
 
 **Browser / Version**: {browser}
@@ -372,7 +372,7 @@ def build_formdata(form_object):
         body += build_details(details)
     # Add the image, if there was one.
     if form_object.get('image_upload') is not None:
-        body += u'\n\n![Screenshot of the site issue]({image_url})'.format(
+        body += '\n\n![Screenshot of the site issue]({image_url})'.format(
             image_url=form_object.get('image_upload').get('url'))
     # Append contact information if available
     contact = form_object.get('contact', '')
@@ -380,8 +380,8 @@ def build_formdata(form_object):
     contact = contact.strip()
     contact = contact.replace('@', '')
     if contact:
-        body += u'\n\nReported by @{contact}'.format(contact=contact)
+        body += '\n\nReported by @{contact}'.format(contact=contact)
     # Append "from webcompat.com" message to bottom (for GitHub issue viewers)
-    body += u'\n\n{0}'.format(GITHUB_HELP)
+    body += '\n\n{0}'.format(GITHUB_HELP)
     rv = {'title': summary, 'body': body}
     return rv

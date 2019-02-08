@@ -28,12 +28,12 @@ limiter = Limiter(app, key_func=get_remote_address)
 
 # import views after we initialize our github object
 import webcompat.views  # nopep8
-import webhooks  # nopep8
+from webcompat import webhooks  # nopep8
 
 # register blueprints
-from api.endpoints import api
-from api.uploads import uploads
-from error_handlers import error_handlers
+from webcompat.api.endpoints import api
+from webcompat.api.uploads import uploads
+from webcompat.error_handlers import error_handlers
 
 for blueprint in [api, error_handlers, uploads]:
     app.register_blueprint(blueprint)

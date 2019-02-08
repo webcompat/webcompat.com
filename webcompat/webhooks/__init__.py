@@ -14,9 +14,9 @@ import logging
 
 from flask import request
 
-from helpers import get_issue_info
-from helpers import is_github_hook
-from helpers import new_opened_issue
+from webcompat.webhooks.helpers import get_issue_info
+from webcompat.webhooks.helpers import is_github_hook
+from webcompat.webhooks.helpers import new_opened_issue
 
 from webcompat import app
 
