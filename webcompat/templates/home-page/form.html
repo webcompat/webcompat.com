@@ -145,6 +145,10 @@
         {% if session.username %}Report as {{ session.username }}{% else %}Report via GitHub{% endif %}
       </button>
     </div>
+    <div class="form-text-privacy ">
+      All information included in this report will be publicly visible.
+      <a href="https://webcompat.com/privacy">Learn More</a>
+    </div>
     <div class="is-hidden" aria-hidden="true">
       <div class="form-text form-element js-Form-group">
         {{ form.username.label(class_='form-label') }}
