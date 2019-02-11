@@ -408,6 +408,35 @@ def mockable_response(func):
     return wrapped_func
 
 
+def mockable_response_direct(func, path, get_args=None):
+    """Mock out API reponses with a decorator.
+
+    This allows us to send back fixture files when in TESTING mode, rather
+    than making API requests over the network. See /api/endponts.py
+    for usage.
+    """
+    @wraps(func)
+    def wrapped_func(*args, **kwargs):
+        if app.config['TESTING']:
+            full_path = path.format(*args)
+            if get_args:
+                # if there are GET args, encode them as a hash so we can
+                # have different fixture files for different response states
+                checksum = hashlib.md5(json.dumps(get_args)).hexdigest()
+                file_path = FIXTURES_PATH + full_path + "." + checksum
+            else:
+                file_path = FIXTURES_PATH + full_path
+            if not os.path.exists(file_path + '.json'):
+                print('Expected fixture file: ' + file_path + '.json')
+                return ('', 404)
+            else:
+                with open(file_path + '.json', 'r') as f:
+                    data = f.read()
+                    return (data, 200, get_fixture_headers(data))
+        return func(*args, **kwargs)
+    return wrapped_func
+
+
 def extract_url(issue_body):
     """Extract the URL for an issue from WebCompat.
 

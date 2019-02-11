@@ -278,10 +278,10 @@ def create_issue():
 @cache_policy(private=True, uri_max_age=0, must_revalidate=True)
 def show_issue(number):
     """Route to display a single issue."""
-    issue_body_json = api.proxy_issue(number)[0]
+    issue_body_json = api.proxy_issue_direct(number)[0]
     issue_body_json = json.loads(issue_body_json)
 
-    issue_comments_json = api.proxy_comments(number)[0]
+    issue_comments_json = api.proxy_comments_direct(number)[0]
     issue_comments_json = json.loads(issue_comments_json)
 
     if g.user:

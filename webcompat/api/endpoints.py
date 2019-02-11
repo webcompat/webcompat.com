@@ -23,6 +23,7 @@ from webcompat.helpers import api_request
 from webcompat.helpers import get_comment_data
 from webcompat.helpers import get_response_headers
 from webcompat.helpers import mockable_response
+from webcompat.helpers import mockable_response_direct
 from webcompat.helpers import normalize_api_params
 from webcompat.helpers import proxy_request
 from webcompat import limiter
@@ -33,15 +34,22 @@ ISSUES_PATH = app.config['ISSUES_REPO_URI']
 REPO_PATH = ISSUES_PATH[:-7]
 
 
-@api.route('/issues/<int:number>')
-@mockable_response
-def proxy_issue(number):
+def proxy_issue_impl(number):
     """XHR endpoint to get issue data from GitHub.
 
     either as an authed user, or as one of our proxy bots.
     """
     path = 'repos/{0}/{1}'.format(ISSUES_PATH, number)
     return api_request('get', path, mime_type=JSON_MIME_HTML)
+
+
+@api.route('/issues/<int:number>')
+@mockable_response
+def proxy_issue(number):
+    return proxy_issue_impl(number)
+
+
+proxy_issue_direct = mockable_response_direct(proxy_issue_impl, '/api/issues/{0}')
 
 
 @api.route('/issues/<int:number>/edit', methods=['PATCH'])
@@ -174,9 +182,7 @@ def get_search_results(query_string=None, params=None):
                        mime_type=JSON_MIME_HTML)
 
 
-@api.route('/issues/<int:number>/comments', methods=['GET', 'POST'])
-@mockable_response
-def proxy_comments(number):
+def proxy_comments_impl(number):
     """XHR endpoint to get issues comments from GitHub.
 
     Either as an authed user, or as one of our proxy bots.
@@ -191,6 +197,15 @@ def proxy_comments(number):
         path = 'repos/{0}/{1}/comments'.format(ISSUES_PATH, number)
         return api_request('get', path, params=params,
                            mime_type=JSON_MIME_HTML)
+
+
+@api.route('/issues/<int:number>/comments', methods=['GET', 'POST'])
+@mockable_response
+def proxy_comments(number):
+    return proxy_comments_impl(number)
+
+
+proxy_comments_direct = mockable_response_direct(proxy_comments_impl, '/api/issues/{0}/comments')
 
 
 @api.route('/issues/<int:number>/labels', methods=['POST'])
