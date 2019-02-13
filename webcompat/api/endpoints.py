@@ -86,7 +86,7 @@ def proxy_issues():
     elif params.get('q'):
         abort(404)
     path = 'repos/{0}'.format(ISSUES_PATH)
-    return api_request('get', path, params=params, mime_type=JSON_MIME_HTML)
+    return api_request('get', path, params=params)
 
 
 @api.route('/issues/<username>/<parameter>')
