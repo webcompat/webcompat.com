@@ -9,12 +9,17 @@
 import logging
 
 from flask import Flask
+from flask_firehose import Firehose
 from flask_github import GitHub
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 
 # Define the application
 app = Flask(__name__, static_url_path='')
+Firehose(app)
+# Adds the HTTP/2 Server Push functionality to app
+# firehose = Firehose(connector=Custom_connector())
+# firehose.init_app(app)
 
 # Configurations
 app.config.from_object('config')
