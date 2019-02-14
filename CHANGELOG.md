@@ -4,6 +4,16 @@
 2. New features: affect minor number
 3. API endpoint changes or dependency version updates: affect major number
 
+## 16.0.0 - 2019-02-14
+
+* Fixes #2767 - Cut description at 75th char [Pull #2801](https://github.com/webcompat/webcompat.com/pull/2801)
+* Fixes #2690 - Adds block about privacy implications of reporting issues [Pull #2795](https://github.com/webcompat/webcompat.com/pull/2795)
+* Fixes #2724 - display error messages on a line [Pull #2794](https://github.com/webcompat/webcompat.com/pull/2794)
+* Fixes #2778 - Implements HTTP/2 Push through Flask [Pull #2792](https://github.com/webcompat/webcompat.com/pull/2792)
+* Fixes #2778 - Adds doc for  push_preload to staging [Pull #2790](https://github.com/webcompat/webcompat.com/pull/2790)
+* Fixes #2788 - Make GitHub username regex case-insensitive [Pull #2789](https://github.com/webcompat/webcompat.com/pull/2789)
+
+
 ## 15.6.2 - 2019-01-31
 
 * Fixes #2782 - Edit dev-env-setup.md around GH client ID/secret + typos [Pull #2786](https://github.com/webcompat/webcompat.com/pull/2786)
