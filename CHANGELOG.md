@@ -4,6 +4,11 @@
 2. New features: affect minor number
 3. API endpoint changes or dependency version updates: affect major number
 
+## 16.0.1 - 2019-02-14
+
+* Fixes #2802 - Requests for a body instead of a body_html [Pull #2803](https://github.com/webcompat/webcompat.com/pull/2803)
+
+
 ## 16.0.0 - 2019-02-14
 
 * Fixes #2767 - Cut description at 75th char [Pull #2801](https://github.com/webcompat/webcompat.com/pull/2801)
