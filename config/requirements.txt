@@ -1,5 +1,6 @@
 blinker==1.4
 Flask==1.0.2
+Flask-Firehose==0.2.2
 Flask-Limiter==0.9.3
 Flask-SQLAlchemy==2.1
 Flask-WTF==0.14.2

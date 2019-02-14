@@ -21,11 +21,13 @@ from flask import session
 from flask import url_for
 
 from dashboard import filter_needstriage
+from flask_firehose import push
 from form import AUTH_REPORT
 from form import get_form
 from form import PROXY_REPORT
 from helpers import add_csp
 from helpers import add_sec_headers
+from helpers import bust_cache
 from helpers import cache_policy
 from helpers import form_type
 from helpers import get_browser_name
@@ -153,6 +155,22 @@ def file_issue():
 @app.route('/', methods=['GET'])
 def index():
     """Set the main view where people come to report issues."""
+    push('/css/dist/webcompat.min.css', **{
+        'as': 'style',
+        'rel': 'preload'
+    })
+    push(bust_cache('/js/dist/webcompat.min.js'), **{
+        'as': 'script',
+        'rel': 'preload'
+    })
+    push('/img/svg/icons/svg-leaf_right.svg', **{
+        'as': 'img',
+        'rel': 'preload'
+    })
+    push('/img/svg/icons/svg-leaf_left.svg', **{
+        'as': 'img',
+        'rel': 'preload'
+    })
     ua_header = request.headers.get('User-Agent')
     bug_form = get_form({'user_agent': ua_header})
     # browser_name is used in topbar.html to show the right add-on link
@@ -167,6 +185,18 @@ def index():
 @cache_policy(private=True, uri_max_age=0, must_revalidate=True)
 def show_issues():
     """Route to display global issues view."""
+    push('/css/dist/webcompat.min.css', **{
+        'as': 'style',
+        'rel': 'preload'
+    })
+    push(bust_cache('/js/dist/webcompat.min.js'), **{
+        'as': 'script',
+        'rel': 'preload'
+    })
+    push(bust_cache('/js/dist/issues.min.js'), **{
+        'as': 'script',
+        'rel': 'preload'
+    })
     if g.user:
         get_user_info()
     categories = app.config['CATEGORIES']
@@ -206,6 +236,14 @@ def create_issue():
     Any deceptive requests will be ended as a 400.
     See https://tools.ietf.org/html/rfc7231#section-6.5.1
     """
+    push('/css/dist/webcompat.min.css', **{
+        'as': 'style',
+        'rel': 'preload'
+    })
+    push(bust_cache('/js/dist/webcompat.min.js'), **{
+        'as': 'script',
+        'rel': 'preload'
+    })
     # Starting a logger
     log = app.logger
     log.setLevel(logging.INFO)
@@ -276,6 +314,18 @@ def create_issue():
 @cache_policy(private=True, uri_max_age=0, must_revalidate=True)
 def show_issue(number):
     """Route to display a single issue."""
+    push('/css/dist/webcompat.min.css', **{
+        'as': 'style',
+        'rel': 'preload'
+    })
+    push(bust_cache('/js/dist/webcompat.min.js'), **{
+        'as': 'script',
+        'rel': 'preload'
+    })
+    push(bust_cache('/js/dist/issues.min.js'), **{
+        'as': 'script',
+        'rel': 'preload'
+    })
     if g.user:
         get_user_info()
     if session.get('show_thanks'):

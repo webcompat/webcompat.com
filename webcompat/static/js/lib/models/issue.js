@@ -96,7 +96,7 @@ issues.Issue = Backbone.Model.extend({
     if (el[0]) {
       var description = el[0].nextSibling.textContent;
       description = description.replace(": ", "");
-      return description;
+      return description != null ? description.slice(0, 74) : null;
     }
   },
 
