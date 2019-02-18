@@ -530,6 +530,7 @@ issues.MainView = Backbone.View.extend(
           commentLinkId: null
         });
         this.addComment(newComment);
+        newComment.attributes.body = textarea.val();
         // Now empty out the textarea.
         textarea.val("");
         // Push to GitHub
