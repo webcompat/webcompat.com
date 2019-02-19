@@ -73,3 +73,11 @@ blockquote {
   margin-right: 0;
   padding-left: 1em;
 }
+
+.font-mobile body {
+  font-family: Verdana, sans-serif;
+}
+
+.fonts-loaded body {
+  font-family: "Open Sans", Helvetica, Arial, sans-serif;
+}

@@ -17,6 +17,7 @@ module.exports = function(grunt) {
         "<%= jsPath %>/vendor/prism.js",
         "<%= jsPath %>/vendor/mousetrap-min.js",
         "<%= jsPath %>/vendor/backbone.mousetrap.js",
+        "<%= jsPath %>/vendor/fontfaceobserver.js",
         "<%= jsPath %>/lib/flash-message.js",
         "<%= jsPath %>/lib/homepage.js",
         "<%= jsPath %>/lib/autogrow-textfield.js",

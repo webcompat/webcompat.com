@@ -9,7 +9,7 @@
   <link rel="mask-icon" href="{{ url_for('static', filename='favicon/safari-pinned-tab.svg') }}" color="#202020">
   <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon/favicon-16x16.png') }}" sizes="16x16">
 
-  <link rel="preload" href="https://fonts.googleapis.com/css?family=Open+Sans:400,600|Source+Sans+Pro:300,400|PT+Mono">
+  <link rel="preload" href="https://fonts.googleapis.com/css?family=Open+Sans:400,600|Source+Sans+Pro:300,400|PT+Mono" as="style">
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600|Source+Sans+Pro:300,400|PT+Mono" rel="stylesheet">
   <link href="{{ url_for('static', filename='css/dist/webcompat.min.css') }}" type="text/css" rel="stylesheet">
 </head>
@@ -24,6 +24,8 @@
 <!-- End Google Analytics -->
 <script src="{{ url_for('static', filename='js/dist/webcompat.min.js')|bust_cache }}"></script>
 {% else %}
+<script src="{{ url_for('static', filename='js/vendor/fontfaceobserver.js') }}"></script>
+<script src="{{ url_for('static', filename='js/lib/fonts.js') }}"></script>
 <script src="{{ url_for('static', filename='js/vendor/jquery-3.3.1.min.js') }}"></script>
 <script src="{{ url_for('static', filename='js/vendor/lodash.custom.min.js') }}"></script>
 <script src="{{ url_for('static', filename='js/vendor/backbone-1.3.3.min.js') }}"></script>
