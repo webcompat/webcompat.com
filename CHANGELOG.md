@@ -4,6 +4,10 @@
 2. New features: affect minor number
 3. API endpoint changes or dependency version updates: affect major number
 
+## 17.0.0 - 2019-02-21
+
+* Fixes #2793 - Comments are sent as markdown to Github [Pull #2800](https://github.com/webcompat/webcompat.com/pull/2800)
+
 ## 16.0.1 - 2019-02-14
 
 * Fixes #2802 - Requests for a body instead of a body_html [Pull #2803](https://github.com/webcompat/webcompat.com/pull/2803)
