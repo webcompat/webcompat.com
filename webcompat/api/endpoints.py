@@ -113,7 +113,7 @@ def get_user_activity_issues(username, parameter):
     else:
         params[parameter] = username
     path = 'repos/{path}'.format(path=ISSUES_PATH)
-    return api_request('get', path, params=params, mime_type=JSON_MIME_HTML)
+    return api_request('get', path, params=params)
 
 
 @api.route('/issues/category/<issue_category>')
