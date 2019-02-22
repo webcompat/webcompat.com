@@ -133,8 +133,7 @@ def get_issue_category(issue_category, other_params=None):
                            mime_type=JSON_MIME_HTML)
     elif issue_category == 'closed':
         params['state'] = 'closed'
-        return api_request('get', issues_path, params=params,
-                           mime_type=JSON_MIME_HTML)
+        return api_request('get', issues_path, params=params)
     else:
         # The path doesn’t exist. 404 Not Found.
         abort(404)
