@@ -171,31 +171,12 @@ server {
 That have the following handlers:
 
 ```nginx
-##
-# Gzip Settings
-##
+        ##
+        # Brotli Settings
+        ##
 
-gzip on;
-gzip_disable "msie6";
-
-gzip_vary on;
-gzip_proxied any;
-gzip_comp_level 6;
-gzip_buffers 16 8k;
-gzip_http_version 1.0;
-
-# Turn on gzip for all content types that should benefit from it.
-gzip_types application/ecmascript;
-gzip_types application/javascript;
-gzip_types application/json;
-gzip_types application/pdf;
-gzip_types application/postscript;
-gzip_types application/x-javascript;
-gzip_types image/svg+xml;
-gzip_types text/css;
-gzip_types text/csv;
-# "gzip_types text/html" is assumed.
-gzip_types text/javascript;
-gzip_types text/plain;
-gzip_types text/xml;
+        brotli on;
+        brotli_comp_level 4;
+        brotli_static on;
+        brotli_types *;
 ```
