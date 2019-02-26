@@ -129,8 +129,7 @@ def get_issue_category(issue_category, other_params=None):
     if issue_category in category_list:
         STATUSES = app.config['STATUSES']
         params.add('milestone', STATUSES[issue_category]['id'])
-        return api_request('get', issues_path, params=params,
-                           mime_type=JSON_MIME_HTML)
+        return api_request('get', issues_path, params=params)
     elif issue_category == 'closed':
         params['state'] = 'closed'
         return api_request('get', issues_path, params=params)
