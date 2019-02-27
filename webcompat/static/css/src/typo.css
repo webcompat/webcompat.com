@@ -73,3 +73,36 @@ blockquote {
   margin-right: 0;
   padding-left: 1em;
 }
+
+/* open-sans-regular - latin */
+@font-face {
+  font-family: "Open Sans";
+  font-style: normal;
+  font-weight: 400;
+  src: url("../../font/open_sans/open-sans-v15-latin-regular.eot");
+  src: local("Open Sans Regular"), local("OpenSans-Regular"), url("../../font/open_sans/Open_Sans_400.eot") format("embedded-opentype"), url("../../font/open_sans/Open_Sans_400.woff2") format("woff2"), url("../../font/open_sans/Open_Sans_400.woff") format("woff"), url("../../font/open_sans/Open_Sans_400.ttf") format("truetype"), url("../../font/open_sans/Open_Sans_400.svg") format("svg");
+}
+
+@font-face {
+  font-family: "Open Sans";
+  font-style: normal;
+  font-weight: 600;
+  src: url("../../font/open_sans/open-sans-v15-latin-600.eot");
+  src: local("Open Sans SemiBold"), local("OpenSans-SemiBold"), url("../../font/open_sans/Open_Sans_600.eot") format("embedded-opentype"), url("../../font/open_sans/Open_Sans_600.woff2") format("woff2"), url("../../font/open_sans/Open_Sans_600.woff") format("woff"), url("../../font/open_sans/Open_Sans_600.ttf") format("truetype"), url("../../font/open_sans/Open_Sans_600.svg") format("svg");
+}
+
+@font-face {
+  font-family: "Source Sans Pro";
+  font-style: normal;
+  font-weight: 300;
+  src: url("../../font/source_sans_pro/Source_Sans_Pro_300.eot");
+  src: local("Source Sans Pro Light"), local("SourceSansPro-Light"), url("../../font/source_sans_pro/Source_Sans_Pro_300.eot") format("embedded-opentype"), url("../../font/source_sans_pro/Source_Sans_Pro_300.woff2") format("woff2"), url("../../font/source_sans_pro/Source_Sans_Pro_300.woff") format("woff"), url("../../font/source_sans_pro/Source_Sans_Pro_300.ttf") format("truetype"), url("../../font/source_sans_pro/Source_Sans_Pro_300.svg") format("svg");
+}
+
+@font-face {
+  font-family: "Source Sans Pro";
+  font-style: normal;
+  font-weight: 400;
+  src: url("../../font/source_sans_pro/source-sans-pro-v11-latin-regular.eot");
+  src: local("Source Sans Pro Regular"), local("SourceSansPro-Regular"), url("../../font/source_sans_pro/Source_Sans_Pro_400.eot") format("embedded-opentype"), url("../../font/source_sans_pro/Source_Sans_Pro_400.woff2") format("woff2"), url("../../font/source_sans_pro/Source_Sans_Pro_400.woff") format("woff"), url("../../font/source_sans_pro/Source_Sans_Pro_400.ttf") format("truetype"), url("../../font/source_sans_pro/Source_Sans_Pro_400.svg") format("svg");
+}
