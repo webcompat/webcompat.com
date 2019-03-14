@@ -4,6 +4,13 @@
 2. New features: affect minor number
 3. API endpoint changes or dependency version updates: affect major number
 
+## 18.0.0 - 2019-03-14
+
+* Fixes #2819 - Add browser-fenix to EXTRA_LABELS [Pull #2820](https://github.com/webcompat/webcompat.com/pull/2820)
+* Fixes #2811 - Fixes mime type for some endpoints [Pull #2812](https://github.com/webcompat/webcompat.com/pull/2812)
+* Fixes #2746 - Renders title with HTML code correctly [Pull #2805](https://github.com/webcompat/webcompat.com/pull/2805)
+* Fixes #2771 - Removes unnecessary favicons [Pull #2804](https://github.com/webcompat/webcompat.com/pull/2804)
+
 ## 17.0.0 - 2019-02-21
 
 * Fixes #2793 - Comments are sent as markdown to Github [Pull #2800](https://github.com/webcompat/webcompat.com/pull/2800)
