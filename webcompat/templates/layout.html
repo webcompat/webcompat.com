@@ -8,7 +8,7 @@
   <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
   <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon/favicon-32x32.png') }}" sizes="32x32">
 
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600|Source+Sans+Pro:300,400|PT+Mono" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600|Source+Sans+Pro:300,400" rel="stylesheet">
   <link href="{{ url_for('static', filename='css/dist/webcompat.min.css') }}" type="text/css" rel="stylesheet">
 </head>
 <body id="body-webcompat" data-username="{{ session.username }}">
@@ -45,4 +45,5 @@
 {% endfor %}
 {% block extrascripts %}{% endblock %}
 </body>
+</html>
 </html>
