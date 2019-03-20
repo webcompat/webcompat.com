@@ -29,7 +29,7 @@ Double check that everything is configured properly
 in config/secrets.py and try again. Good luck!
 """
 MILESTONE_UNMATCHING = """A milestone is missing or has been added: {names}"""
-MILESTONE_UNMATCHING_ERROR = """Check the milestones names on your Github repository and try again. 
+MILESTONE_UNMATCHING_ERROR = """Check the milestones names on your Github repository and try again.
 This error was probably caused by a typo.
 Your milestones.json was erased and a backup copy was created at {path}.
 """
