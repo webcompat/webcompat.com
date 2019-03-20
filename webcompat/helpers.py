@@ -232,7 +232,7 @@ def set_referer(request):
     the HOST_WHITELIST.
     """
     if request.referrer:
-        host = urlparse.urlparse(request.referrer).hostname
+        host = urllib.parse.urlparse(request.referrer).hostname
         if host in HOST_WHITELIST:
             session['referer'] = request.referrer
 
@@ -283,7 +283,7 @@ def rewrite_links(link_header):
     header_link_data = parse_link_header(link_header)
     for data in header_link_data:
         uri = data['link']
-        uri_tuple = urlparse.urlsplit(uri)
+        uri_tuple = urllib.parse.urlsplit(uri)
         path = uri_tuple.path
         query = uri_tuple.query
         if path.startswith('/repositories/'):
@@ -293,7 +293,7 @@ def rewrite_links(link_header):
         elif path.startswith('/search/issues'):
             path = 'issues/search'
         api_path = '{}{}'.format('/api/', path)
-        data['link'] = urlparse.urlunsplit(('', '', api_path, query, ''))
+        data['link'] = urllib.parse.urlunsplit(('', '', api_path, query, ''))
     return format_link_header(header_link_data)
 
 
@@ -314,13 +314,13 @@ def remove_oauth(uri):
     Github returns Oauth tokens in some circumstances. We remove it for
     avoiding to spill it in public as it's not necessary in Link Header.
     """
-    uri_group = urlparse.urlparse(uri)
+    uri_group = urllib.parse.urlparse(uri)
     parameters = uri_group.query.split('&')
     clean_parameters_list = [parameter for parameter in parameters
                              if not parameter.startswith('access_token=')]
     clean_parameters = '&'.join(clean_parameters_list)
     clean_uri = uri_group._replace(query=clean_parameters)
-    return urlparse.urlunparse(clean_uri)
+    return urllib.parse.urlunparse(clean_uri)
 
 
 def rewrite_and_sanitize_link(link_header):
@@ -644,3 +644,21 @@ def prepare_form(form_request):
 def is_json_object(json_data):
     """Check if the JSON data are an object."""
     return isinstance(json_data, dict)
+
+
+def to_bytes(bytes_or_str):
+    """Convert to bytes."""
+    if isinstance(bytes_or_str, str):
+        value = bytes_or_str.encode('utf-8') # uses 'utf-8' for encoding
+    else:
+        value = bytes_or_str
+    return value # Instance of bytes
+
+
+def to_str(bytes_or_str):
+    """Convert to str."""
+    if isinstance(bytes_or_str, bytes):
+        value = bytes_or_str.decode('utf-8') # uses 'utf-8' for encoding
+    else:
+        value = bytes_or_str
+    return value # Instance of str

@@ -16,6 +16,7 @@ from webcompat.db import site_db
 from webcompat.form import domain_name
 from webcompat.helpers import extract_url
 from webcompat.helpers import proxy_request
+from webcompat.helpers import to_bytes
 
 BROWSERS = ['blackberry', 'brave', 'chrome', 'edge', 'firefox', 'iceweasel', 'ie', 'lynx', 'myie', 'opera', 'puffin', 'qq', 'safari', 'samsung', 'seamonkey', 'uc', 'vivaldi']  # noqa
 
@@ -41,9 +42,8 @@ def extract_browser_label(metadata_dict):
     # Only proceed if browser looks like "FooBrowser 99.0"
     if browser and re.search(r'([^\d]+?)\s[\d\.]+', browser):
         browser = browser.lower()
-        browser = browser.encode('utf-8')
         # Remove parenthesis from the name
-        browser = browser.translate(None, '()')
+        browser = browser.translate(str.maketrans('', '', '()'))
         # Before returning a label, we need to clean up a bit
         label_data = browser.split(' ')
         name = label_data[0]
@@ -70,8 +70,7 @@ def extract_extra_labels(metadata_dict):
     labels = metadata_dict.get('extra_labels', None)
     if labels:
         extra_labels = labels.split(', ')
-        extra_labels = [label.lower().encode('utf-8')
-                        for label in extra_labels]
+        extra_labels = [label.lower() for label in extra_labels]
     else:
         extra_labels = labels
     return extra_labels
@@ -97,21 +96,6 @@ def extract_priority_label(body):
     return None
 
 
-def compare_digest(x, y):
-    """Create a hmac comparison.
-
-    Approximates hmac.compare_digest (Py 2.7.7+) until we upgrade.
-    """
-    if not (isinstance(x, bytes) and isinstance(y, bytes)):
-        raise TypeError("both inputs should be instances of bytes")
-    if len(x) != len(y):
-        return False
-    result = 0
-    for a, b in zip(bytearray(x), bytearray(y)):
-        result |= a ^ b
-    return result == 0
-
-
 def signature_check(key, post_signature, payload):
     """Check the HTTP POST legitimacy."""
     if post_signature.startswith('sha1='):
@@ -122,11 +106,16 @@ def signature_check(key, post_signature, payload):
         return False
     # HMAC requires its key to be bytes, but data is strings.
     hexmac = get_payload_signature(key, payload)
-    return compare_digest(hexmac, signature.encode('utf-8'))
+    return hmac.compare_digest(to_bytes(hexmac), to_bytes(signature))
 
 
 def get_payload_signature(key, payload):
-    """Compute the payload signature given a key."""
+    """Compute the payload signature given a key.
+
+    key needs to be a bytes object.
+    """
+    key = to_bytes(key)
+    payload = to_bytes(payload)
     mac = hmac.new(key, msg=payload, digestmod=hashlib.sha1)
     return mac.hexdigest()
 

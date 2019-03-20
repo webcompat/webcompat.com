@@ -63,11 +63,11 @@ class TestURIContent(unittest.TestCase):
                 rv = self.app.get(uri, environ_base=headers)
                 expected = '<title>{title} | webcompat.com</title>'.format(
                     title=title)
-                self.assertTrue(expected in rv.data)
+                self.assertTrue(expected.encode('utf-8') in rv.data)
 
     def test_user_title_pages(self):
         """Testing user activity page title."""
-        title = "<title>testuser's Activity | webcompat.com</title>"
+        title = b"<title>testuser's Activity | webcompat.com</title>"
         with webcompat.app.app_context():
             self.login('testuser', 'foobar')
             rv = self.app.get('/activity/testuser')
@@ -81,27 +81,27 @@ class TestURIContent(unittest.TestCase):
         # testing Firefox addon
         headers = {'HTTP_USER_AGENT': FIREFOX_UA}
         rv = self.app.get('/', environ_base=headers)
-        expected = '<span class="link-text">Download Firefox Add-on</span>'
+        expected = b'<span class="link-text">Download Firefox Add-on</span>'
         self.assertTrue(expected in rv.data)
         # testing for Firefox Androidpe
         headers = {'HTTP_USER_AGENT': FIREFOX_AND_UA}
         rv = self.app.get('/', environ_base=headers)
-        expected = '<span class="link-text">Download Firefox Add-on</span>'
+        expected = b'<span class="link-text">Download Firefox Add-on</span>'
         self.assertTrue(expected in rv.data)
         # testing for Chrome
         headers = {'HTTP_USER_AGENT': CHROME_UA}
         rv = self.app.get('/', environ_base=headers)
-        expected = '<span class="link-text">Download Chrome Add-on</span>'
+        expected = b'<span class="link-text">Download Chrome Add-on</span>'
         self.assertTrue(expected in rv.data)
         # testing for Opera
         headers = {'HTTP_USER_AGENT': OPERA_UA}
         rv = self.app.get('/', environ_base=headers)
-        expected = '<span class="link-text">Download Opera Add-on</span>'
+        expected = b'<span class="link-text">Download Opera Add-on</span>'
         self.assertTrue(expected in rv.data)
         # testing for unknown browser
         headers = {'HTTP_USER_AGENT': 'Punk Cat Space'}
         rv = self.app.get('/', environ_base=headers)
-        expected = '<span class="link-text">Give Feedback</span>'
+        expected = b'<span class="link-text">Give Feedback</span>'
         self.assertTrue(expected in rv.data)
 
     def test_form_rendering(self):
@@ -109,21 +109,21 @@ class TestURIContent(unittest.TestCase):
         url = '/issues/new?url=http://example.com/&label=type-stylo'
         headers = {'HTTP_USER_AGENT': FIREFOX_UA}
         rv = self.app.get(url, environ_base=headers)
-        self.assertTrue('Firefox 61.0' in rv.data)
-        self.assertTrue('Mac OS X 10.13' in rv.data)
-        self.assertTrue('http://example.com/' in rv.data)
+        self.assertTrue(b'Firefox 61.0' in rv.data)
+        self.assertTrue(b'Mac OS X 10.13' in rv.data)
+        self.assertTrue(b'http://example.com/' in rv.data)
 
     def test_wellknown_subpath(self):
         """Test that the /.wellknown/subpath route gets 404."""
         rv = self.app.get('/.well-known/test-route')
-        expected = 'test-route'
+        expected = b'test-route'
         self.assertEqual(rv.status_code, 404)
         self.assertTrue(expected in rv.data)
 
     def test_wellknown_security(self):
         """Test that the /.wellknown/security.txt exists."""
         rv = self.app.get('/.well-known/security.txt')
-        expected = 'Contact: mailto:kdubost+securitywebc'
+        expected = b'Contact: mailto:kdubost+securitywebc'
         self.assertEqual(rv.status_code, 200)
         self.assertTrue(expected in rv.data)
 

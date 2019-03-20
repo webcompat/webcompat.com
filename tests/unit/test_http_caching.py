@@ -57,7 +57,7 @@ class TestHTTPCaching(unittest.TestCase):
                                environ_base=html_headers,
                                headers={'If-None-Match': etag})
             self.assertEqual(rv2.status_code, 304)
-            self.assertEqual(rv2.data, '')
+            self.assertEqual(rv2.data, b'')
             self.assertIn('cache-control', rv2.headers)
             self.assertTrue(rv2.cache_control.must_revalidate)
             self.assertTrue(rv2.cache_control.private)

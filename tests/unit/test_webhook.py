@@ -15,11 +15,13 @@ from mock import patch
 
 import webcompat
 from webcompat.db import Site
+from webcompat.helpers import to_bytes
 from webcompat.webhooks import helpers
 
 
 # The key is being used for testing and computing the signature.
-key = webcompat.app.config['HOOK_SECRET_KEY']
+# The key needs to be a bytes object
+key = to_bytes(webcompat.app.config['HOOK_SECRET_KEY'])
 
 
 # Some machinery for opening our test files
@@ -65,7 +67,7 @@ class TestWebhook(unittest.TestCase):
         **URL**: https://www.google.com/
         <!-- @browser: Firefox Mobile (Tablet) 40.0 -->
         """
-        self.issue_body4 = u"""
+        self.issue_body4 = """
         **URL**: https://www.google.com/
         <!-- @browser: Firefox Mobile (Tablet) 40.0 -->
         """
@@ -84,7 +86,7 @@ class TestWebhook(unittest.TestCase):
         self.headers.update({'X-GitHub-Event': 'ping'})
         rv = self.app.post(self.test_url, headers=self.headers)
         self.assertEqual(rv.status_code, 401)
-        self.assertEqual(rv.data, 'Nothing to see here')
+        self.assertEqual(rv.data, b'Nothing to see here')
         self.assertEqual(rv.mimetype, 'text/plain')
 
     def test_fail_on_bogus_signature(self):
@@ -96,7 +98,7 @@ class TestWebhook(unittest.TestCase):
                            data=json_event,
                            headers=self.headers)
         self.assertEqual(rv.status_code, 401)
-        self.assertEqual(rv.data, 'Nothing to see here')
+        self.assertEqual(rv.data, b'Nothing to see here')
         self.assertEqual(rv.mimetype, 'text/plain')
 
     def test_fail_on_invalid_event_type(self):
@@ -109,7 +111,7 @@ class TestWebhook(unittest.TestCase):
                            headers=self.headers)
         self.assertEqual(rv.status_code, 403)
         self.assertEqual(rv.mimetype, 'text/plain')
-        self.assertEqual(rv.data, 'Not an interesting hook')
+        self.assertEqual(rv.data, b'Not an interesting hook')
 
     def test_success_on_ping_event(self):
         """POST with PING events just return a 200 and contains pong."""
@@ -120,7 +122,7 @@ class TestWebhook(unittest.TestCase):
                            data=json_event,
                            headers=self.headers)
         self.assertEqual(rv.status_code, 200)
-        self.assertIn('pong', rv.data)
+        self.assertIn(b'pong', rv.data)
 
     def test_fails_on_not_known_action(self):
         """POST with an unknown action fails."""
@@ -132,7 +134,7 @@ class TestWebhook(unittest.TestCase):
                            headers=self.headers)
         self.assertEqual(rv.status_code, 403)
         self.assertEqual(rv.mimetype, 'text/plain')
-        self.assertEqual(rv.data, 'Not an interesting hook')
+        self.assertEqual(rv.data, b'Not an interesting hook')
 
     def test_extract_metadata(self):
         """Extract dictionary of metadata for an issue body."""
@@ -176,7 +178,8 @@ class TestWebhook(unittest.TestCase):
             ({'extra_labels': 'browser-focus-geckoview'},
              ['browser-focus-geckoview']),
             ({'extra_labels': 'cool, dude'}, ['cool', 'dude']),
-            ({'extra_labels': u'weather-☁'}, ['weather-\xe2\x98\x81']),
+            ({'extra_labels': 'weather-☁'}, ['weather-☁']),
+            ({'extra_labels': 'weather-É'}, ['weather-é']),
             ({'burgers': 'french fries'}, None),
         ]
         for metadata_dict, expected in metadata_tests:

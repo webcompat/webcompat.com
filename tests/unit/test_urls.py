@@ -23,14 +23,14 @@ headers = {'HTTP_USER_AGENT': ('Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; '
                                'rv:31.0) Gecko/20100101 Firefox/31.0')}
 
 POST_RESPONSE = {
-    u'labels': [],
-    u'number': 1544,
-    u'title': u'testing-form.example.com - see bug description',
-    u'state': u'open',
-    u'body': u'<!-- @browser: Firefox 62.0 -->\n<!-- @ua_header: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:62.0) Gecko/20100101 Firefox/62.0 -->\n<!-- @reported_with: web -->\n\n**URL**: http://testing-form.example.com/\n\n**Browser / Version**: Firefox 62.0\n**Operating System**: Mac OS X 10.13\n**Tested Another Browser**: Unknown\n\n**Problem type**: Something else\n**Description**: testing form and github response.\n**Steps to Reproduce**:\n\n\n\n\n_From [webcompat.com](https://webcompat.com/) with \u2764\ufe0f_',   # noqa
-    u'updated_at': u'2018-06-14T22:50:31Z',
-    u'milestone': None,
-    u'created_at': u'2018-06-14T22:50:31Z', }
+    'labels': [],
+    'number': 1544,
+    'title': 'testing-form.example.com - see bug description',
+    'state': 'open',
+    'body': '<!-- @browser: Firefox 62.0 -->\n<!-- @ua_header: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:62.0) Gecko/20100101 Firefox/62.0 -->\n<!-- @reported_with: web -->\n\n**URL**: http://testing-form.example.com/\n\n**Browser / Version**: Firefox 62.0\n**Operating System**: Mac OS X 10.13\n**Tested Another Browser**: Unknown\n\n**Problem type**: Something else\n**Description**: testing form and github response.\n**Steps to Reproduce**:\n\n\n\n\n_From [webcompat.com](https://webcompat.com/) with \u2764\ufe0f_',   # noqa
+    'updated_at': '2018-06-14T22:50:31Z',
+    'milestone': None,
+    'created_at': '2018-06-14T22:50:31Z', }
 
 
 class TestURLs(unittest.TestCase):
@@ -75,7 +75,7 @@ class TestURLs(unittest.TestCase):
         self.assertEqual(
             rv.headers['Location'], 'http://localhost/issues/1544')
         self.assertTrue(
-            '<a href="/issues/1544">/issues/1544</a>' in rv.data)
+            b'<a href="/issues/1544">/issues/1544</a>' in rv.data)
 
     @patch('webcompat.issues.proxy_request')
     def test_fail_post_new_issue(self, mock_proxy):
@@ -213,12 +213,12 @@ class TestURLs(unittest.TestCase):
 
     def test_new_issue_should_not_crash(self):
         """/issues/new POST exit with 400 if missing parameters."""
-        data = {'problem_category': u'mobile_site_bug',
-                'description': u'foo',
-                'submit_type': u'github-proxy-report',
-                'url': u'http://example.com',
-                'os': u'Foobar',
-                'browser': u'BarFoo'}
+        data = {'problem_category': 'mobile_site_bug',
+                'description': 'foo',
+                'submit_type': 'github-proxy-report',
+                'url': 'http://example.com',
+                'os': 'Foobar',
+                'browser': 'BarFoo'}
         rv = self.app.post('/issues/new',
                            content_type='multipart/form-data',
                            data=data)
@@ -228,7 +228,7 @@ class TestURLs(unittest.TestCase):
         """Request to /dashboard/triage should be 200."""
         rv = self.app.get('/dashboard/triage')
         self.assertEqual(rv.status_code, 200)
-        self.assertTrue('<h1><a href="/">Webcompat.com</a> // Triage Dashboard</h1>' in rv.data)  # noqa
+        self.assertTrue(b'<h1><a href="/">Webcompat.com</a> // Triage Dashboard</h1>' in rv.data)  # noqa
         self.assertTrue('text/html' in rv.content_type)
 
     def test_dashboard_route(self):
@@ -241,7 +241,7 @@ class TestURLs(unittest.TestCase):
         self.assertEqual(rv.status_code, 404)
         self.assertTrue('text/html' in rv.content_type)
         rv = self.app.get('/dashboard')
-        content_test = 'Dashboards' in rv.data
+        content_test = b'Dashboards' in rv.data
         self.assertEqual(rv.status_code, 200)
         self.assertTrue(content_test)
 
@@ -252,7 +252,7 @@ class TestURLs(unittest.TestCase):
         It also proves the route exists.
         """
         rv = self.app.post('/webhooks/labeler')
-        content_test = 'Nothing to see here' in rv.data
+        content_test = b'Nothing to see here' in rv.data
         self.assertEqual(rv.status_code, 401)
         self.assertTrue('text/plain' in rv.content_type)
         self.assertTrue(content_test)
@@ -265,9 +265,9 @@ class TestURLs(unittest.TestCase):
         """
         nonce_re = r'(?:nonce\-)(?P<nonce>[a-z0-9]+)'
         json_data = {
-            'user_agent': u'BurgerJSON',
-            'utm_source': u'mcdonalds',
-            'utm_campaign': u'the mcrib is back'
+            'user_agent': 'BurgerJSON',
+            'utm_source': 'mcdonalds',
+            'utm_campaign': 'the mcrib is back'
         }
         rv = self.app.post(
             '/issues/new?url=http://example.net/&src=web&label=type-stylo',
@@ -276,12 +276,12 @@ class TestURLs(unittest.TestCase):
         # do we have a nonce-hash in our CSP?
         self.assertIn('nonce-', rv.headers['Content-Security-Policy'])
         # do we have a <script nonce=hash> in our response body?
-        self.assertIn('<script nonce=', rv.data)
+        self.assertIn(b'<script nonce=', rv.data)
         # parse out the nonce from CSP, and verify it matches the one in the
         # response body
         nonce = re.search(
             nonce_re, rv.headers['Content-Security-Policy']).group('nonce')
-        self.assertIn(nonce, rv.data)
+        self.assertIn(nonce.encode('utf-8'), rv.data)
 
     def test_missing_ga_params_results_in_no_inline_ga_js(self):
         """Test that we don't render inline ga JS if we're missing
@@ -289,8 +289,8 @@ class TestURLs(unittest.TestCase):
         """
         nonce_re = r'(?:nonce\-)(?P<nonce>[a-z0-9]+)'
         json_data = {
-            'user_agent': u'BurgerJSON',
-            'utm_campaign': u'the mcrib is back'
+            'user_agent': 'BurgerJSON',
+            'utm_campaign': 'the mcrib is back'
         }
         rv = self.app.post(
             '/issues/new?url=http://example.net/&src=web&label=type-stylo',
@@ -299,33 +299,33 @@ class TestURLs(unittest.TestCase):
         # do we have a nonce-hash in our CSP?
         self.assertIn('nonce-', rv.headers['Content-Security-Policy'])
         # do we have a <script nonce=hash> in our response body?
-        self.assertNotIn('<script nonce=', rv.data)
+        self.assertNotIn(b'<script nonce=', rv.data)
         # parse out the nonce from CSP, and verify it matches the one in the
         # response body
         nonce = re.search(
             nonce_re, rv.headers['Content-Security-Policy']).group('nonce')
-        self.assertNotIn(nonce, rv.data)
+        self.assertNotIn(nonce.encode('utf-8'), rv.data)
         # test with only the other utm_ param
         json_data = {
-            'user_agent': u'BurgerJSON',
-            'utm_source': u'the mcrib is back'
+            'user_agent': 'BurgerJSON',
+            'utm_source': 'the mcrib is back'
         }
         rv = self.app.post(
             '/issues/new?url=http://example.net/&src=web&label=type-stylo',
             headers=headers, json=json_data)
         self.assertEqual(rv.status_code, 200)
         # do we not have a <script nonce=hash> in our response body?
-        self.assertNotIn('<script nonce=', rv.data)
+        self.assertNotIn(b'<script nonce=', rv.data)
         # test with no utm_ param
         json_data = {
-            'user_agent': u'BurgerJSON',
+            'user_agent': 'BurgerJSON',
         }
         rv = self.app.post(
             '/issues/new?url=http://example.net/&src=web&label=type-stylo',
             headers=headers, json=json_data)
         self.assertEqual(rv.status_code, 200)
         # do we not have a <script nonce=hash> in our response body?
-        self.assertNotIn('<script nonce=', rv.data)
+        self.assertNotIn(b'<script nonce=', rv.data)
 
 
 if __name__ == '__main__':

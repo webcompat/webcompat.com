@@ -62,6 +62,8 @@ class Upload(object):
                     imagedata.startswith('data:image/')):
                 # Chop off 'data:image/.+;base64,' before decoding
                 imagedata = re.sub('^data:image/.+;base64,', '', imagedata)
+                # This will fix any incorrectly padded data.
+                imagedata = imagedata + '==='
                 return Image.open(io.BytesIO(base64.b64decode(imagedata)))
             raise TypeError('TypeError: Not a valid image format')
         except TypeError:
