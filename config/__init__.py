@@ -186,6 +186,7 @@ EXTRA_LABELS = [
     'browser-fenix',
     'browser-focus-geckoview',
     'browser-firefox-reality',
+    'type-fastclick',
     'type-google',
     'type-media',
     'type-tracking-protection-basic',
