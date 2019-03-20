@@ -53,7 +53,7 @@ class TestDashboard(unittest.TestCase):
 
     def test_filter_needstriage(self):
         """Assess the filtering is correct."""
-        expected = [{'needsinfo': True, 'title': u'example.org - dashboard test', 'created_at': u'2015-02-01T12:00:00Z', 'updated_at': u'2017-11-10T12:00:00Z', 'number': 1, 'older': True, 'browsers': ['firefox']}, {'needsinfo': False, 'title': u'dashboard.example.com - site is not usable', 'created_at': u'2015-02-20T12:00:00Z', 'updated_at': u'2015-02-20T12:00:00Z', 'number': 2, 'older': False, 'browsers': ['chrome', 'firefox']}]  # noqa
+        expected = [{'needsinfo': True, 'title': 'example.org - dashboard test', 'created_at': '2015-02-01T12:00:00Z', 'updated_at': '2017-11-10T12:00:00Z', 'number': 1, 'older': True, 'browsers': [b'firefox']}, {'needsinfo': False, 'title': 'dashboard.example.com - site is not usable', 'created_at': '2015-02-20T12:00:00Z', 'updated_at': '2015-02-20T12:00:00Z', 'number': 2, 'older': False, 'browsers': [b'chrome', b'firefox']}]  # noqa
         raw_list = json.loads(json_data('triage.json'))
         testdt = datetime(2015, 2, 19, 12, 0, 0)
         with patch('webcompat.dashboard.get_control_date') as control_date:
@@ -85,7 +85,7 @@ class TestDashboard(unittest.TestCase):
     def test_browser_labels(self):
         """Check we receive the right list of browsers."""
         labels = ['status-foo', 'blah', 'browser-', 'browser-firefox']
-        self.assertListEqual(['firefox'], browser_labels(labels))
+        self.assertListEqual([b'firefox'], browser_labels(labels))
 
 
 if __name__ == '__main__':

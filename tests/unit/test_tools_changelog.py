@@ -25,11 +25,11 @@ class TestChangelog(unittest.TestCase):
     def test_create_changelog(self):
         """Final changelog formatting."""
         changes = [
-            {u'title': u'Fixes #1 - Everything you can imagine is real.',
-             u'number': 2,
-             u'html_url': u'https://github.com/webcompat/webcompat.com/pull/2'},  # noqa
+            {'title': 'Fixes #1 - Everything you can imagine is real.',
+             'number': 2,
+             'html_url': 'https://github.com/webcompat/webcompat.com/pull/2'},  # noqa
         ]
-        expected = u'* Fixes #1 - Everything you can imagine is real. [Pull #2](https://github.com/webcompat/webcompat.com/pull/2)\n'  # noqa
+        expected = '* Fixes #1 - Everything you can imagine is real. [Pull #2](https://github.com/webcompat/webcompat.com/pull/2)\n'  # noqa
         actual = changelog.create_changelog(changes)
         self.assertEqual(actual, expected)
 
@@ -37,27 +37,27 @@ class TestChangelog(unittest.TestCase):
         """Normalize the title."""
         # Issue instead of Fixes
         actual = changelog.normalize_title(
-            u'Issue #101 - Everything you can imagine is real.')
-        expected = u'Fixes #101 - Everything you can imagine is real.'
+            'Issue #101 - Everything you can imagine is real.')
+        expected = 'Fixes #101 - Everything you can imagine is real.'
         self.assertEqual(actual, expected)
         # Trailing dot
         actual = changelog.normalize_title(
-            u'Fixes #101. Everything you can imagine is real.')
-        expected = u'Fixes #101 - Everything you can imagine is real.'
+            'Fixes #101. Everything you can imagine is real.')
+        expected = 'Fixes #101 - Everything you can imagine is real.'
         self.assertEqual(actual, expected)
         # Space lacking after the number
         actual = changelog.normalize_title(
-            u'Fixes #101- Everything you can imagine is real.')
-        expected = u'Fixes #101 - Everything you can imagine is real.'
+            'Fixes #101- Everything you can imagine is real.')
+        expected = 'Fixes #101 - Everything you can imagine is real.'
         self.assertEqual(actual, expected)
         # Wrong separator.
         actual = changelog.normalize_title(
-            u'Fixes #101 — Everything you can imagine is real.')
-        expected = u'Fixes #101 - Everything you can imagine is real.'
+            'Fixes #101 — Everything you can imagine is real.')
+        expected = 'Fixes #101 - Everything you can imagine is real.'
         self.assertEqual(actual, expected)
         # GreenKeeper title style
-        actual = changelog.normalize_title(u'Greenkeeper style 🚀')
-        expected = u'NPM update - Greenkeeper style.'
+        actual = changelog.normalize_title('Greenkeeper style 🚀')
+        expected = 'NPM update - Greenkeeper style.'
         self.assertEqual(actual, expected)
 
 

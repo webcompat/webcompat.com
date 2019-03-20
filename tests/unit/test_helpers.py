@@ -83,45 +83,45 @@ class TestHelpers(unittest.TestCase):
 
     def test_normalize_api_params_converts_correctly(self):
         """Test that API params are correctly converted to Search API."""
-        self.assertEqual(normalize_api_params({'direction': u'desc'}),
-                         {'order': u'desc'})
+        self.assertEqual(normalize_api_params({'direction': 'desc'}),
+                         {'order': 'desc'})
         self.assertNotIn('direction',
-                         normalize_api_params({'direction': u'desc'}))
+                         normalize_api_params({'direction': 'desc'}))
 
-        self.assertEqual(normalize_api_params({'state': u'closed', 'q': 'hi'}),
-                         {'q': u'hi state:closed'})
+        self.assertEqual(normalize_api_params({'state': 'closed', 'q': 'hi'}),
+                         {'q': 'hi state:closed'})
         self.assertNotIn('state',
-                         normalize_api_params({'state': u'closed', 'q': 'hi'}))
+                         normalize_api_params({'state': 'closed', 'q': 'hi'}))
 
-        self.assertEqual(normalize_api_params({'mentioned': u'coolguy',
+        self.assertEqual(normalize_api_params({'mentioned': 'coolguy',
                                               'q': 'hi'}),
-                         {'q': u'hi mentions:coolguy'})
+                         {'q': 'hi mentions:coolguy'})
         self.assertNotIn('mentioned',
-                         normalize_api_params({'mentioned': u'coolguy',
+                         normalize_api_params({'mentioned': 'coolguy',
                                               'q': 'hi'}))
 
-        self.assertEqual(normalize_api_params({'creator': u'coolguy',
+        self.assertEqual(normalize_api_params({'creator': 'coolguy',
                                               'q': 'hi'}),
-                         {'q': u'hi author:coolguy'})
+                         {'q': 'hi author:coolguy'})
         self.assertNotIn('creator',
-                         normalize_api_params({'creator': u'coolguy',
+                         normalize_api_params({'creator': 'coolguy',
                                               'q': 'hi'}))
 
-        multi_before = {'direction': u'desc', 'state': u'closed',
-                        'mentioned': u'coolguy', 'creator': u'coolguy',
-                        'per_page': u'1', 'q': u'hi'}
-        multi_after = {'order': u'desc',
-                       'q': u'hi state:closed author:coolguy mentions:coolguy',
-                       'per_page': u'1'}
+        multi_before = {'direction': 'desc', 'state': 'closed',
+                        'mentioned': 'coolguy', 'creator': 'coolguy',
+                        'per_page': '1', 'q': 'hi'}
+        multi_after = {'order': 'desc',
+                       'q': 'hi state:closed author:coolguy mentions:coolguy',
+                       'per_page': '1'}
         self.assertEqual(normalize_api_params(multi_before), multi_after)
 
     def test_normalize_api_params_ignores_unknown_params(self):
         """Ignore unknown parameters in normalize_api_params."""
-        self.assertEqual({'foo': u'bar'},
-                         normalize_api_params({'foo': u'bar'}))
-        self.assertEqual({'order': u'desc', 'foo': u'bar'},
-                         normalize_api_params({'foo': u'bar',
-                                              'direction': u'desc'}))
+        self.assertEqual({'foo': 'bar'},
+                         normalize_api_params({'foo': 'bar'}))
+        self.assertEqual({'order': 'desc', 'foo': 'bar'},
+                         normalize_api_params({'foo': 'bar',
+                                              'direction': 'desc'}))
 
     def test_parse_http_link_headers(self):
         """Test HTTP Links parsing for GitHub only."""
@@ -152,7 +152,7 @@ class TestHelpers(unittest.TestCase):
         self.assertEqual(get_browser_name(''), 'unknown')
         self.assertEqual(get_browser_name(None), 'unknown')
         self.assertEqual(get_browser_name(), 'unknown')
-        self.assertEqual(get_browser_name(u'💀'), 'unknown')
+        self.assertEqual(get_browser_name('💀'), 'unknown')
         self.assertEqual(get_browser_name('<script>lol()</script>'), 'unknown')
         self.assertEqual(get_browser_name(True), 'unknown')
         self.assertEqual(get_browser_name(False), 'unknown')
@@ -175,7 +175,7 @@ class TestHelpers(unittest.TestCase):
         self.assertEqual(get_browser(CHROME_TABLET_UA), 'Chrome 18.0.1025')
         self.assertEqual(get_browser(''), 'Unknown')
         self.assertEqual(get_browser(), 'Unknown')
-        self.assertEqual(get_browser(u'💀'), 'Unknown')
+        self.assertEqual(get_browser('💀'), 'Unknown')
         self.assertEqual(get_browser('<script>lol()</script>'), 'Unknown')
         self.assertEqual(get_browser(True), 'Unknown')
         self.assertEqual(get_browser(False), 'Unknown')
@@ -196,7 +196,7 @@ class TestHelpers(unittest.TestCase):
         self.assertEqual(get_os(CHROME_TABLET_UA), 'Android 4.0.4')
         self.assertEqual(get_os(''), 'Unknown')
         self.assertEqual(get_os(), 'Unknown')
-        self.assertEqual(get_os(u'💀'), 'Unknown')
+        self.assertEqual(get_os('💀'), 'Unknown')
         self.assertEqual(get_os('<script>lol()</script>'), 'Unknown')
         self.assertEqual(get_os(True), 'Unknown')
         self.assertEqual(get_os(False), 'Unknown')
@@ -209,9 +209,9 @@ class TestHelpers(unittest.TestCase):
         just to keep the data structure valid.
         """
         tests = [{'1': 1}, {'null': None}, {'true': True}, {'false': False},
-                 {'': ''}, {'cool': 'cool'}, {u'\U0001f480': u'💀'}]
+                 {'': ''}, {'cool': 'cool'}, {'\U0001f480': '💀'}]
         for test in tests:
-            for output, browser_input in test.iteritems():
+            for output, browser_input in test.items():
                 self.assertEqual(get_str_value(browser_input), output)
 
     def test_get_version_string(self):
@@ -263,10 +263,10 @@ class TestHelpers(unittest.TestCase):
 
     def test_prepare_form_get(self):
         """Extract information of a form request with a GET."""
-        form_data = {'extra_labels': [u'type-stylo'],
-                     'src': u'web',
-                     'user_agent': u'Burger',
-                     'url': u'http://example.net/',
+        form_data = {'extra_labels': ['type-stylo'],
+                     'src': 'web',
+                     'user_agent': 'Burger',
+                     'url': 'http://example.net/',
                      }
         with webcompat.app.test_request_context(
                 '/issues/new?url=http://example.net/&src=web&label=type-stylo',
@@ -289,15 +289,15 @@ class TestHelpers(unittest.TestCase):
                 method='GET',
                 headers={'User-agent': 'Burger'}):
             form_data['url'] = None
-            form_data['extra_labels'] = [u'type-punkcat', u'type-webvr']
+            form_data['extra_labels'] = ['type-punkcat', 'type-webvr']
             self.assertEqual(prepare_form(flask.request), form_data)
 
     def test_prepare_form_post(self):
         """Extract information of a form request with a POST."""
-        json_data = {'extra_labels': [u'type-webvr', u'type-media'],
-                     'src': u'addon',
-                     'user_agent': u'BurgerJSON',
-                     'url': u'http://json.example.net/',
+        json_data = {'extra_labels': ['type-webvr', 'type-media'],
+                     'src': 'addon',
+                     'user_agent': 'BurgerJSON',
+                     'url': 'http://json.example.net/',
                      }
         with webcompat.app.test_request_context(
                 '/issues/new?url=http://example.net/&src=web&label=type-stylo',

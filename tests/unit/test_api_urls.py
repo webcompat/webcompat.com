@@ -22,7 +22,7 @@ headers = {'HTTP_USER_AGENT': ('Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; '
                                'rv:31.0) Gecko/20100101 Firefox/31.0'),
            'HTTP_ACCEPT': 'application/json'}
 
-STATUSES = {u'sitewait': {'color': '', 'state': 'open', 'id': 5, 'order': 5}, u'worksforme': {'color': '', 'state': 'closed', 'id': 11, 'order': 7}, u'non-compat': {'color': '', 'state': 'closed', 'id': 12, 'order': 5}, u'needsdiagnosis': {'color': '', 'state': 'open', 'id': 2, 'order': 2}, u'contactready': {'color': '', 'state': 'open', 'id': 4, 'order': 4}, u'wontfix': {'color': '', 'state': 'closed', 'id': 6, 'order': 6}, u'needscontact': {'color': '', 'state': 'open', 'id': 3, 'order': 3}, u'invalid': {'color': '', 'state': 'closed', 'id': 8, 'order': 4}, u'needstriage': {'color': '', 'state': 'open', 'id': 1, 'order': 1}, u'duplicate': {'color': '', 'state': 'closed', 'id': 10, 'order': 1}, u'fixed': {'color': '', 'state': 'closed', 'id': 9, 'order': 2}, u'incomplete': {'color': '', 'state': 'closed', 'id': 7, 'order': 3}}  # noqa
+STATUSES = {'sitewait': {'color': '', 'state': 'open', 'id': 5, 'order': 5}, 'worksforme': {'color': '', 'state': 'closed', 'id': 11, 'order': 7}, 'non-compat': {'color': '', 'state': 'closed', 'id': 12, 'order': 5}, 'needsdiagnosis': {'color': '', 'state': 'open', 'id': 2, 'order': 2}, 'contactready': {'color': '', 'state': 'open', 'id': 4, 'order': 4}, 'wontfix': {'color': '', 'state': 'closed', 'id': 6, 'order': 6}, 'needscontact': {'color': '', 'state': 'open', 'id': 3, 'order': 3}, 'invalid': {'color': '', 'state': 'closed', 'id': 8, 'order': 4}, 'needstriage': {'color': '', 'state': 'open', 'id': 1, 'order': 1}, 'duplicate': {'color': '', 'state': 'closed', 'id': 10, 'order': 1}, 'fixed': {'color': '', 'state': 'closed', 'id': 9, 'order': 2}, 'incomplete': {'color': '', 'state': 'closed', 'id': 7, 'order': 3}}  # noqa
 
 
 def mock_api_response(response_config={}):
@@ -34,7 +34,7 @@ def mock_api_response(response_config={}):
     }
     api_response = MagicMock(spec=Response)
     api_response.content_type = 'application/json'
-    for k, v in response_config.iteritems():
+    for k, v in response_config.items():
         if k == 'headers':
             headers.update(v)
         setattr(api_response, k, v)

@@ -17,13 +17,8 @@ import urllib.parse
 
 import requests
 
-<<<<<<< 4bcbb9acc4fe7056c13dca6dc8af532492d2174d
-from environment import *  # noqa
-from secrets import *  # noqa
-=======
-from config.environment import *  # nopep8
-from config.secrets import *  # nopep8
->>>>>>> Issue #2348 - Converts webcompat/ to python 3
+from config.environment import *  # noqa
+from config.secrets import *  # noqa
 
 MILESTONE_ERROR = """It failed with {msg}!
 We will read from data/milestones.json.

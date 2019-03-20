@@ -11,7 +11,7 @@ import hmac
 import os
 import sys
 import time
-from urllib import urlencode
+from urllib.parse import urlencode
 from xml.dom.minidom import parseString
 
 import requests
@@ -106,10 +106,10 @@ def query_topsites(country_code, count=1000):
                 message = node_text(dom, 'aws:ErrorCode')
                 error_template = """Send request to {uri} get error message:
                 {message}"""
-                print(error_template.format(
-                      uri, message))
+                print((error_template.format(
+                      uri, message)))
         except ConnectionError:
-            print('Unable send request to {}'.format(uri))
+            print(('Unable send request to {}'.format(uri)))
 
 
 def parse_site(site, country_code):
@@ -157,7 +157,7 @@ x-amz-date:{amzdate}
 """.format(
         host=ATS_SERVICE_ENDPOINT,
         amzdate=timestamp)
-    payload_hash = get_sha256_hex("")
+    payload_hash = get_sha256_hex('')
 
     request_template = """GET
 {service_uri}
@@ -230,7 +230,7 @@ def get_sign_key(key, datestamp, region_name, service_name):
 
 def get_sha256_hex(data):
     """Compute the hash as hex."""
-    return hashlib.sha256(data).hexdigest()
+    return hashlib.sha256(data.encode('utf-8')).hexdigest()
 
 
 def gen_sign(key, data):
