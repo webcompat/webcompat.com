@@ -478,7 +478,7 @@ def add_sec_headers(response):
     added to all responses.
     """
     if not app.config['LOCALHOST']:
-        response.headers['Strict-Transport-Security'] = 'max-age=31536000; includeSubDomains;'  # nopep8
+        response.headers['Strict-Transport-Security'] = 'max-age=31536000; includeSubDomains;'  # noqa
     response.headers['X-Content-Type-Options'] = 'nosniff'
     response.headers['X-XSS-Protection'] = '1; mode=block'
     response.headers['X-Frame-Options'] = 'DENY'
@@ -489,9 +489,9 @@ def get_img_src_policy():
 
     We allow webcompat.com-hosted images on localhost servers for convenience.
     """
-    policy = "img-src 'self' https://www.google-analytics.com https://*.githubusercontent.com data:; "  # nopep8
+    policy = "img-src 'self' https://www.google-analytics.com https://*.githubusercontent.com data:; "  # noqa
     if app.config['LOCALHOST']:
-        policy = "img-src 'self' https://webcompat.com https://www.google-analytics.com https://*.githubusercontent.com data:; "  # nopep8
+        policy = "img-src 'self' https://webcompat.com https://www.google-analytics.com https://*.githubusercontent.com data:; "  # noqa
     return policy
 
 
@@ -508,7 +508,7 @@ def add_csp(response):
         "font-src 'self' https://fonts.gstatic.com; " +
         get_img_src_policy() +
         "manifest-src 'self'; " +
-        "script-src 'self' https://www.google-analytics.com https://api.github.com 'nonce-{nonce}'; ".format(nonce=request.nonce) +  # nopep8
+        "script-src 'self' https://www.google-analytics.com https://api.github.com 'nonce-{nonce}'; ".format(nonce=request.nonce) +  # noqa
         "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; " +
         "base-uri 'self'; " +
         "frame-ancestors 'self'; " +
