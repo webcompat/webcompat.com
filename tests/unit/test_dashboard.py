@@ -87,5 +87,6 @@ class TestDashboard(unittest.TestCase):
         labels = ['status-foo', 'blah', 'browser-', 'browser-firefox']
         self.assertListEqual(['firefox'], browser_labels(labels))
 
+
 if __name__ == '__main__':
     unittest.main()

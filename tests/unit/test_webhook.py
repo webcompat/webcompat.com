@@ -288,5 +288,6 @@ class TestWebhook(unittest.TestCase):
                 self.assertEqual(response.status_code, 401)
                 self.assertTrue('Bad credentials' in response.content)
 
+
 if __name__ == '__main__':
     unittest.main()

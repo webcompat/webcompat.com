@@ -316,5 +316,6 @@ class TestHelpers(unittest.TestCase):
         # A JSON value, which is not an object
         self.assertFalse(is_json_object(json.loads('null')))
 
+
 if __name__ == '__main__':
     unittest.main()

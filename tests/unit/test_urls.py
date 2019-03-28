@@ -258,7 +258,7 @@ class TestURLs(unittest.TestCase):
         self.assertTrue(content_test)
 
     def test_extracted_ga_params_end_up_as_inline_js(self):
-        """Extract GA params (utm_foo) information of a form request with a POST.
+        """Extract GA params (utm_foo) information of POST form request.
 
         We also test that the nonce in the CSP matches the nonce in the
         inline style.

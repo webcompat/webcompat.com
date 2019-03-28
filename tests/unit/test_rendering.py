@@ -127,5 +127,6 @@ class TestURIContent(unittest.TestCase):
         self.assertEqual(rv.status_code, 200)
         self.assertTrue(expected in rv.data)
 
+
 if __name__ == '__main__':
     unittest.main()
