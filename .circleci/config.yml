@@ -52,7 +52,7 @@ jobs:
           name: run tests
           command: |
             . venv/bin/activate
-            pycodestyle --ignore=E402 webcompat/ tests/ config/secrets.py.example
+            pycodestyle --ignore=E402,W504 webcompat/ tests/ config/secrets.py.example
             npm run lint
             npm run build
             nosetests
