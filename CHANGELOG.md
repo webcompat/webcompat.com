@@ -4,6 +4,16 @@
 2. New features: affect minor number
 3. API endpoint changes or dependency version updates: affect major number
 
+## 19.0.0 - 2019-04-03
+
+* NPM update - Update postcss-browser-reporter to the latest version. [Pull #2832](https://github.com/webcompat/webcompat.com/pull/2832)
+* Fixes #2759 - Adds more files to ignore on deploy [Pull #2827](https://github.com/webcompat/webcompat.com/pull/2827)
+* Fixes #1968 - Updates python modules [Pull #2826](https://github.com/webcompat/webcompat.com/pull/2826)
+* Fixes #2823 - Adds type-fastclick to the list of valid extra labels [Pull #2824](https://github.com/webcompat/webcompat.com/pull/2824)
+* Fixes #2750 - Improves text rendering [Pull #2821](https://github.com/webcompat/webcompat.com/pull/2821)
+* NPM update - Update eslint-config-prettier to the latest version. [Pull #2814](https://github.com/webcompat/webcompat.com/pull/2814)
+* NPM update - Update yargs to the latest version. [Pull #2798](https://github.com/webcompat/webcompat.com/pull/2798)
+
 ## 18.0.0 - 2019-03-14
 
 * Fixes #2819 - Add browser-fenix to EXTRA_LABELS [Pull #2820](https://github.com/webcompat/webcompat.com/pull/2820)
