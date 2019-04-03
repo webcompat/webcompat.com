@@ -380,7 +380,8 @@ def build_formdata(form_object):
     contact = contact.strip()
     contact = contact.replace('@', '')
     if contact:
-        body += u'\n\nReported by @{contact}'.format(contact=contact)
+        body += u'\n\nSubmitted in the name of `@{contact}`'.format(
+            contact=contact)
     # Append "from webcompat.com" message to bottom (for GitHub issue viewers)
     body += u'\n\n{0}'.format(GITHUB_HELP)
     rv = {'title': summary, 'body': body}
