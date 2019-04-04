@@ -414,7 +414,7 @@ def extract_url(issue_body):
     URL in webcompat.com bugs follow this pattern:
     **URL**: https://example.com/foobar
     """
-    url_pattern = re.compile('\*\*URL\*\*\: (.+)\n')
+    url_pattern = re.compile(r'\*\*URL\*\*\: (.+)')
     url_match = re.search(url_pattern, issue_body)
     if url_match:
         url = url_match.group(1).strip()
@@ -478,7 +478,7 @@ def add_sec_headers(response):
     added to all responses.
     """
     if not app.config['LOCALHOST']:
-        response.headers['Strict-Transport-Security'] = 'max-age=31536000; includeSubDomains;'  # nopep8
+        response.headers['Strict-Transport-Security'] = 'max-age=31536000; includeSubDomains;'  # noqa
     response.headers['X-Content-Type-Options'] = 'nosniff'
     response.headers['X-XSS-Protection'] = '1; mode=block'
     response.headers['X-Frame-Options'] = 'DENY'
@@ -489,9 +489,9 @@ def get_img_src_policy():
 
     We allow webcompat.com-hosted images on localhost servers for convenience.
     """
-    policy = "img-src 'self' https://www.google-analytics.com https://*.githubusercontent.com data:; "  # nopep8
+    policy = "img-src 'self' https://www.google-analytics.com https://*.githubusercontent.com data:; "  # noqa
     if app.config['LOCALHOST']:
-        policy = "img-src 'self' https://webcompat.com https://www.google-analytics.com https://*.githubusercontent.com data:; "  # nopep8
+        policy = "img-src 'self' https://webcompat.com https://www.google-analytics.com https://*.githubusercontent.com data:; "  # noqa
     return policy
 
 
@@ -501,19 +501,20 @@ def add_csp(response):
     This should be used in @app.after_request to ensure the header is
     added to all responses.
     """
-    response.headers['Content-Security-Policy'] = (
-        "default-src 'self'; " +
-        "object-src 'none'; " +
-        "connect-src 'self' https://api.github.com; " +
-        "font-src 'self' https://fonts.gstatic.com; " +
-        get_img_src_policy() +
-        "manifest-src 'self'; " +
-        "script-src 'self' https://www.google-analytics.com https://api.github.com 'nonce-{nonce}'; ".format(nonce=request.nonce) +  # nopep8
-        "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; " +
-        "base-uri 'self'; " +
-        "frame-ancestors 'self'; " +
+    csp_params = [
+        "default-src 'self'; ",
+        "object-src 'none'; ",
+        "connect-src 'self' https://api.github.com; ",
+        "font-src 'self' https://fonts.gstatic.com; ",
+        get_img_src_policy(),
+        "manifest-src 'self'; ",
+        "script-src 'self' https://www.google-analytics.com https://api.github.com 'nonce-{nonce}'; ".format(nonce=request.nonce),  # noqa
+        "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; ",
+        "base-uri 'self'; ",
+        "frame-ancestors 'self'; ",
         "report-uri /csp-report"
-    )
+    ]
+    response.headers['Content-Security-Policy'] = (''.join(csp_params))
 
 
 def cache_policy(private=True, uri_max_age=86400, must_revalidate=False):

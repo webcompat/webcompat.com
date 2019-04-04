@@ -17,8 +17,8 @@ import urlparse
 
 import requests
 
-from environment import *  # nopep8
-from secrets import *  # nopep8
+from environment import *  # noqa
+from secrets import *  # noqa
 
 MILESTONE_ERROR = """It failed with {msg}!
 We will read from data/milestones.json.

@@ -32,8 +32,8 @@ github = GitHub(app)
 limiter = Limiter(app, key_func=get_remote_address)
 
 # import views after we initialize our github object
-import webcompat.views  # nopep8
-import webhooks  # nopep8
+import webcompat.views  # noqa
+import webhooks  # noqa
 
 # register blueprints
 from api.endpoints import api
