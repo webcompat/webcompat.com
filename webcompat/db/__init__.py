@@ -75,4 +75,5 @@ class Site(SiteBase):
         self.country_code = country_code
         self.ranking = ranking
 
+
 SiteBase.metadata.create_all(bind=site_engine)

@@ -6,6 +6,7 @@ Flask-SQLAlchemy==2.3.2
 Flask-WTF==0.14.2
 GitHub-Flask==3.2.0
 Pillow==5.4.1
+pycodestyle==2.5.0
 requests==2.21.0
 ua-parser==0.8
 WTForms==2.2.1
