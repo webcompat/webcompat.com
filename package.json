@@ -75,7 +75,7 @@
     "start": "source env/bin/activate || . env/bin/activate && python run.py",
     "start:test": "npm run build && source env/bin/activate || . env/bin/activate && python run.py -t",
     "virtualenv": "pip2 install virtualenv && virtualenv -p python2.7 env && source env/bin/activate || . env/bin/activate && npm run pip",
-    "pip": "pip2 install -r config/requirements.txt",
+    "pip": "pip2 install -r config/requirements-dev.txt",
     "config": "cp config/secrets.py.example config/secrets.py",
     "project-update": "pip2 install --upgrade pip && npm update",
     "precommit": "lint-staged",
