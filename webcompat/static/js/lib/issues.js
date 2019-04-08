@@ -272,7 +272,7 @@ issues.ImageUploadView = Backbone.View.extend({
     var splitImg = $(input)
       .val()
       .split(".");
-    var ext = splitImg[splitImg.length - 1];
+    var ext = splitImg[splitImg.length - 1].toLowerCase();
     var allowed = ["jpg", "jpeg", "jpe", "png", "gif", "bmp"];
     if (!_.includes(allowed, ext)) {
       this.makeInvalid("image");
