@@ -4,6 +4,12 @@
 2. New features: affect minor number
 3. API endpoint changes or dependency version updates: affect major number
 
+## 19.0.1 - 2019-04-08
+
+* Fixes #2080 - Aligns navigation menu in issues list [Pull #2835](https://github.com/webcompat/webcompat.com/pull/2835)
+* Fixes #1838 - Separates the python dependencies into prod and dev [Pull #2834](https://github.com/webcompat/webcompat.com/pull/2834)
+* Fixes #2828 - Changes from pep8 to pycodestyle [Pull #2829](https://github.com/webcompat/webcompat.com/pull/2829)
+
 ## 19.0.0 - 2019-04-03
 
 * NPM update - Update postcss-browser-reporter to the latest version. [Pull #2832](https://github.com/webcompat/webcompat.com/pull/2832)
