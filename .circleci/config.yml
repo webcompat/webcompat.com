@@ -18,7 +18,7 @@ jobs:
       # Download and cache dependencies
       - restore_cache:
           keys:
-          - v1-pip-{{ checksum "config/requirements.txt" }}
+          - v1-pip-{{ checksum "config/requirements-dev.txt" }}
           # fallback to using the latest cache if no exact match is found
           - v1-pip-
           - v1-npm-{{ checksum "package.json" }}
@@ -35,7 +35,7 @@ jobs:
       - save_cache:
           paths:
             - ./venv
-          key: v1-pip-{{ checksum "config/requirements.txt" }}
+          key: v1-pip-{{ checksum "config/requirements-dev.txt" }}
 
       - run:
           name: install npm deps
