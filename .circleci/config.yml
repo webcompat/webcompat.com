@@ -9,6 +9,8 @@ jobs:
       # specify the version you desire here
       # using -node-browsers to get node + firefox + chrome + geckoview
       - image: circleci/python:3.7.1-stretch-node-browsers
+        environment:
+          FLASK_CONFIG: testing
 
     working_directory: ~/repo
 
