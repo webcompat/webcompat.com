@@ -34,6 +34,7 @@ jobs:
             python3 -m venv venv
             . venv/bin/activate
             pip install -r config/requirements-dev.txt
+            cp config/secrets.py.example config/secrets.py
             # not sure we need this for circleci
             # npm run config
       - save_cache:
