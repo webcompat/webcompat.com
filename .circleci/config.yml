@@ -19,8 +19,8 @@ jobs:
       # Download and cache dependencies
       - restore_cache:
           keys:
-            deps1-{{ .Branch }}-{{ checksum "config/requirements-dev.txt" }}
-            v1-npm-{{ .Branch }}-{{ checksum "package.json" }}
+            - deps1-{{ .Branch }}-{{ checksum "config/requirements-dev.txt" }}
+            - v1-npm-{{ .Branch }}-{{ checksum "package.json" }}
       # - restore_cache:
       #     keys:
       #     - v1-pip-{{ checksum "config/requirements-dev.txt" }}
