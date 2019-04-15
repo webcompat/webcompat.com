@@ -383,25 +383,31 @@ def mockable_response(func):
     """Mock out API reponses with a decorator.
 
     This allows us to send back fixture files when in TESTING mode, rather
-    than making API requests over the network. See /api/endponts.py
+    than making API requests over the network. See /api/endpoints.py
     for usage.
+
+    There are fixtures with a md5 checksum, only for requests with arguments.
     """
     @wraps(func)
     def wrapped_func(*args, **kwargs):
         if app.config['TESTING']:
             get_args = request.args.copy()
+            full_path = request.full_path
             if get_args:
-                # if there are GET args, encode them as a hash so we can
-                # have different fixture files for different response states
-                checksum = hashlib.md5(json.dumps(get_args)).hexdigest()
+                # Only requests with arguments, get a fixture with a checksum.
+                # We grab the full path of the request URI to compute an md5
+                # that will give us the right fixture file.
+                checksum = hashlib.md5(full_path).hexdigest()
                 file_path = FIXTURES_PATH + request.path + "." + checksum
             else:
                 file_path = FIXTURES_PATH + request.path
-            if not os.path.exists(file_path + '.json'):
-                print('Expected fixture file: ' + file_path + '.json')
+            full_file_path = file_path + '.json'
+            if not os.path.exists(full_file_path):
+                print('Fixture expected at: {fix}'.format(fix=full_file_path))
+                print('by the http request: {req}'.format(req=request.url))
                 return ('', 404)
             else:
-                with open(file_path + '.json', 'r') as f:
+                with open(full_file_path, 'r') as f:
                     data = f.read()
                     return (data, 200, get_fixture_headers(data))
         return func(*args, **kwargs)
