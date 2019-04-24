@@ -70,6 +70,19 @@ class TestWebhook(unittest.TestCase):
         <!-- @browser: Firefox Mobile (Tablet) 40.0 -->
         """
 
+        self.issue_body5 = """
+        <!-- @browser: Android 8.1.0 -->
+        <!-- @ua_header: Mozilla/5.0 (Android 8.1.0; Mobile VR; rv:65.0) Gecko/65.0 Firefox/65.0 -->
+        <!-- @reported_with: browser-fxr -->
+        <!-- @extra_labels: browser-firefox-reality, type-media -->
+
+        **URL**: https://vrporn.com/closing-shift-shaft/
+
+        **Browser / Version**: Android 8.1.0
+        **Operating System**: Android 8.1.0
+        **Tested Another Browser**: Yes
+        """  # noqa
+
     def tearDown(self):
         """Tear down tests."""
         pass
@@ -198,7 +211,8 @@ class TestWebhook(unittest.TestCase):
         labels_tests = [
             (self.issue_body, ['browser-firefox', 'type-media', 'type-stylo']),
             (self.issue_body2, ['browser-fixme', 'type-foobar']),
-            (self.issue_body3, ['browser-firefox-tablet'])
+            (self.issue_body3, ['browser-firefox-tablet']),
+            (self.issue_body5, ['browser-firefox-reality', 'type-media']),
         ]
         for issue_body, expected in labels_tests:
             actual = helpers.get_issue_labels(issue_body)
