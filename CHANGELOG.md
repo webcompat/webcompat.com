@@ -4,6 +4,13 @@
 2. New features: affect minor number
 3. API endpoint changes or dependency version updates: affect major number
 
+## 19.0.2 - 2019-04-24
+
+* Fixes #2839 - Changes checksum algorithm for fixtures. Updates fixtures. [Pull #2843](https://github.com/webcompat/webcompat.com/pull/2843)
+* NPM update - Update prettier to the latest version. [Pull #2841](https://github.com/webcompat/webcompat.com/pull/2841)
+* Fixes #2837 - Lowercase the format before checking if it's valid [Pull #2838](https://github.com/webcompat/webcompat.com/pull/2838)
+* Fixes #2762 - Removes the autolinking on adding contact [Pull #2833](https://github.com/webcompat/webcompat.com/pull/2833)
+
 ## 19.0.1 - 2019-04-08
 
 * Fixes #2080 - Aligns navigation menu in issues list [Pull #2835](https://github.com/webcompat/webcompat.com/pull/2835)
