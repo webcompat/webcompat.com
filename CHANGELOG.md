@@ -4,6 +4,11 @@
 2. New features: affect minor number
 3. API endpoint changes or dependency version updates: affect major number
 
+## 19.0.3 - 2019-04-25
+
+* Fixes #2728 - Ignores browser label when extra labels already provides it [Pull #2850](https://github.com/webcompat/webcompat.com/pull/2850)
+
+
 ## 19.0.2 - 2019-04-24
 
 * Fixes #2839 - Changes checksum algorithm for fixtures. Updates fixtures. [Pull #2843](https://github.com/webcompat/webcompat.com/pull/2843)
