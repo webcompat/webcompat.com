@@ -111,6 +111,11 @@ class TestURLs(unittest.TestCase):
         rv = self.app.get('/contributors')
         self.assertEqual(rv.status_code, 200)
 
+    def test_contributors(self):
+        """Test that /contributors/alumni exists."""
+        rv = self.app.get('/contributors/alumni')
+        self.assertEqual(rv.status_code, 200)
+
     def test_contributors_report_bug(self):
         """Test that /contributors/report-bug exists."""
         rv = self.app.get('/contributors/report-bug')

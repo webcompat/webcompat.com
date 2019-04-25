@@ -50,6 +50,7 @@ class TestURIContent(unittest.TestCase):
             ('/', 'Bug reporting for the web'),
             ('/about', 'About'),
             ('/contributors', 'Contributors'),
+            ('/contributors/alumni', 'Alumni Contributors'),
             ('/issues/' + issue_number, 'Issue #' + issue_number),
             ('/issues', 'Issues'),
             ('issues/new', 'New Issue'),
