@@ -18,6 +18,14 @@ from webcompat.helpers import extract_url
 from webcompat.helpers import proxy_request
 
 BROWSERS = ['blackberry', 'brave', 'chrome', 'edge', 'firefox', 'iceweasel', 'ie', 'lynx', 'myie', 'opera', 'puffin', 'qq', 'safari', 'samsung', 'seamonkey', 'uc', 'vivaldi']  # noqa
+MOZILLA_BROWSERS = ['browser-fenix',
+                    'browser-firefox',
+                    'browser-firefox-mobile',
+                    'browser-firefox-reality',
+                    'browser-firefox-tablet',
+                    'browser-focus-geckoview',
+                    'browser-geckoview',
+                    ]
 
 
 def extract_metadata(body):
@@ -165,6 +173,8 @@ def get_issue_labels(issue_body):
         labelslist.extend(extra_labels)
     priority_label = extract_priority_label(issue_body)
     labelslist.extend([browser_label, priority_label])
+    if any(label for label in labelslist if label in MOZILLA_BROWSERS):
+        labelslist.append('engine-gecko')
     labelslist = [label for label in labelslist if label is not None]
     return labelslist
 
