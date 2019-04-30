@@ -83,6 +83,11 @@ class TestWebhook(unittest.TestCase):
         **Tested Another Browser**: Yes
         """  # noqa
 
+        self.issue_body6 = u"""
+        **URL**: https://not-gecko.example.com/
+        <!-- @browser: Safari 99.0 -->
+        """
+
     def tearDown(self):
         """Tear down tests."""
         pass
@@ -209,10 +214,13 @@ class TestWebhook(unittest.TestCase):
     def test_get_issue_labels(self):
         """Extract list of labels from an issue body."""
         labels_tests = [
-            (self.issue_body, ['browser-firefox', 'type-media', 'type-stylo']),
+            (self.issue_body, ['browser-firefox', 'type-media', 'type-stylo',
+                               'engine-gecko']),
             (self.issue_body2, ['browser-fixme', 'type-foobar']),
-            (self.issue_body3, ['browser-firefox-tablet']),
-            (self.issue_body5, ['browser-firefox-reality', 'type-media']),
+            (self.issue_body3, ['browser-firefox-tablet', 'engine-gecko']),
+            (self.issue_body5, ['browser-firefox-reality', 'engine-gecko',
+                                'type-media']),
+            (self.issue_body6, ['browser-safari']),
         ]
         for issue_body, expected in labels_tests:
             actual = helpers.get_issue_labels(issue_body)
