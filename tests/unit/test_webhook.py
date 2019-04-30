@@ -84,7 +84,7 @@ class TestWebhook(unittest.TestCase):
         """  # noqa
 
         self.issue_body6 = u"""
-        **URL**: https://www.not-a-mozilla-browser.com/
+        **URL**: https://not-gecko.example.com/
         <!-- @browser: Safari 99.0 -->
         """
 
