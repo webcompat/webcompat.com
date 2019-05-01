@@ -91,13 +91,11 @@ issues.Issue = Backbone.Model.extend({
 
   getDescription: function(body) {
     // Get the Description of the body
-    var el = body;
-    el = $("strong:contains('Description')", el);
-    if (el[0]) {
-      var description = el[0].nextSibling.textContent;
-      description = description.replace(": ", "");
-      return description;
-    }
+    var div = document.createElement("div");
+    div.innerHTML = body;
+    var regex = /Description:(.+)\n/;
+    var description = regex.exec(div.textContent);
+    return description != null ? description[1].slice(0, 74) : null;
   },
 
   getDomain: function(title) {

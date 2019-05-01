@@ -68,7 +68,7 @@ browser_test_label = u'Did you test in another browser?'
 textarea_label = u'Please describe what happened, including any steps you took before you saw the problem'  # noqa
 
 contact_message = u'There is a mistake in the username.'  # noqa
-contact_label = u'Sharing your GitHub nickname (without signing up) could help us for diagnosis. (publicly visible)'  # noqa
+contact_label = u'Sharing your GitHub username—without logging in—could help us with diagnosis. This will be publicly visible.'  # noqa
 
 
 class IssueForm(FlaskForm):
@@ -380,7 +380,8 @@ def build_formdata(form_object):
     contact = contact.strip()
     contact = contact.replace('@', '')
     if contact:
-        body += u'\n\nReported by @{contact}'.format(contact=contact)
+        body += u'\n\nSubmitted in the name of `@{contact}`'.format(
+            contact=contact)
     # Append "from webcompat.com" message to bottom (for GitHub issue viewers)
     body += u'\n\n{0}'.format(GITHUB_HELP)
     rv = {'title': summary, 'body': body}

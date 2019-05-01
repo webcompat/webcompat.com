@@ -52,14 +52,14 @@ jobs:
           name: run tests
           command: |
             . venv/bin/activate
-            pep8 --ignore=E402 webcompat/ tests/ config/secrets.py.example
-            python run.py -t &
-            sleep 5
-            nosetests
+            pycodestyle --ignore=E402,W504 webcompat/ tests/ config/secrets.py.example
             npm run lint
             npm run build
+            nosetests
+            python run.py -t &
+            sleep 5
             node --max-old-space-size=8192 ./tests/functional/_intern.js --reporters="runner" --firefoxBinary=`which firefox`
-
+            firefox --version
       - store_artifacts:
           path: test-reports
           destination: test-reports

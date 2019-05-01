@@ -91,19 +91,19 @@ For product and design contributions, check out the [Design Repo](https://github
  Try to take care to follow existing conventions. Some of these are defined in an [.editorconfig](https://github.com/webcompat/webcompat.com/blob/master/.editorconfig) file. You can download the plugin for your editor here http://editorconfig.org/#download.
 
 ### Python
-As we are still very early in the project, we do not yet have that many conventions for naming, routes, APIs. If in doubt, ask us or open an issue.  All Python code should pass [pep8](http://pep8.readthedocs.org/en/1.4.6/intro.html).
+As we are still very early in the project, we do not yet have that many conventions for naming, routes, APIs. If in doubt, ask us or open an issue.  All Python code should pass [pycodestyle](http://pycodestyle.pycqa.org/en/latest/intro.html).
 
-You can check this by installing the pep8 module.
+You can check this by installing the pycodestyle module. This is usually installed through the requirements file in the project.  If you wish to install it yourself on your computer, you can do.
 
-    sudo pip install pep8
+    pip install --user pycodestyle
 
 Once at the root of the project you can run it with
 
-    pep8 --show-source --show-pep8 .
+    pycodestyle --ignore=E402,W504 webcompat/ tests/ config/secrets.py.example
 
 That will show you the list of errors and their explanations. Another tool, we have used for checking consistency of the code is `flake8` + `hacking`. [Hacking](https://github.com/openstack-dev/hacking) is a set of [OpenStack guidelines](http://docs.openstack.org/developer/hacking/) which is used by the community for the stability of their projects. You will see that there's nothing really hard about it.
 
-    sudo pip install hacking
+    pip install --user hacking
 
 will install the relevant flake8 and hacking modules. In the same fashion, if you do
 

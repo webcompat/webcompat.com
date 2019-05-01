@@ -53,5 +53,6 @@ class TestConfig(unittest.TestCase):
         actual = update_status_config(milestones_json)
         self.assertEqual(actual, expected)
 
+
 if __name__ == '__main__':
     unittest.main()

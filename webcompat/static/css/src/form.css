@@ -86,7 +86,17 @@
 /* form message: error */
 .form-message-error {
   color: var(--color-error);
+  display: block;
   font-weight: 700;
+}
+
+/* form text privacy */
+.form-text-privacy {
+  background-color: var(--base-colorDark);
+  border-radius: 5px;
+  font-size: 14px;
+  padding: 6px;
+  text-align: center;
 }
 
 /* * Form input[type="text"], textarea (text-field) */

@@ -4,7 +4,79 @@
 2. New features: affect minor number
 3. API endpoint changes or dependency version updates: affect major number
 
-## 15.5.0 - 2019-01-11
+## 19.0.3 - 2019-04-25
+
+* Fixes #2728 - Ignores browser label when extra labels already provides it [Pull #2850](https://github.com/webcompat/webcompat.com/pull/2850)
+
+
+## 19.0.2 - 2019-04-24
+
+* Fixes #2839 - Changes checksum algorithm for fixtures. Updates fixtures. [Pull #2843](https://github.com/webcompat/webcompat.com/pull/2843)
+* NPM update - Update prettier to the latest version. [Pull #2841](https://github.com/webcompat/webcompat.com/pull/2841)
+* Fixes #2837 - Lowercase the format before checking if it's valid [Pull #2838](https://github.com/webcompat/webcompat.com/pull/2838)
+* Fixes #2762 - Removes the autolinking on adding contact [Pull #2833](https://github.com/webcompat/webcompat.com/pull/2833)
+
+## 19.0.1 - 2019-04-08
+
+* Fixes #2080 - Aligns navigation menu in issues list [Pull #2835](https://github.com/webcompat/webcompat.com/pull/2835)
+* Fixes #1838 - Separates the python dependencies into prod and dev [Pull #2834](https://github.com/webcompat/webcompat.com/pull/2834)
+* Fixes #2828 - Changes from pep8 to pycodestyle [Pull #2829](https://github.com/webcompat/webcompat.com/pull/2829)
+
+## 19.0.0 - 2019-04-03
+
+* NPM update - Update postcss-browser-reporter to the latest version. [Pull #2832](https://github.com/webcompat/webcompat.com/pull/2832)
+* Fixes #2759 - Adds more files to ignore on deploy [Pull #2827](https://github.com/webcompat/webcompat.com/pull/2827)
+* Fixes #1968 - Updates python modules [Pull #2826](https://github.com/webcompat/webcompat.com/pull/2826)
+* Fixes #2823 - Adds type-fastclick to the list of valid extra labels [Pull #2824](https://github.com/webcompat/webcompat.com/pull/2824)
+* Fixes #2750 - Improves text rendering [Pull #2821](https://github.com/webcompat/webcompat.com/pull/2821)
+* NPM update - Update eslint-config-prettier to the latest version. [Pull #2814](https://github.com/webcompat/webcompat.com/pull/2814)
+* NPM update - Update yargs to the latest version. [Pull #2798](https://github.com/webcompat/webcompat.com/pull/2798)
+
+## 18.0.0 - 2019-03-14
+
+* Fixes #2819 - Add browser-fenix to EXTRA_LABELS [Pull #2820](https://github.com/webcompat/webcompat.com/pull/2820)
+* Fixes #2811 - Fixes mime type for some endpoints [Pull #2812](https://github.com/webcompat/webcompat.com/pull/2812)
+* Fixes #2746 - Renders title with HTML code correctly [Pull #2805](https://github.com/webcompat/webcompat.com/pull/2805)
+* Fixes #2771 - Removes unnecessary favicons [Pull #2804](https://github.com/webcompat/webcompat.com/pull/2804)
+
+## 17.0.0 - 2019-02-21
+
+* Fixes #2793 - Comments are sent as markdown to Github [Pull #2800](https://github.com/webcompat/webcompat.com/pull/2800)
+
+## 16.0.1 - 2019-02-14
+
+* Fixes #2802 - Requests for a body instead of a body_html [Pull #2803](https://github.com/webcompat/webcompat.com/pull/2803)
+
+
+## 16.0.0 - 2019-02-14
+
+* Fixes #2767 - Cut description at 75th char [Pull #2801](https://github.com/webcompat/webcompat.com/pull/2801)
+* Fixes #2690 - Adds block about privacy implications of reporting issues [Pull #2795](https://github.com/webcompat/webcompat.com/pull/2795)
+* Fixes #2724 - display error messages on a line [Pull #2794](https://github.com/webcompat/webcompat.com/pull/2794)
+* Fixes #2778 - Implements HTTP/2 Push through Flask [Pull #2792](https://github.com/webcompat/webcompat.com/pull/2792)
+* Fixes #2778 - Adds doc for  push_preload to staging [Pull #2790](https://github.com/webcompat/webcompat.com/pull/2790)
+* Fixes #2788 - Make GitHub username regex case-insensitive [Pull #2789](https://github.com/webcompat/webcompat.com/pull/2789)
+
+
+## 15.6.2 - 2019-01-31
+
+* Fixes #2782 - Edit dev-env-setup.md around GH client ID/secret + typos [Pull #2786](https://github.com/webcompat/webcompat.com/pull/2786)
+* Fixes #2747 - Updates Staging to use http2 [Pull #2779](https://github.com/webcompat/webcompat.com/pull/2779)
+* Fixes #2751 - Add gzip settings to Staging [Pull #2777](https://github.com/webcompat/webcompat.com/pull/2777)
+* Fixes #2768 - Renames highlight class so it doesn't interact with the Github class [Pull #2775](https://github.com/webcompat/webcompat.com/pull/2775)
+
+## 15.6.1 - 2019-01-28
+
+* Fixes #2774 - Fixes code blocks with language identifiers [Pull #2776](https://github.com/webcompat/webcompat.com/pull/2776)
+* Fixes #2764 - Updates intern dep. to a version that's not broken [Pull #2773](https://github.com/webcompat/webcompat.com/pull/2773)
+* Fixes #2764 - Prints firefox version used by CircleCI [Pull #2766](https://github.com/webcompat/webcompat.com/pull/2766)
+
+## 15.6.0 - 2019-01-21
+
+* Fixes #2753 - only show GitHub username field if not logged in [Pull #2765](https://github.com/webcompat/webcompat.com/pull/2765)
+* Fixes #2757 - Adds missing lib to issues on concat.js [Pull #2760](https://github.com/webcompat/webcompat.com/pull/2760)
+
+## 15.5.0 - 2019-01-11 (known broken, don't deploy)
 
 * Fixes #2757 - Add markdown-it to issues on production [Pull #2758](https://github.com/webcompat/webcompat.com/pull/2758)
 
@@ -1198,4 +1270,3 @@ Add namespaces for statuses and browsers to labels. [Pull #640](https://github.c
 ## 1.0.0 - 2014-11-06
 
 First release version for an app that's been released for quite a while. There's lot of stuff in it. ^_^
-

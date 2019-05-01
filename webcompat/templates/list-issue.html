@@ -4,7 +4,7 @@
 <div class="js-SearchIssue" data-username="{{ session.username }}">
   {% include "nav/nav.html" %}
   <main role="main" class="loader js-loader is-active" data-repo-path="{{config['ISSUES_REPO_URI']}}">
-    <section class="grid">
+    <section class="grid SearchIssue-filter">
       <div class="js-SearchIssue-filter">
         {% include "list-issue/search-issue-filter.html" %}
       </div>

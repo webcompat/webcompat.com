@@ -117,3 +117,66 @@ logto = $FOO/staging-uwsgi.log
 buffer-size = 8192
 
 ```
+
+## Staging Server Setup
+
+nginx configuration file:
+
+```nginx
+# staging.webcompat.com
+#
+server {
+        server_name staging.webcompat.com;
+        root /home/webcompat/staging.webcompat.com;
+        http2_push_preload on;
+        error_log /home/webcompat/logs/staging-nginx-error.log;
+        client_max_body_size 4M;
+
+        listen [::]:443 ssl ipv6only=on http2; # managed by Certbot
+        listen 443 ssl http2; # managed by Certbot
+        ssl_certificate /etc/letsencrypt/live/staging.webcompat.com/fullchain.pem; # managed by Certbot
+        ssl_certificate_key /etc/letsencrypt/live/staging.webcompat.com/privkey.pem; # managed by Certbot
+        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+
+        ssl_session_cache shared:SSL:50m;
+
+        keepalive_timeout 70;
+
+        location ^~ /uploads/ {
+                root /srv/uploads/staging.webcompat.com/;
+                try_files $uri /dev/null =404;
+        }
+
+        location / {
+                try_files /home/webcompat/staging.webcompat.com/webcompat/static/$uri @staging;
+                expires 1M;
+                add_header Cache-Control "public";
+        }
+
+
+        location @staging {
+                uwsgi_pass unix:///tmp/uwsgi-staging.sock;
+                uwsgi_buffer_size 512k;
+                uwsgi_buffers 8 512k;
+                include uwsgi_params;
+        }
+
+        location ~ /.well-known {
+                allow all;
+        }
+}
+```
+
+That have the following handlers:
+
+```nginx
+        ##
+        # Brotli Settings
+        ##
+
+        brotli on;
+        brotli_comp_level 4;
+        brotli_static on;
+        brotli_types *;
+```
