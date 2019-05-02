@@ -4,6 +4,14 @@
 2. New features: affect minor number
 3. API endpoint changes or dependency version updates: affect major number
 
+## 19.0.4 - 2019-05-02
+
+* Fixes #2754 - updates postcss to version 7.0.13 [Pull #2860](https://github.com/webcompat/webcompat.com/pull/2860)
+* Fixes #2856 - Add 'engine-gecko' label for Mozilla browsers [Pull #2858](https://github.com/webcompat/webcompat.com/pull/2858)
+* NPM update - Update husky to the latest version. [Pull #2852](https://github.com/webcompat/webcompat.com/pull/2852)
+* NPM update - Update stylelint-order to the latest version. [Pull #2847](https://github.com/webcompat/webcompat.com/pull/2847)
+* NPM update - Update stylelint to the latest version. [Pull #2842](https://github.com/webcompat/webcompat.com/pull/2842)
+
 ## 19.0.3 - 2019-04-25
 
 * Fixes #2728 - Ignores browser label when extra labels already provides it [Pull #2850](https://github.com/webcompat/webcompat.com/pull/2850)
