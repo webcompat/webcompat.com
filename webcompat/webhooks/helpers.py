@@ -19,6 +19,14 @@ from webcompat.helpers import proxy_request
 from webcompat.helpers import to_bytes
 
 BROWSERS = ['blackberry', 'brave', 'chrome', 'edge', 'firefox', 'iceweasel', 'ie', 'lynx', 'myie', 'opera', 'puffin', 'qq', 'safari', 'samsung', 'seamonkey', 'uc', 'vivaldi']  # noqa
+MOZILLA_BROWSERS = ['browser-fenix',
+                    'browser-firefox',
+                    'browser-firefox-mobile',
+                    'browser-firefox-reality',
+                    'browser-firefox-tablet',
+                    'browser-focus-geckoview',
+                    'browser-geckoview',
+                    ]
 
 
 def extract_metadata(body):
@@ -143,14 +151,19 @@ def get_issue_info(payload):
 
 def get_issue_labels(issue_body):
     """Extract the list of labels from an issue body to be sent to GitHub."""
-    metadata_dict = extract_metadata(issue_body)
-    browser_label = extract_browser_label(metadata_dict)
-    extra_labels = extract_extra_labels(metadata_dict)
-    priority_label = extract_priority_label(issue_body)
     labelslist = []
-    labelslist.extend([browser_label, priority_label])
+    metadata_dict = extract_metadata(issue_body)
+    extra_labels = extract_extra_labels(metadata_dict)
+    browser_label = extract_browser_label(metadata_dict)
     if extra_labels:
+        # if extra_labels contains a browser tag, we do not need to extract it
+        if any(label.startswith('browser') for label in extra_labels):
+            browser_label = None
         labelslist.extend(extra_labels)
+    priority_label = extract_priority_label(issue_body)
+    labelslist.extend([browser_label, priority_label])
+    if any(label for label in labelslist if label in MOZILLA_BROWSERS):
+        labelslist.append('engine-gecko')
     labelslist = [label for label in labelslist if label is not None]
     return labelslist
 
