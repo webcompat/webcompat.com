@@ -34,3 +34,6 @@ webcompat/static/css/dist/
 *.jar
 *.pid
 nohup.out
+
+# tests
+.noseids

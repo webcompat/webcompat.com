@@ -144,7 +144,7 @@ class TestForm(unittest.TestCase):
         metadata_keys = ['browser', 'ua_header', 'reported_with',
                          'extra_labels']
         actual = form.get_metadata(metadata_keys, form_object)
-        expected = '<!-- @browser: Firefox 59.0 -->\n<!-- @ua_header: Mozilla/5.0...Firefox 59.0 -->\n<!-- @reported_with: desktop-reporter -->\n<!-- @extra_labels: type-webrender-enabled -->\n'  # nopep8
+        expected = '<!-- @browser: Firefox 59.0 -->\n<!-- @ua_header: Mozilla/5.0...Firefox 59.0 -->\n<!-- @reported_with: desktop-reporter -->\n<!-- @extra_labels: type-webrender-enabled -->\n'  # noqa
         self.assertEqual(actual, expected)
 
     def test_get_metadata_browser_as_extra(self):
@@ -158,7 +158,7 @@ class TestForm(unittest.TestCase):
         metadata_keys = ['browser', 'ua_header', 'reported_with',
                          'extra_labels']
         actual = form.get_metadata(metadata_keys, form_object)
-        expected = '<!-- @browser: Firefox 59.0 -->\n<!-- @ua_header: Mozilla/5.0...Firefox 59.0 -->\n<!-- @reported_with: desktop-reporter -->\n<!-- @extra_labels: browser-focus-geckoview -->\n'  # nopep8
+        expected = '<!-- @browser: Firefox 59.0 -->\n<!-- @ua_header: Mozilla/5.0...Firefox 59.0 -->\n<!-- @reported_with: desktop-reporter -->\n<!-- @extra_labels: browser-focus-geckoview -->\n'  # noqa
         self.assertEqual(actual, expected)
 
     def test_normalize_metadata(self):
@@ -181,18 +181,18 @@ class TestForm(unittest.TestCase):
         # even if the data are empty
         form_object = {'foo': 'bar'}
         actual = form.build_formdata(form_object)
-        expected = {'body': '<!-- @browser: None -->\n<!-- @ua_header: None -->\n<!-- @reported_with: None -->\n\n**URL**: None\n\n**Browser / Version**: None\n**Operating System**: None\n**Tested Another Browser**: Unknown\n\n**Problem type**: Unknown\n**Description**: None\n**Steps to Reproduce**:\nNone\n\n\n\n_From [webcompat.com](https://webcompat.com/) with \u2764\ufe0f_', 'title': 'None - unknown'}  # nopep8
+        expected = {'body': '<!-- @browser: None -->\n<!-- @ua_header: None -->\n<!-- @reported_with: None -->\n\n**URL**: None\n\n**Browser / Version**: None\n**Operating System**: None\n**Tested Another Browser**: Unknown\n\n**Problem type**: Unknown\n**Description**: None\n**Steps to Reproduce**:\nNone\n\n\n\n_From [webcompat.com](https://webcompat.com/) with \u2764\ufe0f_', 'title': 'None - unknown'}  # noqa
         self.assertIs(type(actual), dict)
         self.assertEqual(actual, expected)
         # testing for double URL Schemes.
         form_object = {'url': 'http://https://example.com/'}
         actual = form.build_formdata(form_object)
-        expected = {'body': '<!-- @browser: None -->\n<!-- @ua_header: None -->\n<!-- @reported_with: None -->\n\n**URL**: https://example.com/\n\n**Browser / Version**: None\n**Operating System**: None\n**Tested Another Browser**: Unknown\n\n**Problem type**: Unknown\n**Description**: None\n**Steps to Reproduce**:\nNone\n\n\n\n_From [webcompat.com](https://webcompat.com/) with \u2764\ufe0f_', 'title': 'example.com - unknown'}  # nopep8
+        expected = {'body': '<!-- @browser: None -->\n<!-- @ua_header: None -->\n<!-- @reported_with: None -->\n\n**URL**: https://example.com/\n\n**Browser / Version**: None\n**Operating System**: None\n**Tested Another Browser**: Unknown\n\n**Problem type**: Unknown\n**Description**: None\n**Steps to Reproduce**:\nNone\n\n\n\n_From [webcompat.com](https://webcompat.com/) with \u2764\ufe0f_', 'title': 'example.com - unknown'}  # noqa
         self.assertEqual(actual, expected)
         # testing with unicode strings.
         form_object = {'url': '愛'}
         actual = form.build_formdata(form_object)
-        expected = {'body': '<!-- @browser: None -->\n<!-- @ua_header: None -->\n<!-- @reported_with: None -->\n\n**URL**: http://\u611b\n\n**Browser / Version**: None\n**Operating System**: None\n**Tested Another Browser**: Unknown\n\n**Problem type**: Unknown\n**Description**: None\n**Steps to Reproduce**:\nNone\n\n\n\n_From [webcompat.com](https://webcompat.com/) with \u2764\ufe0f_', 'title': '\u611b - unknown'}  # nopep8
+        expected = {'body': '<!-- @browser: None -->\n<!-- @ua_header: None -->\n<!-- @reported_with: None -->\n\n**URL**: http://\u611b\n\n**Browser / Version**: None\n**Operating System**: None\n**Tested Another Browser**: Unknown\n\n**Problem type**: Unknown\n**Description**: None\n**Steps to Reproduce**:\nNone\n\n\n\n_From [webcompat.com](https://webcompat.com/) with \u2764\ufe0f_', 'title': '\u611b - unknown'}  # noqa
         self.assertEqual(actual, expected)
 
     def test_get_details(self):
@@ -217,14 +217,14 @@ class TestForm(unittest.TestCase):
         self.assertEqual(actual_json_arg, expected_json_arg)
         # Test for receiving a string
         actual_string_arg = form.build_details('cool')
-        expected_string_arg = '<details>\n<summary>Browser Configuration</summary>\n<ul>\n  <li>cool</li>\n</ul>\n\n</details>'  # nopep8
+        expected_string_arg = '<details>\n<summary>Browser Configuration</summary>\n<ul>\n  <li>cool</li>\n</ul>\n\n</details>'  # noqa
         self.assertEqual(actual_string_arg, expected_string_arg)
 
     def test_build_details_with_console_logs(self):
         """Expected HTML is returned for a json object with console logs."""
         actual_json_arg = form.build_details(json.dumps(
             {'a': 'b', 'c': False, 'consoleLog': ['console.log(hi)']}))
-        expected_json_arg = '<details>\n<summary>Browser Configuration</summary>\n<ul>\n  <li>a: b</li><li>c: false</li>\n</ul>\n<p>Console Messages:</p>\n<pre>\n[\'console.log(hi)\']\n</pre>\n</details>'  # nopep8
+        expected_json_arg = '<details>\n<summary>Browser Configuration</summary>\n<ul>\n  <li>a: b</li><li>c: false</li>\n</ul>\n<p>Console Messages:</p>\n<pre>\n[\'console.log(hi)\']\n</pre>\n</details>'  # noqa
         self.assertEqual(actual_json_arg, expected_json_arg)
         actual_empty_log_arg = form.build_details(json.dumps(
             {'a': 'b', 'c': False, 'consoleLog': ''}))

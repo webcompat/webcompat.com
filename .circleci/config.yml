@@ -8,35 +8,40 @@ jobs:
     docker:
       # specify the version you desire here
       # using -node-browsers to get node + firefox + chrome + geckoview
-      - image: circleci/python:2.7.15-stretch-node-browsers
+      - image: circleci/python:3.7.1-stretch-node-browsers
+        environment:
+          FLASK_CONFIG: testing
 
     working_directory: ~/repo
 
     steps:
       - checkout
-
       # Download and cache dependencies
       - restore_cache:
           keys:
-          - v1-pip-{{ checksum "config/requirements.txt" }}
-          # fallback to using the latest cache if no exact match is found
-          - v1-pip-
-          - v1-npm-{{ checksum "package.json" }}
-          - v1-npm-
-
+            - deps1-{{ .Branch }}-{{ checksum "config/requirements-dev.txt" }}
+            - v1-npm-{{ .Branch }}-{{ checksum "package.json" }}
+      # - restore_cache:
+      #     keys:
+      #     - v1-pip-{{ checksum "config/requirements-dev.txt" }}
+      #     # fallback to using the latest cache if no exact match is found
+      #     - v1-pip-
+      #     - v1-npm-{{ checksum "package.json" }}
+      #     - v1-npm-
       - run:
           name: install python deps
           command: |
-            virtualenv venv
+            python3 -m venv venv
             . venv/bin/activate
-            npm run pip
-            npm run config
-
+            pip install -r config/requirements-dev.txt
+            cp config/secrets.py.example config/secrets.py
+            # not sure we need this for circleci
+            # npm run config
       - save_cache:
+          key: deps1-{{ .Branch }}-{{ checksum "config/requirements-dev.txt" }}
           paths:
-            - ./venv
-          key: v1-pip-{{ checksum "config/requirements.txt" }}
-
+            - "venv"
+      # NPM INSTALL
       - run:
           name: install npm deps
           command: |
@@ -45,7 +50,7 @@ jobs:
       - save_cache:
           paths:
             - ./node_modules
-          key: v1-npm-{{ checksum "package.json" }}
+          key: v1-npm-{{ .Branch }}-{{ checksum "package.json" }}
 
       # run tests!
       - run:
@@ -61,5 +66,5 @@ jobs:
             node --max-old-space-size=8192 ./tests/functional/_intern.js --reporters="runner" --firefoxBinary=`which firefox`
             firefox --version
       - store_artifacts:
-          path: test-reports
+          path: test-reports/
           destination: test-reports
