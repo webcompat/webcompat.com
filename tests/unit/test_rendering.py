@@ -12,7 +12,7 @@ import unittest
 
 # Add webcompat module to import path
 sys.path.append(os.path.realpath(os.pardir))
-import webcompat  # nopep8
+import webcompat  # noqa
 
 # Any request that depends on parsing HTTP Headers (basically anything
 # on the index route, will need to include the following: environ_base=headers
@@ -126,6 +126,7 @@ class TestURIContent(unittest.TestCase):
         expected = b'Contact: mailto:kdubost+securitywebc'
         self.assertEqual(rv.status_code, 200)
         self.assertTrue(expected in rv.data)
+
 
 if __name__ == '__main__':
     unittest.main()

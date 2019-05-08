@@ -29,6 +29,7 @@
 
 /* imports for other vendor files */
 @import "lib/prism-gh-theme.css";
+@import "lib/github-light.css";
 
 *::after,
 *::before {
@@ -96,4 +97,32 @@
 .img-fit {
   max-height: 75vh;
   max-width: 100%;
+}
+
+@font-face {
+  font-display: optional;
+  font-family: "Source Sans Pro", sans-serif;
+  font-weight: 300;
+  src: local("Source Sans Pro Light"), local("SourceSansPro-Light"), url("https://fonts.gstatic.com/s/sourcesanspro/v11/6xKydSBYKcSV-LCoeQqfX1RYOo3ik4zwlxdu3cOWxw.woff2") format("woff2");
+}
+
+@font-face {
+  font-display: optional;
+  font-family: "Source Sans Pro", sans-serif;
+  font-weight: 400;
+  src: local("Source Sans Pro Regular"), local("SourceSansPro-Regular"), url("https://fonts.gstatic.com/s/sourcesanspro/v11/6xK3dSBYKcSV-LCoeQqfX1RYOo3qOK7lujVj9w.woff2") format("woff2");
+}
+
+@font-face {
+  font-display: optional;
+  font-family: "Open Sans", sans-serif;
+  font-weight: 400;
+  src: local("Open Sans"), url("https://fonts.gstatic.com/s/opensans/v15/mem8YaGs126MiZpBA-UFWJ0bf8pkAp6a.woff2") format("woff2");
+}
+
+@font-face {
+  font-display: optional;
+  font-family: "Open Sans", sans-serif;
+  font-weight: 600;
+  src: local("Open Sans"), url("https://fonts.gstatic.com/s/opensans/v15/mem5YaGs126MiZpBA-UNirkOXOhpKKSTj5PW.woff2") format("woff2");
 }

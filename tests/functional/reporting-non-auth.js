@@ -314,6 +314,60 @@ registerSuite("Reporting (non-auth)", {
         .end();
     },
 
+    "Mixed and lowercase GitHub usernames are valid"() {
+      return (
+        FunctionalHelpers.openPage(
+          this,
+          url("/issues/new"),
+          ".js-report-buttons"
+        )
+          .findByCssSelector("#contact")
+          .click()
+          .type("WebCompat-Bot")
+          .end()
+          .sleep(500)
+          // make sure we can see the valid checkbox (i.e. it's background image is non-empty)
+          .execute(function() {
+            return window
+              .getComputedStyle(
+                document.querySelector(".js-bug-form-contact"),
+                ":after"
+              )
+              .getPropertyValue("background-image");
+          })
+          .then(function(bgImage) {
+            assert.include(
+              bgImage,
+              "checkmark.svg",
+              "The valid checkbox pseudo is visible"
+            );
+          })
+          .end()
+          .findByCssSelector("#contact")
+          .click()
+          .type("webcompat-bot")
+          .end()
+          .sleep(500)
+          // make sure we can see the valid checkbox (i.e. it's background image is non-empty)
+          .execute(function() {
+            return window
+              .getComputedStyle(
+                document.querySelector(".js-bug-form-contact"),
+                ":after"
+              )
+              .getPropertyValue("background-image");
+          })
+          .then(function(bgImage) {
+            assert.include(
+              bgImage,
+              "checkmark.svg",
+              "The valid checkbox pseudo is visible"
+            );
+          })
+          .end()
+      );
+    },
+
     "GitHub contact name with two consecutives --"() {
       return FunctionalHelpers.openPage(
         this,

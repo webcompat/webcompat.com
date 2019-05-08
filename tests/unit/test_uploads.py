@@ -20,7 +20,7 @@ from werkzeug.datastructures import MultiDict
 # Add webcompat module to import path
 sys.path.append(os.path.realpath(os.pardir))
 
-from webcompat import app  # nopep8
+from webcompat import app  # noqa
 
 
 def check_rv_format(self, resp):
@@ -66,7 +66,7 @@ class TestingFileStorage(FileStorage):
     :param headers: Multipart headers as a `werkzeug.Headers`. The default is
                     `None`.
 
-    taken from https://github.com/srusskih/flask-uploads/blob/master/flaskext/uploads.py#L476 # nopep8
+    taken from https://github.com/srusskih/flask-uploads/blob/master/flaskext/uploads.py#L476 # noqa
     """
 
     def __init__(self, stream=None, filename=None, name=None,
@@ -95,7 +95,7 @@ class TestingFileStorage(FileStorage):
 class TestUploads(unittest.TestCase):
     '''Test-only Uploads Class.
 
-    Modified from http://prschmid.blogspot.com/2013/05/unit-testing-flask-file-uploads-without.html  # nopep8
+    Modified from http://prschmid.blogspot.com/2013/05/unit-testing-flask-file-uploads-without.html  # noqa
     '''
 
     def setUp(self):
@@ -155,7 +155,7 @@ class TestUploads(unittest.TestCase):
 
     def test_base64_screenshot_uploads(self):
         '''Test that Base64 screenshots return the expected status codes.'''
-        BASE64_PNG = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAAAAAA6fptVAAAACklEQVQYV2P4DwABAQEAWk1v8QAAAABJRU5ErkJggg=='  # nopep8
+        BASE64_PNG = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAAAAAA6fptVAAAACklEQVQYV2P4DwABAQEAWk1v8QAAAABJRU5ErkJggg=='  # noqa
         BASE64_PNG_GARBAGE = 'data:image/png;base64,garbage!'
         BASE64_PNG_GARBAGE2 = 'data:image/png;data:image/png;'
         PILE_OF_POO = '💩'

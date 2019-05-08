@@ -124,7 +124,7 @@
       {{ form.contact(class_='form-field text-field',
          placeholder='GitHub nickname',
          pattern='^[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}$') }}
-         <span class="form-input-validation check error"></span>
+         <span class="form-input-validation check error js-bug-form-contact"></span>
     </div>
     {% endif %}
     <div class="form-button form-button-multiple form-element js-Form-group js-report-buttons">
@@ -144,6 +144,10 @@
       >
         {% if session.username %}Report as {{ session.username }}{% else %}Report via GitHub{% endif %}
       </button>
+    </div>
+    <div class="form-text-privacy ">
+      All information included in this report will be publicly visible.
+      <a href="https://webcompat.com/privacy">Learn More</a>
     </div>
     <div class="is-hidden" aria-hidden="true">
       <div class="form-text form-element js-Form-group">

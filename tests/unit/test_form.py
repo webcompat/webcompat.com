@@ -12,7 +12,7 @@ import webcompat
 from webcompat import form
 from webcompat import helpers
 
-FIREFOX_UA = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:48.0) Gecko/20100101 Firefox/48.0'  # nopep8
+FIREFOX_UA = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:48.0) Gecko/20100101 Firefox/48.0'  # noqa
 
 
 class TestForm(unittest.TestCase):
@@ -209,11 +209,11 @@ class TestForm(unittest.TestCase):
         # Test for receiving JSON object as a string
         actual_json_arg = form.build_details(json.dumps(
             {'a': 'b', 'c': False}))
-        expected_json_arg = '<details>\n<summary>Browser Configuration</summary>\n<ul>\n  <li>a: b</li><li>c: false</li>\n</ul>\n\n</details>'  # nopep8
+        expected_json_arg = '<details>\n<summary>Browser Configuration</summary>\n<ul>\n  <li>a: b</li><li>c: false</li>\n</ul>\n\n</details>'  # noqa
         self.assertEqual(actual_json_arg, expected_json_arg)
         # Test for receiving a JSON value which is not an object
         actual_json_arg = form.build_details('null')
-        expected_json_arg = '<details>\n<summary>Browser Configuration</summary>\n<ul>\n  <li>None</li>\n</ul>\n\n</details>'  # nopep8
+        expected_json_arg = '<details>\n<summary>Browser Configuration</summary>\n<ul>\n  <li>None</li>\n</ul>\n\n</details>'  # noqa
         self.assertEqual(actual_json_arg, expected_json_arg)
         # Test for receiving a string
         actual_string_arg = form.build_details('cool')
@@ -228,7 +228,7 @@ class TestForm(unittest.TestCase):
         self.assertEqual(actual_json_arg, expected_json_arg)
         actual_empty_log_arg = form.build_details(json.dumps(
             {'a': 'b', 'c': False, 'consoleLog': ''}))
-        expected_empty_log_arg = '<details>\n<summary>Browser Configuration</summary>\n<ul>\n  <li>a: b</li><li>c: false</li>\n</ul>\n\n</details>'  # nopep8
+        expected_empty_log_arg = '<details>\n<summary>Browser Configuration</summary>\n<ul>\n  <li>a: b</li><li>c: false</li>\n</ul>\n\n</details>'  # noqa
         self.assertEqual(actual_empty_log_arg, expected_empty_log_arg)
 
     def test_get_console_section(self):

@@ -22,7 +22,7 @@ headers = {'HTTP_USER_AGENT': ('Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; '
                                'rv:31.0) Gecko/20100101 Firefox/31.0'),
            'HTTP_ACCEPT': 'application/json'}
 
-STATUSES = {'sitewait': {'color': '', 'state': 'open', 'id': 5, 'order': 5}, 'worksforme': {'color': '', 'state': 'closed', 'id': 11, 'order': 7}, 'non-compat': {'color': '', 'state': 'closed', 'id': 12, 'order': 5}, 'needsdiagnosis': {'color': '', 'state': 'open', 'id': 2, 'order': 2}, 'contactready': {'color': '', 'state': 'open', 'id': 4, 'order': 4}, 'wontfix': {'color': '', 'state': 'closed', 'id': 6, 'order': 6}, 'needscontact': {'color': '', 'state': 'open', 'id': 3, 'order': 3}, 'invalid': {'color': '', 'state': 'closed', 'id': 8, 'order': 4}, 'needstriage': {'color': '', 'state': 'open', 'id': 1, 'order': 1}, 'duplicate': {'color': '', 'state': 'closed', 'id': 10, 'order': 1}, 'fixed': {'color': '', 'state': 'closed', 'id': 9, 'order': 2}, 'incomplete': {'color': '', 'state': 'closed', 'id': 7, 'order': 3}}  # nopep8
+STATUSES = {'sitewait': {'color': '', 'state': 'open', 'id': 5, 'order': 5}, 'worksforme': {'color': '', 'state': 'closed', 'id': 11, 'order': 7}, 'non-compat': {'color': '', 'state': 'closed', 'id': 12, 'order': 5}, 'needsdiagnosis': {'color': '', 'state': 'open', 'id': 2, 'order': 2}, 'contactready': {'color': '', 'state': 'open', 'id': 4, 'order': 4}, 'wontfix': {'color': '', 'state': 'closed', 'id': 6, 'order': 6}, 'needscontact': {'color': '', 'state': 'open', 'id': 3, 'order': 3}, 'invalid': {'color': '', 'state': 'closed', 'id': 8, 'order': 4}, 'needstriage': {'color': '', 'state': 'open', 'id': 1, 'order': 1}, 'duplicate': {'color': '', 'state': 'closed', 'id': 10, 'order': 1}, 'fixed': {'color': '', 'state': 'closed', 'id': 9, 'order': 2}, 'incomplete': {'color': '', 'state': 'closed', 'id': 7, 'order': 3}}  # noqa
 
 
 def mock_api_response(response_config={}):
@@ -63,7 +63,7 @@ class TestAPIURLs(unittest.TestCase):
         with patch('webcompat.helpers.proxy_request') as github_data:
             github_data.return_value = mock_api_response({
                 'status_code': 404,
-                'content': '[{"message":"Not Found","documentation_url":"https://developer.github.com/v3"}]'  # nopep8
+                'content': '[{"message":"Not Found","documentation_url":"https://developer.github.com/v3"}]'  # noqa
             })
             rv = self.app.get('/api/issues/1', environ_base=headers)
             json_body = json.loads(rv.data)
@@ -110,7 +110,7 @@ class TestAPIURLs(unittest.TestCase):
                     'status_code': 200,
                     'content': '[]',
                     'headers': {
-                        'Link': '<https://api.github.com/repositories/17839063/issues/398/comments?page=2>; rel="next", <https://api.github.com/repositories/17839063/issues/398/comments?page=4>; rel="last"',  # nopep8
+                        'Link': '<https://api.github.com/repositories/17839063/issues/398/comments?page=2>; rel="next", <https://api.github.com/repositories/17839063/issues/398/comments?page=4>; rel="last"',  # noqa
                     },
                 }),
                 mock_api_response({'status_code': 200, 'content': '[]'})

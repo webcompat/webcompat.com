@@ -21,7 +21,7 @@ from webcompat.dashboard import is_older
 
 # Add webcompat module to import path
 sys.path.append(os.path.realpath(os.pardir))
-import webcompat  # nopep8
+import webcompat  # noqa
 
 # Any request that depends on parsing HTTP Headers (basically anything
 # on the index route, will need to include the following: environ_base=headers
@@ -86,6 +86,7 @@ class TestDashboard(unittest.TestCase):
         """Check we receive the right list of browsers."""
         labels = ['status-foo', 'blah', 'browser-', 'browser-firefox']
         self.assertListEqual([b'firefox'], browser_labels(labels))
+
 
 if __name__ == '__main__':
     unittest.main()

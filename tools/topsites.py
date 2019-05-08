@@ -95,14 +95,14 @@ def query_topsites(country_code, count=1000):
             dom = parseString(response.content)
 
             if response.status_code == 200:
-                # See https://docs.aws.amazon.com/AlexaTopSites/latest/QUERY_QueryRequests.html  # nopep8
+                # See https://docs.aws.amazon.com/AlexaTopSites/latest/QUERY_QueryRequests.html  # noqa
                 sites = dom.getElementsByTagName('aws:Site')
                 for site in sites:
                     parse_site(site, country_code)
                 session.commit()
             else:
                 # Get error code and message from response
-                # See https://docs.aws.amazon.com/AlexaTopSites/latest/Authentication.html  # nopep8
+                # See https://docs.aws.amazon.com/AlexaTopSites/latest/Authentication.html  # noqa
                 message = node_text(dom, 'aws:ErrorCode')
                 error_template = """Send request to {uri} get error message:
                 {message}"""
@@ -195,7 +195,7 @@ x-amz-date:{amzdate}
         base=ATS_AWS_BASE_URL,
         query=canonical_query)
 
-    authorization_template = '{algorithm} Credential={access_key}/{scope}, SignedHeaders={signed_headers}, Signature={signature}'  # nopep8
+    authorization_template = '{algorithm} Credential={access_key}/{scope}, SignedHeaders={signed_headers}, Signature={signature}'  # noqa
     authorization = authorization_template.format(
         algorithm=ATS_ALGORITHM,
         access_key=ats_access_key,

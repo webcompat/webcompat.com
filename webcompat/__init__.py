@@ -9,12 +9,17 @@
 import logging
 
 from flask import Flask
+from flask_firehose import Firehose
 from flask_github import GitHub
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 
 # Define the application
 app = Flask(__name__, static_url_path='')
+Firehose(app)
+# Adds the HTTP/2 Server Push functionality to app
+# firehose = Firehose(connector=Custom_connector())
+# firehose.init_app(app)
 
 # Configurations
 app.config.from_object('config')
@@ -27,13 +32,13 @@ github = GitHub(app)
 limiter = Limiter(app, key_func=get_remote_address)
 
 # import views after we initialize our github object
-import webcompat.views  # nopep8
-from webcompat import webhooks  # nopep8
+import webcompat.views  # noqa
+from webcompat import webhooks  # noqa
 
 # register blueprints
-from webcompat.api.endpoints import api
-from webcompat.api.uploads import uploads
-from webcompat.error_handlers import error_handlers
+from webcompat.api.endpoints import api  # noqa
+from webcompat.api.uploads import uploads  # noqa
+from webcompat.error_handlers import error_handlers  # noqa
 
 for blueprint in [api, error_handlers, uploads]:
     app.register_blueprint(blueprint)

@@ -17,8 +17,8 @@ import urllib.parse
 
 import requests
 
-from config.environment import *  # nopep8
-from config.secrets import *  # nopep8
+from config.environment import *  # noqa
+from config.secrets import *  # noqa
 
 MILESTONE_ERROR = """It failed with {msg}!
 We will read from data/milestones.json.
@@ -29,7 +29,8 @@ Double check that everything is configured properly
 in config/secrets.py and try again. Good luck!
 """
 MILESTONE_UNMATCHING = """A milestone is missing or has been added: {names}"""
-MILESTONE_UNMATCHING_ERROR = """Check the milestones names on your Github repository and try again.
+MILESTONE_UNMATCHING_ERROR = """
+Check the milestones names on your Github repository and try again.
 This error was probably caused by a typo.
 Your milestones.json was erased and a backup copy was created at {path}.
 """
@@ -186,8 +187,10 @@ for cat_label in cat_labels:
 # labels that we allow to be added via a `label` GET param, when
 # creating an issue.
 EXTRA_LABELS = [
+    'browser-fenix',
     'browser-focus-geckoview',
     'browser-firefox-reality',
+    'type-fastclick',
     'type-google',
     'type-media',
     'type-tracking-protection-basic',
@@ -196,7 +199,7 @@ EXTRA_LABELS = [
     'type-webvr',
 ]
 
-from webcompat import app
+from webcompat import app  # noqa
 # We need the milestones
 if not initialize_status():
     sys.exit('Milestones are not initialized. Check logs.')

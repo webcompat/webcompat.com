@@ -166,3 +166,13 @@
   list-style: circle;
   padding-left: 10px;
 }
+
+/* Code blocks */
+pre[class *= "language-"],
+.highlight > pre {
+  background-color: var(--base-background);
+  border: 1px solid #ddd;
+  margin: .5em 0;
+  overflow: auto;
+  padding: 1em;
+}

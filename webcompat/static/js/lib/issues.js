@@ -272,7 +272,7 @@ issues.ImageUploadView = Backbone.View.extend({
     var splitImg = $(input)
       .val()
       .split(".");
-    var ext = splitImg[splitImg.length - 1];
+    var ext = splitImg[splitImg.length - 1].toLowerCase();
     var allowed = ["jpg", "jpeg", "jpe", "png", "gif", "bmp"];
     if (!_.includes(allowed, ext)) {
       this.makeInvalid("image");
@@ -530,6 +530,7 @@ issues.MainView = Backbone.View.extend(
           commentLinkId: null
         });
         this.addComment(newComment);
+        newComment.attributes.body = textarea.val();
         // Now empty out the textarea.
         textarea.val("");
         // Push to GitHub
