@@ -397,7 +397,7 @@ def mockable_response(func):
                 # Only requests with arguments, get a fixture with a checksum.
                 # We grab the full path of the request URI to compute an md5
                 # that will give us the right fixture file.
-                checksum = hashlib.md5(full_path).hexdigest()
+                checksum = hashlib.md5(to_bytes(full_path)).hexdigest()
                 file_path = FIXTURES_PATH + request.path + "." + checksum
             else:
                 file_path = FIXTURES_PATH + request.path
