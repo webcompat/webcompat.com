@@ -47,7 +47,7 @@ class TestURIContent(unittest.TestCase):
         issue_number = '1000'
         default_title = 'Web Compatibility'
         website_uris = [
-            ('/', default_title),
+            ('/', 'Bug reporting for the web'),
             ('/about', 'About'),
             ('/contributors', 'Contributors'),
             ('/issues/' + issue_number, 'Issue #' + issue_number),
