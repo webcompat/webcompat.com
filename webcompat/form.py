@@ -15,6 +15,7 @@ import random
 import re
 import urlparse
 
+from flask import g
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileAllowed
 from flask_wtf.file import FileField
@@ -379,7 +380,7 @@ def build_formdata(form_object):
     # This probably deserves its own function.
     contact = contact.strip()
     contact = contact.replace('@', '')
-    if contact:
+    if contact and not g.user:
         body += u'\n\nSubmitted in the name of `@{contact}`'.format(
             contact=contact)
     # Append "from webcompat.com" message to bottom (for GitHub issue viewers)
