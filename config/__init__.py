@@ -189,6 +189,7 @@ EXTRA_LABELS = [
     'type-fastclick',
     'type-google',
     'type-media',
+    'type-mobify',
     'type-tracking-protection-basic',
     'type-tracking-protection-strict',
     'type-webrender-enabled',
