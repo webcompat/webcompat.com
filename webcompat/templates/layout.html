@@ -10,6 +10,15 @@
 
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600|Source+Sans+Pro:300,400" rel="stylesheet">
   <link href="{{ url_for('static', filename='css/dist/webcompat.min.css') }}" type="text/css" rel="stylesheet">
+
+  {%- if config.PRODUCTION or config.STAGING -%}
+  <script src="{{ url_for('static', filename='js/dist/ab.min.js')|bust_cache }}"></script>
+  {% else %}
+  <script src="{{ url_for('static', filename='js/vendor/mozilla-cookie-helper.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/vendor/mozilla-dnt-helper.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/vendor/mozilla-traffic-cop.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/lib/ab.js') }}"></script>
+  {%- endif %}
 </head>
 <body id="body-webcompat" data-username="{{ session.username }}">
 {% include "shared/svg-icons.html" %}

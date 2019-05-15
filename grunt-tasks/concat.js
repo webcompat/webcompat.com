@@ -69,6 +69,15 @@ module.exports = function(grunt) {
         "<%= jsPath %>/lib/user-activity.js"
       ],
       dest: "<%= jsDistPath %>/user-activity.js"
+    },
+    ab: {
+      src: [
+        "<%= jsDistPath %>/mozilla-cookie-helper.js",
+        "<%= jsDistPath %>/mozilla-dnt-helper.js",
+        "<%= jsDistPath %>/mozilla-traffic-cop.js",
+        "<%= jsPath %>/lib/ab.js"
+      ],
+      dest: "<%= jsDistPath %>/ab.js"
     }
   });
 };
