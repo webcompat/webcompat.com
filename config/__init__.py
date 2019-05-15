@@ -197,6 +197,18 @@ EXTRA_LABELS = [
     'type-webvr',
 ]
 
+
+# AB testing config
+AB_EXPERIMENTS = {
+    'exp': {
+        'variations': {
+            'form-v1': (0, 0),
+        },
+        'max-age': None
+    }
+}
+
+
 from webcompat import app
 # We need the milestones
 if not initialize_status():
