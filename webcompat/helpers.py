@@ -488,6 +488,8 @@ def add_sec_headers(response):
     response.headers['X-Content-Type-Options'] = 'nosniff'
     response.headers['X-XSS-Protection'] = '1; mode=block'
     response.headers['X-Frame-Options'] = 'DENY'
+    if app.config['LOCALHOST']:
+        response.headers['Access-Control-Allow-Origin'] = '*'
 
 
 def get_img_src_policy():
