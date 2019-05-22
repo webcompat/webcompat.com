@@ -35,6 +35,10 @@ module.exports = function(grunt) {
     contributors: {
       src: "<%= jsPath %>/lib/contributors.js",
       dest: "<%= jsDistPath %>/contributors.min.js"
+    },
+    ab: {
+      src: "<%= jsDistPath %>/ab.js",
+      dest: "<%= jsDistPath %>/ab.min.js"
     }
   });
 };
