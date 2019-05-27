@@ -20,7 +20,6 @@ from flask import send_from_directory
 from flask import session
 from flask import url_for
 
-from dashboard import filter_needstriage
 from flask_firehose import push
 from form import AUTH_REPORT
 from form import get_form
@@ -31,7 +30,6 @@ from helpers import bust_cache
 from helpers import cache_policy
 from helpers import form_type
 from helpers import get_browser_name
-from helpers import get_milestone_list
 from helpers import get_referer
 from helpers import get_user_info
 from helpers import is_blacklisted_domain
@@ -500,24 +498,21 @@ def cssfixme():
 
 @app.route('/dashboard')
 def dashboard():
-    """Route for dashboards index."""
-    if g.user:
-        get_user_info()
-    return render_template('dashboard/home.html')
+    """Route for dashboards index.
+
+    This used to be hosted on webcompat.com.
+    This is now living on the dashboard Web site."""
+    return redirect('https://webcompat-dashboard.herokuapp.com/', code=308)
 
 
 @app.route('/dashboard/triage')
 def dashboard_triage():
-    """Route to handle dashboard triage."""
-    if g.user:
-        get_user_info()
-    params = {'per_page': 100, 'sort': 'created', 'direction': 'asc'}
-    needstriage_issues = get_milestone_list('needstriage', params)
-    needstriage_list, stats = filter_needstriage(needstriage_issues)
-    return render_template(
-        'dashboard/triage.html',
-        needstriage_list=needstriage_list,
-        stats=stats)
+    """Route to handle dashboard triage.
+
+    This used to be hosted on webcompat.com.
+    This is now living on the dashboard Web site."""
+    return redirect(
+        'https://webcompat-dashboard.herokuapp.com/triage', code=308)
 
 
 @app.route('/csp-report', methods=['POST'])
