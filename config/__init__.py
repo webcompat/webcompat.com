@@ -188,6 +188,7 @@ EXTRA_LABELS = [
     'browser-firefox-reality',
     'type-fastclick',
     'type-google',
+    'type-marfeel',
     'type-media',
     'type-mobify',
     'type-tracking-protection-basic',
