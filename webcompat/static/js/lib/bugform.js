@@ -5,6 +5,24 @@
 /*eslint new-cap: ["error", { "capIsNewExceptions": ["Deferred"] }]*/
 
 function BugForm() {
+  // Set up listener for message events from screenshot-enabled add-ons
+  // Runs only when the DOM is ready
+  var me = this;
+  window.addEventListener(
+    "message",
+    function(event) {
+      $(function() {
+        me.onReceiveMessage(event);
+      });
+    },
+    false
+  );
+
+  // the initialization of the rest of the form happens when the DOM is ready
+  $(BugForm.prototype.onDOMReadyInit.bind(this));
+}
+
+BugForm.prototype.onDOMReadyInit = function() {
   this.clickedButton = null;
   this.detailsInput = $("#details:hidden");
   this.errorLabel = $(".js-error-upload");
@@ -85,7 +103,7 @@ function BugForm() {
   this.contactField = this.inputs.contact.el;
 
   return this.init();
-}
+};
 
 BugForm.prototype.init = function() {
   // Make sure we're not getting a report
@@ -119,8 +137,8 @@ BugForm.prototype.init = function() {
   // (after a page refresh, back button, etc.)
   this.checkForm();
 
-  // Set up listener for message events from screenshot-enabled add-ons
-  window.addEventListener("message", this.onReceiveMessage.bind(this), false);
+  // // Set up listener for message events from screenshot-enabled add-ons
+  // window.addEventListener("message", this.onReceiveMessage.bind(this), false);
 };
 
 BugForm.prototype.onReceiveMessage = function(event) {
@@ -694,6 +712,4 @@ BugForm.prototype.addImageURL = function(response) {
   return dfd.promise();
 };
 
-$(function() {
-  new BugForm();
-});
+new BugForm();
