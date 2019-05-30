@@ -67,7 +67,7 @@ BugForm.prototype.onDOMReadyInit = function() {
       valid: true,
       helpText:
         "Image must be one of the following: jpe, jpg, jpeg, png, gif, or bmp.",
-      altHelpText: "Please choose a smaller image (<Â 4MB)"
+      altHelpText: "Please choose a smaller image (< 4MB)"
     },
     browser: {
       el: $("#browser"),
@@ -136,9 +136,6 @@ BugForm.prototype.init = function() {
   // See if the user already has a valid form
   // (after a page refresh, back button, etc.)
   this.checkForm();
-
-  // // Set up listener for message events from screenshot-enabled add-ons
-  // window.addEventListener("message", this.onReceiveMessage.bind(this), false);
 };
 
 BugForm.prototype.onReceiveMessage = function(event) {
