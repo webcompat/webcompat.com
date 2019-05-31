@@ -12,7 +12,7 @@
   <div class="grid-cell">
     <div class="form-text form-element js-Form-group">
       <div class="js-Form-information form-label-message">
-        {{ form.url.label(class_='form-label form-required') }}
+        {{ form.url.label(class_='form-label') }}
         {% if form.url.errors %}
           {% for error in form.url.errors %}
             <small class="form-message-error">{{ error }}</small>
@@ -26,7 +26,7 @@
     </div>
     <div class="form-radio form-element js-Form-group">
       <div class="js-Form-information form-label-message">
-        <label class="form-label form-required" for="problem_category">Type of bug</label>
+        <label class="form-label" for="problem_category">Type of bug (mandatory)</label>
         {% if form.problem_category.errors %}
           {% for error in form.problem_category.errors %}
             <small class="form-message-error">{{ error }}</small>
@@ -41,7 +41,7 @@
     </div>
     <div class="form-text form-element js-Form-group">
       <div class="js-Form-information form-label-message">
-        {{ form.description.label(class_='form-label form-required') }}
+        {{ form.description.label(class_='form-label') }}
         {% if form.description.errors %}
           {% for error in form.description.errors %}
             <small class="form-message-error">{{ error }}</small>
@@ -128,22 +128,26 @@
     </div>
     {% endif %}
     <div class="form-button form-button-multiple form-element js-Form-group js-report-buttons">
-      <button
-        class="button button-secondary js-Button"
-        id="submitanon"
-        type="submit"
-        name="github-proxy-report"
-      >
-        Report Anonymously
-      </button>
-      <button
-        class="button button-primary right js-Button"
-        id="submitgithub"
-        type="submit"
-        name="github-auth-report"
-      >
-        {% if session.username %}Report as {{ session.username }}{% else %}Report via GitHub{% endif %}
-      </button>
+      <div class="button-wrapper js-Button-wrapper">
+        <button
+          class="button button-secondary js-Button"
+          id="submitanon"
+          type="submit"
+          name="github-proxy-report"
+        >
+          Report Anonymously
+        </button>
+      </div>
+      <div class="button-wrapper js-Button-wrapper">
+        <button
+          class="button button-primary right js-Button"
+          id="submitgithub"
+          type="submit"
+          name="github-auth-report"
+        >
+          {% if session.username %}Report as {{ session.username }}{% else %}Report via GitHub{% endif %}
+        </button>
+      </div>
     </div>
     <div class="form-text-privacy ">
       All information included in this report will be publicly visible.
