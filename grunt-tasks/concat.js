@@ -20,6 +20,7 @@ module.exports = function(grunt) {
         "<%= jsPath %>/lib/flash-message.js",
         "<%= jsPath %>/lib/homepage.js",
         "<%= jsPath %>/lib/autogrow-textfield.js",
+        "<%= jsPath %>/lib/bugform-validation.js",
         "<%= jsPath %>/lib/bugform.js",
         "<%= jsDistPath %>/templates.js"
       ],

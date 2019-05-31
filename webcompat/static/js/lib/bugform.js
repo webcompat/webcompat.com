@@ -295,7 +295,9 @@ BugForm.prototype.enableSubmits = function() {
 
 /* determines function based on whether validation returns true or false */
 BugForm.prototype.determineValidityFunction = function(func, field, silent) {
-  if (func(field)) return "makeValid";
+  if (func(field)) {
+    return "makeValid";
+  }
   return silent ? "makeInvalidSilent" : "makeInvalid";
 };
 
@@ -329,7 +331,9 @@ BugForm.prototype.checkImageTypeValidity = function(event) {
   }
   // null out input.value so we get a consistent
   // change event across browsers
-  if (event) event.target.value = null;
+  if (event) {
+    event.target.value = null;
+  }
 };
 
 BugForm.prototype.checkUrl = function(event) {
@@ -478,7 +482,9 @@ BugForm.prototype.makeInvalid = function(id) {
   this.showError(id);
   // someone might decide to just not select an image after seeing the error,
   // so buttons shouldn't be disabled
-  if (id !== "image") this.disableSubmits();
+  if (id !== "image") {
+    this.disableSubmits();
+  }
 };
 
 BugForm.prototype.makeInvalidSilent = function(id) {
