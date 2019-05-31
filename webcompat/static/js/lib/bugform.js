@@ -301,15 +301,16 @@ BugForm.prototype.determineValidityFunction = function(func, field, silent) {
   return silent ? "makeInvalidSilent" : "makeInvalid";
 };
 
-BugForm.prototype.checkProblemTypeValidity = function() {
+BugForm.prototype.checkProblemTypeValidity = function(silent) {
   var func = this.determineValidityFunction(
     this.validation.isProblemTypeValid,
-    this.problemType
+    this.problemType,
+    silent
   );
   this[func]("problem_category");
 };
 
-BugForm.prototype.checkImageTypeValidity = function(event) {
+BugForm.prototype.checkImageTypeValidity = function(event, silent) {
   // Bail if there's no image.
   if (!this.uploadField.val()) {
     return;
@@ -317,7 +318,8 @@ BugForm.prototype.checkImageTypeValidity = function(event) {
 
   var func = this.determineValidityFunction(
     this.validation.isImageTypeValid,
-    this.uploadField
+    this.uploadField,
+    silent
   );
   this[func]("image");
 
@@ -379,10 +381,11 @@ BugForm.prototype.checkOptionalNonEmpty = function(field) {
 };
 
 /* Check to see if the GitHub username has the right syntax.*/
-BugForm.prototype.checkGitHubUsername = function() {
+BugForm.prototype.checkGitHubUsername = function(event, silent) {
   var func = this.determineValidityFunction(
     this.validation.isGithubUserNameValid,
-    this.contactField
+    this.contactField,
+    silent
   );
   this[func]("contact");
 };
@@ -391,12 +394,12 @@ BugForm.prototype.onSubmitAttempt = function() {
   this.performChecks();
 };
 
-BugForm.prototype.performChecks = function() {
-  this.checkURLValidity();
-  this.checkDescriptionValidity();
-  this.checkProblemTypeValidity();
-  this.checkImageTypeValidity();
-  this.checkGitHubUsername();
+BugForm.prototype.performChecks = function(isSilent) {
+  this.checkURLValidity(isSilent);
+  this.checkDescriptionValidity(isSilent);
+  this.checkProblemTypeValidity(isSilent);
+  this.checkImageTypeValidity(null, isSilent);
+  this.checkGitHubUsername(null, isSilent);
 };
 
 BugForm.prototype.checkForm = function() {
@@ -410,7 +413,7 @@ BugForm.prototype.checkForm = function() {
   ];
   if (_.some(inputs, Boolean)) {
     // then, check validity
-    this.performChecks();
+    this.performChecks(true);
     // and open the form, if it's not already open
     if (!this.reportButton.hasClass("is-open")) {
       this.reportButton.click();
