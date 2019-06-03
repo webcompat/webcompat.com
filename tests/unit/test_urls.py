@@ -225,25 +225,14 @@ class TestURLs(unittest.TestCase):
         self.assertEqual(rv.status_code, 400)
 
     def test_dashboard_triage(self):
-        """Request to /dashboard/triage should be 200."""
+        """Request to /dashboard/triage should be 308."""
         rv = self.app.get('/dashboard/triage')
-        self.assertEqual(rv.status_code, 200)
-        self.assertTrue(b'<h1><a href="/">Webcompat.com</a> // Triage Dashboard</h1>' in rv.data)  # noqa
-        self.assertTrue('text/html' in rv.content_type)
+        self.assertEqual(rv.status_code, 308)
 
     def test_dashboard_route(self):
-        """Request to /dashboard should exist.
-
-        * 200 on /dashboard
-        * 404 on /dashboard/
-        """
-        rv = self.app.get('/dashboard/')
-        self.assertEqual(rv.status_code, 404)
-        self.assertTrue('text/html' in rv.content_type)
+        """Request to /dashboard should be 308."""
         rv = self.app.get('/dashboard')
-        content_test = b'Dashboards' in rv.data
-        self.assertEqual(rv.status_code, 200)
-        self.assertTrue(content_test)
+        self.assertEqual(rv.status_code, 308)
 
     def test_webhooks_route(self):
         """Request to /webhooks/labeler should be 401.

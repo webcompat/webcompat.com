@@ -488,6 +488,8 @@ def add_sec_headers(response):
     response.headers['X-Content-Type-Options'] = 'nosniff'
     response.headers['X-XSS-Protection'] = '1; mode=block'
     response.headers['X-Frame-Options'] = 'DENY'
+    if app.config['LOCALHOST']:
+        response.headers['Access-Control-Allow-Origin'] = '*'
 
 
 def get_img_src_policy():
@@ -554,14 +556,6 @@ def cache_policy(private=True, uri_max_age=86400, must_revalidate=False):
             return response
         return update_wrapper(policy, view)
     return set_policy
-
-
-def get_milestone_list(milestone_name, params=None):
-    """Return a dictionary of issues in the milestone."""
-    raw_response = api.endpoints.get_issue_category(
-        milestone_name, other_params=params)
-    milestone_list = json.loads(raw_response[0])
-    return milestone_list
 
 
 def is_valid_issue_form(form):
@@ -635,15 +629,6 @@ def prepare_form(form_request):
     if form_request.method == 'POST':
         json_data = form_request.get_json()
         form_data.update(json_data)
-    channel = ''
-    details = form_data.get('details')
-    if details:
-        channel = details.get('channel')
-    # XXXTemp Hack: if the user clicked on Report Site Issue from Release,
-    # we want to redirect them somewhere else and forget all their data.
-    # See https://bugzilla.mozilla.org/show_bug.cgi?id=1513541
-    if channel == 'release':
-        form_data = 'release'
     return form_data
 
 

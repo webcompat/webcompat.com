@@ -4,6 +4,15 @@
 2. New features: affect minor number
 3. API endpoint changes or dependency version updates: affect major number
 
+## 19.2.0 - 2019-05-29
+
+* NPM update - Update load-grunt-tasks to the latest version. [Pull #2882](https://github.com/webcompat/webcompat.com/pull/2882)
+* Fixes #2871 - removed release population "thanks" workaround [Pull #2876](https://github.com/webcompat/webcompat.com/pull/2876)
+* Fixes #2866 - added CORS header for localhost [Pull #2875](https://github.com/webcompat/webcompat.com/pull/2875)
+* Fixes #2845 - Adds type-mobify to EXTRA_LABELS [Pull #2870](https://github.com/webcompat/webcompat.com/pull/2870)
+* NPM update - Update prettier to the latest version. [Pull #2868](https://github.com/webcompat/webcompat.com/pull/2868)
+
+
 ## 19.1.0 - 2019-05-13
 
 * Fixes #2846 - Adds friendlier title for the homepage [Pull #2864](https://github.com/webcompat/webcompat.com/pull/2864)

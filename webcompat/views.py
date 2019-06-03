@@ -20,7 +20,6 @@ from flask import session
 from flask import url_for
 from flask_firehose import push
 
-from webcompat.dashboard import filter_needstriage
 from webcompat.form import AUTH_REPORT
 from webcompat.form import get_form
 from webcompat.form import PROXY_REPORT
@@ -30,7 +29,6 @@ from webcompat.helpers import bust_cache
 from webcompat.helpers import cache_policy
 from webcompat.helpers import form_type
 from webcompat.helpers import get_browser_name
-from webcompat.helpers import get_milestone_list
 from webcompat.helpers import get_referer
 from webcompat.helpers import get_user_info
 from webcompat.helpers import is_blacklisted_domain
@@ -253,11 +251,6 @@ def create_issue():
     # Form Prefill section
     if request_type == 'prefill':
         form_data = prepare_form(request)
-        # XXXTemp Hack: if the user clicked on Report Site Issue from Release,
-        # we want to redirect them somewhere else and forget all their data.
-        # See https://bugzilla.mozilla.org/show_bug.cgi?id=1513541
-        if form_data == 'release':
-            return render_template('thanks.html')
         bug_form = get_form(form_data)
         session['extra_labels'] = form_data['extra_labels']
         source = form_data.pop('utm_source', None)
@@ -504,24 +497,21 @@ def cssfixme():
 
 @app.route('/dashboard')
 def dashboard():
-    """Route for dashboards index."""
-    if g.user:
-        get_user_info()
-    return render_template('dashboard/home.html')
+    """Route for dashboards index.
+
+    This used to be hosted on webcompat.com.
+    This is now living on the dashboard Web site."""
+    return redirect('https://webcompat-dashboard.herokuapp.com/', code=308)
 
 
 @app.route('/dashboard/triage')
 def dashboard_triage():
-    """Route to handle dashboard triage."""
-    if g.user:
-        get_user_info()
-    params = {'per_page': 100, 'sort': 'created', 'direction': 'asc'}
-    needstriage_issues = get_milestone_list('needstriage', params)
-    needstriage_list, stats = filter_needstriage(needstriage_issues)
-    return render_template(
-        'dashboard/triage.html',
-        needstriage_list=needstriage_list,
-        stats=stats)
+    """Route to handle dashboard triage.
+
+    This used to be hosted on webcompat.com.
+    This is now living on the dashboard Web site."""
+    return redirect(
+        'https://webcompat-dashboard.herokuapp.com/triage', code=308)
 
 
 @app.route('/csp-report', methods=['POST'])
