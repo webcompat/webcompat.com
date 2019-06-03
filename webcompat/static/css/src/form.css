@@ -37,9 +37,24 @@
   max-width: none;
 }
 
-.form-button-multiple .button {
+.form-button-multiple .button-wrapper {
+  cursor: pointer;
+  display: flex;
   flex: 1 1 auto;
   margin: 20px 10px 0;
+  position: relative;
+}
+
+.form-button-multiple .button-wrapper .button {
+  flex: 1;
+}
+
+.form-button-multiple .button-wrapper .button:disabled {
+  pointer-events: none;
+}
+
+.form-button-multiple .button-wrapper:hover .button {
+  opacity: .85;
 }
 
 .form-field {
