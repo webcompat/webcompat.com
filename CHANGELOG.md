@@ -4,6 +4,13 @@
 2. New features: affect minor number
 3. API endpoint changes or dependency version updates: affect major number
 
+## 19.3.0 - 2019-06-06
+
+* Fixes #2725 - Bugform validation improvements [Pull #2886](https://github.com/webcompat/webcompat.com/pull/2886)
+* Fixes #2509 - Fixed race condition when image didn't get transferred from report site issue extension [Pull #2885](https://github.com/webcompat/webcompat.com/pull/2885)
+* Fixes #2844 - Adds type-marfeel to EXTRA_LABELS [Pull #2884](https://github.com/webcompat/webcompat.com/pull/2884)
+* Fixes #2881 - Removes the needstriage dashboard code [Pull #2883](https://github.com/webcompat/webcompat.com/pull/2883)
+
 ## 19.2.0 - 2019-05-29
 
 * NPM update - Update load-grunt-tasks to the latest version. [Pull #2882](https://github.com/webcompat/webcompat.com/pull/2882)
