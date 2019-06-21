@@ -18,16 +18,17 @@ module.exports = function(grunt) {
         "<%= jsPath %>/vendor/mousetrap-min.js",
         "<%= jsPath %>/vendor/backbone.mousetrap.js",
         "<%= jsPath %>/lib/flash-message.js",
-        "<%= jsPath %>/lib/homepage.js",
         "<%= jsPath %>/lib/autogrow-textfield.js",
         "<%= jsPath %>/lib/bugform-validation.js",
         "<%= jsPath %>/lib/bugform.js",
-        "<%= jsDistPath %>/templates.js"
+        "<%= jsDistPath %>/templates.js",
+        "<%= jsPath %>/lib/navbar.js"
       ],
       dest: "<%= jsDistPath %>/<%= pkg.name %>.js"
     },
     untriaged: {
       src: [
+        "<%= jsPath %>/lib/homepage.js",
         "<%= jsPath %>/lib/models/label-list.js",
         "<%= jsPath %>/lib/models/issue.js",
         "<%= jsPath %>/lib/untriaged.js"
