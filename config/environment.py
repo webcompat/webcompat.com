@@ -102,3 +102,7 @@ WELL_KNOWN_ALL = """
 WELL_KNOWN_SECURITY = """Contact: mailto:kdubost+securitywebc@mozilla.com
 Contact: mailto:miket@mozilla.com
 """
+
+# AB setup
+# Comma separated list of user IDs to exempt from experiments
+AB_EXEMPT_USERS = os.environ.get('AB_EXEMPT_USERS', '').split(',')

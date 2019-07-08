@@ -7,11 +7,16 @@
 """Tests for helper methods in webcompat/helpers.py."""
 
 import json
+import mock
 import unittest
 
 import flask
+from werkzeug.http import parse_cookie
 
 import webcompat
+from webcompat.helpers import ab_active
+from webcompat.helpers import ab_current_experiments
+from webcompat.helpers import ab_init
 from webcompat.helpers import form_type
 from webcompat.helpers import format_link_header
 from webcompat.helpers import get_browser
@@ -315,6 +320,188 @@ class TestHelpers(unittest.TestCase):
         self.assertTrue(is_json_object(json.loads('{"bar":["baz", null, 1.0, 2]}')))  # noqa
         # A JSON value, which is not an object
         self.assertFalse(is_json_object(json.loads('null')))
+
+    def test_ab_active_true(self):
+        """Check if `ab_active` returns the experiment variation view when
+        expirement cookie exists.
+        """
+        cookie = 'exp=ui-change-v1; Path=/'
+        with webcompat.app.test_request_context(
+                '/',
+                method='GET',
+                environ_base={'HTTP_COOKIE': cookie}):
+
+            user = mock.Mock()
+            user.user_id = 'user_id'
+            flask.g.user = user
+
+            self.assertEqual(ab_active('exp'), 'ui-change-v1')
+
+    def test_ab_active_false(self):
+        """Check if `ab_active` returns `False` when the experiment cookie
+        doesn't exist.
+        """
+        cookie = 'another_exp=ui-change-v1; Path=/'
+        with webcompat.app.test_request_context(
+                '/',
+                method='GET',
+                environ_base={'HTTP_COOKIE': cookie}):
+
+            user = mock.Mock()
+            user.user_id = 'user_id'
+            flask.g.user = user
+
+            self.assertEqual(ab_active('exp'), False)
+
+    def test_ab_current_experiments_active(self):
+        """Check if current experiments are calculated properly"""
+        cookie = 'exp=ui-change-v1; Path=/'
+        with webcompat.app.test_request_context(
+                '/',
+                method='GET',
+                environ_base={'HTTP_COOKIE': cookie}):
+
+            user = mock.Mock()
+            user.user_id = 'user_id'
+            flask.g.user = user
+
+            webcompat.app.config['AB_EXPERIMENTS'] = {
+                'exp': {
+                    'variations': {
+                        'ui-change-v1': (0, 100)
+                    },
+                    'max-age': 86400
+                }
+            }
+
+            c = ab_current_experiments()
+            self.assertEqual(c, {'exp': 'ui-change-v1'})
+
+    def test_ab_current_experiments_dnt(self):
+        """Check if calculating current experiments respects DNT"""
+        cookie = 'exp=ui-change-v1; Path=/'
+        with webcompat.app.test_request_context(
+                '/',
+                method='GET',
+                environ_base={'HTTP_COOKIE': cookie, 'HTTP_DNT': '1'}):
+
+            user = mock.Mock()
+            user.user_id = 'user_id'
+            flask.g.user = user
+
+            webcompat.app.config['AB_EXPERIMENTS'] = {
+                'exp': {
+                    'variations': {
+                        'ui-change-v1': (0, 100)
+                    },
+                    'max-age': 86400
+                }
+            }
+
+            c = ab_current_experiments()
+            self.assertEqual(c, {})
+
+    def test_ab_current_experiments_selector(self):
+        """Check if current experiments selects the expected variations"""
+        with webcompat.app.test_request_context(
+                '/',
+                method='GET'):
+
+            user = mock.Mock()
+            user.user_id = 'user_id'
+            flask.g.user = user
+
+            webcompat.app.config['AB_EXPERIMENTS'] = {
+                'exp-1': {
+                    'variations': {
+                        'ui-change-v1': (0, 20),
+                        'ui-change-v2': (20, 60),
+                        'ui-change-v3': (60, 100)
+                    },
+                    'max-age': 604800
+                },
+                'exp-2': {
+                    'variations': {
+                        'backend-change-v1': (0, 50),
+                        'novariation': (50, 100)
+                    },
+                    'max-age': 86400
+                }
+            }
+
+            with mock.patch('webcompat.helpers.random.random') as mock_random:
+                mock_random.return_value = 0.4
+                expected_experiments = {
+                    'exp-1': 'ui-change-v2',
+                    'exp-2': 'backend-change-v1'
+                }
+                self.assertEqual(
+                    ab_current_experiments(), expected_experiments
+                )
+
+    def test_ab_init(self):
+        """Check if ab_init sets the expected experiment cookie"""
+        with webcompat.app.test_request_context(
+                '/',
+                method='GET') as ctx:
+
+            user = mock.Mock()
+            user.user_id = 'user_id'
+            flask.g.user = user
+
+            webcompat.app.config['AB_EXPERIMENTS'] = {
+                'exp-1': {
+                    'variations': {
+                        'ui-change-v1': (0, 20),
+                        'ui-change-v2': (20, 100)
+                    },
+                    'max-age': 604800
+                }
+            }
+
+            with mock.patch('webcompat.helpers.random.random') as mock_random:
+
+                self.assertEqual(ctx.request.headers.get('Set-Cookie'), None)
+
+                mock_random.return_value = 0.4
+                response = self.app.get('/')
+
+                exp_cookie_value = None
+                for header in response.headers.getlist('Set-Cookie'):
+                    cookie = parse_cookie(header)
+                    value = cookie.get('exp-1')
+                    if value:
+                        exp_cookie_value = value
+
+                self.assertEqual(exp_cookie_value, 'ui-change-v2')
+
+    def test_ab_init_active(self):
+        """Check if ab_init doesn't set cookies if experiment already active"""
+        cookie = 'exp-1=ui-change-v1; Path=/'
+        with webcompat.app.test_request_context(
+                '/',
+                method='GET',
+                environ_base={'HTTP_COOKIE': cookie}):
+
+            user = mock.Mock()
+            user.user_id = 'user_id'
+            flask.g.user = user
+
+            webcompat.app.config['AB_EXPERIMENTS'] = {
+                'exp-1': {
+                    'variations': {
+                        'ui-change-v1': (0, 20),
+                        'ui-change-v2': (20, 100)
+                    },
+                    'max-age': 604800
+                }
+            }
+
+            response = self.app.get('/')
+            response.set_cookie = mock.Mock()
+
+            ab_init(response)
+            response.set_cookie.assert_not_called()
 
 
 if __name__ == '__main__':

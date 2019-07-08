@@ -14,7 +14,10 @@ from functools import wraps
 import hashlib
 import json
 import os
+import math
+import random
 import re
+import urllib
 import urlparse
 
 from flask import abort
@@ -635,3 +638,65 @@ def prepare_form(form_request):
 def is_json_object(json_data):
     """Check if the JSON data are an object."""
     return isinstance(json_data, dict)
+
+
+def ab_active(exp_id):
+    """Checks cookies and returns the experiment variation if variation
+    is still active or `False`.
+    """
+    if ab_exempt():
+        return False
+
+    return request.cookies.get(exp_id) or False
+
+
+def ab_exempt():
+    """Checks if request should exempt AB experiments."""
+    if g.user and g.user.user_id in app.config['AB_EXEMPT_USERS']:
+        return True
+    return False
+
+
+def ab_current_experiments():
+    """Return the current experiments that the request is participating."""
+
+    curr_exp = {}
+
+    if ab_exempt():
+        return curr_exp
+
+    if request.headers.get('DNT') == '1':
+        return curr_exp
+
+    for exp_id in app.config['AB_EXPERIMENTS']:
+
+        active_var = ab_active(exp_id)
+
+        if active_var:
+            curr_exp[exp_id] = active_var
+        else:
+            # Pick a random number in the range [0, 1) and map it to [1, 100]
+            selector = math.floor(random.random() * 10000) + 1
+            selector = selector / 100
+            variations = app.config['AB_EXPERIMENTS'][exp_id]['variations']
+
+            for var, (start, end) in variations.items():
+                if selector > start and selector <= end:
+                    curr_exp[exp_id] = var
+
+    return curr_exp
+
+
+def ab_init(response):
+    """Initialize the experiment cookies in current session.
+    """
+
+    if ab_exempt():
+        return response
+
+    for exp_id, var in g.current_experiments.items():
+        if not ab_active(exp_id):
+            max_age = app.config['AB_EXPERIMENTS'][exp_id]['max-age']
+            response.set_cookie(exp_id, var, max_age=max_age)
+
+    return response
