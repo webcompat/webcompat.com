@@ -201,7 +201,6 @@ EXTRA_LABELS = [
     'type-webvr',
 ]
 
-
 # AB testing config
 AB_EXPERIMENTS = {
     'exp': {

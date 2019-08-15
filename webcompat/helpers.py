@@ -705,8 +705,7 @@ def ab_current_experiments():
 
 
 def ab_init(response):
-    """Initialize the experiment cookies in current session.
-    """
+    """Initialize the experiment cookies in current session."""
 
     if ab_exempt():
         return response
