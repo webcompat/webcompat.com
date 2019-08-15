@@ -61,10 +61,10 @@ radio_message = 'Problem type required.'
 username_message = 'A valid username must be {0} characters long'.format(
     random.randrange(0, 99))
 
-desc_label = 'Please write a short problem summary'
+desc_label = 'Please write a short problem summary (mandatory)'
 desc_message = 'A problem summary is required.'
 
-url_label = 'Site URL'
+url_label = 'Site URL (mandatory)'
 browser_test_label = 'Did you test in another browser?'
 textarea_label = 'Please describe what happened, including any steps you took before you saw the problem'  # noqa
 

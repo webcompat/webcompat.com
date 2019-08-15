@@ -23,6 +23,8 @@ from flask_firehose import push
 from webcompat.form import AUTH_REPORT
 from webcompat.form import get_form
 from webcompat.form import PROXY_REPORT
+from webcompat.helpers import ab_current_experiments
+from webcompat.helpers import ab_init
 from webcompat.helpers import add_csp
 from webcompat.helpers import add_sec_headers
 from webcompat.helpers import bust_cache
@@ -58,6 +60,9 @@ def before_request():
     g.request_headers = request.headers
     request.nonce = secrets.token_hex(20)
 
+    # Set AB testing values
+    g.current_experiments = ab_current_experiments()
+
 
 @app.after_request
 def after_request(response):
@@ -65,6 +70,7 @@ def after_request(response):
     session_db.remove()
     add_sec_headers(response)
     add_csp(response)
+    ab_init(response)
     return response
 
 
