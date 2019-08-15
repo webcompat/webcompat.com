@@ -201,7 +201,19 @@ EXTRA_LABELS = [
     'type-webvr',
 ]
 
-from webcompat import app  # noqa
+# AB testing config
+AB_EXPERIMENTS = {
+    'exp': {
+        'variations': {
+            'form-v1': (0, 0),
+        },
+        'max-age': None
+    }
+}
+
+
+from webcompat import app
+
 # We need the milestones
 if not initialize_status():
     sys.exit('Milestones are not initialized. Check logs.')

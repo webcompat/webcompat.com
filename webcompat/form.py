@@ -61,12 +61,12 @@ radio_message = 'Problem type required.'
 username_message = 'A valid username must be {0} characters long'.format(
     random.randrange(0, 99))
 
-desc_label = 'Please write a short problem summary'
-desc_message = 'A problem summary is required.'
+desc_label = u'Please write a short problem summary (mandatory)'
+desc_message = u'A problem summary is required.'
 
-url_label = 'Site URL'
-browser_test_label = 'Did you test in another browser?'
-textarea_label = 'Please describe what happened, including any steps you took before you saw the problem'  # noqa
+url_label = u'Site URL (mandatory)'
+browser_test_label = u'Did you test in another browser?'
+textarea_label = u'Please describe what happened, including any steps you took before you saw the problem'  # noqa
 
 contact_message = 'There is a mistake in the username.'  # noqa
 contact_label = 'Sharing your GitHub username—without logging in—could help us with diagnosis. This will be publicly visible.'  # noqa

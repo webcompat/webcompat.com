@@ -33,7 +33,8 @@
     "require": true,
     "wcEvents": true,
     "wcTmpl": true,
-    "WindowHelpers": true
+    "WindowHelpers": true,
+    "Validation": true
   },
   "rules": {
     "eqeqeq": [2, "smart"],
