@@ -1,5 +1,8 @@
 - [Development Environment Setup](#development-environment-setup)
   - [Simple setup](#simple-setup)
+    - [Fork the webcompat.com project](#fork-the-webcompatcom-project)
+    - [Install Python 3.7](#install-python-37)
+    - [Install nodejs](#install-nodejs)
     - [Initializing project source code](#initializing-project-source-code)
   - [Detailed setup (all platforms)](#detailed-setup-all-platforms)
     - [Installing Windows Subsystem for Linux](#installing-windows-subsystem-for-linux)
@@ -18,49 +21,29 @@
 
 For testing code locally, you will need a very basic setup. There are a few requirements. These instructions have been made for working with Linux, Windows and MacOSX. You need:
 
-- [Python](https://www.python.org/) 2.7
+- [GitHub account](https://github.com/join)
+- [Python](https://www.python.org/) 3.7.3 minimum
 - [Node.js](https://nodejs.org/en/download/) (current LTS version)
 - [GitHub](https://github.com) account
 - [Git](https://git-scm.com/download/win)
 
-> **Note**: Windows users should install the [Windows Subsystem for Linux](https://docs.microsoft.com/en-us/windows/wsl/install-win10) with the Ubuntu distribution and continue setup in the [Installing Windows Subsystem for Linux](#installing-windows-subsystem-for-linux) section. It may be possible to get the application running via other means, but we don't offer support for other setups.
-
-> **Note**: A cloud IDE such as [Cloud 9](https://c9.io) can also be used. If you take this route, please update to the latest Python version with the following:
-> (This is to avoid `InsecurePlatformWarning` errors that arise when the default Python 2.7.6 is used.)
-
-```shell
-sudo apt-add-repository ppa:fkrull/deadsnakes-python2.7
-sudo apt-get update
-sudo apt-get install python2.7 python2.7-dev
-```
-
-In Ubuntu, sometimes even after installing Node.js, the command `node -v` does not show the installed version. To complete installation, a symbolic link has to be created to the sbin folder.
-
-```shell
-# remove old symbolic links if any
-sudo rm -r /usr/bin/node
-
-# add new symbolic link
-sudo ln -s /usr/bin/nodejs /usr/bin/node
-sudo ln -s /usr/bin/nodejs /usr/sbin/node
-```
-
-> **Note**: If in Windows 10 you receive an error message about already having node installed, it can be fixed by removing existing installations and installing again. You probably only want to do this if you don't rely on existing node setups for other projects.
-
-```shell
-# removing existing nodejs installations
-sudo apt-get --purge remove node
-sudo apt-get --purge remove nodejs
-
-# installing
-curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
-sudo apt-get install -y nodejs
-sudo apt-get install -y build-essential
-```
-
 ### Simple setup
 
+#### Fork the webcompat.com project
+
+Go to https://github.com/webcompat/webcompat.com/ and click on the Fork button (top right). This will create a copy of the project in your own account environmment on GitHub.
+
+#### Install Python 3.7
+
+This project requires Python 3. This is not available per default on most platforms. You will need to install it on your computer. The [download section](https://www.python.org/downloads/) of Python website has binaries for most platforms. Choose the 3.7.3 or more version minimum.
+
+#### Install nodejs
+
+@@magsout@@
+
 #### Initializing project source code
+
+Now that you got a copy of the project on your github account, you will clone it locally on your computer. Open a shell console on your computer.
 
 ```bash
 # clone the repo
