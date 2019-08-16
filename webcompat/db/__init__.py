@@ -19,6 +19,7 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy import String
 
 from webcompat import app
+from webcompat.helpers import to_bytes
 
 session_engine = create_engine('sqlite:///' + os.path.join(
     app.config['DATA_PATH'], 'session.db'))
@@ -51,7 +52,8 @@ class User(UsersBase):
         # We use the user_id in the session cookie to identify auth'd users.
         # Here we salt and hash the GitHub access token so you can't get
         # back to the auth token if the session cookie was ever compromised.
-        self.user_id = sha512(access_token + uuid4().hex).hexdigest()[0:128]
+        self.user_id = sha512(
+            to_bytes(access_token + uuid4().hex)).hexdigest()[0:128]
 
 
 UsersBase.metadata.create_all(bind=session_engine)

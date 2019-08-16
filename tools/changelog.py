@@ -10,8 +10,8 @@ import datetime
 import os
 import re
 import sys
-from urllib import quote_plus
-from urlparse import urlunsplit
+from urllib.parse import quote_plus
+from urllib.parse import urlunsplit
 
 import requests
 
@@ -30,8 +30,8 @@ HEADERS = {'Accept': 'application/vnd.github.v3+json',
            'Authorization': 'token {token}'.format(token=OAUTH_TOKEN),
            'User-Agent': 'webcompat/webcompat-bot'}
 # Templates for producing the changelog
-LINE_TEMPLATE = u'* {title} [Pull #{number}]({url})\n'
-LOG_TEMPLATE = u"""
+LINE_TEMPLATE = '* {title} [Pull #{number}]({url})\n'
+LOG_TEMPLATE = """
 
 ## X.X.X - {date}
 
@@ -71,14 +71,14 @@ def normalize_title(title):
     See the test suite for the potential matches.
     GitHub sends us a unicode string.
     """
-    if u'🚀' in title:
-        title = title.replace(u'🚀', '')
+    if '🚀' in title:
+        title = title.replace('🚀', '')
         title = title.strip()
-        title = u'NPM update - {title}.'.format(title=title)
+        title = 'NPM update - {title}.'.format(title=title)
     else:
         regex = r"[^ ]?\#(?P<number>\d+)[^\w]+(?P<prose>.*)"
         m = re.search(regex, title)
-        log_line = u'Fixes #{msg[number]} - {msg[prose]}'
+        log_line = 'Fixes #{msg[number]} - {msg[prose]}'
         title = log_line.format(msg=m.groupdict())
     return title
 
@@ -123,11 +123,11 @@ def main():
             label_path = path_tmp.format(
                 root=ROOT_REPO, repo=repo, number=number, label=QUERY_VALUE)
             url = urlunsplit(('https', GITHUB_API, label_path, '', ''))
-            print('Deleting "{label}" for {number} on {repo}…'.format(
-                label=QUERY_VALUE, number=number, repo=repo))
+            print(('Deleting "{label}" for {number} on {repo}…'.format(
+                label=QUERY_VALUE, number=number, repo=repo)))
             status = delete_label(url)
-            print('{status} for issue {number}'.format(
-                status=status, number=number))
+            print(('{status} for issue {number}'.format(
+                status=status, number=number)))
 
 
 if __name__ == "__main__":
