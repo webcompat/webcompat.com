@@ -35,11 +35,11 @@ Go to https://github.com/webcompat/webcompat.com/ and click on the Fork button (
 
 #### Install Python 3.7
 
-This project requires Python 3. This is not available per default on most platforms. You will need to install it on your computer. The [download section](https://www.python.org/downloads/) of Python website has binaries for most platforms. Choose the 3.7.3 or more version minimum.
+This project requires Python 3. This is not available per default on most platforms. You will need to install it on your computer. The [download section](https://www.python.org/downloads/) of the Python website has binaries for most platforms. Choose the 3.7.3 or more version minimum.
 
 #### Install nodejs
 
-@@magsout@@
+This project requires NodeJS for building the application and running certain tests. The NodeJS website provides installers in the [downloads section](https://nodejs.org/en/download/). Choose the [current LTS version](https://nodejs.org/en/about/releases/) if you don't have NodeJS installed, or have an older version.
 
 #### Initializing project source code
 
