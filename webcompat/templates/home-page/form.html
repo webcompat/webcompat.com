@@ -1,150 +1,405 @@
-{%- if request.url_rule.endpoint == 'create_issue' %}
-  <h1 class="headline-1">Report Site Issue</h1>
-{%- endif %}
-
-<form
-  action="/issues/new"
-  class="form grid-row js-loader loader"
-  enctype="multipart/form-data"
-  method="post"
-  novalidate
->
-  <div class="grid-cell">
-    <div class="form-text form-element js-Form-group">
-      <div class="js-Form-information form-label-message">
-        {{ form.url.label(class_='form-label') }}
-        {% if form.url.errors %}
-          {% for error in form.url.errors %}
+<form action="/issues/new" class="form grid-row js-loader loader issue-form" enctype="multipart/form-data" method="post"
+  novalidate>
+  <h3 class="page-heading">Filing a web compatibility issue</h3>
+  <div class="step-container step1 col open" data-nextstep="2"data-activate-stepper="2">
+    <div class="row">
+      <div class="input-control half">
+        <div class="col">
+          <div class="input-description">
+            Thank you for filing a web compatibility issue.<br>
+            Do we have the <strong>correct site?</strong>
+          </div>
+          <div class="form-text form-element js-Form-group form-label-message with-validation-icons">
+            {{ form.url.label(class_='form-label is-hidden') }}
+            {% if form.url.errors %}
+            {% for error in form.url.errors %}
             <small class="form-message-error">{{ error }}</small>
-          {% endfor %}
-        {% endif %}
-      </div>
-      {{ form.url(class_='form-field text-field required',
-         placeholder='e.g. https://example.com',
-         required=True, type='url', pattern='') }}
-         <span class="form-input-validation check error"></span>
-    </div>
-    <div class="form-radio form-element js-Form-group">
-      <div class="js-Form-information form-label-message">
-        <label class="form-label" for="problem_category">Type of bug (mandatory)</label>
-        {% if form.problem_category.errors %}
-          {% for error in form.problem_category.errors %}
-            <small class="form-message-error">{{ error }}</small>
-          {% endfor %}
-        {% endif %}
-      </div>
+            {% endfor %}
+            {% endif %}
 
-      {% for subradio in form.problem_category %}
-        {{ subradio(class_='input-radio') }}
-        {{ subradio.label(class_='form-label label-radio') }}
-      {% endfor %}
-    </div>
-    <div class="form-text form-element js-Form-group">
-      <div class="js-Form-information form-label-message">
-        {{ form.description.label(class_='form-label') }}
-        {% if form.description.errors %}
-          {% for error in form.description.errors %}
-            <small class="form-message-error">{{ error }}</small>
-          {% endfor %}
-        {% endif %}
+            {{ form.url(class_='form-field text-field required',
+              placeholder='e.g. https://example.com',
+              required=True, type='url', pattern='') }}
+          </div>
+        </div>
       </div>
-
-      {{ form.description(class_='form-field text-field required',
-         placeholder="e.g. The video doesn't play",
-         required=True) }}
-      <span class="form-input-validation check error"></span>
+      <div class="input-control half">
+        <img class="protruding-img" src="../../img/svg/reporting-people.svg" title="Report" alt="Report" />
+      </div>
     </div>
-    <div class="form-text form-element js-Form-group">
-      {{ form.steps_reproduce.label(class_='form-label') }}
-      {{ form.steps_reproduce(class_='form-field text-field js-autogrow-field',
-         rows=3,
-         placeholder="Please be as detailed as possible.") }}
+    <div class="button-control row">
+      <div class="input-control half">
+        <div class="col center">
+          <button class="next-step step-1 issue-btn disabled" data-nextstep="2">Confirm</button>
+          <a href="#">Learn more about web compatibility</a>
+        </div>
+      </div>
     </div>
   </div>
-  <div class="grid-cell form-element-bottom">
-    <div class="form-text form-element js-Form-group">
-      {{ form.browser.label(class_='form-label') }}
-      {{ form.browser(class_='form-field text-field') }}
-      <span class="form-input-validation check"></span>
-    </div>
-    <div class="form-text form-element js-Form-group">
-      {{ form.os(class_='form-field text-field') }}
-      <span class="form-input-validation check js-bug-form-os"></span>
-    </div>
-    <div class="form-radio form-element js-Form-group">
-      <div class="js-Form-information form-label-message">
-        {{ form.browser_test.label(class_='form-label') }}
-        {% if form.browser_test.errors %}
-          {% for error in form.browser_test.errors %}
+
+  <div class="issue-disclaimer">All information included in this report will be publicly visible. <a href="#">Learn More</a></div>
+
+  <div class="step-container step2 col" data-nextstep="3" data-activate-stepper="2">
+    <div class="row">
+      <div class="input-control">
+        <div class="form-radio choice-control form-element js-Form-group">
+          <div class="js-Form-information form-label-message">
+            <label class="form-label" for="problem_category">What is wrong with the page at <strong id="website-url">example.com</strong><strong>?</strong></label>
+            {% if form.problem_category.errors %}
+            {% for error in form.problem_category.errors %}
             <small class="form-message-error">{{ error }}</small>
-          {% endfor %}
-        {% endif %}
-      </div>
-      {% for subradio in form.browser_test %}
-        {{ subradio(class_='input-radio') }}
-        {{ subradio.label(class_='form-label label-radio') }}
-      {% endfor %}
-    </div>
-    <div class="form-upload form-element js-image-upload js-Form-group">
-        {{ form.image(class_='form-input input-upload', accept='.jpe,.jpg,.jpeg,.gif,.png,.bmp', id='image') }}
-        <div class="label-icon label-upload js-label-upload">
-          <svg class="icon icon-big" role="presentation" title="Upload Screenshot">
-            <use class="icon-upload" xlink:href="#svg-plus">Upload Screenshot</use>
-          </svg>
-          <small class="label-icon-message">Upload screenshot</small>
-        </div>
-
-        <div class="label-icon label-remove is-hidden js-remove-upload">
-          <svg class="icon" role="presentation" title="Remove Screenshot">
-            <use class="icon-remove" xlink:href="#svg-x">Remove Screenshot</use>
-          </svg>
-        </div>
-
-        <div class="label-icon label-error is-hidden js-error-upload">
-          <svg class="icon icon-big" role="presentation" title="An error occoured">
-            <use class="icon-error" xlink:href="#svg-warning">An error occoured</use>
-          </svg>
-          {% if form.image.errors %}
-            {% for error in form.image.errors %}
-              <small class="label-icon-message">{{ error }}</small>
             {% endfor %}
-          {% endif %}
+            {% endif %}
+          </div>
+          {{form.problem_category}}
+        </div>
+      </div>
+    </div>
+    <div class="row half centered other-problem form-element js-Form-groupform-element js-Form-group with-validation-icons low">
+      <div class="column full-width">
+        <div class="label">
+          {{ form.other_problem.label(class_='form-label') }}
+        </div>
+        {{ form.other_problem(class_='form-field text-field required',
+          placeholder='Issue description',
+          required=True, type='text', pattern='') }}
+      </div>
+    </div>
+    <div class="button-control row other-problem">
+      <div class="input-control">
+        <div class="col center">
+          <button class="next-step step-3 issue-btn disabled" data-nextstep="4">Confirm</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="step-container step3 subproblem col" data-nextstep="4" data-activate-stepper="3">
+    <div class="row">
+      <div class="input-control">
+        <div class="form-radio choice-control form-element js-Form-group site_bug_subcategory">
+          <div class="js-Form-information form-label-message">
+            <label class="form-label" for="site_bug_subcategory">What is wrong with <strong>the video or audio?</strong></label>
+            {% if form.site_bug_subcategory.errors %}
+            {% for error in form.site_bug_subcategory.errors %}
+            <small class="form-message-error">{{ error }}</small>
+            {% endfor %}
+            {% endif %}
+          </div>
+          {{form.site_bug_subcategory}}
+        </div>
+        <div class="form-radio choice-control form-element js-Form-group layout_bug_subcategory">
+          <div class="js-Form-information form-label-message">
+            <label class="form-label" for="layout_bug_subcategory">What is wrong with <strong>the video or audio?</strong></label>
+            {% if form.layout_bug_subcategory.errors %}
+            {% for error in form.layout_bug_subcategory.errors %}
+            <small class="form-message-error">{{ error }}</small>
+            {% endfor %}
+            {% endif %}
+          </div>
+          {{form.layout_bug_subcategory}}
+        </div>
+        <div class="form-radio choice-control form-element js-Form-group video_bug_subcategory">
+          <div class="js-Form-information form-label-message">
+            <label class="form-label" for="video_bug_subcategory">What is wrong with <strong>the video or audio?</strong></label>
+            {% if form.video_bug_subcategory.errors %}
+            {% for error in form.video_bug_subcategory.errors %}
+            <small class="form-message-error">{{ error }}</small>
+            {% endfor %}
+            {% endif %}
+          </div>
+          {{form.video_bug_subcategory}}
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+
+  <div class="step-container step4 col" data-nextstep="5" data-activate-stepper="4">
+    <div class="row">
+        <div class="input-control device-data-hero">
+          <img class="protruding-img" src="../../img/svg/devices.svg" title="Device data image" alt="Device data image" />
+        </div>
+      <div class="input-control device-data">
+        <div class="col">
+          <div class="input-description">
+              Did you encounter the issue on <strong>this device</strong> ({{form.os.data}}) using <strong>this browser</strong> ({{form.browser.data}})?
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="button-control row">
+      <div class="input-control">
+        <div class="col center">
+          <button class="next-step step-4 issue-btn" data-nextstep="6" data-hidestep="5">Yes</button>
+          <div class="row">
+              I encountered the issue on a &nbsp;<a class="next-step step-5" data-nextstep="5" data-hidestep="6" href="#">different device or browser</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="step-container step5 col custom-browser" data-nextstep="4" data-activate-stepper="4">
+    <div class="row">
+      <div class="input-control">
+        <div class="col">
+          <div class="input-description">
+            <strong>What browser and device were you using</strong> when the issue was encountered?
+          </div>
+          <div class="row">
+            <div class="form-element js-Form-group low with-validation-icons half">
+              {{ form.browser.label(class_='form-label') }}
+              {{ form.browser(class_='form-field text-field') }}
+            </div>
+            <div class="form-element js-Form-group low with-validation-icons half">
+              {{ form.device.label(class_='form-label') }}
+              {{ form.os(class_='form-field text-field') }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="button-control row">
+      <div class="input-control">
+        <div class="col center">
+          <button class="next-step step-5 issue-btn" data-nextstep="6">Confirm</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="step-container step6 col" data-nextstep="7" data-activate-stepper="5">
+    <div class="row">
+      <div class="input-control">
+        <div class="form-radio choice-control browsers form-element js-Form-group">
+          <div class="js-Form-information form-label-message">
+            <label class="form-label" for="browsers">Please select <strong>other browsers you have tested on</strong></label>
+            {% if form.browsers.errors %}
+            {% for error in form.browsers.errors %}
+            <small class="form-message-error">{{ error }}</small>
+            {% endfor %}
+            {% endif %}
+          </div>
+          {{form.browsers}}
+        </div>
+      </div>
+    </div>
+    <div class="row half centered other-browser form-element js-Form-groupform-element js-Form-group with-validation-icons low">
+      <div class="column full-width">
+        <div class="label">
+          {{ form.other_browser.label(class_='form-label') }}
+        </div>
+        {{ form.other_browser(class_='form-field text-field required',
+          placeholder='Browser',
+          required=True, type='text', pattern='') }}
+      </div>
+    </div>
+    <div class="button-control row">
+      <div class="input-control">
+        <div class="col center">
+          <button class="next-step step-6 issue-btn disabled" data-nextstep="8" data-hidestep="7">Confirm</button>
+          <a class="next-step step-6" data-nextstep="7" href="#">I have <strong>only tested on this browser</strong> ({{form.browser.data}})</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="step-container warning step7 col" data-nextstep="8" data-activate-stepper="5">
+    <img class="warning-icon" src="../../img/svg/icons/svg-info-icon.svg" title="Warning" alt="Warning" />
+    <div class="warning-text">We recommend testing the website in another browser to validate this as a web compatibility issue.</div>
+    <div class="col center input-control">
+      <button class="next-step step-7 issue-btn" data-nextstep="8">Continue without testing</button>
+      <a href="#">What is a web compatibility issue?</a>
+    </div>
+  </div>
+
+  <div class="step-container step8 col" data-nextstep="9" data-activate-stepper="6">
+    <div class="row">
+      <div class="input-control device-data-hero half">
+        <img class="protruding-img" src="../../img/svg/describe-issue.svg" title="Describe issue" alt="Describe issue" />
+        <div class="description-text">
+            OK, now the vital part! <br>
+            Please <strong>describe what happened</strong>,
+            including any steps you took before you saw the problem.
+        </div>
+      </div>
+      <div class="input-control half col">
+        <div class="form-text form-element js-Form-group problem-description bordered-container">
+          {{ form.steps_reproduce(class_='form-field text-field js-autogrow-field',
+            rows=3,
+            placeholder="Describe what happened") }}
+          <div class="progress">
+            <img class="tick" src="../../img/svg/icons/svg-check-issue.svg" title="Valid message" alt="Valid message" />
+            <div class="bar"></div>
+          </div>
+        </div>
+        <div class="text-right char-limit">Minimum 30 characters</div>
+      </div>
+    </div>
+    <div class="button-control row">
+      <div class="input-control">
+        <div class="col center">
+          <button class="next-step step-8 issue-btn disabled" data-nextstep="9">Continue</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="step-container step9 col" data-nextstep="10" data-activate-stepper="7">
+    <div class="row">
+      <div class="input-control half">
+        <div class="description-text top">
+          Fantastic, thank you. <br>
+          We’re almost done. <strong>We took a screenshot of the website</strong> when you began this report. <strong>Are you OK with publicly sharing the image we captured?</strong>
+        </div>
+      </div>
+      <div class="input-control half col">
+        <div class="form-text form-element js-Form-group problem-screenshot">
+          <img class="screenshot" src="../../img/sample-screenshot.jpg" title="Generated screenshot" alt="Generated screenshot" />
+          <div class="shadow"></div>
+        </div>
+      </div>
+    </div>
+    <div class="button-control row">
+      <div class="input-control">
+        <div class="col center">
+          <div class="row">
+            <button class="next-step step-9 issue-btn" data-nextstep="11">Yes, continue</button>
+            <button class="next-step step-9 issue-btn red" data-nextstep="10" data-hidestep="9">No, delete this image</button>
+          </div>
+          <a class="next-step step-9" data-nextstep="10" data-hidestep="9" href="#">Upload a different image</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="step-container step10 col upload-screenshot" data-nextstep="11">
+    <div class="row">
+      <div class="input-control half flex-left">
+        <div class="description-text top up-message deleted-screenshot">
+            <strong>We deleted the automatic screenshot.</strong> <br>
+            Do you have a different screenshot you would like to share?<br>
+            <br>
+            <strong>Uploaded images are publicly viewable.</strong>
+        </div>
+        <div class="description-text top up-message uploaded-screenshot">
+          Image uploaded. <br>
+          <strong>Uploaded images are publicly viewable.</strong>
+        </div>
+        <div class="description-text top up-message reset-screenshot">
+          Do you have a screenshot of the issue you would like to share? <br>
+          <strong>Uploaded images are publicly viewable.</strong>
+        </div>
+      </div>
+      <div class="input-control half col">
+          <div class="form-upload form-element js-image-upload js-Form-group">
+            {{ form.image(class_='form-input input-upload', accept='.jpe,.jpg,.jpeg,.gif,.png,.bmp', id='image') }}
+            <div class="shadow"></div>
+            <div class="label-icon label-upload js-label-upload">
+              <img class="add-screenshot-icon" src="../../img/svg/icons/svg-add-image.svg" title="Upload screenshot" alt="Upload screenshot" />
+              <br>
+              <small class="label-icon-message">Upload screenshot</small>
+            </div>
+
+            <div class="label-icon label-error is-hidden js-error-upload">
+              <svg class="icon icon-big" role="presentation" title="An error occoured">
+                <use class="icon-error" xlink:href="#svg-warning">An error occoured</use>
+              </svg>
+              {% if form.image.errors %}
+              {% for error in form.image.errors %}
+              <small class="label-icon-message">{{ error }}</small>
+              {% endfor %}
+              {% endif %}
+            </div>
+          </div>
+      </div>
+    </div>
+    <div class="button-control row">
+      <div class="input-control">
+        <div class="col center">
+          <div class="row">
+            <button class="next-step step-10 issue-btn disabled" data-nextstep="11">Confirm</button>
+            <button class="js-remove-upload is-hidden issue-btn red">Delete this image</button>
+          </div>
+          <a class="js-remove-upload is-hidden" href="#">Upload a different image</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="step-container step11 col final-step" data-activate-stepper="7">
+    <div class="row header">
+        <div class="input-control final-step-hero">
+          <img class="protruding-img" src="../../img/svg/cheering-people.svg" title="Report ready to send" alt="Report ready to send" />
+        </div>
+        <div class="input-description">
+            Your report is ready to send!
         </div>
     </div>
+    <div class="button-control row">
+      <div class="input-control">
+        <div class="col center">
+          <div class="row final-text">
+              Good job! You can&nbsp;<strong>report via GitHub</strong>&nbsp;or&nbsp;<strong>report anonymously</strong>.
+          </div>
+          <div class="row">
+            <button class="button button-primary right js-Button" id="submitgithub" type="submit"
+              name="github-auth-report">
+              {% if session.username %}Report as {{ session.username }}{% else %}Report via GitHub{% endif %}
+            </button>
+            <button class="button button-secondary js-Button" id="submitanon" type="submit" name="github-proxy-report">
+              Report Anonymously
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <!--div class="grid-cell form-element-bottom">
     {% if not session.username %}
     <div class="form-text js-Form-group">
       <div class="js-Form-information form-label-message">
         {{ form.contact.label(class_='form-label') }}
         {% if form.contact.errors %}
-          {% for error in form.contact.errors %}
-            <small class="form-message-error">{{ error }}</small>
-          {% endfor %}
+        {% for error in form.contact.errors %}
+        <small class="form-message-error">{{ error }}</small>
+        {% endfor %}
         {% endif %}
       </div>
       {{ form.contact(class_='form-field text-field',
-         placeholder='GitHub nickname',
-         pattern='^[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}$') }}
-         <span class="form-input-validation check error js-bug-form-contact"></span>
+        placeholder='GitHub nickname',
+        pattern='^[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}$') }}
+      <span class="form-input-validation check error js-bug-form-contact"></span>
     </div>
     {% endif %}
     <div class="form-button form-button-multiple form-element js-Form-group js-report-buttons">
       <div class="button-wrapper js-Button-wrapper">
-        <button
-          class="button button-secondary js-Button"
-          id="submitanon"
-          type="submit"
-          name="github-proxy-report"
-        >
+        <button class="button button-secondary js-Button" id="submitanon" type="submit" name="github-proxy-report">
           Report Anonymously
         </button>
       </div>
       <div class="button-wrapper js-Button-wrapper">
-        <button
-          class="button button-primary right js-Button"
-          id="submitgithub"
-          type="submit"
-          name="github-auth-report"
-        >
+        <button class="button button-primary right js-Button" id="submitgithub" type="submit"
+          name="github-auth-report">
           {% if session.username %}Report as {{ session.username }}{% else %}Report via GitHub{% endif %}
         </button>
       </div>
@@ -157,13 +412,14 @@
       <div class="form-text form-element js-Form-group">
         {{ form.username.label(class_='form-label') }}
         {% if form.username.errors %}
-          {% for error in form.username.errors %}
-            <small class="form-message-error">{{ error }}</small>
-          {% endfor %}
+        {% for error in form.username.errors %}
+        <small class="form-message-error">{{ error }}</small>
+        {% endfor %}
         {% endif %}
         {{ form.username(class_='u-formInput') }}
       </div>
     </div>
+  </div-->
 
-  {{ form.hidden_tag() }}
+    {{ form.hidden_tag() }}
 </form>

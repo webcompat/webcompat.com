@@ -36,7 +36,75 @@ BugForm.prototype.onDOMReadyInit = function() {
   this.submitButtonWrappers = $("#js-ReportForm .js-Button-wrapper");
   this.submitTypeInput = $("#submit_type:hidden");
   this.uploadLabel = $(".js-label-upload");
+  this.nextStepBtn = $(".next-step");
+  this.sitePrettyUrl = $("#website-url");
+  this.step1Trigger = $(".next-step.step-1");
+  this.step2Trigger = $(".next-step.step-2");
+  this.step3Trigger = $("#problem_category input");
+  this.step3Btn = $(".next-step.step-3");
+  this.step6Btn = $("button.next-step.step-6");
+  this.step8Btn = $("button.next-step.step-8");
+  this.step10Btn = $("button.next-step.step-10");
+  this.step3Radio = $(".step-container.step3 input");
+  this.step1Container = $(".step-container.step1");
+  this.step2Container = $(".step-container.step2");
+  this.step3Container = $(".step-container.step3");
+  this.step4Container = $(".step-container.step4");
+  this.step5Container = $(".step-container.step5");
+  this.step6Container = $(".step-container.step6");
+  this.step6Radio = $(".step-container.step6 input");
+  this.step7Container = $(".step-container.step7");
+  this.step8Container = $(".step-container.step8");
+  this.step9Container = $(".step-container.step9");
+  this.step10Container = $(".step-container.step10");
+  this.step11Container = $(".step-container.step11");
+  this.urlStep = 1;
+  this.problemStep = 2;
+  this.subproblemStep = 3;
+  this.browserSelectionStepNo = 7;
+  this.stepNotDefined = -1;
+  this.problemCategoryName = "problem_category";
+  this.otherProblemId = "unknown_bug";
+  this.browserSelectionName = "browsers";
+  this.otherBrowserId = "other";
+  this.detectionBugId = "detection_bug";
+  this.otherProblemElements = $(".other-problem");
+  this.otherBrowserElements = $(".other-browser");
+  this.uploadTextElements = $(".up-message");
+  this.isSubproblem = false;
+  this.blockNext = false;
+  this.skipOneStep = false;
+  this.slideUpTimeout = 350;
+  this.descriptionMinChars = 30;
+  this.headerHeight = 130;
+  this.progressBar = $(".problem-description .progress .bar");
+  this.progressContainer = $(".problem-description .progress");
+
   this.urlParamRegExp = /url=([^&]+)/;
+  this.cssAnimations = {
+    slideup: "slideup",
+    slidedown: "slidedown",
+    slideupdown: "slideupdown",
+    slidedownandheight: "slidedownandheight",
+    slideupandheight: "slideupandheight"
+  };
+
+  this.stepsArray = [
+    this.step1Container,
+    this.step2Container,
+    this.step3Container,
+    this.step4Container,
+    this.step5Container,
+    this.step6Container,
+    this.step7Container,
+    this.step8Container,
+    this.step9Container,
+    this.step10Container,
+    this.step11Container
+  ];
+
+  this.uploadFileChoice = 1;
+
   this.validation = new Validation();
 
   this.UPLOAD_LIMIT = 1024 * 1024 * 4;
@@ -54,8 +122,46 @@ BugForm.prototype.onDOMReadyInit = function() {
       helpText: "Problem type required.",
       errFunction: "requiredField"
     },
+
+    site_bug_subcategory: {
+      el: $("[name=site_bug_subcategory]"),
+      valid: null,
+      helpText: "Problem type required.",
+      errFunction: "requiredField"
+    },
+    layout_bug_subcategory: {
+      el: $("[name=layout_bug_subcategory]"),
+      valid: null,
+      helpText: "Problem type required.",
+      errFunction: "requiredField"
+    },
+    video_bug_subcategory: {
+      el: $("[name=video_bug_subcategory]"),
+      valid: null,
+      helpText: "Problem type required.",
+      errFunction: "requiredField"
+    },
+    browsers_selection: {
+      el: $("[name=browsers]"),
+      valid: null,
+      helpText: "Browser selection required.",
+      errFunction: "requiredField"
+    },
+    other_browser: {
+      el: $("[name=other_browser]"),
+      valid: null,
+      helpText: "Browser required.",
+      errFunction: "requiredField"
+    },
+
+    other_problem: {
+      el: $("[name=other_problem]"),
+      valid: null,
+      helpText: "Problem type required.",
+      errFunction: "optionalField"
+    },
     description: {
-      el: $("#description"),
+      el: $("#steps_reproduce"),
       valid: null,
       helpText: "A problem summary is required.",
       errFunction: "requiredField"
@@ -102,6 +208,14 @@ BugForm.prototype.onDOMReadyInit = function() {
   this.browserField = this.inputs.browser.el;
   this.osField = this.inputs.os.el;
   this.problemType = this.inputs.problem_category.el;
+  this.problemSubtype = this.inputs.other_problem.el;
+  this.otherBrowser = this.inputs.other_browser.el;
+
+  this.siteBugType = this.inputs.site_bug_subcategory.el;
+  this.layoutBugType = this.inputs.layout_bug_subcategory.el;
+  this.videoBugType = this.inputs.video_bug_subcategory.el;
+  this.browserSelection = this.inputs.browsers_selection.el;
+
   this.uploadField = this.inputs.image.el;
   this.urlField = this.inputs.url.el;
   this.descField = this.inputs.description.el;
@@ -122,7 +236,17 @@ BugForm.prototype.init = function() {
   this.disableSubmits();
   this.urlField.on("blur input", this.checkUrl.bind(this));
   this.descField.on("blur input", this.checkDescription.bind(this));
+  this.descField.on("blur input", this.textareaTrackProgress.bind(this));
   this.problemType.on("change", this.checkProblemTypeValidity.bind(this));
+
+  this.siteBugType.on("change", this.checkBugTypeValidity.bind(this));
+  this.layoutBugType.on("change", this.checkBugTypeValidity.bind(this));
+  this.videoBugType.on("change", this.checkBugTypeValidity.bind(this));
+  this.browserSelection.on("change", this.checkBrowserValidity.bind(this));
+
+  this.otherBrowser.on("blur input", this.checkBrowserInput.bind(this));
+  this.otherBrowser.on("blur input", this.checkBrowserInput.bind(this));
+  this.problemSubtype.on("blur input", this.checkProblemSubtype.bind(this));
   this.uploadField.on("change", this.checkImageTypeValidity.bind(this));
   this.osField.on("blur", this.checkOptionalNonEmpty.bind(this, this.osField));
   this.browserField.on(
@@ -141,6 +265,11 @@ BugForm.prototype.init = function() {
     this.preventSubmitByEnter.bind(this)
   );
 
+  // add event listeners for next step buttons
+  this.nextStepBtn.on("click", this.nextStep.bind(this));
+  this.step3Trigger.on("change", this.nextStep.bind(this));
+  this.step3Radio.on("change", this.nextStep.bind(this));
+  this.step6Radio.on("change", this.nextStep.bind(this));
   // See if the user already has a valid form
   // (after a page refresh, back button, etc.)
   this.checkForm();
@@ -310,6 +439,42 @@ BugForm.prototype.checkProblemTypeValidity = function(silent) {
   this[func]("problem_category");
 };
 
+BugForm.prototype.checkBrowserValidity = function(silent) {
+  var func = this.determineValidityFunction(
+    this.validation.isProblemTypeValid,
+    this.browserSelection,
+    silent
+  );
+  this[func]("browsers_selection");
+};
+
+BugForm.prototype.checkBugTypeValidity = function(e) {
+  var subformName = typeof e === "object" ? e.target.attributes.name.value : "";
+  var subformElement;
+  if (subformName.length > 0) {
+    switch (subformName) {
+      case "site_bug_subcategory":
+        subformElement = this.siteBugType;
+        break;
+      case "layout_bug_subcategory":
+        subformElement = this.layoutBugType;
+        break;
+      case "video_bug_subcategory":
+        subformElement = this.videoBugType;
+        break;
+    }
+
+    var func = this.determineValidityFunction(
+      this.validation.isProblemTypeValid,
+      subformElement,
+      e
+    );
+    this[func](subformName);
+  } else {
+    return false;
+  }
+};
+
 BugForm.prototype.checkImageTypeValidity = function(event, silent) {
   // Bail if there's no image.
   if (!this.uploadField.val()) {
@@ -341,11 +506,23 @@ BugForm.prototype.checkImageTypeValidity = function(event, silent) {
 BugForm.prototype.checkUrl = function(event) {
   var isSilent = event.type === "input" || !this.urlField.val();
   this.checkURLValidity(isSilent);
+  this.setNextBtnStatus(this.urlStep);
 };
 
 BugForm.prototype.checkDescription = function() {
   var isSilent = !this.descField.val();
   this.checkDescriptionValidity(isSilent);
+};
+
+BugForm.prototype.checkProblemSubtype = function() {
+  this.checkProblemSubtypeValidity();
+  this.setNextBtnStatus(this.subproblemStep);
+};
+
+BugForm.prototype.checkBrowserInput = function() {
+  var isSilent = !this.otherBrowser.val();
+  this.checkBrowserInputValidity(isSilent);
+  this.setNextBtnStatus(this.browserSelectionStepNo);
 };
 
 /* Check to see that the URL input element is not empty,
@@ -367,6 +544,26 @@ BugForm.prototype.checkDescriptionValidity = function(silent) {
     silent
   );
   this[func]("description");
+};
+
+/* Check to see that the browser input element is not empty. */
+BugForm.prototype.checkBrowserInputValidity = function(silent) {
+  var func = this.determineValidityFunction(
+    this.validation.isDescriptionValid,
+    this.otherBrowser,
+    silent
+  );
+  this[func]("other_browser");
+};
+
+/* Check to see that the issue description input is not empty. */
+BugForm.prototype.checkProblemSubtypeValidity = function(silent) {
+  var func = this.determineValidityFunction(
+    this.validation.isProblemSubtypeValid,
+    this.problemSubtype,
+    silent
+  );
+  this[func]("other_problem");
 };
 
 /* Check if Browser and OS are empty or not, only
@@ -505,6 +702,280 @@ BugForm.prototype.checkAllRequiredValid = function() {
   );
 };
 
+BugForm.prototype.checkSpecificRequiredValid = function(fieldId) {
+  return this.inputs[fieldId].valid;
+};
+
+BugForm.prototype.setNextBtnStatus = function(step) {
+  switch (step) {
+    case this.urlStep:
+      var input = this.inputs["url"].el[0];
+      var inputVal = $.trim(input.value);
+      if (this.checkSpecificRequiredValid("url") && inputVal.length > 0) {
+        this.step1Trigger.removeClass("disabled");
+        this.sitePrettyUrl.text(this.extractPrettyUrl(inputVal));
+      } else {
+        this.step1Trigger.addClass("disabled");
+      }
+      break;
+    case this.subproblemStep:
+      var subproblemVal = $.trim(this.inputs["other_problem"].el[0].value);
+      if (
+        this.checkSpecificRequiredValid("other_problem") &&
+        subproblemVal.length > 0
+      ) {
+        this.step3Btn.removeClass("disabled");
+      } else {
+        this.step3Btn.addClass("disabled");
+      }
+      break;
+    case this.browserSelectionStepNo:
+      var browserVal = $.trim(this.inputs["other_browser"].el[0].value);
+      var radioVal =
+        $(this.browserSelection)
+          .filter(":checked")
+          .val() || false;
+      if (
+        (radioVal && radioVal !== this.otherBrowserId) ||
+        (radioVal === this.otherBrowserId &&
+          this.checkSpecificRequiredValid("other_browser") &&
+          browserVal.length > 0)
+      ) {
+        this.step6Btn.removeClass("disabled");
+        this.makeValid("other_browser");
+      } else {
+        this.step6Btn.addClass("disabled");
+        this.inputs["other_browser"].valid = false;
+      }
+      break;
+  }
+};
+
+BugForm.prototype.textareaTrackProgress = function(e) {
+  var len = $.trim(e.target.value).length;
+  var progress = (len * 100) / this.descriptionMinChars;
+  this.progressBar.css("width", progress > 100 ? "100%" : progress + "%");
+  if (progress >= 100) {
+    this.progressContainer.addClass("complete");
+    this.step8Btn.removeClass("disabled");
+  } else {
+    this.progressContainer.removeClass("complete");
+    this.step8Btn.addClass("disabled");
+  }
+};
+
+BugForm.prototype.extractPrettyUrl = function(url) {
+  var pathArray = url.split("/");
+  var host = pathArray[2];
+  return host;
+};
+
+BugForm.prototype.nextStep = function(e) {
+  e.preventDefault();
+  var trigger = $(e.currentTarget);
+  if (trigger.hasClass("disabled")) {
+    return false;
+  }
+
+  var nextStepNumber =
+    trigger.attr("type") === "radio"
+      ? trigger.parents(".step-container").data("nextstep")
+      : trigger.data("nextstep") || this.stepNotDefined;
+  var stepperIndex =
+    trigger.parents(".step-container").data("activate-stepper") || false;
+
+  var hideStep = trigger.data("hidestep") || false;
+
+  if (nextStepNumber !== this.stepNotDefined) {
+    if (
+      trigger.attr("type") === "radio" &&
+      trigger.attr("name") === this.problemCategoryName
+    ) {
+      this.problemSubgategoryStep(trigger);
+      this.isSubproblem = true;
+    } else {
+      this.isSubproblem = false;
+      this.blockNext = false;
+    }
+
+    if (
+      trigger.attr("type") === "radio" &&
+      trigger.attr("name") === this.browserSelectionName
+    ) {
+      this.browserSelectionStep(trigger);
+      return;
+    }
+
+    this.setActiveStep(stepperIndex);
+
+    if (
+      (!this.blockNext && !this.isSubproblem) ||
+      (this.isSubproblem && this.skipOneStep)
+    ) {
+      var nextStep = this.skipOneStep ? nextStepNumber : nextStepNumber - 1;
+      this.skipOneStep = false;
+      var animation =
+        this.stepsArray[nextStep][0].style.animationName !==
+        this.cssAnimations.slidedownandheight
+          ? this.cssAnimations.slidedown
+          : this.cssAnimations.slideupandheight;
+      this.stepsArray[nextStep][0].style.animationName = animation;
+      this.stepsArray[nextStep][0].classList.add("open");
+    }
+  }
+
+  var scrollToEl = this.stepsArray[nextStepNumber - 1][0];
+  // Delay "scroll to element" effect in order to let the animation finish, otherwise the scroll point isn't correct
+  setTimeout(
+    function() {
+      var topOfElement =
+        window.pageYOffset +
+        scrollToEl.getBoundingClientRect().top -
+        this.headerHeight;
+      window.scroll({ top: topOfElement, behavior: "smooth" });
+    }.bind(this),
+    this.isSubproblem ? 450 : 250
+  );
+
+  if (hideStep) {
+    this.stepsArray[
+      hideStep - 1
+    ][0].style.animationName = this.cssAnimations.slideupandheight;
+  }
+
+  return false;
+};
+
+BugForm.prototype.setActiveStep = function(nextStep) {
+  for (var index = 1; index <= nextStep; index++) {
+    $("#step-" + index)
+      .addClass("complete")
+      .removeClass("active");
+  }
+  $("#step-" + nextStep)
+    .addClass("active")
+    .removeClass("complete");
+};
+
+BugForm.prototype.problemSubgategoryStep = function(trigger) {
+  var subcategoryId = trigger.val() + "_subcategory";
+  var isOther = trigger.val() === this.otherProblemId;
+  var isDetectionBug = trigger.val() === this.detectionBugId;
+  this.skipOneStep = isDetectionBug; // Detection bug doesn't have subcategories, therefore skips one step
+  var animatedElement = $(".step" + this.subproblemStep)[0];
+  var timeout =
+    animatedElement.style.animationName === this.cssAnimations.slideupdown
+      ? this.slideUpTimeout
+      : 0;
+
+  $(".step" + this.subproblemStep)
+    .find("ul")
+    .each(function() {
+      setTimeout(
+        function() {
+          this.parentNode.style.display = "none";
+        }.bind(this),
+        timeout
+      ); // First time animation should be without options switch off
+    });
+
+  if (animatedElement.style.animationName) {
+    animatedElement.classList.add("slower-animation");
+    // Empty the animationName to trigger animation change, otherwise the animation does not repeat
+    var isSlideUp =
+      animatedElement.style.animationName === this.cssAnimations.slideup; // If the step was previously closed, avoid doing the up and down animation
+    animatedElement.style.animationName = "";
+    setTimeout(
+      function() {
+        var animation =
+          !isOther && !isDetectionBug
+            ? this.cssAnimations.slideupdown
+            : this.cssAnimations.slideup;
+        animation =
+          isSlideUp && !isOther && !isDetectionBug
+            ? this.cssAnimations.slidedown
+            : animation;
+        animatedElement.style.animationName = animation;
+      }.bind(this),
+      10
+    );
+  } else {
+    animatedElement.style.animationName =
+      !isOther && !isDetectionBug ? this.cssAnimations.slidedown : "";
+  }
+
+  // Skip non relevant problem subcategory step for the issues that don't have one
+  this.skipOneStep = isOther || isDetectionBug ? true : false;
+
+  this.blockNext = false;
+  // Check if user selected "Something else" or "Detection bug"
+  if (!isOther && !isDetectionBug) {
+    setTimeout(
+      function() {
+        document.getElementById(subcategoryId).parentNode.style.display =
+          "block";
+      }.bind(this),
+      timeout
+    );
+    this.toggleOtherProblem("hide");
+  } else {
+    $(
+      ".step" + this.subproblemStep
+    )[0].style.animationName = this.cssAnimations.slideup;
+    if (isDetectionBug) {
+      this.toggleOtherProblem("hide");
+      return;
+    }
+
+    // Skip next step and show input with button in the same container
+    this.toggleOtherProblem("show");
+    this.blockNext = true;
+  }
+};
+
+BugForm.prototype.toggleOtherProblem = function(action) {
+  var obj = this;
+  if (action === "hide") {
+    this.otherProblemElements.each(function() {
+      $(this)[0].style.animationName = obj.cssAnimations.slideupandheight;
+    });
+  } else {
+    this.otherProblemElements.each(function() {
+      $(this)[0].style.animationName = obj.cssAnimations.slidedownandheight;
+    });
+  }
+};
+
+BugForm.prototype.browserSelectionStep = function(trigger) {
+  var isOther = trigger.val() === this.otherBrowserId;
+  if (isOther) {
+    $(
+      ".step" + this.browserSelectionStepNo
+    )[0].style.animationName = this.cssAnimations.slideup;
+    // Skip next step and show input with button in the same container
+    this.toggleOtherBrowser("show");
+  } else {
+    this.toggleOtherBrowser("hide");
+  }
+  var step = 7;
+  this.setNextBtnStatus(step);
+};
+
+BugForm.prototype.toggleOtherBrowser = function(action) {
+  var obj = this;
+  if (action === "hide") {
+    this.otherBrowserElements.each(function() {
+      $(this)[0].style.animationName = obj.cssAnimations.slideupandheight;
+      obj.inputs["other_browser"].el[0].value = "";
+      obj.makeInvalidSilent("other_browser");
+    });
+  } else {
+    this.otherBrowserElements.each(function() {
+      $(this)[0].style.animationName = obj.cssAnimations.slidedownandheight;
+    });
+  }
+};
+
 BugForm.prototype.enableSubmitsIfFormValid = function() {
   if (this.checkAllRequiredValid()) {
     this.enableSubmits();
@@ -561,7 +1032,7 @@ BugForm.prototype.addPreviewBackground = function(dataURI) {
   }
 
   this.previewEl.css({
-    background: "url(" + dataURI + ") no-repeat center / contain"
+    background: "url(" + dataURI + ") no-repeat center / cover"
   });
 
   this.hasImage = true;
@@ -582,12 +1053,23 @@ BugForm.prototype.showRemoveUpload = function() {
   this.removeBanner.attr("tabIndex", "0");
   this.uploadLabel.addClass("visually-hidden");
   this.removeBanner.on("click", this.removeUploadPreview.bind(this));
+
+  this.changeUploadText("uploaded-screenshot");
+  this.step10Btn.removeClass("disabled");
+};
+
+BugForm.prototype.changeUploadText = function(textId) {
+  this.uploadTextElements.each(function() {
+    $(this).hide();
+  });
+  $("." + textId).show();
 };
 
 /*
   Remove the upload image preview and hide the banner.
 */
-BugForm.prototype.removeUploadPreview = function() {
+BugForm.prototype.removeUploadPreview = function(e) {
+  e.preventDefault();
   this.previewEl.css("background", "none");
   this.removeBanner.addClass("is-hidden");
   this.removeBanner.attr("tabIndex", "-1");
@@ -599,6 +1081,9 @@ BugForm.prototype.removeUploadPreview = function() {
 
   // clear out the input[type=file] as well
   this.uploadField.val(this.uploadField.get(0).defaultValue);
+
+  this.changeUploadText("reset-screenshot");
+  this.step10Btn.addClass("disabled");
 };
 
 BugForm.prototype.showLoadingIndicator = function() {

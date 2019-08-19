@@ -35,6 +35,10 @@ function Validation() {
     isProblemTypeValid: function(problemTypeField) {
       return problemTypeField.filter(":checked").length;
     },
+    isProblemSubtypeValid: function(problem) {
+      var val = problem.val();
+      return $.trim(val) !== "";
+    },
     isImageTypeValid: function(uploadField) {
       var splitImg = uploadField.val().split(".");
       var ext = splitImg[splitImg.length - 1].toLowerCase();

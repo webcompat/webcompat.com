@@ -48,4 +48,20 @@
   --label-color-device: rgba(188, 143, 143, 1); /* rosybrown */
   --label-color-os: rgba(102, 51, 153, 1); /* rebeccapurple */
   --label-fix-me-assign-a-status: rgba(255, 0, 0, 1); /* #ff0000 */
+  --wizard-step-complete: rgba(86, 99, 140, 1); /* #56638c */
+  --wizard-step-empty: rgba(243, 243, 247, 1); /* #f3f3f7 */
+  --wizard-step-color: rgba(255, 255, 255, 1); /* #ffffff */
+  --wizard-step-error: rgba(226, 40, 80, 1); /* #e22850 */
+  --wizard-grey-bg: rgba(247, 247, 247, 1); /* #f7f7f7 */
+  --link-color: rgba(44, 118, 245, 1); /* #2c76f5 */
+  --issue-type-bg: rgba(86, 99, 140, 1); /* #56638c */
+  --issue-selected-outline: rgba(34, 181, 115, 1); /* #22b573 */
+  --input-placeholder: rgba(64, 64, 64, .5); /* #404040 */
+  --blowser-icon-bg: rgba(255, 255, 255, 1); /* #ffffff */
+  --blowser-icon-border: rgba(64, 64, 64, .3); /* #cccccc */
+  --button-box-border: rgba(228, 227, 227, 1); /* #e4e3e3 */
+  --warning-border: rgba(255, 184, 158, 1); /* #ffb89e */
+  --screenshot-shadow: rgba(0, 0, 0, .3); /* #000000 */
+  --warm-grey: rgba(151, 151, 151, 1); /* #979797 */
+  --upload-background: rgba(231, 231, 231, 1) /* #e7e7e7 */
 }

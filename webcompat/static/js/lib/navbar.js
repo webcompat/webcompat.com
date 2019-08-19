@@ -13,6 +13,7 @@ function NavBar() {
 
   this.navbarHandler = function() {
     var $navbar = $(".js-navigation");
+    var $newIssueStepper = $("#wizard-container");
     var navbarHeight = $navbar.outerHeight();
     var lastScrollY = window.pageYOffset;
     var scrollTimeout = null;
@@ -30,16 +31,22 @@ function NavBar() {
       }
       if (window.pageYOffset < navbarHeight) {
         $navbar.removeClass("is-offscreen");
+        $newIssueStepper.length > 0 &&
+          $newIssueStepper.removeClass("is-offscreen");
         lastScrollY = window.pageYOffset;
         return;
       }
       if (window.pageYOffset > lastScrollY + navbarHeight) {
         $navbar.addClass("is-offscreen");
+        $newIssueStepper.length > 0 &&
+          $newIssueStepper.addClass("is-offscreen");
         lastScrollY = window.pageYOffset;
         return;
       }
       if (window.pageYOffset < lastScrollY - navbarHeight) {
         $navbar.removeClass("is-offscreen");
+        $newIssueStepper.length > 0 &&
+          $newIssueStepper.removeClass("is-offscreen");
         lastScrollY = window.pageYOffset;
         return;
       }
