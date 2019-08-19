@@ -44,80 +44,80 @@ GITHUB_HELP = '_From [webcompat.com](https://webcompat.com/) with ❤️_'
 new_issue_steps = [
     {
         'number': 1,
-        'className': u"active",
-        'label': u"Web address"
+        'className': "active",
+        'label': "Web address"
     },
     {
         'number': 2,
-        'className': u"",
-        'label': u"Issue"
+        'className': "",
+        'label': "Issue"
     },
     {
         'number': 3,
-        'className': u"",
-        'label': u"Details"
+        'className': "",
+        'label': "Details"
     },
     {
         'number': 4,
-        'className': u"",
-        'label': u"Testing"
+        'className': "",
+        'label': "Testing"
     },
     {
         'number': 5,
-        'className': u"",
-        'label': u"Description"
+        'className': "",
+        'label': "Description"
     },
     {
         'number': 6,
-        'className': u"",
-        'label': u"Screenshot"
+        'className': "",
+        'label': "Screenshot"
     },
     {
         'number': 7,
-        'className': u"",
-        'label': u"Send report"
+        'className': "",
+        'label': "Send report"
     }
 ]
 
 problem_choices = [
-    (u'detection_bug', u'<div class="icon-container"><img src="../../img/svg/icons/svg-problem-mobile-vs-desktop.svg" /></div> Desktop site instead of mobile site'),
-    (u'site_bug', u'<div class="icon-container"><img src="../../img/svg/icons/svg-problem-no-use.svg" /></div> Site is not usable'),
-    (u'layout_bug', u'<div class="icon-container"><img src="../../img/svg/icons/svg-problem-broken-design.svg" /></div> Design is broken'),
-    (u'video_bug', u'<div class="icon-container"><img src="../../img/svg/icons/svg-problem-no-video.svg" /></div> Video or audio doesn\'t play'),
-    (u'unknown_bug', u'<div class="icon-container"><img src="../../img/svg/icons/svg-problem-question.svg" /></div> Something else')
+    ('detection_bug', '<div class="icon-container"><img src="../../img/svg/icons/svg-problem-mobile-vs-desktop.svg" /></div> Desktop site instead of mobile site'),
+    ('site_bug', '<div class="icon-container"><img src="../../img/svg/icons/svg-problem-no-use.svg" /></div> Site is not usable'),
+    ('layout_bug', '<div class="icon-container"><img src="../../img/svg/icons/svg-problem-broken-design.svg" /></div> Design is broken'),
+    ('video_bug', '<div class="icon-container"><img src="../../img/svg/icons/svg-problem-no-video.svg" /></div> Video or audio doesn\'t play'),
+    ('unknown_bug', '<div class="icon-container"><img src="../../img/svg/icons/svg-problem-question.svg" /></div> Something else')
 ]
 
 site_bug_choices = [
-    (u'browser_unsupported', u'<div class="icon-container"><img src="../../img/svg/icons/svg-subproblem-unsupported.svg" /></div> Browser unsupported'),
-    (u'page_not_loading', u'<div class="icon-container"><img src="../../img/svg/icons/svg-subproblem-empty-page.svg" /></div> Page not loading correctly'),
-    (u'missing_items', u'<div class="icon-container"><img src="../../img/svg/icons/svg-subproblem-items-missing.svg" /></div> Missing items'),
-    (u'buttons_not_working', u'<div class="icon-container"><img src="../../img/svg/icons/svg-subproblem-cant-click.svg" /></div> Buttons or links not working'),
-    (u'unable_to_type', u'<div class="icon-container"><img src="../../img/svg/icons/svg-subproblem-cant-type.svg" /></div> Unable to type'),
-    (u'unable_to_login', u'<div class="icon-container"><img src="../../img/svg/icons/svg-subproblem-cant-login.svg" /></div> Unable to login'),
-    (u'captcha_problems', u'<div class="icon-container"><img src="../../img/svg/icons/svg-subproblem-captcha.svg" /></div> Problems with Captcha')
+    ('browser_unsupported', '<div class="icon-container"><img src="../../img/svg/icons/svg-subproblem-unsupported.svg" /></div> Browser unsupported'),
+    ('page_not_loading', '<div class="icon-container"><img src="../../img/svg/icons/svg-subproblem-empty-page.svg" /></div> Page not loading correctly'),
+    ('missing_items', '<div class="icon-container"><img src="../../img/svg/icons/svg-subproblem-items-missing.svg" /></div> Missing items'),
+    ('buttons_not_working', '<div class="icon-container"><img src="../../img/svg/icons/svg-subproblem-cant-click.svg" /></div> Buttons or links not working'),
+    ('unable_to_type', '<div class="icon-container"><img src="../../img/svg/icons/svg-subproblem-cant-type.svg" /></div> Unable to type'),
+    ('unable_to_login', '<div class="icon-container"><img src="../../img/svg/icons/svg-subproblem-cant-login.svg" /></div> Unable to login'),
+    ('captcha_problems', '<div class="icon-container"><img src="../../img/svg/icons/svg-subproblem-captcha.svg" /></div> Problems with Captcha')
 ]
 
 layout_bug_choices = [
-    (u'images_not_loaded', u'<div class="icon-container"><img src="../../img/svg/icons/svg-subproblem-no-images.svg" /></div> Images not loaded'),
-    (u'overlapped_items', u'<div class="icon-container"><img src="../../img/svg/icons/svg-subproblem-overlapping.svg" /></div> Items are overlapped'),
-    (u'misaligned_items', u'<div class="icon-container"><img src="../../img/svg/icons/svg-subproblem-misaligned.svg" /></div> Items are misaligned'),
-    (u'items_not_visible', u'<div class="icon-container"><img src="../../img/svg/icons/svg-subproblem-items-not-visible.svg" /></div> Items not fully visible')
+    ('images_not_loaded', '<div class="icon-container"><img src="../../img/svg/icons/svg-subproblem-no-images.svg" /></div> Images not loaded'),
+    ('overlapped_items', '<div class="icon-container"><img src="../../img/svg/icons/svg-subproblem-overlapping.svg" /></div> Items are overlapped'),
+    ('misaligned_items', '<div class="icon-container"><img src="../../img/svg/icons/svg-subproblem-misaligned.svg" /></div> Items are misaligned'),
+    ('items_not_visible', '<div class="icon-container"><img src="../../img/svg/icons/svg-subproblem-items-not-visible.svg" /></div> Items not fully visible')
 ]
 
 video_bug_choices = [
-    (u'images_not_loaded', u'<div class="icon-container"><img src="../../img/svg/icons/svg-subproblem-no-video.svg" /></div> There is no video'),
-    (u'overlapped_items', u'<div class="icon-container"><img src="../../img/svg/icons/svg-subproblem--no-audio.svg" /></div> There is no audio'),
-    (u'misaligned_items', u'<div class="icon-container"><img src="../../img/svg/icons/svg-subproblem-missing-controls.svg" /></div> Media controls are broken or missing'),
-    (u'items_not_visible', u'<div class="icon-container"><img src="../../img/svg/icons/svg-subproblem-does-not-play.svg" /></div> The video or audio does not play')
+    ('images_not_loaded', '<div class="icon-container"><img src="../../img/svg/icons/svg-subproblem-no-video.svg" /></div> There is no video'),
+    ('overlapped_items', '<div class="icon-container"><img src="../../img/svg/icons/svg-subproblem--no-audio.svg" /></div> There is no audio'),
+    ('misaligned_items', '<div class="icon-container"><img src="../../img/svg/icons/svg-subproblem-missing-controls.svg" /></div> Media controls are broken or missing'),
+    ('items_not_visible', '<div class="icon-container"><img src="../../img/svg/icons/svg-subproblem-does-not-play.svg" /></div> The video or audio does not play')
 ]
 
 browser_choices = [
-    (u'chrome', u'<div class="icon-container"><img src="../../img/svg/icons/svg-chrome.svg" /></div> Chrome'),
-    (u'edge', u'<div class="icon-container"><img src="../../img/svg/icons/svg-edge.svg" /></div> Edge'),
-    (u'safari', u'<div class="icon-container"><img src="../../img/svg/icons/svg-safari.svg" /></div> Safari'),
-    (u'opera', u'<div class="icon-container"><img src="../../img/svg/icons/svg-opera.svg" /></div> Opera'),
-    (u'ie', u'<div class="icon-container"><img src="../../img/svg/icons/svg-ie.svg" /></div> Internet Explorer'),
-    (u'other', u'<div class="icon-container"><img src="../../img/svg/icons/svg-other.svg" /></div> Other')
+    ('chrome', '<div class="icon-container"><img src="../../img/svg/icons/svg-chrome.svg" /></div> Chrome'),
+    ('edge', '<div class="icon-container"><img src="../../img/svg/icons/svg-edge.svg" /></div> Edge'),
+    ('safari', '<div class="icon-container"><img src="../../img/svg/icons/svg-safari.svg" /></div> Safari'),
+    ('opera', '<div class="icon-container"><img src="../../img/svg/icons/svg-opera.svg" /></div> Opera'),
+    ('ie', '<div class="icon-container"><img src="../../img/svg/icons/svg-ie.svg" /></div> Internet Explorer'),
+    ('other', '<div class="icon-container"><img src="../../img/svg/icons/svg-other.svg" /></div> Other')
 ]
 
 tested_elsewhere = [
@@ -125,23 +125,23 @@ tested_elsewhere = [
     ('no', 'No')
 ]
 
-url_message = u'A valid URL is required.'
-other_problem_message = u'Please provide a description.'
-other_browser_message = u'Please specify the browser.'
-image_message = (u'Please select an image of the following type:'
-                 u' jpg, png, gif, or bmp.')
-radio_message = u'Problem type required.'
-username_message = u'A valid username must be {0} characters long'.format(
+url_message = 'A valid URL is required.'
+other_problem_message = 'Please provide a description.'
+other_browser_message = 'Please specify the browser.'
+image_message = ('Please select an image of the following type:'
+                 ' jpg, png, gif, or bmp.')
+radio_message = 'Problem type required.'
+username_message = 'A valid username must be {0} characters long'.format(
     random.randrange(0, 99))
 
 desc_label = 'Please write a short problem summary (mandatory)'
 desc_message = 'A problem summary is required.'
 
-url_label = u'Site URL (mandatory)'
-other_problem_label = u'Briefly describe the issue:'
-other_browser_label = u'Browser tested'
-browser_test_label = u'Did you test in another browser?'
-textarea_label = u'Please describe what happened, including any steps you took before you saw the problem'  # noqa
+url_label = 'Site URL (mandatory)'
+other_problem_label = 'Briefly describe the issue:'
+other_browser_label = 'Browser tested'
+browser_test_label = 'Did you test in another browser?'
+textarea_label = 'Please describe what happened, including any steps you took before you saw the problem'  # noqa
 
 contact_message = 'There is a mistake in the username.'  # noqa
 contact_label = 'Sharing your GitHub username—without logging in—could help us with diagnosis. This will be publicly visible.'  # noqa
@@ -156,9 +156,9 @@ class IssueForm(FlaskForm):
                       [InputRequired(message=other_problem_message)])
     other_browser = StringField(other_browser_label,
                       [InputRequired(message=other_browser_message)])
-    browser = StringField(u'Browser', [Optional()])
-    device = StringField(u'Device', [Optional()])
-    os = StringField(u'Operating System', [Optional()])
+    browser = StringField('Browser', [Optional()])
+    device = StringField('Device', [Optional()])
+    os = StringField('Operating System', [Optional()])
     # A dummy field to trap common bots. Users do not see that.
     username = StringField('Username',
                            [Length(max=0, message=username_message)])
