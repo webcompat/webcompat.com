@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 50 50">
+    <title>no-video</title>
+    <g fill="none" fill-rule="evenodd" stroke-width="2">
+        <path stroke="#FFC800" d="M39.242 29.93L35 34.172l-4.242-4.242-2.828 2.828L32.172 37l-4.242 4.242 2.828 2.828L35 39.828l4.242 4.242 2.828-2.828L37.828 37l4.242-4.242z"/>
+        <path stroke="#FFF" stroke-linecap="round" d="M26.99 37H5a4 4 0 0 1-4-4V9a4 4 0 0 1 4-4h40c2.208 0 4 1.792 4 4v24c0 2.208-1.792 4-4 4h-2.104"/>
+        <path stroke="#FFF" d="M19 14.737v12.526c0 1.598 1.78 2.55 3.11 1.664l9.394-6.264a2 2 0 0 0 0-3.328l-9.394-6.262c-1.33-.886-3.11.066-3.11 1.664z"/>
+    </g>
+</svg>
