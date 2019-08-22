@@ -7,7 +7,7 @@
   - [Detailed setup (all platforms)](#detailed-setup-all-platforms)
     - [Installing Windows Subsystem for Linux](#installing-windows-subsystem-for-linux)
     - [Installing pip](#installing-pip)
-    - [Installing virtualenv](#installing-virtualenv)
+    - [Fork the webcompat.com project](#fork-the-webcompatcom-project-1)
     - [Installing project source code](#installing-project-source-code)
     - [Installing npm dependencies](#installing-npm-dependencies)
   - [Configuring the server](#configuring-the-server)
@@ -68,8 +68,8 @@ From the terminal, you can install python, pip, and nodejs and npm with the foll
 
 ```bash
 sudo apt-get update
-sudo apt-get install python
-sudo apt-get install python-pip
+sudo apt-get install python3.7
+sudo apt-get install python3-pip
 sudo apt-get install nodejs
 sudo apt install npm
 ```
@@ -80,12 +80,12 @@ At this point, you can skip over the [Installing pip](#installing-pip) section a
 
 #### Installing pip
 
-We use `pip2` to install other Python packages. You may need to install `pip2` if you haven't done so for another project or Python development, or only have Python 3 installed on your system.
-
-To determine if you need to install `pip2`, type the following command into the terminal:
+We use `pip` to install other Python packages. You may want to check the version of pip associated with your system.
 
 ```bash
-pip2 --version
+pip --version
+# or in case python2.7 is the default on your system.
+pip3 --version
 ```
 
 If you get an error message, follow the docs on [installing pip](https://pip.pypa.io/en/stable/installing/) for your platform.
@@ -93,17 +93,12 @@ If you get an error message, follow the docs on [installing pip](https://pip.pyp
 **Note**: Windows and Linux users can do the following via the terminal:
 
 ```bash
-sudo apt install python-pip
+sudo apt install python3-pip
 ```
 
-#### Installing virtualenv
+#### Fork the webcompat.com project
 
-[Virtual Environment](https://virtualenv.pypa.io/en/stable/) is a tool to create isolated environments for different projects so as to prevent conflicts.
-
-```bash
-# Install virtualenv
-[sudo] pip2 install virtualenv
-```
+Go to https://github.com/webcompat/webcompat.com/ and click on the Fork button (top right). This will create a copy of the project in your own account environmment on GitHub.
 
 #### Installing project source code
 
@@ -112,15 +107,16 @@ sudo apt install python-pip
 git clone git@github.com:<username>/webcompat.com.git
 # change to project directory
 cd webcompat.com
-# set up virtual environment
-virtualenv env
+# set up virtual environment. This creates env/ folder which will have all the tools to be able to work with python 3 on your project.
+python3 -m venv env
+# This will isolate your folder for python modules installation and will remove any uninted effects with other projects.
 source env/bin/activate
 # optionally install Pillow image lib dependencies (only required if you plan on hacking on image upload features)
-#  OSX: http://pillow.readthedocs.org/en/3.0.x/installation.html#os-x-installation
-#  Windows: http://pillow.readthedocs.org/en/3.0.x/installation.html#windows-installation
-#  Linux: http://pillow.readthedocs.org/en/3.0.x/installation.html#linux-installation
+#  OSX: https://pillow.readthedocs.io/en/stable/installation.html#macos-installation
+#  Windows: https://pillow.readthedocs.io/en/stable/installation.html#windows-installation
+#  Linux: https://pillow.readthedocs.io/en/stable/installation.html#linux-installation
 # install rest of dependencies
-pip2 install -r config/requirements-dev.txt
+pip install -r config/requirements-dev.txt
 # In Ubuntu: if ImportError: No module named flask.ext.github occurs, it means the dependencies in requirements-dev.txt are installed in /usr/lib instead of <project_repository>/env/python<version>/site-packages.
 # In this case, use virtual environment's pip from <project_repository>/env/lib/pip folder of the project repository instead of the global pip.
 ```
@@ -193,7 +189,25 @@ You can now edit `secrets.py` and
 
 ```bash
 # start local server
-python run.py
+FLASK_ENV=development FLASK_APP=webcompat flask run
+ ```
+
+You should see this:
+
+```
+* Serving Flask app "webcompat" (lazy loading)
+ * Environment: development
+ * Debug mode: on
+ * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+ * Restarting with stat
+Writing logs to: /Your/code/path/webcompat.com/tmp
+Statuses Initialization…
+Milestones in memory
+ * Debugger is active!
+ * Debugger PIN: 327-604-721
+Writing logs to: /Your/code/path/webcompat.com/tmp
+Statuses Initialization…
+Milestones in memory
 ```
 
 or
@@ -243,10 +257,10 @@ and this command on Windows:
 npm run watch
 ```
 
-Linting static JS files with project coding styles:
+Linting means that you check that the code respects some syntactic rules defined for this project.
 
 ```bash
-# linting style JS
+# linting style, JS and python.
 npm run lint
 ```
 
