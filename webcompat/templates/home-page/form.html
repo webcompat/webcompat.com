@@ -1,7 +1,7 @@
 <form action="/issues/new" class="form grid-row js-loader loader issue-form" enctype="multipart/form-data" method="post"
   novalidate>
   <h3 class="page-heading">Filing a web compatibility issue</h3>
-  <div class="step-container step1 col open" data-nextstep="2"data-activate-stepper="2">
+  <div class="step-container step1 col open" data-nextstep="2" data-activate-stepper="2">
     <div class="row">
       <div class="input-control half">
         <div class="col">
@@ -30,14 +30,14 @@
     <div class="button-control row">
       <div class="input-control half">
         <div class="col center">
-          <button class="next-step step-1 issue-btn disabled" data-nextstep="2">Confirm</button>
-          <a href="#">Learn more about web compatibility</a>
+          <button class="button next-step step-1 issue-btn disabled" data-nextstep="2">Confirm</button>
+          <a href="#" class="popup-trigger" data-popup-trigger="what-is-webcompat">Learn more about web compatibility</a>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="issue-disclaimer">All information included in this report will be publicly visible. <a href="#">Learn More</a></div>
+  <div class="issue-disclaimer">All information included in this report will be publicly visible. <a href="#" class="popup-trigger" data-popup-trigger="privacy-modal">Learn More</a></div>
 
   <div class="step-container step2 col" data-nextstep="3" data-activate-stepper="2">
     <div class="row">
@@ -51,7 +51,7 @@
             {% endfor %}
             {% endif %}
           </div>
-          {{form.problem_category}}
+          {{form.problem_category(autocomplete='off')}}
         </div>
       </div>
     </div>
@@ -68,7 +68,7 @@
     <div class="button-control row other-problem">
       <div class="input-control">
         <div class="col center">
-          <button class="next-step step-3 issue-btn disabled" data-nextstep="4">Confirm</button>
+          <button class="button next-step step-3 issue-btn disabled" data-nextstep="4">Confirm</button>
         </div>
       </div>
     </div>
@@ -114,12 +114,6 @@
     </div>
   </div>
 
-
-
-
-
-
-
   <div class="step-container step4 col" data-nextstep="5" data-activate-stepper="4">
     <div class="row">
         <div class="input-control device-data-hero">
@@ -136,7 +130,7 @@
     <div class="button-control row">
       <div class="input-control">
         <div class="col center">
-          <button class="next-step step-4 issue-btn" data-nextstep="6" data-hidestep="5">Yes</button>
+          <button class="button next-step step-4 issue-btn" data-nextstep="6" data-hidestep="5">Yes</button>
           <div class="row">
               I encountered the issue on a &nbsp;<a class="next-step step-5" data-nextstep="5" data-hidestep="6" href="#">different device or browser</a>
           </div>
@@ -168,7 +162,7 @@
     <div class="button-control row">
       <div class="input-control">
         <div class="col center">
-          <button class="next-step step-5 issue-btn" data-nextstep="6">Confirm</button>
+          <button class="button next-step step-5 issue-btn" data-nextstep="6">Confirm</button>
         </div>
       </div>
     </div>
@@ -203,7 +197,7 @@
     <div class="button-control row">
       <div class="input-control">
         <div class="col center">
-          <button class="next-step step-6 issue-btn disabled" data-nextstep="8" data-hidestep="7">Confirm</button>
+          <button class="button next-step step-6 issue-btn disabled" data-nextstep="8" data-hidestep="7">Confirm</button>
           <a class="next-step step-6" data-nextstep="7" href="#">I have <strong>only tested on this browser</strong> ({{form.browser.data}})</a>
         </div>
       </div>
@@ -214,8 +208,8 @@
     <img class="warning-icon" src="../../img/svg/icons/svg-info-icon.svg" title="Warning" alt="Warning" />
     <div class="warning-text">We recommend testing the website in another browser to validate this as a web compatibility issue.</div>
     <div class="col center input-control">
-      <button class="next-step step-7 issue-btn" data-nextstep="8">Continue without testing</button>
-      <a href="#">What is a web compatibility issue?</a>
+      <button class="button next-step step-7 issue-btn" data-nextstep="8">Continue without testing</button>
+      <a href="#" class="popup-trigger" data-popup-trigger="what-is-webcompat">What is a web compatibility issue?</a>
     </div>
   </div>
 
@@ -233,6 +227,7 @@
         <div class="form-text form-element js-Form-group problem-description bordered-container">
           {{ form.steps_reproduce(class_='form-field text-field js-autogrow-field',
             rows=3,
+            maxlength=200,
             placeholder="Describe what happened") }}
           <div class="progress">
             <img class="tick" src="../../img/svg/icons/svg-check-issue.svg" title="Valid message" alt="Valid message" />
@@ -245,7 +240,7 @@
     <div class="button-control row">
       <div class="input-control">
         <div class="col center">
-          <button class="next-step step-8 issue-btn disabled" data-nextstep="9">Continue</button>
+          <button class="button next-step step-8 issue-btn disabled" data-nextstep="9">Continue</button>
         </div>
       </div>
     </div>
@@ -270,8 +265,8 @@
       <div class="input-control">
         <div class="col center">
           <div class="row">
-            <button class="next-step step-9 issue-btn" data-nextstep="11">Yes, continue</button>
-            <button class="next-step step-9 issue-btn red" data-nextstep="10" data-hidestep="9">No, delete this image</button>
+            <button class="button next-step step-9 issue-btn" data-nextstep="11">Yes, continue</button>
+            <button class="button next-step step-9 issue-btn red" data-nextstep="10" data-hidestep="9">No, delete this image</button>
           </div>
           <a class="next-step step-9" data-nextstep="10" data-hidestep="9" href="#">Upload a different image</a>
         </div>
@@ -324,8 +319,8 @@
       <div class="input-control">
         <div class="col center">
           <div class="row">
-            <button class="next-step step-10 issue-btn disabled" data-nextstep="11">Confirm</button>
-            <button class="js-remove-upload is-hidden issue-btn red">Delete this image</button>
+            <button class="button next-step step-10 issue-btn disabled" data-nextstep="11">Confirm</button>
+            <button class="button js-remove-upload is-hidden issue-btn red">Delete this image</button>
           </div>
           <a class="js-remove-upload is-hidden" href="#">Upload a different image</a>
         </div>
@@ -423,3 +418,72 @@
 
     {{ form.hidden_tag() }}
 </form>
+
+<div class="popup-overlay popup-modal__close"></div>
+
+<div
+  class="popup-modal shadow"
+  data-popup-modal="what-is-webcompat">
+  <img class="close popup-modal__close" src="../../img/svg/icons/svg-cross-black.svg" title="Close popup" alt="Close popup" />
+  <div class="slider">
+    <div class="slides">
+      <div class="slide active">
+        <div class="row full-height">
+          <div class="text-half col">
+            <div class="title">What is a web compatibility issue?</div>
+            <div class="text">A web compatibility issue occurs <strong>when a website behaves differently across browsers.</strong> Sometimes a website will load on one browser and crash or render in a strange way on another. </div>
+          </div>
+          <div class="image-half">
+              <img class="" src="../../img/svg/help-step-1.svg" title="What is a web compatibility issue" alt="What is a web compatibility issue" />
+          </div>
+        </div>
+      </div>
+      <div class="slide">
+        <div class="row full-height">
+          <div class="text-half col">
+            <div class="title">What causes a web compatibility issue?</div>
+            <div class="text">Sometimes websites have bugs that prevent them from working in all browsers. Browsers also have different ways of implementing features that may affect a site’s usability. </div>
+          </div>
+          <div class="image-half">
+              <img class="" src="../../img/svg/help-step-2.svg" title="What is a web compatibility issue" alt="What is a web compatibility issue" />
+          </div>
+        </div>
+      </div>
+      <div class="slide">
+        <div class="row full-height">
+          <div class="text-half col">
+            <div class="title">What is a web compatibility issue?</div>
+            <div class="text"><strong>We want to make sure the Internet works for everyone.</strong> Together with web developers and site owners, we help identify and fix web compatibility issues. Let us know if you find a website behaves differently across browsers. </div>
+          </div>
+          <div class="image-half">
+              <img class="" src="../../img/svg/help-step-3.svg" title="What is a web compatibility issue" alt="What is a web compatibility issue" />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="controls">
+      <div class="row">
+        <div class="dot active" data-slide="0"></div>
+        <div class="dot" data-slide="1"></div>
+        <div class="dot" data-slide="2"></div>
+      </div>
+      <button class="btn next">Next</button>
+      <button class="btn close-control popup-modal__close">Got it</button>
+    </div>
+  </div>
+</div>
+
+<div
+  class="popup-modal shadow text"
+  data-popup-modal="privacy-modal">
+  <img class="close popup-modal__close" src="../../img/svg/icons/svg-cross-black.svg" title="Close popup" alt="Close popup" />
+  <div class="popup-text">
+    <h2>Public Reports</h2>
+    All reports are publicly accessible. <strong>Please do not include any confidential or personal information</strong> in the content of your report.
+    <br><br>
+    If you choose to upload a screenshot or other image, it will be publicly accessible. Please <strong>do not include any confidential or personal information</strong> in the screenshot.
+  </div>
+  <div class="links">
+    <a href="/privacy" target="_blank">Privacy policy</a>
+  </div>
+</div>

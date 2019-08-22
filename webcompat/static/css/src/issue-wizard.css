@@ -1,5 +1,5 @@
 /*
-* form
+* issue wizard
 *
 ----------------
 * DEPENDENCIES:
@@ -497,6 +497,10 @@
   width: 34px;
 }
 
+.choice-control.browsers .icon-container.other img {
+  width: 22px;
+}
+
 .choice-control li {
   font-size: 16px;
   line-height: 23px;
@@ -729,6 +733,10 @@
 .final-text {
   font-size: 18px;
   margin-bottom: 24px;
+}
+
+#submitgithub {
+  margin-right: 16px;
 }
 
 @keyframes validated {

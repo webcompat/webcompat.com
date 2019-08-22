@@ -63,5 +63,6 @@
   --warning-border: rgba(255, 184, 158, 1); /* #ffb89e */
   --screenshot-shadow: rgba(0, 0, 0, .3); /* #000000 */
   --warm-grey: rgba(151, 151, 151, 1); /* #979797 */
-  --upload-background: rgba(231, 231, 231, 1) /* #e7e7e7 */
+  --upload-background: rgba(231, 231, 231, 1); /* #e7e7e7 */
+  --dot-color: rgba(50, 60, 89, 1); /* #323c59 */
 }

@@ -42,6 +42,7 @@ BugForm.prototype.onDOMReadyInit = function() {
   this.step2Trigger = $(".next-step.step-2");
   this.step3Trigger = $("#problem_category input");
   this.step3Btn = $(".next-step.step-3");
+  this.step4Trigger = $(".subproblem input[type='radio']");
   this.step6Btn = $("button.next-step.step-6");
   this.step8Btn = $("button.next-step.step-8");
   this.step10Btn = $("button.next-step.step-10");
@@ -270,6 +271,9 @@ BugForm.prototype.init = function() {
   this.step3Trigger.on("change", this.nextStep.bind(this));
   this.step3Radio.on("change", this.nextStep.bind(this));
   this.step6Radio.on("change", this.nextStep.bind(this));
+
+  window.addEventListener("pageshow", this.resetProblemType.bind(this));
+
   // See if the user already has a valid form
   // (after a page refresh, back button, etc.)
   this.checkForm();
@@ -431,6 +435,7 @@ BugForm.prototype.determineValidityFunction = function(func, field, silent) {
 };
 
 BugForm.prototype.checkProblemTypeValidity = function(silent) {
+  this.resetProblemSubcategory(this.problemType.val() + "_subcategory");
   var func = this.determineValidityFunction(
     this.validation.isProblemTypeValid,
     this.problemType,
@@ -798,6 +803,10 @@ BugForm.prototype.nextStep = function(e) {
       this.blockNext = false;
     }
 
+    if (trigger.val() === this.otherProblemId) {
+      hideStep = 4;
+    }
+
     if (
       trigger.attr("type") === "radio" &&
       trigger.attr("name") === this.browserSelectionName
@@ -868,6 +877,11 @@ BugForm.prototype.problemSubgategoryStep = function(trigger) {
       ? this.slideUpTimeout
       : 0;
 
+  if (!isOther) {
+    this.inputs["other_problem"].el[0].value = "";
+    this.makeInvalidSilent("other_problem");
+  }
+
   $(".step" + this.subproblemStep)
     .find("ul")
     .each(function() {
@@ -922,6 +936,7 @@ BugForm.prototype.problemSubgategoryStep = function(trigger) {
     $(
       ".step" + this.subproblemStep
     )[0].style.animationName = this.cssAnimations.slideup;
+
     if (isDetectionBug) {
       this.toggleOtherProblem("hide");
       return;
@@ -929,6 +944,7 @@ BugForm.prototype.problemSubgategoryStep = function(trigger) {
 
     // Skip next step and show input with button in the same container
     this.toggleOtherProblem("show");
+
     this.blockNext = true;
   }
 };
@@ -1169,6 +1185,24 @@ BugForm.prototype.handleUploadError = function(response) {
 
   this.hideLoadingIndicator();
   this.removeUploadPreview();
+};
+
+BugForm.prototype.resetProblemType = function() {
+  this.resetRadio(this.step3Trigger);
+};
+
+BugForm.prototype.resetProblemSubcategory = function(subformName) {
+  var resetElements =
+    subformName && subformName.length > 0
+      ? this.step4Trigger.not("input[name='" + subformName + "']")
+      : this.step4Trigger;
+  this.resetRadio(resetElements);
+};
+
+BugForm.prototype.resetRadio = function(element) {
+  element.each(function() {
+    $(this).prop("checked", false);
+  });
 };
 
 BugForm.prototype.submitForm = function() {

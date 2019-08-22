@@ -80,44 +80,44 @@ new_issue_steps = [
 ]
 
 problem_choices = [
-    ('detection_bug', '<div class="icon-container"><img src="../../img/svg/icons/svg-problem-mobile-vs-desktop.svg" /></div> Desktop site instead of mobile site'),
-    ('site_bug', '<div class="icon-container"><img src="../../img/svg/icons/svg-problem-no-use.svg" /></div> Site is not usable'),
-    ('layout_bug', '<div class="icon-container"><img src="../../img/svg/icons/svg-problem-broken-design.svg" /></div> Design is broken'),
-    ('video_bug', '<div class="icon-container"><img src="../../img/svg/icons/svg-problem-no-video.svg" /></div> Video or audio doesn\'t play'),
-    ('unknown_bug', '<div class="icon-container"><img src="../../img/svg/icons/svg-problem-question.svg" /></div> Something else')
+    ('detection_bug', '<div class="icon-container"><img src="../../img/svg/icons/svg-problem-mobile-vs-desktop.svg" /></div> Desktop site instead of mobile site'),  # noqa
+    ('site_bug', '<div class="icon-container"><img src="../../img/svg/icons/svg-problem-no-use.svg" /></div> Site is not usable'),  # noqa
+    ('layout_bug', '<div class="icon-container"><img src="../../img/svg/icons/svg-problem-broken-design.svg" /></div> Design is broken'),  # noqa
+    ('video_bug', '<div class="icon-container"><img src="../../img/svg/icons/svg-problem-no-video.svg" /></div> Video or audio doesn\'t play'),  # noqa
+    ('unknown_bug', '<div class="icon-container"><img src="../../img/svg/icons/svg-problem-question.svg" /></div> Something else')  # noqa
 ]
 
 site_bug_choices = [
-    ('browser_unsupported', '<div class="icon-container"><img src="../../img/svg/icons/svg-subproblem-unsupported.svg" /></div> Browser unsupported'),
-    ('page_not_loading', '<div class="icon-container"><img src="../../img/svg/icons/svg-subproblem-empty-page.svg" /></div> Page not loading correctly'),
-    ('missing_items', '<div class="icon-container"><img src="../../img/svg/icons/svg-subproblem-items-missing.svg" /></div> Missing items'),
-    ('buttons_not_working', '<div class="icon-container"><img src="../../img/svg/icons/svg-subproblem-cant-click.svg" /></div> Buttons or links not working'),
-    ('unable_to_type', '<div class="icon-container"><img src="../../img/svg/icons/svg-subproblem-cant-type.svg" /></div> Unable to type'),
-    ('unable_to_login', '<div class="icon-container"><img src="../../img/svg/icons/svg-subproblem-cant-login.svg" /></div> Unable to login'),
-    ('captcha_problems', '<div class="icon-container"><img src="../../img/svg/icons/svg-subproblem-captcha.svg" /></div> Problems with Captcha')
+    ('browser_unsupported', '<div class="icon-container"><img src="../../img/svg/icons/svg-subproblem-unsupported.svg" /></div> Browser unsupported'),  # noqa
+    ('page_not_loading', '<div class="icon-container"><img src="../../img/svg/icons/svg-subproblem-empty-page.svg" /></div> Page not loading correctly'),  # noqa
+    ('missing_items', '<div class="icon-container"><img src="../../img/svg/icons/svg-subproblem-items-missing.svg" /></div> Missing items'),  # noqa
+    ('buttons_not_working', '<div class="icon-container"><img src="../../img/svg/icons/svg-subproblem-cant-click.svg" /></div> Buttons or links not working'),  # noqa
+    ('unable_to_type', '<div class="icon-container"><img src="../../img/svg/icons/svg-subproblem-cant-type.svg" /></div> Unable to type'),  # noqa
+    ('unable_to_login', '<div class="icon-container"><img src="../../img/svg/icons/svg-subproblem-cant-login.svg" /></div> Unable to login'),  # noqa
+    ('captcha_problems', '<div class="icon-container"><img src="../../img/svg/icons/svg-subproblem-captcha.svg" /></div> Problems with Captcha')  # noqa
 ]
 
 layout_bug_choices = [
-    ('images_not_loaded', '<div class="icon-container"><img src="../../img/svg/icons/svg-subproblem-no-images.svg" /></div> Images not loaded'),
-    ('overlapped_items', '<div class="icon-container"><img src="../../img/svg/icons/svg-subproblem-overlapping.svg" /></div> Items are overlapped'),
-    ('misaligned_items', '<div class="icon-container"><img src="../../img/svg/icons/svg-subproblem-misaligned.svg" /></div> Items are misaligned'),
-    ('items_not_visible', '<div class="icon-container"><img src="../../img/svg/icons/svg-subproblem-items-not-visible.svg" /></div> Items not fully visible')
+    ('images_not_loaded', '<div class="icon-container"><img src="../../img/svg/icons/svg-subproblem-no-images.svg" /></div> Images not loaded'),  # noqa
+    ('overlapped_items', '<div class="icon-container"><img src="../../img/svg/icons/svg-subproblem-overlapping.svg" /></div> Items are overlapped'),  # noqa
+    ('misaligned_items', '<div class="icon-container"><img src="../../img/svg/icons/svg-subproblem-misaligned.svg" /></div> Items are misaligned'),  # noqa
+    ('items_not_visible', '<div class="icon-container"><img src="../../img/svg/icons/svg-subproblem-items-not-visible.svg" /></div> Items not fully visible')  # noqa
 ]
 
 video_bug_choices = [
-    ('images_not_loaded', '<div class="icon-container"><img src="../../img/svg/icons/svg-subproblem-no-video.svg" /></div> There is no video'),
-    ('overlapped_items', '<div class="icon-container"><img src="../../img/svg/icons/svg-subproblem--no-audio.svg" /></div> There is no audio'),
-    ('misaligned_items', '<div class="icon-container"><img src="../../img/svg/icons/svg-subproblem-missing-controls.svg" /></div> Media controls are broken or missing'),
-    ('items_not_visible', '<div class="icon-container"><img src="../../img/svg/icons/svg-subproblem-does-not-play.svg" /></div> The video or audio does not play')
+    ('images_not_loaded', '<div class="icon-container"><img src="../../img/svg/icons/svg-subproblem-no-video.svg" /></div> There is no video'),  # noqa
+    ('overlapped_items', '<div class="icon-container"><img src="../../img/svg/icons/svg-subproblem--no-audio.svg" /></div> There is no audio'),  # noqa
+    ('misaligned_items', '<div class="icon-container"><img src="../../img/svg/icons/svg-subproblem-missing-controls.svg" /></div> Media controls are broken or missing'),  # noqa
+    ('items_not_visible', '<div class="icon-container"><img src="../../img/svg/icons/svg-subproblem-does-not-play.svg" /></div> The video or audio does not play')  # noqa
 ]
 
 browser_choices = [
-    ('chrome', '<div class="icon-container"><img src="../../img/svg/icons/svg-chrome.svg" /></div> Chrome'),
-    ('edge', '<div class="icon-container"><img src="../../img/svg/icons/svg-edge.svg" /></div> Edge'),
-    ('safari', '<div class="icon-container"><img src="../../img/svg/icons/svg-safari.svg" /></div> Safari'),
-    ('opera', '<div class="icon-container"><img src="../../img/svg/icons/svg-opera.svg" /></div> Opera'),
-    ('ie', '<div class="icon-container"><img src="../../img/svg/icons/svg-ie.svg" /></div> Internet Explorer'),
-    ('other', '<div class="icon-container"><img src="../../img/svg/icons/svg-other.svg" /></div> Other')
+    ('chrome', '<div class="icon-container"><img src="../../img/svg/icons/svg-chrome.svg" /></div> Chrome'),  # noqa
+    ('edge', '<div class="icon-container"><img src="../../img/svg/icons/svg-edge.svg" /></div> Edge'),  # noqa
+    ('safari', '<div class="icon-container"><img src="../../img/svg/icons/svg-safari.svg" /></div> Safari'),  # noqa
+    ('opera', '<div class="icon-container"><img src="../../img/svg/icons/svg-opera.svg" /></div> Opera'),  # noqa
+    ('ie', '<div class="icon-container"><img src="../../img/svg/icons/svg-ie.svg" /></div> Internet Explorer'),  # noqa
+    ('other', '<div class="icon-container other"><img src="../../img/svg/icons/svg-question-mark.svg" /></div> Other')  # noqa
 ]
 
 tested_elsewhere = [
@@ -153,9 +153,9 @@ class IssueForm(FlaskForm):
     url = StringField(url_label,
                       [InputRequired(message=url_message)])
     other_problem = StringField(other_problem_label,
-                      [InputRequired(message=other_problem_message)])
+                                [InputRequired(message=other_problem_message)])
     other_browser = StringField(other_browser_label,
-                      [InputRequired(message=other_browser_message)])
+                                [InputRequired(message=other_browser_message)])
     browser = StringField('Browser', [Optional()])
     device = StringField('Device', [Optional()])
     os = StringField('Operating System', [Optional()])
@@ -179,13 +179,13 @@ class IssueForm(FlaskForm):
     problem_category = RadioField([InputRequired(message=radio_message)],
                                   choices=problem_choices)
     site_bug_subcategory = RadioField([InputRequired(message=radio_message)],
-                                  choices=site_bug_choices)
+                                      choices=site_bug_choices)
     layout_bug_subcategory = RadioField([InputRequired(message=radio_message)],
-                                  choices=layout_bug_choices)
+                                        choices=layout_bug_choices)
     video_bug_subcategory = RadioField([InputRequired(message=radio_message)],
-                                  choices=video_bug_choices)
+                                       choices=video_bug_choices)
     browsers = RadioField([InputRequired(message=radio_message)],
-                                  choices=browser_choices)
+                          choices=browser_choices)
     browser_test = RadioField(browser_test_label, [Optional()],
                               choices=tested_elsewhere)
     # we filter allowed type in uploads.py
