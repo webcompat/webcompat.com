@@ -13,13 +13,18 @@ import sys
 from urllib.parse import quote_plus
 from urllib.parse import urlunsplit
 
+from dotenv import load_dotenv
 import requests
+
+# Define the application base directory
+BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
+load_dotenv(os.path.join(BASE_DIR, '.env'))
 
 # This will start an initialization process.
 sys.path.append(os.path.realpath(os.getcwd()))
-from config.secrets import OAUTH_TOKEN  # noqa
 
 # Config
+OAUTH_TOKEN = os.environ.get('OAUTH_TOKEN')
 GITHUB_API = 'api.github.com'
 ROOT_REPO = '/repos/webcompat'
 REPO_TEST = 'webcompat-tests'

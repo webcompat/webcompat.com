@@ -48,13 +48,14 @@ if STAGING:
     UPLOADS_DEFAULT_URL = os.environ.get('STAGING_UPLOADS_DEFAULT_URL')
 
 if LOCALHOST:
-    GITHUB_CLIENT_ID = os.environ.get('GITHUB_CLIENT_ID')
-    GITHUB_CLIENT_SECRET = os.environ.get('GITHUB_CLIENT_SECRET')
+    GITHUB_CLIENT_ID = os.environ.get('GITHUB_CLIENT_ID') or os.environ.get('FAKE_ID')  # noqa
+    GITHUB_CLIENT_SECRET = os.environ.get('GITHUB_CLIENT_SECRET') or os.environ.get('FAKE_SECRET')  # noqa
     ISSUES_REPO_URI = 'webcompat/webcompat-tests/issues'
     UPLOADS_DEFAULT_DEST = BASE_DIR + '/uploads/'
     UPLOADS_DEFAULT_URL = 'http://localhost:5000/uploads/'
     OAUTH_TOKEN = os.environ.get('OAUTH_TOKEN')
-    SECRET_KEY = os.environ.get('SECRET_KEY')
+    SECRET_KEY = os.environ.get('SECRET_KEY') or 'NO SECRETS'
+    HOOK_SECRET_KEY = os.environ.get('HOOK_SECRET_KEY') or 'SECRETS'
 
 
 # BUG STATUS
