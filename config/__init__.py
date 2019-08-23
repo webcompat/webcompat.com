@@ -18,7 +18,6 @@ import urllib.parse
 import requests
 
 from config.environment import *  # noqa
-from config.secrets import *  # noqa
 
 MILESTONE_ERROR = """It failed with {msg}!
 We will read from data/milestones.json.
