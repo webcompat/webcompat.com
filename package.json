@@ -73,7 +73,7 @@
     "lint:fix:css": "npx stylelint './webcompat/static/css/src/**/*.css' './webcompat/static/css/webcompat.dev.css' --fix",
     "imagemin": "grunt imagemin",
     "prestart": "npm run build",
-    "start": "source env/bin/activate || . env/bin/activate && FLASK_APP=webcompat flask run",
+    "start": "source env/bin/activate || . env/bin/activate && flask run",
     "start:test": "npm run build && source env/bin/activate || . env/bin/activate && python run.py -t",
     "virtualenv": "python3 -m venv env && source env/bin/activate || . env/bin/activate && npm run pip",
     "pip": "pip install -r config/requirements-dev.txt",
