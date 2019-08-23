@@ -55,18 +55,18 @@ if LOCALHOST:
 # BUG STATUS
 # The id will be initialized when the app is started.
 STATUSES = {
-    u'needstriage': {'id': 0, 'order': 1, 'state': 'open'},
-    u'needsdiagnosis': {'id': 0, 'order': 2, 'state': 'open'},
-    u'needscontact': {'id': 0, 'order': 3, 'state': 'open'},
-    u'contactready': {'id': 0, 'order': 4, 'state': 'open'},
-    u'sitewait': {'id': 0, 'order': 5, 'state': 'open'},
-    u'duplicate': {'id': 0, 'order': 1, 'state': 'closed'},
-    u'fixed': {'id': 0, 'order': 2, 'state': 'closed'},
-    u'incomplete': {'id': 0, 'order': 3, 'state': 'closed'},
-    u'invalid': {'id': 0, 'order': 4, 'state': 'closed'},
-    u'non-compat': {'id': 0, 'order': 5, 'state': 'closed'},
-    u'wontfix': {'id': 0, 'order': 6, 'state': 'closed'},
-    u'worksforme': {'id': 0, 'order': 7, 'state': 'closed'}}
+    'needstriage': {'id': 0, 'order': 1, 'state': 'open'},
+    'needsdiagnosis': {'id': 0, 'order': 2, 'state': 'open'},
+    'needscontact': {'id': 0, 'order': 3, 'state': 'open'},
+    'contactready': {'id': 0, 'order': 4, 'state': 'open'},
+    'sitewait': {'id': 0, 'order': 5, 'state': 'open'},
+    'duplicate': {'id': 0, 'order': 1, 'state': 'closed'},
+    'fixed': {'id': 0, 'order': 2, 'state': 'closed'},
+    'incomplete': {'id': 0, 'order': 3, 'state': 'closed'},
+    'invalid': {'id': 0, 'order': 4, 'state': 'closed'},
+    'non-compat': {'id': 0, 'order': 5, 'state': 'closed'},
+    'wontfix': {'id': 0, 'order': 6, 'state': 'closed'},
+    'worksforme': {'id': 0, 'order': 7, 'state': 'closed'}}
 
 # We don't need to compute for every requests.
 OPEN_STATUSES = [status for status in STATUSES
@@ -79,10 +79,10 @@ CSS_FIX_ME = """
     See https://github.com/webcompat/css-fixme/
     for more details."""
 
-IS_BLACKLISTED_DOMAIN = (u'Anonymous reporting for domain {0} '
-                        'is temporarily disabled. Please contact '
-                        'miket@mozilla.com '
-                        'for more details.')
+IS_BLACKLISTED_DOMAIN = ('Anonymous reporting for domain {0} '
+                         'is temporarily disabled. Please contact '
+                         'miket@mozilla.com '
+                         'for more details.')
 
 SHOW_RATE_LIMIT = """
     All those moments will be lost in time…
