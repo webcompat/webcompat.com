@@ -6,9 +6,12 @@
 """Generic configuration for the project."""
 
 import os
+from dotenv import load_dotenv
 
 # Define the application base directory
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
+load_dotenv(os.path.join(BASE_DIR, '.env'))
+
 DATA_PATH = os.path.join(BASE_DIR, 'data')
 # Add the data/ directory if it doesn't exist.
 if not os.path.exists(DATA_PATH):
@@ -44,12 +47,14 @@ if STAGING:
     UPLOADS_DEFAULT_DEST = os.environ.get('STAGING_UPLOADS_DEFAULT_DEST')
     UPLOADS_DEFAULT_URL = os.environ.get('STAGING_UPLOADS_DEFAULT_URL')
 
-# see secrets.py.example for the rest of the config values that need
-# to be modified for localhost development
 if LOCALHOST:
+    GITHUB_CLIENT_ID = os.environ.get('GITHUB_CLIENT_ID')
+    GITHUB_CLIENT_SECRET = os.environ.get('GITHUB_CLIENT_SECRET')
     ISSUES_REPO_URI = 'webcompat/webcompat-tests/issues'
     UPLOADS_DEFAULT_DEST = BASE_DIR + '/uploads/'
     UPLOADS_DEFAULT_URL = 'http://localhost:5000/uploads/'
+    OAUTH_TOKEN = os.environ.get('OAUTH_TOKEN')
+    SECRET_KEY = os.environ.get('SECRET_KEY')
 
 
 # BUG STATUS
