@@ -187,18 +187,18 @@
     <div class="row half centered other-browser form-element js-Form-groupform-element js-Form-group with-validation-icons low">
       <div class="column full-width">
         <div class="label">
-          {{ form.other_browser.label(class_='form-label') }}
+          {{ form.browser_test.label(class_='form-label') }}
         </div>
-        {{ form.other_browser(class_='form-field text-field required',
+        {{ form.browser_test(class_='form-field text-field required',
           placeholder='Browser',
-          required=True, type='text', pattern='') }}
+          required=True, type='text') }}
       </div>
     </div>
     <div class="button-control row">
       <div class="input-control">
         <div class="col center">
           <button class="button next-step step-6 issue-btn disabled" data-nextstep="8" data-hidestep="7">Confirm</button>
-          <a class="next-step step-6" data-nextstep="7" href="#">I have <strong>only tested on this browser</strong> ({{form.browser.data}})</a>
+          <a class="next-step step-6 no-other-browser" data-nextstep="7" href="#">I have <strong>only tested on this browser</strong> ({{form.browser.data}})</a>
         </div>
       </div>
     </div>
@@ -225,6 +225,8 @@
       </div>
       <div class="input-control half col">
         <div class="form-text form-element js-Form-group problem-description bordered-container">
+          {{ form.description() }}
+
           {{ form.steps_reproduce(class_='form-field text-field js-autogrow-field',
             rows=3,
             maxlength=200,
@@ -344,83 +346,54 @@
               Good job! You can&nbsp;<strong>report via GitHub</strong>&nbsp;or&nbsp;<strong>report anonymously</strong>.
           </div>
           <div class="row">
-            <button class="button button-primary right js-Button" id="submitgithub" type="submit"
+            <button class="button button-secondary right js-Button" id="submitgithub" type="submit"
               name="github-auth-report">
+              <img class="" src="../../img/svg/icons/svg-github-white.svg" title="Report via GitHub" alt="Report via GitHub" />
               {% if session.username %}Report as {{ session.username }}{% else %}Report via GitHub{% endif %}
             </button>
-            <button class="button button-secondary js-Button" id="submitanon" type="submit" name="github-proxy-report">
+            <button class="button button-primary" id="open-username" type="submit">
               Report Anonymously
             </button>
+          </div>
+          <div class="optional-username centered low">
+              You can optionally provide your GitHub username, allowing us to contact you during diagnosis.
+              <div class="column narrow js-Form-group">
+                <div class="label">
+                  {{ form.contact.label(class_='form-label') }}
+                  <div class="right-label">public</div>
+                </div>
+                {{ form.contact(class_='form-field text-field',
+                  placeholder='GitHub username',
+                  pattern='^[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}$') }}
+
+                <div class="is-hidden" aria-hidden="true">
+                  <div class="form-text form-element js-Form-group">
+                    {{ form.username.label(class_='form-label') }}
+                    {% if form.username.errors %}
+                      {% for error in form.username.errors %}
+                        <small class="form-message-error">{{ error }}</small>
+                      {% endfor %}
+                    {% endif %}
+                    {{ form.username(class_='u-formInput') }}
+                  </div>
+                </div>
+              </div>
+              <div class="col center">
+                  <button class="button button-primary js-Button" id="submitanon" type="submit" name="github-proxy-report">
+                    Send report
+                  </button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-  <!--div class="grid-cell form-element-bottom">
-    {% if not session.username %}
-    <div class="form-text js-Form-group">
-      <div class="js-Form-information form-label-message">
-        {{ form.contact.label(class_='form-label') }}
-        {% if form.contact.errors %}
-        {% for error in form.contact.errors %}
-        <small class="form-message-error">{{ error }}</small>
-        {% endfor %}
-        {% endif %}
-      </div>
-      {{ form.contact(class_='form-field text-field',
-        placeholder='GitHub nickname',
-        pattern='^[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}$') }}
-      <span class="form-input-validation check error js-bug-form-contact"></span>
-    </div>
-    {% endif %}
-    <div class="form-button form-button-multiple form-element js-Form-group js-report-buttons">
-      <div class="button-wrapper js-Button-wrapper">
-        <button class="button button-secondary js-Button" id="submitanon" type="submit" name="github-proxy-report">
-          Report Anonymously
-        </button>
-      </div>
-      <div class="button-wrapper js-Button-wrapper">
-        <button class="button button-primary right js-Button" id="submitgithub" type="submit"
-          name="github-auth-report">
-          {% if session.username %}Report as {{ session.username }}{% else %}Report via GitHub{% endif %}
-        </button>
-      </div>
-    </div>
-    <div class="form-text-privacy ">
-      All information included in this report will be publicly visible.
-      <a href="https://webcompat.com/privacy">Learn More</a>
-    </div>
-    <div class="is-hidden" aria-hidden="true">
-      <div class="form-text form-element js-Form-group">
-        {{ form.username.label(class_='form-label') }}
-        {% if form.username.errors %}
-        {% for error in form.username.errors %}
-        <small class="form-message-error">{{ error }}</small>
-        {% endfor %}
-        {% endif %}
-        {{ form.username(class_='u-formInput') }}
-      </div>
-    </div>
-  </div-->
-
-    {{ form.hidden_tag() }}
+  {{ form.hidden_tag() }}
 </form>
 
 <div class="popup-overlay popup-modal__close"></div>
-
 <div
   class="popup-modal shadow"
   data-popup-modal="what-is-webcompat">

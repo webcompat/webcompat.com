@@ -143,8 +143,10 @@ other_browser_label = 'Browser tested'
 browser_test_label = 'Did you test in another browser?'
 textarea_label = 'Please describe what happened, including any steps you took before you saw the problem'  # noqa
 
-contact_message = 'There is a mistake in the username.'  # noqa
-contact_label = 'Sharing your GitHub username—without logging in—could help us with diagnosis. This will be publicly visible.'  # noqa
+contact_message = 'There is a mistake in the username.'
+contact_label = 'Optional GitHub username'
+
+clean = re.compile('<.*?>')
 
 
 class IssueForm(FlaskForm):
@@ -154,8 +156,6 @@ class IssueForm(FlaskForm):
                       [InputRequired(message=url_message)])
     other_problem = StringField(other_problem_label,
                                 [InputRequired(message=other_problem_message)])
-    other_browser = StringField(other_browser_label,
-                                [InputRequired(message=other_browser_message)])
     browser = StringField('Browser', [Optional()])
     device = StringField('Device', [Optional()])
     os = StringField('Operating System', [Optional()])
@@ -172,7 +172,7 @@ class IssueForm(FlaskForm):
         [Regexp(username_pattern,
                 flags=re.IGNORECASE,
                 message=contact_message)])
-    description = StringField(desc_label,
+    description = HiddenField(desc_label,
                               [InputRequired(message=desc_message)])
 
     steps_reproduce = TextAreaField(textarea_label, [Optional()])
@@ -186,8 +186,8 @@ class IssueForm(FlaskForm):
                                        choices=video_bug_choices)
     browsers = RadioField([InputRequired(message=radio_message)],
                           choices=browser_choices)
-    browser_test = RadioField(browser_test_label, [Optional()],
-                              choices=tested_elsewhere)
+    browser_test = StringField(other_browser_label,
+                               [InputRequired(message=other_browser_message)])
     # we filter allowed type in uploads.py
     # Note, we don't use the label programtically for this input[type=file],
     # any changes here need to be updated in form.html.
@@ -295,7 +295,9 @@ def get_problem_summary(category):
     else:
         # Return the usual message in lowercase
         # because it is not at the start of the summary.
-        return get_radio_button_label(category, problem_choices).lower()
+        problem_type_stripped = re.sub(clean, '', get_radio_button_label(
+                                       category, problem_choices).lower())
+        return problem_type_stripped
 
 
 def wrap_metadata(metadata):
@@ -380,6 +382,18 @@ def domain_name(url):
     return domain
 
 
+def switch_problem_subtype(type):
+    """Return the correct problem subtype object in base of the selected
+    problem type.
+    """
+    switcher = {
+        'site_bug': site_bug_choices,
+        'layout_bug': layout_bug_choices,
+        'video_bug': video_bug_choices,
+    }
+    return switcher.get(type, "Other problem")
+
+
 def build_formdata(form_object):
     """Convert HTML form data to GitHub API data.
 
@@ -418,6 +432,8 @@ def build_formdata(form_object):
     domain = domain_name(normalized_url)
     problem_summary = get_problem_summary(form_object.get('problem_category'))
 
+    switch_problem_subtype(form_object.get('problem_category'))
+
     if domain:
         summary = '{0} - {1}'.format(domain, problem_summary)
     else:
@@ -428,15 +444,20 @@ def build_formdata(form_object):
     if extra_labels:
         metadata_keys.append('extra_labels')
 
+    clean = re.compile('<.*?>')
+    problem_type_stripped = re.sub(clean, '', get_radio_button_label(
+        form_object.get('problem_category'), problem_choices))
+    browser_tested_on = form_object.get('browser_test')
+    if browser_tested_on is None:
+        browser_tested_on = "Unknown"
+
     formdata = {
         'metadata': get_metadata(metadata_keys, form_object),
         'url': normalized_url,
         'browser': normalize_metadata(form_object.get('browser')),
         'os': normalize_metadata(form_object.get('os')),
-        'problem_type': get_radio_button_label(
-            form_object.get('problem_category'), problem_choices),
-        'browser_test_type': get_radio_button_label(form_object.get(
-            'browser_test'), tested_elsewhere),
+        'problem_type': problem_type_stripped,
+        'browser_test_type': browser_tested_on,
         'description': form_object.get('description'),
         'steps_reproduce': form_object.get('steps_reproduce'),
     }
