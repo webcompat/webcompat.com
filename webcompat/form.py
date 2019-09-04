@@ -16,10 +16,13 @@ import re
 import urllib.parse
 
 from flask import g
+from flask import url_for
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileAllowed
 from flask_wtf.file import FileField
+from markupsafe import Markup
 from wtforms import HiddenField
+from wtforms import Label
 from wtforms import RadioField
 from wtforms import StringField
 from wtforms import TextAreaField
@@ -40,6 +43,43 @@ PROXY_REPORT = 'github-proxy-report'
 SCHEMES = ('http://', 'https://')
 BAD_SCHEMES = ('http:/', 'https:/', 'http:', 'https:')
 GITHUB_HELP = '_From [webcompat.com](https://webcompat.com/) with ❤️_'
+NEW_ISSUE_STEPS = [
+    {
+        'number': 1,
+        'className': 'active',
+        'label': 'Web address'
+    },
+    {
+        'number': 2,
+        'className': '',
+        'label': 'Issue'
+    },
+    {
+        'number': 3,
+        'className': '',
+        'label': 'Details'
+    },
+    {
+        'number': 4,
+        'className': '',
+        'label': 'Testing'
+    },
+    {
+        'number': 5,
+        'className': '',
+        'label': 'Description'
+    },
+    {
+        'number': 6,
+        'className': '',
+        'label': 'Screenshot'
+    },
+    {
+        'number': 7,
+        'className': '',
+        'label': 'Send report'
+    }
+]
 
 problem_choices = [
     ('detection_bug', 'Desktop site instead of mobile site'),
@@ -47,6 +87,56 @@ problem_choices = [
     ('layout_bug', 'Design is broken'),
     ('video_bug', 'Video or audio doesn\'t play'),
     ('unknown_bug', 'Something else')
+]
+
+problem_choices_redesign = [
+    ('detection_bug', 'svg-problem-mobile-vs-desktop.svg',
+     'Desktop site instead of mobile site'),
+    ('site_bug', 'svg-problem-no-use.svg', 'Site is not usable'),
+    ('layout_bug', 'svg-problem-broken-design.svg', 'Design is broken'),
+    ('video_bug', 'svg-problem-no-video.svg', 'Video or audio doesn\'t play'),
+    ('unknown_bug', 'svg-problem-question.svg', 'Something else')
+]
+
+site_bug_choices = [
+    ('browser_unsupported', 'svg-subproblem-unsupported.svg',
+     'Browser unsupported'),
+    ('page_not_loading', 'svg-subproblem-empty-page.svg',
+     'Page not loading correctly'),
+    ('missing_items', 'svg-subproblem-items-missing.svg', 'Missing items'),
+    ('buttons_not_working', 'svg-subproblem-cant-click.svg',
+     'Buttons or links not working'),
+    ('unable_to_type', 'svg-subproblem-cant-type.svg', 'Unable to type'),
+    ('unable_to_login', 'svg-subproblem-cant-login.svg', 'Unable to login'),
+    ('captcha_problems', 'svg-subproblem-captcha.svg', 'Problems with Captcha')
+]
+
+layout_bug_choices = [
+    ('images_not_loaded', 'svg-subproblem-no-images.svg', 'Images not loaded'),
+    ('overlapped_items', 'svg-subproblem-overlapping.svg',
+     'Items are overlapped'),
+    ('misaligned_items', 'svg-subproblem-misaligned.svg',
+     'Items are misaligned'),
+    ('items_not_visible', 'svg-subproblem-items-not-visible.svg',
+     'Items not fully visible')
+]
+
+video_bug_choices = [
+    ('images_not_loaded', 'svg-subproblem-no-video.svg', 'There is no video'),
+    ('overlapped_items', 'svg-subproblem--no-audio.svg', 'There is no audio'),
+    ('misaligned_items', 'svg-subproblem-missing-controls.svg',
+     'Media controls are broken or missing'),
+    ('items_not_visible', 'svg-subproblem-does-not-play.svg',
+     'The video or audio does not play')
+]
+
+browser_choices = [
+    ('chrome', 'svg-chrome.svg', 'Chrome'),
+    ('edge', 'svg-edge.svg', 'Edge'),
+    ('safari', 'svg-safari.svg', 'Safari'),
+    ('opera', 'svg-opera.svg', 'Opera'),
+    ('ie', 'svg-ie.svg', 'Internet Explorer'),
+    ('other', 'svg-other.svg', 'Other')
 ]
 
 tested_elsewhere = [
@@ -61,12 +151,18 @@ radio_message = 'Problem type required.'
 username_message = 'A valid username must be {0} characters long'.format(
     random.randrange(0, 99))
 
+other_problem_message = 'Please provide a description.'
+other_browser_message = 'Please specify the browser.'
+
 desc_label = 'Please write a short problem summary (mandatory)'
 desc_message = 'A problem summary is required.'
 
 url_label = 'Site URL (mandatory)'
 browser_test_label = 'Did you test in another browser?'
 textarea_label = 'Please describe what happened, including any steps you took before you saw the problem'  # noqa
+
+other_problem_label = 'Briefly describe the issue:'
+other_browser_label = 'Browser tested'
 
 contact_message = 'There is a mistake in the username.'  # noqa
 contact_label = 'Sharing your GitHub username—without logging in—could help us with diagnosis. This will be publicly visible.'  # noqa
@@ -111,12 +207,72 @@ class IssueForm(FlaskForm):
     submit_type = HiddenField()
 
 
-def get_form(form_data):
+class PrefixedRadioField(RadioField):
+    """Prefix radio field label with an image."""
+    def __init__(self, *args, **kwargs):
+        prefixed_choices = kwargs.pop('choices')
+        template = '<div class={css_class}><img src={src}/></div> {text}'
+        choices = []
+
+        css_class = 'icon-container'
+        for slug, img, text in prefixed_choices:
+            filename = 'img/svg/icons/{img}'.format(img=img)
+            src = url_for('static', filename=filename)
+            label = Markup(template.format(
+                src=src, css_class=css_class, text=text)
+            )
+            choice = (slug, label)
+            choices.append(choice)
+
+        kwargs['choices'] = choices
+        super().__init__(*args, **kwargs)
+
+
+class FormWizard(IssueForm):
+    """Re-designed version of IssueForm to a multi step wizard form."""
+
+    steps = NEW_ISSUE_STEPS
+
+    browser = StringField(u'Browser', [Optional()])
+    device = StringField('Device', [Optional()])
+    os = StringField('Operating System', [Optional()])
+
+    problem_category = PrefixedRadioField(
+        [InputRequired(message=radio_message)],
+        choices=problem_choices_redesign
+    )
+    other_problem = StringField(
+        other_problem_label,
+        [InputRequired(message=other_problem_message)]
+    )
+    other_browser = StringField(
+        other_browser_label,
+        [InputRequired(message=other_browser_message)]
+    )
+    site_bug_subcategory = PrefixedRadioField(
+        [InputRequired(message=radio_message)],
+        choices=site_bug_choices
+    )
+    layout_bug_subcategory = PrefixedRadioField(
+        [InputRequired(message=radio_message)],
+        choices=layout_bug_choices
+    )
+    video_bug_subcategory = PrefixedRadioField(
+        [InputRequired(message=radio_message)],
+        choices=video_bug_choices
+    )
+    browsers = PrefixedRadioField(
+        [InputRequired(message=radio_message)],
+        choices=browser_choices
+    )
+
+
+def get_form(form_data, form=IssueForm):
     """Return an instance of flask_wtf.FlaskForm.
 
     It receives a dictionary of everything which needs to be fed to the form.
     """
-    bug_form = IssueForm()
+    bug_form = form()
     ua_header = form_data['user_agent']
     # Populate the form
     bug_form.browser.data = get_browser(ua_header)
