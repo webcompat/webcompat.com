@@ -1,14 +1,33 @@
 {%- extends "layout.html" -%}
+
+{% block extracss %}
+{%- if ab_active('exp') == 'form-v2' %}
+<link href="{{ url_for('static', filename='css/src/issue-wizard.css') }}" type="text/css" rel="stylesheet">
+{% endif %}
+{% endblock %}
+
 {% block title %}New Issue{% endblock %}
 {%- block body -%}
+{% if ab_active('exp') == 'form-v2' %}
+  {% include "nav/issue-wizard-stepper.html" %}
+{% endif %}
 {% include "nav/topbar.html" %}
 <main role="main" class="grid">
   <section id="js-ReportForm" class="js-ReportForm grid">
-    {% include "home-page/form.html" %}
+    {% if ab_active('exp') == 'form-v2' %}
+      {% include "home-page/issue-wizard-form.html" %}
+    {% else %}
+      {% include "home-page/form.html" %}
+    {% endif %}
   </section>
 </main>
 {% endblock %}
+
 {%- block extrascripts -%}
+{% if ab_active('exp') == 'form-v2' %}
+<script src="{{ url_for('static', filename='js/lib/issue-wizard-bugform.js') }}"></script>
+{% endif %}
+
 {% if source and campaign %}
 <script nonce={{nonce}}>
 if (typeof ga == "function") {

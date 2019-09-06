@@ -22,7 +22,9 @@ from flask_firehose import push
 
 from webcompat.form import AUTH_REPORT
 from webcompat.form import get_form
+from webcompat.form import FormWizard
 from webcompat.form import PROXY_REPORT
+from webcompat.helpers import ab_active
 from webcompat.helpers import ab_current_experiments
 from webcompat.helpers import ab_init
 from webcompat.helpers import add_csp
@@ -176,6 +178,7 @@ def index():
     })
     ua_header = request.headers.get('User-Agent')
     bug_form = get_form({'user_agent': ua_header})
+
     # browser_name is used in topbar.html to show the right add-on link
     browser_name = get_browser_name(ua_header)
     # GET means you want to file a report.
@@ -257,7 +260,12 @@ def create_issue():
     # Form Prefill section
     if request_type == 'prefill':
         form_data = prepare_form(request)
-        bug_form = get_form(form_data)
+
+        if ab_active('exp') == 'form-v2':
+            bug_form = get_form(form_data, form=FormWizard)
+        else:
+            bug_form = get_form(form_data)
+
         session['extra_labels'] = form_data['extra_labels']
         source = form_data.pop('utm_source', None)
         campaign = form_data.pop('utm_campaign', None)
