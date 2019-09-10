@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="50" height="50" viewBox="0 0 50 50">
+    <title>items-not-visible</title>
+    <defs>
+        <path id="a" d="M0 48h38V0H0z"/>
+        <path id="c" d="M0 48h38V0H0z"/>
+    </defs>
+    <g fill="none" fill-rule="evenodd">
+        <path stroke="#FFC901" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M43 5v3h-3"/>
+        <path stroke="#FFC901" stroke-dasharray="6,6" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M34 8H13"/>
+        <g transform="translate(6 1)">
+            <path stroke="#FFC901" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7H1V4M1 4V1h3"/>
+            <path stroke="#FFC901" stroke-dasharray="6,6" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 1h21"/>
+            <path stroke="#FFC901" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M34 1h3v3"/>
+            <mask id="b" fill="#fff">
+                <use xlink:href="#a"/>
+            </mask>
+            <path stroke="#FFF" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 17h36v-6H1z" mask="url(#b)"/>
+            <path stroke="#FFC901" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M37 24v3h-3" mask="url(#b)"/>
+        </g>
+        <path stroke="#FFC901" stroke-dasharray="6,6" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M34 28H13"/>
+        <g stroke="#FFC901" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+            <path d="M10 28H7v-3M7 25v-3h3"/>
+        </g>
+        <path stroke="#FFC901" stroke-dasharray="6,6" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 22h21"/>
+        <g transform="translate(6 1)">
+            <path stroke="#FFC901" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M34 21h3v3"/>
+            <mask id="d" fill="#fff">
+                <use xlink:href="#c"/>
+            </mask>
+            <path stroke="#FFF" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 37h36v-6H1z" mask="url(#d)"/>
+            <path stroke="#FFC901" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M37 44v3h-3" mask="url(#d)"/>
+            <path stroke="#FFC901" stroke-dasharray="6,6" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M28 47H7" mask="url(#d)"/>
+            <path stroke="#FFC901" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 47H1v-3M1 44v-3h3" mask="url(#d)"/>
+        </g>
+        <path stroke="#FFC901" stroke-dasharray="6,6" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 42h21"/>
+        <path stroke="#FFC901" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M40 42h3v3"/>
+    </g>
+</svg>

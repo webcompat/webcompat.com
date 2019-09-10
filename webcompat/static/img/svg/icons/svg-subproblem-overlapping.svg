@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="50" height="50" viewBox="0 0 50 50">
+    <title>overlapping</title>
+    <defs>
+        <path id="a" d="M0 46h48V0H0z"/>
+    </defs>
+    <g fill="none" fill-rule="evenodd" transform="translate(1 2)">
+        <path stroke="#FFC901" stroke-linecap="round" stroke-width="2" d="M17 9H3a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h38a2 2 0 0 1 2 2v2M17 21H3a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2h14M17 33H3a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2h14M43 41v2c0 1.106-.894 2-2 2H3a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2h14"/>
+        <mask id="b" fill="#fff">
+            <use xlink:href="#a"/>
+        </mask>
+        <path stroke="#FFF" stroke-linecap="round" stroke-width="2" d="M17 41h30V5H17z" mask="url(#b)"/>
+    </g>
+</svg>

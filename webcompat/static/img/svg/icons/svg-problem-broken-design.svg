@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 50 50">
+    <title>broken-design</title>
+    <g fill="none" fill-rule="evenodd" stroke-width="2">
+        <path stroke="#FFF" d="M9 11h9V1"/>
+        <path stroke="#FFC800" d="M42 30v19H8V35l8-6v6l12-8v8l14-10z"/>
+        <path stroke="#FFF" d="M42 19l-8 6v-8l-12 8v-8L8 27V11L18 1h24v15z"/>
+    </g>
+</svg>
