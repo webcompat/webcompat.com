@@ -34,7 +34,6 @@ jobs:
             python3 -m venv env
             . env/bin/activate
             pip install -r config/requirements-dev.txt
-            cp config/secrets.py.example config/secrets.py
             # not sure we need this for circleci
             # npm run config
       - save_cache:
@@ -57,7 +56,6 @@ jobs:
           name: run tests
           command: |
             . env/bin/activate
-            pycodestyle --ignore=E402,W504 webcompat/ tests/ config/secrets.py.example
             npm run lint
             npm run build
             nosetests
