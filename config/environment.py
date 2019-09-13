@@ -6,11 +6,9 @@
 """Generic configuration for the project."""
 
 import os
-from dotenv import load_dotenv
 
 # Define the application base directory
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
-load_dotenv(os.path.join(BASE_DIR, '.env'))
 
 DATA_PATH = os.path.join(BASE_DIR, 'data')
 # Add the data/ directory if it doesn't exist.
@@ -48,6 +46,9 @@ if STAGING:
     UPLOADS_DEFAULT_URL = os.environ.get('STAGING_UPLOADS_DEFAULT_URL')
 
 if LOCALHOST:
+    # for now we are using .env only on localhost
+    from dotenv import load_dotenv
+    load_dotenv(os.path.join(BASE_DIR, '.env'))
     GITHUB_CLIENT_ID = os.environ.get('GITHUB_CLIENT_ID') or os.environ.get('FAKE_ID')  # noqa
     GITHUB_CLIENT_SECRET = os.environ.get('GITHUB_CLIENT_SECRET') or os.environ.get('FAKE_SECRET')  # noqa
     ISSUES_REPO_URI = 'webcompat/webcompat-tests/issues'
