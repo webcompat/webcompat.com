@@ -1,84 +1,124 @@
-* [Pull Request Guidelines](#pull-request-guidelines)
-* [Coding Style and Project Conventions](#coding-style-and-project-conventions)
+- [Pull Request Guidelines](#pull-request-guidelines)
+  - [Make your changes in a new branch](#make-your-changes-in-a-new-branch)
+  - [Edit and prepare for the commit](#edit-and-prepare-for-the-commit)
+  - [Add commit message including issue number](#add-commit-message-including-issue-number)
+  - [Push your branch to GitHub on your fork](#push-your-branch-to-github-on-your-fork)
+  - [Send a pull request](#send-a-pull-request)
+  - [Asking for review](#asking-for-review)
+- [Coding Style and Project Conventions](#coding-style-and-project-conventions)
+  - [Syntax](#syntax)
+  - [Python](#python)
+  - [CSS](#css)
+    - [Naming conventions](#naming-conventions)
+    - [CSS and JS](#css-and-js)
+    - [Folder and file](#folder-and-file)
+    - [Framework, plugin](#framework-plugin)
+  - [Javascript](#javascript)
+    - [Linting](#linting)
 
 ## Pull Request Guidelines
 
 All code contributions should come in the form of a pull request, as a topic branch.
 
 1. Have a quick search through existing issues and pull requests so you don't waste any of your time.
-
 2. If no existing issue covers the change you want to make, please [open a new issue](https://github.com/webcompat/webcompat.com/issues/new) before you start coding.
-
 3. Fork repository
 
     ![master](http://f.cl.ly/items/1E3f0A0I2A2b3T2L2I2c/forked.png)
 
     You'll probably want to [set up a local development environment](#working-environment-setup) to get that far. If you've already been through this process, make sure you've [set the main repo as an upstream remote](https://help.github.com/articles/configuring-a-remote-for-a-fork/) and make sure [your fork is up to date](https://help.github.com/articles/syncing-a-fork/) before sending pull requests.
 
-4. Make your changes in a new branch
+### Make your changes in a new branch
 
-    ```bash
-    # makes sure, you are on the master branch
-    git checkout master
+ ```bash
+ # makes sure, you are on the master branch
+ git checkout master
 
-    # if you are SURE your fork is up-to-date
-    git pull origin master
+ # if you are SURE your fork is up-to-date
+ git pull origin master
 
-    # OR
-    # if you are NOT SURE your fork is up-to-date
-    git pull upstream master
+ # OR
+ # if you are NOT SURE your fork is up-to-date
+ git pull upstream master
 
-    # creates new branch
-    git checkout -b issues/NumberOfIssue/VersionOfPR
-    ```
+ # creates new branch
+ git checkout -b Issue_Number/PR_Version
+ # For example:
+ # git checkout -b 4567/1
+ # Issue 4567
+ # First attempt at a PR
+ ```
 
-5. Create your patch and commit your changes.
+### Edit and prepare for the commit
 
-    ```bash
-    # check for changed files
-    git status
+Start editing the code with your favorite editor. Try as much as possible to be atomic in your commit. For example, you might want to add tests and commit them together (See below for the commit message format). Then continue coding the functions that will make the tests pass and commit this.
 
-    # add files to commit, e.g. as following
-    git add file.js foldername/foldername2/file2.js
+Check the files which have been modified, erased or added.
 
-    # add commit message including issue number
-    git commit -m 'Issue #1207 - Fixes broken layout on mobile browsers'
-    ```
+```bash
+# check for changed files
+git status
+```
 
-    Commit messages **must** be written according to the following template:
-    ``Issue #NumberOfIssue -  Short message explaining what the commit does``
+Add the files which are new.
 
-    >   Note: Please keep the title under 50 chars. If you'd like to provide more information, just add the details to the commit body.
+```bash
+ # add files to commit, e.g. as following
+ git add file.js foldername/foldername2/file2.js
+```
 
-6. Push your branch to GitHub:
 
-    `git push origin issues/NumberOfIssue/VersionOfPR`
+### Add commit message including issue number
 
-7. If you want to discuss your code or ask questions, please comment in the corresponding issue. You can link to the code you have pushed to your repository to ask for code review.
+```bash
+git commit -m 'Issue #4567 - Fixes broken layout on mobile browsers'
+```
 
-8. When your code is ready to be integrated into the project, use the GitHub site to send a [pull request](https://help.github.com/articles/creating-a-pull-request) to `webcompat.com:master`, aka the master branch of the repo you forked from. This will be the default choice.
+Probably one of the most important sections if you want to avoid nitpicking on the code review. Commit messages **must** be written according to the following template:
 
-    ![master](https://cldup.com/YVlLDGItPf-3000x3000.png)
+1. The text `Issue` followed by the number of the issue with a hash sign: `Issue #4567`
+2. a space, a dash and a space ` - `
+3. A short message explaining what the commit does. Start if possible by a verb explaining what the code does, not what you did. For example, `Adds this feature` instead of `Adding this feature`. Note: Please keep the title under 50 chars. If you'd like to provide more information, just add the details to the commit body.
 
-9. Set the title of the pull request to reference the issue number. Please keep the title short, but descriptive or it will be cut off. You can provide further information in the commit body.
+Summary:
 
-    `Fixes #NumberOfIssue - Fixes broken layout on mobile browsers`
-    > Note: `Fix` or `Fixes` are keywords recognized automatically and will close the issue when the pull request gets merged.
+`Issue #NumberOfIssue -  Short message`
 
-10. When sending the pull request do not forget to call out someone for review by using the following convention:
 
-    `r? @miketaylr`
+### Push your branch to GitHub on your fork
 
-    This will notify the person that your request is waiting for a review for merging. Ask a review only by one person, this will avoid misunderstandings and the ball is dropped. (Python: karlcow, miketaylr. JavaScript: magsout, miketaylr, tagawa, zoepage CSS: magsout, zoepage).
+```bash
+git push origin Issue_Number/PR_Version
+```
 
-11. Continue discussion in the pull request.
+If you want to discuss your code or ask questions, please comment in the corresponding issue. You can link to the code you have pushed to your repository to ask for code review. If you are not sure that this is ready, you may open a pull request with a draft status.
 
-    The discussion might lead to modify or abandon this specific pull request. This is the place where you can have a code review.
+### Send a pull request
 
-12. Once the Pull Request **got an explicit `r+`** from the reviewer(s), it is the responsibility of the reviewer (or the admin) to merge the branch. A pull request submitter should never merge the pull request themselves.
+When your code is ready to be integrated into the project, use the GitHub site to send a [pull request](https://help.github.com/articles/creating-a-pull-request) to `webcompat.com:master`, aka the master branch of the repo you forked from. This will be the default choice.
 
-    The repo owners might choose to self-merge for urgent security or hot fixes.
+![master](https://cldup.com/YVlLDGItPf-3000x3000.png)
 
+Set the title of the pull request to reference the issue number. Please keep the title short, but descriptive or it will be cut off. You can provide further information in the commit body.
+
+`Fixes #Issue_Number - Fixes broken layout on mobile browsers`
+
+> Note: `Fix` or `Fixes` are keywords recognized automatically and will close the issue when the pull request gets merged.
+
+### Asking for review
+
+When sending the pull request do not forget to call out someone for review by using the github widget for asking reviewers. This will notify the person that your request is waiting for a review for merging. Ask a review only by one person, this will avoid misunderstandings and the ball is dropped.
+
+* Python: karlcow, miketaylr.
+* JavaScript: magsout, miketaylr
+* CSS: magsout
+
+
+Continue discussion in the pull request. The discussion might lead to modify or abandon this specific pull request. This is the place where you can have a code review.
+
+Once the Pull Request **got an explicit positive review** from the reviewer(s) and **circleci automatic tests are green**, it is the responsibility of the reviewer (or the admin) to merge the branch. A pull request submitter should never merge the pull request themselves (even if they have the appropriate rights for it).
+
+The repo owners might choose to self-merge for urgent security or hot fixes.
 
 After all that, if you'd like, you can send a pull request to add your name to our humans.txt file.
 
@@ -91,7 +131,10 @@ For product and design contributions, check out the [Design Repo](https://github
  Try to take care to follow existing conventions. Some of these are defined in an [.editorconfig](https://github.com/webcompat/webcompat.com/blob/master/.editorconfig) file. You can download the plugin for your editor here http://editorconfig.org/#download.
 
 ### Python
-As we are still very early in the project, we do not yet have that many conventions for naming, routes, APIs. If in doubt, ask us or open an issue.  All Python code should pass [pycodestyle](http://pycodestyle.pycqa.org/en/latest/intro.html).
+
+The project is developed with Python 3.
+
+We do not have that many conventions for naming, routes, APIs. If in doubt, ask us or open an issue. Try to be consistent.  All Python code should pass [pycodestyle](http://pycodestyle.pycqa.org/en/latest/intro.html).
 
 You can check this by installing the pycodestyle module. This is usually installed through the requirements file in the project.  If you wish to install it yourself on your computer, you can do.
 
@@ -99,7 +142,7 @@ You can check this by installing the pycodestyle module. This is usually install
 
 Once at the root of the project you can run it with
 
-    pycodestyle --ignore=E402,W504 webcompat/ tests/ config/secrets.py.example
+    pycodestyle --ignore=E402,W504 webcompat/ tests/
 
 That will show you the list of errors and their explanations. Another tool, we have used for checking consistency of the code is `flake8` + `hacking`. [Hacking](https://github.com/openstack-dev/hacking) is a set of [OpenStack guidelines](http://docs.openstack.org/developer/hacking/) which is used by the community for the stability of their projects. You will see that there's nothing really hard about it.
 
