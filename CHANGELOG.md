@@ -4,6 +4,21 @@
 2. New features: affect minor number
 3. API endpoint changes or dependency version updates: affect major number
 
+## 20.0.0 - 2019-09-15
+
+This is a major upgrade of our server. We are now running the project under Python 3 (Python 3.7.3). We are definitely saying goodbye to python 2.7. For coding and/or using the project you will need to set your environment with Python 3. We recommend you to start fresh by erasing your previous directory and cloning again the project. If you have ongoing work, make a patch before deleting, so you can reimport it later or you may push the branch to your own fork.
+
+* Fixes #2348 - Converts the source code to python 3 [Pull #2825](https://github.com/webcompat/webcompat.com/pull/2825)
+* Fixes #2905 - Adjust documentation and command for python 3.7 [Pull #2908](https://github.com/webcompat/webcompat.com/pull/2908)
+* Fixes #2899 - update eslint to version 6.1.0 [Pull #2907](https://github.com/webcompat/webcompat.com/pull/2907)
+* Fixes #2903 - update lint-staged to version 9.2.1 [Pull #2906](https://github.com/webcompat/webcompat.com/pull/2906)
+* NPM update - Update eslint-config-prettier to the latest version. [Pull #2901](https://github.com/webcompat/webcompat.com/pull/2901)
+* NPM update - Update yargs to the latest version. [Pull #2909](https://github.com/webcompat/webcompat.com/pull/2909)
+* Fixes #2268 - moved navbar handler [Pull #2896](https://github.com/webcompat/webcompat.com/pull/2896)
+* NPM update - Update eslint-config-prettier to the latest version. [Pull #2894](https://github.com/webcompat/webcompat.com/pull/2894)
+* NPM update - Update prettier to the latest version. [Pull #2891](https://github.com/webcompat/webcompat.com/pull/2891)
+* NPM update - Update intern to the latest version. [Pull #2890](https://github.com/webcompat/webcompat.com/pull/2890)
+
 ## 19.3.0 - 2019-06-06
 
 * Fixes #2725 - Bugform validation improvements [Pull #2886](https://github.com/webcompat/webcompat.com/pull/2886)
