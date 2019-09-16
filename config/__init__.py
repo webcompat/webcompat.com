@@ -25,7 +25,7 @@ We will read from data/milestones.json.
 MILESTONE_MISSING_FILE = """Oooops.
 We can't find {path}
 Double check that everything is configured properly
-in config/secrets.py and try again. Good luck!
+in .env and try again. Good luck!
 """
 MILESTONE_UNMATCHING = """A milestone is missing or has been added: {names}"""
 MILESTONE_UNMATCHING_ERROR = """

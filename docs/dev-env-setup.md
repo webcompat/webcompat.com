@@ -13,13 +13,14 @@
   - [Configuring the server](#configuring-the-server)
     - [Test repository](#test-repository)
     - [Store your settings](#store-your-settings)
+  - [Initialize the assets](#initialize-the-assets)
   - [Starting the server](#starting-the-server)
     - [Getting error messages?](#getting-error-messages)
   - [Building the project](#building-the-project)
 
 ## Development Environment Setup
 
-For testing code locally, you will need a very basic setup. There are a few requirements. These instructions have been made for working with Linux, Windows and MacOSX. You need:
+For testing code locally, you will need a very basic setup. There are a few requirements. These instructions have been made for working with Linux, Windows and macOS. You need:
 
 - [GitHub account](https://github.com/join)
 - [Python](https://www.python.org/) 3.7.3 minimum
@@ -47,7 +48,8 @@ Now that you got a copy of the project on your github account, you will clone it
 
 ```bash
 # clone the repo
-git clone https://github.com/<username>/webcompat.com.git #change <username> to your GitHub username
+# change <username> to your GitHub username
+git clone https://github.com/<username>/webcompat.com.git
 # change to directory
 cd webcompat.com
 # initializing project
@@ -151,17 +153,21 @@ If you would prefer to have your own sandbox for test issues, you may choose to 
 
 #### Store your settings
 
-```bash
-# set up secrets.py, filling in appropriate secrets
-# Mac / Linux
-cp config/secrets.py.example config/secrets.py
-# Windows
-copy config/secrets.py.example config/secrets.py
+Your secrets are stored in `.env` at the root of your project directory. The `.env` file will follow this syntax:
+
+```
+# Secrets. DO NOT SHARE.
+GITHUB_CLIENT_ID='your_github_id'
+GITHUB_CLIENT_SECRET='your_github_secret'
+OAUTH_TOKEN='your_token'
+SECRET_KEY = 'a_secret_key'
+HOOK_SECRET_KEY = 'SECRETS'
 ```
 
-You can now edit `secrets.py` and
+Do not be afraid to put any secrets in there, this file is part of the `.gitignore` and will not be committed into the code.
 
-1.  You have the option of creating a "bot account" (a dummy account for the purpose of testing), or using your own account for local development. Either way, you'll need a personal access token to proceed &mdash; this is the oauth token we use to report issues on behalf of people who don't want to give GitHub OAuth access (or don't have GitHub accounts).
+
+1.  You have the option of creating a "bot account" (a dummy account for the purpose of testing), or using your own account for local development. Either way, you'll need a personal access token to proceed – this is the oauth token we use to report issues on behalf of people who don't want to give GitHub OAuth access (or don't have GitHub accounts).
 
     The [instructions for creating a personal access token](http://help.github.com/articles/creating-an-access-token-for-command-line-use) are given on GitHub. Select public_repo to grant access to the public repositories through the personal access token. Once you have created the token you can add it in the variable `OAUTH_TOKEN = ""`.
 
@@ -169,48 +175,127 @@ You can now edit `secrets.py` and
 
     > **Note**: Cloud 9 users should use `http://yourapp.c9users.io:8000/callback` for the Authorization callback URL instead.
 
-    When you have the client ID and client secret, put them in the corresponding lines in `secrets.py`:
+    When you have the client ID and client secret, put them in the corresponding lines in `.env`:
 
     ```py
-    GITHUB_CLIENT_ID = os.environ.get('FAKE_ID') or "<client id goes here>"
-    GITHUB_CLIENT_SECRET = os.environ.get('FAKE_SECRET') or  "<client secret goes here>"
+    GITHUB_CLIENT_ID='your_github_id'
+    GITHUB_CLIENT_SECRET='your_github_secret'
     ```
 
-    > **Note**: You can ignore the `FAKE_ID` and `FAKE_SECRET` environment variables; we use that as a hack for automated tests.
 
 3.  Click on **Log in** to authorize the application and get access to the issues.
     ![Login](https://cldup.com/HHtMlPhAod.png)
 
-    > **Note**: If you get a 404 at GitHub when clicking **Log in**, it means you haven't filled in the `GITHUB_CLIENT_ID` or `GITHUB_CLIENT_SECRET` in `secrets.py`.
+    > **Note**: If you get a 404 at GitHub when clicking **Log in**, it means you haven't filled in the `GITHUB_CLIENT_ID` or `GITHUB_CLIENT_SECRET` in `.env`.
 
     ![Auth 404](https://i.cloudup.com/8FDA5bVc7l.png)
+
+### Initialize the assets
+
+To initialize all the JS and CSS assets for the web pages to be fully shiny, you might need to run:
+
+```bash
+npm install
+```
+
+The output will be similar to:
+
+```
+audited 9051 packages in 11.011s
+found 6 vulnerabilities (2 low, 4 high)
+  run `npm audit fix` to fix them, or `npm audit` for details
+```
+
+Then we will compile the assets with `grunt`.
+
+```
+Running "checkDependencies:default" (checkDependencies) task
+
+Running "jst:compile" (jst) task
+File webcompat/static/js/dist/templates.js created.
+
+Running "concat:dist" (concat) task
+
+Running "concat:untriaged" (concat) task
+
+Running "concat:issues" (concat) task
+
+Running "concat:issueList" (concat) task
+
+Running "concat:userActivity" (concat) task
+
+Running "uglify:dist" (uglify) task
+>> 1 file created 252.26 kB → 235.03 kB
+
+Running "uglify:ga" (uglify) task
+>> 1 file created 780 B → 585 B
+
+Running "uglify:issues" (uglify) task
+>> 1 file created 371 kB → 185.94 kB
+
+Running "uglify:issueList" (uglify) task
+>> 1 file created 38.1 kB → 20.33 kB
+
+Running "uglify:userActivity" (uglify) task
+>> 1 file created 22.1 kB → 11.54 kB
+
+Running "uglify:untriaged" (uglify) task
+>> 1 file created 16.51 kB → 8.67 kB
+
+Running "uglify:contributors" (uglify) task
+>> 1 file created 1.1 kB → 733 B
+
+Running "postcss:dist" (postcss) task
+>> 1 processed stylesheet created.
+
+Running "cssmin:combine" (cssmin) task
+>> 1 file created. 2.96 kB → 41.23 kB
+
+Done.
+```
+
+We are all set for starting the server.
 
 ### Starting the server
 
 ```bash
 # start local server
-FLASK_ENV=development FLASK_APP=webcompat flask run
- ```
+flask run
+```
 
 You should see this:
 
 ```
-* Serving Flask app "webcompat" (lazy loading)
+ * Serving Flask app "webcompat:app" (lazy loading)
  * Environment: development
  * Debug mode: on
  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
  * Restarting with stat
-Writing logs to: /Your/code/path/webcompat.com/tmp
+Writing logs to: /Users/username/code/webcompat.com/tmp
 Statuses Initialization…
-Milestones in memory
+Oooops.
+We can't find /Users/username/code/webcompat.com/data/milestones.json
+Double check that everything is configured properly
+in .env and try again. Good luck!
+
+Fetching milestones from Github…
  * Debugger is active!
  * Debugger PIN: 327-604-721
-Writing logs to: /Your/code/path/webcompat.com/tmp
+Writing logs to: /Users/username/code/webcompat.com/tmp
 Statuses Initialization…
+Oooops.
+We can't find /Users/username/code/webcompat.com/data/milestones.json
+Double check that everything is configured properly
+in .env and try again. Good luck!
+
+Fetching milestones from Github…
+Milestones saved in data/
+Milestones in memory
+Milestones saved in data/
 Milestones in memory
 ```
 
-or
+or you can type
 
 ```bash
 # start local server
@@ -229,11 +314,12 @@ First you should have a look at the logs located in `webcompat.com/tmp`.
 When you start the local server, it will print the location of the logs to the console:
 
 ```bash
-> python run.py
 Statuses Initialization…
-Writing logs to: /Users/acooluser/projects/webcompat.com/tmp
+Writing logs to: /Users/username/code/webcompat.com/tmp
 …
 ```
+
+The logs are saved in the file `webcompat.log`.
 
 ### Building the project
 
