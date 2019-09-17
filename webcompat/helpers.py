@@ -63,6 +63,12 @@ def bust_cache(file_path):
     return file_path + '?' + get_checksum(STATIC_PATH + file_path)
 
 
+@app.context_processor
+def register_ab_active():
+    """Register `ab_active` in jinja context"""
+    return dict(ab_active=ab_active)
+
+
 def md5_checksum(file_path):
     """Return the md5 checksum for a given file path."""
     with open(file_path, 'rb') as fh:

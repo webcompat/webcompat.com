@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 50 50">
+    <g fill="none" fill-rule="evenodd">
+        <path fill="#575757" d="M0 0h50v50H0z"/>
+        <path fill="#FFF" d="M22 2H4a2 2 0 0 0-2 2v18a2 2 0 0 0 2 2h18a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2zM4 22h18V4H4v18zM46 26H28c-1.106 0-2 .894-2 2v18c0 1.106.894 2 2 2h18c1.106 0 2-.894 2-2V28c0-1.106-.894-2-2-2zM28 46h18V28H28v18zM46 2H28a2 2 0 0 0-2 2v18a2 2 0 0 0 2 2h18a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2zM28 22h18V4H28v18z"/>
+        <path stroke="#FFC901" stroke-width="2" d="M23 43v4h-4"/>
+        <path stroke="#FFC901" stroke-dasharray="4,4" stroke-width="2" d="M15 47H9"/>
+        <path stroke="#FFC901" stroke-width="2" d="M7 47H3v-4"/>
+        <path stroke="#FFC901" stroke-dasharray="4,4" stroke-width="2" d="M3 39v-6"/>
+        <path stroke="#FFC901" stroke-width="2" d="M3 31v-4h4"/>
+        <path stroke="#FFC901" stroke-dasharray="4,4" stroke-width="2" d="M11 27h6"/>
+        <path stroke="#FFC901" stroke-width="2" d="M19 27h4v4"/>
+        <path stroke="#FFC901" stroke-dasharray="4,4" stroke-width="2" d="M23 35v6"/>
+    </g>
+</svg>

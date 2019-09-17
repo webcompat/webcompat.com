@@ -204,7 +204,8 @@ EXTRA_LABELS = [
 AB_EXPERIMENTS = {
     'exp': {
         'variations': {
-            'form-v1': (0, 0),
+            'form-v1': (0, 100),
+            'form-v2': (100, 100)
         },
         'max-age': None
     }

@@ -10,6 +10,8 @@
 
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600|Source+Sans+Pro:300,400" rel="stylesheet">
   <link href="{{ url_for('static', filename='css/dist/webcompat.min.css') }}" type="text/css" rel="stylesheet">
+  {% block extracss %}{% endblock %}
+
 </head>
 <body id="body-webcompat" data-username="{{ session.username }}">
 {% include "shared/svg-icons.html" %}

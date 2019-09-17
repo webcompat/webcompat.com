@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 50 50">
+    <title>misaligned</title>
+    <g fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+        <path stroke="#FFF" d="M1 8h36V2H1z"/>
+        <path stroke="#FFC901" d="M5 18h36v-6H5z"/>
+        <path stroke="#FFF" d="M1 28h36v-6H1zM1 38h36v-6H1z"/>
+        <path stroke="#FFC901" d="M13 48h36v-6H13z"/>
+    </g>
+</svg>
