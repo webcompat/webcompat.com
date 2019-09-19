@@ -25,7 +25,7 @@ For testing code locally, you will need a very basic setup. There are a few requ
 - [Python](https://www.python.org/) 3.7.3 minimum
 - [Node.js](https://nodejs.org/en/download/) (current LTS version)
 - [GitHub](https://github.com) account
-- [Git](https://git-scm.com/download/win)
+- [Git](https://git-scm.com/download/win) 2.13.2 minimum
 
 ### Simple setup
 
