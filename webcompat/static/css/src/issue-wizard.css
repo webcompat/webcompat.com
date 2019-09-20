@@ -1,11 +1,16 @@
 /*
-* form
+* issue wizard
 *
 ----------------
 * DEPENDENCIES:
 ----------------
 * variable.css
 */
+
+@import "../src/variables.css";
+@import "../src/issue-wizard-popup.css";
+@import "../src/issue-wizard-slider.css";
+
 :root {
   --between-steps-margin: 53px;
   --presumed-step-height: -360px;
