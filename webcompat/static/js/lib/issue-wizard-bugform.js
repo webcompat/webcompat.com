@@ -42,6 +42,7 @@ BugForm.prototype.onDOMReadyInit = function() {
   this.step2Trigger = $(".next-step.step-2");
   this.step3Trigger = $("#problem_category input");
   this.step3Btn = $(".next-step.step-3");
+  this.step4Trigger = $(".subproblem input[type='radio']");
   this.step6Btn = $("button.next-step.step-6");
   this.step8Btn = $("button.next-step.step-8");
   this.step10Btn = $("button.next-step.step-10");
@@ -270,6 +271,9 @@ BugForm.prototype.init = function() {
   this.step3Trigger.on("change", this.nextStep.bind(this));
   this.step3Radio.on("change", this.nextStep.bind(this));
   this.step6Radio.on("change", this.nextStep.bind(this));
+
+  window.addEventListener("pageshow", this.resetProblemType.bind(this));
+
   // See if the user already has a valid form
   // (after a page refresh, back button, etc.)
   this.checkForm();
@@ -431,6 +435,7 @@ BugForm.prototype.determineValidityFunction = function(func, field, silent) {
 };
 
 BugForm.prototype.checkProblemTypeValidity = function(silent) {
+  this.resetProblemSubcategory(this.problemType.val() + "_subcategory");
   var func = this.determineValidityFunction(
     this.validation.isProblemTypeValid,
     this.problemType,
@@ -776,6 +781,10 @@ BugForm.prototype.nextStep = function(e) {
   if (trigger.hasClass("disabled")) {
     return false;
   }
+  var hideStep = trigger.data("hidestep") || false;
+  if (trigger.val() === this.otherProblemId) {
+    hideStep = 4;
+  }
 
   var nextStepNumber =
     trigger.attr("type") === "radio"
@@ -784,20 +793,8 @@ BugForm.prototype.nextStep = function(e) {
   var stepperIndex =
     trigger.parents(".step-container").data("activate-stepper") || false;
 
-  var hideStep = trigger.data("hidestep") || false;
-
   if (nextStepNumber !== this.stepNotDefined) {
-    if (
-      trigger.attr("type") === "radio" &&
-      trigger.attr("name") === this.problemCategoryName
-    ) {
-      this.problemSubgategoryStep(trigger);
-      this.isSubproblem = true;
-    } else {
-      this.isSubproblem = false;
-      this.blockNext = false;
-    }
-
+    this.checkIfSubproblem(trigger);
     if (
       trigger.attr("type") === "radio" &&
       trigger.attr("name") === this.browserSelectionName
@@ -805,26 +802,55 @@ BugForm.prototype.nextStep = function(e) {
       this.browserSelectionStep(trigger);
       return;
     }
-
     this.setActiveStep(stepperIndex);
-
-    if (
-      (!this.blockNext && !this.isSubproblem) ||
-      (this.isSubproblem && this.skipOneStep)
-    ) {
-      var nextStep = this.skipOneStep ? nextStepNumber : nextStepNumber - 1;
-      this.skipOneStep = false;
-      var animation =
-        this.stepsArray[nextStep][0].style.animationName !==
-        this.cssAnimations.slidedownandheight
-          ? this.cssAnimations.slidedown
-          : this.cssAnimations.slideupandheight;
-      this.stepsArray[nextStep][0].style.animationName = animation;
-      this.stepsArray[nextStep][0].classList.add("open");
-    }
+    this.stepRevealControl(nextStepNumber);
+    this.scrollToElement(nextStepNumber);
   }
 
-  var scrollToEl = this.stepsArray[nextStepNumber - 1][0];
+  if (hideStep) {
+    this.hideStep(hideStep);
+  }
+  return false;
+};
+
+BugForm.prototype.checkIfSubproblem = function(trigger) {
+  if (
+    trigger.attr("type") === "radio" &&
+    trigger.attr("name") === this.problemCategoryName
+  ) {
+    this.problemSubgategoryStep(trigger);
+    this.isSubproblem = true;
+  } else {
+    this.isSubproblem = false;
+    this.blockNext = false;
+  }
+};
+
+BugForm.prototype.hideStep = function(stepToHide) {
+  this.stepsArray[
+    stepToHide - 1
+  ][0].style.animationName = this.cssAnimations.slideupandheight;
+};
+
+BugForm.prototype.stepRevealControl = function(nextStepNumber) {
+  if (
+    (!this.blockNext && !this.isSubproblem) ||
+    (this.isSubproblem && this.skipOneStep)
+  ) {
+    var nextStep = this.skipOneStep ? nextStepNumber : nextStepNumber - 1;
+    this.skipOneStep = false;
+    var animation =
+      this.stepsArray[nextStep][0].style.animationName !==
+      this.cssAnimations.slidedownandheight
+        ? this.cssAnimations.slidedown
+        : this.cssAnimations.slideupandheight;
+    this.stepsArray[nextStep][0].style.animationName = animation;
+    this.stepsArray[nextStep][0].classList.add("open");
+  }
+};
+
+BugForm.prototype.scrollToElement = function(nextStep) {
+  var scrollToEl = this.stepsArray[nextStep - 1][0];
   // Delay "scroll to element" effect in order to let the animation finish, otherwise the scroll point isn't correct
   setTimeout(
     function() {
@@ -836,14 +862,6 @@ BugForm.prototype.nextStep = function(e) {
     }.bind(this),
     this.isSubproblem ? 450 : 250
   );
-
-  if (hideStep) {
-    this.stepsArray[
-      hideStep - 1
-    ][0].style.animationName = this.cssAnimations.slideupandheight;
-  }
-
-  return false;
 };
 
 BugForm.prototype.setActiveStep = function(nextStep) {
@@ -867,6 +885,11 @@ BugForm.prototype.problemSubgategoryStep = function(trigger) {
     animatedElement.style.animationName === this.cssAnimations.slideupdown
       ? this.slideUpTimeout
       : 0;
+
+  if (!isOther) {
+    this.inputs["other_problem"].el[0].value = "";
+    this.makeInvalidSilent("other_problem");
+  }
 
   $(".step" + this.subproblemStep)
     .find("ul")
@@ -1169,6 +1192,24 @@ BugForm.prototype.handleUploadError = function(response) {
 
   this.hideLoadingIndicator();
   this.removeUploadPreview();
+};
+
+BugForm.prototype.resetProblemType = function() {
+  this.resetRadio(this.step3Trigger);
+};
+
+BugForm.prototype.resetProblemSubcategory = function(subformName) {
+  var resetElements =
+    subformName && subformName.length > 0
+      ? this.step4Trigger.not("input[name='" + subformName + "']")
+      : this.step4Trigger;
+  this.resetRadio(resetElements);
+};
+
+BugForm.prototype.resetRadio = function(element) {
+  element.each(function() {
+    $(this).prop("checked", false);
+  });
 };
 
 BugForm.prototype.submitForm = function() {
