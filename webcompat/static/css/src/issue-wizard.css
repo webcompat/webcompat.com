@@ -18,13 +18,17 @@
   --presumed-step-height-updown: -230px;
 }
 
-#body-webcompat {
+#body-webcompat.no-top-padding {
   padding-top: 0;
 }
 
 #js-ReportForm {
   overflow: hidden;
   padding: 40px 10px 0;
+}
+
+#js-ReportForm .headline-1 {
+  display: none;
 }
 
 .half {
@@ -105,6 +109,10 @@
 
 .step.active .description {
   font-weight: 600;
+}
+
+#description {
+  display: none;
 }
 
 .step .icon {
@@ -253,7 +261,8 @@
 }
 
 .other-problem,
-.other-browser {
+.other-browser,
+.optional-username {
   animation-duration: .8s;
   animation-fill-mode: forwards;
   animation-name: slideupandheight;
@@ -273,6 +282,7 @@
   font-weight: 600;
   line-height: 28px;
   margin-bottom: 8px;
+  text-align: left;
 }
 
 .input-control {
@@ -430,7 +440,8 @@
   margin-left: 20px;
 }
 
-.issue-btn.disabled {
+.issue-btn.disabled,
+.step-container .button.disabled {
   opacity: .5;
 }
 
@@ -494,12 +505,21 @@
   max-width: 100%;
 }
 
+.final-step .button img {
+  margin-right: 8px;
+}
+
 .choice-control.browsers .icon-container:hover {
   border: 4px solid var(--issue-type-bg);
 }
 
 .choice-control.browsers .icon-container img {
+  max-height: 34px;
   width: 34px;
+}
+
+.choice-control.browsers .icon-container.other img {
+  width: 22px;
 }
 
 .choice-control li {
@@ -736,6 +756,51 @@
   margin-bottom: 24px;
 }
 
+#submitgithub {
+  margin-right: 16px;
+}
+
+.optional-username {
+  animation-duration: .5s;
+  font-size: 18px;
+  padding-top: 5px;
+  width: 100%;
+}
+
+.optional-username .column.narrow {
+  margin: 0 auto;
+  max-width: 400px;
+  width: 100%;
+}
+
+.optional-username .label {
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 16px;
+  font-weight: 600;
+  margin-top: 8px;
+}
+
+.optional-username .label .form-message-error {
+  font-size: 15px;
+  line-height: 1.4;
+  margin-bottom: 8px;
+  order: 1;
+}
+
+.optional-username .label .right-label {
+  flex: 1;
+  font-weight: 200;
+  justify-self: flex-end;
+  text-align: right;
+}
+
+.final-step .button:not(#submitanon) {
+  align-items: center;
+  display: flex;
+  padding: 8px 23px;
+}
+
 @keyframes validated {
   0% {
     opacity: 0;
@@ -823,6 +888,18 @@
     max-height: 300px;
     opacity: 1;
     z-index: 0;
+  }
+}
+
+@keyframes slidedownusername {
+  0% {
+    max-height: 0;
+    opacity: 0;
+  }
+  100% {
+    max-height: 300px;
+    opacity: 1;
+    padding-top: 45px;
   }
 }
 

@@ -59,10 +59,15 @@ BugForm.prototype.onDOMReadyInit = function() {
   this.step9Container = $(".step-container.step9");
   this.step10Container = $(".step-container.step10");
   this.step11Container = $(".step-container.step11");
+  this.anonUsernameTrigger = $("#open-username");
+  this.usernameContainer = $(".optional-username");
+  this.noOtherBrowser = "no-other-browser";
   this.urlStep = 1;
   this.problemStep = 2;
   this.subproblemStep = 3;
+  this.browserDetectionStep = 4;
   this.browserSelectionStepNo = 7;
+  this.descriptionStep = 8;
   this.stepNotDefined = -1;
   this.problemCategoryName = "problem_category";
   this.otherProblemId = "unknown_bug";
@@ -87,7 +92,8 @@ BugForm.prototype.onDOMReadyInit = function() {
     slidedown: "slidedown",
     slideupdown: "slideupdown",
     slidedownandheight: "slidedownandheight",
-    slideupandheight: "slideupandheight"
+    slideupandheight: "slideupandheight",
+    slidedownusername: "slidedownusername"
   };
 
   this.stepsArray = [
@@ -148,12 +154,6 @@ BugForm.prototype.onDOMReadyInit = function() {
       helpText: "Browser selection required.",
       errFunction: "requiredField"
     },
-    other_browser: {
-      el: $("[name=other_browser]"),
-      valid: null,
-      helpText: "Browser required.",
-      errFunction: "requiredField"
-    },
 
     other_problem: {
       el: $("[name=other_problem]"),
@@ -162,7 +162,7 @@ BugForm.prototype.onDOMReadyInit = function() {
       errFunction: "optionalField"
     },
     description: {
-      el: $("#steps_reproduce"),
+      el: $("#description"),
       valid: null,
       helpText: "A problem summary is required.",
       errFunction: "requiredField"
@@ -210,7 +210,7 @@ BugForm.prototype.onDOMReadyInit = function() {
   this.osField = this.inputs.os.el;
   this.problemType = this.inputs.problem_category.el;
   this.problemSubtype = this.inputs.other_problem.el;
-  this.otherBrowser = this.inputs.other_browser.el;
+  this.otherBrowser = this.inputs.browser_test_type.el;
 
   this.siteBugType = this.inputs.site_bug_subcategory.el;
   this.layoutBugType = this.inputs.layout_bug_subcategory.el;
@@ -236,8 +236,11 @@ BugForm.prototype.init = function() {
 
   this.disableSubmits();
   this.urlField.on("blur input", this.checkUrl.bind(this));
-  this.descField.on("blur input", this.checkDescription.bind(this));
-  this.descField.on("blur input", this.textareaTrackProgress.bind(this));
+  this.stepsToReproduceField.on("blur input", this.checkDescription.bind(this));
+  this.stepsToReproduceField.on(
+    "blur input",
+    this.textareaTrackProgress.bind(this)
+  );
   this.problemType.on("change", this.checkProblemTypeValidity.bind(this));
 
   this.siteBugType.on("change", this.checkBugTypeValidity.bind(this));
@@ -266,11 +269,12 @@ BugForm.prototype.init = function() {
     this.preventSubmitByEnter.bind(this)
   );
 
-  // add event listeners for next step buttons
+  // add event listeners for the elements that trigger next step
   this.nextStepBtn.on("click", this.nextStep.bind(this));
   this.step3Trigger.on("change", this.nextStep.bind(this));
   this.step3Radio.on("change", this.nextStep.bind(this));
   this.step6Radio.on("change", this.nextStep.bind(this));
+  this.anonUsernameTrigger.on("click", this.revealUsernameField.bind(this));
 
   window.addEventListener("pageshow", this.resetProblemType.bind(this));
 
@@ -558,7 +562,7 @@ BugForm.prototype.checkBrowserInputValidity = function(silent) {
     this.otherBrowser,
     silent
   );
-  this[func]("other_browser");
+  this[func]("browser_test_type");
 };
 
 /* Check to see that the issue description input is not empty. */
@@ -627,6 +631,9 @@ BugForm.prototype.checkForm = function() {
   }
   if (this.osField.length) {
     this.checkOptionalNonEmpty(this.osField);
+  }
+  if (this.urlField && this.urlField.val() && this.urlField.val().length) {
+    this.urlField.trigger("input");
   }
 };
 
@@ -735,7 +742,7 @@ BugForm.prototype.setNextBtnStatus = function(step) {
       }
       break;
     case this.browserSelectionStepNo:
-      var browserVal = $.trim(this.inputs["other_browser"].el[0].value);
+      var browserVal = $.trim(this.otherBrowser.val());
       var radioVal =
         $(this.browserSelection)
           .filter(":checked")
@@ -743,14 +750,14 @@ BugForm.prototype.setNextBtnStatus = function(step) {
       if (
         (radioVal && radioVal !== this.otherBrowserId) ||
         (radioVal === this.otherBrowserId &&
-          this.checkSpecificRequiredValid("other_browser") &&
+          this.checkSpecificRequiredValid("browser_test_type") &&
           browserVal.length > 0)
       ) {
         this.step6Btn.removeClass("disabled");
-        this.makeValid("other_browser");
+        this.makeValid("browser_test_type");
       } else {
         this.step6Btn.addClass("disabled");
-        this.inputs["other_browser"].valid = false;
+        this.inputs["browser_test_type"].valid = false;
       }
       break;
   }
@@ -781,9 +788,9 @@ BugForm.prototype.nextStep = function(e) {
   if (trigger.hasClass("disabled")) {
     return false;
   }
-  var hideStep = trigger.data("hidestep") || false;
+  var stepToHide = trigger.data("hidestep") || false;
   if (trigger.val() === this.otherProblemId) {
-    hideStep = 4;
+    stepToHide = 4;
   }
 
   var nextStepNumber =
@@ -794,26 +801,32 @@ BugForm.prototype.nextStep = function(e) {
     trigger.parents(".step-container").data("activate-stepper") || false;
 
   if (nextStepNumber !== this.stepNotDefined) {
-    this.checkIfSubproblem(trigger);
+    this.subproblemChecks(trigger);
+    this.descriptionControl(trigger, nextStepNumber);
     if (
       trigger.attr("type") === "radio" &&
       trigger.attr("name") === this.browserSelectionName
     ) {
       this.browserSelectionStep(trigger);
+      this.hideStep(this.browserSelectionStepNo);
       return;
+    }
+    // If the user didn't test on other browsers, reset the browser selection
+    if (trigger.hasClass(this.noOtherBrowser)) {
+      this.resetBrowserSelection();
     }
     this.setActiveStep(stepperIndex);
     this.stepRevealControl(nextStepNumber);
     this.scrollToElement(nextStepNumber);
   }
 
-  if (hideStep) {
-    this.hideStep(hideStep);
+  if (stepToHide) {
+    this.hideStep(stepToHide);
   }
   return false;
 };
 
-BugForm.prototype.checkIfSubproblem = function(trigger) {
+BugForm.prototype.subproblemChecks = function(trigger) {
   if (
     trigger.attr("type") === "radio" &&
     trigger.attr("name") === this.problemCategoryName
@@ -823,6 +836,27 @@ BugForm.prototype.checkIfSubproblem = function(trigger) {
   } else {
     this.isSubproblem = false;
     this.blockNext = false;
+  }
+};
+
+BugForm.prototype.descriptionControl = function(trigger, nextStepNumber) {
+  var isTriggerSubproblem = trigger.parents(".subproblem").length > 0;
+  // If the next step is triggered by subproblem, fill the hidden description field with the according value
+  if (isTriggerSubproblem) {
+    // Fill the hidden description field with the selected problem subtype
+    this.descField.val(
+      trigger
+        .next("label")
+        .text()
+        .trim()
+    );
+  }
+  if (nextStepNumber === this.browserDetectionStep) {
+    var selectedProblem = this.problemType.filter(":checked").val();
+    // If the user selects "Something else" as the problem type, fills the description field with user provided problem
+    if (selectedProblem === this.otherProblemId) {
+      this.descField.val(this.problemSubtype.val().trim());
+    }
   }
 };
 
@@ -947,6 +981,13 @@ BugForm.prototype.problemSubgategoryStep = function(trigger) {
     )[0].style.animationName = this.cssAnimations.slideup;
     if (isDetectionBug) {
       this.toggleOtherProblem("hide");
+      // Detection bug desn't have subcategories, filling the description with the category instead
+      this.descField.val(
+        trigger
+          .next("label")
+          .text()
+          .trim()
+      );
       return;
     }
 
@@ -975,10 +1016,19 @@ BugForm.prototype.browserSelectionStep = function(trigger) {
     $(
       ".step" + this.browserSelectionStepNo
     )[0].style.animationName = this.cssAnimations.slideup;
+    this.otherBrowser.val("");
+    this.makeInvalidSilent("browser_test_type");
     // Skip next step and show input with button in the same container
     this.toggleOtherBrowser("show");
   } else {
     this.toggleOtherBrowser("hide");
+    // If the user selects a browser, it gets inserted in the text input
+    this.otherBrowser.val(
+      trigger
+        .next("label")
+        .text()
+        .trim()
+    );
   }
   var step = 7;
   this.setNextBtnStatus(step);
@@ -989,8 +1039,6 @@ BugForm.prototype.toggleOtherBrowser = function(action) {
   if (action === "hide") {
     this.otherBrowserElements.each(function() {
       $(this)[0].style.animationName = obj.cssAnimations.slideupandheight;
-      obj.inputs["other_browser"].el[0].value = "";
-      obj.makeInvalidSilent("other_browser");
     });
   } else {
     this.otherBrowserElements.each(function() {
@@ -1194,8 +1242,22 @@ BugForm.prototype.handleUploadError = function(response) {
   this.removeUploadPreview();
 };
 
+BugForm.prototype.revealUsernameField = function(e) {
+  e.preventDefault();
+  e.target.classList.add("disabled");
+  this.contactField.focus();
+  this.usernameContainer[0].style.animationName = this.cssAnimations.slidedownusername;
+};
+
 BugForm.prototype.resetProblemType = function() {
   this.resetRadio(this.step3Trigger);
+};
+
+BugForm.prototype.resetBrowserSelection = function() {
+  this.otherBrowser.val("No");
+  this.makeInvalidSilent("browser_test_type");
+  this.toggleOtherBrowser("hide");
+  this.resetRadio(this.step6Radio);
 };
 
 BugForm.prototype.resetProblemSubcategory = function(subformName) {

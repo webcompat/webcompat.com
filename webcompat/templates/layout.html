@@ -13,7 +13,9 @@
   {% block extracss %}{% endblock %}
 
 </head>
-<body id="body-webcompat" data-username="{{ session.username }}">
+<body id="body-webcompat"
+  class="{%- if request.url_rule.endpoint == 'create_issue' and ab_active('exp') == 'form-v2' %}no-top-padding{% endif %}"
+  data-username="{{ session.username }}">
 {% include "shared/svg-icons.html" %}
 {% block body %}{% endblock %}
 {% include "shared/footer.html" %}
@@ -35,8 +37,9 @@
 <script src="{{ url_for('static', filename='js/lib/navbar.js') }}"></script>
 <script src="{{ url_for('static', filename='js/lib/autogrow-textfield.js') }}"></script>
 <script src="{{ url_for('static', filename='js/lib/bugform-validation.js') }}"></script>
+{%- if ab_active('exp') == 'form-v1' %}
 <script src="{{ url_for('static', filename='js/lib/bugform.js') }}"></script>
-
+{% endif %}
 {%- if ab_active('exp') == 'form-v2' %}
 <script src="{{ url_for('static', filename='js/lib/issue-wizard-popup.js') }}"></script>
 <script src="{{ url_for('static', filename='js/lib/issue-wizard-slider.js') }}"></script>
