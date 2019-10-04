@@ -52,7 +52,7 @@
     "stylelint": "^11.0.0",
     "prettier": "1.18.0",
     "stylelint-config-standard": "^19.0.0",
-    "stylelint-order": "^3.0.0",
+    "stylelint-order": "^3.1.1",
     "svg-sprite-generator": "0.0.7",
     "svgo": "^1.1.1"
   },
