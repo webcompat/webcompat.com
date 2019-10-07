@@ -189,6 +189,7 @@ EXTRA_LABELS = [
     'browser-fenix',
     'browser-focus-geckoview',
     'browser-firefox-reality',
+    'form-v2-experiment',
     'type-fastclick',
     'type-google',
     'type-marfeel',
