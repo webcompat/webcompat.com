@@ -11,6 +11,7 @@ import os
 import unittest
 
 from config import update_status_config
+from config import get_variation
 from webcompat import webcompat
 
 
@@ -52,6 +53,20 @@ class TestConfig(unittest.TestCase):
         milestones_json = json_data('milestones_content_plus.json')
         actual = update_status_config(milestones_json)
         self.assertEqual(actual, expected)
+
+    def test_get_variation(self):
+        """
+        Check the conversion from string to tuples of two int.
+        """
+        defs = {'a': (1, 2)}
+        self.assertTupleEqual((1, 2), get_variation('a', {'a': '1 2'}, defs))
+        self.assertTupleEqual((1, 2), get_variation('a', {'a': None}, defs))
+        self.assertTupleEqual((1, 2), get_variation('a', {'a': ''}, defs))
+        self.assertTupleEqual((1, 2), get_variation('a', {'a': 2}, defs))
+        self.assertTupleEqual((1, 2), get_variation('a', {'a': '1 2 3'}, defs))
+        self.assertTupleEqual((1, 2), get_variation('a', {'a': '1 '}, defs))
+        self.assertTupleEqual((1, 2),
+                              get_variation('a', {'a': '  1 2 '}, defs))
 
 
 if __name__ == '__main__':

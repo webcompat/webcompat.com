@@ -119,6 +119,29 @@ def update_status_config(milestones_content):
     return STATUSES
 
 
+def get_variation(variation_key, variations_dict, defaults_dict):
+    """Convert a string to a tuple of integers.
+
+    If the passed variation_key doesn't follow this pattern '0 100', it will
+    return default values defined in defaults_dict.
+
+    This is currently used for defining the variation data of the A/B
+    experiment regarding the multi-steps form.
+    """
+    try:
+        # We want to create a tuple of integers from a string containing
+        # integers. Anything else should throw.
+        rv = tuple(int(x) for x in variations_dict.get(variation_key)
+                                                  .strip().split())
+        if (len(rv) != 2):
+            raise ValueError('The format is incorrect. Expected "{int} {int}"')
+    except Exception as e:
+        print('Something went wrong with AB test configuration: {0}'.format(e))
+        print('Falling back to default values.')
+        rv = defaults_dict.get(variation_key)
+    return rv
+
+
 THREADS_PER_PAGE = 8
 
 # ~3 months-ish expires for static junk
@@ -200,14 +223,29 @@ EXTRA_LABELS = [
     'type-webvr',
 ]
 
+# Get AB experiment variation values from the environement.
+AB_VARIATIONS = {
+    'FORM_V1_VARIATION': os.environ.get('FORM_V1_VARIATION'),
+    'FORM_V2_VARIATION': os.environ.get('FORM_V2_VARIATION'),
+}
+# We define default values here, as a fallback.
+# By default, v1 will be served 100% of the time.
+AB_DEFAULTS = {
+    'FORM_V1_VARIATION': (0, 100),
+    'FORM_V2_VARIATION': (100, 100),
+}
+EXP_MAX_AGE = int(os.environ.get('EXP_MAX_AGE', 0))
+
 # AB testing config
 AB_EXPERIMENTS = {
     'exp': {
         'variations': {
-            'form-v1': (0, 100),
-            'form-v2': (100, 100)
+            'form-v1': get_variation('FORM_V1_VARIATION', AB_VARIATIONS,
+                                     AB_DEFAULTS),
+            'form-v2': get_variation('FORM_V2_VARIATION', AB_VARIATIONS,
+                                     AB_DEFAULTS),
         },
-        'max-age': None
+        'max-age': EXP_MAX_AGE
     }
 }
 
