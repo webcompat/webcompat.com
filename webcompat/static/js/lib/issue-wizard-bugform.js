@@ -1153,7 +1153,7 @@ BugForm.prototype.removeUploadPreview = function(e) {
   // clear out the input[type=file] as well
   this.uploadField.val(this.uploadField.get(0).defaultValue);
 
-  this.changeUploadText("reset-screenshot");
+  this.changeUploadText("deleted-screenshot");
   this.step10Btn.addClass("disabled");
 };
 

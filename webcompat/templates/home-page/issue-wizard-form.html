@@ -248,35 +248,7 @@
     <div class="button-control row">
       <div class="input-control">
         <div class="col center">
-          <button class="button next-step step-8 issue-btn disabled" data-nextstep="9">Continue</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="step-container step9 col" data-nextstep="10" data-activate-stepper="7">
-    <div class="row">
-      <div class="input-control half">
-        <div class="description-text top">
-          Fantastic, thank you. <br>
-          We’re almost done. <strong>We took a screenshot of the website</strong> when you began this report. <strong>Are you OK with publicly sharing the image we captured?</strong>
-        </div>
-      </div>
-      <div class="input-control half col">
-        <div class="form-text form-element js-Form-group problem-screenshot">
-          <img class="screenshot" src="{{ url_for('static', filename='img/sample-screenshot.jpg') }}" title="Generated screenshot" alt="Generated screenshot" />
-          <div class="shadow"></div>
-        </div>
-      </div>
-    </div>
-    <div class="button-control row">
-      <div class="input-control">
-        <div class="col center">
-          <div class="row">
-            <button class="button next-step step-9 issue-btn" data-nextstep="11">Yes, continue</button>
-            <button class="button next-step step-9 issue-btn red" data-nextstep="10" data-hidestep="9">No, delete this image</button>
-          </div>
-          <a class="next-step step-9" data-nextstep="10" data-hidestep="9" href="#">Upload a different image</a>
+          <button class="button next-step step-8 issue-btn disabled" data-nextstep="10">Continue</button>
         </div>
       </div>
     </div>
@@ -286,7 +258,7 @@
     <div class="row">
       <div class="input-control half flex-left">
         <div class="description-text top up-message deleted-screenshot">
-          <strong>We deleted the automatic screenshot.</strong><br>
+          <strong>We deleted the screenshot.</strong><br>
           Do you have a different screenshot you would like to share?<br>
           <br>
           <strong>Uploaded images are publicly viewable.</strong>
