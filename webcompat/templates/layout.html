@@ -37,12 +37,11 @@
 <script src="{{ url_for('static', filename='js/lib/navbar.js') }}"></script>
 <script src="{{ url_for('static', filename='js/lib/autogrow-textfield.js') }}"></script>
 <script src="{{ url_for('static', filename='js/lib/bugform-validation.js') }}"></script>
-{%- if ab_active('exp') == 'form-v1' %}
-<script src="{{ url_for('static', filename='js/lib/bugform.js') }}"></script>
-{% endif %}
 {%- if ab_active('exp') == 'form-v2' %}
 <script src="{{ url_for('static', filename='js/lib/issue-wizard-popup.js') }}"></script>
 <script src="{{ url_for('static', filename='js/lib/issue-wizard-slider.js') }}"></script>
+{% else %}
+<script src="{{ url_for('static', filename='js/lib/bugform.js') }}"></script>
 {% endif %}
 
 <script src="{{ url_for('static', filename='js/dist/templates.js') }}"></script>
