@@ -670,7 +670,7 @@ def ab_active(exp_id):
     if ab_exempt():
         return False
 
-    return request.cookies.get(exp_id) or False
+    return g.current_experiments.get(exp_id) or False
 
 
 def ab_exempt():
@@ -693,7 +693,7 @@ def ab_current_experiments():
 
     for exp_id in app.config['AB_EXPERIMENTS']:
 
-        active_var = ab_active(exp_id)
+        active_var = request.cookies.get(exp_id) or False
 
         if active_var:
             curr_exp[exp_id] = active_var
@@ -717,7 +717,7 @@ def ab_init(response):
         return response
 
     for exp_id, var in g.current_experiments.items():
-        if not ab_active(exp_id):
+        if not request.cookies.get(exp_id) or False:
             max_age = app.config['AB_EXPERIMENTS'][exp_id]['max-age']
             response.set_cookie(exp_id, var, max_age=max_age)
 
