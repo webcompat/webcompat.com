@@ -263,6 +263,8 @@ def create_issue():
 
         if ab_active('exp') == 'form-v2':
             bug_form = get_form(form_data, form=FormWizard)
+            # TODO: remove this when the experiment has ended
+            form_data['extra_labels'].append('form-v2-experiment')
         else:
             bug_form = get_form(form_data)
 
