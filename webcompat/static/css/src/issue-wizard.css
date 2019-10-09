@@ -18,10 +18,6 @@
   --presumed-step-height-updown: -230px;
 }
 
-#body-webcompat.no-top-padding {
-  padding-top: 0;
-}
-
 #js-ReportForm {
   overflow: hidden;
   padding: 40px 10px 0;
@@ -49,15 +45,17 @@
 
 .issue-form {
   background: transparent;
+  margin-top: 35px;
 }
 
 #wizard-container {
   background-color: var(--base-colorDark);
   display: flex;
   justify-content: space-evenly;
+  margin-top: -35px;
   padding: 1rem 0;
-  position: sticky;
-  top: 39px;
+  position: fixed;
+  top: 75px;
   transform: none;
   transition: top 400ms ease;
   width: 100%;
@@ -65,7 +63,7 @@
 }
 
 #wizard-container.is-offscreen {
-  top: 0;
+  top: 35px;
 }
 
 #wizard-container .grid {
