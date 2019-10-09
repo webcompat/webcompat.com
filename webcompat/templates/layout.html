@@ -13,9 +13,7 @@
   {% block extracss %}{% endblock %}
 
 </head>
-<body id="body-webcompat"
-  class="{%- if request.url_rule.endpoint == 'create_issue' and ab_active('exp') == 'form-v2' %}no-top-padding{% endif %}"
-  data-username="{{ session.username }}">
+<body id="body-webcompat" data-username="{{ session.username }}">
 {% include "shared/svg-icons.html" %}
 {% block body %}{% endblock %}
 {% include "shared/footer.html" %}
