@@ -321,8 +321,8 @@ class TestHelpers(unittest.TestCase):
         # A JSON value, which is not an object
         self.assertFalse(is_json_object(json.loads('null')))
 
-    def test_ab_active_true(self):
-        """Check if `ab_active` returns the experiment variation view when
+    def test_ab_active_existing_cookie(self):
+        """Check if `ab_active` returns the experiment variation when
         expirement cookie exists.
         """
         cookie = 'exp=ui-change-v1; Path=/'
@@ -331,27 +331,31 @@ class TestHelpers(unittest.TestCase):
                 method='GET',
                 environ_base={'HTTP_COOKIE': cookie}):
 
-            user = mock.Mock()
-            user.user_id = 'user_id'
-            flask.g.user = user
+            webcompat.app.preprocess_request()
 
             self.assertEqual(ab_active('exp'), 'ui-change-v1')
 
-    def test_ab_active_false(self):
-        """Check if `ab_active` returns `False` when the experiment cookie
-        doesn't exist.
+    def test_ab_active_non_existing_cookie(self):
+        """Check if `ab_active` returns the correct experiment variation
+        when the experiment cookie doesn't exist.
         """
-        cookie = 'another_exp=ui-change-v1; Path=/'
+        cookie = 'another_exp=backend-change-v1; Path=/'
         with webcompat.app.test_request_context(
                 '/',
                 method='GET',
                 environ_base={'HTTP_COOKIE': cookie}):
 
-            user = mock.Mock()
-            user.user_id = 'user_id'
-            flask.g.user = user
+            webcompat.app.config['AB_EXPERIMENTS'] = {
+                'exp': {
+                    'variations': {
+                        'ui-change-v1': (0, 100)
+                    },
+                    'max-age': 86400
+                }
+            }
+            webcompat.app.preprocess_request()
 
-            self.assertEqual(ab_active('exp'), False)
+            self.assertEqual(ab_active('exp'), 'ui-change-v1')
 
     def test_ab_current_experiments_active(self):
         """Check if current experiments are calculated properly"""
@@ -445,10 +449,6 @@ class TestHelpers(unittest.TestCase):
                 '/',
                 method='GET') as ctx:
 
-            user = mock.Mock()
-            user.user_id = 'user_id'
-            flask.g.user = user
-
             webcompat.app.config['AB_EXPERIMENTS'] = {
                 'exp-1': {
                     'variations': {
@@ -482,10 +482,6 @@ class TestHelpers(unittest.TestCase):
                 '/',
                 method='GET',
                 environ_base={'HTTP_COOKIE': cookie}):
-
-            user = mock.Mock()
-            user.user_id = 'user_id'
-            flask.g.user = user
 
             webcompat.app.config['AB_EXPERIMENTS'] = {
                 'exp-1': {
