@@ -1,10 +1,23 @@
 # AB testing
 ## Configuration
-You can enable/disable AB testing support by configuring the `config.AB_EXPERIMENT` dictionary.
-This will configure flask to set cookies to responses. For example:
+You can enable/disable AB testing support by configuring the following environment variables:
+
+`FORM_V1_VARIATION`: expects a string of the format '{int} {int}'
+`FORM_V2_VARIATION`: expects a string of the format '{int} {int}'
+`EXP_MAX_AGE`: expects a number which defines when the experiment cookie expires
+
+These are read by the `config.AB_EXPERIMENT` dictionary in `./config/__init__.py` and converted to a tuple.
+This will configure flask to set cookies to responses. For example, setting the variables to the following:
 
 ```
+export FORM_V1_VARIATION = "0 20"
+export FORM_V2_VARIATION = "20 100"
+export EXP_MAX_AGE = 604800
+```
 
+This will result in the `AB_EXPERIMENTS` dictionary with the following values:
+
+```
 AB_EXPERIMENTS = {
     'exp-1': {
         'variations': {
