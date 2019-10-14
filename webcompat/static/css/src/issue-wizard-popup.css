@@ -7,6 +7,16 @@
 * variable.css
 */
 
+:root {
+  --popup-height: 450px;
+  --popup-height-mobile: 90vh;
+  --popup-max-height-mobile: 550px;
+}
+
+.full-height {
+  height: 100%;
+}
+
 .popup-overlay {
   background-color: rgba(0, 0, 0, .65);
   display: none;
@@ -22,15 +32,13 @@
   display: block;
 }
 
-.popup-trigger {
-  display: inline-block;
-}
-
 .popup-modal {
   background-color: #fff;
   border-radius: 5px;
-  height: 450px;
+  height: var(--popup-height-mobile);
   left: 50%;
+  max-height: var(--popup-max-height-mobile);
+  max-width: 90%;
   opacity: 0;
   overflow: hidden;
   padding: 0;
@@ -76,22 +84,41 @@
 }
 
 .popup-text {
-  font-size: 18px;
-  padding: 0 16px;
+  font-size: 14px;
+  line-height: 1.7;
+  padding: 35px 16px 16px;
 }
 
 .popup-text h2 {
   font-size: 32px;
   font-weight: 300;
-  margin-bottom: 38px;
+  margin-bottom: 15px;
 }
 
 .popup-modal .links {
-  padding-top: 32px;
+  padding-top: 22px;
   text-align: center;
 }
 
 .popup-modal .links a {
   color: var(--link-color);
   font-size: 16px;
+}
+
+/* var(--page-size-m) = 665px - vars not usable in queries */
+@media (min-width: 665px) {
+  .popup-modal {
+    height: var(--popup-height);
+  }
+
+  .popup-text {
+    font-size: 18px;
+    line-height: 1.8;
+    padding: 0 16px;
+  }
+
+  .popup-text h2 {
+    margin-bottom: 20px;
+    margin-top: 12px;
+  }
 }
