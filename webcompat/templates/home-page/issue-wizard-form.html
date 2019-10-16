@@ -11,12 +11,19 @@
 >
   <h3 class="page-heading">Filing a web compatibility issue</h3>
   <div class="step-container step1 col open" data-nextstep="2" data-activate-stepper="2">
-    <div class="row">
+    <div class="row mobile-col">
       <div class="input-control half">
         <div class="col">
           <div class="input-description">
-            Thank you for filing a web compatibility issue.<br>
-            Do we have the <strong>correct site?</strong>
+            {% if request.args.get('url') %}
+              Thank you for filing a web compatibility issue.
+              <a href="#" class="popup-trigger mobile-only" data-popup-trigger="what-is-webcompat">Learn more</a>
+              <br>
+              Do we have the <strong>correct site?</strong>
+            {% else %}
+              <strong>Please enter the URL</strong> where you encountered the web compatibility issue.
+              <a href="#" class="popup-trigger mobile-only" data-popup-trigger="what-is-webcompat">Learn more</a>
+            {% endif %}
           </div>
           <div class="form-text form-element js-Form-group form-label-message with-validation-icons">
             {{ form.url.label(class_='form-label is-hidden') }}
@@ -32,7 +39,7 @@
           </div>
         </div>
       </div>
-      <div class="input-control half">
+      <div class="input-control half hero">
         <img class="protruding-img" src="{{ url_for('static', filename='img/svg/reporting-people.svg') }}" title="Report" alt="Report" />
       </div>
     </div>
@@ -40,7 +47,7 @@
       <div class="input-control half">
         <div class="col center">
           <button class="button next-step step-1 issue-btn disabled" data-nextstep="2">Confirm</button>
-          <a href="#" class="popup-trigger" data-popup-trigger="what-is-webcompat">Learn more about web compatibility</a>
+          <a href="#" class="popup-trigger desktop-only" data-popup-trigger="what-is-webcompat">Learn more about web compatibility</a>
         </div>
       </div>
     </div>
@@ -53,7 +60,7 @@
       <div class="input-control">
         <div class="form-radio choice-control form-element js-Form-group">
           <div class="js-Form-information form-label-message">
-            <label class="form-label" for="problem_category">What is wrong with the page at <strong id="website-url">example.com</strong><strong>?</strong></label>
+            <label class="form-label big" for="problem_category">What is wrong with the page at <strong id="website-url">example.com</strong><strong>?</strong></label>
             {% if form.problem_category.errors %}
               {% for error in form.problem_category.errors %}
                 <small class="form-message-error">{{ error }}</small>
@@ -88,7 +95,7 @@
       <div class="input-control">
         <div class="form-radio choice-control form-element js-Form-group site_bug_subcategory">
           <div class="js-Form-information form-label-message">
-            <label class="form-label" for="site_bug_subcategory">What is wrong with <strong>the video or audio?</strong></label>
+            <label class="form-label big" for="site_bug_subcategory">Why is the <strong>site not usable?</strong></label>
             {% if form.site_bug_subcategory.errors %}
               {% for error in form.site_bug_subcategory.errors %}
                 <small class="form-message-error">{{ error }}</small>
@@ -99,7 +106,7 @@
         </div>
         <div class="form-radio choice-control form-element js-Form-group layout_bug_subcategory">
           <div class="js-Form-information form-label-message">
-            <label class="form-label" for="layout_bug_subcategory">What is wrong with <strong>the video or audio?</strong></label>
+            <label class="form-label big" for="layout_bug_subcategory">How is the <strong>design broken?</strong></label>
             {% if form.layout_bug_subcategory.errors %}
               {% for error in form.layout_bug_subcategory.errors %}
                 <small class="form-message-error">{{ error }}</small>
@@ -110,7 +117,7 @@
         </div>
         <div class="form-radio choice-control form-element js-Form-group video_bug_subcategory">
           <div class="js-Form-information form-label-message">
-            <label class="form-label" for="video_bug_subcategory">What is wrong with <strong>the video or audio?</strong></label>
+            <label class="form-label big" for="video_bug_subcategory">What is wrong with <strong>the video or audio?</strong></label>
             {% if form.video_bug_subcategory.errors %}
               {% for error in form.video_bug_subcategory.errors %}
                 <small class="form-message-error">{{ error }}</small>
@@ -124,7 +131,7 @@
   </div>
 
   <div class="step-container step4 col" data-nextstep="5" data-activate-stepper="4">
-    <div class="row">
+    <div class="row mobile-col">
       <div class="input-control device-data-hero">
         <img class="protruding-img" src="{{ url_for('static', filename='img/svg/devices.svg') }}" title="Device data image" alt="Device data image" />
       </div>
@@ -140,8 +147,8 @@
       <div class="input-control">
         <div class="col center">
           <button class="button next-step step-4 issue-btn" data-nextstep="6" data-hidestep="5">Yes</button>
-          <div class="row">
-            I encountered the issue on a &nbsp;<a class="next-step step-5" data-nextstep="5" data-hidestep="6" href="#">different device or browser</a>
+          <div class="other-option">
+            I encountered the issue on a <a class="next-step step-5" data-nextstep="5" data-hidestep="6" href="#">different device or browser</a>
           </div>
         </div>
       </div>
@@ -155,7 +162,7 @@
           <div class="input-description">
             <strong>What browser and device were you using</strong> when the issue was encountered?
           </div>
-          <div class="row">
+          <div class="row mobile-col">
             <div class="form-element js-Form-group low with-validation-icons half">
               {{ form.browser.label(class_='form-label') }}
               {{ form.browser(class_='form-field text-field') }}
@@ -182,7 +189,7 @@
       <div class="input-control">
         <div class="form-radio choice-control browsers form-element js-Form-group">
           <div class="js-Form-information form-label-message">
-            <label class="form-label" for="browsers">Please select <strong>other browsers you have tested on</strong></label>
+            <label class="form-label big" for="browsers">Please select <strong>other browsers you have tested on</strong></label>
             {% if form.browsers.errors %}
               {% for error in form.browsers.errors %}
                 <small class="form-message-error">{{ error }}</small>
@@ -215,7 +222,7 @@
 
   <div class="step-container warning step7 col" data-nextstep="8" data-activate-stepper="5">
     <img class="warning-icon" src="{{ url_for('static', filename='img/svg/icons/svg-info-icon.svg') }}" title="Warning" alt="Warning" />
-    <div class="warning-text">We recommend testing the website in another browser to validate this as a web compatibility issue.</div>
+    <div class="warning-text">We recommend testing the website in another browser to validate this as a <strong>web compatibility issue</strong>.</div>
     <div class="col center input-control">
       <button class="button next-step step-7 issue-btn" data-nextstep="8">Continue without testing</button>
       <a href="#" class="popup-trigger" data-popup-trigger="what-is-webcompat">What is a web compatibility issue?</a>
@@ -223,7 +230,7 @@
   </div>
 
   <div class="step-container step8 col" data-nextstep="9" data-activate-stepper="6">
-    <div class="row">
+    <div class="row mobile-col">
       <div class="input-control device-data-hero half">
         <img class="protruding-img" src="{{ url_for('static', filename='img/svg/describe-issue.svg') }}" title="Describe issue" alt="Describe issue" />
         <div class="description-text">
@@ -233,7 +240,7 @@
         </div>
       </div>
       <div class="input-control half col">
-        <div class="form-text form-element js-Form-group problem-description bordered-container">
+        <div class="form-text form-element js-Form-group problem-description progress-textarea bordered-container">
           {{ form.description() }}
           {{ form.steps_reproduce(class_='form-field text-field js-autogrow-field',
               rows=3, maxlength=200, placeholder="Describe what happened") }}
@@ -255,12 +262,12 @@
   </div>
 
   <div class="step-container step10 col upload-screenshot" data-nextstep="11">
-    <div class="row">
+    <div class="row mobile-col">
       <div class="input-control half flex-left">
         <div class="description-text top up-message deleted-screenshot">
           <strong>We deleted the screenshot.</strong><br>
           Do you have a different screenshot you would like to share?<br>
-          <br>
+          <br class="desktop-only">
           <strong>Uploaded images are publicly viewable.</strong>
         </div>
         <div class="description-text top up-message uploaded-screenshot">
@@ -298,11 +305,11 @@
     <div class="button-control row">
       <div class="input-control">
         <div class="col center">
-          <div class="row">
+          <div class="row mobile-col">
             <button class="button next-step step-10 issue-btn disabled" data-nextstep="11">Confirm</button>
             <button class="button js-remove-upload is-hidden issue-btn red">Delete this image</button>
           </div>
-          <a class="js-remove-upload is-hidden" href="#">Upload a different image</a>
+          <a class="js-remove-upload is-hidden spaced-link" href="#">Upload a different image</a>
         </div>
       </div>
     </div>
@@ -320,10 +327,10 @@
     <div class="button-control row">
       <div class="input-control">
         <div class="col center">
-          <div class="row final-text">
+          <div class="final-text">
             Good job! You can&nbsp;<strong>report via GitHub</strong>&nbsp;or&nbsp;<strong>report anonymously</strong>.
           </div>
-          <div class="row">
+          <div class="row mobile-col">
             <button class="button button-secondary right js-Button" id="submitgithub" type="submit" name="github-auth-report">
               <img class="" src="{{ url_for('static', filename='img/svg/icons/svg-github-white.svg') }}" title="Report via GitHub" alt="Report via GitHub" />
               {% if session.username %}Report as {{ session.username }}{% else %}Report via GitHub{% endif %}
@@ -377,9 +384,10 @@
   <div class="slider">
     <div class="slides">
       <div class="slide active">
-        <div class="row full-height">
+        <div class="title mobile-only">What is a web compatibility issue?</div>
+        <div class="row full-height mobile-col">
           <div class="text-half col">
-            <div class="title">What is a web compatibility issue?</div>
+            <div class="title desktop-only">What is a web compatibility issue?</div>
             <div class="text">A web compatibility issue occurs <strong>when a website behaves differently across browsers.</strong> Sometimes a website will load on one browser and crash or render in a strange way on another. </div>
           </div>
           <div class="image-half">
@@ -388,9 +396,10 @@
         </div>
       </div>
       <div class="slide">
-        <div class="row full-height">
+        <div class="title mobile-only">What causes a web compatibility issue?</div>
+        <div class="row full-height mobile-col">
           <div class="text-half col">
-            <div class="title">What causes a web compatibility issue?</div>
+            <div class="title desktop-only">What causes a web compatibility issue?</div>
             <div class="text">Sometimes websites have bugs that prevent them from working in all browsers. Browsers also have different ways of implementing features that may affect a site’s usability. </div>
           </div>
           <div class="image-half">
@@ -399,12 +408,12 @@
         </div>
       </div>
       <div class="slide">
-        <div class="row full-height">
+        <div class="row full-height mobile-col">
           <div class="text-half col">
-            <div class="title">What is a web compatibility issue?</div>
+            <div class="title desktop-only">What is a web compatibility issue?</div>
             <div class="text"><strong>We want to make sure the Internet works for everyone.</strong> Together with web developers and site owners, we help identify and fix web compatibility issues. Let us know if you find a website behaves differently across browsers. </div>
           </div>
-          <div class="image-half">
+          <div class="image-half image-only">
             <img class="" src="{{ url_for('static', filename='img/svg/help-step-3.svg') }}" title="What is a web compatibility issue" alt="What is a web compatibility issue" />
           </div>
         </div>
