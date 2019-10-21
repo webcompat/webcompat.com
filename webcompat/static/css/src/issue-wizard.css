@@ -394,11 +394,25 @@
   text-align: left;
 }
 
-.form-message-error {
+.form-message-error,
+.device-browser-error {
   color: var(--wizard-step-error);
   font-size: 16px;
   font-weight: 200;
   text-align: left;
+}
+
+.device-browser-error {
+  display: none;
+  font-size: 15px;
+}
+
+.is-error .device-browser-error {
+  display: block;
+}
+
+.step5 .with-validation-icons {
+  align-self: flex-start;
 }
 
 .input-control a {
@@ -954,6 +968,10 @@
   #js-ReportForm .form-label {
     margin-bottom: 5px;
     width: auto;
+  }
+
+  #js-ReportForm .is-error .form-label {
+    margin-bottom: 0;
   }
 
   .custom-browser .form-element:nth-child(odd) {

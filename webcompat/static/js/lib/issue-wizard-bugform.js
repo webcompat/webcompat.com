@@ -42,7 +42,9 @@ BugForm.prototype.onDOMReadyInit = function() {
   this.step2Trigger = $(".next-step.step-2");
   this.step3Trigger = $("#problem_category input");
   this.step3Btn = $(".next-step.step-3");
+  this.step4Btn = $(".next-step.step-4");
   this.step4Trigger = $(".subproblem input[type='radio']");
+  this.step5Btn = $(".next-step.issue-btn.step-5");
   this.step6Btn = $("button.next-step.step-6");
   this.step8Btn = $("button.next-step.step-8");
   this.step10Btn = $("button.next-step.step-10");
@@ -66,6 +68,7 @@ BugForm.prototype.onDOMReadyInit = function() {
   this.problemStep = 2;
   this.subproblemStep = 3;
   this.browserDetectionStep = 4;
+  this.customBrowserStep = 5;
   this.browserSelectionStepNo = 7;
   this.descriptionStep = 8;
   this.stepNotDefined = -1;
@@ -184,13 +187,13 @@ BugForm.prototype.onDOMReadyInit = function() {
       el: $("#browser"),
       valid: true,
       helpText: null,
-      errFunction: "optionalField"
+      errFunction: "requiredField"
     },
     os: {
       el: $("#os"),
       valid: true,
       helpText: null,
-      errFunction: "optionalField"
+      errFunction: "requiredField"
     },
     browser_test_type: {
       el: $("[name=browser_test]"),
@@ -207,7 +210,9 @@ BugForm.prototype.onDOMReadyInit = function() {
   };
 
   this.browserField = this.inputs.browser.el;
+  this.browserVal = this.inputs.browser.el.val();
   this.osField = this.inputs.os.el;
+  this.osVal = this.inputs.os.el.val();
   this.problemType = this.inputs.problem_category.el;
   this.problemSubtype = this.inputs.other_problem.el;
   this.otherBrowser = this.inputs.browser_test_type.el;
@@ -273,6 +278,7 @@ BugForm.prototype.init = function() {
   this.nextStepBtn.on("click", this.nextStep.bind(this));
   this.step3Trigger.on("change", this.nextStep.bind(this));
   this.step3Radio.on("change", this.nextStep.bind(this));
+  this.step4Btn.on("click", this.resetDefaultDevice.bind(this));
   this.step6Radio.on("change", this.nextStep.bind(this));
   this.anonUsernameTrigger.on("click", this.revealUsernameField.bind(this));
 
@@ -584,6 +590,7 @@ BugForm.prototype.checkOptionalNonEmpty = function(field) {
   );
   var inputId = field.prop("id");
   this[func](inputId);
+  this.setNextBtnStatus(this.customBrowserStep);
 };
 
 /* Check to see if the GitHub username has the right syntax.*/
@@ -739,6 +746,15 @@ BugForm.prototype.setNextBtnStatus = function(step) {
         this.step3Btn.removeClass("disabled");
       } else {
         this.step3Btn.addClass("disabled");
+      }
+      break;
+    case this.customBrowserStep:
+      var customBrowserVal = $.trim(this.inputs["browser"].el[0].value);
+      var osVal = $.trim(this.inputs["os"].el[0].value);
+      if (customBrowserVal.length > 0 && osVal.length > 0) {
+        this.step5Btn.removeClass("disabled");
+      } else {
+        this.step5Btn.addClass("disabled");
       }
       break;
     case this.browserSelectionStepNo:
@@ -1251,6 +1267,13 @@ BugForm.prototype.revealUsernameField = function(e) {
 
 BugForm.prototype.resetProblemType = function() {
   this.resetRadio(this.step3Trigger);
+};
+
+BugForm.prototype.resetDefaultDevice = function() {
+  this.browserField.val(this.browserVal);
+  this.browserField.trigger("blur");
+  this.osField.val(this.osVal);
+  this.osField.trigger("blur");
 };
 
 BugForm.prototype.resetBrowserSelection = function() {
