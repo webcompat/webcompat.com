@@ -22,7 +22,11 @@
 <script src="{{ url_for('static', filename='js/dist/ga.js') }}"></script>
 <script async src='https://www.google-analytics.com/analytics.js'></script>
 <!-- End Google Analytics -->
+{%- if ab_active('exp') == 'form-v2' %}
+<script src="{{ url_for('static', filename='js/dist/webcompat.formv2.js')|bust_cache }}"></script>
+{% else %}
 <script src="{{ url_for('static', filename='js/dist/webcompat.min.js')|bust_cache }}"></script>
+{% endif -%}
 {% else %}
 <script src="{{ url_for('static', filename='js/vendor/jquery-3.3.1.min.js') }}"></script>
 <script src="{{ url_for('static', filename='js/vendor/lodash.custom.min.js') }}"></script>
