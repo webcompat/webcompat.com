@@ -24,6 +24,10 @@ function Validation() {
       var val = descField.val();
       return $.trim(val) !== "";
     },
+    isIssueValid: function(issueField) {
+      var val = issueField.val();
+      return $.trim(val) !== "";
+    },
     isUrlValid: function(urlField) {
       var val = urlField.val();
       return $.trim(val) !== "" && isReportableURL(val);

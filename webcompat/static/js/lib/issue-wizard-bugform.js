@@ -568,7 +568,7 @@ BugForm.prototype.checkBrowserInputValidity = function(silent) {
 /* Check to see that the issue description input is not empty. */
 BugForm.prototype.checkProblemSubtypeValidity = function(silent) {
   var func = this.determineValidityFunction(
-    this.validation.isProblemSubtypeValid,
+    this.validation.isIssueValid,
     this.problemSubtype,
     silent
   );
