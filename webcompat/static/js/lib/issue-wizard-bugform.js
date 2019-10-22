@@ -32,6 +32,7 @@ BugForm.prototype.onDOMReadyInit = function() {
   this.previewEl = $(".js-image-upload");
   this.reportButton = $("#js-ReportBug");
   this.removeBanner = $(".js-remove-upload");
+  this.uploadOther = $(".screenshot-select-trigger");
   this.submitButtons = $("#js-ReportForm .js-Button");
   this.submitButtonWrappers = $("#js-ReportForm .js-Button-wrapper");
   this.submitTypeInput = $("#submit_type:hidden");
@@ -1137,6 +1138,7 @@ BugForm.prototype.showRemoveUpload = function() {
   this.uploadLabel.removeClass("visually-hidden");
 
   this.removeBanner.removeClass("is-hidden");
+  this.uploadOther.removeClass("is-hidden");
   this.removeBanner.attr("tabIndex", "0");
   this.uploadLabel.addClass("visually-hidden");
   this.removeBanner.on("click", this.removeUploadPreview.bind(this));
@@ -1159,6 +1161,7 @@ BugForm.prototype.removeUploadPreview = function(e) {
   e.preventDefault();
   this.previewEl.css("background", "none");
   this.removeBanner.addClass("is-hidden");
+  this.uploadOther.addClass("is-hidden");
   this.removeBanner.attr("tabIndex", "-1");
   this.uploadLabel.removeClass("visually-hidden").removeClass("is-hidden");
   this.removeBanner.off("click");
@@ -1216,7 +1219,7 @@ BugForm.prototype.uploadImage = function(dataURI) {
   var dfd = $.Deferred();
   this.disableSubmits();
 
-  $(".js-remove-upload").addClass("is-hidden");
+  this.removeBanner.addClass("is-hidden");
 
   var formdata = new FormData();
   formdata.append("image", dataURI);
