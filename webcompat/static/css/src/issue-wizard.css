@@ -419,6 +419,12 @@
   color: var(--link-color);
 }
 
+.input-control .screenshot-select-trigger {
+  color: var(--link-color);
+  cursor: pointer;
+  text-decoration: underline;
+}
+
 .step1 .hero {
   order: -1;
 }
