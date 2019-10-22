@@ -32,7 +32,7 @@ var WindowHelpers = {
 
   sendBlob: function(blob) {
     return new Promise(function(res) {
-      postMessage(blob, "http://localhost:5000");
+      postMessage({ screenshot: blob }, "http://localhost:5000");
       res();
     });
   },

@@ -32,6 +32,7 @@ from webcompat.helpers import prepare_form
 from webcompat.helpers import rewrite_and_sanitize_link
 from webcompat.helpers import rewrite_links
 from webcompat.helpers import sanitize_link
+from webcompat.helpers import get_extra_labels
 
 
 ACCESS_TOKEN_LINK = '<https://api.github.com/repositories/17839063/issues?per_page=50&page=3&access_token=12345>; rel="next", <https://api.github.com/repositories/17839063/issues?access_token=12345&per_page=50&page=4>; rel="last", <https://api.github.com/repositories/17839063/issues?per_page=50&access_token=12345&page=1>; rel="first", <https://api.github.com/repositories/17839063/issues?per_page=50&page=1&access_token=12345>; rel="prev"'  # noqa
@@ -499,6 +500,11 @@ class TestHelpers(unittest.TestCase):
             ab_init(response)
             response.set_cookie.assert_not_called()
 
+    def test_get_extra_labels(self):
+        with webcompat.app.test_request_context('/issues/new', method='POST'):
+            self.assertEqual(get_extra_labels({'extra_labels': '["type-marfeel", "browser-fenix"]'}), ['type-marfeel', 'browser-fenix'])
+            self.assertEqual(get_extra_labels({'extra_labels': '[]'}), [])
+            self.assertEqual(get_extra_labels({}), None)
 
 if __name__ == '__main__':
     unittest.main()

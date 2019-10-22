@@ -40,6 +40,7 @@ from webcompat.helpers import is_valid_issue_form
 from webcompat.helpers import prepare_form
 from webcompat.helpers import set_referer
 from webcompat.issues import report_issue
+from webcompat.helpers import get_extra_labels
 from webcompat import app
 from webcompat.db import session_db
 from webcompat.db import User
@@ -263,8 +264,6 @@ def create_issue():
 
         if ab_active('exp') == 'form-v2':
             bug_form = get_form(form_data, form=FormWizard)
-            # TODO: remove this when the experiment has ended
-            form_data['extra_labels'].append('form-v2-experiment')
         else:
             bug_form = get_form(form_data)
 
@@ -281,7 +280,7 @@ def create_issue():
             abort(400)
         # Adding parameters to the form
         form = request.form.copy()
-        extra_labels = session.pop('extra_labels', None)
+        extra_labels = get_extra_labels(form)
         if extra_labels:
             form['extra_labels'] = extra_labels
         # Logging the ip and url for investigation

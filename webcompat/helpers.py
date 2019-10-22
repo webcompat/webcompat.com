@@ -722,3 +722,15 @@ def ab_init(response):
             response.set_cookie(exp_id, var, max_age=max_age)
 
     return response
+
+
+def get_extra_labels(form):
+    """If extra_labels exists in current session, use it,
+    otherwise use the value coming from form."""
+
+    extra_labels = session.pop('extra_labels', None)
+
+    if not extra_labels and 'extra_labels' in form:
+        extra_labels = json.loads(form['extra_labels'])
+
+    return extra_labels
