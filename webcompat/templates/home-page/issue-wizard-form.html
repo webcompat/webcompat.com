@@ -202,15 +202,10 @@
         </div>
       </div>
     </div>
-    <div class="row half centered other-browser form-element js-Form-groupform-element js-Form-group with-validation-icons low">
-      <div class="column full-width">
-        <div class="label">
-          Browser tested
-        </div>
-        {{ form.browser_test(class_='form-field text-field required',
-            placeholder='Browser',
-            required=True, type='text') }}
-      </div>
+    <div class="row half centered other-browser">
+      {{ form.browser_test(class_='form-field text-field required',
+          placeholder='Browser',
+          required=True, type='text') }}
     </div>
     <div class="button-control row">
       <div class="input-control">

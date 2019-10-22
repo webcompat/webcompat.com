@@ -56,7 +56,7 @@ BugForm.prototype.onDOMReadyInit = function() {
   this.step4Container = $(".step-container.step4");
   this.step5Container = $(".step-container.step5");
   this.step6Container = $(".step-container.step6");
-  this.step6Radio = $(".step-container.step6 input");
+  this.step6Radio = $(".step-container.step6 .input-control input");
   this.step7Container = $(".step-container.step7");
   this.step8Container = $(".step-container.step8");
   this.step9Container = $(".step-container.step9");
@@ -80,6 +80,8 @@ BugForm.prototype.onDOMReadyInit = function() {
   this.detectionBugId = "detection_bug";
   this.otherProblemElements = $(".other-problem");
   this.otherBrowserElements = $(".other-browser");
+  this.testedOtherBrowsersId = "#browser_test-0";
+  this.noOtherBrowserTestedId = "#browser_test-1";
   this.uploadTextElements = $(".up-message");
   this.isSubproblem = false;
   this.blockNext = false;
@@ -759,22 +761,14 @@ BugForm.prototype.setNextBtnStatus = function(step) {
       }
       break;
     case this.browserSelectionStepNo:
-      var browserVal = $.trim(this.otherBrowser.val());
-      var radioVal =
-        $(this.browserSelection)
-          .filter(":checked")
-          .val() || false;
-      if (
-        (radioVal && radioVal !== this.otherBrowserId) ||
-        (radioVal === this.otherBrowserId &&
-          this.checkSpecificRequiredValid("browser_test_type") &&
-          browserVal.length > 0)
-      ) {
+      var otherBrowser = this.otherBrowserElements
+        .find(this.testedOtherBrowsersId)
+        .prop("checked");
+
+      if (otherBrowser) {
         this.step6Btn.removeClass("disabled");
-        this.makeValid("browser_test_type");
       } else {
         this.step6Btn.addClass("disabled");
-        this.inputs["browser_test_type"].valid = false;
       }
       break;
   }
@@ -824,7 +818,10 @@ BugForm.prototype.nextStep = function(e) {
       trigger.attr("type") === "radio" &&
       trigger.attr("name") === this.browserSelectionName
     ) {
-      this.browserSelectionStep(trigger);
+      this.otherBrowserElements
+        .find(this.testedOtherBrowsersId)
+        .prop("checked", true);
+      this.setNextBtnStatus(this.browserSelectionStepNo);
       this.hideStep(this.browserSelectionStepNo);
       return;
     }
@@ -1025,30 +1022,6 @@ BugForm.prototype.toggleOtherProblem = function(action) {
       $(this)[0].style.animationName = obj.cssAnimations.slidedownandheight;
     });
   }
-};
-
-BugForm.prototype.browserSelectionStep = function(trigger) {
-  var isOther = trigger.val() === this.otherBrowserId;
-  if (isOther) {
-    $(
-      ".step" + this.browserSelectionStepNo
-    )[0].style.animationName = this.cssAnimations.slideup;
-    this.otherBrowser.val("");
-    this.makeInvalidSilent("browser_test_type");
-    // Skip next step and show input with button in the same container
-    this.toggleOtherBrowser("show");
-  } else {
-    this.toggleOtherBrowser("hide");
-    // If the user selects a browser, it gets inserted in the text input
-    this.otherBrowser.val(
-      trigger
-        .next("label")
-        .text()
-        .trim()
-    );
-  }
-  var step = 7;
-  this.setNextBtnStatus(step);
 };
 
 BugForm.prototype.toggleOtherBrowser = function(action) {
@@ -1280,9 +1253,9 @@ BugForm.prototype.resetDefaultDevice = function() {
 };
 
 BugForm.prototype.resetBrowserSelection = function() {
-  this.otherBrowser.val("No");
-  this.makeInvalidSilent("browser_test_type");
-  this.toggleOtherBrowser("hide");
+  this.otherBrowserElements
+    .find(this.noOtherBrowserTestedId)
+    .prop("checked", true);
   this.resetRadio(this.step6Radio);
 };
 
