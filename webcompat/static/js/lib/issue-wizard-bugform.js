@@ -1146,7 +1146,6 @@ BugForm.prototype.removeUploadPreview = function(e) {
   this.uploadField.val(this.uploadField.get(0).defaultValue);
 
   this.changeUploadText("deleted-screenshot");
-  this.step10Btn.addClass("disabled");
 };
 
 BugForm.prototype.showLoadingIndicator = function() {
