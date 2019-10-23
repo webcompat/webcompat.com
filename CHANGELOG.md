@@ -4,6 +4,31 @@
 2. New features: affect minor number
 3. API endpoint changes or dependency version updates: affect major number
 
+## 21.0.0 - 2019-10-23
+
+This updates contains updates for an A/B experiment which is not yet activated. It should continue to work as-is.
+
+* Bump pillow from 6.1.0 to 6.2.0 in /config [Pull #3013](https://github.com/webcompat/webcompat.com/pull/3013)
+* Fixes #2983 - Upload a different image keeps the original image unless a new one is chosen [Pull #3011](https://github.com/webcompat/webcompat.com/pull/3011)
+* Fixes #2974 - Browser selection to say Yes/No as on current bug form [Pull #3010](https://github.com/webcompat/webcompat.com/pull/3010)
+* Fixes #2976 - Prevent user from leaving blank Browser and Device fields [Pull #2993](https://github.com/webcompat/webcompat.com/pull/2993)
+* Fixes #2975 - Briefly describe the issue" fix & validation [Pull #2991](https://github.com/webcompat/webcompat.com/pull/2991)
+* Fixes #2989 - Create static bundle for form-v2 experiment. [Pull #2990](https://github.com/webcompat/webcompat.com/pull/2990)
+* Fixes #2741 - Changes text "Reproduce a Bug" to text "Triage a Bug" [Pull #2987](https://github.com/webcompat/webcompat.com/pull/2987)
+* Fixes #2938 - Implement mobile redesign on bug form [Pull #2984](https://github.com/webcompat/webcompat.com/pull/2984)
+* Fixes #2955 - Move the no-top-padding class to the codebase of the ex… [Pull #2960](https://github.com/webcompat/webcompat.com/pull/2960)
+* Fixes #2958 - Fix `ab_active` to populate cookies on first request [Pull #2959](https://github.com/webcompat/webcompat.com/pull/2959)
+* Fixes #2940 - Add a label to v2 form issues [Pull #2957](https://github.com/webcompat/webcompat.com/pull/2957)
+* Fixes #2944 - 2947 - Read experiment variation values from envvars [Pull #2951](https://github.com/webcompat/webcompat.com/pull/2951)
+* Fixes #2912 - Implement login functionality [Pull #2942](https://github.com/webcompat/webcompat.com/pull/2942)
+* Fixes #2934 - Fix stylelint-order version [Pull #2936](https://github.com/webcompat/webcompat.com/pull/2936)
+* Fixes #2904 - chore(package): update husky to version 3.0.5 [Pull #2935](https://github.com/webcompat/webcompat.com/pull/2935)
+* NPM update - Update stylelint-config-standard to the latest version. [Pull #2930](https://github.com/webcompat/webcompat.com/pull/2930)
+* NPM update - Update stylelint to the latest version. [Pull #2929](https://github.com/webcompat/webcompat.com/pull/2929)
+* Fixes #2927 - Adds context and refines documentation for the new webcompat [Pull #2928](https://github.com/webcompat/webcompat.com/pull/2928)
+* Fixes #2922 - 2921 - Initial redesigned bug form integration [Pull #2923](https://github.com/webcompat/webcompat.com/pull/2923)
+
+
 ## 20.0.0 - 2019-09-15
 
 This is a major upgrade of our server. We are now running the project under Python 3 (Python 3.7.3). We are definitely saying goodbye to python 2.7. For coding and/or using the project you will need to set your environment with Python 3. We recommend you to start fresh by erasing your previous directory and cloning again the project. If you have ongoing work, make a patch before deleting, so you can reimport it later or you may push the branch to your own fork.
