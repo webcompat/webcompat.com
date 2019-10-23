@@ -5,7 +5,7 @@ Flask-Limiter==1.0.1
 Flask-SQLAlchemy==2.4.0
 Flask-WTF==0.14.2
 GitHub-Flask==3.2.0
-Pillow==6.1.0
+Pillow==6.2.0
 python-dotenv==0.10.3
 requests==2.22.0
 ua-parser==0.8
