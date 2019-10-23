@@ -9,6 +9,7 @@ function NavBar() {
 
   this.setUpEvents = function() {
     this.navbarHandler();
+    this.dropDownHandler();
   };
 
   this.navbarHandler = function() {
@@ -51,6 +52,25 @@ function NavBar() {
         return;
       }
     }, 100);
+  };
+
+  this.dropDownHandler = function() {
+    var navDropDown = $(".js-DropdownHeader");
+    navDropDown.click(function() {
+      var $this = $(this);
+      $this.toggleClass("is-active");
+      $this.find("button").attr("aria-expanded", function() {
+        return $this.hasClass("is-active") ? "true" : "false";
+      });
+    });
+
+    // close dropdown if you click "outside"
+    $(document).on("click", function(e) {
+      if (!$(e.target).closest(navDropDown).length) {
+        navDropDown.removeClass("is-active");
+        navDropDown.find("button").attr("aria-expanded", "false");
+      }
+    });
   };
 
   return this.init();
