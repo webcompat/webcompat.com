@@ -9,7 +9,6 @@ function HomePage() {
   var searchBar = $(".js-SearchBar");
   var searchBarOpen = $(".js-SearchBarOpen");
   var searchBarClose = $(".js-SearchBarClose");
-  var navDropDown = $(".js-DropdownHeader");
 
   this.init = function() {
     reportButton.add(reportLink).on("click", this.toggleForm);
@@ -32,7 +31,6 @@ function HomePage() {
 
   this.setUpEvents = function() {
     this.searchHandler();
-    this.dropDownHandler();
   };
 
   this.searchHandler = function() {
@@ -44,24 +42,6 @@ function HomePage() {
     searchBarClose.click(function() {
       searchBar.removeClass("is-active");
       searchBar.find("input").blur();
-    });
-  };
-
-  this.dropDownHandler = function() {
-    navDropDown.click(function() {
-      var $this = $(this);
-      $this.toggleClass("is-active");
-      $this.find("button").attr("aria-expanded", function() {
-        return $this.hasClass("is-active") ? "true" : "false";
-      });
-    });
-
-    // close dropdown if you click "outside"
-    $(document).on("click", function(e) {
-      if (!$(e.target).closest(navDropDown).length) {
-        navDropDown.removeClass("is-active");
-        navDropDown.find("button").attr("aria-expanded", "false");
-      }
     });
   };
 
