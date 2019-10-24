@@ -552,10 +552,18 @@ def log_csp_report():
 @app.route('/.well-known/<path:subpath>')
 @cache_policy(private=False, uri_max_age=31104000, must_revalidate=False)
 def wellknown(subpath):
-    """Route for returning 404 for the currently unused well-known routes."""
+    """Route for returning 404 for the currently unused well-known routes.
+
+    /.well-known/security.txt
+        contact information for a security issue.
+    /.well-known/deployed-version
+        GIT SHA of the current deployed version.
+    """
     if subpath == 'security.txt':
         msg = app.config['WELL_KNOWN_SECURITY']
         status_code = 200
+    elif subpath == 'deployed-version':
+        msg, status_code = app.config['SHA_VERSION']
     else:
         msg = app.config['WELL_KNOWN_ALL'].format(subpath=subpath)
         status_code = 404
