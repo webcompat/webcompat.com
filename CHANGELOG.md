@@ -4,6 +4,14 @@
 2. New features: affect minor number
 3. API endpoint changes or dependency version updates: affect major number
 
+## 21.0.1 - 2019-10-24
+
+* Fixes #3031 - Update privacy policy around experiments [Pull #3032](https://github.com/webcompat/webcompat.com/pull/3032)
+* Fixes #3024 - Move dropdownHandler into shared navbar.js [Pull #3027](https://github.com/webcompat/webcompat.com/pull/3027)
+* Fixes #3022 - Define variation defaults if env vars are missing [Pull #3023](https://github.com/webcompat/webcompat.com/pull/3023)
+* Fixes #3005 - Don't disable button when deleting a screenshots [Pull #3019](https://github.com/webcompat/webcompat.com/pull/3019)
+* Fixes #3005 - Screenshot submit button shouldn't be disabled by default [Pull #3017](https://github.com/webcompat/webcompat.com/pull/3017)
+
 ## 21.0.0 - 2019-10-23
 
 This updates contains updates for an A/B experiment which is not yet activated. It should continue to work as-is.
