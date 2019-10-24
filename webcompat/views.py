@@ -277,7 +277,7 @@ def create_issue():
     elif request_type == 'create':
         # Check if there is a form
         if not request.form:
-            log.info('POST request without form.')
+            log.info('400: POST request without form.')
             abort(400)
         # Adding parameters to the form
         form = request.form.copy()
@@ -290,6 +290,7 @@ def create_issue():
             url=form['url'].encode('utf-8')))
         # Check if the form is valid
         if not is_valid_issue_form(form):
+            log.info('400: POST request w/o valid form (is_valid_issue_form).')
             abort(400)
         if form.get('submit_type') == PROXY_REPORT:
             # Checking blacklisted domains
@@ -315,6 +316,7 @@ def create_issue():
                 session['form'] = form
                 return redirect(url_for('login'))
     else:
+        log.info('400: Something else happened.')
         abort(400)
 
 
