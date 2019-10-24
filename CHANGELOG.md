@@ -4,6 +4,10 @@
 2. New features: affect minor number
 3. API endpoint changes or dependency version updates: affect major number
 
+## 21.0.2 - 2019-10-24
+
+* Fixes #3033 - Include bugform.js on homepage for form-v2 experiment [Pull #3035](https://github.com/webcompat/webcompat.com/pull/3035)
+
 ## 21.0.1 - 2019-10-24
 
 * Fixes #3031 - Update privacy policy around experiments [Pull #3032](https://github.com/webcompat/webcompat.com/pull/3032)
