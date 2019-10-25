@@ -12,7 +12,7 @@ const url = intern.config.siteRoot + "/issues/new";
 // This string is executed by calls to `execute()` in various tests
 // it postMessages a small green test square.
 const POSTMESSAGE_TEST =
-  'postMessage({message: {"url":"http://www.test.com","utm_source":"desktop-reporter","utm_campaign":"report-site-issue-button","src":"desktop-reporter","details":{"gfx.webrender.all":false,"gfx.webrender.blob-images":true,"gfx.webrender.enabled":false,"image.mem.shared":true,"buildID":"20191016225400","channel":"default","consoleLog":[],"hasTouchScreen":false,"mixed active content blocked":false,"mixed passive content blocked":false,"tracking content blocked":"false","hasMarfeel":true},"extra_labels":["type-marfeel"]}}, "http://localhost:5000")';
+  'postMessage({message: {"url":"http://example.com","utm_source":"desktop-reporter","utm_campaign":"report-site-issue-button","src":"desktop-reporter","details":{"gfx.webrender.all":false,"gfx.webrender.blob-images":true,"gfx.webrender.enabled":false,"image.mem.shared":true,"buildID":"20191016225400","channel":"default","consoleLog":[],"hasTouchScreen":false,"mixed active content blocked":false,"mixed passive content blocked":false,"tracking content blocked":"false","hasMarfeel":true},"extra_labels":["type-marfeel"]}}, "http://localhost:5000")';
 
 registerSuite("Reporting through postMessage", {
   tests: {
@@ -25,7 +25,7 @@ registerSuite("Reporting through postMessage", {
           .findByCssSelector("#url")
           .getProperty("value")
           .then(function(value) {
-            assert.include(value, "http://www.test.com");
+            assert.include(value, "http://example.com");
           })
           .end()
           .findByCssSelector("#details")

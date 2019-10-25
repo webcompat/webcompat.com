@@ -501,7 +501,7 @@ class TestHelpers(unittest.TestCase):
             response.set_cookie.assert_not_called()
 
     def test_get_extra_labels(self):
-        """Test extra_label extraction from form object"""
+        """Test extra_labels extraction from form object."""
         with webcompat.app.test_request_context('/issues/new', method='POST'):
             self.assertEqual(get_extra_labels(
                 {'extra_labels': '["type-marfeel", "browser-fenix"]'}),

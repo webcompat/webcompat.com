@@ -30,9 +30,16 @@ var WindowHelpers = {
     });
   },
 
-  sendBlob: function(blob) {
+  sendBlobInObject: function(blob) {
     return new Promise(function(res) {
       postMessage({ screenshot: blob }, "http://localhost:5000");
+      res();
+    });
+  },
+
+  sendBlob: function(blob) {
+    return new Promise(function(res) {
+      postMessage(blob, "http://localhost:5000");
       res();
     });
   },

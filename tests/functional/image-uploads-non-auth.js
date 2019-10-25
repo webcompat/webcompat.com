@@ -13,7 +13,7 @@ const url = intern.config.siteRoot + "/issues/new";
 // This string is executed by calls to `execute()` in various tests
 // it postMessages a small green test square.
 const POSTMESSAGE_TEST_SQUARE =
-  'postMessage({screenshot:"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAIAAABLixI0AAAACXBIWXMAAA7DAAAOwwHHb6hkAAAAB3RJTUUH3gYSAig452t/EQAAAClJREFUOMvtzkENAAAMg0A25ZU+E032AQEXoNcApCGFLX5paWlpaWl9dqq9AS6CKROfAAAAAElFTkSuQmCC"}, "http://localhost:5000")';
+  'postMessage("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAIAAABLixI0AAAACXBIWXMAAA7DAAAOwwHHb6hkAAAAB3RJTUUH3gYSAig452t/EQAAAClJREFUOMvtzkENAAAMg0A25ZU+E032AQEXoNcApCGFLX5paWlpaWl9dqq9AS6CKROfAAAAAElFTkSuQmCC", "http://localhost:5000")';
 
 registerSuite("Image Uploads (non-auth)", {
   tests: {
@@ -42,6 +42,28 @@ registerSuite("Image Uploads (non-auth)", {
           // see window-helpers.js for more details.
           .execute(function() {
             WindowHelpers.getBlob().then(WindowHelpers.sendBlob);
+          })
+          .sleep(1000)
+          .findByCssSelector(".js-image-upload")
+          .getAttribute("style")
+          .then(function(inlineStyle) {
+            assert.include(
+              inlineStyle,
+              "data:image/png;base64,iVBOR",
+              "Base64 data shown as preview background"
+            );
+          })
+          .end()
+      );
+    },
+
+    "postMessaged blob preview that was sent as part of an object"() {
+      return (
+        FunctionalHelpers.openPage(this, url, ".js-image-upload")
+          // Build up a green test square in canvas, toBlob that, and then postMessage the blob
+          // see window-helpers.js for more details.
+          .execute(function() {
+            WindowHelpers.getBlob().then(WindowHelpers.sendBlobInObject);
           })
           .sleep(1000)
           .findByCssSelector(".js-image-upload")

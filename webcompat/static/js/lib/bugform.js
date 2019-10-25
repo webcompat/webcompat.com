@@ -155,12 +155,14 @@ BugForm.prototype.onReceiveMessage = function(event) {
   // Make sure the data is coming from a trusted source.
   // (i.e., our add-on or some other priviledged code sent it)
   if (location.origin === event.origin) {
-    if (event.data.hasOwnProperty("screenshot")) {
+    if (
+      event.data.hasOwnProperty("screenshot") ||
+      event.data.hasOwnProperty("message")
+    ) {
       this.handleScreenshot(event.data.screenshot);
-    }
-
-    if (event.data.hasOwnProperty("message")) {
       this.handleMessage(event.data.message);
+    } else {
+      this.handleScreenshot(event.data);
     }
   }
 };
@@ -179,6 +181,10 @@ BugForm.prototype.handleScreenshot = function(screenshot) {
 };
 
 BugForm.prototype.handleMessage = function(message) {
+  if (!message) {
+    return;
+  }
+
   prefillForm(message);
   this.checkForm();
 };

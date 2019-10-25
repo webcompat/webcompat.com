@@ -725,8 +725,11 @@ def ab_init(response):
 
 
 def get_extra_labels(form):
-    """If extra_labels exists in current session, use it,
-    otherwise use the value coming from form."""
+    """Extract extra_labels.
+
+    If extra_labels param exists in current session, use it,
+    otherwise use the value coming from form.
+    """
 
     extra_labels = session.pop('extra_labels', None)
 
