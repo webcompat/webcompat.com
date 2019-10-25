@@ -4,21 +4,12 @@
 {% include "nav/topbar.html" %}
 <main role="main">
  	{% include "home-page/hero.html" %}
-  	<section id="js-ReportForm" class="js-ReportForm {% if form.errors %}is-opened{% else %}is-closed{% endif %} grid">
-		{% include "home-page/form.html" %}
-	</section>
   	{% include "home-page/how-it-works.html" %}
   	{% include "home-page/join-us.html" %}
   	{% include "home-page/browse-issues.html" %}
 </main>
 {% endblock %}
 {%- block extrascripts -%}
-{# Normally this file is in the webcompat bundle, but the form-v2 #}
-{# experiment does not include it. So include it here. #}
-{# this can be removed when https://github.com/webcompat/webcompat.com/issues/3034 is fixed. #}
-{% if ab_active('exp') == 'form-v2' %}
-<script src="{{ url_for('static', filename='js/lib/bugform.js') }}"></script>
-{% endif %}
 {%- if config.PRODUCTION or config.STAGING -%}
 <script src="{{ url_for('static', filename='js/dist/untriaged.min.js')|bust_cache }}"></script>
 {%- else -%}

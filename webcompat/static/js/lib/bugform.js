@@ -30,7 +30,6 @@ BugForm.prototype.onDOMReadyInit = function() {
   this.hasImage = null;
   this.loadingIndicator = $(".js-loader");
   this.previewEl = $(".js-image-upload");
-  this.reportButton = $("#js-ReportBug");
   this.removeBanner = $(".js-remove-upload");
   this.submitButtons = $("#js-ReportForm .js-Button");
   this.submitButtonWrappers = $("#js-ReportForm .js-Button-wrapper");
@@ -414,10 +413,6 @@ BugForm.prototype.checkForm = function() {
   if (_.some(inputs, Boolean)) {
     // then, check validity
     this.performChecks(true);
-    // and open the form, if it's not already open
-    if (!this.reportButton.hasClass("is-open")) {
-      this.reportButton.click();
-    }
   }
   // Make sure we only do this if the inputs exist on the page
   if (this.browserField.length) {
