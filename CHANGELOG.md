@@ -4,6 +4,11 @@
 2. New features: affect minor number
 3. API endpoint changes or dependency version updates: affect major number
 
+## 21.1.0 - 2019-10-28
+
+* Fixes #3061 - Moves the template at the right place [Pull #3062](https://github.com/webcompat/webcompat.com/pull/3062)
+* Fixes #3034 - Make Report Bug on homepage a hyperlink [Pull #3059](https://github.com/webcompat/webcompat.com/pull/3059)
+
 ## 21.0.3 - 2019-10-24
 
 * Fixes #3033 - Include bugform regardless of env (oops) [Pull #3036](https://github.com/webcompat/webcompat.com/pull/3036)
