@@ -47,7 +47,6 @@ module.exports = function(grunt) {
     },
     index: {
       src: [
-        "<%= jsPath %>/lib/homepage.js",
         "<%= jsPath %>/lib/models/label-list.js",
         "<%= jsPath %>/lib/models/issue.js",
         "<%= jsPath %>/lib/untriaged.js"
