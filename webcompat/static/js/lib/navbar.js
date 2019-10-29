@@ -8,8 +8,25 @@ function NavBar() {
   };
 
   this.setUpEvents = function() {
-    this.navbarHandler();
     this.dropDownHandler();
+    this.navbarHandler();
+    this.searchHandler();
+  };
+
+  this.searchHandler = function() {
+    var searchBar = $(".js-SearchBar");
+    var searchBarOpen = $(".js-SearchBarOpen");
+    var searchBarClose = $(".js-SearchBarClose");
+
+    searchBarOpen.click(function() {
+      searchBar.addClass("is-active");
+      searchBar.find("input").focus();
+    });
+
+    searchBarClose.click(function() {
+      searchBar.removeClass("is-active");
+      searchBar.find("input").blur();
+    });
   };
 
   this.navbarHandler = function() {
