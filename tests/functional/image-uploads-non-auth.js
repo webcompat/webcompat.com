@@ -260,6 +260,54 @@ registerSuite("Image Uploads (non-auth)", {
           .waitForDeletedByCssSelector(".form-upload-error")
           .end()
       );
+    },
+
+    "Selecting an invalid image after a valid one"() {
+      return (
+        FunctionalHelpers.openPage(this, url, ".js-report-buttons")
+          .findByCssSelector("#image")
+          .type(VALID_IMAGE_PATH)
+          .end()
+          .findByCssSelector("#image")
+          .type(BAD_IMAGE_PATH)
+          .end()
+          .findByCssSelector(".form-upload-error")
+          .getVisibleText()
+          .then(function(text) {
+            assert.include(
+              text,
+              "Image must be one of the following",
+              "Image type validation message is shown"
+            );
+          })
+          .end()
+          .findByCssSelector(".js-image-upload")
+          .getAttribute("style")
+          .then(function(inlineStyle) {
+            assert.notInclude(
+              inlineStyle,
+              "data:image/png;base64,iVBOR",
+              "The previous valid image preview should be removed."
+            );
+          })
+          .end()
+          .findByCssSelector(".js-label-upload")
+          .isDisplayed()
+          .then(function(isDisplayed) {
+            assert.isFalse(
+              isDisplayed,
+              "Upload label is hidden while the error is displayed"
+            );
+          })
+          .end()
+          // pick a valid file type
+          .findByCssSelector("#image")
+          .type(VALID_IMAGE_PATH)
+          .end()
+          // validation message should be gone
+          .waitForDeletedByCssSelector(".form-upload-error")
+          .end()
+      );
     }
   }
 });
