@@ -1124,11 +1124,11 @@ BugForm.prototype.changeUploadText = function(textId) {
   Remove the upload image preview and hide the banner.
 */
 BugForm.prototype.removeUploadPreview = function(event) {
-  event.preventDefault();
   if (event && event.originalEvent instanceof Event) {
     // show the upload label when we're responding to a click event
     // (instead of being called from an error handler, which will
     // display its own error label)
+    event.preventDefault();
     this.uploadLabel.removeClass("visually-hidden").removeClass("is-hidden");
   }
   this.previewEl.css("background", "none");
