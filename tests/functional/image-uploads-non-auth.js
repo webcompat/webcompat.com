@@ -7,13 +7,16 @@ const intern = require("intern").default;
 const { assert } = intern.getPlugin("chai");
 const { registerSuite } = intern.getInterface("object");
 const FunctionalHelpers = require("./lib/helpers.js");
-
+const path = require("path");
 const url = intern.config.siteRoot + "/issues/new";
+const cwd = intern.config.basePath;
 
 // This string is executed by calls to `execute()` in various tests
 // it postMessages a small green test square.
 const POSTMESSAGE_TEST_SQUARE =
   'postMessage("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAIAAABLixI0AAAACXBIWXMAAA7DAAAOwwHHb6hkAAAAB3RJTUUH3gYSAig452t/EQAAAClJREFUOMvtzkENAAAMg0A25ZU+E032AQEXoNcApCGFLX5paWlpaWl9dqq9AS6CKROfAAAAAElFTkSuQmCC", "http://localhost:5000")';
+const VALID_IMAGE_PATH = path.join(cwd, "tests/fixtures", "green_square.png");
+const BAD_IMAGE_PATH = path.join(cwd, "tests/fixtures", "evil.py");
 
 registerSuite("Image Uploads (non-auth)", {
   tests: {
@@ -231,6 +234,32 @@ registerSuite("Image Uploads (non-auth)", {
           );
         })
         .end();
+    },
+
+    "Image extension validation"() {
+      return (
+        FunctionalHelpers.openPage(this, url, ".js-report-buttons")
+          .findByCssSelector("#image")
+          .type(BAD_IMAGE_PATH)
+          .end()
+          .findByCssSelector(".form-upload-error")
+          .getVisibleText()
+          .then(function(text) {
+            assert.include(
+              text,
+              "Image must be one of the following",
+              "Image type validation message is shown"
+            );
+          })
+          .end()
+          // pick a valid file type
+          .findByCssSelector("#image")
+          .type(VALID_IMAGE_PATH)
+          .end()
+          // validation message should be gone
+          .waitForDeletedByCssSelector(".form-upload-error")
+          .end()
+      );
     }
   }
 });
