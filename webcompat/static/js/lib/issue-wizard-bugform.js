@@ -1152,6 +1152,8 @@ BugForm.prototype.hideLoadingIndicator = function() {
 };
 
 BugForm.prototype.onFormSubmit = function(event) {
+  event.preventDefault();
+  this.disableSubmits();
   this.showLoadingIndicator();
   this.maybeUploadImage(event).then(
     this.submitForm.bind(this),
