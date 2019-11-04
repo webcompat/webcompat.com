@@ -13,6 +13,7 @@ from functools import update_wrapper
 from functools import wraps
 import hashlib
 import json
+import logging
 import os
 import math
 import random
@@ -42,6 +43,8 @@ JSON_MIME = 'application/json'
 REPO_URI = app.config['ISSUES_REPO_URI']
 
 cache_dict = {}
+log = app.logger
+log.setLevel(logging.INFO)
 
 
 @app.template_filter('bust_cache')
@@ -585,6 +588,13 @@ def is_valid_issue_form(form):
     parameters_check = set(must_parameters).issubset(list(form.keys()))
     if parameters_check:
         values_check = form['submit_type'] in form_submit_values
+    else:
+        log.info('is_valid_issue_form: missing param(s) => {0}'.format(
+            set(must_parameters).difference(list(form.keys()))
+        ))
+        log.info('is_valid_issue_form: form[submit_type] => {0}'.format(
+            form.get('submit_type', 'missing submit_type')
+        ))
     return parameters_check and values_check
 
 
