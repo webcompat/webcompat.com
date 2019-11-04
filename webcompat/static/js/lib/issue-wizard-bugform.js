@@ -654,15 +654,13 @@ BugForm.prototype.imageField = function(id, inlineHelp) {
     .addClass("form-upload-error")
     .appendTo(".js-error-upload");
 
-  $(".js-label-upload").addClass("is-hidden");
-  $(".js-remove-upload").addClass("is-hidden");
+  this.uploadLabel.addClass("is-hidden");
+  this.removeBanner.addClass("is-hidden");
   $(".js-error-upload").removeClass("is-hidden");
 
   $(".form-message-error").hide();
   $(".form-input-validation .error").hide();
-  // "reset" the form field, because the file would get rejected
-  // from the server anyways.
-  this.uploadField.val(this.uploadField.get(0).defaultValue);
+  this.removeUploadPreview();
 };
 
 BugForm.prototype.optionalField = function(id) {
@@ -1125,13 +1123,18 @@ BugForm.prototype.changeUploadText = function(textId) {
 /*
   Remove the upload image preview and hide the banner.
 */
-BugForm.prototype.removeUploadPreview = function(e) {
-  e.preventDefault();
+BugForm.prototype.removeUploadPreview = function(event) {
+  if (event && event.originalEvent instanceof Event) {
+    // show the upload label when we're responding to a click event
+    // (instead of being called from an error handler, which will
+    // display its own error label)
+    event.preventDefault();
+    this.uploadLabel.removeClass("visually-hidden").removeClass("is-hidden");
+  }
   this.previewEl.css("background", "none");
   this.removeBanner.addClass("is-hidden");
   this.uploadOther.addClass("is-hidden");
   this.removeBanner.attr("tabIndex", "-1");
-  this.uploadLabel.removeClass("visually-hidden").removeClass("is-hidden");
   this.removeBanner.off("click");
   this.removeBanner.get(0).blur();
 
