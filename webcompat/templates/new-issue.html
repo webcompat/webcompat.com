@@ -6,7 +6,7 @@
 {% endif %}
 {% endblock %}
 
-{% block title %}New Issue{% endblock %}
+{% block title %}{{ pagetitle }}{% endblock %}
 {%- block body -%}
 {% if ab_active('exp') == 'form-v2' %}
   {% include "nav/issue-wizard-stepper.html" %}
