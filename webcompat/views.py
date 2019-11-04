@@ -265,14 +265,17 @@ def create_issue():
             bug_form = get_form(form_data, form=FormWizard)
             # TODO: remove this when the experiment has ended
             form_data['extra_labels'].append('form-v2-experiment')
+            pagetitle = "New Issue |"
         else:
             bug_form = get_form(form_data)
+            pagetitle = "New Issue"
 
         session['extra_labels'] = form_data['extra_labels']
         source = form_data.pop('utm_source', None)
         campaign = form_data.pop('utm_campaign', None)
         return render_template('new-issue.html', form=bug_form, source=source,
-                               campaign=campaign, nonce=request.nonce)
+                               campaign=campaign, nonce=request.nonce,
+                               pagetitle=pagetitle)
     # Issue Creation section
     elif request_type == 'create':
         # Check if there is a form
