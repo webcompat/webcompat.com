@@ -4,6 +4,13 @@
 2. New features: affect minor number
 3. API endpoint changes or dependency version updates: affect major number
 
+## 21.1.1 - 2019-11-05
+
+* Fixes #3071 - Change page title based on form [Pull #3074](https://github.com/webcompat/webcompat.com/pull/3074)
+* Fixes #3049 - Clear the image preview when hitting an error [Pull #3067](https://github.com/webcompat/webcompat.com/pull/3067)
+* Fixes #3050 - Disable submits on form submit [Pull #3065](https://github.com/webcompat/webcompat.com/pull/3065)
+* Fixes #3063 - Move search bar handling into shared navbar.js [Pull #3064](https://github.com/webcompat/webcompat.com/pull/3064)
+
 ## 21.1.0 - 2019-10-28
 
 * Fixes #3061 - Moves the template at the right place [Pull #3062](https://github.com/webcompat/webcompat.com/pull/3062)
