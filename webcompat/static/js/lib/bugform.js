@@ -156,7 +156,7 @@ BugForm.prototype.onReceiveMessage = function(event) {
   // (i.e., our add-on or some other priviledged code sent it)
   if (location.origin === event.origin) {
     if (
-      event.data.hasOwnProperty("screenshot") ||
+      event.data.hasOwnProperty("screenshot") &&
       event.data.hasOwnProperty("message")
     ) {
       this.handleScreenshot(event.data.screenshot);
@@ -168,6 +168,9 @@ BugForm.prototype.onReceiveMessage = function(event) {
 };
 
 BugForm.prototype.handleScreenshot = function(screenshot) {
+  if (!screenshot) {
+    return;
+  }
   // See https://github.com/webcompat/webcompat.com/issues/1252 to track
   // the work of only accepting blobs, which should simplify things.
   if (screenshot instanceof Blob) {

@@ -503,12 +503,44 @@ class TestHelpers(unittest.TestCase):
     def test_get_extra_labels(self):
         """Test extra_labels extraction from form object."""
         with webcompat.app.test_request_context('/issues/new', method='POST'):
+
+            webcompat.app.preprocess_request()
+
             self.assertEqual(get_extra_labels(
                 {'extra_labels': '["type-marfeel", "browser-fenix"]'}),
                 ['type-marfeel', 'browser-fenix']
             )
             self.assertEqual(get_extra_labels({'extra_labels': '[]'}), [])
             self.assertEqual(get_extra_labels({}), None)
+            self.assertEqual(get_extra_labels({'extra_labels': ''}), None)
+
+    def test_get_extra_labels_for_experiment(self):
+        """Test extra_labels extraction from form object if
+        experiment is active."""
+        with webcompat.app.test_request_context(
+                '/',
+                method='POST'):
+
+            webcompat.app.config['AB_EXPERIMENTS'] = {
+                'exp': {
+                    'variations': {
+                        'form-v2': (0, 100)
+                    },
+                    'max-age': 86400
+                }
+            }
+            webcompat.app.preprocess_request()
+
+            self.assertEqual(get_extra_labels(
+                {'extra_labels': '["type-marfeel", "browser-fenix"]'}),
+                ['type-marfeel', 'browser-fenix', 'form-v2-experiment']
+            )
+
+            self.assertEqual(get_extra_labels({'extra_labels': '[]'}),
+                             ['form-v2-experiment'])
+            self.assertEqual(get_extra_labels({}), ['form-v2-experiment'])
+            self.assertEqual(get_extra_labels({'extra_labels': ''}),
+                             ['form-v2-experiment'])
 
 
 if __name__ == '__main__':

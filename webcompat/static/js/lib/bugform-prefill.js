@@ -1,5 +1,5 @@
 /* exported prefillForm */
-function prefillForm(message, isExperiment) {
+function prefillForm(message) {
   if (!message) return;
 
   var config = {
@@ -15,16 +15,11 @@ function prefillForm(message, isExperiment) {
     },
     extra_labels: {
       element: $("#extra_labels"),
-      stringify: true,
-      label: true
+      stringify: true
     }
   };
 
   var prepareValue = function(field, value) {
-    if (field.label && isExperiment) {
-      value.push("form-v2-experiment");
-    }
-
     if (field.stringify) {
       return JSON.stringify(value);
     }
