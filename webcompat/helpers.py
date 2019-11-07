@@ -576,6 +576,7 @@ def is_valid_issue_form(form):
     if one essential is missing, it's a bad request.
     We may add more constraints in the future.
     """
+    values_check = False
     must_parameters = [
         'browser',
         'description',
@@ -588,14 +589,13 @@ def is_valid_issue_form(form):
     parameters_check = set(must_parameters).issubset(list(form.keys()))
     if parameters_check:
         values_check = form['submit_type'] in form_submit_values
-    else:
-        log.info('is_valid_issue_form: missing param(s) => {0}'.format(
-            set(must_parameters).difference(list(form.keys()))
-        ))
+    valid_form = parameters_check and values_check
+    if not valid_form:
         log.info('is_valid_issue_form: form[submit_type] => {0}'.format(
-            form.get('submit_type', 'missing submit_type')
-        ))
-    return parameters_check and values_check
+            form.get('submit_type', 'missing submit_type value')))
+        log.info('is_valid_issue_form: missing param(s)? => {0}'.format(
+            set(must_parameters).difference(list(form.keys()))))
+    return valid_form
 
 
 def is_blacklisted_domain(domain):
