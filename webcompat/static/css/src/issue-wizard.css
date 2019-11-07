@@ -449,7 +449,7 @@
   border-color: var(--screenshot-shadow);
   font-size: 14px;
   font-weight: 200;
-  padding: 4px 24px 5px 8px;
+  padding: 4px 32px 5px 8px;
 }
 
 .with-validation-icons.is-validated::after,
@@ -488,8 +488,9 @@
 
 .low.is-validated::after,
 .low.is-error::before {
-  bottom: 22px;
+  bottom: 32px;
   height: 20px;
+  right: 18px;
   width: 20px;
 }
 
@@ -498,7 +499,7 @@
   color: var(--color-second);
   font-weight: 200;
   margin-bottom: 17px;
-  padding: 5px 24px 7px 8px;
+  padding: 5px 32px 7px 8px;
 }
 
 .low .text-field::placeholder {
@@ -1032,7 +1033,7 @@
     border-color: var(--color-form);
     font-size: 90%;
     font-weight: 600;
-    padding: 11px 24px 11px 8px;
+    padding: 11px 36px 11px 8px;
   }
 
   .low .text-field {
@@ -1040,7 +1041,7 @@
     color: var(--color-second);
     font-weight: 200;
     margin-bottom: 17px;
-    padding: 5px 24px 7px 8px;
+    padding: 5px 32px 7px 8px;
   }
 
   .button-control {
@@ -1062,7 +1063,7 @@
 
   .low.is-validated::after,
   .low.is-error::before {
-    bottom: 22px;
+    bottom: 23px;
     height: 20px;
     width: 20px;
   }
