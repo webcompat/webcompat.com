@@ -724,6 +724,19 @@ def ab_init(response):
     return response
 
 
+def extract_extra_labels_from_form(form):
+    """Extract extra_labels from form.
+
+    If extra_labels attribute is in form and not empty, use it,
+    otherwise return an empty list.
+    """
+
+    if 'extra_labels' in form and form['extra_labels']:
+        return json.loads(form['extra_labels'])
+    else:
+        return []
+
+
 def get_extra_labels(form):
     """Extract extra_labels.
 
@@ -732,10 +745,10 @@ def get_extra_labels(form):
     label if the experiment cookie exists.
     """
 
-    extra_labels = session.pop('extra_labels', None)
+    extra_labels = session.pop('extra_labels', [])
 
-    if not extra_labels and 'extra_labels' in form and form['extra_labels']:
-        extra_labels = json.loads(form['extra_labels'])
+    if not extra_labels:
+        extra_labels = extract_extra_labels_from_form(form)
 
     if ab_active('exp') == 'form-v2':
         if isinstance(extra_labels, list):

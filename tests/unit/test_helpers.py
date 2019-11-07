@@ -12,6 +12,7 @@ import unittest
 
 import flask
 from werkzeug.http import parse_cookie
+from flask import session
 
 import webcompat
 from webcompat.helpers import ab_active
@@ -33,6 +34,7 @@ from webcompat.helpers import rewrite_and_sanitize_link
 from webcompat.helpers import rewrite_links
 from webcompat.helpers import sanitize_link
 from webcompat.helpers import get_extra_labels
+from webcompat.helpers import extract_extra_labels_from_form
 
 
 ACCESS_TOKEN_LINK = '<https://api.github.com/repositories/17839063/issues?per_page=50&page=3&access_token=12345>; rel="next", <https://api.github.com/repositories/17839063/issues?access_token=12345&per_page=50&page=4>; rel="last", <https://api.github.com/repositories/17839063/issues?per_page=50&access_token=12345&page=1>; rel="first", <https://api.github.com/repositories/17839063/issues?per_page=50&page=1&access_token=12345>; rel="prev"'  # noqa
@@ -504,22 +506,28 @@ class TestHelpers(unittest.TestCase):
         """Test extra_labels extraction from form object."""
         with webcompat.app.test_request_context('/issues/new', method='POST'):
 
+            # need to call this since g.current_experiments
+            # is defined in before_request
             webcompat.app.preprocess_request()
 
             self.assertEqual(get_extra_labels(
                 {'extra_labels': '["type-marfeel", "browser-fenix"]'}),
                 ['type-marfeel', 'browser-fenix']
             )
-            self.assertEqual(get_extra_labels({'extra_labels': '[]'}), [])
-            self.assertEqual(get_extra_labels({}), None)
-            self.assertEqual(get_extra_labels({'extra_labels': ''}), None)
+
+            self.assertEqual(get_extra_labels({}), [])
+
+            session['extra_labels'] = ['type-fastclick']
+
+            self.assertEqual(get_extra_labels(
+                {'extra_labels': '["type-marfeel", "browser-fenix"]'}),
+                ['type-fastclick']
+            )
 
     def test_get_extra_labels_for_experiment(self):
         """Test extra_labels extraction from form object if
         experiment is active."""
-        with webcompat.app.test_request_context(
-                '/',
-                method='POST'):
+        with webcompat.app.test_request_context('/issues/new', method='POST'):
 
             webcompat.app.config['AB_EXPERIMENTS'] = {
                 'exp': {
@@ -529,6 +537,9 @@ class TestHelpers(unittest.TestCase):
                     'max-age': 86400
                 }
             }
+
+            # need to call this since g.current_experiments
+            # is defined in before_request
             webcompat.app.preprocess_request()
 
             self.assertEqual(get_extra_labels(
@@ -538,9 +549,27 @@ class TestHelpers(unittest.TestCase):
 
             self.assertEqual(get_extra_labels({'extra_labels': '[]'}),
                              ['form-v2-experiment'])
-            self.assertEqual(get_extra_labels({}), ['form-v2-experiment'])
-            self.assertEqual(get_extra_labels({'extra_labels': ''}),
-                             ['form-v2-experiment'])
+
+            session['extra_labels'] = ['type-fastclick']
+
+            self.assertEqual(get_extra_labels(
+                {'extra_labels': '["type-marfeel", "browser-fenix"]'}),
+                ['type-fastclick', 'form-v2-experiment']
+            )
+
+    def test_extract_extra_labels_from_form(self):
+        self.assertEqual(extract_extra_labels_from_form(
+            {'extra_labels': '["type-marfeel", "browser-fenix"]'}),
+            ['type-marfeel', 'browser-fenix']
+        )
+
+        self.assertEqual(extract_extra_labels_from_form(
+            {'extra_labels': '[]'}
+        ), [])
+        self.assertEqual(extract_extra_labels_from_form({}), [])
+        self.assertEqual(extract_extra_labels_from_form({
+            'extra_labels': ''}
+        ), [])
 
 
 if __name__ == '__main__':
