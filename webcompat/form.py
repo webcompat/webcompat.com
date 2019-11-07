@@ -234,7 +234,6 @@ class FormWizard(IssueForm):
     steps = NEW_ISSUE_STEPS
 
     browser = StringField(u'Browser', [Optional()])
-    device = StringField('Device', [Optional()])
     os = StringField('Operating System', [Optional()])
 
     problem_category = PrefixedRadioField(
