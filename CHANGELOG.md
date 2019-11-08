@@ -4,6 +4,12 @@
 2. New features: affect minor number
 3. API endpoint changes or dependency version updates: affect major number
 
+## 21.1.2 - 2019-11-08
+
+* Fixes #3041 - Use Operating System instead of Device [Pull #3081](https://github.com/webcompat/webcompat.com/pull/3081)
+* Fixes #3070 - Rewrite is_valid_issue_form [Pull #3079](https://github.com/webcompat/webcompat.com/pull/3079)
+* Fixes #3076 - Remove maxlength for textarea [Pull #3078](https://github.com/webcompat/webcompat.com/pull/3078)
+
 ## 21.1.1 - 2019-11-05
 
 * Fixes #3071 - Change page title based on form [Pull #3074](https://github.com/webcompat/webcompat.com/pull/3074)
