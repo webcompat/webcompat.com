@@ -264,19 +264,22 @@ def create_issue():
 
         if ab_active('exp') == 'form-v2':
             bug_form = get_form(form_data, form=FormWizard)
+            pagetitle = "New Issue |"
         else:
             bug_form = get_form(form_data)
+            pagetitle = "New Issue"
 
         session['extra_labels'] = form_data['extra_labels']
         source = form_data.pop('utm_source', None)
         campaign = form_data.pop('utm_campaign', None)
         return render_template('new-issue.html', form=bug_form, source=source,
-                               campaign=campaign, nonce=request.nonce)
+                               campaign=campaign, nonce=request.nonce,
+                               pagetitle=pagetitle)
     # Issue Creation section
     elif request_type == 'create':
         # Check if there is a form
         if not request.form:
-            log.info('POST request without form.')
+            log.info('400: POST request without form.')
             abort(400)
         # Adding parameters to the form
         form = request.form.copy()
@@ -289,6 +292,7 @@ def create_issue():
             url=form['url'].encode('utf-8')))
         # Check if the form is valid
         if not is_valid_issue_form(form):
+            log.info('400: POST request w/o valid form (is_valid_issue_form).')
             abort(400)
         if form.get('submit_type') == PROXY_REPORT:
             # Checking blacklisted domains
@@ -314,6 +318,7 @@ def create_issue():
                 session['form'] = form
                 return redirect(url_for('login'))
     else:
+        log.info('400: Something else happened.')
         abort(400)
 
 
@@ -551,10 +556,18 @@ def log_csp_report():
 @app.route('/.well-known/<path:subpath>')
 @cache_policy(private=False, uri_max_age=31104000, must_revalidate=False)
 def wellknown(subpath):
-    """Route for returning 404 for the currently unused well-known routes."""
+    """Route for returning 404 for the currently unused well-known routes.
+
+    /.well-known/security.txt
+        contact information for a security issue.
+    /.well-known/deployed-version
+        GIT SHA of the current deployed version.
+    """
     if subpath == 'security.txt':
         msg = app.config['WELL_KNOWN_SECURITY']
         status_code = 200
+    elif subpath == 'deployed-version':
+        msg, status_code = app.config['SHA_VERSION']
     else:
         msg = app.config['WELL_KNOWN_ALL'].format(subpath=subpath)
         status_code = 404

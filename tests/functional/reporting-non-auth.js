@@ -10,7 +10,6 @@ const path = require("path");
 
 var cwd = intern.config.basePath;
 var VALID_IMAGE_PATH = path.join(cwd, "tests/fixtures", "green_square.png");
-var BAD_IMAGE_PATH = path.join(cwd, "tests/fixtures", "evil.py");
 // DETAILS_STRING is a URL encoded object, stringified to JSON.
 var DETAILS_STRING =
   '{"gfx.webrender.all"%3Afalse%2C"gfx.webrender.blob-images"%3A2%2C"gfx.webrender.enabled"%3Afalse%2C"image.mem.shared"%3A2%2C"layout.css.servo.enabled"%3Atrue}';
@@ -201,36 +200,6 @@ registerSuite("Reporting (non-auth)", {
               "The valid checkbox pseudo is not visible"
             );
           })
-          .end()
-      );
-    },
-
-    "Image extension validation"() {
-      return (
-        FunctionalHelpers.openPage(
-          this,
-          url("/issues/new"),
-          ".js-report-buttons"
-        )
-          .findByCssSelector("#image")
-          .type(BAD_IMAGE_PATH)
-          .end()
-          .findByCssSelector(".form-upload-error")
-          .getVisibleText()
-          .then(function(text) {
-            assert.include(
-              text,
-              "Image must be one of the following",
-              "Image type validation message is shown"
-            );
-          })
-          .end()
-          // pick a valid file type
-          .findByCssSelector("#image")
-          .type(VALID_IMAGE_PATH)
-          .end()
-          // validation message should be gone
-          .waitForDeletedByCssSelector(".form-upload-error")
           .end()
       );
     },

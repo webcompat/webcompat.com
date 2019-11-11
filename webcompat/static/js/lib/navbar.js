@@ -8,7 +8,25 @@ function NavBar() {
   };
 
   this.setUpEvents = function() {
+    this.dropDownHandler();
     this.navbarHandler();
+    this.searchHandler();
+  };
+
+  this.searchHandler = function() {
+    var searchBar = $(".js-SearchBar");
+    var searchBarOpen = $(".js-SearchBarOpen");
+    var searchBarClose = $(".js-SearchBarClose");
+
+    searchBarOpen.click(function() {
+      searchBar.addClass("is-active");
+      searchBar.find("input").focus();
+    });
+
+    searchBarClose.click(function() {
+      searchBar.removeClass("is-active");
+      searchBar.find("input").blur();
+    });
   };
 
   this.navbarHandler = function() {
@@ -51,6 +69,25 @@ function NavBar() {
         return;
       }
     }, 100);
+  };
+
+  this.dropDownHandler = function() {
+    var navDropDown = $(".js-DropdownHeader");
+    navDropDown.click(function() {
+      var $this = $(this);
+      $this.toggleClass("is-active");
+      $this.find("button").attr("aria-expanded", function() {
+        return $this.hasClass("is-active") ? "true" : "false";
+      });
+    });
+
+    // close dropdown if you click "outside"
+    $(document).on("click", function(e) {
+      if (!$(e.target).closest(navDropDown).length) {
+        navDropDown.removeClass("is-active");
+        navDropDown.find("button").attr("aria-expanded", "false");
+      }
+    });
   };
 
   return this.init();

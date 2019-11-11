@@ -26,14 +26,32 @@ module.exports = function(grunt) {
       ],
       dest: "<%= jsDistPath %>/<%= pkg.name %>.js"
     },
-    untriaged: {
+    distFormV2: {
       src: [
-        "<%= jsPath %>/lib/homepage.js",
+        "<%= jsPath %>/vendor/jquery-3.3.1.min.js",
+        "<%= jsPath %>/vendor/lodash.custom.min.js",
+        "<%= jsPath %>/vendor/backbone-1.3.3.min.js",
+        "<%= jsPath %>/vendor/moment-min.js",
+        "<%= jsPath %>/vendor/prism.js",
+        "<%= jsPath %>/vendor/mousetrap-min.js",
+        "<%= jsPath %>/vendor/backbone.mousetrap.js",
+        "<%= jsPath %>/lib/flash-message.js",
+        "<%= jsPath %>/lib/autogrow-textfield.js",
+        "<%= jsPath %>/lib/bugform-validation.js",
+        "<%= jsPath %>/lib/issue-wizard-popup.js",
+        "<%= jsPath %>/lib/issue-wizard-slider.js",
+        "<%= jsDistPath %>/templates.js",
+        "<%= jsPath %>/lib/navbar.js"
+      ],
+      dest: "<%= jsDistPath %>/<%= pkg.name %>.formv2.js"
+    },
+    index: {
+      src: [
         "<%= jsPath %>/lib/models/label-list.js",
         "<%= jsPath %>/lib/models/issue.js",
         "<%= jsPath %>/lib/untriaged.js"
       ],
-      dest: "<%= jsDistPath %>/untriaged.js"
+      dest: "<%= jsDistPath %>/index.js"
     },
     issues: {
       src: [

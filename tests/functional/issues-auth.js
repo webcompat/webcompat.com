@@ -43,6 +43,43 @@ registerSuite("Issues (auth)", {
             });
         })
         .end();
+    },
+
+    "Clicking the logout dropdown works"() {
+      return FunctionalHelpers.openPage(
+        this,
+        url("/issues/70"),
+        ".js-Issue-comment-button"
+      )
+        .findByCssSelector(".js-DropdownHeader")
+        .click()
+        .end()
+        .findByCssSelector(".js-DropdownHeader")
+        .then(function(element) {
+          element
+            .getAttribute("class")
+            .then(function(classList) {
+              assert.include(classList, "is-active");
+            })
+            .catch(function(error) {
+              console.log(error);
+            });
+        })
+        .end()
+        .findByCssSelector(".js-DropdownHeader")
+        .click()
+        .end()
+        .findByCssSelector(".js-DropdownHeader")
+        .then(function(element) {
+          element
+            .getAttribute("class")
+            .then(function(classList) {
+              assert.notInclude(classList, "is-active");
+            })
+            .catch(function(error) {
+              console.log(error);
+            });
+        });
     }
   }
 });

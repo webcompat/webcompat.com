@@ -226,8 +226,8 @@ EXTRA_LABELS = [
 
 # Get AB experiment variation values from the environement.
 AB_VARIATIONS = {
-    'FORM_V1_VARIATION': os.environ.get('FORM_V1_VARIATION'),
-    'FORM_V2_VARIATION': os.environ.get('FORM_V2_VARIATION'),
+    'FORM_V1_VARIATION': os.environ.get('FORM_V1_VARIATION', '0 100'),
+    'FORM_V2_VARIATION': os.environ.get('FORM_V2_VARIATION', '100 100'),
 }
 # We define default values here, as a fallback.
 # By default, v1 will be served 100% of the time.

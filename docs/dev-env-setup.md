@@ -216,7 +216,7 @@ File webcompat/static/js/dist/templates.js created.
 
 Running "concat:dist" (concat) task
 
-Running "concat:untriaged" (concat) task
+Running "concat:index" (concat) task
 
 Running "concat:issues" (concat) task
 
@@ -239,7 +239,7 @@ Running "uglify:issueList" (uglify) task
 Running "uglify:userActivity" (uglify) task
 >> 1 file created 22.1 kB → 11.54 kB
 
-Running "uglify:untriaged" (uglify) task
+Running "uglify:index" (uglify) task
 >> 1 file created 16.51 kB → 8.67 kB
 
 Running "uglify:contributors" (uglify) task

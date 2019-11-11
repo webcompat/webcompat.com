@@ -92,7 +92,7 @@ registerSuite("Search (auth)", {
         .end();
     },
 
-    "Search works by icon click"() {
+    "Search works by icon click (issues page)"() {
       return FunctionalHelpers.openPage(
         this,
         url("/issues"),
@@ -112,6 +112,36 @@ registerSuite("Search (auth)", {
             "vladvlad",
             "The search results show up on the page."
           );
+        })
+        .end();
+    },
+
+    "Search opens by icon click (new issue page)"() {
+      return FunctionalHelpers.openPage(
+        this,
+        url("/issues/new"),
+        ".js-ReportForm"
+      )
+        .findByCssSelector(".js-SearchBarOpen")
+        .click()
+        .end()
+        .findDisplayedByCssSelector("#search-bar")
+        .isDisplayed()
+        .then(function(isDisplayed) {
+          assert.equal(isDisplayed, true, "Search form is visible.");
+        })
+        .end();
+    },
+
+    "Search works by icon click (home page)"() {
+      return FunctionalHelpers.openPage(this, url("/"), ".js-SearchBarOpen")
+        .findByCssSelector(".js-SearchBarOpen")
+        .click()
+        .end()
+        .findDisplayedByCssSelector("#search-bar")
+        .isDisplayed()
+        .then(function(isDisplayed) {
+          assert.equal(isDisplayed, true, "Search form is visible.");
         })
         .end();
     },

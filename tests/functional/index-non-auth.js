@@ -26,37 +26,6 @@ registerSuite("Index", {
         .end();
     },
 
-    "form toggles open then closed"() {
-      return (
-        FunctionalHelpers.openPage(this, url("/"), ".js-hero-title")
-          .findByCssSelector("#js-ReportBug")
-          .click()
-          .end()
-          .sleep(1000)
-          .findByCssSelector("#js-ReportForm")
-          .isDisplayed()
-          .then(function(isDisplayed) {
-            assert.equal(isDisplayed, true, "The form is displayed");
-          })
-          .end()
-          .execute(function() {
-            // scroll up so the driver doesn't get confused and
-            // click on the addon link
-            window.scrollTo(0, 0);
-          })
-          .findByCssSelector("#js-ReportBug")
-          .click()
-          .end()
-          // wait a bit for animation to finish
-          .sleep(1000)
-          .findByCssSelector("#js-ReportForm")
-          .isDisplayed()
-          .then(function(isDisplayed) {
-            assert.equal(isDisplayed, false, "The form should be hidden");
-          })
-      );
-    },
-
     "browse issues (needstriage)"() {
       return FunctionalHelpers.openPage(this, url("/"), ".js-hero-title")
         .findAllByCssSelector("#js-lastIssue .js-IssueList.label-needstriage")

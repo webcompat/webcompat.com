@@ -113,3 +113,12 @@ Contact: mailto:miket@mozilla.com
 # AB setup
 # Comma separated list of user IDs to exempt from experiments
 AB_EXEMPT_USERS = os.environ.get('AB_EXEMPT_USERS', '').split(',')
+
+# SHA reference for the current deployed version
+# The Git SHA is written in data/ at deployment time.
+# This is used in views.py for /.well-known/deployed-version route
+try:
+    with open(os.path.join(DATA_PATH, 'sha.txt')) as f:
+        SHA_VERSION = (f.read(), 200)
+except FileNotFoundError as oops:
+    SHA_VERSION = ('no sha.', 404)

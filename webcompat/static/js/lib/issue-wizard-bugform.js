@@ -30,8 +30,8 @@ BugForm.prototype.onDOMReadyInit = function() {
   this.hasImage = null;
   this.loadingIndicator = $(".js-loader");
   this.previewEl = $(".js-image-upload");
-  this.reportButton = $("#js-ReportBug");
   this.removeBanner = $(".js-remove-upload");
+  this.uploadOther = $(".screenshot-select-trigger");
   this.submitButtons = $("#js-ReportForm .js-Button");
   this.submitButtonWrappers = $("#js-ReportForm .js-Button-wrapper");
   this.submitTypeInput = $("#submit_type:hidden");
@@ -42,7 +42,9 @@ BugForm.prototype.onDOMReadyInit = function() {
   this.step2Trigger = $(".next-step.step-2");
   this.step3Trigger = $("#problem_category input");
   this.step3Btn = $(".next-step.step-3");
+  this.step4Btn = $(".next-step.step-4");
   this.step4Trigger = $(".subproblem input[type='radio']");
+  this.step5Btn = $(".next-step.issue-btn.step-5");
   this.step6Btn = $("button.next-step.step-6");
   this.step8Btn = $("button.next-step.step-8");
   this.step10Btn = $("button.next-step.step-10");
@@ -53,7 +55,7 @@ BugForm.prototype.onDOMReadyInit = function() {
   this.step4Container = $(".step-container.step4");
   this.step5Container = $(".step-container.step5");
   this.step6Container = $(".step-container.step6");
-  this.step6Radio = $(".step-container.step6 input");
+  this.step6Radio = $(".step-container.step6 .input-control input");
   this.step7Container = $(".step-container.step7");
   this.step8Container = $(".step-container.step8");
   this.step9Container = $(".step-container.step9");
@@ -66,6 +68,7 @@ BugForm.prototype.onDOMReadyInit = function() {
   this.problemStep = 2;
   this.subproblemStep = 3;
   this.browserDetectionStep = 4;
+  this.customBrowserStep = 5;
   this.browserSelectionStepNo = 7;
   this.descriptionStep = 8;
   this.stepNotDefined = -1;
@@ -76,6 +79,8 @@ BugForm.prototype.onDOMReadyInit = function() {
   this.detectionBugId = "detection_bug";
   this.otherProblemElements = $(".other-problem");
   this.otherBrowserElements = $(".other-browser");
+  this.testedOtherBrowsersId = "#browser_test-0";
+  this.noOtherBrowserTestedId = "#browser_test-1";
   this.uploadTextElements = $(".up-message");
   this.isSubproblem = false;
   this.blockNext = false;
@@ -184,13 +189,13 @@ BugForm.prototype.onDOMReadyInit = function() {
       el: $("#browser"),
       valid: true,
       helpText: null,
-      errFunction: "optionalField"
+      errFunction: "requiredField"
     },
     os: {
       el: $("#os"),
       valid: true,
       helpText: null,
-      errFunction: "optionalField"
+      errFunction: "requiredField"
     },
     browser_test_type: {
       el: $("[name=browser_test]"),
@@ -207,7 +212,9 @@ BugForm.prototype.onDOMReadyInit = function() {
   };
 
   this.browserField = this.inputs.browser.el;
+  this.browserVal = this.inputs.browser.el.val();
   this.osField = this.inputs.os.el;
+  this.osVal = this.inputs.os.el.val();
   this.problemType = this.inputs.problem_category.el;
   this.problemSubtype = this.inputs.other_problem.el;
   this.otherBrowser = this.inputs.browser_test_type.el;
@@ -273,6 +280,7 @@ BugForm.prototype.init = function() {
   this.nextStepBtn.on("click", this.nextStep.bind(this));
   this.step3Trigger.on("change", this.nextStep.bind(this));
   this.step3Radio.on("change", this.nextStep.bind(this));
+  this.step4Btn.on("click", this.resetDefaultDevice.bind(this));
   this.step6Radio.on("change", this.nextStep.bind(this));
   this.anonUsernameTrigger.on("click", this.revealUsernameField.bind(this));
 
@@ -592,7 +600,7 @@ BugForm.prototype.checkBrowserInputValidity = function(silent) {
 /* Check to see that the issue description input is not empty. */
 BugForm.prototype.checkProblemSubtypeValidity = function(silent) {
   var func = this.determineValidityFunction(
-    this.validation.isProblemSubtypeValid,
+    this.validation.isIssueValid,
     this.problemSubtype,
     silent
   );
@@ -608,6 +616,7 @@ BugForm.prototype.checkOptionalNonEmpty = function(field) {
   );
   var inputId = field.prop("id");
   this[func](inputId);
+  this.setNextBtnStatus(this.customBrowserStep);
 };
 
 /* Check to see if the GitHub username has the right syntax.*/
@@ -644,10 +653,6 @@ BugForm.prototype.checkForm = function() {
   if (_.some(inputs, Boolean)) {
     // then, check validity
     this.performChecks(true);
-    // and open the form, if it's not already open
-    if (!this.reportButton.hasClass("is-open")) {
-      this.reportButton.click();
-    }
   }
   // Make sure we only do this if the inputs exist on the page
   if (this.browserField.length) {
@@ -673,15 +678,13 @@ BugForm.prototype.imageField = function(id, inlineHelp) {
     .addClass("form-upload-error")
     .appendTo(".js-error-upload");
 
-  $(".js-label-upload").addClass("is-hidden");
-  $(".js-remove-upload").addClass("is-hidden");
+  this.uploadLabel.addClass("is-hidden");
+  this.removeBanner.addClass("is-hidden");
   $(".js-error-upload").removeClass("is-hidden");
 
   $(".form-message-error").hide();
   $(".form-input-validation .error").hide();
-  // "reset" the form field, because the file would get rejected
-  // from the server anyways.
-  this.uploadField.val(this.uploadField.get(0).defaultValue);
+  this.removeUploadPreview();
 };
 
 BugForm.prototype.optionalField = function(id) {
@@ -765,23 +768,24 @@ BugForm.prototype.setNextBtnStatus = function(step) {
         this.step3Btn.addClass("disabled");
       }
       break;
+    case this.customBrowserStep:
+      var customBrowserVal = $.trim(this.inputs["browser"].el[0].value);
+      var osVal = $.trim(this.inputs["os"].el[0].value);
+      if (customBrowserVal.length > 0 && osVal.length > 0) {
+        this.step5Btn.removeClass("disabled");
+      } else {
+        this.step5Btn.addClass("disabled");
+      }
+      break;
     case this.browserSelectionStepNo:
-      var browserVal = $.trim(this.otherBrowser.val());
-      var radioVal =
-        $(this.browserSelection)
-          .filter(":checked")
-          .val() || false;
-      if (
-        (radioVal && radioVal !== this.otherBrowserId) ||
-        (radioVal === this.otherBrowserId &&
-          this.checkSpecificRequiredValid("browser_test_type") &&
-          browserVal.length > 0)
-      ) {
+      var otherBrowser = this.otherBrowserElements
+        .find(this.testedOtherBrowsersId)
+        .prop("checked");
+
+      if (otherBrowser) {
         this.step6Btn.removeClass("disabled");
-        this.makeValid("browser_test_type");
       } else {
         this.step6Btn.addClass("disabled");
-        this.inputs["browser_test_type"].valid = false;
       }
       break;
   }
@@ -831,7 +835,10 @@ BugForm.prototype.nextStep = function(e) {
       trigger.attr("type") === "radio" &&
       trigger.attr("name") === this.browserSelectionName
     ) {
-      this.browserSelectionStep(trigger);
+      this.otherBrowserElements
+        .find(this.testedOtherBrowsersId)
+        .prop("checked", true);
+      this.setNextBtnStatus(this.browserSelectionStepNo);
       this.hideStep(this.browserSelectionStepNo);
       return;
     }
@@ -1034,30 +1041,6 @@ BugForm.prototype.toggleOtherProblem = function(action) {
   }
 };
 
-BugForm.prototype.browserSelectionStep = function(trigger) {
-  var isOther = trigger.val() === this.otherBrowserId;
-  if (isOther) {
-    $(
-      ".step" + this.browserSelectionStepNo
-    )[0].style.animationName = this.cssAnimations.slideup;
-    this.otherBrowser.val("");
-    this.makeInvalidSilent("browser_test_type");
-    // Skip next step and show input with button in the same container
-    this.toggleOtherBrowser("show");
-  } else {
-    this.toggleOtherBrowser("hide");
-    // If the user selects a browser, it gets inserted in the text input
-    this.otherBrowser.val(
-      trigger
-        .next("label")
-        .text()
-        .trim()
-    );
-  }
-  var step = 7;
-  this.setNextBtnStatus(step);
-};
-
 BugForm.prototype.toggleOtherBrowser = function(action) {
   var obj = this;
   if (action === "hide") {
@@ -1145,6 +1128,7 @@ BugForm.prototype.showRemoveUpload = function() {
   this.uploadLabel.removeClass("visually-hidden");
 
   this.removeBanner.removeClass("is-hidden");
+  this.uploadOther.removeClass("is-hidden");
   this.removeBanner.attr("tabIndex", "0");
   this.uploadLabel.addClass("visually-hidden");
   this.removeBanner.on("click", this.removeUploadPreview.bind(this));
@@ -1163,12 +1147,18 @@ BugForm.prototype.changeUploadText = function(textId) {
 /*
   Remove the upload image preview and hide the banner.
 */
-BugForm.prototype.removeUploadPreview = function(e) {
-  e.preventDefault();
+BugForm.prototype.removeUploadPreview = function(event) {
+  if (event && event.originalEvent instanceof Event) {
+    // show the upload label when we're responding to a click event
+    // (instead of being called from an error handler, which will
+    // display its own error label)
+    event.preventDefault();
+    this.uploadLabel.removeClass("visually-hidden").removeClass("is-hidden");
+  }
   this.previewEl.css("background", "none");
   this.removeBanner.addClass("is-hidden");
+  this.uploadOther.addClass("is-hidden");
   this.removeBanner.attr("tabIndex", "-1");
-  this.uploadLabel.removeClass("visually-hidden").removeClass("is-hidden");
   this.removeBanner.off("click");
   this.removeBanner.get(0).blur();
 
@@ -1178,7 +1168,6 @@ BugForm.prototype.removeUploadPreview = function(e) {
   this.uploadField.val(this.uploadField.get(0).defaultValue);
 
   this.changeUploadText("deleted-screenshot");
-  this.step10Btn.addClass("disabled");
 };
 
 BugForm.prototype.showLoadingIndicator = function() {
@@ -1190,6 +1179,8 @@ BugForm.prototype.hideLoadingIndicator = function() {
 };
 
 BugForm.prototype.onFormSubmit = function(event) {
+  event.preventDefault();
+  this.disableSubmits();
   this.showLoadingIndicator();
   this.maybeUploadImage(event).then(
     this.submitForm.bind(this),
@@ -1224,7 +1215,7 @@ BugForm.prototype.uploadImage = function(dataURI) {
   var dfd = $.Deferred();
   this.disableSubmits();
 
-  $(".js-remove-upload").addClass("is-hidden");
+  this.removeBanner.addClass("is-hidden");
 
   var formdata = new FormData();
   formdata.append("image", dataURI);
@@ -1277,10 +1268,17 @@ BugForm.prototype.resetProblemType = function() {
   this.resetRadio(this.step3Trigger);
 };
 
+BugForm.prototype.resetDefaultDevice = function() {
+  this.browserField.val(this.browserVal);
+  this.browserField.trigger("blur");
+  this.osField.val(this.osVal);
+  this.osField.trigger("blur");
+};
+
 BugForm.prototype.resetBrowserSelection = function() {
-  this.otherBrowser.val("No");
-  this.makeInvalidSilent("browser_test_type");
-  this.toggleOtherBrowser("hide");
+  this.otherBrowserElements
+    .find(this.noOtherBrowserTestedId)
+    .prop("checked", true);
   this.resetRadio(this.step6Radio);
 };
 

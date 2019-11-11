@@ -30,7 +30,6 @@ BugForm.prototype.onDOMReadyInit = function() {
   this.hasImage = null;
   this.loadingIndicator = $(".js-loader");
   this.previewEl = $(".js-image-upload");
-  this.reportButton = $("#js-ReportBug");
   this.removeBanner = $(".js-remove-upload");
   this.submitButtons = $("#js-ReportForm .js-Button");
   this.submitButtonWrappers = $("#js-ReportForm .js-Button-wrapper");
@@ -438,10 +437,6 @@ BugForm.prototype.checkForm = function() {
   if (_.some(inputs, Boolean)) {
     // then, check validity
     this.performChecks(true);
-    // and open the form, if it's not already open
-    if (!this.reportButton.hasClass("is-open")) {
-      this.reportButton.click();
-    }
   }
   // Make sure we only do this if the inputs exist on the page
   if (this.browserField.length) {
@@ -464,15 +459,13 @@ BugForm.prototype.imageField = function(id, inlineHelp) {
     .addClass("form-upload-error")
     .appendTo(".js-error-upload");
 
-  $(".js-label-upload").addClass("is-hidden");
-  $(".js-remove-upload").addClass("is-hidden");
+  this.uploadLabel.addClass("is-hidden");
+  this.removeBanner.addClass("is-hidden");
   $(".js-error-upload").removeClass("is-hidden");
 
   $(".form-message-error").hide();
   $(".form-input-validation .error").hide();
-  // "reset" the form field, because the file would get rejected
-  // from the server anyways.
-  this.uploadField.val(this.uploadField.get(0).defaultValue);
+  this.removeUploadPreview();
 };
 
 BugForm.prototype.optionalField = function(id) {
@@ -611,11 +604,16 @@ BugForm.prototype.showRemoveUpload = function() {
 /*
   Remove the upload image preview and hide the banner.
 */
-BugForm.prototype.removeUploadPreview = function() {
+BugForm.prototype.removeUploadPreview = function(event) {
+  if (event && event.originalEvent instanceof Event) {
+    // show the upload label when we're responding to a click event
+    // (instead of being called from an error handler, which will
+    // display its own error label)
+    this.uploadLabel.removeClass("visually-hidden").removeClass("is-hidden");
+  }
   this.previewEl.css("background", "none");
   this.removeBanner.addClass("is-hidden");
   this.removeBanner.attr("tabIndex", "-1");
-  this.uploadLabel.removeClass("visually-hidden").removeClass("is-hidden");
   this.removeBanner.off("click");
   this.removeBanner.get(0).blur();
 
@@ -634,6 +632,8 @@ BugForm.prototype.hideLoadingIndicator = function() {
 };
 
 BugForm.prototype.onFormSubmit = function(event) {
+  event.preventDefault();
+  this.disableSubmits();
   this.showLoadingIndicator();
   this.maybeUploadImage(event).then(
     this.submitForm.bind(this),
@@ -668,7 +668,7 @@ BugForm.prototype.uploadImage = function(dataURI) {
   var dfd = $.Deferred();
   this.disableSubmits();
 
-  $(".js-remove-upload").addClass("is-hidden");
+  this.removeBanner.addClass("is-hidden");
 
   var formdata = new FormData();
   formdata.append("image", dataURI);
