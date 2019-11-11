@@ -34,7 +34,6 @@ from webcompat.helpers import rewrite_and_sanitize_link
 from webcompat.helpers import rewrite_links
 from webcompat.helpers import sanitize_link
 from webcompat.helpers import get_extra_labels
-from webcompat.helpers import extract_extra_labels_from_form
 
 
 ACCESS_TOKEN_LINK = '<https://api.github.com/repositories/17839063/issues?per_page=50&page=3&access_token=12345>; rel="next", <https://api.github.com/repositories/17839063/issues?access_token=12345&per_page=50&page=4>; rel="last", <https://api.github.com/repositories/17839063/issues?per_page=50&access_token=12345&page=1>; rel="first", <https://api.github.com/repositories/17839063/issues?per_page=50&page=1&access_token=12345>; rel="prev"'  # noqa
@@ -516,6 +515,8 @@ class TestHelpers(unittest.TestCase):
             )
 
             self.assertEqual(get_extra_labels({}), [])
+            self.assertEqual(get_extra_labels({'extra_labels': '[]'}), [])
+            self.assertEqual(get_extra_labels({'extra_labels': ''}), [])
 
             session['extra_labels'] = ['type-fastclick']
 
@@ -525,8 +526,7 @@ class TestHelpers(unittest.TestCase):
             )
 
     def test_get_extra_labels_for_experiment(self):
-        """Test extra_labels extraction from form object if
-        experiment is active."""
+        """Test extra_labels extraction with active experiment."""
         with webcompat.app.test_request_context('/issues/new', method='POST'):
 
             webcompat.app.config['AB_EXPERIMENTS'] = {
@@ -556,20 +556,6 @@ class TestHelpers(unittest.TestCase):
                 {'extra_labels': '["type-marfeel", "browser-fenix"]'}),
                 ['type-fastclick', 'form-v2-experiment']
             )
-
-    def test_extract_extra_labels_from_form(self):
-        self.assertEqual(extract_extra_labels_from_form(
-            {'extra_labels': '["type-marfeel", "browser-fenix"]'}),
-            ['type-marfeel', 'browser-fenix']
-        )
-
-        self.assertEqual(extract_extra_labels_from_form(
-            {'extra_labels': '[]'}
-        ), [])
-        self.assertEqual(extract_extra_labels_from_form({}), [])
-        self.assertEqual(extract_extra_labels_from_form({
-            'extra_labels': ''}
-        ), [])
 
 
 if __name__ == '__main__':
