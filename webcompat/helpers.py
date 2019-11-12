@@ -592,7 +592,7 @@ def is_valid_issue_form(form):
     valid_form = parameters_check and values_check
     if not valid_form:
         log.info('is_valid_issue_form: form[submit_type] => {0}'.format(
-            form.get('submit_type', 'missing submit_type value')))
+            form.get('submit_type') or 'empty submit_type value'))
         log.info('is_valid_issue_form: missing param(s)? => {0}'.format(
             set(must_parameters).difference(list(form.keys()))))
     return valid_form
