@@ -244,31 +244,36 @@ class TestForm(unittest.TestCase):
 
     def test_is_valid_issue_form(self):
         """Assert that we get the form parameters we want."""
-        incomplete_form = MultiDict([('problem_category', 'unknown_bug')])
-        self.assertFalse(helpers.is_valid_issue_form(incomplete_form))
-        valid_form = MultiDict([
-            ('browser', 'Firefox 61.0'),
-            ('description', 'streamlining the form.'),
-            ('details', ''),
-            ('os', 'Mac OS X 10.13'),
-            ('problem_category', 'unknown_bug'),
-            ('submit_type', 'github-auth-report'),
-            ('url', 'http://2479.example.com'),
-            ('username', ''), ])
-        self.assertTrue(helpers.is_valid_issue_form(valid_form))
-        # The value for submit-Type can be only:
-        # - github-auth-report
-        # - github-proxy-report
-        wrong_value_form = MultiDict([
-            ('browser', 'Firefox 61.0'),
-            ('description', 'streamlining the form.'),
-            ('details', ''),
-            ('os', 'Mac OS X 10.13'),
-            ('problem_category', 'unknown_bug'),
-            ('submit_type', 'wrong-value'),
-            ('url', 'http://2479.example.com'),
-            ('username', ''), ])
-        self.assertFalse(helpers.is_valid_issue_form(wrong_value_form))
+        cookie = 'exp=form-v1; Path=/'
+        with webcompat.app.test_request_context(
+                environ_base={'HTTP_COOKIE': cookie}):
+            webcompat.app.preprocess_request()
+
+            incomplete_form = MultiDict([('problem_category', 'unknown_bug')])
+            self.assertFalse(helpers.is_valid_issue_form(incomplete_form))
+            valid_form = MultiDict([
+                ('browser', 'Firefox 61.0'),
+                ('description', 'streamlining the form.'),
+                ('details', ''),
+                ('os', 'Mac OS X 10.13'),
+                ('problem_category', 'unknown_bug'),
+                ('submit_type', 'github-auth-report'),
+                ('url', 'http://2479.example.com'),
+                ('username', ''), ])
+            self.assertTrue(helpers.is_valid_issue_form(valid_form))
+            # The value for submit-Type can be only:
+            # - github-auth-report
+            # - github-proxy-report
+            wrong_value_form = MultiDict([
+                ('browser', 'Firefox 61.0'),
+                ('description', 'streamlining the form.'),
+                ('details', ''),
+                ('os', 'Mac OS X 10.13'),
+                ('problem_category', 'unknown_bug'),
+                ('submit_type', 'wrong-value'),
+                ('url', 'http://2479.example.com'),
+                ('username', ''), ])
+            self.assertFalse(helpers.is_valid_issue_form(wrong_value_form))
 
     def test_is_blacklisted_domain(self):
         """Assert domains validity in issue reporting."""
