@@ -205,6 +205,7 @@ class IssueForm(FlaskForm):
     reported_with = HiddenField()
     ua_header = HiddenField()
     submit_type = HiddenField()
+    extra_labels = HiddenField()
 
 
 class PrefixedRadioField(RadioField):

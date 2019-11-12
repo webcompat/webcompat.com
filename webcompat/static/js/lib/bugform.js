@@ -154,17 +154,41 @@ BugForm.prototype.onReceiveMessage = function(event) {
   // Make sure the data is coming from a trusted source.
   // (i.e., our add-on or some other priviledged code sent it)
   if (location.origin === event.origin) {
-    // See https://github.com/webcompat/webcompat.com/issues/1252 to track
-    // the work of only accepting blobs, which should simplify things.
-    if (event.data instanceof Blob) {
-      // convertToDataURI sends the resulting string to the upload
-      // callback.
-      this.convertToDataURI(event.data, this.showUploadPreview.bind(this));
+    if (
+      event.data.hasOwnProperty("screenshot") &&
+      event.data.hasOwnProperty("message")
+    ) {
+      this.handleScreenshot(event.data.screenshot);
+      this.handleMessage(event.data.message);
     } else {
-      // ...the data is already a data URI string
-      this.showUploadPreview(event.data);
+      this.handleScreenshot(event.data);
     }
   }
+};
+
+BugForm.prototype.handleScreenshot = function(screenshot) {
+  if (!screenshot) {
+    return;
+  }
+  // See https://github.com/webcompat/webcompat.com/issues/1252 to track
+  // the work of only accepting blobs, which should simplify things.
+  if (screenshot instanceof Blob) {
+    // convertToDataURI sends the resulting string to the upload
+    // callback.
+    this.convertToDataURI(screenshot, this.showUploadPreview.bind(this));
+  } else {
+    // ...the data is already a data URI string
+    this.showUploadPreview(screenshot);
+  }
+};
+
+BugForm.prototype.handleMessage = function(message) {
+  if (!message) {
+    return;
+  }
+
+  prefillForm(message);
+  this.checkForm();
 };
 
 BugForm.prototype.preventSubmitByEnter = function(event) {

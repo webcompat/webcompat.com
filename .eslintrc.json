@@ -34,7 +34,9 @@
     "wcEvents": true,
     "wcTmpl": true,
     "WindowHelpers": true,
-    "Validation": true
+    "Validation": true,
+    "prefillForm": true,
+    "setAnalyticsData": true
   },
   "rules": {
     "eqeqeq": [2, "smart"],

@@ -12,6 +12,7 @@ import unittest
 
 import flask
 from werkzeug.http import parse_cookie
+from flask import session
 
 import webcompat
 from webcompat.helpers import ab_active
@@ -32,6 +33,7 @@ from webcompat.helpers import prepare_form
 from webcompat.helpers import rewrite_and_sanitize_link
 from webcompat.helpers import rewrite_links
 from webcompat.helpers import sanitize_link
+from webcompat.helpers import get_extra_labels
 
 
 ACCESS_TOKEN_LINK = '<https://api.github.com/repositories/17839063/issues?per_page=50&page=3&access_token=12345>; rel="next", <https://api.github.com/repositories/17839063/issues?access_token=12345&per_page=50&page=4>; rel="last", <https://api.github.com/repositories/17839063/issues?per_page=50&access_token=12345&page=1>; rel="first", <https://api.github.com/repositories/17839063/issues?per_page=50&page=1&access_token=12345>; rel="prev"'  # noqa
@@ -64,6 +66,14 @@ class TestHelpers(unittest.TestCase):
 
     def tearDown(self):
         """Tear down the tests."""
+        webcompat.app.config['AB_EXPERIMENTS'] = {
+            'exp': {
+                'variations': {
+                    'ui-change-v1': (0, 100)
+                },
+                'max-age': 86400
+            }
+        }
         pass
 
     def test_rewrite_link(self):
@@ -498,6 +508,62 @@ class TestHelpers(unittest.TestCase):
 
             ab_init(response)
             response.set_cookie.assert_not_called()
+
+    def test_get_extra_labels(self):
+        """Test extra_labels extraction from form object."""
+        with webcompat.app.test_request_context('/issues/new', method='POST'):
+
+            # need to call this since g.current_experiments
+            # is defined in before_request
+            webcompat.app.preprocess_request()
+
+            self.assertEqual(get_extra_labels(
+                {'extra_labels': '["type-marfeel", "browser-fenix"]'}),
+                ['type-marfeel', 'browser-fenix']
+            )
+
+            self.assertEqual(get_extra_labels({}), [])
+            self.assertEqual(get_extra_labels({'extra_labels': '[]'}), [])
+            self.assertEqual(get_extra_labels({'extra_labels': ''}), [])
+
+            session['extra_labels'] = ['type-fastclick']
+
+            self.assertEqual(get_extra_labels(
+                {'extra_labels': '["type-marfeel", "browser-fenix"]'}),
+                ['type-fastclick']
+            )
+
+    def test_get_extra_labels_for_experiment(self):
+        """Test extra_labels extraction with active experiment."""
+        with webcompat.app.test_request_context('/issues/new', method='POST'):
+
+            webcompat.app.config['AB_EXPERIMENTS'] = {
+                'exp': {
+                    'variations': {
+                        'form-v2': (0, 100)
+                    },
+                    'max-age': 86400
+                }
+            }
+
+            # need to call this since g.current_experiments
+            # is defined in before_request
+            webcompat.app.preprocess_request()
+
+            self.assertEqual(get_extra_labels(
+                {'extra_labels': '["type-marfeel", "browser-fenix"]'}),
+                ['type-marfeel', 'browser-fenix', 'form-v2-experiment']
+            )
+
+            self.assertEqual(get_extra_labels({'extra_labels': '[]'}),
+                             ['form-v2-experiment'])
+
+            session['extra_labels'] = ['type-fastclick']
+
+            self.assertEqual(get_extra_labels(
+                {'extra_labels': '["type-marfeel", "browser-fenix"]'}),
+                ['type-fastclick', 'form-v2-experiment']
+            )
 
 
 if __name__ == '__main__':

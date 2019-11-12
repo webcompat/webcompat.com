@@ -60,6 +60,28 @@ registerSuite("Image Uploads (non-auth)", {
       );
     },
 
+    "postMessaged blob preview that was sent as part of an object"() {
+      return (
+        FunctionalHelpers.openPage(this, url, ".js-image-upload")
+          // Build up a green test square in canvas, toBlob that, and then postMessage the blob
+          // see window-helpers.js for more details.
+          .execute(function() {
+            WindowHelpers.getBlob().then(WindowHelpers.sendBlobInObject);
+          })
+          .sleep(1000)
+          .findByCssSelector(".js-image-upload")
+          .getAttribute("style")
+          .then(function(inlineStyle) {
+            assert.include(
+              inlineStyle,
+              "data:image/png;base64,iVBOR",
+              "Base64 data shown as preview background"
+            );
+          })
+          .end()
+      );
+    },
+
     "uploaded image file preview"() {
       return FunctionalHelpers.openPage(this, url, ".js-image-upload")
         .findById("image")

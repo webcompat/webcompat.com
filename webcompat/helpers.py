@@ -732,3 +732,25 @@ def ab_init(response):
             response.set_cookie(exp_id, var, max_age=max_age)
 
     return response
+
+
+def get_extra_labels(form):
+    """Extract extra_labels.
+
+    If extra_labels param exists in current session, use it,
+    otherwise use the value coming from form. Add form-v2-experiment
+    label if the experiment cookie exists.
+    """
+
+    extra_labels = session.pop('extra_labels', [])
+
+    if not extra_labels:
+        extra_labels = json.loads(form.get('extra_labels', '[]') or '[]')
+
+    if ab_active('exp') == 'form-v2':
+        if isinstance(extra_labels, list):
+            extra_labels.append('form-v2-experiment')
+        else:
+            extra_labels = ['form-v2-experiment']
+
+    return extra_labels
