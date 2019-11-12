@@ -595,6 +595,9 @@ def is_valid_issue_form(form):
             form.get('submit_type') or 'empty submit_type value'))
         log.info('is_valid_issue_form: missing param(s)? => {0}'.format(
             set(must_parameters).difference(list(form.keys()))))
+        log.info('is_valid_issue_form: experiment branch => {0}'.format(
+            ab_active('exp') or 'Unknown branch'
+        ))
     return valid_form
 
 
