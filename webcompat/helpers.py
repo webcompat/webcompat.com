@@ -598,6 +598,9 @@ def is_valid_issue_form(form):
         log.info('is_valid_issue_form: experiment branch => {0}'.format(
             ab_active('exp') or 'Unknown branch'
         ))
+        log.info('is_valid_issue_form: reporter ip => {0}'.format(
+            request.remote_addr
+        ))
     return valid_form
 
 
