@@ -66,6 +66,14 @@ class TestHelpers(unittest.TestCase):
 
     def tearDown(self):
         """Tear down the tests."""
+        webcompat.app.config['AB_EXPERIMENTS'] = {
+            'exp': {
+                'variations': {
+                    'ui-change-v1': (0, 100)
+                },
+                'max-age': 86400
+            }
+        }
         pass
 
     def test_rewrite_link(self):
