@@ -8,10 +8,7 @@
 
 * Fixes #3070 - Add additional logging of experiment branch and IP [Pull #3086](https://github.com/webcompat/webcompat.com/pull/3086)
 * NPM update - Update prettier to the latest version. [Pull #3083](https://github.com/webcompat/webcompat.com/pull/3083)
-* Fixes #3041 - Use Operating System instead of Device [Pull #3081](https://github.com/webcompat/webcompat.com/pull/3081)
 * Fixes #3052 - Adjust positioning and padding related to validation badges [Pull #3080](https://github.com/webcompat/webcompat.com/pull/3080)
-* Fixes #3070 - Rewrite is_valid_issue_form [Pull #3079](https://github.com/webcompat/webcompat.com/pull/3079)
-* Fixes #3076 - Remove maxlength for textarea [Pull #3078](https://github.com/webcompat/webcompat.com/pull/3078)
 * Fixes #2985 - Add postMessage support for report site issue data [Pull #3012](https://github.com/webcompat/webcompat.com/pull/3012)
 
 ## 21.1.2 - 2019-11-08
