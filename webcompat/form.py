@@ -89,7 +89,7 @@ problem_choices = [
     ('unknown_bug', 'Something else')
 ]
 
-problem_choices_redesign = [
+problem_choices_wizard = [
     ('detection_bug', 'svg-problem-mobile-vs-desktop.svg',
      'Desktop site instead of mobile site'),
     ('site_bug', 'svg-problem-no-use.svg', 'Site is not usable'),
@@ -239,7 +239,7 @@ class FormWizard(IssueForm):
 
     problem_category = PrefixedRadioField(
         [InputRequired(message=radio_message)],
-        choices=problem_choices_redesign
+        choices=problem_choices_wizard
     )
     other_problem = StringField(
         other_problem_label,
