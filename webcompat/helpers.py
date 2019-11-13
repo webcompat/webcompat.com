@@ -592,9 +592,15 @@ def is_valid_issue_form(form):
     valid_form = parameters_check and values_check
     if not valid_form:
         log.info('is_valid_issue_form: form[submit_type] => {0}'.format(
-            form.get('submit_type', 'missing submit_type value')))
+            form.get('submit_type') or 'empty submit_type value'))
         log.info('is_valid_issue_form: missing param(s)? => {0}'.format(
             set(must_parameters).difference(list(form.keys()))))
+        log.info('is_valid_issue_form: experiment branch => {0}'.format(
+            ab_active('exp') or 'Unknown branch'
+        ))
+        log.info('is_valid_issue_form: reporter ip => {0}'.format(
+            request.remote_addr
+        ))
     return valid_form
 
 
