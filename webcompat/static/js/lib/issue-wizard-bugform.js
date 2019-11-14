@@ -862,7 +862,7 @@ BugForm.prototype.subproblemChecks = function(trigger) {
     trigger.attr("type") === "radio" &&
     trigger.attr("name") === this.problemCategoryName
   ) {
-    this.problemSubgategoryStep(trigger);
+    this.problemSubcategoryStep(trigger);
     this.isSubproblem = true;
   } else {
     this.isSubproblem = false;
@@ -940,7 +940,7 @@ BugForm.prototype.setActiveStep = function(nextStep) {
     .removeClass("complete");
 };
 
-BugForm.prototype.problemSubgategoryStep = function(trigger) {
+BugForm.prototype.problemSubcategoryStep = function(trigger) {
   var subcategoryId = trigger.val() + "_subcategory";
   var isOther = trigger.val() === this.otherProblemId;
   var isDetectionBug = trigger.val() === this.detectionBugId;
