@@ -236,6 +236,7 @@ class FormWizard(IssueForm):
 
     browser = StringField(u'Browser', [Optional()])
     os = StringField('Operating System', [Optional()])
+    description = HiddenField()
 
     problem_category = PrefixedRadioField(
         [InputRequired(message=radio_message)],
