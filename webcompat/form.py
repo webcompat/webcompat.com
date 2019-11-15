@@ -168,6 +168,27 @@ contact_message = 'There is a mistake in the username.'  # noqa
 contact_label = 'Sharing your GitHub username—without logging in—could help us with diagnosis. This will be publicly visible.'  # noqa
 
 
+class PrefixedRadioField(RadioField):
+    """Prefix radio field label with an image."""
+    def __init__(self, *args, **kwargs):
+        prefixed_choices = kwargs.pop('choices')
+        template = '<div class={css_class}><img src={src}/></div> {text}'
+        choices = []
+
+        css_class = 'icon-container'
+        for slug, img, text in prefixed_choices:
+            filename = 'img/svg/icons/{img}'.format(img=img)
+            src = url_for('static', filename=filename)
+            label = Markup(template.format(
+                src=src, css_class=css_class, text=text)
+            )
+            choice = (slug, label)
+            choices.append(choice)
+
+        kwargs['choices'] = choices
+        super().__init__(*args, **kwargs)
+
+
 class IssueForm(FlaskForm):
     """Define form fields and validation for our bug reporting form."""
 
@@ -206,27 +227,6 @@ class IssueForm(FlaskForm):
     ua_header = HiddenField()
     submit_type = HiddenField()
     extra_labels = HiddenField()
-
-
-class PrefixedRadioField(RadioField):
-    """Prefix radio field label with an image."""
-    def __init__(self, *args, **kwargs):
-        prefixed_choices = kwargs.pop('choices')
-        template = '<div class={css_class}><img src={src}/></div> {text}'
-        choices = []
-
-        css_class = 'icon-container'
-        for slug, img, text in prefixed_choices:
-            filename = 'img/svg/icons/{img}'.format(img=img)
-            src = url_for('static', filename=filename)
-            label = Markup(template.format(
-                src=src, css_class=css_class, text=text)
-            )
-            choice = (slug, label)
-            choices.append(choice)
-
-        kwargs['choices'] = choices
-        super().__init__(*args, **kwargs)
 
 
 class FormWizard(IssueForm):
