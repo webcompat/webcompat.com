@@ -131,12 +131,12 @@ video_bug_choices = [
 ]
 
 browser_choices = [
-    ('chrome', 'svg-chrome.svg', 'Chrome'),
-    ('edge', 'svg-edge.svg', 'Edge'),
-    ('safari', 'svg-safari.svg', 'Safari'),
-    ('opera', 'svg-opera.svg', 'Opera'),
-    ('ie', 'svg-ie.svg', 'Internet Explorer'),
-    ('other', 'svg-other.svg', 'Other')
+    ('Chrome', 'svg-chrome.svg', 'Chrome'),
+    ('Edge', 'svg-edge.svg', 'Edge'),
+    ('Safari', 'svg-safari.svg', 'Safari'),
+    ('Opera', 'svg-opera.svg', 'Opera'),
+    ('Internet Explorer', 'svg-ie.svg', 'Internet Explorer'),
+    ('Other', 'svg-other.svg', 'Other')
 ]
 
 tested_elsewhere = [
@@ -262,7 +262,7 @@ class FormWizard(IssueForm):
         [InputRequired(message=radio_message)],
         choices=video_bug_choices
     )
-    browsers = PrefixedRadioField(
+    tested_browsers = PrefixedRadioField(
         [InputRequired(message=radio_message)],
         choices=browser_choices
     )
@@ -507,6 +507,7 @@ def build_formdata(form_object):
             'browser_test'), tested_elsewhere),
         'description': form_object.get('description'),
         'steps_reproduce': form_object.get('steps_reproduce'),
+        'tested_browsers': form_object.get('tested_browsers', ''),
     }
 
     # Preparing the body
@@ -516,7 +517,7 @@ def build_formdata(form_object):
 
 **Browser / Version**: {browser}
 **Operating System**: {os}
-**Tested Another Browser**: {browser_test_type}
+**Tested Another Browser**: {browser_test_type} {tested_browsers}
 
 **Problem type**: {problem_type}
 **Description**: {description}

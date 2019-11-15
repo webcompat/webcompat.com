@@ -74,7 +74,7 @@ BugForm.prototype.onDOMReadyInit = function() {
   this.stepNotDefined = -1;
   this.problemCategoryName = "problem_category";
   this.otherProblemId = "unknown_bug";
-  this.browserSelectionName = "browsers";
+  this.browserSelectionName = "tested_browsers";
   this.otherBrowserId = "other";
   this.detectionBugId = "detection_bug";
   this.otherProblemElements = $(".other-problem");
@@ -154,7 +154,7 @@ BugForm.prototype.onDOMReadyInit = function() {
       errFunction: "requiredField"
     },
     browsers_selection: {
-      el: $("[name=browsers]"),
+      el: $("[name=tested_browsers]"),
       valid: null,
       helpText: "Browser selection required.",
       errFunction: "requiredField"
