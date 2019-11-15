@@ -249,13 +249,10 @@ BugForm.prototype.init = function() {
     this.textareaTrackProgress.bind(this)
   );
   this.problemType.on("change", this.checkProblemTypeValidity.bind(this));
-
   this.siteBugType.on("change", this.checkBugTypeValidity.bind(this));
   this.layoutBugType.on("change", this.checkBugTypeValidity.bind(this));
   this.videoBugType.on("change", this.checkBugTypeValidity.bind(this));
   this.browserSelection.on("change", this.checkBrowserValidity.bind(this));
-
-  this.otherBrowser.on("blur input", this.checkBrowserInput.bind(this));
   this.otherBrowser.on("blur input", this.checkBrowserInput.bind(this));
   this.problemSubtype.on("blur input", this.checkProblemSubtype.bind(this));
   this.uploadField.on("change", this.checkImageTypeValidity.bind(this));
