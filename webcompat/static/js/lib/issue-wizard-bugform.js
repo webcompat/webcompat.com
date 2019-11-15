@@ -216,7 +216,7 @@ BugForm.prototype.onDOMReadyInit = function() {
   this.osField = this.inputs.os.el;
   this.osVal = this.inputs.os.el.val();
   this.problemType = this.inputs.problem_category.el;
-  this.problemSubtype = this.inputs.other_problem.el;
+  this.otherProblem = this.inputs.other_problem.el;
   this.otherBrowser = this.inputs.browser_test_type.el;
 
   this.siteBugType = this.inputs.site_bug_subcategory.el;
@@ -254,7 +254,7 @@ BugForm.prototype.init = function() {
   this.videoBugType.on("change", this.checkBugTypeValidity.bind(this));
   this.browserSelection.on("change", this.checkBrowserValidity.bind(this));
   this.otherBrowser.on("blur input", this.checkBrowserInput.bind(this));
-  this.problemSubtype.on("blur input", this.checkProblemSubtype.bind(this));
+  this.otherProblem.on("blur input", this.checkOtherProblem.bind(this));
   this.uploadField.on("change", this.checkImageTypeValidity.bind(this));
   this.osField.on("blur", this.checkOptionalNonEmpty.bind(this, this.osField));
   this.browserField.on(
@@ -552,8 +552,8 @@ BugForm.prototype.checkDescription = function() {
   this.checkDescriptionValidity(isSilent);
 };
 
-BugForm.prototype.checkProblemSubtype = function() {
-  this.checkProblemSubtypeValidity();
+BugForm.prototype.checkOtherProblem = function() {
+  this.checkOtherProblemValidity();
   this.setNextBtnStatus(this.subproblemStep);
 };
 
@@ -594,11 +594,11 @@ BugForm.prototype.checkBrowserInputValidity = function(silent) {
   this[func]("browser_test_type");
 };
 
-/* Check to see that the issue description input is not empty. */
-BugForm.prototype.checkProblemSubtypeValidity = function(silent) {
+/* Check to see that the other problem input is not empty. */
+BugForm.prototype.checkOtherProblemValidity = function(silent) {
   var func = this.determineValidityFunction(
     this.validation.isIssueValid,
-    this.problemSubtype,
+    this.otherProblem,
     silent
   );
   this[func]("other_problem");
@@ -883,7 +883,7 @@ BugForm.prototype.descriptionControl = function(trigger, nextStepNumber) {
     var selectedProblem = this.problemType.filter(":checked").val();
     // If the user selects "Something else" as the problem type, fills the description field with user provided problem
     if (selectedProblem === this.otherProblemId) {
-      this.descField.val(this.problemSubtype.val().trim());
+      this.descField.val(this.otherProblem.val().trim());
     }
   }
 };
