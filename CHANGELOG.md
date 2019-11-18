@@ -4,6 +4,13 @@
 2. New features: affect minor number
 3. API endpoint changes or dependency version updates: affect major number
 
+## 22.0.0 - 2019-11-18
+
+* Fixes #3092 - Add bugform-prefill.js to grunt-tasks concat [Pull #3093](https://github.com/webcompat/webcompat.com/pull/3093)
+* NPM update - Update yargs to the latest version. [Pull #3091](https://github.com/webcompat/webcompat.com/pull/3091)
+* Fixes #3025 - expose tested browsers in issue body [Pull #3089](https://github.com/webcompat/webcompat.com/pull/3089)
+* NPM update - Update stylelint to the latest version. [Pull #3088](https://github.com/webcompat/webcompat.com/pull/3088)
+
 ## 21.2.0 - 2019-11-13
 
 * Fixes #3070 - Add additional logging of experiment branch and IP [Pull #3086](https://github.com/webcompat/webcompat.com/pull/3086)
