@@ -192,13 +192,13 @@
         <div class="form-radio choice-control browsers form-element js-Form-group">
           <div class="js-Form-information form-label-message">
             <label class="form-label big" for="browsers">Please select <strong>other browsers you have tested on</strong></label>
-            {% if form.browsers.errors %}
-              {% for error in form.browsers.errors %}
+            {% if form.tested_browsers.errors %}
+              {% for error in form.tested_browsers.errors %}
                 <small class="form-message-error">{{ error }}</small>
               {% endfor %}
             {% endif %}
           </div>
-          {{form.browsers}}
+          {{form.tested_browsers}}
         </div>
       </div>
     </div>
@@ -238,7 +238,6 @@
       </div>
       <div class="input-control half col">
         <div class="form-text form-element js-Form-group problem-description progress-textarea bordered-container">
-          {{ form.description() }}
           {{ form.steps_reproduce(class_='form-field text-field js-autogrow-field',
               rows=3, placeholder="Describe what happened") }}
           <div class="progress">

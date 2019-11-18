@@ -74,7 +74,7 @@ BugForm.prototype.onDOMReadyInit = function() {
   this.stepNotDefined = -1;
   this.problemCategoryName = "problem_category";
   this.otherProblemId = "unknown_bug";
-  this.browserSelectionName = "browsers";
+  this.browserSelectionName = "tested_browsers";
   this.otherBrowserId = "other";
   this.detectionBugId = "detection_bug";
   this.otherProblemElements = $(".other-problem");
@@ -154,7 +154,7 @@ BugForm.prototype.onDOMReadyInit = function() {
       errFunction: "requiredField"
     },
     browsers_selection: {
-      el: $("[name=browsers]"),
+      el: $("[name=tested_browsers]"),
       valid: null,
       helpText: "Browser selection required.",
       errFunction: "requiredField"
@@ -216,7 +216,7 @@ BugForm.prototype.onDOMReadyInit = function() {
   this.osField = this.inputs.os.el;
   this.osVal = this.inputs.os.el.val();
   this.problemType = this.inputs.problem_category.el;
-  this.problemSubtype = this.inputs.other_problem.el;
+  this.otherProblem = this.inputs.other_problem.el;
   this.otherBrowser = this.inputs.browser_test_type.el;
 
   this.siteBugType = this.inputs.site_bug_subcategory.el;
@@ -249,15 +249,12 @@ BugForm.prototype.init = function() {
     this.textareaTrackProgress.bind(this)
   );
   this.problemType.on("change", this.checkProblemTypeValidity.bind(this));
-
   this.siteBugType.on("change", this.checkBugTypeValidity.bind(this));
   this.layoutBugType.on("change", this.checkBugTypeValidity.bind(this));
   this.videoBugType.on("change", this.checkBugTypeValidity.bind(this));
   this.browserSelection.on("change", this.checkBrowserValidity.bind(this));
-
   this.otherBrowser.on("blur input", this.checkBrowserInput.bind(this));
-  this.otherBrowser.on("blur input", this.checkBrowserInput.bind(this));
-  this.problemSubtype.on("blur input", this.checkProblemSubtype.bind(this));
+  this.otherProblem.on("blur input", this.checkOtherProblem.bind(this));
   this.uploadField.on("change", this.checkImageTypeValidity.bind(this));
   this.osField.on("blur", this.checkOptionalNonEmpty.bind(this, this.osField));
   this.browserField.on(
@@ -555,8 +552,8 @@ BugForm.prototype.checkDescription = function() {
   this.checkDescriptionValidity(isSilent);
 };
 
-BugForm.prototype.checkProblemSubtype = function() {
-  this.checkProblemSubtypeValidity();
+BugForm.prototype.checkOtherProblem = function() {
+  this.checkOtherProblemValidity();
   this.setNextBtnStatus(this.subproblemStep);
 };
 
@@ -597,11 +594,11 @@ BugForm.prototype.checkBrowserInputValidity = function(silent) {
   this[func]("browser_test_type");
 };
 
-/* Check to see that the issue description input is not empty. */
-BugForm.prototype.checkProblemSubtypeValidity = function(silent) {
+/* Check to see that the other problem input is not empty. */
+BugForm.prototype.checkOtherProblemValidity = function(silent) {
   var func = this.determineValidityFunction(
     this.validation.isIssueValid,
-    this.problemSubtype,
+    this.otherProblem,
     silent
   );
   this[func]("other_problem");
@@ -862,7 +859,7 @@ BugForm.prototype.subproblemChecks = function(trigger) {
     trigger.attr("type") === "radio" &&
     trigger.attr("name") === this.problemCategoryName
   ) {
-    this.problemSubgategoryStep(trigger);
+    this.problemSubcategoryStep(trigger);
     this.isSubproblem = true;
   } else {
     this.isSubproblem = false;
@@ -886,7 +883,7 @@ BugForm.prototype.descriptionControl = function(trigger, nextStepNumber) {
     var selectedProblem = this.problemType.filter(":checked").val();
     // If the user selects "Something else" as the problem type, fills the description field with user provided problem
     if (selectedProblem === this.otherProblemId) {
-      this.descField.val(this.problemSubtype.val().trim());
+      this.descField.val(this.otherProblem.val().trim());
     }
   }
 };
@@ -940,7 +937,7 @@ BugForm.prototype.setActiveStep = function(nextStep) {
     .removeClass("complete");
 };
 
-BugForm.prototype.problemSubgategoryStep = function(trigger) {
+BugForm.prototype.problemSubcategoryStep = function(trigger) {
   var subcategoryId = trigger.val() + "_subcategory";
   var isOther = trigger.val() === this.otherProblemId;
   var isDetectionBug = trigger.val() === this.detectionBugId;

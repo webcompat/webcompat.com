@@ -89,7 +89,7 @@ problem_choices = [
     ('unknown_bug', 'Something else')
 ]
 
-problem_choices_redesign = [
+problem_choices_wizard = [
     ('detection_bug', 'svg-problem-mobile-vs-desktop.svg',
      'Desktop site instead of mobile site'),
     ('site_bug', 'svg-problem-no-use.svg', 'Site is not usable'),
@@ -131,12 +131,12 @@ video_bug_choices = [
 ]
 
 browser_choices = [
-    ('chrome', 'svg-chrome.svg', 'Chrome'),
-    ('edge', 'svg-edge.svg', 'Edge'),
-    ('safari', 'svg-safari.svg', 'Safari'),
-    ('opera', 'svg-opera.svg', 'Opera'),
-    ('ie', 'svg-ie.svg', 'Internet Explorer'),
-    ('other', 'svg-other.svg', 'Other')
+    ('Chrome', 'svg-chrome.svg', 'Chrome'),
+    ('Edge', 'svg-edge.svg', 'Edge'),
+    ('Safari', 'svg-safari.svg', 'Safari'),
+    ('Opera', 'svg-opera.svg', 'Opera'),
+    ('Internet Explorer', 'svg-ie.svg', 'Internet Explorer'),
+    ('Other', 'svg-other.svg', 'Other')
 ]
 
 tested_elsewhere = [
@@ -166,6 +166,27 @@ other_browser_label = 'Browser tested'
 
 contact_message = 'There is a mistake in the username.'  # noqa
 contact_label = 'Sharing your GitHub username—without logging in—could help us with diagnosis. This will be publicly visible.'  # noqa
+
+
+class PrefixedRadioField(RadioField):
+    """Prefix radio field label with an image."""
+    def __init__(self, *args, **kwargs):
+        prefixed_choices = kwargs.pop('choices')
+        template = '<div class={css_class}><img src={src}/></div> {text}'
+        choices = []
+
+        css_class = 'icon-container'
+        for slug, img, text in prefixed_choices:
+            filename = 'img/svg/icons/{img}'.format(img=img)
+            src = url_for('static', filename=filename)
+            label = Markup(template.format(
+                src=src, css_class=css_class, text=text)
+            )
+            choice = (slug, label)
+            choices.append(choice)
+
+        kwargs['choices'] = choices
+        super().__init__(*args, **kwargs)
 
 
 class IssueForm(FlaskForm):
@@ -208,27 +229,6 @@ class IssueForm(FlaskForm):
     extra_labels = HiddenField()
 
 
-class PrefixedRadioField(RadioField):
-    """Prefix radio field label with an image."""
-    def __init__(self, *args, **kwargs):
-        prefixed_choices = kwargs.pop('choices')
-        template = '<div class={css_class}><img src={src}/></div> {text}'
-        choices = []
-
-        css_class = 'icon-container'
-        for slug, img, text in prefixed_choices:
-            filename = 'img/svg/icons/{img}'.format(img=img)
-            src = url_for('static', filename=filename)
-            label = Markup(template.format(
-                src=src, css_class=css_class, text=text)
-            )
-            choice = (slug, label)
-            choices.append(choice)
-
-        kwargs['choices'] = choices
-        super().__init__(*args, **kwargs)
-
-
 class FormWizard(IssueForm):
     """Re-designed version of IssueForm to a multi step wizard form."""
 
@@ -236,10 +236,11 @@ class FormWizard(IssueForm):
 
     browser = StringField(u'Browser', [Optional()])
     os = StringField('Operating System', [Optional()])
+    description = HiddenField()
 
     problem_category = PrefixedRadioField(
         [InputRequired(message=radio_message)],
-        choices=problem_choices_redesign
+        choices=problem_choices_wizard
     )
     other_problem = StringField(
         other_problem_label,
@@ -261,7 +262,7 @@ class FormWizard(IssueForm):
         [InputRequired(message=radio_message)],
         choices=video_bug_choices
     )
-    browsers = PrefixedRadioField(
+    tested_browsers = PrefixedRadioField(
         [InputRequired(message=radio_message)],
         choices=browser_choices
     )
@@ -506,6 +507,7 @@ def build_formdata(form_object):
             'browser_test'), tested_elsewhere),
         'description': form_object.get('description'),
         'steps_reproduce': form_object.get('steps_reproduce'),
+        'tested_browsers': form_object.get('tested_browsers', ''),
     }
 
     # Preparing the body
@@ -515,7 +517,7 @@ def build_formdata(form_object):
 
 **Browser / Version**: {browser}
 **Operating System**: {os}
-**Tested Another Browser**: {browser_test_type}
+**Tested Another Browser**: {browser_test_type} {tested_browsers}
 
 **Problem type**: {problem_type}
 **Description**: {description}
