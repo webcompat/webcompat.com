@@ -5,7 +5,7 @@
 [![Dependency Status](https://david-dm.org/webcompat/webcompat.com.svg)](https://david-dm.org/webcompat/webcompat.com)
 [![devDependency Status](https://david-dm.org/webcompat/webcompat.com/dev-status.svg)](https://david-dm.org/webcompat/webcompat.com/)
 
-[![Built with Grunt](https://cdn.gruntjs.com/builtwith.svg)](http://gruntjs.com/)
+[![Built with Grunt](https://gruntjs.com/cdn/builtwith.svg)](http://gruntjs.com/)
 [![CircleCI](https://circleci.com/gh/webcompat/webcompat.com.svg?style=svg)](https://circleci.com/gh/webcompat/webcompat.com)
 
 [![Twitter](https://img.shields.io/twitter/url/https/github.com/webcompat/webcompat.com.svg?style=social)](https://twitter.com/webcompat) [![Greenkeeper badge](https://badges.greenkeeper.io/webcompat/webcompat.com.svg)](https://greenkeeper.io/)
