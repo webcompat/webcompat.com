@@ -283,6 +283,28 @@ BugForm.prototype.init = function() {
 
   window.addEventListener("pageshow", this.resetProblemType.bind(this));
 
+  // Send GA event for all the `next` button clicks
+  if ("ga" in window) {
+    this.stepsArray.forEach(function(element) {
+      $(element).on("click", function() {
+        let ga_event = {
+          eventAction: "click",
+          eventCategory: "wizard next-step click",
+          eventLabel: this.className
+        };
+        window.ga("send", "event", ga_event);
+      });
+      $(element).on("change", function() {
+        let ga_event = {
+          eventAction: "input",
+          eventCategory: "wizard input",
+          eventLabel: this.className
+        };
+        window.ga("send", "event", ga_event);
+      });
+    });
+  }
+
   // See if the user already has a valid form
   // (after a page refresh, back button, etc.)
   this.checkForm();
