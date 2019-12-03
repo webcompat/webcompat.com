@@ -636,10 +636,11 @@ BugForm.prototype.onFormSubmit = function(event) {
   event.preventDefault();
   this.disableSubmits();
   this.showLoadingIndicator();
-
-  var consoleLogPromise = this.uploadConsoleLogs();
-  var imagePromise = this.uploadImage();
-  $.when(consoleLogPromise, imagePromise).then(this.submitForm.bind(this));
+  this.uploadConsoleLogs().always(
+    function() {
+      this.uploadImage().then(this.submitForm.bind(this));
+    }.bind(this)
+  );
 };
 
 /*
@@ -647,14 +648,14 @@ BugForm.prototype.onFormSubmit = function(event) {
    put a link to it in the hidden field.
 */
 BugForm.prototype.uploadConsoleLogs = function() {
-  var dfd = $.Deferred();
   var details = JSON.parse(this.detailsInput.val());
 
   if (!details || !details.consoleLog) {
+    var dfd = $.Deferred();
     return dfd.resolve();
   }
 
-  $.ajax({
+  return $.ajax({
     contentType: "application/json",
     data: JSON.stringify(details.consoleLog),
     method: "POST",
@@ -662,16 +663,8 @@ BugForm.prototype.uploadConsoleLogs = function() {
     success: function(response) {
       var path = location.origin + "/console_logs/";
       this.consoleLogsInput.val(path + response.url);
-      dfd.resolve();
-    }.bind(this),
-    /* in case of error resolve with success anyway since we don't
-       want to prevent form submission if console logs are not
-       uploaded
-    */
-    error: dfd.resolve()
+    }.bind(this)
   });
-
-  return dfd.promise();
 };
 
 /*
@@ -679,9 +672,8 @@ BugForm.prototype.uploadConsoleLogs = function() {
    put an image link in the bug description.
 */
 BugForm.prototype.uploadImage = function() {
-  var dfd = $.Deferred();
-
   if (!this.hasImage) {
+    var dfd = $.Deferred();
     return dfd.resolve();
   }
 
@@ -691,7 +683,7 @@ BugForm.prototype.uploadImage = function() {
   var formdata = new FormData();
   formdata.append("image", dataURI);
 
-  $.ajax({
+  return $.ajax({
     contentType: false,
     processData: false,
     data: formdata,
@@ -699,9 +691,7 @@ BugForm.prototype.uploadImage = function() {
     url: "/upload/",
     success: this.addImageURL.bind(this),
     error: this.handleUploadError.bind(this)
-  }).then(dfd.resolve, dfd.reject);
-
-  return dfd.promise();
+  });
 };
 
 /*
@@ -771,7 +761,6 @@ BugForm.prototype.getDataURIFromPreviewEl = function() {
   and its thumbnail URL assets to the bug description
 */
 BugForm.prototype.addImageURL = function(response) {
-  var dfd = $.Deferred();
   var img_url = response.url;
   var thumb_url = response.thumb_url;
   var imageURL = [
@@ -785,9 +774,6 @@ BugForm.prototype.addImageURL = function(response) {
   this.stepsToReproduceField.val(function(idx, value) {
     return value + "\n" + imageURL;
   });
-
-  dfd.resolve();
-  return dfd.promise();
 };
 
 new BugForm();
