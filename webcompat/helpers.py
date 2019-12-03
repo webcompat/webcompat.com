@@ -412,13 +412,14 @@ def mockable_response(func):
                 file_path = FIXTURES_PATH + request.path + "." + checksum
             else:
                 file_path = FIXTURES_PATH + request.path
-            full_file_path = file_path + '.json'
-            if not os.path.exists(full_file_path):
-                print('Fixture expected at: {fix}'.format(fix=full_file_path))
+            if '.json' not in file_path:
+                file_path = file_path + '.json'
+            if not os.path.exists(file_path):
+                print('Fixture expected at: {fix}'.format(fix=file_path))
                 print('by the http request: {req}'.format(req=request.url))
                 return ('', 404)
             else:
-                with open(full_file_path, 'r') as f:
+                with open(file_path, 'r') as f:
                     data = f.read()
                     return (data, 200, get_fixture_headers(data))
         return func(*args, **kwargs)

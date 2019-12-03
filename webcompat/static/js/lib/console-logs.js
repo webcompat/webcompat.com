@@ -17,7 +17,7 @@ function consoleLogs() {
     var filename = getFileName(message.uri);
 
     return (
-      "<div><a href='" +
+      "<div class='log-file'><a href='" +
       message.uri +
       "'>" +
       filename +

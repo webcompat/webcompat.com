@@ -41,6 +41,7 @@ from webcompat.helpers import prepare_form
 from webcompat.helpers import set_referer
 from webcompat.issues import report_issue
 from webcompat.helpers import get_extra_labels
+from webcompat.helpers import mockable_response
 from webcompat import app
 from webcompat.db import session_db
 from webcompat.db import User
@@ -390,6 +391,7 @@ def show_rate_limit():
 
 if app.config['LOCALHOST']:
     @app.route('/uploads/<path:filename>')
+    @mockable_response
     def download_file(filename):
         """Route just for local environments to send uploaded images.
 
