@@ -25,6 +25,7 @@ function BugForm() {
 BugForm.prototype.onDOMReadyInit = function() {
   this.clickedButton = null;
   this.detailsInput = $("#details:hidden");
+  this.consoleLogsInput = $("#console_logs_url:hidden");
   this.errorLabel = $(".js-error-upload");
   this.form = $("#js-ReportForm form");
   this.hasImage = null;
@@ -635,27 +636,40 @@ BugForm.prototype.onFormSubmit = function(event) {
   event.preventDefault();
   this.disableSubmits();
   this.showLoadingIndicator();
-  this.maybeUploadImage(event).then(
-    this.submitForm.bind(this),
-    this.handleUploadError.bind(this)
-  );
+
+  var consoleLogPromise = this.uploadConsoleLogs();
+  var imagePromise = this.uploadImage();
+  $.when(consoleLogPromise, imagePromise).then(this.submitForm.bind(this));
 };
 
 /*
-   If we have an image, kick off the uploadImage promise, otherwise
-   resolve immediately.
+   Upload console logs before form submission so we can
+   put a link to it in the hidden field.
 */
-BugForm.prototype.maybeUploadImage = function(event) {
-  event.preventDefault();
+BugForm.prototype.uploadConsoleLogs = function() {
   var dfd = $.Deferred();
+  var details = JSON.parse(this.detailsInput.val());
 
-  if (!this.hasImage) {
+  if (!details || !details.consoleLog) {
     return dfd.resolve();
   }
 
-  this.uploadImage(this.getDataURIFromPreviewEl())
-    .then(this.addImageURL.bind(this))
-    .then(dfd.resolve, dfd.reject);
+  $.ajax({
+    contentType: "application/json",
+    data: JSON.stringify(details.consoleLog),
+    method: "POST",
+    url: "/console_logs/",
+    success: function(response) {
+      var path = location.origin + "/console_logs/";
+      this.consoleLogsInput.val(path + response.url);
+      dfd.resolve();
+    }.bind(this),
+    /* in case of error resolve with success anyway since we don't
+       want to prevent form submission if console logs are not
+       uploaded
+    */
+    error: dfd.resolve()
+  });
 
   return dfd.promise();
 };
@@ -664,10 +678,14 @@ BugForm.prototype.maybeUploadImage = function(event) {
    Upload the image before form submission so we can
    put an image link in the bug description.
 */
-BugForm.prototype.uploadImage = function(dataURI) {
+BugForm.prototype.uploadImage = function() {
   var dfd = $.Deferred();
-  this.disableSubmits();
 
+  if (!this.hasImage) {
+    return dfd.resolve();
+  }
+
+  var dataURI = this.getDataURIFromPreviewEl();
   this.removeBanner.addClass("is-hidden");
 
   var formdata = new FormData();
@@ -678,7 +696,9 @@ BugForm.prototype.uploadImage = function(dataURI) {
     processData: false,
     data: formdata,
     method: "POST",
-    url: "/upload/"
+    url: "/upload/",
+    success: this.addImageURL.bind(this),
+    error: this.handleUploadError.bind(this)
   }).then(dfd.resolve, dfd.reject);
 
   return dfd.promise();
