@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Console logs | webcompat.com</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Open source community for web compatibility.  Report bugs from websites or for browsers and help us move the web forward.">
+  <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon/favicon-32x32.png') }}" sizes="32x32">
+  <link href="{{ url_for('static', filename='css/dist/webcompat-logs.min.css') }}" type="text/css" rel="stylesheet">
+</head>
+<body>
+
+<div id="console_logs_data" data-subpath="{{ subpath }}" data-file-id="{{ file_id }}"></div>
+<div id="container"></div>
+
+<script src="{{ url_for('static', filename='js/vendor/jquery-3.3.1.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/lib/console-logs.js') }}"></script>
+</body>
+</html>

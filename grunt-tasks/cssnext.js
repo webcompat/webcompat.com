@@ -24,7 +24,9 @@ module.exports = function(grunt) {
     dist: {
       files: {
         "<%= cssPath %>/dist/webcompat.min.css":
-          "<%= cssPath %>/webcompat.dev.css"
+          "<%= cssPath %>/webcompat.dev.css",
+        "<%= cssPath %>/dist/webcompat-logs.min.css":
+          "<%= cssPath %>/webcompat-logs.dev.css"
       }
     }
   });

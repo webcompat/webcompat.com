@@ -151,6 +151,11 @@ class TestURLs(unittest.TestCase):
         rv = self.app.get('/contact')
         self.assertEqual(rv.status_code, 200)
 
+    def test_console_logs(self):
+        """Test that /console_logs exists."""
+        rv = self.app.get('/console_logs/11/20/1c0a7174-2c15-480f-9cee-e6183e6a781b')  # noqa
+        self.assertEqual(rv.status_code, 200)
+
     def test_activity_page_401_if_not_logged_in(self):
         """Test that asks user to log in before displaying activity."""
         rv = self.app.get('/me')

@@ -572,3 +572,11 @@ def wellknown(subpath):
         msg = app.config['WELL_KNOWN_ALL'].format(subpath=subpath)
         status_code = 404
     return (msg, status_code, {'content-type': 'text/plain; charset=utf-8'})
+
+
+@app.route('/console_logs/<path:subpath>/<uuid:file_id>')
+@cache_policy(private=True, uri_max_age=0, must_revalidate=True)
+def show_logs(subpath, file_id):
+    """Route to display console logs."""
+    return render_template('console-logs.html',
+                           subpath=subpath, file_id=file_id)
