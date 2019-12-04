@@ -4,6 +4,12 @@
 2. New features: affect minor number
 3. API endpoint changes or dependency version updates: affect major number
 
+## 23.0.0 - 2019-12-04
+
+* Fixes #2952 - Fixes husky pre-commit deprecation [Pull #3102](https://github.com/webcompat/webcompat.com/pull/3102)
+* Fixes #3100 - Send GA events for issue-wizard clicks/input changes [Pull #3101](https://github.com/webcompat/webcompat.com/pull/3101)
+* Fixes #3098 - Built with Grunt SVG badge (URL) is broken [Pull #3099](https://github.com/webcompat/webcompat.com/pull/3099)
+
 ## 22.0.0 - 2019-11-18
 
 * Fixes #3092 - Add bugform-prefill.js to grunt-tasks concat [Pull #3093](https://github.com/webcompat/webcompat.com/pull/3093)
