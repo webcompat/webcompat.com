@@ -78,7 +78,6 @@
     "virtualenv": "python3 -m venv env && source env/bin/activate || . env/bin/activate && npm run pip",
     "pip": "pip install -r config/requirements-dev.txt",
     "project-update": "pip install --upgrade pip && npm update",
-    "precommit": "lint-staged",
     "test": "npm run test:js && npm run test:python",
     "test:js": "node ./tests/functional/_intern.js",
     "test:python": "nosetests"
