@@ -57,7 +57,7 @@ const config = {
       "firefox",
       {
         name: "chrome",
-        version: "2.38"
+        version: "2.44"
       }
     ]
   },
