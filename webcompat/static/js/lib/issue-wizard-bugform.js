@@ -1199,11 +1199,15 @@ BugForm.prototype.uploadConsoleLogs = function() {
     return dfd.resolve();
   }
 
+  var formdata = new FormData();
+  formdata.append("console_logs", JSON.stringify(details.consoleLog));
+
   return $.ajax({
-    contentType: "application/json",
-    data: JSON.stringify(details.consoleLog),
+    contentType: false,
+    processData: false,
+    data: formdata,
     method: "POST",
-    url: "/console_logs/",
+    url: "/upload/",
     success: function(response) {
       var path = location.origin + "/console_logs/";
       this.consoleLogsInput.val(path + response.url);

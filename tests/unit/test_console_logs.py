@@ -4,12 +4,13 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-'''Tests for image upload API endpoint.'''
+'''Tests for console logs upload.'''
 
 import json
 import os.path
 import sys
 import unittest
+from werkzeug.datastructures import MultiDict
 
 # Add webcompat module to import path
 sys.path.append(os.path.realpath(os.pardir))
@@ -50,6 +51,12 @@ def cleanup(filepath):
     os.remove(filepath)
 
 
+def form_request(data):
+    d = MultiDict()
+    d['console_logs'] = data
+    return d
+
+
 class TestConsoleUploads(unittest.TestCase):
     def setUp(self):
         app.config['TESTING'] = True
@@ -60,30 +67,35 @@ class TestConsoleUploads(unittest.TestCase):
         pass
 
     def test_get(self):
-        '''Test that /console_logs/ doesn't let you GET.'''
-        rv = self.test_client.get('/console_logs/')
+        '''Test that /upload/ doesn't let you GET.'''
+        rv = self.test_client.get('/upload/')
         self.assertEqual(rv.status_code, 404)
 
     def test_console_log_upload(self):
         rv = self.test_client.post(
-            '/console_logs/', data=json.dumps(LOG))
+            '/upload/', data=form_request(json.dumps(LOG)))
         self.assertEqual(rv.status_code, 201)
 
         response = json.loads(rv.data)
         self.assertTrue('url' in response)
         cleanup(get_path(self, response.get('url')))
 
+    def test_console_log_bad_format(self):
         rv = self.test_client.post(
-            '/console_logs/', data='{test}')
+            '/upload/', data=form_request('{test}'))
         self.assertEqual(rv.status_code, 400)
 
         rv = self.test_client.post(
-            '/console_logs/', data='')
-        self.assertEqual(rv.status_code, 400)
+            '/upload/', data=form_request(''))
+        self.assertEqual(rv.status_code, 501)
+
+        rv = self.test_client.post(
+            '/upload/', data=json.dumps(LOG))
+        self.assertEqual(rv.status_code, 501)
 
     def test_console_log_file_contents(self):
         rv = self.test_client.post(
-            '/console_logs/', data=json.dumps(LOG))
+            '/upload/', data=form_request(json.dumps(LOG)))
         response = json.loads(rv.data)
         filepath = get_path(self, response.get('url'))
         actual = get_json_contents(filepath)

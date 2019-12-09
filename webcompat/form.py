@@ -32,7 +32,7 @@ from wtforms.validators import Optional
 from wtforms.validators import Regexp
 
 from webcompat import app
-from webcompat.api.uploads import Upload
+from webcompat.api.uploads import ImageUpload
 from webcompat.helpers import get_browser
 from webcompat.helpers import get_os
 from webcompat.helpers import get_str_value
@@ -221,7 +221,8 @@ class IssueForm(FlaskForm):
     # any changes here need to be updated in form.html.
     image = FileField('Attach a screenshot image',
                       [Optional(),
-                       FileAllowed(Upload.ALLOWED_FORMATS, image_message)])
+                       FileAllowed(ImageUpload.ALLOWED_FORMATS,
+                       image_message)])
     details = HiddenField()
     reported_with = HiddenField()
     ua_header = HiddenField()

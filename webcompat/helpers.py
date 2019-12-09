@@ -412,7 +412,7 @@ def mockable_response(func):
                 file_path = FIXTURES_PATH + request.path + "." + checksum
             else:
                 file_path = FIXTURES_PATH + request.path
-            if '.json' not in file_path:
+            if not file_path.endswith('.json'):
                 file_path = file_path + '.json'
             if not os.path.exists(file_path):
                 print('Fixture expected at: {fix}'.format(fix=file_path))
@@ -761,3 +761,14 @@ def get_extra_labels(form):
             extra_labels = ['form-v2-experiment']
 
     return extra_labels
+
+
+def get_data_from_request(request):
+    if 'image' in request.files and request.files['image'].filename:
+        return True, request.files['image']
+    elif 'image' in request.form:
+        return True, request.form['image']
+    elif 'console_logs' in request.form:
+        return False, request.form['console_logs']
+    else:
+        return False, None
