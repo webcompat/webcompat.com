@@ -102,6 +102,44 @@ class TestConsoleUploads(unittest.TestCase):
         self.assertEqual(actual, LOG)
         cleanup(filepath)
 
+    # def test_console_log_escape(self):
+    #     test = [
+    #         {
+    #             'level': 'log',
+    #             'log': [
+    #                 'test'
+    #             ],
+    #             'uri': 'http://example.com/vendor.js',
+    #             'pos': '95:13'
+    #         },
+    #         {
+    #             'level': 'warn',
+    #             'log': [
+    #                 '<script> alert("hi")</script>',
+    #                 'something else..'
+    #             ],
+    #             'uri': 'http://example.com/test.js',
+    #             'pos': '1:28535'
+    #         },
+    #         {
+    #             'level': 'error',
+    #             'log': [
+    #                 'Loading failed for the <script> with source https://www.redditstatic.com/desktop2x/js/ads.js.'
+    #             ],
+    #             'uri': 'http://example.com/vendor.js',
+    #             'pos': '95:13'
+    #         },
+    #     ]
+    #
+    #     rv = self.test_client.post(
+    #         '/upload/', data=form_request(json.dumps(test)))
+    #
+    #     response = json.loads(rv.data)
+    #     filepath = get_path(self, response.get('url'))
+    #     actual = get_json_contents(filepath)
+    #     self.assertEqual(actual, test)
+    #     cleanup(filepath)
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -13,6 +13,7 @@ import json
 import os
 import re
 import uuid
+#import html
 
 from flask import abort
 from flask import Blueprint
@@ -20,6 +21,8 @@ from flask import request
 from PIL import Image
 from werkzeug.datastructures import FileStorage
 from werkzeug.exceptions import RequestEntityTooLarge
+# from functools import reduce
+from flask import json as flask_json
 
 from webcompat import app
 from webcompat.helpers import get_data_from_request
@@ -142,12 +145,23 @@ class ImageUpload(BaseUpload):
 class LogUpload(BaseUpload):
     def __init__(self, data):
         super().__init__()
-        self.data = self.process_data(data)
+        self.data = self.process_json(data)
         self.file_path = self.get_file_path(self.year, self.month,
                                             self.file_id, 'json')
 
-    def process_data(self, data):
+    def process_json(self, data):
         try:
+            # d = json.loads(data)
+            # new_set = []
+            # for item in d:
+            #     new_dict = {}
+            #     for key, value in item.items():
+            #         if isinstance(value, list):
+            #             new_dict[key] = ', '.join(list(map(lambda x: html.escape(x), value)))
+            #         else:
+            #             new_dict[key] = html.escape(value)
+            #     new_set.append(new_dict)
+            # return new_set
             return json.loads(data)
         except ValueError:
             abort(400)
@@ -163,7 +177,8 @@ class LogUpload(BaseUpload):
             os.makedirs(dest_dir)
 
         with open(file_dest, 'w', encoding='utf-8') as f:
-            json.dump(self.data, f, ensure_ascii=False)
+            flask_json.htmlsafe_dump(self.data, f, ensure_ascii=False)
+            #json.dump(self.data, f, ensure_ascii=False)
 
     def get_file_info(self):
         return {
