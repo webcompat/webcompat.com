@@ -4,6 +4,12 @@
 2. New features: affect minor number
 3. API endpoint changes or dependency version updates: affect major number
 
+## 24.0.0 - 2019-12-12
+
+* Fixes #3004 - Description step has no intro copy [Pull #3108](https://github.com/webcompat/webcompat.com/pull/3108)
+* Fixes #3096 - Wrong button label for screenshot step [Pull #3107](https://github.com/webcompat/webcompat.com/pull/3107)
+* Fixes #2945 - Update Intern to 4.7.0 [Pull #3105](https://github.com/webcompat/webcompat.com/pull/3105)
+
 ## 23.0.0 - 2019-12-04
 
 * Fixes #2952 - Fixes husky pre-commit deprecation [Pull #3102](https://github.com/webcompat/webcompat.com/pull/3102)
