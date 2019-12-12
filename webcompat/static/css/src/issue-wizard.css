@@ -583,11 +583,8 @@
 }
 
 .device-data-hero img {
-  max-width: 100%;
-}
-
-.device-data-hero {
   display: none;
+  max-width: 100%;
 }
 
 .final-step .button img {
@@ -1101,6 +1098,9 @@
   .device-data-hero {
     display: flex;
     width: 40%;
+  }
+  .device-data-hero img {
+    display: flex;
   }
 
   .device-data .input-description {
