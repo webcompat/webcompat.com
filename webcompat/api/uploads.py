@@ -13,7 +13,6 @@ import json
 import os
 import re
 import uuid
-#import html
 
 from flask import abort
 from flask import Blueprint
@@ -21,8 +20,6 @@ from flask import request
 from PIL import Image
 from werkzeug.datastructures import FileStorage
 from werkzeug.exceptions import RequestEntityTooLarge
-# from functools import reduce
-from flask import json as flask_json
 
 from webcompat import app
 from webcompat.helpers import get_data_from_request
@@ -151,17 +148,6 @@ class LogUpload(BaseUpload):
 
     def process_json(self, data):
         try:
-            # d = json.loads(data)
-            # new_set = []
-            # for item in d:
-            #     new_dict = {}
-            #     for key, value in item.items():
-            #         if isinstance(value, list):
-            #             new_dict[key] = ', '.join(list(map(lambda x: html.escape(x), value)))
-            #         else:
-            #             new_dict[key] = html.escape(value)
-            #     new_set.append(new_dict)
-            # return new_set
             return json.loads(data)
         except ValueError:
             abort(400)
@@ -177,8 +163,7 @@ class LogUpload(BaseUpload):
             os.makedirs(dest_dir)
 
         with open(file_dest, 'w', encoding='utf-8') as f:
-            flask_json.htmlsafe_dump(self.data, f, ensure_ascii=False)
-            #json.dump(self.data, f, ensure_ascii=False)
+            json.dump(self.data, f, ensure_ascii=False)
 
     def get_file_info(self):
         return {
@@ -195,13 +180,13 @@ def upload():
 
     Returns a JSON string that contains the filename and url.
     '''
-    is_image, data = get_data_from_request(request)
+    file_type, data = get_data_from_request(request)
     if not data:
         # We don't know what you're trying to do, but it ain't gonna work.
         abort(501)
 
     try:
-        if is_image:
+        if file_type is 'image':
             upload = ImageUpload(data)
         else:
             upload = LogUpload(data)

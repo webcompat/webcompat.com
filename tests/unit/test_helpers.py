@@ -34,6 +34,7 @@ from webcompat.helpers import rewrite_and_sanitize_link
 from webcompat.helpers import rewrite_links
 from webcompat.helpers import sanitize_link
 from webcompat.helpers import get_extra_labels
+from webcompat.helpers import get_filename_from_url
 
 
 ACCESS_TOKEN_LINK = '<https://api.github.com/repositories/17839063/issues?per_page=50&page=3&access_token=12345>; rel="next", <https://api.github.com/repositories/17839063/issues?access_token=12345&per_page=50&page=4>; rel="last", <https://api.github.com/repositories/17839063/issues?per_page=50&access_token=12345&page=1>; rel="first", <https://api.github.com/repositories/17839063/issues?per_page=50&page=1&access_token=12345>; rel="prev"'  # noqa
@@ -564,6 +565,36 @@ class TestHelpers(unittest.TestCase):
                 {'extra_labels': '["type-marfeel", "browser-fenix"]'}),
                 ['type-fastclick', 'form-v2-experiment']
             )
+
+    def test_process_log_url(self):
+        self.assertEqual(get_filename_from_url(
+            'https://example.com/file.js'),
+            'file.js'
+        )
+        self.assertEqual(get_filename_from_url(
+            'https://example.com/vendor.min.js?201911131607%20line%202%20%3E%20#id'),  # noqa
+            'vendor.min.js'
+        )
+        self.assertEqual(get_filename_from_url(
+            'https://example.com/some_path/to_page/'
+        ),
+            'to_page'
+        )
+
+        self.assertEqual(get_filename_from_url(
+            'https://example.com/some_path/to_page'
+        ),
+            'to_page'
+        )
+
+        self.assertEqual(get_filename_from_url(
+            'https://example.com/'),
+            'example.com'
+        )
+        self.assertEqual(get_filename_from_url(
+            'https://example.com'),
+            'example.com'
+        )
 
 
 if __name__ == '__main__':

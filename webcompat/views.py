@@ -46,6 +46,7 @@ from webcompat import app
 from webcompat.db import session_db
 from webcompat.db import User
 from webcompat import github
+import json
 
 
 @app.teardown_appcontext
@@ -580,5 +581,16 @@ def wellknown(subpath):
 @cache_policy(private=True, uri_max_age=0, must_revalidate=True)
 def show_logs(subpath, file_id):
     """Route to display console logs."""
-    return render_template('console-logs.html',
-                           subpath=subpath, file_id=file_id)
+
+    path = os.path.join(
+        app.config['UPLOADS_DEFAULT_DEST'],
+        subpath,
+        str(file_id) + '.json'
+    )
+
+    if os.path.exists(path):
+        with open(path, 'r') as f:
+            logs = json.load(f)
+        return render_template('console-logs.html', logs=logs)
+    else:
+        abort(404)

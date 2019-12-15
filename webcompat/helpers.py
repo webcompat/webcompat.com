@@ -765,10 +765,34 @@ def get_extra_labels(form):
 
 def get_data_from_request(request):
     if 'image' in request.files and request.files['image'].filename:
-        return True, request.files['image']
+        return 'image', request.files['image']
     elif 'image' in request.form:
-        return True, request.form['image']
+        return 'image', request.form['image']
     elif 'console_logs' in request.form:
-        return False, request.form['console_logs']
+        return 'json', request.form['console_logs']
     else:
-        return False, None
+        return None, None
+
+
+def get_filename_from_url(uri):
+    """Extract filename from url.
+
+    Get filename of a file/page where console log was initiated
+    based on url
+    """
+    parsed_uri = urllib.parse.urlparse(uri)
+    script_path = os.path.basename(parsed_uri.path)
+
+    if not script_path and parsed_uri.path:
+        script_path = os.path.basename(os.path.normpath(parsed_uri.path))
+
+    # if file or page wasn't found just return site domain
+    if not script_path:
+        script_path = parsed_uri.netloc
+
+    return script_path
+
+
+@app.context_processor
+def register_get_filename_from_url():
+    return dict(get_filename_from_url=get_filename_from_url)

@@ -102,43 +102,54 @@ class TestConsoleUploads(unittest.TestCase):
         self.assertEqual(actual, LOG)
         cleanup(filepath)
 
-    # def test_console_log_escape(self):
-    #     test = [
-    #         {
-    #             'level': 'log',
-    #             'log': [
-    #                 'test'
-    #             ],
-    #             'uri': 'http://example.com/vendor.js',
-    #             'pos': '95:13'
-    #         },
-    #         {
-    #             'level': 'warn',
-    #             'log': [
-    #                 '<script> alert("hi")</script>',
-    #                 'something else..'
-    #             ],
-    #             'uri': 'http://example.com/test.js',
-    #             'pos': '1:28535'
-    #         },
-    #         {
-    #             'level': 'error',
-    #             'log': [
-    #                 'Loading failed for the <script> with source https://www.redditstatic.com/desktop2x/js/ads.js.'
-    #             ],
-    #             'uri': 'http://example.com/vendor.js',
-    #             'pos': '95:13'
-    #         },
-    #     ]
-    #
-    #     rv = self.test_client.post(
-    #         '/upload/', data=form_request(json.dumps(test)))
-    #
-    #     response = json.loads(rv.data)
-    #     filepath = get_path(self, response.get('url'))
-    #     actual = get_json_contents(filepath)
-    #     self.assertEqual(actual, test)
-    #     cleanup(filepath)
+    def test_console_log_render(self):
+        test = [
+            {
+                'level': 'log',
+                'log': [
+                    'test log'
+                ],
+                'uri': 'http://example.com/vendor.js',
+                'pos': '95:13'
+            },
+            {
+                'level': 'warn',
+                'log': [
+                    '<script> alert("hi")</script>',
+                    'something else..'
+                ],
+                'uri': 'http://example.com/test.js',
+                'pos': '1:28535'
+            },
+            {
+                'level': 'error',
+                'log': [
+                    '<div style="background-image: url(javascript:alert(\'XSS\'))">',  # noqa
+                ],
+                'uri': 'http://example.com/test.js',
+                'pos': '1:28535'
+            }
+        ]
+
+        rv = self.test_client.post(
+            '/upload/', data=form_request(json.dumps(test)))
+        response = json.loads(rv.data)
+        console_logs_url = '/console_logs/' + response.get('url')
+        rv = self.test_client.get(console_logs_url)
+        for expected in [
+            b'<div class="log level-log">',
+            b'<div class="log level-warn">',
+            b'<div class="log level-error">',
+            b'<a href="http://example.com/vendor.js">vendor.js:95:13</a>',
+            b'test log',
+            b'&lt;script&gt; alert(&#34;hi&#34;)&lt;/script&gt;',
+            b'&lt;div style=&#34;background-image: url(javascript:alert(&#39;XSS&#39;))&#34;&gt;'  # noqa
+        ]:
+            self.assertTrue(expected in rv.data)
+
+        self.assertEqual(rv.status_code, 200)
+        filepath = get_path(self, response.get('url'))
+        cleanup(filepath)
 
 
 if __name__ == '__main__':

@@ -12,10 +12,20 @@
 </head>
 <body>
 
-<div id="console_logs_data" data-subpath="{{ subpath }}" data-file-id="{{ file_id }}"></div>
-<div id="container"></div>
+<div id="console_logs_data">
+{% for data in logs %}
 
-<script src="{{ url_for('static', filename='js/vendor/jquery-3.3.1.min.js') }}"></script>
-<script src="{{ url_for('static', filename='js/lib/console-logs.js') }}"></script>
+    <div class="log level-{{ data.level }}">
+        <div class="log-message">
+            {{ data.log | join(', ') }}
+        </div>
+        <div class="log-file">
+            <a href="{{ data.uri }}">{{ get_filename_from_url(data.uri) }}:{{ data.pos }}</a>
+        </div>
+    </div>
+
+{% endfor %}
+</div>
+
 </body>
 </html>
