@@ -1154,6 +1154,7 @@ BugForm.prototype.showRemoveUpload = function() {
   this.removeScreenshotButton.on("click", this.removeUploadPreview.bind(this));
 
   this.changeUploadText("uploaded-screenshot");
+  this.step10Btn.text("Continue");
   this.step10Btn.removeClass("disabled");
 };
 
@@ -1187,6 +1188,7 @@ BugForm.prototype.removeUploadPreview = function(event) {
   // clear out the input[type=file] as well
   this.uploadField.val(this.uploadField.get(0).defaultValue);
 
+  this.step10Btn.text("Continue without");
   this.changeUploadText("deleted-screenshot");
 };
 
