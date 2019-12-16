@@ -31,7 +31,7 @@ BugForm.prototype.onDOMReadyInit = function() {
   this.hasImage = null;
   this.loadingIndicator = $(".js-loader");
   this.previewEl = $(".js-image-upload");
-  this.removeBanner = $(".js-remove-upload");
+  this.removeScreenshotButton = $(".js-remove-upload");
   this.uploadOther = $(".screenshot-select-trigger");
   this.submitButtons = $("#js-ReportForm .js-Button");
   this.submitButtonWrappers = $("#js-ReportForm .js-Button-wrapper");
@@ -699,7 +699,7 @@ BugForm.prototype.imageField = function(id, inlineHelp) {
     .appendTo(".js-error-upload");
 
   this.uploadLabel.addClass("is-hidden");
-  this.removeBanner.addClass("is-hidden");
+  this.removeScreenshotButton.addClass("is-hidden");
   $(".js-error-upload").removeClass("is-hidden");
 
   $(".form-message-error").hide();
@@ -1147,11 +1147,11 @@ BugForm.prototype.showRemoveUpload = function() {
   this.errorLabel.addClass("is-hidden");
   this.uploadLabel.removeClass("visually-hidden");
 
-  this.removeBanner.removeClass("is-hidden");
+  this.removeScreenshotButton.removeClass("is-hidden");
   this.uploadOther.removeClass("is-hidden");
-  this.removeBanner.attr("tabIndex", "0");
+  this.removeScreenshotButton.attr("tabIndex", "0");
   this.uploadLabel.addClass("visually-hidden");
-  this.removeBanner.on("click", this.removeUploadPreview.bind(this));
+  this.removeScreenshotButton.on("click", this.removeUploadPreview.bind(this));
 
   this.changeUploadText("uploaded-screenshot");
   this.step10Btn.removeClass("disabled");
@@ -1165,7 +1165,7 @@ BugForm.prototype.changeUploadText = function(textId) {
 };
 
 /*
-  Remove the upload image preview and hide the banner.
+  Remove the upload image preview and hide the remove screenshot button.
 */
 BugForm.prototype.removeUploadPreview = function(event) {
   if (event && event.originalEvent instanceof Event) {
@@ -1176,11 +1176,11 @@ BugForm.prototype.removeUploadPreview = function(event) {
     this.uploadLabel.removeClass("visually-hidden").removeClass("is-hidden");
   }
   this.previewEl.css("background", "none");
-  this.removeBanner.addClass("is-hidden");
+  this.removeScreenshotButton.addClass("is-hidden");
   this.uploadOther.addClass("is-hidden");
-  this.removeBanner.attr("tabIndex", "-1");
-  this.removeBanner.off("click");
-  this.removeBanner.get(0).blur();
+  this.removeScreenshotButton.attr("tabIndex", "-1");
+  this.removeScreenshotButton.off("click");
+  this.removeScreenshotButton.get(0).blur();
 
   this.hasImage = false;
 
@@ -1248,7 +1248,7 @@ BugForm.prototype.uploadImage = function() {
   }
 
   var dataURI = this.getDataURIFromPreviewEl();
-  this.removeBanner.addClass("is-hidden");
+  this.removeScreenshotButton.addClass("is-hidden");
 
   var formdata = new FormData();
   formdata.append("image", dataURI);
