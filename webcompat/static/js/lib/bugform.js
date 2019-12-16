@@ -25,6 +25,7 @@ function BugForm() {
 BugForm.prototype.onDOMReadyInit = function() {
   this.clickedButton = null;
   this.detailsInput = $("#details:hidden");
+  this.consoleLogsInput = $("#console_logs_url:hidden");
   this.errorLabel = $(".js-error-upload");
   this.form = $("#js-ReportForm form");
   this.hasImage = null;
@@ -635,53 +636,66 @@ BugForm.prototype.onFormSubmit = function(event) {
   event.preventDefault();
   this.disableSubmits();
   this.showLoadingIndicator();
-  this.maybeUploadImage(event).then(
-    this.submitForm.bind(this),
-    this.handleUploadError.bind(this)
+  this.uploadConsoleLogs().always(
+    function() {
+      this.uploadImage().then(this.submitForm.bind(this));
+    }.bind(this)
   );
 };
 
 /*
-   If we have an image, kick off the uploadImage promise, otherwise
-   resolve immediately.
+   Upload console logs before form submission so we can
+   put a link to it in the hidden field.
 */
-BugForm.prototype.maybeUploadImage = function(event) {
-  event.preventDefault();
-  var dfd = $.Deferred();
+BugForm.prototype.uploadConsoleLogs = function() {
+  var details = JSON.parse(this.detailsInput.val());
 
-  if (!this.hasImage) {
+  if (!details || !details.consoleLog) {
+    var dfd = $.Deferred();
     return dfd.resolve();
   }
 
-  this.uploadImage(this.getDataURIFromPreviewEl())
-    .then(this.addImageURL.bind(this))
-    .then(dfd.resolve, dfd.reject);
+  var formdata = new FormData();
+  formdata.append("console_logs", JSON.stringify(details.consoleLog));
 
-  return dfd.promise();
+  return $.ajax({
+    contentType: false,
+    processData: false,
+    data: formdata,
+    method: "POST",
+    url: "/upload/",
+    success: function(response) {
+      var path = location.origin + "/console_logs/";
+      this.consoleLogsInput.val(path + response.url);
+    }.bind(this)
+  });
 };
 
 /*
    Upload the image before form submission so we can
    put an image link in the bug description.
 */
-BugForm.prototype.uploadImage = function(dataURI) {
-  var dfd = $.Deferred();
-  this.disableSubmits();
+BugForm.prototype.uploadImage = function() {
+  if (!this.hasImage) {
+    var dfd = $.Deferred();
+    return dfd.resolve();
+  }
 
+  var dataURI = this.getDataURIFromPreviewEl();
   this.removeBanner.addClass("is-hidden");
 
   var formdata = new FormData();
   formdata.append("image", dataURI);
 
-  $.ajax({
+  return $.ajax({
     contentType: false,
     processData: false,
     data: formdata,
     method: "POST",
-    url: "/upload/"
-  }).then(dfd.resolve, dfd.reject);
-
-  return dfd.promise();
+    url: "/upload/",
+    success: this.addImageURL.bind(this),
+    error: this.handleUploadError.bind(this)
+  });
 };
 
 /*
@@ -751,7 +765,6 @@ BugForm.prototype.getDataURIFromPreviewEl = function() {
   and its thumbnail URL assets to the bug description
 */
 BugForm.prototype.addImageURL = function(response) {
-  var dfd = $.Deferred();
   var img_url = response.url;
   var thumb_url = response.thumb_url;
   var imageURL = [
@@ -765,9 +778,6 @@ BugForm.prototype.addImageURL = function(response) {
   this.stepsToReproduceField.val(function(idx, value) {
     return value + "\n" + imageURL;
   });
-
-  dfd.resolve();
-  return dfd.promise();
 };
 
 new BugForm();

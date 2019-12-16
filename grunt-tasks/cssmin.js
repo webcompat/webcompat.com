@@ -13,6 +13,11 @@ module.exports = function(grunt) {
         "<%= cssPath %>/dist/webcompat.min.css": [
           // input
           "<%= cssPath %>/webcompat.dev.css"
+        ],
+        // output
+        "<%= cssPath %>/dist/webcompat-logs.min.css": [
+          // input
+          "<%= cssPath %>/webcompat-logs.dev.css"
         ]
       }
     }

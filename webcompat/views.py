@@ -41,10 +41,12 @@ from webcompat.helpers import prepare_form
 from webcompat.helpers import set_referer
 from webcompat.issues import report_issue
 from webcompat.helpers import get_extra_labels
+from webcompat.helpers import mockable_response
 from webcompat import app
 from webcompat.db import session_db
 from webcompat.db import User
 from webcompat import github
+import json
 
 
 @app.teardown_appcontext
@@ -390,6 +392,7 @@ def show_rate_limit():
 
 if app.config['LOCALHOST']:
     @app.route('/uploads/<path:filename>')
+    @mockable_response
     def download_file(filename):
         """Route just for local environments to send uploaded images.
 
@@ -572,3 +575,22 @@ def wellknown(subpath):
         msg = app.config['WELL_KNOWN_ALL'].format(subpath=subpath)
         status_code = 404
     return (msg, status_code, {'content-type': 'text/plain; charset=utf-8'})
+
+
+@app.route('/console_logs/<path:subpath>/<uuid:file_id>')
+@cache_policy(private=True, uri_max_age=0, must_revalidate=True)
+def show_logs(subpath, file_id):
+    """Route to display console logs."""
+
+    path = os.path.join(
+        app.config['UPLOADS_DEFAULT_DEST'],
+        subpath,
+        str(file_id) + '.json'
+    )
+
+    if os.path.exists(path):
+        with open(path, 'r') as f:
+            logs = json.load(f)
+        return render_template('console-logs.html', logs=logs)
+    else:
+        abort(404)

@@ -209,37 +209,37 @@ class TestForm(unittest.TestCase):
         # Test for receiving JSON object as a string
         actual_json_arg = form.build_details(json.dumps(
             {'a': 'b', 'c': False}))
-        expected_json_arg = '<details>\n<summary>Browser Configuration</summary>\n<ul>\n  <li>a: b</li><li>c: false</li>\n</ul>\n\n</details>'  # noqa
+        expected_json_arg = '<details>\n<summary>Browser Configuration</summary>\n<ul>\n  <li>a: b</li><li>c: false</li>\n</ul>\n</details>'  # noqa
         self.assertEqual(actual_json_arg, expected_json_arg)
         # Test for receiving a JSON value which is not an object
         actual_json_arg = form.build_details('null')
-        expected_json_arg = '<details>\n<summary>Browser Configuration</summary>\n<ul>\n  <li>None</li>\n</ul>\n\n</details>'  # noqa
+        expected_json_arg = '<details>\n<summary>Browser Configuration</summary>\n<ul>\n  <li>None</li>\n</ul>\n</details>'  # noqa
         self.assertEqual(actual_json_arg, expected_json_arg)
         # Test for receiving a string
         actual_string_arg = form.build_details('cool')
-        expected_string_arg = '<details>\n<summary>Browser Configuration</summary>\n<ul>\n  <li>cool</li>\n</ul>\n\n</details>'  # noqa
+        expected_string_arg = '<details>\n<summary>Browser Configuration</summary>\n<ul>\n  <li>cool</li>\n</ul>\n</details>'  # noqa
         self.assertEqual(actual_string_arg, expected_string_arg)
 
-    def test_build_details_with_console_logs(self):
-        """Expected HTML is returned for a json object with console logs."""
+    def test_build_details_without_console_logs(self):
+        """Expected HTML is returned for a json object without console logs."""
         actual_json_arg = form.build_details(json.dumps(
             {'a': 'b', 'c': False, 'consoleLog': ['console.log(hi)']}))
-        expected_json_arg = '<details>\n<summary>Browser Configuration</summary>\n<ul>\n  <li>a: b</li><li>c: false</li>\n</ul>\n<p>Console Messages:</p>\n<pre>\n[\'console.log(hi)\']\n</pre>\n</details>'  # noqa
+        expected_json_arg = '<details>\n<summary>Browser Configuration</summary>\n<ul>\n  <li>a: b</li><li>c: false</li>\n</ul>\n</details>'  # noqa
         self.assertEqual(actual_json_arg, expected_json_arg)
         actual_empty_log_arg = form.build_details(json.dumps(
             {'a': 'b', 'c': False, 'consoleLog': ''}))
-        expected_empty_log_arg = '<details>\n<summary>Browser Configuration</summary>\n<ul>\n  <li>a: b</li><li>c: false</li>\n</ul>\n\n</details>'  # noqa
+        expected_empty_log_arg = '<details>\n<summary>Browser Configuration</summary>\n<ul>\n  <li>a: b</li><li>c: false</li>\n</ul>\n</details>'  # noqa
         self.assertEqual(actual_empty_log_arg, expected_empty_log_arg)
 
-    def test_get_console_section(self):
-        """Assert we return an empty string, or a pre with console messages."""
-        actual_empty_arg = form.get_console_section('')
+    def test_get_console_logs_url(self):
+        """Assert we return an empty string, or a link to console logs page."""
+        actual_empty_arg = form.get_console_logs_url('')
         expected_empty_arg = ''
         self.assertEqual(actual_empty_arg, expected_empty_arg)
-        actual_none_arg = form.get_console_section(None)
+        actual_none_arg = form.get_console_logs_url(None)
         self.assertEqual(actual_none_arg, expected_empty_arg)
-        actual_stringy_arg = form.get_console_section('sup')
-        expected_stringy_arg = '<p>Console Messages:</p>\n<pre>\nsup\n</pre>'
+        actual_stringy_arg = form.get_console_logs_url('some url')
+        expected_stringy_arg = '\n\n[View console log messages](some url)'
         self.assertEqual(actual_stringy_arg, expected_stringy_arg)
 
     def test_is_valid_issue_form(self):

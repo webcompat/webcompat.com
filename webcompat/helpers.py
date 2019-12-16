@@ -412,13 +412,14 @@ def mockable_response(func):
                 file_path = FIXTURES_PATH + request.path + "." + checksum
             else:
                 file_path = FIXTURES_PATH + request.path
-            full_file_path = file_path + '.json'
-            if not os.path.exists(full_file_path):
-                print('Fixture expected at: {fix}'.format(fix=full_file_path))
+            if not file_path.endswith('.json'):
+                file_path = file_path + '.json'
+            if not os.path.exists(file_path):
+                print('Fixture expected at: {fix}'.format(fix=file_path))
                 print('by the http request: {req}'.format(req=request.url))
                 return ('', 404)
             else:
-                with open(full_file_path, 'r') as f:
+                with open(file_path, 'r') as f:
                     data = f.read()
                     return (data, 200, get_fixture_headers(data))
         return func(*args, **kwargs)
@@ -760,3 +761,38 @@ def get_extra_labels(form):
             extra_labels = ['form-v2-experiment']
 
     return extra_labels
+
+
+def get_data_from_request(request):
+    if 'image' in request.files and request.files['image'].filename:
+        return 'image', request.files['image']
+    elif 'image' in request.form:
+        return 'image', request.form['image']
+    elif 'console_logs' in request.form:
+        return 'json', request.form['console_logs']
+    else:
+        return None, None
+
+
+def get_filename_from_url(uri):
+    """Extract filename from url.
+
+    Get filename of a file/page where console log was initiated
+    based on url
+    """
+    parsed_uri = urllib.parse.urlparse(uri)
+    script_path = os.path.basename(parsed_uri.path)
+
+    if not script_path and parsed_uri.path:
+        script_path = os.path.basename(os.path.normpath(parsed_uri.path))
+
+    # if file or page wasn't found just return site domain
+    if not script_path:
+        script_path = parsed_uri.netloc
+
+    return script_path
+
+
+@app.context_processor
+def register_get_filename_from_url():
+    return dict(get_filename_from_url=get_filename_from_url)

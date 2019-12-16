@@ -32,7 +32,7 @@ from wtforms.validators import Optional
 from wtforms.validators import Regexp
 
 from webcompat import app
-from webcompat.api.uploads import Upload
+from webcompat.api.uploads import ImageUpload
 from webcompat.helpers import get_browser
 from webcompat.helpers import get_os
 from webcompat.helpers import get_str_value
@@ -221,12 +221,14 @@ class IssueForm(FlaskForm):
     # any changes here need to be updated in form.html.
     image = FileField('Attach a screenshot image',
                       [Optional(),
-                       FileAllowed(Upload.ALLOWED_FORMATS, image_message)])
+                       FileAllowed(ImageUpload.ALLOWED_FORMATS,
+                       image_message)])
     details = HiddenField()
     reported_with = HiddenField()
     ua_header = HiddenField()
     submit_type = HiddenField()
     extra_labels = HiddenField()
+    console_logs_url = HiddenField()
 
 
 class FormWizard(IssueForm):
@@ -307,18 +309,16 @@ def get_details(details):
     return rv
 
 
-def get_console_section(console_logs):
+def get_console_logs_url(url):
     """Return a section for console logs, or the empty string.
 
     This populates the named argument `{console_section}`
     inside the formatted string that `build_details` returns.
     """
-    if not console_logs:
+    if not url:
         return ''
-    return """<p>Console Messages:</p>
-<pre>
-{console_logs}
-</pre>""".format(console_logs=console_logs)
+    return """\n
+[View console log messages]({console_logs_url})""".format(console_logs_url=url)
 
 
 def build_details(details):
@@ -327,11 +327,10 @@ def build_details(details):
     If we get JSON, we try to pull out the console logs before building the
     rest of the details.
     """
-    console_logs = None
     try:
         content = json.loads(details)
         if is_json_object(content):
-            console_logs = content.pop('consoleLog', None)
+            content.pop('consoleLog', None)
     except ValueError:
         # if we got a ValueError, details was a string, so just pass it
         # into get_details below
@@ -341,9 +340,7 @@ def build_details(details):
 <ul>
   {details_list_items}
 </ul>
-{console_section}
-</details>""".format(details_list_items=get_details(content),
-                     console_section=get_console_section(console_logs))
+</details>""".format(details_list_items=get_details(content))
 
 
 def get_radio_button_label(field_value, label_list):
@@ -529,6 +526,7 @@ def build_formdata(form_object):
     details = form_object.get('details')
     if details:
         body += build_details(details)
+    body += get_console_logs_url(form_object.get('console_logs_url'))
     # Add the image, if there was one.
     if form_object.get('image_upload') is not None:
         body += '\n\n![Screenshot of the site issue]({image_url})'.format(
