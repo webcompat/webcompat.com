@@ -4,6 +4,11 @@
 2. New features: affect minor number
 3. API endpoint changes or dependency version updates: affect major number
 
+## 24.1.0 - 2019-12-17
+
+* Fixes #3110 - Change step10 button text depending on state [Pull #3111](https://github.com/webcompat/webcompat.com/pull/3111)
+* Fixes #2659 - Make console logs in browser configuration details easier to read [Pull #3103](https://github.com/webcompat/webcompat.com/pull/3103)
+
 ## 24.0.0 - 2019-12-12
 
 * Fixes #3004 - Description step has no intro copy [Pull #3108](https://github.com/webcompat/webcompat.com/pull/3108)
