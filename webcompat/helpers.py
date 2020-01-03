@@ -616,6 +616,11 @@ def is_blacklisted_domain(domain):
     return domain in spamlist
 
 
+def is_darknet_domain(domain):
+    """Check if the domain ends with .onion."""
+    return domain.endswith('.onion')
+
+
 def form_type(form_request):
     """Check the type of form request for /issues/new.
 
