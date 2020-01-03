@@ -4,6 +4,14 @@
 2. New features: affect minor number
 3. API endpoint changes or dependency version updates: affect major number
 
+## 26.0.0 - 2020-01-03
+
+* Fixes #3123 - Prevent .onion URLs from being reported [Pull #3128](https://github.com/webcompat/webcompat.com/pull/3128)
+* Fixes #3121 - Remove inline screenshot images [Pull #3127](https://github.com/webcompat/webcompat.com/pull/3127)
+* Fixes #3121 - Disable anonymous reporting [Pull #3126](https://github.com/webcompat/webcompat.com/pull/3126)
+* Fixes #3118 - Display maintenance page for /issues/new route" [Pull #3125](https://github.com/webcompat/webcompat.com/pull/3125)
+* NPM update - Update stylelint-order to the latest version. [Pull #3116](https://github.com/webcompat/webcompat.com/pull/3116)
+
 ## 25.0.0 - 2020-01-03
 
 * Fixes #3118 - Display maintenance page for /issues/new route [Pull #3119](https://github.com/webcompat/webcompat.com/pull/3119)
