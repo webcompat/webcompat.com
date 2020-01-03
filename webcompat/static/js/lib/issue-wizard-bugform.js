@@ -1373,14 +1373,7 @@ BugForm.prototype.getDataURIFromPreviewEl = function() {
 */
 BugForm.prototype.addImageURL = function(response) {
   var img_url = response.url;
-  var thumb_url = response.thumb_url;
-  var imageURL = [
-    "[![Screenshot Description](",
-    thumb_url,
-    ")](",
-    img_url,
-    ")"
-  ].join("");
+  var imageURL = ["[Screenshot](", img_url, ")"].join("");
 
   this.stepsToReproduceField.val(function(idx, value) {
     return value + "\n" + imageURL;
