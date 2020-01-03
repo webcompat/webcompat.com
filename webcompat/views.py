@@ -36,6 +36,7 @@ from webcompat.helpers import get_browser_name
 from webcompat.helpers import get_referer
 from webcompat.helpers import get_user_info
 from webcompat.helpers import is_blacklisted_domain
+from webcompat.helpers import is_darknet_domain
 from webcompat.helpers import is_valid_issue_form
 from webcompat.helpers import prepare_form
 from webcompat.helpers import set_referer
@@ -296,9 +297,13 @@ def create_issue():
         if not is_valid_issue_form(form):
             log.info('400: POST request w/o valid form (is_valid_issue_form).')
             abort(400)
+        domain = urllib.parse.urlsplit(form['url']).hostname
+        if is_darknet_domain(domain):
+            msg = app.config['IS_DARKNET_DOMAIN'].format(form['url'])
+            flash(msg, 'notimeout')
+            return redirect(url_for('index'))
         if form.get('submit_type') == PROXY_REPORT:
             # Checking blacklisted domains
-            domain = urllib.parse.urlsplit(form['url']).hostname
             if is_blacklisted_domain(domain):
                 msg = app.config['IS_BLACKLISTED_DOMAIN'].format(form['url'])
                 flash(msg, 'notimeout')

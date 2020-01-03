@@ -91,6 +91,10 @@ IS_BLACKLISTED_DOMAIN = ('Anonymous reporting for domain {0} '
                          'miket@mozilla.com '
                          'for more details.')
 
+IS_DARKNET_DOMAIN = ('Reporting for .onion domains is disabled.'
+                     'Please contact miket@mozilla.com '
+                     'for more details.')
+
 SHOW_RATE_LIMIT = """
     All those moments will be lost in time…
     like tears in rain…

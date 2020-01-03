@@ -35,6 +35,7 @@ from webcompat.helpers import rewrite_links
 from webcompat.helpers import sanitize_link
 from webcompat.helpers import get_extra_labels
 from webcompat.helpers import get_filename_from_url
+from webcompat.helpers import is_darknet_domain
 
 
 ACCESS_TOKEN_LINK = '<https://api.github.com/repositories/17839063/issues?per_page=50&page=3&access_token=12345>; rel="next", <https://api.github.com/repositories/17839063/issues?access_token=12345&per_page=50&page=4>; rel="last", <https://api.github.com/repositories/17839063/issues?per_page=50&access_token=12345&page=1>; rel="first", <https://api.github.com/repositories/17839063/issues?per_page=50&page=1&access_token=12345>; rel="prev"'  # noqa
@@ -595,6 +596,12 @@ class TestHelpers(unittest.TestCase):
             'https://example.com'),
             'example.com'
         )
+
+    def test_is_darknet_domain(self):
+        """Assert domains validity in issue reporting."""
+        self.assertTrue(is_darknet_domain('www.gjobqjj7wyczbqie.onion'))
+        self.assertFalse(is_darknet_domain('example.com'))
+        self.assertFalse(is_darknet_domain('gjobqjj7wyczbqie.onion.com'))
 
 
 if __name__ == '__main__':
