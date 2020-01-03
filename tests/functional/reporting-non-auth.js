@@ -229,7 +229,7 @@ registerSuite("Reporting (non-auth)", {
           // wait a bit
           .sleep(250)
           // now make sure the buttons aren't disabled anymore
-          .findAllByCssSelector(".js-report-buttons button")
+          .findAllByCssSelector("#js-ReportForm .js-Button")
           .getAttribute("disabled")
           .then(function(values) {
             values.forEach(function(value) {
