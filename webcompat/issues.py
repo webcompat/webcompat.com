@@ -26,10 +26,12 @@ def report_issue(form, proxy=False):
     submit_type = form.get('submit_type')
     if proxy and submit_type == 'github-proxy-report':
         # Return a Response object.
-        response = proxy_request('post',
-                                 path,
-                                 data=json.dumps(build_formdata(form)))
-        json_response = response.json()
+        # response = proxy_request('post',
+        #                          path,
+        #                          data=json.dumps(build_formdata(form)))
+        # json_response = response.json()
+        # Anonymous reporting is currently disabled.
+        abort(400)
     elif (not proxy) and submit_type == 'github-auth-report':
         # Return JSON data as a dict
         json_response = github.post(path, build_formdata(form))
