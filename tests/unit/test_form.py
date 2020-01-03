@@ -294,7 +294,9 @@ class TestForm(unittest.TestCase):
                     submit_type='punkcat-submit',
                     url='http://testing.example.org',
                     username='yeeha'))
-            self.assertEqual(rv.status_code, 400)
+            # temprorarily return the maintenance page
+            self.assertEqual(rv.status_code, 200)
+            # self.assertEqual(rv.status_code, 400)
 
 
 if __name__ == '__main__':
