@@ -71,13 +71,11 @@ class TestURLs(unittest.TestCase):
                 submit_type='github-proxy-report',
                 url='http://testing.example.org',
                 username='yeeha'))
-        # temprorarily return the maintenance page
-        self.assertEqual(rv.status_code, 200)
-        # self.assertEqual(rv.status_code, 302)
-        # self.assertEqual(
-        #     rv.headers['Location'], 'http://localhost/issues/1544')
-        # self.assertTrue(
-        #     b'<a href="/issues/1544">/issues/1544</a>' in rv.data)
+        self.assertEqual(rv.status_code, 302)
+        self.assertEqual(
+            rv.headers['Location'], 'http://localhost/issues/1544')
+        self.assertTrue(
+            b'<a href="/issues/1544">/issues/1544</a>' in rv.data)
 
     @patch('webcompat.issues.proxy_request')
     def test_fail_post_new_issue(self, mock_proxy):
@@ -96,9 +94,7 @@ class TestURLs(unittest.TestCase):
                 problem_category='what',
                 submit_type='github-proxy-report',
                 username='PunkCat',))
-        # temporarily return the maintenance page
-        self.assertEqual(rv.status_code, 200)
-        # self.assertEqual(rv.status_code, 400)
+        self.assertEqual(rv.status_code, 400)
 
     def test_about(self):
         """Test that /about exists."""
@@ -213,9 +209,7 @@ class TestURLs(unittest.TestCase):
         rv = self.app.post('/issues/new',
                            content_type='multipart/form-data',
                            data=dict(url='foo'))
-        # temporarily return the maintenance page
-        self.assertEqual(rv.status_code, 200)
-        # self.assertEqual(rv.status_code, 400)
+        self.assertEqual(rv.status_code, 400)
 
     def test_new_issue_should_not_crash(self):
         """/issues/new POST exit with 400 if missing parameters."""
@@ -228,9 +222,7 @@ class TestURLs(unittest.TestCase):
         rv = self.app.post('/issues/new',
                            content_type='multipart/form-data',
                            data=data)
-        # temporarily return the maintenance page
-        self.assertEqual(rv.status_code, 200)
-        # self.assertEqual(rv.status_code, 400)
+        self.assertEqual(rv.status_code, 400)
 
     def test_dashboard_triage(self):
         """Request to /dashboard/triage should be 308."""
@@ -273,13 +265,12 @@ class TestURLs(unittest.TestCase):
         # do we have a nonce-hash in our CSP?
         self.assertIn('nonce-', rv.headers['Content-Security-Policy'])
         # do we have a <script nonce=hash> in our response body?
-        # FIXME: uncomment this when #3118 is fixed
-        # self.assertIn(b'<script nonce=', rv.data)
+        self.assertIn(b'<script nonce=', rv.data)
         # parse out the nonce from CSP, and verify it matches the one in the
         # response body
-        # nonce = re.search(
-        #    nonce_re, rv.headers['Content-Security-Policy']).group('nonce')
-        # self.assertIn(nonce.encode('utf-8'), rv.data)
+        nonce = re.search(
+            nonce_re, rv.headers['Content-Security-Policy']).group('nonce')
+        self.assertIn(nonce.encode('utf-8'), rv.data)
 
     def test_missing_ga_params_results_in_no_inline_ga_js(self):
         """Test that we don't render inline ga JS if we're missing
