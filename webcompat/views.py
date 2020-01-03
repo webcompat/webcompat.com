@@ -213,115 +213,119 @@ def show_issues():
 
 
 @app.route('/issues/new', methods=['GET', 'POST'])
-def create_issue():
-    """Create a new issue or prefill a form for submission.
+def site_is_down():
+    """Route to display a maintenance page."""
+    return render_template('maintenance.html')
+# See https://github.com/webcompat/webcompat.com/issues/3118
+# def create_issue():
+#     """Create a new issue or prefill a form for submission.
 
-    * HTTP GET with (optional) parameters
-      * create a form with prefilled data.
-      * parameters:
-        * url: URL of the Web site
-        * src: source of the request (web, addon, etc.)
-        * label: controled list of labels
-    * HTTP POST with a JSON payload
-      * create a form with prefilled data
-      * content-type is application/json
-      * json may include:
-        * title
-        * User agent string
-        * OS identification
-        * labels list
-        * type of bugs
-        * short summary
-        * full description
-        * tested in another browser
-        * body
-        * utm_ params for Google Analytics
-    * HTTP POST with an attached form
-      * submit a form to GitHub to create a new issue
-      * form submit type:
-        * authenticated: Github authentification
-        * anonymous: handled by webcompat-bot
+#     * HTTP GET with (optional) parameters
+#       * create a form with prefilled data.
+#       * parameters:
+#         * url: URL of the Web site
+#         * src: source of the request (web, addon, etc.)
+#         * label: controled list of labels
+#     * HTTP POST with a JSON payload
+#       * create a form with prefilled data
+#       * content-type is application/json
+#       * json may include:
+#         * title
+#         * User agent string
+#         * OS identification
+#         * labels list
+#         * type of bugs
+#         * short summary
+#         * full description
+#         * tested in another browser
+#         * body
+#         * utm_ params for Google Analytics
+#     * HTTP POST with an attached form
+#       * submit a form to GitHub to create a new issue
+#       * form submit type:
+#         * authenticated: Github authentification
+#         * anonymous: handled by webcompat-bot
 
-    Any deceptive requests will be ended as a 400.
-    See https://tools.ietf.org/html/rfc7231#section-6.5.1
-    """
-    push('/css/dist/webcompat.min.css', **{
-        'as': 'style',
-        'rel': 'preload'
-    })
-    push(bust_cache('/js/dist/webcompat.min.js'), **{
-        'as': 'script',
-        'rel': 'preload'
-    })
-    # Starting a logger
-    log = app.logger
-    log.setLevel(logging.INFO)
-    if g.user:
-        get_user_info()
-    # We define which type of requests we are dealing with.
-    request_type = form_type(request)
-    # Form Prefill section
-    if request_type == 'prefill':
-        form_data = prepare_form(request)
+#     Any deceptive requests will be ended as a 400.
+#     See https://tools.ietf.org/html/rfc7231#section-6.5.1
+#     """
+#     push('/css/dist/webcompat.min.css', **{
+#         'as': 'style',
+#         'rel': 'preload'
+#     })
+#     push(bust_cache('/js/dist/webcompat.min.js'), **{
+#         'as': 'script',
+#         'rel': 'preload'
+#     })
+#     # Starting a logger
+#     log = app.logger
+#     log.setLevel(logging.INFO)
+#     if g.user:
+#         get_user_info()
+#     # We define which type of requests we are dealing with.
+#     request_type = form_type(request)
+#     # Form Prefill section
+#     if request_type == 'prefill':
+#         form_data = prepare_form(request)
 
-        if ab_active('exp') == 'form-v2':
-            bug_form = get_form(form_data, form=FormWizard)
-            pagetitle = "New Issue |"
-        else:
-            bug_form = get_form(form_data)
-            pagetitle = "New Issue"
+#         if ab_active('exp') == 'form-v2':
+#             bug_form = get_form(form_data, form=FormWizard)
+#             pagetitle = "New Issue |"
+#         else:
+#             bug_form = get_form(form_data)
+#             pagetitle = "New Issue"
 
-        session['extra_labels'] = form_data['extra_labels']
-        source = form_data.pop('utm_source', None)
-        campaign = form_data.pop('utm_campaign', None)
-        return render_template('new-issue.html', form=bug_form, source=source,
-                               campaign=campaign, nonce=request.nonce,
-                               pagetitle=pagetitle)
-    # Issue Creation section
-    elif request_type == 'create':
-        # Check if there is a form
-        if not request.form:
-            log.info('400: POST request without form.')
-            abort(400)
-        # Adding parameters to the form
-        form = request.form.copy()
-        extra_labels = get_extra_labels(form)
-        if extra_labels:
-            form['extra_labels'] = extra_labels
-        # Logging the ip and url for investigation
-        log.info('{ip} {url}'.format(
-            ip=request.remote_addr,
-            url=form['url'].encode('utf-8')))
-        # Check if the form is valid
-        if not is_valid_issue_form(form):
-            log.info('400: POST request w/o valid form (is_valid_issue_form).')
-            abort(400)
-        if form.get('submit_type') == PROXY_REPORT:
-            # Checking blacklisted domains
-            domain = urllib.parse.urlsplit(form['url']).hostname
-            if is_blacklisted_domain(domain):
-                msg = app.config['IS_BLACKLISTED_DOMAIN'].format(form['url'])
-                flash(msg, 'notimeout')
-                return redirect(url_for('index'))
-            # Anonymous reporting
-            json_response = report_issue(form, proxy=True)
-            session['show_thanks'] = True
-            return redirect(
-                url_for('show_issue', number=json_response.get('number')))
-        # Authenticated reporting
-        if form.get('submit_type') == AUTH_REPORT:
-            if g.user:  # If you're already authed, submit the bug.
-                json_response = report_issue(form)
-                session['show_thanks'] = True
-                return redirect(url_for('show_issue',
-                                        number=json_response.get('number')))
-            else:
-                # Stash form data into session, go do GitHub auth
-                session['form'] = form
-                return redirect(url_for('login'))
-    else:
-        log.info('400: Something else happened.')
-        abort(400)
+#         session['extra_labels'] = form_data['extra_labels']
+#         source = form_data.pop('utm_source', None)
+#         campaign = form_data.pop('utm_campaign', None)
+#         return render_template('new-issue.html', form=bug_form, source=source, # noqa
+#                                campaign=campaign, nonce=request.nonce,
+#                                pagetitle=pagetitle)
+#     # Issue Creation section
+#     elif request_type == 'create':
+#         # Check if there is a form
+#         if not request.form:
+#             log.info('400: POST request without form.')
+#             abort(400)
+#         # Adding parameters to the form
+#         form = request.form.copy()
+#         extra_labels = get_extra_labels(form)
+#         if extra_labels:
+#             form['extra_labels'] = extra_labels
+#         # Logging the ip and url for investigation
+#         log.info('{ip} {url}'.format(
+#             ip=request.remote_addr,
+#             url=form['url'].encode('utf-8')))
+#         # Check if the form is valid
+#         if not is_valid_issue_form(form):
+#             log.info('400: POST request w/o valid form (is_valid_issue_form).') # noqa
+#             abort(400)
+#         if form.get('submit_type') == PROXY_REPORT:
+#             # Checking blacklisted domains
+#             domain = urllib.parse.urlsplit(form['url']).hostname
+#             if is_blacklisted_domain(domain):
+#                 msg = app.config['IS_BLACKLISTED_DOMAIN'].format(form['url'])
+#                 flash(msg, 'notimeout')
+#                 return redirect(url_for('index'))
+#             # Anonymous reporting
+#             json_response = report_issue(form, proxy=True)
+#             session['show_thanks'] = True
+#             return redirect(
+#                 url_for('show_issue', number=json_response.get('number')))
+#         # Authenticated reporting
+#         if form.get('submit_type') == AUTH_REPORT:
+#             if g.user:  # If you're already authed, submit the bug.
+#                 json_response = report_issue(form)
+#                 session['show_thanks'] = True
+#                 return redirect(url_for('show_issue',
+#                                         number=json_response.get('number')))
+#             else:
+#                 # Stash form data into session, go do GitHub auth
+#                 session['form'] = form
+#                 return redirect(url_for('login'))
+#     else:
+#         log.info('400: Something else happened.')
+#         abort(400)
 
 
 @app.route('/issues/<int:number>')
