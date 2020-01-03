@@ -57,7 +57,7 @@ class TestURLs(unittest.TestCase):
 
     @patch('webcompat.views.report_issue')
     def test_successful_post_new_issue(self, mock_proxy):
-        """Test that post is working on /issues/new."""
+        """Test that anonymous post is not working on /issues/new."""
         mock_proxy.return_value = POST_RESPONSE
         rv = self.app.post(
             '/issues/new',
@@ -71,11 +71,12 @@ class TestURLs(unittest.TestCase):
                 submit_type='github-proxy-report',
                 url='http://testing.example.org',
                 username='yeeha'))
-        self.assertEqual(rv.status_code, 302)
-        self.assertEqual(
-            rv.headers['Location'], 'http://localhost/issues/1544')
-        self.assertTrue(
-            b'<a href="/issues/1544">/issues/1544</a>' in rv.data)
+        self.assertEqual(rv.status_code, 400)
+        # Commented out while anonymous reporting is disabled
+        # self.assertNotEqual(
+        #     rv.headers['Location'], 'http://localhost/issues/1544')
+        # self.assertTrue(
+        #     b'<a href="/issues/1544">/issues/1544</a>' in rv.data)
 
     @patch('webcompat.issues.proxy_request')
     def test_fail_post_new_issue(self, mock_proxy):
