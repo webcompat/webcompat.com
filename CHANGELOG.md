@@ -4,6 +4,10 @@
 2. New features: affect minor number
 3. API endpoint changes or dependency version updates: affect major number
 
+## 25.0.0 - 2020-01-03
+
+* Fixes #3118 - Display maintenance page for /issues/new route [Pull #3119](https://github.com/webcompat/webcompat.com/pull/3119)
+
 ## 24.1.0 - 2019-12-17
 
 * Fixes #3110 - Change step10 button text depending on state [Pull #3111](https://github.com/webcompat/webcompat.com/pull/3111)
