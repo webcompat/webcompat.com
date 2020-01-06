@@ -64,11 +64,11 @@ class TestWebhook(unittest.TestCase):
         <!-- @extra_labels: type-foobar -->
         """
         self.issue_body3 = """
-        **URL**: https://www.google.com/
+        **URL**: https://www.example.com/
         <!-- @browser: Firefox Mobile (Tablet) 40.0 -->
         """
         self.issue_body4 = """
-        **URL**: https://www.google.com/
+        **URL**: https://www.example.com/
         <!-- @browser: Firefox Mobile (Tablet) 40.0 -->
         """
 
