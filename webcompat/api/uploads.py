@@ -36,11 +36,8 @@ class BaseUpload(object):
         self.month = str(today.month)
         self.file_id = str(uuid.uuid4())
 
-    def get_file_path(self, year, month, file_id, ext, thumb=False):
-        thumb_string = ''
-        if thumb:
-            thumb_string = '-thumb'
-        file_name = file_id + thumb_string + '.' + ext
+    def get_file_path(self, year, month, file_id, ext):
+        file_name = file_id + '.' + ext
         return os.path.join(year, month, file_name)
 
 
@@ -59,11 +56,7 @@ class ImageUpload(BaseUpload):
         self.image_object = self.to_image_object(imagedata)
         self.file_ext = self.get_file_ext()
         self.image_path = self.get_file_path(self.year, self.month,
-                                             self.file_id, self.file_ext,
-                                             thumb=False)
-        self.thumb_path = self.get_file_path(self.year, self.month,
-                                             self.file_id, self.file_ext,
-                                             thumb=True)
+                                             self.file_id, self.file_ext)
 
     def to_image_object(self, imagedata):
         '''Method to return a Pillow Image object from the raw imagedata.'''
@@ -108,7 +101,6 @@ class ImageUpload(BaseUpload):
             raise TypeError('Image file format not allowed')
         # Paths of the images
         file_dest = app.config['UPLOADS_DEFAULT_DEST'] + self.image_path
-        thumb_dest = app.config['UPLOADS_DEFAULT_DEST'] + self.thumb_path
         dest_dir = os.path.dirname(file_dest)
         if not os.path.exists(dest_dir):
             os.makedirs(dest_dir)
@@ -126,16 +118,11 @@ class ImageUpload(BaseUpload):
             save_parameters['save_all'] = True
         # unpacking save_parameters
         self.image_object.save(file_dest, **save_parameters)
-        # Creating the thumbnail
-        size = (1024, 1024)
-        self.image_object.thumbnail(size, Image.HAMMING)
-        self.image_object.save(thumb_dest, **save_parameters)
 
     def get_file_info(self):
         return {
             'filename': self.get_filename(self.image_path),
             'url': self.get_url(self.image_path),
-            'thumb_url': self.get_url(self.thumb_path)
         }
 
 

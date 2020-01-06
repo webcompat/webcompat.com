@@ -28,7 +28,6 @@ def check_rv_format(self, resp):
 
     expected format:
      '{"url": "http://localhost:5000/uploads/...ade311d4.jpg",
-     "thumb_url": "http://localhost:5000/uploads/...e311d4-thumb.jpg",
      "filename": "ca589794-875b-44bd-9cd9-ed6cade311d4.jpg"}'
     """
     if resp.status_code == 201:
@@ -36,10 +35,6 @@ def check_rv_format(self, resp):
         self.assertTrue(
             'url' in response and
             'http://localhost:5000/uploads/' in response.get('url')
-        )
-        self.assertTrue(
-            'thumb_url' in response and
-            '-thumb.' in response.get('thumb_url')
         )
         self.assertTrue(
             'filename' in response and
