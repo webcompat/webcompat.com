@@ -13,7 +13,6 @@ import json
 
 from flask import abort
 
-from webcompat import app
 from webcompat import github
 from webcompat.form import build_formdata
 from webcompat.helpers import proxy_request

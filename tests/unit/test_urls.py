@@ -39,7 +39,6 @@ class TestURLs(unittest.TestCase):
     def setUp(self):
         """Set up the tests."""
         webcompat.app.config['TESTING'] = True
-        webcompat.app.config['ANON_REPORTING_ENABLED'] = False
 
         self.app = webcompat.app.test_client()
 
