@@ -13,6 +13,7 @@ import json
 
 from flask import abort
 
+from webcompat import app
 from webcompat import github
 from webcompat.form import build_formdata
 from webcompat.helpers import proxy_request
@@ -26,12 +27,10 @@ def report_issue(form, proxy=False):
     submit_type = form.get('submit_type')
     if proxy and submit_type == 'github-proxy-report':
         # Return a Response object.
-        # response = proxy_request('post',
-        #                          path,
-        #                          data=json.dumps(build_formdata(form)))
-        # json_response = response.json()
-        # Anonymous reporting is currently disabled.
-        abort(400)
+        response = proxy_request('post',
+                                 path,
+                                 data=json.dumps(build_formdata(form)))
+        json_response = response.json()
     elif (not proxy) and submit_type == 'github-auth-report':
         # Return JSON data as a dict
         json_response = github.post(path, build_formdata(form))
