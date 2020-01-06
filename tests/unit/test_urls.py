@@ -39,6 +39,8 @@ class TestURLs(unittest.TestCase):
     def setUp(self):
         """Set up the tests."""
         webcompat.app.config['TESTING'] = True
+        webcompat.app.config['ANON_REPORTING_ENABLED'] = False
+
         self.app = webcompat.app.test_client()
 
     def tearDown(self):
@@ -57,7 +59,8 @@ class TestURLs(unittest.TestCase):
 
     @patch('webcompat.views.report_issue')
     def test_successful_post_new_issue(self, mock_proxy):
-        """Test that anonymous post is not working on /issues/new."""
+        """Test that anonymous post succeeds or not on /issues/new."""
+        webcompat.app.config['ANON_REPORTING_ENABLED'] = True
         mock_proxy.return_value = POST_RESPONSE
         rv = self.app.post(
             '/issues/new',
@@ -71,12 +74,26 @@ class TestURLs(unittest.TestCase):
                 submit_type='github-proxy-report',
                 url='http://testing.example.org',
                 username='yeeha'))
+        self.assertEqual(rv.status_code, 302)
+        self.assertEqual(
+            rv.headers['Location'], 'http://localhost/issues/1544')
+        self.assertTrue(
+            b'<a href="/issues/1544">/issues/1544</a>' in rv.data)
+
+        webcompat.app.config['ANON_REPORTING_ENABLED'] = False
+        rv = self.app.post(
+            '/issues/new',
+            content_type='multipart/form-data',
+            environ_base=headers,
+            data=dict(
+                browser='Firefox Mobile 45.0',
+                description='testing 2971',
+                os='macos',
+                problem_category='yada',
+                submit_type='github-proxy-report',
+                url='http://testing.example.org',
+                username='yeeha'))
         self.assertEqual(rv.status_code, 400)
-        # Commented out while anonymous reporting is disabled
-        # self.assertNotEqual(
-        #     rv.headers['Location'], 'http://localhost/issues/1544')
-        # self.assertTrue(
-        #     b'<a href="/issues/1544">/issues/1544</a>' in rv.data)
 
     @patch('webcompat.issues.proxy_request')
     def test_fail_post_new_issue(self, mock_proxy):
