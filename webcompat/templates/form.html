@@ -128,11 +128,13 @@
     <div class="form-button form-button-multiple form-element js-Form-group js-report-buttons">
       <div class="button-wrapper js-Button-wrapper">
         <button
-          class="button button-secondary"
+          class="button button-secondary {{ 'js-Button' if anon_reporting_enabled else '' }}"
+          id="submitanon"
           type="button"
-          disabled="disabled"
+          name="github-proxy-report"
+          {{ '' if anon_reporting_enabled else 'disabled' }}
         >
-          Anonymous reports temporarily disabled
+          {{'Report Anonymously' if anon_reporting_enabled else 'Anonymous reports temporarily disabled'}}
         </button>
       </div>
       <div class="button-wrapper js-Button-wrapper">
