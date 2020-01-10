@@ -130,7 +130,7 @@
         <button
           class="button button-secondary {{ 'js-Button' if anon_reporting_enabled else '' }}"
           id="submitanon"
-          type="button"
+          type={{ 'submit' if anon_reporting_enabled else 'button' }}
           name="github-proxy-report"
           {{ '' if anon_reporting_enabled else 'disabled' }}
         >
