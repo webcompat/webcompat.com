@@ -40,7 +40,6 @@ HOST_WHITELIST = ('webcompat.com', 'staging.webcompat.com',
 FIXTURES_PATH = os.getcwd() + '/tests/fixtures'
 STATIC_PATH = os.getcwd() + '/webcompat/static'
 JSON_MIME = 'application/json'
-REPO_URI = app.config['ISSUES_REPO_URI']
 
 cache_dict = {}
 log = app.logger

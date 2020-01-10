@@ -13,10 +13,13 @@ import json
 
 from flask import abort
 
+from webcompat import app
 from webcompat import github
 from webcompat.form import build_formdata
 from webcompat.helpers import proxy_request
-from webcompat.helpers import REPO_URI
+
+REPO_URI = app.config['ISSUES_REPO_URI']
+PRIVATE_REPO_URI = app.config['PRIVATE_REPO_URI']
 
 
 def report_issue(form, proxy=False):
