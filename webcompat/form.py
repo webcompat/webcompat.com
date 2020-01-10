@@ -371,7 +371,7 @@ def wrap_metadata(metadata):
     return '<!-- @{0}: {1} -->\n'.format(*metadata)
 
 
-def get_metadata(metadata_keys, form_object):
+def get_metadata(metadata_keys, form_object, extra_metadata):
     """Return relevant metadata hanging off the form as a single string."""
     extra_labels = []
     if 'extra_labels' in metadata_keys:
@@ -383,6 +383,8 @@ def get_metadata(metadata_keys, form_object):
     metadata = [(md[0], normalize_metadata(md[1])) for md in metadata]
     if extra_labels:
         metadata.append(('extra_labels', ', '.join(extra_labels)))
+    if extra_metadata:
+        metadata.append(extra_metadata)
     # Now, "wrap the metadata" and return them all as a single string
     return ''.join([wrap_metadata(md) for md in metadata])
 
@@ -445,7 +447,7 @@ def domain_name(url):
     return domain
 
 
-def build_formdata(form_object):
+def build_formdata(form_object, extra_metadata=None):
     """Convert HTML form data to GitHub API data.
 
     Summary -> title
@@ -475,6 +477,9 @@ def build_formdata(form_object):
     Labels are silently dropped otherwise.
     NOTE: intentionally leaving out `assignee`.
     NOTE: Add milestone "needstriage" when creating a new issue
+
+    An optional extra_metadata tuple can be passed to supply additional
+    metadata.
     """
     # Do domain extraction for adding to the summary/title
     # form_object always returns a unicode string
@@ -494,7 +499,7 @@ def build_formdata(form_object):
         metadata_keys.append('extra_labels')
 
     formdata = {
-        'metadata': get_metadata(metadata_keys, form_object),
+        'metadata': get_metadata(metadata_keys, form_object, extra_metadata),
         'url': normalized_url,
         'browser': normalize_metadata(form_object.get('browser')),
         'os': normalize_metadata(form_object.get('os')),
