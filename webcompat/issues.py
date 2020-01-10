@@ -39,7 +39,8 @@ def report_private_issue(form, public_url):
     """
     path = 'repos/{0}'.format(PRIVATE_REPO_URI)
     formdata = build_formdata(form, ('public_url', public_url))
-    response = proxy_request('post', path, data=json.dumps(formdata))
+    proxy_request('post', path, data=json.dumps(formdata))
+    return None
 
 
 def report_issue(form, proxy=False):
