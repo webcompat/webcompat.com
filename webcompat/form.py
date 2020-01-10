@@ -371,7 +371,7 @@ def wrap_metadata(metadata):
     return '<!-- @{0}: {1} -->\n'.format(*metadata)
 
 
-def get_metadata(metadata_keys, form_object, extra_metadata):
+def get_metadata(metadata_keys, form_object, extra_metadata=None):
     """Return relevant metadata hanging off the form as a single string."""
     extra_labels = []
     if 'extra_labels' in metadata_keys:
