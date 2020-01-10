@@ -147,6 +147,26 @@ class TestForm(unittest.TestCase):
         expected = '<!-- @browser: Firefox 59.0 -->\n<!-- @ua_header: Mozilla/5.0...Firefox 59.0 -->\n<!-- @reported_with: desktop-reporter -->\n<!-- @extra_labels: type-webrender-enabled -->\n'  # noqa
         self.assertEqual(actual, expected)
 
+    def test_get_metadata_with_extra_metadata_arg(self):
+        """HTML comments need the right values depending on the keys."""
+        metadata_keys = ('sky', 'earth')
+        extra_data = ('seatbelt', 'on!')
+        form_object = {'blah': 'goo', 'hello': 'moshi', 'sky': 'blue'}
+        actual = form.get_metadata(metadata_keys, form_object, extra_data)
+        expected = '<!-- @sky: blue -->\n<!-- @earth: None -->\n<!-- @seatbelt: on! -->\n'  # noqa
+        self.assertEqual(actual, expected)
+        form_object = MultiDict([
+            ('reported_with', 'desktop-reporter'),
+            ('url', 'http://localhost:5000/issues/new'),
+            ('extra_labels', ['type-webrender-enabled']),
+            ('ua_header', 'Mozilla/5.0...Firefox 59.0'),
+            ('browser', 'Firefox 59.0')])
+        metadata_keys = ['browser', 'ua_header', 'reported_with',
+                         'extra_labels']
+        actual = form.get_metadata(metadata_keys, form_object, extra_data)
+        expected = '<!-- @browser: Firefox 59.0 -->\n<!-- @ua_header: Mozilla/5.0...Firefox 59.0 -->\n<!-- @reported_with: desktop-reporter -->\n<!-- @extra_labels: type-webrender-enabled -->\n<!-- @seatbelt: on! -->\n'  # noqa
+        self.assertEqual(actual, expected)
+
     def test_get_metadata_browser_as_extra(self):
         """Test that we can handle a browser-foo inside of EXTRA_LABELS."""
         form_object = MultiDict([
@@ -193,6 +213,27 @@ class TestForm(unittest.TestCase):
         form_object = {'url': '愛'}
         actual = form.build_formdata(form_object)
         expected = {'body': '<!-- @browser: None -->\n<!-- @ua_header: None -->\n<!-- @reported_with: None -->\n\n**URL**: http://\u611b\n\n**Browser / Version**: None\n**Operating System**: None\n**Tested Another Browser**: Unknown \n\n**Problem type**: Unknown\n**Description**: None\n**Steps to Reproduce**:\nNone\n\n\n\n_From [webcompat.com](https://webcompat.com/) with \u2764\ufe0f_', 'title': '\u611b - unknown'}  # noqa
+        self.assertEqual(actual, expected)
+
+    def test_build_formdata_with_extra_metadata_arg(self):
+        """The data body sent to GitHub API, with additional metadata."""
+        # we just need to test that nothing breaks
+        # even if the data are empty
+        form_object = {'foo': 'bar'}
+        extra_data = ('chicken', 'nuggets')
+        actual = form.build_formdata(form_object, extra_data)
+        expected = {'body': '<!-- @browser: None -->\n<!-- @ua_header: None -->\n<!-- @reported_with: None -->\n<!-- @chicken: nuggets -->\n\n**URL**: None\n\n**Browser / Version**: None\n**Operating System**: None\n**Tested Another Browser**: Unknown \n\n**Problem type**: Unknown\n**Description**: None\n**Steps to Reproduce**:\nNone\n\n\n\n_From [webcompat.com](https://webcompat.com/) with \u2764\ufe0f_', 'title': 'None - unknown'}  # noqa
+        self.assertIs(type(actual), dict)
+        self.assertEqual(actual, expected)
+        # testing for double URL Schemes.
+        form_object = {'url': 'http://https://example.com/'}
+        actual = form.build_formdata(form_object, extra_data)
+        expected = {'body': '<!-- @browser: None -->\n<!-- @ua_header: None -->\n<!-- @reported_with: None -->\n<!-- @chicken: nuggets -->\n\n**URL**: https://example.com/\n\n**Browser / Version**: None\n**Operating System**: None\n**Tested Another Browser**: Unknown \n\n**Problem type**: Unknown\n**Description**: None\n**Steps to Reproduce**:\nNone\n\n\n\n_From [webcompat.com](https://webcompat.com/) with \u2764\ufe0f_', 'title': 'example.com - unknown'}  # noqa
+        self.assertEqual(actual, expected)
+        # testing with unicode strings.
+        form_object = {'url': '愛'}
+        actual = form.build_formdata(form_object, extra_data)
+        expected = {'body': '<!-- @browser: None -->\n<!-- @ua_header: None -->\n<!-- @reported_with: None -->\n<!-- @chicken: nuggets -->\n\n**URL**: http://\u611b\n\n**Browser / Version**: None\n**Operating System**: None\n**Tested Another Browser**: Unknown \n\n**Problem type**: Unknown\n**Description**: None\n**Steps to Reproduce**:\nNone\n\n\n\n_From [webcompat.com](https://webcompat.com/) with \u2764\ufe0f_', 'title': '\u611b - unknown'}  # noqa
         self.assertEqual(actual, expected)
 
     def test_get_details(self):
