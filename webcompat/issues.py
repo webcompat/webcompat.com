@@ -15,6 +15,7 @@ from flask import abort
 
 from webcompat import app
 from webcompat import github
+from webcompat.form import add_metadata
 from webcompat.form import build_formdata
 from webcompat.helpers import proxy_request
 
@@ -40,7 +41,8 @@ def report_private_issue(form, public_url):
     Returns None (so we don't accidentally leak data).
     """
     path = 'repos/{0}'.format(PRIVATE_REPO_URI)
-    formdata = build_formdata(form, ('public_url', public_url))
+    form = add_metadata(form, {'public_url': public_url})
+    formdata = build_formdata(form)
     proxy_request('post', path, data=json.dumps(formdata))
     return None
 

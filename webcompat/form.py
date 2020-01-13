@@ -371,7 +371,7 @@ def wrap_metadata(metadata):
     return '<!-- @{0}: {1} -->\n'.format(*metadata)
 
 
-def get_metadata(metadata_keys, form_object, extra_metadata=None):
+def get_metadata(metadata_keys, form_object):
     """Return relevant metadata hanging off the form as a single string."""
     extra_labels = []
     if 'extra_labels' in metadata_keys:
@@ -383,8 +383,6 @@ def get_metadata(metadata_keys, form_object, extra_metadata=None):
     metadata = [(md[0], normalize_metadata(md[1])) for md in metadata]
     if extra_labels:
         metadata.append(('extra_labels', ', '.join(extra_labels)))
-    if extra_metadata:
-        metadata.append(extra_metadata)
     # Now, "wrap the metadata" and return them all as a single string
     return ''.join([wrap_metadata(md) for md in metadata])
 
@@ -447,7 +445,16 @@ def domain_name(url):
     return domain
 
 
-def build_formdata(form_object, extra_metadata=None):
+def add_metadata(form, metadata_dict):
+    """Method to add additional arbitrary metadata objects.
+
+    Returns the form object.
+    """
+    form['extra_metadata'] = metadata_dict
+    return form
+
+
+def build_formdata(form_object):
     """Convert HTML form data to GitHub API data.
 
     Summary -> title
@@ -477,9 +484,6 @@ def build_formdata(form_object, extra_metadata=None):
     Labels are silently dropped otherwise.
     NOTE: intentionally leaving out `assignee`.
     NOTE: Add milestone "needstriage" when creating a new issue
-
-    An optional extra_metadata tuple can be passed to supply additional
-    metadata.
     """
     # Do domain extraction for adding to the summary/title
     # form_object always returns a unicode string
@@ -497,9 +501,14 @@ def build_formdata(form_object, extra_metadata=None):
     extra_labels = form_object.get('extra_labels', None)
     if extra_labels:
         metadata_keys.append('extra_labels')
+    extra_metadata = form_object.get('extra_metadata', None)
+    if extra_metadata:
+        for key in extra_metadata.keys():
+            form_object[key] = extra_metadata[key]
+            metadata_keys.append(key)
 
     formdata = {
-        'metadata': get_metadata(metadata_keys, form_object, extra_metadata),
+        'metadata': get_metadata(metadata_keys, form_object),
         'url': normalized_url,
         'browser': normalize_metadata(form_object.get('browser')),
         'os': normalize_metadata(form_object.get('os')),
