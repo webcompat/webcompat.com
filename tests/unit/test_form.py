@@ -195,6 +195,28 @@ class TestForm(unittest.TestCase):
         expected = {'body': '<!-- @browser: None -->\n<!-- @ua_header: None -->\n<!-- @reported_with: None -->\n\n**URL**: http://\u611b\n\n**Browser / Version**: None\n**Operating System**: None\n**Tested Another Browser**: Unknown \n\n**Problem type**: Unknown\n**Description**: None\n**Steps to Reproduce**:\nNone\n\n\n\n_From [webcompat.com](https://webcompat.com/) with \u2764\ufe0f_', 'title': '\u611b - unknown'}  # noqa
         self.assertEqual(actual, expected)
 
+    def test_build_formdata_with_add_metadata(self):
+        """The data body sent to GitHub API, with additional metadata."""
+        # we just need to test that nothing breaks
+        # even if the data are empty
+        form_object = {'foo': 'bar'}
+        form_object = form.add_metadata(form_object, {'public_url':
+                                        'https://public.example.com'})
+        actual = form.build_formdata(form_object)
+        expected = {'body': '<!-- @browser: None -->\n<!-- @ua_header: None -->\n<!-- @reported_with: None -->\n<!-- @public_url: https://public.example.com -->\n\n**URL**: None\n\n**Browser / Version**: None\n**Operating System**: None\n**Tested Another Browser**: Unknown \n\n**Problem type**: Unknown\n**Description**: None\n**Steps to Reproduce**:\nNone\n\n\n\n_From [webcompat.com](https://webcompat.com/) with \u2764\ufe0f_', 'title': 'None - unknown'}  # noqa
+        self.assertIs(type(actual), dict)
+        self.assertEqual(actual, expected)
+        form_object2 = form.add_metadata(form_object, {'foo': 'bar'})
+        actual2 = form.build_formdata(form_object2)
+        expected = {'body': '<!-- @browser: None -->\n<!-- @ua_header: None -->\n<!-- @reported_with: None -->\n<!-- @foo: bar -->\n\n**URL**: None\n\n**Browser / Version**: None\n**Operating System**: None\n**Tested Another Browser**: Unknown \n\n**Problem type**: Unknown\n**Description**: None\n**Steps to Reproduce**:\nNone\n\n\n\n_From [webcompat.com](https://webcompat.com/) with \u2764\ufe0f_', 'title': 'None - unknown'}  # noqa
+        self.assertIs(type(actual2), dict)
+        self.assertEqual(actual2, expected)
+        form_object3 = form.add_metadata(form_object, {'😀': '😅'})
+        actual3 = form.build_formdata(form_object3)
+        expected = {'body': '<!-- @browser: None -->\n<!-- @ua_header: None -->\n<!-- @reported_with: None -->\n<!-- @😀: 😅 -->\n\n**URL**: None\n\n**Browser / Version**: None\n**Operating System**: None\n**Tested Another Browser**: Unknown \n\n**Problem type**: Unknown\n**Description**: None\n**Steps to Reproduce**:\nNone\n\n\n\n_From [webcompat.com](https://webcompat.com/) with \u2764\ufe0f_', 'title': 'None - unknown'}  # noqa
+        self.assertIs(type(actual3), dict)
+        self.assertEqual(actual3, expected)
+
     def test_get_details(self):
         """Assert we handle valid dict and other values."""
         actual_string_arg = form.get_details('cool')

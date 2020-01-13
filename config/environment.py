@@ -29,6 +29,7 @@ if PRODUCTION:
     GITHUB_CALLBACK_URL = os.environ.get('PROD_GITHUB_CALLBACK_URL')
     HOOK_SECRET_KEY = os.environ.get('HOOK_SECRET_KEY')
     ISSUES_REPO_URI = 'webcompat/web-bugs/issues'
+    PRIVATE_REPO_URI = 'webcompat/web-bugs-private/issues'
     OAUTH_TOKEN = os.environ.get('PROD_OAUTH_TOKEN')
     SECRET_KEY = os.environ.get('PROD_SECRET_KEY')
     UPLOADS_DEFAULT_DEST = os.environ.get('PROD_UPLOADS_DEFAULT_DEST')
@@ -41,6 +42,7 @@ if STAGING:
     GITHUB_CALLBACK_URL = os.environ.get('STAGING_GITHUB_CALLBACK_URL')
     HOOK_SECRET_KEY = os.environ.get('HOOK_SECRET_KEY')
     ISSUES_REPO_URI = 'webcompat/webcompat-tests/issues'
+    PRIVATE_REPO_URI = 'webcompat/webcompat-tests-private/issues'
     OAUTH_TOKEN = os.environ.get('STAGING_OAUTH_TOKEN')
     SECRET_KEY = os.environ.get('STAGING_SECRET_KEY')
     UPLOADS_DEFAULT_DEST = os.environ.get('STAGING_UPLOADS_DEFAULT_DEST')
@@ -54,6 +56,7 @@ if LOCALHOST:
     GITHUB_CLIENT_ID = os.environ.get('GITHUB_CLIENT_ID') or os.environ.get('FAKE_ID')  # noqa
     GITHUB_CLIENT_SECRET = os.environ.get('GITHUB_CLIENT_SECRET') or os.environ.get('FAKE_SECRET')  # noqa
     ISSUES_REPO_URI = 'webcompat/webcompat-tests/issues'
+    PRIVATE_REPO_URI = 'webcompat/webcompat-tests-private/issues'
     UPLOADS_DEFAULT_DEST = BASE_DIR + '/uploads/'
     UPLOADS_DEFAULT_URL = 'http://localhost:5000/uploads/'
     OAUTH_TOKEN = os.environ.get('OAUTH_TOKEN')

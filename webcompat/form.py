@@ -445,6 +445,15 @@ def domain_name(url):
     return domain
 
 
+def add_metadata(form, metadata_dict):
+    """Method to add additional arbitrary metadata objects.
+
+    Returns the form object.
+    """
+    form['extra_metadata'] = metadata_dict
+    return form
+
+
 def build_formdata(form_object):
     """Convert HTML form data to GitHub API data.
 
@@ -492,6 +501,11 @@ def build_formdata(form_object):
     extra_labels = form_object.get('extra_labels', None)
     if extra_labels:
         metadata_keys.append('extra_labels')
+    extra_metadata = form_object.get('extra_metadata', None)
+    if extra_metadata:
+        for key in extra_metadata.keys():
+            form_object[key] = extra_metadata[key]
+            metadata_keys.append(key)
 
     formdata = {
         'metadata': get_metadata(metadata_keys, form_object),
