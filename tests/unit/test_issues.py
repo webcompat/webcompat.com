@@ -31,6 +31,7 @@ class TestIssue(unittest.TestCase):
     @patch.object(requests, 'post')
     def test_report_issue_returns_number(self, mockpost):
         """Test we can expect an issue number back."""
+        mockpost.return_value.status_code = 201
         mockpost.return_value.json.return_value = {'number': 2}
         form = MultiDict([
             ('browser', 'Firefox 99.0'),
