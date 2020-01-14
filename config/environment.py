@@ -62,7 +62,7 @@ if LOCALHOST:
     OAUTH_TOKEN = os.environ.get('OAUTH_TOKEN')
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'NO SECRETS'
     HOOK_SECRET_KEY = os.environ.get('HOOK_SECRET_KEY') or 'SECRETS'
-    ANON_REPORTING_ENABLED = False
+    ANON_REPORTING_ENABLED = os.environ.get('ANON_REPORTING_ENABLED') or False
 
 
 # BUG STATUS
