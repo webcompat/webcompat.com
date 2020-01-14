@@ -21,6 +21,7 @@ from webcompat.helpers import proxy_request
 
 REPO_URI = app.config['ISSUES_REPO_URI']
 PRIVATE_REPO_URI = app.config['PRIVATE_REPO_URI']
+PRIVATE_REPO_MILESTONE = app.config['PRIVATE_REPO_MILESTONE']
 
 
 def unmoderated_issue():
@@ -41,8 +42,11 @@ def report_private_issue(form, public_url):
     Returns None (so we don't accidentally leak data).
     """
     path = 'repos/{0}'.format(PRIVATE_REPO_URI)
+    milestone = PRIVATE_REPO_MILESTONE
     form = add_metadata(form, {'public_url': public_url})
     formdata = build_formdata(form)
+    # add the milestone number to set
+    formdata['milestone'] = milestone
     proxy_request('post', path, data=json.dumps(formdata))
     return None
 
