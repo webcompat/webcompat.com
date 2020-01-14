@@ -125,7 +125,7 @@
 }
 
 .issue-details {
-  word-break: break-all;
+  word-break: break-word;
 }
 
 .issue-details-nsfw {
