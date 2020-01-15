@@ -27,13 +27,13 @@ def moderation_template():
     """Gets the placeholder data to send for unmoderated issues."""
 
     summary = 'In the moderation queue.'
-    body = """<p>This issue has been put in the moderation queue. A human
+    body = '''<p>This issue has been put in the moderation queue. A human
 will review if the message meets our current
 <a href="https://www.mozilla.org/en-US/about/legal/acceptable-use/">
 acceptable use</a> guidelines.
 It will probably take a couple of days depending on the backlog.
 Once it has been reviewed, the content will be either made public
-or deleted.</p>"""
+or deleted.</p>'''
     return {'title': summary, 'body': body}
 
 
