@@ -24,12 +24,17 @@ PRIVATE_REPO_URI = app.config['PRIVATE_REPO_URI']
 PRIVATE_REPO_MILESTONE = app.config['PRIVATE_REPO_MILESTONE']
 
 
-def unmoderated_issue():
+def moderation_template():
     """Gets the placeholder data to send for unmoderated issues."""
-    # TODO: Replace this with something meaningful.
-    # See https://github.com/webcompat/webcompat.com/issues/3137
-    summary = 'Placeholder in-moderation title.'
-    body = 'Placeholder in-moderation body.'
+
+    summary = 'In the moderation queue.'
+    body = '''<p>This issue has been put in the moderation queue. A human
+will review if the message meets our current
+<a href="https://www.mozilla.org/en-US/about/legal/acceptable-use/">
+acceptable use</a> guidelines.
+It will probably take a couple of days depending on the backlog.
+Once it has been reviewed, the content will be either made public
+or deleted.</p>'''
     return {'title': summary, 'body': body}
 
 
@@ -51,13 +56,13 @@ def report_private_issue(form, public_url):
     return None
 
 
-def report_public_issue(form):
+def report_public_issue():
     """Report the issue publicly.
 
     Returns a requests.Response object.
     """
     path = 'repos/{0}'.format(REPO_URI)
-    return proxy_request('post', path, data=json.dumps(unmoderated_issue()))
+    return proxy_request('post', path, data=json.dumps(moderation_template()))
 
 
 def report_issue(form, proxy=False):
@@ -66,7 +71,7 @@ def report_issue(form, proxy=False):
     path = 'repos/{0}'.format(REPO_URI)
     submit_type = form.get('submit_type')
     if proxy and submit_type == 'github-proxy-report':
-        response = report_public_issue(form)
+        response = report_public_issue()
         if (response.status_code == 201):
             json_response = response.json()
             report_private_issue(form, json_response.get('html_url'))
