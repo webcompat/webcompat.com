@@ -111,7 +111,7 @@ registerSuite("Image Uploads (non-auth)", {
           .then(function(val) {
             assert.notInclude(
               val,
-              "[Screenshot(http://localhost:5000/uploads/",
+              "<img alt='Screenshot' src='http://localhost:5000/uploads/",
               "The data URI was not uploaded before form submission."
             );
           })
@@ -132,7 +132,7 @@ registerSuite("Image Uploads (non-auth)", {
           .then(function(val) {
             assert.notInclude(
               val,
-              "[Screenshot(http://localhost:5000/uploads/",
+              "<img alt='Screenshot' src='",
               "The data URI was not uploaded before form submission."
             );
           })
@@ -151,7 +151,7 @@ registerSuite("Image Uploads (non-auth)", {
         .then(function(val) {
           assert.notInclude(
             val,
-            "[Screenshot](http://localhost:5000/uploads/",
+            "<img alt='Screenshot' src='",
             "The data URI was not uploaded before form submission."
           );
         })

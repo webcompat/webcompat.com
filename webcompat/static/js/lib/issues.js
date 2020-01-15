@@ -252,7 +252,12 @@ issues.ImageUploadView = Backbone.View.extend({
     var textarea = $(".js-Comment-text");
     var textareaVal = textarea.val();
     var img_url = response.url;
-    var imageURL = ["[Screenshot](", img_url, ")"].join("");
+    var imageURL = [
+      "<details><summary>View the screenshot</summary>",
+      "<img alt='Screenshot' src='",
+      img_url,
+      "'></details>"
+    ].join("");
 
     if (!$.trim(textareaVal)) {
       textarea.val(imageURL);

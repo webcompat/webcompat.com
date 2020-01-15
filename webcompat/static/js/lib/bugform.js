@@ -766,7 +766,12 @@ BugForm.prototype.getDataURIFromPreviewEl = function() {
 */
 BugForm.prototype.addImageURL = function(response) {
   var img_url = response.url;
-  var imageURL = ["[Screenshot](", img_url, ")"].join("");
+  var imageURL = [
+    "<details><summary>View the screenshot</summary>",
+    "<img alt='Screenshot' src='",
+    img_url,
+    "'></details>"
+  ].join("");
 
   this.stepsToReproduceField.val(function(idx, value) {
     return value + "\n" + imageURL;
