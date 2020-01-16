@@ -67,7 +67,22 @@ class TestIssue(unittest.TestCase):
 
     @patch.object(requests, 'post')
     def test_report_public_issue_returns_moderation_template(self, mockpost):
-        """Test that we get a moderation template back from a public issue report."""   # noqa
+        """Test the data in report_public_issue contains the right data."""
         report_public_issue()
-        data = json.dumps(moderation_template())
-        mockpost.assert_called_with(ANY, data=data, headers=ANY, params=ANY)
+        post_data = json.loads(mockpost.call_args.kwargs['data'])
+        self.assertIs(type(post_data), dict)
+        self.assertIn('title', post_data.keys())
+        self.assertIn('body', post_data.keys())
+        self.assertIn('labels', post_data.keys())
+        self.assertEqual(['action-needsmoderation'], post_data['labels'])
+
+    def test_moderation_template(self):
+        """Check the moderation template structure.
+
+        - must be a dictionary
+        - must contain the keys: title, body
+        """
+        actual = moderation_template()
+        self.assertIs(type(actual), dict)
+        self.assertIn('title', actual.keys())
+        self.assertIn('body', actual.keys())
