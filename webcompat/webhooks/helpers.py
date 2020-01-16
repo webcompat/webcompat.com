@@ -188,7 +188,12 @@ def new_opened_issue(payload):
     """
     issue_body = payload.get('issue')['body']
     issue_number = payload.get('issue')['number']
+    # Grabs the labels already set so they will not be erased
+    original_labels = [label['name']
+                       for label in payload.get('issue')['labels']]
+    # Gets the labels from the body
     labels = get_issue_labels(issue_body)
+    labels.extend(original_labels)
     milestone = app.config['STATUSES']['needstriage']['id']
     # Preparing the proxy request
     headers = {'Authorization': 'token {0}'.format(app.config['OAUTH_TOKEN'])}

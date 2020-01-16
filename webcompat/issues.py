@@ -62,7 +62,10 @@ def report_public_issue():
     Returns a requests.Response object.
     """
     path = 'repos/{0}'.format(REPO_URI)
-    return proxy_request('post', path, data=json.dumps(moderation_template()))
+    public_data = moderation_template()
+    # We add action-needsmoderation label, so reviewers can filter out
+    public_data['labels'] = ['action-needsmoderation']
+    return proxy_request('post', path, data=json.dumps(public_data))
 
 
 def report_issue(form, proxy=False):
