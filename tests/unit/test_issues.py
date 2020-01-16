@@ -9,12 +9,16 @@
 
 import unittest
 import requests
+import json
 
 from mock import patch
+from mock import ANY
 from werkzeug import MultiDict
 
 from webcompat.issues import report_issue
 from webcompat.issues import report_private_issue
+from webcompat.issues import report_public_issue
+from webcompat.issues import moderation_template
 
 
 class TestIssue(unittest.TestCase):
@@ -60,3 +64,10 @@ class TestIssue(unittest.TestCase):
             ('username', ''), ])
         rv = report_private_issue(form, 'http://public.example.com')
         self.assertIsNone(rv)
+
+    @patch.object(requests, 'post')
+    def test_report_public_issue_returns_moderation_template(self, mockpost):
+        """Test that we get a moderation template back from a public issue report."""   # noqa
+        report_public_issue()
+        data = json.dumps(moderation_template())
+        mockpost.assert_called_with(ANY, data=data, headers=ANY, params=ANY)
