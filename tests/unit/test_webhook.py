@@ -229,8 +229,8 @@ class TestWebhook(unittest.TestCase):
             actual = helpers.get_issue_labels(issue_body)
             self.assertEqual(sorted(expected), sorted(actual))
 
-    def test_is_github_hook(self):
-        """Validation tests for GitHub Webhooks."""
+    def test_is_github_hook_missing_x_github_event(self):
+        """Validation tests for GitHub Webhooks: Missing X-GitHub-Event."""
         json_event, signature = event_data('new_event_invalid.json')
         # Lack the X-GitHub-Event
         with self.app as client:
@@ -241,6 +241,10 @@ class TestWebhook(unittest.TestCase):
                         headers=headers)
             webhook_request = helpers.is_github_hook(flask.request)
             self.assertFalse(webhook_request, 'X-GitHub-Event is missing')
+
+    def test_is_github_hook_missing_x_hub_signature(self):
+        """Validation tests for GitHub Webhooks: Missing X-Hub-Signature."""
+        json_event, signature = event_data('new_event_invalid.json')
         # Lack the X-Hub-Signature
         with self.app as client:
             headers = self.headers.copy()
@@ -250,6 +254,10 @@ class TestWebhook(unittest.TestCase):
                         headers=headers)
             webhook_request = helpers.is_github_hook(flask.request)
             self.assertFalse(webhook_request, 'X-Hub-Signature is missing')
+
+    def test_is_github_hook_wrong_signature(self):
+        """Validation tests for GitHub Webhooks: Wrong X-Hub-Signature."""
+        json_event, signature = event_data('new_event_invalid.json')
         # X-Hub-Signature is wrong
         with self.app as client:
             headers = self.headers.copy()
@@ -260,6 +268,10 @@ class TestWebhook(unittest.TestCase):
                         headers=headers)
             webhook_request = helpers.is_github_hook(flask.request)
             self.assertFalse(webhook_request, 'X-Hub-Signature is wrong')
+
+    def test_is_github_hook_everything_ok(self):
+        """Validation tests for GitHub Webhooks: Everything ok."""
+        json_event, signature = event_data('new_event_invalid.json')
         # Everything is fine
         with self.app as client:
             headers = self.headers.copy()
@@ -276,9 +288,7 @@ class TestWebhook(unittest.TestCase):
         """Extract the right information from an issue."""
         json_event, signature = event_data('new_event_invalid.json')
         payload = json.loads(json_event)
-        expected = {'number': 600,
-                    'action': 'foobar',
-                    'domain': 'www.chia-anime.tv'}
+        expected = {'number': 600, 'repository_url': 'https://api.github.com/repos/webcompat/webcompat-tests', 'action': 'foobar', 'domain': 'www.netflix.com'}  # noqa
         actual = helpers.get_issue_info(payload)
         self.assertDictEqual(expected, actual)
 
