@@ -323,6 +323,54 @@ class TestWebhook(unittest.TestCase):
                 self.assertEqual(response.status_code, 401)
                 self.assertTrue('Bad credentials' in response.content)
 
+    @patch('webcompat.webhooks.new_opened_issue')
+    def test_new_issue_right_repo(self, mock_proxy):
+        """Test that repository_url matches the CONFIG for public repo.
+
+        Success is:
+        payload: 'gracias amigos'
+        status: 200
+        content-type: text/plain
+        """
+        json_event, signature = event_data('new_event_valid.json')
+        headers = {
+            'X-GitHub-Event': 'issues',
+            'X-Hub-Signature': 'sha1=2fd56e551f8243a4c8094239916131535051f74b',
+        }
+        with webcompat.app.test_client() as c:
+            mock_proxy.return_value.status_code = 200
+            rv = c.post(
+                '/webhooks/labeler',
+                data=json_event,
+                headers=headers
+            )
+            self.assertEqual(rv.data, b'gracias, amigo.')
+            self.assertEqual(rv.status_code, 200)
+            self.assertEqual(rv.content_type, 'text/plain')
+
+    def test_new_issue_wrong_repo(self):
+        """Test when repository_url differs from the CONFIG for public repo.
+
+        In this case the error message is
+        payload: 'Wrong repository'
+        status: 403
+        content-type: text/plain.
+        """
+        json_event, signature = event_data('wrong_repo.json')
+        headers = {
+            'X-GitHub-Event': 'issues',
+            'X-Hub-Signature': 'sha1=585e6a35199b5d6e7a5321ca9231aed0a104f41e',
+        }
+        with webcompat.app.test_client() as c:
+            rv = c.post(
+                '/webhooks/labeler',
+                data=json_event,
+                headers=headers
+            )
+            self.assertEqual(rv.data, b'Wrong repository')
+            self.assertEqual(rv.status_code, 403)
+            self.assertEqual(rv.content_type, 'text/plain')
+
 
 if __name__ == '__main__':
     unittest.main()
