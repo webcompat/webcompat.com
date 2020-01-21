@@ -20,6 +20,9 @@ from webcompat.webhooks.helpers import new_opened_issue
 
 from webcompat import app
 
+public_repo = app.config['ISSUES_REPO_URI']
+private_repo = app.config['PRIVATE_REPO_URI']
+
 
 @app.route('/webhooks/labeler', methods=['POST'])
 def hooklistener():
@@ -27,17 +30,22 @@ def hooklistener():
 
     By default, we return a 403 HTTP response.
     """
+    # webcompat/webcompat-tests/issues
     if not is_github_hook(request):
         return ('Nothing to see here', 401, {'Content-Type': 'text/plain'})
     payload = json.loads(request.data)
     event_type = request.headers.get('X-GitHub-Event')
-
     # Treating events related to issues
     if event_type == 'issues':
         issue = get_issue_info(payload)
+        source_repo = issue['repository_url']
         # A new issue has been created.
         # In the future we can add new type of actions.
         if issue['action'] == 'opened':
+            # We scope the opened action only to the public repo
+            if not source_repo.endswith(public_repo.rsplit('/issues')[0]):
+                return ('Wrong repository', 403,
+                        {'Content-Type': 'text/plain'})
             # we are setting labels on each new open issues
             response = new_opened_issue(payload)
             if response.status_code == 200:

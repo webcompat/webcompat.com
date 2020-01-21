@@ -229,8 +229,8 @@ class TestWebhook(unittest.TestCase):
             actual = helpers.get_issue_labels(issue_body)
             self.assertEqual(sorted(expected), sorted(actual))
 
-    def test_is_github_hook(self):
-        """Validation tests for GitHub Webhooks."""
+    def test_is_github_hook_missing_x_github_event(self):
+        """Validation tests for GitHub Webhooks: Missing X-GitHub-Event."""
         json_event, signature = event_data('new_event_invalid.json')
         # Lack the X-GitHub-Event
         with self.app as client:
@@ -241,6 +241,10 @@ class TestWebhook(unittest.TestCase):
                         headers=headers)
             webhook_request = helpers.is_github_hook(flask.request)
             self.assertFalse(webhook_request, 'X-GitHub-Event is missing')
+
+    def test_is_github_hook_missing_x_hub_signature(self):
+        """Validation tests for GitHub Webhooks: Missing X-Hub-Signature."""
+        json_event, signature = event_data('new_event_invalid.json')
         # Lack the X-Hub-Signature
         with self.app as client:
             headers = self.headers.copy()
@@ -250,6 +254,10 @@ class TestWebhook(unittest.TestCase):
                         headers=headers)
             webhook_request = helpers.is_github_hook(flask.request)
             self.assertFalse(webhook_request, 'X-Hub-Signature is missing')
+
+    def test_is_github_hook_wrong_signature(self):
+        """Validation tests for GitHub Webhooks: Wrong X-Hub-Signature."""
+        json_event, signature = event_data('new_event_invalid.json')
         # X-Hub-Signature is wrong
         with self.app as client:
             headers = self.headers.copy()
@@ -260,6 +268,10 @@ class TestWebhook(unittest.TestCase):
                         headers=headers)
             webhook_request = helpers.is_github_hook(flask.request)
             self.assertFalse(webhook_request, 'X-Hub-Signature is wrong')
+
+    def test_is_github_hook_everything_ok(self):
+        """Validation tests for GitHub Webhooks: Everything ok."""
+        json_event, signature = event_data('new_event_invalid.json')
         # Everything is fine
         with self.app as client:
             headers = self.headers.copy()
@@ -276,9 +288,7 @@ class TestWebhook(unittest.TestCase):
         """Extract the right information from an issue."""
         json_event, signature = event_data('new_event_invalid.json')
         payload = json.loads(json_event)
-        expected = {'number': 600,
-                    'action': 'foobar',
-                    'domain': 'www.chia-anime.tv'}
+        expected = {'number': 600, 'repository_url': 'https://api.github.com/repos/webcompat/webcompat-tests', 'action': 'foobar', 'domain': 'www.netflix.com'}  # noqa
         actual = helpers.get_issue_info(payload)
         self.assertDictEqual(expected, actual)
 
@@ -312,6 +322,54 @@ class TestWebhook(unittest.TestCase):
                 response = helpers.new_opened_issue(payload)
                 self.assertEqual(response.status_code, 401)
                 self.assertTrue('Bad credentials' in response.content)
+
+    @patch('webcompat.webhooks.new_opened_issue')
+    def test_new_issue_right_repo(self, mock_proxy):
+        """Test that repository_url matches the CONFIG for public repo.
+
+        Success is:
+        payload: 'gracias amigos'
+        status: 200
+        content-type: text/plain
+        """
+        json_event, signature = event_data('new_event_valid.json')
+        headers = {
+            'X-GitHub-Event': 'issues',
+            'X-Hub-Signature': 'sha1=2fd56e551f8243a4c8094239916131535051f74b',
+        }
+        with webcompat.app.test_client() as c:
+            mock_proxy.return_value.status_code = 200
+            rv = c.post(
+                '/webhooks/labeler',
+                data=json_event,
+                headers=headers
+            )
+            self.assertEqual(rv.data, b'gracias, amigo.')
+            self.assertEqual(rv.status_code, 200)
+            self.assertEqual(rv.content_type, 'text/plain')
+
+    def test_new_issue_wrong_repo(self):
+        """Test when repository_url differs from the CONFIG for public repo.
+
+        In this case the error message is
+        payload: 'Wrong repository'
+        status: 403
+        content-type: text/plain.
+        """
+        json_event, signature = event_data('wrong_repo.json')
+        headers = {
+            'X-GitHub-Event': 'issues',
+            'X-Hub-Signature': 'sha1=585e6a35199b5d6e7a5321ca9231aed0a104f41e',
+        }
+        with webcompat.app.test_client() as c:
+            rv = c.post(
+                '/webhooks/labeler',
+                data=json_event,
+                headers=headers
+            )
+            self.assertEqual(rv.data, b'Wrong repository')
+            self.assertEqual(rv.status_code, 403)
+            self.assertEqual(rv.content_type, 'text/plain')
 
 
 if __name__ == '__main__':

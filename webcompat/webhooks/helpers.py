@@ -146,7 +146,8 @@ def get_issue_info(payload):
     # Create the issue dictionary
     return {'action': payload.get('action'),
             'number': payload.get('issue')['number'],
-            'domain': title.partition(' ')[0]}
+            'domain': title.partition(' ')[0],
+            'repository_url': payload.get('issue')['repository_url']}
 
 
 def get_issue_labels(issue_body):
