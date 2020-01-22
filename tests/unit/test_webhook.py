@@ -392,6 +392,33 @@ class TestWebhook(unittest.TestCase):
         actual = helpers.repo_scope(url)
         self.assertEqual(expected, actual)
 
+    def test_patch_acceptable_issue(self):
+        """Test for acceptable issues comes from private repo.
+
+        payload: 'Moderated issue accepted'
+        status: 200
+        content-type: text/plain
+        """
+        raise unittest.SkipTest('TODO')
+
+    def test_patch_not_acceptable_issue(self):
+        """Test for not acceptable issues from private repo.
+
+        payload: 'Moderated issue rejected'
+        status: 200
+        content-type: text/plain
+        """
+        raise unittest.SkipTest('TODO')
+
+    def test_patch_wrong_repo_for_moderation(self):
+        """Test for not acceptable issues from private repo.
+
+        payload: 'Wrong repository'
+        status: 403
+        content-type: text/plain
+        """
+        raise unittest.SkipTest('TODO')
+
 
 if __name__ == '__main__':
     unittest.main()
