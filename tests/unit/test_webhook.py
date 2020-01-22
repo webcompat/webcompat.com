@@ -402,7 +402,7 @@ class TestWebhook(unittest.TestCase):
         raise unittest.SkipTest('TODO')
 
     def test_patch_not_acceptable_issue(self):
-        """Test for not acceptable issues from private repo.
+        """Test for rejected issues from private repo.
 
         payload: 'Moderated issue rejected'
         status: 200
@@ -411,7 +411,7 @@ class TestWebhook(unittest.TestCase):
         raise unittest.SkipTest('TODO')
 
     def test_patch_wrong_repo_for_moderation(self):
-        """Test for not acceptable issues from private repo.
+        """Test for issues in the wrong repo.
 
         payload: 'Wrong repository'
         status: 403

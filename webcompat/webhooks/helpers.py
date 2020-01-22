@@ -226,9 +226,9 @@ def process_issue_action(issue, payload):
     """
     source_repo = issue['repository_url']
     scope = repo_scope(source_repo)
+    issue_number = issue['number']
     # We do not process further in case
     # we don't know what we are dealing with
-    print('SCOPE ', scope)
     if scope == 'unknown':
         return ('Wrong repository', 403, {'Content-Type': 'text/plain'})
     if issue['action'] == 'opened' and scope == 'public':
@@ -237,11 +237,7 @@ def process_issue_action(issue, payload):
         if response.status_code == 200:
             return ('gracias, amigo.', 200, {'Content-Type': 'text/plain'})
         else:
-            log = app.logger
-            log.setLevel(logging.INFO)
-            msg = 'failed to set labels on issue {issue}'.format(
-                issue=issue['number'])
-            log.info(msg)
+            msg_log('public:opened labels failed', issue_number)
             return ('ooops', 400, {'Content-Type': 'text/plain'})
     else:
         return ('Not an interesting hook', 403, {'Content-Type': 'text/plain'})
@@ -261,3 +257,11 @@ def repo_scope(source_repo):
     elif source_repo.endswith(PRIVATE_REPO.rsplit('/issues')[0]):
         scope = 'private'
     return scope
+
+
+def msg_log(msg, issue_number):
+    """Write a log with the reason and the issue number."""
+    log = app.logger
+    log.setLevel(logging.INFO)
+    msg = 'issue {issue} {msg}'.format(issue=issue_number, msg=msg)
+    log.info(msg)
