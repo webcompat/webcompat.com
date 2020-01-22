@@ -359,7 +359,7 @@ class TestWebhook(unittest.TestCase):
         json_event, signature = event_data('wrong_repo.json')
         headers = {
             'X-GitHub-Event': 'issues',
-            'X-Hub-Signature': 'sha1=585e6a35199b5d6e7a5321ca9231aed0a104f41e',
+            'X-Hub-Signature': 'sha1=650006ac2f518e2b4dd6201055c652cd82149821',
         }
         with webcompat.app.test_client() as c:
             rv = c.post(
@@ -370,6 +370,27 @@ class TestWebhook(unittest.TestCase):
             self.assertEqual(rv.data, b'Wrong repository')
             self.assertEqual(rv.status_code, 403)
             self.assertEqual(rv.content_type, 'text/plain')
+
+    def test_repo_scope_public(self):
+        """Test the public scope of the repository."""
+        url = 'https://api.github.com/repos/webcompat/webcompat-tests'
+        expected = 'public'
+        actual = helpers.repo_scope(url)
+        self.assertEqual(expected, actual)
+
+    def test_repo_scope_private(self):
+        """Test the private scope of the repository."""
+        url = 'https://api.github.com/repos/webcompat/webcompat-tests-private'
+        expected = 'private'
+        actual = helpers.repo_scope(url)
+        self.assertEqual(expected, actual)
+
+    def test_repo_scope_unknown(self):
+        """Test the unknown of the repository."""
+        url = 'https://api.github.com/repos/webcompat/webcompat-foobar'
+        expected = 'unknown'
+        actual = helpers.repo_scope(url)
+        self.assertEqual(expected, actual)
 
 
 if __name__ == '__main__':

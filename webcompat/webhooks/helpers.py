@@ -27,8 +27,8 @@ MOZILLA_BROWSERS = ['browser-fenix',
                     'browser-focus-geckoview',
                     'browser-geckoview',
                     ]
-public_repo = app.config['ISSUES_REPO_URI']
-private_repo = app.config['PRIVATE_REPO_URI']
+PUBLIC_REPO = app.config['ISSUES_REPO_URI']
+PRIVATE_REPO = app.config['PRIVATE_REPO_URI']
 
 
 def extract_metadata(body):
@@ -211,13 +211,27 @@ def new_opened_issue(payload):
 
 
 def process_issue_action(issue, payload):
-    """Route the actions and provide different responses."""
+    """Route the actions and provide different responses.
+
+    There are two possible known scopes:
+    * public repo
+    * private repo
+
+    Currently the actions we are handling are (for now):
+    * opened (public repo only)
+      Aka newly issues created and
+      need to be assigned labels and milestones
+    * milestoned (private repo only)
+      When the issue is being moderated with a milestone: accepted
+    """
     source_repo = issue['repository_url']
-    if issue['action'] == 'opened':
-        # We scope the opened action only to the public repo
-        if not source_repo.endswith(public_repo.rsplit('/issues')[0]):
-            return ('Wrong repository', 403,
-                    {'Content-Type': 'text/plain'})
+    scope = repo_scope(source_repo)
+    # We do not process further in case
+    # we don't know what we are dealing with
+    print('SCOPE ', scope)
+    if scope == 'unknown':
+        return ('Wrong repository', 403, {'Content-Type': 'text/plain'})
+    if issue['action'] == 'opened' and scope == 'public':
         # we are setting labels on each new open issues
         response = new_opened_issue(payload)
         if response.status_code == 200:
@@ -231,3 +245,19 @@ def process_issue_action(issue, payload):
             return ('ooops', 400, {'Content-Type': 'text/plain'})
     else:
         return ('Not an interesting hook', 403, {'Content-Type': 'text/plain'})
+
+
+def repo_scope(source_repo):
+    """Check the scope nature of the repository.
+
+    The repository can be a
+    * known public.
+    * known private.
+    * or completely unknown.
+    """
+    scope = 'unknown'
+    if source_repo.endswith(PUBLIC_REPO.rsplit('/issues')[0]):
+        scope = 'public'
+    elif source_repo.endswith(PRIVATE_REPO.rsplit('/issues')[0]):
+        scope = 'private'
+    return scope
