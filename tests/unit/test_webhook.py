@@ -323,7 +323,7 @@ class TestWebhook(unittest.TestCase):
                 self.assertEqual(response.status_code, 401)
                 self.assertTrue('Bad credentials' in response.content)
 
-    @patch('webcompat.webhooks.new_opened_issue')
+    @patch('webcompat.webhooks.helpers.new_opened_issue')
     def test_new_issue_right_repo(self, mock_proxy):
         """Test that repository_url matches the CONFIG for public repo.
 
