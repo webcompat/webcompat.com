@@ -335,7 +335,7 @@ class TestWebhook(unittest.TestCase):
         json_event, signature = event_data('new_event_valid.json')
         headers = {
             'X-GitHub-Event': 'issues',
-            'X-Hub-Signature': 'sha1=2fd56e551f8243a4c8094239916131535051f74b',
+            'X-Hub-Signature': signature,
         }
         with webcompat.app.test_client() as c:
             mock_proxy.return_value.status_code = 200
@@ -359,7 +359,7 @@ class TestWebhook(unittest.TestCase):
         json_event, signature = event_data('wrong_repo.json')
         headers = {
             'X-GitHub-Event': 'issues',
-            'X-Hub-Signature': 'sha1=650006ac2f518e2b4dd6201055c652cd82149821',
+            'X-Hub-Signature': signature,
         }
         with webcompat.app.test_client() as c:
             rv = c.post(
