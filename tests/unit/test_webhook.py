@@ -305,25 +305,25 @@ class TestWebhook(unittest.TestCase):
         post_signature = 'sha1=wrong'
         self.assertFalse(helpers.signature_check(key, post_signature, payload))
 
-    def test_new_opened_issue(self):
+    def test_tag_new_public_issue(self):
         """Test the core actions on new opened issues for WebHooks."""
         # A 200 response
         json_event, signature = event_data('new_event_valid.json')
         payload = json.loads(json_event)
         with patch('webcompat.webhooks.helpers.proxy_request') as proxy:
             proxy.return_value.status_code = 200
-            response = helpers.new_opened_issue(payload)
+            response = helpers.tag_new_public_issue(payload)
             self.assertEqual(response.status_code, 200)
             # A 401 response
             proxy.return_value.status_code = 401
             proxy.return_value.content = '{"message":"Bad credentials","documentation_url":"https://developer.github.com/v3"}'  # noqa
             with patch.dict('webcompat.webhooks.helpers.app.config',
                             {'OAUTH_TOKEN': ''}):
-                response = helpers.new_opened_issue(payload)
+                response = helpers.tag_new_public_issue(payload)
                 self.assertEqual(response.status_code, 401)
                 self.assertTrue('Bad credentials' in response.content)
 
-    @patch('webcompat.webhooks.helpers.new_opened_issue')
+    @patch('webcompat.webhooks.helpers.tag_new_public_issue')
     def test_new_issue_right_repo(self, mock_proxy):
         """Test that repository_url matches the CONFIG for public repo.
 

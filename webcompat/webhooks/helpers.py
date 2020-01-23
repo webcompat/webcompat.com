@@ -171,7 +171,7 @@ def get_issue_labels(issue_body):
     return labelslist
 
 
-def new_opened_issue(payload):
+def tag_new_public_issue(payload):
     """Set the core actions on new opened issues.
 
     When a new issue is opened, we set a couple of things.
@@ -233,7 +233,7 @@ def process_issue_action(issue, payload):
         return ('Wrong repository', 403, {'Content-Type': 'text/plain'})
     if issue['action'] == 'opened' and scope == 'public':
         # we are setting labels on each new open issues
-        response = new_opened_issue(payload)
+        response = tag_new_public_issue(payload)
         if response.status_code == 200:
             return ('gracias, amigo.', 200, {'Content-Type': 'text/plain'})
         else:
