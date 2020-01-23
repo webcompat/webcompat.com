@@ -292,6 +292,14 @@ class TestWebhook(unittest.TestCase):
         actual = helpers.get_issue_info(payload)
         self.assertDictEqual(expected, actual)
 
+    def test_get_milestoned_issue_info(self):
+        """Extract the right information for a milestoned issue."""
+        json_event, signature = event_data('private_milestone_accepted.json')
+        payload = json.loads(json_event)
+        expected = {'number': 600, 'repository_url': 'https://api.github.com/repos/webcompat/webcompat-tests-private', 'action': 'milestoned', 'domain': 'www.netflix.com', 'milestoned_with': 'accepted'}  # noqa
+        actual = helpers.get_issue_info(payload)
+        self.assertDictEqual(expected, actual)
+
     def test_signature_check(self):
         """Test the signature check function for WebHooks."""
         payload = 'A body'
@@ -392,14 +400,53 @@ class TestWebhook(unittest.TestCase):
         actual = helpers.repo_scope(url)
         self.assertEqual(expected, actual)
 
-    def test_patch_acceptable_issue(self):
+    @patch('webcompat.webhooks.helpers.private_issue_moderation')
+    def test_patch_acceptable_issue(self, mock_proxy):
         """Test for acceptable issues comes from private repo.
 
         payload: 'Moderated issue accepted'
         status: 200
         content-type: text/plain
         """
-        raise unittest.SkipTest('TODO')
+        json_event, signature = event_data('private_milestone_accepted.json')
+        headers = {
+            'X-GitHub-Event': 'issues',
+            'X-Hub-Signature': signature,
+        }
+        with webcompat.app.test_client() as c:
+            mock_proxy.return_value.status_code = 200
+            rv = c.post(
+                '/webhooks/labeler',
+                data=json_event,
+                headers=headers
+            )
+            self.assertEqual(rv.data, b'Moderated issue accepted')
+            self.assertEqual(rv.status_code, 200)
+            self.assertEqual(rv.content_type, 'text/plain')
+
+    @patch('webcompat.webhooks.helpers.private_issue_moderation')
+    def test_patch_acceptable_issue_problem(self, mock_proxy):
+        """Test for accepted issues failed.
+
+        payload: 'ooops'
+        status: 400
+        content-type: text/plain
+        """
+        json_event, signature = event_data('private_milestone_accepted.json')
+        headers = {
+            'X-GitHub-Event': 'issues',
+            'X-Hub-Signature': signature,
+        }
+        with webcompat.app.test_client() as c:
+            mock_proxy.return_value.status_code = 400
+            rv = c.post(
+                '/webhooks/labeler',
+                data=json_event,
+                headers=headers
+            )
+            self.assertEqual(rv.data, b'ooops')
+            self.assertEqual(rv.status_code, 400)
+            self.assertEqual(rv.content_type, 'text/plain')
 
     def test_patch_not_acceptable_issue(self):
         """Test for rejected issues from private repo.
@@ -416,6 +463,13 @@ class TestWebhook(unittest.TestCase):
         payload: 'Wrong repository'
         status: 403
         content-type: text/plain
+        """
+        raise unittest.SkipTest('TODO')
+
+    def test_private_issue_moderated_ok(self):
+        """Test for private issue successfully moderated.
+
+        it returns a 200 code.
         """
         raise unittest.SkipTest('TODO')
 

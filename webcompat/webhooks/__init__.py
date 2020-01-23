@@ -10,7 +10,6 @@ See https://developer.github.com/ for what is possible.
 """
 
 import json
-import logging
 
 from flask import request
 

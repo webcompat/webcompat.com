@@ -8,6 +8,7 @@
 import hashlib
 import hmac
 import json
+import logging
 import re
 
 from webcompat import app
@@ -146,10 +147,14 @@ def get_issue_info(payload):
     # Extract the title and the body
     title = payload.get('issue')['title']
     # Create the issue dictionary
-    return {'action': payload.get('action'),
-            'number': payload.get('issue')['number'],
-            'domain': title.partition(' ')[0],
-            'repository_url': payload.get('issue')['repository_url']}
+    issue = {'action': payload.get('action'),
+             'number': payload.get('issue')['number'],
+             'domain': title.partition(' ')[0],
+             'repository_url': payload.get('issue')['repository_url']}
+    # webhook with a milestoned action
+    if payload.get('milestone'):
+        issue['milestoned_with'] = payload.get('milestone')['title']
+    return issue
 
 
 def get_issue_labels(issue_body):
@@ -239,6 +244,18 @@ def process_issue_action(issue, payload):
         else:
             msg_log('public:opened labels failed', issue_number)
             return ('ooops', 400, {'Content-Type': 'text/plain'})
+    # TODO probably do a function. Too many conditions.
+    elif (issue['action'] == 'milestoned' and
+          scope == 'private' and
+          issue['milestoned_with'] == 'accepted'):
+        # private issue have been moderated and we will make it public
+        response = private_issue_moderation(payload)
+        if response.status_code == 200:
+            return ('Moderated issue accepted',
+                    200, {'Content-Type': 'text/plain'})
+        else:
+            msg_log('private:moving to public failed', issue_number)
+            return ('ooops', 400, {'Content-Type': 'text/plain'})
     else:
         return ('Not an interesting hook', 403, {'Content-Type': 'text/plain'})
 
@@ -265,3 +282,8 @@ def msg_log(msg, issue_number):
     log.setLevel(logging.INFO)
     msg = 'issue {issue} {msg}'.format(issue=issue_number, msg=msg)
     log.info(msg)
+
+
+def private_issue_moderation(payload):
+    """Publish a private issue in public after moderation."""
+    return 'boom'
