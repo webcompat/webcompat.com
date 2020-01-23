@@ -31,6 +31,11 @@
             Privacy Policy
           </a>
         </li>
+       <li class="footer-item{% if request.url_rule.endpoint == 'terms' %} active{% endif %}">
+          <a class="footer-item-link" href="{{ url_for('terms') }}">
+            Terms of Service
+          </a>
+        </li>
         <li class="footer-item">
           <a class="footer-item-link" href="https://github.com/webcompat/webcompat.com/blob/master/CODE_OF_CONDUCT.md">
             Code of Conduct

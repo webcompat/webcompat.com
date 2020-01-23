@@ -436,6 +436,15 @@ def privacy():
     return render_template('privacy.html')
 
 
+@app.route('/terms')
+@cache_policy(private=True, uri_max_age=0, must_revalidate=True)
+def terms():
+    """Route to display terms of service page."""
+    if g.user:
+        get_user_info()
+    return render_template('terms.html')
+
+
 @app.route('/contact')
 @cache_policy(private=True, uri_max_age=0, must_revalidate=True)
 def contact():
