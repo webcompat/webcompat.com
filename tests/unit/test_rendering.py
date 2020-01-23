@@ -54,6 +54,7 @@ class TestURIContent(unittest.TestCase):
             ('/issues', 'Issues'),
             ('issues/new', 'New Issue'),
             ('/privacy', 'Privacy Policy'),
+            ('/terms', 'Terms of Service'),
             ('/404', default_title)
         ]
         with webcompat.app.app_context():
