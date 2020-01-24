@@ -215,7 +215,7 @@ def tag_new_public_issue(payload):
     return proxy_response
 
 
-def process_issue_action(issue, payload):
+def process_issue_action(issue_info):
     """Route the actions and provide different responses.
 
     There are two possible known scopes:
@@ -229,27 +229,27 @@ def process_issue_action(issue, payload):
     * milestoned (private repo only)
       When the issue is being moderated with a milestone: accepted
     """
-    source_repo = issue['repository_url']
+    source_repo = issue_info['repository_url']
     scope = repo_scope(source_repo)
-    issue_number = issue['number']
+    issue_number = issue_info['number']
     # We do not process further in case
     # we don't know what we are dealing with
     if scope == 'unknown':
         return ('Wrong repository', 403, {'Content-Type': 'text/plain'})
-    if issue['action'] == 'opened' and scope == 'public':
+    if issue_info['action'] == 'opened' and scope == 'public':
         # we are setting labels on each new open issues
-        response = tag_new_public_issue(payload)
+        response = tag_new_public_issue(issue_info)
         if response.status_code == 200:
             return ('gracias, amigo.', 200, {'Content-Type': 'text/plain'})
         else:
             msg_log('public:opened labels failed', issue_number)
             return ('ooops', 400, {'Content-Type': 'text/plain'})
     # TODO probably do a function. Too many conditions.
-    elif (issue['action'] == 'milestoned' and
+    elif (issue_info['action'] == 'milestoned' and
           scope == 'private' and
-          issue['milestoned_with'] == 'accepted'):
+          issue_info['milestoned_with'] == 'accepted'):
         # private issue have been moderated and we will make it public
-        response = private_issue_moderation(payload)
+        response = private_issue_moderation(issue_info)
         if response.status_code == 200:
             return ('Moderated issue accepted',
                     200, {'Content-Type': 'text/plain'})

@@ -33,9 +33,9 @@ def hooklistener():
     event_type = request.headers.get('X-GitHub-Event')
     # Treating events related to issues
     if event_type == 'issues':
-        issue = get_issue_info(payload)
+        issue_info = get_issue_info(payload)
         # we process the action
-        response = process_issue_action(issue, payload)
+        response = process_issue_action(issue_info)
         return response
     elif event_type == 'ping':
         return ('pong', 200, {'Content-Type': 'text/plain'})
