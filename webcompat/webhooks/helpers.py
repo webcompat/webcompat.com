@@ -145,16 +145,28 @@ def is_github_hook(request):
 def get_issue_info(payload):
     """Extract all information we need when handling webhooks for issues."""
     # Extract the title and the body
-    title = payload.get('issue')['title']
+    issue = payload.get('issue')
+    full_title = issue.get('title', 'Weird_Title - Inspect')
+    labels = issue.get('labels', [])
     # Create the issue dictionary
-    issue = {'action': payload.get('action'),
-             'number': payload.get('issue')['number'],
-             'domain': title.partition(' ')[0],
-             'repository_url': payload.get('issue')['repository_url']}
+    issue_info = {
+        'title': full_title,
+        'action': payload.get('action'),
+        'number': issue.get('number'),
+        'domain': full_title.partition(' ')[0],
+        'repository_url': issue.get('repository_url'),
+        'body': issue.get('body'),
+        }
+    # labels on the original issue?
+    original_labels = [label['name'] for label in labels]
+    issue_info['original_labels'] = original_labels
     # webhook with a milestoned action
     if payload.get('milestone'):
-        issue['milestoned_with'] = payload.get('milestone')['title']
-    return issue
+        issue_info['milestoned_with'] = payload.get('milestone')['title']
+        issue_body = issue.get('body')
+        public_url = extract_metadata(issue_body)['public_url']
+        issue_info['public_url'] = public_url.strip()
+    return issue_info
 
 
 def get_issue_labels(issue_body):
@@ -176,7 +188,7 @@ def get_issue_labels(issue_body):
     return labelslist
 
 
-def tag_new_public_issue(payload):
+def tag_new_public_issue(issue_info):
     """Set the core actions on new opened issues.
 
     When a new issue is opened, we set a couple of things.
@@ -194,14 +206,12 @@ def tag_new_public_issue(payload):
         "labels": ['Label1', 'Label2']
     }
     """
-    issue_body = payload.get('issue')['body']
-    issue_number = payload.get('issue')['number']
+    issue_body = issue_info['body']
+    issue_number = issue_info['number']
     # Grabs the labels already set so they will not be erased
-    original_labels = [label['name']
-                       for label in payload.get('issue')['labels']]
     # Gets the labels from the body
     labels = get_issue_labels(issue_body)
-    labels.extend(original_labels)
+    labels.extend(issue_info['original_labels'])
     milestone = app.config['STATUSES']['needstriage']['id']
     # Preparing the proxy request
     headers = {'Authorization': 'token {0}'.format(app.config['OAUTH_TOKEN'])}
@@ -284,6 +294,49 @@ def msg_log(msg, issue_number):
     log.info(msg)
 
 
-def private_issue_moderation(payload):
-    """Publish a private issue in public after moderation."""
-    return 'boom'
+def private_issue_moderation(issue_info):
+    """Write the private issue in public.
+
+    When the issue has been moderated,
+    we need to change a couple of things in the public space
+
+    - Title
+    - body
+    - Any labels from the private issue
+
+    Then Send a GitHub PATCH to set labels and milestone for the issue.
+
+    PATCH /repos/:owner/:repo/issues/:number
+    {
+        "title": "a string for the title",
+        "body": "the full body",
+        "labels": ['Label1', 'Label2'],
+    }
+
+    Milestone should be already set on needstriage
+
+    we get the destination through the public_url
+    """
+    # Extract the relevant information
+    public_url = issue_info['public_url']
+    body = issue_info['body']
+    title = issue_info['title']
+    issue_number = issue_info['number']
+    # Gets the labels from the body
+    labels = get_issue_labels(body)
+    labels.extend(issue_info['original_labels'])
+    # Prepares the payload
+    payload_request = {
+        'labels': labels,
+        'title': title,
+        'body': body}
+    # Preparing the proxy request
+    # TODO: CREATE the right destination for the URL
+    headers = {'Authorization': 'token {0}'.format(app.config['OAUTH_TOKEN'])}
+    path = 'repos/{0}/{1}'.format(app.config['ISSUES_REPO_URI'], issue_number)
+    proxy_response = proxy_request(
+        'patch',
+        path,
+        headers=headers,
+        data=json.dumps(payload_request))
+    return proxy_response

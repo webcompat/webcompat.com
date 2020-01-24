@@ -44,6 +44,7 @@ class TestWebhook(unittest.TestCase):
         """Set up tests."""
         # sets a more detailed message when testing.
         self.longMessage = True
+        self.maxDiff = None
         webcompat.app.config['TESTING'] = True
         self.app = webcompat.app.test_client()
         self.headers = {'content-type': 'application/json'}
@@ -53,6 +54,7 @@ class TestWebhook(unittest.TestCase):
         <!-- @ua_header: Mozilla/5.0 (what) Gecko/20100101 Firefox/55.0 -->
         <!-- @reported_with: web -->
         <!-- @extra_labels: type-media, type-stylo -->
+        <!-- @public_url: https://foo.example.org/issues/1 -->
 
         **URL**: https://www.example.com/
         **Browser / Version**: Firefox 55.0
@@ -85,10 +87,50 @@ class TestWebhook(unittest.TestCase):
         **Tested Another Browser**: Yes
         """  # noqa
 
-        self.issue_body6 = u"""
+        self.issue_body6 = """
         **URL**: https://not-gecko.example.com/
         <!-- @browser: Safari 99.0 -->
         """
+
+        self.issue_body7 = """
+        **URL**: https://not-gecko.example.com/
+        <!-- @public_url: http://test.example.org/issues/1 -->
+        """
+
+        self.issue_info1 = {
+            'action': 'foobar',
+            'body': '<!-- @browser: Firefox 55.0 -->\n'
+            '<!-- @ua_header: Mozilla/5.0 (X11; Linux x86_64; rv:55.0) '
+            'Gecko/20100101 Firefox/55.0 -->\n'
+            '<!-- @reported_with: web -->\n'
+            '\n'
+            '**URL**: https://www.netflix.com/',
+            'domain': 'www.netflix.com',
+            'number': 600,
+            'original_labels': [],
+            'repository_url':
+                'https://api.github.com/repos/webcompat/webcompat-tests',
+            'title': 'www.netflix.com - test invalid event'}
+
+        self.issue_info2 = {
+            'action': 'milestoned',
+            'milestoned_with': 'accepted',
+            'body': '<!-- @browser: Firefox 55.0 -->\n'
+            '<!-- @ua_header: Mozilla/5.0 (X11; Linux x86_64; rv:55.0) '
+            'Gecko/20100101 Firefox/55.0 -->\n'
+            '<!-- @reported_with: web -->\n'
+            '<!-- @public_url: '
+            'https://github.com/webcompat/webcompat-tests/issues/1  -->\n'
+            '\n'
+            '**URL**: https://www.netflix.com/',
+            'domain': 'www.netflix.com',
+            'number': 600,
+            'original_labels': ['action-needsmoderation'],
+            'public_url':
+                'https://github.com/webcompat/webcompat-tests/issues/1',
+            'repository_url':
+                'https://api.github.com/repos/webcompat/webcompat-tests-private',  # noqa
+            'title': 'www.netflix.com - test private issue accepted'}
 
     def tearDown(self):
         """Tear down tests."""
@@ -160,7 +202,8 @@ class TestWebhook(unittest.TestCase):
                     'extra_labels': 'type-media, type-stylo',
                     'ua_header': ('Mozilla/5.0 (what) Gecko/20100101 '
                                   'Firefox/55.0'),
-                    'browser': 'Firefox 55.0'}
+                    'browser': 'Firefox 55.0',
+                    'public_url': 'https://foo.example.org/issues/1'}
         actual = helpers.extract_metadata(self.issue_body)
         self.assertEqual(expected, actual)
 
@@ -288,7 +331,7 @@ class TestWebhook(unittest.TestCase):
         """Extract the right information from an issue."""
         json_event, signature = event_data('new_event_invalid.json')
         payload = json.loads(json_event)
-        expected = {'number': 600, 'repository_url': 'https://api.github.com/repos/webcompat/webcompat-tests', 'action': 'foobar', 'domain': 'www.netflix.com'}  # noqa
+        expected = self.issue_info1
         actual = helpers.get_issue_info(payload)
         self.assertDictEqual(expected, actual)
 
@@ -296,7 +339,7 @@ class TestWebhook(unittest.TestCase):
         """Extract the right information for a milestoned issue."""
         json_event, signature = event_data('private_milestone_accepted.json')
         payload = json.loads(json_event)
-        expected = {'number': 600, 'repository_url': 'https://api.github.com/repos/webcompat/webcompat-tests-private', 'action': 'milestoned', 'domain': 'www.netflix.com', 'milestoned_with': 'accepted'}  # noqa
+        expected = self.issue_info2
         actual = helpers.get_issue_info(payload)
         self.assertDictEqual(expected, actual)
 
@@ -318,16 +361,17 @@ class TestWebhook(unittest.TestCase):
         # A 200 response
         json_event, signature = event_data('new_event_valid.json')
         payload = json.loads(json_event)
+        issue_info = helpers.get_issue_info(payload)
         with patch('webcompat.webhooks.helpers.proxy_request') as proxy:
             proxy.return_value.status_code = 200
-            response = helpers.tag_new_public_issue(payload)
+            response = helpers.tag_new_public_issue(issue_info)
             self.assertEqual(response.status_code, 200)
             # A 401 response
             proxy.return_value.status_code = 401
             proxy.return_value.content = '{"message":"Bad credentials","documentation_url":"https://developer.github.com/v3"}'  # noqa
             with patch.dict('webcompat.webhooks.helpers.app.config',
                             {'OAUTH_TOKEN': ''}):
-                response = helpers.tag_new_public_issue(payload)
+                response = helpers.tag_new_public_issue(issue_info)
                 self.assertEqual(response.status_code, 401)
                 self.assertTrue('Bad credentials' in response.content)
 
@@ -466,12 +510,27 @@ class TestWebhook(unittest.TestCase):
         """
         raise unittest.SkipTest('TODO')
 
-    def test_private_issue_moderated_ok(self):
+    @patch('webcompat.webhooks.helpers.private_issue_moderation')
+    def test_private_issue_moderated_ok(self, mock_proxy):
         """Test for private issue successfully moderated.
 
         it returns a 200 code.
         """
-        raise unittest.SkipTest('TODO')
+        json_event, signature = event_data('private_milestone_accepted.json')
+        headers = {
+            'X-GitHub-Event': 'issues',
+            'X-Hub-Signature': signature,
+        }
+        with webcompat.app.test_client() as c:
+            mock_proxy.return_value.status_code = 200
+            rv = c.post(
+                '/webhooks/labeler',
+                data=json_event,
+                headers=headers
+            )
+            self.assertEqual(rv.data, b'Moderated issue accepted')
+            self.assertEqual(rv.status_code, 200)
+            self.assertEqual(rv.content_type, 'text/plain')
 
 
 if __name__ == '__main__':
