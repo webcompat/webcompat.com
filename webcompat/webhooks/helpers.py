@@ -155,8 +155,7 @@ def get_issue_info(payload):
         'number': issue.get('number'),
         'domain': full_title.partition(' ')[0],
         'repository_url': issue.get('repository_url'),
-        'body': issue.get('body'),
-        }
+        'body': issue.get('body')}
     # labels on the original issue?
     original_labels = [label['name'] for label in labels]
     issue_info['original_labels'] = original_labels
