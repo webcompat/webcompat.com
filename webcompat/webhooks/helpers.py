@@ -271,6 +271,16 @@ def process_issue_action(issue_info):
         else:
             msg_log('private:moving to public failed', issue_number)
             return ('ooops', 400, {'Content-Type': 'text/plain'})
+    elif (scope == 'private' and issue_info['status'] == 'closed'):
+        # private issue has been closed. It is rejected
+        # We need to patch with a template.
+        response = private_issue_rejected(issue_info)
+        if response.status_code == 200:
+            return ('Moderated issue rejected',
+                    200, {'Content-Type': 'text/plain'})
+        else:
+            msg_log('private:moving to public failed', issue_number)
+            return ('ooops', 400, {'Content-Type': 'text/plain'})
     else:
         return ('Not an interesting hook', 403, {'Content-Type': 'text/plain'})
 
@@ -356,3 +366,10 @@ def private_issue_moderation(issue_info):
         headers=headers,
         data=json.dumps(payload_request))
     return proxy_response
+
+
+def private_issue_rejected(issue_info):
+    """Send a rejected moderattion PATCH on the public issue."""
+    # TODO: reuse a modified version (with parameters)
+    # of webcompat.issues.moderation_template
+    pass

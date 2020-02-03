@@ -499,8 +499,10 @@ class TestWebhook(unittest.TestCase):
         payload: 'Moderated issue rejected'
         status: 200
         content-type: text/plain
+
+        A rejected issue is a private issue which has been closed.
         """
-        raise unittest.SkipTest('TODO')
+        raise unittest.SkipTest('TODO: private_issue_rejected. See #3141')
 
     @patch('webcompat.webhooks.helpers.private_issue_moderation')
     def test_patch_wrong_repo_for_moderation(self, mock_proxy):
