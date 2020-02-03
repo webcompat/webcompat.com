@@ -345,13 +345,14 @@ def private_issue_moderation(issue_info):
     we get the destination through the public_url
     """
     payload_request = prepare_accepted_issue(issue_info)
+    public_number = get_public_issue_number(issue_info['public_url'])
     # Preparing the proxy request
     # TODO: CREATE the right destination for the URL
     headers = {'Authorization': 'token {0}'.format(app.config['OAUTH_TOKEN'])}
-    path = 'repos/{0}/{1}'.format(app.config['ISSUES_REPO_URI'], issue_number)
+    path = 'repos/{0}/{1}'.format(app.config['ISSUES_REPO_URI'], public_number)
     proxy_response = proxy_request(
-        'patch',
-        path,
+        method='patch',
+        path=path,
         headers=headers,
         data=json.dumps(payload_request))
     return proxy_response

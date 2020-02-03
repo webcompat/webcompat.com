@@ -11,6 +11,7 @@ import os
 import unittest
 
 import flask
+from mock import ANY
 from mock import patch
 
 import webcompat
@@ -554,6 +555,21 @@ class TestWebhook(unittest.TestCase):
             self.assertEqual(rv.data, b'Moderated issue accepted')
             self.assertEqual(rv.status_code, 200)
             self.assertEqual(rv.content_type, 'text/plain')
+
+    @patch('webcompat.webhooks.helpers.proxy_request')
+    def test_arguments_private_issue_moderation(self, mock_proxy):
+        """Test that we are sending the request with the right arguments."""
+        with webcompat.app.test_client() as c:
+            mock_proxy.return_value.status_code = 200
+            rv = helpers.private_issue_moderation(self.issue_info2)
+            mock_proxy.assert_called_with(
+                path='repos/webcompat/webcompat-tests/issues/1',
+                method='patch',
+                data=ANY,
+                headers=ANY)
+            self.assertIn(
+                'www.netflix.com - test private issue accepted',
+                mock_proxy.call_args.kwargs['data'])
 
     def test_get_public_issue_number(self):
         """Test the extraction of the issue number from the public_url."""
