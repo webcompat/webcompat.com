@@ -510,8 +510,15 @@ class TestWebhook(unittest.TestCase):
         """
         raise unittest.SkipTest('TODO')
 
-    def test_prepare_accepted_issue(self):
-        """Test the payload preparation for accepted moderated issues."""
+    @patch('webcompat.webhooks.helpers.extract_priority_label')
+    def test_prepare_accepted_issue(self, mock_priority):
+        """Test the payload preparation for accepted moderated issues.
+
+        Labels extraction will create a call to the topsites db
+        and return a value. If the db has not been populated, the result
+        will be different. So we return a value 'priority-critical' here.
+        """
+        mock_priority.return_value = 'priority-critical'
         actual = helpers.prepare_accepted_issue(self.issue_info2)
         expected = {
             'body': '<!-- @browser: Firefox 55.0 -->\n'
