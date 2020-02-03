@@ -502,14 +502,29 @@ class TestWebhook(unittest.TestCase):
         """
         raise unittest.SkipTest('TODO')
 
-    def test_patch_wrong_repo_for_moderation(self):
+    @patch('webcompat.webhooks.helpers.private_issue_moderation')
+    def test_patch_wrong_repo_for_moderation(self, mock_proxy):
         """Test for issues in the wrong repo.
 
         payload: 'Wrong repository'
         status: 403
         content-type: text/plain
         """
-        raise unittest.SkipTest('TODO')
+        json_event, signature = event_data(
+            'private_milestone_accepted_wrong_repo.json')
+        headers = {
+            'X-GitHub-Event': 'issues',
+            'X-Hub-Signature': signature,
+        }
+        with webcompat.app.test_client() as c:
+            rv = c.post(
+                '/webhooks/labeler',
+                data=json_event,
+                headers=headers
+            )
+            self.assertEqual(rv.data, b'Wrong repository')
+            self.assertEqual(rv.status_code, 403)
+            self.assertEqual(rv.content_type, 'text/plain')
 
     @patch('webcompat.webhooks.helpers.extract_priority_label')
     def test_prepare_accepted_issue(self, mock_priority):
