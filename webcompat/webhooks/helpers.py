@@ -168,6 +168,12 @@ def get_issue_info(payload):
     return issue_info
 
 
+def get_public_issue_number(public_url):
+    """Extract the issue number from the public url."""
+    public_number = public_url.strip().rsplit('/', 1)[1]
+    return public_number
+
+
 def get_issue_labels(issue_body):
     """Extract the list of labels from an issue body to be sent to GitHub."""
     labelslist = []

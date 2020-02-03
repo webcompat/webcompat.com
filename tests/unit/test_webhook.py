@@ -555,6 +555,11 @@ class TestWebhook(unittest.TestCase):
             self.assertEqual(rv.status_code, 200)
             self.assertEqual(rv.content_type, 'text/plain')
 
+    def test_get_public_issue_number(self):
+        """Test the extraction of the issue number from the public_url."""
+        public_url = 'https://github.com/webcompat/webcompat-tests/issues/1'
+        self.assertEqual(helpers.get_public_issue_number(public_url), '1')
+
 
 if __name__ == '__main__':
     unittest.main()
