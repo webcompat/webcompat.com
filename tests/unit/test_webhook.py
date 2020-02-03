@@ -510,6 +510,22 @@ class TestWebhook(unittest.TestCase):
         """
         raise unittest.SkipTest('TODO')
 
+    def test_prepare_accepted_issue(self):
+        """Test the payload preparation for accepted moderated issues."""
+        actual = helpers.prepare_accepted_issue(self.issue_info2)
+        expected = {
+            'body': '<!-- @browser: Firefox 55.0 -->\n'
+            '<!-- @ua_header: Mozilla/5.0 (X11; Linux x86_64; rv:55.0) '
+            'Gecko/20100101 Firefox/55.0 -->\n'
+            '<!-- @reported_with: web -->\n'
+            '<!-- @public_url: '
+            'https://github.com/webcompat/webcompat-tests/issues/1  -->\n'
+            '\n'
+            '**URL**: https://www.netflix.com/',
+            'labels': ['browser-firefox', 'priority-critical', 'engine-gecko'],
+            'title': 'www.netflix.com - test private issue accepted'}
+        self.assertEqual(expected, actual)
+
     @patch('webcompat.webhooks.helpers.private_issue_moderation')
     def test_private_issue_moderated_ok(self, mock_proxy):
         """Test for private issue successfully moderated.

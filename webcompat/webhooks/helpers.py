@@ -293,17 +293,39 @@ def msg_log(msg, issue_number):
     log.info(msg)
 
 
-def private_issue_moderation(issue_info):
-    """Write the private issue in public.
+def prepare_accepted_issue(issue_info):
+    """Create the payload for the accepted moderated issue.
 
-    When the issue has been moderated,
+    When the issue has been moderated as accepted,
     we need to change a couple of things in the public space
 
     - Title
     - body
     - Any labels from the private issue
+    """
+    # Extract the relevant information
+    public_url = issue_info['public_url']
+    body = issue_info['body']
+    title = issue_info['title']
+    issue_number = issue_info['number']
+    # Gets the labels from the body
+    labels = get_issue_labels(body)
+    labels.extend(issue_info['original_labels'])
+    # Let's remove action-needsmoderation in case it's here
+    if 'action-needsmoderation' in labels:
+        labels.remove('action-needsmoderation')
+    # Prepares the payload
+    payload_request = {
+        'labels': labels,
+        'title': title,
+        'body': body}
+    return payload_request
 
-    Then Send a GitHub PATCH to set labels and milestone for the issue.
+
+def private_issue_moderation(issue_info):
+    """Write the private issue in public.
+
+    Send a GitHub PATCH to set labels and milestone for the issue.
 
     PATCH /repos/:owner/:repo/issues/:number
     {
@@ -316,19 +338,7 @@ def private_issue_moderation(issue_info):
 
     we get the destination through the public_url
     """
-    # Extract the relevant information
-    public_url = issue_info['public_url']
-    body = issue_info['body']
-    title = issue_info['title']
-    issue_number = issue_info['number']
-    # Gets the labels from the body
-    labels = get_issue_labels(body)
-    labels.extend(issue_info['original_labels'])
-    # Prepares the payload
-    payload_request = {
-        'labels': labels,
-        'title': title,
-        'body': body}
+    payload_request = prepare_accepted_issue(issue_info)
     # Preparing the proxy request
     # TODO: CREATE the right destination for the URL
     headers = {'Authorization': 'token {0}'.format(app.config['OAUTH_TOKEN'])}
