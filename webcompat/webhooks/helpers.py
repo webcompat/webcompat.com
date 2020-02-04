@@ -18,6 +18,7 @@ from webcompat.form import domain_name
 from webcompat.helpers import extract_url
 from webcompat.helpers import proxy_request
 from webcompat.helpers import to_bytes
+from webcompat.issues import moderation_template
 
 BROWSERS = ['blackberry', 'brave', 'chrome', 'edge', 'firefox', 'iceweasel', 'ie', 'lynx', 'myie', 'opera', 'puffin', 'qq', 'safari', 'samsung', 'seamonkey', 'uc', 'vivaldi']  # noqa
 MOZILLA_BROWSERS = ['browser-fenix',
@@ -151,6 +152,7 @@ def get_issue_info(payload):
     # Create the issue dictionary
     issue_info = {
         'title': full_title,
+        'state': issue.get('state'),
         'action': payload.get('action'),
         'number': issue.get('number'),
         'domain': full_title.partition(' ')[0],
@@ -271,7 +273,7 @@ def process_issue_action(issue_info):
         else:
             msg_log('private:moving to public failed', issue_number)
             return ('ooops', 400, {'Content-Type': 'text/plain'})
-    elif (scope == 'private' and issue_info['status'] == 'closed'):
+    elif (scope == 'private' and issue_info['state'] == 'closed'):
         # private issue has been closed. It is rejected
         # We need to patch with a template.
         response = private_issue_rejected(issue_info)
@@ -279,7 +281,7 @@ def process_issue_action(issue_info):
             return ('Moderated issue rejected',
                     200, {'Content-Type': 'text/plain'})
         else:
-            msg_log('private:moving to public failed', issue_number)
+            msg_log('public rejection failed', issue_number)
             return ('ooops', 400, {'Content-Type': 'text/plain'})
     else:
         return ('Not an interesting hook', 403, {'Content-Type': 'text/plain'})
@@ -357,7 +359,6 @@ def private_issue_moderation(issue_info):
     payload_request = prepare_accepted_issue(issue_info)
     public_number = get_public_issue_number(issue_info['public_url'])
     # Preparing the proxy request
-    # TODO: CREATE the right destination for the URL
     headers = {'Authorization': 'token {0}'.format(app.config['OAUTH_TOKEN'])}
     path = 'repos/{0}/{1}'.format(app.config['ISSUES_REPO_URI'], public_number)
     proxy_response = proxy_request(
@@ -369,7 +370,37 @@ def private_issue_moderation(issue_info):
 
 
 def private_issue_rejected(issue_info):
-    """Send a rejected moderattion PATCH on the public issue."""
-    # TODO: reuse a modified version (with parameters)
-    # of webcompat.issues.moderation_template
-    pass
+    """Send a rejected moderation PATCH on the public issue."""
+    payload_request = prepare_rejected_issue()
+    public_number = get_public_issue_number(issue_info['public_url'])
+    # Preparing the proxy request
+    # TODO: CREATE the right destination for the URL
+    headers = {'Authorization': 'token {0}'.format(app.config['OAUTH_TOKEN'])}
+    path = 'repos/{0}/{1}'.format(app.config['ISSUES_REPO_URI'], public_number)
+    proxy_response = proxy_request(
+        method='patch',
+        path=path,
+        headers=headers,
+        data=json.dumps(payload_request))
+    return proxy_response
+
+
+def prepare_rejected_issue():
+    """Create the payload for the rejected moderated issue.
+
+    When the issue has been moderated as rejected,
+    we need to change a couple of things in the public space
+
+    - change Title
+    - change body
+    - close the issue
+    - remove the action-needsmoderation label
+    - change the milestone to invalid
+    """
+    # Extract the relevant information
+    invalid_id = app.config['STATUSES']['invalid']['id']
+    payload_request = moderation_template('rejected')
+    payload_request['labels'] = []
+    payload_request['state'] = 'closed'
+    payload_request['milestone'] = invalid_id
+    return payload_request

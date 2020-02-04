@@ -1,5 +1,5 @@
 {
-  "action": "milestoned",
+  "action": "closed",
   "issue": {
     "title": "www.netflix.com - test private issue accepted",
     "repository_url": "https://api.github.com/repos/webcompat/webcompat-tests-private",
@@ -16,9 +16,9 @@
         "description": "issue in the process of being moderated"
       }
     ],
-    "state": "open"
-  },
+    "state": "closed"
+},
   "milestone": {
-    "title": "accepted"
+    "title": "needstriage"
   }
 }

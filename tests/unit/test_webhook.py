@@ -100,6 +100,7 @@ class TestWebhook(unittest.TestCase):
 
         self.issue_info1 = {
             'action': 'foobar',
+            'state': 'open',
             'body': '<!-- @browser: Firefox 55.0 -->\n'
             '<!-- @ua_header: Mozilla/5.0 (X11; Linux x86_64; rv:55.0) '
             'Gecko/20100101 Firefox/55.0 -->\n'
@@ -115,7 +116,28 @@ class TestWebhook(unittest.TestCase):
 
         self.issue_info2 = {
             'action': 'milestoned',
+            'state': 'open',
             'milestoned_with': 'accepted',
+            'body': '<!-- @browser: Firefox 55.0 -->\n'
+            '<!-- @ua_header: Mozilla/5.0 (X11; Linux x86_64; rv:55.0) '
+            'Gecko/20100101 Firefox/55.0 -->\n'
+            '<!-- @reported_with: web -->\n'
+            '<!-- @public_url: '
+            'https://github.com/webcompat/webcompat-tests/issues/1  -->\n'
+            '\n'
+            '**URL**: https://www.netflix.com/',
+            'domain': 'www.netflix.com',
+            'number': 600,
+            'original_labels': ['action-needsmoderation'],
+            'public_url':
+                'https://github.com/webcompat/webcompat-tests/issues/1',
+            'repository_url':
+                'https://api.github.com/repos/webcompat/webcompat-tests-private',  # noqa
+            'title': 'www.netflix.com - test private issue accepted'}
+
+        self.issue_info3 = {
+            'action': 'closed',
+            'state': 'closed',
             'body': '<!-- @browser: Firefox 55.0 -->\n'
             '<!-- @ua_header: Mozilla/5.0 (X11; Linux x86_64; rv:55.0) '
             'Gecko/20100101 Firefox/55.0 -->\n'
@@ -493,7 +515,8 @@ class TestWebhook(unittest.TestCase):
             self.assertEqual(rv.status_code, 400)
             self.assertEqual(rv.content_type, 'text/plain')
 
-    def test_patch_not_acceptable_issue(self):
+    @patch('webcompat.webhooks.helpers.private_issue_rejected')
+    def test_patch_not_acceptable_issue(self, mock_proxy):
         """Test for rejected issues from private repo.
 
         payload: 'Moderated issue rejected'
@@ -502,7 +525,21 @@ class TestWebhook(unittest.TestCase):
 
         A rejected issue is a private issue which has been closed.
         """
-        raise unittest.SkipTest('TODO: private_issue_rejected. See #3141')
+        json_event, signature = event_data('private_milestone_closed.json')
+        headers = {
+            'X-GitHub-Event': 'issues',
+            'X-Hub-Signature': signature,
+        }
+        with webcompat.app.test_client() as c:
+            mock_proxy.return_value.status_code = 200
+            rv = c.post(
+                '/webhooks/labeler',
+                data=json_event,
+                headers=headers
+            )
+            self.assertEqual(rv.data, b'Moderated issue rejected')
+            self.assertEqual(rv.status_code, 200)
+            self.assertEqual(rv.content_type, 'text/plain')
 
     @patch('webcompat.webhooks.helpers.private_issue_moderation')
     def test_patch_wrong_repo_for_moderation(self, mock_proxy):
@@ -575,7 +612,7 @@ class TestWebhook(unittest.TestCase):
 
     @patch('webcompat.webhooks.helpers.proxy_request')
     def test_arguments_private_issue_moderation(self, mock_proxy):
-        """Test that we are sending the request with the right arguments."""
+        """Test accepted issue request with the right arguments."""
         with webcompat.app.test_client() as c:
             mock_proxy.return_value.status_code = 200
             rv = helpers.private_issue_moderation(self.issue_info2)
@@ -592,6 +629,38 @@ class TestWebhook(unittest.TestCase):
         """Test the extraction of the issue number from the public_url."""
         public_url = 'https://github.com/webcompat/webcompat-tests/issues/1'
         self.assertEqual(helpers.get_public_issue_number(public_url), '1')
+
+    @patch('webcompat.webhooks.helpers.proxy_request')
+    def test_arguments_private_issue_rejected(self, mock_proxy):
+        """Test rejected issue request with the right arguments."""
+        with webcompat.app.test_client() as c:
+            mock_proxy.return_value.status_code = 200
+            rv = helpers.private_issue_rejected(self.issue_info3)
+            post_data = json.loads(mock_proxy.call_args.kwargs['data'])
+            self.assertEqual('Issue rejected.', post_data['title'])
+            self.assertIn('Its original content has been deleted',
+                          post_data['body'])
+            self.assertEqual([], post_data['labels'])
+            self.assertEqual('closed', post_data['state'])
+            self.assertIn('milestone', post_data)
+            mock_proxy.assert_called_with(
+                path='repos/webcompat/webcompat-tests/issues/1',
+                method='patch',
+                data=ANY,
+                headers=ANY)
+
+    def test_prepare_rejected_issue(self):
+        """Test we prepare the right payload for the rejected issue."""
+        expected = {'body': "<p>The content of this issue doesn't meet our\n"
+                    '<a href="/acceptable-use">acceptable use</a>\n'
+                    'guidelines. Its original content has been deleted.</p>',
+                    'labels': [],
+                    'milestone': 8,
+                    'state': 'closed',
+                    'title': 'Issue rejected.'}
+        actual = helpers.prepare_rejected_issue()
+        self.assertEqual(type(actual), dict)
+        self.assertEqual(actual, expected)
 
 
 if __name__ == '__main__':

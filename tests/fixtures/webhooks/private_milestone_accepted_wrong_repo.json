@@ -15,7 +15,8 @@
         "default": false,
         "description": "issue in the process of being moderated"
       }
-    ]
+    ],
+    "state": "open"
   },
   "milestone": {
     "title": "accepted"
