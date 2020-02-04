@@ -23,19 +23,36 @@ REPO_URI = app.config['ISSUES_REPO_URI']
 PRIVATE_REPO_URI = app.config['PRIVATE_REPO_URI']
 PRIVATE_REPO_MILESTONE = app.config['PRIVATE_REPO_MILESTONE']
 
-
-def moderation_template():
-    """Gets the placeholder data to send for unmoderated issues."""
-
-    summary = 'In the moderation queue.'
-    body = '''<p>This issue has been put in the moderation queue. A human
+REJECTED_TITLE = 'Issue rejected.'
+REJECTED_BODY = '''<p>The content of this issue doesn't meet our
+<a href="/acceptable-use">acceptable use</a>
+guidelines. Its original content has been deleted.</p>'''
+ONGOING_TITLE = 'In the moderation queue.'
+ONGOING_BODY = '''<p>This issue has been put in the moderation queue. A human
 will review if the message meets our current
 <a href="https://www.mozilla.org/en-US/about/legal/acceptable-use/">
 acceptable use</a> guidelines.
 It will probably take a couple of days depending on the backlog.
 Once it has been reviewed, the content will be either made public
 or deleted.</p>'''
-    return {'title': summary, 'body': body}
+
+
+def moderation_template(choice='ongoing'):
+    """Gets the placeholder data to send for unmoderated issues.
+
+    The moderation is for now two types:
+    - ongoing: the issue is in the moderation queue.
+    - rejected: the issue has been rejected.
+
+    The default is 'ongoing' even with unknown keywords.
+    """
+    if choice == 'rejected':
+        title = REJECTED_TITLE
+        body = REJECTED_BODY
+    else:
+        title = ONGOING_TITLE
+        body = ONGOING_BODY
+    return {'title': title, 'body': body}
 
 
 def report_private_issue(form, public_url):
@@ -62,7 +79,7 @@ def report_public_issue():
     Returns a requests.Response object.
     """
     path = 'repos/{0}'.format(REPO_URI)
-    public_data = moderation_template()
+    public_data = moderation_template('ongoing')
     # We add action-needsmoderation label, so reviewers can filter out
     public_data['labels'] = ['action-needsmoderation']
     return proxy_request('post', path, data=json.dumps(public_data))

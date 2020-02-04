@@ -82,7 +82,28 @@ class TestIssue(unittest.TestCase):
         - must be a dictionary
         - must contain the keys: title, body
         """
-        actual = moderation_template()
+        actual = moderation_template('ongoing')
         self.assertIs(type(actual), dict)
         self.assertIn('title', actual.keys())
         self.assertIn('body', actual.keys())
+
+    def test_moderation_template_rejected(self):
+        """Check the return values are for the rejected case."""
+        actual = moderation_template('rejected')
+        self.assertEqual(actual['title'], 'Issue rejected.')
+        self.assertIn('Its original content has been deleted', actual['body'])
+
+    def test_moderation_template_ongoing(self):
+        """Check the return values are for the needsmoderation case."""
+        # test the default
+        actual = moderation_template()
+        self.assertEqual(actual['title'], 'In the moderation queue.')
+        self.assertIn('put in the moderation queue.', actual['body'])
+        # test the keyword
+        actual = moderation_template('ongoing')
+        self.assertEqual(actual['title'], 'In the moderation queue.')
+        self.assertIn('put in the moderation queue.', actual['body'])
+        # bad keyword, we go back to the default.
+        actual = moderation_template('punkcat')
+        self.assertEqual(actual['title'], 'In the moderation queue.')
+        self.assertIn('put in the moderation queue.', actual['body'])
