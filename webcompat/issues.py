@@ -25,12 +25,12 @@ PRIVATE_REPO_MILESTONE = app.config['PRIVATE_REPO_MILESTONE']
 
 REJECTED_TITLE = 'Issue rejected.'
 REJECTED_BODY = '''<p>The content of this issue doesn't meet our
-<a href="/acceptable-use">acceptable use</a>
+<a href="https://webcompat.com/terms#acceptable-use">acceptable use</a>
 guidelines. Its original content has been deleted.</p>'''
 ONGOING_TITLE = 'In the moderation queue.'
 ONGOING_BODY = '''<p>This issue has been put in the moderation queue. A human
 will review if the message meets our current
-<a href="https://www.mozilla.org/en-US/about/legal/acceptable-use/">
+<a href="https://webcompat.com/terms#acceptable-use">
 acceptable use</a> guidelines.
 It will probably take a couple of days depending on the backlog.
 Once it has been reviewed, the content will be either made public
