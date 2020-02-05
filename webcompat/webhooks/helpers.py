@@ -8,6 +8,7 @@
 import hashlib
 import hmac
 import json
+import logging
 import re
 
 from webcompat import app
@@ -17,6 +18,7 @@ from webcompat.form import domain_name
 from webcompat.helpers import extract_url
 from webcompat.helpers import proxy_request
 from webcompat.helpers import to_bytes
+from webcompat.issues import moderation_template
 
 BROWSERS = ['blackberry', 'brave', 'chrome', 'edge', 'firefox', 'iceweasel', 'ie', 'lynx', 'myie', 'opera', 'puffin', 'qq', 'safari', 'samsung', 'seamonkey', 'uc', 'vivaldi']  # noqa
 MOZILLA_BROWSERS = ['browser-fenix',
@@ -27,6 +29,8 @@ MOZILLA_BROWSERS = ['browser-fenix',
                     'browser-focus-geckoview',
                     'browser-geckoview',
                     ]
+PUBLIC_REPO = app.config['ISSUES_REPO_URI']
+PRIVATE_REPO = app.config['PRIVATE_REPO_URI']
 
 
 def extract_metadata(body):
@@ -142,12 +146,34 @@ def is_github_hook(request):
 def get_issue_info(payload):
     """Extract all information we need when handling webhooks for issues."""
     # Extract the title and the body
-    title = payload.get('issue')['title']
+    issue = payload.get('issue')
+    full_title = issue.get('title', 'Weird_Title - Inspect')
+    labels = issue.get('labels', [])
     # Create the issue dictionary
-    return {'action': payload.get('action'),
-            'number': payload.get('issue')['number'],
-            'domain': title.partition(' ')[0],
-            'repository_url': payload.get('issue')['repository_url']}
+    issue_info = {
+        'title': full_title,
+        'state': issue.get('state'),
+        'action': payload.get('action'),
+        'number': issue.get('number'),
+        'domain': full_title.partition(' ')[0],
+        'repository_url': issue.get('repository_url'),
+        'body': issue.get('body')}
+    # If labels on the original issue, we need them.
+    original_labels = [label['name'] for label in labels]
+    issue_info['original_labels'] = original_labels
+    # webhook with a milestoned action
+    if payload.get('milestone'):
+        issue_info['milestoned_with'] = payload.get('milestone')['title']
+        issue_body = issue.get('body')
+        public_url = extract_metadata(issue_body)['public_url']
+        issue_info['public_url'] = public_url.strip()
+    return issue_info
+
+
+def get_public_issue_number(public_url):
+    """Extract the issue number from the public url."""
+    public_number = public_url.strip().rsplit('/', 1)[1]
+    return public_number
 
 
 def get_issue_labels(issue_body):
@@ -169,7 +195,7 @@ def get_issue_labels(issue_body):
     return labelslist
 
 
-def new_opened_issue(payload):
+def tag_new_public_issue(issue_info):
     """Set the core actions on new opened issues.
 
     When a new issue is opened, we set a couple of things.
@@ -187,14 +213,12 @@ def new_opened_issue(payload):
         "labels": ['Label1', 'Label2']
     }
     """
-    issue_body = payload.get('issue')['body']
-    issue_number = payload.get('issue')['number']
+    issue_body = issue_info['body']
+    issue_number = issue_info['number']
     # Grabs the labels already set so they will not be erased
-    original_labels = [label['name']
-                       for label in payload.get('issue')['labels']]
     # Gets the labels from the body
     labels = get_issue_labels(issue_body)
-    labels.extend(original_labels)
+    labels.extend(issue_info['original_labels'])
     milestone = app.config['STATUSES']['needstriage']['id']
     # Preparing the proxy request
     headers = {'Authorization': 'token {0}'.format(app.config['OAUTH_TOKEN'])}
@@ -206,3 +230,175 @@ def new_opened_issue(payload):
         headers=headers,
         data=json.dumps(payload_request))
     return proxy_response
+
+
+def process_issue_action(issue_info):
+    """Route the actions and provide different responses.
+
+    There are two possible known scopes:
+    * public repo
+    * private repo
+
+    Currently the actions we are handling are (for now):
+    * opened (public repo only)
+      Aka newly issues created and
+      need to be assigned labels and milestones
+    * milestoned (private repo only)
+      When the issue is being moderated with a milestone: accepted
+    """
+    source_repo = issue_info['repository_url']
+    scope = repo_scope(source_repo)
+    issue_number = issue_info['number']
+    # We do not process further in case
+    # we don't know what we are dealing with
+    if scope == 'unknown':
+        return ('Wrong repository', 403, {'Content-Type': 'text/plain'})
+    if issue_info['action'] == 'opened' and scope == 'public':
+        # we are setting labels on each new open issues
+        response = tag_new_public_issue(issue_info)
+        if response.status_code == 200:
+            return ('gracias, amigo.', 200, {'Content-Type': 'text/plain'})
+        else:
+            msg_log('public:opened labels failed', issue_number)
+            return ('ooops', 400, {'Content-Type': 'text/plain'})
+    elif (issue_info['action'] == 'milestoned' and
+          scope == 'private' and
+          issue_info['milestoned_with'] == 'accepted'):
+        # private issue have been moderated and we will make it public
+        response = private_issue_moderation(issue_info)
+        if response.status_code == 200:
+            return ('Moderated issue accepted',
+                    200, {'Content-Type': 'text/plain'})
+        else:
+            msg_log('private:moving to public failed', issue_number)
+            return ('ooops', 400, {'Content-Type': 'text/plain'})
+    elif (scope == 'private' and issue_info['state'] == 'closed'):
+        # private issue has been closed. It is rejected
+        # We need to patch with a template.
+        response = private_issue_rejected(issue_info)
+        if response.status_code == 200:
+            return ('Moderated issue rejected',
+                    200, {'Content-Type': 'text/plain'})
+        else:
+            msg_log('public rejection failed', issue_number)
+            return ('ooops', 400, {'Content-Type': 'text/plain'})
+    else:
+        return ('Not an interesting hook', 403, {'Content-Type': 'text/plain'})
+
+
+def repo_scope(source_repo):
+    """Check the scope nature of the repository.
+
+    The repository can be a
+    * known public.
+    * known private.
+    * or completely unknown.
+    """
+    scope = 'unknown'
+    if source_repo.endswith(PUBLIC_REPO.rsplit('/issues')[0]):
+        scope = 'public'
+    elif source_repo.endswith(PRIVATE_REPO.rsplit('/issues')[0]):
+        scope = 'private'
+    return scope
+
+
+def msg_log(msg, issue_number):
+    """Write a log with the reason and the issue number."""
+    log = app.logger
+    log.setLevel(logging.INFO)
+    msg = 'issue {issue} {msg}'.format(issue=issue_number, msg=msg)
+    log.info(msg)
+
+
+def prepare_accepted_issue(issue_info):
+    """Create the payload for the accepted moderated issue.
+
+    When the issue has been moderated as accepted,
+    we need to change a couple of things in the public space
+
+    - Title
+    - Body
+    - Any labels from the private issue
+    """
+    # Extract the relevant information
+    public_url = issue_info['public_url']
+    body = issue_info['body']
+    title = issue_info['title']
+    issue_number = issue_info['number']
+    # Gets the labels from the body
+    labels = get_issue_labels(body)
+    labels.extend(issue_info['original_labels'])
+    # Let's remove action-needsmoderation in case it's here
+    if 'action-needsmoderation' in labels:
+        labels.remove('action-needsmoderation')
+    # Prepares the payload
+    payload_request = {
+        'labels': labels,
+        'title': title,
+        'body': body}
+    return payload_request
+
+
+def private_issue_moderation(issue_info):
+    """Write the private issue in public.
+
+    Send a GitHub PATCH to set labels and milestone for the issue.
+
+    PATCH /repos/:owner/:repo/issues/:number
+    {
+        "title": "a string for the title",
+        "body": "the full body",
+        "labels": ['Label1', 'Label2'],
+    }
+
+    Milestone should be already set on needstriage
+
+    we get the destination through the public_url
+    """
+    payload_request = prepare_accepted_issue(issue_info)
+    public_number = get_public_issue_number(issue_info['public_url'])
+    # Preparing the proxy request
+    headers = {'Authorization': 'token {0}'.format(app.config['OAUTH_TOKEN'])}
+    path = 'repos/{0}/{1}'.format(app.config['ISSUES_REPO_URI'], public_number)
+    proxy_response = proxy_request(
+        method='patch',
+        path=path,
+        headers=headers,
+        data=json.dumps(payload_request))
+    return proxy_response
+
+
+def private_issue_rejected(issue_info):
+    """Send a rejected moderation PATCH on the public issue."""
+    payload_request = prepare_rejected_issue()
+    public_number = get_public_issue_number(issue_info['public_url'])
+    # Preparing the proxy request
+    headers = {'Authorization': 'token {0}'.format(app.config['OAUTH_TOKEN'])}
+    path = 'repos/{0}/{1}'.format(app.config['ISSUES_REPO_URI'], public_number)
+    proxy_response = proxy_request(
+        method='patch',
+        path=path,
+        headers=headers,
+        data=json.dumps(payload_request))
+    return proxy_response
+
+
+def prepare_rejected_issue():
+    """Create the payload for the rejected moderated issue.
+
+    When the issue has been moderated as rejected,
+    we need to change a couple of things in the public space
+
+    - change Title
+    - change body
+    - close the issue
+    - remove the action-needsmoderation label
+    - change the milestone to invalid
+    """
+    # Extract the relevant information
+    invalid_id = app.config['STATUSES']['invalid']['id']
+    payload_request = moderation_template('rejected')
+    payload_request['labels'] = ['status-notacceptable']
+    payload_request['state'] = 'closed'
+    payload_request['milestone'] = invalid_id
+    return payload_request
