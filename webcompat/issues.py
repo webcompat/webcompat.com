@@ -30,7 +30,7 @@ guidelines. Its original content has been deleted.</p>'''
 ONGOING_TITLE = 'In the moderation queue.'
 ONGOING_BODY = '''<p>This issue has been put in the moderation queue. A human
 will review if the message meets our current
-<a href="https://www.mozilla.org/en-US/about/legal/acceptable-use/">
+<a href="https://webcompat.com/terms#acceptable-use">
 acceptable use</a> guidelines.
 It will probably take a couple of days depending on the backlog.
 Once it has been reviewed, the content will be either made public
