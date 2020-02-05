@@ -7,10 +7,12 @@
 
 import datetime
 import json
-import sys
-import os
 import logging
+import os
+import sys
+
 import requests
+
 from webcompat import app
 
 # Config
@@ -70,8 +72,9 @@ def process_pages(first_json, label_list):
 
 def has_next_page(json_data):
     """Check for more labels."""
-    if json_data.get("data").get("repository").get(
-            "labels").get("pageInfo").get("hasNextPage"):
+    page_info = json_data.get("data").get(
+        "repository").get("labels").get("pageInfo")
+    if page_info.get("hasNextPage"):
         return True
     return False
 
@@ -89,7 +92,7 @@ def main():
             # On a second failure, log an error
             msg = "Yikes! Daily label query failed."
             LOGGER.warning(msg)
-            return
+            sys.exit(1)
     while has_next_page(json_data):
         json_data, label_list = process_pages(json_data, label_list)
     cursor, updated_list = extract_label_list(json_data, label_list)
