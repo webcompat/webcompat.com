@@ -158,7 +158,7 @@ def get_issue_info(payload):
         'domain': full_title.partition(' ')[0],
         'repository_url': issue.get('repository_url'),
         'body': issue.get('body')}
-    # labels on the original issue?
+    # If labels on the original issue, we need them.
     original_labels = [label['name'] for label in labels]
     issue_info['original_labels'] = original_labels
     # webhook with a milestoned action
@@ -261,7 +261,6 @@ def process_issue_action(issue_info):
         else:
             msg_log('public:opened labels failed', issue_number)
             return ('ooops', 400, {'Content-Type': 'text/plain'})
-    # TODO probably do a function. Too many conditions.
     elif (issue_info['action'] == 'milestoned' and
           scope == 'private' and
           issue_info['milestoned_with'] == 'accepted'):
@@ -318,7 +317,7 @@ def prepare_accepted_issue(issue_info):
     we need to change a couple of things in the public space
 
     - Title
-    - body
+    - Body
     - Any labels from the private issue
     """
     # Extract the relevant information
@@ -374,7 +373,6 @@ def private_issue_rejected(issue_info):
     payload_request = prepare_rejected_issue()
     public_number = get_public_issue_number(issue_info['public_url'])
     # Preparing the proxy request
-    # TODO: CREATE the right destination for the URL
     headers = {'Authorization': 'token {0}'.format(app.config['OAUTH_TOKEN'])}
     path = 'repos/{0}/{1}'.format(app.config['ISSUES_REPO_URI'], public_number)
     proxy_response = proxy_request(
@@ -400,7 +398,7 @@ def prepare_rejected_issue():
     # Extract the relevant information
     invalid_id = app.config['STATUSES']['invalid']['id']
     payload_request = moderation_template('rejected')
-    payload_request['labels'] = []
+    payload_request['labels'] = ['status-notacceptable']
     payload_request['state'] = 'closed'
     payload_request['milestone'] = invalid_id
     return payload_request

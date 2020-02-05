@@ -640,7 +640,7 @@ class TestWebhook(unittest.TestCase):
             self.assertEqual('Issue rejected.', post_data['title'])
             self.assertIn('Its original content has been deleted',
                           post_data['body'])
-            self.assertEqual([], post_data['labels'])
+            self.assertEqual(['status-notacceptable'], post_data['labels'])
             self.assertEqual('closed', post_data['state'])
             self.assertIn('milestone', post_data)
             mock_proxy.assert_called_with(
@@ -654,7 +654,7 @@ class TestWebhook(unittest.TestCase):
         expected = {'body': "<p>The content of this issue doesn't meet our\n"
                     '<a href="/acceptable-use">acceptable use</a>\n'
                     'guidelines. Its original content has been deleted.</p>',
-                    'labels': [],
+                    'labels': ['status-notacceptable'],
                     'milestone': 8,
                     'state': 'closed',
                     'title': 'Issue rejected.'}
