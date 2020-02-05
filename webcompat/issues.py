@@ -25,7 +25,7 @@ PRIVATE_REPO_MILESTONE = app.config['PRIVATE_REPO_MILESTONE']
 
 REJECTED_TITLE = 'Issue rejected.'
 REJECTED_BODY = '''<p>The content of this issue doesn't meet our
-<a href="/acceptable-use">acceptable use</a>
+<a href="https://webcompat.com/terms#acceptable-use">acceptable use</a>
 guidelines. Its original content has been deleted.</p>'''
 ONGOING_TITLE = 'In the moderation queue.'
 ONGOING_BODY = '''<p>This issue has been put in the moderation queue. A human

@@ -652,7 +652,7 @@ class TestWebhook(unittest.TestCase):
     def test_prepare_rejected_issue(self):
         """Test we prepare the right payload for the rejected issue."""
         expected = {'body': "<p>The content of this issue doesn't meet our\n"
-                    '<a href="/acceptable-use">acceptable use</a>\n'
+                    '<a href="https://webcompat.com/terms#acceptable-use">acceptable use</a>\n'  # noqa
                     'guidelines. Its original content has been deleted.</p>',
                     'labels': ['status-notacceptable'],
                     'milestone': 8,
