@@ -149,24 +149,24 @@ def get_issue_info(payload):
     issue = payload.get('issue')
     full_title = issue.get('title', 'Weird_Title - Inspect')
     labels = issue.get('labels', [])
+    issue_body = issue.get('body')
+    public_url = extract_metadata(issue_body).get('public_url', '')
     # Create the issue dictionary
     issue_info = {
-        'title': full_title,
-        'state': issue.get('state'),
         'action': payload.get('action'),
-        'number': issue.get('number'),
+        'body': issue_body,
         'domain': full_title.partition(' ')[0],
+        'number': issue.get('number'),
+        'public_url': public_url.strip(),
         'repository_url': issue.get('repository_url'),
-        'body': issue.get('body')}
+        'state': issue.get('state'),
+        'title': full_title}
     # If labels on the original issue, we need them.
     original_labels = [label['name'] for label in labels]
     issue_info['original_labels'] = original_labels
     # webhook with a milestoned action
     if payload.get('milestone'):
         issue_info['milestoned_with'] = payload.get('milestone')['title']
-        issue_body = issue.get('body')
-        public_url = extract_metadata(issue_body)['public_url']
-        issue_info['public_url'] = public_url.strip()
     return issue_info
 
 

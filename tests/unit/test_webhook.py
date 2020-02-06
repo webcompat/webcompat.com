@@ -110,6 +110,7 @@ class TestWebhook(unittest.TestCase):
             'domain': 'www.netflix.com',
             'number': 600,
             'original_labels': [],
+            'public_url': '',
             'repository_url':
                 'https://api.github.com/repos/webcompat/webcompat-tests',
             'title': 'www.netflix.com - test invalid event'}
@@ -637,6 +638,14 @@ class TestWebhook(unittest.TestCase):
             mock_proxy.return_value.status_code = 200
             rv = helpers.private_issue_rejected(self.issue_info3)
             post_data = json.loads(mock_proxy.call_args.kwargs['data'])
+            url_path = mock_proxy.call_args.kwargs['path']
+            issue_number = url_path.replace(
+                'repos/webcompat/webcompat-tests/issues/', '')
+            # testing that the path is having a number
+            self.assertNotEqual(issue_number, '')
+            # testing the path starts with the right string
+            self.assertTrue(
+                url_path.startswith('repos/webcompat/webcompat-tests/issues/'))
             self.assertEqual('Issue rejected.', post_data['title'])
             self.assertIn('Its original content has been deleted',
                           post_data['body'])
