@@ -3,6 +3,9 @@
 <head>
   <title>{% block title %}Web Compatibility{% endblock %} | webcompat.com</title>
   <meta charset="utf-8">
+  {%- if not config.PRODUCTION -%}
+  <meta name="env" content="staging: {{ config.STAGING }}, prod: {{config.PRODUCTION}}, localhost: {{config.LOCALHOST}}">
+  {%- endif %}
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Open source community for web compatibility.  Report bugs from websites or for browsers and help us move the web forward.">
   <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
