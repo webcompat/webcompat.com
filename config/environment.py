@@ -35,7 +35,7 @@ if PRODUCTION:
     SECRET_KEY = os.environ.get('PROD_SECRET_KEY')
     UPLOADS_DEFAULT_DEST = os.environ.get('PROD_UPLOADS_DEFAULT_DEST')
     UPLOADS_DEFAULT_URL = os.environ.get('PROD_UPLOADS_DEFAULT_URL')
-    ANONYMOUS_REPORTING = os.environ.get('PROD_ANON_REPORTING')
+    ANONYMOUS_REPORTING = os.environ.get('PROD_ANON_REPORTING') or 'OFF'
 
 if STAGING:
     GITHUB_CLIENT_ID = os.environ.get('STAGING_GITHUB_CLIENT_ID')
@@ -49,7 +49,7 @@ if STAGING:
     SECRET_KEY = os.environ.get('STAGING_SECRET_KEY')
     UPLOADS_DEFAULT_DEST = os.environ.get('STAGING_UPLOADS_DEFAULT_DEST')
     UPLOADS_DEFAULT_URL = os.environ.get('STAGING_UPLOADS_DEFAULT_URL')
-    ANONYMOUS_REPORTING = os.environ.get('STAGING_ANON_REPORTING')
+    ANONYMOUS_REPORTING = os.environ.get('STAGING_ANON_REPORTING') or 'OFF'
 
 if LOCALHOST:
     # for now we are using .env only on localhost
@@ -65,7 +65,7 @@ if LOCALHOST:
     OAUTH_TOKEN = os.environ.get('OAUTH_TOKEN')
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'NO SECRETS'
     HOOK_SECRET_KEY = os.environ.get('HOOK_SECRET_KEY') or 'SECRETS'
-    ANONYMOUS_REPORTING = os.environ.get('ANONYMOUS_REPORTING') or False
+    ANONYMOUS_REPORTING = os.environ.get('ANONYMOUS_REPORTING') or 'ON'
 
 
 # BUG STATUS
