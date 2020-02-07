@@ -324,7 +324,7 @@
       <div class="input-control">
         <div class="col center">
           <div class="final-text">
-            Good job! You can&nbsp;<strong>report via GitHub</strong>{% if anon_reporting_enabled %}or&nbsp;<strong>report anonymously</strong>.
+            Good job! You can&nbsp;<strong>report via GitHub</strong>{% if anonymous_reporting == 'ON' %}or&nbsp;<strong>report anonymously</strong>.
             {% else %}
             <div><strong>Anonymous reporting is temporarily disabled</strong>.</div>
             {% endif %}
@@ -336,10 +336,10 @@
             </button>
             <button class="button button-primary"
                     id="open-username"
-                    type={{ 'submit' if anon_reporting_enabled else 'button' }}
-                    {{ '' if anon_reporting_enabled else 'disabled' }}
+                    type={{ 'submit' if anonymous_reporting == 'ON' else 'button' }}
+                    {{ '' if anonymous_reporting == 'ON' else 'disabled' }}
                     >
-                    {{'Report Anonymously' if anon_reporting_enabled else 'Anonymous reports temporarily disabled'}}
+                    {{'Report Anonymously' if anonymous_reporting == 'ON' else 'Anonymous reports temporarily disabled'}}
             </button>
           </div>
           <div class="optional-username centered low">
@@ -365,7 +365,7 @@
             </div>
           </div>
           <div class="col center">
-            <button class="button button-primary {{ 'js-Button' if anon_reporting_enabled else '' }}"
+            <button class="button button-primary {{ 'js-Button' if anonymous_reporting == 'ON' else '' }}"
                     id="submitanon"
                     type="submit"
                     name="github-proxy-report">
