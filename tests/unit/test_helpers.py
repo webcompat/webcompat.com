@@ -602,6 +602,7 @@ class TestHelpers(unittest.TestCase):
         self.assertTrue(is_darknet_domain('www.gjobqjj7wyczbqie.onion'))
         self.assertFalse(is_darknet_domain('example.com'))
         self.assertFalse(is_darknet_domain('gjobqjj7wyczbqie.onion.com'))
+        self.assertFalse(is_darknet_domain(None))
 
 
 if __name__ == '__main__':

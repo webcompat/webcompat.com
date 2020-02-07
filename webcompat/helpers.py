@@ -617,6 +617,8 @@ def is_blacklisted_domain(domain):
 
 def is_darknet_domain(domain):
     """Check if the domain ends with .onion."""
+    if not domain:
+        return False
     return domain.endswith('.onion')
 
 

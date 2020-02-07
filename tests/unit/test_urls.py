@@ -117,6 +117,26 @@ class TestURLs(unittest.TestCase):
                 username='PunkCat',))
         self.assertEqual(rv.status_code, 400)
 
+    @patch('webcompat.views.report_issue')
+    def test_successful_post_new_issue_with_incorrect_url(self, mock_proxy):
+        """Test that anonymous post succeeds on /issues/new with incorrect url."""  # noqa
+        mock_proxy.return_value = POST_RESPONSE
+        rv = self.app.post(
+            '/issues/new',
+            content_type='multipart/form-data',
+            environ_base=headers,
+            data=dict(
+                browser='Firefox Mobile 45.0',
+                description='testing 2971',
+                os='macos',
+                problem_category='yada',
+                submit_type='github-proxy-report',
+                url='http:testing.example.org',
+                username='yeeha'))
+        self.assertEqual(rv.status_code, 302)
+        self.assertTrue(
+            b'<a href="/issues/1544">/issues/1544</a>' in rv.data)
+
     def test_about(self):
         """Test that /about exists."""
         rv = self.app.get('/about')

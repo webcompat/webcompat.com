@@ -24,6 +24,7 @@ from webcompat.form import AUTH_REPORT
 from webcompat.form import get_form
 from webcompat.form import FormWizard
 from webcompat.form import PROXY_REPORT
+from webcompat.form import normalize_url
 from webcompat.helpers import ab_active
 from webcompat.helpers import ab_current_experiments
 from webcompat.helpers import ab_init
@@ -299,7 +300,7 @@ def create_issue():
         if not is_valid_issue_form(form):
             log.info('400: POST request w/o valid form (is_valid_issue_form).')
             abort(400)
-        domain = urllib.parse.urlsplit(form['url']).hostname
+        domain = urllib.parse.urlsplit(normalize_url(form['url'])).hostname
         if is_darknet_domain(domain):
             msg = app.config['IS_DARKNET_DOMAIN'].format(form['url'])
             flash(msg, 'notimeout')
