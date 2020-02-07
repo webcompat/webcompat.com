@@ -1,8 +1,8 @@
 blinker==1.4
 Flask==1.1.1
 Flask-Firehose==0.2.2
-Flask-Limiter==1.0.1
-Flask-SQLAlchemy==2.4.0
+Flask-Limiter==1.1.0
+Flask-SQLAlchemy==2.4.1
 Flask-WTF==0.14.3
 GitHub-Flask==3.2.0
 Pillow==6.2.0
