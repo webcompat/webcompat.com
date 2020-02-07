@@ -305,7 +305,7 @@ def create_issue():
             flash(msg, 'notimeout')
             return redirect(url_for('index'))
         if form.get('submit_type') == PROXY_REPORT:
-            if not app.config['ANONYMOUS_REPORTING']:
+            if app.config['ANONYMOUS_REPORTING'] == 'OFF':
                 abort(400)
             # Checking blacklisted domains
             if is_blacklisted_domain(domain):

@@ -58,7 +58,7 @@ class TestURLs(unittest.TestCase):
 
     @patch('webcompat.views.report_issue')
     def test_successful_post_new_issue(self, mock_proxy):
-        """Test that anonymous post succeeds or not on /issues/new."""
+        """Test that anonymous post succeeds on /issues/new."""
         webcompat.app.config['ANONYMOUS_REPORTING'] = 'ON'
         mock_proxy.return_value = POST_RESPONSE
         rv = self.app.post(
@@ -79,7 +79,11 @@ class TestURLs(unittest.TestCase):
         self.assertTrue(
             b'<a href="/issues/1544">/issues/1544</a>' in rv.data)
 
+    @patch('webcompat.views.report_issue')
+    def test_fail_anonymous_post_new_issue(self, mock_proxy):
+        """Test that anonymous post fail when this is off."""
         webcompat.app.config['ANONYMOUS_REPORTING'] = 'OFF'
+        mock_proxy.return_value = POST_RESPONSE
         rv = self.app.post(
             '/issues/new',
             content_type='multipart/form-data',
