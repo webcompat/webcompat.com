@@ -14,7 +14,7 @@ import sys
 import unittest
 
 from flask import Request
-from werkzeug import FileStorage
+from werkzeug.datastructures import FileStorage
 from werkzeug.datastructures import MultiDict
 
 # Add webcompat module to import path

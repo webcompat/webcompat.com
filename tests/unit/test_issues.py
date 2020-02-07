@@ -13,7 +13,7 @@ import json
 
 from mock import patch
 from mock import ANY
-from werkzeug import MultiDict
+from werkzeug.datastructures import MultiDict
 
 from webcompat.issues import report_issue
 from webcompat.issues import report_private_issue
