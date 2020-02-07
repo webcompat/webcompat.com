@@ -275,11 +275,11 @@ def create_issue():
         session['extra_labels'] = form_data['extra_labels']
         source = form_data.pop('utm_source', None)
         campaign = form_data.pop('utm_campaign', None)
-        anon_reporting_enabled = app.config['ANON_REPORTING_ENABLED']
+        anonymous_reporting = app.config['ANONYMOUS_REPORTING']
         return render_template('new-issue.html', form=bug_form, source=source,
                                campaign=campaign, nonce=request.nonce,
                                pagetitle=pagetitle,
-                               anon_reporting_enabled=anon_reporting_enabled)
+                               anonymous_reporting=anonymous_reporting)
     # Issue Creation section
     elif request_type == 'create':
         # Check if there is a form
@@ -305,7 +305,7 @@ def create_issue():
             flash(msg, 'notimeout')
             return redirect(url_for('index'))
         if form.get('submit_type') == PROXY_REPORT:
-            if not app.config['ANON_REPORTING_ENABLED']:
+            if not app.config['ANONYMOUS_REPORTING']:
                 abort(400)
             # Checking blacklisted domains
             if is_blacklisted_domain(domain):
