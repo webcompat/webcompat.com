@@ -7,7 +7,8 @@
 """Tests for helper methods in webcompat/helpers.py."""
 
 import json
-import mock
+from unittest.mock import Mock
+from unittest.mock import patch
 import unittest
 
 import flask
@@ -377,7 +378,7 @@ class TestHelpers(unittest.TestCase):
                 method='GET',
                 environ_base={'HTTP_COOKIE': cookie}):
 
-            user = mock.Mock()
+            user = Mock()
             user.user_id = 'user_id'
             flask.g.user = user
 
@@ -401,7 +402,7 @@ class TestHelpers(unittest.TestCase):
                 method='GET',
                 environ_base={'HTTP_COOKIE': cookie, 'HTTP_DNT': '1'}):
 
-            user = mock.Mock()
+            user = Mock()
             user.user_id = 'user_id'
             flask.g.user = user
 
@@ -423,7 +424,7 @@ class TestHelpers(unittest.TestCase):
                 '/',
                 method='GET'):
 
-            user = mock.Mock()
+            user = Mock()
             user.user_id = 'user_id'
             flask.g.user = user
 
@@ -445,7 +446,7 @@ class TestHelpers(unittest.TestCase):
                 }
             }
 
-            with mock.patch('webcompat.helpers.random.random') as mock_random:
+            with patch('webcompat.helpers.random.random') as mock_random:
                 mock_random.return_value = 0.4
                 expected_experiments = {
                     'exp-1': 'ui-change-v2',
@@ -471,7 +472,7 @@ class TestHelpers(unittest.TestCase):
                 }
             }
 
-            with mock.patch('webcompat.helpers.random.random') as mock_random:
+            with patch('webcompat.helpers.random.random') as mock_random:
 
                 self.assertEqual(ctx.request.headers.get('Set-Cookie'), None)
 
@@ -506,7 +507,7 @@ class TestHelpers(unittest.TestCase):
             }
 
             response = self.app.get('/')
-            response.set_cookie = mock.Mock()
+            response.set_cookie = Mock()
 
             ab_init(response)
             response.set_cookie.assert_not_called()

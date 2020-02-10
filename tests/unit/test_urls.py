@@ -10,8 +10,8 @@ import os.path
 import re
 import sys
 import unittest
+from unittest.mock import patch
 
-from mock import patch
 
 # Add webcompat module to import path
 sys.path.append(os.path.realpath(os.pardir))

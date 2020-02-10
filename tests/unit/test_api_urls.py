@@ -8,9 +8,9 @@
 
 import json
 import unittest
+from unittest.mock import MagicMock
+from unittest.mock import patch
 
-from mock import MagicMock
-from mock import patch
 from requests import Response
 from requests.structures import CaseInsensitiveDict
 
