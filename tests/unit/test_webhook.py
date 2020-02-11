@@ -9,10 +9,10 @@
 import json
 import os
 import unittest
+from unittest.mock import ANY
+from unittest.mock import patch
 
 import flask
-from mock import ANY
-from mock import patch
 
 import webcompat
 from webcompat.db import Site
@@ -617,6 +617,7 @@ class TestWebhook(unittest.TestCase):
         with webcompat.app.test_client() as c:
             mock_proxy.return_value.status_code = 200
             rv = helpers.private_issue_moderation(self.issue_info2)
+            args, kwargs = mock_proxy.call_args
             mock_proxy.assert_called_with(
                 path='repos/webcompat/webcompat-tests/issues/1',
                 method='patch',
@@ -624,7 +625,7 @@ class TestWebhook(unittest.TestCase):
                 headers=ANY)
             self.assertIn(
                 'www.netflix.com - test private issue accepted',
-                mock_proxy.call_args.kwargs['data'])
+                kwargs['data'])
 
     def test_get_public_issue_number(self):
         """Test the extraction of the issue number from the public_url."""
@@ -637,8 +638,9 @@ class TestWebhook(unittest.TestCase):
         with webcompat.app.test_client() as c:
             mock_proxy.return_value.status_code = 200
             rv = helpers.private_issue_rejected(self.issue_info3)
-            post_data = json.loads(mock_proxy.call_args.kwargs['data'])
-            url_path = mock_proxy.call_args.kwargs['path']
+            args, kwargs = mock_proxy.call_args
+            post_data = json.loads(kwargs['data'])
+            url_path = kwargs['path']
             issue_number = url_path.replace(
                 'repos/webcompat/webcompat-tests/issues/', '')
             # testing that the path is having a number
