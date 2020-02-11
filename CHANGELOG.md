@@ -4,6 +4,25 @@
 2. New features: affect minor number
 3. API endpoint changes or dependency version updates: affect major number
 
+## 27.0.0 - 2020-02-11
+
+* NPM update - Update stylelint-config-standard to the latest version. [Pull #3193](https://github.com/webcompat/webcompat.com/pull/3193)
+* NPM update - Update stylelint to the latest version. [Pull #3192](https://github.com/webcompat/webcompat.com/pull/3192)
+* Fixes #3183 - Fixes the anonymous reporting through env [Pull #3185](https://github.com/webcompat/webcompat.com/pull/3185)
+* Fixes #3178 - Adds public_url for action: closed [Pull #3182](https://github.com/webcompat/webcompat.com/pull/3182)
+* Fixes #2830 - Create local list of labels with a cron script [Pull #3171](https://github.com/webcompat/webcompat.com/pull/3171)
+* Fixes #3165 - Create Terms of Service page [Pull #3168](https://github.com/webcompat/webcompat.com/pull/3168)
+* Fixes #3140 - Publish private issue in public after moderation [Pull #3167](https://github.com/webcompat/webcompat.com/pull/3167)
+* Fixes #3163 - Scopes the URL of the repo before making actions on opened issues. [Pull #3164](https://github.com/webcompat/webcompat.com/pull/3164)
+* Fixes #3145 - Adds an action-needsmoderation label to anonymous issue [Pull #3159](https://github.com/webcompat/webcompat.com/pull/3159)
+* Fixes #3150 - Send the "moderation in process" message to the public issue [Pull #3156](https://github.com/webcompat/webcompat.com/pull/3156)
+* Fixes #3136 - Adds inline images but inside details/summary markup [Pull #3154](https://github.com/webcompat/webcompat.com/pull/3154)
+* Fixes #3146 - Assigns unmoderated milestone to private repo issues [Pull #3153](https://github.com/webcompat/webcompat.com/pull/3153)
+* Fixes #3139 - Implement first stages of private reporting flow [Pull #3147](https://github.com/webcompat/webcompat.com/pull/3147)
+* NPM update - Update husky to the latest version. [Pull #3135](https://github.com/webcompat/webcompat.com/pull/3135)
+* Fixes #3132 - Control anonymous reporting via config option [Pull #3133](https://github.com/webcompat/webcompat.com/pull/3133)
+* Fixes #3122 - Removes code related to images thumbnail [Pull #3131](https://github.com/webcompat/webcompat.com/pull/3131)
+
 ## 26.0.0 - 2020-01-03
 
 * Fixes #3123 - Prevent .onion URLs from being reported [Pull #3128](https://github.com/webcompat/webcompat.com/pull/3128)
