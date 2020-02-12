@@ -543,6 +543,34 @@ class TestWebhook(unittest.TestCase):
             self.assertEqual(rv.status_code, 200)
             self.assertEqual(rv.content_type, 'text/plain')
 
+    @patch('webcompat.webhooks.helpers.private_issue_rejected')
+    def test_patch_acceptable_issue_closed(self, mock_proxy):
+        """Test for accepted issues being closed.
+
+        payload: 'Not an interesting hook'
+        status: 403
+        content-type: text/plain
+
+        An accepted issue, which is being closed, should
+        not modify the public issue.
+        """
+        json_event, signature = event_data(
+            'private_milestone_accepted_closed.json')
+        headers = {
+            'X-GitHub-Event': 'issues',
+            'X-Hub-Signature': signature,
+        }
+        with webcompat.app.test_client() as c:
+            mock_proxy.return_value.status_code = 200
+            rv = c.post(
+                '/webhooks/labeler',
+                data=json_event,
+                headers=headers
+            )
+            self.assertEqual(rv.data, b'Not an interesting hook')
+            self.assertEqual(rv.status_code, 403)
+            self.assertEqual(rv.content_type, 'text/plain')
+
     @patch('webcompat.webhooks.helpers.private_issue_moderation')
     def test_patch_wrong_repo_for_moderation(self, mock_proxy):
         """Test for issues in the wrong repo.
