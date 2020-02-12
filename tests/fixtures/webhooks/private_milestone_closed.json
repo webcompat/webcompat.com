@@ -16,9 +16,36 @@
         "description": "issue in the process of being moderated"
       }
     ],
-    "state": "closed"
-},
-  "milestone": {
-    "title": "needstriage"
+    "state": "closed",
+    "milestone": {
+      "url": "https://api.github.com/repos/webcompat/webcompat-tests-private/milestones/1",
+      "html_url": "https://github.com/webcompat/webcompat-tests-private/milestone/1",
+      "labels_url": "https://api.github.com/repos/webcompat/webcompat-tests-private/milestones/1/labels",
+      "id": 4995253,
+      "node_id": "MDk6TWlsZXN0b25lNDk5NTI1Mw==",
+      "number": 1,
+      "title": "unmoderated",
+      "description": "The default milestone. These issues may not be made public until they are determined to not violate terms of use.",
+      "creator": {
+        "login": "miketaylr",
+        "id": 67283,
+        "node_id": "MDQ6VXNlcjY3Mjgz",
+        "avatar_url": "https://avatars1.githubusercontent.com/u/67283?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/miketaylr",
+        "html_url": "https://github.com/miketaylr",
+        "followers_url": "https://api.github.com/users/miketaylr/followers",
+        "following_url": "https://api.github.com/users/miketaylr/following{/other_user}",
+        "gists_url": "https://api.github.com/users/miketaylr/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/miketaylr/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/miketaylr/subscriptions",
+        "organizations_url": "https://api.github.com/users/miketaylr/orgs",
+        "repos_url": "https://api.github.com/users/miketaylr/repos",
+        "events_url": "https://api.github.com/users/miketaylr/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/miketaylr/received_events",
+        "type": "User",
+        "site_admin": false
+      }
+    }
   }
 }

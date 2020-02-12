@@ -164,6 +164,9 @@ def get_issue_info(payload):
     # If labels on the original issue, we need them.
     original_labels = [label['name'] for label in labels]
     issue_info['original_labels'] = original_labels
+    # webhook with a milestone already set
+    if issue.get('milestone'):
+        issue_info['milestone'] = issue['milestone']['title']
     # webhook with a milestoned action
     if payload.get('milestone'):
         issue_info['milestoned_with'] = payload.get('milestone')['title']
@@ -272,7 +275,9 @@ def process_issue_action(issue_info):
         else:
             msg_log('private:moving to public failed', issue_number)
             return ('ooops', 400, {'Content-Type': 'text/plain'})
-    elif (scope == 'private' and issue_info['state'] == 'closed'):
+    elif (scope == 'private' and
+          issue_info['state'] == 'closed' and
+          not issue_info['milestone'] == 'accepted'):
         # private issue has been closed. It is rejected
         # We need to patch with a template.
         response = private_issue_rejected(issue_info)
