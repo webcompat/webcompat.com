@@ -58,6 +58,7 @@ jobs:
             . env/bin/activate
             npm run lint
             npm run build
+            pip install -e .
             pytest tests
             python run.py -t &
             sleep 5
