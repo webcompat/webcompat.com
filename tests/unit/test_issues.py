@@ -47,7 +47,7 @@ class TestIssue(unittest.TestCase):
             ('url', 'http://3139.example.com'),
             ('username', ''), ])
         rv = report_issue(form, True)
-        self.assertEquals(rv.get('number'), 2)
+        self.assertEqual(rv.get('number'), 2)
 
     @patch.object(requests, 'post')
     def test_report_private_issue_returns_nothing(self, mockpost):

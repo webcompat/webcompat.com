@@ -17,6 +17,9 @@ config/secrets.py
 package-lock.json
 tmp/
 
+# Ignore the installable app.
+*.egg-info
+
 # The data folder contains information that shouldn't live in version control.
 data/*
 
