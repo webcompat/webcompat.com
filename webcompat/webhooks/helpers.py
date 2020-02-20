@@ -225,7 +225,7 @@ def tag_new_public_issue(issue_info):
     milestone = app.config['STATUSES']['needstriage']['id']
     # Preparing the proxy request
     headers = {'Authorization': 'token {0}'.format(app.config['OAUTH_TOKEN'])}
-    path = 'repos/{0}/{1}'.format(app.config['ISSUES_REPO_URI'], issue_number)
+    path = 'repos/{0}/{1}'.format(PUBLIC_REPO, issue_number)
     payload_request = {'labels': labels, 'milestone': milestone}
     proxy_response = proxy_request(
         'patch',
@@ -263,6 +263,14 @@ def process_issue_action(issue_info):
             return ('gracias, amigo.', 200, {'Content-Type': 'text/plain'})
         else:
             msg_log('public:opened labels failed', issue_number)
+            return ('ooops', 400, {'Content-Type': 'text/plain'})
+    elif issue_info['action'] == 'opened' and scope == 'private':
+        # webcompat-bot needs to comment on this issue with the URL
+        response = comment_public_uri(issue_info)
+        if response.status_code == 200:
+            return ('public url added', 200, {'Content-Type': 'text/plain'})
+        else:
+            msg_log('comment failed', issue_number)
             return ('ooops', 400, {'Content-Type': 'text/plain'})
     elif (issue_info['action'] == 'milestoned' and
           scope == 'private' and
@@ -364,7 +372,7 @@ def private_issue_moderation(issue_info):
     public_number = get_public_issue_number(issue_info['public_url'])
     # Preparing the proxy request
     headers = {'Authorization': 'token {0}'.format(app.config['OAUTH_TOKEN'])}
-    path = 'repos/{0}/{1}'.format(app.config['ISSUES_REPO_URI'], public_number)
+    path = 'repos/{0}/{1}'.format(PUBLIC_REPO, public_number)
     proxy_response = proxy_request(
         method='patch',
         path=path,
@@ -379,7 +387,7 @@ def private_issue_rejected(issue_info):
     public_number = get_public_issue_number(issue_info['public_url'])
     # Preparing the proxy request
     headers = {'Authorization': 'token {0}'.format(app.config['OAUTH_TOKEN'])}
-    path = 'repos/{0}/{1}'.format(app.config['ISSUES_REPO_URI'], public_number)
+    path = 'repos/{0}/{1}'.format(PUBLIC_REPO, public_number)
     proxy_response = proxy_request(
         method='patch',
         path=path,
@@ -407,3 +415,27 @@ def prepare_rejected_issue():
     payload_request['state'] = 'closed'
     payload_request['milestone'] = invalid_id
     return payload_request
+
+
+def comment_public_uri(issue_info):
+    """Publish a comment on the private issue with the public uri."""
+    # issue number on private repo
+    number = issue_info['number']
+    # public issue data
+    public_url = issue_info['public_url']
+    public_number = get_public_issue_number(public_url)
+    # prepare the payload
+    comment_body = '[Original issue {nb}]({url})'.format(
+        nb=public_number,
+        url=public_url
+    )
+    payload = {'body': comment_body}
+    # Preparing the proxy request
+    headers = {'Authorization': 'token {0}'.format(app.config['OAUTH_TOKEN'])}
+    path = 'repos/{0}/{1}/comments'.format(PRIVATE_REPO, number)
+    proxy_response = proxy_request(
+        method='post',
+        path=path,
+        headers=headers,
+        data=json.dumps(payload))
+    return proxy_response
