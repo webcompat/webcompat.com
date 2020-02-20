@@ -157,6 +157,26 @@ class TestWebhook(unittest.TestCase):
                 'https://api.github.com/repos/webcompat/webcompat-tests-private',  # noqa
             'title': 'www.netflix.com - test private issue accepted'}
 
+        self.issue_info4 = {
+            'action': 'opened',
+            'state': 'open',
+            'body': '<!-- @browser: Firefox 55.0 -->\n'
+            '<!-- @ua_header: Mozilla/5.0 (X11; Linux x86_64; rv:55.0) '
+            'Gecko/20100101 Firefox/55.0 -->\n'
+            '<!-- @reported_with: web -->\n'
+            '<!-- @public_url: '
+            'https://github.com/webcompat/webcompat-tests/issues/1  -->\n'
+            '\n'
+            '**URL**: https://www.netflix.com/',
+            'domain': 'www.netflix.com',
+            'number': 600,
+            'original_labels': ['action-needsmoderation'],
+            'public_url':
+                'https://github.com/webcompat/webcompat-tests/issues/1',
+            'repository_url':
+                'https://api.github.com/repos/webcompat/webcompat-tests-private',  # noqa
+            'title': 'www.netflix.com - test private issue accepted'}
+
     def tearDown(self):
         """Tear down tests."""
         pass
@@ -701,6 +721,68 @@ class TestWebhook(unittest.TestCase):
         actual = helpers.prepare_rejected_issue()
         self.assertEqual(type(actual), dict)
         self.assertEqual(actual, expected)
+
+    @patch('webcompat.webhooks.helpers.proxy_request')
+    def test_comment_public_uri(self, mock_proxy):
+        """Test we post the right comment with public uri."""
+        dest = 'repos/webcompat/webcompat-tests-private/issues/600/comments'
+        payload = '{"body": "[Original issue 1](https://github.com/webcompat/webcompat-tests/issues/1)"}'  # noqa
+        with webcompat.app.test_client() as c:
+            mock_proxy.return_value.status_code = 200
+            rv = helpers.comment_public_uri(self.issue_info4)
+            request_args = mock_proxy.call_args[1]
+            assert request_args['method'] == 'post'
+            assert request_args['path'] == dest
+            assert request_args['data'] == payload
+
+    @patch('webcompat.webhooks.helpers.comment_public_uri')
+    def test_comment_public_uri_for_webhooks(self, mock_proxy):
+        """Test we are getting the right message on public uri comment
+
+        payload: 'public url added'
+        status: 200
+        content-type: text/plain
+        """
+        json_event, signature = event_data('private_issue_opened.json')
+        headers = {
+            'X-GitHub-Event': 'issues',
+            'X-Hub-Signature': signature,
+        }
+        with webcompat.app.test_client() as c:
+            mock_proxy.return_value.status_code = 200
+            rv = c.post(
+                '/webhooks/labeler',
+                data=json_event,
+                headers=headers
+            )
+            assert rv.data == b'public url added'
+            assert rv.status_code == 200
+            assert rv.content_type == 'text/plain'
+
+    @patch('webcompat.webhooks.helpers.comment_public_uri')
+    def test_comment_public_uri_for_webhooks_fail(self, mock_proxy):
+        """Test public uri comment which fails
+        let's say the source url is missing.
+
+        payload: 'ooops'
+        status: 400
+        content-type: text/plain
+        """
+        json_event, signature = event_data('private_issue_no_source.json')
+        headers = {
+            'X-GitHub-Event': 'issues',
+            'X-Hub-Signature': signature,
+        }
+        with webcompat.app.test_client() as c:
+            mock_proxy.return_value.status_code = 400
+            rv = c.post(
+                '/webhooks/labeler',
+                data=json_event,
+                headers=headers
+            )
+            assert rv.data == b'ooops'
+            assert rv.status_code == 400
+            assert rv.content_type == 'text/plain'
 
 
 if __name__ == '__main__':
