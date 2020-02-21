@@ -109,8 +109,8 @@ Set the title of the pull request to reference the issue number. Please keep the
 
 When sending the pull request do not forget to call out someone for review by using the github widget for asking reviewers. This will notify the person that your request is waiting for a review for merging. Ask a review only by one person, this will avoid misunderstandings and the ball is dropped.
 
-* Python: karlcow, miketaylr.
-* JavaScript: magsout, miketaylr
+* Python: karlcow, miketaylr, ksy36
+* JavaScript: magsout, miketaylr, ksy36
 * CSS: magsout
 
 
