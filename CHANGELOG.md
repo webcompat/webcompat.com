@@ -4,6 +4,15 @@
 2. New features: affect minor number
 3. API endpoint changes or dependency version updates: affect major number
 
+## 28.0.0 - 2020-02-21
+
+* Fixes #3201 - adds public uri to the private issue [Pull #3215](https://github.com/webcompat/webcompat.com/pull/3215)
+* Fixes #3210 - Add missing space [Pull #3213](https://github.com/webcompat/webcompat.com/pull/3213)
+* Fixes #3206 - Switch from Nosetests to pytest [Pull #3209](https://github.com/webcompat/webcompat.com/pull/3209)
+* Fixes #2981 - Fixes "Learn more about web compatibility" and "Learn more" popups [Pull #3198](https://github.com/webcompat/webcompat.com/pull/3198)
+* Fixes #3174 - Adds link to matrix [Pull #3194](https://github.com/webcompat/webcompat.com/pull/3194)
+* Fixes #3187 - Update Python dependencies [Pull #3191](https://github.com/webcompat/webcompat.com/pull/3191)
+
 ## 27.0.0 - 2020-02-11
 
 * NPM update - Update stylelint-config-standard to the latest version. [Pull #3193](https://github.com/webcompat/webcompat.com/pull/3193)
