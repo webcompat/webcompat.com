@@ -6,7 +6,7 @@
 import json
 import unittest
 
-from werkzeug import MultiDict
+from werkzeug.datastructures import MultiDict
 
 import webcompat
 from webcompat import form

@@ -14,7 +14,7 @@ import sys
 import unittest
 
 from flask import Request
-from werkzeug import FileStorage
+from werkzeug.datastructures import FileStorage
 from werkzeug.datastructures import MultiDict
 
 # Add webcompat module to import path
@@ -42,7 +42,7 @@ def check_rv_format(self, resp):
         )
 
 
-class TestingFileStorage(FileStorage):
+class MockingFileStorage(FileStorage):
     """Test-only File Storage class.
 
     This is a helper for testing upload behavior in your application. You
@@ -121,13 +121,13 @@ class TestUploads(unittest.TestCase):
 
             # The reason why we are defining it in here and not outside
             # this method is that we are setting the filename of the
-            # TestingFileStorage to be the one in the for loop. This way
+            # MockingFileStorage to be the one in the for loop. This way
             # we can ensure that the filename that we are "uploading"
             # is the same as the one being used by the application
             class TestingRequest(Request):
                 """Test-only Request Class.
 
-                A testing request to use that will return a TestingFileStorage
+                A testing request to use that will return a MockingFileStorage
                 to test the uploading.
                 """
                 @property
@@ -136,7 +136,7 @@ class TestUploads(unittest.TestCase):
                     f = open(os.path.join('tests', 'fixtures', filename), 'rb')
                     print(os.path.join('tests', 'fixtures', filename))
                     print(type(f))
-                    d['image'] = TestingFileStorage(stream=BytesIO(f.read()),
+                    d['image'] = MockingFileStorage(stream=BytesIO(f.read()),
                                                     filename=filename)
                     f.close()
                     return d

@@ -1,5 +1,4 @@
 # This is for dev purpose
 -r requirements.txt
-mock==3.0.5
-nose==1.3.7
 pycodestyle==2.5.0
+pytest==5.3.5

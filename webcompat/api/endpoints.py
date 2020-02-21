@@ -27,13 +27,13 @@ from webcompat.helpers import normalize_api_params
 from webcompat.helpers import proxy_request
 from webcompat import limiter
 
-api = Blueprint('api', __name__, url_prefix='/api')
+api_bp = Blueprint('api_bp', __name__, url_prefix='/api')
 JSON_MIME_HTML = 'application/vnd.github.v3.html+json'
 ISSUES_PATH = app.config['ISSUES_REPO_URI']
 REPO_PATH = ISSUES_PATH[:-7]
 
 
-@api.route('/issues/<int:number>')
+@api_bp.route('/issues/<int:number>')
 @mockable_response
 def proxy_issue(number):
     """XHR endpoint to get issue data from GitHub.
@@ -44,7 +44,7 @@ def proxy_issue(number):
     return api_request('get', path, mime_type=JSON_MIME_HTML)
 
 
-@api.route('/issues/<int:number>/edit', methods=['PATCH'])
+@api_bp.route('/issues/<int:number>/edit', methods=['PATCH'])
 @mockable_response
 def edit_issue(number):
     """XHR endpoint to push back edits to GitHub for a single issue.
@@ -70,7 +70,7 @@ def edit_issue(number):
     abort(403)
 
 
-@api.route('/issues')
+@api_bp.route('/issues')
 @mockable_response
 def proxy_issues():
     """List all issues from GitHub on the API endpoint."""
@@ -89,7 +89,7 @@ def proxy_issues():
     return api_request('get', path, params=params)
 
 
-@api.route('/issues/<username>/<parameter>')
+@api_bp.route('/issues/<username>/<parameter>')
 @mockable_response
 def get_user_activity_issues(username, parameter):
     """Return issues related to a user at the API endpoint.
@@ -116,7 +116,7 @@ def get_user_activity_issues(username, parameter):
     return api_request('get', path, params=params)
 
 
-@api.route('/issues/category/<issue_category>')
+@api_bp.route('/issues/category/<issue_category>')
 @mockable_response
 def get_issue_category(issue_category):
     """Return all issues for a specific category."""
@@ -135,7 +135,7 @@ def get_issue_category(issue_category):
         abort(404)
 
 
-@api.route('/issues/search')
+@api_bp.route('/issues/search')
 @mockable_response
 @limiter.limit('30/minute',
                key_func=lambda: session.get('username', 'proxy-user'))
@@ -169,7 +169,7 @@ def get_search_results(query_string=None, params=None):
                        mime_type=JSON_MIME_HTML)
 
 
-@api.route('/issues/<int:number>/comments', methods=['GET', 'POST'])
+@api_bp.route('/issues/<int:number>/comments', methods=['GET', 'POST'])
 @mockable_response
 def proxy_comments(number):
     """XHR endpoint to get issues comments from GitHub.
@@ -188,7 +188,7 @@ def proxy_comments(number):
                            mime_type=JSON_MIME_HTML)
 
 
-@api.route('/issues/<int:number>/labels', methods=['POST'])
+@api_bp.route('/issues/<int:number>/labels', methods=['POST'])
 def modify_labels(number):
     """XHR endpoint to modify issue labels.
 
@@ -205,7 +205,7 @@ def modify_labels(number):
         abort(403)
 
 
-@api.route('/issues/labels')
+@api_bp.route('/issues/labels')
 @mockable_response
 def get_repo_labels():
     """XHR endpoint to get all possible labels in a repo."""

@@ -8,9 +8,9 @@
 
 import json
 import unittest
+from unittest.mock import MagicMock
+from unittest.mock import patch
 
-from mock import MagicMock
-from mock import patch
 from requests import Response
 from requests.structures import CaseInsensitiveDict
 
@@ -155,31 +155,36 @@ class TestAPIURLs(unittest.TestCase):
         self.assertEqual(rv.content_type, 'application/json')
         self.assertEqual(json_body['status'], 404)
 
-    def test_api_patch_issue(self):
-        """Patching the issue is working only with certain circumstances."""
+    def test_api_patch_issue_state_status(self):
+        """Patching the issue - Incompatible state and status."""
         with webcompat.app.app_context():
             webcompat.app.config.update(STATUSES=STATUSES)
-            # Incompatible state and status
             data = {'state': 'closed', 'milestone': 2}
             patch_data = json.dumps(data)
             rv = self.app.patch('/api/issues/1/edit', data=patch_data,
                                 environ_base=headers)
             self.assertEqual(rv.status_code, 403)
-            # Too many elements in the JSON
+
+    def test_api_patch_issue_too_many_json_elements(self):
+        """Patching the issue - Too many elements in the JSON."""
+        with webcompat.app.app_context():
             data = {'state': 'open', 'milestone': 2, 'foobar': 'z'}
             patch_data = json.dumps(data)
             rv = self.app.patch('/api/issues/1/edit', data=patch_data,
                                 environ_base=headers)
             self.assertEqual(rv.status_code, 403)
-            # Valid request
-            with patch('webcompat.api.endpoints.proxy_request') as github_data:
-                github_data.return_value = mock_api_response(
-                    {'status_code': 200, 'content': '[]'})
-                data = {'state': 'open', 'milestone': 2}
-                patch_data = json.dumps(data)
-                rv = self.app.patch('/api/issues/1/edit', data=patch_data,
-                                    environ_base=headers)
-                self.assertEqual(rv.status_code, 200)
+
+    @patch('webcompat.api.endpoints.proxy_request')
+    def test_api_patch_issue_valid_request(self, github_data):
+        """Patching the issue - Valid request."""
+        with webcompat.app.app_context():
+            github_data.return_value = mock_api_response(
+                {'status_code': 200, 'content': '[]'})
+            data = {'state': 'open', 'milestone': 2}
+            patch_data = json.dumps(data)
+            rv = self.app.patch('/api/issues/1/edit', data=patch_data,
+                                environ_base=headers)
+            self.assertEqual(rv.status_code, 200)
 
 
 if __name__ == '__main__':

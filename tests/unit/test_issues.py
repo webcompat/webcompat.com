@@ -7,13 +7,13 @@
 """Tests for issue creation."""
 
 
-import unittest
-import requests
 import json
+import requests
+import unittest
+from unittest.mock import patch
+from unittest.mock import ANY
 
-from mock import patch
-from mock import ANY
-from werkzeug import MultiDict
+from werkzeug.datastructures import MultiDict
 
 from webcompat.issues import report_issue
 from webcompat.issues import report_private_issue
@@ -47,7 +47,7 @@ class TestIssue(unittest.TestCase):
             ('url', 'http://3139.example.com'),
             ('username', ''), ])
         rv = report_issue(form, True)
-        self.assertEquals(rv.get('number'), 2)
+        self.assertEqual(rv.get('number'), 2)
 
     @patch.object(requests, 'post')
     def test_report_private_issue_returns_nothing(self, mockpost):
@@ -69,7 +69,8 @@ class TestIssue(unittest.TestCase):
     def test_report_public_issue_returns_moderation_template(self, mockpost):
         """Test the data in report_public_issue contains the right data."""
         report_public_issue()
-        post_data = json.loads(mockpost.call_args.kwargs['data'])
+        args, kwargs = mockpost.call_args
+        post_data = json.loads(kwargs['data'])
         self.assertIs(type(post_data), dict)
         self.assertIn('title', post_data.keys())
         self.assertIn('body', post_data.keys())
