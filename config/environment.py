@@ -36,7 +36,9 @@ if PRODUCTION:
     SECRET_KEY = os.environ.get('PROD_SECRET_KEY')
     UPLOADS_DEFAULT_DEST = os.environ.get('PROD_UPLOADS_DEFAULT_DEST')
     UPLOADS_DEFAULT_URL = os.environ.get('PROD_UPLOADS_DEFAULT_URL')
-    ANONYMOUS_REPORTING_ENABLED = os.environ.get('PROD_ANON_REPORTING') or False  # noqa
+    ANONYMOUS_REPORTING_ENABLED = strtobool(
+        os.environ.get("PROD_ANON_REPORTING", "off")
+    )
 
 if STAGING:
     GITHUB_CLIENT_ID = os.environ.get('STAGING_GITHUB_CLIENT_ID')
@@ -50,7 +52,9 @@ if STAGING:
     SECRET_KEY = os.environ.get('STAGING_SECRET_KEY')
     UPLOADS_DEFAULT_DEST = os.environ.get('STAGING_UPLOADS_DEFAULT_DEST')
     UPLOADS_DEFAULT_URL = os.environ.get('STAGING_UPLOADS_DEFAULT_URL')
-    ANONYMOUS_REPORTING_ENABLED = os.environ.get('STAGING_ANON_REPORTING') or False  # noqa
+    ANONYMOUS_REPORTING_ENABLED = strtobool(
+        os.environ.get("STAGING_ANON_REPORTING", "off")
+    )
 
 if LOCALHOST:
     # for now we are using .env only on localhost
@@ -66,10 +70,9 @@ if LOCALHOST:
     OAUTH_TOKEN = os.environ.get('OAUTH_TOKEN')
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'NO SECRETS'
     HOOK_SECRET_KEY = os.environ.get('HOOK_SECRET_KEY') or 'SECRETS'
-    ANONYMOUS_REPORTING_ENABLED = os.environ.get('ANONYMOUS_REPORTING') or True  # noqa
-
-if ANONYMOUS_REPORTING_ENABLED in ['True', 'False']:
-    ANONYMOUS_REPORTING_ENABLED = strtobool(ANONYMOUS_REPORTING_ENABLED)
+    ANONYMOUS_REPORTING_ENABLED = strtobool(
+        os.environ.get("ANONYMOUS_REPORTING", "on")
+    )
 
 # BUG STATUS
 # The id will be initialized when the app is started.
