@@ -59,7 +59,7 @@ class TestURLs(unittest.TestCase):
     @patch('webcompat.views.report_issue')
     def test_successful_post_new_issue(self, mock_proxy):
         """Test that anonymous post succeeds on /issues/new."""
-        webcompat.app.config['ANONYMOUS_REPORTING'] = 'ON'
+        webcompat.app.config['ANONYMOUS_REPORTING_ENABLED'] = True
         mock_proxy.return_value = POST_RESPONSE
         rv = self.app.post(
             '/issues/new',
@@ -73,16 +73,14 @@ class TestURLs(unittest.TestCase):
                 submit_type='github-proxy-report',
                 url='http://testing.example.org',
                 username='yeeha'))
-        self.assertEqual(rv.status_code, 302)
-        self.assertEqual(
-            rv.headers['Location'], 'http://localhost/issues/1544')
-        self.assertTrue(
-            b'<a href="/issues/1544">/issues/1544</a>' in rv.data)
+        assert rv.status_code == 302
+        assert rv.headers['Location'] == 'http://localhost/issues/1544'
+        assert b'<a href="/issues/1544">/issues/1544</a>' in rv.data
 
     @patch('webcompat.views.report_issue')
     def test_fail_anonymous_post_new_issue(self, mock_proxy):
         """Test that anonymous post fail when this is off."""
-        webcompat.app.config['ANONYMOUS_REPORTING'] = 'OFF'
+        webcompat.app.config['ANONYMOUS_REPORTING_ENABLED'] = False
         mock_proxy.return_value = POST_RESPONSE
         rv = self.app.post(
             '/issues/new',
@@ -96,7 +94,7 @@ class TestURLs(unittest.TestCase):
                 submit_type='github-proxy-report',
                 url='http://testing.example.org',
                 username='yeeha'))
-        self.assertEqual(rv.status_code, 400)
+        assert rv.status_code == 400
 
     @patch('webcompat.issues.proxy_request')
     def test_fail_post_new_issue(self, mock_proxy):
