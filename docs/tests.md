@@ -7,7 +7,45 @@
 
 ## Running Tests
 
-You can run the Python unit tests from the project root with the `nosetests` command.
+We assume you have already installed the development python modules with
+
+```bash
+pip install -r config/requirements-dev.txt
+```
+
+We are using the [pytest framework](https://docs.pytest.org/en/latest/) for running our Python unit tests. Use the following commands:
+
+```bash
+pip install -e .
+pytest
+```
+
+This will display an output similar to this when all tests are passing.
+
+```
+========================= test session starts =======================
+========================= 154 passed in 33.19s ======================
+platform darwin -- Python 3.7.4, pytest-5.3.5, py-1.8.1, pluggy-0.13.1
+rootdir: /Users/karl/code/webcompat.com
+collected 154 items
+tests/unit/test_api_urls.py ...........                        [  7%]
+tests/unit/test_config.py ..                                   [  8%]
+tests/unit/test_console_logs.py .....                          [ 11%]
+tests/unit/test_form.py .................                      [ 22%]
+tests/unit/test_helpers.py ............................        [ 40%]
+tests/unit/test_http_caching.py ...                            [ 42%]
+tests/unit/test_issues.py ......                               [ 46%]
+tests/unit/test_rendering.py ......                            [ 50%]
+tests/unit/test_tools_changelog.py ..                          [ 51%]
+tests/unit/test_topsites.py ...                                [ 53%]
+tests/unit/test_uploads.py ...                                 [ 55%]
+tests/unit/test_urls.py .................................      [ 77%]
+tests/unit/test_webhook.py ................................... [100%]
+
+========================= 154 passed in 33.19s ======================
+```
+
+
 
 You can also run them with following:
 
