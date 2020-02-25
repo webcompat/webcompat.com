@@ -37,10 +37,10 @@ from webcompat import webhooks  # noqa
 
 # register blueprints
 from webcompat.api.endpoints import api_bp  # noqa
-from webcompat.api.uploads import uploads  # noqa
-from webcompat.error_handlers import error_handlers  # noqa
+from webcompat.api.uploads import uploads_bp  # noqa
+from webcompat.error_handlers import error_handlers_bp  # noqa
 
-for blueprint in [api_bp, error_handlers, uploads]:
+for blueprint in [api_bp, error_handlers_bp, uploads_bp]:
     app.register_blueprint(blueprint)
 
 
