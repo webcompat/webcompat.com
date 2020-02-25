@@ -24,8 +24,8 @@ from werkzeug.exceptions import RequestEntityTooLarge
 from webcompat import app
 from webcompat.helpers import get_data_from_request
 
-uploads = Blueprint('uploads', __name__, url_prefix='/upload',
-                    template_folder='../templates')
+uploads_bp = Blueprint('uploads_bp', __name__, url_prefix='/upload',
+                       template_folder='../templates')
 JSON_MIME = 'application/json'
 
 
@@ -158,7 +158,7 @@ class LogUpload(BaseUpload):
         }
 
 
-@uploads.route('/', methods=['POST'])
+@uploads_bp.route('/', methods=['POST'])
 def upload():
     '''Endpoint to upload an image or a json with console logs.
 

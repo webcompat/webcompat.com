@@ -13,7 +13,7 @@ from flask import request
 
 from webcompat import app
 
-error_handlers = Blueprint('error_handlers', __name__)
+error_handlers_bp = Blueprint('error_handlers_bp', __name__)
 
 ERROR_DICT = {
     400: 'Bad Request.',
@@ -46,11 +46,11 @@ def api_call(request):
         return False
 
 
-@error_handlers.app_errorhandler(400)
-@error_handlers.app_errorhandler(401)
-@error_handlers.app_errorhandler(403)
-@error_handlers.app_errorhandler(404)
-@error_handlers.app_errorhandler(500)
+@error_handlers_bp.app_errorhandler(400)
+@error_handlers_bp.app_errorhandler(401)
+@error_handlers_bp.app_errorhandler(403)
+@error_handlers_bp.app_errorhandler(404)
+@error_handlers_bp.app_errorhandler(500)
 def custom_error_handler(err):
     # log the exception stack trace
     # (but don't bother for localhost because the
@@ -64,7 +64,7 @@ def custom_error_handler(err):
         return error_response(request, 500)
 
 
-@error_handlers.app_errorhandler(429)
+@error_handlers_bp.app_errorhandler(429)
 def too_many_requests_status(err):
     '''Error handler that comes from hitting our API rate limits.
 
