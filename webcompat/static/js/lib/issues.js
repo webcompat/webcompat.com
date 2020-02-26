@@ -486,26 +486,27 @@ issues.MainView = Backbone.View.extend(
       //in consecutive pages
 
       _.each(
-        _.range(2, count),
-        function(i) {
-          this.comments.fetchPage({
-            pageNumber: i,
-            headers: { Accept: "application/json" }
-          });
-        },
-        this
+        _.bind(
+          _.range(2, count),
+          function(i) {
+            this.comments.fetchPage({
+              pageNumber: i,
+              headers: { Accept: "application/json" }
+            });
+          },
+          this
+        )
       );
     },
 
     addComment: function(comment) {
-      // if there's a nsfw label, add the whatever class.
+      // if there's a nsfw label, add the relevant class.
       var view = new issues.CommentView({ model: comment });
       var commentElm = view.render().$el;
       $(".js-Issue-commentList").append(commentElm);
       _.each(commentElm.find("code"), function(elm) {
         Prism.highlightElement(elm);
       });
-
       if (this._isNSFW) {
         _.each(commentElm.find("img"), function(elm) {
           $(elm)
@@ -536,7 +537,7 @@ issues.MainView = Backbone.View.extend(
       }
     },
     addExistingComments: function() {
-      this.comments.each(this.addComment, this);
+      this.comments.each(_.bind(this.addComment, this));
     },
     toggleNSFW: function(e) {
       // make sure we've got a reference to the <img> element,

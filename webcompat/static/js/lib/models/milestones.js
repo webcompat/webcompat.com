@@ -16,7 +16,7 @@ issues.MilestonesModel = Backbone.Model.extend({
       milestones.push(_.merge(milestone, value));
     });
 
-    var orderedMilestones = _.sortByOrder(
+    var orderedMilestones = _.orderBy(
       milestones,
       // sort first by state, in desc order (because open comes after closed, alphabetically)
       // then sort by order, in ascending order to get 1, 2, 3... etc.
@@ -62,6 +62,6 @@ issues.MilestonesModel = Backbone.Model.extend({
     });
   },
   toArray: function() {
-    return _.pluck(this.get("milestones"), "name");
+    return _.map(this.get("milestones"), "name");
   }
 });

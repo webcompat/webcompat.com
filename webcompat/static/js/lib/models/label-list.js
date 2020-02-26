@@ -96,13 +96,13 @@ issues.LabelList = Backbone.Model.extend({
   },
   // Returns a simple array of unprefixed labels - strings only
   toArray: function() {
-    return _.pluck(this.get("labels"), "name");
+    return _.map(this.get("labels"), "name");
   },
   // To save the model to the server, we need to make
   // sure we apply the prefixes the server expects.
   // The JSON serialization will take care of it.
   toJSON: function() {
-    var labelsArray = _.pluck(this.get("labels"), "name");
+    var labelsArray = _.map(this.get("labels"), "name");
     return issues.allLabels.toPrefixed(labelsArray);
   }
 });
