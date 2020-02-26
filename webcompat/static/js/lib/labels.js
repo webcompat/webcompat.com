@@ -42,7 +42,7 @@ issues.LabelsView = issues.CategoryView.extend({
     }
   },
   getIssueLabels: function() {
-    return _.pluck(this.model.get("labels"), "name");
+    return _.map(this.model.get("labels"), "name");
   },
   openEditor: function(e) {
     // make sure we're not typing in the comment textfield.
@@ -109,7 +109,7 @@ issues.LabelEditorView = issues.CategoryEditorView.extend({
       if (!e || (e && (e.keyCode === 27 || !e.keyCode))) {
         this.isOpen = false;
         var checked = this.$el.find("input[type=checkbox]:checked");
-        var labelsArray = _.pluck(checked, "name");
+        var labelsArray = _.map(checked, "name");
         this.issueView.editorButton.removeClass("is-active");
         this.issueView.model.updateLabels(labelsArray);
 

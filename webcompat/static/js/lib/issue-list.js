@@ -446,7 +446,7 @@ issueList.IssueView = Backbone.View.extend(
         } else {
           this.issues.setURLState("/api/issues/search", paramsCopy);
         }
-      } else if (_.contains(issuesAPICategories, category)) {
+      } else if (_.includes(issuesAPICategories, category)) {
         this.issues.setURLState(
           "/api/issues/category/" + category,
           this.removeParamQuery(params)
