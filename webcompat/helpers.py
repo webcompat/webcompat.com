@@ -510,7 +510,7 @@ def get_img_src_policy():
     """
     policy = "img-src 'self' https://www.google-analytics.com https://*.githubusercontent.com data:; "  # noqa
     if app.config['LOCALHOST']:
-        policy = "img-src 'self' https://webcompat.com https://www.google-analytics.com https://*.githubusercontent.com data:; "  # noqa
+        policy = "img-src 'self' https://staging.webcompat.com https://webcompat.com https://www.google-analytics.com https://*.githubusercontent.com data:; "  # noqa
     return policy
 
 
