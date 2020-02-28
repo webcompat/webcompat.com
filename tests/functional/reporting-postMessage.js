@@ -50,3 +50,47 @@ registerSuite("Reporting through postMessage", {
     }
   }
 });
+
+registerSuite("Reporting through postMessage for the wizard", {
+  before() {
+    return FunctionalHelpers.setCookie(this, { name: "exp", value: "form-v2" });
+  },
+
+  after() {
+    return FunctionalHelpers.deleteCookie(this, "exp");
+  },
+  tests: {
+    "postMessaged object to the new form"() {
+      return (
+        FunctionalHelpers.openPage(this, url, "#js-ReportForm")
+          // send data object through postMessage
+          .execute(POSTMESSAGE_TEST)
+          .sleep(1000)
+          .findByCssSelector("#url")
+          .getProperty("value")
+          .then(function(value) {
+            assert.include(value, "http://example.com");
+          })
+          .end()
+          .findByCssSelector("#details")
+          .getProperty("value")
+          .then(function(value) {
+            assert.include(value, "gfx.webrender.all");
+          })
+          .end()
+          .findByCssSelector("#reported_with")
+          .getProperty("value")
+          .then(function(value) {
+            assert.include(value, "desktop-reporter");
+          })
+          .end()
+          .findByCssSelector("#extra_labels")
+          .getProperty("value")
+          .then(function(value) {
+            assert.include(value, "type-marfeel");
+          })
+          .end()
+      );
+    }
+  }
+});

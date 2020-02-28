@@ -52,9 +52,24 @@ function logout(context) {
     .end();
 }
 
+function setCookie(context, cookie) {
+  return openPage(context, url("/"), "body")
+    .setCookie(cookie)
+    .sleep(500)
+    .end();
+}
+
+function deleteCookie(context, cookieName) {
+  return openPage(context, url("/"), "body")
+    .deleteCookie(cookieName)
+    .end();
+}
+
 module.exports = {
   login: login,
   logout: logout,
   openPage: openPage,
-  pollUntil: pollUntil
+  pollUntil: pollUntil,
+  setCookie: setCookie,
+  deleteCookie: deleteCookie
 };
