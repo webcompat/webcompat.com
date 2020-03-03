@@ -55,7 +55,7 @@ further defined and clarified by project maintainers.
 ## Enforcement
 
 Instances of abuse, harassment, or otherwise unacceptable behavior may be
-reported by contacting the project team at [Ola](mailto:ogasidlo@mozilla.com) / [@zoepage](https://github.com/zoepage) or [Dennis](mailto:DSchubert@mozilla.com) / [@denschub](https://github.com/denschub). All
+reported by contacting [Ksenia](mailto:kberezina@mozilla.com) / [@ksy36](https://github.com/ksy36) or [Dennis](mailto:DSchubert@mozilla.com) / [@denschub](https://github.com/denschub). All
 complaints will be reviewed and investigated and will result in a response that
 is deemed necessary and appropriate to the circumstances. The project team is
 obligated to maintain confidentiality with regard to the reporter of an incident.
