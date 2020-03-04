@@ -36,7 +36,7 @@ from webcompat.helpers import form_type
 from webcompat.helpers import get_browser_name
 from webcompat.helpers import get_referer
 from webcompat.helpers import get_user_info
-from webcompat.helpers import is_blacklisted_domain
+from webcompat.helpers import is_blocked_domain
 from webcompat.helpers import is_darknet_domain
 from webcompat.helpers import is_valid_issue_form
 from webcompat.helpers import prepare_form
@@ -308,9 +308,9 @@ def create_issue():
         if form.get('submit_type') == PROXY_REPORT:
             if not app.config['ANONYMOUS_REPORTING_ENABLED']:
                 abort(400)
-            # Checking blacklisted domains
-            if is_blacklisted_domain(domain):
-                msg = app.config['IS_BLACKLISTED_DOMAIN'].format(form['url'])
+            # Checking blocked domains
+            if is_blocked_domain(domain):
+                msg = app.config['IS_BLOCKED_DOMAIN'].format(form['url'])
                 flash(msg, 'notimeout')
                 return redirect(url_for('index'))
             # Anonymous reporting
