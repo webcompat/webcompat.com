@@ -296,7 +296,7 @@ This is a major upgrade of our server. We are now running the project under Pyth
 * NPM update - Update lint-staged to the latest version. [Pull #2685](https://github.com/webcompat/webcompat.com/pull/2685)
 * Fixes #2682 - Removes unused markdown-it in issue-list.js [Pull #2683](https://github.com/webcompat/webcompat.com/pull/2683)
 * Fixes #2571 - Adds a dashboard route with the list of current dashboards [Pull #2675](https://github.com/webcompat/webcompat.com/pull/2675)
-* Fixes #2650 - Modified domain received by `is_blocked_domain` [Pull #2667](https://github.com/webcompat/webcompat.com/pull/2667)
+* Fixes #2650 - Modified domain received by `is_blacklisted_domain` [Pull #2667](https://github.com/webcompat/webcompat.com/pull/2667)
 
 
 ## 15.0.0 - 2018-10-30
@@ -304,7 +304,7 @@ This is a major upgrade of our server. We are now running the project under Pyth
 * Fixes #2686 - Upgrade requests [Pull #2687](https://github.com/webcompat/webcompat.com/pull/2687)
 * Fixes #2682 - Removes unused markdown-it in issue-list.js [Pull #2683](https://github.com/webcompat/webcompat.com/pull/2683)
 * Fixes #2571 - Adds a dashboard route with the list of current dashboards [Pull #2675](https://github.com/webcompat/webcompat.com/pull/2675)
-* Fixes #2650 - Modified domain received by `is_blocked_domain` [Pull #2667](https://github.com/webcompat/webcompat.com/pull/2667)
+* Fixes #2650 - Modified domain received by `is_blacklisted_domain` [Pull #2667](https://github.com/webcompat/webcompat.com/pull/2667)
 
 
 ## 14.4.0 - 2018-10-26
