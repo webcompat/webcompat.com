@@ -22,7 +22,6 @@
     "cssrecipes-utils": "^0.6.2",
     "suitcss-utils-align": "^1.0.0",
     "suitcss-utils-display": "^1.0.2",
-    "typescript": "^3.8.3",
     "yargs": "^15.0.1"
   },
   "devDependencies": {
