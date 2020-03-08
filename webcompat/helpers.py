@@ -604,7 +604,7 @@ def is_valid_issue_form(form):
     return valid_form
 
 
-def is_blacklisted_domain(domain):
+def is_blocked_domain(domain):
     """Check if the domain is part of an exclusion list."""
     # see https://github.com/webcompat/webcompat.com/issues/1141
     # see https://github.com/webcompat/webcompat.com/issues/1237

@@ -101,10 +101,10 @@ CSS_FIX_ME = """
     See https://github.com/webcompat/css-fixme/
     for more details."""
 
-IS_BLACKLISTED_DOMAIN = ('Anonymous reporting for domain {0} '
-                         'is temporarily disabled. Please contact '
-                         'miket@mozilla.com '
-                         'for more details.')
+IS_BLOCKED_DOMAIN = ('Anonymous reporting for domain {0} '
+                     'is temporarily disabled. Please contact '
+                     'miket@mozilla.com '
+                     'for more details.')
 
 IS_DARKNET_DOMAIN = ('Reporting for .onion domains is disabled.'
                      'Please contact miket@mozilla.com '
