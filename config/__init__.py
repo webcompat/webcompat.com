@@ -17,7 +17,7 @@ import urllib.parse
 
 import requests
 
-from config.environment import *  # noqa
+import config.environment as cfg
 
 MILESTONE_ERROR = """It failed with {msg}!
 We will read from data/milestones.json.
@@ -154,12 +154,12 @@ RATELIMIT_STRATEGY = 'moving-window'
 
 DEBUG = False
 
-if not PRODUCTION:
+if not cfg.PRODUCTION:
     DEBUG = True
 
 # localhost runs on HTTP
 # use secure and samesite flags on session cookie otherwise
-if not LOCALHOST:
+if not cfg.LOCALHOST:
     SESSION_COOKIE_SECURE = True
     SESSION_COOKIE_SAMESITE = 'Lax'
 
@@ -183,7 +183,7 @@ tempfile.tempdir = tmp_path
 print('Writing logs to: {}'.format(tempfile.gettempdir()))
 
 LOG_FILE = os.path.join(tempfile.gettempdir(), 'webcompat.log')
-if STAGING:
+if cfg.STAGING:
     LOG_FILE = os.path.join(tempfile.gettempdir(), 'staging-webcompat.log')
 LOG_FMT = '%(asctime)s tracking %(message)s'
 CSP_REPORTS_LOG = os.path.join(
