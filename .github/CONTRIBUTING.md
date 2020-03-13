@@ -18,7 +18,7 @@ Please note that everyone interacting in our codebases, issue trackers, and any 
 
 ## Questions or Problems
 
-If you have a question about the site or about web compatibility in general, feel free to join us in the #webcompat channel on the Mozilla IRC network. [Here's how to join](https://wiki.mozilla.org/IRC#Connect_to_the_Mozilla_IRC_server).
+If you have a question about the site or about web compatibility in general, feel free to join us in the #webcompat:mozilla.org channel on the Mozilla Matrix network. [Here's how to join](https://wiki.mozilla.org/Matrix#Connect_to_Matrix).
 
 Otherwise, you can try to ping Mike Taylor on the Freenode network with the following command `/msg miketaylr Hi, I have a question about webcompat.com`.
 
