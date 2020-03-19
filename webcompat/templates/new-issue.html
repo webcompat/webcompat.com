@@ -25,7 +25,7 @@
 
 {%- block extrascripts -%}
 {% if ab_active('exp') == 'form-v2' %}
-<script src="{{ url_for('static', filename='js/lib/issue-wizard-bugform.js') }}"></script>
+<script type="module" src="{{ url_for('static', filename='js/lib/wizard/app.js') }}"></script>
 {% endif %}
 
 {% if source and campaign %}
