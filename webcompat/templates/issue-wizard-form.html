@@ -10,7 +10,7 @@
   novalidate
 >
   <h3 class="page-heading">Filing a web compatibility issue</h3>
-  <div class="step-container step1 col open" data-nextstep="2" data-activate-stepper="2">
+  <div class="step-container step1 col open">
     <div class="row mobile-col">
       <div class="input-control half">
         <div class="col">
@@ -46,7 +46,7 @@
     <div class="button-control row">
       <div class="input-control half">
         <div class="col center">
-          <button class="button next-step step-1 issue-btn disabled" data-nextstep="2">Confirm</button>
+          <button class="button next-step step-1 issue-btn disabled">Confirm</button>
           <a href="#" class="popup-trigger desktop-only" data-popup-trigger="what-is-webcompat">Learn more about web compatibility</a>
         </div>
       </div>
@@ -55,7 +55,7 @@
 
   <div class="issue-disclaimer">All information included in this report will be publicly visible. <a href="#" class="popup-trigger" data-popup-trigger="privacy-modal">Learn More</a></div>
 
-  <div class="step-container step2 col" data-nextstep="3" data-activate-stepper="2">
+  <div class="step-container step2 col">
     <div class="row">
       <div class="input-control">
         <div class="form-radio choice-control form-element js-Form-group">
@@ -84,13 +84,13 @@
     <div class="button-control row other-problem">
       <div class="input-control">
         <div class="col center">
-          <button class="button next-step step-3 issue-btn disabled" data-nextstep="4">Confirm</button>
+          <button class="button next-step step-2 issue-btn disabled">Confirm</button>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="step-container step3 subproblem col" data-nextstep="4" data-activate-stepper="3">
+  <div class="step-container step3 subproblem col">
     <div class="row">
       <div class="input-control">
         <div class="form-radio choice-control form-element js-Form-group site_bug_subcategory">
@@ -130,7 +130,7 @@
     </div>
   </div>
 
-  <div class="step-container step4 col" data-nextstep="5" data-activate-stepper="4">
+  <div class="step-container step4 col">
     <div class="row mobile-col">
       <div class="input-control device-data-hero">
         <img class="protruding-img" src="{{ url_for('static', filename='img/svg/devices.svg') }}" title="Device data image" alt="Device data image" />
@@ -146,16 +146,16 @@
     <div class="button-control row">
       <div class="input-control">
         <div class="col center">
-          <button class="button next-step step-4 issue-btn" data-nextstep="6" data-hidestep="5">Yes</button>
+          <button class="button next-step step-4 issue-btn">Yes</button>
           <div class="other-option">
-            I encountered the issue on a <a class="next-step step-5" data-nextstep="5" data-hidestep="6" href="#">different device or browser</a>
+            I encountered the issue on a <a class="next-step step-5" href="#">different device or browser</a>
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="step-container step5 col custom-browser" data-nextstep="4" data-activate-stepper="4">
+  <div class="step-container step5 col custom-browser">
     <div class="row">
       <div class="input-control">
         <div class="col">
@@ -180,13 +180,13 @@
     <div class="button-control row">
       <div class="input-control">
         <div class="col center">
-          <button class="button next-step step-5 issue-btn" data-nextstep="6">Confirm</button>
+          <button class="button next-step step-5 issue-btn">Confirm</button>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="step-container step6 col" data-nextstep="7" data-activate-stepper="5">
+  <div class="step-container step6 col">
     <div class="row">
       <div class="input-control">
         <div class="form-radio choice-control browsers form-element js-Form-group">
@@ -210,23 +210,23 @@
     <div class="button-control row">
       <div class="input-control">
         <div class="col center">
-          <button class="button next-step step-6 issue-btn disabled" data-nextstep="8" data-hidestep="7">Confirm</button>
-          <a class="next-step step-6 no-other-browser" data-nextstep="7" href="#">I have <strong>only tested on this browser</strong> ({{ form.browser.data }})</a>
+          <button class="button next-step step-6 issue-btn disabled" >Confirm</button>
+          <a class="next-step step-6 no-other-browser" href="#">I have <strong>only tested on this browser</strong> ({{ form.browser.data }})</a>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="step-container warning step7 col" data-nextstep="8" data-activate-stepper="5">
+  <div class="step-container warning step7 col">
     <img class="warning-icon" src="{{ url_for('static', filename='img/svg/icons/svg-info-icon.svg') }}" title="Warning" alt="Warning" />
     <div class="warning-text">We recommend testing the website in another browser to validate this as a <strong>web compatibility issue</strong>.</div>
     <div class="col center input-control">
-      <button class="button next-step step-7 issue-btn" data-nextstep="8">Continue without testing</button>
+      <button class="button next-step step-7 issue-btn">Continue without testing</button>
       <a href="#" class="popup-trigger" data-popup-trigger="what-is-webcompat">What is a web compatibility issue?</a>
     </div>
   </div>
 
-  <div class="step-container step8 col" data-nextstep="9" data-activate-stepper="6">
+  <div class="step-container step8 col">
     <div class="row mobile-col">
       <div class="input-control device-data-hero half">
         <img class="protruding-img" src="{{ url_for('static', filename='img/svg/describe-issue.svg') }}" title="Describe issue" alt="Describe issue" />
@@ -251,13 +251,13 @@
     <div class="button-control row">
       <div class="input-control">
         <div class="col center">
-          <button class="button next-step step-8 issue-btn disabled" data-nextstep="10">Continue</button>
+          <button class="button next-step step-8 issue-btn disabled">Continue</button>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="step-container step10 col upload-screenshot" data-nextstep="11">
+  <div class="step-container step9 col upload-screenshot">
     <div class="row mobile-col">
       <div class="input-control half flex-left">
         <div class="description-text top up-message deleted-screenshot">
@@ -302,7 +302,7 @@
       <div class="input-control">
         <div class="col center">
           <div class="row mobile-col">
-            <button class="button next-step step-10 issue-btn" data-nextstep="11">Continue without</button>
+            <button class="button next-step step-9 issue-btn">Continue without</button>
             <button class="button js-remove-upload is-hidden issue-btn red">Delete this image</button>
           </div>
           <label for="image" class="is-hidden screenshot-select-trigger spaced-link" href="#">Upload a different image</label>
@@ -311,7 +311,7 @@
     </div>
   </div>
 
-  <div class="step-container step11 col final-step" data-activate-stepper="7">
+  <div class="step-container step10 col final-step">
     <div class="row header">
       <div class="input-control final-step-hero">
         <img class="protruding-img" src="{{ url_for('static', filename='img/svg/cheering-people.svg') }}" title="Report ready to send" alt="Report ready to send" />

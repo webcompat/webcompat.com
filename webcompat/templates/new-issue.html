@@ -16,7 +16,7 @@
 {% endblock %}
 
 {%- block extrascripts -%}
-<script src="{{ url_for('static', filename='js/lib/issue-wizard-bugform.js') }}"></script>
+<script type="module" src="{{ url_for('static', filename='js/lib/wizard/app.js') }}"></script>
 
 {% if source and campaign %}
 <script nonce={{nonce}}>
