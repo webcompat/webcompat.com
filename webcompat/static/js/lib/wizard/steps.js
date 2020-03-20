@@ -9,7 +9,11 @@ import step8 from "./step8.js";
 import step9 from "./step9.js";
 import step10 from "./step10.js";
 
+/* adding an empty object as a first element in order to make navigation
+   more readable since we don't have step 0 */
+
 export const STEPS = [
+  {},
   step1,
   step2,
   step3,
