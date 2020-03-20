@@ -1,6 +1,7 @@
 {
   "parserOptions": {
-    "ecmaVersion": 6
+    "ecmaVersion": 6,
+    "sourceType": "module"
   },
   "env": {
     "browser": true
@@ -20,6 +21,7 @@
     "console": true,
     "define": true,
     "ga": true,
+    "intern": true,
     "markdownitEmoji": true,
     "markdownitSanitizer": true,
     "md": true,
@@ -46,6 +48,7 @@
     "no-prototype-builtins": "off",
     "no-use-before-define": 2,
     "one-var": [2, "never"],
-    "prettier/prettier": "error"
+    "prettier/prettier": "error",
+    "no-unused-vars": "off"
   }
 }
