@@ -2,6 +2,8 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
+/* Allows the user to enter a URl and navigate to the next step */
+
 import notify from "./notify.js";
 
 const urlField = $("#url");
@@ -20,7 +22,7 @@ const showStep = (id, data) => notify.publish("showStep", { id, data });
 
 const makeAStep = event => {
   event.preventDefault();
-  showStep(1, { url: extractPrettyUrl(urlField.val()) });
+  showStep(2, { url: extractPrettyUrl(urlField.val()) });
 };
 
 urlField.on("blur input", checkUrl);

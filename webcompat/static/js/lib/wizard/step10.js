@@ -2,6 +2,8 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
+/* Allows the user to submit an issue anonymously or through github */
+
 import utils from "./utils.js";
 
 const container = $(".step-container.step10");
