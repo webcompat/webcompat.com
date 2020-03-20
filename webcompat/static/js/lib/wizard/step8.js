@@ -2,6 +2,8 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
+/* Allows the user to enter description of the problem */
+
 import utils from "./utils.js";
 import notify from "./notify.js";
 
@@ -13,7 +15,7 @@ nextStepButton.removeClass("disabled");
 
 const handleNext = event => {
   event.preventDefault();
-  notify.publish("showStep", { id: 8 });
+  notify.publish("showStep", { id: 9 });
 };
 
 nextStepButton.on("click", handleNext);

@@ -2,6 +2,8 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
+/* Allows the user to select a category of the problem they're experiencing */
+
 import utils from "./utils.js";
 import notify from "./notify.js";
 
@@ -28,25 +30,25 @@ const hideStep = id => notify.publish("hideStep", id);
 
 const handleDetectionBug = () => {
   hideUnknown();
-  hideStep(2);
-  showStep(3);
+  hideStep(3);
+  showStep(4);
 };
 
 const handleBugWithSubCategory = event => {
   hideUnknown();
   const subId = `${event.target.value}_subcategory`;
-  showStep(2, { subId });
+  showStep(3, { subId });
 };
 
 const handleUnknownBug = () => {
   showUnknown();
-  hideStep(2);
   hideStep(3);
+  hideStep(4);
 };
 
 const handleNextStep = event => {
   event.preventDefault();
-  showStep(3);
+  showStep(4);
 };
 
 const setUrl = url => sitePrettyUrl.text(url);
