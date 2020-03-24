@@ -4,8 +4,8 @@
 
 /* Allows the user to confirm the browser and device they're experiencing the problem on */
 
-import utils from "./utils.js";
-import notify from "./notify.js";
+import { showContainer, hideContainer } from "../ui-utils.js";
+import notify from "../notify.js";
 
 const container = $(".step-container.step4");
 const nextStepButton = container.find(".next-step.step-4");
@@ -16,14 +16,14 @@ const hideStep = id => notify.publish("hideStep", id);
 
 const handleNext = event => {
   event.preventDefault();
-  hideStep(5);
-  makeAStep(6);
+  hideStep("differentBrowser");
+  makeAStep("testedBrowsers");
 };
 
 const handleOther = event => {
   event.preventDefault();
-  hideStep(6);
-  makeAStep(5);
+  hideStep("testedBrowsers");
+  makeAStep("differentBrowser");
 };
 
 nextStepButton.on("click", handleNext);
@@ -31,10 +31,10 @@ otherOption.on("click", handleOther);
 
 export default {
   show() {
-    utils.showContainer(container);
+    showContainer(container);
   },
 
   hide() {
-    utils.hideContainer(container);
+    hideContainer(container);
   }
 };

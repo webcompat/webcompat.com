@@ -4,8 +4,8 @@
 
 /* Allows the user to select a category of the problem they're experiencing */
 
-import utils from "./utils.js";
-import notify from "./notify.js";
+import { showContainer } from "../ui-utils.js";
+import notify from "../notify.js";
 
 const container = $(".step-container.step2");
 const detectionBug = $("#problem_category-0");
@@ -30,25 +30,25 @@ const hideStep = id => notify.publish("hideStep", id);
 
 const handleDetectionBug = () => {
   hideUnknown();
-  hideStep(3);
-  showStep(4);
+  hideStep("subCategory");
+  showStep("confirmBrowser");
 };
 
 const handleBugWithSubCategory = event => {
   hideUnknown();
   const subId = `${event.target.value}_subcategory`;
-  showStep(3, { subId });
+  showStep("subCategory", { subId });
 };
 
 const handleUnknownBug = () => {
   showUnknown();
-  hideStep(3);
-  hideStep(4);
+  hideStep("subCategory");
+  hideStep("confirmBrowser");
 };
 
 const handleNextStep = event => {
   event.preventDefault();
-  showStep(4);
+  showStep("confirmBrowser");
 };
 
 const setUrl = url => sitePrettyUrl.text(url);
@@ -67,6 +67,6 @@ initListeners();
 export default {
   show(data) {
     setUrl(data.url);
-    utils.showContainer(container);
+    showContainer(container);
   }
 };
