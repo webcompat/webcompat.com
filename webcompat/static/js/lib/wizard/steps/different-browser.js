@@ -4,25 +4,25 @@
 
 /* Allows the user to enter device/browser information if it's different from they're currently using */
 
-import utils from "./utils.js";
-import notify from "./notify.js";
+import { showContainer, hideContainer } from "../ui-utils.js";
+import notify from "../notify.js";
 
 const container = $(".step-container.step5");
 const nextStepButton = container.find(".next-step.step-5");
 
 const handleNext = event => {
   event.preventDefault();
-  notify.publish("showStep", { id: 6 });
+  notify.publish("showStep", { id: "testedBrowsers" });
 };
 
 nextStepButton.on("click", handleNext);
 
 export default {
   show() {
-    utils.showContainer(container);
+    showContainer(container);
   },
 
   hide() {
-    utils.hideContainer(container);
+    hideContainer(container);
   }
 };

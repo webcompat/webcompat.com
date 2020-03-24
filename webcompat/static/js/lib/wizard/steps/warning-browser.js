@@ -4,25 +4,25 @@
 
 /* Showing a warning if user hasn't tested on any other browsers */
 
-import utils from "./utils.js";
-import notify from "./notify.js";
+import { showContainer, hideContainer } from "../ui-utils.js";
+import notify from "../notify.js";
 
 const container = $(".step-container.step7");
 const nextStepButton = container.find(".next-step.step-7");
 
 const handleNext = event => {
   event.preventDefault();
-  notify.publish("showStep", { id: 8 });
+  notify.publish("showStep", { id: "description" });
 };
 
 nextStepButton.on("click", handleNext);
 
 export default {
   show() {
-    utils.showContainer(container);
+    showContainer(container);
   },
 
   hide() {
-    utils.hideContainer(container, "slideupandheight");
+    hideContainer(container, "slideupandheight");
   }
 };
