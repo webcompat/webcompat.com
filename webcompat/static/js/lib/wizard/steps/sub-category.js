@@ -4,8 +4,8 @@
 
 /* Allows the user to select a sub category of the problem they're experiencing */
 
-import utils from "./utils.js";
-import notify from "./notify.js";
+import { showContainer, hideContainer } from "../ui-utils.js";
+import notify from "../notify.js";
 
 const container = $(".step-container.step3");
 const radio = container.find("input");
@@ -21,7 +21,8 @@ const resetRadio = element => {
   });
 };
 
-const handleSubCategory = () => notify.publish("showStep", { id: 4 });
+const handleSubCategory = () =>
+  notify.publish("showStep", { id: "confirmBrowser" });
 
 radio.on("change", handleSubCategory);
 
@@ -29,9 +30,9 @@ export default {
   show(data) {
     resetRadio(radio);
     showSubcategory(data.subId);
-    utils.showContainer(container);
+    showContainer(container);
   },
   hide() {
-    utils.hideContainer(container);
+    hideContainer(container);
   }
 };

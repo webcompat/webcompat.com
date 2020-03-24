@@ -4,12 +4,12 @@
 
 /* Allows the user to submit an issue anonymously or through github */
 
-import utils from "./utils.js";
+import { showContainer } from "../ui-utils.js";
 
 const container = $(".step-container.step10");
 
 export default {
   show() {
-    utils.showContainer(container);
+    showContainer(container);
   }
 };
