@@ -20,7 +20,7 @@ things inside of it. The optional boolean longer arg at the end can
 be used for tests that need more time.
 */
 function openPage(context, path, readySelector, longerTimeout) {
-  var timeout = longerTimeout ? 20000 : config.wc.pageLoadTimeout;
+  var timeout = longerTimeout ? 20000 : config.functionalTimeouts.pageLoad;
 
   return (
     context.remote
