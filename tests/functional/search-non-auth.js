@@ -8,7 +8,7 @@ const { registerSuite } = intern.getInterface("object");
 const FunctionalHelpers = require("./lib/helpers.js");
 
 var url = function(path, params) {
-  var base = intern.config.siteRoot + path;
+  var base = intern.config.functionalBaseUrl + path;
   return params ? base + params : base;
 };
 
@@ -16,7 +16,7 @@ registerSuite("Search (non-auth)", {
   tests: {
     "Pressing g inside of search input *doesnt* go to github issues"() {
       return (
-        FunctionalHelpers.openPage(this, url("/issues"), "#js-SearchForm-input")
+        FunctionalHelpers.openPage(this, url("issues"), "#js-SearchForm-input")
           .findByCssSelector("#js-SearchForm-input")
           .click()
           .type("g")
@@ -35,7 +35,7 @@ registerSuite("Search (non-auth)", {
     "Clicking on label search adds query parameter to the URL"() {
       return FunctionalHelpers.openPage(
         this,
-        url("/issues"),
+        url("issues"),
         "[data-remotename=browser-android]"
       )
         .findByCssSelector("[data-remotename=browser-android]")
@@ -55,7 +55,7 @@ registerSuite("Search (non-auth)", {
     "Clicking on label search updates the search input"() {
       return FunctionalHelpers.openPage(
         this,
-        url("/issues"),
+        url("issues"),
         "[data-remotename=browser-android"
       )
         .findByCssSelector("[data-remotename=browser-android]")
@@ -75,7 +75,7 @@ registerSuite("Search (non-auth)", {
     },
 
     "Search input is visible"() {
-      return FunctionalHelpers.openPage(this, url("/issues"), ".js-SearchForm")
+      return FunctionalHelpers.openPage(this, url("issues"), ".js-SearchForm")
         .findByCssSelector(".js-SearchForm")
         .isDisplayed()
         .then(function(isDisplayed) {
@@ -94,7 +94,7 @@ registerSuite("Search (non-auth)", {
       var searchParam = "?q=fffffff";
       return FunctionalHelpers.openPage(
         this,
-        url("/issues", searchParam),
+        url("issues", searchParam),
         ".js-SearchForm"
       )
         .findByCssSelector("#js-SearchForm-input")

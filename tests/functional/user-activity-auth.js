@@ -8,7 +8,7 @@ const { registerSuite } = intern.getInterface("object");
 const FunctionalHelpers = require("./lib/helpers.js");
 
 var url = function(path) {
-  return intern.config.siteRoot + path;
+  return intern.config.functionalBaseUrl + path;
 };
 
 registerSuite("User Activity (auth)", {
@@ -23,7 +23,7 @@ registerSuite("User Activity (auth)", {
   tests: {
     "We're at the right place"() {
       var username;
-      return FunctionalHelpers.openPage(this, url("/me"), ".js-username")
+      return FunctionalHelpers.openPage(this, url("me"), ".js-username")
         .findByCssSelector(".js-username")
         .getVisibleText()
         .then(function(text) {
@@ -46,7 +46,7 @@ registerSuite("User Activity (auth)", {
     "IssueListView renders"() {
       return FunctionalHelpers.openPage(
         this,
-        url("/activity/testuser"),
+        url("activity/testuser"),
         ".js-IssueList"
       )
         .findByCssSelector(".js-IssueList")
@@ -97,7 +97,7 @@ registerSuite("User Activity (auth)", {
     "needsinfo section renders"() {
       return FunctionalHelpers.openPage(
         this,
-        url("/activity/testuser"),
+        url("activity/testuser"),
         ".js-IssueList"
       )
         .findByCssSelector("#needsinfo-issues")
@@ -122,7 +122,7 @@ registerSuite("User Activity (auth)", {
     "Trying to view someone else's activity fails (logged in)"() {
       return FunctionalHelpers.openPage(
         this,
-        url("/activity/someoneelse"),
+        url("activity/someoneelse"),
         "article"
       )
         .findByCssSelector("article .headline-1")

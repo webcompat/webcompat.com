@@ -8,13 +8,13 @@ const { registerSuite } = intern.getInterface("object");
 const FunctionalHelpers = require("./lib/helpers.js");
 
 var url = function(path) {
-  return intern.config.siteRoot + path;
+  return intern.config.functionalBaseUrl + path;
 };
 
 registerSuite("Issues", {
   tests: {
     "Issue page loads"() {
-      return FunctionalHelpers.openPage(this, url("/issues/100"), ".js-Issue")
+      return FunctionalHelpers.openPage(this, url("issues/100"), ".js-Issue")
         .findDisplayedByCssSelector(".js-issue-number")
         .getVisibleText()
         .then(function(text) {
@@ -35,7 +35,7 @@ registerSuite("Issues", {
     },
 
     "Issue comments load"() {
-      return FunctionalHelpers.openPage(this, url("/issues/100"), ".js-Issue")
+      return FunctionalHelpers.openPage(this, url("issues/100"), ".js-Issue")
         .findDisplayedByCssSelector(".js-Issue-comment")
         .isDisplayed()
         .then(function(isDisplayed) {
@@ -59,7 +59,7 @@ registerSuite("Issues", {
     },
 
     "Pressing g goes to the github issue page"() {
-      return FunctionalHelpers.openPage(this, url("/issues/100"), ".js-Issue")
+      return FunctionalHelpers.openPage(this, url("issues/100"), ".js-Issue")
         .findByCssSelector("body")
         .click()
         .type("g")
@@ -76,7 +76,7 @@ registerSuite("Issues", {
     },
 
     "NSFW images are blurred"() {
-      return FunctionalHelpers.openPage(this, url("/issues/396"), ".js-Issue")
+      return FunctionalHelpers.openPage(this, url("issues/396"), ".js-Issue")
         .findDisplayedByCssSelector(
           ".js-Issue-commentList .js-Comment-content p"
         )
@@ -88,7 +88,7 @@ registerSuite("Issues", {
     },
 
     "Clicking NSFW images toggles between blurry and not-blurry"() {
-      return FunctionalHelpers.openPage(this, url("/issues/396"), ".js-Issue")
+      return FunctionalHelpers.openPage(this, url("issues/396"), ".js-Issue")
         .findDisplayedByCssSelector(
           ".js-Issue-commentList .js-Comment-content p"
         )
@@ -117,7 +117,7 @@ registerSuite("Issues", {
     },
 
     "Simple title concatenation"() {
-      return FunctionalHelpers.openPage(this, url("/issues/15000"), ".js-Issue")
+      return FunctionalHelpers.openPage(this, url("issues/15000"), ".js-Issue")
         .findDisplayedByCssSelector(".js-issue-title")
         .getVisibleText()
         .then(function(text) {

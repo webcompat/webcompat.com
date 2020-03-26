@@ -8,14 +8,15 @@ const { registerSuite } = intern.getInterface("object");
 const FunctionalHelpers = require("./lib/helpers.js");
 
 var url = function(path) {
-  return intern.config.siteRoot + path;
+  path = path ? path : "";
+  return intern.config.functionalBaseUrl + path;
 };
 
 registerSuite("History navigation", {
   tests: {
     "Back button works from issues page"() {
       return (
-        FunctionalHelpers.openPage(this, url("/"), ".js-issues-link")
+        FunctionalHelpers.openPage(this, url(), ".js-issues-link")
           .findByCssSelector(".js-issues-link")
           .click()
           .end()

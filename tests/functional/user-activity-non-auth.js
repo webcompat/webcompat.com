@@ -8,7 +8,7 @@ const { registerSuite } = intern.getInterface("object");
 const FunctionalHelpers = require("./lib/helpers.js");
 
 var url = function(path) {
-  return intern.config.siteRoot + path;
+  return intern.config.functionalBaseUrl + path;
 };
 
 registerSuite("User Activity (non-auth)", {
@@ -16,7 +16,7 @@ registerSuite("User Activity (non-auth)", {
     "Trying to view someone else's activity fails (logged out)"() {
       return FunctionalHelpers.openPage(
         this,
-        url("/activity/someoneelse"),
+        url("activity/someoneelse"),
         "article"
       )
         .findByCssSelector("article .headline-1")

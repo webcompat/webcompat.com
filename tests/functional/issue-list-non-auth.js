@@ -8,7 +8,7 @@ const { registerSuite } = intern.getInterface("object");
 const FunctionalHelpers = require("./lib/helpers.js");
 
 var url = function(path, params) {
-  var base = intern.config.siteRoot + path;
+  var base = intern.config.functionalBaseUrl + path;
   return params ? base + params : base;
 };
 
@@ -17,7 +17,7 @@ registerSuite("Issue-list", {
     "FilterView renders"() {
       return FunctionalHelpers.openPage(
         this,
-        url("/issues"),
+        url("issues"),
         ".js-SearchIssue-filter"
       )
         .findAllByCssSelector(".js-Tag")
@@ -28,7 +28,7 @@ registerSuite("Issue-list", {
     },
 
     "IssueListView renders"() {
-      return FunctionalHelpers.openPage(this, url("/issues"), ".js-IssueList")
+      return FunctionalHelpers.openPage(this, url("issues"), ".js-IssueList")
         .findByCssSelector(".js-IssueList")
         .isDisplayed()
         .then(function(isDisplayed) {
@@ -77,7 +77,7 @@ registerSuite("Issue-list", {
     "PaginationControlsView tests"() {
       return FunctionalHelpers.openPage(
         this,
-        url("/issues"),
+        url("issues"),
         ".js-Pagination-controls"
       )
         .findByCssSelector(".js-Pagination-controls")
@@ -127,7 +127,7 @@ registerSuite("Issue-list", {
     "Pagination dropdown tests"() {
       return FunctionalHelpers.openPage(
         this,
-        url("/issues"),
+        url("issues"),
         ".js-Pagination-controls"
       )
         .findByCssSelector(".js-Dropdown-pagination")
@@ -185,7 +185,7 @@ registerSuite("Issue-list", {
     "Pressing g goes to github issues"() {
       return FunctionalHelpers.openPage(
         this,
-        url("/issues"),
+        url("issues"),
         ".js-Pagination-controls"
       )
         .findByCssSelector("body")
@@ -207,7 +207,7 @@ registerSuite("Issue-list", {
     "Pressing g inside of search input *doesn't* go to github issues"() {
       return FunctionalHelpers.openPage(
         this,
-        url("/issues"),
+        url("issues"),
         "#js-SearchForm-input"
       )
         .findByCssSelector("#js-SearchForm-input")
@@ -225,7 +225,7 @@ registerSuite("Issue-list", {
     "Loading issues page has default params in URL"() {
       return FunctionalHelpers.openPage(
         this,
-        url("/issues"),
+        url("issues"),
         ".js-IssueList:nth-of-type(1)"
       )
         .getCurrentUrl()
@@ -242,7 +242,7 @@ registerSuite("Issue-list", {
       var params = "?page=2";
       return FunctionalHelpers.openPage(
         this,
-        url("/issues", params),
+        url("issues", params),
         ".js-IssueList:nth-of-type(1)"
       )
         .getCurrentUrl()
@@ -260,7 +260,7 @@ registerSuite("Issue-list", {
 
       return FunctionalHelpers.openPage(
         this,
-        url("/issues", params),
+        url("issues", params),
         ".js-IssueList:nth-of-type(1)"
       )
         .findByCssSelector(".js-Dropdown-pagination .js-Dropdown-label")
@@ -291,7 +291,7 @@ registerSuite("Issue-list", {
       return (
         FunctionalHelpers.openPage(
           this,
-          url("/issues", params),
+          url("issues", params),
           ".js-IssueList:nth-of-type(1)"
         )
           .findByCssSelector(".js-Dropdown-pagination .js-Dropdown-label")
@@ -346,7 +346,7 @@ registerSuite("Issue-list", {
 
       return FunctionalHelpers.openPage(
         this,
-        url("/issues", params),
+        url("issues", params),
         ".js-IssueList:nth-of-type(1)"
       )
         .findByCssSelector(".js-Tag.is-active")
@@ -365,7 +365,7 @@ registerSuite("Issue-list", {
       return (
         FunctionalHelpers.openPage(
           this,
-          url("/issues"),
+          url("issues"),
           ".js-IssueList:nth-of-type(1)"
         )
           .findByCssSelector('[data-filter="contactready"]')
@@ -390,7 +390,7 @@ registerSuite("Issue-list", {
       return (
         FunctionalHelpers.openPage(
           this,
-          url("/issues"),
+          url("issues"),
           ".js-IssueList:nth-of-type(1)"
         )
           .findByCssSelector('[data-filter="closed"]')
@@ -418,7 +418,7 @@ registerSuite("Issue-list", {
       return (
         FunctionalHelpers.openPage(
           this,
-          url("/issues"),
+          url("issues"),
           ".js-IssueList:nth-of-type(1)"
         )
           .findByCssSelector('[data-filter="closed"]')

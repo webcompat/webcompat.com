@@ -8,7 +8,7 @@ const { registerSuite } = intern.getInterface("object");
 const FunctionalHelpers = require("./lib/helpers.js");
 
 var url = function(path) {
-  return intern.config.siteRoot + path;
+  return intern.config.functionalBaseUrl + path;
 };
 
 registerSuite("Issues (auth)", {
@@ -24,7 +24,7 @@ registerSuite("Issues (auth)", {
     "Pressing 'l' opens the label editor box"() {
       return FunctionalHelpers.openPage(
         this,
-        url("/issues/70"),
+        url("issues/70"),
         ".js-Issue-comment-button"
       )
         .findByCssSelector("body")
@@ -48,7 +48,7 @@ registerSuite("Issues (auth)", {
     "Clicking the logout dropdown works"() {
       return FunctionalHelpers.openPage(
         this,
-        url("/issues/70"),
+        url("issues/70"),
         ".js-Issue-comment-button"
       )
         .findByCssSelector(".js-DropdownHeader")

@@ -8,7 +8,7 @@ const { registerSuite } = intern.getInterface("object");
 const FunctionalHelpers = require("./lib/helpers.js");
 
 var url = function(path) {
-  return intern.config.siteRoot + path;
+  return intern.config.functionalBaseUrl + path;
 };
 
 registerSuite("Labels (auth)", {
@@ -24,7 +24,7 @@ registerSuite("Labels (auth)", {
     "Label editor opens then closes (clicks)": function() {
       return FunctionalHelpers.openPage(
         this,
-        url("/issues/2"),
+        url("issues/2"),
         ".js-LabelEditorLauncher",
         true /* longerTimeout */
       )
@@ -48,7 +48,7 @@ registerSuite("Labels (auth)", {
     "Label editor opens then closes (key events)": function() {
       return FunctionalHelpers.openPage(
         this,
-        url("/issues/2"),
+        url("issues/2"),
         ".js-LabelEditorLauncher",
         true /* longerTimeout */
       )
@@ -70,7 +70,7 @@ registerSuite("Labels (auth)", {
     "Clicking outside label editor closes it": function() {
       return FunctionalHelpers.openPage(
         this,
-        url("/issues/2"),
+        url("issues/2"),
         ".js-LabelEditorLauncher",
         true /* longerTimeout */
       )
@@ -93,7 +93,7 @@ registerSuite("Labels (auth)", {
     "Clicking close button actually closes it": function() {
       return FunctionalHelpers.openPage(
         this,
-        url("/issues/2"),
+        url("issues/2"),
         ".js-LabelEditorLauncher",
         true /* longerTimeout */
       )
@@ -115,7 +115,7 @@ registerSuite("Labels (auth)", {
       var count = 0;
       return FunctionalHelpers.openPage(
         this,
-        url("/issues/100"),
+        url("issues/100"),
         ".js-LabelEditorLauncher",
         true /* longerTimeout */
       )

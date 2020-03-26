@@ -8,7 +8,7 @@ const { registerSuite } = intern.getInterface("object");
 const FunctionalHelpers = require("./lib/helpers.js");
 
 var url = function(path) {
-  return intern.config.siteRoot + path;
+  return intern.config.functionalBaseUrl + path;
 };
 
 registerSuite("Reporting (auth)", {
@@ -23,7 +23,7 @@ registerSuite("Reporting (auth)", {
   tests: {
     "Wizard stepper - scenario 1"() {
       return (
-        FunctionalHelpers.openPage(this, url("/issues/new"), "#js-ReportForm")
+        FunctionalHelpers.openPage(this, url("issues/new"), "#js-ReportForm")
           // Manual url enter
           .findByCssSelector("#url")
           .type("http://example.com")
