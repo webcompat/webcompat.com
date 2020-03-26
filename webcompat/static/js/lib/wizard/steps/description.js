@@ -4,8 +4,8 @@
 
 /* Allows the user to enter description of the problem */
 
-import utils from "./utils.js";
-import notify from "./notify.js";
+import { showContainer } from "../ui-utils.js";
+import notify from "../notify.js";
 
 const container = $(".step-container.step8");
 const nextStepButton = container.find(".next-step.step-8");
@@ -15,13 +15,13 @@ nextStepButton.removeClass("disabled");
 
 const handleNext = event => {
   event.preventDefault();
-  notify.publish("showStep", { id: 9 });
+  notify.publish("showStep", { id: "screenshot" });
 };
 
 nextStepButton.on("click", handleNext);
 
 export default {
   show() {
-    utils.showContainer(container);
+    showContainer(container);
   }
 };

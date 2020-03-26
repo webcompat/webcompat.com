@@ -4,8 +4,8 @@
 
 /* Allows the user to select other browsers you have tested on */
 
-import utils from "./utils.js";
-import notify from "./notify.js";
+import { showContainer, hideContainer } from "../ui-utils.js";
+import notify from "../notify.js";
 
 const container = $(".step-container.step6");
 const nextStepButton = container.find("button.next-step.step-6");
@@ -26,18 +26,18 @@ const resetRadio = element => {
 
 const handleNext = event => {
   event.preventDefault();
-  hideStep(7);
-  makeAStep(8);
+  hideStep("warningBrowser");
+  makeAStep("description");
 };
 
 const handleNoOther = event => {
   event.preventDefault();
   resetRadio(radio);
-  makeAStep(7);
+  makeAStep("warningBrowser");
 };
 
 const handleBrowserSelection = () => {
-  hideStep(7);
+  hideStep("warningBrowser");
 };
 
 nextStepButton.on("click", handleNext);
@@ -46,10 +46,10 @@ radio.on("change", handleBrowserSelection);
 
 export default {
   show() {
-    utils.showContainer(container);
+    showContainer(container);
   },
 
   hide() {
-    utils.hideContainer(container, "slideupandheight");
+    hideContainer(container, "slideupandheight");
   }
 };

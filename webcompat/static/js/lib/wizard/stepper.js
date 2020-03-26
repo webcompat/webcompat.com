@@ -3,7 +3,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 import notify from "./notify.js";
-import { STEPS } from "./steps.js";
+import { STEPS } from "./steps/index.js";
 
 const hideStep = id => {
   STEPS[id].hide();
