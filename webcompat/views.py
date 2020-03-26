@@ -265,14 +265,8 @@ def create_issue():
     # Form Prefill section
     if request_type == 'prefill':
         form_data = prepare_form(request)
-
-        if ab_active('exp') == 'form-v2':
-            bug_form = get_form(form_data, form=FormWizard)
-            pagetitle = "New Issue |"
-        else:
-            bug_form = get_form(form_data)
-            pagetitle = "New Issue"
-
+        bug_form = get_form(form_data, form=FormWizard)
+        pagetitle = "New Issue"
         session['extra_labels'] = form_data['extra_labels']
         source = form_data.pop('utm_source', None)
         campaign = form_data.pop('utm_campaign', None)
