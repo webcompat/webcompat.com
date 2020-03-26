@@ -536,7 +536,6 @@ class TestHelpers(unittest.TestCase):
                 ['type-fastclick']
             )
 
-
     def test_process_log_url(self):
         self.assertEqual(get_filename_from_url(
             'https://example.com/file.js'),
