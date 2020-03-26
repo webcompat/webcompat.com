@@ -18,7 +18,7 @@ registerSuite("Reporting through postMessage", {
   tests: {
     "postMessaged object"() {
       return (
-        FunctionalHelpers.openPage(this, url, ".js-report-buttons")
+        FunctionalHelpers.openPage(this, url, "#js-ReportForm")
           // send data object through postMessage
           .execute(POSTMESSAGE_TEST)
           .sleep(1000)
@@ -52,13 +52,6 @@ registerSuite("Reporting through postMessage", {
 });
 
 registerSuite("Reporting through postMessage for the wizard", {
-  before() {
-    return FunctionalHelpers.setCookie(this, { name: "exp", value: "form-v2" });
-  },
-
-  after() {
-    return FunctionalHelpers.deleteCookie(this, "exp");
-  },
   tests: {
     "postMessaged object to the new form"() {
       return (

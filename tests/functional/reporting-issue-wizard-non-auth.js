@@ -10,20 +10,13 @@ const path = require("path");
 
 const cwd = intern.config.basePath;
 const VALID_IMAGE_PATH = path.join(cwd, "tests/fixtures", "green_square.png");
+const BAD_IMAGE_PATH = path.join(cwd, "tests/fixtures", "evil.py");
 
 const url = function(path) {
   return intern.config.siteRoot + path;
 };
 
 registerSuite("Reporting with wizard", {
-  before() {
-    return FunctionalHelpers.setCookie(this, { name: "exp", value: "form-v2" });
-  },
-
-  after() {
-    return FunctionalHelpers.deleteCookie(this, "exp");
-  },
-
   tests: {
     "Space in domain name validation"() {
       return FunctionalHelpers.openPage(
@@ -367,6 +360,47 @@ registerSuite("Reporting with wizard", {
           // Upload an image again
           .findByCssSelector("#image")
           .type(VALID_IMAGE_PATH)
+          .end()
+          // Change for a bad image
+          .findByCssSelector("#image")
+          .type(BAD_IMAGE_PATH)
+          .end()
+          // check the error message
+          .findByCssSelector(".form-upload-error")
+          .getVisibleText()
+          .then(function(text) {
+            assert.include(
+              text,
+              "Image must be one of the following",
+              "Image type validation message is shown"
+            );
+          })
+          .end()
+          .findByCssSelector(".js-image-upload")
+          .getAttribute("style")
+          .then(function(inlineStyle) {
+            assert.notInclude(
+              inlineStyle,
+              "data:image/png;base64,iVBOR",
+              "The previous valid image preview should be removed."
+            );
+          })
+          .end()
+          .findByCssSelector(".js-label-upload")
+          .isDisplayed()
+          .then(function(isDisplayed) {
+            assert.isFalse(
+              isDisplayed,
+              "Upload label is hidden while the error is displayed"
+            );
+          })
+          .end()
+          // pick a valid file type
+          .findByCssSelector("#image")
+          .type(VALID_IMAGE_PATH)
+          .end()
+          // validation message should be gone
+          .waitForDeletedByCssSelector(".form-upload-error")
           .end()
           .sleep(500)
           .findDisplayedByCssSelector(".button.step-10")
