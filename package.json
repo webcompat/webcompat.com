@@ -79,7 +79,7 @@
     "pip": "pip install -r config/requirements-dev.txt",
     "project-update": "pip install --upgrade pip && npm update",
     "test": "npm run test:js && npm run test:python",
-    "test:js": "node ./tests/functional/_intern.js",
+    "test:js": "npx intern",
     "test:python": "pip install -e . && pytest"
   },
   "husky": {
