@@ -61,7 +61,7 @@ Tests are also run automatically on [Circle CI](https://circleci.com/gh/webcompa
 
 We use [Intern](http://theintern.io/) to run functional tests.
 
-> Note: This version is known to work with Firefox 50.1.0. If things aren't working with the current stable version of Firefox, please [file a bug!](https://github.com/webcompat/webcompat.com/issues/new).
+> Note: This version is known to work with Firefox 74.0. If things aren't working with the current stable version of Firefox, please [file a bug!](https://github.com/webcompat/webcompat.com/issues/new).
 
 Be sure that you have installed local npm dependencies and run the build before trying to run functional tests - if not, you will notice problems with the css. [See dev env setup](https://github.com/webcompat/webcompat.com/blob/master/docs/dev-env-setup.md) for details.
 
@@ -131,31 +131,21 @@ Shortly after running this command, a progress indicator should appear in the te
 
 To run a single test suite, where foo.js is the file found in the `tests/functional` directory:
 
-Note: the extra `--` is how you pass arguments to the npm script. Don't forget it!
-
 ```bash
-npm run test:js -- --functionalSuites=tests/functional/foo.js
+npm run test:js functionalSuites=tests/functional/foo.js
 ```
 
-To filter which tests *within* a single test suite you run, you can use the `--grep` argument:
+To filter which tests *within* a single test suite you run, you can use the `grep` argument:
 
 ```bash
-npm run test:js -- --functionalSuites=tests/functional/foo.js --grep=tacos
+npm run test:js grep=tacos functionalSuites=tests/functional/foo.js
 ```
 
 This will run any test within the foo.js suite that has "tacos" in its name.
 
-Right now the tests are running in Firefox and Chrome as a default. You can specify which browsers you want to test with using the `browsers` argument. Like this:
+Right now the tests are running in Firefox and Chrome as a default. You can specify which browsers you want to test by modifying `intern.json` in the project root.
 
-```bash
-npm run test:js -- --browsers=chrome
-```
-
-By default, Chrome and Firefox will run in headless mode. To display the browser UI when running tests, use the `--showBrowser` argument:
-
-```bash
-npm run test:js -- --showBrowser
-```
+By default, Chrome and Firefox will run in headless mode. To display the browser UI when running tests, remove the `headless` arguments for each browser from the `environments` key.
 
 For a list of the recognized browser names, just refer to [Browser enum](http://seleniumhq.github.io/selenium/docs/api/javascript/module/selenium-webdriver/index_exports_Browser.html)
 
