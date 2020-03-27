@@ -34,8 +34,6 @@ jobs:
             python3 -m venv env
             . env/bin/activate
             pip install -r config/requirements-dev.txt
-            # not sure we need this for circleci
-            # npm run config
       - save_cache:
           key: deps1-{{ .Branch }}-{{ checksum "config/requirements-dev.txt" }}
           paths:
@@ -51,9 +49,20 @@ jobs:
             - ./node_modules
           key: v1-npm-{{ .Branch }}-{{ checksum "package.json" }}
 
-      # run tests!
       - run:
-          name: run tests
+          name: Install latest Firefox
+          command: |
+            echo "export PATH=/home/circleci/.local/bin:$PATH" >> $BASH_ENV
+            source $BASH_ENV
+            pip install --user mozdownload mozinstall
+            mozdownload --version latest --destination firefox.tar.bz2
+            mozinstall firefox.tar.bz2
+            sudo ln -sf /home/circleci/repo/firefox/firefox /usr/local/bin/firefox
+            firefox --version
+            which firefox
+
+      - run:
+          name: Run Tests
           command: |
             . env/bin/activate
             NODE_OPTIONS=--max_old_space_size=8192
@@ -63,7 +72,6 @@ jobs:
             pytest tests
             python run.py -t &
             sleep 5
-            firefox --version
             npx intern
       - store_artifacts:
           path: test-reports/
