@@ -8,7 +8,7 @@ const { registerSuite } = intern.getInterface("object");
 const FunctionalHelpers = require("./lib/helpers.js");
 
 var url = function(path) {
-  return intern.config.siteRoot + path;
+  return intern.config.functionalBaseUrl + path;
 };
 
 registerSuite("Milestones (non-auth)", {
@@ -16,7 +16,7 @@ registerSuite("Milestones (non-auth)", {
     "Page loads without milestone set": function() {
       return FunctionalHelpers.openPage(
         this,
-        url("/issues/9"),
+        url("issues/9"),
         ".js-Issue",
         true /* longerTimeout */
       )
@@ -32,7 +32,7 @@ registerSuite("Milestones (non-auth)", {
     "Missing status error displays": function() {
       FunctionalHelpers.openPage(
         this,
-        url("/issues/9"),
+        url("issues/9"),
         ".js-Issue",
         true /* longerTimeout */
       )
@@ -41,7 +41,7 @@ registerSuite("Milestones (non-auth)", {
 
       return FunctionalHelpers.openPage(
         this,
-        url("/issues/9"),
+        url("issues/9"),
         ".js-Issue",
         true /* longerTimeout */
       )

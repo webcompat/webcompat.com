@@ -8,13 +8,13 @@ const { registerSuite } = intern.getInterface("object");
 const FunctionalHelpers = require("./lib/helpers.js");
 
 var url = function(path) {
-  return intern.config.siteRoot + path;
+  return intern.config.functionalBaseUrl + path;
 };
 
 registerSuite("Comments (non-auth)", {
   tests: {
     "Comment form not visible for logged out users"() {
-      return FunctionalHelpers.openPage(this, url("/issues/200"), ".js-Issue")
+      return FunctionalHelpers.openPage(this, url("issues/200"), ".js-Issue")
         .findByCssSelector(".js-Comment-form")
         .then(assert.fail, function(err) {
           assert.isTrue(/NoSuchElement/.test(String(err)));

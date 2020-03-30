@@ -8,10 +8,11 @@ const { registerSuite } = intern.getInterface("object");
 const FunctionalHelpers = require("./lib/helpers.js");
 
 var url = function(path, params) {
+  path = path ? path : "";
   var fullUrl =
     params !== undefined
-      ? intern.config.siteRoot + path + params
-      : intern.config.siteRoot + path;
+      ? intern.config.functionalBaseUrl + path + params
+      : intern.config.functionalBaseUrl + path;
   return fullUrl;
 };
 
@@ -28,7 +29,7 @@ registerSuite("Search (auth)", {
     "Search/filter interaction"() {
       return FunctionalHelpers.openPage(
         this,
-        url("/issues"),
+        url("issues"),
         ".js-SearchForm-button"
       )
         .findDisplayedByCssSelector(".js-SearchForm-button")
@@ -68,7 +69,7 @@ registerSuite("Search (auth)", {
         "?page=1&per_page=50&state=open&stage=all&sort=created&direction=desc&q=vladvlad";
       return FunctionalHelpers.openPage(
         this,
-        url("/issues", params),
+        url("issues", params),
         ".js-IssueList:nth-of-type(1)"
       )
         .findDisplayedByCssSelector(".js-IssueList:nth-of-type(1) a")
@@ -95,7 +96,7 @@ registerSuite("Search (auth)", {
     "Search works by icon click (issues page)"() {
       return FunctionalHelpers.openPage(
         this,
-        url("/issues"),
+        url("issues"),
         ".js-IssueList:nth-of-type(10)"
       )
         .findByCssSelector(".js-SearchForm input")
@@ -119,7 +120,7 @@ registerSuite("Search (auth)", {
     "Search opens by icon click (new issue page)"() {
       return FunctionalHelpers.openPage(
         this,
-        url("/issues/new"),
+        url("issues/new"),
         ".js-ReportForm"
       )
         .findByCssSelector(".js-SearchBarOpen")
@@ -134,7 +135,7 @@ registerSuite("Search (auth)", {
     },
 
     "Search works by icon click (home page)"() {
-      return FunctionalHelpers.openPage(this, url("/"), ".js-SearchBarOpen")
+      return FunctionalHelpers.openPage(this, url(), ".js-SearchBarOpen")
         .findByCssSelector(".js-SearchBarOpen")
         .click()
         .end()
@@ -149,7 +150,7 @@ registerSuite("Search (auth)", {
     "Search works by Return key"() {
       return FunctionalHelpers.openPage(
         this,
-        url("/issues"),
+        url("issues"),
         ".js-SearchForm input"
       )
         .findDisplayedByCssSelector(".js-SearchForm input")
@@ -170,8 +171,8 @@ registerSuite("Search (auth)", {
 
     "Search from the homepage"() {
       return (
-        FunctionalHelpers.openPage(this, url("/"), ".js-SearchBarOpen")
-          .get(url("/"))
+        FunctionalHelpers.openPage(this, url(), ".js-SearchBarOpen")
+          .get(url())
           .findByCssSelector(".js-SearchBarOpen")
           .click()
           .end()
@@ -206,7 +207,7 @@ registerSuite("Search (auth)", {
       var searchParam = "?q=jfdkjfkdjfkdjfdkjfkd";
       return FunctionalHelpers.openPage(
         this,
-        url("/issues", searchParam),
+        url("issues", searchParam),
         ".js-no-results"
       )
         .findByCssSelector("#js-SearchForm-input")
@@ -230,7 +231,7 @@ registerSuite("Search (auth)", {
     },
 
     "After search without results, suggested label appear and have a clickable URL."() {
-      return FunctionalHelpers.openPage(this, url("/issues"), ".grid")
+      return FunctionalHelpers.openPage(this, url("issues"), ".grid")
         .findByCssSelector("#js-SearchForm-input")
         .click()
         .type("noExpectedResult123")
@@ -259,7 +260,7 @@ registerSuite("Search (auth)", {
       var searchParam = "?q=one:two-three";
       return FunctionalHelpers.openPage(
         this,
-        url("/issues", searchParam),
+        url("issues", searchParam),
         ".js-no-results"
       )
         .findByCssSelector("#js-SearchForm-input")

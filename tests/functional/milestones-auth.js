@@ -8,7 +8,7 @@ const { registerSuite } = intern.getInterface("object");
 const FunctionalHelpers = require("./lib/helpers.js");
 
 var url = function(path) {
-  return intern.config.siteRoot + path;
+  return intern.config.functionalBaseUrl + path;
 };
 
 registerSuite("Milestones (auth)", {
@@ -24,7 +24,7 @@ registerSuite("Milestones (auth)", {
     "Milestone editor opens then closes (clicks)"() {
       return FunctionalHelpers.openPage(
         this,
-        url("/issues/2"),
+        url("issues/2"),
         ".js-MilestoneEditorLauncher",
         true /* longerTimeout */
       )
@@ -48,7 +48,7 @@ registerSuite("Milestones (auth)", {
     "Milestone editor opens then closes (key events)"() {
       return FunctionalHelpers.openPage(
         this,
-        url("/issues/2"),
+        url("issues/2"),
         ".js-MilestoneEditorLauncher",
         true /* longerTimeout */
       )
@@ -70,7 +70,7 @@ registerSuite("Milestones (auth)", {
     "Clicking outside milestone editor closes it"() {
       return FunctionalHelpers.openPage(
         this,
-        url("/issues/2"),
+        url("issues/2"),
         ".js-MilestoneEditorLauncher",
         true /* longerTimeout */
       )
@@ -93,7 +93,7 @@ registerSuite("Milestones (auth)", {
     "Clicking close button actually closes it"() {
       return FunctionalHelpers.openPage(
         this,
-        url("/issues/2"),
+        url("issues/2"),
         ".js-MilestoneEditorLauncher",
         true /* longerTimeout */
       )
@@ -114,7 +114,7 @@ registerSuite("Milestones (auth)", {
     "Missing status error displays": function() {
       FunctionalHelpers.openPage(
         this,
-        url("/issues/9"),
+        url("issues/9"),
         ".js-Issue",
         true /* longerTimeout */
       )
@@ -124,7 +124,7 @@ registerSuite("Milestones (auth)", {
 
       return FunctionalHelpers.openPage(
         this,
-        url("/issues/9"),
+        url("issues/9"),
         ".js-Issue",
         true /* longerTimeout */
       )

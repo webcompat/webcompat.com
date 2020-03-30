@@ -7,7 +7,7 @@ const { assert } = intern.getPlugin("chai");
 const { registerSuite } = intern.getInterface("object");
 const FunctionalHelpers = require("./lib/helpers.js");
 
-var url = path => intern.config.siteRoot + path;
+var url = path => intern.config.functionalBaseUrl + path;
 
 registerSuite("Comments (auth)", {
   before() {
@@ -21,7 +21,7 @@ registerSuite("Comments (auth)", {
   tests: {
     "Comments form visible when logged in"() {
       return (
-        FunctionalHelpers.openPage(this, url("/issues/100"), ".js-Issue")
+        FunctionalHelpers.openPage(this, url("issues/100"), ".js-Issue")
           // Comment form visible for logged in users.
           .findDisplayedByCssSelector(".js-Comment-form")
           .end()
@@ -30,7 +30,7 @@ registerSuite("Comments (auth)", {
 
     "Comments form not visible when the issue is locked"() {
       return (
-        FunctionalHelpers.openPage(this, url("/issues/23"), ".js-Issue")
+        FunctionalHelpers.openPage(this, url("issues/23"), ".js-Issue")
           // Comment form should not be visible for locked issues.
           .findByCssSelector(".js-issue-comment-submit")
           .getAttribute("class")
@@ -45,7 +45,7 @@ registerSuite("Comments (auth)", {
       var originalCommentsLength;
       var allCommentsLength;
       return (
-        FunctionalHelpers.openPage(this, url("/issues/100"), ".js-image-upload")
+        FunctionalHelpers.openPage(this, url("issues/100"), ".js-image-upload")
           .findAllByCssSelector(".js-Issue-comment")
           .then(elms => {
             originalCommentsLength = elms.length;
@@ -73,7 +73,7 @@ registerSuite("Comments (auth)", {
     "Posting an empty comment fails"() {
       var originalCommentsLength;
       var allCommentsLength;
-      return FunctionalHelpers.openPage(this, url("/issues/100"), ".js-Issue")
+      return FunctionalHelpers.openPage(this, url("issues/100"), ".js-Issue")
         .findAllByCssSelector(".js-Issue-comment")
         .then(elms => {
           originalCommentsLength = elms.length;
@@ -98,7 +98,7 @@ registerSuite("Comments (auth)", {
     "Pressing 'g' inside of comment textarea *doesn't* go to github issue"() {
       return FunctionalHelpers.openPage(
         this,
-        url("/issues/100"),
+        url("issues/100"),
         ".js-Comment-text"
       )
         .findByCssSelector(".js-Comment-text")
@@ -115,7 +115,7 @@ registerSuite("Comments (auth)", {
     "Pressing 'l' inside of comment textarea *doesn't* open the label editor box"() {
       return FunctionalHelpers.openPage(
         this,
-        url("/issues/100"),
+        url("issues/100"),
         ".js-Comment-text"
       )
         .findByCssSelector(".js-Comment-text")

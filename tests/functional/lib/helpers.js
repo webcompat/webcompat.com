@@ -9,7 +9,8 @@ const pollUntil = require("leadfoot/helpers/pollUntil");
 var config = intern.config;
 
 var url = function(path, params) {
-  var base = intern.config.siteRoot + path;
+  path = path ? path : "";
+  var base = intern.config.functionalBaseUrl + path;
   return params ? base + params : base;
 };
 
@@ -19,7 +20,7 @@ things inside of it. The optional boolean longer arg at the end can
 be used for tests that need more time.
 */
 function openPage(context, path, readySelector, longerTimeout) {
-  var timeout = longerTimeout ? 20000 : config.wc.pageLoadTimeout;
+  var timeout = longerTimeout ? 20000 : config.functionalTimeouts.pageLoad;
 
   return (
     context.remote
@@ -43,24 +44,24 @@ function openPage(context, path, readySelector, longerTimeout) {
 }
 
 function login(context) {
-  return openPage(context, url("/login"), "body").end();
+  return openPage(context, url("login"), "body").end();
 }
 
 function logout(context) {
-  return openPage(context, url("/logout"), "body")
+  return openPage(context, url("logout"), "body")
     .clearCookies()
     .end();
 }
 
 function setCookie(context, cookie) {
-  return openPage(context, url("/"), "body")
+  return openPage(context, url(), "body")
     .setCookie(cookie)
     .sleep(500)
     .end();
 }
 
 function deleteCookie(context, cookieName) {
-  return openPage(context, url("/"), "body")
+  return openPage(context, url(), "body")
     .deleteCookie(cookieName)
     .end();
 }

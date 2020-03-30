@@ -6,7 +6,7 @@ const intern = require("intern").default;
 const http = require("http");
 
 var url = function(path, params) {
-  var base = intern.config.siteRoot + path;
+  var base = intern.config.functionalBaseUrl + path;
   return params ? base + params : base;
 };
 
@@ -18,7 +18,7 @@ it will also check if there's anything wrong with the server.
 
 intern.registerPlugin("checkServer", function() {
   return new Promise(function(resolve, reject) {
-    var request = http.get(url("/api/issues/100"), function(response) {
+    var request = http.get(url("api/issues/100"), function(response) {
       response.on("data", function(data) {
         try {
           var json = JSON.parse(data);

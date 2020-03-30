@@ -13,7 +13,7 @@ const VALID_IMAGE_PATH = path.join(cwd, "tests/fixtures", "green_square.png");
 const BAD_IMAGE_PATH = path.join(cwd, "tests/fixtures", "evil.py");
 
 const url = function(path) {
-  return intern.config.siteRoot + path;
+  return intern.config.functionalBaseUrl + path;
 };
 
 registerSuite("Reporting with wizard", {
@@ -21,7 +21,7 @@ registerSuite("Reporting with wizard", {
     "Space in domain name validation"() {
       return FunctionalHelpers.openPage(
         this,
-        url("/issues/new"),
+        url("issues/new"),
         "#js-ReportForm"
       )
         .findByCssSelector("#url")
@@ -38,7 +38,7 @@ registerSuite("Reporting with wizard", {
     "URL validation"() {
       return FunctionalHelpers.openPage(
         this,
-        url("/issues/new"),
+        url("issues/new"),
         "#js-ReportForm"
       )
         .findByCssSelector("#url")
@@ -75,7 +75,7 @@ registerSuite("Reporting with wizard", {
     },
     "Wizard stepper - scenario 1"() {
       return (
-        FunctionalHelpers.openPage(this, url("/issues/new"), "#js-ReportForm")
+        FunctionalHelpers.openPage(this, url("issues/new"), "#js-ReportForm")
           // Manual url enter
           .findByCssSelector("#url")
           .type("http://example.com")
@@ -156,7 +156,7 @@ registerSuite("Reporting with wizard", {
     },
     "Wizard stepper - scenario 2"() {
       return (
-        FunctionalHelpers.openPage(this, url("/issues/new"), "#js-ReportForm")
+        FunctionalHelpers.openPage(this, url("issues/new"), "#js-ReportForm")
           // Manual url enter
           .findByCssSelector("#url")
           .type("http://example.com")
@@ -257,7 +257,7 @@ registerSuite("Reporting with wizard", {
     },
     "Wizard stepper - scenario 3"() {
       return (
-        FunctionalHelpers.openPage(this, url("/issues/new"), "#js-ReportForm")
+        FunctionalHelpers.openPage(this, url("issues/new"), "#js-ReportForm")
           // Manual url enter
           .findByCssSelector("#url")
           .type("http://example.com")
