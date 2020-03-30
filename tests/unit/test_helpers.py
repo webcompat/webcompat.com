@@ -536,38 +536,6 @@ class TestHelpers(unittest.TestCase):
                 ['type-fastclick']
             )
 
-    def test_get_extra_labels_for_experiment(self):
-        """Test extra_labels extraction with active experiment."""
-        with webcompat.app.test_request_context('/issues/new', method='POST'):
-
-            webcompat.app.config['AB_EXPERIMENTS'] = {
-                'exp': {
-                    'variations': {
-                        'form-v2': (0, 100)
-                    },
-                    'max-age': 86400
-                }
-            }
-
-            # need to call this since g.current_experiments
-            # is defined in before_request
-            webcompat.app.preprocess_request()
-
-            self.assertEqual(get_extra_labels(
-                {'extra_labels': '["type-marfeel", "browser-fenix"]'}),
-                ['type-marfeel', 'browser-fenix', 'form-v2-experiment']
-            )
-
-            self.assertEqual(get_extra_labels({'extra_labels': '[]'}),
-                             ['form-v2-experiment'])
-
-            session['extra_labels'] = ['type-fastclick']
-
-            self.assertEqual(get_extra_labels(
-                {'extra_labels': '["type-marfeel", "browser-fenix"]'}),
-                ['type-fastclick', 'form-v2-experiment']
-            )
-
     def test_process_log_url(self):
         self.assertEqual(get_filename_from_url(
             'https://example.com/file.js'),

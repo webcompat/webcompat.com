@@ -212,7 +212,6 @@ EXTRA_LABELS = [
     'browser-fenix',
     'browser-focus-geckoview',
     'browser-firefox-reality',
-    'form-v2-experiment',
     'type-fastclick',
     'type-google',
     'type-marfeel',
@@ -226,14 +225,14 @@ EXTRA_LABELS = [
 
 # Get AB experiment variation values from the environement.
 AB_VARIATIONS = {
-    'FORM_V1_VARIATION': os.environ.get('FORM_V1_VARIATION', '0 100'),
-    'FORM_V2_VARIATION': os.environ.get('FORM_V2_VARIATION', '100 100'),
+    'V1_VARIATION': os.environ.get('V1_VARIATION', '0 100'),
+    'V2_VARIATION': os.environ.get('V2_VARIATION', '100 100'),
 }
 # We define default values here, as a fallback.
 # By default, v1 will be served 100% of the time.
 AB_DEFAULTS = {
-    'FORM_V1_VARIATION': (0, 100),
-    'FORM_V2_VARIATION': (100, 100),
+    'V1_VARIATION': (0, 100),
+    'V2_VARIATION': (100, 100),
 }
 EXP_MAX_AGE = int(os.environ.get('EXP_MAX_AGE', 0))
 
@@ -241,10 +240,8 @@ EXP_MAX_AGE = int(os.environ.get('EXP_MAX_AGE', 0))
 AB_EXPERIMENTS = {
     'exp': {
         'variations': {
-            'form-v1': get_variation('FORM_V1_VARIATION', AB_VARIATIONS,
-                                     AB_DEFAULTS),
-            'form-v2': get_variation('FORM_V2_VARIATION', AB_VARIATIONS,
-                                     AB_DEFAULTS),
+            'v1': get_variation('V1_VARIATION', AB_VARIATIONS, AB_DEFAULTS),
+            'v2': get_variation('V2_VARIATION', AB_VARIATIONS, AB_DEFAULTS),
         },
         'max-age': EXP_MAX_AGE
     }
