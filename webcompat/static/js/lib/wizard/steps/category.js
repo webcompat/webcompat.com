@@ -4,8 +4,9 @@
 
 /* Allows the user to select a category of the problem they're experiencing */
 
-import { showContainer } from "../ui-utils.js";
 import notify from "../notify.js";
+import { isEmpty } from "../validation.js";
+import { showSuccess, hideSuccess, showContainer } from "../ui-utils.js";
 
 const container = $(".step-container.step2");
 const detectionBug = $("#problem_category-0");
@@ -16,9 +17,7 @@ const unknownBug = $("#problem_category-4");
 const sitePrettyUrl = $("#website-url");
 const otherProblem = $(".other-problem");
 const nextStepButton = $(".next-step.step-2");
-
-//@todo remove this
-nextStepButton.removeClass("disabled");
+const otherProblemField = $("#other_problem");
 
 const showUnknown = () =>
   otherProblem.css("animation-name", "slidedownandheight");
@@ -46,6 +45,18 @@ const handleUnknownBug = () => {
   hideStep("confirmBrowser");
 };
 
+const onChange = event => {
+  const isValid = !isEmpty(event.target.value);
+
+  if (isValid) {
+    showSuccess(otherProblemField);
+  } else {
+    hideSuccess(otherProblemField);
+  }
+
+  nextStepButton.prop("disabled", !isValid);
+};
+
 const handleNextStep = event => {
   event.preventDefault();
   showStep("confirmBrowser");
@@ -59,6 +70,7 @@ const initListeners = () => {
   layoutBug.on("change", handleBugWithSubCategory);
   videoBug.on("change", handleBugWithSubCategory);
   unknownBug.on("change", handleUnknownBug);
+  otherProblemField.on("blur input", onChange);
   nextStepButton.on("click", handleNextStep);
 };
 

@@ -5,3 +5,7 @@
 export const isUrlValid = value => {
   return /^https?:\/\/(?!.*:\/\/)\S+/.test(value);
 };
+
+export const isEmpty = value => {
+  return !value.trim();
+};
