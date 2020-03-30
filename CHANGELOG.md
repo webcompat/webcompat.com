@@ -4,6 +4,22 @@
 2. New features: affect minor number
 3. API endpoint changes or dependency version updates: affect major number
 
+## 29.0.0 - 2020-03-30
+
+* Fixes #3250 - Makes form wizard the default [Pull #3252](https://github.com/webcompat/webcompat.com/pull/3252)
+* Fixes #3248 - pin grunt to 1.0.4 [Pull #3248](https://github.com/webcompat/webcompat.com/pull/3248)
+* NPM update - Update yargs to the latest version. [Pull #3242](https://github.com/webcompat/webcompat.com/pull/3242)
+* Fixes #3239 - Remove IRC info, replace it with Matrix info [Pull #3240](https://github.com/webcompat/webcompat.com/pull/3240)
+* Fixes #3235 - pin yargs to 15.2.0 [Pull #3237](https://github.com/webcompat/webcompat.com/pull/3237)
+* Fixes #3199 - Changed blacklisted by blocked [Pull #3228](https://github.com/webcompat/webcompat.com/pull/3228)
+* NPM update - Update lint-staged to the latest version. [Pull #3227](https://github.com/webcompat/webcompat.com/pull/3227)
+* Fixes #3226 - Update Code of Conduct contact points. [Pull #3225](https://github.com/webcompat/webcompat.com/pull/3225)
+* Fixes #3196 - Add functional tests for the new form UI [Pull #3221](https://github.com/webcompat/webcompat.com/pull/3221)
+* Fixes #2807 - Upgrade lodash to 4.17.5 [Pull #3220](https://github.com/webcompat/webcompat.com/pull/3220)
+* Fixes #3211 - Use _bp naming convention consistently [Pull #3219](https://github.com/webcompat/webcompat.com/pull/3219)
+* Fixes #3208 - Use more Pythonic get default value [Pull #3218](https://github.com/webcompat/webcompat.com/pull/3218)
+* Fixes #3208 - Moves to boolean flag for anonymous reporting [Pull #3217](https://github.com/webcompat/webcompat.com/pull/3217)
+
 ## 28.0.0 - 2020-02-21
 
 * Fixes #3201 - adds public uri to the private issue [Pull #3215](https://github.com/webcompat/webcompat.com/pull/3215)
