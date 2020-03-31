@@ -4,16 +4,13 @@
 
 /* Allows the user to select other browsers you have tested on */
 
-import { showContainer, hideContainer } from "../ui-utils.js";
 import notify from "../notify.js";
+import { showContainer, hideContainer } from "../ui-utils.js";
 
 const container = $(".step-container.step6");
 const nextStepButton = container.find("button.next-step.step-6");
 const noOtherButton = container.find(".no-other-browser");
 const radio = container.find("input");
-
-//@todo remove this
-nextStepButton.removeClass("disabled");
 
 const makeAStep = id => notify.publish("showStep", { id });
 const hideStep = id => notify.publish("hideStep", id);
@@ -38,6 +35,7 @@ const handleNoOther = event => {
 
 const handleBrowserSelection = () => {
   hideStep("warningBrowser");
+  nextStepButton.prop("disabled", false);
 };
 
 nextStepButton.on("click", handleNext);

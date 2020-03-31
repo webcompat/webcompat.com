@@ -4,20 +4,43 @@
 
 /* Allows the user to enter description of the problem */
 
-import { showContainer } from "../ui-utils.js";
 import notify from "../notify.js";
+import { charsPercent } from "../utils.js";
+import { showContainer } from "../ui-utils.js";
+
+const MIN_CHARACTERS = 30;
 
 const container = $(".step-container.step8");
+const descriptionField = container.find("#steps_reproduce");
+const progress = container.find(".problem-description .progress");
+const bar = progress.find(".bar");
 const nextStepButton = container.find(".next-step.step-8");
-
-//@todo remove this
-nextStepButton.removeClass("disabled");
 
 const handleNext = event => {
   event.preventDefault();
   notify.publish("showStep", { id: "screenshot" });
 };
 
+const updateProgress = percent => {
+  const isReady = percent === 100;
+
+  bar.css("width", `${percent}%`);
+
+  if (isReady) {
+    progress.addClass("complete");
+  } else {
+    progress.removeClass("complete");
+  }
+
+  nextStepButton.prop("disabled", !isReady);
+};
+
+const onChange = value => {
+  const percent = charsPercent(value, MIN_CHARACTERS);
+  updateProgress(percent);
+};
+
+descriptionField.on("blur input", event => onChange(event.target.value));
 nextStepButton.on("click", handleNext);
 
 export default {
