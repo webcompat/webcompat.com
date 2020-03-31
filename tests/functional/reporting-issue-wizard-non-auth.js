@@ -61,9 +61,9 @@ registerSuite("Reporting with wizard", {
         })
         .end()
         .findByCssSelector(".button.step-1")
-        .getAttribute("class")
-        .then(function(className) {
-          assert.include(className, "disabled");
+        .getAttribute("disabled")
+        .then(function(attribute) {
+          assert.isNotNull(attribute);
         })
         .end()
         .findByCssSelector("#url")
@@ -95,10 +95,10 @@ registerSuite("Reporting with wizard", {
           .end()
           .sleep(500)
           .findByCssSelector(".button.step-6")
-          .getAttribute("class")
-          .then(function(className) {
+          .getAttribute("disabled")
+          .then(function(attribute) {
             // Make sure that "Confirm" button is disabled if browser is not selected
-            assert.include(className, "disabled");
+            assert.isNotNull(attribute);
           })
           .execute(function() {
             // Click on "Chrome"
@@ -116,10 +116,10 @@ registerSuite("Reporting with wizard", {
           .end()
           .sleep(500)
           .findDisplayedByCssSelector(".button.step-8")
-          .getAttribute("class")
-          .then(function(className) {
+          .getAttribute("disabled")
+          .then(function(attribute) {
             // Make sure "Continue" is disabled if there are not enough characters
-            assert.include(className, "disabled");
+            assert.isNotNull(attribute);
           })
           .end()
           .findById("steps_reproduce")
@@ -181,10 +181,10 @@ registerSuite("Reporting with wizard", {
           .clearValue()
           .end()
           .findByCssSelector(".button.step-5")
-          .getAttribute("class")
-          .then(function(className) {
+          .getAttribute("disabled")
+          .then(function(attribute) {
             // Make sure  that "Confirm" button is disabled when "Browser" field is empty
-            assert.include(className, "disabled");
+            assert.isNotNull(attribute);
           })
           .end()
           .findById("browser")
@@ -283,11 +283,11 @@ registerSuite("Reporting with wizard", {
             $("[for=problem_category-4]")[0].click();
           })
           .sleep(500)
-          .findByCssSelector(".button.step-3")
-          .getAttribute("class")
-          .then(function(className) {
+          .findByCssSelector(".button.step-2")
+          .getAttribute("disabled")
+          .then(function(attribute) {
             // Make sure that "Confirm" button is disabled if there is no problem description
-            assert.include(className, "disabled");
+            assert.isNotNull(attribute);
           })
           .end()
           // Fill in "Issue description"
@@ -296,7 +296,7 @@ registerSuite("Reporting with wizard", {
           .end()
           .sleep(500)
           // Click on "Confirm" button
-          .findByCssSelector(".button.step-3")
+          .findByCssSelector(".button.step-2")
           .click()
           .end()
           .sleep(1000)
@@ -321,10 +321,10 @@ registerSuite("Reporting with wizard", {
           .end()
           .sleep(500)
           .findDisplayedByCssSelector(".button.step-8")
-          .getAttribute("class")
-          .then(function(className) {
+          .getAttribute("disabled")
+          .then(function(attribute) {
             // Make sure "Continue" is disabled if there are not enough characters
-            assert.include(className, "disabled");
+            assert.isNotNull(attribute);
           })
           .end()
           // Enter more than 30 characters in the description field
