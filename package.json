@@ -39,7 +39,7 @@
     "grunt-contrib-watch": "^1.1.0",
     "grunt-postcss": "^0.9.0",
     "husky": "^4.0.2",
-    "intern": "4.7.1",
+    "intern": "4.8.1",
     "leadfoot": "1.7.6",
     "lint-staged": "^10.0.8",
     "load-grunt-tasks": "^5.0.0",
