@@ -17,7 +17,7 @@ import urllib.parse
 
 import requests
 
-from config.environment import *  # noqa
+import config.environment as cfg
 
 MILESTONE_ERROR = """It failed with {msg}!
 We will read from data/milestones.json.
@@ -44,15 +44,16 @@ def initialize_status():
     """
     milestones_content = None
     print('Statuses Initialization…')
-    REPO_ROOT = ISSUES_REPO_URI.rpartition('/issues')[0]
+    REPO_ROOT = cfg.ISSUES_REPO_URI.rpartition('/issues')[0]
     milestones_url_path = os.path.normcase(
         os.path.join('repos', REPO_ROOT, 'milestones'))
     milestones_url = urllib.parse.urlunparse(
         ('https', 'api.github.com', milestones_url_path, '', '', ''))
-    milestones_path = os.path.join(DATA_PATH, 'milestones.json')
+    milestones_path = os.path.join(cfg.DATA_PATH, 'milestones.json')
     # Attempt to fetch from data/milestones.json
     milestones_content = milestones_from_file(milestones_path)
-    milestones_backup_path = os.path.join(DATA_PATH, 'milestones_backup.json')
+    milestones_backup_path = os.path.join(cfg.DATA_PATH,
+                                          'milestones_backup.json')
     if not milestones_content:
         try:
             # Get the milestone from the network
@@ -99,7 +100,7 @@ def update_status_config(milestones_content):
     """Convert the JSON milestones from GitHub to a simple dict."""
     milestones = json.loads(milestones_content)
     # Test that GitHub milestones and local definitions are equivalent
-    status_names = sorted(STATUSES.keys())
+    status_names = sorted(cfg.STATUSES.keys())
     milestone_names = sorted([milestone['title'] for milestone in milestones])
     # Check if there is a missing milestone. The app will not start.
     if not set(status_names).issubset(milestone_names):
@@ -115,8 +116,8 @@ def update_status_config(milestones_content):
     # Assign the right id to the status.
     for milestone in milestones:
         if milestone['title'] in status_names:
-            STATUSES[milestone['title']]['id'] = milestone['number']
-    return STATUSES
+            cfg.STATUSES[milestone['title']]['id'] = milestone['number']
+    return cfg.STATUSES
 
 
 def get_variation(variation_key, variations_dict, defaults_dict):
@@ -154,12 +155,12 @@ RATELIMIT_STRATEGY = 'moving-window'
 
 DEBUG = False
 
-if not PRODUCTION:
+if not cfg.PRODUCTION:
     DEBUG = True
 
 # localhost runs on HTTP
 # use secure and samesite flags on session cookie otherwise
-if not LOCALHOST:
+if not cfg.LOCALHOST:
     SESSION_COOKIE_SECURE = True
     SESSION_COOKIE_SAMESITE = 'Lax'
 
@@ -183,7 +184,7 @@ tempfile.tempdir = tmp_path
 print('Writing logs to: {}'.format(tempfile.gettempdir()))
 
 LOG_FILE = os.path.join(tempfile.gettempdir(), 'webcompat.log')
-if STAGING:
+if cfg.STAGING:
     LOG_FILE = os.path.join(tempfile.gettempdir(), 'staging-webcompat.log')
 LOG_FMT = '%(asctime)s tracking %(message)s'
 CSP_REPORTS_LOG = os.path.join(
