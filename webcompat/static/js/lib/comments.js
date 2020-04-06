@@ -6,19 +6,19 @@ var issues = issues || {}; // eslint-disable-line no-use-before-define
 
 issues.CommentsCollection = Backbone.Collection.extend({
   model: issues.Comment,
-  url: function() {
+  url: function () {
     var issueNumber = $("main").data("issueNumber");
     return "/api/issues/" + issueNumber + "/comments?page=" + this.pageNumber;
   },
-  initialize: function(options) {
+  initialize: function (options) {
     this.pageNumber = options.pageNumber;
   },
-  fetchPage: function(options) {
+  fetchPage: function (options) {
     if (options.pageNumber) {
       this.pageNumber = options.pageNumber;
     }
     return this.fetch(options);
-  }
+  },
 });
 
 var commentMarkdownSanitizer = new MarkdownSanitizerMixin();
@@ -26,14 +26,14 @@ var commentMarkdownSanitizer = new MarkdownSanitizerMixin();
 issues.CommentView = Backbone.View.extend(
   _.extend({}, commentMarkdownSanitizer, {
     className: "issue-comment js-Issue-comment grid-cell x2",
-    id: function() {
+    id: function () {
       return this.model.get("commentLinkId");
     },
     template: wcTmpl["issue/issue-comment-list.jst"],
-    render: function() {
+    render: function () {
       var modelData = this.model.toJSON();
       this.$el.html(this.template(modelData));
       return this;
-    }
+    },
   })
 );

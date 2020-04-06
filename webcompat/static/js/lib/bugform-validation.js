@@ -3,7 +3,7 @@ function Validation() {
   var GITHUB_REGEXP = /^[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}$/i;
   var ALLOWED_IMG_FORMAT = ["jpg", "jpeg", "jpe", "png", "gif", "bmp"];
 
-  var isReportableURL = function(url) {
+  var isReportableURL = function (url) {
     var ok = url && (_.startsWith(url, "http:") || _.startsWith(url, "https:"));
     ok &= !(_.startsWith(url, "http:// ") || _.startsWith(url, "https:// "));
     return ok;
@@ -15,38 +15,38 @@ function Validation() {
    - alphanumerical characters and hyphens
    - no two consecutive hyphens
    */
-  var isValidGitHubUsername = function(contact) {
+  var isValidGitHubUsername = function (contact) {
     return GITHUB_REGEXP.test(contact);
   };
 
   return {
-    isDescriptionValid: function(descField) {
+    isDescriptionValid: function (descField) {
       var val = descField.val();
       return $.trim(val) !== "";
     },
-    isIssueValid: function(issueField) {
+    isIssueValid: function (issueField) {
       var val = issueField.val();
       return $.trim(val) !== "";
     },
-    isUrlValid: function(urlField) {
+    isUrlValid: function (urlField) {
       var val = urlField.val();
       return $.trim(val) !== "" && isReportableURL(val);
     },
-    isGithubUserNameValid: function(contactField) {
+    isGithubUserNameValid: function (contactField) {
       var contact = contactField.val();
       return isValidGitHubUsername(contact) || $.trim(contact) === "";
     },
-    isProblemTypeValid: function(problemTypeField) {
+    isProblemTypeValid: function (problemTypeField) {
       return problemTypeField.filter(":checked").length;
     },
-    isImageTypeValid: function(uploadField) {
+    isImageTypeValid: function (uploadField) {
       var splitImg = uploadField.val().split(".");
       var ext = splitImg[splitImg.length - 1].toLowerCase();
 
       return _.includes(ALLOWED_IMG_FORMAT, ext);
     },
-    isOptionalValid: function(input) {
+    isOptionalValid: function (input) {
       return !!input.val();
-    }
+    },
   };
 }

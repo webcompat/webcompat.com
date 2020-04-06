@@ -12,7 +12,7 @@ const cwd = intern.config.basePath;
 const VALID_IMAGE_PATH = path.join(cwd, "tests/fixtures", "green_square.png");
 const BAD_IMAGE_PATH = path.join(cwd, "tests/fixtures", "evil.py");
 
-const url = function(path) {
+const url = function (path) {
   return intern.config.functionalBaseUrl + path;
 };
 
@@ -28,7 +28,7 @@ registerSuite("Reporting with wizard", {
         .click()
         .type("http:// example.com")
         .end()
-        .execute(function() {
+        .execute(function () {
           var elm = document.querySelector("#url");
           WindowHelpers.sendEvent(elm, "blur");
         })
@@ -46,13 +46,13 @@ registerSuite("Reporting with wizard", {
         .type("sup")
         .end()
         .sleep(500)
-        .execute(function() {
+        .execute(function () {
           var elm = document.querySelector("#url");
           WindowHelpers.sendEvent(elm, "blur");
         })
         .findByCssSelector(".form-message-error")
         .getVisibleText()
-        .then(function(texts) {
+        .then(function (texts) {
           assert.include(
             texts,
             "A valid URL is required",
@@ -62,7 +62,7 @@ registerSuite("Reporting with wizard", {
         .end()
         .findByCssSelector(".button.step-1")
         .getAttribute("class")
-        .then(function(className) {
+        .then(function (className) {
           assert.include(className, "disabled");
         })
         .end()
@@ -84,7 +84,7 @@ registerSuite("Reporting with wizard", {
           .findByCssSelector(".button.step-1")
           .click()
           .end()
-          .execute(function() {
+          .execute(function () {
             // Click on "Desktop site instead of mobile site"
             $("[for=problem_category-0]")[0].click();
           })
@@ -96,11 +96,11 @@ registerSuite("Reporting with wizard", {
           .sleep(500)
           .findByCssSelector(".button.step-6")
           .getAttribute("class")
-          .then(function(className) {
+          .then(function (className) {
             // Make sure that "Confirm" button is disabled if browser is not selected
             assert.include(className, "disabled");
           })
-          .execute(function() {
+          .execute(function () {
             // Click on "Chrome"
             $("[for=tested_browsers-0]")[0].click();
           })
@@ -117,7 +117,7 @@ registerSuite("Reporting with wizard", {
           .sleep(500)
           .findDisplayedByCssSelector(".button.step-8")
           .getAttribute("class")
-          .then(function(className) {
+          .then(function (className) {
             // Make sure "Continue" is disabled if there are not enough characters
             assert.include(className, "disabled");
           })
@@ -139,7 +139,7 @@ registerSuite("Reporting with wizard", {
           .sleep(500)
           .findDisplayedByCssSelector(".button.step-10")
           .getVisibleText()
-          .then(function(text) {
+          .then(function (text) {
             // Make sure that there is "Continue" button after uploading
             assert.include(text, "Continue", "Continue with image attached");
           })
@@ -165,7 +165,7 @@ registerSuite("Reporting with wizard", {
           .findByCssSelector(".button.step-1")
           .click()
           .end()
-          .execute(function() {
+          .execute(function () {
             // Click on "Design is broken"
             $("[for=problem_category-2]")[0].click();
             // Click on "Images not loaded"
@@ -182,7 +182,7 @@ registerSuite("Reporting with wizard", {
           .end()
           .findByCssSelector(".button.step-5")
           .getAttribute("class")
-          .then(function(className) {
+          .then(function (className) {
             // Make sure  that "Confirm" button is disabled when "Browser" field is empty
             assert.include(className, "disabled");
           })
@@ -204,7 +204,7 @@ registerSuite("Reporting with wizard", {
           .findByCssSelector(".no-other-browser")
           .click()
           .end()
-          .execute(function() {
+          .execute(function () {
             // Click on "What is a web compatibility issue?"
             $(".popup-trigger")[0].click();
           })
@@ -218,7 +218,7 @@ registerSuite("Reporting with wizard", {
           .sleep(500)
           .findByCssSelector(".button.step-7")
           .getVisibleText()
-          .then(function(text) {
+          .then(function (text) {
             // Make sure there is "Continue without testing" button
             assert.include(text, "Continue without testing");
           })
@@ -236,7 +236,7 @@ registerSuite("Reporting with wizard", {
           .sleep(500)
           .findDisplayedByCssSelector(".button.step-10")
           .getVisibleText()
-          .then(function(text) {
+          .then(function (text) {
             // Make sure there is "Continue without" button if there is no image
             assert.include(
               text,
@@ -262,7 +262,7 @@ registerSuite("Reporting with wizard", {
           .findByCssSelector("#url")
           .type("http://example.com")
           .end()
-          .execute(function() {
+          .execute(function () {
             // Click on "Learn more about web compatibility" link
             $(".popup-trigger")[0].click();
           })
@@ -278,14 +278,14 @@ registerSuite("Reporting with wizard", {
           .findByCssSelector(".button.step-1")
           .click()
           .end()
-          .execute(function() {
+          .execute(function () {
             // Click on "Something else"
             $("[for=problem_category-4]")[0].click();
           })
           .sleep(500)
           .findByCssSelector(".button.step-3")
           .getAttribute("class")
-          .then(function(className) {
+          .then(function (className) {
             // Make sure that "Confirm" button is disabled if there is no problem description
             assert.include(className, "disabled");
           })
@@ -305,7 +305,7 @@ registerSuite("Reporting with wizard", {
           .click()
           .end()
           .sleep(500)
-          .execute(function() {
+          .execute(function () {
             // Click on "Other" in the browsers list
             $("[for=tested_browsers-5]")[0].click();
           })
@@ -322,7 +322,7 @@ registerSuite("Reporting with wizard", {
           .sleep(500)
           .findDisplayedByCssSelector(".button.step-8")
           .getAttribute("class")
-          .then(function(className) {
+          .then(function (className) {
             // Make sure "Continue" is disabled if there are not enough characters
             assert.include(className, "disabled");
           })
@@ -348,7 +348,7 @@ registerSuite("Reporting with wizard", {
           .end()
           .findDisplayedByCssSelector(".button.step-10")
           .getVisibleText()
-          .then(function(text) {
+          .then(function (text) {
             // Make sure there is "Continue without" button after image deletion
             assert.include(
               text,
@@ -368,7 +368,7 @@ registerSuite("Reporting with wizard", {
           // check the error message
           .findByCssSelector(".form-upload-error")
           .getVisibleText()
-          .then(function(text) {
+          .then(function (text) {
             assert.include(
               text,
               "Image must be one of the following",
@@ -378,7 +378,7 @@ registerSuite("Reporting with wizard", {
           .end()
           .findByCssSelector(".js-image-upload")
           .getAttribute("style")
-          .then(function(inlineStyle) {
+          .then(function (inlineStyle) {
             assert.notInclude(
               inlineStyle,
               "data:image/png;base64,iVBOR",
@@ -388,7 +388,7 @@ registerSuite("Reporting with wizard", {
           .end()
           .findByCssSelector(".js-label-upload")
           .isDisplayed()
-          .then(function(isDisplayed) {
+          .then(function (isDisplayed) {
             assert.isFalse(
               isDisplayed,
               "Upload label is hidden while the error is displayed"
@@ -405,7 +405,7 @@ registerSuite("Reporting with wizard", {
           .sleep(500)
           .findDisplayedByCssSelector(".button.step-10")
           .getVisibleText()
-          .then(function(text) {
+          .then(function (text) {
             // Make sure there is "Continue" button after second upload
             assert.include(
               text,
@@ -423,6 +423,6 @@ registerSuite("Reporting with wizard", {
           .findDisplayedById("open-username")
           .end()
       );
-    }
-  }
+    },
+  },
 });

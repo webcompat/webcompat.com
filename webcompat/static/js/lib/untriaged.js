@@ -7,34 +7,34 @@ var issues = issues || {}; // eslint-disable-line no-use-before-define
 
 untriaged.NeedsTriageCollection = Backbone.Collection.extend({
   model: issues.Issue,
-  url: "/api/issues/category/needstriage?per_page=5"
+  url: "/api/issues/category/needstriage?per_page=5",
 });
 
 untriaged.NeedsTriageView = Backbone.View.extend({
   el: $("#js-lastIssue"),
-  initialize: function() {
+  initialize: function () {
     var self = this;
     var headersBag = { headers: { Accept: "application/json" } };
     this.issues = new untriaged.NeedsTriageCollection();
     this.issues
       .fetch(headersBag)
-      .done(function() {
+      .done(function () {
         self.render();
       })
-      .fail(function() {});
+      .fail(function () {});
   },
   template: wcTmpl["web_modules/issue-list.jst"],
-  render: function() {
+  render: function () {
     this.$el.html(
       this.template({
         // Just display the first 5.
-        issues: this.issues.toJSON().slice(0, 5)
+        issues: this.issues.toJSON().slice(0, 5),
       })
     );
     return this;
-  }
+  },
 });
 
-$(function() {
+$(function () {
   new untriaged.NeedsTriageView();
 });

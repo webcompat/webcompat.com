@@ -8,7 +8,7 @@ const pollUntil = require("leadfoot/helpers/pollUntil");
 
 var config = intern.config;
 
-var url = function(path, params) {
+var url = function (path, params) {
   path = path ? path : "";
   var base = intern.config.functionalBaseUrl + path;
   return params ? base + params : base;
@@ -29,14 +29,14 @@ function openPage(context, path, readySelector, longerTimeout) {
       // Wait until the `readySelector` element is found to return.
       .findByCssSelector(readySelector)
       .end()
-      .then(null, function(err) {
+      .then(null, function (err) {
         return context.remote
           .getCurrentUrl()
-          .then(function(resultUrl) {
+          .then(function (resultUrl) {
             console.log("Error fetching %s", resultUrl);
           })
           .end()
-          .then(function() {
+          .then(function () {
             throw err;
           });
       })
@@ -48,22 +48,15 @@ function login(context) {
 }
 
 function logout(context) {
-  return openPage(context, url("logout"), "body")
-    .clearCookies()
-    .end();
+  return openPage(context, url("logout"), "body").clearCookies().end();
 }
 
 function setCookie(context, cookie) {
-  return openPage(context, url(), "body")
-    .setCookie(cookie)
-    .sleep(500)
-    .end();
+  return openPage(context, url(), "body").setCookie(cookie).sleep(500).end();
 }
 
 function deleteCookie(context, cookieName) {
-  return openPage(context, url(), "body")
-    .deleteCookie(cookieName)
-    .end();
+  return openPage(context, url(), "body").deleteCookie(cookieName).end();
 }
 
 module.exports = {
@@ -72,5 +65,5 @@ module.exports = {
   openPage: openPage,
   pollUntil: pollUntil,
   setCookie: setCookie,
-  deleteCookie: deleteCookie
+  deleteCookie: deleteCookie,
 };

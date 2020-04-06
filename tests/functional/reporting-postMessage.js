@@ -24,31 +24,31 @@ registerSuite("Reporting through postMessage", {
           .sleep(1000)
           .findByCssSelector("#url")
           .getProperty("value")
-          .then(function(value) {
+          .then(function (value) {
             assert.include(value, "http://example.com");
           })
           .end()
           .findByCssSelector("#details")
           .getProperty("value")
-          .then(function(value) {
+          .then(function (value) {
             assert.include(value, "gfx.webrender.all");
           })
           .end()
           .findByCssSelector("#reported_with")
           .getProperty("value")
-          .then(function(value) {
+          .then(function (value) {
             assert.include(value, "desktop-reporter");
           })
           .end()
           .findByCssSelector("#extra_labels")
           .getProperty("value")
-          .then(function(value) {
+          .then(function (value) {
             assert.include(value, "type-marfeel");
           })
           .end()
       );
-    }
-  }
+    },
+  },
 });
 
 registerSuite("Reporting through postMessage for the wizard", {
@@ -61,29 +61,29 @@ registerSuite("Reporting through postMessage for the wizard", {
           .sleep(1000)
           .findByCssSelector("#url")
           .getProperty("value")
-          .then(function(value) {
+          .then(function (value) {
             assert.include(value, "http://example.com");
           })
           .end()
           .findByCssSelector("#details")
           .getProperty("value")
-          .then(function(value) {
+          .then(function (value) {
             assert.include(value, "gfx.webrender.all");
           })
           .end()
           .findByCssSelector("#reported_with")
           .getProperty("value")
-          .then(function(value) {
+          .then(function (value) {
             assert.include(value, "desktop-reporter");
           })
           .end()
           .findByCssSelector("#extra_labels")
           .getProperty("value")
-          .then(function(value) {
+          .then(function (value) {
             assert.include(value, "type-marfeel");
           })
           .end()
       );
-    }
-  }
+    },
+  },
 });

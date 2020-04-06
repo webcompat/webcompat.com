@@ -8,8 +8,8 @@
 
 /* eslint-disable no-unused-vars, no-undef */
 var WindowHelpers = {
-  getBlob: function() {
-    return new Promise(function(resolve, reject) {
+  getBlob: function () {
+    return new Promise(function (resolve, reject) {
       var c = document.createElement("canvas");
       c.width = 25;
       c.height = 25;
@@ -21,7 +21,7 @@ var WindowHelpers = {
       ctx.strokeStyle = "rgb(0, 0, 0)";
       ctx.strokeRect(0, 0, 25, 25);
       try {
-        c.toBlob(function(blob) {
+        c.toBlob(function (blob) {
           resolve(blob);
         });
       } catch (ex) {
@@ -30,21 +30,21 @@ var WindowHelpers = {
     });
   },
 
-  sendBlobInObject: function(blob) {
-    return new Promise(function(res) {
+  sendBlobInObject: function (blob) {
+    return new Promise(function (res) {
       postMessage({ screenshot: blob, message: {} }, "http://localhost:5000");
       res();
     });
   },
 
-  sendBlob: function(blob) {
-    return new Promise(function(res) {
+  sendBlob: function (blob) {
+    return new Promise(function (res) {
       postMessage(blob, "http://localhost:5000");
       res();
     });
   },
 
-  sendEvent: function(elm, type) {
+  sendEvent: function (elm, type) {
     elm.dispatchEvent(new Event(type), { bubbles: true });
-  }
+  },
 };

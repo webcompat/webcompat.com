@@ -7,7 +7,7 @@ const { assert } = intern.getPlugin("chai");
 const { registerSuite } = intern.getInterface("object");
 const FunctionalHelpers = require("./lib/helpers.js");
 
-var url = function(path) {
+var url = function (path) {
   return intern.config.functionalBaseUrl + path;
 };
 
@@ -17,19 +17,19 @@ registerSuite("Issues", {
       return FunctionalHelpers.openPage(this, url("issues/100"), ".js-Issue")
         .findDisplayedByCssSelector(".js-issue-number")
         .getVisibleText()
-        .then(function(text) {
+        .then(function (text) {
           assert.include(text, "#100", "Issue title displayed");
         })
         .end()
         .findByCssSelector(".js-Issue-reporter")
         .getVisibleText()
-        .then(function(text) {
+        .then(function (text) {
           assert.equal(text, "miketaylr", "Issue reporter displayed.");
         })
         .end()
         .findByCssSelector(".js-Label")
         .isDisplayed()
-        .then(function(isDisplayed) {
+        .then(function (isDisplayed) {
           assert.equal(isDisplayed, true);
         });
     },
@@ -38,18 +38,18 @@ registerSuite("Issues", {
       return FunctionalHelpers.openPage(this, url("issues/100"), ".js-Issue")
         .findDisplayedByCssSelector(".js-Issue-comment")
         .isDisplayed()
-        .then(function(isDisplayed) {
+        .then(function (isDisplayed) {
           assert.equal(isDisplayed, true);
         })
         .findByCssSelector(".js-Comment-owner")
         .getVisibleText()
-        .then(function(text) {
+        .then(function (text) {
           assert.equal(text, "GIGANTOR", "Commenter name displayed.");
         })
         .end()
         .findByCssSelector(".js-Comment-content")
         .getVisibleText()
-        .then(function(text) {
+        .then(function (text) {
           assert.equal(
             text,
             "Today's date is Mon Sep 28 2015",
@@ -66,7 +66,7 @@ registerSuite("Issues", {
         .end()
         .sleep(500)
         .getCurrentUrl()
-        .then(function(url) {
+        .then(function (url) {
           assert.match(
             url,
             /[https://github.com/^*/^*/issues/100]/,
@@ -81,7 +81,7 @@ registerSuite("Issues", {
           ".js-Issue-commentList .js-Comment-content p"
         )
         .getAttribute("class")
-        .then(function(className) {
+        .then(function (className) {
           assert.include(className, "issue-details-nsfw");
         })
         .end();
@@ -93,7 +93,7 @@ registerSuite("Issues", {
           ".js-Issue-commentList .js-Comment-content p"
         )
         .getAttribute("class")
-        .then(function(className) {
+        .then(function (className) {
           assert.include(className, "issue-details-nsfw");
           assert.notInclude(className, "issue-details-nsfw--display");
         })
@@ -101,7 +101,7 @@ registerSuite("Issues", {
         .end()
         .findByCssSelector(".js-Issue-commentList .js-Comment-content p")
         .getAttribute("class")
-        .then(function(className) {
+        .then(function (className) {
           assert.include(className, "issue-details-nsfw");
           assert.include(className, "issue-details-nsfw--display");
         })
@@ -109,7 +109,7 @@ registerSuite("Issues", {
         .end()
         .findByCssSelector(".js-Issue-commentList .js-Comment-content p")
         .getAttribute("class")
-        .then(function(className) {
+        .then(function (className) {
           assert.include(className, "issue-details-nsfw");
           assert.notInclude(className, "issue-details-nsfw--display");
         })
@@ -120,7 +120,7 @@ registerSuite("Issues", {
       return FunctionalHelpers.openPage(this, url("issues/15000"), ".js-Issue")
         .findDisplayedByCssSelector(".js-issue-title")
         .getVisibleText()
-        .then(function(text) {
+        .then(function (text) {
           assert.equal(
             text,
             "www.prudential.com.sg - Text rendering missing",
@@ -128,6 +128,6 @@ registerSuite("Issues", {
           );
         })
         .end();
-    }
-  }
+    },
+  },
 });

@@ -3,15 +3,15 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 function Slider() {
-  this.init = function() {
+  this.init = function () {
     this.setUpEvents();
   };
 
-  this.setUpEvents = function() {
+  this.setUpEvents = function () {
     this.sliderHandler();
   };
 
-  this.sliderHandler = function() {
+  this.sliderHandler = function () {
     var slider = document.querySelectorAll(".slider");
     var nextBtn = document.querySelectorAll(".slider .next");
     var prevBtn = document.querySelectorAll(".slider .prev");
@@ -27,10 +27,10 @@ function Slider() {
     var closeButtons = document.querySelectorAll(".popup-modal__close");
     var index = 0;
 
-    var setActiveControls = function(index) {
+    var setActiveControls = function (index) {
       var selectedDot = document.querySelector(".slider .dot.active");
       selectedDot.classList.remove("active");
-      dot.forEach(function(d) {
+      dot.forEach(function (d) {
         if (index === $(d).data("slide")) {
           d.classList.add("active");
         }
@@ -44,7 +44,7 @@ function Slider() {
       }
     };
 
-    var nextSlide = function() {
+    var nextSlide = function () {
       index++;
       if (index >= slide.length) {
         index--;
@@ -55,7 +55,7 @@ function Slider() {
       setActiveControls(index);
     };
 
-    var prevSlide = function() {
+    var prevSlide = function () {
       index--;
       if (index < 0) {
         index = 0;
@@ -66,20 +66,20 @@ function Slider() {
       setActiveControls(index);
     };
 
-    prevBtn.forEach(function(btn) {
-      btn.addEventListener("click", function() {
+    prevBtn.forEach(function (btn) {
+      btn.addEventListener("click", function () {
         prevSlide();
       });
     });
 
-    nextBtn.forEach(function(btn) {
-      btn.addEventListener("click", function() {
+    nextBtn.forEach(function (btn) {
+      btn.addEventListener("click", function () {
         nextSlide();
       });
     });
 
-    dot.forEach(function(d) {
-      d.addEventListener("click", function() {
+    dot.forEach(function (d) {
+      d.addEventListener("click", function () {
         slide[index].classList.remove("active");
         index = $(d).data("slide");
         slide[index].classList.add("active");
@@ -87,8 +87,8 @@ function Slider() {
       });
     });
 
-    closeButtons.forEach(function(btn) {
-      btn.addEventListener("click", function() {
+    closeButtons.forEach(function (btn) {
+      btn.addEventListener("click", function () {
         slide[index].classList.remove("active");
         index = 0;
         slide[index].classList.add("active");
@@ -102,12 +102,12 @@ function Slider() {
       if (touchendX > touchstartX) prevSlide();
     }
 
-    slider.forEach(function(s) {
-      s.addEventListener("touchstart", e => {
+    slider.forEach(function (s) {
+      s.addEventListener("touchstart", (e) => {
         touchstartX = e.changedTouches[0].screenX;
       });
 
-      s.addEventListener("touchend", e => {
+      s.addEventListener("touchend", (e) => {
         touchendX = e.changedTouches[0].screenX;
         handleGesure();
       });
@@ -117,6 +117,6 @@ function Slider() {
   return this.init();
 }
 
-$(function() {
+$(function () {
   new Slider();
 });

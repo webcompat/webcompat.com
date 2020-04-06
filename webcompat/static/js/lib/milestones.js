@@ -7,29 +7,29 @@ var issues = issues || {}; // eslint-disable-line no-use-before-define
 issues.MilestonesView = issues.CategoryView.extend({
   el: $(".js-Issue-milestones"),
   keyboardEvents: {
-    m: "openEditor"
+    m: "openEditor",
   },
   template: wcTmpl["issue/issue-milestones.jst"],
   // this subTemplate will need to be kept in sync with
   // relavant parts in issue/issue-labels.jst
   subTemplate: wcTmpl["issue/issue-milestones-sub.jst"],
-  closeEditor: function() {
+  closeEditor: function () {
     this.milestoneEditor.closeEditor();
   },
-  fetchItems: function() {
+  fetchItems: function () {
     this.editorButton = $(".js-MilestoneEditorLauncher");
     this.milestoneEditor = new issues.MilestoneEditorView({
       model: new issues.MilestonesModel({
         statuses: $("main").data("statuses"),
-        issueModel: this.model
+        issueModel: this.model,
       }),
-      issueView: this
+      issueView: this,
     });
     if (this._isLoggedIn) {
       this.editorButton.show();
     }
   },
-  openEditor: function(e) {
+  openEditor: function (e) {
     // make sure we're not typing in the comment textfield.
     if (e && e.target.nodeName === "TEXTAREA") {
       return;
@@ -44,21 +44,21 @@ issues.MilestonesView = issues.CategoryView.extend({
 
     $('[name="' + this.model.get("milestone") + '"]').prop("checked", true);
     this.$el.closest(".label-box").scrollTop(this.$el.position().top);
-  }
+  },
 });
 
 issues.MilestoneEditorView = issues.CategoryEditorView.extend({
-  initialize: function(options) {
+  initialize: function (options) {
     this.issueView = options.issueView;
   },
   template: wcTmpl["web_modules/milestone-editor.jst"],
-  updateView: function(evt) {
+  updateView: function (evt) {
     // We try to make sure only one milestone is set
     // enumerate all checked milestones and uncheck the others.
     var checked = this.$el.find(
       'input[type=checkbox][data-remotename^="milestone"]:checked'
     );
-    _.each(checked, function(item) {
+    _.each(checked, function (item) {
       if (item !== evt.target) {
         item.checked = false;
       }
@@ -68,20 +68,20 @@ issues.MilestoneEditorView = issues.CategoryEditorView.extend({
     // this just updates the UI responsively
     this.reRender({
       milestone: checked.prop("name"),
-      color: checked.data("color")
+      color: checked.data("color"),
     });
   },
-  render: function() {
+  render: function () {
     this.$el.html(this.template(this.model.toJSON()));
     this.resizeEditorHeight();
     _.defer(
-      _.bind(function() {
+      _.bind(function () {
         this.$el.find(".js-MilestoneEditor-search").focus();
       }, this)
     );
     return this;
   },
-  closeEditor: function(e) {
+  closeEditor: function (e) {
     if (this.isOpen) {
       if (!e || (e && (e.keyCode === 27 || !e.keyCode))) {
         this.isOpen = false;
@@ -98,5 +98,5 @@ issues.MilestoneEditorView = issues.CategoryEditorView.extend({
         $("#body-webcompat").removeClass("is-label-editor-open");
       }
     }
-  }
+  },
 });

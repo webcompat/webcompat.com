@@ -11,10 +11,10 @@ var issueList = issueList || {}; // eslint-disable-line no-use-before-define
 issues.Issue = Backbone.Model.extend({
   _namespaceRegex: /(browser|closed|os|status)-/i,
   _statuses: $("main").data("statuses"),
-  urlRoot: function() {
+  urlRoot: function () {
     return "/api/issues/" + this.get("number");
   },
-  getState: function(state, milestone) {
+  getState: function (state, milestone) {
     if (state === "closed") {
       this.set("stateClass", "closed");
       return "Closed: " + milestone[0].toUpperCase() + milestone.slice(1);
@@ -40,7 +40,7 @@ issues.Issue = Backbone.Model.extend({
     this.set("stateClass", "needstriage");
     return "Needs Triage";
   },
-  parse: function(response) {
+  parse: function (response) {
     var isLoggedIn = $("body").data("username");
     var milestone;
     var milestoneClass;
@@ -74,12 +74,12 @@ issues.Issue = Backbone.Model.extend({
         this.getDomain(response.title),
         this.getDescription(response.body_html),
         response.title
-      )
+      ),
     });
 
     this.on(
       "change:milestone",
-      _.bind(function() {
+      _.bind(function () {
         var milestone = this.get("milestone");
         this.set(
           "issueState",
@@ -89,7 +89,7 @@ issues.Issue = Backbone.Model.extend({
     );
   },
 
-  getDescription: function(body) {
+  getDescription: function (body) {
     // Get the Description of the body
     var div = document.createElement("div");
     div.innerHTML = body;
@@ -98,14 +98,14 @@ issues.Issue = Backbone.Model.extend({
     return description != null ? description[1].slice(0, 74) : null;
   },
 
-  getDomain: function(title) {
+  getDomain: function (title) {
     // Get the domain name from the title
     var regex = /^([^ ]+)/;
     var domain = regex.exec(title);
     return domain != null ? domain[1] : null;
   },
 
-  getTitle: function(domain, description, title) {
+  getTitle: function (domain, description, title) {
     // Return a title for the issue aside
     var issue_title = title != null ? title : "";
     if (description) {
@@ -114,7 +114,7 @@ issues.Issue = Backbone.Model.extend({
     return issue_title;
   },
 
-  updateLabels: function(labelsArray) {
+  updateLabels: function (labelsArray) {
     // Save ourselves some requests in case nothing has changed.
     if (
       !$.isArray(labelsArray) ||
@@ -124,22 +124,22 @@ issues.Issue = Backbone.Model.extend({
     }
     var labels = new issues.LabelList({
       labels: labelsArray,
-      url: "/api/issues/" + this.get("number") + "/labels"
+      url: "/api/issues/" + this.get("number") + "/labels",
     });
     labels.save(null, {
-      success: _.bind(function(response) {
+      success: _.bind(function (response) {
         // update model after success
         var updatedLabels = new issues.LabelList({
-          labels: response.get("labels")
+          labels: response.get("labels"),
         });
         this.set("labels", updatedLabels.get("labels"));
       }, this),
-      error: function() {
+      error: function () {
         var msg = "There was an error setting labels.";
         wcEvents.trigger("flash:error", { message: msg, timeout: 4000 });
-      }
+      },
     });
-  }
+  },
 });
 
 issueList.Issue = issues.Issue.extend({});
@@ -147,7 +147,7 @@ issueList.Issue = issues.Issue.extend({});
 issueList.IssueCollection = Backbone.Collection.extend({
   model: issueList.Issue,
   /* the url property is set in issueList.IssueView#fetchAndRenderIssues */
-  initialize: function(options) {
+  initialize: function (options) {
     // set defaults
     this.params = (options && options.params) || {
       page: 1,
@@ -155,11 +155,11 @@ issueList.IssueCollection = Backbone.Collection.extend({
       state: "open",
       stage: "all",
       sort: "created",
-      direction: "desc"
+      direction: "desc",
     };
     this.path = (options && options.path) || "/api/issues";
   },
-  parse: function(response, jqXHR) {
+  parse: function (response, jqXHR) {
     if (jqXHR.xhr.getResponseHeader("Link") != null) {
       //external code can access the parsed header via this.linkHeader
       this.linkHeader = this.parseHeader(jqXHR.xhr.getResponseHeader("Link"));
@@ -174,11 +174,11 @@ issueList.IssueCollection = Backbone.Collection.extend({
       return response;
     }
   },
-  setURLState: function(path, params) {
+  setURLState: function (path, params) {
     this.path = path;
     this.params = params;
   },
-  parseHeader: function(linkHeader) {
+  parseHeader: function (linkHeader) {
     /* Returns an object like so:
       {
         next:  "/api/issues?per_page=50&state=open&page=3",
@@ -208,21 +208,21 @@ issueList.IssueCollection = Backbone.Collection.extend({
 
     return result;
   },
-  getNextPage: function() {
+  getNextPage: function () {
     if (this.linkHeader && this.linkHeader.hasOwnProperty("next")) {
       return this.linkHeader.next;
     } else {
       return null;
     }
   },
-  getPrevPage: function() {
+  getPrevPage: function () {
     if (this.linkHeader && this.linkHeader.hasOwnProperty("prev")) {
       return this.linkHeader.prev;
     } else {
       return null;
     }
   },
-  normalizeAPIParams: function(paramsArg) {
+  normalizeAPIParams: function (paramsArg) {
     /* ported version of normalize_api_params from helpers.py
     Normalize GitHub Issues API params to Search API conventions:
 
@@ -237,14 +237,14 @@ issueList.IssueCollection = Backbone.Collection.extend({
     var qMap = {
       state: "state",
       creator: "author",
-      mentioned: "mentions"
+      mentioned: "mentions",
     };
     var sitesearchRegExp = /site:([\w-.]+(:\d+)?)/g;
     var repoPath = $("main").data("repoPath");
 
     if (_.isString(paramsArg)) {
       var paramsArray = _.uniq(paramsArg.split("&"));
-      _.forEach(paramsArray, function(param) {
+      _.forEach(paramsArray, function (param) {
         var kvArray = param.split("=");
         var key = kvArray[0];
         var value = kvArray[1];
@@ -266,7 +266,7 @@ issueList.IssueCollection = Backbone.Collection.extend({
     }
 
     // The rest need to be added to the "q" param as substrings
-    _.forEach(qMap, function(val, key) {
+    _.forEach(qMap, function (val, key) {
       if (key in params) {
         params.q += " " + val + ":" + params[key];
         delete params[key];
@@ -277,5 +277,5 @@ issueList.IssueCollection = Backbone.Collection.extend({
     params.q += " repo:" + repoPath.slice(0, -7);
 
     return params;
-  }
+  },
 });

@@ -2,7 +2,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-module.exports = function(grunt) {
+module.exports = function (grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON("package.json"),
     tmplPath: "webcompat/templates/",
@@ -15,7 +15,7 @@ module.exports = function(grunt) {
       ' *  Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author.name %>\n' +
       " *\n" +
       " *  This code is licensed under the MPL 2.0 License, except where\n" +
-      " *  otherwise stated. See http://mozilla.org/MPL/2.0/. */\n"
+      " *  otherwise stated. See http://mozilla.org/MPL/2.0/. */\n",
   });
 
   // Load per-task config from separate files.
@@ -31,7 +31,7 @@ module.exports = function(grunt) {
     "concat",
     "uglify",
     "postcss",
-    "cssmin"
+    "cssmin",
   ]);
 
   // Task used before doing a deploy (same as default, but does image optimization)
@@ -42,6 +42,6 @@ module.exports = function(grunt) {
     "uglify",
     "postcss",
     "cssmin",
-    "imagemin"
+    "imagemin",
   ]);
 };

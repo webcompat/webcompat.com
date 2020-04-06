@@ -3,47 +3,47 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 function NavBar() {
-  this.init = function() {
+  this.init = function () {
     this.setUpEvents();
   };
 
-  this.setUpEvents = function() {
+  this.setUpEvents = function () {
     this.dropDownHandler();
     this.navbarHandler();
     this.searchHandler();
   };
 
-  this.searchHandler = function() {
+  this.searchHandler = function () {
     var searchBar = $(".js-SearchBar");
     var searchBarOpen = $(".js-SearchBarOpen");
     var searchBarClose = $(".js-SearchBarClose");
 
-    searchBarOpen.click(function() {
+    searchBarOpen.click(function () {
       searchBar.addClass("is-active");
       searchBar.find("input").focus();
     });
 
-    searchBarClose.click(function() {
+    searchBarClose.click(function () {
       searchBar.removeClass("is-active");
       searchBar.find("input").blur();
     });
   };
 
-  this.navbarHandler = function() {
+  this.navbarHandler = function () {
     var $navbar = $(".js-navigation");
     var $newIssueStepper = $("#wizard-container");
     var navbarHeight = $navbar.outerHeight();
     var lastScrollY = window.pageYOffset;
     var scrollTimeout = null;
     var isScrolling = false;
-    $(window).on("scroll", function() {
+    $(window).on("scroll", function () {
       isScrolling = true;
       window.clearTimeout(scrollTimeout);
-      scrollTimeout = window.setTimeout(function() {
+      scrollTimeout = window.setTimeout(function () {
         isScrolling = false;
       }, 500);
     });
-    window.setInterval(function() {
+    window.setInterval(function () {
       if (!isScrolling) {
         return;
       }
@@ -71,18 +71,18 @@ function NavBar() {
     }, 100);
   };
 
-  this.dropDownHandler = function() {
+  this.dropDownHandler = function () {
     var navDropDown = $(".js-DropdownHeader");
-    navDropDown.click(function() {
+    navDropDown.click(function () {
       var $this = $(this);
       $this.toggleClass("is-active");
-      $this.find("button").attr("aria-expanded", function() {
+      $this.find("button").attr("aria-expanded", function () {
         return $this.hasClass("is-active") ? "true" : "false";
       });
     });
 
     // close dropdown if you click "outside"
-    $(document).on("click", function(e) {
+    $(document).on("click", function (e) {
       if (!$(e.target).closest(navDropDown).length) {
         navDropDown.removeClass("is-active");
         navDropDown.find("button").attr("aria-expanded", "false");
@@ -93,6 +93,6 @@ function NavBar() {
   return this.init();
 }
 
-$(function() {
+$(function () {
   new NavBar();
 });

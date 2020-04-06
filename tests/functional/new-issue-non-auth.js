@@ -7,7 +7,7 @@ const { assert } = intern.getPlugin("chai");
 const { registerSuite } = intern.getInterface("object");
 const FunctionalHelpers = require("./lib/helpers.js");
 
-var url = function(path) {
+var url = function (path) {
   return intern.config.functionalBaseUrl + path;
 };
 
@@ -21,11 +21,11 @@ registerSuite("New Issue Page", {
       )
         .findByCssSelector(".js-Navbar-link")
         .getVisibleText()
-        .then(function(text) {
+        .then(function (text) {
           assert.include(text, "Home");
           assert.notInclude(text, "Download our");
         })
         .end();
-    }
-  }
+    },
+  },
 });

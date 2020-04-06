@@ -7,7 +7,7 @@ const { assert } = intern.getPlugin("chai");
 const { registerSuite } = intern.getInterface("object");
 const FunctionalHelpers = require("./lib/helpers.js");
 
-var url = function(path) {
+var url = function (path) {
   return intern.config.functionalBaseUrl + path;
 };
 
@@ -32,7 +32,7 @@ registerSuite("Reporting (auth)", {
           .findByCssSelector(".button.step-1")
           .click()
           .end()
-          .execute(function() {
+          .execute(function () {
             // Click on "Desktop site instead of mobile site"
             $("[for=problem_category-0]")[0].click();
           })
@@ -44,11 +44,11 @@ registerSuite("Reporting (auth)", {
           .sleep(500)
           .findByCssSelector(".button.step-6")
           .getAttribute("class")
-          .then(function(className) {
+          .then(function (className) {
             // Make sure that "Confirm" button is disabled if browser is not selected
             assert.include(className, "disabled");
           })
-          .execute(function() {
+          .execute(function () {
             // Click on "Chrome"
             $("[for=tested_browsers-0]")[0].click();
           })
@@ -65,7 +65,7 @@ registerSuite("Reporting (auth)", {
           .sleep(500)
           .findDisplayedByCssSelector(".button.step-8")
           .getAttribute("class")
-          .then(function(className) {
+          .then(function (className) {
             // Make sure "Continue" is disabled if there are not enough characters
             assert.include(className, "disabled");
           })
@@ -89,10 +89,10 @@ registerSuite("Reporting (auth)", {
           // Make sure Report as FooUser (logged in)
           .findByCssSelector("#submitgithub")
           .getVisibleText()
-          .then(function(text) {
+          .then(function (text) {
             assert.include(text, "Report as");
           })
       );
-    }
-  }
+    },
+  },
 });

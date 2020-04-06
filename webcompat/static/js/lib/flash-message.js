@@ -17,22 +17,18 @@ var wcEvents = _.extend({}, Backbone.Events);
 var FlashMessageView = Backbone.View.extend({
   tagName: "div",
   className: "notification-bar js-flashmessage",
-  initialize: function() {
+  initialize: function () {
     wcEvents.on("flash:error", _.bind(this.showError, this));
     wcEvents.on("flash:info", _.bind(this.show, this));
     wcEvents.on("flash:notimeout", _.bind(this.showForever, this));
     wcEvents.on("flash:thanks", _.bind(this.showThanks, this));
   },
-  render: function(message) {
-    this.$el
-      .html(message)
-      .addClass("is-active")
-      .appendTo("body")
-      .show();
+  render: function (message) {
+    this.$el.html(message).addClass("is-active").appendTo("body").show();
 
     return this;
   },
-  show: function(opts) {
+  show: function (opts) {
     var timeout = opts.timeout || 4000;
     var message = opts.message;
 
@@ -40,16 +36,16 @@ var FlashMessageView = Backbone.View.extend({
     this.render(message);
     setTimeout(_.bind(this.hide, this), timeout);
   },
-  showError: function(data) {
+  showError: function (data) {
     this.$el.addClass("is-error notification-alert");
     this.show(data);
   },
-  showForever: function(opts) {
+  showForever: function (opts) {
     var message = opts.message;
     this.$el.addClass("notification-information");
     this.render(message);
   },
-  showThanks: function(opts) {
+  showThanks: function (opts) {
     var buildTemplate = wcTmpl["issue/thanks.jst"];
     this.$el.addClass("is-active notification-thanks grid-cell x3");
     this.$el
@@ -57,9 +53,9 @@ var FlashMessageView = Backbone.View.extend({
       .insertBefore(".js-Issue")
       .show();
   },
-  hide: function() {
+  hide: function () {
     this.$el.fadeOut();
-  }
+  },
 });
 
 new FlashMessageView();
