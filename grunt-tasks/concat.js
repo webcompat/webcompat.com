@@ -2,11 +2,11 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-module.exports = function(grunt) {
+module.exports = function (grunt) {
   grunt.config("concat", {
     options: {
       banner: "<%= banner %>",
-      stripBanners: false
+      stripBanners: false,
     },
     dist: {
       src: [
@@ -23,9 +23,9 @@ module.exports = function(grunt) {
         "<%= jsPath %>/lib/bugform-prefill.js",
         "<%= jsPath %>/lib/bugform.js",
         "<%= jsDistPath %>/templates.js",
-        "<%= jsPath %>/lib/navbar.js"
+        "<%= jsPath %>/lib/navbar.js",
       ],
-      dest: "<%= jsDistPath %>/<%= pkg.name %>.js"
+      dest: "<%= jsDistPath %>/<%= pkg.name %>.js",
     },
     distFormV2: {
       src: [
@@ -43,17 +43,17 @@ module.exports = function(grunt) {
         "<%= jsPath %>/lib/issue-wizard-popup.js",
         "<%= jsPath %>/lib/issue-wizard-slider.js",
         "<%= jsDistPath %>/templates.js",
-        "<%= jsPath %>/lib/navbar.js"
+        "<%= jsPath %>/lib/navbar.js",
       ],
-      dest: "<%= jsDistPath %>/<%= pkg.name %>.formv2.js"
+      dest: "<%= jsDistPath %>/<%= pkg.name %>.formv2.js",
     },
     index: {
       src: [
         "<%= jsPath %>/lib/models/label-list.js",
         "<%= jsPath %>/lib/models/issue.js",
-        "<%= jsPath %>/lib/untriaged.js"
+        "<%= jsPath %>/lib/untriaged.js",
       ],
-      dest: "<%= jsDistPath %>/index.js"
+      dest: "<%= jsDistPath %>/index.js",
     },
     issues: {
       src: [
@@ -70,27 +70,27 @@ module.exports = function(grunt) {
         "<%= jsPath %>/lib/models/comment.js",
         "<%= jsPath %>/lib/comments.js",
         "<%= jsPath %>/lib/autogrow-textfield.js",
-        "<%= jsPath %>/lib/issues.js"
+        "<%= jsPath %>/lib/issues.js",
       ],
-      dest: "<%= jsDistPath %>/issues.js"
+      dest: "<%= jsDistPath %>/issues.js",
     },
     issueList: {
       src: [
         "<%= jsPath %>/lib/models/label-list.js",
         "<%= jsPath %>/lib/models/issue.js",
         "<%= jsPath %>/lib/mixins/pagination.js",
-        "<%= jsPath %>/lib/issue-list.js"
+        "<%= jsPath %>/lib/issue-list.js",
       ],
-      dest: "<%= jsDistPath %>/issue-list.js"
+      dest: "<%= jsDistPath %>/issue-list.js",
     },
     userActivity: {
       src: [
         "<%= jsPath %>/lib/models/label-list.js",
         "<%= jsPath %>/lib/models/issue.js",
         "<%= jsPath %>/lib/mixins/pagination.js",
-        "<%= jsPath %>/lib/user-activity.js"
+        "<%= jsPath %>/lib/user-activity.js",
       ],
-      dest: "<%= jsDistPath %>/user-activity.js"
-    }
+      dest: "<%= jsDistPath %>/user-activity.js",
+    },
   });
 };

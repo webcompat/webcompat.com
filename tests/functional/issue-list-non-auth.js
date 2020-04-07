@@ -7,7 +7,7 @@ const { assert } = intern.getPlugin("chai");
 const { registerSuite } = intern.getInterface("object");
 const FunctionalHelpers = require("./lib/helpers.js");
 
-var url = function(path, params) {
+var url = function (path, params) {
   var base = intern.config.functionalBaseUrl + path;
   return params ? base + params : base;
 };
@@ -21,7 +21,7 @@ registerSuite("Issue-list", {
         ".js-SearchIssue-filter"
       )
         .findAllByCssSelector(".js-Tag")
-        .then(function(elms) {
+        .then(function (elms) {
           assert.equal(elms.length, 6, "All filter buttons are displayed");
         })
         .end();
@@ -31,20 +31,20 @@ registerSuite("Issue-list", {
       return FunctionalHelpers.openPage(this, url("issues"), ".js-IssueList")
         .findByCssSelector(".js-IssueList")
         .isDisplayed()
-        .then(function(isDisplayed) {
+        .then(function (isDisplayed) {
           assert.equal(isDisplayed, true, "IssueList container is visible.");
         })
         .sleep(1000)
         .end()
         .findByCssSelector(".js-list-issue .js-IssueList")
         .isDisplayed()
-        .then(function(isDisplayed) {
+        .then(function (isDisplayed) {
           assert.equal(isDisplayed, true, "IssueList item is visible.");
         })
         .end()
         .findByCssSelector(".js-IssueList .js-issue-title")
         .isDisplayed()
-        .then(function(isDisplayed) {
+        .then(function (isDisplayed) {
           assert.equal(
             isDisplayed,
             true,
@@ -54,7 +54,7 @@ registerSuite("Issue-list", {
         .end()
         .findByCssSelector(".js-issue-comments")
         .getVisibleText()
-        .then(function(text) {
+        .then(function (text) {
           assert.match(
             text,
             /comments:\s\d+$/i,
@@ -64,7 +64,7 @@ registerSuite("Issue-list", {
         .end()
         .findByCssSelector(".js-issue-date")
         .getVisibleText()
-        .then(function(text) {
+        .then(function (text) {
           assert.match(
             text,
             /^Opened:\s\d{4}-\d{2}-\d{2}/,
@@ -82,13 +82,13 @@ registerSuite("Issue-list", {
       )
         .findByCssSelector(".js-Pagination-controls")
         .isDisplayed()
-        .then(function(isDisplayed) {
+        .then(function (isDisplayed) {
           assert.equal(isDisplayed, true, "IssueList container is visible.");
         })
         .end()
         .findByCssSelector(".js-Pagination-previous.is-disabled")
         .getAttribute("class")
-        .then(function(className) {
+        .then(function (className) {
           assert.include(
             className,
             "is-disabled",
@@ -101,7 +101,7 @@ registerSuite("Issue-list", {
         .end()
         .findByCssSelector(".js-Pagination-previous:not(.is-disabled)")
         .getAttribute("class")
-        .then(function(className) {
+        .then(function (className) {
           assert.notInclude(
             className,
             "is-disabled",
@@ -114,7 +114,7 @@ registerSuite("Issue-list", {
         .end()
         .findByCssSelector(".js-Pagination-previous.is-disabled")
         .getAttribute("class")
-        .then(function(className) {
+        .then(function (className) {
           assert.include(
             className,
             "is-disabled",
@@ -132,7 +132,7 @@ registerSuite("Issue-list", {
       )
         .findByCssSelector(".js-Dropdown-pagination")
         .isDisplayed()
-        .then(function(isDisplayed) {
+        .then(function (isDisplayed) {
           assert.equal(
             isDisplayed,
             true,
@@ -145,7 +145,7 @@ registerSuite("Issue-list", {
         .end()
         .findByCssSelector(".js-Dropdown-pagination")
         .getAttribute("class")
-        .then(function(className) {
+        .then(function (className) {
           assert.include(
             className,
             "is-active",
@@ -155,7 +155,7 @@ registerSuite("Issue-list", {
         .end()
         .findByCssSelector(".js-Dropdown-pagination .js-Dropdown-options")
         .isDisplayed()
-        .then(function(isDisplayed) {
+        .then(function (isDisplayed) {
           assert.equal(isDisplayed, true, "dropdown options are visible.");
         })
         .end()
@@ -166,7 +166,7 @@ registerSuite("Issue-list", {
         .end()
         .findByCssSelector(".js-Dropdown-pagination .js-Dropdown-label")
         .getVisibleText()
-        .then(function(text) {
+        .then(function (text) {
           assert.include(
             text,
             "Show 100",
@@ -176,7 +176,7 @@ registerSuite("Issue-list", {
         .end()
         .findDisplayedByCssSelector(".js-IssueList:nth-child(51)")
         .isDisplayed()
-        .then(function(isDisplayed) {
+        .then(function (isDisplayed) {
           assert.equal(isDisplayed, true, "More than 50 issues were loaded.");
         })
         .end();
@@ -194,7 +194,7 @@ registerSuite("Issue-list", {
         .end()
         .sleep(500)
         .getCurrentUrl()
-        .then(function(url) {
+        .then(function (url) {
           assert.match(
             url,
             /[https://github.com/^*/^*/issues/]/,
@@ -216,7 +216,7 @@ registerSuite("Issue-list", {
         .end()
         .setFindTimeout(0)
         .findByCssSelector(".repo-container .issues-listing")
-        .then(assert.fail, function(err) {
+        .then(assert.fail, function (err) {
           assert.isTrue(/NoSuchElement/.test(String(err)));
         })
         .end();
@@ -229,7 +229,7 @@ registerSuite("Issue-list", {
         ".js-IssueList:nth-of-type(1)"
       )
         .getCurrentUrl()
-        .then(function(currUrl) {
+        .then(function (currUrl) {
           assert.include(
             currUrl,
             "page=1&per_page=50&state=open",
@@ -246,7 +246,7 @@ registerSuite("Issue-list", {
         ".js-IssueList:nth-of-type(1)"
       )
         .getCurrentUrl()
-        .then(function(currUrl) {
+        .then(function (currUrl) {
           assert.include(
             currUrl,
             "page=2&per_page=50&state=open",
@@ -265,7 +265,7 @@ registerSuite("Issue-list", {
       )
         .findByCssSelector(".js-Dropdown-pagination .js-Dropdown-label")
         .getVisibleText()
-        .then(function(text) {
+        .then(function (text) {
           assert.equal(
             text,
             "Show 25",
@@ -275,7 +275,7 @@ registerSuite("Issue-list", {
         .end()
         .findAllByCssSelector(".js-Dropdown-sort .js-Dropdown-label")
         .getVisibleText()
-        .then(function(text) {
+        .then(function (text) {
           assert.equal(
             text,
             "Recently Updated",
@@ -296,7 +296,7 @@ registerSuite("Issue-list", {
         )
           .findByCssSelector(".js-Dropdown-pagination .js-Dropdown-label")
           .getVisibleText()
-          .then(function(text) {
+          .then(function (text) {
             assert.equal(
               text,
               "Show 25",
@@ -315,11 +315,11 @@ registerSuite("Issue-list", {
           .end()
           // find something so we know issues have been loaded
           .findByCssSelector(".js-IssueList:nth-of-type(1)")
-          .execute(function() {
+          .execute(function () {
             history.back();
           })
           .getCurrentUrl()
-          .then(function(currUrl) {
+          .then(function (currUrl) {
             assert.include(
               currUrl,
               "per_page=25",
@@ -329,7 +329,7 @@ registerSuite("Issue-list", {
           .end()
           .findByCssSelector(".js-Dropdown-pagination .js-Dropdown-label")
           .getVisibleText()
-          .then(function(text) {
+          .then(function (text) {
             assert.equal(
               text,
               "Show 25",
@@ -351,7 +351,7 @@ registerSuite("Issue-list", {
       )
         .findByCssSelector(".js-Tag.is-active")
         .getVisibleText()
-        .then(function(text) {
+        .then(function (text) {
           assert.equal(
             "Needs Triage",
             text,
@@ -375,7 +375,7 @@ registerSuite("Issue-list", {
           .findByCssSelector(".js-IssueList:nth-of-type(1)")
           .end()
           .getCurrentUrl()
-          .then(function(currUrl) {
+          .then(function (currUrl) {
             assert.include(
               currUrl,
               "stage=contactready",
@@ -403,7 +403,7 @@ registerSuite("Issue-list", {
           .click()
           .end()
           .getCurrentUrl()
-          .then(function(currUrl) {
+          .then(function (currUrl) {
             assert.notInclude(
               currUrl,
               "stage=closed",
@@ -431,7 +431,7 @@ registerSuite("Issue-list", {
           .click()
           .end()
           .getCurrentUrl()
-          .then(function(currUrl) {
+          .then(function (currUrl) {
             assert.include(
               currUrl,
               "stage=sitewait",
@@ -445,6 +445,6 @@ registerSuite("Issue-list", {
           })
           .end()
       );
-    }
-  }
+    },
+  },
 });

@@ -5,17 +5,17 @@
 function Autogrow() {
   this.autogrowField = $(".js-autogrow-field");
 
-  this.init = function() {
+  this.init = function () {
     this.handleAutogrowField = this.handleAutogrowField.bind(this);
 
-    this.autogrowField.each(function(index, el) {
+    this.autogrowField.each(function (index, el) {
       var minRows = parseInt(el.getAttribute("rows"), 10);
       el.dataset.minRows = minRows;
     });
     this.autogrowField.on("focus keyup input", this.handleAutogrowField);
   };
 
-  this.handleAutogrowField = function(event) {
+  this.handleAutogrowField = function (event) {
     var target = event.target;
     var $target = $(target);
     var MIN_ROWS = target.dataset.minRows;
@@ -50,6 +50,6 @@ function Autogrow() {
   return this.init();
 }
 
-$(function() {
+$(function () {
   new Autogrow();
 });

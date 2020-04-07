@@ -7,7 +7,7 @@ const { assert } = intern.getPlugin("chai");
 const { registerSuite } = intern.getInterface("object");
 const FunctionalHelpers = require("./lib/helpers.js");
 
-var url = function(path) {
+var url = function (path) {
   return intern.config.functionalBaseUrl + path;
 };
 
@@ -39,7 +39,7 @@ registerSuite("Milestones (auth)", {
         .findByCssSelector(".js-MilestoneEditorLauncher")
         .click()
         .getAttribute("class")
-        .then(function(className) {
+        .then(function (className) {
           assert.notInclude("is-active", className);
         })
         .end();
@@ -61,7 +61,7 @@ registerSuite("Milestones (auth)", {
         .findByCssSelector(".js-MilestoneEditorLauncher")
         .click()
         .getAttribute("class")
-        .then(function(className) {
+        .then(function (className) {
           assert.notInclude("is-active", className);
         })
         .end();
@@ -84,7 +84,7 @@ registerSuite("Milestones (auth)", {
         .end()
         .findByCssSelector(".js-MilestoneEditorLauncher")
         .getAttribute("class")
-        .then(function(className) {
+        .then(function (className) {
           assert.notInclude("is-active", className);
         })
         .end();
@@ -105,13 +105,13 @@ registerSuite("Milestones (auth)", {
         .end()
         .findByCssSelector(".js-MilestoneEditorLauncher")
         .getAttribute("class")
-        .then(function(className) {
+        .then(function (className) {
           assert.notInclude("is-active", className);
         })
         .end();
     },
 
-    "Missing status error displays": function() {
+    "Missing status error displays": function () {
       FunctionalHelpers.openPage(
         this,
         url("issues/9"),
@@ -130,11 +130,11 @@ registerSuite("Milestones (auth)", {
       )
         .findByCssSelector(".js-Milestone")
         .getVisibleText()
-        .then(function(text) {
+        .then(function (text) {
           // check that the title loaded, it won't be there if the page didn't render.
           assert.strictEqual(text, "Fix me: assign a status");
         })
         .end();
-    }
-  }
+    },
+  },
 });

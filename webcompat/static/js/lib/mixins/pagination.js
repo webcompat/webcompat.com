@@ -16,21 +16,21 @@ no template needed. It gets constructed in PaginationMixin.initMixin()
 */
 
 issueList.PaginationControlsView = Backbone.View.extend({
-  initialize: function(options) {
+  initialize: function (options) {
     this.el = options.el;
   },
   events: {
     "click .js-Pagination-previous": "broadcastPrevious",
-    "click .js-Pagination-next": "broadcastNext"
+    "click .js-Pagination-next": "broadcastNext",
   },
-  broadcastNext: function(e) {
+  broadcastNext: function (e) {
     issueList.events.trigger("paginate:next", e);
     e.preventDefault();
   },
-  broadcastPrevious: function(e) {
+  broadcastPrevious: function (e) {
     issueList.events.trigger("paginate:previous", e);
     e.preventDefault();
-  }
+  },
 });
 
 /*
@@ -59,13 +59,13 @@ Check out issueList.IssueView for an example.
 
 /* exported PaginationMixin */
 function PaginationMixin() {
-  this.initMixin = function(hostView, hostModel, parentContainerEl) {
+  this.initMixin = function (hostView, hostModel, parentContainerEl) {
     this.view = hostView;
     this.model = hostModel;
     this.parentContainerEl = parentContainerEl;
 
     this.paginationControls = new issueList.PaginationControlsView({
-      el: this.parentContainerEl
+      el: this.parentContainerEl,
     });
 
     issueList.events.on("paginate:next", _.bind(this.requestNextPage, this));
@@ -75,7 +75,7 @@ function PaginationMixin() {
     );
   };
 
-  this.initPaginationLinks = function(issuesCollection) {
+  this.initPaginationLinks = function (issuesCollection) {
     // if either the next or previous page numbers are null
     // disable the buttons and add .is-disabled classes.
     var nextButton = this.paginationControls.el.find(".js-Pagination-next");
@@ -86,10 +86,10 @@ function PaginationMixin() {
     var nextPage = issuesCollection.getNextPage();
     var prevPage = issuesCollection.getPrevPage();
 
-    var isLastPage = function() {
+    var isLastPage = function () {
       return nextPage == null;
     };
-    var isFirstPage = function() {
+    var isFirstPage = function () {
       return prevPage == null;
     };
     var isSinglePage = isLastPage() && isFirstPage();
@@ -124,7 +124,7 @@ function PaginationMixin() {
     }
   };
 
-  this.requestNextPage = function(e) {
+  this.requestNextPage = function (e) {
     var nextPage;
     var pageNum;
 
@@ -142,7 +142,7 @@ function PaginationMixin() {
     }
   };
 
-  this.requestPreviousPage = function(e) {
+  this.requestPreviousPage = function (e) {
     var prevPage;
     var pageNum;
 
@@ -160,7 +160,7 @@ function PaginationMixin() {
     }
   };
 
-  this.getPageNumberFromURL = function(url) {
+  this.getPageNumberFromURL = function (url) {
     // takes a string URL and extracts the page param/value pair.
     var match = /[?&](page=\d+)/i.exec(url);
     return match[1];

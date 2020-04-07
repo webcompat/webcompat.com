@@ -2,7 +2,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-module.exports = function(grunt) {
+module.exports = function (grunt) {
   grunt.config("postcss", {
     options: {
       map: true,
@@ -14,20 +14,20 @@ module.exports = function(grunt) {
             "ie >= 10",
             "safari >= 7",
             "opera >= 12",
-            "chrome >=30"
-          ]
+            "chrome >=30",
+          ],
         }),
         require("postcss-browser-reporter")(),
-        require("postcss-reporter")()
-      ]
+        require("postcss-reporter")(),
+      ],
     },
     dist: {
       files: {
         "<%= cssPath %>/dist/webcompat.min.css":
           "<%= cssPath %>/webcompat.dev.css",
         "<%= cssPath %>/dist/webcompat-logs.min.css":
-          "<%= cssPath %>/webcompat-logs.dev.css"
-      }
-    }
+          "<%= cssPath %>/webcompat-logs.dev.css",
+      },
+    },
   });
 };

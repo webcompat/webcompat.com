@@ -7,7 +7,7 @@ const { assert } = intern.getPlugin("chai");
 const { registerSuite } = intern.getInterface("object");
 const FunctionalHelpers = require("./lib/helpers.js");
 
-var url = function(path) {
+var url = function (path) {
   path = path ? path : "";
   return intern.config.functionalBaseUrl + path;
 };
@@ -18,7 +18,7 @@ registerSuite("Index", {
       return FunctionalHelpers.openPage(this, url(), ".js-hero-title")
         .findByCssSelector(".js-hero-title")
         .getVisibleText()
-        .then(function(text) {
+        .then(function (text) {
           assert.equal(
             text.toLowerCase(),
             "Bug reporting\nfor the web.".toLowerCase()
@@ -30,25 +30,25 @@ registerSuite("Index", {
     "browse issues (needstriage)"() {
       return FunctionalHelpers.openPage(this, url(), ".js-hero-title")
         .findAllByCssSelector("#js-lastIssue .js-IssueList.label-needstriage")
-        .then(function(elms) {
+        .then(function (elms) {
           assert.equal(elms.length, 5, "5 issues should be displayed");
         })
         .end()
         .findByCssSelector(".js-IssueList.label-needstriage .js-issue-number")
         .getVisibleText()
-        .then(function(text) {
+        .then(function (text) {
           assert.match(text, /Issue\s(\d+)$/, "Issue should have a number");
         })
         .end()
         .findByCssSelector(".js-IssueList.label-needstriage .js-issue-desc a")
         .getAttribute("href")
-        .then(function(text) {
+        .then(function (text) {
           assert.match(text, /\/issues\/\d+$/, "Link should have a number");
         })
         .end()
         .findByCssSelector(".js-IssueList.label-needstriage .js-issue-desc")
         .getVisibleText()
-        .then(function(text) {
+        .then(function (text) {
           assert.match(
             text,
             /Issue\s\d+\n.+/,
@@ -58,7 +58,7 @@ registerSuite("Index", {
         .end()
         .findByCssSelector(".js-IssueList.label-needstriage .js-issue-date")
         .getVisibleText()
-        .then(function(text) {
+        .then(function (text) {
           assert.match(
             text,
             /^Opened:\s\d{4}-\d{2}-\d{2}/,
@@ -68,7 +68,7 @@ registerSuite("Index", {
         .end()
         .findByCssSelector(".js-issue-desc .js-issue-comments")
         .getVisibleText()
-        .then(function(text) {
+        .then(function (text) {
           assert.match(
             text,
             /Comments:\s\d/,
@@ -76,6 +76,6 @@ registerSuite("Index", {
           );
         })
         .end();
-    }
-  }
+    },
+  },
 });

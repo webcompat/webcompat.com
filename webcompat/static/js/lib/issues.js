@@ -12,14 +12,14 @@ if (!window.md) {
     .markdownit({
       breaks: true,
       html: true,
-      linkify: true
+      linkify: true,
     })
     .use(window.markdownitSanitizer)
     .use(window.markdownitEmoji);
 }
 // Add links to @usernames and #issues
 md.linkify.add("@", {
-  validate: function(text, pos, self) {
+  validate: function (text, pos, self) {
     var tail = text.slice(pos);
 
     if (!self.re.gh_user) {
@@ -32,13 +32,13 @@ md.linkify.add("@", {
     }
     return 0;
   },
-  normalize: function(match) {
+  normalize: function (match) {
     match.url = "https://github.com/" + match.url.replace(/^@/, "");
-  }
+  },
 });
 
 md.linkify.add("#", {
-  validate: function(text, pos, self) {
+  validate: function (text, pos, self) {
     var tail = text.slice(pos);
 
     if (!self.re.hash_bug) {
@@ -49,12 +49,12 @@ md.linkify.add("#", {
     }
     return 0;
   },
-  normalize: function(match) {
+  normalize: function (match) {
     match.url = "/issues/" + match.url.replace(/^#/, "");
-  }
+  },
 });
 
-var checkIfReportedURLOpeningA = function(tokens) {
+var checkIfReportedURLOpeningA = function (tokens) {
   // check the tokens to see if we match the following markdown pattern
   // **URL**: http....
   if (
@@ -72,11 +72,11 @@ var checkIfReportedURLOpeningA = function(tokens) {
 // Add rel=nofollow to links
 var defaultLinkOpenRender =
   md.renderer.rules.link_open ||
-  function(tokens, idx, options, env, self) {
+  function (tokens, idx, options, env, self) {
     return self.renderToken(tokens, idx, options);
   };
 
-md.renderer.rules.link_open = function(tokens, idx, options, env, self) {
+md.renderer.rules.link_open = function (tokens, idx, options, env, self) {
   var foundReportedURL = checkIfReportedURLOpeningA(tokens);
   // only add target=_blank to a URL that was parsed from the following:
   // **URL**: <url>
@@ -92,7 +92,7 @@ md.renderer.rules.link_open = function(tokens, idx, options, env, self) {
       "https://bugzilla.mozilla.org/show_bug": "Mozilla",
       "https://bugs.webkit.org/show_bug": "WebKit",
       "https://code.google.com/p/chromium/issues/detail?": "Chromium",
-      "https://github.com/": "GitHub"
+      "https://github.com/": "GitHub",
     };
     for (var bugtracker in transformations) {
       if (link.indexOf(bugtracker) > -1) {
@@ -119,44 +119,44 @@ issues.MetaDataView = Backbone.View.extend(
   _.extend({}, issueMarkdownSanitizer, {
     el: $("#js-Issue-information"),
     template: wcTmpl["issue/metadata.jst"],
-    render: function() {
+    render: function () {
       var modelData = this.model.toJSON();
       modelData.body = this.sanitizeMarkdown(modelData.body);
       this.$el.html(this.template(modelData));
       return this;
-    }
+    },
   })
 );
 
 issues.AsideView = Backbone.View.extend({
   el: $("#js-Issue-aside"),
-  initialize: function() {
+  initialize: function () {
     this.model.on(
       "change:issueState",
-      _.bind(function() {
+      _.bind(function () {
         this.render();
       }, this)
     );
   },
   template: wcTmpl["issue/aside.jst"],
-  render: function() {
+  render: function () {
     this.$el.html(this.template(this.model.toJSON()));
     return this;
-  }
+  },
 });
 
 issues.BodyView = Backbone.View.extend({
   mainView: null,
-  initialize: function(options) {
+  initialize: function (options) {
     this.mainView = options.mainView;
   },
-  render: function() {
+  render: function () {
     // hide metadata
     var issueDesc = $(".js-Issue-markdown");
 
     issueDesc
       .contents()
-      .filter(function() {
+      .filter(function () {
         //find the bare html comment-ish text nodes
         return this.nodeType === 3 && this.nodeValue.match(/<!--/);
         //and hide them
@@ -170,23 +170,20 @@ issues.BodyView = Backbone.View.extend({
       .addClass("is-hidden");
 
     if (this.mainView._isNSFW) {
-      issueDesc
-        .find("img")
-        .closest("p")
-        .addClass("issue-details-nsfw");
+      issueDesc.find("img").closest("p").addClass("issue-details-nsfw");
     }
 
     return this;
-  }
+  },
 });
 
 issues.TextAreaView = Backbone.View.extend({
   el: $(".js-Comment-text"),
   events: {
-    keydown: "broadcastChange"
+    keydown: "broadcastChange",
   },
   broadcastChange: _.debounce(
-    function() {
+    function () {
       if ($.trim(this.$el.val())) {
         issues.events.trigger("textarea:content");
       } else {
@@ -195,18 +192,18 @@ issues.TextAreaView = Backbone.View.extend({
     },
     250,
     { maxWait: 1500 }
-  )
+  ),
 });
 
 issues.ImageUploadView = Backbone.View.extend({
   el: $(".js-ImageUploadView"),
   events: {
-    "change .js-buttonUpload": "validateAndUpload"
+    "change .js-buttonUpload": "validateAndUpload",
   },
   _submitButton: $(".js-Issue-comment-button"),
   _loadingIndicator: $(".js-loader"),
   template: wcTmpl["issue/upload-image.jst"],
-  render: function() {
+  render: function () {
     this.$el.html(this.template()).insertAfter($("textarea"));
     return this;
   },
@@ -216,10 +213,10 @@ issues.ImageUploadView = Backbone.View.extend({
       // image should be valid by default because it's optional
       valid: true,
       helpText:
-        "Please select an image of the following type: jpg, png, gif, or bmp."
-    }
+        "Please select an image of the following type: jpg, png, gif, or bmp.",
+    },
   },
-  validateAndUpload: function(e) {
+  validateAndUpload: function (e) {
     if (this.checkImageTypeValidity(e.target)) {
       // The assumption here is that FormData is supported, otherwise
       // the upload view is not shown to the user.
@@ -234,19 +231,19 @@ issues.ImageUploadView = Backbone.View.extend({
         data: formdata,
         method: "POST",
         url: "/upload/",
-        success: _.bind(function(response) {
+        success: _.bind(function (response) {
           this.addImageUploadComment(response);
           this._loadingIndicator.removeClass("is-active");
         }, this),
-        error: _.bind(function() {
+        error: _.bind(function () {
           var msg = "There was an error trying to upload the image.";
           wcEvents.trigger("flash:error", { message: msg, timeout: 4000 });
           this._loadingIndicator.removeClass("is-active");
-        }, this)
+        }, this),
       });
     }
   },
-  addImageUploadComment: function(response) {
+  addImageUploadComment: function (response) {
     // reponse looks like {filename: "blah", url: "http...blah"}
     var DELIMITER = "\n\n";
     var textarea = $(".js-Comment-text");
@@ -256,7 +253,7 @@ issues.ImageUploadView = Backbone.View.extend({
       "<details><summary>View the screenshot</summary>",
       "<img alt='Screenshot' src='",
       img_url,
-      "'></details>"
+      "'></details>",
     ].join("");
 
     if (!$.trim(textareaVal)) {
@@ -266,10 +263,8 @@ issues.ImageUploadView = Backbone.View.extend({
     }
   },
   // Adapted from bugform.js
-  checkImageTypeValidity: function(input) {
-    var splitImg = $(input)
-      .val()
-      .split(".");
+  checkImageTypeValidity: function (input) {
+    var splitImg = $(input).val().split(".");
     var ext = splitImg[splitImg.length - 1].toLowerCase();
     var allowed = ["jpg", "jpeg", "jpe", "png", "gif", "bmp"];
     if (!_.includes(allowed, ext)) {
@@ -280,7 +275,7 @@ issues.ImageUploadView = Backbone.View.extend({
       return true;
     }
   },
-  makeInvalid: function(id) {
+  makeInvalid: function (id) {
     // Early return if inline help is already in place.
     if (this.inputMap[id].valid === false) {
       return;
@@ -288,7 +283,7 @@ issues.ImageUploadView = Backbone.View.extend({
 
     var inlineHelp = $("<small></small>", {
       class: "form-message-error",
-      text: this.inputMap[id].helpText
+      text: this.inputMap[id].helpText,
     });
 
     this.inputMap[id].valid = false;
@@ -303,7 +298,7 @@ issues.ImageUploadView = Backbone.View.extend({
 
     this.disableSubmits();
   },
-  makeValid: function(id) {
+  makeValid: function (id) {
     this.inputMap[id].valid = true;
     $(this.inputMap[id].elm)
       .parents(".js-Form-group")
@@ -314,14 +309,14 @@ issues.ImageUploadView = Backbone.View.extend({
       this.enableSubmits();
     }
   },
-  disableSubmits: function() {
+  disableSubmits: function () {
     this._submitButton.prop("disabled", true);
     this._submitButton.addClass("is-disabled");
   },
-  enableSubmits: function() {
+  enableSubmits: function () {
     this._submitButton.prop("disabled", false);
     this._submitButton.removeClass("is-disabled");
-  }
+  },
 });
 
 issues.MainView = Backbone.View.extend(
@@ -329,21 +324,21 @@ issues.MainView = Backbone.View.extend(
     el: $(".js-Issue"),
     events: {
       "click .js-Issue-comment-button": "addNewComment",
-      "click .issue-details-nsfw": "toggleNSFW"
+      "click .issue-details-nsfw": "toggleNSFW",
     },
     keyboardEvents: {
-      g: "githubWarp"
+      g: "githubWarp",
     },
     _supportsFormData: "FormData" in window,
     _isNSFW: undefined,
-    initialize: function() {
+    initialize: function () {
       var body = $(document.body);
       body.addClass("language-html");
       var issueNum = { number: $("main").data("issueNumber") };
       this.issue = new issues.Issue(issueNum);
       this.comments = new issues.CommentsCollection({ pageNumber: 1 });
       this.initSubViews(
-        _.bind(function() {
+        _.bind(function () {
           // set listener for closing category editor only after its
           // been initialized.
           body.click(_.bind(this.closeCategoryEditor, this));
@@ -352,7 +347,7 @@ issues.MainView = Backbone.View.extend(
       this.fetchModels();
       this.handleKeyShortcuts();
     },
-    closeCategoryEditor: function(e) {
+    closeCategoryEditor: function (e) {
       var target = $(e.target);
       // early return if the editor is closed,
       if (
@@ -383,7 +378,7 @@ issues.MainView = Backbone.View.extend(
         this.milestones.closeEditor();
       }
     },
-    githubWarp: function(e) {
+    githubWarp: function (e) {
       var repoPath = $("main").data("repoPath");
 
       if (e.target.nodeName === "TEXTAREA") {
@@ -394,7 +389,7 @@ issues.MainView = Backbone.View.extend(
         return (location.href = warpPipe);
       }
     },
-    initSubViews: function(callback) {
+    initSubViews: function (callback) {
       var issueModel = { model: this.issue };
       this.metadata = new issues.MetaDataView(issueModel);
       this.body = new issues.BodyView(_.extend(issueModel, { mainView: this }));
@@ -406,12 +401,12 @@ issues.MainView = Backbone.View.extend(
 
       callback();
     },
-    fetchModels: function() {
+    fetchModels: function () {
       var headersBag = { headers: { Accept: "application/json" } };
       this.issue
         .fetch(headersBag)
         .done(
-          _.bind(function() {
+          _.bind(function () {
             // _.find() will return the object if found (which is truthy),
             // or undefined if not found (which is falsey)
             this._isNSFW = !!_.find(
@@ -421,9 +416,9 @@ issues.MainView = Backbone.View.extend(
 
             _.each(
               [this.metadata, this.labels, this.milestones, this.body, this],
-              function(elm) {
+              function (elm) {
                 elm.render();
-                _.each($(".js-Issue-markdown code"), function(elm) {
+                _.each($(".js-Issue-markdown code"), function (elm) {
                   Prism.highlightElement(elm);
                 });
               }
@@ -438,7 +433,7 @@ issues.MainView = Backbone.View.extend(
               this.comments
                 .fetch(headersBag)
                 .done(
-                  _.bind(function(response) {
+                  _.bind(function (response) {
                     this.addExistingComments();
                     this.comments.bind("add", _.bind(this.addComment, this));
                     // If there's a #hash pointing to a comment (or elsewhere)
@@ -452,18 +447,18 @@ issues.MainView = Backbone.View.extend(
                     }
                   }, this)
                 )
-                .fail(function() {
+                .fail(function () {
                   var msg =
                     "There was an error retrieving issue comments. Please reload to try again.";
                   wcEvents.trigger("flash:error", {
                     message: msg,
-                    timeout: 4000
+                    timeout: 4000,
                   });
                 });
             }
           }, this)
         )
-        .fail(function(response) {
+        .fail(function (response) {
           var msg;
           if (
             response &&
@@ -480,7 +475,7 @@ issues.MainView = Backbone.View.extend(
         });
     },
 
-    getRemainingComments: function(count) {
+    getRemainingComments: function (count) {
       //The first 30 comments for page 1 has already been loaded.
       //If more than 30 comments are there the remaining comments are rendered in sets of 30
       //in consecutive pages
@@ -488,10 +483,10 @@ issues.MainView = Backbone.View.extend(
       _.each(
         _.bind(
           _.range(2, count),
-          function(i) {
+          function (i) {
             this.comments.fetchPage({
               pageNumber: i,
-              headers: { Accept: "application/json" }
+              headers: { Accept: "application/json" },
             });
           },
           this
@@ -499,23 +494,21 @@ issues.MainView = Backbone.View.extend(
       );
     },
 
-    addComment: function(comment) {
+    addComment: function (comment) {
       // if there's a nsfw label, add the relevant class.
       var view = new issues.CommentView({ model: comment });
       var commentElm = view.render().$el;
       $(".js-Issue-commentList").append(commentElm);
-      _.each(commentElm.find("code"), function(elm) {
+      _.each(commentElm.find("code"), function (elm) {
         Prism.highlightElement(elm);
       });
       if (this._isNSFW) {
-        _.each(commentElm.find("img"), function(elm) {
-          $(elm)
-            .closest("p")
-            .addClass("issue-details-nsfw");
+        _.each(commentElm.find("img"), function (elm) {
+          $(elm).closest("p").addClass("issue-details-nsfw");
         });
       }
     },
-    addNewComment: function(event) {
+    addNewComment: function (event) {
       var form = $(".js-Comment-form");
       var textarea = $(".js-Comment-text");
 
@@ -526,7 +519,7 @@ issues.MainView = Backbone.View.extend(
           body: this.sanitizeMarkdown(md.render(textarea.val())),
           commenter: form.data("username"),
           createdAt: moment(new Date().toISOString()).fromNow(),
-          commentLinkId: null
+          commentLinkId: null,
         });
         this.addComment(newComment);
         newComment.attributes.body = textarea.val();
@@ -536,10 +529,10 @@ issues.MainView = Backbone.View.extend(
         newComment.save();
       }
     },
-    addExistingComments: function() {
+    addExistingComments: function () {
       this.comments.each(_.bind(this.addComment, this));
     },
-    toggleNSFW: function(e) {
+    toggleNSFW: function (e) {
       // make sure we've got a reference to the <img> element,
       // (small images won't extend to the width of the containing
       // p.nsfw)
@@ -553,7 +546,7 @@ issues.MainView = Backbone.View.extend(
         .parent()
         .toggleClass("issue-details-nsfw--display");
     },
-    render: function() {
+    render: function () {
       this.$el.removeClass("is-hidden");
       // only show issue commenting bits if the issue is not locked
       if (!this.issue.get("locked")) {
@@ -561,9 +554,9 @@ issues.MainView = Backbone.View.extend(
       }
     },
 
-    handleKeyShortcuts: function() {
+    handleKeyShortcuts: function () {
       Mousetrap.bind("mod+enter", _.bind(this.addNewComment, this));
-    }
+    },
   })
 );
 

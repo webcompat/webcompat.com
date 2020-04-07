@@ -7,7 +7,7 @@ const { assert } = intern.getPlugin("chai");
 const { registerSuite } = intern.getInterface("object");
 const FunctionalHelpers = require("./lib/helpers.js");
 
-var url = function(path, params) {
+var url = function (path, params) {
   path = path ? path : "";
   var fullUrl =
     params !== undefined
@@ -41,7 +41,7 @@ registerSuite("Search (auth)", {
         .end()
         .findByCssSelector("#js-SearchForm-input")
         .getVisibleText()
-        .then(function(text) {
+        .then(function (text) {
           assert.equal(text, "", "Clicking filter should empty search text");
         })
         .end()
@@ -54,7 +54,7 @@ registerSuite("Search (auth)", {
         .end()
         .findAllByCssSelector(".needsdiagnosis.js-Tag")
         .getAttribute("class")
-        .then(function(className) {
+        .then(function (className) {
           assert.notInclude(
             className,
             "is-active",
@@ -74,7 +74,7 @@ registerSuite("Search (auth)", {
       )
         .findDisplayedByCssSelector(".js-IssueList:nth-of-type(1) a")
         .getVisibleText()
-        .then(function(text) {
+        .then(function (text) {
           assert.include(
             text,
             "vladvlad",
@@ -83,7 +83,7 @@ registerSuite("Search (auth)", {
         })
         .end()
         .getCurrentUrl()
-        .then(function(currUrl) {
+        .then(function (currUrl) {
           assert.include(
             currUrl,
             "q=vladvlad",
@@ -107,7 +107,7 @@ registerSuite("Search (auth)", {
         .end()
         .findDisplayedByCssSelector(".js-IssueList:only-of-type a")
         .getVisibleText()
-        .then(function(text) {
+        .then(function (text) {
           assert.include(
             text,
             "vladvlad",
@@ -128,7 +128,7 @@ registerSuite("Search (auth)", {
         .end()
         .findDisplayedByCssSelector("#search-bar")
         .isDisplayed()
-        .then(function(isDisplayed) {
+        .then(function (isDisplayed) {
           assert.equal(isDisplayed, true, "Search form is visible.");
         })
         .end();
@@ -141,7 +141,7 @@ registerSuite("Search (auth)", {
         .end()
         .findDisplayedByCssSelector("#search-bar")
         .isDisplayed()
-        .then(function(isDisplayed) {
+        .then(function (isDisplayed) {
           assert.equal(isDisplayed, true, "Search form is visible.");
         })
         .end();
@@ -159,7 +159,7 @@ registerSuite("Search (auth)", {
         .end()
         .findDisplayedByCssSelector(".js-IssueList:only-of-type a")
         .getVisibleText()
-        .then(function(text) {
+        .then(function (text) {
           assert.include(
             text,
             "vladvlad",
@@ -185,7 +185,7 @@ registerSuite("Search (auth)", {
           .end()
           .findDisplayedByCssSelector(".js-IssueList:only-of-type a")
           .getVisibleText()
-          .then(function(text) {
+          .then(function (text) {
             assert.include(
               text,
               "vladvlad",
@@ -194,7 +194,7 @@ registerSuite("Search (auth)", {
           })
           .end()
           .getCurrentUrl()
-          .then(function(currUrl) {
+          .then(function (currUrl) {
             assert.include(currUrl, "page=1", "Default params got merged.");
           })
           .end()
@@ -220,7 +220,7 @@ registerSuite("Search (auth)", {
           ".js-IssueList:first-of-type .js-Issue-label"
         )
         .getVisibleText()
-        .then(function(text) {
+        .then(function (text) {
           assert.include(
             text,
             "tacos",
@@ -244,7 +244,7 @@ registerSuite("Search (auth)", {
         .click()
         .end()
         .getCurrentUrl()
-        .then(function(url) {
+        .then(function (url) {
           assert(
             url.includes(
               "q=label%3Abrowser-android",
@@ -265,7 +265,7 @@ registerSuite("Search (auth)", {
       )
         .findByCssSelector("#js-SearchForm-input")
         .getProperty("value")
-        .then(function(text) {
+        .then(function (text) {
           assert.include(
             text,
             "one:two-three",
@@ -273,6 +273,6 @@ registerSuite("Search (auth)", {
           );
         })
         .end();
-    }
-  }
+    },
+  },
 });

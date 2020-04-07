@@ -3,20 +3,20 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 function Popup() {
-  this.init = function() {
+  this.init = function () {
     this.setUpEvents();
   };
 
-  this.setUpEvents = function() {
+  this.setUpEvents = function () {
     this.popupHandler();
   };
 
-  this.popupHandler = function() {
+  this.popupHandler = function () {
     var modalTriggers = document.querySelectorAll(".popup-trigger");
     var overlay = document.querySelector(".popup-overlay");
     var closeButtons = document.querySelectorAll(".popup-modal__close");
-    modalTriggers.forEach(function(trigger) {
-      trigger.addEventListener("click", function(e) {
+    modalTriggers.forEach(function (trigger) {
+      trigger.addEventListener("click", function (e) {
         e.preventDefault();
         var popupTrigger = trigger.dataset.popupTrigger;
         var popupModal = document.querySelector(
@@ -24,8 +24,8 @@ function Popup() {
         );
         popupModal.classList.add("is--visible");
         overlay.classList.add("is-blacked-out");
-        closeButtons.forEach(function(btn) {
-          btn.addEventListener("click", function() {
+        closeButtons.forEach(function (btn) {
+          btn.addEventListener("click", function () {
             popupModal.classList.remove("is--visible");
             overlay.classList.remove("is-blacked-out");
           });
@@ -37,6 +37,6 @@ function Popup() {
   return this.init();
 }
 
-$(function() {
+$(function () {
   new Popup();
 });

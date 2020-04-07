@@ -7,7 +7,7 @@ const { assert } = intern.getPlugin("chai");
 const { registerSuite } = intern.getInterface("object");
 const FunctionalHelpers = require("./lib/helpers.js");
 
-var url = function(path) {
+var url = function (path) {
   path = path ? path : "";
   return intern.config.functionalBaseUrl + path;
 };
@@ -24,7 +24,7 @@ registerSuite("History navigation", {
           .findDisplayedByCssSelector(".js-IssueList:nth-child(11)")
           .end()
           .getCurrentUrl()
-          .then(function(url) {
+          .then(function (url) {
             assert.include(url, "/issues");
           })
           .goBack()
@@ -32,11 +32,11 @@ registerSuite("History navigation", {
           .findDisplayedByCssSelector(".js-IssueList:nth-child(1)")
           .end()
           .getCurrentUrl()
-          .then(function(url) {
+          .then(function (url) {
             assert.notInclude(url, "/issues");
           })
           .end()
       );
-    }
-  }
+    },
+  },
 });

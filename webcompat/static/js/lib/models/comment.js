@@ -5,11 +5,11 @@
 var issues = issues || {}; // eslint-disable-line no-use-before-define
 
 issues.Comment = Backbone.Model.extend({
-  url: function() {
+  url: function () {
     var issueNumber = $("main").data("issueNumber");
     return "/api/issues/" + issueNumber + "/comments";
   },
-  parse: function(response, jqXHR) {
+  parse: function (response, jqXHR) {
     this.set({
       avatarUrl: response.user.avatar_url,
       body: response.body_html,
@@ -18,7 +18,7 @@ issues.Comment = Backbone.Model.extend({
       createdAt:
         moment(Date.now()).diff(response.created_at, "weeks") > 1
           ? moment(response.created_at).format("YYYY-MM-DD")
-          : moment(response.created_at).fromNow()
+          : moment(response.created_at).fromNow(),
     });
     var linkHeader = jqXHR.xhr.getResponseHeader("Link");
     if (linkHeader !== null && !!this.parseHeader(linkHeader).last) {
@@ -29,7 +29,7 @@ issues.Comment = Backbone.Model.extend({
       response.lastPageNumber = "1";
     }
   },
-  parseHeader: function(linkHeader) {
+  parseHeader: function (linkHeader) {
     //TODO: Abstract 'parseHeader' method from comment.js in to a mixin
     //See Issue #1118
     /* Returns an object like so:
@@ -60,5 +60,5 @@ issues.Comment = Backbone.Model.extend({
     }
 
     return result;
-  }
+  },
 });

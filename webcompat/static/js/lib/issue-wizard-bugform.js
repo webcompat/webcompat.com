@@ -10,8 +10,8 @@ function BugForm() {
   var me = this;
   window.addEventListener(
     "message",
-    function(event) {
-      $(function() {
+    function (event) {
+      $(function () {
         me.onReceiveMessage(event);
       });
     },
@@ -22,7 +22,7 @@ function BugForm() {
   $(BugForm.prototype.onDOMReadyInit.bind(this));
 }
 
-BugForm.prototype.onDOMReadyInit = function() {
+BugForm.prototype.onDOMReadyInit = function () {
   this.clickedButton = null;
   this.detailsInput = $("#details:hidden");
   this.consoleLogsInput = $("#console_logs_url:hidden");
@@ -99,7 +99,7 @@ BugForm.prototype.onDOMReadyInit = function() {
     slideupdown: "slideupdown",
     slidedownandheight: "slidedownandheight",
     slideupandheight: "slideupandheight",
-    slidedownusername: "slidedownusername"
+    slidedownusername: "slidedownusername",
   };
 
   this.stepsArray = [
@@ -113,7 +113,7 @@ BugForm.prototype.onDOMReadyInit = function() {
     this.step8Container,
     this.step9Container,
     this.step10Container,
-    this.step11Container
+    this.step11Container,
   ];
 
   this.uploadFileChoice = 1;
@@ -127,56 +127,56 @@ BugForm.prototype.onDOMReadyInit = function() {
       el: $("#url"),
       valid: null,
       helpText: "A valid URL is required.",
-      errFunction: "requiredField"
+      errFunction: "requiredField",
     },
     problem_category: {
       el: $("[name=problem_category]"),
       valid: null,
       helpText: "Problem type required.",
-      errFunction: "requiredField"
+      errFunction: "requiredField",
     },
 
     site_bug_subcategory: {
       el: $("[name=site_bug_subcategory]"),
       valid: null,
       helpText: "Problem type required.",
-      errFunction: "requiredField"
+      errFunction: "requiredField",
     },
     layout_bug_subcategory: {
       el: $("[name=layout_bug_subcategory]"),
       valid: null,
       helpText: "Problem type required.",
-      errFunction: "requiredField"
+      errFunction: "requiredField",
     },
     video_bug_subcategory: {
       el: $("[name=video_bug_subcategory]"),
       valid: null,
       helpText: "Problem type required.",
-      errFunction: "requiredField"
+      errFunction: "requiredField",
     },
     browsers_selection: {
       el: $("[name=tested_browsers]"),
       valid: null,
       helpText: "Browser selection required.",
-      errFunction: "requiredField"
+      errFunction: "requiredField",
     },
 
     other_problem: {
       el: $("[name=other_problem]"),
       valid: null,
       helpText: "Problem type required.",
-      errFunction: "optionalField"
+      errFunction: "optionalField",
     },
     description: {
       el: $("#description"),
       valid: null,
       helpText: "A problem summary is required.",
-      errFunction: "requiredField"
+      errFunction: "requiredField",
     },
     steps_reproduce: {
       el: $("#steps_reproduce"),
       valid: true,
-      helpText: null
+      helpText: null,
     },
     image: {
       el: $("#image"),
@@ -184,32 +184,32 @@ BugForm.prototype.onDOMReadyInit = function() {
       valid: true,
       helpText:
         "Image must be one of the following: jpe, jpg, jpeg, png, gif, or bmp.",
-      errFunction: "imageField"
+      errFunction: "imageField",
     },
     browser: {
       el: $("#browser"),
       valid: true,
       helpText: null,
-      errFunction: "requiredField"
+      errFunction: "requiredField",
     },
     os: {
       el: $("#os"),
       valid: true,
       helpText: null,
-      errFunction: "requiredField"
+      errFunction: "requiredField",
     },
     browser_test_type: {
       el: $("[name=browser_test]"),
       valid: true,
-      helpText: null
+      helpText: null,
     },
     contact: {
       el: $("#contact"),
       valid: true,
       helpText:
         "GitHub nicknames are 39 characters max, alphanumeric and hyphens only.",
-      errFunction: "requiredField"
-    }
+      errFunction: "requiredField",
+    },
   };
 
   this.browserField = this.inputs.browser.el;
@@ -235,7 +235,7 @@ BugForm.prototype.onDOMReadyInit = function() {
   return this.init();
 };
 
-BugForm.prototype.init = function() {
+BugForm.prototype.init = function () {
   // Make sure we're not getting a report
   // about our own site before checking params.
   if (!this.isSelfReport()) {
@@ -286,20 +286,20 @@ BugForm.prototype.init = function() {
 
   // Send GA event for all the `next` button clicks
   if ("ga" in window) {
-    this.stepsArray.forEach(function(element) {
-      $(element).on("click", function() {
+    this.stepsArray.forEach(function (element) {
+      $(element).on("click", function () {
         let ga_event = {
           eventAction: "click",
           eventCategory: "wizard next-step click",
-          eventLabel: this.className
+          eventLabel: this.className,
         };
         window.ga("send", "event", ga_event);
       });
-      $(element).on("change", function() {
+      $(element).on("change", function () {
         let ga_event = {
           eventAction: "input",
           eventCategory: "wizard input",
-          eventLabel: this.className
+          eventLabel: this.className,
         };
         window.ga("send", "event", ga_event);
       });
@@ -311,7 +311,7 @@ BugForm.prototype.init = function() {
   this.checkForm();
 };
 
-BugForm.prototype.onReceiveMessage = function(event) {
+BugForm.prototype.onReceiveMessage = function (event) {
   // We're getting a report about our own site, so let's bail.
   if (this.isSelfReport()) {
     return false;
@@ -332,7 +332,7 @@ BugForm.prototype.onReceiveMessage = function(event) {
   }
 };
 
-BugForm.prototype.handleScreenshot = function(screenshot) {
+BugForm.prototype.handleScreenshot = function (screenshot) {
   if (!screenshot) {
     return;
   }
@@ -348,7 +348,7 @@ BugForm.prototype.handleScreenshot = function(screenshot) {
   }
 };
 
-BugForm.prototype.handleMessage = function(message) {
+BugForm.prototype.handleMessage = function (message) {
   if (!message) {
     return;
   }
@@ -357,13 +357,13 @@ BugForm.prototype.handleMessage = function(message) {
   this.checkForm();
 };
 
-BugForm.prototype.preventSubmitByEnter = function(event) {
+BugForm.prototype.preventSubmitByEnter = function (event) {
   if (event.key === "Enter") {
     event.preventDefault();
   }
 };
 
-BugForm.prototype.showUploadPreview = function(dataURI) {
+BugForm.prototype.showUploadPreview = function (dataURI) {
   // The final size of Base64-encoded binary data is ~equal to
   // 1.37 times the original data size + 814 bytes (for headers).
   // so, bytes = (encoded_string.length - 814) / 1.37)
@@ -371,7 +371,7 @@ BugForm.prototype.showUploadPreview = function(dataURI) {
   if (String(dataURI).length - 814 / 1.37 > this.UPLOAD_LIMIT) {
     this.downsampleImage(
       dataURI,
-      _.bind(function(downsampledData) {
+      _.bind(function (downsampledData) {
         // Recurse until it's small enough for us to upload.
         this.showUploadPreview(downsampledData);
       }, this)
@@ -382,12 +382,12 @@ BugForm.prototype.showUploadPreview = function(dataURI) {
   }
 };
 
-BugForm.prototype.downsampleImage = function(dataURI, callback) {
+BugForm.prototype.downsampleImage = function (dataURI, callback) {
   var img = document.createElement("img");
   var canvas = document.createElement("canvas");
   var ctx = canvas.getContext("2d");
 
-  img.onload = function() {
+  img.onload = function () {
     // scale the tmp canvas to 50%
     canvas.width = Math.floor(img.width / 2);
     canvas.height = Math.floor(img.height / 2);
@@ -408,7 +408,7 @@ BugForm.prototype.downsampleImage = function(dataURI, callback) {
 };
 
 // Is the user trying to report a site against webcompat.com itself?
-BugForm.prototype.isSelfReport = function(href) {
+BugForm.prototype.isSelfReport = function (href) {
   href = href || location.href;
   var url = href.match(this.urlParamRegExp);
   if (url !== null) {
@@ -420,7 +420,7 @@ BugForm.prototype.isSelfReport = function(href) {
 };
 
 // Do some extra work based on the GET params that come with the request
-BugForm.prototype.checkParams = function() {
+BugForm.prototype.checkParams = function () {
   // Don't bother doing any work for bare requests.
   if (!location.search) {
     return;
@@ -449,18 +449,18 @@ BugForm.prototype.checkParams = function() {
   }
 };
 
-BugForm.prototype.addDetails = function(detailsParam) {
+BugForm.prototype.addDetails = function (detailsParam) {
   // The content of the details param may be encoded via
   // application/x-www-form-urlencoded, so we need to change the
   // + (SPACE) to %20 before decoding
   this.detailsInput.val(decodeURIComponent(detailsParam.replace(/\+/g, "%20")));
 };
 
-BugForm.prototype.storeClickedButton = function(event) {
+BugForm.prototype.storeClickedButton = function (event) {
   this.clickedButton = event.target.name;
 };
 
-BugForm.prototype.trimWyciwyg = function(url) {
+BugForm.prototype.trimWyciwyg = function (url) {
   // Trim wyciwyg://N/ from URL, if found.
   // See https://bugzilla.mozilla.org/show_bug.cgi?id=1098037 &
   // https://en.wikipedia.org/wiki/WYCIWYG
@@ -472,25 +472,25 @@ BugForm.prototype.trimWyciwyg = function(url) {
   }
 };
 
-BugForm.prototype.disableSubmits = function() {
+BugForm.prototype.disableSubmits = function () {
   this.submitButtons.prop("disabled", true);
   this.submitButtons.addClass("is-disabled");
 };
 
-BugForm.prototype.enableSubmits = function() {
+BugForm.prototype.enableSubmits = function () {
   this.submitButtons.prop("disabled", false);
   this.submitButtons.removeClass("is-disabled");
 };
 
 /* determines function based on whether validation returns true or false */
-BugForm.prototype.determineValidityFunction = function(func, field, silent) {
+BugForm.prototype.determineValidityFunction = function (func, field, silent) {
   if (func(field)) {
     return "makeValid";
   }
   return silent ? "makeInvalidSilent" : "makeInvalid";
 };
 
-BugForm.prototype.checkProblemTypeValidity = function(silent) {
+BugForm.prototype.checkProblemTypeValidity = function (silent) {
   this.resetProblemSubcategory(this.problemType.val() + "_subcategory");
   var func = this.determineValidityFunction(
     this.validation.isProblemTypeValid,
@@ -500,7 +500,7 @@ BugForm.prototype.checkProblemTypeValidity = function(silent) {
   this[func]("problem_category");
 };
 
-BugForm.prototype.checkBrowserValidity = function(silent) {
+BugForm.prototype.checkBrowserValidity = function (silent) {
   var func = this.determineValidityFunction(
     this.validation.isProblemTypeValid,
     this.browserSelection,
@@ -509,7 +509,7 @@ BugForm.prototype.checkBrowserValidity = function(silent) {
   this[func]("browsers_selection");
 };
 
-BugForm.prototype.checkBugTypeValidity = function(e) {
+BugForm.prototype.checkBugTypeValidity = function (e) {
   var subformName = typeof e === "object" ? e.target.attributes.name.value : "";
   var subformElement;
   if (subformName.length > 0) {
@@ -536,7 +536,7 @@ BugForm.prototype.checkBugTypeValidity = function(e) {
   }
 };
 
-BugForm.prototype.checkImageTypeValidity = function(event, silent) {
+BugForm.prototype.checkImageTypeValidity = function (event, silent) {
   // Bail if there's no image.
   if (!this.uploadField.val()) {
     return;
@@ -564,23 +564,23 @@ BugForm.prototype.checkImageTypeValidity = function(event, silent) {
   }
 };
 
-BugForm.prototype.checkUrl = function(event) {
+BugForm.prototype.checkUrl = function (event) {
   var isSilent = event.type === "input" || !this.urlField.val();
   this.checkURLValidity(isSilent);
   this.setNextBtnStatus(this.urlStep);
 };
 
-BugForm.prototype.checkDescription = function() {
+BugForm.prototype.checkDescription = function () {
   var isSilent = !this.descField.val();
   this.checkDescriptionValidity(isSilent);
 };
 
-BugForm.prototype.checkOtherProblem = function() {
+BugForm.prototype.checkOtherProblem = function () {
   this.checkOtherProblemValidity();
   this.setNextBtnStatus(this.subproblemStep);
 };
 
-BugForm.prototype.checkBrowserInput = function() {
+BugForm.prototype.checkBrowserInput = function () {
   var isSilent = !this.otherBrowser.val();
   this.checkBrowserInputValidity(isSilent);
   this.setNextBtnStatus(this.browserSelectionStepNo);
@@ -588,7 +588,7 @@ BugForm.prototype.checkBrowserInput = function() {
 
 /* Check to see that the URL input element is not empty,
    or if it's a non-webby scheme. */
-BugForm.prototype.checkURLValidity = function(silent) {
+BugForm.prototype.checkURLValidity = function (silent) {
   var func = this.determineValidityFunction(
     this.validation.isUrlValid,
     this.urlField,
@@ -598,7 +598,7 @@ BugForm.prototype.checkURLValidity = function(silent) {
 };
 
 /* Check to see that the description input element is not empty. */
-BugForm.prototype.checkDescriptionValidity = function(silent) {
+BugForm.prototype.checkDescriptionValidity = function (silent) {
   var func = this.determineValidityFunction(
     this.validation.isDescriptionValid,
     this.descField,
@@ -608,7 +608,7 @@ BugForm.prototype.checkDescriptionValidity = function(silent) {
 };
 
 /* Check to see that the browser input element is not empty. */
-BugForm.prototype.checkBrowserInputValidity = function(silent) {
+BugForm.prototype.checkBrowserInputValidity = function (silent) {
   var func = this.determineValidityFunction(
     this.validation.isDescriptionValid,
     this.otherBrowser,
@@ -618,7 +618,7 @@ BugForm.prototype.checkBrowserInputValidity = function(silent) {
 };
 
 /* Check to see that the other problem input is not empty. */
-BugForm.prototype.checkOtherProblemValidity = function(silent) {
+BugForm.prototype.checkOtherProblemValidity = function (silent) {
   var func = this.determineValidityFunction(
     this.validation.isIssueValid,
     this.otherProblem,
@@ -629,7 +629,7 @@ BugForm.prototype.checkOtherProblemValidity = function(silent) {
 
 /* Check if Browser and OS are empty or not, only
    so we can set them to valid (there is no invalid state)*/
-BugForm.prototype.checkOptionalNonEmpty = function(field) {
+BugForm.prototype.checkOptionalNonEmpty = function (field) {
   var func = this.determineValidityFunction(
     this.validation.isOptionalValid,
     field
@@ -640,7 +640,7 @@ BugForm.prototype.checkOptionalNonEmpty = function(field) {
 };
 
 /* Check to see if the GitHub username has the right syntax.*/
-BugForm.prototype.checkGitHubUsername = function(event, silent) {
+BugForm.prototype.checkGitHubUsername = function (event, silent) {
   var func = this.determineValidityFunction(
     this.validation.isGithubUserNameValid,
     this.contactField,
@@ -649,11 +649,11 @@ BugForm.prototype.checkGitHubUsername = function(event, silent) {
   this[func]("contact");
 };
 
-BugForm.prototype.onSubmitAttempt = function() {
+BugForm.prototype.onSubmitAttempt = function () {
   this.performChecks();
 };
 
-BugForm.prototype.performChecks = function(isSilent) {
+BugForm.prototype.performChecks = function (isSilent) {
   this.checkURLValidity(isSilent);
   this.checkDescriptionValidity(isSilent);
   this.checkProblemTypeValidity(isSilent);
@@ -661,14 +661,14 @@ BugForm.prototype.performChecks = function(isSilent) {
   this.checkGitHubUsername(null, isSilent);
 };
 
-BugForm.prototype.checkForm = function() {
+BugForm.prototype.checkForm = function () {
   // Run through and see if there's any user input in the
   // required inputs
   var inputs = [
     this.problemType.filter(":checked").length,
     this.urlField.val(),
     this.descField.val(),
-    this.uploadField.val()
+    this.uploadField.val(),
   ];
   if (_.some(inputs, Boolean)) {
     // then, check validity
@@ -686,11 +686,11 @@ BugForm.prototype.checkForm = function() {
   }
 };
 
-BugForm.prototype.requiredField = function(id, inlineHelp) {
+BugForm.prototype.requiredField = function (id, inlineHelp) {
   inlineHelp.insertAfter("label[for=" + id + "]");
 };
 
-BugForm.prototype.imageField = function(id, inlineHelp) {
+BugForm.prototype.imageField = function (id, inlineHelp) {
   $(".form-upload-error").remove();
 
   inlineHelp
@@ -707,19 +707,19 @@ BugForm.prototype.imageField = function(id, inlineHelp) {
   this.removeUploadPreview();
 };
 
-BugForm.prototype.optionalField = function(id) {
+BugForm.prototype.optionalField = function (id) {
   this.inputs[id].el
     .parents(".js-Form-group")
     .removeClass("is-error js-form-error");
 };
 
 /* shows an error based on the errFunction in the config above */
-BugForm.prototype.showError = function(id) {
+BugForm.prototype.showError = function (id) {
   if (!this.inputs[id].hasOwnProperty("errFunction")) return;
 
   var inlineHelp = $("<small></small>", {
     class: "label-icon-message form-message-error",
-    text: this.inputs[id].helpText
+    text: this.inputs[id].helpText,
   });
 
   this.inputs[id].el
@@ -731,7 +731,7 @@ BugForm.prototype.showError = function(id) {
   this[func](id, inlineHelp);
 };
 
-BugForm.prototype.makeInvalid = function(id) {
+BugForm.prototype.makeInvalid = function (id) {
   // Early return if inline help is already in place.
   if (this.inputs[id].valid === false) {
     return;
@@ -746,12 +746,12 @@ BugForm.prototype.makeInvalid = function(id) {
   }
 };
 
-BugForm.prototype.makeInvalidSilent = function(id) {
+BugForm.prototype.makeInvalidSilent = function (id) {
   this.removeSuccessStyle(this.inputs[id].el);
   this.disableSubmits();
 };
 
-BugForm.prototype.checkAllRequiredValid = function() {
+BugForm.prototype.checkAllRequiredValid = function () {
   return (
     this.inputs["url"].valid &&
     this.inputs["problem_category"].valid &&
@@ -761,11 +761,11 @@ BugForm.prototype.checkAllRequiredValid = function() {
   );
 };
 
-BugForm.prototype.checkSpecificRequiredValid = function(fieldId) {
+BugForm.prototype.checkSpecificRequiredValid = function (fieldId) {
   return this.inputs[fieldId].valid;
 };
 
-BugForm.prototype.setNextBtnStatus = function(step) {
+BugForm.prototype.setNextBtnStatus = function (step) {
   switch (step) {
     case this.urlStep:
       var input = this.inputs["url"].el[0];
@@ -811,7 +811,7 @@ BugForm.prototype.setNextBtnStatus = function(step) {
   }
 };
 
-BugForm.prototype.textareaTrackProgress = function(e) {
+BugForm.prototype.textareaTrackProgress = function (e) {
   var len = $.trim(e.target.value).length;
   var progress = (len * 100) / this.descriptionMinChars;
   this.progressBar.css("width", progress > 100 ? "100%" : progress + "%");
@@ -824,13 +824,13 @@ BugForm.prototype.textareaTrackProgress = function(e) {
   }
 };
 
-BugForm.prototype.extractPrettyUrl = function(url) {
+BugForm.prototype.extractPrettyUrl = function (url) {
   var pathArray = url.split("/");
   var host = pathArray[2];
   return host;
 };
 
-BugForm.prototype.nextStep = function(e) {
+BugForm.prototype.nextStep = function (e) {
   e.preventDefault();
   var trigger = $(e.currentTarget);
   if (trigger.hasClass("disabled")) {
@@ -877,7 +877,7 @@ BugForm.prototype.nextStep = function(e) {
   return false;
 };
 
-BugForm.prototype.subproblemChecks = function(trigger) {
+BugForm.prototype.subproblemChecks = function (trigger) {
   if (
     trigger.attr("type") === "radio" &&
     trigger.attr("name") === this.problemCategoryName
@@ -890,17 +890,12 @@ BugForm.prototype.subproblemChecks = function(trigger) {
   }
 };
 
-BugForm.prototype.descriptionControl = function(trigger, nextStepNumber) {
+BugForm.prototype.descriptionControl = function (trigger, nextStepNumber) {
   var isTriggerSubproblem = trigger.parents(".subproblem").length > 0;
   // If the next step is triggered by subproblem, fill the hidden description field with the according value
   if (isTriggerSubproblem) {
     // Fill the hidden description field with the selected problem subtype
-    this.descField.val(
-      trigger
-        .next("label")
-        .text()
-        .trim()
-    );
+    this.descField.val(trigger.next("label").text().trim());
   }
   if (nextStepNumber === this.browserDetectionStep) {
     var selectedProblem = this.problemType.filter(":checked").val();
@@ -911,13 +906,13 @@ BugForm.prototype.descriptionControl = function(trigger, nextStepNumber) {
   }
 };
 
-BugForm.prototype.hideStep = function(stepToHide) {
+BugForm.prototype.hideStep = function (stepToHide) {
   this.stepsArray[
     stepToHide - 1
   ][0].style.animationName = this.cssAnimations.slideupandheight;
 };
 
-BugForm.prototype.stepRevealControl = function(nextStepNumber) {
+BugForm.prototype.stepRevealControl = function (nextStepNumber) {
   if (
     (!this.blockNext && !this.isSubproblem) ||
     (this.isSubproblem && this.skipOneStep)
@@ -934,11 +929,11 @@ BugForm.prototype.stepRevealControl = function(nextStepNumber) {
   }
 };
 
-BugForm.prototype.scrollToElement = function(nextStep) {
+BugForm.prototype.scrollToElement = function (nextStep) {
   var scrollToEl = this.stepsArray[nextStep - 1][0];
   // Delay "scroll to element" effect in order to let the animation finish, otherwise the scroll point isn't correct
   setTimeout(
-    function() {
+    function () {
       var topOfElement =
         window.pageYOffset +
         scrollToEl.getBoundingClientRect().top -
@@ -949,7 +944,7 @@ BugForm.prototype.scrollToElement = function(nextStep) {
   );
 };
 
-BugForm.prototype.setActiveStep = function(nextStep) {
+BugForm.prototype.setActiveStep = function (nextStep) {
   for (var index = 1; index <= nextStep; index++) {
     $("#step-" + index)
       .addClass("complete")
@@ -960,7 +955,7 @@ BugForm.prototype.setActiveStep = function(nextStep) {
     .removeClass("complete");
 };
 
-BugForm.prototype.problemSubcategoryStep = function(trigger) {
+BugForm.prototype.problemSubcategoryStep = function (trigger) {
   var subcategoryId = trigger.val() + "_subcategory";
   var isOther = trigger.val() === this.otherProblemId;
   var isDetectionBug = trigger.val() === this.detectionBugId;
@@ -978,9 +973,9 @@ BugForm.prototype.problemSubcategoryStep = function(trigger) {
 
   $(".step" + this.subproblemStep)
     .find("ul")
-    .each(function() {
+    .each(function () {
       setTimeout(
-        function() {
+        function () {
           this.parentNode.style.display = "none";
         }.bind(this),
         timeout
@@ -994,7 +989,7 @@ BugForm.prototype.problemSubcategoryStep = function(trigger) {
       animatedElement.style.animationName === this.cssAnimations.slideup; // If the step was previously closed, avoid doing the up and down animation
     animatedElement.style.animationName = "";
     setTimeout(
-      function() {
+      function () {
         var animation =
           !isOther && !isDetectionBug
             ? this.cssAnimations.slideupdown
@@ -1019,7 +1014,7 @@ BugForm.prototype.problemSubcategoryStep = function(trigger) {
   // Check if user selected "Something else" or "Detection bug"
   if (!isOther && !isDetectionBug) {
     setTimeout(
-      function() {
+      function () {
         document.getElementById(subcategoryId).parentNode.style.display =
           "block";
       }.bind(this),
@@ -1033,12 +1028,7 @@ BugForm.prototype.problemSubcategoryStep = function(trigger) {
     if (isDetectionBug) {
       this.toggleOtherProblem("hide");
       // Detection bug desn't have subcategories, filling the description with the category instead
-      this.descField.val(
-        trigger
-          .next("label")
-          .text()
-          .trim()
-      );
+      this.descField.val(trigger.next("label").text().trim());
       return;
     }
 
@@ -1048,53 +1038,51 @@ BugForm.prototype.problemSubcategoryStep = function(trigger) {
   }
 };
 
-BugForm.prototype.toggleOtherProblem = function(action) {
+BugForm.prototype.toggleOtherProblem = function (action) {
   var obj = this;
   if (action === "hide") {
-    this.otherProblemElements.each(function() {
+    this.otherProblemElements.each(function () {
       $(this)[0].style.animationName = obj.cssAnimations.slideupandheight;
     });
   } else {
-    this.otherProblemElements.each(function() {
+    this.otherProblemElements.each(function () {
       $(this)[0].style.animationName = obj.cssAnimations.slidedownandheight;
     });
   }
 };
 
-BugForm.prototype.toggleOtherBrowser = function(action) {
+BugForm.prototype.toggleOtherBrowser = function (action) {
   var obj = this;
   if (action === "hide") {
-    this.otherBrowserElements.each(function() {
+    this.otherBrowserElements.each(function () {
       $(this)[0].style.animationName = obj.cssAnimations.slideupandheight;
     });
   } else {
-    this.otherBrowserElements.each(function() {
+    this.otherBrowserElements.each(function () {
       $(this)[0].style.animationName = obj.cssAnimations.slidedownandheight;
     });
   }
 };
 
-BugForm.prototype.enableSubmitsIfFormValid = function() {
+BugForm.prototype.enableSubmitsIfFormValid = function () {
   if (this.checkAllRequiredValid()) {
     this.enableSubmits();
   }
 };
 
-BugForm.prototype.removeSuccessStyle = function(el) {
+BugForm.prototype.removeSuccessStyle = function (el) {
   el.parents(".js-Form-group").removeClass("is-validated js-no-error");
 };
 
-BugForm.prototype.showSuccess = function(el) {
+BugForm.prototype.showSuccess = function (el) {
   el.parents(".js-Form-group")
     .removeClass("is-error js-form-error")
     .addClass("is-validated js-no-error");
 
-  el.parents(".js-Form-group")
-    .find(".form-message-error")
-    .remove();
+  el.parents(".js-Form-group").find(".form-message-error").remove();
 };
 
-BugForm.prototype.makeValid = function(id) {
+BugForm.prototype.makeValid = function (id) {
   this.inputs[id].valid = true;
   this.showSuccess(this.inputs[id].el);
   this.enableSubmitsIfFormValid();
@@ -1105,7 +1093,7 @@ BugForm.prototype.makeValid = function(id) {
   of the image they're about to load, then invoke the passed in callback
   with the result of reading the blobOrFile as a dataURI.
 */
-BugForm.prototype.convertToDataURI = function(blobOrFile, callback) {
+BugForm.prototype.convertToDataURI = function (blobOrFile, callback) {
   if (!(window.FileReader && window.File)) {
     return;
   }
@@ -1117,20 +1105,20 @@ BugForm.prototype.convertToDataURI = function(blobOrFile, callback) {
   }
 
   var reader = new FileReader();
-  reader.onload = function(event) {
+  reader.onload = function (event) {
     var dataURI = event.target.result;
     callback(dataURI);
   };
   reader.readAsDataURL(blobOrFile);
 };
 
-BugForm.prototype.addPreviewBackground = function(dataURI) {
+BugForm.prototype.addPreviewBackground = function (dataURI) {
   if (!_.startsWith(dataURI, "data:image/")) {
     return;
   }
 
   this.previewEl.css({
-    background: "url(" + dataURI + ") no-repeat center / cover"
+    background: "url(" + dataURI + ") no-repeat center / cover",
   });
 
   this.hasImage = true;
@@ -1140,7 +1128,7 @@ BugForm.prototype.addPreviewBackground = function(dataURI) {
 /*
   Allow users to remove an image from the form upload.
 */
-BugForm.prototype.showRemoveUpload = function() {
+BugForm.prototype.showRemoveUpload = function () {
   // hide upload image errors (this will no-op if the user never saw one)
   $(".form-upload-error").remove();
 
@@ -1158,8 +1146,8 @@ BugForm.prototype.showRemoveUpload = function() {
   this.step10Btn.removeClass("disabled");
 };
 
-BugForm.prototype.changeUploadText = function(textId) {
-  this.uploadTextElements.each(function() {
+BugForm.prototype.changeUploadText = function (textId) {
+  this.uploadTextElements.each(function () {
     $(this).hide();
   });
   $("." + textId).show();
@@ -1168,7 +1156,7 @@ BugForm.prototype.changeUploadText = function(textId) {
 /*
   Remove the upload image preview and hide the remove screenshot button.
 */
-BugForm.prototype.removeUploadPreview = function(event) {
+BugForm.prototype.removeUploadPreview = function (event) {
   if (event && event.originalEvent instanceof Event) {
     // show the upload label when we're responding to a click event
     // (instead of being called from an error handler, which will
@@ -1192,20 +1180,20 @@ BugForm.prototype.removeUploadPreview = function(event) {
   this.changeUploadText("deleted-screenshot");
 };
 
-BugForm.prototype.showLoadingIndicator = function() {
+BugForm.prototype.showLoadingIndicator = function () {
   this.loadingIndicator.addClass("is-active");
 };
 
-BugForm.prototype.hideLoadingIndicator = function() {
+BugForm.prototype.hideLoadingIndicator = function () {
   this.loadingIndicator.removeClass("is-active");
 };
 
-BugForm.prototype.onFormSubmit = function(event) {
+BugForm.prototype.onFormSubmit = function (event) {
   event.preventDefault();
   this.disableSubmits();
   this.showLoadingIndicator();
   this.uploadConsoleLogs().always(
-    function() {
+    function () {
       this.uploadImage().then(this.submitForm.bind(this));
     }.bind(this)
   );
@@ -1215,7 +1203,7 @@ BugForm.prototype.onFormSubmit = function(event) {
    Upload console logs before form submission so we can
    put a link to it in the hidden field.
 */
-BugForm.prototype.uploadConsoleLogs = function() {
+BugForm.prototype.uploadConsoleLogs = function () {
   var details = JSON.parse(this.detailsInput.val());
 
   if (!details || !details.consoleLog) {
@@ -1232,10 +1220,10 @@ BugForm.prototype.uploadConsoleLogs = function() {
     data: formdata,
     method: "POST",
     url: "/upload/",
-    success: function(response) {
+    success: function (response) {
       var path = location.origin + "/console_logs/";
       this.consoleLogsInput.val(path + response.url);
-    }.bind(this)
+    }.bind(this),
   });
 };
 
@@ -1243,7 +1231,7 @@ BugForm.prototype.uploadConsoleLogs = function() {
    Upload the image before form submission so we can
    put an image link in the bug description.
 */
-BugForm.prototype.uploadImage = function() {
+BugForm.prototype.uploadImage = function () {
   if (!this.hasImage) {
     var dfd = $.Deferred();
     return dfd.resolve();
@@ -1262,7 +1250,7 @@ BugForm.prototype.uploadImage = function() {
     method: "POST",
     url: "/upload/",
     success: this.addImageURL.bind(this),
-    error: this.handleUploadError.bind(this)
+    error: this.handleUploadError.bind(this),
   });
 };
 
@@ -1272,11 +1260,11 @@ BugForm.prototype.uploadImage = function() {
 
    If we're here, the attempted form submission failed.
 */
-BugForm.prototype.handleUploadError = function(response) {
+BugForm.prototype.handleUploadError = function (response) {
   if (response && response.status === 415) {
     wcEvents.trigger("flash:error", {
       message: this.inputs.image.helpText,
-      timeout: 5000
+      timeout: 5000,
     });
   }
 
@@ -1284,7 +1272,7 @@ BugForm.prototype.handleUploadError = function(response) {
     wcEvents.trigger("flash:error", {
       message:
         "The image is too big! Please choose something smaller than 4MB.",
-      timeout: 5000
+      timeout: 5000,
     });
   }
 
@@ -1292,32 +1280,32 @@ BugForm.prototype.handleUploadError = function(response) {
   this.removeUploadPreview();
 };
 
-BugForm.prototype.revealUsernameField = function(e) {
+BugForm.prototype.revealUsernameField = function (e) {
   e.preventDefault();
   e.target.classList.add("disabled");
   this.contactField.focus();
   this.usernameContainer[0].style.animationName = this.cssAnimations.slidedownusername;
 };
 
-BugForm.prototype.resetProblemType = function() {
+BugForm.prototype.resetProblemType = function () {
   this.resetRadio(this.step3Trigger);
 };
 
-BugForm.prototype.resetDefaultDevice = function() {
+BugForm.prototype.resetDefaultDevice = function () {
   this.browserField.val(this.browserVal);
   this.browserField.trigger("blur");
   this.osField.val(this.osVal);
   this.osField.trigger("blur");
 };
 
-BugForm.prototype.resetBrowserSelection = function() {
+BugForm.prototype.resetBrowserSelection = function () {
   this.otherBrowserElements
     .find(this.noOtherBrowserTestedId)
     .prop("checked", true);
   this.resetRadio(this.step6Radio);
 };
 
-BugForm.prototype.resetProblemSubcategory = function(subformName) {
+BugForm.prototype.resetProblemSubcategory = function (subformName) {
   var resetElements =
     subformName && subformName.length > 0
       ? this.step4Trigger.not("input[name='" + subformName + "']")
@@ -1325,13 +1313,13 @@ BugForm.prototype.resetProblemSubcategory = function(subformName) {
   this.resetRadio(resetElements);
 };
 
-BugForm.prototype.resetRadio = function(element) {
-  element.each(function() {
+BugForm.prototype.resetRadio = function (element) {
+  element.each(function () {
     $(this).prop("checked", false);
   });
 };
 
-BugForm.prototype.submitForm = function() {
+BugForm.prototype.submitForm = function () {
   var dfd = $.Deferred();
   var formEl = this.form.get(0);
   // Calling submit() manually on the form won't contain details
@@ -1353,7 +1341,7 @@ BugForm.prototype.submitForm = function() {
 
   Note: browsers are inconsistent in quoting CSSOM serialization
 */
-BugForm.prototype.getDataURIFromPreviewEl = function() {
+BugForm.prototype.getDataURIFromPreviewEl = function () {
   var bgImage = this.previewEl.get(0).style.backgroundImage;
   var re = /url\(['"]{0,1}(data:image\/(?:jpeg*|jpg|png|gif|bmp);\s*base64,.+)['"]{0,1}\)/;
   var match = re.exec(bgImage);
@@ -1371,16 +1359,16 @@ BugForm.prototype.getDataURIFromPreviewEl = function() {
   create the markdown with the URL of a newly uploaded image
   and its thumbnail URL assets to the bug description
 */
-BugForm.prototype.addImageURL = function(response) {
+BugForm.prototype.addImageURL = function (response) {
   var img_url = response.url;
   var imageURL = [
     "<details><summary>View the screenshot</summary>",
     "<img alt='Screenshot' src='",
     img_url,
-    "'></details>"
+    "'></details>",
   ].join("");
 
-  this.stepsToReproduceField.val(function(idx, value) {
+  this.stepsToReproduceField.val(function (idx, value) {
     return value + "\n" + imageURL;
   });
 };

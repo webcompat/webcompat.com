@@ -7,13 +7,13 @@ const { assert } = intern.getPlugin("chai");
 const { registerSuite } = intern.getInterface("object");
 const FunctionalHelpers = require("./lib/helpers.js");
 
-var url = function(path) {
+var url = function (path) {
   return intern.config.functionalBaseUrl + path;
 };
 
 registerSuite("Milestones (non-auth)", {
   tests: {
-    "Page loads without milestone set": function() {
+    "Page loads without milestone set": function () {
       return FunctionalHelpers.openPage(
         this,
         url("issues/9"),
@@ -22,14 +22,14 @@ registerSuite("Milestones (non-auth)", {
       )
         .findByCssSelector(".js-issue-title")
         .getVisibleText()
-        .then(function(text) {
+        .then(function (text) {
           // check that the title loaded, it won't be there if the page didn't render.
           assert.include(text, "No Milestone.");
         })
         .end();
     },
 
-    "Missing status error displays": function() {
+    "Missing status error displays": function () {
       FunctionalHelpers.openPage(
         this,
         url("issues/9"),
@@ -47,11 +47,11 @@ registerSuite("Milestones (non-auth)", {
       )
         .findByCssSelector(".js-Milestone")
         .getVisibleText()
-        .then(function(text) {
+        .then(function (text) {
           // check that the title loaded, it won't be there if the page didn't render.
           assert.equal(text, "No status assigned yet");
         })
         .end();
-    }
-  }
+    },
+  },
 });

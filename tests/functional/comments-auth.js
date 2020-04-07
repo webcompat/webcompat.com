@@ -7,7 +7,7 @@ const { assert } = intern.getPlugin("chai");
 const { registerSuite } = intern.getInterface("object");
 const FunctionalHelpers = require("./lib/helpers.js");
 
-var url = path => intern.config.functionalBaseUrl + path;
+var url = (path) => intern.config.functionalBaseUrl + path;
 
 registerSuite("Comments (auth)", {
   before() {
@@ -34,7 +34,7 @@ registerSuite("Comments (auth)", {
           // Comment form should not be visible for locked issues.
           .findByCssSelector(".js-issue-comment-submit")
           .getAttribute("class")
-          .then(className => {
+          .then((className) => {
             assert.include(className, "is-hidden");
           })
           .end()
@@ -47,7 +47,7 @@ registerSuite("Comments (auth)", {
       return (
         FunctionalHelpers.openPage(this, url("issues/100"), ".js-image-upload")
           .findAllByCssSelector(".js-Issue-comment")
-          .then(elms => {
+          .then((elms) => {
             originalCommentsLength = elms.length;
           })
           .end()
@@ -60,7 +60,7 @@ registerSuite("Comments (auth)", {
           .end()
           .sleep(1000)
           .findAllByCssSelector(".js-Issue-comment")
-          .then(elms => {
+          .then((elms) => {
             allCommentsLength = elms.length;
             assert(
               originalCommentsLength < allCommentsLength,
@@ -75,7 +75,7 @@ registerSuite("Comments (auth)", {
       var allCommentsLength;
       return FunctionalHelpers.openPage(this, url("issues/100"), ".js-Issue")
         .findAllByCssSelector(".js-Issue-comment")
-        .then(elms => {
+        .then((elms) => {
           originalCommentsLength = elms.length;
         })
         .end()
@@ -86,7 +86,7 @@ registerSuite("Comments (auth)", {
         .end()
         .sleep(2000)
         .findAllByCssSelector(".js-Issue-comment")
-        .then(elms => {
+        .then((elms) => {
           allCommentsLength = elms.length;
           assert(
             originalCommentsLength === allCommentsLength,
@@ -106,7 +106,7 @@ registerSuite("Comments (auth)", {
         .end()
         .setFindTimeout(2000)
         .findByCssSelector(".repo-container .issues-listing")
-        .then(assert.fail, err => {
+        .then(assert.fail, (err) => {
           assert.isTrue(/NoSuchElement/.test(String(err)));
         })
         .end();
@@ -124,10 +124,10 @@ registerSuite("Comments (auth)", {
         .setFindTimeout(2000)
         .findByCssSelector(".js-LabelEditorLauncher")
         .getAttribute("class")
-        .then(className => {
+        .then((className) => {
           assert.notInclude(className, "is-active");
         })
         .end();
-    }
-  }
+    },
+  },
 });

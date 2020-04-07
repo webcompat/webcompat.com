@@ -2,39 +2,39 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-module.exports = function(grunt) {
+module.exports = function (grunt) {
   grunt.config("uglify", {
     options: {
       banner: "<%= banner %>",
-      mangle: false
+      mangle: false,
     },
     dist: {
       src: "<%= concat.dist.dest %>",
-      dest: "<%= jsDistPath %>/<%= pkg.name %>.min.js"
+      dest: "<%= jsDistPath %>/<%= pkg.name %>.min.js",
     },
     ga: {
       src: "<%= jsPath %>/lib/ga.js",
-      dest: "<%= jsDistPath %>/ga.js"
+      dest: "<%= jsDistPath %>/ga.js",
     },
     issues: {
       src: "<%= concat.issues.dest %>",
-      dest: "<%= jsDistPath %>/issues.min.js"
+      dest: "<%= jsDistPath %>/issues.min.js",
     },
     issueList: {
       src: "<%= concat.issueList.dest %>",
-      dest: "<%= jsDistPath %>/issue-list.min.js"
+      dest: "<%= jsDistPath %>/issue-list.min.js",
     },
     userActivity: {
       src: "<%= concat.userActivity.dest %>",
-      dest: "<%= jsDistPath %>/user-activity.min.js"
+      dest: "<%= jsDistPath %>/user-activity.min.js",
     },
     index: {
       src: "<%= concat.index.dest %>",
-      dest: "<%= jsDistPath %>/index.min.js"
+      dest: "<%= jsDistPath %>/index.min.js",
     },
     contributors: {
       src: "<%= jsPath %>/lib/contributors.js",
-      dest: "<%= jsDistPath %>/contributors.min.js"
-    }
+      dest: "<%= jsDistPath %>/contributors.min.js",
+    },
   });
 };

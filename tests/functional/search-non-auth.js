@@ -7,7 +7,7 @@ const { assert } = intern.getPlugin("chai");
 const { registerSuite } = intern.getInterface("object");
 const FunctionalHelpers = require("./lib/helpers.js");
 
-var url = function(path, params) {
+var url = function (path, params) {
   var base = intern.config.functionalBaseUrl + path;
   return params ? base + params : base;
 };
@@ -25,7 +25,7 @@ registerSuite("Search (non-auth)", {
           // to realize we're not at GitHub.
           .setFindTimeout(0)
           .findByCssSelector(".repo-container .issues-listing")
-          .then(assert.fail, function(err) {
+          .then(assert.fail, function (err) {
             assert.isTrue(/NoSuchElement/.test(String(err)));
           })
           .end()
@@ -42,7 +42,7 @@ registerSuite("Search (non-auth)", {
         .click()
         .end()
         .getCurrentUrl()
-        .then(function(currUrl) {
+        .then(function (currUrl) {
           assert.include(
             currUrl,
             "q=label%3Abrowser-android",
@@ -64,7 +64,7 @@ registerSuite("Search (non-auth)", {
         .end()
         .findDisplayedById("js-SearchForm-input")
         .getProperty("value")
-        .then(function(searchText) {
+        .then(function (searchText) {
           assert.include(
             searchText,
             "label:browser-android",
@@ -78,7 +78,7 @@ registerSuite("Search (non-auth)", {
       return FunctionalHelpers.openPage(this, url("issues"), ".js-SearchForm")
         .findByCssSelector(".js-SearchForm")
         .isDisplayed()
-        .then(function(isDisplayed) {
+        .then(function (isDisplayed) {
           assert.equal(
             isDisplayed,
             true,
@@ -104,10 +104,10 @@ registerSuite("Search (non-auth)", {
         .type("\uE007")
         .sleep(3000)
         .getCurrentUrl()
-        .then(function(currUrl) {
+        .then(function (currUrl) {
           assert.notInclude(currUrl, "fffffff", "old search param was removed");
         })
         .end();
-    }
-  }
+    },
+  },
 });

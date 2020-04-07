@@ -7,7 +7,7 @@ const { assert } = intern.getPlugin("chai");
 const { registerSuite } = intern.getInterface("object");
 const FunctionalHelpers = require("./lib/helpers.js");
 
-var url = function(path) {
+var url = function (path) {
   return intern.config.functionalBaseUrl + path;
 };
 
@@ -26,14 +26,14 @@ registerSuite("User Activity (auth)", {
       return FunctionalHelpers.openPage(this, url("me"), ".js-username")
         .findByCssSelector(".js-username")
         .getVisibleText()
-        .then(function(text) {
+        .then(function (text) {
           var match = text.match(/Issues reported by (.+)/);
           if (match) {
             username = match[1];
           }
         })
         .getCurrentUrl()
-        .then(function(currURL) {
+        .then(function (currURL) {
           assert.include(
             currURL,
             username,
@@ -51,20 +51,20 @@ registerSuite("User Activity (auth)", {
       )
         .findByCssSelector(".js-IssueList")
         .isDisplayed()
-        .then(function(isDisplayed) {
+        .then(function (isDisplayed) {
           assert.equal(isDisplayed, true, "IssueList container is visible.");
         })
         .sleep(1000)
         .end()
         .findByCssSelector(".js-list-issue .js-IssueList")
         .isDisplayed()
-        .then(function(isDisplayed) {
+        .then(function (isDisplayed) {
           assert.equal(isDisplayed, true, "IssueList item is visible.");
         })
         .end()
         .findByCssSelector(".js-IssueList .js-issue-title")
         .isDisplayed()
-        .then(function(isDisplayed) {
+        .then(function (isDisplayed) {
           assert.equal(
             isDisplayed,
             true,
@@ -74,7 +74,7 @@ registerSuite("User Activity (auth)", {
         .end()
         .findByCssSelector(".js-issue-comments")
         .getVisibleText()
-        .then(function(text) {
+        .then(function (text) {
           assert.match(
             text,
             /comments:\s\d+$/i,
@@ -84,7 +84,7 @@ registerSuite("User Activity (auth)", {
         .end()
         .findByCssSelector(".js-issue-date")
         .getVisibleText()
-        .then(function(text) {
+        .then(function (text) {
           assert.match(
             text,
             /^Opened:\s\d{4}-\d{2}-\d{2}/,
@@ -102,7 +102,7 @@ registerSuite("User Activity (auth)", {
       )
         .findByCssSelector("#needsinfo-issues")
         .isDisplayed()
-        .then(function(isDisplayed) {
+        .then(function (isDisplayed) {
           assert.equal(
             isDisplayed,
             true,
@@ -113,7 +113,7 @@ registerSuite("User Activity (auth)", {
         .end()
         .findByCssSelector(".label-status-needsinfo-testuser")
         .isDisplayed()
-        .then(function(isDisplayed) {
+        .then(function (isDisplayed) {
           assert.equal(isDisplayed, true, "A needsinfo label is visible");
         })
         .end();
@@ -127,7 +127,7 @@ registerSuite("User Activity (auth)", {
       )
         .findByCssSelector("article .headline-1")
         .getVisibleText()
-        .then(function(text) {
+        .then(function (text) {
           assert.include(
             text,
             "Forbidden",
@@ -135,6 +135,6 @@ registerSuite("User Activity (auth)", {
           );
         })
         .end();
-    }
-  }
+    },
+  },
 });

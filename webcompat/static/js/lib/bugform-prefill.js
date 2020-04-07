@@ -4,22 +4,22 @@ function prefillForm(message) {
 
   var config = {
     url: {
-      element: $("#url")
+      element: $("#url"),
     },
     details: {
       element: $("#details"),
-      stringify: true
+      stringify: true,
     },
     src: {
-      element: $("#reported_with")
+      element: $("#reported_with"),
     },
     extra_labels: {
       element: $("#extra_labels"),
-      stringify: true
-    }
+      stringify: true,
+    },
   };
 
-  var prepareValue = function(field, value) {
+  var prepareValue = function (field, value) {
     if (field.stringify) {
       return JSON.stringify(value);
     }
@@ -27,8 +27,8 @@ function prefillForm(message) {
     return value;
   };
 
-  var setValues = function(data) {
-    Object.keys(config).forEach(function(key) {
+  var setValues = function (data) {
+    Object.keys(config).forEach(function (key) {
       if (data.hasOwnProperty(key)) {
         var field = config[key];
         field.element.val(prepareValue(field, data[key]));
@@ -36,13 +36,13 @@ function prefillForm(message) {
     });
   };
 
-  var setAnalytics = function(campaign, source) {
+  var setAnalytics = function (campaign, source) {
     if (!window.setAnalyticsData) return;
 
     if (campaign && source) {
       window.setAnalyticsData({
         campaignName: campaign,
-        campaignSource: source
+        campaignSource: source,
       });
     }
   };

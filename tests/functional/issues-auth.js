@@ -7,7 +7,7 @@ const { assert } = intern.getPlugin("chai");
 const { registerSuite } = intern.getInterface("object");
 const FunctionalHelpers = require("./lib/helpers.js");
 
-var url = function(path) {
+var url = function (path) {
   return intern.config.functionalBaseUrl + path;
 };
 
@@ -32,13 +32,13 @@ registerSuite("Issues (auth)", {
         .type("l")
         .end()
         .findByCssSelector(".js-LabelEditorLauncher")
-        .then(function(element) {
+        .then(function (element) {
           element
             .getAttribute("class")
-            .then(function(classList) {
+            .then(function (classList) {
               assert.include(classList, "is-active");
             })
-            .catch(function(error) {
+            .catch(function (error) {
               console.log(error);
             });
         })
@@ -55,13 +55,13 @@ registerSuite("Issues (auth)", {
         .click()
         .end()
         .findByCssSelector(".js-DropdownHeader")
-        .then(function(element) {
+        .then(function (element) {
           element
             .getAttribute("class")
-            .then(function(classList) {
+            .then(function (classList) {
               assert.include(classList, "is-active");
             })
-            .catch(function(error) {
+            .catch(function (error) {
               console.log(error);
             });
         })
@@ -70,16 +70,16 @@ registerSuite("Issues (auth)", {
         .click()
         .end()
         .findByCssSelector(".js-DropdownHeader")
-        .then(function(element) {
+        .then(function (element) {
           element
             .getAttribute("class")
-            .then(function(classList) {
+            .then(function (classList) {
               assert.notInclude(classList, "is-active");
             })
-            .catch(function(error) {
+            .catch(function (error) {
               console.log(error);
             });
         });
-    }
-  }
+    },
+  },
 });
