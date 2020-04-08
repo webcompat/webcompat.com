@@ -11,16 +11,16 @@ const container = $(".step-container.step4");
 const nextStepButton = container.find(".next-step.step-4");
 const otherOption = container.find(".next-step.step-5");
 
-const makeAStep = id => notify.publish("showStep", { id });
-const hideStep = id => notify.publish("hideStep", id);
+const makeAStep = (id) => notify.publish("showStep", { id });
+const hideStep = (id) => notify.publish("hideStep", id);
 
-const handleNext = event => {
+const handleNext = (event) => {
   event.preventDefault();
   hideStep("differentBrowser");
   makeAStep("testedBrowsers");
 };
 
-const handleOther = event => {
+const handleOther = (event) => {
   event.preventDefault();
   hideStep("testedBrowsers");
   makeAStep("differentBrowser");
@@ -36,5 +36,5 @@ export default {
 
   hide() {
     hideContainer(container);
-  }
+  },
 };

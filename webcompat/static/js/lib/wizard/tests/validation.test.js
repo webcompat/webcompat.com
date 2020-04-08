@@ -2,7 +2,7 @@ import {
   isUrlValid,
   isEmpty,
   isImageTypeValid,
-  blobOrFileTypeValid
+  blobOrFileTypeValid,
 } from "../validation.js";
 
 const { describe, it } = intern.getPlugin("interface.bdd");

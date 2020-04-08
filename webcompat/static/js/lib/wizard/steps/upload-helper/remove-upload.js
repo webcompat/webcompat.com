@@ -13,7 +13,7 @@ const hideRemoveUpload = () => {
   removeUpload.get(0).blur();
 };
 
-const removeUploadPreview = event => {
+const removeUploadPreview = (event) => {
   event.preventDefault();
   hideRemoveUpload();
 
@@ -30,5 +30,5 @@ export default {
   init: () => {
     notify.subscribe("uploadImage", showRemoveUpload);
     notify.subscribe("uploadError", hideRemoveUpload);
-  }
+  },
 };

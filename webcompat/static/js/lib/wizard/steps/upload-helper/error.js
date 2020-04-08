@@ -29,5 +29,5 @@ export default {
   init: () => {
     notify.subscribe("uploadError", showUploadError);
     notify.subscribe("uploadImage", hideUploadError);
-  }
+  },
 };

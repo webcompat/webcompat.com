@@ -9,11 +9,11 @@ const index = [
   uploadError,
   uploadText,
   uploadOther,
-  uploadPreview
+  uploadPreview,
 ];
 
 export default {
   init: () => {
-    index.forEach(module => module.init());
-  }
+    index.forEach((module) => module.init());
+  },
 };

@@ -11,5 +11,5 @@ const container = $(".step-container.step10");
 export default {
   show() {
     showContainer(container);
-  }
+  },
 };

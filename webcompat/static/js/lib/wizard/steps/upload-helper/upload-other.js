@@ -17,5 +17,5 @@ export default {
     notify.subscribe("deleteImage", hideUploadOther);
     notify.subscribe("uploadError", hideUploadOther);
     notify.subscribe("uploadImage", showUploadOther);
-  }
+  },
 };

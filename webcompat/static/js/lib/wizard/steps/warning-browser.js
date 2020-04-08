@@ -10,7 +10,7 @@ import notify from "../notify.js";
 const container = $(".step-container.step7");
 const nextStepButton = container.find(".next-step.step-7");
 
-const handleNext = event => {
+const handleNext = (event) => {
   event.preventDefault();
   notify.publish("showStep", { id: "description" });
 };
@@ -24,5 +24,5 @@ export default {
 
   hide() {
     hideContainer(container, "slideupandheight");
-  }
+  },
 };

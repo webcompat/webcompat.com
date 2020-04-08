@@ -25,7 +25,7 @@ const hideUnknown = () =>
   otherProblem.css("animation-name", "slideupandheight");
 
 const showStep = (id, data) => notify.publish("showStep", { id, data });
-const hideStep = id => notify.publish("hideStep", id);
+const hideStep = (id) => notify.publish("hideStep", id);
 
 const handleDetectionBug = () => {
   hideUnknown();
@@ -33,7 +33,7 @@ const handleDetectionBug = () => {
   showStep("confirmBrowser");
 };
 
-const handleBugWithSubCategory = event => {
+const handleBugWithSubCategory = (event) => {
   hideUnknown();
   const subId = `${event.target.value}_subcategory`;
   showStep("subCategory", { subId });
@@ -45,7 +45,7 @@ const handleUnknownBug = () => {
   hideStep("confirmBrowser");
 };
 
-const onChange = event => {
+const onChange = (event) => {
   const isValid = !isEmpty(event.target.value);
 
   if (isValid) {
@@ -57,12 +57,12 @@ const onChange = event => {
   nextStepButton.prop("disabled", !isValid);
 };
 
-const handleNextStep = event => {
+const handleNextStep = (event) => {
   event.preventDefault();
   showStep("confirmBrowser");
 };
 
-const setUrl = url => sitePrettyUrl.text(url);
+const setUrl = (url) => sitePrettyUrl.text(url);
 
 const initListeners = () => {
   detectionBug.on("change", handleDetectionBug);
@@ -80,5 +80,5 @@ export default {
   show(data) {
     setUrl(data.url);
     showContainer(container);
-  }
+  },
 };

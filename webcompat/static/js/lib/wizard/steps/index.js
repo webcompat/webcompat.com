@@ -19,5 +19,5 @@ export const STEPS = {
   warningBrowser: warningBrowser,
   description: description,
   screenshot: screenshot,
-  submit: submit
+  submit: submit,
 };

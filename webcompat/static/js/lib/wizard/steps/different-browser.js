@@ -10,7 +10,7 @@ import {
   showContainer,
   hideContainer,
   showError,
-  showSuccess
+  showSuccess,
 } from "../ui-utils.js";
 
 const BROWSER_ERROR = "Browser required";
@@ -21,7 +21,7 @@ const nextStepButton = container.find(".next-step.step-5");
 const browserField = container.find("#browser");
 const osField = container.find("#os");
 
-const handleNext = event => {
+const handleNext = (event) => {
   event.preventDefault();
   notify.publish("showStep", { id: "testedBrowsers" });
 };
@@ -34,11 +34,11 @@ const updateFieldState = (isValid, element, text) => {
   }
 };
 
-const updateButtonState = isValid => {
+const updateButtonState = (isValid) => {
   nextStepButton.prop("disabled", !isValid);
 };
 
-const onBrowserChange = value => {
+const onBrowserChange = (value) => {
   const isBrowserValid = !isEmpty(value);
   const isOsValid = !isEmpty(osField.val());
 
@@ -47,7 +47,7 @@ const onBrowserChange = value => {
   updateButtonState(isBrowserValid && isOsValid);
 };
 
-const onOsChange = value => {
+const onOsChange = (value) => {
   const isOsValid = !isEmpty(value);
   const isBrowserValid = !isEmpty(browserField.val());
 
@@ -57,8 +57,8 @@ const onOsChange = value => {
 };
 
 nextStepButton.on("click", handleNext);
-browserField.on("blur input", event => onBrowserChange(event.target.value));
-osField.on("blur input", event => onOsChange(event.target.value));
+browserField.on("blur input", (event) => onBrowserChange(event.target.value));
+osField.on("blur input", (event) => onOsChange(event.target.value));
 
 onBrowserChange(browserField.val());
 onOsChange(osField.val());
@@ -70,5 +70,5 @@ export default {
 
   hide() {
     hideContainer(container);
-  }
+  },
 };

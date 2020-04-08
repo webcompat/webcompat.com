@@ -14,7 +14,7 @@ const nextStepButton = $(".next-step.step-1");
 
 const showNextStep = (id, data) => notify.publish("showStep", { id, data });
 
-const onClick = event => {
+const onClick = (event) => {
   event.preventDefault();
 
   showNextStep("category", { url: extractPrettyUrl(urlField.val()) });
@@ -32,16 +32,16 @@ const handleEvent = (value, errCb) => {
   nextStepButton.prop("disabled", !isValid);
 };
 
-const onChange = value => handleEvent(value, () => hideSuccess(urlField));
+const onChange = (value) => handleEvent(value, () => hideSuccess(urlField));
 
-const onBlur = value => {
+const onBlur = (value) => {
   if (!value) return;
 
   handleEvent(value, () => showError(urlField, "A valid URL is required."));
 };
 
-urlField.on("input", event => onChange(event.target.value));
-urlField.on("blur", event => onBlur(event.target.value));
+urlField.on("input", (event) => onChange(event.target.value));
+urlField.on("blur", (event) => onBlur(event.target.value));
 nextStepButton.on("click", onClick);
 
 onChange(urlField.val());

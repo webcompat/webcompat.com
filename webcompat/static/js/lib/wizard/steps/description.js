@@ -16,12 +16,12 @@ const progress = container.find(".problem-description .progress");
 const bar = progress.find(".bar");
 const nextStepButton = container.find(".next-step.step-8");
 
-const handleNext = event => {
+const handleNext = (event) => {
   event.preventDefault();
   notify.publish("showStep", { id: "screenshot" });
 };
 
-const updateProgress = percent => {
+const updateProgress = (percent) => {
   const isReady = percent === 100;
 
   bar.css("width", `${percent}%`);
@@ -35,16 +35,16 @@ const updateProgress = percent => {
   nextStepButton.prop("disabled", !isReady);
 };
 
-const onChange = value => {
+const onChange = (value) => {
   const percent = charsPercent(value, MIN_CHARACTERS);
   updateProgress(percent);
 };
 
-descriptionField.on("blur input", event => onChange(event.target.value));
+descriptionField.on("blur input", (event) => onChange(event.target.value));
 nextStepButton.on("click", handleNext);
 
 export default {
   show() {
     showContainer(container);
-  }
+  },
 };

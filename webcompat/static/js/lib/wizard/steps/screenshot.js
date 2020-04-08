@@ -18,12 +18,12 @@ const container = $(".step-container.step9");
 const nextStepButton = container.find(".next-step.step-9");
 const uploadField = container.find("#image");
 
-const onClick = event => {
+const onClick = (event) => {
   event.preventDefault();
   notify.publish("showStep", { id: "submit" });
 };
 
-const addPreviewBackground = dataURI => {
+const addPreviewBackground = (dataURI) => {
   if (!dataURI.startsWith("data:image/")) {
     return;
   }
@@ -32,7 +32,7 @@ const addPreviewBackground = dataURI => {
   nextStepButton.text("Continue");
 };
 
-const showUploadPreview = dataURI => {
+const showUploadPreview = (dataURI) => {
   // The final size of Base64-encoded binary data is ~equal to
   // 1.37 times the original data size + 814 bytes (for headers).
   // so, bytes = (encoded_string.length - 814) / 1.37)
@@ -42,14 +42,14 @@ const showUploadPreview = dataURI => {
     downsampleImage(
       dataURI,
       // Recurse until it's small enough for us to upload.
-      downSampledData => showUploadPreview(downSampledData)
+      (downSampledData) => showUploadPreview(downSampledData)
     );
   } else {
     addPreviewBackground(dataURI);
   }
 };
 
-const processUpload = file => {
+const processUpload = (file) => {
   convertToDataURI(file, showUploadPreview);
 };
 
@@ -63,7 +63,7 @@ const handleError = () => {
   handleDelete();
 };
 
-const onChange = event => {
+const onChange = (event) => {
   // Bail if there's no image.
   if (!event.target.value) {
     return;
@@ -98,5 +98,5 @@ uploadHelper.init();
 export default {
   show() {
     showContainer(container);
-  }
+  },
 };

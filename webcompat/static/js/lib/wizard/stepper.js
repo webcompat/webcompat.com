@@ -5,11 +5,11 @@
 import notify from "./notify.js";
 import { STEPS } from "./steps/index.js";
 
-const hideStep = id => {
+const hideStep = (id) => {
   STEPS[id].hide();
 };
 
-const showStep = message => {
+const showStep = (message) => {
   const { id, data } = message;
   const step = STEPS[id];
   step.show(data);
@@ -17,7 +17,7 @@ const showStep = message => {
 
 export default {
   init: () => {
-    notify.subscribe("showStep", message => showStep(message));
-    notify.subscribe("hideStep", id => hideStep(id));
-  }
+    notify.subscribe("showStep", (message) => showStep(message));
+    notify.subscribe("hideStep", (id) => hideStep(id));
+  },
 };

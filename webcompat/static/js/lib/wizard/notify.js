@@ -5,7 +5,7 @@
 const channels = {};
 
 export default {
-  subscribe: function(channel, cb) {
+  subscribe: function (channel, cb) {
     if (!channel) throw Error("Please provide channel name to subscribe");
     if (!cb)
       throw Error(
@@ -19,16 +19,16 @@ export default {
     const index = channels[channel].push(cb) - 1;
 
     return {
-      unsubscribe: function() {
+      unsubscribe: function () {
         delete channels[channel][index];
-      }
+      },
     };
   },
-  publish: function(channel, data) {
+  publish: function (channel, data) {
     if (!channels.hasOwnProperty(channel) || !channels[channel].length) {
       return;
     }
 
-    channels[channel].forEach(cb => cb(data || {}));
-  }
+    channels[channel].forEach((cb) => cb(data || {}));
+  },
 };

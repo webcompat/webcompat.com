@@ -12,22 +12,22 @@ const nextStepButton = container.find("button.next-step.step-6");
 const noOtherButton = container.find(".no-other-browser");
 const radio = container.find("input");
 
-const makeAStep = id => notify.publish("showStep", { id });
-const hideStep = id => notify.publish("hideStep", id);
+const makeAStep = (id) => notify.publish("showStep", { id });
+const hideStep = (id) => notify.publish("hideStep", id);
 
-const resetRadio = element => {
-  element.each(function() {
+const resetRadio = (element) => {
+  element.each(function () {
     $(this).prop("checked", false);
   });
 };
 
-const handleNext = event => {
+const handleNext = (event) => {
   event.preventDefault();
   hideStep("warningBrowser");
   makeAStep("description");
 };
 
-const handleNoOther = event => {
+const handleNoOther = (event) => {
   event.preventDefault();
   resetRadio(radio);
   makeAStep("warningBrowser");
@@ -49,5 +49,5 @@ export default {
 
   hide() {
     hideContainer(container, "slideupandheight");
-  }
+  },
 };

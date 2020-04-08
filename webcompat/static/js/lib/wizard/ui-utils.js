@@ -7,7 +7,7 @@ const HEADER_HEIGHT = 130;
 export const createInlineHelp = (text, className = "form-message-error") => {
   return $("<small></small>", {
     class: `label-icon-message ${className}`,
-    text: text
+    text: text,
   });
 };
 
@@ -49,16 +49,14 @@ export const showError = (el, text) => {
   inlineHelp.insertBefore(el);
 };
 
-export const showSuccess = el => {
+export const showSuccess = (el) => {
   el.parents(".js-Form-group")
     .removeClass("is-error js-form-error")
     .addClass("is-validated js-no-error");
 
-  el.parents(".js-Form-group")
-    .find(".form-message-error")
-    .remove();
+  el.parents(".js-Form-group").find(".form-message-error").remove();
 };
 
-export const hideSuccess = el => {
+export const hideSuccess = (el) => {
   el.parents(".js-Form-group").removeClass("is-validated js-no-error");
 };

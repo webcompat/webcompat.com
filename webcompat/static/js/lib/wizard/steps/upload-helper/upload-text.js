@@ -4,7 +4,7 @@
 
 import notify from "../../notify.js";
 
-const changeUploadText = textId => {
+const changeUploadText = (textId) => {
   $(".up-message").hide();
   $(`.${textId}`).show();
 };
@@ -22,5 +22,5 @@ export default {
     notify.subscribe("uploadImage", setUploadedText);
     notify.subscribe("deleteImage", setDeletedText);
     notify.subscribe("uploadError", setDeletedText);
-  }
+  },
 };

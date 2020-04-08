@@ -9,7 +9,7 @@ const uploadLabel = $(".js-label-upload");
 
 const showPreview = ({ dataURI }) => {
   previewEl.css({
-    background: "url(" + dataURI + ") no-repeat center / cover"
+    background: "url(" + dataURI + ") no-repeat center / cover",
   });
 
   uploadLabel.addClass("visually-hidden");
@@ -30,5 +30,5 @@ export default {
     notify.subscribe("uploadImage", showPreview);
     notify.subscribe("deleteImage", hidePreview);
     notify.subscribe("uploadError", handleError);
-  }
+  },
 };

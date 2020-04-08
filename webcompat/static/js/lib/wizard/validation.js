@@ -4,22 +4,22 @@
 
 const ALLOWED_IMG_FORMAT = ["jpg", "jpeg", "jpe", "png", "gif", "bmp"];
 
-export const isUrlValid = value => {
+export const isUrlValid = (value) => {
   return /^https?:\/\/(?!.*:\/\/)\S+/.test(value);
 };
 
-export const isEmpty = value => {
+export const isEmpty = (value) => {
   return !value.trim();
 };
 
-export const isImageTypeValid = value => {
+export const isImageTypeValid = (value) => {
   const splitImg = value.split(".");
   const ext = splitImg[splitImg.length - 1].toLowerCase();
 
   return ALLOWED_IMG_FORMAT.includes(ext);
 };
 
-export const blobOrFileTypeValid = blobOrFile => {
+export const blobOrFileTypeValid = (blobOrFile) => {
   if (!blobOrFile || !blobOrFile.type) return false;
 
   const matches = blobOrFile.type.match("image.*");

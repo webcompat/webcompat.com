@@ -10,13 +10,13 @@ import notify from "../notify.js";
 const container = $(".step-container.step3");
 const radio = container.find("input");
 
-const showSubcategory = subId => {
+const showSubcategory = (subId) => {
   container.find(".choice-control").hide();
   $(`.${subId}`).show();
 };
 
-const resetRadio = element => {
-  element.each(function() {
+const resetRadio = (element) => {
+  element.each(function () {
     $(this).prop("checked", false);
   });
 };
@@ -34,5 +34,5 @@ export default {
   },
   hide() {
     hideContainer(container);
-  }
+  },
 };
