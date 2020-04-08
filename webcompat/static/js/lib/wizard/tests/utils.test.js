@@ -13,7 +13,7 @@ describe("utils", () => {
     );
   });
 
-  it("charsPercent return percent of entered chars limiting percent to 100", () => {
+  it("charsPercent returns percent of entered chars limiting percent to 100", () => {
     assert.equal(charsPercent("example text example text text", 30), 100);
     assert.equal(
       charsPercent("example text example text example text", 30),

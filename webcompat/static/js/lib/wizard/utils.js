@@ -18,3 +18,48 @@ export const charsPercent = (value, min = 30) => {
 
   return progress;
 };
+
+export const downsampleImage = (dataURI, callback) => {
+  let img = document.createElement("img");
+  let canvas = document.createElement("canvas");
+  const ctx = canvas.getContext("2d");
+
+  img.onload = () => {
+    // scale the tmp canvas to 50%
+    canvas.width = Math.floor(img.width / 2);
+    canvas.height = Math.floor(img.height / 2);
+    ctx.scale(0.5, 0.5);
+    // draw back in the screenshot (at 50% scale)
+    // and re-serialize to data URI
+    ctx.drawImage(img, 0, 0);
+    // Note: this will convert GIFs to JPEG, which breaks
+    // animated GIFs. However, this only will happen if they
+    // were above the upload limit size. So... sorry?
+    const screenshotData = canvas.toDataURL("image/jpeg", 0.8);
+
+    img = null;
+    canvas = null;
+
+    callback(screenshotData);
+  };
+
+  img.src = dataURI;
+};
+
+/*
+  If the users browser understands the FileReader API, show a preview
+  of the image they're about to load, then invoke the passed in callback
+  with the result of reading the blobOrFile as a dataURI.
+*/
+export const convertToDataURI = (blobOrFile, callback) => {
+  if (!(window.FileReader && window.File)) {
+    return;
+  }
+
+  const reader = new FileReader();
+  reader.onload = function(event) {
+    const dataURI = event.target.result;
+    callback(dataURI);
+  };
+  reader.readAsDataURL(blobOrFile);
+};

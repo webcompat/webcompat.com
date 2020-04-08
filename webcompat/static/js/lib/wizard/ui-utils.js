@@ -4,6 +4,13 @@
 
 const HEADER_HEIGHT = 130;
 
+export const createInlineHelp = (text, className = "form-message-error") => {
+  return $("<small></small>", {
+    class: `label-icon-message ${className}`,
+    text: text
+  });
+};
+
 export const scrollToElement = (element, delay = 250) => {
   // Delay "scroll to element" effect in order to let the animation finish, otherwise the scroll point isn't correct
   setTimeout(() => {
@@ -37,10 +44,7 @@ export const showError = (el, text) => {
   // if the helper already in place, don't create a new one
   if (helper.length) return;
 
-  const inlineHelp = $("<small></small>", {
-    class: "label-icon-message form-message-error",
-    text: text
-  });
+  const inlineHelp = createInlineHelp(text);
 
   inlineHelp.insertBefore(el);
 };
