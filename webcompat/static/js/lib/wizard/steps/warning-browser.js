@@ -18,11 +18,11 @@ const handleNext = (event) => {
 nextStepButton.on("click", handleNext);
 
 export default {
-  show() {
+  show: () => {
     showContainer(container);
   },
 
-  hide() {
+  hide: () => {
     hideContainer(container, "slideupandheight");
   },
 };

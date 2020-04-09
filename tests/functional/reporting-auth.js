@@ -21,7 +21,7 @@ registerSuite("Reporting (auth)", {
   },
 
   tests: {
-    "Wizard stepper - scenario 1"() {
+    "Wizard stepper - scenario 1 for authorized user"() {
       return (
         FunctionalHelpers.openPage(this, url("issues/new"), "#js-ReportForm")
           // Manual url enter
@@ -43,10 +43,10 @@ registerSuite("Reporting (auth)", {
           .end()
           .sleep(500)
           .findByCssSelector(".button.step-6")
-          .getAttribute("class")
-          .then(function (className) {
+          .getAttribute("disabled")
+          .then(function (attribute) {
             // Make sure that "Confirm" button is disabled if browser is not selected
-            assert.include(className, "disabled");
+            assert.isNotNull(attribute);
           })
           .execute(function () {
             // Click on "Chrome"
@@ -64,10 +64,10 @@ registerSuite("Reporting (auth)", {
           .end()
           .sleep(500)
           .findDisplayedByCssSelector(".button.step-8")
-          .getAttribute("class")
-          .then(function (className) {
+          .getAttribute("disabled")
+          .then(function (attribute) {
             // Make sure "Continue" is disabled if there are not enough characters
-            assert.include(className, "disabled");
+            assert.isNotNull(attribute);
           })
           .end()
           .findById("steps_reproduce")
@@ -81,7 +81,7 @@ registerSuite("Reporting (auth)", {
           .click()
           .end()
           .sleep(500)
-          .findDisplayedByCssSelector(".button.step-10")
+          .findDisplayedByCssSelector(".button.step-9")
           // Click on "Continue without"
           .click()
           .end()

@@ -44,7 +44,7 @@ descriptionField.on("blur input", (event) => onChange(event.target.value));
 nextStepButton.on("click", handleNext);
 
 export default {
-  show() {
+  show: () => {
     showContainer(container);
   },
 };

@@ -137,7 +137,7 @@ registerSuite("Reporting with wizard", {
           .type(VALID_IMAGE_PATH)
           .end()
           .sleep(500)
-          .findDisplayedByCssSelector(".button.step-10")
+          .findDisplayedByCssSelector(".button.step-9")
           .getVisibleText()
           .then(function (text) {
             // Make sure that there is "Continue" button after uploading
@@ -234,7 +234,7 @@ registerSuite("Reporting with wizard", {
           .click()
           .end()
           .sleep(500)
-          .findDisplayedByCssSelector(".button.step-10")
+          .findDisplayedByCssSelector(".button.step-9")
           .getVisibleText()
           .then(function (text) {
             // Make sure there is "Continue without" button if there is no image
@@ -346,7 +346,7 @@ registerSuite("Reporting with wizard", {
           .findByCssSelector(".button.js-remove-upload")
           .click()
           .end()
-          .findDisplayedByCssSelector(".button.step-10")
+          .findDisplayedByCssSelector(".button.step-9")
           .getVisibleText()
           .then(function (text) {
             // Make sure there is "Continue without" button after image deletion
@@ -403,7 +403,7 @@ registerSuite("Reporting with wizard", {
           .waitForDeletedByCssSelector(".form-upload-error")
           .end()
           .sleep(500)
-          .findDisplayedByCssSelector(".button.step-10")
+          .findDisplayedByCssSelector(".button.step-9")
           .getVisibleText()
           .then(function (text) {
             // Make sure there is "Continue" button after second upload

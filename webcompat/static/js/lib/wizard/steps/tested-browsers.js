@@ -43,11 +43,11 @@ noOtherButton.on("click", handleNoOther);
 radio.on("change", handleBrowserSelection);
 
 export default {
-  show() {
+  show: () => {
     showContainer(container);
   },
 
-  hide() {
+  hide: () => {
     hideContainer(container, "slideupandheight");
   },
 };
