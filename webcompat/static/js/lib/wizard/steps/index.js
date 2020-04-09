@@ -8,6 +8,7 @@ import warningBrowser from "./warning-browser.js";
 import description from "./description.js";
 import screenshot from "./screenshot.js";
 import submit from "./submit.js";
+import hidden from "./hidden.js";
 
 export const STEPS = {
   url: url,
@@ -20,4 +21,5 @@ export const STEPS = {
   description: description,
   screenshot: screenshot,
   submit: submit,
+  hidden: hidden,
 };

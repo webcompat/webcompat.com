@@ -1,4 +1,4 @@
-import { extractPrettyUrl, charsPercent } from "../utils.js";
+import { extractPrettyUrl, charsPercent, isSelfReport } from "../utils.js";
 
 const { describe, it } = intern.getPlugin("interface.bdd");
 const { assert } = intern.getPlugin("chai");
@@ -25,6 +25,30 @@ describe("utils", () => {
       () => charsPercent(123, 30),
       Error,
       "First argument should be a string"
+    );
+  });
+
+  it("isSelfReport determines if report was filed for our own site", () => {
+    assert.isFalse(
+      isSelfReport(
+        "http://localhost:5000/issues/new?url=http://example.com/",
+        "http://localhost:5000"
+      )
+    );
+    assert.isFalse(
+      isSelfReport("http://localhost:5000/issues/new", "http://localhost:5000")
+    );
+    assert.isFalse(
+      isSelfReport(
+        "http://localhost:5000/issues/new?url=test",
+        "http://localhost:5000"
+      )
+    );
+    assert.isTrue(
+      isSelfReport(
+        "http://localhost:5000/issues/new?url=http://localhost:5000/",
+        "http://localhost:5000"
+      )
     );
   });
 });

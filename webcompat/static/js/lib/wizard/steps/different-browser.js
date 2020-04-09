@@ -64,11 +64,11 @@ onBrowserChange(browserField.val());
 onOsChange(osField.val());
 
 export default {
-  show() {
+  show: () => {
     showContainer(container);
   },
 
-  hide() {
+  hide: () => {
     hideContainer(container);
   },
 };

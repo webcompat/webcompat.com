@@ -9,7 +9,7 @@ import { showContainer } from "../ui-utils.js";
 const container = $(".step-container.step10");
 
 export default {
-  show() {
+  show: () => {
     showContainer(container);
   },
 };

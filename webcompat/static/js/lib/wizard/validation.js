@@ -25,3 +25,7 @@ export const blobOrFileTypeValid = (blobOrFile) => {
   const matches = blobOrFile.type.match("image.*");
   return !!(matches && matches.length);
 };
+
+export const isImageDataURIValid = (dataURI) => {
+  return typeof dataURI === "string" && dataURI.startsWith("data:image/");
+};

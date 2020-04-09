@@ -3,6 +3,7 @@ import {
   isEmpty,
   isImageTypeValid,
   blobOrFileTypeValid,
+  isImageDataURIValid,
 } from "../validation.js";
 
 const { describe, it } = intern.getPlugin("interface.bdd");
@@ -37,5 +38,18 @@ describe("validation", () => {
     assert.isFalse(blobOrFileTypeValid({ type: undefined }));
     assert.isFalse(blobOrFileTypeValid({}));
     assert.isFalse(blobOrFileTypeValid({ type: "application/x-diskcopy" }));
+  });
+
+  it("isImageDataURIValid detects is data URI is valid image", () => {
+    assert.isFalse(isImageDataURIValid({}));
+    assert.isFalse(
+      isImageDataURIValid("data:text/html,%3Ch1%3EHello%2C%20World!%3C%2Fh1%3E")
+    );
+    assert.isFalse(isImageDataURIValid());
+    assert.isTrue(
+      isImageDataURIValid(
+        "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAZC"
+      )
+    );
   });
 });

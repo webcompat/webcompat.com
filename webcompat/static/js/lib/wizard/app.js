@@ -3,5 +3,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 import stepper from "./stepper.js";
+import prefill from "./prefill.js";
 
+prefill.init();
 stepper.init();

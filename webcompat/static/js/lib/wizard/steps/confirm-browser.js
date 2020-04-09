@@ -30,11 +30,11 @@ nextStepButton.on("click", handleNext);
 otherOption.on("click", handleOther);
 
 export default {
-  show() {
+  show: () => {
     showContainer(container);
   },
 
-  hide() {
+  hide: () => {
     hideContainer(container);
   },
 };

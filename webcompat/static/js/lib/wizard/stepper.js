@@ -15,9 +15,16 @@ const showStep = (message) => {
   step.show(data);
 };
 
+const updateStep = (message) => {
+  const { id, data } = message;
+  const step = STEPS[id];
+  step.update(data);
+};
+
 export default {
   init: () => {
     notify.subscribe("showStep", (message) => showStep(message));
     notify.subscribe("hideStep", (id) => hideStep(id));
+    notify.subscribe("updateStep", (message) => updateStep(message));
   },
 };

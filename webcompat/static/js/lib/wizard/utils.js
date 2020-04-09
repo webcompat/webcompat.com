@@ -63,3 +63,14 @@ export const convertToDataURI = (blobOrFile, callback) => {
   };
   reader.readAsDataURL(blobOrFile);
 };
+
+export const isSelfReport = (href, origin) => {
+  const reg = /url=([^&]+)/;
+  const url = href.match(reg);
+
+  if (url !== null) {
+    return decodeURIComponent(url[0]).includes(origin);
+  }
+
+  return false;
+};

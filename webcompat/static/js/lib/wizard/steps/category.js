@@ -77,7 +77,7 @@ const initListeners = () => {
 initListeners();
 
 export default {
-  show(data) {
+  show: (data) => {
     setUrl(data.url);
     showContainer(container);
   },

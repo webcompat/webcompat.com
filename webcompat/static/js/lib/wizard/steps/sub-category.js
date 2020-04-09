@@ -27,12 +27,12 @@ const handleSubCategory = () =>
 radio.on("change", handleSubCategory);
 
 export default {
-  show(data) {
+  show: (data) => {
     resetRadio(radio);
     showSubcategory(data.subId);
     showContainer(container);
   },
-  hide() {
+  hide: () => {
     hideContainer(container);
   },
 };

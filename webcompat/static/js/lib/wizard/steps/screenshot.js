@@ -9,7 +9,11 @@ const UPLOAD_LIMIT = 1024 * 1024 * 4;
 const ERROR_TEXT =
   "Image must be one of the following: jpe, jpg, jpeg, png, gif, or bmp.";
 
-import { isImageTypeValid, blobOrFileTypeValid } from "../validation.js";
+import {
+  isImageTypeValid,
+  blobOrFileTypeValid,
+  isImageDataURIValid,
+} from "../validation.js";
 import { showContainer } from "../ui-utils.js";
 import { downsampleImage, convertToDataURI } from "../utils.js";
 import uploadHelper from "./upload-helper/index.js";
@@ -24,7 +28,7 @@ const onClick = (event) => {
 };
 
 const addPreviewBackground = (dataURI) => {
-  if (!dataURI.startsWith("data:image/")) {
+  if (!isImageDataURIValid(dataURI)) {
     return;
   }
 
@@ -96,7 +100,10 @@ addListeners();
 uploadHelper.init();
 
 export default {
-  show() {
+  show: () => {
     showContainer(container);
+  },
+  update: ({ dataURI }) => {
+    showUploadPreview(dataURI);
   },
 };

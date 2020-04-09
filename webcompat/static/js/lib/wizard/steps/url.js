@@ -44,6 +44,11 @@ urlField.on("input", (event) => onChange(event.target.value));
 urlField.on("blur", (event) => onBlur(event.target.value));
 nextStepButton.on("click", onClick);
 
-onChange(urlField.val());
+urlField.trigger("input");
 
-export default {};
+export default {
+  update: ({ url }) => {
+    if (!url) return;
+    urlField.val(url).trigger("input");
+  },
+};
