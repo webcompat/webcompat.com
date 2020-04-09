@@ -7,11 +7,9 @@ const intern = require("intern").default;
 const { assert } = intern.getPlugin("chai");
 const { registerSuite } = intern.getInterface("object");
 const FunctionalHelpers = require("./lib/helpers.js");
-const url = intern.config.functionalBaseUrl + "issues/new";
-const targetOrigin = intern.config.functionalBaseUrl.slice(
-  0,
-  intern.config.functionalBaseUrl.length - 1
-);
+const baseUrl = intern.config.functionalBaseUrl;
+const url = baseUrl + "issues/new";
+const targetOrigin = baseUrl.slice(0, baseUrl.length - 1);
 
 // This string is executed by calls to `execute()` in various tests
 // it postMessages a small green test square.
