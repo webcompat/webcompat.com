@@ -4,6 +4,16 @@
 2. New features: affect minor number
 3. API endpoint changes or dependency version updates: affect major number
 
+## 30.0.0 - 2020-04-10
+
+* Fixes #3282 - Update Privacy policy to mention GPU data collection [Pull #3286](https://github.com/webcompat/webcompat.com/pull/3286)
+* Fixes #2198 - Pass in targetOrigin from intern config for tests [Pull #3280](https://github.com/webcompat/webcompat.com/pull/3280)
+* Fixes #3277 - Add a type-hunt-from-home label to EXTRA_LABELS [Pull #3278](https://github.com/webcompat/webcompat.com/pull/3278)
+* NPM update - Update intern to the latest version. [Pull #3276](https://github.com/webcompat/webcompat.com/pull/3276)
+* NPM update - Update prettier to the latest version. [Pull #3274](https://github.com/webcompat/webcompat.com/pull/3274)
+* NPM update - Update intern to the latest version. [Pull #3271](https://github.com/webcompat/webcompat.com/pull/3271)
+* NPM update - Update grunt-contrib-imagemin to the latest version. [Pull #3270](https://github.com/webcompat/webcompat.com/pull/3270)
+
 ## 29.0.0 - 2020-03-30
 
 * Fixes #3250 - Makes form wizard the default [Pull #3252](https://github.com/webcompat/webcompat.com/pull/3252)
