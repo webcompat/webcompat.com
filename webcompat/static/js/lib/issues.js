@@ -145,38 +145,6 @@ issues.AsideView = Backbone.View.extend({
   },
 });
 
-issues.BodyView = Backbone.View.extend({
-  mainView: null,
-  initialize: function (options) {
-    this.mainView = options.mainView;
-  },
-  render: function () {
-    // hide metadata
-    var issueDesc = $(".js-Issue-markdown");
-
-    issueDesc
-      .contents()
-      .filter(function () {
-        //find the bare html comment-ish text nodes
-        return this.nodeType === 3 && this.nodeValue.match(/<!--/);
-        //and hide them
-      })
-      .wrap('<p class="is-hidden"></p>');
-
-    // this is probably really slow, but it's the safest way to not hide user data
-    issueDesc
-      .find("p:last-of-type em:contains(From webcompat.com)")
-      .parent()
-      .addClass("is-hidden");
-
-    if (this.mainView._isNSFW) {
-      issueDesc.find("img").closest("p").addClass("issue-details-nsfw");
-    }
-
-    return this;
-  },
-});
-
 issues.TextAreaView = Backbone.View.extend({
   el: $(".js-Comment-text"),
   events: {
@@ -392,7 +360,6 @@ issues.MainView = Backbone.View.extend(
     initSubViews: function (callback) {
       var issueModel = { model: this.issue };
       this.metadata = new issues.MetaDataView(issueModel);
-      this.body = new issues.BodyView(_.extend(issueModel, { mainView: this }));
       this.aside = new issues.AsideView(issueModel);
       this.labels = new issues.LabelsView(issueModel);
       this.milestones = new issues.MilestonesView(issueModel);
@@ -415,7 +382,7 @@ issues.MainView = Backbone.View.extend(
             );
 
             _.each(
-              [this.metadata, this.labels, this.milestones, this.body, this],
+              [this.metadata, this.labels, this.milestones, this],
               function (elm) {
                 elm.render();
                 _.each($(".js-Issue-markdown code"), function (elm) {
