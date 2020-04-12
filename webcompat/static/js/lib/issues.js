@@ -120,15 +120,21 @@ issues.AsideView = Backbone.View.extend({
   initialize: function () {
     this.model.on(
       "change:issueState",
-      _.bind(function () {
-        this.render();
+      _.bind(function (model, currentState) {
+        this.render(model, currentState);
       }, this)
     );
   },
-  template: wcTmpl["issue/aside.jst"],
-  render: function () {
-    this.$el.html(this.template(this.model.toJSON()));
-    return this;
+  render: function (model, currentState) {
+    $(".js-milestone-title").text(currentState);
+    if (model.previous("milestone")) {
+      // Update the class of the header here, so the color
+      // will be correct when we change milestones from the
+      // client.
+      $(".js-state-class")
+        .removeClass("label-" + model.previous("milestone"))
+        .addClass("label-" + model.get("milestone"));
+    }
   },
 });
 

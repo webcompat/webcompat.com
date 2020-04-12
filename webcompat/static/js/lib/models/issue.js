@@ -24,7 +24,7 @@ issues.Issue = Backbone.Model.extend({
       return "Site Contacted";
     }
     if (milestone === "contactready") {
-      this.set("stateClass", "ready");
+      this.set("stateClass", "contactready");
       return "Ready for Outreach";
     }
     if (milestone === "needsdiagnosis") {
