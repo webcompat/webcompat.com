@@ -14,7 +14,7 @@
   border-color: var(--label-needs-contact);
 }
 
-.issue.label-ready .x2 {
+.issue.label-contactready .x2 {
   border-color: var(--label-outreach);
 }
 
@@ -81,8 +81,8 @@
   background-color: var(--label-needs-contact);
 }
 
-.label-box-header.label-ready,
-.label-box-editor .label-ready {
+.label-box-header.label-contactready,
+.label-box-editor .label-contactready {
   background-color: var(--label-outreach);
 }
 
