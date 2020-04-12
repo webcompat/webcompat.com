@@ -334,13 +334,10 @@ issues.MainView = Backbone.View.extend(
       }
     },
     githubWarp: function (e) {
-      var repoPath = $("main").data("repoPath");
-
+      var warpPipe = $(".js-github-url").attr("href");
       if (e.target.nodeName === "TEXTAREA") {
         return;
       } else {
-        var warpPipe =
-          "https://github.com/" + repoPath + "/" + this.issue.get("number");
         return (location.href = warpPipe);
       }
     },

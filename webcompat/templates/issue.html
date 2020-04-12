@@ -4,7 +4,6 @@
   {% include "nav/nav.html" %}
   <main class="grid grid-show-gap" role="main"
         data-issue-number={{ number }}
-        data-repo-path="{{ config['ISSUES_REPO_URI'] }}"
         data-statuses="{{ config['JSON_STATUSES'] }}"
         >
     <section id="issue" class="grid-row js-Issue is-hidden">
@@ -31,7 +30,7 @@
           {% if not session.user_id and not session.avatar_url %}
             <a class="x2" href="{{ url_for('login') }}">Please login to edit issues.</a>
           {% endif %}
-            <p><a class="x2" href="https://github.com/{{ config['ISSUES_REPO_URI'] }}/{{ number }}">
+            <p><a class="x2 js-github-url" href="{{ issue_data.html_url }}">
               View issue on Github
             </a></p>
             <span class="desktop-only">Shortcut: Press <b>l</b> on your keyboard to open the label editor.</span>
