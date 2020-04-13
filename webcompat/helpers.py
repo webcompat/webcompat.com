@@ -445,6 +445,12 @@ def mockable_response(func):
             if not file_path.endswith('.json'):
                 file_path = file_path + '.json'
             if not os.path.exists(file_path):
+                # When you request /issues/2
+                # it will try to find a /fixtures/issues/2.json file which
+                # doesn't exist (it's in /api/)-- so rather than duplicate
+                # files, we just look there.
+                file_path = FIXTURES_PATH + '/api' + request.path + '.json'
+            if not os.path.exists(file_path):
                 print('Fixture expected at: {fix}'.format(fix=file_path))
                 print('by the http request: {req}'.format(req=request.url))
                 return ('', 404)
