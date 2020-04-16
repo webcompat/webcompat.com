@@ -227,7 +227,8 @@ class TestHelpers(unittest.TestCase):
         just to keep the data structure valid.
         """
         tests = [{'1': 1}, {'null': None}, {'true': True}, {'false': False},
-                 {'': ''}, {'cool': 'cool'}, {'\U0001f480': '💀'}]
+                 {'': ''}, {'cool': 'cool'}, {'\U0001f480': '💀'},
+                 {'<ul><li>hi: there</li></ul>': [{'hi': 'there'}]}]
         for test in tests:
             for output, browser_input in test.items():
                 self.assertEqual(get_str_value(browser_input), output)

@@ -85,10 +85,16 @@ def md5_checksum(file_path):
 
 
 def get_str_value(val):
-    """Map values from JSON to python."""
+    """Map values from JSON to a more human readable format."""
     details_map = {False: 'false', True: 'true', None: 'null'}
     if isinstance(val, (bool, type(None))):
         return details_map[val]
+    if isinstance(val, list):
+        # if val is a list, we expect there to be a single object
+        # inside, so we build a nested <ul> from that object's data
+        rv = ''.join(['<li>{k}: {v}</li>'.format(k=k, v=get_str_value(v))
+                     for k, v in list(val[0].items())])
+        return '<ul>{rv}</ul>'.format(rv=rv)
     if isinstance(val, str):
         return val
     return str(val)
