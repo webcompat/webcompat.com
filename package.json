@@ -50,7 +50,7 @@
     "postcss-reporter": "^6.0.0",
     "postcss-url": "^8.0.0",
     "stylelint": "^13.1.0",
-    "prettier": "2.0.3",
+    "prettier": "2.0.5",
     "stylelint-config-standard": "^20.0.0",
     "stylelint-order": "^4.0.0",
     "svg-sprite-generator": "0.0.7",
