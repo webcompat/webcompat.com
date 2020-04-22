@@ -293,10 +293,12 @@ def get_form(form_data, form=IssueForm):
     return bug_form
 
 
-def get_details(details):
-    """Return details content.
+def get_details_list(details):
+    """Return details content as list items in a <ul>.
 
     * If a dict, as a formatted string
+    * If the dict has a value that looks like [{k: v}], that will
+      be returned as a nested <ul>.
     * Otherwise as a string as-is.
     """
     content = details
@@ -305,8 +307,8 @@ def get_details(details):
         rv = ''.join(['<li>{k}: {v}</li>'.format(k=k, v=get_str_value(v))
                       for k, v in list(details.items())])
     except AttributeError:
-        return '<li>{content}</li>'.format(content=content)
-    return rv
+        rv = '<li>{content}</li>'.format(content=content)
+    return '<ul>\n  {rv}\n  </ul>'.format(rv=rv)
 
 
 def get_console_logs_url(url):
@@ -337,10 +339,8 @@ def build_details(details):
         content = details
     return """<details>
 <summary>Browser Configuration</summary>
-<ul>
-  {details_list_items}
-</ul>
-</details>""".format(details_list_items=get_details(content))
+{details_list_items}
+</details>""".format(details_list_items=get_details_list(content))
 
 
 def get_radio_button_label(field_value, label_list):
