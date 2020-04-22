@@ -115,19 +115,6 @@ md.renderer.rules.link_open = function (tokens, idx, options, env, self) {
   return defaultLinkOpenRender(tokens, idx, options, env, self);
 };
 
-issues.MetaDataView = Backbone.View.extend(
-  _.extend({}, issueMarkdownSanitizer, {
-    el: $("#js-Issue-information"),
-    template: wcTmpl["issue/metadata.jst"],
-    render: function () {
-      var modelData = this.model.toJSON();
-      modelData.body = this.sanitizeMarkdown(modelData.body);
-      this.$el.html(this.template(modelData));
-      return this;
-    },
-  })
-);
-
 issues.AsideView = Backbone.View.extend({
   el: $("#js-Issue-aside"),
   initialize: function () {
@@ -359,7 +346,6 @@ issues.MainView = Backbone.View.extend(
     },
     initSubViews: function (callback) {
       var issueModel = { model: this.issue };
-      this.metadata = new issues.MetaDataView(issueModel);
       this.aside = new issues.AsideView(issueModel);
       this.labels = new issues.LabelsView(issueModel);
       this.milestones = new issues.MilestonesView(issueModel);
@@ -381,15 +367,12 @@ issues.MainView = Backbone.View.extend(
               _.matchesProperty("name", "nsfw")
             );
 
-            _.each(
-              [this.metadata, this.labels, this.milestones, this],
-              function (elm) {
-                elm.render();
-                _.each($(".js-Issue-markdown code"), function (elm) {
-                  Prism.highlightElement(elm);
-                });
-              }
-            );
+            _.each([this.labels, this.milestones, this], function (elm) {
+              elm.render();
+              _.each($(".js-Issue-markdown code"), function (elm) {
+                Prism.highlightElement(elm);
+              });
+            });
 
             if (this._supportsFormData) {
               this.imageUpload.render();
