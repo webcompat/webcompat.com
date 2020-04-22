@@ -35,7 +35,7 @@ from webcompat import app
 from webcompat.api.uploads import ImageUpload
 from webcompat.helpers import get_browser
 from webcompat.helpers import get_os
-from webcompat.helpers import get_str_value
+from webcompat.helpers import get_details_list
 from webcompat.helpers import is_json_object
 
 AUTH_REPORT = 'github-auth-report'
@@ -291,24 +291,6 @@ def get_form(form_data, form=IssueForm):
     bug_form.ua_header.data = ua_header
     bug_form.url.data = form_data.get('url', None)
     return bug_form
-
-
-def get_details_list(details):
-    """Return details content as list items in a <ul>.
-
-    * If a dict, as a formatted string
-    * If the dict has a value that looks like [{k: v}], that will
-      be returned as a nested <ul>.
-    * Otherwise as a string as-is.
-    """
-    content = details
-    rv = ''
-    try:
-        rv = ''.join(['<li>{k}: {v}</li>'.format(k=k, v=get_str_value(v))
-                      for k, v in list(details.items())])
-    except AttributeError:
-        rv = '<li>{content}</li>'.format(content=content)
-    return '<ul>\n  {rv}\n  </ul>'.format(rv=rv)
 
 
 def get_console_logs_url(url):

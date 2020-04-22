@@ -25,7 +25,7 @@ from webcompat.helpers import get_browser
 from webcompat.helpers import get_browser_name
 from webcompat.helpers import get_name
 from webcompat.helpers import get_os
-from webcompat.helpers import get_str_value
+from webcompat.helpers import get_serialized_value
 from webcompat.helpers import get_version_string
 from webcompat.helpers import is_json_object
 from webcompat.helpers import normalize_api_params
@@ -220,7 +220,7 @@ class TestHelpers(unittest.TestCase):
         self.assertEqual(get_os(False), 'Unknown')
         self.assertEqual(get_os(None), 'Unknown')
 
-    def test_get_str_value(self):
+    def test_get_serialized_value(self):
         """Get an expected string, including Python to js-style boolean.
 
         Note: key (output) and value (input) are in an unexpected order,
@@ -231,7 +231,7 @@ class TestHelpers(unittest.TestCase):
                  {'<ul><li>hi: there</li></ul>': [{'hi': 'there'}]}]
         for test in tests:
             for output, browser_input in test.items():
-                self.assertEqual(get_str_value(browser_input), output)
+                self.assertEqual(get_serialized_value(browser_input), output)
 
     def test_get_version_string(self):
         """Test version string composition.
