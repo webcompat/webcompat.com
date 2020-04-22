@@ -217,13 +217,13 @@ class TestForm(unittest.TestCase):
         self.assertIs(type(actual3), dict)
         self.assertEqual(actual3, expected)
 
-    def test_get_details(self):
+    def test_get_details_list(self):
         """Assert we handle valid dict and other values."""
-        actual_string_arg = form.get_details('cool')
-        expected_string_arg = '<li>cool</li>'
+        actual_string_arg = form.get_details_list('cool')
+        expected_string_arg = '<ul>\n  <li>cool</li>\n</ul>'
         self.assertEqual(actual_string_arg, expected_string_arg)
-        actual_dict_arg = form.get_details({'a': 'b', 'c': False})
-        expected_dict_arg = '<li>a: b</li><li>c: false</li>'
+        actual_dict_arg = form.get_details_list({'a': 'b', 'c': False})
+        expected_dict_arg = '<ul>\n  <li>a: b</li><li>c: false</li>\n</ul>'
         self.assertEqual(actual_dict_arg, expected_dict_arg)
 
     def test_build_details(self):

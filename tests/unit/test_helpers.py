@@ -228,7 +228,7 @@ class TestHelpers(unittest.TestCase):
         """
         tests = [{'1': 1}, {'null': None}, {'true': True}, {'false': False},
                  {'': ''}, {'cool': 'cool'}, {'\U0001f480': '💀'},
-                 {'<ul><li>hi: there</li></ul>': [{'hi': 'there'}]}]
+                 {'<ul>\n  <li>hi: there</li>\n</ul>': [{'hi': 'there'}]}]
         for test in tests:
             for output, browser_input in test.items():
                 self.assertEqual(get_serialized_value(browser_input), output)
