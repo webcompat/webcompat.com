@@ -84,11 +84,42 @@ def md5_checksum(file_path):
         return m.hexdigest()
 
 
-def get_str_value(val):
-    """Map values from JSON to python."""
+def get_list_items(val_dict):
+    """Return list items (<li>) from the passed in list ([])."""
+    rv = ''.join(['<li>{k}: {v}</li>'.format(k=k, v=get_serialized_value(v))
+                 for k, v in list(val_dict.items())])
+    return '<ul>\n  {rv}\n</ul>'.format(rv=rv)
+
+
+def get_details_list(details):
+    """Return details content as list items in a <ul>.
+
+    * If a dict, as a formatted string
+    * If the dict has a value that looks like [{k: v}], that will
+      be returned as a nested <ul>.
+    * Otherwise as a string as-is.
+    """
+    content = details
+    try:
+        rv = get_list_items(details)
+    except AttributeError:
+        rv = '<ul>\n  <li>{content}</li>\n</ul>'.format(content=content)
+    return rv
+
+
+def get_serialized_value(val):
+    """Map values from JSON to a more human readable format.
+
+    This might be a nested <ul> with list items, depending
+    on the input.
+    """
     details_map = {False: 'false', True: 'true', None: 'null'}
     if isinstance(val, (bool, type(None))):
         return details_map[val]
+    if isinstance(val, list) and isinstance(val[0], dict):
+        # if val is a list, we expect there to be a single object
+        # inside. if so, we build a nested <ul> from that object's data
+        return get_list_items(val[0])
     if isinstance(val, str):
         return val
     return str(val)

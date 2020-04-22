@@ -35,7 +35,7 @@ from webcompat import app
 from webcompat.api.uploads import ImageUpload
 from webcompat.helpers import get_browser
 from webcompat.helpers import get_os
-from webcompat.helpers import get_str_value
+from webcompat.helpers import get_details_list
 from webcompat.helpers import is_json_object
 
 AUTH_REPORT = 'github-auth-report'
@@ -293,22 +293,6 @@ def get_form(form_data, form=IssueForm):
     return bug_form
 
 
-def get_details(details):
-    """Return details content.
-
-    * If a dict, as a formatted string
-    * Otherwise as a string as-is.
-    """
-    content = details
-    rv = ''
-    try:
-        rv = ''.join(['<li>{k}: {v}</li>'.format(k=k, v=get_str_value(v))
-                      for k, v in list(details.items())])
-    except AttributeError:
-        return '<li>{content}</li>'.format(content=content)
-    return rv
-
-
 def get_console_logs_url(url):
     """Return a section for console logs, or the empty string.
 
@@ -337,10 +321,8 @@ def build_details(details):
         content = details
     return """<details>
 <summary>Browser Configuration</summary>
-<ul>
-  {details_list_items}
-</ul>
-</details>""".format(details_list_items=get_details(content))
+{details_list_items}
+</details>""".format(details_list_items=get_details_list(content))
 
 
 def get_radio_button_label(field_value, label_list):
