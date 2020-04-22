@@ -4,6 +4,7 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 """Module for the main routes of webcompat.com."""
+import json
 import logging
 import os
 import secrets
@@ -20,6 +21,7 @@ from flask import session
 from flask import url_for
 from flask_firehose import push
 
+from webcompat.api.endpoints import proxy_issue
 from webcompat.form import AUTH_REPORT
 from webcompat.form import get_form
 from webcompat.form import FormWizard
@@ -48,7 +50,6 @@ from webcompat import app
 from webcompat.db import session_db
 from webcompat.db import User
 from webcompat import github
-import json
 
 
 @app.teardown_appcontext
@@ -349,7 +350,9 @@ def show_issue(number):
     if session.get('show_thanks'):
         flash(number, 'thanks')
         session.pop('show_thanks')
-    return render_template('issue.html', number=number)
+    issue_data = proxy_issue(number)
+    return render_template('issue.html', number=number,
+                           issue_data=json.loads(issue_data[0]))
 
 
 @app.route('/me')

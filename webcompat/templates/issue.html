@@ -11,7 +11,11 @@
       <article class="grid-nested x2 issue-labels">
         <div class="grid-row">
           <section id="js-Issue-information" class="grid-cell">
-            {% include "issue/issue-information.html" %}
+            <section id="js-Issue-information">
+              <div class="js-Issue-markdown issue-details">
+                {{ issue_data.body_html|safe }}
+              </div>
+            </section>
           </section>
           <section class="js-Issue-commentList issue-comment">
             {% include "issue/issue-comment-list.jst" %}
