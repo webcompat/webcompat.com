@@ -32,6 +32,7 @@ github = GitHub(app)
 limiter = Limiter(app, key_func=get_remote_address)
 
 # import views after we initialize our github object
+import webcompat.templates  # noqa
 import webcompat.views  # noqa
 from webcompat import webhooks  # noqa
 

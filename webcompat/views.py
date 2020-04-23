@@ -32,7 +32,6 @@ from webcompat.helpers import ab_current_experiments
 from webcompat.helpers import ab_init
 from webcompat.helpers import add_csp
 from webcompat.helpers import add_sec_headers
-from webcompat.helpers import bust_cache
 from webcompat.helpers import cache_policy
 from webcompat.helpers import form_type
 from webcompat.helpers import get_browser_name
@@ -43,9 +42,10 @@ from webcompat.helpers import is_darknet_domain
 from webcompat.helpers import is_valid_issue_form
 from webcompat.helpers import prepare_form
 from webcompat.helpers import set_referer
-from webcompat.issues import report_issue
 from webcompat.helpers import get_extra_labels
 from webcompat.helpers import mockable_response
+from webcompat.issues import report_issue
+from webcompat.templates import bust_cache
 from webcompat import app
 from webcompat.db import session_db
 from webcompat.db import User
@@ -88,13 +88,6 @@ def token_getter():
     user = g.user
     if user is not None:
         return user.access_token
-
-
-@app.template_filter('format_date')
-def format_date(datestring):
-    """For now, just chops off crap."""
-    # 2014-05-01T02:26:28Z
-    return datestring[0:10]
 
 
 @app.route('/login')

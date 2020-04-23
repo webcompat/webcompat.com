@@ -38,50 +38,16 @@ AUTH_HEADERS = {'Authorization': 'token {0}'.format(app.config['OAUTH_TOKEN']),
 HOST_WHITELIST = ('webcompat.com', 'staging.webcompat.com',
                   '127.0.0.1', 'localhost')
 FIXTURES_PATH = os.getcwd() + '/tests/fixtures'
-STATIC_PATH = os.getcwd() + '/webcompat/static'
 JSON_MIME = 'application/json'
 
-cache_dict = {}
 log = app.logger
 log.setLevel(logging.INFO)
-
-
-@app.template_filter('bust_cache')
-def bust_cache(file_path):
-    """Jinja2 filter to add a cache busting param based on md5 checksum.
-
-    Uses a simple cache_dict to we don't have to hash each file for every
-    request. This is kept in-memory so it will be blown away when the app
-    is restarted (which is when file changes would have been deployed).
-    """
-    def get_checksum(file_path):
-        try:
-            checksum = cache_dict[file_path]
-        except KeyError:
-            checksum = md5_checksum(file_path)
-            cache_dict[file_path] = checksum
-        return checksum
-
-    return file_path + '?' + get_checksum(STATIC_PATH + file_path)
 
 
 @app.context_processor
 def register_ab_active():
     """Register `ab_active` in jinja context"""
     return dict(ab_active=ab_active)
-
-
-def md5_checksum(file_path):
-    """Return the md5 checksum for a given file path."""
-    with open(file_path, 'rb') as fh:
-        m = hashlib.md5()
-        while True:
-            # only read in 8k of the file at a time
-            data = fh.read(8192)
-            if not data:
-                break
-            m.update(data)
-        return m.hexdigest()
 
 
 def get_list_items(val_dict):
