@@ -11,9 +11,7 @@
     </h1>
   </div>
   <div class="label-box-section">
-    {% with created_at = issue_data.created_at[0:10] %}
-    <div>Opened: {{ created_at }}</div>
-    {% endwith %}
+    <div>Opened: {{ issue_data.created_at|format_date }}</div>
     <div>
       Reporter:
       <span class="js-Issue-reporter">
