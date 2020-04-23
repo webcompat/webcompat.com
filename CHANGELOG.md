@@ -2,7 +2,13 @@
 
 1. Bug fixes, docs updates, etc.: affect patch number
 2. New features: affect minor number
-3. API endpoint changes or dependency version updates: affect major number
+3. API endpoint changes or (major) dependency version updates: affect major number
+
+## 30.1.0 - 2020-04-23
+
+* NPM update - Update prettier to the latest version. [Pull #3292](https://github.com/webcompat/webcompat.com/pull/3292)
+* Fixes #3289 - Add support for nested ul in browser details [Pull #3290](https://github.com/webcompat/webcompat.com/pull/3290)
+* NPM update - Update intern to the latest version. [Pull #3288](https://github.com/webcompat/webcompat.com/pull/3288)
 
 ## 30.0.0 - 2020-04-10
 
