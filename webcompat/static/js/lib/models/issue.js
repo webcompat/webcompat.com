@@ -57,34 +57,41 @@ issues.Issue = Backbone.Model.extend({
     }
     var labelList = new issues.LabelList({ labels: response.labels });
     var labels = labelList.get("labels");
-    this.set({
-      body: response.body_html,
-      commentNumber: response.comments,
-      createdAt: response.created_at.slice(0, 10),
-      issueState: this.getState(response.state, milestone),
-      labels: labels,
-      locked: response.locked,
-      milestone: milestone,
-      milestoneClass: milestoneClass,
-      number: response.number,
-      reporter: response.user.login,
-      reporterAvatar: response.user.avatar_url,
-      state: response.state,
-      title: this.getTitle(
-        this.getDomain(response.title),
-        this.getDescription(response.body_html),
-        response.title
-      ),
-    });
+    this.set(
+      {
+        body: response.body_html,
+        commentNumber: response.comments,
+        createdAt: response.created_at.slice(0, 10),
+        issueState: this.getState(response.state, milestone),
+        labels: labels,
+        locked: response.locked,
+        milestone: milestone,
+        milestoneClass: milestoneClass,
+        number: response.number,
+        reporter: response.user.login,
+        reporterAvatar: response.user.avatar_url,
+        state: response.state,
+        title: this.getTitle(
+          this.getDomain(response.title),
+          this.getDescription(response.body_html),
+          response.title
+        ),
+      },
+      { silent: true }
+    );
 
     this.on(
       "change:milestone",
-      _.bind(function () {
-        var milestone = this.get("milestone");
-        this.set(
-          "issueState",
-          this.getState(this._statuses[milestone].state, milestone)
+      _.bind(function (model, newMilestone) {
+        var newState = this.getState(
+          this._statuses[newMilestone].state,
+          newMilestone
         );
+
+        this.set({
+          issueState: newState,
+          state: this._statuses[newMilestone].state,
+        });
       }, this)
     );
   },

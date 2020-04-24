@@ -119,19 +119,25 @@ issues.AsideView = Backbone.View.extend({
   el: $("#js-Issue-aside"),
   initialize: function () {
     this.model.on(
-      "change:issueState",
-      _.bind(function (model, currentState) {
-        this.render(model, currentState);
+      "change",
+      _.bind(function (model) {
+        this.render(model);
       }, this)
     );
   },
-  render: function (model, currentState) {
-    if (model.previous("milestone")) {
-      // Update the class of the header here, so the color
-      // will be correct when we change milestones from the
-      // client.
-      $(".js-milestone-title").text(currentState);
+  render: function (model) {
+    // Update the class of the header here, so the color
+    // will be correct when we change milestones from the
+    // client.
+    if (model.get("state") === "closed") {
+      $(".js-milestone-title").text(model.get("issueState"));
       $(".js-state-class")
+        .removeClass("label-" + model.previous("milestone"))
+        .addClass("label-closed");
+    } else if (model.previous("milestone")) {
+      $(".js-milestone-title").text(model.get("issueState"));
+      $(".js-state-class")
+        .removeClass("label-closed")
         .removeClass("label-" + model.previous("milestone"))
         .addClass("label-" + model.get("milestone"));
     }
