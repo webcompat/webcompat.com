@@ -346,7 +346,7 @@ def show_issue(number):
     # right now this is a double request... can we prevent
     # that from happening? add in a caching layer? (maybe it already happens)
     issue_data = proxy_issue(number)
-    return render_template('issue.html', number=number,
+    return render_template('issue.html', nonce=request.nonce,
                            issue_data=json.loads(issue_data[0]))
 
 
