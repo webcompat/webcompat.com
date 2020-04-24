@@ -138,24 +138,6 @@ issues.AsideView = Backbone.View.extend({
   },
 });
 
-issues.TextAreaView = Backbone.View.extend({
-  el: $(".js-Comment-text"),
-  events: {
-    keydown: "broadcastChange",
-  },
-  broadcastChange: _.debounce(
-    function () {
-      if ($.trim(this.$el.val())) {
-        issues.events.trigger("textarea:content");
-      } else {
-        issues.events.trigger("textarea:empty");
-      }
-    },
-    250,
-    { maxWait: 1500 }
-  ),
-});
-
 issues.ImageUploadView = Backbone.View.extend({
   el: $(".js-ImageUploadView"),
   events: {
@@ -352,7 +334,6 @@ issues.MainView = Backbone.View.extend(
       this.aside = new issues.AsideView(issueModel);
       this.labels = new issues.LabelsView(issueModel);
       this.milestones = new issues.MilestonesView(issueModel);
-      this.textArea = new issues.TextAreaView();
       this.imageUpload = new issues.ImageUploadView();
 
       callback();
