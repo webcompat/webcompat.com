@@ -283,8 +283,7 @@ issues.MainView = Backbone.View.extend(
     initialize: function () {
       var body = $(document.body);
       body.addClass("language-html");
-      var issueNum = { number: $("main").data("issueNumber") };
-      this.issue = new issues.Issue(issueNum);
+      this.issue = new issues.Issue(window.issueData, { parse: true });
       this.comments = new issues.CommentsCollection({ pageNumber: 1 });
       this.initSubViews(
         _.bind(function () {
@@ -293,7 +292,7 @@ issues.MainView = Backbone.View.extend(
           body.click(_.bind(this.closeCategoryEditor, this));
         }, this)
       );
-      this.fetchModels();
+      this.onAfterInit();
       this.handleKeyShortcuts();
     },
     closeCategoryEditor: function (e) {
@@ -344,75 +343,53 @@ issues.MainView = Backbone.View.extend(
 
       callback();
     },
-    fetchModels: function () {
-      var headersBag = { headers: { Accept: "application/json" } };
-      this.issue
-        .fetch(headersBag)
-        .done(
-          _.bind(function () {
-            // _.find() will return the object if found (which is truthy),
-            // or undefined if not found (which is falsey)
-            this._isNSFW = !!_.find(
-              this.issue.get("labels"),
-              _.matchesProperty("name", "nsfw")
-            );
+    onAfterInit: function () {
+      // _.find() will return the object if found (which is truthy),
+      // or undefined if not found (which is falsey)
+      this._isNSFW = !!_.find(
+        this.issue.get("labels"),
+        _.matchesProperty("name", "nsfw")
+      );
 
-            _.each([this.labels, this.milestones, this], function (elm) {
-              elm.render();
-              _.each($(".js-Issue-markdown code"), function (elm) {
-                Prism.highlightElement(elm);
-              });
-            });
-
-            if (this._supportsFormData) {
-              this.imageUpload.render();
-            }
-
-            // If there are any comments, go fetch the model data
-            if (this.issue.get("commentNumber") > 0) {
-              this.comments
-                .fetch(headersBag)
-                .done(
-                  _.bind(function (response) {
-                    this.addExistingComments();
-                    this.comments.bind("add", _.bind(this.addComment, this));
-                    // If there's a #hash pointing to a comment (or elsewhere)
-                    // scrollTo it.
-                    if (location.hash !== "") {
-                      var _id = $(location.hash);
-                      window.scrollTo(0, _id.offset().top);
-                    }
-                    if (response[0].lastPageNumber > 1) {
-                      this.getRemainingComments(++response[0].lastPageNumber);
-                    }
-                  }, this)
-                )
-                .fail(function () {
-                  var msg =
-                    "There was an error retrieving issue comments. Please reload to try again.";
-                  wcEvents.trigger("flash:error", {
-                    message: msg,
-                    timeout: 4000,
-                  });
-                });
-            }
-          }, this)
-        )
-        .fail(function (response) {
-          var msg;
-          if (
-            response &&
-            response.responseJSON &&
-            response.responseJSON.message === "API call. Not Found"
-          ) {
-            location.href = "/404";
-            return;
-          } else {
-            msg =
-              "There was an error retrieving the issue. Please reload to try again.";
-            wcEvents.trigger("flash:error", { message: msg, timeout: 4000 });
-          }
+      _.each([this.labels, this.milestones, this], function (elm) {
+        elm.render();
+        _.each($(".js-Issue-markdown code"), function (elm) {
+          Prism.highlightElement(elm);
         });
+      });
+
+      if (this._supportsFormData) {
+        this.imageUpload.render();
+      }
+
+      // If there are any comments, go fetch the model data
+      if (this.issue.get("commentNumber") > 0) {
+        this.comments
+          .fetch({ headers: { Accept: "application/json" } })
+          .done(
+            _.bind(function (response) {
+              this.addExistingComments();
+              this.comments.bind("add", _.bind(this.addComment, this));
+              // If there's a #hash pointing to a comment (or elsewhere)
+              // scrollTo it.
+              if (location.hash !== "") {
+                var _id = $(location.hash);
+                window.scrollTo(0, _id.offset().top);
+              }
+              if (response[0].lastPageNumber > 1) {
+                this.getRemainingComments(++response[0].lastPageNumber);
+              }
+            }, this)
+          )
+          .fail(function () {
+            var msg =
+              "There was an error retrieving issue comments. Please reload to try again.";
+            wcEvents.trigger("flash:error", {
+              message: msg,
+              timeout: 4000,
+            });
+          });
+      }
     },
 
     getRemainingComments: function (count) {

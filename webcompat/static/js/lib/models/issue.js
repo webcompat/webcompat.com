@@ -9,11 +9,7 @@ var issues = issues || {}; // eslint-disable-line no-use-before-define
 var issueList = issueList || {}; // eslint-disable-line no-use-before-define
 
 issues.Issue = Backbone.Model.extend({
-  _namespaceRegex: /(browser|closed|os|status)-/i,
   _statuses: $("main").data("statuses"),
-  urlRoot: function () {
-    return "/api/issues/" + this.get("number");
-  },
   getState: function (state, milestone) {
     if (state === "closed") {
       this.set("stateClass", "closed");
@@ -57,6 +53,7 @@ issues.Issue = Backbone.Model.extend({
     }
     var labelList = new issues.LabelList({ labels: response.labels });
     var labels = labelList.get("labels");
+    // Note: the homepage still uses this data.
     this.set(
       {
         body: response.body_html,
