@@ -1,7 +1,7 @@
 <div id="js-Issue-aside">
   <header class="js-state-class label-box-header label-{{issue_data.milestone.title}}">
     <div class="js-milestone-title">{{ '🔒' if issue_data.locked else '' }}
-      {{ issue_data.milestone.title }}
+      {{ issue_data|format_milestone_title }}
     </div>
     <div class="js-issue-number">#{{ issue_data.number }}</div>
   </header>

@@ -9,6 +9,7 @@
 import unittest
 
 from webcompat.templates import format_date
+from webcompat.templates import format_milestone_title
 from webcompat.templates import format_title
 from webcompat.templates import get_description
 from webcompat.templates import get_domain
@@ -70,3 +71,18 @@ class TestTemplates(unittest.TestCase):
         formatted_title = format_title(issue_data)
         self.assertEqual(formatted_title,
                          'staging.webcompat.com - desc from title')
+
+    def test_format_milestone_title(self):
+        """Test that we return a properly formatted milestone title."""
+        issue_data = {}
+        issue_data['milestone'] = {}
+        issue_data['milestone']['title'] = ''
+        issue_data['state'] = 'open'
+        self.assertEqual(format_milestone_title(issue_data),
+                         'Missing Milestone!')
+        issue_data['milestone']['title'] = 'sitewait'
+        self.assertEqual(format_milestone_title(issue_data),
+                         'Site Contacted')
+        issue_data['state'] = 'closed'
+        self.assertEqual(format_milestone_title(issue_data),
+                         'Closed: Site Contacted')

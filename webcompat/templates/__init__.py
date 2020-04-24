@@ -95,3 +95,29 @@ def get_description(body_html):
         return description.group(1)[0:74]
     else:
         return None
+
+
+@app.template_filter('format_milestone_title')
+def format_milestone_title(issue_data):
+    """Get a more human-friendly description of the state + milestone."""
+    milestone_map = {
+        'contactready': 'Ready for Outreach',
+        'duplicate': 'Duplicate',
+        'incomplete': 'Incomplete',
+        'fixed': 'Fixed',
+        'invalid': 'Invalid',
+        'needscontact': 'Needs Contact',
+        'needsdiagnosis': 'Needs Diagnosis',
+        'needstriage': 'Needs Triage',
+        'non-compat': 'Non-Compat',
+        'sitewait': 'Site Contacted',
+        'wontfix': 'Wont Fix',
+        'worksforme': 'Works For Me',
+    }
+    state = issue_data.get('state')
+    title = milestone_map.get(issue_data['milestone'].get('title'),
+                              'Missing Milestone!')
+    if state == 'closed':
+        return 'Closed: {0}'.format(title)
+    else:
+        return title

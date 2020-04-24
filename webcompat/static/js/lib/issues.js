@@ -126,11 +126,11 @@ issues.AsideView = Backbone.View.extend({
     );
   },
   render: function (model, currentState) {
-    $(".js-milestone-title").text(currentState);
     if (model.previous("milestone")) {
       // Update the class of the header here, so the color
       // will be correct when we change milestones from the
       // client.
+      $(".js-milestone-title").text(currentState);
       $(".js-state-class")
         .removeClass("label-" + model.previous("milestone"))
         .addClass("label-" + model.get("milestone"));
