@@ -9,6 +9,7 @@
 import unittest
 
 from webcompat.templates import format_date
+from webcompat.templates import format_milestone_class
 from webcompat.templates import format_milestone_title
 from webcompat.templates import format_title
 from webcompat.templates import get_description
@@ -86,3 +87,13 @@ class TestTemplates(unittest.TestCase):
         issue_data['state'] = 'closed'
         self.assertEqual(format_milestone_title(issue_data),
                          'Closed: Site Contacted')
+
+    def test_format_milestone_class(self):
+        """Test that we return the correct class string."""
+        issue_data = {}
+        issue_data['milestone'] = {}
+        issue_data['milestone']['title'] = 'needsdiagnosis'
+        issue_data['state'] = 'open'
+        self.assertEqual(format_milestone_class(issue_data), 'needsdiagnosis')
+        issue_data['state'] = 'closed'
+        self.assertEqual(format_milestone_class(issue_data), 'closed')

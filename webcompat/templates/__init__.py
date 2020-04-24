@@ -115,9 +115,25 @@ def format_milestone_title(issue_data):
         'worksforme': 'Works For Me',
     }
     state = issue_data.get('state')
-    title = milestone_map.get(issue_data['milestone'].get('title'),
-                              'Missing Milestone!')
+    milestone = issue_data.get('milestone')
+    title = ''
+    if milestone:
+        title = milestone_map.get(issue_data['milestone'].get('title'),
+                                  'Missing Milestone!')
     if state == 'closed':
         return 'Closed: {0}'.format(title)
     else:
         return title
+
+
+@app.template_filter('format_milestone_class')
+def format_milestone_class(issue_data):
+    """Return the correct class for a milestone, depending on state."""
+    state = issue_data.get('state')
+    milestone = issue_data.get('milestone')
+    title = ''
+    if state == 'closed':
+        return 'closed'
+    elif milestone:
+        title = milestone.get('title')
+    return title
