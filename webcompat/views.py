@@ -343,11 +343,10 @@ def show_issue(number):
     if session.get('show_thanks'):
         flash(number, 'thanks')
         session.pop('show_thanks')
-    # right now this is a double request... can we prevent
-    # that from happening? add in a caching layer? (maybe it already happens)
     issue_data = proxy_issue(number)
-    return render_template('issue.html', nonce=request.nonce,
-                           issue_data=json.loads(issue_data[0]))
+    return render_template('issue.html',
+                           issue_data=json.loads(issue_data[0]),
+                           json_data=issue_data[0].decode('utf-8'))
 
 
 @app.route('/me')

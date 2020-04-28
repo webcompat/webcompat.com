@@ -282,8 +282,11 @@ issues.MainView = Backbone.View.extend(
     _isNSFW: undefined,
     initialize: function () {
       var body = $(document.body);
+      var issueData = $(".js-Issue").data("issueData");
       body.addClass("language-html");
-      this.issue = new issues.Issue(window.issueData, { parse: true });
+      this.issue = new issues.Issue(JSON.parse(issueData), {
+        parse: true,
+      });
       this.comments = new issues.CommentsCollection({ pageNumber: 1 });
       this.initSubViews(
         _.bind(function () {
