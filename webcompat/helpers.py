@@ -421,7 +421,7 @@ def mockable_response(func):
                 print('by the http request: {req}'.format(req=request.url))
                 return ('', 404)
             else:
-                with open(file_path, 'r') as f:
+                with open(file_path, 'rb') as f:
                     data = f.read()
                     return (data, 200, get_fixture_headers(data))
         return func(*args, **kwargs)
