@@ -346,7 +346,7 @@ def show_issue(number):
     issue_data = proxy_issue(number)
     return render_template('issue.html',
                            issue_data=json.loads(issue_data[0]),
-                           json_data=issue_data[0].decode('utf-8'))
+                           json_data=helpers.to_str(issue_data[0])
 
 
 @app.route('/me')
