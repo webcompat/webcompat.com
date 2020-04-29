@@ -52,8 +52,11 @@ def md5_checksum(file_path):
 
 @app.template_filter('format_date')
 def format_date(datestring):
-    """For now, just chops off crap."""
-    # 2014-05-01T02:26:28Z
+    """Convert a long iso date to the day date.
+
+    input: 2014-05-01T02:26:28Z
+    output: 2014-05-01
+    """
     return datestring[0:10]
 
 
@@ -111,7 +114,7 @@ def format_milestone_title(issue_data):
         'needstriage': 'Needs Triage',
         'non-compat': 'Non-Compat',
         'sitewait': 'Site Contacted',
-        'wontfix': 'Wont Fix',
+        'wontfix': 'Won\'t Fix',
         'worksforme': 'Works For Me',
     }
     state = issue_data.get('state')

@@ -28,11 +28,17 @@ class TestTemplates(unittest.TestCase):
         pass
 
     def test_format_date(self):
-        """We trust what GitHub gives us, so just test length."""
+        """Test date formatting.
+
+        We trust what GitHub gives us, so just test length.
+        input: 2014-05-01T02:26:28Z
+        ouput: 2014-05-01
+        """
         input = '2014-05-01T02:26:28Z'
         output = format_date(input)
-        self.assertEqual(len(output), 10)
-        self.assertNotRegex(output, r'T')
+        assert len(output) == 10
+        assert 'T' not in output
+        assert output == '2014-05-01'
 
     def test_get_domain(self):
         """Test domain name extraction from title.
@@ -41,9 +47,9 @@ class TestTemplates(unittest.TestCase):
         the first whitespace).
         """
         title = 'staging.webcompat.com - site is not usable'
-        self.assertEqual(get_domain(title), 'staging.webcompat.com')
+        assert get_domain(title) == 'staging.webcompat.com'
         title = '😎 😓'
-        self.assertEqual(get_domain(title), '😎')
+        assert get_domain(title) == '😎'
 
     def test_get_description(self):
         """Test that we can pull out the first part of the description."""

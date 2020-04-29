@@ -22,6 +22,8 @@ from flask import url_for
 from flask_firehose import push
 
 from webcompat.api.endpoints import proxy_issue
+from webcompat.db import session_db
+from webcompat.db import User
 from webcompat.form import AUTH_REPORT
 from webcompat.form import get_form
 from webcompat.form import FormWizard
@@ -35,20 +37,19 @@ from webcompat.helpers import add_sec_headers
 from webcompat.helpers import cache_policy
 from webcompat.helpers import form_type
 from webcompat.helpers import get_browser_name
+from webcompat.helpers import get_extra_labels
 from webcompat.helpers import get_referer
 from webcompat.helpers import get_user_info
 from webcompat.helpers import is_blocked_domain
+from webcompat.helpers import to_str
 from webcompat.helpers import is_darknet_domain
 from webcompat.helpers import is_valid_issue_form
+from webcompat.helpers import mockable_response
 from webcompat.helpers import prepare_form
 from webcompat.helpers import set_referer
-from webcompat.helpers import get_extra_labels
-from webcompat.helpers import mockable_response
 from webcompat.issues import report_issue
 from webcompat.templates import bust_cache
 from webcompat import app
-from webcompat.db import session_db
-from webcompat.db import User
 from webcompat import github
 
 
@@ -346,7 +347,7 @@ def show_issue(number):
     issue_data = proxy_issue(number)
     return render_template('issue.html',
                            issue_data=json.loads(issue_data[0]),
-                           json_data=issue_data[0].decode('utf-8'))
+                           json_data=to_str(issue_data[0]))
 
 
 @app.route('/me')
