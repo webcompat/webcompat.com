@@ -59,47 +59,47 @@ class TestTemplates(unittest.TestCase):
 <strong>Steps to Reproduce</strong>:<br>
 """
         body_html_frag2 = '😎'
-        self.assertEqual(get_description(body_html_frag), 'Missing items')
-        self.assertEqual(get_description(body_html_frag2), None)
+        assert get_description(body_html_frag) == 'Missing items'
+        assert get_description(body_html_frag2) == None
 
     def test_format_title(self):
         """Test putting issue titles together."""
-        issue_data = {}
-        issue_data['title'] = 'staging.webcompat.com - desc from title'
-        issue_data['body_html'] = """
-<p><strong>Problem type</strong>: Site is not usable<br>
-<strong>Description</strong>: Desc from Description<br>
-<strong>Steps to Reproduce</strong>:<br>
-"""
-        formatted_title = format_title(issue_data)
-        self.assertEqual(formatted_title,
-                         'staging.webcompat.com - Desc from Description')
-        issue_data['body_html'] = 'fix my bug'
-        formatted_title = format_title(issue_data)
-        self.assertEqual(formatted_title,
-                         'staging.webcompat.com - desc from title')
+        # title comes from body description
+        issue_data = {
+            'body_html': '\n'
+            '<p><strong>Problem type</strong>: Site is not usable<br>\n'
+            '<strong>Description</strong>: Desc from Description<br>\n'
+            '<strong>Steps to Reproduce</strong>:<br>\n',
+            'title': 'staging.webcompat.com - desc from title'}
+        expected = 'staging.webcompat.com - Desc from Description'
+        assert format_title(issue_data) == expected
+        # title comes from issue title
+        issue_data = {
+            'body_html': 'fix my bug'
+            'title': 'staging.webcompat.com - desc from title'}
+        expected = 'staging.webcompat.com - desc from title'
+        assert format_title(issue_data) == expected
 
     def test_format_milestone_title(self):
         """Test that we return a properly formatted milestone title."""
-        issue_data = {}
-        issue_data['milestone'] = {}
-        issue_data['milestone']['title'] = ''
-        issue_data['state'] = 'open'
-        self.assertEqual(format_milestone_title(issue_data),
-                         'Missing Milestone!')
-        issue_data['milestone']['title'] = 'sitewait'
-        self.assertEqual(format_milestone_title(issue_data),
-                         'Site Contacted')
-        issue_data['state'] = 'closed'
-        self.assertEqual(format_milestone_title(issue_data),
-                         'Closed: Site Contacted')
+        # missing milestone title
+        issue_data = {'milestone': {'title': ''}, 'state': 'open'}
+        expected = 'Missing Milestone!'
+        assert format_milestone_title(issue_data) == expected
+        # milestone has title
+        issue_data = {'milestone': {'title': 'sitewait'}, 'state': 'open'}
+        expected = 'Site Contacted'
+        assert format_milestone_title(issue_data) == expected
+        # milestone has title in a closed state
+        issue_data = {'milestone': {'title': 'sitewait'}, 'state': 'closed'}
+        expected = 'Closed: Site Contacted'
+        assert format_milestone_title(issue_data) == expected
 
     def test_format_milestone_class(self):
         """Test that we return the correct class string."""
-        issue_data = {}
-        issue_data['milestone'] = {}
-        issue_data['milestone']['title'] = 'needsdiagnosis'
-        issue_data['state'] = 'open'
-        self.assertEqual(format_milestone_class(issue_data), 'needsdiagnosis')
-        issue_data['state'] = 'closed'
-        self.assertEqual(format_milestone_class(issue_data), 'closed')
+        # open state
+        issue_data = {'milestone': {'title': 'needsdiagnosis'}, 'state': 'open'}
+        assert format_milestone_class(issue_data) == 'needsdiagnosis'
+        # closed state
+        issue_data = {'milestone': {'title': 'needsdiagnosis'}, 'state': 'closed'}
+        assert format_milestone_class(issue_data) == 'closed'
