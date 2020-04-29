@@ -1,17 +1,21 @@
 {% extends "layout.html" %}
-{% block title %}Issue #{{ number }}{% endblock %}
+{% block title %}Issue #{{ issue_data.number }}{% endblock %}
 {% block body %}
   {% include "nav/nav.html" %}
   <main class="grid grid-show-gap" role="main"
-        data-issue-number={{ number }}
-        data-repo-path="{{ config['ISSUES_REPO_URI'] }}"
+        data-issue-number={{ issue_data.number }}
         data-statuses="{{ config['JSON_STATUSES'] }}"
         >
-    <section id="issue" class="grid-row js-Issue is-hidden">
+    <section id="issue" class="grid-row js-Issue is-hidden"
+             data-issue-data="{{ json_data }}">
       <article class="grid-nested x2 issue-labels">
         <div class="grid-row">
           <section id="js-Issue-information" class="grid-cell">
-            {% include "issue/issue-information.html" %}
+            <section id="js-Issue-information">
+              <div class="js-Issue-markdown issue-details">
+                {{ issue_data.body_html|safe }}
+              </div>
+            </section>
           </section>
           <section class="js-Issue-commentList issue-comment">
             {% include "issue/issue-comment-list.jst" %}
@@ -27,7 +31,7 @@
           {% if not session.user_id and not session.avatar_url %}
             <a class="x2" href="{{ url_for('login') }}">Please login to edit issues.</a>
           {% endif %}
-            <p><a class="x2" href="https://github.com/{{ config['ISSUES_REPO_URI'] }}/{{ number }}">
+            <p><a class="x2 js-github-url" href="{{ issue_data.html_url }}">
               View issue on Github
             </a></p>
             <span class="desktop-only">Shortcut: Press <b>l</b> on your keyboard to open the label editor.</span>

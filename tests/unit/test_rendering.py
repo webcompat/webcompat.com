@@ -44,7 +44,7 @@ class TestURIContent(unittest.TestCase):
 
     def test_titles(self):
         """Page title format for different URIs."""
-        issue_number = '1000'
+        issue_number = '396'
         default_title = 'Web Compatibility'
         website_uris = [
             ('/', 'Bug reporting for the web'),

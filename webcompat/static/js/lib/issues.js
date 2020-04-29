@@ -115,84 +115,33 @@ md.renderer.rules.link_open = function (tokens, idx, options, env, self) {
   return defaultLinkOpenRender(tokens, idx, options, env, self);
 };
 
-issues.MetaDataView = Backbone.View.extend(
-  _.extend({}, issueMarkdownSanitizer, {
-    el: $("#js-Issue-information"),
-    template: wcTmpl["issue/metadata.jst"],
-    render: function () {
-      var modelData = this.model.toJSON();
-      modelData.body = this.sanitizeMarkdown(modelData.body);
-      this.$el.html(this.template(modelData));
-      return this;
-    },
-  })
-);
-
 issues.AsideView = Backbone.View.extend({
   el: $("#js-Issue-aside"),
   initialize: function () {
     this.model.on(
-      "change:issueState",
-      _.bind(function () {
-        this.render();
+      "change",
+      _.bind(function (model) {
+        this.render(model);
       }, this)
     );
   },
-  template: wcTmpl["issue/aside.jst"],
-  render: function () {
-    this.$el.html(this.template(this.model.toJSON()));
-    return this;
-  },
-});
-
-issues.BodyView = Backbone.View.extend({
-  mainView: null,
-  initialize: function (options) {
-    this.mainView = options.mainView;
-  },
-  render: function () {
-    // hide metadata
-    var issueDesc = $(".js-Issue-markdown");
-
-    issueDesc
-      .contents()
-      .filter(function () {
-        //find the bare html comment-ish text nodes
-        return this.nodeType === 3 && this.nodeValue.match(/<!--/);
-        //and hide them
-      })
-      .wrap('<p class="is-hidden"></p>');
-
-    // this is probably really slow, but it's the safest way to not hide user data
-    issueDesc
-      .find("p:last-of-type em:contains(From webcompat.com)")
-      .parent()
-      .addClass("is-hidden");
-
-    if (this.mainView._isNSFW) {
-      issueDesc.find("img").closest("p").addClass("issue-details-nsfw");
+  render: function (model) {
+    // Update the class of the header here, so the color
+    // will be correct when we change milestones from the
+    // client.
+    if (model.get("state") === "closed") {
+      $(".js-milestone-title").text(model.get("issueState"));
+      $(".js-state-class")
+        .removeClass("label-" + model.previous("milestone"))
+        .addClass("label-closed");
+    } else if (model.previous("milestone")) {
+      $(".js-milestone-title").text(model.get("issueState"));
+      $(".js-state-class")
+        .removeClass("label-closed")
+        .removeClass("label-" + model.previous("milestone"))
+        .addClass("label-" + model.get("milestone"));
     }
-
-    return this;
   },
-});
-
-issues.TextAreaView = Backbone.View.extend({
-  el: $(".js-Comment-text"),
-  events: {
-    keydown: "broadcastChange",
-  },
-  broadcastChange: _.debounce(
-    function () {
-      if ($.trim(this.$el.val())) {
-        issues.events.trigger("textarea:content");
-      } else {
-        issues.events.trigger("textarea:empty");
-      }
-    },
-    250,
-    { maxWait: 1500 }
-  ),
 });
 
 issues.ImageUploadView = Backbone.View.extend({
@@ -333,9 +282,11 @@ issues.MainView = Backbone.View.extend(
     _isNSFW: undefined,
     initialize: function () {
       var body = $(document.body);
+      var issueData = $(".js-Issue").data("issueData");
       body.addClass("language-html");
-      var issueNum = { number: $("main").data("issueNumber") };
-      this.issue = new issues.Issue(issueNum);
+      this.issue = new issues.Issue(JSON.parse(issueData), {
+        parse: true,
+      });
       this.comments = new issues.CommentsCollection({ pageNumber: 1 });
       this.initSubViews(
         _.bind(function () {
@@ -344,7 +295,7 @@ issues.MainView = Backbone.View.extend(
           body.click(_.bind(this.closeCategoryEditor, this));
         }, this)
       );
-      this.fetchModels();
+      this.onAfterInit();
       this.handleKeyShortcuts();
     },
     closeCategoryEditor: function (e) {
@@ -379,100 +330,69 @@ issues.MainView = Backbone.View.extend(
       }
     },
     githubWarp: function (e) {
-      var repoPath = $("main").data("repoPath");
-
+      var warpPipe = $(".js-github-url").attr("href");
       if (e.target.nodeName === "TEXTAREA") {
         return;
       } else {
-        var warpPipe =
-          "https://github.com/" + repoPath + "/" + this.issue.get("number");
         return (location.href = warpPipe);
       }
     },
     initSubViews: function (callback) {
       var issueModel = { model: this.issue };
-      this.metadata = new issues.MetaDataView(issueModel);
-      this.body = new issues.BodyView(_.extend(issueModel, { mainView: this }));
       this.aside = new issues.AsideView(issueModel);
       this.labels = new issues.LabelsView(issueModel);
       this.milestones = new issues.MilestonesView(issueModel);
-      this.textArea = new issues.TextAreaView();
       this.imageUpload = new issues.ImageUploadView();
 
       callback();
     },
-    fetchModels: function () {
-      var headersBag = { headers: { Accept: "application/json" } };
-      this.issue
-        .fetch(headersBag)
-        .done(
-          _.bind(function () {
-            // _.find() will return the object if found (which is truthy),
-            // or undefined if not found (which is falsey)
-            this._isNSFW = !!_.find(
-              this.issue.get("labels"),
-              _.matchesProperty("name", "nsfw")
-            );
+    onAfterInit: function () {
+      // _.find() will return the object if found (which is truthy),
+      // or undefined if not found (which is falsey)
+      this._isNSFW = !!_.find(
+        this.issue.get("labels"),
+        _.matchesProperty("name", "nsfw")
+      );
 
-            _.each(
-              [this.metadata, this.labels, this.milestones, this.body, this],
-              function (elm) {
-                elm.render();
-                _.each($(".js-Issue-markdown code"), function (elm) {
-                  Prism.highlightElement(elm);
-                });
-              }
-            );
-
-            if (this._supportsFormData) {
-              this.imageUpload.render();
-            }
-
-            // If there are any comments, go fetch the model data
-            if (this.issue.get("commentNumber") > 0) {
-              this.comments
-                .fetch(headersBag)
-                .done(
-                  _.bind(function (response) {
-                    this.addExistingComments();
-                    this.comments.bind("add", _.bind(this.addComment, this));
-                    // If there's a #hash pointing to a comment (or elsewhere)
-                    // scrollTo it.
-                    if (location.hash !== "") {
-                      var _id = $(location.hash);
-                      window.scrollTo(0, _id.offset().top);
-                    }
-                    if (response[0].lastPageNumber > 1) {
-                      this.getRemainingComments(++response[0].lastPageNumber);
-                    }
-                  }, this)
-                )
-                .fail(function () {
-                  var msg =
-                    "There was an error retrieving issue comments. Please reload to try again.";
-                  wcEvents.trigger("flash:error", {
-                    message: msg,
-                    timeout: 4000,
-                  });
-                });
-            }
-          }, this)
-        )
-        .fail(function (response) {
-          var msg;
-          if (
-            response &&
-            response.responseJSON &&
-            response.responseJSON.message === "API call. Not Found"
-          ) {
-            location.href = "/404";
-            return;
-          } else {
-            msg =
-              "There was an error retrieving the issue. Please reload to try again.";
-            wcEvents.trigger("flash:error", { message: msg, timeout: 4000 });
-          }
+      _.each([this.labels, this.milestones, this], function (elm) {
+        elm.render();
+        _.each($(".js-Issue-markdown code"), function (elm) {
+          Prism.highlightElement(elm);
         });
+      });
+
+      if (this._supportsFormData) {
+        this.imageUpload.render();
+      }
+
+      // If there are any comments, go fetch the model data
+      if (this.issue.get("commentNumber") > 0) {
+        this.comments
+          .fetch({ headers: { Accept: "application/json" } })
+          .done(
+            _.bind(function (response) {
+              this.addExistingComments();
+              this.comments.bind("add", _.bind(this.addComment, this));
+              // If there's a #hash pointing to a comment (or elsewhere)
+              // scrollTo it.
+              if (location.hash !== "") {
+                var _id = $(location.hash);
+                window.scrollTo(0, _id.offset().top);
+              }
+              if (response[0].lastPageNumber > 1) {
+                this.getRemainingComments(++response[0].lastPageNumber);
+              }
+            }, this)
+          )
+          .fail(function () {
+            var msg =
+              "There was an error retrieving issue comments. Please reload to try again.";
+            wcEvents.trigger("flash:error", {
+              message: msg,
+              timeout: 4000,
+            });
+          });
+      }
     },
 
     getRemainingComments: function (count) {
