@@ -4,23 +4,23 @@
 
 import notify from "../../notify.js";
 
-const changeUploadText = (textId) => {
+const changeText = (textId) => {
   $(".up-message").hide();
   $(`.${textId}`).show();
 };
 
-const setUploadedText = () => {
-  changeUploadText("uploaded-screenshot");
+const setSavedText = () => {
+  changeText("uploaded-screenshot");
 };
 
 const setDeletedText = () => {
-  changeUploadText("deleted-screenshot");
+  changeText("deleted-screenshot");
 };
 
 export default {
   init: () => {
-    notify.subscribe("uploadImage", setUploadedText);
+    notify.subscribe("saveImage", setSavedText);
     notify.subscribe("deleteImage", setDeletedText);
-    notify.subscribe("uploadError", setDeletedText);
+    notify.subscribe("saveImageError", setDeletedText);
   },
 };

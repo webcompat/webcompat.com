@@ -15,7 +15,7 @@ const showUploadOther = () => {
 export default {
   init: () => {
     notify.subscribe("deleteImage", hideUploadOther);
-    notify.subscribe("uploadError", hideUploadOther);
-    notify.subscribe("uploadImage", showUploadOther);
+    notify.subscribe("saveImageError", hideUploadOther);
+    notify.subscribe("saveImage", showUploadOther);
   },
 };

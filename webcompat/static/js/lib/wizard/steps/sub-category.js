@@ -21,8 +21,19 @@ const resetRadio = (element) => {
   });
 };
 
-const handleSubCategory = () =>
+const updateDescription = (target) => {
+  const text = $(target).next("label").text().trim();
+  const toUpdate = {
+    data: { elementId: "#description", value: text },
+    single: true,
+  };
+  notify.publish("updateStep", { id: "hidden", data: toUpdate });
+};
+
+const handleSubCategory = (event) => {
+  updateDescription(event.currentTarget);
   notify.publish("showStep", { id: "confirmBrowser" });
+};
 
 radio.on("change", handleSubCategory);
 

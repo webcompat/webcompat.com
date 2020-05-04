@@ -89,6 +89,13 @@ registerSuite("Reporting with wizard", {
             $("[for=problem_category-0]")[0].click();
           })
           .sleep(1000)
+          // Check that hidden description field has "Desktop site instead of mobile site"
+          .findById("description")
+          .getAttribute("value")
+          .then(function (val) {
+            assert.include(val, "Desktop site instead of mobile site");
+          })
+          .end()
           // Click on "Yes"
           .findByCssSelector(".button.step-4")
           .click()
@@ -172,6 +179,13 @@ registerSuite("Reporting with wizard", {
             $("[for=layout_bug_subcategory-0]")[0].click();
           })
           .sleep(1000)
+          // Check that hidden description field has "Images not loaded"
+          .findById("description")
+          .getAttribute("value")
+          .then(function (val) {
+            assert.include(val, "Images not loaded");
+          })
+          .end()
           // Click on "different device or browser"
           .findByCssSelector(".next-step.step-5")
           .click()
@@ -305,6 +319,13 @@ registerSuite("Reporting with wizard", {
           .click()
           .end()
           .sleep(500)
+          // Check that hidden description field has "some problem"
+          .findById("description")
+          .getAttribute("value")
+          .then(function (val) {
+            assert.include(val, "some problem");
+          })
+          .end()
           .execute(function () {
             // Click on "Other" in the browsers list
             $("[for=tested_browsers-5]")[0].click();
