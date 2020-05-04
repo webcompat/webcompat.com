@@ -4,6 +4,12 @@
 2. New features: affect minor number
 3. API endpoint changes or (major) dependency version updates: affect major number
 
+## 31.0.0 - 2020-05-04
+
+* NPM update - Bump grunt from 1.0.4 to 1.1.0 [Pull #3296](https://github.com/webcompat/webcompat.com/pull/3296)
+* Fixes #3281 - Convert issue page to be server rendered (part 1) [Pull #3294](https://github.com/webcompat/webcompat.com/pull/3294)
+* NPM update - Update intern to the latest version. [Pull #3293](https://github.com/webcompat/webcompat.com/pull/3293)
+
 ## 30.1.0 - 2020-04-23
 
 * NPM update - Update prettier to the latest version. [Pull #3292](https://github.com/webcompat/webcompat.com/pull/3292)
