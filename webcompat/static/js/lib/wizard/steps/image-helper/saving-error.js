@@ -11,7 +11,7 @@ const removeHelper = () => {
   $(".form-upload-error").remove();
 };
 
-const showUploadError = ({ errorText }) => {
+const showSavingError = ({ errorText }) => {
   removeHelper();
 
   const inlineHelp = createInlineHelp(errorText, "form-upload-error");
@@ -20,14 +20,14 @@ const showUploadError = ({ errorText }) => {
   errEl.removeClass("is-hidden");
 };
 
-const hideUploadError = () => {
+const hideSavingError = () => {
   removeHelper();
   errEl.addClass("is-hidden");
 };
 
 export default {
   init: () => {
-    notify.subscribe("uploadError", showUploadError);
-    notify.subscribe("uploadImage", hideUploadError);
+    notify.subscribe("saveImageError", showSavingError);
+    notify.subscribe("saveImage", hideSavingError);
   },
 };

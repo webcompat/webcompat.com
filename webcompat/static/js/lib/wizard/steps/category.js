@@ -26,8 +26,20 @@ const hideUnknown = () =>
 
 const showStep = (id, data) => notify.publish("showStep", { id, data });
 const hideStep = (id) => notify.publish("hideStep", id);
+const updateStep = (id, data) =>
+  notify.publish("updateStep", { id: "hidden", data });
 
-const handleDetectionBug = () => {
+const updateDescription = (text) => {
+  const toUpdate = {
+    data: { elementId: "#description", value: text },
+    single: true,
+  };
+  updateStep("hidden", toUpdate);
+};
+
+const handleDetectionBug = (event) => {
+  const text = $(event.currentTarget).next("label").text().trim();
+  updateDescription(text);
   hideUnknown();
   hideStep("subCategory");
   showStep("confirmBrowser");
@@ -59,6 +71,9 @@ const onChange = (event) => {
 
 const handleNextStep = (event) => {
   event.preventDefault();
+
+  const otherProblemValue = otherProblemField.val();
+  updateDescription(otherProblemValue);
   showStep("confirmBrowser");
 };
 

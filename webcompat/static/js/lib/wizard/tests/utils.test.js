@@ -1,4 +1,9 @@
-import { extractPrettyUrl, charsPercent, isSelfReport } from "../utils.js";
+import {
+  extractPrettyUrl,
+  charsPercent,
+  isSelfReport,
+  getDataURIFromPreview,
+} from "../utils.js";
 
 const { describe, it } = intern.getPlugin("interface.bdd");
 const { assert } = intern.getPlugin("chai");
@@ -50,5 +55,20 @@ describe("utils", () => {
         "http://localhost:5000"
       )
     );
+  });
+
+  it("getDataURIFromPreview gets the data URI portion inside of a serialized data URI", () => {
+    const base64String =
+      "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAIAAABLixI0AAAACXBIWXMAAA7DAAAOwwHHb6hkAAAAB3RJTUUH3gYSAig452t/EQAAAClJREFUOMvtzkENAAAMg0A25ZU+E032AQEXoNcApCGFLX5paWlpaWl9dqq9AS6CKROfAAAAAElFTkSuQmCC";
+    const bgImage = `url(${base64String})`;
+    const bgImageInQuotes = `url("${base64String}")`;
+
+    assert.equal(getDataURIFromPreview(bgImage), base64String);
+    assert.equal(getDataURIFromPreview(bgImageInQuotes), `${base64String}"`);
+    assert.strictEqual(
+      getDataURIFromPreview("invalid background..."),
+      undefined
+    );
+    assert.strictEqual(getDataURIFromPreview("url('test.jpg')"), undefined);
   });
 });

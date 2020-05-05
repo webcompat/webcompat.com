@@ -12,7 +12,7 @@ const prepareValue = (field, value) => {
   return value;
 };
 
-const updateHiddenValues = (data) => {
+const updateMultiple = (data) => {
   const config = {
     details: {
       element: $("#details"),
@@ -35,8 +35,19 @@ const updateHiddenValues = (data) => {
   });
 };
 
+const updateById = ({ elementId, value }) => {
+  if (!elementId) return;
+
+  $(elementId).val(value);
+};
+
 export default {
-  update: ({ hidden }) => {
-    updateHiddenValues(hidden);
+  update: ({ data, single }) => {
+    if (single) {
+      updateById(data);
+      return;
+    }
+
+    updateMultiple(data);
   },
 };

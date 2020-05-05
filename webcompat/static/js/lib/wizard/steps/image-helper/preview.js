@@ -27,8 +27,8 @@ const handleError = () => {
 
 export default {
   init: () => {
-    notify.subscribe("uploadImage", showPreview);
+    notify.subscribe("saveImage", showPreview);
     notify.subscribe("deleteImage", hidePreview);
-    notify.subscribe("uploadError", handleError);
+    notify.subscribe("saveImageError", handleError);
   },
 };

@@ -8,7 +8,7 @@ import { blobOrFileTypeValid, isImageDataURIValid } from "./validation.js";
 
 const updateStep = (id, data) => notify.publish("updateStep", { id, data });
 const updateUrl = (url) => updateStep("url", { url });
-const updateHidden = (hidden) => updateStep("hidden", { hidden });
+const updateHidden = (data) => updateStep("hidden", { data });
 const updateScreenshot = (dataURI) => updateStep("screenshot", { dataURI });
 
 const setAnalytics = (campaign, source) => {

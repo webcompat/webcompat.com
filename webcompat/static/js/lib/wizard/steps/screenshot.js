@@ -2,7 +2,12 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-/* Allows the user to upload an image or continue without it */
+/* Allows the user to upload an image or continue without it.
+
+*  The image saved as Base64-encoded format and used as a
+*  background image on the preview element and only uploaded
+*  to the server when the form is submitted.
+*/
 
 import notify from "../notify.js";
 const UPLOAD_LIMIT = 1024 * 1024 * 4;
@@ -16,7 +21,7 @@ import {
 } from "../validation.js";
 import { showContainer } from "../ui-utils.js";
 import { downsampleImage, convertToDataURI } from "../utils.js";
-import uploadHelper from "./upload-helper/index.js";
+import imageHelper from "./image-helper/index.js";
 
 const container = $(".step-container.step9");
 const nextStepButton = container.find(".next-step.step-9");
@@ -32,11 +37,11 @@ const addPreviewBackground = (dataURI) => {
     return;
   }
 
-  notify.publish("uploadImage", { dataURI });
+  notify.publish("saveImage", { dataURI });
   nextStepButton.text("Continue");
 };
 
-const showUploadPreview = (dataURI) => {
+const showImagePreview = (dataURI) => {
   // The final size of Base64-encoded binary data is ~equal to
   // 1.37 times the original data size + 814 bytes (for headers).
   // so, bytes = (encoded_string.length - 814) / 1.37)
@@ -46,15 +51,15 @@ const showUploadPreview = (dataURI) => {
     downsampleImage(
       dataURI,
       // Recurse until it's small enough for us to upload.
-      (downSampledData) => showUploadPreview(downSampledData)
+      (downSampledData) => showImagePreview(downSampledData)
     );
   } else {
     addPreviewBackground(dataURI);
   }
 };
 
-const processUpload = (file) => {
-  convertToDataURI(file, showUploadPreview);
+const processSaving = (file) => {
+  convertToDataURI(file, showImagePreview);
 };
 
 const handleDelete = () => {
@@ -63,7 +68,7 @@ const handleDelete = () => {
 };
 
 const handleError = () => {
-  notify.publish("uploadError", { errorText: ERROR_TEXT });
+  notify.publish("saveImageError", { errorText: ERROR_TEXT });
   handleDelete();
 };
 
@@ -78,7 +83,7 @@ const onChange = (event) => {
   const file = event.target.files[0];
 
   if (isImageTypeValid(event.target.value) && blobOrFileTypeValid(file)) {
-    processUpload(file);
+    processSaving(file);
   } else {
     handleError();
   }
@@ -97,13 +102,13 @@ const addListeners = () => {
 };
 
 addListeners();
-uploadHelper.init();
+imageHelper.init();
 
 export default {
   show: () => {
     showContainer(container);
   },
   update: ({ dataURI }) => {
-    showUploadPreview(dataURI);
+    showImagePreview(dataURI);
   },
 };

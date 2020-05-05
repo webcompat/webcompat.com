@@ -74,3 +74,26 @@ export const isSelfReport = (href, origin) => {
 
   return false;
 };
+
+/*
+  Grab the data URI portion inside of a serialized data URI
+  backgroundImage, i.e, for the following two possible strings,
+  'url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAACAAAAAYACAIAAABt)'
+  'url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAACAAAAAYACAIAAABt")'
+  we expect "data:image/ping;base64,iVBORw0KGgoAAAANSUhEUgAACAAAAAYACAIAAABt"
+  to be matched.
+
+  Note: browsers are inconsistent in quoting CSSOM serialization
+*/
+export const getDataURIFromPreview = (bgImage) => {
+  const re = /url\(['"]{0,1}(data:image\/(?:jpeg*|jpg|png|gif|bmp);\s*base64,.+)['"]{0,1}\)/;
+  const match = re.exec(bgImage);
+
+  if (match === null) {
+    // In theory it shouldn't be possible for there to not be a match at this
+    // point, but handle it just in case.
+    return;
+  }
+
+  return match[1];
+};
