@@ -7,8 +7,8 @@
 import notify from "../notify.js";
 import { showContainer, hideContainer } from "../ui-utils.js";
 
-const container = $(".step-container.step6");
-const nextStepButton = container.find("button.next-step.step-6");
+const container = $(".step-container.step-tested-browsers");
+const nextStepButton = container.find("button.next-tested");
 const noOtherButton = container.find(".no-other-browser");
 const radio = container.find("input");
 

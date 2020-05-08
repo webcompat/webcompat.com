@@ -15,7 +15,7 @@ import { showError, hideError } from "../ui-utils.js";
 const GITHUB_USERNAME_ERROR =
   "GitHub nicknames are 39 characters max, alphanumeric and hyphens only.";
 
-const container = $(".step-container.step10");
+const container = $(".step-container.step-submit");
 const usernameContainer = container.find(".optional-username");
 const submitAnonymouslyButton = $("#open-username");
 const form = $("#js-ReportForm form");

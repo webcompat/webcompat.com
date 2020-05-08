@@ -7,8 +7,8 @@
 import { showContainer, hideContainer } from "../ui-utils.js";
 import notify from "../notify.js";
 
-const container = $(".step-container.step7");
-const nextStepButton = container.find(".next-step.step-7");
+const container = $(".step-container.step-warning");
+const nextStepButton = container.find(".next-warning");
 
 const handleNext = (event) => {
   event.preventDefault();

@@ -16,8 +16,8 @@ import {
 const BROWSER_ERROR = "Browser required";
 const OS_ERROR = "OS required";
 
-const container = $(".step-container.step5");
-const nextStepButton = container.find(".next-step.step-5");
+const container = $(".step-container.step-custom-browser");
+const nextStepButton = container.find(".next-custom");
 const browserField = container.find("#browser");
 const osField = container.find("#os");
 

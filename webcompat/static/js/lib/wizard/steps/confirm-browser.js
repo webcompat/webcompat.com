@@ -7,9 +7,9 @@
 import { showContainer, hideContainer } from "../ui-utils.js";
 import notify from "../notify.js";
 
-const container = $(".step-container.step4");
-const nextStepButton = container.find(".next-step.step-4");
-const otherOption = container.find(".next-step.step-5");
+const container = $(".step-container.step-browser");
+const nextStepButton = container.find(".next-browser");
+const otherOption = container.find(".next-custom");
 
 const makeAStep = (id) => notify.publish("showStep", { id });
 const hideStep = (id) => notify.publish("hideStep", id);
