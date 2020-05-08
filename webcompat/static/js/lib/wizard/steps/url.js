@@ -10,7 +10,7 @@ import { extractPrettyUrl } from "../utils.js";
 import { showError, showSuccess, hideSuccess } from "../ui-utils.js";
 
 const urlField = $("#url");
-const nextStepButton = $(".next-step.step-1");
+const nextStepButton = $(".next-url");
 
 const showNextStep = (id, data) => notify.publish("showStep", { id, data });
 

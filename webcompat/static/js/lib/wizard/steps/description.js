@@ -10,11 +10,11 @@ import { showContainer } from "../ui-utils.js";
 
 const MIN_CHARACTERS = 30;
 
-const container = $(".step-container.step8");
+const container = $(".step-container.step-description");
 const descriptionField = container.find("#steps_reproduce");
 const progress = container.find(".problem-description .progress");
 const bar = progress.find(".bar");
-const nextStepButton = container.find(".next-step.step-8");
+const nextStepButton = container.find(".next-description");
 
 const handleNext = (event) => {
   event.preventDefault();

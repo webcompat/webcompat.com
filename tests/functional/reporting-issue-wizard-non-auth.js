@@ -60,7 +60,7 @@ registerSuite("Reporting with wizard", {
           );
         })
         .end()
-        .findByCssSelector(".button.step-1")
+        .findByCssSelector(".next-url")
         .getAttribute("disabled")
         .then(function (attribute) {
           assert.isNotNull(attribute);
@@ -81,7 +81,7 @@ registerSuite("Reporting with wizard", {
           .type("http://example.com")
           .end()
           // Click on "Confirm"
-          .findByCssSelector(".button.step-1")
+          .findByCssSelector(".next-url")
           .click()
           .end()
           .execute(function () {
@@ -97,11 +97,11 @@ registerSuite("Reporting with wizard", {
           })
           .end()
           // Click on "Yes"
-          .findByCssSelector(".button.step-4")
+          .findByCssSelector(".next-browser")
           .click()
           .end()
           .sleep(500)
-          .findByCssSelector(".button.step-6")
+          .findByCssSelector(".next-tested")
           .getAttribute("disabled")
           .then(function (attribute) {
             // Make sure that "Confirm" button is disabled if browser is not selected
@@ -114,7 +114,7 @@ registerSuite("Reporting with wizard", {
           .end()
           .sleep(500)
           // Click on "Confirm"
-          .findByCssSelector(".button.step-6")
+          .findByCssSelector(".next-tested")
           .click()
           .end()
           // Enter less than 30 characters in the description field
@@ -122,7 +122,7 @@ registerSuite("Reporting with wizard", {
           .type("not enough characters")
           .end()
           .sleep(500)
-          .findDisplayedByCssSelector(".button.step-8")
+          .findDisplayedByCssSelector(".next-description")
           .getAttribute("disabled")
           .then(function (attribute) {
             // Make sure "Continue" is disabled if there are not enough characters
@@ -136,7 +136,7 @@ registerSuite("Reporting with wizard", {
           .end()
           .sleep(500)
           // Click on "Continue"
-          .findByCssSelector(".button.step-8")
+          .findByCssSelector(".next-description")
           .click()
           .end()
           // Upload an image
@@ -144,7 +144,7 @@ registerSuite("Reporting with wizard", {
           .type(VALID_IMAGE_PATH)
           .end()
           .sleep(500)
-          .findDisplayedByCssSelector(".button.step-9")
+          .findDisplayedByCssSelector(".next-screenshot")
           .getVisibleText()
           .then(function (text) {
             // Make sure that there is "Continue" button after uploading
@@ -169,7 +169,7 @@ registerSuite("Reporting with wizard", {
           .type("http://example.com")
           .end()
           // Click on "Confirm"
-          .findByCssSelector(".button.step-1")
+          .findByCssSelector(".next-url")
           .click()
           .end()
           .execute(function () {
@@ -187,14 +187,14 @@ registerSuite("Reporting with wizard", {
           })
           .end()
           // Click on "different device or browser"
-          .findByCssSelector(".next-step.step-5")
+          .findByCssSelector(".next-custom")
           .click()
           .end()
           // Clear the "Browser" field
           .findById("browser")
           .clearValue()
           .end()
-          .findByCssSelector(".button.step-5")
+          .findByCssSelector(".button.next-custom")
           .getAttribute("disabled")
           .then(function (attribute) {
             // Make sure  that "Confirm" button is disabled when "Browser" field is empty
@@ -206,11 +206,11 @@ registerSuite("Reporting with wizard", {
           .type("Firefox 76.0")
           .end()
           .sleep(500)
-          .findByCssSelector(".step-container.step5 ")
+          .findByCssSelector(".step-custom-browser")
           .click()
           .end()
           // Click on "Confirm"
-          .findByCssSelector(".button.step-5")
+          .findByCssSelector(".button.next-custom")
           .click()
           .end()
           .sleep(1000)
@@ -230,7 +230,7 @@ registerSuite("Reporting with wizard", {
           .end()
           .end()
           .sleep(500)
-          .findByCssSelector(".button.step-7")
+          .findByCssSelector(".button.next-warning")
           .getVisibleText()
           .then(function (text) {
             // Make sure there is "Continue without testing" button
@@ -244,11 +244,11 @@ registerSuite("Reporting with wizard", {
           .end()
           .sleep(500)
           // Click "Continue"
-          .findByCssSelector(".button.step-8")
+          .findByCssSelector(".next-description")
           .click()
           .end()
           .sleep(500)
-          .findDisplayedByCssSelector(".button.step-9")
+          .findDisplayedByCssSelector(".next-screenshot")
           .getVisibleText()
           .then(function (text) {
             // Make sure there is "Continue without" button if there is no image
@@ -289,7 +289,7 @@ registerSuite("Reporting with wizard", {
           .end()
           .sleep(500)
           // Click on "Confirm"
-          .findByCssSelector(".button.step-1")
+          .findByCssSelector(".next-url")
           .click()
           .end()
           .execute(function () {
@@ -297,7 +297,7 @@ registerSuite("Reporting with wizard", {
             $("[for=problem_category-4]")[0].click();
           })
           .sleep(500)
-          .findByCssSelector(".button.step-2")
+          .findByCssSelector(".next-category")
           .getAttribute("disabled")
           .then(function (attribute) {
             // Make sure that "Confirm" button is disabled if there is no problem description
@@ -310,12 +310,12 @@ registerSuite("Reporting with wizard", {
           .end()
           .sleep(500)
           // Click on "Confirm" button
-          .findByCssSelector(".button.step-2")
+          .findByCssSelector(".next-category")
           .click()
           .end()
           .sleep(1000)
           // Click on "Yes"
-          .findDisplayedByCssSelector(".button.step-4")
+          .findDisplayedByCssSelector(".next-browser")
           .click()
           .end()
           .sleep(500)
@@ -333,7 +333,7 @@ registerSuite("Reporting with wizard", {
           .end()
           .sleep(1000)
           // Click on "Confirm" button
-          .findDisplayedByCssSelector(".button.step-6")
+          .findDisplayedByCssSelector(".next-tested")
           .click()
           .end()
           // Enter less than 30 characters
@@ -341,7 +341,7 @@ registerSuite("Reporting with wizard", {
           .type("not enough characters")
           .end()
           .sleep(500)
-          .findDisplayedByCssSelector(".button.step-8")
+          .findDisplayedByCssSelector(".next-description")
           .getAttribute("disabled")
           .then(function (attribute) {
             // Make sure "Continue" is disabled if there are not enough characters
@@ -355,7 +355,7 @@ registerSuite("Reporting with wizard", {
           .end()
           .sleep(500)
           // Click "Continue"
-          .findByCssSelector(".button.step-8")
+          .findByCssSelector(".next-description")
           .click()
           .end()
           // Upload an image
@@ -367,7 +367,7 @@ registerSuite("Reporting with wizard", {
           .findByCssSelector(".button.js-remove-upload")
           .click()
           .end()
-          .findDisplayedByCssSelector(".button.step-9")
+          .findDisplayedByCssSelector(".next-screenshot")
           .getVisibleText()
           .then(function (text) {
             // Make sure there is "Continue without" button after image deletion
@@ -424,7 +424,7 @@ registerSuite("Reporting with wizard", {
           .waitForDeletedByCssSelector(".form-upload-error")
           .end()
           .sleep(500)
-          .findDisplayedByCssSelector(".button.step-9")
+          .findDisplayedByCssSelector(".next-screenshot")
           .getVisibleText()
           .then(function (text) {
             // Make sure there is "Continue" button after second upload

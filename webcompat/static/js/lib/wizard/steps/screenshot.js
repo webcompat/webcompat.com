@@ -23,8 +23,8 @@ import { showContainer } from "../ui-utils.js";
 import { downsampleImage, convertToDataURI } from "../utils.js";
 import imageHelper from "./image-helper/index.js";
 
-const container = $(".step-container.step9");
-const nextStepButton = container.find(".next-step.step-9");
+const container = $(".step-container.step-screenshot");
+const nextStepButton = container.find(".next-screenshot");
 const uploadField = container.find("#image");
 
 const onClick = (event) => {

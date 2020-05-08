@@ -7,7 +7,7 @@
 import { showContainer, hideContainer } from "../ui-utils.js";
 import notify from "../notify.js";
 
-const container = $(".step-container.step3");
+const container = $(".step-container.step-subproblem");
 const radio = container.find("input");
 
 const showSubcategory = (subId) => {

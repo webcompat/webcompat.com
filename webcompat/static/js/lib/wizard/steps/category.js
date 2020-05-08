@@ -8,7 +8,7 @@ import notify from "../notify.js";
 import { isEmpty } from "../validation.js";
 import { showSuccess, hideSuccess, showContainer } from "../ui-utils.js";
 
-const container = $(".step-container.step2");
+const container = $(".step-container.step-category");
 const detectionBug = $("#problem_category-0");
 const siteBug = $("#problem_category-1");
 const layoutBug = $("#problem_category-2");
@@ -16,7 +16,7 @@ const videoBug = $("#problem_category-3");
 const unknownBug = $("#problem_category-4");
 const sitePrettyUrl = $("#website-url");
 const otherProblem = $(".other-problem");
-const nextStepButton = $(".next-step.step-2");
+const nextStepButton = $(".next-category");
 const otherProblemField = $("#other_problem");
 
 const showUnknown = () =>
