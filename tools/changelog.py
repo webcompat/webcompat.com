@@ -76,9 +76,18 @@ def normalize_title(title):
     See the test suite for the potential matches.
     GitHub sends us a unicode string.
     """
-    if '🚀' in title:
-        title = title.replace('🚀', '')
-        title = title.strip()
+    # if '🚀' in title:
+    #     title = title.replace('🚀', '')
+    #     title = title.strip()
+    #     title = 'NPM update - {title}.'.format(title=title)
+
+    if 'Bump' in title:
+        """
+        index [0] -> Bump always for dependabot
+        index [1:] -> name of package and version info
+        """
+        title = title.split()[1:]
+        title = ' '.join(title)
         title = 'NPM update - {title}.'.format(title=title)
     else:
         regex = r"[^ ]?\#(?P<number>\d+)[^\w]+(?P<prose>.*)"

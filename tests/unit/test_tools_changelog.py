@@ -55,9 +55,16 @@ class TestChangelog(unittest.TestCase):
             'Fixes #101 — Everything you can imagine is real.')
         expected = 'Fixes #101 - Everything you can imagine is real.'
         self.assertEqual(actual, expected)
-        # GreenKeeper title style
-        actual = changelog.normalize_title('Greenkeeper style 🚀')
-        expected = 'NPM update - Greenkeeper style.'
+        
+        # # GreenKeeper title style
+        # actual = changelog.normalize_title('Greenkeeper style 🚀')
+        # expected = 'NPM update - Greenkeeper style.'
+        # self.assertEqual(actual, expected)
+
+        # Dependabot-review title style 
+        actual = changelog.normalize_title(
+            'Bump grunt from 1.0.4 to 1.1.0') 
+        expected = 'NPM update - grunt from 1.0.4 to 1.1.0.'
         self.assertEqual(actual, expected)
 
 
