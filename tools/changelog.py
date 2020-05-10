@@ -76,10 +76,12 @@ def normalize_title(title):
     See the test suite for the potential matches.
     GitHub sends us a unicode string.
     """
-    if '🚀' in title:
-        title = title.replace('🚀', '')
-        title = title.strip()
-        title = 'NPM update - {title}.'.format(title=title)
+
+    if title.startswith('Bump'):
+        title = title.partition(' ')
+        title = 'NPM update - Upgrade {title}.'.format(
+            title=title[2])
+
     else:
         regex = r"[^ ]?\#(?P<number>\d+)[^\w]+(?P<prose>.*)"
         m = re.search(regex, title)
