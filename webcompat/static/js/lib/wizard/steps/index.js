@@ -11,15 +11,48 @@ import submit from "./submit.js";
 import hidden from "./hidden.js";
 
 export const STEPS = {
-  url: url,
-  category: category,
-  subCategory: subCategory,
-  confirmBrowser: confirmBrowser,
-  differentBrowser: differentBrowser,
-  testedBrowsers: testedBrowsers,
-  warningBrowser: warningBrowser,
-  description: description,
-  screenshot: screenshot,
-  submit: submit,
-  hidden: hidden,
+  url: {
+    module: url,
+    progress: "address",
+  },
+  category: {
+    module: category,
+    progress: "issue",
+  },
+  subCategory: {
+    module: subCategory,
+    progress: "issue",
+  },
+  confirmBrowser: {
+    module: confirmBrowser,
+    progress: "details",
+  },
+  differentBrowser: {
+    module: differentBrowser,
+    progress: "details",
+  },
+  testedBrowsers: {
+    module: testedBrowsers,
+    progress: "testing",
+  },
+  warningBrowser: {
+    module: warningBrowser,
+    progress: "testing",
+  },
+  description: {
+    module: description,
+    progress: "description",
+  },
+  screenshot: {
+    module: screenshot,
+    progress: "screenshot",
+  },
+  submit: {
+    module: submit,
+    progress: "send",
+  },
+  hidden: {
+    module: hidden,
+    progress: "",
+  },
 };

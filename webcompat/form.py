@@ -46,36 +46,43 @@ GITHUB_HELP = '_From [webcompat.com](https://webcompat.com/) with ❤️_'
 NEW_ISSUE_STEPS = [
     {
         'number': 1,
+        'id': 'address',
         'className': 'active',
         'label': 'Web address'
     },
     {
         'number': 2,
+        'id': 'issue',
         'className': '',
         'label': 'Issue'
     },
     {
         'number': 3,
+        'id': 'details',
         'className': '',
         'label': 'Details'
     },
     {
         'number': 4,
+        'id': 'testing',
         'className': '',
         'label': 'Testing'
     },
     {
         'number': 5,
+        'id': 'description',
         'className': '',
         'label': 'Description'
     },
     {
         'number': 6,
+        'id': 'screenshot',
         'className': '',
         'label': 'Screenshot'
     },
     {
         'number': 7,
+        'id': 'send',
         'className': 'last',
         'label': 'Send report'
     }

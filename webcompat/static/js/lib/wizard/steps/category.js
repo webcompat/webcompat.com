@@ -28,6 +28,7 @@ const showStep = (id, data) => notify.publish("showStep", { id, data });
 const hideStep = (id) => notify.publish("hideStep", id);
 const updateStep = (id, data) =>
   notify.publish("updateStep", { id: "hidden", data });
+const setProgress = (id) => notify.publish("setProgress", { id });
 
 const updateDescription = (text) => {
   const toUpdate = {
@@ -55,6 +56,7 @@ const handleUnknownBug = () => {
   showUnknown();
   hideStep("subCategory");
   hideStep("confirmBrowser");
+  setProgress("issue");
 };
 
 const onChange = (event) => {
