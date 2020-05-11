@@ -76,6 +76,13 @@ registerSuite("Reporting with wizard", {
     "Wizard stepper - scenario 1"() {
       return (
         FunctionalHelpers.openPage(this, url("issues/new"), "#js-ReportForm")
+          .findByCssSelector(".step.active .description")
+          .getVisibleText()
+          .then(function (text) {
+            // Make sure that progress label is "Web address"
+            assert.include(text, "Web address");
+          })
+          .end()
           // Manual url enter
           .findByCssSelector("#url")
           .type("http://example.com")
@@ -83,6 +90,13 @@ registerSuite("Reporting with wizard", {
           // Click on "Confirm"
           .findByCssSelector(".next-url")
           .click()
+          .end()
+          .findByCssSelector(".step.active .description")
+          .getVisibleText()
+          .then(function (text) {
+            // Make sure that progress label is "Issue"
+            assert.include(text, "Issue");
+          })
           .end()
           .execute(function () {
             // Click on "Desktop site instead of mobile site"
@@ -96,11 +110,25 @@ registerSuite("Reporting with wizard", {
             assert.include(val, "Desktop site instead of mobile site");
           })
           .end()
+          .findByCssSelector(".step.active .description")
+          .getVisibleText()
+          .then(function (text) {
+            // Make sure that progress label is "Details"
+            assert.include(text, "Details");
+          })
+          .end()
           // Click on "Yes"
           .findByCssSelector(".next-browser")
           .click()
           .end()
           .sleep(500)
+          .findByCssSelector(".step.active .description")
+          .getVisibleText()
+          .then(function (text) {
+            // Make sure that progress label is "Testing"
+            assert.include(text, "Testing");
+          })
+          .end()
           .findByCssSelector(".next-tested")
           .getAttribute("disabled")
           .then(function (attribute) {
@@ -116,6 +144,13 @@ registerSuite("Reporting with wizard", {
           // Click on "Confirm"
           .findByCssSelector(".next-tested")
           .click()
+          .end()
+          .findByCssSelector(".step.active .description")
+          .getVisibleText()
+          .then(function (text) {
+            // Make sure that progress label is "Description"
+            assert.include(text, "Description");
+          })
           .end()
           // Enter less than 30 characters in the description field
           .findById("steps_reproduce")
@@ -139,6 +174,13 @@ registerSuite("Reporting with wizard", {
           .findByCssSelector(".next-description")
           .click()
           .end()
+          .findByCssSelector(".step.active .description")
+          .getVisibleText()
+          .then(function (text) {
+            // Make sure that progress label is "Screenshot"
+            assert.include(text, "Screenshot");
+          })
+          .end()
           // Upload an image
           .findByCssSelector("#image")
           .type(VALID_IMAGE_PATH)
@@ -153,6 +195,13 @@ registerSuite("Reporting with wizard", {
           // Click on "Continue"
           .click()
           .end()
+          .findByCssSelector(".step.active .description")
+          .getVisibleText()
+          .then(function (text) {
+            // Make sure that progress label is "Send report"
+            assert.include(text, "Send report");
+          })
+          .end()
           // Make sure "Report via Github" is visible
           .findDisplayedById("submitgithub")
           .end()
@@ -164,6 +213,13 @@ registerSuite("Reporting with wizard", {
     "Wizard stepper - scenario 2"() {
       return (
         FunctionalHelpers.openPage(this, url("issues/new"), "#js-ReportForm")
+          .findByCssSelector(".step.active .description")
+          .getVisibleText()
+          .then(function (text) {
+            // Make sure that progress label is "Web address"
+            assert.include(text, "Web address");
+          })
+          .end()
           // Manual url enter
           .findByCssSelector("#url")
           .type("http://example.com")
@@ -171,6 +227,13 @@ registerSuite("Reporting with wizard", {
           // Click on "Confirm"
           .findByCssSelector(".next-url")
           .click()
+          .end()
+          .findByCssSelector(".step.active .description")
+          .getVisibleText()
+          .then(function (text) {
+            // Make sure that progress label is "Issue"
+            assert.include(text, "Issue");
+          })
           .end()
           .execute(function () {
             // Click on "Design is broken"
@@ -186,9 +249,23 @@ registerSuite("Reporting with wizard", {
             assert.include(val, "Images not loaded");
           })
           .end()
+          .findByCssSelector(".step.active .description")
+          .getVisibleText()
+          .then(function (text) {
+            // Make sure that progress label is "Details"
+            assert.include(text, "Details");
+          })
+          .end()
           // Click on "different device or browser"
           .findByCssSelector(".next-custom")
           .click()
+          .end()
+          .findByCssSelector(".step.active .description")
+          .getVisibleText()
+          .then(function (text) {
+            // Make sure that progress label is still "Details"
+            assert.include(text, "Details");
+          })
           .end()
           // Clear the "Browser" field
           .findById("browser")
@@ -214,6 +291,13 @@ registerSuite("Reporting with wizard", {
           .click()
           .end()
           .sleep(1000)
+          .findByCssSelector(".step.active .description")
+          .getVisibleText()
+          .then(function (text) {
+            // Make sure that progress label is "Testing"
+            assert.include(text, "Testing");
+          })
+          .end()
           // Click on "I have only tested on this browser"
           .findByCssSelector(".no-other-browser")
           .click()
@@ -238,6 +322,13 @@ registerSuite("Reporting with wizard", {
           })
           .click()
           .end()
+          .findByCssSelector(".step.active .description")
+          .getVisibleText()
+          .then(function (text) {
+            // Make sure that progress label is "Description"
+            assert.include(text, "Description");
+          })
+          .end()
           // Enter more than 30 characters in the description field
           .findById("steps_reproduce")
           .type("This paragraph contains more than 30 characters")
@@ -248,6 +339,13 @@ registerSuite("Reporting with wizard", {
           .click()
           .end()
           .sleep(500)
+          .findByCssSelector(".step.active .description")
+          .getVisibleText()
+          .then(function (text) {
+            // Make sure that progress label is "Screenshot"
+            assert.include(text, "Screenshot");
+          })
+          .end()
           .findDisplayedByCssSelector(".next-screenshot")
           .getVisibleText()
           .then(function (text) {
@@ -261,6 +359,13 @@ registerSuite("Reporting with wizard", {
           // Click on "Continue without"
           .click()
           .end()
+          .findByCssSelector(".step.active .description")
+          .getVisibleText()
+          .then(function (text) {
+            // Make sure that progress label is "Send report"
+            assert.include(text, "Send report");
+          })
+          .end()
           // Make sure "Report via Github" is visible
           .findDisplayedById("submitgithub")
           .end()
@@ -272,6 +377,13 @@ registerSuite("Reporting with wizard", {
     "Wizard stepper - scenario 3"() {
       return (
         FunctionalHelpers.openPage(this, url("issues/new"), "#js-ReportForm")
+          .findByCssSelector(".step.active .description")
+          .getVisibleText()
+          .then(function (text) {
+            // Make sure that progress label is "Web address"
+            assert.include(text, "Web address");
+          })
+          .end()
           // Manual url enter
           .findByCssSelector("#url")
           .type("http://example.com")
@@ -291,6 +403,13 @@ registerSuite("Reporting with wizard", {
           // Click on "Confirm"
           .findByCssSelector(".next-url")
           .click()
+          .end()
+          .findByCssSelector(".step.active .description")
+          .getVisibleText()
+          .then(function (text) {
+            // Make sure that progress label is "Issue"
+            assert.include(text, "Issue");
+          })
           .end()
           .execute(function () {
             // Click on "Something else"
@@ -314,6 +433,13 @@ registerSuite("Reporting with wizard", {
           .click()
           .end()
           .sleep(1000)
+          .findByCssSelector(".step.active .description")
+          .getVisibleText()
+          .then(function (text) {
+            // Make sure that progress label is "Details"
+            assert.include(text, "Details");
+          })
+          .end()
           // Click on "Yes"
           .findDisplayedByCssSelector(".next-browser")
           .click()
@@ -336,6 +462,13 @@ registerSuite("Reporting with wizard", {
           .findDisplayedByCssSelector(".next-tested")
           .click()
           .end()
+          .findByCssSelector(".step.active .description")
+          .getVisibleText()
+          .then(function (text) {
+            // Make sure that progress label is "Description"
+            assert.include(text, "Description");
+          })
+          .end()
           // Enter less than 30 characters
           .findById("steps_reproduce")
           .type("not enough characters")
@@ -357,6 +490,13 @@ registerSuite("Reporting with wizard", {
           // Click "Continue"
           .findByCssSelector(".next-description")
           .click()
+          .end()
+          .findByCssSelector(".step.active .description")
+          .getVisibleText()
+          .then(function (text) {
+            // Make sure that progress label is "Screenshot"
+            assert.include(text, "Screenshot");
+          })
           .end()
           // Upload an image
           .findByCssSelector("#image")
@@ -436,6 +576,13 @@ registerSuite("Reporting with wizard", {
           })
           // Click "Continue"
           .click()
+          .end()
+          .findByCssSelector(".step.active .description")
+          .getVisibleText()
+          .then(function (text) {
+            // Make sure that progress label is "Send report"
+            assert.include(text, "Send report");
+          })
           .end()
           // Make sure "Report via Github" is visible
           .findDisplayedById("submitgithub")

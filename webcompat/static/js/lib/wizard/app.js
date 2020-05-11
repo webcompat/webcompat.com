@@ -4,6 +4,8 @@
 
 import stepper from "./stepper.js";
 import prefill from "./prefill.js";
+import progress from "./progress.js";
 
 prefill.init();
 stepper.init();
+progress.init();

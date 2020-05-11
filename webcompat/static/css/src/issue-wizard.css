@@ -59,13 +59,17 @@
   position: fixed;
   top: 75px;
   transform: none;
-  transition: top 400ms ease;
+  transition: top 400ms ease, box-shadow 200ms ease-in;
   width: calc(100% + var(--grid-outermargin-s));
   z-index: 31;
 }
 
 #wizard-container.is-offscreen {
   top: 35px;
+}
+
+#wizard-container.shadow {
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .5);
 }
 
 #wizard-container .grid {

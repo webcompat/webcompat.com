@@ -6,19 +6,19 @@ import notify from "./notify.js";
 import { STEPS } from "./steps/index.js";
 
 const hideStep = (id) => {
-  STEPS[id].hide();
+  STEPS[id].module.hide();
 };
 
 const showStep = (message) => {
   const { id, data } = message;
   const step = STEPS[id];
-  step.show(data);
+  step.module.show(data);
 };
 
 const updateStep = (message) => {
   const { id, data } = message;
   const step = STEPS[id];
-  step.update(data);
+  step.module.update(data);
 };
 
 export default {

@@ -1,7 +1,7 @@
 <div id="wizard-container">
     <div class="grid row">
         {% for step in form.steps %}
-            <div id="step-{{ step.number }}" class="step {{ step.className }}">
+            <div id="pr-{{ step.id }}" class="step {{ step.className }}">
                 <div class="circle">
                 <div class="number">{{ step.number }}</div>
                 <div class="icon"></div>
