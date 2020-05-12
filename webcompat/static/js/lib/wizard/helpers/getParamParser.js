@@ -3,10 +3,9 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 import notify from "../notify.js";
-import { isSelfReport, trimWyciwyg } from "../utils.js";
+import { isSelfReport } from "../utils.js";
 
 const updateStep = (id, data) => notify.publish("updateStep", { id, data });
-const URL_REGEX = /url=([^&]+)/;
 const TYPE_REGEX = /problem_type=([^&]*)/;
 const DETAILS_REGEX = /details=([^&]*)/;
 
@@ -27,11 +26,6 @@ const addDetails = function (detailsParam) {
 export const parseGetParams = () => {
   if (!location.search || isSelfReport(location.href, location.origin)) {
     return;
-  }
-
-  const parsedUrl = location.href.match(URL_REGEX);
-  if (parsedUrl !== null) {
-    updateStep("url", { url: trimWyciwyg(decodeURIComponent(parsedUrl[1])) });
   }
 
   // If we have a problem_type param, and it matches the value, select it for

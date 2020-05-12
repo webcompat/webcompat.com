@@ -3,7 +3,6 @@ import {
   charsPercent,
   isSelfReport,
   getDataURIFromPreview,
-  trimWyciwyg,
 } from "../utils.js";
 
 const { describe, it } = intern.getPlugin("interface.bdd");
@@ -71,17 +70,5 @@ describe("utils", () => {
       undefined
     );
     assert.strictEqual(getDataURIFromPreview("url('test.jpg')"), undefined);
-  });
-
-  it("trimWyciwyg removes wyciwyg:// from a given string", () => {
-    assert.equal(
-      trimWyciwyg("wyciwyg://2/http://example.com"),
-      "http://example.com"
-    );
-    assert.equal(trimWyciwyg("https://example.com"), "https://example.com");
-    assert.equal(
-      trimWyciwyg("https://example.com/wyciwyg/22/"),
-      "https://example.com/wyciwyg/22/"
-    );
   });
 });
