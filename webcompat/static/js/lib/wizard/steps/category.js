@@ -81,6 +81,18 @@ const handleNextStep = (event) => {
 
 const setUrl = (url) => sitePrettyUrl.text(url);
 
+const updateSelection = (value) => {
+  if (!value) return;
+
+  const radio = $(`[value="${value}"]`);
+  if (radio.length) radio.prop("checked", true);
+};
+
+const triggerChangeOnSelected = () => {
+  const checkedEl = $("input[name=problem_category]:checked");
+  if (checkedEl.length) checkedEl.trigger("change");
+};
+
 const initListeners = () => {
   detectionBug.on("change", handleDetectionBug);
   siteBug.on("change", handleBugWithSubCategory);
@@ -97,5 +109,9 @@ export default {
   show: (data) => {
     setUrl(data.url);
     showContainer(container);
+    triggerChangeOnSelected();
+  },
+  update: ({ categoryName }) => {
+    updateSelection(categoryName);
   },
 };
