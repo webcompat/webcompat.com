@@ -97,3 +97,16 @@ export const getDataURIFromPreview = (bgImage) => {
 
   return match[1];
 };
+
+/* Trim wyciwyg://N/ from URL, if found.
+   See https://bugzilla.mozilla.org/show_bug.cgi?id=1098037 &
+   https://en.wikipedia.org/wiki/WYCIWYG
+*/
+export const trimWyciwyg = (url) => {
+  const wyciwygRegex = /(wyciwyg:\/\/\d+\/)/i;
+  if (url.search(wyciwygRegex) !== 0) {
+    return url;
+  } else {
+    return url.replace(wyciwygRegex, "");
+  }
+};
