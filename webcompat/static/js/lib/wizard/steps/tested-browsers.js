@@ -10,12 +10,14 @@ import { showContainer, hideContainer } from "../ui-utils.js";
 const container = $(".step-container.step-tested-browsers");
 const nextStepButton = container.find("button.next-tested");
 const noOtherButton = container.find(".no-other-browser");
-const radio = container.find("input");
+const radio = container.find("[name=tested_browsers]");
+const testedOtherRadio = container.find("#browser_test-0");
+const notTestedOtherRadio = container.find("#browser_test-1");
 
 const makeAStep = (id) => notify.publish("showStep", { id });
 const hideStep = (id) => notify.publish("hideStep", id);
 
-const resetRadio = (element) => {
+const resetBrowserSelection = (element) => {
   element.each(function () {
     $(this).prop("checked", false);
   });
@@ -29,13 +31,15 @@ const handleNext = (event) => {
 
 const handleNoOther = (event) => {
   event.preventDefault();
-  resetRadio(radio);
+  resetBrowserSelection(radio);
   makeAStep("warningBrowser");
+  notTestedOtherRadio.prop("checked", true);
 };
 
 const handleBrowserSelection = () => {
   hideStep("warningBrowser");
   nextStepButton.prop("disabled", false);
+  testedOtherRadio.prop("checked", true);
 };
 
 nextStepButton.on("click", handleNext);

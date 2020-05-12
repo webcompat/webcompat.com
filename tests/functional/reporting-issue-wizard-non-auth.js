@@ -141,6 +141,13 @@ registerSuite("Reporting with wizard", {
           })
           .end()
           .sleep(500)
+          // Make sure that "Tested Another Browser" is true
+          .findByCssSelector("#browser_test-0")
+          .getProperty("checked")
+          .then(function (value) {
+            assert.equal(value, true);
+          })
+          .end()
           // Click on "Confirm"
           .findByCssSelector(".next-tested")
           .click()
@@ -302,6 +309,13 @@ registerSuite("Reporting with wizard", {
           .findByCssSelector(".no-other-browser")
           .click()
           .end()
+          // Make sure that "Tested Another Browser" is false
+          .findByCssSelector("#browser_test-1")
+          .getProperty("checked")
+          .then(function (value) {
+            assert.equal(value, true);
+          })
+          .end()
           .execute(function () {
             // Click on "What is a web compatibility issue?"
             $(".popup-trigger")[0].click();
@@ -458,6 +472,13 @@ registerSuite("Reporting with wizard", {
           })
           .end()
           .sleep(1000)
+          // Make sure that "Tested Another Browser" is true
+          .findByCssSelector("#browser_test-0")
+          .getProperty("checked")
+          .then(function (value) {
+            assert.equal(value, true);
+          })
+          .end()
           // Click on "Confirm" button
           .findDisplayedByCssSelector(".next-tested")
           .click()
