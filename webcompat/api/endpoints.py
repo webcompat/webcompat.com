@@ -15,7 +15,9 @@ import json
 from flask import abort
 from flask import Blueprint
 from flask import g
+from flask import make_response
 from flask import request
+from flask import render_template
 from flask import session
 
 from webcompat import app
@@ -27,7 +29,8 @@ from webcompat.helpers import normalize_api_params
 from webcompat.helpers import proxy_request
 from webcompat import limiter
 
-api_bp = Blueprint('api_bp', __name__, url_prefix='/api')
+api_bp = Blueprint('api_bp', __name__, url_prefix='/api',
+                   template_folder='../templates')
 JSON_MIME_HTML = 'application/vnd.github.v3.html+json'
 ISSUES_PATH = app.config['ISSUES_REPO_URI']
 REPO_PATH = ISSUES_PATH[:-7]
@@ -172,7 +175,8 @@ def get_search_results(query_string=None, params=None):
 @api_bp.route('/issues/<int:number>/comments', methods=['GET', 'POST'])
 @mockable_response
 def proxy_comments(number):
-    """XHR endpoint to get issues comments from GitHub.
+    """XHR endpoint to get issues comments from GitHub, or to add
+    a new comment.
 
     Either as an authed user, or as one of our proxy bots.
     """
@@ -183,9 +187,26 @@ def proxy_comments(number):
                            data=get_comment_data(request.data),
                            mime_type=JSON_MIME_HTML)
     else:
+        # TODO: handle the (rare) case for more than 1 page of comments
+        # for now, we just get the first 100 and rely on the client to
+        # fetch more
+        params.update({'per_page': 100})
         path = 'repos/{0}/{1}/comments'.format(ISSUES_PATH, number)
-        return api_request('get', path, params=params,
-                           mime_type=JSON_MIME_HTML)
+        comments_data = api_request('get', path, params=params,
+                                    mime_type=JSON_MIME_HTML)
+        comments_json, comments_status = comments_data[0:2]
+        if comments_status != 304:
+            return (
+                make_response(
+                    render_template('issue/issue-comment-list.html',
+                                    comments=json.loads(comments_json))),
+                comments_status,
+                get_response_headers(comments_data)
+            )
+        else:
+            # in the case of a 304, comments_json will be empty
+            # but the browser cache will handle it.
+            return comments_json, 304, get_response_headers(comments_data)
 
 
 @api_bp.route('/issues/<int:number>/labels', methods=['POST'])

@@ -367,11 +367,18 @@ issues.MainView = Backbone.View.extend(
 
       // If there are any comments, go fetch the model data
       if (this.issue.get("commentNumber") > 0) {
-        this.comments
-          .fetch({ headers: { Accept: "application/json" } })
+        jQuery
+          .ajax(
+            "/api/issues/" + this.issue.get("number") + "/comments?page=1",
+            {
+              type: "GET",
+              dataType: "html",
+            }
+          )
           .done(
-            _.bind(function (response) {
-              this.addExistingComments();
+            _.bind(function (response, textStatus, jqXHR) {
+              console.log(response, textStatus, jqXHR);
+              $(".js-Issue-commentList").html(response);
               this.comments.bind("add", _.bind(this.addComment, this));
               // If there's a #hash pointing to a comment (or elsewhere)
               // scrollTo it.
@@ -396,9 +403,8 @@ issues.MainView = Backbone.View.extend(
     },
 
     getRemainingComments: function (count) {
-      //The first 30 comments for page 1 has already been loaded.
-      //If more than 30 comments are there the remaining comments are rendered in sets of 30
-      //in consecutive pages
+      //The first 100 comments for page 1 have already been loaded. If there
+      // are more, fetch the next 100 until we're done.
 
       _.each(
         _.bind(
@@ -448,9 +454,6 @@ issues.MainView = Backbone.View.extend(
         // Push to GitHub
         newComment.save();
       }
-    },
-    addExistingComments: function () {
-      this.comments.each(_.bind(this.addComment, this));
     },
     toggleNSFW: function (e) {
       // make sure we've got a reference to the <img> element,

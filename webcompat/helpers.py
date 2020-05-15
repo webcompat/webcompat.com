@@ -192,14 +192,18 @@ def get_response_headers(response):
 
     This allows us to proxy response headers from GitHub to our own responses.
     """
-    headers = {'etag': response.headers.get('etag'),
-               'cache-control': response.headers.get('cache-control'),
-               'content-type': JSON_MIME}
-
-    if response.headers.get('link'):
-        headers['link'] = rewrite_and_sanitize_link(
-            response.headers.get('link'))
-    return headers
+    # handle the case where we get the data directly
+    if isinstance(response, requests.models.Response):
+        headers = response.headers
+    # or the case where we proxy an already fetched reponse
+    if isinstance(response, tuple):
+        headers = response[2]
+    new_headers = {'etag': headers.get('etag'),
+                   'cache-control': headers.get('cache-control'),
+                   'content-type': JSON_MIME}
+    if headers.get('link'):
+        new_headers['link'] = rewrite_and_sanitize_link(headers.get('link'))
+    return new_headers
 
 
 def get_request_headers(headers, mime_type=JSON_MIME):
