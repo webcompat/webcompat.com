@@ -32,6 +32,7 @@ from webcompat import limiter
 api_bp = Blueprint('api_bp', __name__, url_prefix='/api',
                    template_folder='../templates')
 JSON_MIME_HTML = 'application/vnd.github.v3.html+json'
+HTML_MIME = 'text/html'
 ISSUES_PATH = app.config['ISSUES_REPO_URI']
 REPO_PATH = ISSUES_PATH[:-7]
 
@@ -181,17 +182,24 @@ def proxy_comments(number):
     Either as an authed user, or as one of our proxy bots.
     """
     params = request.args.copy()
+    path = 'repos/{0}/{1}/comments'.format(ISSUES_PATH, number)
     if request.method == 'POST' and g.user:
-        path = 'repos/{0}/{1}/comments'.format(ISSUES_PATH, number)
-        return api_request('post', path, params=params,
-                           data=get_comment_data(request.data),
-                           mime_type=JSON_MIME_HTML)
+        new_comment = api_request('post', path, params=params,
+                                  data=get_comment_data(request.data),
+                                  mime_type=JSON_MIME_HTML)
+        comment_json, comment_status = new_comment[0:2]
+        return (
+            make_response(
+                render_template('issue/issue-comment-list.html',
+                                comments=[json.loads(comment_json)]),
+                comment_status,
+                get_response_headers(new_comment, HTML_MIME))
+        )
     else:
         # TODO: handle the (rare) case for more than 1 page of comments
         # for now, we just get the first 100 and rely on the client to
         # fetch more
         params.update({'per_page': 100})
-        path = 'repos/{0}/{1}/comments'.format(ISSUES_PATH, number)
         comments_data = api_request('get', path, params=params,
                                     mime_type=JSON_MIME_HTML)
         comments_json, comments_status = comments_data[0:2]
@@ -201,7 +209,7 @@ def proxy_comments(number):
                     render_template('issue/issue-comment-list.html',
                                     comments=json.loads(comments_json))),
                 comments_status,
-                get_response_headers(comments_data)
+                get_response_headers(comments_data, HTML_MIME)
             )
         else:
             # in the case of a 304, comments_json will be empty

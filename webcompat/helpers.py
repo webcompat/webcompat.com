@@ -187,7 +187,7 @@ def get_os(user_agent_string=None):
     return "Unknown"
 
 
-def get_response_headers(response):
+def get_response_headers(response, mime_type=JSON_MIME):
     """Return a dictionary of headers based on a passed in Response object.
 
     This allows us to proxy response headers from GitHub to our own responses.
@@ -200,7 +200,7 @@ def get_response_headers(response):
         headers = response[2]
     new_headers = {'etag': headers.get('etag'),
                    'cache-control': headers.get('cache-control'),
-                   'content-type': JSON_MIME}
+                   'content-type': mime_type}
     if headers.get('link'):
         new_headers['link'] = rewrite_and_sanitize_link(headers.get('link'))
     return new_headers

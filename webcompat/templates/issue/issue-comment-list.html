@@ -1,23 +1,24 @@
-{#  Note: this needs to be kept in sync with issue-comment-list.jst #}
 {% autoescape false %}{% for response in comments %}
-<header class="comment-header">
-  <figure class="comment-author" role="group">
-    <img src="{{ response.user.avatar_url }}" class="comment-avatar" alt="{{ response.user.login }}">
-    <figcaption class="js-Comment-owner">
-      <a class="comment-reporter bold" href="https://github.com/{{ response.user.login }}">
-        {{ response.user.login }}
+<div class="issue-comment js-Issue-comment grid-cell x2">
+  <header class="comment-header">
+    <figure class="comment-author" role="group">
+      <img src="{{ response.user.avatar_url }}" class="comment-avatar" alt="{{ response.user.login }}">
+      <figcaption class="js-Comment-owner">
+        <a class="comment-reporter bold" href="https://github.com/{{ response.user.login }}">
+          {{ response.user.login }}
+        </a>
+      </figcaption>
+    </figure>
+    <div>
+      <a class="comment-time" href="#issuecomment-{{ response.id }}">
+        {{ response.created_at }}
       </a>
-    </figcaption>
-  </figure>
-  <div>
-    <a class="comment-time" href="#issuecomment-{{ response.id }}">
-      {{ response.created_at }}
-    </a>
-  </div>
-</header>
-<div class="js-Comment-content comment-body grid-cell">
-  <div class="markdown">
-    {{ response.body_html }}
+    </div>
+  </header>
+  <div class="js-Comment-content comment-body grid-cell">
+    <div class="markdown">
+      {{ response.body_html }}
+    </div>
   </div>
 </div>
 {% endfor %}{% endautoescape %}
