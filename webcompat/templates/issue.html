@@ -18,7 +18,6 @@
             </section>
           </section>
           <section class="js-Issue-commentList issue-comment">
-            {% include "issue/issue-comment-list.jst" %}
           </section>
           {% if session.user_id and session.avatar_url %}
             <section class="grid-cell issue-comment issue-new-comment x3 js-issue-comment-submit is-hidden">
@@ -59,8 +58,6 @@
 <script src="{{ url_for('static', filename='js/lib/models/milestones.js') }}"></script>
 <script src="{{ url_for('static', filename='js/lib/milestones.js') }}"></script>
 <script src="{{ url_for('static', filename='js/lib/models/issue.js') }}"></script>
-<script src="{{ url_for('static', filename='js/lib/models/comment.js') }}"></script>
-<script src="{{ url_for('static', filename='js/lib/comments.js') }}"></script>
 <script src="{{ url_for('static', filename='js/lib/issues.js') }}"></script>
 {%- endif %}
 {% endblock %}

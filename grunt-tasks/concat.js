@@ -67,8 +67,6 @@ module.exports = function (grunt) {
         "<%= jsPath %>/lib/models/milestones.js",
         "<%= jsPath %>/lib/milestones.js",
         "<%= jsPath %>/lib/models/issue.js",
-        "<%= jsPath %>/lib/models/comment.js",
-        "<%= jsPath %>/lib/comments.js",
         "<%= jsPath %>/lib/autogrow-textfield.js",
         "<%= jsPath %>/lib/issues.js",
       ],

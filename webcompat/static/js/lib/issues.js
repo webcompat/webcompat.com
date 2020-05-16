@@ -287,7 +287,6 @@ issues.MainView = Backbone.View.extend(
       this.issue = new issues.Issue(JSON.parse(issueData), {
         parse: true,
       });
-      this.comments = new issues.CommentsCollection({ pageNumber: 1 });
       this.initSubViews(
         _.bind(function () {
           // set listener for closing category editor only after its
@@ -379,7 +378,6 @@ issues.MainView = Backbone.View.extend(
             _.bind(function (response, textStatus, jqXHR) {
               console.log(response, textStatus, jqXHR);
               $(".js-Issue-commentList").html(response);
-              this.comments.bind("add", _.bind(this.addComment, this));
               // If there's a #hash pointing to a comment (or elsewhere)
               // scrollTo it.
               if (location.hash !== "") {
@@ -402,28 +400,9 @@ issues.MainView = Backbone.View.extend(
       }
     },
 
-    getRemainingComments: function (count) {
-      //The first 100 comments for page 1 have already been loaded. If there
-      // are more, fetch the next 100 until we're done.
-
-      _.each(
-        _.bind(
-          _.range(2, count),
-          function (i) {
-            this.comments.fetchPage({
-              pageNumber: i,
-              headers: { Accept: "application/json" },
-            });
-          },
-          this
-        )
-      );
-    },
-
     addComment: function (comment) {
       // if there's a nsfw label, add the relevant class.
-      var view = new issues.CommentView({ model: comment });
-      var commentElm = view.render().$el;
+      var commentElm = $(comment);
       $(".js-Issue-commentList").append(commentElm);
       _.each(commentElm.find("code"), function (elm) {
         Prism.highlightElement(elm);
@@ -440,19 +419,28 @@ issues.MainView = Backbone.View.extend(
 
       if (form[0].checkValidity()) {
         event.preventDefault();
-        var newComment = new issues.Comment({
-          avatarUrl: form.data("avatarUrl"),
-          body: this.sanitizeMarkdown(md.render(textarea.val())),
-          commenter: form.data("username"),
-          createdAt: moment(new Date().toISOString()).fromNow(),
-          commentLinkId: null,
-        });
-        this.addComment(newComment);
-        newComment.attributes.body = textarea.val();
-        // Now empty out the textarea.
-        textarea.val("");
-        // Push to GitHub
-        newComment.save();
+        jQuery
+          .ajax("/api/issues/" + this.issue.get("number") + "/comments", {
+            type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify({
+              body: textarea.val(),
+            }),
+          })
+          .done(
+            _.bind(function (response) {
+              textarea.val("");
+              $(".js-Issue-commentList").append(response);
+            }, this)
+          )
+          .fail(function () {
+            var msg =
+              "There was an error posting a comment. Please reload to try again.";
+            wcEvents.trigger("flash:error", {
+              message: msg,
+              timeout: 4000,
+            });
+          });
       }
     },
     toggleNSFW: function (e) {
