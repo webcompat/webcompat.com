@@ -53,7 +53,7 @@ def register_ab_active():
 def get_list_items(val_dict):
     """Return list items (<li>) from the passed in list ([])."""
     rv = ''.join(['<li>{k}: {v}</li>'.format(k=k, v=get_serialized_value(v))
-                 for k, v in list(val_dict.items())])
+                  for k, v in list(val_dict.items())])
     return '<ul>\n  {rv}\n</ul>'.format(rv=rv)
 
 
