@@ -375,8 +375,7 @@ issues.MainView = Backbone.View.extend(
             }
           )
           .done(
-            _.bind(function (response, textStatus, jqXHR) {
-              console.log(response, textStatus, jqXHR);
+            _.bind(function (response) {
               $(".js-Issue-commentList").html(response);
               // If there's a #hash pointing to a comment (or elsewhere)
               // scrollTo it.
@@ -416,9 +415,11 @@ issues.MainView = Backbone.View.extend(
     addNewComment: function (event) {
       var form = $(".js-Comment-form");
       var textarea = $(".js-Comment-text");
+      var loadingIndicator = form.find(".js-loader");
 
       if (form[0].checkValidity()) {
         event.preventDefault();
+        loadingIndicator.addClass("is-active");
         jQuery
           .ajax("/api/issues/" + this.issue.get("number") + "/comments", {
             type: "POST",
@@ -429,6 +430,7 @@ issues.MainView = Backbone.View.extend(
           })
           .done(
             _.bind(function (response) {
+              loadingIndicator.removeClass("is-active");
               textarea.val("");
               $(".js-Issue-commentList").append(response);
             }, this)
