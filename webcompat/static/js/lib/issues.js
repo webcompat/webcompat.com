@@ -377,6 +377,7 @@ issues.MainView = Backbone.View.extend(
           .done(
             _.bind(function (response) {
               $(".js-Issue-commentList").html(response);
+              this.onAfterCommentsRendered();
               // If there's a #hash pointing to a comment (or elsewhere)
               // scrollTo it.
               if (location.hash !== "") {
@@ -398,11 +399,10 @@ issues.MainView = Backbone.View.extend(
           });
       }
     },
-
-    addComment: function (comment) {
-      // if there's a nsfw label, add the relevant class.
-      var commentElm = $(comment);
-      $(".js-Issue-commentList").append(commentElm);
+    onAfterCommentsRendered: function () {
+      // highlight codeblocks, and if there's a nsfw label
+      // add the relevant class.
+      var commentElm = $(".js-Issue-comment");
       _.each(commentElm.find("code"), function (elm) {
         Prism.highlightElement(elm);
       });
