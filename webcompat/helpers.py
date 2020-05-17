@@ -404,6 +404,12 @@ def mockable_response(func):
         if app.config['TESTING']:
             get_args = request.args.copy()
             full_path = request.full_path
+            # If request.path is '/', this means we're calling a mocked
+            # method (in)directly, so just return it. The expectation is that
+            # a unit test is using Mock, so we don't need to rely on mocked
+            # file system data.
+            if request.path == '/':
+                return func(*args, **kwargs)
             if get_args:
                 # Only requests with arguments, get a fixture with a checksum.
                 # We grab the full path of the request URI to compute an md5
