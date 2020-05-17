@@ -449,6 +449,7 @@ def extract_url(issue_body):
     return url
 
 
+@mockable_response
 def proxy_request(method, path, params=None, headers=None, data=None):
     """Make a GitHub API request with a bot's OAuth token.
 
@@ -471,6 +472,7 @@ def proxy_request(method, path, params=None, headers=None, data=None):
     return req(resource_uri, data=data, params=params, headers=auth_headers)
 
 
+@mockable_response
 def api_request(method, path, params=None, data=None, mime_type=JSON_MIME):
     """Handle communication with the  GitHub API.
 

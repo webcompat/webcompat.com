@@ -39,7 +39,6 @@ REPO_PATH = ISSUES_PATH[:-7]
 
 
 @api_bp.route('/issues/<int:number>')
-@mockable_response
 def proxy_issue(number):
     """XHR endpoint to get issue data from GitHub.
 
@@ -50,7 +49,6 @@ def proxy_issue(number):
 
 
 @api_bp.route('/issues/<int:number>/edit', methods=['PATCH'])
-@mockable_response
 def edit_issue(number):
     """XHR endpoint to push back edits to GitHub for a single issue.
 
@@ -76,7 +74,6 @@ def edit_issue(number):
 
 
 @api_bp.route('/issues')
-@mockable_response
 def proxy_issues():
     """List all issues from GitHub on the API endpoint."""
     params = request.args.copy()
@@ -95,7 +92,6 @@ def proxy_issues():
 
 
 @api_bp.route('/issues/<username>/<parameter>')
-@mockable_response
 def get_user_activity_issues(username, parameter):
     """Return issues related to a user at the API endpoint.
 
@@ -122,7 +118,6 @@ def get_user_activity_issues(username, parameter):
 
 
 @api_bp.route('/issues/category/<issue_category>')
-@mockable_response
 def get_issue_category(issue_category):
     """Return all issues for a specific category."""
     category_list = app.config['OPEN_STATUSES']
@@ -141,7 +136,6 @@ def get_issue_category(issue_category):
 
 
 @api_bp.route('/issues/search')
-@mockable_response
 @limiter.limit('30/minute',
                key_func=lambda: session.get('username', 'proxy-user'))
 def get_search_results(query_string=None, params=None):
@@ -175,7 +169,6 @@ def get_search_results(query_string=None, params=None):
 
 
 @api_bp.route('/issues/<int:number>/comments', methods=['GET', 'POST'])
-@mockable_response
 def proxy_comments(number):
     """XHR endpoint to get issues comments from GitHub, or to add
     a new comment.
@@ -222,7 +215,6 @@ def modify_labels(number):
 
 
 @api_bp.route('/issues/labels')
-@mockable_response
 def get_repo_labels():
     """XHR endpoint to get all possible labels in a repo."""
     params = request.args.copy()
