@@ -193,6 +193,7 @@ def get_response_headers(response, mime_type=JSON_MIME):
     This allows us to proxy response headers from GitHub to our own responses.
     """
     # handle the case where we get the data directly
+    headers = {}
     if isinstance(response, requests.models.Response):
         headers = response.headers
     # or the case where we proxy an already fetched reponse
