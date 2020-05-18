@@ -57,10 +57,6 @@ module.exports = function (grunt) {
     },
     issues: {
       src: [
-        "<%= jsPath %>/vendor/markdown-it.js",
-        "<%= jsPath %>/vendor/markdown-it-emoji-1.4.0.js",
-        "<%= jsPath %>/vendor/markdown-it-sanitizer-0.4.1.js",
-        "<%= jsPath %>/lib/mixins/extend-md-sanitizer.js",
         "<%= jsPath %>/lib/models/label-list.js",
         "<%= jsPath %>/lib/editor.js",
         "<%= jsPath %>/lib/labels.js",

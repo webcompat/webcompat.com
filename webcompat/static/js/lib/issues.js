@@ -5,116 +5,6 @@
 var issues = issues || {}; // eslint-disable-line no-use-before-define
 issues.events = _.extend({}, Backbone.Events);
 
-var issueMarkdownSanitizer = new MarkdownSanitizerMixin();
-
-if (!window.md) {
-  window.md = window
-    .markdownit({
-      breaks: true,
-      html: true,
-      linkify: true,
-    })
-    .use(window.markdownitSanitizer)
-    .use(window.markdownitEmoji);
-}
-// Add links to @usernames and #issues
-md.linkify.add("@", {
-  validate: function (text, pos, self) {
-    var tail = text.slice(pos);
-
-    if (!self.re.gh_user) {
-      self.re.gh_user = new RegExp(
-        "^([a-zA-Z0-9_-]){1,30}(?=$|" + self.re.src_ZPCc + ")"
-      );
-    }
-    if (self.re.gh_user.test(tail)) {
-      return tail.match(self.re.gh_user)[0].length;
-    }
-    return 0;
-  },
-  normalize: function (match) {
-    match.url = "https://github.com/" + match.url.replace(/^@/, "");
-  },
-});
-
-md.linkify.add("#", {
-  validate: function (text, pos, self) {
-    var tail = text.slice(pos);
-
-    if (!self.re.hash_bug) {
-      self.re.hash_bug = new RegExp("^([0-9])+(?=$|" + self.re.src_ZPCc + ")");
-    }
-    if (self.re.hash_bug.test(tail)) {
-      return tail.match(self.re.hash_bug)[0].length;
-    }
-    return 0;
-  },
-  normalize: function (match) {
-    match.url = "/issues/" + match.url.replace(/^#/, "");
-  },
-});
-
-var checkIfReportedURLOpeningA = function (tokens) {
-  // check the tokens to see if we match the following markdown pattern
-  // **URL**: http....
-  if (
-    tokens[0].markup === "**" &&
-    tokens[1].content === "URL" &&
-    tokens[2].markup === "**" &&
-    tokens[3].content === ": " &&
-    tokens[4].type === "link_open"
-  ) {
-    return true;
-  }
-  return false;
-};
-
-// Add rel=nofollow to links
-var defaultLinkOpenRender =
-  md.renderer.rules.link_open ||
-  function (tokens, idx, options, env, self) {
-    return self.renderToken(tokens, idx, options);
-  };
-
-md.renderer.rules.link_open = function (tokens, idx, options, env, self) {
-  var foundReportedURL = checkIfReportedURLOpeningA(tokens);
-  // only add target=_blank to a URL that was parsed from the following:
-  // **URL**: <url>
-  if (foundReportedURL) {
-    tokens[idx].attrPush(["target", "_blank"]);
-  }
-  tokens[idx].attrPush(["rel", "nofollow"]);
-
-  // Transform link text for some well-known sites
-  if (tokens[idx].attrIndex("href") > -1) {
-    var link = tokens[idx].attrs[tokens[idx].attrIndex("href")][1];
-    var transformations = {
-      "https://bugzilla.mozilla.org/show_bug": "Mozilla",
-      "https://bugs.webkit.org/show_bug": "WebKit",
-      "https://code.google.com/p/chromium/issues/detail?": "Chromium",
-      "https://github.com/": "GitHub",
-    };
-    for (var bugtracker in transformations) {
-      if (link.indexOf(bugtracker) > -1) {
-        var bugNumRx = /(\?id=|\/issues\/)(\d+)/;
-        var matches;
-        if ((matches = link.match(bugNumRx))) {
-          for (var i = idx, theToken; (theToken = tokens[i]); i++) {
-            // find the token for link text
-            if (theToken.content === link) {
-              theToken.content =
-                "#" + matches[2] + " (" + transformations[bugtracker] + ")";
-              break;
-            }
-          }
-        }
-      }
-    }
-  }
-  // pass token to default renderer.
-  return defaultLinkOpenRender(tokens, idx, options, env, self);
-};
-
 issues.AsideView = Backbone.View.extend({
   el: $("#js-Issue-aside"),
   initialize: function () {
@@ -269,208 +159,211 @@ issues.ImageUploadView = Backbone.View.extend({
 });
 
 issues.MainView = Backbone.View.extend(
-  _.extend({}, issueMarkdownSanitizer, {
-    el: $(".js-Issue"),
-    events: {
-      "click .js-Issue-comment-button": "addNewComment",
-      "click .issue-details-nsfw": "toggleNSFW",
-    },
-    keyboardEvents: {
-      g: "githubWarp",
-    },
-    _supportsFormData: "FormData" in window,
-    _isNSFW: undefined,
-    initialize: function () {
-      var body = $(document.body);
-      var issueData = $(".js-Issue").data("issueData");
-      body.addClass("language-html");
-      this.issue = new issues.Issue(JSON.parse(issueData), {
-        parse: true,
-      });
-      this.initSubViews(
-        _.bind(function () {
-          // set listener for closing category editor only after its
-          // been initialized.
-          body.click(_.bind(this.closeCategoryEditor, this));
-        }, this)
-      );
-      this.onAfterInit();
-      this.handleKeyShortcuts();
-    },
-    closeCategoryEditor: function (e) {
-      var target = $(e.target);
-      // early return if the editor is closed,
-      if (
-        // If no category editor is visible
-        !this.$el.find(".js-CategoryEditor").is(":visible") ||
-        // or we've clicked on the button to open it,
-        (target[0].nodeName === "BUTTON" &&
-          target.hasClass("js-CategoryEditorLauncher")) ||
-        // or clicked anywhere inside the label editor
-        target.parents(".js-CategoryEditor").length
-      ) {
-        // Clicking on one launcher will force to close the other one
+  _.extend(
+    {},
+    {
+      el: $(".js-Issue"),
+      events: {
+        "click .js-Issue-comment-button": "addNewComment",
+        "click .issue-details-nsfw": "toggleNSFW",
+      },
+      keyboardEvents: {
+        g: "githubWarp",
+      },
+      _supportsFormData: "FormData" in window,
+      _isNSFW: undefined,
+      initialize: function () {
+        var body = $(document.body);
+        var issueData = $(".js-Issue").data("issueData");
+        body.addClass("language-html");
+        this.issue = new issues.Issue(JSON.parse(issueData), {
+          parse: true,
+        });
+        this.initSubViews(
+          _.bind(function () {
+            // set listener for closing category editor only after its
+            // been initialized.
+            body.click(_.bind(this.closeCategoryEditor, this));
+          }, this)
+        );
+        this.onAfterInit();
+        this.handleKeyShortcuts();
+      },
+      closeCategoryEditor: function (e) {
+        var target = $(e.target);
+        // early return if the editor is closed,
         if (
-          target[0].nodeName === "BUTTON" &&
-          target.hasClass("js-LabelEditorLauncher")
+          // If no category editor is visible
+          !this.$el.find(".js-CategoryEditor").is(":visible") ||
+          // or we've clicked on the button to open it,
+          (target[0].nodeName === "BUTTON" &&
+            target.hasClass("js-CategoryEditorLauncher")) ||
+          // or clicked anywhere inside the label editor
+          target.parents(".js-CategoryEditor").length
         ) {
-          this.milestones.closeEditor();
-        } else if (
-          target[0].nodeName === "BUTTON" &&
-          target.hasClass("js-MilestoneEditorLauncher")
-        ) {
+          // Clicking on one launcher will force to close the other one
+          if (
+            target[0].nodeName === "BUTTON" &&
+            target.hasClass("js-LabelEditorLauncher")
+          ) {
+            this.milestones.closeEditor();
+          } else if (
+            target[0].nodeName === "BUTTON" &&
+            target.hasClass("js-MilestoneEditorLauncher")
+          ) {
+            this.labels.closeEditor();
+          }
+          return;
+        } else {
+          // Click outside, close both editors
           this.labels.closeEditor();
+          this.milestones.closeEditor();
         }
-        return;
-      } else {
-        // Click outside, close both editors
-        this.labels.closeEditor();
-        this.milestones.closeEditor();
-      }
-    },
-    githubWarp: function (e) {
-      var warpPipe = $(".js-github-url").attr("href");
-      if (e.target.nodeName === "TEXTAREA") {
-        return;
-      } else {
-        return (location.href = warpPipe);
-      }
-    },
-    initSubViews: function (callback) {
-      var issueModel = { model: this.issue };
-      this.aside = new issues.AsideView(issueModel);
-      this.labels = new issues.LabelsView(issueModel);
-      this.milestones = new issues.MilestonesView(issueModel);
-      this.imageUpload = new issues.ImageUploadView();
+      },
+      githubWarp: function (e) {
+        var warpPipe = $(".js-github-url").attr("href");
+        if (e.target.nodeName === "TEXTAREA") {
+          return;
+        } else {
+          return (location.href = warpPipe);
+        }
+      },
+      initSubViews: function (callback) {
+        var issueModel = { model: this.issue };
+        this.aside = new issues.AsideView(issueModel);
+        this.labels = new issues.LabelsView(issueModel);
+        this.milestones = new issues.MilestonesView(issueModel);
+        this.imageUpload = new issues.ImageUploadView();
 
-      callback();
-    },
-    onAfterInit: function () {
-      // _.find() will return the object if found (which is truthy),
-      // or undefined if not found (which is falsey)
-      this._isNSFW = !!_.find(
-        this.issue.get("labels"),
-        _.matchesProperty("name", "nsfw")
-      );
+        callback();
+      },
+      onAfterInit: function () {
+        // _.find() will return the object if found (which is truthy),
+        // or undefined if not found (which is falsey)
+        this._isNSFW = !!_.find(
+          this.issue.get("labels"),
+          _.matchesProperty("name", "nsfw")
+        );
 
-      _.each([this.labels, this.milestones, this], function (elm) {
-        elm.render();
-        _.each($(".js-Issue-markdown code"), function (elm) {
+        _.each([this.labels, this.milestones, this], function (elm) {
+          elm.render();
+          _.each($(".js-Issue-comment-body code"), function (elm) {
+            Prism.highlightElement(elm);
+          });
+        });
+
+        if (this._supportsFormData) {
+          this.imageUpload.render();
+        }
+
+        // If there are any comments, go fetch the model data
+        if (this.issue.get("commentNumber") > 0) {
+          jQuery
+            .ajax(
+              "/api/issues/" + this.issue.get("number") + "/comments?page=1",
+              {
+                type: "GET",
+                dataType: "html",
+              }
+            )
+            .done(
+              _.bind(function (response) {
+                $(".js-Issue-commentList").html(response);
+                this.onAfterCommentsRendered();
+                // If there's a #hash pointing to a comment (or elsewhere)
+                // scrollTo it.
+                if (location.hash !== "") {
+                  var _id = $(location.hash);
+                  window.scrollTo(0, _id.offset().top);
+                }
+                if (response[0].lastPageNumber > 1) {
+                  this.getRemainingComments(++response[0].lastPageNumber);
+                }
+              }, this)
+            )
+            .fail(function () {
+              var msg =
+                "There was an error retrieving issue comments. Please reload to try again.";
+              wcEvents.trigger("flash:error", {
+                message: msg,
+                timeout: 4000,
+              });
+            });
+        }
+      },
+      onAfterCommentsRendered: function () {
+        // highlight codeblocks, and if there's a nsfw label
+        // add the relevant class.
+        var commentElm = $(".js-Issue-comment");
+        _.each(commentElm.find("code"), function (elm) {
           Prism.highlightElement(elm);
         });
-      });
-
-      if (this._supportsFormData) {
-        this.imageUpload.render();
-      }
-
-      // If there are any comments, go fetch the model data
-      if (this.issue.get("commentNumber") > 0) {
-        jQuery
-          .ajax(
-            "/api/issues/" + this.issue.get("number") + "/comments?page=1",
-            {
-              type: "GET",
-              dataType: "html",
-            }
-          )
-          .done(
-            _.bind(function (response) {
-              $(".js-Issue-commentList").html(response);
-              this.onAfterCommentsRendered();
-              // If there's a #hash pointing to a comment (or elsewhere)
-              // scrollTo it.
-              if (location.hash !== "") {
-                var _id = $(location.hash);
-                window.scrollTo(0, _id.offset().top);
-              }
-              if (response[0].lastPageNumber > 1) {
-                this.getRemainingComments(++response[0].lastPageNumber);
-              }
-            }, this)
-          )
-          .fail(function () {
-            var msg =
-              "There was an error retrieving issue comments. Please reload to try again.";
-            wcEvents.trigger("flash:error", {
-              message: msg,
-              timeout: 4000,
-            });
+        if (this._isNSFW) {
+          _.each(commentElm.find("img"), function (elm) {
+            $(elm).closest("p").addClass("issue-details-nsfw");
           });
-      }
-    },
-    onAfterCommentsRendered: function () {
-      // highlight codeblocks, and if there's a nsfw label
-      // add the relevant class.
-      var commentElm = $(".js-Issue-comment");
-      _.each(commentElm.find("code"), function (elm) {
-        Prism.highlightElement(elm);
-      });
-      if (this._isNSFW) {
-        _.each(commentElm.find("img"), function (elm) {
-          $(elm).closest("p").addClass("issue-details-nsfw");
-        });
-      }
-    },
-    addNewComment: function (event) {
-      var form = $(".js-Comment-form");
-      var textarea = $(".js-Comment-text");
-      var loadingIndicator = form.find(".js-loader");
+        }
+      },
+      addNewComment: function (event) {
+        var form = $(".js-Comment-form");
+        var textarea = $(".js-Comment-text");
+        var loadingIndicator = form.find(".js-loader");
 
-      if (form[0].checkValidity()) {
-        event.preventDefault();
-        loadingIndicator.addClass("is-active");
-        jQuery
-          .ajax("/api/issues/" + this.issue.get("number") + "/comments", {
-            type: "POST",
-            contentType: "application/json",
-            data: JSON.stringify({
-              body: textarea.val(),
-            }),
-          })
-          .done(
-            _.bind(function (response) {
-              loadingIndicator.removeClass("is-active");
-              textarea.val("");
-              $(".js-Issue-commentList").append(response);
-            }, this)
-          )
-          .fail(function () {
-            var msg =
-              "There was an error posting a comment. Please reload to try again.";
-            wcEvents.trigger("flash:error", {
-              message: msg,
-              timeout: 4000,
+        if (form[0].checkValidity()) {
+          event.preventDefault();
+          loadingIndicator.addClass("is-active");
+          jQuery
+            .ajax("/api/issues/" + this.issue.get("number") + "/comments", {
+              type: "POST",
+              contentType: "application/json",
+              data: JSON.stringify({
+                body: textarea.val(),
+              }),
+            })
+            .done(
+              _.bind(function (response) {
+                loadingIndicator.removeClass("is-active");
+                textarea.val("");
+                $(".js-Issue-commentList").append(response);
+              }, this)
+            )
+            .fail(function () {
+              var msg =
+                "There was an error posting a comment. Please reload to try again.";
+              wcEvents.trigger("flash:error", {
+                message: msg,
+                timeout: 4000,
+              });
             });
-          });
-      }
-    },
-    toggleNSFW: function (e) {
-      // make sure we've got a reference to the <img> element,
-      // (small images won't extend to the width of the containing
-      // p.nsfw)
-      var target =
-        e.target.nodeName === "IMG"
-          ? e.target
-          : e.target.nodeName === "P" && e.target.querySelector("img");
-      $(target)
-        .parent()
-        .removeAttr("href")
-        .parent()
-        .toggleClass("issue-details-nsfw--display");
-    },
-    render: function () {
-      this.$el.removeClass("is-hidden");
-      // only show issue commenting bits if the issue is not locked
-      if (!this.issue.get("locked")) {
-        this.$el.find(".js-issue-comment-submit").removeClass("is-hidden");
-      }
-    },
+        }
+      },
+      toggleNSFW: function (e) {
+        // make sure we've got a reference to the <img> element,
+        // (small images won't extend to the width of the containing
+        // p.nsfw)
+        var target =
+          e.target.nodeName === "IMG"
+            ? e.target
+            : e.target.nodeName === "P" && e.target.querySelector("img");
+        $(target)
+          .parent()
+          .removeAttr("href")
+          .parent()
+          .toggleClass("issue-details-nsfw--display");
+      },
+      render: function () {
+        this.$el.removeClass("is-hidden");
+        // only show issue commenting bits if the issue is not locked
+        if (!this.issue.get("locked")) {
+          this.$el.find(".js-issue-comment-submit").removeClass("is-hidden");
+        }
+      },
 
-    handleKeyShortcuts: function () {
-      Mousetrap.bind("mod+enter", _.bind(this.addNewComment, this));
-    },
-  })
+      handleKeyShortcuts: function () {
+        Mousetrap.bind("mod+enter", _.bind(this.addNewComment, this));
+      },
+    }
+  )
 );
 
 //Not using a router, so kick off things manually
