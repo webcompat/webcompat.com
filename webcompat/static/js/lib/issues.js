@@ -276,9 +276,6 @@ issues.MainView = Backbone.View.extend(
                   var _id = $(location.hash);
                   window.scrollTo(0, _id.offset().top);
                 }
-                if (response[0].lastPageNumber > 1) {
-                  this.getRemainingComments(++response[0].lastPageNumber);
-                }
               }, this)
             )
             .fail(function () {
