@@ -16,8 +16,8 @@ from flask import abort
 from flask import Blueprint
 from flask import g
 from flask import make_response
-from flask import request
 from flask import render_template
+from flask import request
 from flask import session
 
 from webcompat import app
@@ -170,10 +170,10 @@ def get_search_results(query_string=None, params=None):
 
 @api_bp.route('/issues/<int:number>/comments', methods=['GET', 'POST'])
 def proxy_comments(number):
-    """XHR endpoint to get issues comments from GitHub, or to add
-    a new comment.
+    """XHR endpoint for GitHub issue comments.
 
-    Either as an authed user, or as one of our proxy bots.
+    * GET an issue comments
+    * POST a comment on an issue (only as an authorized GitHub user)
     """
     params = request.args.copy()
     path = 'repos/{0}/{1}/comments'.format(ISSUES_PATH, number)

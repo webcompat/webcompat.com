@@ -13,8 +13,8 @@ import unittest
 
 import flask
 from flask import session
-from werkzeug.http import parse_cookie
 from requests.models import Response
+from werkzeug.http import parse_cookie
 
 import webcompat
 from webcompat.helpers import ab_active
