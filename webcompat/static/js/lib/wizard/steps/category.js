@@ -4,6 +4,7 @@
 
 /* Allows the user to select a category of the problem they're experiencing */
 
+import $ from "jquery";
 import notify from "../notify.js";
 import { isEmpty } from "../validation.js";
 import { showSuccess, hideSuccess, showContainer } from "../ui-utils.js";

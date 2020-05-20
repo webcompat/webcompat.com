@@ -9,6 +9,7 @@
    put an image link in the bug description.
 */
 
+import $ from "jquery";
 import notify from "../../notify.js";
 import { getDataURIFromPreview } from "../../utils.js";
 

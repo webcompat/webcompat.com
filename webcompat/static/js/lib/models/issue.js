@@ -5,10 +5,13 @@
  * Contains some code modified from https://github.com/jfromaniello/li
  * which is released under the MIT license. */
 
-var issues = issues || {}; // eslint-disable-line no-use-before-define
-var issueList = issueList || {}; // eslint-disable-line no-use-before-define
+import $ from "jquery";
+import { LabelList } from "./label-list.js";
 
-issues.Issue = Backbone.Model.extend({
+// var issues = issues || {}; // eslint-disable-line no-use-before-define
+// var issueList = issueList || {}; // eslint-disable-line no-use-before-define
+
+export const Issue = Backbone.Model.extend({
   _statuses: $("main").data("statuses"),
   getState: function (state, milestone) {
     if (state === "closed") {
@@ -51,7 +54,7 @@ issues.Issue = Backbone.Model.extend({
         milestoneClass = "no-status-assigned-yet";
       }
     }
-    var labelList = new issues.LabelList({ labels: response.labels });
+    var labelList = new LabelList({ labels: response.labels });
     var labels = labelList.get("labels");
     // Note: the homepage still uses this data.
     this.set(
@@ -126,14 +129,14 @@ issues.Issue = Backbone.Model.extend({
     ) {
       return;
     }
-    var labels = new issues.LabelList({
+    var labels = new LabelList({
       labels: labelsArray,
       url: "/api/issues/" + this.get("number") + "/labels",
     });
     labels.save(null, {
       success: _.bind(function (response) {
         // update model after success
-        var updatedLabels = new issues.LabelList({
+        var updatedLabels = new LabelList({
           labels: response.get("labels"),
         });
         this.set("labels", updatedLabels.get("labels"));
@@ -146,10 +149,11 @@ issues.Issue = Backbone.Model.extend({
   },
 });
 
-issueList.Issue = issues.Issue.extend({});
+// issueList.Issue = issue.extend({});
+const issueModel = Issue.extend({});
 
-issueList.IssueCollection = Backbone.Collection.extend({
-  model: issueList.Issue,
+export const IssueCollection = Backbone.Collection.extend({
+  model: issueModel,
   /* the url property is set in issueList.IssueView#fetchAndRenderIssues */
   initialize: function (options) {
     // set defaults

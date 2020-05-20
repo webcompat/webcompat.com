@@ -23,21 +23,22 @@
 <script src="{{ url_for('static', filename='js/dist/ga.js') }}"></script>
 <script async src='https://www.google-analytics.com/analytics.js'></script>
 <!-- End Google Analytics -->
-<script src="{{ url_for('static', filename='js/dist/webcompat.formv2.js')|bust_cache }}"></script>
+<script src="{{ url_for('static', filename='js/dist-new/vendors.js')|bust_cache }}"></script>
 {% else %}
-<script src="{{ url_for('static', filename='js/vendor/jquery-3.3.1.min.js') }}"></script>
-<script src="{{ url_for('static', filename='js/vendor/lodash.custom.min.js') }}"></script>
-<script src="{{ url_for('static', filename='js/vendor/backbone-1.3.3.min.js') }}"></script>
-<script src="{{ url_for('static', filename='js/vendor/moment-min.js') }}"></script>
-<script src="{{ url_for('static', filename='js/vendor/prism.js') }}"></script>
-<script src="{{ url_for('static', filename='js/vendor/mousetrap-min.js') }}"></script>
-<script src="{{ url_for('static', filename='js/vendor/backbone.mousetrap.js') }}"></script>
-<script src="{{ url_for('static', filename='js/lib/flash-message.js') }}"></script>
-<script src="{{ url_for('static', filename='js/lib/navbar.js') }}"></script>
-<script src="{{ url_for('static', filename='js/lib/autogrow-textfield.js') }}"></script>
-<script src="{{ url_for('static', filename='js/lib/issue-wizard-popup.js') }}"></script>
-<script src="{{ url_for('static', filename='js/lib/issue-wizard-slider.js') }}"></script>
-<script src="{{ url_for('static', filename='js/dist/templates.js') }}"></script>
+<script src="{{ url_for('static', filename='js/dist-new/vendors.js') }}"></script>
+<!--<script src="{{ url_for('static', filename='js/vendor/jquery-3.3.1.min.js') }}"></script>-->
+<!--<script src="{{ url_for('static', filename='js/vendor/lodash.custom.min.js') }}"></script>-->
+<!--<script src="{{ url_for('static', filename='js/vendor/backbone-1.3.3.min.js') }}"></script>-->
+<!--<script src="{{ url_for('static', filename='js/vendor/moment-min.js') }}"></script>-->
+<!--<script src="{{ url_for('static', filename='js/vendor/prism.js') }}"></script>-->
+<!--<script src="{{ url_for('static', filename='js/vendor/mousetrap-min.js') }}"></script>-->
+<!--<script src="{{ url_for('static', filename='js/vendor/backbone.mousetrap.js') }}"></script>-->
+<!--<script src="{{ url_for('static', filename='js/lib/flash-message.js') }}"></script>-->
+<!--<script src="{{ url_for('static', filename='js/lib/navbar.js') }}"></script>-->
+<!--<script src="{{ url_for('static', filename='js/lib/autogrow-textfield.js') }}"></script>-->
+<!--<script src="{{ url_for('static', filename='js/lib/issue-wizard-popup.js') }}"></script>-->
+<!--<script src="{{ url_for('static', filename='js/lib/issue-wizard-slider.js') }}"></script>-->
+<!--<script src="{{ url_for('static', filename='js/dist/templates.js') }}"></script>-->
 {%- if config['LOCALHOST'] %}
 <script src="{{ url_for('get_test_helper',
                          filename='functional/lib/window-helpers.js') }}"></script>

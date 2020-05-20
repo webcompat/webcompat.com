@@ -9,6 +9,7 @@
 *  to the server when the form is submitted.
 */
 
+import $ from "jquery";
 import notify from "../notify.js";
 const UPLOAD_LIMIT = 1024 * 1024 * 4;
 const ERROR_TEXT =

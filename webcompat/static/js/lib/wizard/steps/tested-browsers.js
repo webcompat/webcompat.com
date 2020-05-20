@@ -4,6 +4,7 @@
 
 /* Allows the user to select other browsers you have tested on */
 
+import $ from "jquery";
 import notify from "../notify.js";
 import { showContainer, hideContainer } from "../ui-utils.js";
 

@@ -20,6 +20,7 @@
     "cssrecipes-grid": "^1.0.0",
     "cssrecipes-reset": "^0.5.0",
     "cssrecipes-utils": "^0.6.2",
+    "lodash-cli": "^4.17.5",
     "suitcss-utils-align": "^1.0.0",
     "suitcss-utils-display": "^1.0.2",
     "yargs": "15.3.1"
@@ -28,6 +29,7 @@
     "@babel/core": "^7.8.7",
     "@babel/preset-env": "^7.8.7",
     "@babel/register": "^7.8.6",
+    "ejs-loader": "^0.3.6",
     "eslint": "^6.1.0",
     "eslint-config-prettier": "^6.0.0",
     "eslint-plugin-prettier": "^3.0.0",
@@ -58,7 +60,9 @@
     "stylelint-config-standard": "^20.0.0",
     "stylelint-order": "^4.0.0",
     "svg-sprite-generator": "0.0.7",
-    "svgo": "^1.1.1"
+    "svgo": "^1.1.1",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.11"
   },
   "scripts": {
     "setup": "npm run virtualenv && npm install",
@@ -85,7 +89,8 @@
     "test": "npm run test:js && npm run test:python",
     "test:js": "npx intern",
     "test:unit-js": "intern config=./webcompat/static/js/lib/wizard/tests/intern.json",
-    "test:python": "pip install -e . && pytest"
+    "test:python": "pip install -e . && pytest",
+    "build-test": "webpack --config ./webpack/webpack.config.js --watch"
   },
   "husky": {
     "hooks": {

@@ -4,6 +4,7 @@
 
 /* Showing a warning if user hasn't tested on any other browsers */
 
+import $ from "jquery";
 import { showContainer, hideContainer } from "../ui-utils.js";
 import notify from "../notify.js";
 

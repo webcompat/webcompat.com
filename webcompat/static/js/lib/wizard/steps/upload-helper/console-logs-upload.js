@@ -9,6 +9,7 @@
    put a link to it in the hidden field.
 */
 
+import $ from "jquery";
 import notify from "../../notify.js";
 
 const detailsInput = $("#details:hidden");

@@ -4,6 +4,7 @@
 
 /* Allows the user to enter device/browser information if it's different from they're currently using */
 
+import $ from "jquery";
 import notify from "../notify.js";
 import { isEmpty } from "../validation.js";
 import {

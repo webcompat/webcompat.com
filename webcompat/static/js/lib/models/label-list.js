@@ -22,7 +22,7 @@ var issues = issues || {}; // eslint-disable-line no-use-before-define
  * new issues.LabelList({url:'/path/to/labels.json'});
  */
 
-issues.LabelList = Backbone.Model.extend({
+export const LabelList = Backbone.Model.extend({
   initialize: function () {
     this.set("namespaceRegex", /(browser|closed|os|priority|status)-(.+)/i);
     // Temporarily set pagination to 100 labels per page, until
