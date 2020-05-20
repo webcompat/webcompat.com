@@ -122,15 +122,15 @@ class TestAPIURLs(unittest.TestCase):
                         'page', 'next', 'last']))
             self.assertEqual(rv.status_code, 200)
             self.assertEqual(
-                rv.content_type, 'application/json')
+                rv.content_type, 'text/html')
             # API access to comments for an issue
-            # with < 30 does not return link a header in
+            # with < per_page param does not return link a header in
             #  the response (until GitHub changes it....?)
             rv = self.app.get('/api/issues/4/comments', environ_base=headers)
             self.assertTrue('link' not in rv.headers)
             self.assertEqual(rv.status_code, 200)
             self.assertEqual(
-                rv.content_type, 'application/json')
+                rv.content_type, 'text/html')
 
     def test_api_set_labels_without_auth(self):
         """API setting labels without auth returns JSON 403 error code."""

@@ -15,10 +15,13 @@ import json
 from flask import abort
 from flask import Blueprint
 from flask import g
+from flask import make_response
+from flask import render_template
 from flask import request
 from flask import session
 
 from webcompat import app
+from webcompat.api.helpers import get_html_comments
 from webcompat.helpers import api_request
 from webcompat.helpers import get_comment_data
 from webcompat.helpers import get_response_headers
@@ -27,14 +30,15 @@ from webcompat.helpers import normalize_api_params
 from webcompat.helpers import proxy_request
 from webcompat import limiter
 
-api_bp = Blueprint('api_bp', __name__, url_prefix='/api')
+api_bp = Blueprint('api_bp', __name__, url_prefix='/api',
+                   template_folder='../templates')
 JSON_MIME_HTML = 'application/vnd.github.v3.html+json'
+HTML_MIME = 'text/html'
 ISSUES_PATH = app.config['ISSUES_REPO_URI']
 REPO_PATH = ISSUES_PATH[:-7]
 
 
 @api_bp.route('/issues/<int:number>')
-@mockable_response
 def proxy_issue(number):
     """XHR endpoint to get issue data from GitHub.
 
@@ -45,7 +49,6 @@ def proxy_issue(number):
 
 
 @api_bp.route('/issues/<int:number>/edit', methods=['PATCH'])
-@mockable_response
 def edit_issue(number):
     """XHR endpoint to push back edits to GitHub for a single issue.
 
@@ -71,7 +74,6 @@ def edit_issue(number):
 
 
 @api_bp.route('/issues')
-@mockable_response
 def proxy_issues():
     """List all issues from GitHub on the API endpoint."""
     params = request.args.copy()
@@ -90,7 +92,6 @@ def proxy_issues():
 
 
 @api_bp.route('/issues/<username>/<parameter>')
-@mockable_response
 def get_user_activity_issues(username, parameter):
     """Return issues related to a user at the API endpoint.
 
@@ -117,7 +118,6 @@ def get_user_activity_issues(username, parameter):
 
 
 @api_bp.route('/issues/category/<issue_category>')
-@mockable_response
 def get_issue_category(issue_category):
     """Return all issues for a specific category."""
     category_list = app.config['OPEN_STATUSES']
@@ -136,7 +136,6 @@ def get_issue_category(issue_category):
 
 
 @api_bp.route('/issues/search')
-@mockable_response
 @limiter.limit('30/minute',
                key_func=lambda: session.get('username', 'proxy-user'))
 def get_search_results(query_string=None, params=None):
@@ -170,22 +169,32 @@ def get_search_results(query_string=None, params=None):
 
 
 @api_bp.route('/issues/<int:number>/comments', methods=['GET', 'POST'])
-@mockable_response
 def proxy_comments(number):
-    """XHR endpoint to get issues comments from GitHub.
+    """XHR endpoint for GitHub issue comments.
 
-    Either as an authed user, or as one of our proxy bots.
+    * GET an issue comments
+    * POST a comment on an issue (only as an authorized GitHub user)
     """
     params = request.args.copy()
+    path = 'repos/{0}/{1}/comments'.format(ISSUES_PATH, number)
     if request.method == 'POST' and g.user:
-        path = 'repos/{0}/{1}/comments'.format(ISSUES_PATH, number)
-        return api_request('post', path, params=params,
-                           data=get_comment_data(request.data),
-                           mime_type=JSON_MIME_HTML)
+        new_comment = api_request('post', path, params=params,
+                                  data=get_comment_data(request.data),
+                                  mime_type=JSON_MIME_HTML)
+        return get_html_comments(new_comment)
     else:
-        path = 'repos/{0}/{1}/comments'.format(ISSUES_PATH, number)
-        return api_request('get', path, params=params,
-                           mime_type=JSON_MIME_HTML)
+        # TODO: handle the (rare) case for more than 1 page of comments
+        # for now, we just get the first 100 and rely on the client to
+        # fetch more
+        params.update({'per_page': 100})
+        comments_data = api_request('get', path, params=params,
+                                    mime_type=JSON_MIME_HTML)
+        comments_status = comments_data[1:2]
+        if comments_status != 304:
+            return get_html_comments(comments_data)
+        else:
+            # in the case of a 304, the browser cache will handle it.
+            return '', 304, get_response_headers(comments_data, HTML_MIME)
 
 
 @api_bp.route('/issues/<int:number>/labels', methods=['POST'])
@@ -206,7 +215,6 @@ def modify_labels(number):
 
 
 @api_bp.route('/issues/labels')
-@mockable_response
 def get_repo_labels():
     """XHR endpoint to get all possible labels in a repo."""
     params = request.args.copy()

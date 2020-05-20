@@ -53,7 +53,7 @@ def register_ab_active():
 def get_list_items(val_dict):
     """Return list items (<li>) from the passed in list ([])."""
     rv = ''.join(['<li>{k}: {v}</li>'.format(k=k, v=get_serialized_value(v))
-                 for k, v in list(val_dict.items())])
+                  for k, v in list(val_dict.items())])
     return '<ul>\n  {rv}\n</ul>'.format(rv=rv)
 
 
@@ -187,19 +187,24 @@ def get_os(user_agent_string=None):
     return "Unknown"
 
 
-def get_response_headers(response):
+def get_response_headers(response, mime_type=JSON_MIME):
     """Return a dictionary of headers based on a passed in Response object.
 
     This allows us to proxy response headers from GitHub to our own responses.
     """
-    headers = {'etag': response.headers.get('etag'),
-               'cache-control': response.headers.get('cache-control'),
-               'content-type': JSON_MIME}
-
-    if response.headers.get('link'):
-        headers['link'] = rewrite_and_sanitize_link(
-            response.headers.get('link'))
-    return headers
+    # handle the case where we get the data directly
+    headers = {}
+    if isinstance(response, requests.models.Response):
+        headers = response.headers
+    # or the case where we proxy an already fetched reponse
+    if isinstance(response, tuple):
+        headers = response[2]
+    new_headers = {'etag': headers.get('etag'),
+                   'cache-control': headers.get('cache-control'),
+                   'content-type': mime_type}
+    if headers.get('link'):
+        new_headers['link'] = rewrite_and_sanitize_link(headers.get('link'))
+    return new_headers
 
 
 def get_request_headers(headers, mime_type=JSON_MIME):
@@ -400,6 +405,12 @@ def mockable_response(func):
         if app.config['TESTING']:
             get_args = request.args.copy()
             full_path = request.full_path
+            # If request.path is '/', this means we're calling a mocked
+            # method (in)directly, so just return it. The expectation is that
+            # a unit test is using Mock, so we don't need to rely on mocked
+            # file system data.
+            if request.path == '/':
+                return func(*args, **kwargs)
             if get_args:
                 # Only requests with arguments, get a fixture with a checksum.
                 # We grab the full path of the request URI to compute an md5
@@ -445,6 +456,7 @@ def extract_url(issue_body):
     return url
 
 
+@mockable_response
 def proxy_request(method, path, params=None, headers=None, data=None):
     """Make a GitHub API request with a bot's OAuth token.
 
@@ -467,6 +479,7 @@ def proxy_request(method, path, params=None, headers=None, data=None):
     return req(resource_uri, data=data, params=params, headers=auth_headers)
 
 
+@mockable_response
 def api_request(method, path, params=None, data=None, mime_type=JSON_MIME):
     """Handle communication with the  GitHub API.
 

@@ -12,8 +12,9 @@ from unittest.mock import patch
 import unittest
 
 import flask
-from werkzeug.http import parse_cookie
 from flask import session
+from requests.models import Response
+from werkzeug.http import parse_cookie
 
 import webcompat
 from webcompat.helpers import ab_active
@@ -25,6 +26,7 @@ from webcompat.helpers import get_browser
 from webcompat.helpers import get_browser_name
 from webcompat.helpers import get_name
 from webcompat.helpers import get_os
+from webcompat.helpers import get_response_headers
 from webcompat.helpers import get_serialized_value
 from webcompat.helpers import get_version_string
 from webcompat.helpers import is_json_object
@@ -573,6 +575,31 @@ class TestHelpers(unittest.TestCase):
         self.assertFalse(is_darknet_domain('example.com'))
         self.assertFalse(is_darknet_domain('gjobqjj7wyczbqie.onion.com'))
         self.assertFalse(is_darknet_domain(None))
+
+    def test_get_response_headers_tuple(self):
+        """Test we get expected headers with a tuple argument."""
+        proxy_response = (1, 1, {'lol': 'wat', 'etag': '1'})
+        with webcompat.app.app_context():
+            new_headers = get_response_headers(proxy_response)
+            assert new_headers.get('content-type') == 'application/json'
+            assert new_headers.get('etag') == '1'
+            assert new_headers.get('lol') is None
+            new_headers2 = get_response_headers(proxy_response,
+                                                mime_type='text/html')
+            assert new_headers2.get('content-type') == 'text/html'
+
+    def test_get_response_headers_response(self):
+        """Test we get expected headers with a Response argument."""
+        proxy_response = Response()
+        proxy_response.headers = {'lol': 'wat', 'etag': '1'}
+        with webcompat.app.app_context():
+            new_headers = get_response_headers(proxy_response)
+            assert new_headers.get('content-type') == 'application/json'
+            assert new_headers.get('etag') == '1'
+            assert new_headers.get('lol') is None
+            new_headers2 = get_response_headers(proxy_response,
+                                                mime_type='text/html')
+            assert new_headers2.get('content-type') == 'text/html'
 
 
 if __name__ == '__main__':

@@ -102,7 +102,7 @@
 /* As we can not add a class to the img in the comment right now (markup parsers are complicated), we need to use the img element */
 
 .comment-body img,
-.js-Issue-markdown img {
+.js-Issue-comment-body img {
   max-width: 100%;
 }
 
