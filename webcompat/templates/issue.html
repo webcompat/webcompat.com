@@ -46,14 +46,8 @@
 {% endblock %}
 {% block extrascripts %}
 {%- if config.PRODUCTION or config.STAGING -%}
-<script src="{{ url_for('static', filename='js/dist/issues.min.js')|bust_cache }}"></script>
+<script src="{{ url_for('static', filename='js/dist-new/issuePage.js')|bust_cache }}"></script>
 {% else %}
-<script src="{{ url_for('static', filename='js/lib/models/label-list.js') }}"></script>
-<script src="{{ url_for('static', filename='js/lib/editor.js') }}"></script>
-<script src="{{ url_for('static', filename='js/lib/labels.js') }}"></script>
-<script src="{{ url_for('static', filename='js/lib/models/milestones.js') }}"></script>
-<script src="{{ url_for('static', filename='js/lib/milestones.js') }}"></script>
-<script src="{{ url_for('static', filename='js/lib/models/issue.js') }}"></script>
-<script src="{{ url_for('static', filename='js/lib/issues.js') }}"></script>
+<script src="{{ url_for('static', filename='js/dist-new/issuePage.js') }}"></script>
 {%- endif %}
 {% endblock %}

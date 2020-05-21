@@ -168,7 +168,7 @@ registerSuite("Image Uploads (non-auth)", {
           .execute(() => {
             // work around for chrome "Other element would receive the click"
             // error
-            $(".js-remove-upload")[0].click();
+            document.querySelector(".js-remove-upload").click();
           })
           .end()
           .findByCssSelector(".js-image-upload")
@@ -193,7 +193,7 @@ registerSuite("Image Uploads (non-auth)", {
           .execute(() => {
             // work around for chrome "Other element would receive the click"
             // error
-            $(".js-remove-upload")[0].click();
+            document.querySelector(".js-remove-upload").click();
           })
           .end()
           .findByCssSelector(".js-image-upload")
@@ -214,12 +214,12 @@ registerSuite("Image Uploads (non-auth)", {
         .execute(POSTMESSAGE_TEST_SQUARE)
         .sleep(1000)
         .execute(() => {
-          $(".js-image-upload")[0].click();
+          document.querySelector(".js-image-upload").click();
         })
         .execute(POSTMESSAGE_TEST_SQUARE)
         .sleep(1000)
         .execute(() => {
-          $(".js-image-upload")[0].click();
+          document.querySelector(".js-image-upload").click();
         })
         .sleep(1000)
         .findByCssSelector(".js-image-upload")

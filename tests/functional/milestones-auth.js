@@ -98,7 +98,7 @@ registerSuite("Milestones (auth)", {
         true /* longerTimeout */
       )
         .execute(() => {
-          $(".js-MilestoneEditorLauncher")[0].click();
+          document.querySelector(".js-MilestoneEditorLauncher").click();
         })
         .findByCssSelector(".js-CategoryEditor-close")
         .click()

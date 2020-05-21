@@ -7,7 +7,10 @@
 // in flash-message.js. See layout.html for how category and message data
 // attributes are set.
 
+import { wcEvents } from "./flash-message.js";
+
 var currentScript = document.currentScript;
+
 if (currentScript) {
   var category = currentScript.dataset.category || "";
   var message = currentScript.dataset.message || "";

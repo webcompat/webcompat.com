@@ -2,6 +2,15 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
+import $ from "jquery";
+import Mousetrap from "Mousetrap";
+import Prism from "Prism";
+import { wcEvents } from "./flash-message.js";
+import uploadImageTemplate from "templates/issue/upload-image.jst";
+import { Issue } from "./models/issue.js";
+import { LabelsView } from "./labels.js";
+import { MilestonesView } from "./milestones.js";
+
 var issues = issues || {}; // eslint-disable-line no-use-before-define
 issues.events = _.extend({}, Backbone.Events);
 
@@ -41,7 +50,7 @@ issues.ImageUploadView = Backbone.View.extend({
   },
   _submitButton: $(".js-Issue-comment-button"),
   _loadingIndicator: $(".js-loader"),
-  template: wcTmpl["issue/upload-image.jst"],
+  template: uploadImageTemplate,
   render: function () {
     this.$el.html(this.template()).insertAfter($("textarea"));
     return this;
@@ -176,7 +185,7 @@ issues.MainView = Backbone.View.extend(
         var body = $(document.body);
         var issueData = $(".js-Issue").data("issueData");
         body.addClass("language-html");
-        this.issue = new issues.Issue(JSON.parse(issueData), {
+        this.issue = new Issue(JSON.parse(issueData), {
           parse: true,
         });
         this.initSubViews(
@@ -231,8 +240,8 @@ issues.MainView = Backbone.View.extend(
       initSubViews: function (callback) {
         var issueModel = { model: this.issue };
         this.aside = new issues.AsideView(issueModel);
-        this.labels = new issues.LabelsView(issueModel);
-        this.milestones = new issues.MilestonesView(issueModel);
+        this.labels = new LabelsView(issueModel);
+        this.milestones = new MilestonesView(issueModel);
         this.imageUpload = new issues.ImageUploadView();
 
         callback();
@@ -258,14 +267,12 @@ issues.MainView = Backbone.View.extend(
 
         // If there are any comments, go fetch the model data
         if (this.issue.get("commentNumber") > 0) {
-          jQuery
-            .ajax(
-              "/api/issues/" + this.issue.get("number") + "/comments?page=1",
-              {
-                type: "GET",
-                dataType: "html",
-              }
-            )
+          $.ajax("/api/issues/" + this.issue.get("number") + "/comments?page=1",
+            {
+              type: "GET",
+              dataType: "html",
+            }
+          )
             .done(
               _.bind(function (response) {
                 $(".js-Issue-commentList").html(response);
@@ -309,14 +316,13 @@ issues.MainView = Backbone.View.extend(
         if (form[0].checkValidity()) {
           event.preventDefault();
           loadingIndicator.addClass("is-active");
-          jQuery
-            .ajax("/api/issues/" + this.issue.get("number") + "/comments", {
-              type: "POST",
-              contentType: "application/json",
-              data: JSON.stringify({
-                body: textarea.val(),
-              }),
-            })
+          $.ajax("/api/issues/" + this.issue.get("number") + "/comments", {
+            type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify({
+              body: textarea.val(),
+            }),
+          })
             .done(
               _.bind(function (response) {
                 loadingIndicator.removeClass("is-active");

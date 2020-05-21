@@ -6,6 +6,7 @@
  * which is released under the MIT license. */
 
 import $ from "jquery";
+import { wcEvents } from "../flash-message.js";
 import { LabelList } from "./label-list.js";
 
 // var issues = issues || {}; // eslint-disable-line no-use-before-define

@@ -3,15 +3,13 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 import $ from "jquery";
-// import issueList from "web_modules/issue-list.jst";
 import issueListTemplate from "templates/web_modules/issue-list.jst";
-import { issues } from "./models/index.js";
+import { Issue } from "./models/issue.js";
 
 var untriaged = untriaged || {}; // eslint-disable-line no-use-before-define
-//var issues = issues || {}; // eslint-disable-line no-use-before-define
 
 untriaged.NeedsTriageCollection = Backbone.Collection.extend({
-  model: issues.Issue,
+  model: Issue,
   url: "/api/issues/category/needstriage?per_page=5",
 });
 

@@ -22,7 +22,7 @@ var issues = issues || {}; // eslint-disable-line no-use-before-define
  * new issues.LabelList({url:'/path/to/labels.json'});
  */
 
-export const LabelList = Backbone.Model.extend({
+const LabelList = Backbone.Model.extend({
   initialize: function () {
     this.set("namespaceRegex", /(browser|closed|os|priority|status)-(.+)/i);
     // Temporarily set pagination to 100 labels per page, until
@@ -106,3 +106,11 @@ export const LabelList = Backbone.Model.extend({
     return issues.allLabels.toPrefixed(labelsArray);
   },
 });
+
+if ($("body").data("username")) {
+  if (!issues.allLabels) {
+    issues.allLabels = new LabelList();
+  }
+}
+
+export { LabelList };

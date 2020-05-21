@@ -100,7 +100,7 @@ registerSuite("Reporting with wizard", {
           .end()
           .execute(function () {
             // Click on "Desktop site instead of mobile site"
-            $("[for=problem_category-0]")[0].click();
+            document.querySelector("[for=problem_category-0]").click();
           })
           .sleep(1000)
           // Check that hidden description field has "Desktop site instead of mobile site"
@@ -137,7 +137,7 @@ registerSuite("Reporting with wizard", {
           })
           .execute(function () {
             // Click on "Chrome"
-            $("[for=tested_browsers-0]")[0].click();
+            document.querySelector("[for=tested_browsers-0]").click();
           })
           .end()
           .sleep(500)
@@ -244,9 +244,9 @@ registerSuite("Reporting with wizard", {
           .end()
           .execute(function () {
             // Click on "Design is broken"
-            $("[for=problem_category-2]")[0].click();
+            document.querySelector("[for=problem_category-2]").click();
             // Click on "Images not loaded"
-            $("[for=layout_bug_subcategory-0]")[0].click();
+            document.querySelector("[for=layout_bug_subcategory-0]").click();
           })
           .sleep(1000)
           // Check that hidden description field has "Images not loaded"
@@ -318,7 +318,7 @@ registerSuite("Reporting with wizard", {
           .end()
           .execute(function () {
             // Click on "What is a web compatibility issue?"
-            $(".popup-trigger")[0].click();
+            document.querySelector(".popup-trigger").click();
           })
           .end()
           // Make sure that popup is visible and close it
@@ -404,7 +404,7 @@ registerSuite("Reporting with wizard", {
           .end()
           .execute(function () {
             // Click on "Learn more about web compatibility" link
-            $(".popup-trigger")[0].click();
+            document.querySelector(".popup-trigger").click();
           })
           .end()
           // Make sure that popup is visible an close it
@@ -427,7 +427,7 @@ registerSuite("Reporting with wizard", {
           .end()
           .execute(function () {
             // Click on "Something else"
-            $("[for=problem_category-4]")[0].click();
+            document.querySelector("[for=problem_category-4]").click();
           })
           .sleep(500)
           .findByCssSelector(".next-category")
@@ -468,7 +468,7 @@ registerSuite("Reporting with wizard", {
           .end()
           .execute(function () {
             // Click on "Other" in the browsers list
-            $("[for=tested_browsers-5]")[0].click();
+            document.querySelector("[for=tested_browsers-5]").click();
           })
           .end()
           .sleep(1000)

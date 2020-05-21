@@ -11,6 +11,7 @@
 
 import $ from "jquery";
 import notify from "../../notify.js";
+import { wcEvents } from "../../../flash-message.js";
 import { getDataURIFromPreview } from "../../utils.js";
 
 const previewEl = $(".js-image-upload");
