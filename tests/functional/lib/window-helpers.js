@@ -8,7 +8,7 @@
 
 /* eslint-disable no-unused-vars, no-undef */
 var WindowHelpers = {
-  getBlob: function () {
+  getBlob: function (targetOrigin) {
     return new Promise(function (resolve, reject) {
       var c = document.createElement("canvas");
       c.width = 25;
@@ -22,7 +22,7 @@ var WindowHelpers = {
       ctx.strokeRect(0, 0, 25, 25);
       try {
         c.toBlob(function (blob) {
-          resolve(blob);
+          resolve({ blob, targetOrigin });
         });
       } catch (ex) {
         reject(ex);
@@ -30,16 +30,16 @@ var WindowHelpers = {
     });
   },
 
-  sendBlobInObject: function (blob) {
+  sendBlobInObject: function (args) {
     return new Promise(function (res) {
-      postMessage({ screenshot: blob, message: {} }, "http://localhost:5000");
+      postMessage({ screenshot: args.blob, message: {} }, args.targetOrigin);
       res();
     });
   },
 
-  sendBlob: function (blob) {
+  sendBlob: function (args) {
     return new Promise(function (res) {
-      postMessage(blob, "http://localhost:5000");
+      postMessage(args.blob, args.targetOrigin);
       res();
     });
   },

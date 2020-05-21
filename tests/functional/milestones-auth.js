@@ -120,7 +120,6 @@ registerSuite("Milestones (auth)", {
       )
         .findByCssSelector(".js-Milestone")
         .getVisibleText();
-      // console.log(a.text)
 
       return FunctionalHelpers.openPage(
         this,

@@ -4,6 +4,7 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 """Module for the main routes of webcompat.com."""
+import json
 import logging
 import os
 import secrets
@@ -20,6 +21,9 @@ from flask import session
 from flask import url_for
 from flask_firehose import push
 
+from webcompat.api.endpoints import proxy_issue
+from webcompat.db import session_db
+from webcompat.db import User
 from webcompat.form import AUTH_REPORT
 from webcompat.form import get_form
 from webcompat.form import FormWizard
@@ -30,25 +34,23 @@ from webcompat.helpers import ab_current_experiments
 from webcompat.helpers import ab_init
 from webcompat.helpers import add_csp
 from webcompat.helpers import add_sec_headers
-from webcompat.helpers import bust_cache
 from webcompat.helpers import cache_policy
 from webcompat.helpers import form_type
 from webcompat.helpers import get_browser_name
+from webcompat.helpers import get_extra_labels
 from webcompat.helpers import get_referer
 from webcompat.helpers import get_user_info
 from webcompat.helpers import is_blocked_domain
+from webcompat.helpers import to_str
 from webcompat.helpers import is_darknet_domain
 from webcompat.helpers import is_valid_issue_form
+from webcompat.helpers import mockable_response
 from webcompat.helpers import prepare_form
 from webcompat.helpers import set_referer
 from webcompat.issues import report_issue
-from webcompat.helpers import get_extra_labels
-from webcompat.helpers import mockable_response
+from webcompat.templates import bust_cache
 from webcompat import app
-from webcompat.db import session_db
-from webcompat.db import User
 from webcompat import github
-import json
 
 
 @app.teardown_appcontext
@@ -87,13 +89,6 @@ def token_getter():
     user = g.user
     if user is not None:
         return user.access_token
-
-
-@app.template_filter('format_date')
-def format_date(datestring):
-    """For now, just chops off crap."""
-    # 2014-05-01T02:26:28Z
-    return datestring[0:10]
 
 
 @app.route('/login')
@@ -349,7 +344,10 @@ def show_issue(number):
     if session.get('show_thanks'):
         flash(number, 'thanks')
         session.pop('show_thanks')
-    return render_template('issue.html', number=number)
+    issue_data = proxy_issue(number)
+    return render_template('issue.html',
+                           issue_data=json.loads(issue_data[0]),
+                           json_data=to_str(issue_data[0]))
 
 
 @app.route('/me')

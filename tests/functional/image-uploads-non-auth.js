@@ -7,7 +7,9 @@ const intern = require("intern").default;
 const { assert } = intern.getPlugin("chai");
 const { registerSuite } = intern.getInterface("object");
 const FunctionalHelpers = require("./lib/helpers.js");
-const url = intern.config.functionalBaseUrl + "issues/new";
+const baseUrl = intern.config.functionalBaseUrl;
+const url = baseUrl + "issues/new";
+const targetOrigin = baseUrl.slice(0, baseUrl.length - 1);
 
 // This string is executed by calls to `execute()` in various tests
 // it postMessages a small green test square.
@@ -39,9 +41,12 @@ registerSuite("Image Uploads (non-auth)", {
         FunctionalHelpers.openPage(this, url, ".js-image-upload")
           // Build up a green test square in canvas, toBlob that, and then postMessage the blob
           // see window-helpers.js for more details.
-          .execute(function () {
-            WindowHelpers.getBlob().then(WindowHelpers.sendBlob);
-          })
+          .execute(
+            function (args) {
+              WindowHelpers.getBlob(args).then(WindowHelpers.sendBlob);
+            },
+            [targetOrigin]
+          )
           .sleep(1000)
           .findByCssSelector(".js-image-upload")
           .getAttribute("style")

@@ -15,6 +15,7 @@ from unittest.mock import ANY
 
 from werkzeug.datastructures import MultiDict
 
+from webcompat import app
 from webcompat.issues import report_issue
 from webcompat.issues import report_private_issue
 from webcompat.issues import report_public_issue
@@ -35,47 +36,50 @@ class TestIssue(unittest.TestCase):
     @patch.object(requests, 'post')
     def test_report_issue_returns_number(self, mockpost):
         """Test we can expect an issue number back."""
-        mockpost.return_value.status_code = 201
-        mockpost.return_value.json.return_value = {'number': 2}
-        form = MultiDict([
-            ('browser', 'Firefox 99.0'),
-            ('description', 'sup'),
-            ('details', ''),
-            ('os', 'Mac OS X 13'),
-            ('problem_category', 'unknown_bug'),
-            ('submit_type', 'github-proxy-report'),
-            ('url', 'http://3139.example.com'),
-            ('username', ''), ])
-        rv = report_issue(form, True)
-        self.assertEqual(rv.get('number'), 2)
+        with app.test_request_context():
+            mockpost.return_value.status_code = 201
+            mockpost.return_value.json.return_value = {'number': 2}
+            form = MultiDict([
+                ('browser', 'Firefox 99.0'),
+                ('description', 'sup'),
+                ('details', ''),
+                ('os', 'Mac OS X 13'),
+                ('problem_category', 'unknown_bug'),
+                ('submit_type', 'github-proxy-report'),
+                ('url', 'http://3139.example.com'),
+                ('username', ''), ])
+            rv = report_issue(form, True)
+            self.assertEqual(rv.get('number'), 2)
 
     @patch.object(requests, 'post')
     def test_report_private_issue_returns_nothing(self, mockpost):
         """Test that we get nothing back from a private issue report."""
-        mockpost.return_value.json.return_value = {'number': 2}
-        form = MultiDict([
-            ('browser', 'Firefox 99.0'),
-            ('description', 'sup'),
-            ('details', ''),
-            ('os', 'Mac OS X 13'),
-            ('problem_category', 'unknown_bug'),
-            ('submit_type', 'github-proxy-report'),
-            ('url', 'http://3139.example.com'),
-            ('username', ''), ])
-        rv = report_private_issue(form, 'http://public.example.com')
-        self.assertIsNone(rv)
+        with app.test_request_context():
+            mockpost.return_value.json.return_value = {'number': 2}
+            form = MultiDict([
+                ('browser', 'Firefox 99.0'),
+                ('description', 'sup'),
+                ('details', ''),
+                ('os', 'Mac OS X 13'),
+                ('problem_category', 'unknown_bug'),
+                ('submit_type', 'github-proxy-report'),
+                ('url', 'http://3139.example.com'),
+                ('username', ''), ])
+            rv = report_private_issue(form, 'http://public.example.com')
+            self.assertIsNone(rv)
 
     @patch.object(requests, 'post')
     def test_report_public_issue_returns_moderation_template(self, mockpost):
         """Test the data in report_public_issue contains the right data."""
-        report_public_issue()
-        args, kwargs = mockpost.call_args
-        post_data = json.loads(kwargs['data'])
-        self.assertIs(type(post_data), dict)
-        self.assertIn('title', post_data.keys())
-        self.assertIn('body', post_data.keys())
-        self.assertIn('labels', post_data.keys())
-        self.assertEqual(['action-needsmoderation'], post_data['labels'])
+        with app.test_request_context():
+            report_public_issue()
+            args, kwargs = mockpost.call_args
+            post_data = json.loads(kwargs['data'])
+            self.assertIs(type(post_data), dict)
+            self.assertIn('title', post_data.keys())
+            self.assertIn('body', post_data.keys())
+            self.assertIn('labels', post_data.keys())
+            self.assertEqual(['action-needsmoderation'], post_data['labels'])
 
     def test_moderation_template(self):
         """Check the moderation template structure.

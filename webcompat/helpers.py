@@ -38,31 +38,10 @@ AUTH_HEADERS = {'Authorization': 'token {0}'.format(app.config['OAUTH_TOKEN']),
 HOST_WHITELIST = ('webcompat.com', 'staging.webcompat.com',
                   '127.0.0.1', 'localhost')
 FIXTURES_PATH = os.getcwd() + '/tests/fixtures'
-STATIC_PATH = os.getcwd() + '/webcompat/static'
 JSON_MIME = 'application/json'
 
-cache_dict = {}
 log = app.logger
 log.setLevel(logging.INFO)
-
-
-@app.template_filter('bust_cache')
-def bust_cache(file_path):
-    """Jinja2 filter to add a cache busting param based on md5 checksum.
-
-    Uses a simple cache_dict to we don't have to hash each file for every
-    request. This is kept in-memory so it will be blown away when the app
-    is restarted (which is when file changes would have been deployed).
-    """
-    def get_checksum(file_path):
-        try:
-            checksum = cache_dict[file_path]
-        except KeyError:
-            checksum = md5_checksum(file_path)
-            cache_dict[file_path] = checksum
-        return checksum
-
-    return file_path + '?' + get_checksum(STATIC_PATH + file_path)
 
 
 @app.context_processor
@@ -71,24 +50,42 @@ def register_ab_active():
     return dict(ab_active=ab_active)
 
 
-def md5_checksum(file_path):
-    """Return the md5 checksum for a given file path."""
-    with open(file_path, 'rb') as fh:
-        m = hashlib.md5()
-        while True:
-            # only read in 8k of the file at a time
-            data = fh.read(8192)
-            if not data:
-                break
-            m.update(data)
-        return m.hexdigest()
+def get_list_items(val_dict):
+    """Return list items (<li>) from the passed in list ([])."""
+    rv = ''.join(['<li>{k}: {v}</li>'.format(k=k, v=get_serialized_value(v))
+                  for k, v in list(val_dict.items())])
+    return '<ul>\n  {rv}\n</ul>'.format(rv=rv)
 
 
-def get_str_value(val):
-    """Map values from JSON to python."""
+def get_details_list(details):
+    """Return details content as list items in a <ul>.
+
+    * If a dict, as a formatted string
+    * If the dict has a value that looks like [{k: v}], that will
+      be returned as a nested <ul>.
+    * Otherwise as a string as-is.
+    """
+    content = details
+    try:
+        rv = get_list_items(details)
+    except AttributeError:
+        rv = '<ul>\n  <li>{content}</li>\n</ul>'.format(content=content)
+    return rv
+
+
+def get_serialized_value(val):
+    """Map values from JSON to a more human readable format.
+
+    This might be a nested <ul> with list items, depending
+    on the input.
+    """
     details_map = {False: 'false', True: 'true', None: 'null'}
     if isinstance(val, (bool, type(None))):
         return details_map[val]
+    if isinstance(val, list) and isinstance(val[0], dict):
+        # if val is a list, we expect there to be a single object
+        # inside. if so, we build a nested <ul> from that object's data
+        return get_list_items(val[0])
     if isinstance(val, str):
         return val
     return str(val)
@@ -190,19 +187,24 @@ def get_os(user_agent_string=None):
     return "Unknown"
 
 
-def get_response_headers(response):
+def get_response_headers(response, mime_type=JSON_MIME):
     """Return a dictionary of headers based on a passed in Response object.
 
     This allows us to proxy response headers from GitHub to our own responses.
     """
-    headers = {'etag': response.headers.get('etag'),
-               'cache-control': response.headers.get('cache-control'),
-               'content-type': JSON_MIME}
-
-    if response.headers.get('link'):
-        headers['link'] = rewrite_and_sanitize_link(
-            response.headers.get('link'))
-    return headers
+    # handle the case where we get the data directly
+    headers = {}
+    if isinstance(response, requests.models.Response):
+        headers = response.headers
+    # or the case where we proxy an already fetched reponse
+    if isinstance(response, tuple):
+        headers = response[2]
+    new_headers = {'etag': headers.get('etag'),
+                   'cache-control': headers.get('cache-control'),
+                   'content-type': mime_type}
+    if headers.get('link'):
+        new_headers['link'] = rewrite_and_sanitize_link(headers.get('link'))
+    return new_headers
 
 
 def get_request_headers(headers, mime_type=JSON_MIME):
@@ -403,6 +405,12 @@ def mockable_response(func):
         if app.config['TESTING']:
             get_args = request.args.copy()
             full_path = request.full_path
+            # If request.path is '/', this means we're calling a mocked
+            # method (in)directly, so just return it. The expectation is that
+            # a unit test is using Mock, so we don't need to rely on mocked
+            # file system data.
+            if request.path == '/':
+                return func(*args, **kwargs)
             if get_args:
                 # Only requests with arguments, get a fixture with a checksum.
                 # We grab the full path of the request URI to compute an md5
@@ -414,11 +422,17 @@ def mockable_response(func):
             if not file_path.endswith('.json'):
                 file_path = file_path + '.json'
             if not os.path.exists(file_path):
+                # When you request /issues/2
+                # it will try to find a /fixtures/issues/2.json file which
+                # doesn't exist (it's in /api/)-- so rather than duplicate
+                # files, we just look there.
+                file_path = FIXTURES_PATH + '/api' + request.path + '.json'
+            if not os.path.exists(file_path):
                 print('Fixture expected at: {fix}'.format(fix=file_path))
                 print('by the http request: {req}'.format(req=request.url))
                 return ('', 404)
             else:
-                with open(file_path, 'r') as f:
+                with open(file_path, 'rb') as f:
                     data = f.read()
                     return (data, 200, get_fixture_headers(data))
         return func(*args, **kwargs)
@@ -442,6 +456,7 @@ def extract_url(issue_body):
     return url
 
 
+@mockable_response
 def proxy_request(method, path, params=None, headers=None, data=None):
     """Make a GitHub API request with a bot's OAuth token.
 
@@ -464,6 +479,7 @@ def proxy_request(method, path, params=None, headers=None, data=None):
     return req(resource_uri, data=data, params=params, headers=auth_headers)
 
 
+@mockable_response
 def api_request(method, path, params=None, data=None, mime_type=JSON_MIME):
     """Handle communication with the  GitHub API.
 

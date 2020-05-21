@@ -206,16 +206,16 @@ class TestURLs(unittest.TestCase):
         * an issue only displays if <number> is an integer
         * /issues/<number> exists, and does not redirect.
         """
-        rv = self.app.get('/issues/3')
+        rv = self.app.get('/issues/2')
         self.assertEqual(rv.status_code, 200)
         self.assertNotEqual(rv.status_code, 404)
-        rv = self.app.get('/issues/three')
+        rv = self.app.get('/issues/two')
         self.assertEqual(rv.status_code, 404)
         self.assertNotEqual(rv.status_code, 200)
 
     def test_issue_redirect(self):
         """Test that the /issues/<number> exists, and does not redirect."""
-        rv = self.app.get('/issues/3')
+        rv = self.app.get('/issues/2')
         self.assertEqual(rv.status_code, 200)
         self.assertNotEqual(rv.status_code, 307)
 
