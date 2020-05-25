@@ -1037,6 +1037,10 @@
     padding: 5px 32px 7px 8px;
   }
 
+  .issue-form .is-error .text-field {
+    border-color: var(--wizard-step-error);
+  }
+
   .button-control {
     background-color: var(--wizard-grey-bg);
     border-top: 1px solid var(--button-box-border);
