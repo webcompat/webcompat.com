@@ -4,6 +4,13 @@
 2. New features: affect minor number
 3. API endpoint changes or (major) dependency version updates: affect major number
 
+## 32.0.0 - 2020-05-26
+
+* Fixes #3310 - improves tests documentation [Pull #3312](https://github.com/webcompat/webcompat.com/pull/3312)
+* Fixes #3295 - Fetch and render existing issue comments as HTML [Pull #3308](https://github.com/webcompat/webcompat.com/pull/3308)
+* Fixes #2980 - Adding correct border for Invalid form [Pull #3306](https://github.com/webcompat/webcompat.com/pull/3306)
+* Fixes #3297 - Adjust changelog for dependabot [Pull #3301](https://github.com/webcompat/webcompat.com/pull/3301)
+
 ## 31.0.0 - 2020-05-04
 
 * NPM update - Bump grunt from 1.0.4 to 1.1.0 [Pull #3296](https://github.com/webcompat/webcompat.com/pull/3296)
