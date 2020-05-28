@@ -12,8 +12,8 @@
 {% endblock %}
 {% block extrascripts %}
 {%- if config.PRODUCTION or config.STAGING -%}
-<script src="{{ url_for('static', filename='js/dist-new/userActivity.js')|bust_cache }}"></script>
+<script src="{{ url_for('static', filename='dist/user-activity.js')|bust_cache }}"></script>
 {% else %}
-<script src="{{ url_for('static', filename='js/dist-new/userActivity.js') }}"></script>
+<script src="{{ url_for('static', filename='dist/user-activity.js') }}"></script>
 {%- endif %}
 {% endblock %}

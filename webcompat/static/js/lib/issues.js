@@ -267,7 +267,8 @@ issues.MainView = Backbone.View.extend(
 
         // If there are any comments, go fetch the model data
         if (this.issue.get("commentNumber") > 0) {
-          $.ajax("/api/issues/" + this.issue.get("number") + "/comments?page=1",
+          $.ajax(
+            "/api/issues/" + this.issue.get("number") + "/comments?page=1",
             {
               type: "GET",
               dataType: "html",

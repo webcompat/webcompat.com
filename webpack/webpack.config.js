@@ -1,6 +1,7 @@
 const path = require("path");
-const webpack = require('webpack');
-const entries = require('./entries.js');
+const webpack = require("webpack");
+const entries = require("./entries.js");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
   entry: entries,
@@ -8,7 +9,7 @@ module.exports = {
   devtool: "inline-source-map",
   context: path.resolve(__dirname, "../webcompat/static"),
   output: {
-    path: path.join(__dirname, "../webcompat/static/js/dist-new")
+    path: path.join(__dirname, "../webcompat/static/dist"),
   },
   module: {
     rules: [
@@ -16,35 +17,55 @@ module.exports = {
         test: /\.jst$/,
         use: [
           {
-            loader: path.resolve(__dirname, './loaders/strip-tags.js'),
+            loader: path.resolve(__dirname, "./loaders/strip-tags.js"),
           },
           {
-            loader: 'ejs-loader'
-          }
-        ]
-      }
+            loader: "ejs-loader",
+          },
+        ],
+      },
+      {
+        test: /\.js$/,
+        exclude: [
+          /node_modules/,
+          path.resolve(__dirname, "../webcompat/static/js/vendor"),
+        ],
+        use: {
+          loader: "babel-loader",
+        },
+      },
+      {
+        test: /\.css$/,
+        use: [MiniCssExtractPlugin.loader, "css-loader"],
+      },
+      {
+        test: /\.(png|svg|jpg|gif)$/,
+        use: ["file-loader"],
+      },
     ],
   },
   resolve: {
-    modules: [path.resolve(__dirname, "../webcompat/static/js")],
+    modules: [path.resolve(__dirname, "../webcompat/static/js/vendor")],
     alias: {
-      templates: path.resolve(__dirname, '../webcompat/templates/'),
-      jquery: "vendor/jquery-3.3.1.min.js",
-      underscore: "vendor/lodash.custom.min.js",
-      Backbone: "vendor/backbone-1.3.3.min.js",
-      Mousetrap: "vendor/mousetrap-min.js",
-      Prism: "vendor/prism.js",
-      BackboneMousetrap: "vendor/backbone.mousetrap.js"
-    }
+      templates: path.resolve(__dirname, "../webcompat/templates/"),
+      jquery: "jquery-3.3.1.min.js",
+      underscore: "lodash.custom.min.js",
+      Backbone: "backbone-1.3.3.min.js",
+      Mousetrap: "mousetrap-min.js",
+      Prism: "prism.js",
+      BackboneMousetrap: "backbone.mousetrap.js",
+    },
   },
   plugins: [
     //make underscore and jquery global for jst templates
     new webpack.ProvidePlugin({
-      _: "underscore"
+      _: "underscore",
     }),
     new webpack.ProvidePlugin({
-      $: "jquery"
-    })
-  ]
+      $: "jquery",
+    }),
+    new MiniCssExtractPlugin({
+      filename: "[name].css",
+    }),
+  ],
 };
-

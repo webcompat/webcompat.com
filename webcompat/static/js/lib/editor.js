@@ -2,7 +2,6 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 import $ from "jquery";
-//var issues = issues || {}; // eslint-disable-line no-use-before-define
 
 /* Child classes need to define the following methods/properties:
  * closeEditor

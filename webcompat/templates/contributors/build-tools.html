@@ -37,8 +37,8 @@
 {% endblock %}
 {%- block extrascripts -%}
 {%- if config.PRODUCTION or config.STAGING -%}
-<script src="{{ url_for('static', filename='js/dist-new/contributors.js')|bust_cache }}"></script>
+<script src="{{ url_for('static', filename='dist/contributors.js')|bust_cache }}"></script>
 {% else %}
-<script src="{{ url_for('static', filename='js/dist-new/contributors.js') }}"></script>
+<script src="{{ url_for('static', filename='dist/contributors.js') }}"></script>
 {%- endif %}
 {%- endblock %}

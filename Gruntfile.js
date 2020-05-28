@@ -26,20 +26,20 @@ module.exports = function (grunt) {
 
   // Default task.
   grunt.registerTask("default", [
-    // "checkDependencies",
-    //"jst",
-    // "concat",
-    // "uglify",
+    "checkDependencies",
+    "jst",
+    "concat",
+    "uglify",
     "postcss",
     "cssmin",
   ]);
 
   // Task used before doing a deploy (same as default, but does image optimization)
   grunt.registerTask("deploy", [
-    // "checkDependencies",
-    //"jst",
-    // "concat",
-    // "uglify",
+    "checkDependencies",
+    "jst",
+    "concat",
+    "uglify",
     "postcss",
     "cssmin",
     "imagemin",

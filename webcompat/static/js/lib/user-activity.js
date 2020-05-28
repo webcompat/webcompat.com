@@ -7,7 +7,6 @@ import { IssueCollection } from "./models/issue.js";
 import issueListTemplate from "templates/web_modules/issue-list.jst";
 import { wcEvents } from "./flash-message.js";
 
-// var issues = issues || {}; // eslint-disable-line no-use-before-define
 var issueList = issueList || {}; // eslint-disable-line no-use-before-define
 var loadingIndicator = $(".js-loader");
 issueList.user = $("body").data("username");

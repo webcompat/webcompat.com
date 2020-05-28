@@ -16,7 +16,7 @@
 {% endblock %}
 
 {%- block extrascripts -%}
-<script src="{{ url_for('static', filename='js/dist-new/formv2.js')|bust_cache }}"></script>
+<script src="{{ url_for('static', filename='dist/formv2.js')|bust_cache }}"></script>
 
 {% if source and campaign %}
 <script nonce={{nonce}}>

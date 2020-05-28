@@ -5,18 +5,18 @@ module.exports = {
     "./js/lib/untriaged.js",
   ],
   formv2: [
-    "./js/lib/wizard/app.js",
+    "./js/lib/wizard/wizard.js",
     "./js/lib/issue-wizard-popup.js",
     "./js/lib/issue-wizard-slider.js",
-    "./js/lib/autogrow-textfield.js"
+    "./js/lib/autogrow-textfield.js",
   ],
-  issuesList: [
+  "issues-list": [
     "./js/lib/models/label-list.js",
     "./js/lib/models/issue.js",
     "./js/lib/mixins/pagination.js",
-    "./js/lib/issue-list.js"
+    "./js/lib/issue-list.js",
   ],
-  issuePage: [
+  "issue-page": [
     "./js/lib/models/label-list.js",
     "./js/lib/editor.js",
     "./js/lib/labels.js",
@@ -24,29 +24,24 @@ module.exports = {
     "./js/lib/milestones.js",
     "./js/lib/models/issue.js",
     "./js/lib/autogrow-textfield.js",
-    "./js/lib/issues.js"
+    "./js/lib/issues.js",
   ],
-  contributors: [
-    "./js/lib/contributors.js"
-  ],
-  userActivity: [
+  contributors: ["./js/lib/contributors.js"],
+  "user-activity": [
     "./js/lib/models/label-list.js",
     "./js/lib/models/issue.js",
     "./js/lib/mixins/pagination.js",
-    "./js/lib/user-activity.js"
+    "./js/lib/user-activity.js",
   ],
-  navBar: [
-    "./js/lib/navbar.js"
-  ],
-  flashedMessages: [
-    "./js/lib/flashed-messages.js"
-  ],
+  webcompat: ["./js/lib/navbar.js", "./js/lib/webcompat.js"],
+  "flashed-messages": ["./js/lib/flashed-messages.js"],
+  "console-logs": ["./js/lib/console-logs.js"],
   vendors: [
     "jquery",
     "underscore",
     "Backbone",
     "Prism",
     "Mousetrap",
-    "BackboneMousetrap"
-  ]
+    "BackboneMousetrap",
+  ],
 };

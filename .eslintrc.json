@@ -35,7 +35,8 @@
     "WindowHelpers": true,
     "Validation": true,
     "prefillForm": true,
-    "setAnalyticsData": true
+    "setAnalyticsData": true,
+    "__dirname": true
   },
   "rules": {
     "eqeqeq": [2, "smart"],
