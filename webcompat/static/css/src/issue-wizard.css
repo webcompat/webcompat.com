@@ -446,6 +446,7 @@
   font-size: 14px;
   font-weight: 200;
   padding: 4px 32px 5px 8px;
+  transition: box-shadow .3s;
 }
 
 .with-validation-icons.is-validated::after,
@@ -656,6 +657,14 @@
   height: 28px;
   right: -11px;
   width: 28px;
+}
+
+.issue-form .is-validated .text-field {
+  border-color: var(--issue-selected-outline);
+}
+
+.issue-form .text-field:focus {
+  box-shadow: 0 0 0 3px var(--issue-type-bg);
 }
 
 #browsers li {
