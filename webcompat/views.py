@@ -177,14 +177,13 @@ def index():
         'rel': 'preload'
     })
     ua_header = request.headers.get('User-Agent')
-    bug_form = get_form({'user_agent': ua_header})
 
     # browser_name is used in topbar.html to show the right add-on link
     browser_name = get_browser_name(ua_header)
     # GET means you want to file a report.
     if g.user:
         get_user_info()
-    return render_template('index.html', form=bug_form, browser=browser_name)
+    return render_template('index.html', browser=browser_name)
 
 
 @app.route('/issues')
