@@ -39,12 +39,12 @@ FORM_AUTH['submit_type'] = 'github-auth-report'
 
 
 @pytest.fixture
-def client():
+def setup():
     """Test client for requests."""
     webcompat.app.config['TESTING'] = True
 
 
-def test_report_with_auth_on(client):
+def test_report_with_auth_on(setup):
     """Test that we can still work with github-auth-report."""
     with patch('webcompat.issues.github.post') as json_resp:
         json_resp.return_value = {'number': 2}
@@ -53,7 +53,7 @@ def test_report_with_auth_on(client):
         assert json_data.get('number') == 2
 
 
-def test_report_issue_returns_number(client):
+def test_report_issue_returns_number(setup):
     """Test issue posting report the right json."""
     with patch('webcompat.issues.proxy_request') as github_data:
         github_data.return_value = mock_api_response({
@@ -68,13 +68,13 @@ def test_report_issue_returns_number(client):
             assert json_data.get('number') == 2
 
 
-def test_report_issue_fails_400_for_unknown_type(client):
+def test_report_issue_fails_400_for_unknown_type(setup):
     """Test request fails with a 400 because type unknown."""
     with pytest.raises(BadRequest):
         rv = report_issue(FORM, proxy=True)
 
 
-def test_report_issue_fails_400_for_proxy(client):
+def test_report_issue_fails_400_for_proxy(setup):
     """Test github-proxy-report fails with a 400."""
     with patch('webcompat.issues.proxy_request') as github_data:
         github_data.return_value = mock_api_response({
@@ -85,7 +85,7 @@ def test_report_issue_fails_400_for_proxy(client):
             rv = report_issue(FORM_ANON, proxy=True)
 
 
-def test_report_private_issue_returns_nothing(client):
+def test_report_private_issue_returns_nothing(setup):
     """Test that we get nothing back from a private issue report."""
     with patch('webcompat.issues.proxy_request') as github_data:
         github_data.return_value = mock_api_response({
@@ -96,7 +96,7 @@ def test_report_private_issue_returns_nothing(client):
         assert rv is None
 
 
-def test_report_public_issue_returns_moderation_template(client):
+def test_report_public_issue_returns_moderation_template(setup):
     """Test the data in report_public_issue contains the right data."""
     with patch('webcompat.issues.proxy_request') as req:
         req.return_value = mock_api_response({
@@ -113,7 +113,7 @@ def test_report_public_issue_returns_moderation_template(client):
         assert ['action-needsmoderation'] == post_data['labels']
 
 
-def test_moderation_template(client):
+def test_moderation_template(setup):
     """Check the moderation template structure.
 
     - must be a dictionary
@@ -125,14 +125,14 @@ def test_moderation_template(client):
     assert 'body' in actual.keys()
 
 
-def test_moderation_template_rejected(client):
+def test_moderation_template_rejected(setup):
     """Check the return values are for the rejected case."""
     actual = moderation_template('rejected')
     assert actual['title'] == 'Issue rejected.'
     assert 'Its original content has been deleted' in actual['body']
 
 
-def test_moderation_template_ongoing(client):
+def test_moderation_template_ongoing(setup):
     """Check the return values are for the needsmoderation case."""
     # test the default
     actual = moderation_template()
