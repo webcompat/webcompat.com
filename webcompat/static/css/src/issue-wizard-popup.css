@@ -1,0 +1,124 @@
+/*
+* popup
+*
+----------------
+* DEPENDENCIES:
+----------------
+* variable.css
+*/
+
+:root {
+  --popup-height: 450px;
+  --popup-height-mobile: 90vh;
+  --popup-max-height-mobile: 550px;
+}
+
+.full-height {
+  height: 100%;
+}
+
+.popup-overlay {
+  background-color: rgba(0, 0, 0, .65);
+  display: none;
+  height: 100%;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1010;
+}
+
+.popup-overlay.is-blacked-out {
+  display: block;
+}
+
+.popup-modal {
+  background-color: #fff;
+  border-radius: 5px;
+  height: var(--popup-height-mobile);
+  left: 50%;
+  max-height: var(--popup-max-height-mobile);
+  max-width: 90%;
+  opacity: 0;
+  overflow: hidden;
+  padding: 0;
+  pointer-events: none;
+  position: fixed;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  transition: all 300ms ease-in-out;
+  width: 650px;
+  z-index: 1011;
+}
+
+.popup-modal.text {
+  height: 400px;
+  width: 590px;
+}
+
+.popup-modal.is--visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.popup-modal__close:not(.close-control):not(.popup-overlay) {
+  cursor: pointer;
+  font-size: 1.2rem;
+  position: absolute;
+  right: 12px;
+  top: 12px;
+}
+
+.popup-modal .close {
+  cursor: pointer;
+  position: absolute;
+  right: 12px;
+  top: 12px;
+  transition: transform .2s;
+  width: 22px;
+  z-index: 3;
+}
+
+.popup-modal .close:hover {
+  transform: scale(1.1);
+}
+
+.popup-text {
+  font-size: 14px;
+  line-height: 1.7;
+  padding: 35px 16px 16px;
+}
+
+.popup-text h2 {
+  font-size: 32px;
+  font-weight: 300;
+  margin-bottom: 15px;
+}
+
+.popup-modal .links {
+  padding-top: 22px;
+  text-align: center;
+}
+
+.popup-modal .links a {
+  color: var(--link-color);
+  font-size: 16px;
+}
+
+/* var(--page-size-m) = 665px - vars not usable in queries */
+@media (min-width: 665px) {
+  .popup-modal {
+    height: var(--popup-height);
+  }
+
+  .popup-text {
+    font-size: 18px;
+    line-height: 1.8;
+    padding: 0 16px;
+  }
+
+  .popup-text h2 {
+    margin-bottom: 20px;
+    margin-top: 12px;
+  }
+}

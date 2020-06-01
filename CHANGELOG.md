@@ -2,7 +2,213 @@
 
 1. Bug fixes, docs updates, etc.: affect patch number
 2. New features: affect minor number
-3. API endpoint changes or dependency version updates: affect major number
+3. API endpoint changes or (major) dependency version updates: affect major number
+
+## 32.0.0 - 2020-05-26
+
+* Fixes #3310 - improves tests documentation [Pull #3312](https://github.com/webcompat/webcompat.com/pull/3312)
+* Fixes #3295 - Fetch and render existing issue comments as HTML [Pull #3308](https://github.com/webcompat/webcompat.com/pull/3308)
+* Fixes #2980 - Adding correct border for Invalid form [Pull #3306](https://github.com/webcompat/webcompat.com/pull/3306)
+* Fixes #3297 - Adjust changelog for dependabot [Pull #3301](https://github.com/webcompat/webcompat.com/pull/3301)
+
+## 31.0.0 - 2020-05-04
+
+* NPM update - Bump grunt from 1.0.4 to 1.1.0 [Pull #3296](https://github.com/webcompat/webcompat.com/pull/3296)
+* Fixes #3281 - Convert issue page to be server rendered (part 1) [Pull #3294](https://github.com/webcompat/webcompat.com/pull/3294)
+* NPM update - Update intern to the latest version. [Pull #3293](https://github.com/webcompat/webcompat.com/pull/3293)
+
+## 30.1.0 - 2020-04-23
+
+* NPM update - Update prettier to the latest version. [Pull #3292](https://github.com/webcompat/webcompat.com/pull/3292)
+* Fixes #3289 - Add support for nested ul in browser details [Pull #3290](https://github.com/webcompat/webcompat.com/pull/3290)
+* NPM update - Update intern to the latest version. [Pull #3288](https://github.com/webcompat/webcompat.com/pull/3288)
+
+## 30.0.0 - 2020-04-10
+
+* Fixes #3282 - Update Privacy policy to mention GPU data collection [Pull #3286](https://github.com/webcompat/webcompat.com/pull/3286)
+* Fixes #2198 - Pass in targetOrigin from intern config for tests [Pull #3280](https://github.com/webcompat/webcompat.com/pull/3280)
+* Fixes #3277 - Add a type-hunt-from-home label to EXTRA_LABELS [Pull #3278](https://github.com/webcompat/webcompat.com/pull/3278)
+* NPM update - Update intern to the latest version. [Pull #3276](https://github.com/webcompat/webcompat.com/pull/3276)
+* NPM update - Update prettier to the latest version. [Pull #3274](https://github.com/webcompat/webcompat.com/pull/3274)
+* NPM update - Update intern to the latest version. [Pull #3271](https://github.com/webcompat/webcompat.com/pull/3271)
+* NPM update - Update grunt-contrib-imagemin to the latest version. [Pull #3270](https://github.com/webcompat/webcompat.com/pull/3270)
+
+## 29.0.0 - 2020-03-30
+
+* Fixes #3250 - Makes form wizard the default [Pull #3252](https://github.com/webcompat/webcompat.com/pull/3252)
+* Fixes #3248 - pin grunt to 1.0.4 [Pull #3248](https://github.com/webcompat/webcompat.com/pull/3248)
+* NPM update - Update yargs to the latest version. [Pull #3242](https://github.com/webcompat/webcompat.com/pull/3242)
+* Fixes #3239 - Remove IRC info, replace it with Matrix info [Pull #3240](https://github.com/webcompat/webcompat.com/pull/3240)
+* Fixes #3235 - pin yargs to 15.2.0 [Pull #3237](https://github.com/webcompat/webcompat.com/pull/3237)
+* Fixes #3199 - Changed blacklisted by blocked [Pull #3228](https://github.com/webcompat/webcompat.com/pull/3228)
+* NPM update - Update lint-staged to the latest version. [Pull #3227](https://github.com/webcompat/webcompat.com/pull/3227)
+* Fixes #3226 - Update Code of Conduct contact points. [Pull #3225](https://github.com/webcompat/webcompat.com/pull/3225)
+* Fixes #3196 - Add functional tests for the new form UI [Pull #3221](https://github.com/webcompat/webcompat.com/pull/3221)
+* Fixes #2807 - Upgrade lodash to 4.17.5 [Pull #3220](https://github.com/webcompat/webcompat.com/pull/3220)
+* Fixes #3211 - Use _bp naming convention consistently [Pull #3219](https://github.com/webcompat/webcompat.com/pull/3219)
+* Fixes #3208 - Use more Pythonic get default value [Pull #3218](https://github.com/webcompat/webcompat.com/pull/3218)
+* Fixes #3208 - Moves to boolean flag for anonymous reporting [Pull #3217](https://github.com/webcompat/webcompat.com/pull/3217)
+
+## 28.0.0 - 2020-02-21
+
+* Fixes #3201 - adds public uri to the private issue [Pull #3215](https://github.com/webcompat/webcompat.com/pull/3215)
+* Fixes #3210 - Add missing space [Pull #3213](https://github.com/webcompat/webcompat.com/pull/3213)
+* Fixes #3206 - Switch from Nosetests to pytest [Pull #3209](https://github.com/webcompat/webcompat.com/pull/3209)
+* Fixes #2981 - Fixes "Learn more about web compatibility" and "Learn more" popups [Pull #3198](https://github.com/webcompat/webcompat.com/pull/3198)
+* Fixes #3174 - Adds link to matrix [Pull #3194](https://github.com/webcompat/webcompat.com/pull/3194)
+* Fixes #3187 - Update Python dependencies [Pull #3191](https://github.com/webcompat/webcompat.com/pull/3191)
+
+## 27.0.0 - 2020-02-11
+
+* NPM update - Update stylelint-config-standard to the latest version. [Pull #3193](https://github.com/webcompat/webcompat.com/pull/3193)
+* NPM update - Update stylelint to the latest version. [Pull #3192](https://github.com/webcompat/webcompat.com/pull/3192)
+* Fixes #3183 - Fixes the anonymous reporting through env [Pull #3185](https://github.com/webcompat/webcompat.com/pull/3185)
+* Fixes #3178 - Adds public_url for action: closed [Pull #3182](https://github.com/webcompat/webcompat.com/pull/3182)
+* Fixes #2830 - Create local list of labels with a cron script [Pull #3171](https://github.com/webcompat/webcompat.com/pull/3171)
+* Fixes #3165 - Create Terms of Service page [Pull #3168](https://github.com/webcompat/webcompat.com/pull/3168)
+* Fixes #3140 - Publish private issue in public after moderation [Pull #3167](https://github.com/webcompat/webcompat.com/pull/3167)
+* Fixes #3163 - Scopes the URL of the repo before making actions on opened issues. [Pull #3164](https://github.com/webcompat/webcompat.com/pull/3164)
+* Fixes #3145 - Adds an action-needsmoderation label to anonymous issue [Pull #3159](https://github.com/webcompat/webcompat.com/pull/3159)
+* Fixes #3150 - Send the "moderation in process" message to the public issue [Pull #3156](https://github.com/webcompat/webcompat.com/pull/3156)
+* Fixes #3136 - Adds inline images but inside details/summary markup [Pull #3154](https://github.com/webcompat/webcompat.com/pull/3154)
+* Fixes #3146 - Assigns unmoderated milestone to private repo issues [Pull #3153](https://github.com/webcompat/webcompat.com/pull/3153)
+* Fixes #3139 - Implement first stages of private reporting flow [Pull #3147](https://github.com/webcompat/webcompat.com/pull/3147)
+* NPM update - Update husky to the latest version. [Pull #3135](https://github.com/webcompat/webcompat.com/pull/3135)
+* Fixes #3132 - Control anonymous reporting via config option [Pull #3133](https://github.com/webcompat/webcompat.com/pull/3133)
+* Fixes #3122 - Removes code related to images thumbnail [Pull #3131](https://github.com/webcompat/webcompat.com/pull/3131)
+
+## 26.0.0 - 2020-01-03
+
+* Fixes #3123 - Prevent .onion URLs from being reported [Pull #3128](https://github.com/webcompat/webcompat.com/pull/3128)
+* Fixes #3121 - Remove inline screenshot images [Pull #3127](https://github.com/webcompat/webcompat.com/pull/3127)
+* Fixes #3121 - Disable anonymous reporting [Pull #3126](https://github.com/webcompat/webcompat.com/pull/3126)
+* Fixes #3118 - Display maintenance page for /issues/new route" [Pull #3125](https://github.com/webcompat/webcompat.com/pull/3125)
+* NPM update - Update stylelint-order to the latest version. [Pull #3116](https://github.com/webcompat/webcompat.com/pull/3116)
+
+## 25.0.0 - 2020-01-03
+
+* Fixes #3118 - Display maintenance page for /issues/new route [Pull #3119](https://github.com/webcompat/webcompat.com/pull/3119)
+
+## 24.1.0 - 2019-12-17
+
+* Fixes #3110 - Change step10 button text depending on state [Pull #3111](https://github.com/webcompat/webcompat.com/pull/3111)
+* Fixes #2659 - Make console logs in browser configuration details easier to read [Pull #3103](https://github.com/webcompat/webcompat.com/pull/3103)
+
+## 24.0.0 - 2019-12-12
+
+* Fixes #3004 - Description step has no intro copy [Pull #3108](https://github.com/webcompat/webcompat.com/pull/3108)
+* Fixes #3096 - Wrong button label for screenshot step [Pull #3107](https://github.com/webcompat/webcompat.com/pull/3107)
+* Fixes #2945 - Update Intern to 4.7.0 [Pull #3105](https://github.com/webcompat/webcompat.com/pull/3105)
+
+## 23.0.0 - 2019-12-04
+
+* Fixes #2952 - Fixes husky pre-commit deprecation [Pull #3102](https://github.com/webcompat/webcompat.com/pull/3102)
+* Fixes #3100 - Send GA events for issue-wizard clicks/input changes [Pull #3101](https://github.com/webcompat/webcompat.com/pull/3101)
+* Fixes #3098 - Built with Grunt SVG badge (URL) is broken [Pull #3099](https://github.com/webcompat/webcompat.com/pull/3099)
+
+## 22.0.0 - 2019-11-18
+
+* Fixes #3092 - Add bugform-prefill.js to grunt-tasks concat [Pull #3093](https://github.com/webcompat/webcompat.com/pull/3093)
+* NPM update - Update yargs to the latest version. [Pull #3091](https://github.com/webcompat/webcompat.com/pull/3091)
+* Fixes #3025 - expose tested browsers in issue body [Pull #3089](https://github.com/webcompat/webcompat.com/pull/3089)
+* NPM update - Update stylelint to the latest version. [Pull #3088](https://github.com/webcompat/webcompat.com/pull/3088)
+
+## 21.2.0 - 2019-11-13
+
+* Fixes #3070 - Add additional logging of experiment branch and IP [Pull #3086](https://github.com/webcompat/webcompat.com/pull/3086)
+* NPM update - Update prettier to the latest version. [Pull #3083](https://github.com/webcompat/webcompat.com/pull/3083)
+* Fixes #3052 - Adjust positioning and padding related to validation badges [Pull #3080](https://github.com/webcompat/webcompat.com/pull/3080)
+* Fixes #2985 - Add postMessage support for report site issue data [Pull #3012](https://github.com/webcompat/webcompat.com/pull/3012)
+
+## 21.1.2 - 2019-11-08
+
+* Fixes #3041 - Use Operating System instead of Device [Pull #3081](https://github.com/webcompat/webcompat.com/pull/3081)
+* Fixes #3070 - Rewrite is_valid_issue_form [Pull #3079](https://github.com/webcompat/webcompat.com/pull/3079)
+* Fixes #3076 - Remove maxlength for textarea [Pull #3078](https://github.com/webcompat/webcompat.com/pull/3078)
+
+## 21.1.1 - 2019-11-05
+
+* Fixes #3071 - Change page title based on form [Pull #3074](https://github.com/webcompat/webcompat.com/pull/3074)
+* Fixes #3049 - Clear the image preview when hitting an error [Pull #3067](https://github.com/webcompat/webcompat.com/pull/3067)
+* Fixes #3050 - Disable submits on form submit [Pull #3065](https://github.com/webcompat/webcompat.com/pull/3065)
+* Fixes #3063 - Move search bar handling into shared navbar.js [Pull #3064](https://github.com/webcompat/webcompat.com/pull/3064)
+
+## 21.1.0 - 2019-10-28
+
+* Fixes #3061 - Moves the template at the right place [Pull #3062](https://github.com/webcompat/webcompat.com/pull/3062)
+* Fixes #3034 - Make Report Bug on homepage a hyperlink [Pull #3059](https://github.com/webcompat/webcompat.com/pull/3059)
+
+## 21.0.3 - 2019-10-24
+
+* Fixes #3033 - Include bugform regardless of env (oops) [Pull #3036](https://github.com/webcompat/webcompat.com/pull/3036)
+
+## 21.0.2 - 2019-10-24
+
+* Fixes #3033 - Include bugform.js on homepage for form-v2 experiment [Pull #3035](https://github.com/webcompat/webcompat.com/pull/3035)
+
+## 21.0.1 - 2019-10-24
+
+* Fixes #3031 - Update privacy policy around experiments [Pull #3032](https://github.com/webcompat/webcompat.com/pull/3032)
+* Fixes #3024 - Move dropdownHandler into shared navbar.js [Pull #3027](https://github.com/webcompat/webcompat.com/pull/3027)
+* Fixes #3022 - Define variation defaults if env vars are missing [Pull #3023](https://github.com/webcompat/webcompat.com/pull/3023)
+* Fixes #3005 - Don't disable button when deleting a screenshots [Pull #3019](https://github.com/webcompat/webcompat.com/pull/3019)
+* Fixes #3005 - Screenshot submit button shouldn't be disabled by default [Pull #3017](https://github.com/webcompat/webcompat.com/pull/3017)
+
+## 21.0.0 - 2019-10-23
+
+This updates contains updates for an A/B experiment which is not yet activated. It should continue to work as-is.
+
+* Bump pillow from 6.1.0 to 6.2.0 in /config [Pull #3013](https://github.com/webcompat/webcompat.com/pull/3013)
+* Fixes #2983 - Upload a different image keeps the original image unless a new one is chosen [Pull #3011](https://github.com/webcompat/webcompat.com/pull/3011)
+* Fixes #2974 - Browser selection to say Yes/No as on current bug form [Pull #3010](https://github.com/webcompat/webcompat.com/pull/3010)
+* Fixes #2976 - Prevent user from leaving blank Browser and Device fields [Pull #2993](https://github.com/webcompat/webcompat.com/pull/2993)
+* Fixes #2975 - Briefly describe the issue" fix & validation [Pull #2991](https://github.com/webcompat/webcompat.com/pull/2991)
+* Fixes #2989 - Create static bundle for form-v2 experiment. [Pull #2990](https://github.com/webcompat/webcompat.com/pull/2990)
+* Fixes #2741 - Changes text "Reproduce a Bug" to text "Triage a Bug" [Pull #2987](https://github.com/webcompat/webcompat.com/pull/2987)
+* Fixes #2938 - Implement mobile redesign on bug form [Pull #2984](https://github.com/webcompat/webcompat.com/pull/2984)
+* Fixes #2955 - Move the no-top-padding class to the codebase of the ex… [Pull #2960](https://github.com/webcompat/webcompat.com/pull/2960)
+* Fixes #2958 - Fix `ab_active` to populate cookies on first request [Pull #2959](https://github.com/webcompat/webcompat.com/pull/2959)
+* Fixes #2940 - Add a label to v2 form issues [Pull #2957](https://github.com/webcompat/webcompat.com/pull/2957)
+* Fixes #2944 - 2947 - Read experiment variation values from envvars [Pull #2951](https://github.com/webcompat/webcompat.com/pull/2951)
+* Fixes #2912 - Implement login functionality [Pull #2942](https://github.com/webcompat/webcompat.com/pull/2942)
+* Fixes #2934 - Fix stylelint-order version [Pull #2936](https://github.com/webcompat/webcompat.com/pull/2936)
+* Fixes #2904 - chore(package): update husky to version 3.0.5 [Pull #2935](https://github.com/webcompat/webcompat.com/pull/2935)
+* NPM update - Update stylelint-config-standard to the latest version. [Pull #2930](https://github.com/webcompat/webcompat.com/pull/2930)
+* NPM update - Update stylelint to the latest version. [Pull #2929](https://github.com/webcompat/webcompat.com/pull/2929)
+* Fixes #2927 - Adds context and refines documentation for the new webcompat [Pull #2928](https://github.com/webcompat/webcompat.com/pull/2928)
+* Fixes #2922 - 2921 - Initial redesigned bug form integration [Pull #2923](https://github.com/webcompat/webcompat.com/pull/2923)
+
+
+## 20.0.0 - 2019-09-15
+
+This is a major upgrade of our server. We are now running the project under Python 3 (Python 3.7.3). We are definitely saying goodbye to python 2.7. For coding and/or using the project you will need to set your environment with Python 3. We recommend you to start fresh by erasing your previous directory and cloning again the project. If you have ongoing work, make a patch before deleting, so you can reimport it later or you may push the branch to your own fork.
+
+* Fixes #2348 - Converts the source code to python 3 [Pull #2825](https://github.com/webcompat/webcompat.com/pull/2825)
+* Fixes #2905 - Adjust documentation and command for python 3.7 [Pull #2908](https://github.com/webcompat/webcompat.com/pull/2908)
+* Fixes #2899 - update eslint to version 6.1.0 [Pull #2907](https://github.com/webcompat/webcompat.com/pull/2907)
+* Fixes #2903 - update lint-staged to version 9.2.1 [Pull #2906](https://github.com/webcompat/webcompat.com/pull/2906)
+* NPM update - Update eslint-config-prettier to the latest version. [Pull #2901](https://github.com/webcompat/webcompat.com/pull/2901)
+* NPM update - Update yargs to the latest version. [Pull #2909](https://github.com/webcompat/webcompat.com/pull/2909)
+* Fixes #2268 - moved navbar handler [Pull #2896](https://github.com/webcompat/webcompat.com/pull/2896)
+* NPM update - Update eslint-config-prettier to the latest version. [Pull #2894](https://github.com/webcompat/webcompat.com/pull/2894)
+* NPM update - Update prettier to the latest version. [Pull #2891](https://github.com/webcompat/webcompat.com/pull/2891)
+* NPM update - Update intern to the latest version. [Pull #2890](https://github.com/webcompat/webcompat.com/pull/2890)
+
+## 19.3.0 - 2019-06-06
+
+* Fixes #2725 - Bugform validation improvements [Pull #2886](https://github.com/webcompat/webcompat.com/pull/2886)
+* Fixes #2509 - Fixed race condition when image didn't get transferred from report site issue extension [Pull #2885](https://github.com/webcompat/webcompat.com/pull/2885)
+* Fixes #2844 - Adds type-marfeel to EXTRA_LABELS [Pull #2884](https://github.com/webcompat/webcompat.com/pull/2884)
+* Fixes #2881 - Removes the needstriage dashboard code [Pull #2883](https://github.com/webcompat/webcompat.com/pull/2883)
+
+## 19.2.0 - 2019-05-29
+
+* NPM update - Update load-grunt-tasks to the latest version. [Pull #2882](https://github.com/webcompat/webcompat.com/pull/2882)
+* Fixes #2871 - removed release population "thanks" workaround [Pull #2876](https://github.com/webcompat/webcompat.com/pull/2876)
+* Fixes #2866 - added CORS header for localhost [Pull #2875](https://github.com/webcompat/webcompat.com/pull/2875)
+* Fixes #2845 - Adds type-mobify to EXTRA_LABELS [Pull #2870](https://github.com/webcompat/webcompat.com/pull/2870)
+* NPM update - Update prettier to the latest version. [Pull #2868](https://github.com/webcompat/webcompat.com/pull/2868)
+
 
 ## 19.1.0 - 2019-05-13
 

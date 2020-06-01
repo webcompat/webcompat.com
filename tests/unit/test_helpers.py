@@ -7,18 +7,27 @@
 """Tests for helper methods in webcompat/helpers.py."""
 
 import json
+from unittest.mock import Mock
+from unittest.mock import patch
 import unittest
 
 import flask
+from flask import session
+from requests.models import Response
+from werkzeug.http import parse_cookie
 
 import webcompat
+from webcompat.helpers import ab_active
+from webcompat.helpers import ab_current_experiments
+from webcompat.helpers import ab_init
 from webcompat.helpers import form_type
 from webcompat.helpers import format_link_header
 from webcompat.helpers import get_browser
 from webcompat.helpers import get_browser_name
 from webcompat.helpers import get_name
 from webcompat.helpers import get_os
-from webcompat.helpers import get_str_value
+from webcompat.helpers import get_response_headers
+from webcompat.helpers import get_serialized_value
 from webcompat.helpers import get_version_string
 from webcompat.helpers import is_json_object
 from webcompat.helpers import normalize_api_params
@@ -27,6 +36,9 @@ from webcompat.helpers import prepare_form
 from webcompat.helpers import rewrite_and_sanitize_link
 from webcompat.helpers import rewrite_links
 from webcompat.helpers import sanitize_link
+from webcompat.helpers import get_extra_labels
+from webcompat.helpers import get_filename_from_url
+from webcompat.helpers import is_darknet_domain
 
 
 ACCESS_TOKEN_LINK = '<https://api.github.com/repositories/17839063/issues?per_page=50&page=3&access_token=12345>; rel="next", <https://api.github.com/repositories/17839063/issues?access_token=12345&per_page=50&page=4>; rel="last", <https://api.github.com/repositories/17839063/issues?per_page=50&access_token=12345&page=1>; rel="first", <https://api.github.com/repositories/17839063/issues?per_page=50&page=1&access_token=12345>; rel="prev"'  # noqa
@@ -59,6 +71,14 @@ class TestHelpers(unittest.TestCase):
 
     def tearDown(self):
         """Tear down the tests."""
+        webcompat.app.config['AB_EXPERIMENTS'] = {
+            'exp': {
+                'variations': {
+                    'ui-change-v1': (0, 100)
+                },
+                'max-age': 86400
+            }
+        }
         pass
 
     def test_rewrite_link(self):
@@ -83,45 +103,45 @@ class TestHelpers(unittest.TestCase):
 
     def test_normalize_api_params_converts_correctly(self):
         """Test that API params are correctly converted to Search API."""
-        self.assertEqual(normalize_api_params({'direction': u'desc'}),
-                         {'order': u'desc'})
+        self.assertEqual(normalize_api_params({'direction': 'desc'}),
+                         {'order': 'desc'})
         self.assertNotIn('direction',
-                         normalize_api_params({'direction': u'desc'}))
+                         normalize_api_params({'direction': 'desc'}))
 
-        self.assertEqual(normalize_api_params({'state': u'closed', 'q': 'hi'}),
-                         {'q': u'hi state:closed'})
+        self.assertEqual(normalize_api_params({'state': 'closed', 'q': 'hi'}),
+                         {'q': 'hi state:closed'})
         self.assertNotIn('state',
-                         normalize_api_params({'state': u'closed', 'q': 'hi'}))
+                         normalize_api_params({'state': 'closed', 'q': 'hi'}))
 
-        self.assertEqual(normalize_api_params({'mentioned': u'coolguy',
+        self.assertEqual(normalize_api_params({'mentioned': 'coolguy',
                                               'q': 'hi'}),
-                         {'q': u'hi mentions:coolguy'})
+                         {'q': 'hi mentions:coolguy'})
         self.assertNotIn('mentioned',
-                         normalize_api_params({'mentioned': u'coolguy',
+                         normalize_api_params({'mentioned': 'coolguy',
                                               'q': 'hi'}))
 
-        self.assertEqual(normalize_api_params({'creator': u'coolguy',
+        self.assertEqual(normalize_api_params({'creator': 'coolguy',
                                               'q': 'hi'}),
-                         {'q': u'hi author:coolguy'})
+                         {'q': 'hi author:coolguy'})
         self.assertNotIn('creator',
-                         normalize_api_params({'creator': u'coolguy',
+                         normalize_api_params({'creator': 'coolguy',
                                               'q': 'hi'}))
 
-        multi_before = {'direction': u'desc', 'state': u'closed',
-                        'mentioned': u'coolguy', 'creator': u'coolguy',
-                        'per_page': u'1', 'q': u'hi'}
-        multi_after = {'order': u'desc',
-                       'q': u'hi state:closed author:coolguy mentions:coolguy',
-                       'per_page': u'1'}
+        multi_before = {'direction': 'desc', 'state': 'closed',
+                        'mentioned': 'coolguy', 'creator': 'coolguy',
+                        'per_page': '1', 'q': 'hi'}
+        multi_after = {'order': 'desc',
+                       'q': 'hi state:closed author:coolguy mentions:coolguy',
+                       'per_page': '1'}
         self.assertEqual(normalize_api_params(multi_before), multi_after)
 
     def test_normalize_api_params_ignores_unknown_params(self):
         """Ignore unknown parameters in normalize_api_params."""
-        self.assertEqual({'foo': u'bar'},
-                         normalize_api_params({'foo': u'bar'}))
-        self.assertEqual({'order': u'desc', 'foo': u'bar'},
-                         normalize_api_params({'foo': u'bar',
-                                              'direction': u'desc'}))
+        self.assertEqual({'foo': 'bar'},
+                         normalize_api_params({'foo': 'bar'}))
+        self.assertEqual({'order': 'desc', 'foo': 'bar'},
+                         normalize_api_params({'foo': 'bar',
+                                              'direction': 'desc'}))
 
     def test_parse_http_link_headers(self):
         """Test HTTP Links parsing for GitHub only."""
@@ -152,7 +172,7 @@ class TestHelpers(unittest.TestCase):
         self.assertEqual(get_browser_name(''), 'unknown')
         self.assertEqual(get_browser_name(None), 'unknown')
         self.assertEqual(get_browser_name(), 'unknown')
-        self.assertEqual(get_browser_name(u'💀'), 'unknown')
+        self.assertEqual(get_browser_name('💀'), 'unknown')
         self.assertEqual(get_browser_name('<script>lol()</script>'), 'unknown')
         self.assertEqual(get_browser_name(True), 'unknown')
         self.assertEqual(get_browser_name(False), 'unknown')
@@ -175,7 +195,7 @@ class TestHelpers(unittest.TestCase):
         self.assertEqual(get_browser(CHROME_TABLET_UA), 'Chrome 18.0.1025')
         self.assertEqual(get_browser(''), 'Unknown')
         self.assertEqual(get_browser(), 'Unknown')
-        self.assertEqual(get_browser(u'💀'), 'Unknown')
+        self.assertEqual(get_browser('💀'), 'Unknown')
         self.assertEqual(get_browser('<script>lol()</script>'), 'Unknown')
         self.assertEqual(get_browser(True), 'Unknown')
         self.assertEqual(get_browser(False), 'Unknown')
@@ -196,23 +216,24 @@ class TestHelpers(unittest.TestCase):
         self.assertEqual(get_os(CHROME_TABLET_UA), 'Android 4.0.4')
         self.assertEqual(get_os(''), 'Unknown')
         self.assertEqual(get_os(), 'Unknown')
-        self.assertEqual(get_os(u'💀'), 'Unknown')
+        self.assertEqual(get_os('💀'), 'Unknown')
         self.assertEqual(get_os('<script>lol()</script>'), 'Unknown')
         self.assertEqual(get_os(True), 'Unknown')
         self.assertEqual(get_os(False), 'Unknown')
         self.assertEqual(get_os(None), 'Unknown')
 
-    def test_get_str_value(self):
+    def test_get_serialized_value(self):
         """Get an expected string, including Python to js-style boolean.
 
         Note: key (output) and value (input) are in an unexpected order,
         just to keep the data structure valid.
         """
         tests = [{'1': 1}, {'null': None}, {'true': True}, {'false': False},
-                 {'': ''}, {'cool': 'cool'}, {u'\U0001f480': u'💀'}]
+                 {'': ''}, {'cool': 'cool'}, {'\U0001f480': '💀'},
+                 {'<ul>\n  <li>hi: there</li>\n</ul>': [{'hi': 'there'}]}]
         for test in tests:
-            for output, browser_input in test.iteritems():
-                self.assertEqual(get_str_value(browser_input), output)
+            for output, browser_input in test.items():
+                self.assertEqual(get_serialized_value(browser_input), output)
 
     def test_get_version_string(self):
         """Test version string composition.
@@ -263,10 +284,10 @@ class TestHelpers(unittest.TestCase):
 
     def test_prepare_form_get(self):
         """Extract information of a form request with a GET."""
-        form_data = {'extra_labels': [u'type-stylo'],
-                     'src': u'web',
-                     'user_agent': u'Burger',
-                     'url': u'http://example.net/',
+        form_data = {'extra_labels': ['type-stylo'],
+                     'src': 'web',
+                     'user_agent': 'Burger',
+                     'url': 'http://example.net/',
                      }
         with webcompat.app.test_request_context(
                 '/issues/new?url=http://example.net/&src=web&label=type-stylo',
@@ -289,15 +310,15 @@ class TestHelpers(unittest.TestCase):
                 method='GET',
                 headers={'User-agent': 'Burger'}):
             form_data['url'] = None
-            form_data['extra_labels'] = [u'type-punkcat', u'type-webvr']
+            form_data['extra_labels'] = ['type-punkcat', 'type-webvr']
             self.assertEqual(prepare_form(flask.request), form_data)
 
     def test_prepare_form_post(self):
         """Extract information of a form request with a POST."""
-        json_data = {'extra_labels': [u'type-webvr', u'type-media'],
-                     'src': u'addon',
-                     'user_agent': u'BurgerJSON',
-                     'url': u'http://json.example.net/',
+        json_data = {'extra_labels': ['type-webvr', 'type-media'],
+                     'src': 'addon',
+                     'user_agent': 'BurgerJSON',
+                     'url': 'http://json.example.net/',
                      }
         with webcompat.app.test_request_context(
                 '/issues/new?url=http://example.net/&src=web&label=type-stylo',
@@ -315,6 +336,270 @@ class TestHelpers(unittest.TestCase):
         self.assertTrue(is_json_object(json.loads('{"bar":["baz", null, 1.0, 2]}')))  # noqa
         # A JSON value, which is not an object
         self.assertFalse(is_json_object(json.loads('null')))
+
+    def test_ab_active_existing_cookie(self):
+        """Check if `ab_active` returns the experiment variation when
+        expirement cookie exists.
+        """
+        cookie = 'exp=ui-change-v1; Path=/'
+        with webcompat.app.test_request_context(
+                '/',
+                method='GET',
+                environ_base={'HTTP_COOKIE': cookie}):
+
+            webcompat.app.preprocess_request()
+
+            self.assertEqual(ab_active('exp'), 'ui-change-v1')
+
+    def test_ab_active_non_existing_cookie(self):
+        """Check if `ab_active` returns the correct experiment variation
+        when the experiment cookie doesn't exist.
+        """
+        cookie = 'another_exp=backend-change-v1; Path=/'
+        with webcompat.app.test_request_context(
+                '/',
+                method='GET',
+                environ_base={'HTTP_COOKIE': cookie}):
+
+            webcompat.app.config['AB_EXPERIMENTS'] = {
+                'exp': {
+                    'variations': {
+                        'ui-change-v1': (0, 100)
+                    },
+                    'max-age': 86400
+                }
+            }
+            webcompat.app.preprocess_request()
+
+            self.assertEqual(ab_active('exp'), 'ui-change-v1')
+
+    def test_ab_current_experiments_active(self):
+        """Check if current experiments are calculated properly"""
+        cookie = 'exp=ui-change-v1; Path=/'
+        with webcompat.app.test_request_context(
+                '/',
+                method='GET',
+                environ_base={'HTTP_COOKIE': cookie}):
+
+            user = Mock()
+            user.user_id = 'user_id'
+            flask.g.user = user
+
+            webcompat.app.config['AB_EXPERIMENTS'] = {
+                'exp': {
+                    'variations': {
+                        'ui-change-v1': (0, 100)
+                    },
+                    'max-age': 86400
+                }
+            }
+
+            c = ab_current_experiments()
+            self.assertEqual(c, {'exp': 'ui-change-v1'})
+
+    def test_ab_current_experiments_dnt(self):
+        """Check if calculating current experiments respects DNT"""
+        cookie = 'exp=ui-change-v1; Path=/'
+        with webcompat.app.test_request_context(
+                '/',
+                method='GET',
+                environ_base={'HTTP_COOKIE': cookie, 'HTTP_DNT': '1'}):
+
+            user = Mock()
+            user.user_id = 'user_id'
+            flask.g.user = user
+
+            webcompat.app.config['AB_EXPERIMENTS'] = {
+                'exp': {
+                    'variations': {
+                        'ui-change-v1': (0, 100)
+                    },
+                    'max-age': 86400
+                }
+            }
+
+            c = ab_current_experiments()
+            self.assertEqual(c, {})
+
+    def test_ab_current_experiments_selector(self):
+        """Check if current experiments selects the expected variations"""
+        with webcompat.app.test_request_context(
+                '/',
+                method='GET'):
+
+            user = Mock()
+            user.user_id = 'user_id'
+            flask.g.user = user
+
+            webcompat.app.config['AB_EXPERIMENTS'] = {
+                'exp-1': {
+                    'variations': {
+                        'ui-change-v1': (0, 20),
+                        'ui-change-v2': (20, 60),
+                        'ui-change-v3': (60, 100)
+                    },
+                    'max-age': 604800
+                },
+                'exp-2': {
+                    'variations': {
+                        'backend-change-v1': (0, 50),
+                        'novariation': (50, 100)
+                    },
+                    'max-age': 86400
+                }
+            }
+
+            with patch('webcompat.helpers.random.random') as mock_random:
+                mock_random.return_value = 0.4
+                expected_experiments = {
+                    'exp-1': 'ui-change-v2',
+                    'exp-2': 'backend-change-v1'
+                }
+                self.assertEqual(
+                    ab_current_experiments(), expected_experiments
+                )
+
+    def test_ab_init(self):
+        """Check if ab_init sets the expected experiment cookie"""
+        with webcompat.app.test_request_context(
+                '/',
+                method='GET') as ctx:
+
+            webcompat.app.config['AB_EXPERIMENTS'] = {
+                'exp-1': {
+                    'variations': {
+                        'ui-change-v1': (0, 20),
+                        'ui-change-v2': (20, 100)
+                    },
+                    'max-age': 604800
+                }
+            }
+
+            with patch('webcompat.helpers.random.random') as mock_random:
+
+                self.assertEqual(ctx.request.headers.get('Set-Cookie'), None)
+
+                mock_random.return_value = 0.4
+                response = self.app.get('/')
+
+                exp_cookie_value = None
+                for header in response.headers.getlist('Set-Cookie'):
+                    cookie = parse_cookie(header)
+                    value = cookie.get('exp-1')
+                    if value:
+                        exp_cookie_value = value
+
+                self.assertEqual(exp_cookie_value, 'ui-change-v2')
+
+    def test_ab_init_active(self):
+        """Check if ab_init doesn't set cookies if experiment already active"""
+        cookie = 'exp-1=ui-change-v1; Path=/'
+        with webcompat.app.test_request_context(
+                '/',
+                method='GET',
+                environ_base={'HTTP_COOKIE': cookie}):
+
+            webcompat.app.config['AB_EXPERIMENTS'] = {
+                'exp-1': {
+                    'variations': {
+                        'ui-change-v1': (0, 20),
+                        'ui-change-v2': (20, 100)
+                    },
+                    'max-age': 604800
+                }
+            }
+
+            response = self.app.get('/')
+            response.set_cookie = Mock()
+
+            ab_init(response)
+            response.set_cookie.assert_not_called()
+
+    def test_get_extra_labels(self):
+        """Test extra_labels extraction from form object."""
+        with webcompat.app.test_request_context('/issues/new', method='POST'):
+
+            # need to call this since g.current_experiments
+            # is defined in before_request
+            webcompat.app.preprocess_request()
+
+            self.assertEqual(get_extra_labels(
+                {'extra_labels': '["type-marfeel", "browser-fenix"]'}),
+                ['type-marfeel', 'browser-fenix']
+            )
+
+            self.assertEqual(get_extra_labels({}), [])
+            self.assertEqual(get_extra_labels({'extra_labels': '[]'}), [])
+            self.assertEqual(get_extra_labels({'extra_labels': ''}), [])
+
+            session['extra_labels'] = ['type-fastclick']
+
+            self.assertEqual(get_extra_labels(
+                {'extra_labels': '["type-marfeel", "browser-fenix"]'}),
+                ['type-fastclick']
+            )
+
+    def test_process_log_url(self):
+        self.assertEqual(get_filename_from_url(
+            'https://example.com/file.js'),
+            'file.js'
+        )
+        self.assertEqual(get_filename_from_url(
+            'https://example.com/vendor.min.js?201911131607%20line%202%20%3E%20#id'),  # noqa
+            'vendor.min.js'
+        )
+        self.assertEqual(get_filename_from_url(
+            'https://example.com/some_path/to_page/'
+        ),
+            'to_page'
+        )
+
+        self.assertEqual(get_filename_from_url(
+            'https://example.com/some_path/to_page'
+        ),
+            'to_page'
+        )
+
+        self.assertEqual(get_filename_from_url(
+            'https://example.com/'),
+            'example.com'
+        )
+        self.assertEqual(get_filename_from_url(
+            'https://example.com'),
+            'example.com'
+        )
+
+    def test_is_darknet_domain(self):
+        """Assert domains validity in issue reporting."""
+        self.assertTrue(is_darknet_domain('www.gjobqjj7wyczbqie.onion'))
+        self.assertFalse(is_darknet_domain('example.com'))
+        self.assertFalse(is_darknet_domain('gjobqjj7wyczbqie.onion.com'))
+        self.assertFalse(is_darknet_domain(None))
+
+    def test_get_response_headers_tuple(self):
+        """Test we get expected headers with a tuple argument."""
+        proxy_response = (1, 1, {'lol': 'wat', 'etag': '1'})
+        with webcompat.app.app_context():
+            new_headers = get_response_headers(proxy_response)
+            assert new_headers.get('content-type') == 'application/json'
+            assert new_headers.get('etag') == '1'
+            assert new_headers.get('lol') is None
+            new_headers2 = get_response_headers(proxy_response,
+                                                mime_type='text/html')
+            assert new_headers2.get('content-type') == 'text/html'
+
+    def test_get_response_headers_response(self):
+        """Test we get expected headers with a Response argument."""
+        proxy_response = Response()
+        proxy_response.headers = {'lol': 'wat', 'etag': '1'}
+        with webcompat.app.app_context():
+            new_headers = get_response_headers(proxy_response)
+            assert new_headers.get('content-type') == 'application/json'
+            assert new_headers.get('etag') == '1'
+            assert new_headers.get('lol') is None
+            new_headers2 = get_response_headers(proxy_response,
+                                                mime_type='text/html')
+            assert new_headers2.get('content-type') == 'text/html'
 
 
 if __name__ == '__main__':

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 50 50">
+    <title>mobile-vs-desktop</title>
+    <g fill="none" fill-rule="evenodd" stroke-width="2">
+        <path stroke="#FFF" d="M29 49h14c1.106 0 2-.894 2-2V3a2 2 0 0 0-2-2H29"/>
+        <path stroke="#FFF" d="M29 41h12V7H29"/>
+        <path stroke="#FFF" stroke-linecap="round" stroke-linejoin="round" d="M29 45h4"/>
+        <path stroke="#FFF" d="M29 5H7a2 2 0 0 0-2 2v28a2 2 0 0 0 2 2h16v6H13v4h16"/>
+        <path stroke="#FFF" d="M29 9H9v24h20"/>
+        <path stroke="#FFC800" d="M29 0v50"/>
+    </g>
+</svg>

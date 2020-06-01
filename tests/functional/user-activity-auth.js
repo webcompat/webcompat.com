@@ -7,8 +7,8 @@ const { assert } = intern.getPlugin("chai");
 const { registerSuite } = intern.getInterface("object");
 const FunctionalHelpers = require("./lib/helpers.js");
 
-var url = function(path) {
-  return intern.config.siteRoot + path;
+var url = function (path) {
+  return intern.config.functionalBaseUrl + path;
 };
 
 registerSuite("User Activity (auth)", {
@@ -23,17 +23,17 @@ registerSuite("User Activity (auth)", {
   tests: {
     "We're at the right place"() {
       var username;
-      return FunctionalHelpers.openPage(this, url("/me"), ".js-username")
+      return FunctionalHelpers.openPage(this, url("me"), ".js-username")
         .findByCssSelector(".js-username")
         .getVisibleText()
-        .then(function(text) {
+        .then(function (text) {
           var match = text.match(/Issues reported by (.+)/);
           if (match) {
             username = match[1];
           }
         })
         .getCurrentUrl()
-        .then(function(currURL) {
+        .then(function (currURL) {
           assert.include(
             currURL,
             username,
@@ -46,25 +46,25 @@ registerSuite("User Activity (auth)", {
     "IssueListView renders"() {
       return FunctionalHelpers.openPage(
         this,
-        url("/activity/testuser"),
+        url("activity/testuser"),
         ".js-IssueList"
       )
         .findByCssSelector(".js-IssueList")
         .isDisplayed()
-        .then(function(isDisplayed) {
+        .then(function (isDisplayed) {
           assert.equal(isDisplayed, true, "IssueList container is visible.");
         })
         .sleep(1000)
         .end()
         .findByCssSelector(".js-list-issue .js-IssueList")
         .isDisplayed()
-        .then(function(isDisplayed) {
+        .then(function (isDisplayed) {
           assert.equal(isDisplayed, true, "IssueList item is visible.");
         })
         .end()
         .findByCssSelector(".js-IssueList .js-issue-title")
         .isDisplayed()
-        .then(function(isDisplayed) {
+        .then(function (isDisplayed) {
           assert.equal(
             isDisplayed,
             true,
@@ -74,7 +74,7 @@ registerSuite("User Activity (auth)", {
         .end()
         .findByCssSelector(".js-issue-comments")
         .getVisibleText()
-        .then(function(text) {
+        .then(function (text) {
           assert.match(
             text,
             /comments:\s\d+$/i,
@@ -84,7 +84,7 @@ registerSuite("User Activity (auth)", {
         .end()
         .findByCssSelector(".js-issue-date")
         .getVisibleText()
-        .then(function(text) {
+        .then(function (text) {
           assert.match(
             text,
             /^Opened:\s\d{4}-\d{2}-\d{2}/,
@@ -97,12 +97,12 @@ registerSuite("User Activity (auth)", {
     "needsinfo section renders"() {
       return FunctionalHelpers.openPage(
         this,
-        url("/activity/testuser"),
+        url("activity/testuser"),
         ".js-IssueList"
       )
         .findByCssSelector("#needsinfo-issues")
         .isDisplayed()
-        .then(function(isDisplayed) {
+        .then(function (isDisplayed) {
           assert.equal(
             isDisplayed,
             true,
@@ -113,7 +113,7 @@ registerSuite("User Activity (auth)", {
         .end()
         .findByCssSelector(".label-status-needsinfo-testuser")
         .isDisplayed()
-        .then(function(isDisplayed) {
+        .then(function (isDisplayed) {
           assert.equal(isDisplayed, true, "A needsinfo label is visible");
         })
         .end();
@@ -122,12 +122,12 @@ registerSuite("User Activity (auth)", {
     "Trying to view someone else's activity fails (logged in)"() {
       return FunctionalHelpers.openPage(
         this,
-        url("/activity/someoneelse"),
+        url("activity/someoneelse"),
         "article"
       )
         .findByCssSelector("article .headline-1")
         .getVisibleText()
-        .then(function(text) {
+        .then(function (text) {
           assert.include(
             text,
             "Forbidden",
@@ -135,6 +135,6 @@ registerSuite("User Activity (auth)", {
           );
         })
         .end();
-    }
-  }
+    },
+  },
 });

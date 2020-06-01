@@ -8,12 +8,13 @@
 
 import json
 import os.path
-from StringIO import StringIO
+from io import StringIO
+from io import BytesIO
 import sys
 import unittest
 
 from flask import Request
-from werkzeug import FileStorage
+from werkzeug.datastructures import FileStorage
 from werkzeug.datastructures import MultiDict
 
 # Add webcompat module to import path
@@ -27,7 +28,6 @@ def check_rv_format(self, resp):
 
     expected format:
      '{"url": "http://localhost:5000/uploads/...ade311d4.jpg",
-     "thumb_url": "http://localhost:5000/uploads/...e311d4-thumb.jpg",
      "filename": "ca589794-875b-44bd-9cd9-ed6cade311d4.jpg"}'
     """
     if resp.status_code == 201:
@@ -37,16 +37,12 @@ def check_rv_format(self, resp):
             'http://localhost:5000/uploads/' in response.get('url')
         )
         self.assertTrue(
-            'thumb_url' in response and
-            '-thumb.' in response.get('thumb_url')
-        )
-        self.assertTrue(
             'filename' in response and
             response.get('filename') in response.get('url')
         )
 
 
-class TestingFileStorage(FileStorage):
+class MockingFileStorage(FileStorage):
     """Test-only File Storage class.
 
     This is a helper for testing upload behavior in your application. You
@@ -85,7 +81,7 @@ class TestingFileStorage(FileStorage):
         :param dst: The file to save to.
         :param buffer_size: Ignored.
         """
-        if isinstance(dst, basestring):
+        if isinstance(dst, str):
             self.saved = dst
         else:
             self.saved = dst.name
@@ -125,20 +121,22 @@ class TestUploads(unittest.TestCase):
 
             # The reason why we are defining it in here and not outside
             # this method is that we are setting the filename of the
-            # TestingFileStorage to be the one in the for loop. This way
+            # MockingFileStorage to be the one in the for loop. This way
             # we can ensure that the filename that we are "uploading"
             # is the same as the one being used by the application
             class TestingRequest(Request):
                 """Test-only Request Class.
 
-                A testing request to use that will return a TestingFileStorage
+                A testing request to use that will return a MockingFileStorage
                 to test the uploading.
                 """
                 @property
                 def files(self):
                     d = MultiDict()
-                    f = open(os.path.join('tests', 'fixtures', filename), 'r')
-                    d['image'] = TestingFileStorage(stream=StringIO(f.read()),
+                    f = open(os.path.join('tests', 'fixtures', filename), 'rb')
+                    print(os.path.join('tests', 'fixtures', filename))
+                    print(type(f))
+                    d['image'] = MockingFileStorage(stream=BytesIO(f.read()),
                                                     filename=filename)
                     f.close()
                     return d
@@ -152,10 +150,10 @@ class TestUploads(unittest.TestCase):
 
     def test_base64_screenshot_uploads(self):
         '''Test that Base64 screenshots return the expected status codes.'''
-        BASE64_PNG = u'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAAAAAA6fptVAAAACklEQVQYV2P4DwABAQEAWk1v8QAAAABJRU5ErkJggg=='  # noqa
-        BASE64_PNG_GARBAGE = u'data:image/png;base64,garbage!'
-        BASE64_PNG_GARBAGE2 = u'data:image/png;data:image/png;'
-        PILE_OF_POO = u'💩'
+        BASE64_PNG = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAAAAAA6fptVAAAACklEQVQYV2P4DwABAQEAWk1v8QAAAABJRU5ErkJggg=='  # noqa
+        BASE64_PNG_GARBAGE = 'data:image/png;base64,garbage!'
+        BASE64_PNG_GARBAGE2 = 'data:image/png;data:image/png;'
+        PILE_OF_POO = '💩'
 
         for filedata, status_code in (
                 (BASE64_PNG, 201),

@@ -8,8 +8,9 @@ const pollUntil = require("leadfoot/helpers/pollUntil");
 
 var config = intern.config;
 
-var url = function(path, params) {
-  var base = intern.config.siteRoot + path;
+var url = function (path, params) {
+  path = path ? path : "";
+  var base = intern.config.functionalBaseUrl + path;
   return params ? base + params : base;
 };
 
@@ -19,7 +20,7 @@ things inside of it. The optional boolean longer arg at the end can
 be used for tests that need more time.
 */
 function openPage(context, path, readySelector, longerTimeout) {
-  var timeout = longerTimeout ? 20000 : config.wc.pageLoadTimeout;
+  var timeout = longerTimeout ? 20000 : config.functionalTimeouts.pageLoad;
 
   return (
     context.remote
@@ -28,14 +29,14 @@ function openPage(context, path, readySelector, longerTimeout) {
       // Wait until the `readySelector` element is found to return.
       .findByCssSelector(readySelector)
       .end()
-      .then(null, function(err) {
+      .then(null, function (err) {
         return context.remote
           .getCurrentUrl()
-          .then(function(resultUrl) {
+          .then(function (resultUrl) {
             console.log("Error fetching %s", resultUrl);
           })
           .end()
-          .then(function() {
+          .then(function () {
             throw err;
           });
       })
@@ -43,18 +44,26 @@ function openPage(context, path, readySelector, longerTimeout) {
 }
 
 function login(context) {
-  return openPage(context, url("/login"), "body").end();
+  return openPage(context, url("login"), "body").end();
 }
 
 function logout(context) {
-  return openPage(context, url("/logout"), "body")
-    .clearCookies()
-    .end();
+  return openPage(context, url("logout"), "body").clearCookies().end();
+}
+
+function setCookie(context, cookie) {
+  return openPage(context, url(), "body").setCookie(cookie).sleep(500).end();
+}
+
+function deleteCookie(context, cookieName) {
+  return openPage(context, url(), "body").deleteCookie(cookieName).end();
 }
 
 module.exports = {
   login: login,
   logout: logout,
   openPage: openPage,
-  pollUntil: pollUntil
+  pollUntil: pollUntil,
+  setCookie: setCookie,
+  deleteCookie: deleteCookie,
 };

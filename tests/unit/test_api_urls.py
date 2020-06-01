@@ -8,9 +8,9 @@
 
 import json
 import unittest
+from unittest.mock import MagicMock
+from unittest.mock import patch
 
-from mock import MagicMock
-from mock import patch
 from requests import Response
 from requests.structures import CaseInsensitiveDict
 
@@ -22,7 +22,7 @@ headers = {'HTTP_USER_AGENT': ('Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; '
                                'rv:31.0) Gecko/20100101 Firefox/31.0'),
            'HTTP_ACCEPT': 'application/json'}
 
-STATUSES = {u'sitewait': {'color': '', 'state': 'open', 'id': 5, 'order': 5}, u'worksforme': {'color': '', 'state': 'closed', 'id': 11, 'order': 7}, u'non-compat': {'color': '', 'state': 'closed', 'id': 12, 'order': 5}, u'needsdiagnosis': {'color': '', 'state': 'open', 'id': 2, 'order': 2}, u'contactready': {'color': '', 'state': 'open', 'id': 4, 'order': 4}, u'wontfix': {'color': '', 'state': 'closed', 'id': 6, 'order': 6}, u'needscontact': {'color': '', 'state': 'open', 'id': 3, 'order': 3}, u'invalid': {'color': '', 'state': 'closed', 'id': 8, 'order': 4}, u'needstriage': {'color': '', 'state': 'open', 'id': 1, 'order': 1}, u'duplicate': {'color': '', 'state': 'closed', 'id': 10, 'order': 1}, u'fixed': {'color': '', 'state': 'closed', 'id': 9, 'order': 2}, u'incomplete': {'color': '', 'state': 'closed', 'id': 7, 'order': 3}}  # noqa
+STATUSES = {'sitewait': {'color': '', 'state': 'open', 'id': 5, 'order': 5}, 'worksforme': {'color': '', 'state': 'closed', 'id': 11, 'order': 7}, 'non-compat': {'color': '', 'state': 'closed', 'id': 12, 'order': 5}, 'needsdiagnosis': {'color': '', 'state': 'open', 'id': 2, 'order': 2}, 'contactready': {'color': '', 'state': 'open', 'id': 4, 'order': 4}, 'wontfix': {'color': '', 'state': 'closed', 'id': 6, 'order': 6}, 'needscontact': {'color': '', 'state': 'open', 'id': 3, 'order': 3}, 'invalid': {'color': '', 'state': 'closed', 'id': 8, 'order': 4}, 'needstriage': {'color': '', 'state': 'open', 'id': 1, 'order': 1}, 'duplicate': {'color': '', 'state': 'closed', 'id': 10, 'order': 1}, 'fixed': {'color': '', 'state': 'closed', 'id': 9, 'order': 2}, 'incomplete': {'color': '', 'state': 'closed', 'id': 7, 'order': 3}}  # noqa
 
 
 def mock_api_response(response_config={}):
@@ -34,7 +34,7 @@ def mock_api_response(response_config={}):
     }
     api_response = MagicMock(spec=Response)
     api_response.content_type = 'application/json'
-    for k, v in response_config.iteritems():
+    for k, v in response_config.items():
         if k == 'headers':
             headers.update(v)
         setattr(api_response, k, v)
@@ -122,15 +122,15 @@ class TestAPIURLs(unittest.TestCase):
                         'page', 'next', 'last']))
             self.assertEqual(rv.status_code, 200)
             self.assertEqual(
-                rv.content_type, 'application/json')
+                rv.content_type, 'text/html')
             # API access to comments for an issue
-            # with < 30 does not return link a header in
+            # with < per_page param does not return link a header in
             #  the response (until GitHub changes it....?)
             rv = self.app.get('/api/issues/4/comments', environ_base=headers)
             self.assertTrue('link' not in rv.headers)
             self.assertEqual(rv.status_code, 200)
             self.assertEqual(
-                rv.content_type, 'application/json')
+                rv.content_type, 'text/html')
 
     def test_api_set_labels_without_auth(self):
         """API setting labels without auth returns JSON 403 error code."""
@@ -155,31 +155,36 @@ class TestAPIURLs(unittest.TestCase):
         self.assertEqual(rv.content_type, 'application/json')
         self.assertEqual(json_body['status'], 404)
 
-    def test_api_patch_issue(self):
-        """Patching the issue is working only with certain circumstances."""
+    def test_api_patch_issue_state_status(self):
+        """Patching the issue - Incompatible state and status."""
         with webcompat.app.app_context():
             webcompat.app.config.update(STATUSES=STATUSES)
-            # Incompatible state and status
             data = {'state': 'closed', 'milestone': 2}
             patch_data = json.dumps(data)
             rv = self.app.patch('/api/issues/1/edit', data=patch_data,
                                 environ_base=headers)
             self.assertEqual(rv.status_code, 403)
-            # Too many elements in the JSON
+
+    def test_api_patch_issue_too_many_json_elements(self):
+        """Patching the issue - Too many elements in the JSON."""
+        with webcompat.app.app_context():
             data = {'state': 'open', 'milestone': 2, 'foobar': 'z'}
             patch_data = json.dumps(data)
             rv = self.app.patch('/api/issues/1/edit', data=patch_data,
                                 environ_base=headers)
             self.assertEqual(rv.status_code, 403)
-            # Valid request
-            with patch('webcompat.api.endpoints.proxy_request') as github_data:
-                github_data.return_value = mock_api_response(
-                    {'status_code': 200, 'content': '[]'})
-                data = {'state': 'open', 'milestone': 2}
-                patch_data = json.dumps(data)
-                rv = self.app.patch('/api/issues/1/edit', data=patch_data,
-                                    environ_base=headers)
-                self.assertEqual(rv.status_code, 200)
+
+    @patch('webcompat.api.endpoints.proxy_request')
+    def test_api_patch_issue_valid_request(self, github_data):
+        """Patching the issue - Valid request."""
+        with webcompat.app.app_context():
+            github_data.return_value = mock_api_response(
+                {'status_code': 200, 'content': '[]'})
+            data = {'state': 'open', 'milestone': 2}
+            patch_data = json.dumps(data)
+            rv = self.app.patch('/api/issues/1/edit', data=patch_data,
+                                environ_base=headers)
+            self.assertEqual(rv.status_code, 200)
 
 
 if __name__ == '__main__':

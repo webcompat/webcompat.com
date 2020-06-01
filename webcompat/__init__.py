@@ -32,15 +32,16 @@ github = GitHub(app)
 limiter = Limiter(app, key_func=get_remote_address)
 
 # import views after we initialize our github object
+import webcompat.templates  # noqa
 import webcompat.views  # noqa
-import webhooks  # noqa
+from webcompat import webhooks  # noqa
 
 # register blueprints
-from api.endpoints import api
-from api.uploads import uploads
-from error_handlers import error_handlers
+from webcompat.api.endpoints import api_bp  # noqa
+from webcompat.api.uploads import uploads_bp  # noqa
+from webcompat.error_handlers import error_handlers_bp  # noqa
 
-for blueprint in [api, error_handlers, uploads]:
+for blueprint in [api_bp, error_handlers_bp, uploads_bp]:
     app.register_blueprint(blueprint)
 
 

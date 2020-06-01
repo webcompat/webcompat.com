@@ -7,7 +7,7 @@ const { assert } = intern.getPlugin("chai");
 const { registerSuite } = intern.getInterface("object");
 const FunctionalHelpers = require("./lib/helpers.js");
 
-var url = path => intern.config.siteRoot + path;
+var url = (path) => intern.config.functionalBaseUrl + path;
 
 registerSuite("Comments (auth)", {
   before() {
@@ -21,7 +21,7 @@ registerSuite("Comments (auth)", {
   tests: {
     "Comments form visible when logged in"() {
       return (
-        FunctionalHelpers.openPage(this, url("/issues/100"), ".js-Issue")
+        FunctionalHelpers.openPage(this, url("issues/100"), ".js-Issue")
           // Comment form visible for logged in users.
           .findDisplayedByCssSelector(".js-Comment-form")
           .end()
@@ -30,11 +30,11 @@ registerSuite("Comments (auth)", {
 
     "Comments form not visible when the issue is locked"() {
       return (
-        FunctionalHelpers.openPage(this, url("/issues/23"), ".js-Issue")
+        FunctionalHelpers.openPage(this, url("issues/23"), ".js-Issue")
           // Comment form should not be visible for locked issues.
           .findByCssSelector(".js-issue-comment-submit")
           .getAttribute("class")
-          .then(className => {
+          .then((className) => {
             assert.include(className, "is-hidden");
           })
           .end()
@@ -45,9 +45,9 @@ registerSuite("Comments (auth)", {
       var originalCommentsLength;
       var allCommentsLength;
       return (
-        FunctionalHelpers.openPage(this, url("/issues/100"), ".js-image-upload")
+        FunctionalHelpers.openPage(this, url("issues/100"), ".js-image-upload")
           .findAllByCssSelector(".js-Issue-comment")
-          .then(elms => {
+          .then((elms) => {
             originalCommentsLength = elms.length;
           })
           .end()
@@ -60,7 +60,7 @@ registerSuite("Comments (auth)", {
           .end()
           .sleep(1000)
           .findAllByCssSelector(".js-Issue-comment")
-          .then(elms => {
+          .then((elms) => {
             allCommentsLength = elms.length;
             assert(
               originalCommentsLength < allCommentsLength,
@@ -73,9 +73,9 @@ registerSuite("Comments (auth)", {
     "Posting an empty comment fails"() {
       var originalCommentsLength;
       var allCommentsLength;
-      return FunctionalHelpers.openPage(this, url("/issues/100"), ".js-Issue")
+      return FunctionalHelpers.openPage(this, url("issues/100"), ".js-Issue")
         .findAllByCssSelector(".js-Issue-comment")
-        .then(elms => {
+        .then((elms) => {
           originalCommentsLength = elms.length;
         })
         .end()
@@ -86,7 +86,7 @@ registerSuite("Comments (auth)", {
         .end()
         .sleep(2000)
         .findAllByCssSelector(".js-Issue-comment")
-        .then(elms => {
+        .then((elms) => {
           allCommentsLength = elms.length;
           assert(
             originalCommentsLength === allCommentsLength,
@@ -98,7 +98,7 @@ registerSuite("Comments (auth)", {
     "Pressing 'g' inside of comment textarea *doesn't* go to github issue"() {
       return FunctionalHelpers.openPage(
         this,
-        url("/issues/100"),
+        url("issues/100"),
         ".js-Comment-text"
       )
         .findByCssSelector(".js-Comment-text")
@@ -106,7 +106,7 @@ registerSuite("Comments (auth)", {
         .end()
         .setFindTimeout(2000)
         .findByCssSelector(".repo-container .issues-listing")
-        .then(assert.fail, err => {
+        .then(assert.fail, (err) => {
           assert.isTrue(/NoSuchElement/.test(String(err)));
         })
         .end();
@@ -115,7 +115,7 @@ registerSuite("Comments (auth)", {
     "Pressing 'l' inside of comment textarea *doesn't* open the label editor box"() {
       return FunctionalHelpers.openPage(
         this,
-        url("/issues/100"),
+        url("issues/100"),
         ".js-Comment-text"
       )
         .findByCssSelector(".js-Comment-text")
@@ -124,10 +124,10 @@ registerSuite("Comments (auth)", {
         .setFindTimeout(2000)
         .findByCssSelector(".js-LabelEditorLauncher")
         .getAttribute("class")
-        .then(className => {
+        .then((className) => {
           assert.notInclude(className, "is-active");
         })
         .end();
-    }
-  }
+    },
+  },
 });

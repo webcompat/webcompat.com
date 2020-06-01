@@ -8,9 +8,8 @@
 
 import datetime
 import unittest
+from unittest.mock import patch
 from xml.dom.minidom import parseString
-
-from mock import patch
 
 from tools import topsites
 

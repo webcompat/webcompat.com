@@ -11,6 +11,7 @@ import os
 import unittest
 
 from config import update_status_config
+from config import get_variation
 from webcompat import webcompat
 
 
@@ -38,7 +39,7 @@ class TestConfig(unittest.TestCase):
 
     def test_update_status_config(self):
         """Update statuses with real milestones id."""
-        expected = {u'sitewait': {'state': 'open', 'id': 5, 'order': 5}, u'worksforme': {'state': 'closed', 'id': 11, 'order': 7}, u'non-compat': {'state': 'closed', 'id': 12, 'order': 5}, u'needsdiagnosis': {'state': 'open', 'id': 2, 'order': 2}, u'contactready': {'state': 'open', 'id': 4, 'order': 4}, u'wontfix': {'state': 'closed', 'id': 6, 'order': 6}, u'needscontact': {'state': 'open', 'id': 3, 'order': 3}, u'invalid': {'state': 'closed', 'id': 8, 'order': 4}, u'needstriage': {'state': 'open', 'id': 1, 'order': 1}, u'duplicate': {'state': 'closed', 'id': 10, 'order': 1}, u'fixed': {'state': 'closed', 'id': 9, 'order': 2}, u'incomplete': {'state': 'closed', 'id': 7, 'order': 3}}  # noqa
+        expected = {'sitewait': {'state': 'open', 'id': 5, 'order': 5}, 'worksforme': {'state': 'closed', 'id': 11, 'order': 7}, 'non-compat': {'state': 'closed', 'id': 12, 'order': 5}, 'needsdiagnosis': {'state': 'open', 'id': 2, 'order': 2}, 'contactready': {'state': 'open', 'id': 4, 'order': 4}, 'wontfix': {'state': 'closed', 'id': 6, 'order': 6}, 'needscontact': {'state': 'open', 'id': 3, 'order': 3}, 'invalid': {'state': 'closed', 'id': 8, 'order': 4}, 'needstriage': {'state': 'open', 'id': 1, 'order': 1}, 'duplicate': {'state': 'closed', 'id': 10, 'order': 1}, 'fixed': {'state': 'closed', 'id': 9, 'order': 2}, 'incomplete': {'state': 'closed', 'id': 7, 'order': 3}}  # noqa
         # Normal Case
         milestones_json = json_data('milestones_content.json')
         actual = update_status_config(milestones_json)
@@ -52,6 +53,20 @@ class TestConfig(unittest.TestCase):
         milestones_json = json_data('milestones_content_plus.json')
         actual = update_status_config(milestones_json)
         self.assertEqual(actual, expected)
+
+    def test_get_variation(self):
+        """
+        Check the conversion from string to tuples of two int.
+        """
+        defs = {'a': (1, 2)}
+        self.assertTupleEqual((1, 2), get_variation('a', {'a': '1 2'}, defs))
+        self.assertTupleEqual((1, 2), get_variation('a', {'a': None}, defs))
+        self.assertTupleEqual((1, 2), get_variation('a', {'a': ''}, defs))
+        self.assertTupleEqual((1, 2), get_variation('a', {'a': 2}, defs))
+        self.assertTupleEqual((1, 2), get_variation('a', {'a': '1 2 3'}, defs))
+        self.assertTupleEqual((1, 2), get_variation('a', {'a': '1 '}, defs))
+        self.assertTupleEqual((1, 2),
+                              get_variation('a', {'a': '  1 2 '}, defs))
 
 
 if __name__ == '__main__':

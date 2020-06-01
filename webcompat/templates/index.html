@@ -4,9 +4,6 @@
 {% include "nav/topbar.html" %}
 <main role="main">
  	{% include "home-page/hero.html" %}
-  	<section id="js-ReportForm" class="js-ReportForm {% if form.errors %}is-opened{% else %}is-closed{% endif %} grid">
-		{% include "home-page/form.html" %}
-	</section>
   	{% include "home-page/how-it-works.html" %}
   	{% include "home-page/join-us.html" %}
   	{% include "home-page/browse-issues.html" %}
@@ -14,7 +11,7 @@
 {% endblock %}
 {%- block extrascripts -%}
 {%- if config.PRODUCTION or config.STAGING -%}
-<script src="{{ url_for('static', filename='js/dist/untriaged.min.js')|bust_cache }}"></script>
+<script src="{{ url_for('static', filename='js/dist/index.min.js')|bust_cache }}"></script>
 {%- else -%}
 <script src="{{ url_for('static', filename='js/lib/models/label-list.js') }}"></script>
 <script src="{{ url_for('static', filename='js/lib/models/issue.js') }}"></script>

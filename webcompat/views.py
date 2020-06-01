@@ -4,11 +4,11 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 """Module for the main routes of webcompat.com."""
-from hashlib import sha1
+import json
 import logging
 import os
-import urlparse
-from uuid import uuid4
+import secrets
+import urllib.parse
 
 from flask import abort
 from flask import flash
@@ -19,29 +19,37 @@ from flask import request
 from flask import send_from_directory
 from flask import session
 from flask import url_for
-
-from dashboard import filter_needstriage
 from flask_firehose import push
-from form import AUTH_REPORT
-from form import get_form
-from form import PROXY_REPORT
-from helpers import add_csp
-from helpers import add_sec_headers
-from helpers import bust_cache
-from helpers import cache_policy
-from helpers import form_type
-from helpers import get_browser_name
-from helpers import get_milestone_list
-from helpers import get_referer
-from helpers import get_user_info
-from helpers import is_blacklisted_domain
-from helpers import is_valid_issue_form
-from helpers import prepare_form
-from helpers import set_referer
-from issues import report_issue
-from webcompat import app
+
+from webcompat.api.endpoints import proxy_issue
 from webcompat.db import session_db
 from webcompat.db import User
+from webcompat.form import AUTH_REPORT
+from webcompat.form import get_form
+from webcompat.form import FormWizard
+from webcompat.form import PROXY_REPORT
+from webcompat.form import normalize_url
+from webcompat.helpers import ab_active
+from webcompat.helpers import ab_current_experiments
+from webcompat.helpers import ab_init
+from webcompat.helpers import add_csp
+from webcompat.helpers import add_sec_headers
+from webcompat.helpers import cache_policy
+from webcompat.helpers import form_type
+from webcompat.helpers import get_browser_name
+from webcompat.helpers import get_extra_labels
+from webcompat.helpers import get_referer
+from webcompat.helpers import get_user_info
+from webcompat.helpers import is_blocked_domain
+from webcompat.helpers import to_str
+from webcompat.helpers import is_darknet_domain
+from webcompat.helpers import is_valid_issue_form
+from webcompat.helpers import mockable_response
+from webcompat.helpers import prepare_form
+from webcompat.helpers import set_referer
+from webcompat.issues import report_issue
+from webcompat.templates import bust_cache
+from webcompat import app
 from webcompat import github
 
 
@@ -59,7 +67,10 @@ def before_request():
         g.user = User.query.get(session['user_id'])
     g.referer = get_referer(request) or url_for('index')
     g.request_headers = request.headers
-    request.nonce = sha1(uuid4().hex).hexdigest()
+    request.nonce = secrets.token_hex(20)
+
+    # Set AB testing values
+    g.current_experiments = ab_current_experiments()
 
 
 @app.after_request
@@ -68,6 +79,7 @@ def after_request(response):
     session_db.remove()
     add_sec_headers(response)
     add_csp(response)
+    ab_init(response)
     return response
 
 
@@ -77,13 +89,6 @@ def token_getter():
     user = g.user
     if user is not None:
         return user.access_token
-
-
-@app.template_filter('format_date')
-def format_date(datestring):
-    """For now, just chops off crap."""
-    # 2014-05-01T02:26:28Z
-    return datestring[0:10]
 
 
 @app.route('/login')
@@ -107,7 +112,7 @@ def login():
 def logout():
     """Set the logout route."""
     session.clear()
-    flash(u'You were successfully logged out.', 'info')
+    flash('You were successfully logged out.', 'info')
     return redirect(g.referer)
 
 
@@ -120,7 +125,7 @@ def authorized(access_token=None):
     if app.config['TESTING']:
         access_token = 'thisisatest'
     if access_token is None:
-        flash(u'Something went wrong trying to sign into GitHub. :(', 'error')
+        flash('Something went wrong trying to sign into GitHub. :(', 'error')
         return redirect(g.referer)
     user = User.query.filter_by(access_token=access_token).first()
     if user is None:
@@ -172,13 +177,13 @@ def index():
         'rel': 'preload'
     })
     ua_header = request.headers.get('User-Agent')
-    bug_form = get_form({'user_agent': ua_header})
+
     # browser_name is used in topbar.html to show the right add-on link
     browser_name = get_browser_name(ua_header)
     # GET means you want to file a report.
     if g.user:
         get_user_info()
-    return render_template('index.html', form=bug_form, browser=browser_name)
+    return render_template('index.html', browser=browser_name)
 
 
 @app.route('/issues')
@@ -254,26 +259,25 @@ def create_issue():
     # Form Prefill section
     if request_type == 'prefill':
         form_data = prepare_form(request)
-        # XXXTemp Hack: if the user clicked on Report Site Issue from Release,
-        # we want to redirect them somewhere else and forget all their data.
-        # See https://bugzilla.mozilla.org/show_bug.cgi?id=1513541
-        if form_data == 'release':
-            return render_template('thanks.html')
-        bug_form = get_form(form_data)
+        bug_form = get_form(form_data, form=FormWizard)
+        pagetitle = "New Issue"
         session['extra_labels'] = form_data['extra_labels']
         source = form_data.pop('utm_source', None)
         campaign = form_data.pop('utm_campaign', None)
+        anonymous_reporting = app.config['ANONYMOUS_REPORTING_ENABLED']
         return render_template('new-issue.html', form=bug_form, source=source,
-                               campaign=campaign, nonce=request.nonce)
+                               campaign=campaign, nonce=request.nonce,
+                               pagetitle=pagetitle,
+                               anonymous_reporting=anonymous_reporting)
     # Issue Creation section
     elif request_type == 'create':
         # Check if there is a form
         if not request.form:
-            log.info('POST request without form.')
+            log.info('400: POST request without form.')
             abort(400)
         # Adding parameters to the form
         form = request.form.copy()
-        extra_labels = session.pop('extra_labels', None)
+        extra_labels = get_extra_labels(form)
         if extra_labels:
             form['extra_labels'] = extra_labels
         # Logging the ip and url for investigation
@@ -282,12 +286,19 @@ def create_issue():
             url=form['url'].encode('utf-8')))
         # Check if the form is valid
         if not is_valid_issue_form(form):
+            log.info('400: POST request w/o valid form (is_valid_issue_form).')
             abort(400)
+        domain = urllib.parse.urlsplit(normalize_url(form['url'])).hostname
+        if is_darknet_domain(domain):
+            msg = app.config['IS_DARKNET_DOMAIN'].format(form['url'])
+            flash(msg, 'notimeout')
+            return redirect(url_for('index'))
         if form.get('submit_type') == PROXY_REPORT:
-            # Checking blacklisted domains
-            domain = urlparse.urlsplit(form['url']).hostname
-            if is_blacklisted_domain(domain):
-                msg = app.config['IS_BLACKLISTED_DOMAIN'].format(form['url'])
+            if not app.config['ANONYMOUS_REPORTING_ENABLED']:
+                abort(400)
+            # Checking blocked domains
+            if is_blocked_domain(domain):
+                msg = app.config['IS_BLOCKED_DOMAIN'].format(form['url'])
                 flash(msg, 'notimeout')
                 return redirect(url_for('index'))
             # Anonymous reporting
@@ -307,6 +318,7 @@ def create_issue():
                 session['form'] = form
                 return redirect(url_for('login'))
     else:
+        log.info('400: Something else happened.')
         abort(400)
 
 
@@ -331,7 +343,10 @@ def show_issue(number):
     if session.get('show_thanks'):
         flash(number, 'thanks')
         session.pop('show_thanks')
-    return render_template('issue.html', number=number)
+    issue_data = proxy_issue(number)
+    return render_template('issue.html',
+                           issue_data=json.loads(issue_data[0]),
+                           json_data=to_str(issue_data[0]))
 
 
 @app.route('/me')
@@ -378,6 +393,7 @@ def show_rate_limit():
 
 if app.config['LOCALHOST']:
     @app.route('/uploads/<path:filename>')
+    @mockable_response
     def download_file(filename):
         """Route just for local environments to send uploaded images.
 
@@ -410,6 +426,15 @@ def privacy():
     if g.user:
         get_user_info()
     return render_template('privacy.html')
+
+
+@app.route('/terms')
+@cache_policy(private=True, uri_max_age=0, must_revalidate=True)
+def terms():
+    """Route to display terms of service page."""
+    if g.user:
+        get_user_info()
+    return render_template('terms.html')
 
 
 @app.route('/contact')
@@ -514,24 +539,21 @@ def cssfixme():
 
 @app.route('/dashboard')
 def dashboard():
-    """Route for dashboards index."""
-    if g.user:
-        get_user_info()
-    return render_template('dashboard/home.html')
+    """Route for dashboards index.
+
+    This used to be hosted on webcompat.com.
+    This is now living on the dashboard Web site."""
+    return redirect('https://webcompat-dashboard.herokuapp.com/', code=308)
 
 
 @app.route('/dashboard/triage')
 def dashboard_triage():
-    """Route to handle dashboard triage."""
-    if g.user:
-        get_user_info()
-    params = {'per_page': 100, 'sort': 'created', 'direction': 'asc'}
-    needstriage_issues = get_milestone_list('needstriage', params)
-    needstriage_list, stats = filter_needstriage(needstriage_issues)
-    return render_template(
-        'dashboard/triage.html',
-        needstriage_list=needstriage_list,
-        stats=stats)
+    """Route to handle dashboard triage.
+
+    This used to be hosted on webcompat.com.
+    This is now living on the dashboard Web site."""
+    return redirect(
+        'https://webcompat-dashboard.herokuapp.com/triage', code=308)
 
 
 @app.route('/csp-report', methods=['POST'])
@@ -547,7 +569,7 @@ def log_csp_report():
         if expected_mime not in request.headers.get('content-type', ''):
             return ('Wrong Content-Type.', 400)
         with open(app.config['CSP_REPORTS_LOG'], 'a') as r:
-            r.write(request.data + '\n')
+            r.write(request.data.decode('utf-8') + '\n')
         return ('', 204)
     else:
         return ('Forbidden.', 403)
@@ -556,11 +578,38 @@ def log_csp_report():
 @app.route('/.well-known/<path:subpath>')
 @cache_policy(private=False, uri_max_age=31104000, must_revalidate=False)
 def wellknown(subpath):
-    """Route for returning 404 for the currently unused well-known routes."""
+    """Route for returning 404 for the currently unused well-known routes.
+
+    /.well-known/security.txt
+        contact information for a security issue.
+    /.well-known/deployed-version
+        GIT SHA of the current deployed version.
+    """
     if subpath == 'security.txt':
         msg = app.config['WELL_KNOWN_SECURITY']
         status_code = 200
+    elif subpath == 'deployed-version':
+        msg, status_code = app.config['SHA_VERSION']
     else:
         msg = app.config['WELL_KNOWN_ALL'].format(subpath=subpath)
         status_code = 404
     return (msg, status_code, {'content-type': 'text/plain; charset=utf-8'})
+
+
+@app.route('/console_logs/<path:subpath>/<uuid:file_id>')
+@cache_policy(private=True, uri_max_age=0, must_revalidate=True)
+def show_logs(subpath, file_id):
+    """Route to display console logs."""
+
+    path = os.path.join(
+        app.config['UPLOADS_DEFAULT_DEST'],
+        subpath,
+        str(file_id) + '.json'
+    )
+
+    if os.path.exists(path):
+        with open(path, 'r') as f:
+            logs = json.load(f)
+        return render_template('console-logs.html', logs=logs)
+    else:
+        abort(404)

@@ -10,16 +10,21 @@ import datetime
 import os
 import re
 import sys
-from urllib import quote_plus
-from urlparse import urlunsplit
+from urllib.parse import quote_plus
+from urllib.parse import urlunsplit
 
+from dotenv import load_dotenv
 import requests
+
+# Define the application base directory
+BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
+load_dotenv(os.path.join(BASE_DIR, '.env'))
 
 # This will start an initialization process.
 sys.path.append(os.path.realpath(os.getcwd()))
-from config.secrets import OAUTH_TOKEN  # noqa
 
 # Config
+OAUTH_TOKEN = os.environ.get('OAUTH_TOKEN')
 GITHUB_API = 'api.github.com'
 ROOT_REPO = '/repos/webcompat'
 REPO_TEST = 'webcompat-tests'
@@ -30,8 +35,8 @@ HEADERS = {'Accept': 'application/vnd.github.v3+json',
            'Authorization': 'token {token}'.format(token=OAUTH_TOKEN),
            'User-Agent': 'webcompat/webcompat-bot'}
 # Templates for producing the changelog
-LINE_TEMPLATE = u'* {title} [Pull #{number}]({url})\n'
-LOG_TEMPLATE = u"""
+LINE_TEMPLATE = '* {title} [Pull #{number}]({url})\n'
+LOG_TEMPLATE = """
 
 ## X.X.X - {date}
 
@@ -71,14 +76,16 @@ def normalize_title(title):
     See the test suite for the potential matches.
     GitHub sends us a unicode string.
     """
-    if u'🚀' in title:
-        title = title.replace(u'🚀', '')
-        title = title.strip()
-        title = u'NPM update - {title}.'.format(title=title)
+
+    if title.startswith('Bump'):
+        title = title.partition(' ')
+        title = 'NPM update - Upgrade {title}.'.format(
+            title=title[2])
+
     else:
         regex = r"[^ ]?\#(?P<number>\d+)[^\w]+(?P<prose>.*)"
         m = re.search(regex, title)
-        log_line = u'Fixes #{msg[number]} - {msg[prose]}'
+        log_line = 'Fixes #{msg[number]} - {msg[prose]}'
         title = log_line.format(msg=m.groupdict())
     return title
 
@@ -123,11 +130,11 @@ def main():
             label_path = path_tmp.format(
                 root=ROOT_REPO, repo=repo, number=number, label=QUERY_VALUE)
             url = urlunsplit(('https', GITHUB_API, label_path, '', ''))
-            print('Deleting "{label}" for {number} on {repo}…'.format(
-                label=QUERY_VALUE, number=number, repo=repo))
+            print(('Deleting "{label}" for {number} on {repo}…'.format(
+                label=QUERY_VALUE, number=number, repo=repo)))
             status = delete_label(url)
-            print('{status} for issue {number}'.format(
-                status=status, number=number))
+            print(('{status} for issue {number}'.format(
+                status=status, number=number)))
 
 
 if __name__ == "__main__":

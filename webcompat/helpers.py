@@ -13,9 +13,12 @@ from functools import update_wrapper
 from functools import wraps
 import hashlib
 import json
+import logging
 import os
+import math
+import random
 import re
-import urlparse
+import urllib.parse
 
 from flask import abort
 from flask import g
@@ -35,51 +38,55 @@ AUTH_HEADERS = {'Authorization': 'token {0}'.format(app.config['OAUTH_TOKEN']),
 HOST_WHITELIST = ('webcompat.com', 'staging.webcompat.com',
                   '127.0.0.1', 'localhost')
 FIXTURES_PATH = os.getcwd() + '/tests/fixtures'
-STATIC_PATH = os.getcwd() + '/webcompat/static'
 JSON_MIME = 'application/json'
-REPO_URI = app.config['ISSUES_REPO_URI']
 
-cache_dict = {}
+log = app.logger
+log.setLevel(logging.INFO)
 
 
-@app.template_filter('bust_cache')
-def bust_cache(file_path):
-    """Jinja2 filter to add a cache busting param based on md5 checksum.
+@app.context_processor
+def register_ab_active():
+    """Register `ab_active` in jinja context"""
+    return dict(ab_active=ab_active)
 
-    Uses a simple cache_dict to we don't have to hash each file for every
-    request. This is kept in-memory so it will be blown away when the app
-    is restarted (which is when file changes would have been deployed).
+
+def get_list_items(val_dict):
+    """Return list items (<li>) from the passed in list ([])."""
+    rv = ''.join(['<li>{k}: {v}</li>'.format(k=k, v=get_serialized_value(v))
+                  for k, v in list(val_dict.items())])
+    return '<ul>\n  {rv}\n</ul>'.format(rv=rv)
+
+
+def get_details_list(details):
+    """Return details content as list items in a <ul>.
+
+    * If a dict, as a formatted string
+    * If the dict has a value that looks like [{k: v}], that will
+      be returned as a nested <ul>.
+    * Otherwise as a string as-is.
     """
-    def get_checksum(file_path):
-        try:
-            checksum = cache_dict[file_path]
-        except KeyError:
-            checksum = md5_checksum(file_path)
-            cache_dict[file_path] = checksum
-        return checksum
-
-    return file_path + '?' + get_checksum(STATIC_PATH + file_path)
+    content = details
+    try:
+        rv = get_list_items(details)
+    except AttributeError:
+        rv = '<ul>\n  <li>{content}</li>\n</ul>'.format(content=content)
+    return rv
 
 
-def md5_checksum(file_path):
-    """Return the md5 checksum for a given file path."""
-    with open(file_path, 'rb') as fh:
-        m = hashlib.md5()
-        while True:
-            # only read in 8k of the file at a time
-            data = fh.read(8192)
-            if not data:
-                break
-            m.update(data)
-        return m.hexdigest()
+def get_serialized_value(val):
+    """Map values from JSON to a more human readable format.
 
-
-def get_str_value(val):
-    """Map values from JSON to python."""
+    This might be a nested <ul> with list items, depending
+    on the input.
+    """
     details_map = {False: 'false', True: 'true', None: 'null'}
     if isinstance(val, (bool, type(None))):
         return details_map[val]
-    if isinstance(val, unicode):
+    if isinstance(val, list) and isinstance(val[0], dict):
+        # if val is a list, we expect there to be a single object
+        # inside. if so, we build a nested <ul> from that object's data
+        return get_list_items(val[0])
+    if isinstance(val, str):
         return val
     return str(val)
 
@@ -131,7 +138,7 @@ def get_browser(user_agent_string=None):
 
     It will pre-populate the bug reporting form.
     """
-    if user_agent_string and isinstance(user_agent_string, basestring):
+    if user_agent_string and isinstance(user_agent_string, str):
         ua_dict = user_agent_parser.Parse(user_agent_string)
         ua = ua_dict.get('user_agent')
         name = get_name(ua)
@@ -154,7 +161,7 @@ def get_browser_name(user_agent_string=None):
 
     unknown user agents will be reported as "unknown".
     """
-    if user_agent_string and isinstance(user_agent_string, basestring):
+    if user_agent_string and isinstance(user_agent_string, str):
         # get_browser will return something like 'Chrome Mobile 47.0'
         # we just want 'chrome mobile', i.e., the lowercase name
         # w/o the version
@@ -167,7 +174,7 @@ def get_os(user_agent_string=None):
 
     It pre-populates the bug reporting form.
     """
-    if user_agent_string and isinstance(user_agent_string, basestring):
+    if user_agent_string and isinstance(user_agent_string, str):
         ua_dict = user_agent_parser.Parse(user_agent_string)
         os = ua_dict.get('os')
         name = get_name(os)
@@ -180,19 +187,24 @@ def get_os(user_agent_string=None):
     return "Unknown"
 
 
-def get_response_headers(response):
+def get_response_headers(response, mime_type=JSON_MIME):
     """Return a dictionary of headers based on a passed in Response object.
 
     This allows us to proxy response headers from GitHub to our own responses.
     """
-    headers = {'etag': response.headers.get('etag'),
-               'cache-control': response.headers.get('cache-control'),
-               'content-type': JSON_MIME}
-
-    if response.headers.get('link'):
-        headers['link'] = rewrite_and_sanitize_link(
-            response.headers.get('link'))
-    return headers
+    # handle the case where we get the data directly
+    headers = {}
+    if isinstance(response, requests.models.Response):
+        headers = response.headers
+    # or the case where we proxy an already fetched reponse
+    if isinstance(response, tuple):
+        headers = response[2]
+    new_headers = {'etag': headers.get('etag'),
+                   'cache-control': headers.get('cache-control'),
+                   'content-type': mime_type}
+    if headers.get('link'):
+        new_headers['link'] = rewrite_and_sanitize_link(headers.get('link'))
+    return new_headers
 
 
 def get_request_headers(headers, mime_type=JSON_MIME):
@@ -216,7 +228,7 @@ def get_referer(request):
     the session for a manually stashed 'referer' key, otherwise return None.
     """
     if request.referrer:
-        host = urlparse.urlparse(request.referrer).hostname
+        host = urllib.parse.urlparse(request.referrer).hostname
         if host in HOST_WHITELIST:
             return request.referrer
         else:
@@ -232,7 +244,7 @@ def set_referer(request):
     the HOST_WHITELIST.
     """
     if request.referrer:
-        host = urlparse.urlparse(request.referrer).hostname
+        host = urllib.parse.urlparse(request.referrer).hostname
         if host in HOST_WHITELIST:
             session['referer'] = request.referrer
 
@@ -283,7 +295,7 @@ def rewrite_links(link_header):
     header_link_data = parse_link_header(link_header)
     for data in header_link_data:
         uri = data['link']
-        uri_tuple = urlparse.urlsplit(uri)
+        uri_tuple = urllib.parse.urlsplit(uri)
         path = uri_tuple.path
         query = uri_tuple.query
         if path.startswith('/repositories/'):
@@ -293,7 +305,7 @@ def rewrite_links(link_header):
         elif path.startswith('/search/issues'):
             path = 'issues/search'
         api_path = '{}{}'.format('/api/', path)
-        data['link'] = urlparse.urlunsplit(('', '', api_path, query, ''))
+        data['link'] = urllib.parse.urlunsplit(('', '', api_path, query, ''))
     return format_link_header(header_link_data)
 
 
@@ -314,13 +326,13 @@ def remove_oauth(uri):
     Github returns Oauth tokens in some circumstances. We remove it for
     avoiding to spill it in public as it's not necessary in Link Header.
     """
-    uri_group = urlparse.urlparse(uri)
+    uri_group = urllib.parse.urlparse(uri)
     parameters = uri_group.query.split('&')
     clean_parameters_list = [parameter for parameter in parameters
                              if not parameter.startswith('access_token=')]
     clean_parameters = '&'.join(clean_parameters_list)
     clean_uri = uri_group._replace(query=clean_parameters)
-    return urlparse.urlunparse(clean_uri)
+    return urllib.parse.urlunparse(clean_uri)
 
 
 def rewrite_and_sanitize_link(link_header):
@@ -393,21 +405,34 @@ def mockable_response(func):
         if app.config['TESTING']:
             get_args = request.args.copy()
             full_path = request.full_path
+            # If request.path is '/', this means we're calling a mocked
+            # method (in)directly, so just return it. The expectation is that
+            # a unit test is using Mock, so we don't need to rely on mocked
+            # file system data.
+            if request.path == '/':
+                return func(*args, **kwargs)
             if get_args:
                 # Only requests with arguments, get a fixture with a checksum.
                 # We grab the full path of the request URI to compute an md5
                 # that will give us the right fixture file.
-                checksum = hashlib.md5(full_path).hexdigest()
+                checksum = hashlib.md5(to_bytes(full_path)).hexdigest()
                 file_path = FIXTURES_PATH + request.path + "." + checksum
             else:
                 file_path = FIXTURES_PATH + request.path
-            full_file_path = file_path + '.json'
-            if not os.path.exists(full_file_path):
-                print('Fixture expected at: {fix}'.format(fix=full_file_path))
+            if not file_path.endswith('.json'):
+                file_path = file_path + '.json'
+            if not os.path.exists(file_path):
+                # When you request /issues/2
+                # it will try to find a /fixtures/issues/2.json file which
+                # doesn't exist (it's in /api/)-- so rather than duplicate
+                # files, we just look there.
+                file_path = FIXTURES_PATH + '/api' + request.path + '.json'
+            if not os.path.exists(file_path):
+                print('Fixture expected at: {fix}'.format(fix=file_path))
                 print('by the http request: {req}'.format(req=request.url))
                 return ('', 404)
             else:
-                with open(full_file_path, 'r') as f:
+                with open(file_path, 'rb') as f:
                     data = f.read()
                     return (data, 200, get_fixture_headers(data))
         return func(*args, **kwargs)
@@ -431,6 +456,7 @@ def extract_url(issue_body):
     return url
 
 
+@mockable_response
 def proxy_request(method, path, params=None, headers=None, data=None):
     """Make a GitHub API request with a bot's OAuth token.
 
@@ -453,6 +479,7 @@ def proxy_request(method, path, params=None, headers=None, data=None):
     return req(resource_uri, data=data, params=params, headers=auth_headers)
 
 
+@mockable_response
 def api_request(method, path, params=None, data=None, mime_type=JSON_MIME):
     """Handle communication with the  GitHub API.
 
@@ -488,6 +515,8 @@ def add_sec_headers(response):
     response.headers['X-Content-Type-Options'] = 'nosniff'
     response.headers['X-XSS-Protection'] = '1; mode=block'
     response.headers['X-Frame-Options'] = 'DENY'
+    if app.config['LOCALHOST']:
+        response.headers['Access-Control-Allow-Origin'] = '*'
 
 
 def get_img_src_policy():
@@ -497,7 +526,7 @@ def get_img_src_policy():
     """
     policy = "img-src 'self' https://www.google-analytics.com https://*.githubusercontent.com data:; "  # noqa
     if app.config['LOCALHOST']:
-        policy = "img-src 'self' https://webcompat.com https://www.google-analytics.com https://*.githubusercontent.com data:; "  # noqa
+        policy = "img-src 'self' https://staging.webcompat.com https://webcompat.com https://www.google-analytics.com https://*.githubusercontent.com data:; "  # noqa
     return policy
 
 
@@ -556,14 +585,6 @@ def cache_policy(private=True, uri_max_age=86400, must_revalidate=False):
     return set_policy
 
 
-def get_milestone_list(milestone_name, params=None):
-    """Return a dictionary of issues in the milestone."""
-    raw_response = api.endpoints.get_issue_category(
-        milestone_name, other_params=params)
-    milestone_list = json.loads(raw_response[0])
-    return milestone_list
-
-
 def is_valid_issue_form(form):
     """Check if the issue form follows some requirements.
 
@@ -571,6 +592,7 @@ def is_valid_issue_form(form):
     if one essential is missing, it's a bad request.
     We may add more constraints in the future.
     """
+    values_check = False
     must_parameters = [
         'browser',
         'description',
@@ -580,13 +602,25 @@ def is_valid_issue_form(form):
         'url',
         'username', ]
     form_submit_values = ['github-auth-report', 'github-proxy-report']
-    parameters_check = set(must_parameters).issubset(form.keys())
+    parameters_check = set(must_parameters).issubset(list(form.keys()))
     if parameters_check:
         values_check = form['submit_type'] in form_submit_values
-    return parameters_check and values_check
+    valid_form = parameters_check and values_check
+    if not valid_form:
+        log.info('is_valid_issue_form: form[submit_type] => {0}'.format(
+            form.get('submit_type') or 'empty submit_type value'))
+        log.info('is_valid_issue_form: missing param(s)? => {0}'.format(
+            set(must_parameters).difference(list(form.keys()))))
+        log.info('is_valid_issue_form: experiment branch => {0}'.format(
+            ab_active('exp') or 'Unknown branch'
+        ))
+        log.info('is_valid_issue_form: reporter ip => {0}'.format(
+            request.remote_addr
+        ))
+    return valid_form
 
 
-def is_blacklisted_domain(domain):
+def is_blocked_domain(domain):
     """Check if the domain is part of an exclusion list."""
     # see https://github.com/webcompat/webcompat.com/issues/1141
     # see https://github.com/webcompat/webcompat.com/issues/1237
@@ -595,6 +629,13 @@ def is_blacklisted_domain(domain):
                 'mailmanager.cityweb.de',
                 'coco.fr']
     return domain in spamlist
+
+
+def is_darknet_domain(domain):
+    """Check if the domain ends with .onion."""
+    if not domain:
+        return False
+    return domain.endswith('.onion')
 
 
 def form_type(form_request):
@@ -635,18 +676,138 @@ def prepare_form(form_request):
     if form_request.method == 'POST':
         json_data = form_request.get_json()
         form_data.update(json_data)
-    channel = ''
-    details = form_data.get('details')
-    if details:
-        channel = details.get('channel')
-    # XXXTemp Hack: if the user clicked on Report Site Issue from Release,
-    # we want to redirect them somewhere else and forget all their data.
-    # See https://bugzilla.mozilla.org/show_bug.cgi?id=1513541
-    if channel == 'release':
-        form_data = 'release'
     return form_data
 
 
 def is_json_object(json_data):
     """Check if the JSON data are an object."""
     return isinstance(json_data, dict)
+
+
+def to_bytes(bytes_or_str):
+    """Convert to bytes."""
+    if isinstance(bytes_or_str, str):
+        value = bytes_or_str.encode('utf-8')  # uses 'utf-8' for encoding
+    else:
+        value = bytes_or_str
+    return value  # Instance of bytes
+
+
+def to_str(bytes_or_str):
+    """Convert to str."""
+    if isinstance(bytes_or_str, bytes):
+        value = bytes_or_str.decode('utf-8')  # uses 'utf-8' for encoding
+    else:
+        value = bytes_or_str
+    return value  # Instance of str
+
+
+def ab_active(exp_id):
+    """Checks cookies and returns the experiment variation if variation
+    is still active or `False`.
+    """
+    if ab_exempt():
+        return False
+
+    return g.current_experiments.get(exp_id) or False
+
+
+def ab_exempt():
+    """Checks if request should exempt AB experiments."""
+    if g.user and g.user.user_id in app.config['AB_EXEMPT_USERS']:
+        return True
+    return False
+
+
+def ab_current_experiments():
+    """Return the current experiments that the request is participating."""
+
+    curr_exp = {}
+
+    if ab_exempt():
+        return curr_exp
+
+    if request.headers.get('DNT') == '1':
+        return curr_exp
+
+    for exp_id in app.config['AB_EXPERIMENTS']:
+
+        active_var = request.cookies.get(exp_id) or False
+
+        if active_var:
+            curr_exp[exp_id] = active_var
+        else:
+            # Pick a random number in the range [0, 1) and map it to [1, 100]
+            selector = math.floor(random.random() * 10000) + 1
+            selector = selector / 100
+            variations = app.config['AB_EXPERIMENTS'][exp_id]['variations']
+
+            for var, (start, end) in variations.items():
+                if selector > start and selector <= end:
+                    curr_exp[exp_id] = var
+
+    return curr_exp
+
+
+def ab_init(response):
+    """Initialize the experiment cookies in current session."""
+
+    if ab_exempt():
+        return response
+
+    for exp_id, var in g.current_experiments.items():
+        if not request.cookies.get(exp_id) or False:
+            max_age = app.config['AB_EXPERIMENTS'][exp_id]['max-age']
+            response.set_cookie(exp_id, var, max_age=max_age)
+
+    return response
+
+
+def get_extra_labels(form):
+    """Extract extra_labels.
+
+    If extra_labels param exists in current session, use it,
+    otherwise use the value coming from form.
+    """
+
+    extra_labels = session.pop('extra_labels', [])
+
+    if not extra_labels:
+        extra_labels = json.loads(form.get('extra_labels', '[]') or '[]')
+
+    return extra_labels
+
+
+def get_data_from_request(request):
+    if 'image' in request.files and request.files['image'].filename:
+        return 'image', request.files['image']
+    elif 'image' in request.form:
+        return 'image', request.form['image']
+    elif 'console_logs' in request.form:
+        return 'json', request.form['console_logs']
+    else:
+        return None, None
+
+
+def get_filename_from_url(uri):
+    """Extract filename from url.
+
+    Get filename of a file/page where console log was initiated
+    based on url
+    """
+    parsed_uri = urllib.parse.urlparse(uri)
+    script_path = os.path.basename(parsed_uri.path)
+
+    if not script_path and parsed_uri.path:
+        script_path = os.path.basename(os.path.normpath(parsed_uri.path))
+
+    # if file or page wasn't found just return site domain
+    if not script_path:
+        script_path = parsed_uri.netloc
+
+    return script_path
+
+
+@app.context_processor
+def register_get_filename_from_url():
+    return dict(get_filename_from_url=get_filename_from_url)

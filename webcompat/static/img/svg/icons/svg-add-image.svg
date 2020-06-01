@@ -1,0 +1,13 @@
+<svg width="49px" height="47px" viewBox="0 0 49 47" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>add-image</title>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="wireframe/screenshot/add" transform="translate(-115.000000, -25.000000)">
+            <g id="Group-9" transform="translate(116.000000, 26.000000)">
+                <path d="M20,38 L4,38 C1.792,38 0,36.208 0,34 L0,4 C0,1.792 1.792,0 4,0 L38,0 C40.208,0 42,1.792 42,4 L42,18" id="Stroke-1" stroke-opacity="0.497650787" stroke="#404040" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                <polyline id="Stroke-3" stroke-opacity="0.497650787" stroke="#404040" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" points="4 32 16 20 20 24 34 10 38 14"></polyline>
+                <path d="M18,10 C18,13.314 15.314,16 12,16 C8.686,16 6,13.314 6,10 C6,6.686 8.686,4 12,4 C15.314,4 18,6.686 18,10 Z" id="Stroke-5" stroke-opacity="0.497650787" stroke="#404040" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                <path d="M41.25,35.25 L37.25,35.25 L37.25,39.25 C37.25,40.356 36.356,41.25 35.25,41.25 C34.144,41.25 33.25,40.356 33.25,39.25 L33.25,35.25 L29.25,35.25 C28.144,35.25 27.25,34.356 27.25,33.25 C27.25,32.144 28.144,31.25 29.25,31.25 L33.25,31.25 L33.25,27.25 C33.25,26.144 34.144,25.25 35.25,25.25 C36.356,25.25 37.25,26.144 37.25,27.25 L37.25,31.25 L41.25,31.25 C42.356,31.25 43.25,32.144 43.25,33.25 C43.25,34.356 42.356,35.25 41.25,35.25 M35.25,20.75 C28.346,20.75 22.75,26.346 22.75,33.25 C22.75,40.154 28.346,45.75 35.25,45.75 C42.154,45.75 47.75,40.154 47.75,33.25 C47.75,26.346 42.154,20.75 35.25,20.75" id="Fill-7" fill-opacity="0.497650787" fill="#404040"></path>
+            </g>
+        </g>
+    </g>
+</svg>

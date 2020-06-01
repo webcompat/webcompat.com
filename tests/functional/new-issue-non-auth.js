@@ -7,8 +7,8 @@ const { assert } = intern.getPlugin("chai");
 const { registerSuite } = intern.getInterface("object");
 const FunctionalHelpers = require("./lib/helpers.js");
 
-var url = function(path) {
-  return intern.config.siteRoot + path;
+var url = function (path) {
+  return intern.config.functionalBaseUrl + path;
 };
 
 registerSuite("New Issue Page", {
@@ -16,16 +16,16 @@ registerSuite("New Issue Page", {
     "new issue page loads"() {
       return FunctionalHelpers.openPage(
         this,
-        url("/issues/new"),
+        url("issues/new"),
         ".js-Navbar-link"
       )
         .findByCssSelector(".js-Navbar-link")
         .getVisibleText()
-        .then(function(text) {
+        .then(function (text) {
           assert.include(text, "Home");
           assert.notInclude(text, "Download our");
         })
         .end();
-    }
-  }
+    },
+  },
 });

@@ -7,8 +7,8 @@ const { assert } = intern.getPlugin("chai");
 const { registerSuite } = intern.getInterface("object");
 const FunctionalHelpers = require("./lib/helpers.js");
 
-var url = function(path) {
-  return intern.config.siteRoot + path;
+var url = function (path) {
+  return intern.config.functionalBaseUrl + path;
 };
 
 registerSuite("Labels (auth)", {
@@ -21,10 +21,10 @@ registerSuite("Labels (auth)", {
   },
 
   tests: {
-    "Label editor opens then closes (clicks)": function() {
+    "Label editor opens then closes (clicks)": function () {
       return FunctionalHelpers.openPage(
         this,
-        url("/issues/2"),
+        url("issues/2"),
         ".js-LabelEditorLauncher",
         true /* longerTimeout */
       )
@@ -39,16 +39,16 @@ registerSuite("Labels (auth)", {
         .findByCssSelector(".js-LabelEditorLauncher")
         .click()
         .getAttribute("class")
-        .then(function(className) {
+        .then(function (className) {
           assert.notInclude("is-active", className);
         })
         .end();
     },
 
-    "Label editor opens then closes (key events)": function() {
+    "Label editor opens then closes (key events)": function () {
       return FunctionalHelpers.openPage(
         this,
-        url("/issues/2"),
+        url("issues/2"),
         ".js-LabelEditorLauncher",
         true /* longerTimeout */
       )
@@ -61,16 +61,16 @@ registerSuite("Labels (auth)", {
         .findByCssSelector(".js-LabelEditorLauncher")
         .click()
         .getAttribute("class")
-        .then(function(className) {
+        .then(function (className) {
           assert.notInclude("is-active", className);
         })
         .end();
     },
 
-    "Clicking outside label editor closes it": function() {
+    "Clicking outside label editor closes it": function () {
       return FunctionalHelpers.openPage(
         this,
-        url("/issues/2"),
+        url("issues/2"),
         ".js-LabelEditorLauncher",
         true /* longerTimeout */
       )
@@ -84,16 +84,16 @@ registerSuite("Labels (auth)", {
         .end()
         .findByCssSelector(".js-LabelEditorLauncher")
         .getAttribute("class")
-        .then(function(className) {
+        .then(function (className) {
           assert.notInclude("is-active", className);
         })
         .end();
     },
 
-    "Clicking close button actually closes it": function() {
+    "Clicking close button actually closes it": function () {
       return FunctionalHelpers.openPage(
         this,
-        url("/issues/2"),
+        url("issues/2"),
         ".js-LabelEditorLauncher",
         true /* longerTimeout */
       )
@@ -105,17 +105,17 @@ registerSuite("Labels (auth)", {
         .end()
         .findByCssSelector(".js-LabelEditorLauncher")
         .getAttribute("class")
-        .then(function(className) {
+        .then(function (className) {
           assert.notInclude("is-active", className);
         })
         .end();
     },
 
-    "Label editor filters label list based on entered text": function() {
+    "Label editor filters label list based on entered text": function () {
       var count = 0;
       return FunctionalHelpers.openPage(
         this,
-        url("/issues/100"),
+        url("issues/100"),
         ".js-LabelEditorLauncher",
         true /* longerTimeout */
       )
@@ -129,7 +129,7 @@ registerSuite("Labels (auth)", {
         .findAllByXpath(
           '//label[contains (@class, "label-editor-list-item") and not(@style="display: none;")]'
         )
-        .then(function(elements) {
+        .then(function (elements) {
           count = elements.length;
           assert.deepEqual(
             1,
@@ -138,6 +138,6 @@ registerSuite("Labels (auth)", {
           );
         })
         .end();
-    }
-  }
+    },
+  },
 });

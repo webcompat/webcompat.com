@@ -32,3 +32,4 @@ session.db
 tests/
 tmp/
 uploads/
+venv/

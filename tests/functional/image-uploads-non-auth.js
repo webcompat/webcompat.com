@@ -7,8 +7,9 @@ const intern = require("intern").default;
 const { assert } = intern.getPlugin("chai");
 const { registerSuite } = intern.getInterface("object");
 const FunctionalHelpers = require("./lib/helpers.js");
-
-const url = intern.config.siteRoot + "/issues/new";
+const baseUrl = intern.config.functionalBaseUrl;
+const url = baseUrl + "issues/new";
+const targetOrigin = baseUrl.slice(0, baseUrl.length - 1);
 
 // This string is executed by calls to `execute()` in various tests
 // it postMessages a small green test square.
@@ -25,7 +26,7 @@ registerSuite("Image Uploads (non-auth)", {
           .sleep(1000)
           .findByCssSelector(".js-image-upload")
           .getAttribute("style")
-          .then(function(inlineStyle) {
+          .then(function (inlineStyle) {
             assert.include(
               inlineStyle,
               "data:image/png;base64,iVBOR",
@@ -40,13 +41,38 @@ registerSuite("Image Uploads (non-auth)", {
         FunctionalHelpers.openPage(this, url, ".js-image-upload")
           // Build up a green test square in canvas, toBlob that, and then postMessage the blob
           // see window-helpers.js for more details.
-          .execute(function() {
-            WindowHelpers.getBlob().then(WindowHelpers.sendBlob);
+          .execute(
+            function (args) {
+              WindowHelpers.getBlob(args).then(WindowHelpers.sendBlob);
+            },
+            [targetOrigin]
+          )
+          .sleep(1000)
+          .findByCssSelector(".js-image-upload")
+          .getAttribute("style")
+          .then(function (inlineStyle) {
+            assert.include(
+              inlineStyle,
+              "data:image/png;base64,iVBOR",
+              "Base64 data shown as preview background"
+            );
+          })
+          .end()
+      );
+    },
+
+    "postMessaged blob preview that was sent as part of an object"() {
+      return (
+        FunctionalHelpers.openPage(this, url, ".js-image-upload")
+          // Build up a green test square in canvas, toBlob that, and then postMessage the blob
+          // see window-helpers.js for more details.
+          .execute(function () {
+            WindowHelpers.getBlob().then(WindowHelpers.sendBlobInObject);
           })
           .sleep(1000)
           .findByCssSelector(".js-image-upload")
           .getAttribute("style")
-          .then(function(inlineStyle) {
+          .then(function (inlineStyle) {
             assert.include(
               inlineStyle,
               "data:image/png;base64,iVBOR",
@@ -65,7 +91,7 @@ registerSuite("Image Uploads (non-auth)", {
         .sleep(1000)
         .findByCssSelector(".js-image-upload")
         .getAttribute("style")
-        .then(function(inlineStyle) {
+        .then(function (inlineStyle) {
           assert.include(
             inlineStyle,
             "data:image/png;base64,iVBOR",
@@ -83,10 +109,10 @@ registerSuite("Image Uploads (non-auth)", {
           .sleep(1000)
           .findByCssSelector("#steps_reproduce")
           .getProperty("value")
-          .then(function(val) {
+          .then(function (val) {
             assert.notInclude(
               val,
-              "[![Screenshot Description](http://localhost:5000/uploads/",
+              "<img alt='Screenshot' src='http://localhost:5000/uploads/",
               "The data URI was not uploaded before form submission."
             );
           })
@@ -98,16 +124,16 @@ registerSuite("Image Uploads (non-auth)", {
       return (
         FunctionalHelpers.openPage(this, url, ".js-image-upload")
           // Build up a green test square in canvas, toBlob that, and then postMessage the blob
-          .execute(function() {
+          .execute(function () {
             WindowHelpers.getBlob().then(WindowHelpers.sendBlob);
           })
           .sleep(1000)
           .findByCssSelector("#steps_reproduce")
           .getProperty("value")
-          .then(function(val) {
+          .then(function (val) {
             assert.notInclude(
               val,
-              "[![Screenshot Description](http://localhost:5000/uploads/",
+              "<img alt='Screenshot' src='",
               "The data URI was not uploaded before form submission."
             );
           })
@@ -123,39 +149,14 @@ registerSuite("Image Uploads (non-auth)", {
         .sleep(1000)
         .findByCssSelector("#steps_reproduce")
         .getProperty("value")
-        .then(function(val) {
+        .then(function (val) {
           assert.notInclude(
             val,
-            "[![Screenshot Description](http://localhost:5000/uploads/",
+            "<img alt='Screenshot' src='",
             "The data URI was not uploaded before form submission."
           );
         })
         .end();
-    },
-
-    "remove image upload button is shown"() {
-      return (
-        FunctionalHelpers.openPage(this, url, ".js-remove-upload")
-          // send a small base64 encoded green test square
-          .execute(POSTMESSAGE_TEST_SQUARE)
-          .sleep(1000)
-          .findByCssSelector(".js-remove-upload")
-          .isDisplayed()
-          .then(function(isDisplayed) {
-            assert.equal(isDisplayed, true, "Remove button is displayed");
-          })
-          .end()
-          .findByCssSelector(".js-image-upload")
-          .getAttribute("class")
-          .then(function(className) {
-            assert.notInclude(
-              "is-validated",
-              className,
-              "parent container got the right class after an image was postMessage'd"
-            );
-          })
-          .end()
-      );
     },
 
     "clicking remove image upload button removes preview"() {
@@ -172,7 +173,7 @@ registerSuite("Image Uploads (non-auth)", {
           .end()
           .findByCssSelector(".js-image-upload")
           .getAttribute("style")
-          .then(function(inlineStyle) {
+          .then(function (inlineStyle) {
             assert.notInclude(
               inlineStyle,
               "data:image/png;base64,iVBOR",
@@ -197,7 +198,7 @@ registerSuite("Image Uploads (non-auth)", {
           .end()
           .findByCssSelector(".js-image-upload")
           .getAttribute("style")
-          .then(function(inlineStyle) {
+          .then(function (inlineStyle) {
             assert.notInclude(
               inlineStyle,
               "data:image/png;base64,iVBOR",
@@ -223,7 +224,7 @@ registerSuite("Image Uploads (non-auth)", {
         .sleep(1000)
         .findByCssSelector(".js-image-upload")
         .getAttribute("style")
-        .then(function(inlineStyle) {
+        .then(function (inlineStyle) {
           assert.include(
             inlineStyle,
             "data:image/png;base64,iVBOR",
@@ -231,6 +232,6 @@ registerSuite("Image Uploads (non-auth)", {
           );
         })
         .end();
-    }
-  }
+    },
+  },
 });

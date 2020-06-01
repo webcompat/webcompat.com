@@ -5,8 +5,8 @@
 const intern = require("intern").default;
 const http = require("http");
 
-var url = function(path, params) {
-  var base = intern.config.siteRoot + path;
+var url = function (path, params) {
+  var base = intern.config.functionalBaseUrl + path;
   return params ? base + params : base;
 };
 
@@ -16,10 +16,10 @@ checks that the server is returning fixture data,
 it will also check if there's anything wrong with the server.
 */
 
-intern.registerPlugin("checkServer", function() {
-  return new Promise(function(resolve, reject) {
-    var request = http.get(url("/api/issues/100"), function(response) {
-      response.on("data", function(data) {
+intern.registerPlugin("checkServer", function () {
+  return new Promise(function (resolve, reject) {
+    var request = http.get(url("api/issues/100"), function (response) {
+      response.on("data", function (data) {
         try {
           var json = JSON.parse(data);
           if (!json.hasOwnProperty("_fixture")) {
@@ -50,7 +50,7 @@ intern.registerPlugin("checkServer", function() {
     });
 
     // Handle connection errors.
-    request.on("error", function(err) {
+    request.on("error", function (err) {
       reject(
         new Error(
           `

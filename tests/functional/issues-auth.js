@@ -7,8 +7,8 @@ const { assert } = intern.getPlugin("chai");
 const { registerSuite } = intern.getInterface("object");
 const FunctionalHelpers = require("./lib/helpers.js");
 
-var url = function(path) {
-  return intern.config.siteRoot + path;
+var url = function (path) {
+  return intern.config.functionalBaseUrl + path;
 };
 
 registerSuite("Issues (auth)", {
@@ -24,7 +24,7 @@ registerSuite("Issues (auth)", {
     "Pressing 'l' opens the label editor box"() {
       return FunctionalHelpers.openPage(
         this,
-        url("/issues/70"),
+        url("issues/70"),
         ".js-Issue-comment-button"
       )
         .findByCssSelector("body")
@@ -32,17 +32,54 @@ registerSuite("Issues (auth)", {
         .type("l")
         .end()
         .findByCssSelector(".js-LabelEditorLauncher")
-        .then(function(element) {
+        .then(function (element) {
           element
             .getAttribute("class")
-            .then(function(classList) {
+            .then(function (classList) {
               assert.include(classList, "is-active");
             })
-            .catch(function(error) {
+            .catch(function (error) {
               console.log(error);
             });
         })
         .end();
-    }
-  }
+    },
+
+    "Clicking the logout dropdown works"() {
+      return FunctionalHelpers.openPage(
+        this,
+        url("issues/70"),
+        ".js-Issue-comment-button"
+      )
+        .findByCssSelector(".js-DropdownHeader")
+        .click()
+        .end()
+        .findByCssSelector(".js-DropdownHeader")
+        .then(function (element) {
+          element
+            .getAttribute("class")
+            .then(function (classList) {
+              assert.include(classList, "is-active");
+            })
+            .catch(function (error) {
+              console.log(error);
+            });
+        })
+        .end()
+        .findByCssSelector(".js-DropdownHeader")
+        .click()
+        .end()
+        .findByCssSelector(".js-DropdownHeader")
+        .then(function (element) {
+          element
+            .getAttribute("class")
+            .then(function (classList) {
+              assert.notInclude(classList, "is-active");
+            })
+            .catch(function (error) {
+              console.log(error);
+            });
+        });
+    },
+  },
 });

@@ -1,4 +1,6 @@
+.env
 env/
+venv/
 node_modules/
 git_modules/
 .DS_Store
@@ -14,6 +16,9 @@ uploads/
 config/secrets.py
 package-lock.json
 tmp/
+
+# Ignore the installable app.
+*.egg-info
 
 # The data folder contains information that shouldn't live in version control.
 data/*
@@ -33,3 +38,6 @@ webcompat/static/css/dist/
 *.jar
 *.pid
 nohup.out
+
+# tests
+.noseids

@@ -7,8 +7,8 @@ const { assert } = intern.getPlugin("chai");
 const { registerSuite } = intern.getInterface("object");
 const FunctionalHelpers = require("./lib/helpers.js");
 
-var url = function(path, params) {
-  var base = intern.config.siteRoot + path;
+var url = function (path, params) {
+  var base = intern.config.functionalBaseUrl + path;
   return params ? base + params : base;
 };
 
@@ -16,7 +16,7 @@ registerSuite("Search (non-auth)", {
   tests: {
     "Pressing g inside of search input *doesnt* go to github issues"() {
       return (
-        FunctionalHelpers.openPage(this, url("/issues"), "#js-SearchForm-input")
+        FunctionalHelpers.openPage(this, url("issues"), "#js-SearchForm-input")
           .findByCssSelector("#js-SearchForm-input")
           .click()
           .type("g")
@@ -25,7 +25,7 @@ registerSuite("Search (non-auth)", {
           // to realize we're not at GitHub.
           .setFindTimeout(0)
           .findByCssSelector(".repo-container .issues-listing")
-          .then(assert.fail, function(err) {
+          .then(assert.fail, function (err) {
             assert.isTrue(/NoSuchElement/.test(String(err)));
           })
           .end()
@@ -35,14 +35,14 @@ registerSuite("Search (non-auth)", {
     "Clicking on label search adds query parameter to the URL"() {
       return FunctionalHelpers.openPage(
         this,
-        url("/issues"),
+        url("issues"),
         "[data-remotename=browser-android]"
       )
         .findByCssSelector("[data-remotename=browser-android]")
         .click()
         .end()
         .getCurrentUrl()
-        .then(function(currUrl) {
+        .then(function (currUrl) {
           assert.include(
             currUrl,
             "q=label%3Abrowser-android",
@@ -55,7 +55,7 @@ registerSuite("Search (non-auth)", {
     "Clicking on label search updates the search input"() {
       return FunctionalHelpers.openPage(
         this,
-        url("/issues"),
+        url("issues"),
         "[data-remotename=browser-android"
       )
         .findByCssSelector("[data-remotename=browser-android]")
@@ -64,7 +64,7 @@ registerSuite("Search (non-auth)", {
         .end()
         .findDisplayedById("js-SearchForm-input")
         .getProperty("value")
-        .then(function(searchText) {
+        .then(function (searchText) {
           assert.include(
             searchText,
             "label:browser-android",
@@ -75,10 +75,10 @@ registerSuite("Search (non-auth)", {
     },
 
     "Search input is visible"() {
-      return FunctionalHelpers.openPage(this, url("/issues"), ".js-SearchForm")
+      return FunctionalHelpers.openPage(this, url("issues"), ".js-SearchForm")
         .findByCssSelector(".js-SearchForm")
         .isDisplayed()
-        .then(function(isDisplayed) {
+        .then(function (isDisplayed) {
           assert.equal(
             isDisplayed,
             true,
@@ -94,7 +94,7 @@ registerSuite("Search (non-auth)", {
       var searchParam = "?q=fffffff";
       return FunctionalHelpers.openPage(
         this,
-        url("/issues", searchParam),
+        url("issues", searchParam),
         ".js-SearchForm"
       )
         .findByCssSelector("#js-SearchForm-input")
@@ -104,10 +104,10 @@ registerSuite("Search (non-auth)", {
         .type("\uE007")
         .sleep(3000)
         .getCurrentUrl()
-        .then(function(currUrl) {
+        .then(function (currUrl) {
           assert.notInclude(currUrl, "fffffff", "old search param was removed");
         })
         .end();
-    }
-  }
+    },
+  },
 });

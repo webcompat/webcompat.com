@@ -4,7 +4,7 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-'''Flask Blueprint for image uploads.'''
+'''Flask Blueprint for file uploads.'''
 
 import base64
 import datetime
@@ -22,13 +22,26 @@ from werkzeug.datastructures import FileStorage
 from werkzeug.exceptions import RequestEntityTooLarge
 
 from webcompat import app
+from webcompat.helpers import get_data_from_request
 
-uploads = Blueprint('uploads', __name__, url_prefix='/upload',
-                    template_folder='../templates')
+uploads_bp = Blueprint('uploads_bp', __name__, url_prefix='/upload',
+                       template_folder='../templates')
 JSON_MIME = 'application/json'
 
 
-class Upload(object):
+class BaseUpload(object):
+    def __init__(self):
+        today = datetime.date.today()
+        self.year = str(today.year)
+        self.month = str(today.month)
+        self.file_id = str(uuid.uuid4())
+
+    def get_file_path(self, year, month, file_id, ext):
+        file_name = file_id + '.' + ext
+        return os.path.join(year, month, file_name)
+
+
+class ImageUpload(BaseUpload):
 
     '''Class that abstracts over saving image and screenshot uploads.
 
@@ -39,17 +52,11 @@ class Upload(object):
     ALLOWED_FORMATS = ('jpg', 'jpeg', 'jpe', 'png', 'gif', 'bmp')
 
     def __init__(self, imagedata):
+        super().__init__()
         self.image_object = self.to_image_object(imagedata)
-        # computing the parameters to be used
-        today = datetime.date.today()
-        self.year = str(today.year)
-        self.month = str(today.month)
-        self.image_id = str(uuid.uuid4())
         self.file_ext = self.get_file_ext()
-        self.image_path = self.img_path(self.month, self.year, self.image_id,
-                                        thumb=False)
-        self.thumb_path = self.img_path(self.month, self.year, self.image_id,
-                                        thumb=True)
+        self.image_path = self.get_file_path(self.year, self.month,
+                                             self.file_id, self.file_ext)
 
     def to_image_object(self, imagedata):
         '''Method to return a Pillow Image object from the raw imagedata.'''
@@ -58,23 +65,17 @@ class Upload(object):
             if isinstance(imagedata, FileStorage):
                 return Image.open(imagedata)
             # Is this a base64 encoded image (i.e., bug report screenshot)?
-            if (isinstance(imagedata, unicode) and
+            if (isinstance(imagedata, str) and
                     imagedata.startswith('data:image/')):
                 # Chop off 'data:image/.+;base64,' before decoding
                 imagedata = re.sub('^data:image/.+;base64,', '', imagedata)
+                # This will fix any incorrectly padded data.
+                imagedata = imagedata + '==='
                 return Image.open(io.BytesIO(base64.b64decode(imagedata)))
             raise TypeError('TypeError: Not a valid image format')
         except TypeError:
             # Not a valid format
             abort(415)
-
-    def img_path(self, month, year, image_id, thumb=False):
-        '''Return the right image path.'''
-        thumb_string = ''
-        if thumb:
-            thumb_string = '-thumb'
-        image_name = image_id + thumb_string + '.' + self.file_ext
-        return os.path.join(year, month, image_name)
 
     def get_file_ext(self):
         '''Method to return the file extension, as determined by Pillow.
@@ -100,7 +101,6 @@ class Upload(object):
             raise TypeError('Image file format not allowed')
         # Paths of the images
         file_dest = app.config['UPLOADS_DEFAULT_DEST'] + self.image_path
-        thumb_dest = app.config['UPLOADS_DEFAULT_DEST'] + self.thumb_path
         dest_dir = os.path.dirname(file_dest)
         if not os.path.exists(dest_dir):
             os.makedirs(dest_dir)
@@ -118,38 +118,69 @@ class Upload(object):
             save_parameters['save_all'] = True
         # unpacking save_parameters
         self.image_object.save(file_dest, **save_parameters)
-        # Creating the thumbnail
-        size = (1024, 1024)
-        self.image_object.thumbnail(size, Image.HAMMING)
-        self.image_object.save(thumb_dest, **save_parameters)
+
+    def get_file_info(self):
+        return {
+            'filename': self.get_filename(self.image_path),
+            'url': self.get_url(self.image_path),
+        }
 
 
-@uploads.route('/', methods=['POST'])
+class LogUpload(BaseUpload):
+    def __init__(self, data):
+        super().__init__()
+        self.data = self.process_json(data)
+        self.file_path = self.get_file_path(self.year, self.month,
+                                            self.file_id, 'json')
+
+    def process_json(self, data):
+        try:
+            return json.loads(data)
+        except ValueError:
+            abort(400)
+
+    def get_url(self, file_path):
+        return os.path.splitext(file_path)[0]
+
+    def save(self):
+        file_dest = app.config['UPLOADS_DEFAULT_DEST'] + self.file_path
+        dest_dir = os.path.dirname(file_dest)
+
+        if not os.path.exists(dest_dir):
+            os.makedirs(dest_dir)
+
+        with open(file_dest, 'w', encoding='utf-8') as f:
+            json.dump(self.data, f, ensure_ascii=False)
+
+    def get_file_info(self):
+        return {
+            'url': self.get_url(self.file_path)
+        }
+
+
+@uploads_bp.route('/', methods=['POST'])
 def upload():
-    '''Endpoint to upload an image.
+    '''Endpoint to upload an image or a json with console logs.
 
-    If the image asset passes validation, it's saved as:
+    If the file asset passes validation, it's saved as:
         UPLOADS_DEFAULT_DEST + /year/month/random-uuid.ext
 
     Returns a JSON string that contains the filename and url.
     '''
-    if 'image' in request.files and request.files['image'].filename:
-        imagedata = request.files['image']
-    elif 'image' in request.form:
-        imagedata = request.form['image']
-    else:
+    file_type, data = get_data_from_request(request)
+    if not data:
         # We don't know what you're trying to do, but it ain't gonna work.
         abort(501)
 
     try:
-        upload = Upload(imagedata)
+        if file_type is 'image':
+            upload = ImageUpload(data)
+        else:
+            upload = LogUpload(data)
+
         upload.save()
-        data = {
-            'filename': upload.get_filename(upload.image_path),
-            'url': upload.get_url(upload.image_path),
-            'thumb_url': upload.get_url(upload.thumb_path)
-        }
-        return (json.dumps(data), 201, {'content-type': JSON_MIME})
+        file_info = upload.get_file_info()
+        return json.dumps(file_info), 201, {'content-type': JSON_MIME}
     except (TypeError, IOError):
         abort(415)
     except RequestEntityTooLarge:

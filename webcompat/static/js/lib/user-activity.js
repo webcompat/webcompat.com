@@ -15,28 +15,28 @@ var needsinfoPagination = new PaginationMixin();
 // its url property directly. So we need to be sure to construct that from
 // path and params manually.
 issueList.UserActivityCollection = issueList.IssueCollection.extend({
-  initialize: function(options) {
+  initialize: function (options) {
     this.url =
       "/api/issues/" + issueList.user + options.path + "?" + options.params;
-  }
+  },
 });
 
 var sharedViewProps = {
   _loadingIndicator: loadingIndicator,
   template: wcTmpl["web_modules/issue-list.jst"],
-  render: function() {
+  render: function () {
     this.$el.html(
       this.template({
-        issues: this.issues.toJSON()
+        issues: this.issues.toJSON(),
       })
     );
 
     return this;
   },
-  updateModelParams: function() {
+  updateModelParams: function () {
     //no-op for now, (if?) until we manage state in the URL
   },
-  fetchAndRenderIssues: function(options) {
+  fetchAndRenderIssues: function (options) {
     var headers = { headers: { Accept: "application/json" } };
     var instance = options.instance;
     if (options && options.url) {
@@ -49,14 +49,14 @@ var sharedViewProps = {
     this.issues
       .fetch(headers)
       .done(
-        _.bind(function() {
+        _.bind(function () {
           this._loadingIndicator.removeClass("is-active");
           this.render(this.issues);
           instance.initPaginationLinks(this.issues);
         }, this)
       )
       .fail(
-        _.bind(function(e) {
+        _.bind(function (e) {
           var message;
           var timeout;
           if (e.responseJSON) {
@@ -70,37 +70,37 @@ var sharedViewProps = {
           this._loadingIndicator.removeClass("is-active");
           wcEvents.trigger("flash:error", {
             message: message,
-            timeout: timeout
+            timeout: timeout,
           });
         }, this)
       );
-  }
+  },
 };
 
 issueList.NeedsInfoView = Backbone.View.extend(
   _.extend(sharedViewProps, needsinfoPagination, {
     el: $("#needsinfo-issues"),
-    initialize: function() {
+    initialize: function () {
       this.issues = new issueList.UserActivityCollection({
         path: "/needsinfo",
-        params: "per_page=10"
+        params: "per_page=10",
       });
       needsinfoPagination.initMixin(this, this.issues, $("#needsinfo-section"));
       this.fetchAndRenderIssues({
         url: this.issues.url,
-        instance: needsinfoPagination
+        instance: needsinfoPagination,
       });
-    }
+    },
   })
 );
 
 issueList.MyIssuesView = Backbone.View.extend(
   _.extend(sharedViewProps, myIssuesPagination, {
     el: $("#my-issues"),
-    initialize: function() {
+    initialize: function () {
       this.issues = new issueList.UserActivityCollection({
         path: "/creator",
-        params: "per_page=10"
+        params: "per_page=10",
       });
       myIssuesPagination.initMixin(
         this,
@@ -109,19 +109,19 @@ issueList.MyIssuesView = Backbone.View.extend(
       );
       this.fetchAndRenderIssues({
         url: this.issues.url,
-        instance: myIssuesPagination
+        instance: myIssuesPagination,
       });
-    }
+    },
   })
 );
 
 issueList.IssueMentionsView = Backbone.View.extend(
   _.extend(sharedViewProps, mentionsPagination, {
     el: $("#issue-mentions"),
-    initialize: function() {
+    initialize: function () {
       this.issues = new issueList.UserActivityCollection({
         path: "/mentioned",
-        params: "per_page=10"
+        params: "per_page=10",
       });
 
       mentionsPagination.initMixin(
@@ -131,13 +131,13 @@ issueList.IssueMentionsView = Backbone.View.extend(
       );
       this.fetchAndRenderIssues({
         url: this.issues.url,
-        instance: mentionsPagination
+        instance: mentionsPagination,
       });
-    }
+    },
   })
 );
 
-$(function() {
+$(function () {
   new issueList.NeedsInfoView();
   new issueList.MyIssuesView();
   new issueList.IssueMentionsView();

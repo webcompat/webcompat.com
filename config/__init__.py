@@ -13,12 +13,11 @@ import os
 import shutil
 import sys
 import tempfile
-import urlparse
+import urllib.parse
 
 import requests
 
-from environment import *  # noqa
-from secrets import *  # noqa
+from config.environment import *  # noqa
 
 MILESTONE_ERROR = """It failed with {msg}!
 We will read from data/milestones.json.
@@ -26,10 +25,11 @@ We will read from data/milestones.json.
 MILESTONE_MISSING_FILE = """Oooops.
 We can't find {path}
 Double check that everything is configured properly
-in config/secrets.py and try again. Good luck!
+in .env and try again. Good luck!
 """
 MILESTONE_UNMATCHING = """A milestone is missing or has been added: {names}"""
-MILESTONE_UNMATCHING_ERROR = """Check the milestones names on your Github repository and try again.
+MILESTONE_UNMATCHING_ERROR = """
+Check the milestones names on your Github repository and try again.
 This error was probably caused by a typo.
 Your milestones.json was erased and a backup copy was created at {path}.
 """
@@ -47,7 +47,7 @@ def initialize_status():
     REPO_ROOT = ISSUES_REPO_URI.rpartition('/issues')[0]
     milestones_url_path = os.path.normcase(
         os.path.join('repos', REPO_ROOT, 'milestones'))
-    milestones_url = urlparse.urlunparse(
+    milestones_url = urllib.parse.urlunparse(
         ('https', 'api.github.com', milestones_url_path, '', '', ''))
     milestones_path = os.path.join(DATA_PATH, 'milestones.json')
     # Attempt to fetch from data/milestones.json
@@ -58,10 +58,12 @@ def initialize_status():
             # Get the milestone from the network
             print('Fetching milestones from Github…')
             r = requests.get(milestones_url)
+            # r.content is bytes
             milestones_content = r.content
             if r.status_code == 200:
                 with open(milestones_path, 'w') as f:
-                    f.write(r.content)
+                    # converting from bytes to str
+                    f.write(milestones_content.decode('utf-8'))
                 print('Milestones saved in data/')
             r.raise_for_status()
         except requests.exceptions.HTTPError as error:
@@ -85,6 +87,7 @@ def milestones_from_file(milestones_path):
     """Attempt to read the milestones data from the filesystem."""
     if os.path.isfile(milestones_path):
         with open(milestones_path, 'r') as f:
+            # returns a str
             milestones_content = f.read()
         return milestones_content
     else:
@@ -114,6 +117,29 @@ def update_status_config(milestones_content):
         if milestone['title'] in status_names:
             STATUSES[milestone['title']]['id'] = milestone['number']
     return STATUSES
+
+
+def get_variation(variation_key, variations_dict, defaults_dict):
+    """Convert a string to a tuple of integers.
+
+    If the passed variation_key doesn't follow this pattern '0 100', it will
+    return default values defined in defaults_dict.
+
+    This is currently used for defining the variation data of the A/B
+    experiment regarding the multi-steps form.
+    """
+    try:
+        # We want to create a tuple of integers from a string containing
+        # integers. Anything else should throw.
+        rv = tuple(int(x) for x in variations_dict.get(variation_key)
+                                                  .strip().split())
+        if (len(rv) != 2):
+            raise ValueError('The format is incorrect. Expected "{int} {int}"')
+    except Exception as e:
+        print('Something went wrong with AB test configuration: {0}'.format(e))
+        print('Falling back to default values.')
+        rv = defaults_dict.get(variation_key)
+    return rv
 
 
 THREADS_PER_PAGE = 8
@@ -188,6 +214,7 @@ EXTRA_LABELS = [
     'browser-firefox-reality',
     'type-fastclick',
     'type-google',
+    'type-marfeel',
     'type-media',
     'type-mobify',
     'type-tracking-protection-basic',
@@ -196,7 +223,33 @@ EXTRA_LABELS = [
     'type-webvr',
 ]
 
-from webcompat import app
+# Get AB experiment variation values from the environement.
+AB_VARIATIONS = {
+    'V1_VARIATION': os.environ.get('V1_VARIATION', '0 100'),
+    'V2_VARIATION': os.environ.get('V2_VARIATION', '100 100'),
+}
+# We define default values here, as a fallback.
+# By default, v1 will be served 100% of the time.
+AB_DEFAULTS = {
+    'V1_VARIATION': (0, 100),
+    'V2_VARIATION': (100, 100),
+}
+EXP_MAX_AGE = int(os.environ.get('EXP_MAX_AGE', 0))
+
+# AB testing config
+AB_EXPERIMENTS = {
+    'exp': {
+        'variations': {
+            'v1': get_variation('V1_VARIATION', AB_VARIATIONS, AB_DEFAULTS),
+            'v2': get_variation('V2_VARIATION', AB_VARIATIONS, AB_DEFAULTS),
+        },
+        'max-age': EXP_MAX_AGE
+    }
+}
+
+
+from webcompat import app  # noqa
+
 # We need the milestones
 if not initialize_status():
     sys.exit('Milestones are not initialized. Check logs.')

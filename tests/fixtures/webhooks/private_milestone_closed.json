@@ -1,0 +1,51 @@
+{
+  "action": "closed",
+  "issue": {
+    "title": "www.netflix.com - test private issue accepted",
+    "repository_url": "https://api.github.com/repos/webcompat/webcompat-tests-private",
+    "number": 600,
+    "body": "<!-- @browser: Firefox 55.0 -->\n<!-- @ua_header: Mozilla/5.0 (X11; Linux x86_64; rv:55.0) Gecko/20100101 Firefox/55.0 -->\n<!-- @reported_with: web -->\n<!-- @public_url: https://github.com/webcompat/webcompat-tests/issues/1  -->\n\n**URL**: https://www.netflix.com/",
+    "labels": [
+      {
+        "id": 1788251357,
+        "node_id": "MDU6TGFiZWwxNzg4MjUxMzU3",
+        "url": "https://api.github.com/repos/webcompat/webcompat-tests/labels/action-needsmoderation",
+        "name": "action-needsmoderation",
+        "color": "d36200",
+        "default": false,
+        "description": "issue in the process of being moderated"
+      }
+    ],
+    "state": "closed",
+    "milestone": {
+      "url": "https://api.github.com/repos/webcompat/webcompat-tests-private/milestones/1",
+      "html_url": "https://github.com/webcompat/webcompat-tests-private/milestone/1",
+      "labels_url": "https://api.github.com/repos/webcompat/webcompat-tests-private/milestones/1/labels",
+      "id": 4995253,
+      "node_id": "MDk6TWlsZXN0b25lNDk5NTI1Mw==",
+      "number": 1,
+      "title": "unmoderated",
+      "description": "The default milestone. These issues may not be made public until they are determined to not violate terms of use.",
+      "creator": {
+        "login": "miketaylr",
+        "id": 67283,
+        "node_id": "MDQ6VXNlcjY3Mjgz",
+        "avatar_url": "https://avatars1.githubusercontent.com/u/67283?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/miketaylr",
+        "html_url": "https://github.com/miketaylr",
+        "followers_url": "https://api.github.com/users/miketaylr/followers",
+        "following_url": "https://api.github.com/users/miketaylr/following{/other_user}",
+        "gists_url": "https://api.github.com/users/miketaylr/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/miketaylr/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/miketaylr/subscriptions",
+        "organizations_url": "https://api.github.com/users/miketaylr/orgs",
+        "repos_url": "https://api.github.com/users/miketaylr/repos",
+        "events_url": "https://api.github.com/users/miketaylr/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/miketaylr/received_events",
+        "type": "User",
+        "site_admin": false
+      }
+    }
+  }
+}

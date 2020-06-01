@@ -13,13 +13,16 @@ It includes helper methods.
 import json
 import random
 import re
-import urlparse
+import urllib.parse
 
 from flask import g
+from flask import url_for
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileAllowed
 from flask_wtf.file import FileField
+from markupsafe import Markup
 from wtforms import HiddenField
+from wtforms import Label
 from wtforms import RadioField
 from wtforms import StringField
 from wtforms import TextAreaField
@@ -29,47 +32,161 @@ from wtforms.validators import Optional
 from wtforms.validators import Regexp
 
 from webcompat import app
-from webcompat.api.uploads import Upload
+from webcompat.api.uploads import ImageUpload
 from webcompat.helpers import get_browser
 from webcompat.helpers import get_os
-from webcompat.helpers import get_str_value
+from webcompat.helpers import get_details_list
 from webcompat.helpers import is_json_object
 
 AUTH_REPORT = 'github-auth-report'
 PROXY_REPORT = 'github-proxy-report'
 SCHEMES = ('http://', 'https://')
 BAD_SCHEMES = ('http:/', 'https:/', 'http:', 'https:')
-GITHUB_HELP = u'_From [webcompat.com](https://webcompat.com/) with ❤️_'
+GITHUB_HELP = '_From [webcompat.com](https://webcompat.com/) with ❤️_'
+NEW_ISSUE_STEPS = [
+    {
+        'number': 1,
+        'className': 'active',
+        'label': 'Web address'
+    },
+    {
+        'number': 2,
+        'className': '',
+        'label': 'Issue'
+    },
+    {
+        'number': 3,
+        'className': '',
+        'label': 'Details'
+    },
+    {
+        'number': 4,
+        'className': '',
+        'label': 'Testing'
+    },
+    {
+        'number': 5,
+        'className': '',
+        'label': 'Description'
+    },
+    {
+        'number': 6,
+        'className': '',
+        'label': 'Screenshot'
+    },
+    {
+        'number': 7,
+        'className': 'last',
+        'label': 'Send report'
+    }
+]
 
 problem_choices = [
-    (u'detection_bug', u'Desktop site instead of mobile site'),
-    (u'site_bug', u'Site is not usable'),
-    (u'layout_bug', u'Design is broken'),
-    (u'video_bug', u'Video or audio doesn\'t play'),
-    (u'unknown_bug', u'Something else')
+    ('detection_bug', 'Desktop site instead of mobile site'),
+    ('site_bug', 'Site is not usable'),
+    ('layout_bug', 'Design is broken'),
+    ('video_bug', 'Video or audio doesn\'t play'),
+    ('unknown_bug', 'Something else')
+]
+
+problem_choices_wizard = [
+    ('detection_bug', 'svg-problem-mobile-vs-desktop.svg',
+     'Desktop site instead of mobile site'),
+    ('site_bug', 'svg-problem-no-use.svg', 'Site is not usable'),
+    ('layout_bug', 'svg-problem-broken-design.svg', 'Design is broken'),
+    ('video_bug', 'svg-problem-no-video.svg', 'Video or audio doesn\'t play'),
+    ('unknown_bug', 'svg-problem-question.svg', 'Something else')
+]
+
+site_bug_choices = [
+    ('browser_unsupported', 'svg-subproblem-unsupported.svg',
+     'Browser unsupported'),
+    ('page_not_loading', 'svg-subproblem-empty-page.svg',
+     'Page not loading correctly'),
+    ('missing_items', 'svg-subproblem-items-missing.svg', 'Missing items'),
+    ('buttons_not_working', 'svg-subproblem-cant-click.svg',
+     'Buttons or links not working'),
+    ('unable_to_type', 'svg-subproblem-cant-type.svg', 'Unable to type'),
+    ('unable_to_login', 'svg-subproblem-cant-login.svg', 'Unable to login'),
+    ('captcha_problems', 'svg-subproblem-captcha.svg', 'Problems with Captcha')
+]
+
+layout_bug_choices = [
+    ('images_not_loaded', 'svg-subproblem-no-images.svg', 'Images not loaded'),
+    ('overlapped_items', 'svg-subproblem-overlapping.svg',
+     'Items are overlapped'),
+    ('misaligned_items', 'svg-subproblem-misaligned.svg',
+     'Items are misaligned'),
+    ('items_not_visible', 'svg-subproblem-items-not-visible.svg',
+     'Items not fully visible')
+]
+
+video_bug_choices = [
+    ('images_not_loaded', 'svg-subproblem-no-video.svg', 'There is no video'),
+    ('overlapped_items', 'svg-subproblem--no-audio.svg', 'There is no audio'),
+    ('misaligned_items', 'svg-subproblem-missing-controls.svg',
+     'Media controls are broken or missing'),
+    ('items_not_visible', 'svg-subproblem-does-not-play.svg',
+     'The video or audio does not play')
+]
+
+browser_choices = [
+    ('Chrome', 'svg-chrome.svg', 'Chrome'),
+    ('Edge', 'svg-edge.svg', 'Edge'),
+    ('Safari', 'svg-safari.svg', 'Safari'),
+    ('Opera', 'svg-opera.svg', 'Opera'),
+    ('Internet Explorer', 'svg-ie.svg', 'Internet Explorer'),
+    ('Other', 'svg-other.svg', 'Other')
 ]
 
 tested_elsewhere = [
-    (u'yes', u'Yes'),
-    (u'no', u'No')
+    ('yes', 'Yes'),
+    ('no', 'No')
 ]
 
-url_message = u'A valid URL is required.'
-image_message = (u'Please select an image of the following type:'
-                 u' jpg, png, gif, or bmp.')
-radio_message = u'Problem type required.'
-username_message = u'A valid username must be {0} characters long'.format(
+url_message = 'A valid URL is required.'
+image_message = ('Please select an image of the following type:'
+                 ' jpg, png, gif, or bmp.')
+radio_message = 'Problem type required.'
+username_message = 'A valid username must be {0} characters long'.format(
     random.randrange(0, 99))
 
-desc_label = u'Please write a short problem summary'
-desc_message = u'A problem summary is required.'
+other_problem_message = 'Please provide a description.'
+other_browser_message = 'Please specify the browser.'
 
-url_label = u'Site URL'
-browser_test_label = u'Did you test in another browser?'
-textarea_label = u'Please describe what happened, including any steps you took before you saw the problem'  # noqa
+desc_label = 'Please write a short problem summary (mandatory)'
+desc_message = 'A problem summary is required.'
 
-contact_message = u'There is a mistake in the username.'  # noqa
-contact_label = u'Sharing your GitHub username—without logging in—could help us with diagnosis. This will be publicly visible.'  # noqa
+url_label = 'Site URL (mandatory)'
+browser_test_label = 'Did you test in another browser?'
+textarea_label = 'Please describe what happened, including any steps you took before you saw the problem'  # noqa
+
+other_problem_label = 'Briefly describe the issue:'
+other_browser_label = 'Browser tested'
+
+contact_message = 'There is a mistake in the username.'  # noqa
+contact_label = 'Sharing your GitHub username—without logging in—could help us with diagnosis. This will be publicly visible.'  # noqa
+
+
+class PrefixedRadioField(RadioField):
+    """Prefix radio field label with an image."""
+    def __init__(self, *args, **kwargs):
+        prefixed_choices = kwargs.pop('choices')
+        template = '<div class={css_class}><img src={src}/></div> {text}'
+        choices = []
+
+        css_class = 'icon-container'
+        for slug, img, text in prefixed_choices:
+            filename = 'img/svg/icons/{img}'.format(img=img)
+            src = url_for('static', filename=filename)
+            label = Markup(template.format(
+                src=src, css_class=css_class, text=text)
+            )
+            choice = (slug, label)
+            choices.append(choice)
+
+        kwargs['choices'] = choices
+        super().__init__(*args, **kwargs)
 
 
 class IssueForm(FlaskForm):
@@ -77,10 +194,10 @@ class IssueForm(FlaskForm):
 
     url = StringField(url_label,
                       [InputRequired(message=url_message)])
-    browser = StringField(u'Is this information correct?', [Optional()])
-    os = StringField(u'Operating System', [Optional()])
+    browser = StringField('Is this information correct?', [Optional()])
+    os = StringField('Operating System', [Optional()])
     # A dummy field to trap common bots. Users do not see that.
-    username = StringField(u'Username',
+    username = StringField('Username',
                            [Length(max=0, message=username_message)])
     # Field for people who want to be contacted, but do not want to login
     # regex for GitHub usernames
@@ -102,21 +219,63 @@ class IssueForm(FlaskForm):
     # we filter allowed type in uploads.py
     # Note, we don't use the label programtically for this input[type=file],
     # any changes here need to be updated in form.html.
-    image = FileField(u'Attach a screenshot image',
+    image = FileField('Attach a screenshot image',
                       [Optional(),
-                       FileAllowed(Upload.ALLOWED_FORMATS, image_message)])
+                       FileAllowed(ImageUpload.ALLOWED_FORMATS,
+                       image_message)])
     details = HiddenField()
     reported_with = HiddenField()
     ua_header = HiddenField()
     submit_type = HiddenField()
+    extra_labels = HiddenField()
+    console_logs_url = HiddenField()
 
 
-def get_form(form_data):
+class FormWizard(IssueForm):
+    """Re-designed version of IssueForm to a multi step wizard form."""
+
+    steps = NEW_ISSUE_STEPS
+
+    browser = StringField(u'Browser', [Optional()])
+    os = StringField('Operating System', [Optional()])
+    description = HiddenField()
+
+    problem_category = PrefixedRadioField(
+        [InputRequired(message=radio_message)],
+        choices=problem_choices_wizard
+    )
+    other_problem = StringField(
+        other_problem_label,
+        [InputRequired(message=other_problem_message)]
+    )
+    other_browser = StringField(
+        other_browser_label,
+        [InputRequired(message=other_browser_message)]
+    )
+    site_bug_subcategory = PrefixedRadioField(
+        [InputRequired(message=radio_message)],
+        choices=site_bug_choices
+    )
+    layout_bug_subcategory = PrefixedRadioField(
+        [InputRequired(message=radio_message)],
+        choices=layout_bug_choices
+    )
+    video_bug_subcategory = PrefixedRadioField(
+        [InputRequired(message=radio_message)],
+        choices=video_bug_choices
+    )
+    tested_browsers = PrefixedRadioField(
+        [InputRequired(message=radio_message)],
+        choices=browser_choices
+    )
+
+
+def get_form(form_data, form=IssueForm):
     """Return an instance of flask_wtf.FlaskForm.
 
     It receives a dictionary of everything which needs to be fed to the form.
     """
-    bug_form = IssueForm()
+    bug_form = form()
     ua_header = form_data['user_agent']
     # Populate the form
     bug_form.browser.data = get_browser(ua_header)
@@ -134,34 +293,16 @@ def get_form(form_data):
     return bug_form
 
 
-def get_details(details):
-    """Return details content.
-
-    * If a dict, as a formatted string
-    * Otherwise as a string as-is.
-    """
-    content = details
-    rv = ''
-    try:
-        rv = ''.join(['<li>{k}: {v}</li>'.format(k=k, v=get_str_value(v))
-                      for k, v in details.items()])
-    except AttributeError:
-        return '<li>{content}</li>'.format(content=content)
-    return rv
-
-
-def get_console_section(console_logs):
+def get_console_logs_url(url):
     """Return a section for console logs, or the empty string.
 
     This populates the named argument `{console_section}`
     inside the formatted string that `build_details` returns.
     """
-    if not console_logs:
+    if not url:
         return ''
-    return """<p>Console Messages:</p>
-<pre>
-{console_logs}
-</pre>""".format(console_logs=console_logs)
+    return """\n
+[View console log messages]({console_logs_url})""".format(console_logs_url=url)
 
 
 def build_details(details):
@@ -170,23 +311,18 @@ def build_details(details):
     If we get JSON, we try to pull out the console logs before building the
     rest of the details.
     """
-    console_logs = None
     try:
         content = json.loads(details)
         if is_json_object(content):
-            console_logs = content.pop('consoleLog', None)
+            content.pop('consoleLog', None)
     except ValueError:
         # if we got a ValueError, details was a string, so just pass it
         # into get_details below
         content = details
     return """<details>
 <summary>Browser Configuration</summary>
-<ul>
-  {details_list_items}
-</ul>
-{console_section}
-</details>""".format(details_list_items=get_details(content),
-                     console_section=get_console_section(console_logs))
+{details_list_items}
+</details>""".format(details_list_items=get_details_list(content))
 
 
 def get_radio_button_label(field_value, label_list):
@@ -195,14 +331,14 @@ def get_radio_button_label(field_value, label_list):
         if value == field_value:
             return text
     # Something probably went wrong. Return something safe.
-    return u'Unknown'
+    return 'Unknown'
 
 
 def get_problem_summary(category):
     """Create the summary for the issue title."""
     if category == 'unknown_bug':
         # In this case, we need a special message
-        return u'see bug description'
+        return 'see bug description'
     else:
         # Return the usual message in lowercase
         # because it is not at the start of the summary.
@@ -214,7 +350,7 @@ def wrap_metadata(metadata):
 
     We use it to hide potentially (un)interesting metadata from the UI.
     """
-    return u'<!-- @{0}: {1} -->\n'.format(*metadata)
+    return '<!-- @{0}: {1} -->\n'.format(*metadata)
 
 
 def get_metadata(metadata_keys, form_object):
@@ -228,7 +364,7 @@ def get_metadata(metadata_keys, form_object):
     metadata = [(key, form_object.get(key)) for key in metadata_keys]
     metadata = [(md[0], normalize_metadata(md[1])) for md in metadata]
     if extra_labels:
-        metadata.append(('extra_labels', u', '.join(extra_labels)))
+        metadata.append(('extra_labels', ', '.join(extra_labels)))
     # Now, "wrap the metadata" and return them all as a single string
     return ''.join([wrap_metadata(md) for md in metadata])
 
@@ -238,7 +374,7 @@ def normalize_url(url):
     if not url:
         return None
     url = url.strip()
-    parsed = urlparse.urlparse(url)
+    parsed = urllib.parse.urlparse(url)
     # Handle the case when URL has the form http://https://example.com
     if parsed.netloc in ['http:', 'https:'] and parsed.path.startswith('//'):
         url = url.split('//', 1)[1]
@@ -247,17 +383,17 @@ def normalize_url(url):
         # if url starts with a bad scheme, parsed.netloc will be empty,
         # so we use parsed.path instead
         path = parsed.path.lstrip('/')
-        url = u'{}://{}'.format(parsed.scheme, path)
+        url = '{}://{}'.format(parsed.scheme, path)
         if parsed.query:
             url += '?' + parsed.query
         if parsed.fragment:
             url += '#' + parsed.fragment
     elif not parsed.scheme:
         # We assume that http is missing not https
-        if url.startswith("//"):
-            url = u"http://{}".format(url[2:])
+        if url.startswith('//'):
+            url = 'http://{}'.format(url[2:])
         else:
-            url = u'http://{}'.format(url)
+            url = 'http://{}'.format(url)
     return url
 
 
@@ -285,10 +421,19 @@ def domain_name(url):
     url = url.lstrip()
     # testing if it's an http URL
     if url.startswith(SCHEMES):
-        domain = urlparse.urlsplit(url).netloc
+        domain = urllib.parse.urlsplit(url).netloc
     else:
         domain = None
     return domain
+
+
+def add_metadata(form, metadata_dict):
+    """Method to add additional arbitrary metadata objects.
+
+    Returns the form object.
+    """
+    form['extra_metadata'] = metadata_dict
+    return form
 
 
 def build_formdata(form_object):
@@ -330,14 +475,19 @@ def build_formdata(form_object):
     problem_summary = get_problem_summary(form_object.get('problem_category'))
 
     if domain:
-        summary = u'{0} - {1}'.format(domain, problem_summary)
+        summary = '{0} - {1}'.format(domain, problem_summary)
     else:
-        summary = u'{0} - {1}'.format(normalized_url, problem_summary)
+        summary = '{0} - {1}'.format(normalized_url, problem_summary)
 
     metadata_keys = ['browser', 'ua_header', 'reported_with']
     extra_labels = form_object.get('extra_labels', None)
     if extra_labels:
         metadata_keys.append('extra_labels')
+    extra_metadata = form_object.get('extra_metadata', None)
+    if extra_metadata:
+        for key in extra_metadata.keys():
+            form_object[key] = extra_metadata[key]
+            metadata_keys.append(key)
 
     formdata = {
         'metadata': get_metadata(metadata_keys, form_object),
@@ -350,16 +500,17 @@ def build_formdata(form_object):
             'browser_test'), tested_elsewhere),
         'description': form_object.get('description'),
         'steps_reproduce': form_object.get('steps_reproduce'),
+        'tested_browsers': form_object.get('tested_browsers', ''),
     }
 
     # Preparing the body
 
-    body = u"""{metadata}
+    body = """{metadata}
 **URL**: {url}
 
 **Browser / Version**: {browser}
 **Operating System**: {os}
-**Tested Another Browser**: {browser_test_type}
+**Tested Another Browser**: {browser_test_type} {tested_browsers}
 
 **Problem type**: {problem_type}
 **Description**: {description}
@@ -371,9 +522,10 @@ def build_formdata(form_object):
     details = form_object.get('details')
     if details:
         body += build_details(details)
+    body += get_console_logs_url(form_object.get('console_logs_url'))
     # Add the image, if there was one.
     if form_object.get('image_upload') is not None:
-        body += u'\n\n![Screenshot of the site issue]({image_url})'.format(
+        body += '\n\n![Screenshot of the site issue]({image_url})'.format(
             image_url=form_object.get('image_upload').get('url'))
     # Append contact information if available
     contact = form_object.get('contact', '')
@@ -381,9 +533,9 @@ def build_formdata(form_object):
     contact = contact.strip()
     contact = contact.replace('@', '')
     if contact and not g.user:
-        body += u'\n\nSubmitted in the name of `@{contact}`'.format(
+        body += '\n\nSubmitted in the name of `@{contact}`'.format(
             contact=contact)
     # Append "from webcompat.com" message to bottom (for GitHub issue viewers)
-    body += u'\n\n{0}'.format(GITHUB_HELP)
+    body += '\n\n{0}'.format(GITHUB_HELP)
     rv = {'title': summary, 'body': body}
     return rv

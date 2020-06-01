@@ -1,0 +1,39 @@
+a {
+  color: var(--log-link-color);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.log {
+  display: flex;
+  justify-content: space-between;
+  padding: 4px;
+}
+
+.log-error {
+  padding: 8px;
+}
+
+.level-log {
+  border-bottom: 1px solid var(--level-log-border);
+}
+
+.level-warn {
+  background: var(--level-warn-background);
+  border-bottom: 1px solid var(--level-warn-border);
+  color: var(--level-warn-color);
+}
+
+.level-error {
+  background: var(--level-error-background);
+  border-bottom: 1px solid var(--level-error-border);
+  color: var(--level-error-color);
+}
+
+.log-message {
+  padding-right: 16px;
+  word-break: break-all;
+}

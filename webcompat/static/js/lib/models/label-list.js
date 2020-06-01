@@ -23,7 +23,7 @@ var issues = issues || {}; // eslint-disable-line no-use-before-define
  */
 
 issues.LabelList = Backbone.Model.extend({
-  initialize: function() {
+  initialize: function () {
     this.set("namespaceRegex", /(browser|closed|os|priority|status)-(.+)/i);
     // Temporarily set pagination to 100 labels per page, until
     // we fix Issue #781
@@ -31,7 +31,7 @@ issues.LabelList = Backbone.Model.extend({
     // The templating engine needs objects that have JS properties, it won't call
     // get('labels'). Setting a property here makes sure we can pass the model
     // directly to a template() method
-    this.on("change:labels", function() {
+    this.on("change:labels", function () {
       this.labels = this.get("labels");
     });
     // if we're initialized with {labels:array-of-objects}, process the data
@@ -48,7 +48,7 @@ issues.LabelList = Backbone.Model.extend({
       this.fetch(headersBag); // This will trigger parse() on response
     }
   },
-  parse: function(labelsArray) {
+  parse: function (labelsArray) {
     var list = [];
     var namespaceMap = {};
     for (var i = 0, matches, theLabel; i < labelsArray.length; i++) {
@@ -61,7 +61,7 @@ issues.LabelList = Backbone.Model.extend({
           name: matches[2],
           url: labelsArray[i].url,
           color: labelsArray[i].color,
-          remoteName: matches[0]
+          remoteName: matches[0],
         };
       } else {
         if (typeof labelsArray[i] === "object") {
@@ -78,7 +78,7 @@ issues.LabelList = Backbone.Model.extend({
   // toPrefixed takes a local label name and maps it
   // to the prefixed repository form. Also handles an array
   // of label names (Note: not arrays of objects)
-  toPrefixed: function(input) {
+  toPrefixed: function (input) {
     if (typeof input === "string") {
       if (issues.allLabels.get("namespaceMap")[input]) {
         return issues.allLabels.get("namespaceMap")[input] + "-" + input;
@@ -86,23 +86,23 @@ issues.LabelList = Backbone.Model.extend({
       return input;
     } else {
       // This is not a string, we assume it's an array
-      return input.map(function(label) {
+      return input.map(function (label) {
         return issues.allLabels.toPrefixed(label);
       });
     }
   },
-  url: function() {
+  url: function () {
     return this.get("url");
   },
   // Returns a simple array of unprefixed labels - strings only
-  toArray: function() {
-    return _.pluck(this.get("labels"), "name");
+  toArray: function () {
+    return _.map(this.get("labels"), "name");
   },
   // To save the model to the server, we need to make
   // sure we apply the prefixes the server expects.
   // The JSON serialization will take care of it.
-  toJSON: function() {
-    var labelsArray = _.pluck(this.get("labels"), "name");
+  toJSON: function () {
+    var labelsArray = _.map(this.get("labels"), "name");
     return issues.allLabels.toPrefixed(labelsArray);
-  }
+  },
 });

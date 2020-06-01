@@ -1,11 +1,33 @@
 <div id="js-Issue-aside">
-	{% include "issue/aside.jst" %}
+  <header class="js-state-class label-box-header label-{{issue_data|format_milestone_class}}">
+    <div class="js-milestone-title">{{ '🔒' if issue_data.locked else '' }}
+      {{ issue_data|format_milestone_title }}
+    </div>
+    <div class="js-issue-number">#{{ issue_data.number }}</div>
+  </header>
+  <div class="label-box-section">
+    <h1 class="js-issue-title headline-2">
+      {{ issue_data|format_title }}
+    </h1>
+  </div>
+  <div class="label-box-section">
+    <div>Opened: {{ issue_data.created_at|format_date }}</div>
+    <div>
+      Reporter:
+      <span class="js-Issue-reporter">
+        <a class="bold" href="https://github.com/{{ issue_data.user.login }}">
+          {{ issue_data.user.login }}
+        </a>
+      </span>
+    </div>
+    <div>Comments: {{ issue_data.comments }} </div>
+  </div>
 </div>
 <div class="js-Issue-labels label-box-editor label-box-section">
-	{% include "issue/issue-labels.jst" %}
-	{% include "web_modules/label-editor.jst" %}
+  {% include "issue/issue-labels.jst" %}
+  {% include "web_modules/label-editor.jst" %}
 </div>
 <div class="js-Issue-milestones label-box-editor label-box-section">
-	{% include "issue/issue-milestones.jst" %}
-	{% include "web_modules/milestone-editor.jst" %}
+  {% include "issue/issue-milestones.jst" %}
+  {% include "web_modules/milestone-editor.jst" %}
 </div>

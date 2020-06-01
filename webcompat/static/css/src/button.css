@@ -57,8 +57,11 @@
   background-color: var(--color-second);
   border-radius: 10px;
   color: var(--color-first);
+  font-family: sans-serif;
   font-size: 2em;
   font-weight: 200;
+  padding: 14.4px 23px;
+  text-decoration: none;
   vertical-align: middle;
 }
 

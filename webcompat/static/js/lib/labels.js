@@ -21,30 +21,30 @@ if ($("body").data("username")) {
 issues.LabelsView = issues.CategoryView.extend({
   el: $(".js-Issue-labels"),
   keyboardEvents: {
-    l: "openEditor"
+    l: "openEditor",
   },
   template: wcTmpl["issue/issue-labels.jst"],
   // this subTemplate will need to be kept in sync with
   // relavant parts in issue/issue-labels.jst
   subTemplate: wcTmpl["issue/issue-labels-sub.jst"],
-  closeEditor: function() {
+  closeEditor: function () {
     this.labelEditor.closeEditor();
   },
-  fetchItems: function() {
+  fetchItems: function () {
     this.editorButton = $(".js-LabelEditorLauncher");
     if (this._isLoggedIn) {
       this.labelEditor = new issues.LabelEditorView({
         model: issues.allLabels,
-        issueView: this
+        issueView: this,
       });
       this.issueLabels = this.getIssueLabels();
       this.editorButton.show();
     }
   },
-  getIssueLabels: function() {
-    return _.pluck(this.model.get("labels"), "name");
+  getIssueLabels: function () {
+    return _.map(this.model.get("labels"), "name");
   },
-  openEditor: function(e) {
+  openEditor: function (e) {
     // make sure we're not typing in the comment textfield.
     if (e && e.target.nodeName === "TEXTAREA") {
       return;
@@ -61,19 +61,19 @@ issues.LabelsView = issues.CategoryView.extend({
       this.getIssueLabels(),
       issues.allLabels.toArray()
     );
-    _.each(toBeChecked, function(labelName) {
+    _.each(toBeChecked, function (labelName) {
       $('[name="' + labelName + '"]').prop("checked", true);
     });
     this.$el.closest(".label-box").scrollTop(this.$el.position().top);
-  }
+  },
 });
 
 issues.LabelEditorView = issues.CategoryEditorView.extend({
-  initialize: function(options) {
+  initialize: function (options) {
     this.issueView = options.issueView;
   },
   template: wcTmpl["web_modules/label-editor.jst"],
-  updateView: function(evt) {
+  updateView: function (evt) {
     // We try to make sure only one priority"-type label is set
     // If the change event comes from a "priority"-type label,
     // enumerate all checked priority"-type labels and uncheck
@@ -85,7 +85,7 @@ issues.LabelEditorView = issues.CategoryEditorView.extend({
       checked = this.$el.find(
         'input[type=checkbox][data-remotename^="' + prefix + '"]:checked'
       );
-      _.each(checked, function(item) {
+      _.each(checked, function (item) {
         if (item !== evt.target) {
           item.checked = false;
         }
@@ -97,19 +97,19 @@ issues.LabelEditorView = issues.CategoryEditorView.extend({
     // build up an array of objects that have
     // .name and .color props that the templates expect
     var modelUpdate = [];
-    _.each(checked, function(item) {
+    _.each(checked, function (item) {
       //item already has a .name property
       item.remoteName = $(item).data("remotename");
       modelUpdate.push(item);
     });
     this.reRender({ labels: _.uniq(modelUpdate) });
   },
-  closeEditor: function(e) {
+  closeEditor: function (e) {
     if (this.isOpen) {
       if (!e || (e && (e.keyCode === 27 || !e.keyCode))) {
         this.isOpen = false;
         var checked = this.$el.find("input[type=checkbox]:checked");
-        var labelsArray = _.pluck(checked, "name");
+        var labelsArray = _.map(checked, "name");
         this.issueView.editorButton.removeClass("is-active");
         this.issueView.model.updateLabels(labelsArray);
 
@@ -120,5 +120,5 @@ issues.LabelEditorView = issues.CategoryEditorView.extend({
         $("#body-webcompat").removeClass("is-label-editor-open");
       }
     }
-  }
+  },
 });
