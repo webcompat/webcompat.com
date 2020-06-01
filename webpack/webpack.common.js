@@ -5,11 +5,10 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
   entry: entries,
-  mode: "development",
-  devtool: "inline-source-map",
   context: path.resolve(__dirname, "../webcompat/static"),
   output: {
     path: path.join(__dirname, "../webcompat/static/dist"),
+    filename: "[name].js",
   },
   module: {
     rules: [
@@ -68,4 +67,15 @@ module.exports = {
       filename: "[name].css",
     }),
   ],
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        vendor: {
+          chunks: "all",
+          name: "vendor",
+          test: "vendor",
+        },
+      },
+    },
+  },
 };

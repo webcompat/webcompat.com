@@ -27,6 +27,6 @@
 {% endfor %}
 </div>
 
-<script src="{{ url_for('static', filename='dist/console-logs.js') }}"></script>
+<script src="{{ url_for('static', filename='dist/console-logs.js')|bust_cache }}"></script>
 </body>
 </html>

@@ -2,6 +2,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
+import $ from "jquery";
 import { PaginationMixin } from "./mixins/pagination.js";
 import { IssueCollection } from "./models/issue.js";
 import issueListTemplate from "templates/web_modules/issue-list.jst";

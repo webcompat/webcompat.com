@@ -2,8 +2,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-//var issues = issues || {}; // eslint-disable-line no-use-before-define
-
+import $ from "jquery";
 import { wcEvents } from "../flash-message.js";
 
 export const MilestonesModel = Backbone.Model.extend({

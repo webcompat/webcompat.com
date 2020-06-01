@@ -11,12 +11,14 @@ module.exports = {
     "./js/lib/autogrow-textfield.js",
   ],
   "issues-list": [
+    "BackboneMousetrap",
     "./js/lib/models/label-list.js",
     "./js/lib/models/issue.js",
     "./js/lib/mixins/pagination.js",
     "./js/lib/issue-list.js",
   ],
   "issue-page": [
+    "BackboneMousetrap",
     "./js/lib/models/label-list.js",
     "./js/lib/editor.js",
     "./js/lib/labels.js",
@@ -36,12 +38,6 @@ module.exports = {
   webcompat: ["./js/lib/navbar.js", "./js/lib/webcompat.js"],
   "flashed-messages": ["./js/lib/flashed-messages.js"],
   "console-logs": ["./js/lib/console-logs.js"],
-  vendors: [
-    "jquery",
-    "underscore",
-    "Backbone",
-    "Prism",
-    "Mousetrap",
-    "BackboneMousetrap",
-  ],
+  ga: ["./js/lib/ga.js"],
+  vendor: ["jquery", "underscore", "Backbone", "Prism", "Mousetrap"],
 };

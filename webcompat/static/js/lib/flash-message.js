@@ -12,6 +12,8 @@ eventBus.trigger('flash:error', {message: 'hi', timeout: 1000});
 `opts.timeout` (optional) is the length of time before fading the message out.
                           Default is 3 seconds
 */
+
+import Backbone from "Backbone";
 import thanksTemplate from "templates/issue/thanks.jst";
 
 var wcEvents = _.extend({}, Backbone.Events);

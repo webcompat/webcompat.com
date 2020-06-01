@@ -9,9 +9,6 @@ import $ from "jquery";
 import { wcEvents } from "../flash-message.js";
 import { LabelList } from "./label-list.js";
 
-// var issues = issues || {}; // eslint-disable-line no-use-before-define
-// var issueList = issueList || {}; // eslint-disable-line no-use-before-define
-
 export const Issue = Backbone.Model.extend({
   _statuses: $("main").data("statuses"),
   getState: function (state, milestone) {
@@ -150,7 +147,6 @@ export const Issue = Backbone.Model.extend({
   },
 });
 
-// issueList.Issue = issue.extend({});
 const issueModel = Issue.extend({});
 
 export const IssueCollection = Backbone.Collection.extend({

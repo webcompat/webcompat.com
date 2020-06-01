@@ -12,7 +12,6 @@
   <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon/favicon-32x32.png') }}" sizes="32x32">
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600|Source+Sans+Pro:300,400" rel="stylesheet">
   <link href="{{ url_for('static', filename='dist/webcompat.css') }}" type="text/css" rel="stylesheet">
-  {%- block extracss %}{% endblock %}
 </head>
 <body id="body-webcompat" data-username="{{ session.username }}">
 {% include "shared/svg-icons.html" %}
@@ -20,13 +19,13 @@
 {% include "shared/footer.html" %}
 {%- if config.PRODUCTION or config.STAGING -%}
 <!-- Google Analytics -->
-<script src="{{ url_for('static', filename='js/dist/ga.js') }}"></script>
+<script src="{{ url_for('static', filename='dist/ga.js') }}"></script>
 <script async src='https://www.google-analytics.com/analytics.js'></script>
 <!-- End Google Analytics -->
-<script src="{{ url_for('static', filename='dist/vendors.js')|bust_cache }}"></script>
+<script src="{{ url_for('static', filename='dist/vendor.js')|bust_cache }}"></script>
 <script src="{{ url_for('static', filename='dist/webcompat.js')|bust_cache }}"></script>
 {% else %}
-<script src="{{ url_for('static', filename='dist/vendors.js') }}"></script>
+<script src="{{ url_for('static', filename='dist/vendor.js') }}"></script>
 <script src="{{ url_for('static', filename='dist/webcompat.js') }}"></script>
 {%- if config['LOCALHOST'] %}
 <script src="{{ url_for('get_test_helper',

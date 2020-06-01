@@ -51,6 +51,7 @@
     "lint-staged": "^10.0.8",
     "load-grunt-tasks": "^5.0.0",
     "mini-css-extract-plugin": "^0.9.0",
+    "optimize-css-assets-webpack-plugin": "^5.0.3",
     "postcss": "^7.0.13",
     "postcss-browser-reporter": "^0.6.0",
     "postcss-cssnext": "^3.1.0",
@@ -64,12 +65,14 @@
     "stylelint-order": "^4.0.0",
     "svg-sprite-generator": "0.0.7",
     "svgo": "^1.1.1",
+    "terser-webpack-plugin": "^3.0.2",
     "webpack": "^4.43.0",
-    "webpack-cli": "^3.3.11"
+    "webpack-cli": "^3.3.11",
+    "webpack-merge": "^4.2.2"
   },
   "scripts": {
     "setup": "npm run virtualenv && npm install",
-    "build": "webpack --config ./webpack/webpack.config.js",
+    "build": "webpack --config ./webpack/webpack.dev.js",
     "build:svg": "npm run build:svg:clean-svg && npm run build:svg:svg-sprite && rm -rf ./webcompat/static/img/svg/tmp",
     "build:svg:clean-svg": "svgo -f ./webcompat/static/img/svg/icons -o ./webcompat/static/img/svg/tmp",
     "build:svg:svg-sprite": "svg-sprite-generate -d ./webcompat/static/img/svg/tmp -o ./webcompat/static/img/svg/sprite.svg",
@@ -92,7 +95,8 @@
     "test:js": "npx intern",
     "test:unit-js": "intern config=./webcompat/static/js/lib/wizard/tests/intern.json",
     "test:python": "pip install -e . && pytest",
-    "build-test": "webpack --config ./webpack/webpack.config.js --watch"
+    "dev": "webpack --config ./webpack/webpack.dev.js --watch",
+    "prod": "webpack --config ./webpack/webpack.prod.js"
   },
   "husky": {
     "hooks": {
