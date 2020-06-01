@@ -455,6 +455,15 @@ def contributors():
     return render_template('contributors.html')
 
 
+@app.route('/contributors/alumni')
+@cache_policy(private=True, uri_max_age=0, must_revalidate=True)
+def alumni():
+    """Route to display contributors alumni page."""
+    if g.user:
+        get_user_info()
+    return render_template('contributors/alumni.html')
+
+
 @app.route('/contributors/report-bug')
 @cache_policy(private=True, uri_max_age=0, must_revalidate=True)
 def contributors_bug_report():
