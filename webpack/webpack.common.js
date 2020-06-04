@@ -2,6 +2,7 @@ const path = require("path");
 const webpack = require("webpack");
 const entries = require("./entries.js");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const postcssPresetEnv = require("postcss-preset-env");
 
 module.exports = {
   entry: entries,
@@ -35,7 +36,26 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        use: [MiniCssExtractPlugin.loader, "css-loader"],
+        use: [
+          MiniCssExtractPlugin.loader,
+          "css-loader",
+          {
+            loader: "postcss-loader",
+            options: {
+              ident: "postcss",
+              plugins: () => [
+                postcssPresetEnv({
+                  browsers: [
+                    "defaults",
+                    "Firefox > 52",
+                    "Safari >=9",
+                    "Chrome >=75",
+                  ],
+                }),
+              ],
+            },
+          },
+        ],
       },
       {
         test: /\.(png|svg|jpg|gif)$/,
