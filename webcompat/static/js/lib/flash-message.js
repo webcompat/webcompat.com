@@ -12,6 +12,10 @@ eventBus.trigger('flash:error', {message: 'hi', timeout: 1000});
 `opts.timeout` (optional) is the length of time before fading the message out.
                           Default is 3 seconds
 */
+
+import Backbone from "Backbone";
+import thanksTemplate from "templates/issue/thanks.jst";
+
 var wcEvents = _.extend({}, Backbone.Events);
 
 var FlashMessageView = Backbone.View.extend({
@@ -46,10 +50,9 @@ var FlashMessageView = Backbone.View.extend({
     this.render(message);
   },
   showThanks: function (opts) {
-    var buildTemplate = wcTmpl["issue/thanks.jst"];
     this.$el.addClass("is-active notification-thanks grid-cell x3");
     this.$el
-      .html(buildTemplate({ number: opts.message }))
+      .html(thanksTemplate({ number: opts.message }))
       .insertBefore(".js-Issue")
       .show();
   },
@@ -59,3 +62,5 @@ var FlashMessageView = Backbone.View.extend({
 });
 
 new FlashMessageView();
+
+export { wcEvents };

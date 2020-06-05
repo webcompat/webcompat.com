@@ -1,9 +1,5 @@
 {%- extends "layout.html" -%}
 
-{% block extracss %}
-<link href="{{ url_for('static', filename='css/src/issue-wizard.css') }}" type="text/css" rel="stylesheet">
-{% endblock %}
-
 {% block title %}{{ pagetitle }}{% endblock %}
 {%- block body -%}
 {% include "nav/issue-wizard-stepper.html" %}
@@ -16,7 +12,12 @@
 {% endblock %}
 
 {%- block extrascripts -%}
-<script type="module" src="{{ url_for('static', filename='js/lib/wizard/app.js') }}"></script>
+
+{%- if config.PRODUCTION or config.STAGING -%}
+<script src="{{ url_for('static', filename='dist/formv2.js')|bust_cache }}"></script>
+{% else %}
+<script src="{{ url_for('static', filename='dist/formv2.js') }}"></script>
+{%- endif %}
 
 {% if source and campaign %}
 <script nonce={{nonce}}>

@@ -4,6 +4,8 @@
 
 /* Allows the user to enter a URL and navigate to the next step */
 
+import $ from "jquery";
+
 import notify from "../notify.js";
 import { isUrlValid } from "../validation.js";
 import { extractPrettyUrl } from "../utils.js";

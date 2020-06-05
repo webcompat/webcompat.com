@@ -4,6 +4,7 @@
 
 /* Allows the user to select a sub category of the problem they're experiencing */
 
+import $ from "jquery";
 import { showContainer, hideContainer } from "../ui-utils.js";
 import notify from "../notify.js";
 

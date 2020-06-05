@@ -2,56 +2,18 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-var issues = issues || {}; // eslint-disable-line no-use-before-define
+import $ from "jquery";
+import { CategoryView, CategoryEditorView } from "./editor.js";
+import { MilestonesModel } from "./models/milestones.js";
+import issueMilestonesTemplate from "templates/issue/issue-milestones.jst";
+import issueMilestonesSubTemplate from "templates/issue/issue-milestones-sub.jst";
+import milestoneEditorTemplate from "templates/web_modules/milestone-editor.jst";
 
-issues.MilestonesView = issues.CategoryView.extend({
-  el: $(".js-Issue-milestones"),
-  keyboardEvents: {
-    m: "openEditor",
-  },
-  template: wcTmpl["issue/issue-milestones.jst"],
-  // this subTemplate will need to be kept in sync with
-  // relavant parts in issue/issue-labels.jst
-  subTemplate: wcTmpl["issue/issue-milestones-sub.jst"],
-  closeEditor: function () {
-    this.milestoneEditor.closeEditor();
-  },
-  fetchItems: function () {
-    this.editorButton = $(".js-MilestoneEditorLauncher");
-    this.milestoneEditor = new issues.MilestoneEditorView({
-      model: new issues.MilestonesModel({
-        statuses: $("main").data("statuses"),
-        issueModel: this.model,
-      }),
-      issueView: this,
-    });
-    if (this._isLoggedIn) {
-      this.editorButton.show();
-    }
-  },
-  openEditor: function (e) {
-    // make sure we're not typing in the comment textfield.
-    if (e && e.target.nodeName === "TEXTAREA") {
-      return;
-    }
-    this.milestoneEditor.isOpen = true;
-    this.editorButton.addClass("is-active");
-    this.$el
-      .find(".js-MilestoneEditorLauncher")
-      .after(this.milestoneEditor.render().el);
-    this.$el.find(".label-editor").addClass("is-open");
-    $("#body-webcompat").addClass("is-label-editor-open");
-
-    $('[name="' + this.model.get("milestone") + '"]').prop("checked", true);
-    this.$el.closest(".label-box").scrollTop(this.$el.position().top);
-  },
-});
-
-issues.MilestoneEditorView = issues.CategoryEditorView.extend({
+const MilestoneEditorView = CategoryEditorView.extend({
   initialize: function (options) {
     this.issueView = options.issueView;
   },
-  template: wcTmpl["web_modules/milestone-editor.jst"],
+  template: milestoneEditorTemplate,
   updateView: function (evt) {
     // We try to make sure only one milestone is set
     // enumerate all checked milestones and uncheck the others.
@@ -98,5 +60,48 @@ issues.MilestoneEditorView = issues.CategoryEditorView.extend({
         $("#body-webcompat").removeClass("is-label-editor-open");
       }
     }
+  },
+});
+
+export const MilestonesView = CategoryView.extend({
+  el: $(".js-Issue-milestones"),
+  keyboardEvents: {
+    m: "openEditor",
+  },
+  template: issueMilestonesTemplate,
+  // this subTemplate will need to be kept in sync with
+  // relavant parts in issue/issue-labels.jst
+  subTemplate: issueMilestonesSubTemplate,
+  closeEditor: function () {
+    this.milestoneEditor.closeEditor();
+  },
+  fetchItems: function () {
+    this.editorButton = $(".js-MilestoneEditorLauncher");
+    this.milestoneEditor = new MilestoneEditorView({
+      model: new MilestonesModel({
+        statuses: $("main").data("statuses"),
+        issueModel: this.model,
+      }),
+      issueView: this,
+    });
+    if (this._isLoggedIn) {
+      this.editorButton.show();
+    }
+  },
+  openEditor: function (e) {
+    // make sure we're not typing in the comment textfield.
+    if (e && e.target.nodeName === "TEXTAREA") {
+      return;
+    }
+    this.milestoneEditor.isOpen = true;
+    this.editorButton.addClass("is-active");
+    this.$el
+      .find(".js-MilestoneEditorLauncher")
+      .after(this.milestoneEditor.render().el);
+    this.$el.find(".label-editor").addClass("is-open");
+    $("#body-webcompat").addClass("is-label-editor-open");
+
+    $('[name="' + this.model.get("milestone") + '"]').prop("checked", true);
+    this.$el.closest(".label-box").scrollTop(this.$el.position().top);
   },
 });

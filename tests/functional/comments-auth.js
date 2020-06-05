@@ -81,7 +81,7 @@ registerSuite("Comments (auth)", {
         .end()
         .execute(() => {
           // click the comment button
-          $(".js-Issue-comment-button")[0].click();
+          document.querySelector(".js-Issue-comment-button").click();
         })
         .end()
         .sleep(2000)

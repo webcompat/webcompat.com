@@ -1,0 +1,43 @@
+module.exports = {
+  index: [
+    "./js/lib/models/label-list.js",
+    "./js/lib/models/issue.js",
+    "./js/lib/untriaged.js",
+  ],
+  formv2: [
+    "./js/lib/wizard/wizard.js",
+    "./js/lib/issue-wizard-popup.js",
+    "./js/lib/issue-wizard-slider.js",
+    "./js/lib/autogrow-textfield.js",
+  ],
+  "issues-list": [
+    "BackboneMousetrap",
+    "./js/lib/models/label-list.js",
+    "./js/lib/models/issue.js",
+    "./js/lib/mixins/pagination.js",
+    "./js/lib/issue-list.js",
+  ],
+  "issue-page": [
+    "BackboneMousetrap",
+    "./js/lib/models/label-list.js",
+    "./js/lib/editor.js",
+    "./js/lib/labels.js",
+    "./js/lib/models/milestones.js",
+    "./js/lib/milestones.js",
+    "./js/lib/models/issue.js",
+    "./js/lib/autogrow-textfield.js",
+    "./js/lib/issues.js",
+  ],
+  contributors: ["./js/lib/contributors.js"],
+  "user-activity": [
+    "./js/lib/models/label-list.js",
+    "./js/lib/models/issue.js",
+    "./js/lib/mixins/pagination.js",
+    "./js/lib/user-activity.js",
+  ],
+  webcompat: ["./js/lib/navbar.js", "./js/lib/webcompat.js"],
+  "flashed-messages": ["./js/lib/flashed-messages.js"],
+  "console-logs": ["./js/lib/console-logs.js"],
+  ga: ["./js/lib/ga.js"],
+  vendor: ["jquery", "underscore", "Backbone", "Prism", "Mousetrap"],
+};

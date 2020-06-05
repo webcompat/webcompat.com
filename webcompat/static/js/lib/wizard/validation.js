@@ -10,6 +10,8 @@ export const isUrlValid = (value) => {
 };
 
 export const isEmpty = (value) => {
+  if (!value) return true;
+
   return !value.trim();
 };
 

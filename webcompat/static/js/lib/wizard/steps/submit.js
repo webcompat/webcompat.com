@@ -6,6 +6,7 @@
 
 /* Allows the user to submit an issue anonymously or through github */
 
+import $ from "jquery";
 import { showContainer } from "../ui-utils.js";
 import { isGithubUserNameValid } from "../validation.js";
 import { uploadConsoleLogs } from "./upload-helper/console-logs-upload.js";

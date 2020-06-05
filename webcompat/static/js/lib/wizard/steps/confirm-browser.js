@@ -4,6 +4,7 @@
 
 /* Allows the user to confirm the browser and device they're experiencing the problem on */
 
+import $ from "jquery";
 import { showContainer, hideContainer } from "../ui-utils.js";
 import notify from "../notify.js";
 

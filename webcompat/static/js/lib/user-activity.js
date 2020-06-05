@@ -2,7 +2,12 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-var issues = issues || {}; // eslint-disable-line no-use-before-define
+import $ from "jquery";
+import { PaginationMixin } from "./mixins/pagination.js";
+import { IssueCollection } from "./models/issue.js";
+import issueListTemplate from "templates/web_modules/issue-list.jst";
+import { wcEvents } from "./flash-message.js";
+
 var issueList = issueList || {}; // eslint-disable-line no-use-before-define
 var loadingIndicator = $(".js-loader");
 issueList.user = $("body").data("username");
@@ -14,7 +19,7 @@ var needsinfoPagination = new PaginationMixin();
 // UserActivityCollection inherits from IssueCollection, which doesn't set
 // its url property directly. So we need to be sure to construct that from
 // path and params manually.
-issueList.UserActivityCollection = issueList.IssueCollection.extend({
+issueList.UserActivityCollection = IssueCollection.extend({
   initialize: function (options) {
     this.url =
       "/api/issues/" + issueList.user + options.path + "?" + options.params;
@@ -23,7 +28,7 @@ issueList.UserActivityCollection = issueList.IssueCollection.extend({
 
 var sharedViewProps = {
   _loadingIndicator: loadingIndicator,
-  template: wcTmpl["web_modules/issue-list.jst"],
+  template: issueListTemplate,
   render: function () {
     this.$el.html(
       this.template({

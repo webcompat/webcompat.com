@@ -34,7 +34,7 @@ registerSuite("Reporting (auth)", {
           .end()
           .execute(function () {
             // Click on "Desktop site instead of mobile site"
-            $("[for=problem_category-0]")[0].click();
+            document.querySelector("[for=problem_category-0]").click();
           })
           .sleep(1000)
           // Click on "Yes"
@@ -50,7 +50,7 @@ registerSuite("Reporting (auth)", {
           })
           .execute(function () {
             // Click on "Chrome"
-            $("[for=tested_browsers-0]")[0].click();
+            document.querySelector("[for=tested_browsers-0]").click();
           })
           .end()
           .sleep(500)

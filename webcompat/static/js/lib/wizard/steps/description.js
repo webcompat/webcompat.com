@@ -4,6 +4,7 @@
 
 /* Allows the user to enter description of the problem */
 
+import $ from "jquery";
 import notify from "../notify.js";
 import { charsPercent } from "../utils.js";
 import { showContainer } from "../ui-utils.js";

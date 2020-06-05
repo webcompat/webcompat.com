@@ -11,8 +11,7 @@
   <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
   <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon/favicon-32x32.png') }}" sizes="32x32">
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600|Source+Sans+Pro:300,400" rel="stylesheet">
-  <link href="{{ url_for('static', filename='css/dist/webcompat.min.css') }}" type="text/css" rel="stylesheet">
-  {%- block extracss %}{% endblock %}
+  <link href="{{ url_for('static', filename='dist/webcompat.css') }}" type="text/css" rel="stylesheet">
 </head>
 <body id="body-webcompat" data-username="{{ session.username }}">
 {% include "shared/svg-icons.html" %}
@@ -20,31 +19,21 @@
 {% include "shared/footer.html" %}
 {%- if config.PRODUCTION or config.STAGING -%}
 <!-- Google Analytics -->
-<script src="{{ url_for('static', filename='js/dist/ga.js') }}"></script>
+<script src="{{ url_for('static', filename='dist/ga.js') }}"></script>
 <script async src='https://www.google-analytics.com/analytics.js'></script>
 <!-- End Google Analytics -->
-<script src="{{ url_for('static', filename='js/dist/webcompat.formv2.js')|bust_cache }}"></script>
+<script src="{{ url_for('static', filename='dist/vendor.js')|bust_cache }}"></script>
+<script src="{{ url_for('static', filename='dist/webcompat.js')|bust_cache }}"></script>
 {% else %}
-<script src="{{ url_for('static', filename='js/vendor/jquery-3.3.1.min.js') }}"></script>
-<script src="{{ url_for('static', filename='js/vendor/lodash.custom.min.js') }}"></script>
-<script src="{{ url_for('static', filename='js/vendor/backbone-1.3.3.min.js') }}"></script>
-<script src="{{ url_for('static', filename='js/vendor/moment-min.js') }}"></script>
-<script src="{{ url_for('static', filename='js/vendor/prism.js') }}"></script>
-<script src="{{ url_for('static', filename='js/vendor/mousetrap-min.js') }}"></script>
-<script src="{{ url_for('static', filename='js/vendor/backbone.mousetrap.js') }}"></script>
-<script src="{{ url_for('static', filename='js/lib/flash-message.js') }}"></script>
-<script src="{{ url_for('static', filename='js/lib/navbar.js') }}"></script>
-<script src="{{ url_for('static', filename='js/lib/autogrow-textfield.js') }}"></script>
-<script src="{{ url_for('static', filename='js/lib/issue-wizard-popup.js') }}"></script>
-<script src="{{ url_for('static', filename='js/lib/issue-wizard-slider.js') }}"></script>
-<script src="{{ url_for('static', filename='js/dist/templates.js') }}"></script>
+<script src="{{ url_for('static', filename='dist/vendor.js') }}"></script>
+<script src="{{ url_for('static', filename='dist/webcompat.js') }}"></script>
 {%- if config['LOCALHOST'] %}
 <script src="{{ url_for('get_test_helper',
                          filename='functional/lib/window-helpers.js') }}"></script>
 {% endif -%}
 {% endif -%}
 {%- for category, message in get_flashed_messages(with_categories=True) %}
-<script src="{{ url_for('static', filename='js/lib/flashed-messages.js') }}"
+<script src="{{ url_for('static', filename='dist/flashed-messages.js') }}"
         data-category="{{ category }}"
         data-message="{{ message }}"></script>
 {% endfor -%}

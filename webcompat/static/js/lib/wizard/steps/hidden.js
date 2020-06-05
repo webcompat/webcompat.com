@@ -4,6 +4,8 @@
 
 /* This step is for hidden values being prefilled by postMessage from report site issue addon  */
 
+import $ from "jquery";
+
 const prepareValue = (field, value) => {
   if (field.stringify) {
     return JSON.stringify(value);
