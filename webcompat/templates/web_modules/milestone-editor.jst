@@ -11,7 +11,7 @@
       </button>
     </div>
     <div class="label-editor-list" tabindex="-1">
-      <% _.each(milestones, function(milestone) { %>
+      <% _.each(data.milestones, function(milestone) { %>
         <input class="label-editor-list-item-checkbox"
                 type="checkbox" name="<%= milestone.name %>"
                 id="milestone-<%= milestone.name %>"

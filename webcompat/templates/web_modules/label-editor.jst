@@ -11,7 +11,7 @@
       </button>
     </div>
     <div class="label-editor-list" tabindex="-1">
-      <% _.each(labels, function(label) { %>
+      <% _.each(data.labels, function(label) { %>
         <input class="label-editor-list-item-checkbox"
                 type="checkbox" name="<%= label.name %>"
                 id="label-<%= label.remoteName %>"

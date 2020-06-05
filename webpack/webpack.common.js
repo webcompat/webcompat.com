@@ -21,6 +21,9 @@ module.exports = {
           },
           {
             loader: "ejs-loader",
+            options: {
+              variable: "data",
+            },
           },
         ],
       },
