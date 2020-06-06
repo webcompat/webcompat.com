@@ -394,9 +394,5 @@
 </div>
 {% endblock %}
 {%- block extrascripts -%}
-{%- if config.PRODUCTION or config.STAGING -%}
 <script src="{{ url_for('static', filename='dist/contributors.js')|bust_cache }}"></script>
-{% else %}
-<script src="{{ url_for('static', filename='dist/contributors.js') }}"></script>
-{%- endif %}
 {%- endblock %}

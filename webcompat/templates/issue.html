@@ -44,10 +44,6 @@
     </section>
   </main>
 {% endblock %}
-{% block extrascripts %}
-{%- if config.PRODUCTION or config.STAGING -%}
+{% block extrascripts %
 <script src="{{ url_for('static', filename='dist/issue-page.js')|bust_cache }}"></script>
-{% else %}
-<script src="{{ url_for('static', filename='dist/issue-page.js') }}"></script>
-{%- endif %}
 {% endblock %}
