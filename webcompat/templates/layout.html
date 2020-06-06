@@ -21,10 +21,12 @@
 <!-- Google Analytics -->
 <script src="{{ url_for('static', filename='dist/ga.js') }}"></script>
 <script async src='https://www.google-analytics.com/analytics.js'></script>
+<script nomodule src="{{ url_for('static', filename='dist/vendor.es5.js')|bust_cache }}"></script>
+<script nomodule src="{{ url_for('static', filename='dist/webcompat.es5.js')|bust_cache }}"></script>
 <!-- End Google Analytics -->
 {% endif -%}
-<script src="{{ url_for('static', filename='dist/vendor.js')|bust_cache }}"></script>
-<script src="{{ url_for('static', filename='dist/webcompat.js')|bust_cache }}"></script>
+<script type="module" src="{{ url_for('static', filename='dist/vendor.js')|bust_cache }}"></script>
+<script type="module" src="{{ url_for('static', filename='dist/webcompat.js')|bust_cache }}"></script>
 
 {%- if config['LOCALHOST'] %}
 <script src="{{ url_for('get_test_helper',

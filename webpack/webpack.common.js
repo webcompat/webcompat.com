@@ -28,16 +28,6 @@ module.exports = {
         ],
       },
       {
-        test: /\.js$/,
-        exclude: [
-          /node_modules/,
-          path.resolve(__dirname, "../webcompat/static/js/vendor"),
-        ],
-        use: {
-          loader: "babel-loader",
-        },
-      },
-      {
         test: /\.css$/,
         use: [
           MiniCssExtractPlugin.loader,

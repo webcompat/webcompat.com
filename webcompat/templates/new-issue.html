@@ -13,7 +13,10 @@
 
 {%- block extrascripts -%}
 
-<script src="{{ url_for('static', filename='dist/formv2.js')|bust_cache }}"></script>
+<script type="module" src="{{ url_for('static', filename='dist/formv2.js')|bust_cache }}"></script>
+{%- if config.PRODUCTION or config.STAGING -%}
+<script nomodule src="{{ url_for('static', filename='dist/formv2.es5.js')|bust_cache }}"></script>
+{%- endif %}
 
 {% if source and campaign %}
 <script nonce={{nonce}}>

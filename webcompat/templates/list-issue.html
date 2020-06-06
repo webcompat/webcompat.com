@@ -40,5 +40,8 @@
 
 {% endblock %}
 {% block extrascripts %}
-<script src="{{ url_for('static', filename='dist/issues-list.js')|bust_cache }}"></script>
+<script type="module" src="{{ url_for('static', filename='dist/issues-list.js')|bust_cache }}"></script>
+{%- if config.PRODUCTION or config.STAGING -%}
+<script nomodule src="{{ url_for('static', filename='dist/issues-list.es5.js')|bust_cache }}"></script>
+{%- endif %}
 {% endblock %}
