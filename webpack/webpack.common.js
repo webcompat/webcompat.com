@@ -21,18 +21,11 @@ module.exports = {
           },
           {
             loader: "ejs-loader",
+            options: {
+              variable: "data",
+            },
           },
         ],
-      },
-      {
-        test: /\.js$/,
-        exclude: [
-          /node_modules/,
-          path.resolve(__dirname, "../webcompat/static/js/vendor"),
-        ],
-        use: {
-          loader: "babel-loader",
-        },
       },
       {
         test: /\.css$/,

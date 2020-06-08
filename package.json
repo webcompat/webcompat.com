@@ -25,9 +25,9 @@
     "yargs": "15.3.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.8.7",
-    "@babel/preset-env": "^7.8.7",
-    "@babel/register": "^7.8.6",
+    "@babel/core": "^7.10.2",
+    "@babel/preset-env": "^7.10.2",
+    "@babel/register": "^7.10.1",
     "babel-loader": "^8.1.0",
     "css-loader": "^3.5.3",
     "ejs-loader": "^0.3.6",
@@ -99,7 +99,8 @@
     "test:unit-js": "intern config=./webcompat/static/js/lib/wizard/tests/intern.json",
     "test:python": "pip install -e . && pytest",
     "dev": "webpack --config ./webpack/webpack.dev.js --watch",
-    "prod": "webpack --config ./webpack/webpack.prod.js"
+    "prod": "webpack --config ./webpack/webpack.prod.js && npm run prod:es5",
+    "prod:es5": "webpack --config ./webpack/webpack.prod.js --env.es5"
   },
   "husky": {
     "hooks": {
