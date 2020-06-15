@@ -173,7 +173,7 @@ def upload():
         abort(501)
 
     try:
-        if file_type is 'image':
+        if file_type == 'image':
             upload = ImageUpload(data)
         else:
             upload = LogUpload(data)
