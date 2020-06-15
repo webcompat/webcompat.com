@@ -10,11 +10,8 @@
 </main>
 {% endblock %}
 {%- block extrascripts -%}
+<script type="module" src="{{ url_for('static', filename='dist/index.js')|bust_cache }}"></script>
 {%- if config.PRODUCTION or config.STAGING -%}
-<script src="{{ url_for('static', filename='js/dist/index.min.js')|bust_cache }}"></script>
-{%- else -%}
-<script src="{{ url_for('static', filename='js/lib/models/label-list.js') }}"></script>
-<script src="{{ url_for('static', filename='js/lib/models/issue.js') }}"></script>
-<script src="{{ url_for('static', filename='js/lib/untriaged.js') }}"></script>
-{%- endif -%}
+<script nomodule src="{{ url_for('static', filename='dist/index.es5.js')|bust_cache }}"></script>
+{%- endif %}
 {%- endblock %}

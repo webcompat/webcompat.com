@@ -160,20 +160,20 @@ def file_issue():
 @app.route('/', methods=['GET'])
 def index():
     """Set the main view where people come to report issues."""
-    push('/css/dist/webcompat.min.css', **{
+    push('/dist/webcompat.css', **{
         'as': 'style',
         'rel': 'preload'
     })
-    push(bust_cache('/js/dist/webcompat.min.js'), **{
+    push(bust_cache('/dist/vendor.js'), **{
         'as': 'script',
         'rel': 'preload'
     })
-    push('/img/svg/icons/svg-leaf_right.svg', **{
-        'as': 'img',
+    push(bust_cache('/dist/webcompat.js'), **{
+        'as': 'script',
         'rel': 'preload'
     })
-    push('/img/svg/icons/svg-leaf_left.svg', **{
-        'as': 'img',
+    push(bust_cache('/dist/index.js'), **{
+        'as': 'script',
         'rel': 'preload'
     })
     ua_header = request.headers.get('User-Agent')
@@ -190,15 +190,19 @@ def index():
 @cache_policy(private=True, uri_max_age=0, must_revalidate=True)
 def show_issues():
     """Route to display global issues view."""
-    push('/css/dist/webcompat.min.css', **{
+    push('/dist/webcompat.css', **{
         'as': 'style',
         'rel': 'preload'
     })
-    push(bust_cache('/js/dist/webcompat.min.js'), **{
+    push(bust_cache('/dist/vendor.js'), **{
         'as': 'script',
         'rel': 'preload'
     })
-    push(bust_cache('/js/dist/issues.min.js'), **{
+    push(bust_cache('/dist/webcompat.js'), **{
+        'as': 'script',
+        'rel': 'preload'
+    })
+    push(bust_cache('/dist/issues-list.js'), **{
         'as': 'script',
         'rel': 'preload'
     })
@@ -241,11 +245,19 @@ def create_issue():
     Any deceptive requests will be ended as a 400.
     See https://tools.ietf.org/html/rfc7231#section-6.5.1
     """
-    push('/css/dist/webcompat.min.css', **{
+    push('/dist/webcompat.css', **{
         'as': 'style',
         'rel': 'preload'
     })
-    push(bust_cache('/js/dist/webcompat.min.js'), **{
+    push(bust_cache('/dist/vendor.js'), **{
+        'as': 'script',
+        'rel': 'preload'
+    })
+    push(bust_cache('/dist/webcompat.js'), **{
+        'as': 'script',
+        'rel': 'preload'
+    })
+    push(bust_cache('/dist/formv2.js'), **{
         'as': 'script',
         'rel': 'preload'
     })
@@ -326,15 +338,19 @@ def create_issue():
 @cache_policy(private=True, uri_max_age=0, must_revalidate=True)
 def show_issue(number):
     """Route to display a single issue."""
-    push('/css/dist/webcompat.min.css', **{
+    push('/dist/webcompat.css', **{
         'as': 'style',
         'rel': 'preload'
     })
-    push(bust_cache('/js/dist/webcompat.min.js'), **{
+    push(bust_cache('/dist/vendor.js'), **{
         'as': 'script',
         'rel': 'preload'
     })
-    push(bust_cache('/js/dist/issues.min.js'), **{
+    push(bust_cache('/dist/webcompat.js'), **{
+        'as': 'script',
+        'rel': 'preload'
+    })
+    push(bust_cache('/dist/issue-page.js'), **{
         'as': 'script',
         'rel': 'preload'
     })

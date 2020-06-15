@@ -33,6 +33,7 @@ webcompat/static/js/build/
 webcompat/static/js/dist/
 webcompat/**/*.min.css
 webcompat/static/css/dist/
+webcompat/static/dist
 
 #selenium server
 *.jar

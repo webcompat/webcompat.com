@@ -2,6 +2,13 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
+import $ from "jquery";
+import { LabelList } from "./models/label-list.js";
+import { CategoryView, CategoryEditorView } from "./editor.js";
+import issueLabelsTemplate from "templates/issue/issue-labels.jst";
+import issueLabelsSubTemplate from "templates/issue/issue-labels-sub.jst";
+import labelEditorTemplate from "templates/web_modules/label-editor.jst";
+
 var issues = issues || {}; // eslint-disable-line no-use-before-define
 
 // We need a complete list of labels for certain operations,
@@ -14,65 +21,15 @@ var issues = issues || {}; // eslint-disable-line no-use-before-define
 
 if ($("body").data("username")) {
   if (!issues.allLabels) {
-    issues.allLabels = new issues.LabelList();
+    issues.allLabels = new LabelList();
   }
 }
 
-issues.LabelsView = issues.CategoryView.extend({
-  el: $(".js-Issue-labels"),
-  keyboardEvents: {
-    l: "openEditor",
-  },
-  template: wcTmpl["issue/issue-labels.jst"],
-  // this subTemplate will need to be kept in sync with
-  // relavant parts in issue/issue-labels.jst
-  subTemplate: wcTmpl["issue/issue-labels-sub.jst"],
-  closeEditor: function () {
-    this.labelEditor.closeEditor();
-  },
-  fetchItems: function () {
-    this.editorButton = $(".js-LabelEditorLauncher");
-    if (this._isLoggedIn) {
-      this.labelEditor = new issues.LabelEditorView({
-        model: issues.allLabels,
-        issueView: this,
-      });
-      this.issueLabels = this.getIssueLabels();
-      this.editorButton.show();
-    }
-  },
-  getIssueLabels: function () {
-    return _.map(this.model.get("labels"), "name");
-  },
-  openEditor: function (e) {
-    // make sure we're not typing in the comment textfield.
-    if (e && e.target.nodeName === "TEXTAREA") {
-      return;
-    }
-
-    this.labelEditor.isOpen = true;
-    this.editorButton.addClass("is-active");
-    this.$el
-      .find(".js-LabelEditorLauncher")
-      .after(this.labelEditor.render().el);
-    this.$el.find(".label-editor").addClass("is-open");
-    $("#body-webcompat").addClass("is-label-editor-open");
-    var toBeChecked = _.intersection(
-      this.getIssueLabels(),
-      issues.allLabels.toArray()
-    );
-    _.each(toBeChecked, function (labelName) {
-      $('[name="' + labelName + '"]').prop("checked", true);
-    });
-    this.$el.closest(".label-box").scrollTop(this.$el.position().top);
-  },
-});
-
-issues.LabelEditorView = issues.CategoryEditorView.extend({
+const LabelEditorView = CategoryEditorView.extend({
   initialize: function (options) {
     this.issueView = options.issueView;
   },
-  template: wcTmpl["web_modules/label-editor.jst"],
+  template: labelEditorTemplate,
   updateView: function (evt) {
     // We try to make sure only one priority"-type label is set
     // If the change event comes from a "priority"-type label,
@@ -120,5 +77,55 @@ issues.LabelEditorView = issues.CategoryEditorView.extend({
         $("#body-webcompat").removeClass("is-label-editor-open");
       }
     }
+  },
+});
+
+export const LabelsView = CategoryView.extend({
+  el: $(".js-Issue-labels"),
+  keyboardEvents: {
+    l: "openEditor",
+  },
+  template: issueLabelsTemplate,
+  // this subTemplate will need to be kept in sync with
+  // relavant parts in issue/issue-labels.jst
+  subTemplate: issueLabelsSubTemplate,
+  closeEditor: function () {
+    this.labelEditor.closeEditor();
+  },
+  fetchItems: function () {
+    this.editorButton = $(".js-LabelEditorLauncher");
+    if (this._isLoggedIn) {
+      this.labelEditor = new LabelEditorView({
+        model: issues.allLabels,
+        issueView: this,
+      });
+      this.issueLabels = this.getIssueLabels();
+      this.editorButton.show();
+    }
+  },
+  getIssueLabels: function () {
+    return _.map(this.model.get("labels"), "name");
+  },
+  openEditor: function (e) {
+    // make sure we're not typing in the comment textfield.
+    if (e && e.target.nodeName === "TEXTAREA") {
+      return;
+    }
+
+    this.labelEditor.isOpen = true;
+    this.editorButton.addClass("is-active");
+    this.$el
+      .find(".js-LabelEditorLauncher")
+      .after(this.labelEditor.render().el);
+    this.$el.find(".label-editor").addClass("is-open");
+    $("#body-webcompat").addClass("is-label-editor-open");
+    var toBeChecked = _.intersection(
+      this.getIssueLabels(),
+      issues.allLabels.toArray()
+    );
+    _.each(toBeChecked, function (labelName) {
+      $('[name="' + labelName + '"]').prop("checked", true);
+    });
+    this.$el.closest(".label-box").scrollTop(this.$el.position().top);
   },
 });

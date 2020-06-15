@@ -60,10 +60,10 @@ registerSuite("Reporting with wizard", {
           );
         })
         .end()
-        .findByCssSelector(".button.step-1")
-        .getAttribute("class")
-        .then(function (className) {
-          assert.include(className, "disabled");
+        .findByCssSelector(".next-url")
+        .getAttribute("disabled")
+        .then(function (attribute) {
+          assert.isNotNull(attribute);
         })
         .end()
         .findByCssSelector("#url")
@@ -76,50 +76,99 @@ registerSuite("Reporting with wizard", {
     "Wizard stepper - scenario 1"() {
       return (
         FunctionalHelpers.openPage(this, url("issues/new"), "#js-ReportForm")
+          .findByCssSelector(".step.active .description")
+          .getVisibleText()
+          .then(function (text) {
+            // Make sure that progress label is "Web address"
+            assert.include(text, "Web address");
+          })
+          .end()
           // Manual url enter
           .findByCssSelector("#url")
           .type("http://example.com")
           .end()
           // Click on "Confirm"
-          .findByCssSelector(".button.step-1")
+          .findByCssSelector(".next-url")
           .click()
+          .end()
+          .findByCssSelector(".step.active .description")
+          .getVisibleText()
+          .then(function (text) {
+            // Make sure that progress label is "Issue"
+            assert.include(text, "Issue");
+          })
           .end()
           .execute(function () {
             // Click on "Desktop site instead of mobile site"
-            $("[for=problem_category-0]")[0].click();
+            document.querySelector("[for=problem_category-0]").click();
           })
           .sleep(1000)
+          // Check that hidden description field has "Desktop site instead of mobile site"
+          .findById("description")
+          .getAttribute("value")
+          .then(function (val) {
+            assert.include(val, "Desktop site instead of mobile site");
+          })
+          .end()
+          .findByCssSelector(".step.active .description")
+          .getVisibleText()
+          .then(function (text) {
+            // Make sure that progress label is "Details"
+            assert.include(text, "Details");
+          })
+          .end()
           // Click on "Yes"
-          .findByCssSelector(".button.step-4")
+          .findByCssSelector(".next-browser")
           .click()
           .end()
           .sleep(500)
-          .findByCssSelector(".button.step-6")
-          .getAttribute("class")
-          .then(function (className) {
+          .findByCssSelector(".step.active .description")
+          .getVisibleText()
+          .then(function (text) {
+            // Make sure that progress label is "Testing"
+            assert.include(text, "Testing");
+          })
+          .end()
+          .findByCssSelector(".next-tested")
+          .getAttribute("disabled")
+          .then(function (attribute) {
             // Make sure that "Confirm" button is disabled if browser is not selected
-            assert.include(className, "disabled");
+            assert.isNotNull(attribute);
           })
           .execute(function () {
             // Click on "Chrome"
-            $("[for=tested_browsers-0]")[0].click();
+            document.querySelector("[for=tested_browsers-0]").click();
           })
           .end()
           .sleep(500)
+          // Make sure that "Tested Another Browser" is true
+          .findByCssSelector("#browser_test-0")
+          .getProperty("checked")
+          .then(function (value) {
+            assert.equal(value, true);
+          })
+          .end()
           // Click on "Confirm"
-          .findByCssSelector(".button.step-6")
+          .findByCssSelector(".next-tested")
           .click()
+          .end()
+          .findByCssSelector(".step.active .description")
+          .getVisibleText()
+          .then(function (text) {
+            // Make sure that progress label is "Description"
+            assert.include(text, "Description");
+          })
           .end()
           // Enter less than 30 characters in the description field
           .findById("steps_reproduce")
           .type("not enough characters")
           .end()
           .sleep(500)
-          .findDisplayedByCssSelector(".button.step-8")
-          .getAttribute("class")
-          .then(function (className) {
+          .findDisplayedByCssSelector(".next-description")
+          .getAttribute("disabled")
+          .then(function (attribute) {
             // Make sure "Continue" is disabled if there are not enough characters
-            assert.include(className, "disabled");
+            assert.isNotNull(attribute);
           })
           .end()
           .findById("steps_reproduce")
@@ -129,15 +178,22 @@ registerSuite("Reporting with wizard", {
           .end()
           .sleep(500)
           // Click on "Continue"
-          .findByCssSelector(".button.step-8")
+          .findByCssSelector(".next-description")
           .click()
+          .end()
+          .findByCssSelector(".step.active .description")
+          .getVisibleText()
+          .then(function (text) {
+            // Make sure that progress label is "Screenshot"
+            assert.include(text, "Screenshot");
+          })
           .end()
           // Upload an image
           .findByCssSelector("#image")
           .type(VALID_IMAGE_PATH)
           .end()
           .sleep(500)
-          .findDisplayedByCssSelector(".button.step-10")
+          .findDisplayedByCssSelector(".next-screenshot")
           .getVisibleText()
           .then(function (text) {
             // Make sure that there is "Continue" button after uploading
@@ -145,6 +201,13 @@ registerSuite("Reporting with wizard", {
           })
           // Click on "Continue"
           .click()
+          .end()
+          .findByCssSelector(".step.active .description")
+          .getVisibleText()
+          .then(function (text) {
+            // Make sure that progress label is "Send report"
+            assert.include(text, "Send report");
+          })
           .end()
           // Make sure "Report via Github" is visible
           .findDisplayedById("submitgithub")
@@ -157,34 +220,69 @@ registerSuite("Reporting with wizard", {
     "Wizard stepper - scenario 2"() {
       return (
         FunctionalHelpers.openPage(this, url("issues/new"), "#js-ReportForm")
+          .findByCssSelector(".step.active .description")
+          .getVisibleText()
+          .then(function (text) {
+            // Make sure that progress label is "Web address"
+            assert.include(text, "Web address");
+          })
+          .end()
           // Manual url enter
           .findByCssSelector("#url")
           .type("http://example.com")
           .end()
           // Click on "Confirm"
-          .findByCssSelector(".button.step-1")
+          .findByCssSelector(".next-url")
           .click()
+          .end()
+          .findByCssSelector(".step.active .description")
+          .getVisibleText()
+          .then(function (text) {
+            // Make sure that progress label is "Issue"
+            assert.include(text, "Issue");
+          })
           .end()
           .execute(function () {
             // Click on "Design is broken"
-            $("[for=problem_category-2]")[0].click();
+            document.querySelector("[for=problem_category-2]").click();
             // Click on "Images not loaded"
-            $("[for=layout_bug_subcategory-0]")[0].click();
+            document.querySelector("[for=layout_bug_subcategory-0]").click();
           })
           .sleep(1000)
+          // Check that hidden description field has "Images not loaded"
+          .findById("description")
+          .getAttribute("value")
+          .then(function (val) {
+            assert.include(val, "Images not loaded");
+          })
+          .end()
+          .findByCssSelector(".step.active .description")
+          .getVisibleText()
+          .then(function (text) {
+            // Make sure that progress label is "Details"
+            assert.include(text, "Details");
+          })
+          .end()
           // Click on "different device or browser"
-          .findByCssSelector(".next-step.step-5")
+          .findByCssSelector(".next-custom")
           .click()
+          .end()
+          .findByCssSelector(".step.active .description")
+          .getVisibleText()
+          .then(function (text) {
+            // Make sure that progress label is still "Details"
+            assert.include(text, "Details");
+          })
           .end()
           // Clear the "Browser" field
           .findById("browser")
           .clearValue()
           .end()
-          .findByCssSelector(".button.step-5")
-          .getAttribute("class")
-          .then(function (className) {
+          .findByCssSelector(".button.next-custom")
+          .getAttribute("disabled")
+          .then(function (attribute) {
             // Make sure  that "Confirm" button is disabled when "Browser" field is empty
-            assert.include(className, "disabled");
+            assert.isNotNull(attribute);
           })
           .end()
           .findById("browser")
@@ -192,21 +290,35 @@ registerSuite("Reporting with wizard", {
           .type("Firefox 76.0")
           .end()
           .sleep(500)
-          .findByCssSelector(".step-container.step5 ")
+          .findByCssSelector(".step-custom-browser")
           .click()
           .end()
           // Click on "Confirm"
-          .findByCssSelector(".button.step-5")
+          .findByCssSelector(".button.next-custom")
           .click()
           .end()
           .sleep(1000)
+          .findByCssSelector(".step.active .description")
+          .getVisibleText()
+          .then(function (text) {
+            // Make sure that progress label is "Testing"
+            assert.include(text, "Testing");
+          })
+          .end()
           // Click on "I have only tested on this browser"
           .findByCssSelector(".no-other-browser")
           .click()
           .end()
+          // Make sure that "Tested Another Browser" is false
+          .findByCssSelector("#browser_test-1")
+          .getProperty("checked")
+          .then(function (value) {
+            assert.equal(value, true);
+          })
+          .end()
           .execute(function () {
             // Click on "What is a web compatibility issue?"
-            $(".popup-trigger")[0].click();
+            document.querySelector(".popup-trigger").click();
           })
           .end()
           // Make sure that popup is visible and close it
@@ -216,7 +328,7 @@ registerSuite("Reporting with wizard", {
           .end()
           .end()
           .sleep(500)
-          .findByCssSelector(".button.step-7")
+          .findByCssSelector(".button.next-warning")
           .getVisibleText()
           .then(function (text) {
             // Make sure there is "Continue without testing" button
@@ -224,17 +336,31 @@ registerSuite("Reporting with wizard", {
           })
           .click()
           .end()
+          .findByCssSelector(".step.active .description")
+          .getVisibleText()
+          .then(function (text) {
+            // Make sure that progress label is "Description"
+            assert.include(text, "Description");
+          })
+          .end()
           // Enter more than 30 characters in the description field
           .findById("steps_reproduce")
           .type("This paragraph contains more than 30 characters")
           .end()
           .sleep(500)
           // Click "Continue"
-          .findByCssSelector(".button.step-8")
+          .findByCssSelector(".next-description")
           .click()
           .end()
           .sleep(500)
-          .findDisplayedByCssSelector(".button.step-10")
+          .findByCssSelector(".step.active .description")
+          .getVisibleText()
+          .then(function (text) {
+            // Make sure that progress label is "Screenshot"
+            assert.include(text, "Screenshot");
+          })
+          .end()
+          .findDisplayedByCssSelector(".next-screenshot")
           .getVisibleText()
           .then(function (text) {
             // Make sure there is "Continue without" button if there is no image
@@ -247,6 +373,13 @@ registerSuite("Reporting with wizard", {
           // Click on "Continue without"
           .click()
           .end()
+          .findByCssSelector(".step.active .description")
+          .getVisibleText()
+          .then(function (text) {
+            // Make sure that progress label is "Send report"
+            assert.include(text, "Send report");
+          })
+          .end()
           // Make sure "Report via Github" is visible
           .findDisplayedById("submitgithub")
           .end()
@@ -258,13 +391,20 @@ registerSuite("Reporting with wizard", {
     "Wizard stepper - scenario 3"() {
       return (
         FunctionalHelpers.openPage(this, url("issues/new"), "#js-ReportForm")
+          .findByCssSelector(".step.active .description")
+          .getVisibleText()
+          .then(function (text) {
+            // Make sure that progress label is "Web address"
+            assert.include(text, "Web address");
+          })
+          .end()
           // Manual url enter
           .findByCssSelector("#url")
           .type("http://example.com")
           .end()
           .execute(function () {
             // Click on "Learn more about web compatibility" link
-            $(".popup-trigger")[0].click();
+            document.querySelector(".popup-trigger").click();
           })
           .end()
           // Make sure that popup is visible an close it
@@ -275,19 +415,26 @@ registerSuite("Reporting with wizard", {
           .end()
           .sleep(500)
           // Click on "Confirm"
-          .findByCssSelector(".button.step-1")
+          .findByCssSelector(".next-url")
           .click()
+          .end()
+          .findByCssSelector(".step.active .description")
+          .getVisibleText()
+          .then(function (text) {
+            // Make sure that progress label is "Issue"
+            assert.include(text, "Issue");
+          })
           .end()
           .execute(function () {
             // Click on "Something else"
-            $("[for=problem_category-4]")[0].click();
+            document.querySelector("[for=problem_category-4]").click();
           })
           .sleep(500)
-          .findByCssSelector(".button.step-3")
-          .getAttribute("class")
-          .then(function (className) {
+          .findByCssSelector(".next-category")
+          .getAttribute("disabled")
+          .then(function (attribute) {
             // Make sure that "Confirm" button is disabled if there is no problem description
-            assert.include(className, "disabled");
+            assert.isNotNull(attribute);
           })
           .end()
           // Fill in "Issue description"
@@ -296,35 +443,63 @@ registerSuite("Reporting with wizard", {
           .end()
           .sleep(500)
           // Click on "Confirm" button
-          .findByCssSelector(".button.step-3")
+          .findByCssSelector(".next-category")
           .click()
           .end()
           .sleep(1000)
+          .findByCssSelector(".step.active .description")
+          .getVisibleText()
+          .then(function (text) {
+            // Make sure that progress label is "Details"
+            assert.include(text, "Details");
+          })
+          .end()
           // Click on "Yes"
-          .findDisplayedByCssSelector(".button.step-4")
+          .findDisplayedByCssSelector(".next-browser")
           .click()
           .end()
           .sleep(500)
+          // Check that hidden description field has "some problem"
+          .findById("description")
+          .getAttribute("value")
+          .then(function (val) {
+            assert.include(val, "some problem");
+          })
+          .end()
           .execute(function () {
             // Click on "Other" in the browsers list
-            $("[for=tested_browsers-5]")[0].click();
+            document.querySelector("[for=tested_browsers-5]").click();
           })
           .end()
           .sleep(1000)
+          // Make sure that "Tested Another Browser" is true
+          .findByCssSelector("#browser_test-0")
+          .getProperty("checked")
+          .then(function (value) {
+            assert.equal(value, true);
+          })
+          .end()
           // Click on "Confirm" button
-          .findDisplayedByCssSelector(".button.step-6")
+          .findDisplayedByCssSelector(".next-tested")
           .click()
+          .end()
+          .findByCssSelector(".step.active .description")
+          .getVisibleText()
+          .then(function (text) {
+            // Make sure that progress label is "Description"
+            assert.include(text, "Description");
+          })
           .end()
           // Enter less than 30 characters
           .findById("steps_reproduce")
           .type("not enough characters")
           .end()
           .sleep(500)
-          .findDisplayedByCssSelector(".button.step-8")
-          .getAttribute("class")
-          .then(function (className) {
+          .findDisplayedByCssSelector(".next-description")
+          .getAttribute("disabled")
+          .then(function (attribute) {
             // Make sure "Continue" is disabled if there are not enough characters
-            assert.include(className, "disabled");
+            assert.isNotNull(attribute);
           })
           .end()
           // Enter more than 30 characters in the description field
@@ -334,8 +509,15 @@ registerSuite("Reporting with wizard", {
           .end()
           .sleep(500)
           // Click "Continue"
-          .findByCssSelector(".button.step-8")
+          .findByCssSelector(".next-description")
           .click()
+          .end()
+          .findByCssSelector(".step.active .description")
+          .getVisibleText()
+          .then(function (text) {
+            // Make sure that progress label is "Screenshot"
+            assert.include(text, "Screenshot");
+          })
           .end()
           // Upload an image
           .findByCssSelector("#image")
@@ -346,7 +528,7 @@ registerSuite("Reporting with wizard", {
           .findByCssSelector(".button.js-remove-upload")
           .click()
           .end()
-          .findDisplayedByCssSelector(".button.step-10")
+          .findDisplayedByCssSelector(".next-screenshot")
           .getVisibleText()
           .then(function (text) {
             // Make sure there is "Continue without" button after image deletion
@@ -403,7 +585,7 @@ registerSuite("Reporting with wizard", {
           .waitForDeletedByCssSelector(".form-upload-error")
           .end()
           .sleep(500)
-          .findDisplayedByCssSelector(".button.step-10")
+          .findDisplayedByCssSelector(".next-screenshot")
           .getVisibleText()
           .then(function (text) {
             // Make sure there is "Continue" button after second upload
@@ -415,6 +597,13 @@ registerSuite("Reporting with wizard", {
           })
           // Click "Continue"
           .click()
+          .end()
+          .findByCssSelector(".step.active .description")
+          .getVisibleText()
+          .then(function (text) {
+            // Make sure that progress label is "Send report"
+            assert.include(text, "Send report");
+          })
           .end()
           // Make sure "Report via Github" is visible
           .findDisplayedById("submitgithub")

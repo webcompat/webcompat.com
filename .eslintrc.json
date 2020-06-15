@@ -1,6 +1,7 @@
 {
   "parserOptions": {
-    "ecmaVersion": 6
+    "ecmaVersion": 9,
+    "sourceType": "module"
   },
   "env": {
     "browser": true
@@ -20,6 +21,7 @@
     "console": true,
     "define": true,
     "ga": true,
+    "intern": true,
     "md": true,
     "module": true,
     "moment": true,
@@ -33,7 +35,8 @@
     "WindowHelpers": true,
     "Validation": true,
     "prefillForm": true,
-    "setAnalyticsData": true
+    "setAnalyticsData": true,
+    "__dirname": true
   },
   "rules": {
     "eqeqeq": [2, "smart"],
@@ -43,6 +46,7 @@
     "no-prototype-builtins": "off",
     "no-use-before-define": 2,
     "one-var": [2, "never"],
-    "prettier/prettier": "error"
+    "prettier/prettier": "error",
+    "no-unused-vars": "off"
   }
 }

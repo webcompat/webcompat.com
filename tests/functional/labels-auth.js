@@ -98,7 +98,7 @@ registerSuite("Labels (auth)", {
         true /* longerTimeout */
       )
         .execute(() => {
-          $(".js-LabelEditorLauncher")[0].click();
+          document.querySelector(".js-LabelEditorLauncher").click();
         })
         .findByCssSelector(".js-CategoryEditor-close")
         .click()

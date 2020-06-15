@@ -1,6 +1,6 @@
 <script type="text/template">
-  <% if (issues.length) { %>
-    <% _.each(issues, function(issue) { %>
+  <% if (data.issues.length) { %>
+    <% _.each(data.issues, function(issue) { %>
       <div class="grid-row issue label-<%= issue.stateClass %> js-IssueList">
         <article class="grid-cell x2 issue-description js-issue-desc">
             <a href="/issues/<%= issue.number %>">

@@ -2,6 +2,8 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
+import $ from "jquery";
+
 function NavBar() {
   this.init = function () {
     this.setUpEvents();
@@ -29,6 +31,14 @@ function NavBar() {
     });
   };
 
+  this.addShadow = function (el, scroll) {
+    if (scroll > 0) {
+      el.addClass("shadow");
+    } else {
+      el.removeClass("shadow");
+    }
+  };
+
   this.navbarHandler = function () {
     var $navbar = $(".js-navigation");
     var $newIssueStepper = $("#wizard-container");
@@ -36,13 +46,20 @@ function NavBar() {
     var lastScrollY = window.pageYOffset;
     var scrollTimeout = null;
     var isScrolling = false;
-    $(window).on("scroll", function () {
-      isScrolling = true;
-      window.clearTimeout(scrollTimeout);
-      scrollTimeout = window.setTimeout(function () {
-        isScrolling = false;
-      }, 500);
-    });
+
+    $(window).on(
+      "scroll",
+      function () {
+        isScrolling = true;
+        window.clearTimeout(scrollTimeout);
+        scrollTimeout = window.setTimeout(function () {
+          isScrolling = false;
+        }, 500);
+
+        this.addShadow($newIssueStepper, $(window).scrollTop());
+      }.bind(this)
+    );
+
     window.setInterval(function () {
       if (!isScrolling) {
         return;

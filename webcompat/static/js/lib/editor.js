@@ -1,7 +1,8 @@
 /* This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
-var issues = issues || {}; // eslint-disable-line no-use-before-define
+
+import $ from "jquery";
 
 /* Child classes need to define the following methods/properties:
  * closeEditor
@@ -10,7 +11,7 @@ var issues = issues || {}; // eslint-disable-line no-use-before-define
  * template
  * subTemplate
  */
-issues.CategoryView = Backbone.View.extend({
+export const CategoryView = Backbone.View.extend({
   _isLoggedIn: $("body").data("username"),
   editorButton: null,
   events: {
@@ -30,7 +31,7 @@ issues.CategoryView = Backbone.View.extend({
  * template
  * updateView
  */
-issues.CategoryEditorView = Backbone.View.extend({
+export const CategoryEditorView = Backbone.View.extend({
   isOpen: false,
   className: "label-editor js-CategoryEditor",
   events: {

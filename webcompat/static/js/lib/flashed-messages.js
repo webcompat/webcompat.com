@@ -7,10 +7,19 @@
 // in flash-message.js. See layout.html for how category and message data
 // attributes are set.
 
-var currentScript = document.currentScript;
-if (currentScript) {
-  var category = currentScript.dataset.category || "";
-  var message = currentScript.dataset.message || "";
+import $ from "jquery";
+import { wcEvents } from "./flash-message.js";
 
-  wcEvents.trigger("flash:" + category, { message: message, timeout: 4000 });
+const showMessage = (el) => {
+  const category = el.getAttribute("data-category");
+  const message = el.getAttribute("data-message");
+  if (category && message) {
+    wcEvents.trigger("flash:" + category, { message: message, timeout: 4000 });
+  }
+};
+
+const messagesEl = $(".flashed-message");
+
+if (messagesEl.length) {
+  messagesEl.each((i, el) => showMessage(el));
 }

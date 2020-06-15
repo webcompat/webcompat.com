@@ -25,7 +25,9 @@ def bust_cache(file_path):
     Uses a simple cache_dict to we don't have to hash each file for every
     request. This is kept in-memory so it will be blown away when the app
     is restarted (which is when file changes would have been deployed).
+    Doesn't return hash on development
     """
+
     def get_checksum(file_path):
         try:
             checksum = cache_dict[file_path]
@@ -33,6 +35,9 @@ def bust_cache(file_path):
             checksum = md5_checksum(file_path)
             cache_dict[file_path] = checksum
         return checksum
+
+    if app.config['LOCALHOST']:
+        return file_path
 
     return file_path + '?' + get_checksum(STATIC_PATH + file_path)
 

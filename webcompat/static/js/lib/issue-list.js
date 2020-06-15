@@ -2,6 +2,15 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
+import $ from "jquery";
+import dropdownTemplate from "templates/list-issue/dropdown.jst";
+import searchTemplate from "templates/list-issue/issuelist-search.jst";
+import sortTemplate from "templates/list-issue/issuelist-sorting.jst";
+import issueTemplate from "templates/list-issue/issuelist-issue.jst";
+import { PaginationMixin } from "./mixins/pagination.js";
+import { IssueCollection } from "./models/issue.js";
+import { wcEvents } from "./flash-message.js";
+
 var issueList = issueList || {}; // eslint-disable-line no-use-before-define
 issueList.events = _.extend({}, Backbone.Events);
 
@@ -27,7 +36,7 @@ issueList.DropdownView = Backbone.View.extend({
       _.bind(this.selectDropdownOption, this)
     );
   },
-  template: wcTmpl["list-issue/dropdown.jst"],
+  template: dropdownTemplate,
   render: function () {
     this.$el.html(this.template(this.model.toJSON()));
     return this;
@@ -141,7 +150,7 @@ issueList.SearchView = Backbone.View.extend({
     issueList.events.on("search:clear", _.bind(this.clearSearchBox, this));
     issueList.events.on("search:current", _.bind(this.currentSearch, this));
   },
-  template: wcTmpl["list-issue/issuelist-search.jst"],
+  template: searchTemplate,
   render: function (cb) {
     this.$el.html(this.template());
     this.input = this.$el.find("input");
@@ -238,7 +247,7 @@ issueList.SortingView = Backbone.View.extend({
       model: this.sortModel,
     });
   },
-  template: wcTmpl["list-issue/issuelist-sorting.jst"],
+  template: sortTemplate,
   render: function () {
     this.$el.html(this.template());
     this.paginationDropdown
@@ -265,7 +274,7 @@ issueList.IssueView = Backbone.View.extend(
     _loadingIndicator: $(".js-loader"),
     _urlParams: undefined,
     initialize: function () {
-      this.issues = new issueList.IssueCollection();
+      this.issues = new IssueCollection();
 
       // set up event listeners.
       issueList.events.on("issues:update", _.bind(this.updateIssues, this));
@@ -283,7 +292,7 @@ issueList.IssueView = Backbone.View.extend(
       issuesPagination.initMixin(this, this.issues, $("main"));
       this.loadIssues();
     },
-    template: wcTmpl["list-issue/issuelist-issue.jst"],
+    template: issueTemplate,
     loadIssues: function () {
       // Attemps to load model state from URL params, if present,
       // otherwise grab model defaults and load issues

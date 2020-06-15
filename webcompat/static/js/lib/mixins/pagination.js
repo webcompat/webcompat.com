@@ -2,6 +2,8 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
+import $ from "jquery";
+
 var issueList = issueList || {}; // eslint-disable-line no-use-before-define
 issueList.events = _.extend({}, Backbone.Events);
 
@@ -58,7 +60,7 @@ Check out issueList.IssueView for an example.
 */
 
 /* exported PaginationMixin */
-function PaginationMixin() {
+export function PaginationMixin() {
   this.initMixin = function (hostView, hostModel, parentContainerEl) {
     this.view = hostView;
     this.model = hostModel;

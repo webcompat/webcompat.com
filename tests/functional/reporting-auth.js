@@ -21,7 +21,7 @@ registerSuite("Reporting (auth)", {
   },
 
   tests: {
-    "Wizard stepper - scenario 1"() {
+    "Wizard stepper - scenario 1 for authorized user"() {
       return (
         FunctionalHelpers.openPage(this, url("issues/new"), "#js-ReportForm")
           // Manual url enter
@@ -29,33 +29,33 @@ registerSuite("Reporting (auth)", {
           .type("http://example.com")
           .end()
           // Click on "Confirm"
-          .findByCssSelector(".button.step-1")
+          .findByCssSelector(".next-url")
           .click()
           .end()
           .execute(function () {
             // Click on "Desktop site instead of mobile site"
-            $("[for=problem_category-0]")[0].click();
+            document.querySelector("[for=problem_category-0]").click();
           })
           .sleep(1000)
           // Click on "Yes"
-          .findByCssSelector(".button.step-4")
+          .findByCssSelector(".next-browser")
           .click()
           .end()
           .sleep(500)
-          .findByCssSelector(".button.step-6")
-          .getAttribute("class")
-          .then(function (className) {
+          .findByCssSelector(".next-tested")
+          .getAttribute("disabled")
+          .then(function (attribute) {
             // Make sure that "Confirm" button is disabled if browser is not selected
-            assert.include(className, "disabled");
+            assert.isNotNull(attribute);
           })
           .execute(function () {
             // Click on "Chrome"
-            $("[for=tested_browsers-0]")[0].click();
+            document.querySelector("[for=tested_browsers-0]").click();
           })
           .end()
           .sleep(500)
           // Click on "Confirm"
-          .findByCssSelector(".button.step-6")
+          .findByCssSelector(".next-tested")
           .click()
           .end()
           // Enter less than 30 characters in the description field
@@ -63,11 +63,11 @@ registerSuite("Reporting (auth)", {
           .type("not enough characters")
           .end()
           .sleep(500)
-          .findDisplayedByCssSelector(".button.step-8")
-          .getAttribute("class")
-          .then(function (className) {
+          .findDisplayedByCssSelector(".next-description")
+          .getAttribute("disabled")
+          .then(function (attribute) {
             // Make sure "Continue" is disabled if there are not enough characters
-            assert.include(className, "disabled");
+            assert.isNotNull(attribute);
           })
           .end()
           .findById("steps_reproduce")
@@ -77,11 +77,11 @@ registerSuite("Reporting (auth)", {
           .end()
           .sleep(500)
           // Click on "Continue"
-          .findByCssSelector(".button.step-8")
+          .findByCssSelector(".next-description")
           .click()
           .end()
           .sleep(500)
-          .findDisplayedByCssSelector(".button.step-10")
+          .findDisplayedByCssSelector(".next-screenshot")
           // Click on "Continue without"
           .click()
           .end()

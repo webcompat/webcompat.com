@@ -189,7 +189,7 @@
 <!-- Ksenia Berezina -->
 <article class="grid-row bio">
   <div class="grid-cell x1-fix">
-    <img src="https://avatars1.githubusercontent.com/u/505230" alt="Ksenia Berezina" class="bio-img">
+    <img src="https://avatars0.githubusercontent.com/u/1303908" alt="Ksenia Berezina" class="bio-img">
   </div>
   <div class="grid-nested x1">
     <div class="grid-cell bio-desc x1">
@@ -317,9 +317,8 @@
 </div>
 {% endblock %}
 {%- block extrascripts -%}
+<script type="module" src="{{ url_for('static', filename='dist/contributors.js')|bust_cache }}"></script>
 {%- if config.PRODUCTION or config.STAGING -%}
-<script src="{{ url_for('static', filename='js/dist/contributors.min.js')|bust_cache }}"></script>
-{% else %}
-<script src="{{ url_for('static', filename='js/lib/contributors.js') }}"></script>
+<script nomodule src="{{ url_for('static', filename='dist/contributors.es5.js')|bust_cache }}"></script>
 {%- endif %}
 {%- endblock %}
