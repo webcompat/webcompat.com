@@ -82,7 +82,8 @@ def report_public_issue():
     public_data = moderation_template('ongoing')
     # We add action-needsmoderation label, so reviewers can filter out
     public_data['labels'] = ['action-needsmoderation']
-    return proxy_request('post', path, data=json.dumps(public_data))
+    resp = proxy_request('post', path, data=json.dumps(public_data))
+    return resp.status_code, resp.json()
 
 
 def report_issue(form, proxy=False):
@@ -91,9 +92,8 @@ def report_issue(form, proxy=False):
     path = 'repos/{0}'.format(REPO_URI)
     submit_type = form.get('submit_type')
     if proxy and submit_type == 'github-proxy-report':
-        response = report_public_issue()
-        if (response.status_code == 201):
-            json_response = response.json()
+        status_code, json_response = report_public_issue()
+        if status_code == 201:
             report_private_issue(form, json_response.get('html_url'))
         else:
             abort(400)

@@ -1,5 +1,5 @@
 {% autoescape false %}{% for response in comments %}
-<div class="issue-comment js-Issue-comment grid-cell x2">
+<div class="issue-comment js-Issue-comment grid-cell x2" id="issuecomment-{{ response.id }}">
   <header class="comment-header">
     <figure class="comment-author" role="group">
       <img src="{{ response.user.avatar_url }}" class="comment-avatar" alt="{{ response.user.login }}">
@@ -11,7 +11,7 @@
     </figure>
     <div>
       <a class="comment-time" href="#issuecomment-{{ response.id }}">
-        {{ response.created_at }}
+        {{ response.created_at|format_date }}
       </a>
     </div>
   </header>

@@ -7,15 +7,12 @@
 '''Tests for console logs upload.'''
 
 import json
-import os.path
-import sys
-import unittest
+from pathlib import Path
+import pytest
 from werkzeug.datastructures import MultiDict
 
-# Add webcompat module to import path
-sys.path.append(os.path.realpath(os.pardir))
+import webcompat
 
-from webcompat import app  # noqa
 
 LOG = [
     {
@@ -37,120 +34,125 @@ LOG = [
 ]
 
 
+@pytest.fixture
+def client(tmp_path):
+    '''Setup environment for the tests.
+
+    Using tmpdir that will create
+    1. a tmp directory in your source code
+    2. auto-cleanup without having to remove the files.
+    '''
+    webcompat.app.config['TESTING'] = True
+    # Our configuration code is expecting a slash at the end.
+    webcompat.app.config['UPLOADS_DEFAULT_DEST'] = str(tmp_path) + '/'
+    with webcompat.app.test_client() as client:
+        yield client
+
+
 def get_json_contents(filepath):
     with open(filepath, 'r') as f:
         json_contents = json.load(f)
     return json_contents
 
 
-def get_path(self, url):
-    return self.app.config['UPLOADS_DEFAULT_DEST'] + url + '.json'
-
-
-def cleanup(filepath):
-    os.remove(filepath)
+def get_path(url):
+    '''Build the full absolute path to the json log.'''
+    url = url + '.json'
+    return Path(webcompat.app.config['UPLOADS_DEFAULT_DEST']) / Path(url)
 
 
 def form_request(data):
+    '''Create a dictionary for console logs.'''
     d = MultiDict()
     d['console_logs'] = data
     return d
 
 
-class TestConsoleUploads(unittest.TestCase):
-    def setUp(self):
-        app.config['TESTING'] = True
-        self.app = app
-        self.test_client = self.app.test_client()
-
-    def tearDown(self):
-        pass
-
-    def test_get(self):
-        '''Test that /upload/ doesn't let you GET.'''
-        rv = self.test_client.get('/upload/')
-        self.assertEqual(rv.status_code, 404)
-
-    def test_console_log_upload(self):
-        rv = self.test_client.post(
-            '/upload/', data=form_request(json.dumps(LOG)))
-        self.assertEqual(rv.status_code, 201)
-
-        response = json.loads(rv.data)
-        self.assertTrue('url' in response)
-        cleanup(get_path(self, response.get('url')))
-
-    def test_console_log_bad_format(self):
-        rv = self.test_client.post(
-            '/upload/', data=form_request('{test}'))
-        self.assertEqual(rv.status_code, 400)
-
-        rv = self.test_client.post(
-            '/upload/', data=form_request(''))
-        self.assertEqual(rv.status_code, 501)
-
-        rv = self.test_client.post(
-            '/upload/', data=json.dumps(LOG))
-        self.assertEqual(rv.status_code, 501)
-
-    def test_console_log_file_contents(self):
-        rv = self.test_client.post(
-            '/upload/', data=form_request(json.dumps(LOG)))
-        response = json.loads(rv.data)
-        filepath = get_path(self, response.get('url'))
-        actual = get_json_contents(filepath)
-        self.assertEqual(actual, LOG)
-        cleanup(filepath)
-
-    def test_console_log_render(self):
-        test = [
-            {
-                'level': 'log',
-                'log': [
-                    'test log'
-                ],
-                'uri': 'http://example.com/vendor.js',
-                'pos': '95:13'
-            },
-            {
-                'level': 'warn',
-                'log': [
-                    '<script> alert("hi")</script>',
-                    'something else..'
-                ],
-                'uri': 'http://example.com/test.js',
-                'pos': '1:28535'
-            },
-            {
-                'level': 'error',
-                'log': [
-                    '<div style="background-image: url(javascript:alert(\'XSS\'))">',  # noqa
-                ],
-                'uri': 'http://example.com/test.js',
-                'pos': '1:28535'
-            }
-        ]
-
-        rv = self.test_client.post(
-            '/upload/', data=form_request(json.dumps(test)))
-        response = json.loads(rv.data)
-        console_logs_url = '/console_logs/' + response.get('url')
-        rv = self.test_client.get(console_logs_url)
-        for expected in [
-            b'<div class="log level-log">',
-            b'<div class="log level-warn">',
-            b'<div class="log level-error">',
-            b'<a href="http://example.com/vendor.js">vendor.js:95:13</a>',
-            b'test log',
-            b'&lt;script&gt; alert(&#34;hi&#34;)&lt;/script&gt;',
-            b'&lt;div style=&#34;background-image: url(javascript:alert(&#39;XSS&#39;))&#34;&gt;'  # noqa
-        ]:
-            self.assertTrue(expected in rv.data)
-
-        self.assertEqual(rv.status_code, 200)
-        filepath = get_path(self, response.get('url'))
-        cleanup(filepath)
+def test_get(client):
+    '''Test that /upload/ doesn't let you GET.'''
+    rv = client.get('/upload/')
+    assert rv.status_code == 404
 
 
-if __name__ == '__main__':
-    unittest.main()
+def test_console_log_upload(client):
+    '''Test the upload of console.log to the server.'''
+    rv = client.post('/upload/', data=form_request(json.dumps(LOG)))
+    # file is created
+    assert rv.status_code == 201
+    # url is given in the response
+    response = json.loads(rv.data)
+    assert 'url' in response
+
+
+def test_console_log_bad_format(client):
+    '''Test to identify failures mode on file format.'''
+    # invalid content type
+    rv = client.post('/upload/', data=form_request('{test}'))
+    assert rv.status_code == 400
+    # empty content
+    rv = client.post(
+        '/upload/', data=form_request(''))
+    assert rv.status_code == 501
+    # wrong data structure
+    rv = client.post(
+        '/upload/', data=json.dumps(LOG))
+    assert rv.status_code == 501
+
+
+def test_console_log_file_contents(client):
+    '''Test that we don't modify the data in a round trip.'''
+    rv = client.post('/upload/', data=form_request(json.dumps(LOG)))
+    response = json.loads(rv.data)
+    filepath = get_path(response.get('url'))
+    actual = get_json_contents(filepath)
+    assert actual == LOG
+
+
+def test_console_log_render(client):
+    '''Test the rendered markup for console logs.'''
+    test = [
+        {
+            'level': 'log',
+            'log': [
+                'test log'
+            ],
+            'uri': 'http://example.com/vendor.js',
+            'pos': '95:13'
+        },
+        {
+            'level': 'warn',
+            'log': [
+                '<script> alert("hi")</script>',
+                'something else..'
+            ],
+            'uri': 'http://example.com/test.js',
+            'pos': '1:28535'
+        },
+        {
+            'level': 'error',
+            'log': [
+                '<div style="background-image: url(javascript:alert(\'XSS\'))">',  # noqa
+            ],
+            'uri': 'http://example.com/test.js',
+            'pos': '1:28535'
+        }
+    ]
+
+    rv = client.post(
+        '/upload/', data=form_request(json.dumps(test)))
+    response = json.loads(rv.data)
+    console_logs_url = '/console_logs/' + response.get('url')
+    print(console_logs_url)
+    rv = client.get(console_logs_url)
+    for expected in [
+        b'<div class="log level-log">',
+        b'<div class="log level-warn">',
+        b'<div class="log level-error">',
+        b'<a href="http://example.com/vendor.js">vendor.js:95:13</a>',
+        b'test log',
+        b'&lt;script&gt; alert(&#34;hi&#34;)&lt;/script&gt;',
+        b'&lt;div style=&#34;background-image: url(javascript:alert(&#39;XSS&#39;))&#34;&gt;'  # noqa
+    ]:
+        assert expected in rv.data
+
+    assert rv.status_code == 200

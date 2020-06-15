@@ -41,6 +41,11 @@ def mock_api_response(response_config={}):
     # Request headers are case insensitive dicts,
     # so we need to turn our mock headers into one.
     api_response.headers = CaseInsensitiveDict(headers)
+    # We build a json() method for the mock based on the true content.
+    content = response_config.get('content')
+    if content != '[]':
+        attrs = {'json.return_value': json.loads(content)[0]}
+        api_response.configure_mock(**attrs)
     return api_response
 
 

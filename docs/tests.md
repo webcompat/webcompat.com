@@ -1,13 +1,20 @@
+
+
 * [Running Tests](#running-tests)
+  * [Backend Unit Tests](#backend-unit-tests)
   * [Functional Tests](#functional-tests)
-  * [Functional Tests using Fixture Data](#functional-tests-using-fixture-data)
 * [Writing Tests](#writing-tests)
   * [Python Unit Tests](#python-unit-tests)
   * [JS Functional Tests](#js-functional-tests)
+  * [Adding Data Fixtures](#adding-data-fixtures)
 
 ## Running Tests
 
-We assume you have already installed the development python modules with
+Some of our tests are testing our backend code infrastructure and the others are testing the frontend logic of the application.
+
+### Backend Unit Tests
+
+Our tests are written in Python. We assume you have already installed the development Python modules with
 
 ```bash
 pip install -r config/requirements-dev.txt
@@ -45,8 +52,6 @@ tests/unit/test_webhook.py ................................... [100%]
 ========================= 154 passed in 33.19s ======================
 ```
 
-
-
 You can also run them with following:
 
 ```
@@ -66,7 +71,7 @@ We use [Intern](http://theintern.io/) to run functional tests.
 Be sure that you have installed local npm dependencies and run the build before trying to run functional tests - if not, you will notice problems with the css. [See dev env setup](https://github.com/webcompat/webcompat.com/blob/master/docs/dev-env-setup.md) for details.
 
 
-#### Installing Java
+#### Install Java
 
 > Java is used to run Selenium functional tests. Version 1.8.0+ is required.
 
@@ -91,11 +96,15 @@ sudo apt-get update
 sudo apt-get install oracle-java8-installer
 ```
 
+#### Select the Firefox binary
+
 The `firefox` binary will also need to be in your `PATH`. Here's how this can be done on OS X:
 
 ```bash
 export PATH="/Applications/Firefox.app/Contents/MacOS/:$PATH"
 ```
+
+#### Run the functional tests
 
 If you are using your own test repo, your tests will fail. Change it back to the default, at least for running tests:
 
@@ -121,7 +130,7 @@ In a separate terminal window or tab, run the tests:
 npm run test:js
 ```
 
-You can also run the functional tests as well as the python tests in a separate tab, after starting the server, with:
+You can also run the functional tests as well as the Python tests in a separate tab, after starting the server, with:
 
 ```
 npm test
@@ -149,9 +158,93 @@ By default, Chrome and Firefox will run in headless mode. To display the browser
 
 For a list of the recognized browser names, just refer to [Browser enum](http://seleniumhq.github.io/selenium/docs/api/javascript/module/selenium-webdriver/index_exports_Browser.html)
 
-## Adding Fixtures
+## Writing Tests
 
-To indicate that the app should send fixture data, use the `@mockable_response` decorator for an API endpoint.
+Contributions that add or modify major functionality to the project should typically come with tests to ensure we're not breaking things (or won't in the future!). There's always room for more testing, so general contributions in this form are always welcome.
+
+1. [Open an issue](https://github.com/webcompat/webcompat.com/issues) (if it doesn't exist yet)
+2. Write the tests
+3. Implement the feature
+4. Send a pull request
+5. The discussion around the code can start
+
+### Python Unit Tests
+
+Our Python unit tests are written using the [pytest](https://docs.pytest.org/en/latest/) framework.
+
+#### History
+
+Historically, we had been writing our tests with the Python standard [`unittest`](https://docs.python.org/3/library/unittest.html) module. We are slowly transitioning to pytest for some of the tests when we have to modify them. So you will find some test files with a mix of both unittest and pytest. If you feel converting the tests from unittest to pytest, please pick up one test file, open an issue and send a pull request with your modifications. See below for an example of pytest test skeleton.
+
+#### Python Test organization
+
+Unit tests placed in the [`tests/unit` directory](https://github.com/webcompat/webcompat.com/tree/master/tests/unit) will be automatically detected by pytest.
+
+Unit tests are preferred for features or functionality that are independent of the browser front-end, i.e., API responses, application routes, etc.
+
+#### pytest testing skeleton for webcompat
+
+pytest has far less boilerplate requirements than the unittest module.
+
+```python
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+"""Tests for @@THIS_MODULE@@ methods."""
+
+import pytest
+
+import webcompat
+# import the module you need to test
+# example: from webcompat.api.helpers import get_html_comments
+
+
+@pytest.fixture
+def client():
+    webcompat.app.config['TESTING'] = True
+    with webcompat.app.test_client() as client:
+        with webcompat.app.app_context():
+            # intialize something
+            pass
+        yield client
+
+def test_my_new_test(client):
+    """Test docstring."""
+    rv = client.get('/')
+    assert b'yes! expected data' in rv.data
+```
+
+Check, for example, the [tests for the API helpers](https://github.com/webcompat/webcompat.com/blob/master/tests/unit/test_api_helpers.py)
+
+#### Additional references:
+* [pytest documentation](https://docs.pytest.org/en/latest/contents.html#toc)
+* [Testing Flask Applications](https://flask.palletsprojects.com/en/1.1.x/testing/)
+
+
+### JS Functional Tests
+
+Functional tests are written in JavaScript, using [Intern](http://theintern.io/). There's a nice [guide on the Intern wiki](https://theintern.io/docs.html#Intern/4/docs/docs%2Fwriting_tests.md/functional-tests) that should explain enough to get you started.
+
+#### Additional references:
+
+* [Leadfoot](https://theintern.github.io/leadfoot/): the library that drives the browser (via Selenium).
+* [ChaiJS](http://chaijs.com/api/assert/): the library used for assertions.
+* [Intern docs](https://theintern.io/docs.html#Intern/4/docs/README.md): contains useful examples.
+
+It's also recommended to look at the other test files in the `tests/functional` directory to see how things are commonly done.
+
+### Adding Data Fixtures
+
+To avoid hitting the GitHub API during the tests, we need to make sure to have local representations of the data. When running the tests, the webcompat Flask app will then use these data for answering instead of asking data.
+
+🚨You need to make sure that your data are representative of what GitHub is sending. This is the danger with any fixtures is when the fixtures data are drifting from the reality of what the third party API is sending.
+
+#### Set a mockable response
+
+To indicate that the app should send fixture data, use the Python `@mockable_response` decorator for a Python API endpoint.
 
 If the endpoint you are trying to mock has `GET` parameters, you will need to create a file that has the `GET` parameters encoded in the filename. The source of `@mockable_repsonse` explains how this is done:
 
@@ -166,28 +259,13 @@ if get_args:
 
 You can look at the server console's `Expected fixture file:` message to know what file it is expecting.
 
-## Writing Tests
+#### Data fixtures location
 
-Contributions that add or modify major functionality to the project should typically come with tests to ensure we're not breaking things (or won't in the future!). There's always room for more testing, so general contributions in this form are always welcome.
+The [data fixtures](https://github.com/webcompat/webcompat.com/tree/master/tests/fixtures) are in the tests directory.
 
-### Python Unit Tests
-
-Our Python unit tests are vanilla flavored [`unittest`](https://docs.python.org/2/library/unittest.html) tests. Unit tests placed in the `tests` directory will be automatically detected by nose&mdash; no manual registration is necessary.
-
-Unit tests are preferred for features or functionality that are independent of the browser front-end, i.e., API responses, application routes, etc.
-
-Important documentation links:
-* [Writing nose tests](https://nose.readthedocs.org/en/latest/writing_tests.html)
-* [`unittest`](https://docs.python.org/2/library/unittest.html)
-* [Testing Flask](http://flask.pocoo.org/docs/1.0/testing/)
-
-### JS Functional Tests
-
-Functional tests are written in JavaScript, using [Intern](http://theintern.io/). There's a nice [guide on the Intern wiki](https://theintern.io/docs.html#Intern/4/docs/docs%2Fwriting_tests.md/functional-tests) that should explain enough to get you started.
-
-Important documentation links:
-* [Leadfoot](https://theintern.github.io/leadfoot/): the library that drives the browser (via Selenium).
-* [ChaiJS](http://chaijs.com/api/assert/): the library used for assertions.
-* [Intern docs](https://theintern.io/docs.html#Intern/4/docs/README.md): contains useful examples.
-
-It's also recommended to look at the other test files in the `tests/functional` directory to see how things are commonly done.
+* `tests/fixtures/api/` follow the structure of the API hierarchy. For example
+    * `tests/fixtures/api/` contains the requests done for `https://webcompat.com/api`
+    * `tests/fixtures/api/issues/category` contains the requests done for `https://webcompa.com/api/issues/category`
+* `tests/fixtures/webhooks` contains the fixture data for simulating the webhook requests.
+* `tests/fixtures/config` contains the fixture which are related to configuration initialization
+* `tests/fixtures` contains some example of images (This should probably go to another directory).
