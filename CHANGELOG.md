@@ -4,7 +4,11 @@
 2. New features: affect minor number
 3. API endpoint changes or (major) dependency version updates: affect major number
 
-## 34.0.0 - 2020-06-16
+## 34.0.1 - 2020-06-16
+
+* Fixes #3352 - correct script location for es5 version of flashed-messages.js [Pull #3353](https://github.com/webcompat/webcompat.com/pull/3353)
+
+## 34.0.0 - 2020-06-16 (known broken, don't deploy)
 
 * Fixes #3229 - Form v2 refactor and webpack bundling [Pull #3346](https://github.com/webcompat/webcompat.com/pull/3346)
 * Fixes #3336 - Replace is with == for checking string value [Pull #3343](https://github.com/webcompat/webcompat.com/pull/3343)
