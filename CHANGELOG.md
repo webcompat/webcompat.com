@@ -4,6 +4,11 @@
 2. New features: affect minor number
 3. API endpoint changes or (major) dependency version updates: affect major number
 
+## 34.0.0 - 2020-06-16
+
+* Fixes #3229 - Form v2 refactor and webpack bundling [Pull #3346](https://github.com/webcompat/webcompat.com/pull/3346)
+* Fixes #3336 - Replace is with == for checking string value [Pull #3343](https://github.com/webcompat/webcompat.com/pull/3343)
+
 ## 33.0.0 - 2020-06-09
 
 * NPM update - Upgrade eslint from 6.8.0 to 7.1.0. [Pull #3327](https://github.com/webcompat/webcompat.com/pull/3327)
