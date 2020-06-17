@@ -44,15 +44,21 @@ def bust_cache(file_path):
 
 def md5_checksum(file_path):
     """Return the md5 checksum for a given file path."""
-    with open(file_path, 'rb') as fh:
-        m = hashlib.md5()
-        while True:
-            # only read in 8k of the file at a time
-            data = fh.read(8192)
-            if not data:
-                break
-            m.update(data)
-        return m.hexdigest()
+    try:
+        with open(file_path, 'rb') as fh:
+            m = hashlib.md5()
+            while True:
+                # only read in 8k of the file at a time
+                data = fh.read(8192)
+                if not data:
+                    break
+                m.update(data)
+            checksum = m.hexdigest()
+    except FileNotFoundError:
+        # if file doesn't exist we want to be able to show it in the URI
+        checksum = 'missing_file'
+    finally:
+        return checksum
 
 
 @app.template_filter('format_date')
