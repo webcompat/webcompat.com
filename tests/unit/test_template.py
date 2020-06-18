@@ -35,6 +35,7 @@ def test_format_date():
     assert 'T' not in output
     assert output == '2014-05-01'
 
+
 def test_get_domain():
     """Test domain name extraction from title.
 
@@ -46,6 +47,7 @@ def test_get_domain():
     title = '😎 😓'
     assert get_domain(title) == '😎'
 
+
 def test_get_description():
     """Test that we can pull out the first part of the description."""
     body_html_frag = """
@@ -56,6 +58,7 @@ def test_get_description():
     body_html_frag2 = '😎'
     assert get_description(body_html_frag) == 'Missing items'
     assert get_description(body_html_frag2) is None
+
 
 def test_format_title():
     """Test putting issue titles together."""
@@ -75,6 +78,7 @@ def test_format_title():
     expected = 'staging.webcompat.com - desc from title'
     assert format_title(issue_data) == expected
 
+
 def test_format_milestone_title():
     """Test that we return a properly formatted milestone title."""
     # missing milestone title
@@ -90,6 +94,7 @@ def test_format_milestone_title():
     expected = 'Closed: Site Contacted'
     assert format_milestone_title(issue_data) == expected
 
+
 def test_format_milestone_class():
     """Test that we return the correct class string."""
     # open state
@@ -103,15 +108,18 @@ def test_format_milestone_class():
         'state': 'closed'}
     assert format_milestone_class(issue_data) == 'closed'
 
+
 def test_md5_checksum_file_missing():
     """Test checksum computation."""
     assert md5_checksum('/punkcat/nowhere') == 'missing_file'
+
 
 def test_md5_checksum_file_exists(tmp_path):
     """Test checksum computation."""
     file_path = tmp_path / 'space.js'
     file_path.write_text('punkcat')
     assert md5_checksum(file_path) == '501753e94c8bfbbbd53c792c9688c8b5'
+
 
 def test_get_checksum_not_in_cache(tmp_path):
     """Test the checksum cache_dict."""
@@ -121,24 +129,26 @@ def test_get_checksum_not_in_cache(tmp_path):
     get_checksum(file_path)
     assert str(file_path) in cache_dict
 
+
 def test_bust_cache_localhost():
     """Test for LOCALHOST the path is not modified."""
     expected = '/dist/vendor.js'
     webcompat.app.config['LOCALHOST'] = True
     assert bust_cache('/dist/vendor.js') == expected
 
+
 def test_bust_cache_production_missing_file():
-    """Test for LOCALHOST the path is missing."""
+    """Test for cache_bust the path is missing."""
     expected = '/punkcat/nowhere?missing_file'
     webcompat.app.config['LOCALHOST'] = None
     assert bust_cache('/punkcat/nowhere') == expected
 
-def test_bust_cache_production_file_exists(monkeypatch, tmpdir):
-    """Test for LOCALHOST the path is not modified."""
+
+def test_bust_cache_production_file_exists(tmpdir):
+    """Test cache_bust with the right checksum."""
     webcompat.app.config['LOCALHOST'] = None
     webcompat.templates.STATIC_PATH = tmpdir
     file_path = tmpdir.join('space.js')
     file_path.write_text('punkcat', encoding='utf-8')
     expected = 'space.js' + '?501753e94c8bfbbbd53c792c9688c8b5'
     assert bust_cache('space.js') == expected
-
