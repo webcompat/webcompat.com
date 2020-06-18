@@ -8,6 +8,7 @@
 
 import hashlib
 import os
+import os.path
 import re
 
 from flask import Markup
@@ -27,32 +28,39 @@ def bust_cache(file_path):
     is restarted (which is when file changes would have been deployed).
     Doesn't return hash on development
     """
-
-    def get_checksum(file_path):
-        try:
-            checksum = cache_dict[file_path]
-        except KeyError:
-            checksum = md5_checksum(file_path)
-            cache_dict[file_path] = checksum
-        return checksum
-
     if app.config['LOCALHOST']:
         return file_path
+    absolute_path = os.path.join(STATIC_PATH, file_path)
+    return file_path + '?' + get_checksum(absolute_path)
 
-    return file_path + '?' + get_checksum(STATIC_PATH + file_path)
+
+def get_checksum(file_path):
+    print('GET_CHECKSUM', cache_dict)
+    try:
+        checksum = cache_dict[file_path]
+    except KeyError:
+        checksum = md5_checksum(file_path)
+        cache_dict[str(file_path)] = checksum
+    return checksum
 
 
 def md5_checksum(file_path):
     """Return the md5 checksum for a given file path."""
-    with open(file_path, 'rb') as fh:
-        m = hashlib.md5()
-        while True:
-            # only read in 8k of the file at a time
-            data = fh.read(8192)
-            if not data:
-                break
-            m.update(data)
-        return m.hexdigest()
+    try:
+        with open(file_path, 'rb') as fh:
+            m = hashlib.md5()
+            while True:
+                # only read in 8k of the file at a time
+                data = fh.read(8192)
+                if not data:
+                    break
+                m.update(data)
+            checksum = m.hexdigest()
+    except FileNotFoundError:
+        # if file doesn't exist we want to be able to show it in the URI
+        checksum = 'missing_file'
+    finally:
+        return checksum
 
 
 @app.template_filter('format_date')
