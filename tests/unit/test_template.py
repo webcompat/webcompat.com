@@ -8,12 +8,18 @@
 
 import pytest
 
+import webcompat
+from webcompat.templates import bust_cache
+from webcompat.templates import cache_dict
 from webcompat.templates import format_date
 from webcompat.templates import format_milestone_class
 from webcompat.templates import format_milestone_title
 from webcompat.templates import format_title
 from webcompat.templates import get_description
+from webcompat.templates import get_checksum
 from webcompat.templates import get_domain
+from webcompat.templates import md5_checksum
+from webcompat.templates import STATIC_PATH
 
 
 def test_format_date():
@@ -96,3 +102,43 @@ def test_format_milestone_class():
         'milestone': {'title': 'needsdiagnosis'},
         'state': 'closed'}
     assert format_milestone_class(issue_data) == 'closed'
+
+def test_md5_checksum_file_missing():
+    """Test checksum computation."""
+    assert md5_checksum('/punkcat/nowhere') == 'missing_file'
+
+def test_md5_checksum_file_exists(tmp_path):
+    """Test checksum computation."""
+    file_path = tmp_path / 'space.js'
+    file_path.write_text('punkcat')
+    assert md5_checksum(file_path) == '501753e94c8bfbbbd53c792c9688c8b5'
+
+def test_get_checksum_not_in_cache(tmp_path):
+    """Test the checksum cache_dict."""
+    assert cache_dict == {}
+    file_path = tmp_path / 'space.js'
+    file_path.write_text('punkcat')
+    get_checksum(file_path)
+    assert str(file_path) in cache_dict
+
+def test_bust_cache_localhost():
+    """Test for LOCALHOST the path is not modified."""
+    expected = '/dist/vendor.js'
+    webcompat.app.config['LOCALHOST'] = True
+    assert bust_cache('/dist/vendor.js') == expected
+
+def test_bust_cache_production_missing_file():
+    """Test for LOCALHOST the path is missing."""
+    expected = '/punkcat/nowhere?missing_file'
+    webcompat.app.config['LOCALHOST'] = None
+    assert bust_cache('/punkcat/nowhere') == expected
+
+def test_bust_cache_production_file_exists(monkeypatch, tmpdir):
+    """Test for LOCALHOST the path is not modified."""
+    webcompat.app.config['LOCALHOST'] = None
+    webcompat.templates.STATIC_PATH = tmpdir
+    file_path = tmpdir.join('space.js')
+    file_path.write_text('punkcat', encoding='utf-8')
+    expected = 'space.js' + '?501753e94c8bfbbbd53c792c9688c8b5'
+    assert bust_cache('space.js') == expected
+

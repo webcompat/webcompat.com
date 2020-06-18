@@ -8,6 +8,7 @@
 
 import hashlib
 import os
+import os.path
 import re
 
 from flask import Markup
@@ -27,19 +28,20 @@ def bust_cache(file_path):
     is restarted (which is when file changes would have been deployed).
     Doesn't return hash on development
     """
-
-    def get_checksum(file_path):
-        try:
-            checksum = cache_dict[file_path]
-        except KeyError:
-            checksum = md5_checksum(file_path)
-            cache_dict[file_path] = checksum
-        return checksum
-
     if app.config['LOCALHOST']:
         return file_path
+    absolute_path = os.path.join(STATIC_PATH, file_path)
+    return file_path + '?' + get_checksum(absolute_path)
 
-    return file_path + '?' + get_checksum(STATIC_PATH + file_path)
+
+def get_checksum(file_path):
+    print('GET_CHECKSUM', cache_dict)
+    try:
+        checksum = cache_dict[file_path]
+    except KeyError:
+        checksum = md5_checksum(file_path)
+        cache_dict[str(file_path)] = checksum
+    return checksum
 
 
 def md5_checksum(file_path):
