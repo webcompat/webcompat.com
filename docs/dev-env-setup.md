@@ -13,7 +13,6 @@
   - [Configuring the server](#configuring-the-server)
     - [Test repository](#test-repository)
     - [Store your settings](#store-your-settings)
-  - [Initialize the assets](#initialize-the-assets)
   - [Starting the server](#starting-the-server)
     - [Getting error messages?](#getting-error-messages)
   - [Building the project](#building-the-project)
