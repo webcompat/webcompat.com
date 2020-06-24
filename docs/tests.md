@@ -62,6 +62,44 @@ Running functional tests is a bit more involved. You can also run both test suit
 
 Tests are also run automatically on [Circle CI](https://circleci.com/gh/webcompat/webcompat.com) for each commit. If you would like to skip running tests for a given commit, you can use use the magical `[ci skip]` string in your commit message. See the [Circle CI docs](https://circleci.com/docs/2.0/skip-build/) for more info.
 
+### Frontend Unit Tests
+
+We use [Intern](http://theintern.io/) to run JavaScript unit tests.
+
+A [series of unit tests](https://github.com/webcompat/webcompat.com/tree/master/webcompat/static/js/lib/wizard/tests/) have been created for the JavaScript code managing the frontend of our application.
+
+You can run them by using the command.
+
+```
+npm run test:unit-js
+```
+
+The output will be something similar to:
+
+```
+> webcompat@ test:unit-js /Users/karl/code/webcompat.com
+> intern config=./webcompat/static/js/lib/wizard/tests/intern.json
+
+✓ node - notify - subscribe throws an error if no channel or callback provided (0.001s)
+✓ node - notify - subscribe returns and object with unsubscribe property (0s)
+✓ node - notify - publishing to a channel calls callback fn (0.001s)
+✓ node - notify - publishing to a channel with no listeners doesn't call callback fn (0s)
+✓ node - notify - publishing data to callback makes it to callback fn (0s)
+✓ node - notify - publishing no data to callback results in an empty object being passed to callback fn (0.001s)
+✓ node - notify - callback fn is not called after unsubscribe (0s)
+✓ node - utils - extractPrettyUrl extracts url without protocol and slashes (0s)
+✓ node - utils - charsPercent returns percent of entered chars limiting percent to 100 (0s)
+✓ node - utils - isSelfReport determines if report was filed for our own site (0s)
+✓ node - utils - getDataURIFromPreview gets the data URI portion inside of a serialized data URI (0s)
+✓ node - validation - isUrlValid detects if url is valid (0s)
+✓ node - validation - isEmpty detects if string is empty trimming spaces (0s)
+✓ node - validation - isImageTypeValid detects if uploaded image type is valid (0s)
+✓ node - validation - blobOrFileTypeValid detects if uploaded file type is valid (0s)
+✓ node - validation - isImageDataURIValid detects is data URI is valid image (0s)
+✓ node - validation - isGithubUserNameValid detects if github username is valid (0s)
+TOTAL: tested 1 platforms, 17 passed, 0 failed
+```
+
 ### Functional Tests
 
 We use [Intern](http://theintern.io/) to run functional tests.

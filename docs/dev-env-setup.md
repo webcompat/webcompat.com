@@ -13,7 +13,6 @@
   - [Configuring the server](#configuring-the-server)
     - [Test repository](#test-repository)
     - [Store your settings](#store-your-settings)
-  - [Initialize the assets](#initialize-the-assets)
   - [Starting the server](#starting-the-server)
     - [Getting error messages?](#getting-error-messages)
   - [Building the project](#building-the-project)
@@ -139,6 +138,8 @@ When that is done, you can build the site via the `npm run build` command (if yo
 npm run build
 ```
 
+This will be using webpack to compile all the assets and put them in the right directories, you will see a detailed list of output.
+
 **Note**: if you get an error message about missing rights to install the setup through npm, please _do not run `sudo npm`_. You just need to [fix your permissions](https://coderwall.com/p/t2mc9g/don-t-sudo-npm) for `usr/local`.
 
 ### Configuring the server
@@ -190,71 +191,6 @@ Do not be afraid to put any secrets in there, this file is part of the `.gitigno
 
     ![Auth 404](https://i.cloudup.com/8FDA5bVc7l.png)
 
-### Initialize the assets
-
-To initialize all the JS and CSS assets for the web pages to be fully shiny, you might need to run:
-
-```bash
-npm install
-```
-
-The output will be similar to:
-
-```
-audited 9051 packages in 11.011s
-found 6 vulnerabilities (2 low, 4 high)
-  run `npm audit fix` to fix them, or `npm audit` for details
-```
-
-Then we will compile the assets with `grunt`.
-
-```
-Running "checkDependencies:default" (checkDependencies) task
-
-Running "jst:compile" (jst) task
-File webcompat/static/js/dist/templates.js created.
-
-Running "concat:dist" (concat) task
-
-Running "concat:index" (concat) task
-
-Running "concat:issues" (concat) task
-
-Running "concat:issueList" (concat) task
-
-Running "concat:userActivity" (concat) task
-
-Running "uglify:dist" (uglify) task
->> 1 file created 252.26 kB → 235.03 kB
-
-Running "uglify:ga" (uglify) task
->> 1 file created 780 B → 585 B
-
-Running "uglify:issues" (uglify) task
->> 1 file created 371 kB → 185.94 kB
-
-Running "uglify:issueList" (uglify) task
->> 1 file created 38.1 kB → 20.33 kB
-
-Running "uglify:userActivity" (uglify) task
->> 1 file created 22.1 kB → 11.54 kB
-
-Running "uglify:index" (uglify) task
->> 1 file created 16.51 kB → 8.67 kB
-
-Running "uglify:contributors" (uglify) task
->> 1 file created 1.1 kB → 733 B
-
-Running "postcss:dist" (postcss) task
->> 1 processed stylesheet created.
-
-Running "cssmin:combine" (cssmin) task
->> 1 file created. 2.96 kB → 41.23 kB
-
-Done.
-```
-
-We are all set for starting the server.
 
 ### Starting the server
 
