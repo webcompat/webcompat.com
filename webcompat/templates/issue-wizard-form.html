@@ -32,10 +32,11 @@
                 <small class="form-message-error">{{ error }}</small>
               {% endfor %}
             {% endif %}
-
+            <div class="input-wrapper">
             {{ form.url(class_='form-field text-field required',
                 placeholder='e.g. https://example.com',
                 required=True, type='url', pattern='') }}
+            </div>
           </div>
         </div>
       </div>
@@ -165,11 +166,15 @@
           <div class="row mobile-col">
             <div class="form-element js-Form-group low with-validation-icons half">
               {{ form.browser.label(class_='form-label') }}
-              {{ form.browser(class_='form-field text-field') }}
+              <div class="input-wrapper">
+                {{ form.browser(class_='form-field text-field') }}
+              </div>
             </div>
             <div class="form-element js-Form-group low with-validation-icons half">
               {{ form.os.label(class_='form-label') }}
-              {{ form.os(class_='form-field text-field') }}
+              <div class="input-wrapper">
+                {{ form.os(class_='form-field text-field') }}
+              </div>
             </div>
           </div>
         </div>
