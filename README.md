@@ -8,7 +8,7 @@
 [![Built with Grunt](https://gruntjs.com/cdn/builtwith.svg)](http://gruntjs.com/)
 [![CircleCI](https://circleci.com/gh/webcompat/webcompat.com.svg?style=svg)](https://circleci.com/gh/webcompat/webcompat.com)
 
-[![Twitter](https://img.shields.io/twitter/url/https/github.com/webcompat/webcompat.com.svg?style=social)](https://twitter.com/webcompat) [![Greenkeeper badge](https://badges.greenkeeper.io/webcompat/webcompat.com.svg)](https://greenkeeper.io/)
+[![Twitter](https://img.shields.io/twitter/url/https/github.com/webcompat/webcompat.com.svg?style=social)](https://twitter.com/webcompat)
 
 
 
@@ -24,7 +24,7 @@ Your contributions are appreciated which could be; contributing code, design and
 
 ### Assets & Design
 
-See the [design](https://github.com/webcompat/design) repo and our [pattern portfolio](http://webcompat.github.io/webcompat.com/).
+See the [design](https://github.com/webcompat/design) repo and our [Living Style Guide](https://webcompat.github.io/design/).
 
 ### License
 
