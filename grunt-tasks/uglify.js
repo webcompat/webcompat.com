@@ -24,10 +24,6 @@ module.exports = function (grunt) {
       src: "<%= concat.issueList.dest %>",
       dest: "<%= jsDistPath %>/issue-list.min.js",
     },
-    userActivity: {
-      src: "<%= concat.userActivity.dest %>",
-      dest: "<%= jsDistPath %>/user-activity.min.js",
-    },
     index: {
       src: "<%= concat.index.dest %>",
       dest: "<%= jsDistPath %>/index.min.js",

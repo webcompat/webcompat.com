@@ -29,12 +29,6 @@ module.exports = {
     "./js/lib/issues.js",
   ],
   contributors: ["./js/lib/contributors.js"],
-  "user-activity": [
-    "./js/lib/models/label-list.js",
-    "./js/lib/models/issue.js",
-    "./js/lib/mixins/pagination.js",
-    "./js/lib/user-activity.js",
-  ],
   webcompat: ["./js/lib/navbar.js", "./js/lib/webcompat.js"],
   "flashed-messages": ["./js/lib/flashed-messages.js"],
   "console-logs": ["./js/lib/console-logs.js"],

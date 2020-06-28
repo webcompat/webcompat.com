@@ -77,14 +77,5 @@ module.exports = function (grunt) {
       ],
       dest: "<%= jsDistPath %>/issue-list.js",
     },
-    userActivity: {
-      src: [
-        "<%= jsPath %>/lib/models/label-list.js",
-        "<%= jsPath %>/lib/models/issue.js",
-        "<%= jsPath %>/lib/mixins/pagination.js",
-        "<%= jsPath %>/lib/user-activity.js",
-      ],
-      dest: "<%= jsDistPath %>/user-activity.js",
-    },
   });
 };

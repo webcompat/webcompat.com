@@ -200,11 +200,6 @@ class TestURLs(unittest.TestCase):
         rv = self.app.get('/contact')
         self.assertEqual(rv.status_code, 200)
 
-    def test_activity_page_401_if_not_logged_in(self):
-        """Test that asks user to log in before displaying activity."""
-        rv = self.app.get('/me')
-        self.assertEqual(rv.status_code, 401)
-
     def test_issue_int(self):
         """Test if issues are really integer.
 
@@ -246,11 +241,6 @@ class TestURLs(unittest.TestCase):
     def test_tools_cssfixme(self):
         """Test that the /tools/cssfixme route gets 410."""
         rv = self.app.get('/tools/cssfixme')
-        self.assertEqual(rv.status_code, 410)
-
-    def test_rate_limit(self):
-        """Rate Limit URI sends 410 Gone."""
-        rv = self.app.get('/rate_limit')
         self.assertEqual(rv.status_code, 410)
 
     def test_missing_parameters_for_new_issue(self):

@@ -365,45 +365,17 @@ def show_issue(number):
                            json_data=to_str(issue_data[0]))
 
 
-@app.route('/me')
-def me_redirect():
-    """Set a redirect to /activity/<username>, for logged in users."""
-    if not g.user:
-        abort(401)
-    get_user_info()
-    return redirect(url_for('show_user_page', username=session['username']))
-
-
 @app.route('/activity/<username>')
-def show_user_page(username):
-    """Set the route for user activity.
-
-    (this dupes some of the functionality of /me, but allows directly visiting
-    this endpoint via a bookmark)
-
-    If the user is not logged in, send back a 401.
-    Make sure we have username and avatar details from Github
-    If the username matches, render the template as expected.
-    If it doesn't match, abort with 403 until we support looking at
-    *other* users activity.
-    """
-    if not g.user:
-        abort(401)
-    get_user_info()
-    if username == session['username']:
-        return render_template('user-activity.html', user=username)
-    else:
-        abort(403)
-
-
 @app.route('/rate_limit')
-def show_rate_limit():
-    """Retired route. 410 Gone.
+def show_410_gone(username):
+    """Retired routes. 410 Gone.
 
-    Decision made on March 2017. See
+    * Decision made on June 2020. See
+    https://github.com/webcompat/webcompat.com/issues/3347
+    * Decision made on March 2017. See
     https://github.com/webcompat/webcompat.com/issues/1437
     """
-    msg = app.config['SHOW_RATE_LIMIT']
+    msg = app.config['MESSAGE_410']
     return (msg, 410, {'content-type': 'text/plain; charset=utf-8'})
 
 
