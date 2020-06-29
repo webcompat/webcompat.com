@@ -443,8 +443,8 @@
   transition: box-shadow .3s;
 }
 
-.with-validation-icons.is-validated::after,
-.with-validation-icons.is-error::before {
+.with-validation-icons.is-validated .input-wrapper::after,
+.with-validation-icons.is-error .input-wrapper::before {
   align-items: center;
   animation-duration: .25s;
   animation-fill-mode: forwards;
@@ -453,7 +453,6 @@
   background-repeat: no-repeat;
   background-size: 50%;
   border-radius: 50%;
-  bottom: 4px;
   content: "";
   display: flex;
   height: 19px;
@@ -461,25 +460,28 @@
   opacity: 0;
   position: absolute;
   right: 8px;
-  top: auto;
+  top: 50%;
   transition: opacity .2s;
   width: 19px;
   z-index: 2;
 }
 
-.with-validation-icons.is-validated::after {
+.with-validation-icons .input-wrapper {
+  position: relative;
+}
+
+.with-validation-icons.is-validated .input-wrapper::after {
   background-color: var(--issue-selected-outline);
   background-image: url("../../img/svg/icons/svg-check-issue.svg");
 }
 
-.with-validation-icons.is-error::before {
+.with-validation-icons.is-error .input-wrapper::before {
   background-color: var(--wizard-step-error);
   background-image: url("../../img/svg/icons/svg-cross-white.svg");
 }
 
-.low.is-validated::after,
-.low.is-error::before {
-  bottom: 32px;
+.low.is-validated .input-wrapper::after,
+.low.is-error .input-wrapper::before {
   height: 20px;
   right: 18px;
   width: 20px;
@@ -1052,24 +1054,21 @@
     padding: 25px 0 14px 0;
   }
 
-  .with-validation-icons.is-validated::after,
-  .with-validation-icons.is-error::before {
-    bottom: 8px;
+  .with-validation-icons.is-validated .input-wrapper::after,
+  .with-validation-icons.is-error .input-wrapper::before {
     height: 24px;
     right: 8px;
     width: 24px;
   }
 
-  .low.is-validated::after,
-  .low.is-error::before {
-    bottom: 23px;
+  .low.is-validated .input-wrapper::after,
+  .low.is-error .input-wrapper::before {
     height: 20px;
     width: 20px;
   }
 
-  .step-custom-browser .low.is-validated::after,
-  .step-custom-browser .low.is-error::before {
-    bottom: 22px;
+  .step-custom-browser .low.is-validated .input-wrapper::after,
+  .step-custom-browser .low.is-error .input-wrapper::before {
     right: 8px;
   }
 

@@ -45,9 +45,12 @@ export const showError = (el, text) => {
   // if the helper already in place, don't create a new one
   if (helper.length) return;
 
-  const inlineHelp = createInlineHelp(text);
+  //wrapper
+  const wrapper = el.parents(".input-wrapper");
 
-  inlineHelp.insertBefore(el);
+  const inlineHelp = createInlineHelp(text);
+  // just in case the wrapper doesn't exist
+  wrapper ? inlineHelp.insertBefore(wrapper) : inlineHelp.insertBefore(el);
 };
 
 export const showSuccess = (el) => {

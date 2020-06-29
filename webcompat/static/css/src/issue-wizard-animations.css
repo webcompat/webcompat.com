@@ -5,14 +5,14 @@
 @keyframes validated {
   0% {
     opacity: 0;
-    transform: scale(.8);
+    transform: scale(.8) translateY(-50%);
   }
   50% {
-    transform: scale(1.3);
+    transform: scale(1.3) translateY(-50%);
   }
   100% {
     opacity: 1;
-    transform: scale(1);
+    transform: scale(1) translateY(-50%);
   }
 }
 
