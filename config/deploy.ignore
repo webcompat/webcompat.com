@@ -18,8 +18,7 @@ docs/
 env/
 fabfile.py*
 git_modules/
-grunt-tasks/
-Gruntfile.js
+webpack/
 icon-licenses/
 Makefile
 node_modules/
