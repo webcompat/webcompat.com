@@ -261,28 +261,33 @@ The logs are saved in the file `webcompat.log`.
 
 After certain kinds of changes are made, you need to build the project before serving it from a webserver will work.
 
-- CSS: a build will run cssnext, combine custom media queries, and concat all source files into webcompat.dev.css. You'll need to rebuild the CSS to see any changes, so it's recommended to use a watch task (see `npm run watch`).
-- JS: a build will run eslint and minify, and concat source files.
-- JS templates (`.jst` files): if you are making changes to a Backbone template in a `.jst` file, you will need to re-run the `build` command to update the pre-compiled `templates.js` file before you will see the results.
-- HTML templates: the changes should be served from disk without the need for rebuilding.
 - Python: the Flask local server will detect changes and restart automatically. No need to rebuild.
+- HTML templates: the changes should be served from disk without the need for rebuilding.
+- JS and CSS: We use webpack for asset bundling. 
 
-You can build the entire project (CSS stylesheets, JavaScript scripts, and optimized images) by executing this command on macOS/Linux:
+See main webpack commands below:
+
+You can build the entire project (CSS stylesheets, JavaScript code) by executing this command
+in a new terminal tab:
 
 ```bash
 npm run build
 ```
 
-and this command on Windows:
+This build is meant for development and does not include optimizations for production. 
+Note that this command will not watch for changes in JS or CSS. 
+
+If you need to watch for changes and rebuild the assets on the fly, run this command instead:
 
 ```bash
-npm run watch
+npm run dev
 ```
 
-Linting means that you check that the code respects some syntactic rules defined for this project.
+We use linting, which will check that the code respects some syntactic rules defined for this project.
+To run linters:
 
 ```bash
-# linting style, JS and python.
+# linting style, JS, CSS and python.
 npm run lint
 ```
 
@@ -290,7 +295,12 @@ Fixing static JS files with project coding styles, if an error occurs:
 
 ```bash
 # fixing linting style JS
-npm run fix
+npm run lint:fix:js
 ```
 
-By default, a build will _not_ optimize images (which is done before deploys). If you'd like to optimize images, you can run `npm run imagemin`.
+or CSS:
+
+```bash
+# fixing linting style CSS
+npm run lint:fix:css
+```
