@@ -42,3 +42,4 @@ nohup.out
 
 # tests
 .noseids
+.coverage
