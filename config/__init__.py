@@ -223,6 +223,17 @@ EXTRA_LABELS = [
     'type-webvr',
 ]
 
+# List of accepted values for browser sources.
+REPORTED_WITH = [
+    "addon-reporter-chrome",
+    "addon-reporter-firefox-mobile",
+    "addon-reporter-firefox",
+    "addon-reporter-opera",
+    "desktop-reporter",
+    "mobile-reporter",
+    "web-fxr",
+]
+
 # Get AB experiment variation values from the environement.
 AB_VARIATIONS = {
     'V1_VARIATION': os.environ.get('V1_VARIATION', '0 100'),
