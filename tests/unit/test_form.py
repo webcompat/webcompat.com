@@ -120,13 +120,15 @@ class TestForm(unittest.TestCase):
         """Check we return the right form with the appropriate data."""
         with webcompat.app.test_request_context('/issues/new'):
             form_data = {'user_agent': FIREFOX_UA,
-                         'url': 'http://example.net/'}
+                         'url': 'http://example.net/',
+                         'src': 'desktop-reporter'}
             actual = form.get_form(form_data)
             expected_browser = 'Firefox 48.0'
             expected_os = 'Mac OS X 10.11'
             self.assertIsInstance(actual, form.IssueForm)
             self.assertEqual(actual.browser.data, expected_browser)
             self.assertEqual(actual.os.data, expected_os)
+            self.assertEqual(actual.reported_with.data, 'desktop-reporter')
 
     def test_get_metadata(self):
         """HTML comments need the right values depending on the keys."""
