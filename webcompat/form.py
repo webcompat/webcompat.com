@@ -294,7 +294,7 @@ def get_form(form_data, form=IssueForm):
     bug_form.details.data = json.dumps(form_data.get('details'), indent=2)
     bug_form.extra_labels = form_data.get('extra_labels', None)
     bug_form.os.data = get_os(ua_header)
-    bug_form.reported_with.data = form_data.get('src', 'web')
+    bug_form.reported_with.data = extract_report_source(form_data)
     bug_form.ua_header.data = ua_header
     bug_form.url.data = form_data.get('url', None)
     return bug_form
@@ -441,6 +441,28 @@ def add_metadata(form, metadata_dict):
     """
     form['extra_metadata'] = metadata_dict
     return form
+
+
+def extract_report_source(form_data):
+    """Extract the source of report.
+
+    This also controls if the src argument is part of a known list.
+    """
+    reported_with = 'unknown'
+    try:
+        reported_with = form_data['src']
+        if not is_valid_source(reported_with):
+            reported_with = 'unknown'
+    except KeyError:
+        reported_with = 'web'
+    return reported_with
+
+
+def is_valid_source(reported_with):
+    """Only a known subset of known values are accepted."""
+    if reported_with in app.config['REPORTED_WITH']:
+        return True
+    return False
 
 
 def build_formdata(form_object):

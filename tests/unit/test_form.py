@@ -6,6 +6,7 @@
 import json
 import unittest
 
+import pytest
 from werkzeug.datastructures import MultiDict
 
 import webcompat
@@ -319,6 +320,19 @@ class TestForm(unittest.TestCase):
                     url='http://testing.example.org',
                     username='yeeha'))
             self.assertEqual(rv.status_code, 400)
+
+
+@pytest.mark.parametrize(
+    'test_input,expected',
+    [({}, 'web'),
+     ({'src': ''}, 'unknown'),
+     ({'src': 'punkCat'}, 'unknown'),
+     ({'src': 'mobile-reporter'}, 'mobile-reporter'),
+     ]
+)
+def test_report_source(test_input, expected):
+    """Extract the reporting source when valid and invalid."""
+    assert form.extract_report_source(test_input) == expected
 
 
 if __name__ == '__main__':
