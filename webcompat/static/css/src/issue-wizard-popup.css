@@ -40,7 +40,7 @@
   max-height: var(--popup-max-height-mobile);
   max-width: 90%;
   opacity: 0;
-  overflow: hidden;
+  overflow-x: hidden;
   padding: 0;
   pointer-events: none;
   position: fixed;
@@ -52,8 +52,7 @@
 }
 
 .popup-modal.text {
-  height: 400px;
-  width: 590px;
+  max-height: 400px;
 }
 
 .popup-modal.is--visible {
