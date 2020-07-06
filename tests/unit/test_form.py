@@ -6,6 +6,7 @@
 import json
 import unittest
 
+import pytest
 from werkzeug.datastructures import MultiDict
 
 import webcompat
@@ -120,13 +121,15 @@ class TestForm(unittest.TestCase):
         """Check we return the right form with the appropriate data."""
         with webcompat.app.test_request_context('/issues/new'):
             form_data = {'user_agent': FIREFOX_UA,
-                         'url': 'http://example.net/'}
+                         'url': 'http://example.net/',
+                         'src': 'desktop-reporter'}
             actual = form.get_form(form_data)
             expected_browser = 'Firefox 48.0'
             expected_os = 'Mac OS X 10.11'
             self.assertIsInstance(actual, form.IssueForm)
             self.assertEqual(actual.browser.data, expected_browser)
             self.assertEqual(actual.os.data, expected_os)
+            self.assertEqual(actual.reported_with.data, 'desktop-reporter')
 
     def test_get_metadata(self):
         """HTML comments need the right values depending on the keys."""
@@ -317,6 +320,19 @@ class TestForm(unittest.TestCase):
                     url='http://testing.example.org',
                     username='yeeha'))
             self.assertEqual(rv.status_code, 400)
+
+
+@pytest.mark.parametrize(
+    'test_input,expected',
+    [({}, 'web'),
+     ({'src': ''}, 'unknown'),
+     ({'src': 'punkCat'}, 'unknown'),
+     ({'src': 'mobile-reporter'}, 'mobile-reporter'),
+     ]
+)
+def test_report_source(test_input, expected):
+    """Extract the reporting source when valid and invalid."""
+    assert form.extract_report_source(test_input) == expected
 
 
 if __name__ == '__main__':
