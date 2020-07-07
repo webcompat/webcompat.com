@@ -407,7 +407,7 @@ class TestWebhook(unittest.TestCase):
         json_event, signature = event_data('new_event_valid.json')
         payload = json.loads(json_event)
         issue_info = helpers.get_issue_info(payload)
-        with patch('webcompat.webhooks.helpers.proxy_request') as proxy:
+        with patch('webcompat.webhooks.helpers.make_request') as proxy:
             proxy.return_value.status_code = 200
             response = helpers.tag_new_public_issue(issue_info)
             self.assertEqual(response.status_code, 200)
@@ -660,36 +660,30 @@ class TestWebhook(unittest.TestCase):
             self.assertEqual(rv.status_code, 200)
             self.assertEqual(rv.content_type, 'text/plain')
 
-    @patch('webcompat.webhooks.helpers.proxy_request')
+    @patch('webcompat.webhooks.helpers.make_request')
     def test_arguments_private_issue_moderation(self, mock_proxy):
         """Test accepted issue request with the right arguments."""
         with webcompat.app.test_client() as c:
             mock_proxy.return_value.status_code = 200
             rv = helpers.private_issue_moderation(self.issue_info2)
-            args, kwargs = mock_proxy.call_args
-            mock_proxy.assert_called_with(
-                path='repos/webcompat/webcompat-tests/issues/1',
-                method='patch',
-                data=ANY,
-                headers=ANY)
-            self.assertIn(
-                'www.netflix.com - test private issue accepted',
-                kwargs['data'])
+            method, url_path, data = mock_proxy.call_args[0]
+            assert url_path == 'repos/webcompat/webcompat-tests/issues/1'
+            assert method == 'patch'
+            assert data == ANY
+            assert 'www.netflix.com - test private issue accepted' in data['title']  # noqa
 
     def test_get_public_issue_number(self):
         """Test the extraction of the issue number from the public_url."""
         public_url = 'https://github.com/webcompat/webcompat-tests/issues/1'
         self.assertEqual(helpers.get_public_issue_number(public_url), '1')
 
-    @patch('webcompat.webhooks.helpers.proxy_request')
+    @patch('webcompat.webhooks.helpers.make_request')
     def test_arguments_private_issue_rejected(self, mock_proxy):
         """Test rejected issue request with the right arguments."""
         with webcompat.app.test_client() as c:
             mock_proxy.return_value.status_code = 200
             rv = helpers.private_issue_rejected(self.issue_info3)
-            args, kwargs = mock_proxy.call_args
-            post_data = json.loads(kwargs['data'])
-            url_path = kwargs['path']
+            method, url_path, data = mock_proxy.call_args[0]
             issue_number = url_path.replace(
                 'repos/webcompat/webcompat-tests/issues/', '')
             # testing that the path is having a number
@@ -697,17 +691,15 @@ class TestWebhook(unittest.TestCase):
             # testing the path starts with the right string
             self.assertTrue(
                 url_path.startswith('repos/webcompat/webcompat-tests/issues/'))
-            self.assertEqual('Issue rejected.', post_data['title'])
+            self.assertEqual('Issue rejected.', data['title'])
             self.assertIn('Its original content has been deleted',
-                          post_data['body'])
-            self.assertEqual(['status-notacceptable'], post_data['labels'])
-            self.assertEqual('closed', post_data['state'])
-            self.assertIn('milestone', post_data)
-            mock_proxy.assert_called_with(
-                path='repos/webcompat/webcompat-tests/issues/1',
-                method='patch',
-                data=ANY,
-                headers=ANY)
+                          data['body'])
+            self.assertEqual(['status-notacceptable'], data['labels'])
+            self.assertEqual('closed', data['state'])
+            self.assertIn('milestone', data)
+            assert url_path == 'repos/webcompat/webcompat-tests/issues/1'
+            assert method == 'patch'
+            assert data == ANY
 
     def test_prepare_rejected_issue(self):
         """Test we prepare the right payload for the rejected issue."""
@@ -722,18 +714,18 @@ class TestWebhook(unittest.TestCase):
         self.assertEqual(type(actual), dict)
         self.assertEqual(actual, expected)
 
-    @patch('webcompat.webhooks.helpers.proxy_request')
+    @patch('webcompat.webhooks.helpers.make_request')
     def test_comment_public_uri(self, mock_proxy):
         """Test we post the right comment with public uri."""
         dest = 'repos/webcompat/webcompat-tests-private/issues/600/comments'
-        payload = '{"body": "[Original issue 1](https://github.com/webcompat/webcompat-tests/issues/1)"}'  # noqa
+        expected_payload = '{"body": "[Original issue 1](https://github.com/webcompat/webcompat-tests/issues/1)"}'  # noqa
         with webcompat.app.test_client() as c:
             mock_proxy.return_value.status_code = 200
             rv = helpers.comment_public_uri(self.issue_info4)
-            request_args = mock_proxy.call_args[1]
-            assert request_args['method'] == 'post'
-            assert request_args['path'] == dest
-            assert request_args['data'] == payload
+            method, path, payload = mock_proxy.call_args[0]
+            assert method == 'post'
+            assert path == dest
+            assert payload == expected_payload
 
     @patch('webcompat.webhooks.helpers.comment_public_uri')
     def test_comment_public_uri_for_webhooks(self, mock_proxy):

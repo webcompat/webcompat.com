@@ -198,6 +198,13 @@ def get_issue_labels(issue_body):
     return labelslist
 
 
+def make_request(method, path, payload_request):
+    """Helper method to wrap webcompat.helpers.proxy_request."""
+    headers = {'Authorization': f'token {app.config["OAUTH_TOKEN"]}'}
+    return proxy_request(method, path, headers=headers, data=json.dumps(
+        payload_request))
+
+
 def tag_new_public_issue(issue_info):
     """Set the core actions on new opened issues.
 
@@ -224,14 +231,9 @@ def tag_new_public_issue(issue_info):
     labels.extend(issue_info['original_labels'])
     milestone = app.config['STATUSES']['needstriage']['id']
     # Preparing the proxy request
-    headers = {'Authorization': 'token {0}'.format(app.config['OAUTH_TOKEN'])}
     path = 'repos/{0}/{1}'.format(PUBLIC_REPO, issue_number)
     payload_request = {'labels': labels, 'milestone': milestone}
-    proxy_response = proxy_request(
-        'patch',
-        path,
-        headers=headers,
-        data=json.dumps(payload_request))
+    proxy_response = make_request('patch', path, payload_request)
     return proxy_response
 
 
@@ -372,13 +374,8 @@ def private_issue_moderation(issue_info):
     payload_request = prepare_accepted_issue(issue_info)
     public_number = get_public_issue_number(issue_info['public_url'])
     # Preparing the proxy request
-    headers = {'Authorization': 'token {0}'.format(app.config['OAUTH_TOKEN'])}
     path = 'repos/{0}/{1}'.format(PUBLIC_REPO, public_number)
-    proxy_response = proxy_request(
-        method='patch',
-        path=path,
-        headers=headers,
-        data=json.dumps(payload_request))
+    proxy_response = make_request('patch', path, payload_request)
     return proxy_response
 
 
@@ -387,13 +384,8 @@ def private_issue_rejected(issue_info):
     payload_request = prepare_rejected_issue()
     public_number = get_public_issue_number(issue_info['public_url'])
     # Preparing the proxy request
-    headers = {'Authorization': 'token {0}'.format(app.config['OAUTH_TOKEN'])}
     path = 'repos/{0}/{1}'.format(PUBLIC_REPO, public_number)
-    proxy_response = proxy_request(
-        method='patch',
-        path=path,
-        headers=headers,
-        data=json.dumps(payload_request))
+    proxy_response = make_request('patch', path, payload_request)
     return proxy_response
 
 
@@ -432,11 +424,6 @@ def comment_public_uri(issue_info):
     )
     payload = {'body': comment_body}
     # Preparing the proxy request
-    headers = {'Authorization': 'token {0}'.format(app.config['OAUTH_TOKEN'])}
     path = 'repos/{0}/{1}/comments'.format(PRIVATE_REPO, number)
-    proxy_response = proxy_request(
-        method='post',
-        path=path,
-        headers=headers,
-        data=json.dumps(payload))
+    proxy_response = make_request('post', path, payload)
     return proxy_response
