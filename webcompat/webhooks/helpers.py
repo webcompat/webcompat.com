@@ -281,6 +281,8 @@ def process_issue_action(issue_info):
         response = private_issue_moderation(issue_info)
         if response.status_code == 200:
             # if it succeeded, we can close the private issue
+            path = f'repos/{PRIVATE_REPO}/{issue_info["number"]}'
+            make_request('patch', path, {'state': 'closed'})
             return ('Moderated issue accepted',
                     200, {'Content-Type': 'text/plain'})
         else:
