@@ -71,10 +71,8 @@ def extract_browser_label(metadata_dict):
             if 'tablet' in remainder:
                 browser_type = 'tablet'
             if browser_type:
-                dash_browser = '{dash_browser}-{browser_type}'.format(
-                    dash_browser=dash_browser,
-                    browser_type=browser_type)
-    return 'browser-{name}'.format(name=dash_browser)
+                dash_browser = f'{dash_browser}-{browser_type}'
+    return f'browser-{dash_browser}'
 
 
 def extract_extra_labels(metadata_dict):
@@ -95,7 +93,7 @@ def extract_priority_label(body):
         priorities = ['critical', 'important', 'normal']
         # Find host_name in DB
         for site in site_db.query(Site).filter_by(url=hostname):
-            return 'priority-{}'.format(priorities[site.priority - 1])
+            return f'priority-{priorities[site.priority - 1]}'
         # No host_name in DB, find less-level domain (>2)
         # If host_name is lv4.lv3.example.com, find lv3.example.com/example.com
         subparts = hostname.split('.')
@@ -104,7 +102,7 @@ def extract_priority_label(body):
                    if 0 < i < hostname.count('.')]
         for domain in domains:
             for site in site_db.query(Site).filter_by(url=domain):
-                return 'priority-{}'.format(priorities[site.priority - 1])
+                return f'priority-{priorities[site.priority - 1]}'
     return None
 
 
@@ -231,7 +229,7 @@ def tag_new_public_issue(issue_info):
     labels.extend(issue_info['original_labels'])
     milestone = app.config['STATUSES']['needstriage']['id']
     # Preparing the proxy request
-    path = 'repos/{0}/{1}'.format(PUBLIC_REPO, issue_number)
+    path = f'repos/{PUBLIC_REPO}/{issue_number}'
     payload_request = {'labels': labels, 'milestone': milestone}
     proxy_response = make_request('patch', path, payload_request)
     return proxy_response
@@ -324,7 +322,7 @@ def msg_log(msg, issue_number):
     """Write a log with the reason and the issue number."""
     log = app.logger
     log.setLevel(logging.INFO)
-    msg = 'issue {issue} {msg}'.format(issue=issue_number, msg=msg)
+    msg = f'issue {issue_number} {msg}'
     log.info(msg)
 
 
@@ -376,7 +374,7 @@ def private_issue_moderation(issue_info):
     payload_request = prepare_accepted_issue(issue_info)
     public_number = get_public_issue_number(issue_info['public_url'])
     # Preparing the proxy request
-    path = 'repos/{0}/{1}'.format(PUBLIC_REPO, public_number)
+    path = f'repos/{PUBLIC_REPO}/{public_number}'
     proxy_response = make_request('patch', path, payload_request)
     return proxy_response
 
@@ -386,7 +384,7 @@ def private_issue_rejected(issue_info):
     payload_request = prepare_rejected_issue()
     public_number = get_public_issue_number(issue_info['public_url'])
     # Preparing the proxy request
-    path = 'repos/{0}/{1}'.format(PUBLIC_REPO, public_number)
+    path = f'repos/{PUBLIC_REPO}/{public_number}'
     proxy_response = make_request('patch', path, payload_request)
     return proxy_response
 
@@ -420,12 +418,9 @@ def comment_public_uri(issue_info):
     public_url = issue_info['public_url']
     public_number = get_public_issue_number(public_url)
     # prepare the payload
-    comment_body = '[Original issue {nb}]({url})'.format(
-        nb=public_number,
-        url=public_url
-    )
+    comment_body = f'[Original issue {public_number}]({public_url})'
     payload = {'body': comment_body}
     # Preparing the proxy request
-    path = 'repos/{0}/{1}/comments'.format(PRIVATE_REPO, number)
+    path = f'repos/{PRIVATE_REPO}/{number}/comments'
     proxy_response = make_request('post', path, payload)
     return proxy_response
