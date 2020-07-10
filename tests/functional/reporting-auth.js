@@ -80,7 +80,7 @@ registerSuite("Reporting (auth)", {
           .findByCssSelector(".next-description")
           .click()
           .end()
-          .sleep(500)
+          .sleep(1000)
           .findDisplayedByCssSelector(".next-screenshot")
           // Click on "Continue without"
           .click()

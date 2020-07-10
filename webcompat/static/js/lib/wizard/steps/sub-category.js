@@ -11,9 +11,9 @@ import notify from "../notify.js";
 const container = $(".step-container.step-subproblem");
 const radio = container.find("input");
 
-const showSubcategory = (subId) => {
+const showSubcategory = (subId, cb) => {
   container.find(".choice-control").hide();
-  $(`.${subId}`).show();
+  $(`.${subId}`).show(0, cb);
 };
 
 const resetRadio = (element) => {
@@ -41,8 +41,7 @@ radio.on("change", handleSubCategory);
 export default {
   show: (data) => {
     resetRadio(radio);
-    showSubcategory(data.subId);
-    showContainer(container);
+    showSubcategory(data.subId, () => showContainer(container));
   },
   hide: () => {
     hideContainer(container);

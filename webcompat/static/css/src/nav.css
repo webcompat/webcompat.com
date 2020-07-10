@@ -49,6 +49,7 @@
 
 .nav-item .nav-link {
   display: inline-block;
+  height: 42px;
   padding: 5px;
   text-decoration: none;
 }

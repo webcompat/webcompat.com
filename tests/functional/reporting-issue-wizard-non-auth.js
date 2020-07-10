@@ -248,7 +248,7 @@ registerSuite("Reporting with wizard", {
             // Click on "Images not loaded"
             document.querySelector("[for=layout_bug_subcategory-0]").click();
           })
-          .sleep(1000)
+          .sleep(1500)
           // Check that hidden description field has "Images not loaded"
           .findById("description")
           .getAttribute("value")
@@ -352,7 +352,7 @@ registerSuite("Reporting with wizard", {
           .findByCssSelector(".next-description")
           .click()
           .end()
-          .sleep(500)
+          .sleep(1000)
           .findByCssSelector(".step.active .description")
           .getVisibleText()
           .then(function (text) {

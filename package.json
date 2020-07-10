@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "amd-to-commonjs-codemod": "^1.2.0",
+    "core-js": "^3.6.5",
     "cssrecipes-custom-media-queries": "0.3.0",
     "cssrecipes-defaults": "^0.5.0",
     "cssrecipes-grid": "^1.0.0",
@@ -42,8 +43,10 @@
     "lint-staged": "^10.0.8",
     "mini-css-extract-plugin": "^0.9.0",
     "optimize-css-assets-webpack-plugin": "^5.0.3",
+    "postcss-import": "^12.0.1",
     "postcss-loader": "^3.0.0",
     "postcss-preset-env": "^6.7.0",
+    "postcss-url": "^8.0.0",
     "prettier": "2.0.5",
     "sinon": "^9.0.1",
     "stylelint": "^13.1.0",
@@ -64,10 +67,10 @@
     "build:svg:svg-sprite": "svg-sprite-generate -d ./webcompat/static/img/svg/tmp -o ./webcompat/static/img/svg/sprite.svg",
     "lint": "npm run lint:js && npm run lint:css && npm run lint:python",
     "lint:python": "pycodestyle --ignore=E402,W504 webcompat/ tests/ config/",
-    "lint:js": "npx eslint ./webpack ./tests ./webcompat/static/js/lib",
+    "lint:js": "npx eslint ./webpack ./tests ./webcompat/static/js/lib postcss.config.js",
     "lint:css": "npx stylelint './webcompat/static/css/src/**/*.css' './webcompat/static/css/webcompat.dev.css'",
     "lint:fix": "npm run lint:fix:js && npm run lint:fix:css",
-    "lint:fix:js": "npx eslint --fix ./webpack ./tests ./webcompat/static/js/lib",
+    "lint:fix:js": "npx eslint --fix ./webpack ./tests ./webcompat/static/js/lib postcss.config.js",
     "lint:fix:css": "npx stylelint './webcompat/static/css/src/**/*.css' './webcompat/static/css/webcompat.dev.css' --fix",
     "prestart": "npm run build",
     "start": "source env/bin/activate || . env/bin/activate && flask run",
@@ -90,7 +93,7 @@
   },
   "lint-staged": {
     "*.js": [
-      "npx eslint ./webpack ./tests ./webcompat/static/js/lib",
+      "npx eslint ./webpack ./tests ./webcompat/static/js/lib postcss.config.js",
       "git add"
     ],
     "*.css": [

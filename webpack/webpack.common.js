@@ -2,7 +2,6 @@ const path = require("path");
 const webpack = require("webpack");
 const entries = require("./entries.js");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const postcssPresetEnv = require("postcss-preset-env");
 
 module.exports = {
   entry: entries,
@@ -29,26 +28,7 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        use: [
-          MiniCssExtractPlugin.loader,
-          "css-loader",
-          {
-            loader: "postcss-loader",
-            options: {
-              ident: "postcss",
-              plugins: () => [
-                postcssPresetEnv({
-                  browsers: [
-                    "defaults",
-                    "Firefox > 52",
-                    "Safari >=9",
-                    "Chrome >=75",
-                  ],
-                }),
-              ],
-            },
-          },
-        ],
+        use: [MiniCssExtractPlugin.loader, "css-loader", "postcss-loader"],
       },
       {
         test: /\.(png|svg|jpg|gif)$/,
@@ -57,7 +37,10 @@ module.exports = {
     ],
   },
   resolve: {
-    modules: [path.resolve(__dirname, "../webcompat/static/js/vendor")],
+    modules: [
+      path.resolve(__dirname, "../webcompat/static/js/vendor"),
+      "node_modules",
+    ],
     alias: {
       templates: path.resolve(__dirname, "../webcompat/templates/"),
       jquery: "jquery-3.3.1.min.js",
