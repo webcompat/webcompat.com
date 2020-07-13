@@ -70,14 +70,6 @@ def test_titles(client):
         assert expected.encode('utf-8') in rv.data
 
 
-def test_user_title_pages(client):
-    """Testing user activity page title."""
-    login(client, 'testuser', 'foobar')
-    title = b"<title>testuser's Activity | webcompat.com</title>"
-    rv = client.get('/activity/testuser')
-    assert title in rv.data
-
-
 def test_addon_link(client):
     """An addon link should be in the top navigation bar.
 
