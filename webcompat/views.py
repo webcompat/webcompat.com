@@ -367,7 +367,7 @@ def show_issue(number):
 
 @app.route('/activity/<username>')
 @app.route('/rate_limit')
-def show_410_gone(username):
+def show_410_gone(username=None):
     """Retired routes. 410 Gone.
 
     * Decision made on June 2020. See
