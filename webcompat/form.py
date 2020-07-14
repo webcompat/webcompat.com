@@ -22,7 +22,6 @@ from flask_wtf.file import FileAllowed
 from flask_wtf.file import FileField
 from markupsafe import Markup
 from wtforms import HiddenField
-from wtforms import Label
 from wtforms import RadioField
 from wtforms import StringField
 from wtforms import TextAreaField
@@ -38,8 +37,6 @@ from webcompat.helpers import get_os
 from webcompat.helpers import get_details_list
 from webcompat.helpers import is_json_object
 
-AUTH_REPORT = 'github-auth-report'
-PROXY_REPORT = 'github-proxy-report'
 SCHEMES = ('http://', 'https://')
 BAD_SCHEMES = ('http:/', 'https:/', 'http:', 'https:')
 GITHUB_HELP = '_From [webcompat.com](https://webcompat.com/) with ❤️_'
