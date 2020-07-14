@@ -329,6 +329,8 @@ def build_details(details):
 
 def get_radio_button_label(field_value, label_list):
     """Return human-readable label for problem choices form value."""
+    if len(label_list[0]) == 3:
+        label_list = [(value, text) for value, icon, text in label_list]
     for value, text in label_list:
         if value == field_value:
             return text
