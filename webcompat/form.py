@@ -173,22 +173,20 @@ contact_label = 'Sharing your GitHub username—without logging in—could help 
 
 
 class PrefixedRadioField(RadioField):
-    """Prefix radio field label with an image."""
+    """Prefix radio field label with an image.
+
+    This renders the radio elements with a specific html markup.
+    """
     def __init__(self, *args, **kwargs):
         prefixed_choices = kwargs.pop('choices')
-        template = '<div class={css_class}><img src={src}/></div> {text}'
         choices = []
-
-        css_class = 'icon-container'
         for slug, img, text in prefixed_choices:
-            filename = 'img/svg/icons/{img}'.format(img=img)
+            filename = f'img/svg/icons/{img}'
             src = url_for('static', filename=filename)
-            label = Markup(template.format(
-                src=src, css_class=css_class, text=text)
-            )
+            t = f'<div class="icon-container"><img src="{src}"/></div> {text}'
+            label = Markup(t)
             choice = (slug, label)
             choices.append(choice)
-
         kwargs['choices'] = choices
         super().__init__(*args, **kwargs)
 
