@@ -1,4 +1,6 @@
+.env
 env/
+venv/
 node_modules/
 git_modules/
 .DS_Store
@@ -10,25 +12,34 @@ docs/build/
 screenshots/
 uploads/
 .idea/
+.vscode/
 config/secrets.py
+package-lock.json
+tmp/
 
-# backup folder contains the issues.db backup file with issues dump
-# for the previous versions
-backups/*.db
+# Ignore the installable app.
+*.egg-info
+
+# The data folder contains information that shouldn't live in version control.
+data/*
 
 # these are our 'dist' files
 # checking them into the repo is silly
-webcompat/static/js/webcompat.js
-webcompat/static/js/diagnose.js
-webcompat/static/js/issues.js
-webcompat/static/js/issue-list.js
-webcompat/static/js/user-activity.js
-webcompat/static/js/cssfixme.js
 webcompat/**/*.min.js
+# but don't ignore minified js code in the /vendor/ directory
+!webcompat/**/vendor/*.min.js
+webcompat/static/js/*.js
+webcompat/static/js/build/
+webcompat/static/js/dist/
 webcompat/**/*.min.css
-webcompat/**/*.dev.css
+webcompat/static/css/dist/
+webcompat/static/dist
 
 #selenium server
 *.jar
 *.pid
 nohup.out
+
+# tests
+.noseids
+.coverage

@@ -1,24 +1,24 @@
-<script type="text/template" id="comment-tmpl">
-  <div class="wc-Comment-body">
-    <div class="wc-Comment-wrapper">
-      <div class="wc-Comment-header">
-        <div class="wc-Comment-owner">
-          <div class="wc-Comment-owner-avatar">
-            <img src="<%= avatarUrl %>" alt="<%= commenter %>">
-          </div>
-          <div class="wc-Comment-owner-name js-Comment-owner">
-            <a class="wc-Link" href="https://github.com/<%= commenter %>"><%= commenter %></a>
-          </div>
-        </div>
-        <div>
-          <a class="wc-Link" href="#<%= commentLinkId %>"><%= createdAt %></a>
-        </div>
-      </div>
-      <div class="wc-Comment-content js-Comment-content">
-        <div class="wc-Markdown">
-          <%= body %>
-        </div>
-      </div>
+{% autoescape false %}{% for response in comments %}
+<div class="issue-comment js-Issue-comment grid-cell x2" id="issuecomment-{{ response.id }}">
+  <header class="comment-header">
+    <figure class="comment-author" role="group">
+      <img src="{{ response.user.avatar_url }}" class="comment-avatar" alt="{{ response.user.login }}">
+      <figcaption class="js-Comment-owner">
+        <a class="comment-reporter bold" href="https://github.com/{{ response.user.login }}">
+          {{ response.user.login }}
+        </a>
+      </figcaption>
+    </figure>
+    <div>
+      <a class="comment-time" href="#issuecomment-{{ response.id }}">
+        {{ response.created_at|format_date }}
+      </a>
+    </div>
+  </header>
+  <div class="js-Comment-content js-Issue-comment-body grid-cell">
+    <div>
+      {{ response.body_html }}
     </div>
   </div>
-</script>
+</div>
+{% endfor %}{% endautoescape %}

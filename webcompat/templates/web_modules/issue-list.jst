@@ -1,0 +1,33 @@
+<script type="text/template">
+  <% if (data.issues.length) { %>
+    <% _.each(data.issues, function(issue) { %>
+      <div class="grid-row issue label-<%= issue.stateClass %> js-IssueList">
+        <article class="grid-cell x2 issue-description js-issue-desc">
+            <a href="/issues/<%= issue.number %>">
+              <span class="issue-number js-issue-number">Issue <%= issue.number %></span> <br />
+              <span class="issue-url issue-type js-issue-title"><%- issue.title %></span> <br />
+            </a>
+          <p>
+            <span class="issue-date-open js-issue-date">Opened: <time><%= issue.createdAt %></time></span>
+            <span class="issue-comments js-issue-comments">Comments: <%= issue.commentNumber %></span>
+          </p>
+        </article>
+        <aside class="grid-cell x1 issue-labels">
+          <% _.each(issue.labels, function(label) { %>
+            <span class="label js-Issue-label label-<%= label.remoteName %>">
+              <a href="/issues?q=label:<%= label.remoteName %>"
+                 data-remotename="<%= label.remoteName %>"
+                 title="Labels : <%= label.name %>"><%= label.name %></a>
+            </span>
+          <% }); %>
+        </aside>
+      </div>
+    <% }); %>
+  <% } else { %>
+  <div class="grid-row">
+    <article class="grid-cell x3">
+      <p>Nothing here currently, go report something!</p>
+    </article>
+  </div>
+<% } %>
+</script>

@@ -1,0 +1,13 @@
+<script type="text/template">
+<section>
+  <h4 class="headline-1">Thanks for reporting an issue!</h4>
+  <p>You're helping us make the web a better place to work and play. Tell your friends about the bug you just filed:</p>
+  <a class="button button-primary button-thanks"
+     href="https://twitter.com/intent/tweet?text=<%- encodeURIComponent("I just filed a bug on the internet:") %>&url=<%- encodeURIComponent("https://webcompat.com/issues/") %><%= data.number %>&via=webcompat"
+     target="_blank">Share on Twitter</a>
+  <a class="button button-primary button-thanks"
+     href="https://facebook.com/sharer/sharer.php?u=<%- encodeURIComponent("https://webcompat.com/issues/") %><%= data.number %>"
+     target="_blank">Share on Facebook</a>
+  <p>You can return to this web page at any time to track the progress of this report.</p>
+</section>
+</script>

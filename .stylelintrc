@@ -1,0 +1,70 @@
+{
+    "extends": "stylelint-config-standard",
+    "plugins": [
+      "stylelint-order"
+    ],
+    "rules": {
+        "indentation": 2,
+        "string-quotes": "double",
+        "no-duplicate-selectors": true,
+        "color-hex-case": "lower",
+        "color-hex-length": "short",
+        "color-named": "never",
+        "selector-no-qualifying-type":  [ true, {"ignore": "attribute"} ],
+        "selector-max-id": 1,
+        "selector-max-attribute": 1,
+        "selector-combinator-space-after": "always",
+        "selector-attribute-quotes": "always",
+        "selector-attribute-operator-space-before": "always",
+        "selector-attribute-operator-space-after": "always",
+        "selector-attribute-brackets-space-inside": "never",
+        "declaration-block-trailing-semicolon": "always",
+        "declaration-no-important": true,
+        "declaration-colon-space-before": "never",
+        "declaration-colon-space-after": "always",
+        "property-no-vendor-prefix": true,
+        "value-no-vendor-prefix": true,
+        "number-leading-zero": "never",
+        "function-url-quotes": "always",
+        "font-weight-notation": "numeric",
+        "font-family-name-quotes": "always-where-recommended",
+        "comment-whitespace-inside": "always",
+        "comment-empty-line-before": "always",
+        "at-rule-no-vendor-prefix": true,
+        "rule-empty-line-before": ["always", {
+          "except": [
+            "after-single-line-comment",
+            "inside-block-and-after-rule"
+          ],
+          "ignore": [
+            "after-comment",
+            "inside-block"
+          ]
+        }],
+        "selector-pseudo-element-colon-notation": "double",
+        "selector-pseudo-class-parentheses-space-inside": "never",
+        "selector-no-vendor-prefix": true,
+        "selector-max-universal": 1,
+        "selector-max-type": 1,
+        "media-feature-range-operator-space-before": "always",
+        "media-feature-range-operator-space-after": "always",
+        "media-feature-parentheses-space-inside": "never",
+        "media-feature-name-no-vendor-prefix": true,
+        "media-feature-colon-space-before": "never",
+        "media-feature-colon-space-after": "always",
+        "declaration-block-no-duplicate-properties": true,
+        "declaration-block-no-redundant-longhand-properties": [ true, {"ignoreShorthands": "font"} ],
+        "no-eol-whitespace": true,
+        "order/order": [
+          "custom-properties",
+          "declarations"
+        ],
+        "order/properties-alphabetical-order": true
+    },
+    "ignoreFiles": [
+      "./webcompat/static/css/development/vendor/prism.css"
+    ],
+    "ignoreShorthands": [
+        "font"
+    ]
+}

@@ -1,0 +1,27 @@
+<script type="text/template">
+  <div class="label-editor-container">
+    <div class="label-editor-header">
+      <input class="form-field text-field js-MilestoneEditor-search" placeholder="Filter statuses">
+      <button class="nav-button js-CategoryEditor-close"
+              tabindex="0">
+        <svg class="nav-text icon nav-icon" viewBox="0 0 30 30" role="presentation">
+            <title>Save &amp; close</title>
+            <use xlink:href="#svg-sliders">Save &amp; close</use>
+        </svg>
+      </button>
+    </div>
+    <div class="label-editor-list" tabindex="-1">
+      <% _.each(data.milestones, function(milestone) { %>
+        <input class="label-editor-list-item-checkbox"
+                type="checkbox" name="<%= milestone.name %>"
+                id="milestone-<%= milestone.name %>"
+                data-color="<%=milestone.color%>"
+                data-remotename="milestone-<%= milestone.name %>"
+                tabindex="-1">
+        <label class="label-editor-list-item label-<%= milestone.name %>" tabindex="0" for="milestone-<%= milestone.name %>">
+          <span class="small"><%= milestone.name %></span>
+        </label>
+      <% }); %>
+    </div>
+  </div>
+</script>

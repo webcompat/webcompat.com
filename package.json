@@ -11,53 +11,92 @@
     "url": "https://github.com/webcompat/webcompat.com.git"
   },
   "engines": {
-    "node": ">= 4.x"
+    "node": ">= 10.13.0"
   },
-  "devDependencies": {
+  "dependencies": {
+    "amd-to-commonjs-codemod": "^1.2.0",
     "cssrecipes-custom-media-queries": "0.3.0",
     "cssrecipes-defaults": "^0.5.0",
     "cssrecipes-grid": "^1.0.0",
     "cssrecipes-reset": "^0.5.0",
     "cssrecipes-utils": "^0.6.2",
-    "eslint": "^3.4.0",
-    "eslint-config-prettier": "^1.5.0",
-    "eslint-plugin-prettier": "^2.0.1",
-    "grunt": "~0.4.5",
-    "grunt-check-dependencies": "~0.9.0",
-    "grunt-cli": "^1.2.0",
-    "grunt-contrib-concat": "~0.3.0",
-    "grunt-contrib-cssmin": "~0.9.0",
-    "grunt-contrib-imagemin": "~1.0.0",
-    "grunt-contrib-uglify": "~0.2.7",
-    "grunt-contrib-watch": "~0.5.3",
-    "grunt-postcss": "^0.8.0",
-    "grunt-travis-lint": "0.0.3",
-    "intern": "3.4.0",
-    "load-grunt-tasks": "~0.6.0",
-    "postcss": "^5.2.14",
-    "postcss-browser-reporter": "^0.4.0",
-    "postcss-cssnext": "^2.9.0",
-    "postcss-import": "^8.0.2",
-    "postcss-reporter": "^3.0.0",
-    "postcss-url": "^5.1.1",
-    "prettier": "^0.22.0",
-    "suitcss-utils-align": "^0.2.0",
-    "suitcss-utils-display": "^0.4.0"
+    "suitcss-utils-align": "^1.0.0",
+    "suitcss-utils-display": "^1.0.2",
+    "yargs": "15.3.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.10.2",
+    "@babel/preset-env": "^7.10.2",
+    "@babel/register": "^7.10.1",
+    "babel-loader": "^8.1.0",
+    "css-loader": "^3.5.3",
+    "ejs-loader": "^0.5.0",
+    "eslint": "^7.1.0",
+    "eslint-config-prettier": "^6.0.0",
+    "eslint-plugin-prettier": "^3.0.0",
+    "file-loader": "^6.0.0",
+    "husky": "^4.0.2",
+    "imagemin-webpack-plugin": "^2.4.2",
+    "intern": "^4.8.4",
+    "leadfoot": "1.7.6",
+    "lint-staged": "^10.0.8",
+    "mini-css-extract-plugin": "^0.9.0",
+    "optimize-css-assets-webpack-plugin": "^5.0.3",
+    "postcss-loader": "^3.0.0",
+    "postcss-preset-env": "^6.7.0",
+    "prettier": "2.0.5",
+    "sinon": "^9.0.1",
+    "stylelint": "^13.1.0",
+    "stylelint-config-standard": "^20.0.0",
+    "stylelint-order": "^4.0.0",
+    "svg-sprite-generator": "0.0.7",
+    "svgo": "^1.1.1",
+    "terser-webpack-plugin": "^3.0.2",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.11",
+    "webpack-merge": "^4.2.2"
   },
   "scripts": {
-    "setup": "npm run module && npm run virtualenv && npm install && npm run config",
-    "watch": "grunt watch",
-    "build": "grunt",
-    "lint": "eslint ./Gruntfile.js ./tests ./grunt-tasks ./webcompat/static/js/lib && grunt travis-lint",
-    "fix": "eslint --fix ./Gruntfile.js ./tests ./grunt-tasks ./webcompat/static/js/lib",
-    "imagemin": "grunt imagemin",
-    "module": "git submodule init && git submodule update",
+    "setup": "npm run virtualenv && npm install",
+    "build": "webpack --config ./webpack/webpack.dev.js",
+    "build:svg": "npm run build:svg:clean-svg && npm run build:svg:svg-sprite && rm -rf ./webcompat/static/img/svg/tmp",
+    "build:svg:clean-svg": "svgo -f ./webcompat/static/img/svg/icons -o ./webcompat/static/img/svg/tmp",
+    "build:svg:svg-sprite": "svg-sprite-generate -d ./webcompat/static/img/svg/tmp -o ./webcompat/static/img/svg/sprite.svg",
+    "lint": "npm run lint:js && npm run lint:css && npm run lint:python",
+    "lint:python": "pycodestyle --ignore=E402,W504 webcompat/ tests/ config/",
+    "lint:js": "npx eslint ./webpack ./tests ./webcompat/static/js/lib",
+    "lint:css": "npx stylelint './webcompat/static/css/src/**/*.css' './webcompat/static/css/webcompat.dev.css'",
+    "lint:fix": "npm run lint:fix:js && npm run lint:fix:css",
+    "lint:fix:js": "npx eslint --fix ./webpack ./tests ./webcompat/static/js/lib",
+    "lint:fix:css": "npx stylelint './webcompat/static/css/src/**/*.css' './webcompat/static/css/webcompat.dev.css' --fix",
     "prestart": "npm run build",
-    "start": "source env/bin/activate || . env/bin/activate && python run.py",
-    "virtualenv": "pip install virtualenv && virtualenv env && source env/bin/activate || . env/bin/activate && npm run pip",
-    "pip": "pip install -r config/requirements.txt",
-    "config": "cp config/secrets.py.example config/secrets.py",
-    "project-update": "pip install --upgrade pip && npm run backend-install && npm update"
+    "start": "source env/bin/activate || . env/bin/activate && flask run",
+    "start:test": "npm run build && source env/bin/activate || . env/bin/activate && python run.py -t",
+    "virtualenv": "python3 -m venv env && source env/bin/activate || . env/bin/activate && npm run pip",
+    "pip": "pip install -r config/requirements-dev.txt",
+    "project-update": "pip install --upgrade pip && npm update",
+    "test": "npm run test:js && npm run test:python",
+    "test:js": "npx intern",
+    "test:unit-js": "intern config=./webcompat/static/js/lib/wizard/tests/intern.json",
+    "test:python": "pip install -e . && pytest",
+    "dev": "webpack --config ./webpack/webpack.dev.js --watch",
+    "prod": "webpack --config ./webpack/webpack.prod.js && npm run prod:es5",
+    "prod:es5": "webpack --config ./webpack/webpack.prod.js --env.es5"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.js": [
+      "npx eslint ./webpack ./tests ./webcompat/static/js/lib",
+      "git add"
+    ],
+    "*.css": [
+      "npx stylelint './webcompat/static/css/src/**/*.css' './webcompat/static/css/webcompat.dev.css'",
+      "git add"
+    ]
   },
   "license": "MPL-2.0"
 }

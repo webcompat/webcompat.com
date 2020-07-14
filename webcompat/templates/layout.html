@@ -3,68 +3,40 @@
 <head>
   <title>{% block title %}Web Compatibility{% endblock %} | webcompat.com</title>
   <meta charset="utf-8">
+  {%- if not config.PRODUCTION -%}
+  <meta name="env" content="staging: {{ config.STAGING }}, prod: {{config.PRODUCTION}}, localhost: {{config.LOCALHOST}}">
+  {%- endif %}
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Open source community for web compatibility.  Report bugs from websites or for browsers and help us move the web forward.">
-  <!-- Web APP iOS/Android -->
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta content="WebCompat" name="apple-mobile-web-app-title">
   <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
-  <link rel="manifest" href="{{ url_for('static', filename='webcompat.webmanifest') }}">
-  <link rel="apple-touch-icon" sizes="57x57" href="{{ url_for('static', filename='favicon/apple-touch-icon-57x57.png') }}">
-  <link rel="apple-touch-icon" sizes="114x114" href="{{ url_for('static', filename='favicon/apple-touch-icon-114x114.png') }}">
-  <link rel="apple-touch-icon" sizes="72x72" href="{{ url_for('static', filename='favicon/apple-touch-icon-72x72.png') }}">
-  <link rel="apple-touch-icon" sizes="144x144" href="{{ url_for('static', filename='favicon/apple-touch-icon-144x144.png') }}">
-  <link rel="apple-touch-icon" sizes="60x60" href="{{ url_for('static', filename='favicon/apple-touch-icon-60x60.png') }}">
-  <link rel="apple-touch-icon" sizes="120x120" href="{{ url_for('static', filename='favicon/apple-touch-icon-120x120.png') }}">
-  <link rel="apple-touch-icon" sizes="76x76" href="{{ url_for('static', filename='favicon/apple-touch-icon-76x76.png') }}">
-  <link rel="apple-touch-icon" sizes="152x152" href="{{ url_for('static', filename='favicon/apple-touch-icon-152x152.png') }}">
-  <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon/favicon-160x160.png') }}" sizes="160x160">
-  <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon/favicon-96x96.png') }}" sizes="96x96">
-  <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon/favicon-16x16.png') }}" sizes="16x16">
   <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon/favicon-32x32.png') }}" sizes="32x32">
-  <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon/favicon-196x196.png') }}" sizes="196x196">
-  <meta name="msapplication-TileColor" content="#e4bc05">
-  <meta name="msapplication-TileImage" content="{{ url_for('static', filename='favicon/mstile-144x144.png') }}">
-{%- if config.PRODUCTION or config.STAGING -%}
-  <link href="{{ url_for('static', filename='css/webcompat.min.css')|bust_cache }}" type="text/css" rel="stylesheet">
-{%- else %}
-  <link href="{{ url_for('static', filename='css/webcompat.dev.css') }}" type="text/css" rel="stylesheet">
-{%- endif %}
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600|Source+Sans+Pro:300,400" rel="stylesheet">
+  <link href="{{ url_for('static', filename='dist/webcompat.css') }}" type="text/css" rel="stylesheet">
 </head>
-<body data-username="{{ session.username }}">
-<div class="wc-UIViewport">
-  {% block body %}{% endblock %}
-  {% include "shared/footer.html" %}
-</div>
+<body id="body-webcompat" data-username="{{ session.username }}">
+{% include "shared/svg-icons.html" %}
+{% block body %}{% endblock %}
+{% include "shared/footer.html" %}
 {%- if config.PRODUCTION or config.STAGING -%}
 <!-- Google Analytics -->
-<script src="{{ url_for('static', filename='js/vendor/ga.js') }}"></script>
+<script type="module" src="{{ url_for('static', filename='dist/ga.js')| bust_cache}}"></script>
+<script nomodule src="{{ url_for('static', filename='dist/ga.es5.js')| bust_cache }}"></script>
 <script async src='https://www.google-analytics.com/analytics.js'></script>
 <!-- End Google Analytics -->
-<script src="{{ url_for('static', filename='js/webcompat.min.js')|bust_cache }}"></script>
-{% else %}
-<script src="{{ url_for('static', filename='js/vendor/jquery-1.11.2.min.js') }}"></script>
-<script src="{{ url_for('static', filename='js/vendor/lodash.custom.min.js') }}"></script>
-<script src="{{ url_for('static', filename='js/vendor/backbone-min.js') }}"></script>
-<script src="{{ url_for('static', filename='js/vendor/moment-min.js') }}"></script>
-<script src="{{ url_for('static', filename='js/vendor/prism.js') }}"></script>
-<script src="{{ url_for('static', filename='js/vendor/mousetrap-min.js') }}"></script>
-<script src="{{ url_for('static', filename='js/vendor/backbone.mousetrap.js') }}"></script>
-<script src="{{ url_for('static', filename='js/vendor/markdown-it.js') }}"></script>
-<script src="{{ url_for('static', filename='js/vendor/markdown-it-emoji-1.0.0.js') }}"></script>
-<script src="{{ url_for('static', filename='js/vendor/markdown-it-sanitizer-0.4.1.js') }}"></script>
-<script src="{{ url_for('static', filename='js/lib/flash-message.js') }}"></script>
-<script src="{{ url_for('static', filename='js/lib/homepage.js') }}"></script>
-<script src="{{ url_for('static', filename='js/lib/bugform.js') }}"></script>
-{%- if config['LOCALHOST'] -%}
+<script nomodule src="{{ url_for('static', filename='dist/vendor.es5.js')|bust_cache }}"></script>
+<script nomodule src="{{ url_for('static', filename='dist/webcompat.es5.js')|bust_cache }}"></script>
+
+{% endif -%}
+<script type="module" src="{{ url_for('static', filename='dist/vendor.js')|bust_cache }}"></script>
+<script type="module" src="{{ url_for('static', filename='dist/webcompat.js')|bust_cache }}"></script>
+
+{%- if config['LOCALHOST'] %}
 <script src="{{ url_for('get_test_helper',
                          filename='functional/lib/window-helpers.js') }}"></script>
-{%- endif %}{%- endif %}
-{% for category, message in get_flashed_messages(with_categories=True) %}
-<script>wcEvents.trigger('flash:{{ category }}', {message: '{{ message }}', timeout: 4000});</script>
-{% endfor %}
+{% endif -%}
+
+{% include "shared/flashed-messages.html" %}
+
 {% block extrascripts %}{% endblock %}
 </body>
 </html>

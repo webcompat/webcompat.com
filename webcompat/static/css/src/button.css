@@ -1,0 +1,70 @@
+/*
+* Buttons
+*
+-----------------------
+* DEPENDENCIES:
+-----------------------
+* variables.css
+*/
+
+.button {
+  border: 0;
+  border-radius: 5px;
+  color: inherit;
+  cursor: pointer;
+  display: inline-block;
+  padding: var(--button-primary-padding);
+}
+
+.button-primary {
+  background-color: var(--color-first);
+}
+
+.button-secondary {
+  background-color: var(--color-second);
+  color: var(--color-bg-page);
+}
+
+.button-thanks {
+  margin-right: 10px;
+  padding: var(--button-thanks-padding);
+  text-decoration: none;
+}
+
+.button:hover,
+.button-primary:hover,
+.button-secondary:hover {
+  opacity: .85;
+}
+
+.button-icon-hero {
+  fill: var(--color-first);
+}
+
+.button-hero .icon-middle {
+  vertical-align: middle;
+}
+
+.button-hero.is-open .icon-middle {
+  transform: rotate(90deg);
+}
+
+.button-hero:hover .icon-middle {
+  transform: rotate(0deg);
+}
+
+.button-hero {
+  background-color: var(--color-second);
+  border-radius: 10px;
+  color: var(--color-first);
+  font-family: sans-serif;
+  font-size: 2em;
+  font-weight: 200;
+  padding: 14.4px 23px;
+  text-decoration: none;
+  vertical-align: middle;
+}
+
+.button-hero:hover {
+  opacity: 1;
+}

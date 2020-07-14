@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Console logs | webcompat.com</title>
+  <meta name="robots" content="noindex">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Open source community for web compatibility.  Report bugs from websites or for browsers and help us move the web forward.">
+  <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon/favicon-32x32.png') }}" sizes="32x32">
+  <link href="{{ url_for('static', filename='dist/console-logs.css') }}" type="text/css" rel="stylesheet">
+</head>
+<body>
+
+<div id="console_logs_data">
+{% for data in logs %}
+
+    <div class="log level-{{ data.level }}">
+        <div class="log-message">
+            {{ data.log | join(', ') }}
+        </div>
+        <div class="log-file">
+            <a href="{{ data.uri }}">{{ get_filename_from_url(data.uri) }}:{{ data.pos }}</a>
+        </div>
+    </div>
+
+{% endfor %}
+</div>
+
+<script type="module" src="{{ url_for('static', filename='dist/console-logs.js')|bust_cache }}"></script>
+{%- if config.PRODUCTION or config.STAGING -%}
+<script nomodule src="{{ url_for('static', filename='dist/console-logs.es5.js')|bust_cache }}"></script>
+{%- endif %}
+</body>
+</html>

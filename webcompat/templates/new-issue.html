@@ -1,9 +1,29 @@
 {%- extends "layout.html" -%}
-{% block title %}New Issue{% endblock %}
+
+{% block title %}{{ pagetitle }}{% endblock %}
 {%- block body -%}
-{% include "topbar.html" %}
-<main role="main">
-  <div class="wc-Loader js-Loader"></div>
-  {% include "home-page/form.html" %}
+{% include "nav/issue-wizard-stepper.html" %}
+{% include "nav/topbar.html" %}
+<main role="main" class="grid">
+  <section id="js-ReportForm" class="js-ReportForm grid">
+    {% include "issue-wizard-form.html" %}
+  </section>
 </main>
 {% endblock %}
+
+{%- block extrascripts -%}
+
+<script type="module" src="{{ url_for('static', filename='dist/formv2.js')|bust_cache }}"></script>
+{%- if config.PRODUCTION or config.STAGING -%}
+<script nomodule src="{{ url_for('static', filename='dist/formv2.es5.js')|bust_cache }}"></script>
+{%- endif %}
+
+{% if source and campaign %}
+<script nonce={{nonce}}>
+if (typeof ga == "function") {
+  ga('set', 'campaignName', '{{campaign}}');
+  ga('set', 'campaignSource', '{{source}}');
+}
+</script>
+{% endif %}
+{%- endblock %}

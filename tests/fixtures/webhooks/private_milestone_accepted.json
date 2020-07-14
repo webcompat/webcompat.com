@@ -1,0 +1,41 @@
+{
+  "action": "milestoned",
+  "issue": {
+    "title": "www.netflix.com - test private issue accepted",
+    "repository_url": "https://api.github.com/repos/webcompat/webcompat-tests-private",
+    "number": 600,
+    "body": "<!-- @browser: Firefox 55.0 -->\n<!-- @ua_header: Mozilla/5.0 (X11; Linux x86_64; rv:55.0) Gecko/20100101 Firefox/55.0 -->\n<!-- @reported_with: web -->\n<!-- @public_url: https://github.com/webcompat/webcompat-tests/issues/1  -->\n\n**URL**: https://www.netflix.com/",
+    "labels": [
+      {
+        "id": 1788251357,
+        "node_id": "MDU6TGFiZWwxNzg4MjUxMzU3",
+        "url": "https://api.github.com/repos/webcompat/webcompat-tests/labels/action-needsmoderation",
+        "name": "action-needsmoderation",
+        "color": "d36200",
+        "default": false,
+        "description": "issue in the process of being moderated"
+      }
+    ],
+    "state": "open",
+    "milestone": {
+      "url": "https://api.github.com/repos/webcompat/webcompat-tests-private/milestones/2",
+      "html_url": "https://github.com/webcompat/webcompat-tests-private/milestone/2",
+      "labels_url": "https://api.github.com/repos/webcompat/webcompat-tests-private/milestones/2/labels",
+      "id": 5092463,
+      "node_id": "MDk6TWlsZXN0b25lNTA5MjQ2Mw==",
+      "number": 2,
+      "title": "accepted",
+      "description": "This is when a bug has been accepted for moderation",
+      "open_issues": 0,
+      "closed_issues": 2,
+      "state": "open",
+      "created_at": "2020-02-11T00:37:18Z",
+      "updated_at": "2020-02-11T18:34:04Z",
+      "due_on": null,
+      "closed_at": null
+    }
+  },
+  "milestone": {
+    "title": "accepted"
+  }
+}

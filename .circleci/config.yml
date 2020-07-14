@@ -1,0 +1,79 @@
+# Python CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-python/ for more details
+#
+version: 2
+jobs:
+  build:
+    docker:
+      # specify the version you desire here
+      # using -node-browsers to get node + firefox + chrome + geckoview
+      - image: circleci/python:3.7.3-stretch-node-browsers
+        environment:
+          FLASK_CONFIG: testing
+
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+            - deps1-{{ .Branch }}-{{ checksum "config/requirements-dev.txt" }}
+            - v1-npm-{{ .Branch }}-{{ checksum "package.json" }}
+      # - restore_cache:
+      #     keys:
+      #     - v1-pip-{{ checksum "config/requirements-dev.txt" }}
+      #     # fallback to using the latest cache if no exact match is found
+      #     - v1-pip-
+      #     - v1-npm-{{ checksum "package.json" }}
+      #     - v1-npm-
+      - run:
+          name: install python deps
+          command: |
+            python3 -m venv env
+            . env/bin/activate
+            pip install -r config/requirements-dev.txt
+      - save_cache:
+          key: deps1-{{ .Branch }}-{{ checksum "config/requirements-dev.txt" }}
+          paths:
+            - "env"
+      # NPM INSTALL
+      - run:
+          name: install npm deps
+          command: |
+            npm install
+
+      - save_cache:
+          paths:
+            - ./node_modules
+          key: v1-npm-{{ .Branch }}-{{ checksum "package.json" }}
+
+      - run:
+          name: Install latest Firefox
+          command: |
+            echo "export PATH=/home/circleci/.local/bin:$PATH" >> $BASH_ENV
+            source $BASH_ENV
+            pip install --user mozdownload mozinstall
+            mozdownload --version latest --destination firefox.tar.bz2
+            mozinstall firefox.tar.bz2
+            sudo ln -sf /home/circleci/repo/firefox/firefox /usr/local/bin/firefox
+            firefox --version
+            which firefox
+
+      - run:
+          name: Run Tests
+          command: |
+            . env/bin/activate
+            NODE_OPTIONS=--max_old_space_size=8192
+            npm run lint
+            npm run build
+            pip install -e .
+            pytest tests
+            npm run test:unit-js
+            python run.py -t &
+            sleep 5
+            npx intern
+      - store_artifacts:
+          path: test-reports/
+          destination: test-reports

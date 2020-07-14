@@ -1,0 +1,322 @@
+/*
+* form
+*
+----------------
+* DEPENDENCIES:
+----------------
+* variable.css
+*/
+
+.form {
+  padding: 10px 0 35px;
+}
+
+.form-element-bottom {
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+.form-element-bottom .form-button {
+  margin-top: auto;
+}
+
+.form-element {
+  margin: 0 0 20px;
+  max-width: 100%;
+  padding: 0;
+  position: relative;
+}
+
+.form-button-multiple {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-left: -10px;
+  margin-right: -10px;
+  max-width: none;
+}
+
+.form-button-multiple .button-wrapper {
+  cursor: pointer;
+  display: flex;
+  flex: 1 1 auto;
+  margin: 20px 10px 0;
+  position: relative;
+}
+
+.form-button-multiple .button-wrapper .button {
+  flex: 1;
+}
+
+.form-button-multiple .button-wrapper .button:disabled {
+  pointer-events: none;
+}
+
+.form-button-multiple .button-wrapper:hover .button {
+  opacity: .85;
+}
+
+.form-field {
+  background: none;
+  color: inherit;
+}
+
+.form-field ::placeholder {
+  color: #888;
+  opacity: 1;
+}
+
+.form-element .form-text:last-child {
+  margin-top: -13px;
+}
+
+.form-radio {
+  margin-bottom: 35px;
+}
+
+.form-label {
+  cursor: pointer;
+  display: block;
+  line-height: 1.7em;
+  margin-bottom: 5px;
+  text-align: left;
+}
+
+.form-upload:hover .visually-hidden {
+  visibility: hidden;
+}
+
+.form-required::after {
+  color: var(--color-error);
+  content: "*";
+  padding-left: 7px;
+  padding-right: 7px;
+}
+
+.form-label-message .form-label {
+  display: inline-block;
+}
+
+/* form message: error */
+.form-message-error {
+  color: var(--color-error);
+  display: block;
+  font-weight: 700;
+}
+
+/* form text privacy */
+.form-text-privacy {
+  background-color: var(--base-colorDark);
+  border-radius: 5px;
+  font-size: 14px;
+  padding: 6px;
+  text-align: center;
+}
+
+/* * Form input[type="text"], textarea (text-field) */
+
+.text-field {
+  border: 1px solid var(--color-form);
+  border-radius: 2px;
+  display: block;
+  font-family: "Open Sans", sans-serif;
+  font-size: 90%;
+  line-height: 1.2;
+  min-height: 27px;
+  padding: 8px 24px 8px 8px;
+  position: relative;
+  width: 100%;
+  z-index: 2;
+}
+
+.text-field:focus {
+  border-bottom: 1px solid var(--color-first);
+  outline: 1px solid transparent;
+  transition: border-bottom 1s linear;
+}
+
+/* * Form input[type="text"] validation */
+
+.form-input-validation {
+  display: inline-block;
+  position: relative;
+  text-align: right;
+  top: -2em;
+  width: 100%;
+  z-index: 0;
+}
+
+.is-validated .check::after {
+  background-image: url("../../img/svg/icons/svg-checkmark.svg");
+  background-repeat: no-repeat;
+  background-size: contain;
+  content: "";
+  display: inline-block;
+  height: 16px;
+  margin-right: 4px;
+  width: 16px;
+}
+
+.is-error .error::after {
+  background-image: url("../../img/svg/icons/svg-cross2.svg");
+  background-repeat: no-repeat;
+  background-size: contain;
+  content: "";
+  display: inline-block;
+  height: 16px;
+  margin-right: 4px;
+  width: 16px;
+}
+
+/* form-input-validation check error */
+
+/* Form radio */
+.input-radio {
+  opacity: 0;
+  position: absolute;
+}
+
+.label-radio {
+  margin-bottom: 5px;
+}
+
+.input-radio + .label-radio::before {
+  background: transparent;
+  border: 2px solid var(--color-default);
+  border-radius: 100%;
+  content: "";
+  cursor: pointer;
+  display: inline-block;
+  height: var(--input-size);
+  margin-right: 15px;
+  position: relative;
+  text-align: center;
+  top: 3px;
+  transition: all 250ms ease;
+  vertical-align: top;
+  width: var(--input-size);
+}
+
+.input-radio:checked + .label-radio::before {
+  background-color: var(--color-first);
+  border-color: var(--color-first);
+  box-shadow: inset 0 0 0 3px var(--color-bg-box);
+}
+
+.input-radio:focus + .label-radio::before {
+  border-color: var(--color-first);
+  box-shadow: inset 0 0 0 3px var(--color-bg-box), 0 0 0 3px var(--color-first-light);
+}
+
+.input-radio:disabled + .label-radio::before {
+  background: transparent;
+  border-color: var(--color-first);
+  box-shadow: inset 0 0 0 4px var(--color-first);
+}
+
+/* * Form upload */
+.form-upload {
+  border: 1px solid var(--color-form);
+  border-radius: 4px;
+  position: relative;
+}
+
+.form-upload:hover,
+.form-upload:focus-within {
+  border: 1px solid var(--color-first);
+  transition: all 250ms ease;
+}
+
+.input-upload {
+  color: var(--color-fourth);
+  cursor: pointer;
+  display: block;
+  height: 180px;
+  margin: -1px;
+  opacity: 0;
+  position: relative;
+  width: calc(100% + 2px);
+  z-index: 30;
+}
+
+.form-upload .label-icon {
+  left: 50%;
+  margin: 0;
+  max-height: 100%;
+  max-width: 100%;
+  position: absolute;
+  text-align: center;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 20;
+}
+
+.comment-body .form-upload .label-icon {
+  width: 90%;
+}
+
+.label-icon .icon {
+  display: block;
+  margin: 0 auto;
+}
+
+.icon-upload {
+  fill: var(--color-form);
+}
+
+.form-upload:hover .icon-upload,
+.form-upload:focus-within .icon-upload {
+  fill: var(--color-first);
+  transition: all 350ms ease;
+}
+
+.is-validated.no-js-error .label-upload,
+.is-validated.no-js-error:hover .label-upload,
+.is-validated.no-js-error:focus-within .label-upload {
+  visibility: hidden;
+}
+
+.is-validated .label-remove {
+  border: 0 none;
+  cursor: pointer;
+  outline: none;
+  visibility: visible;
+  z-index: 40;
+}
+
+.form-upload .label-remove:not(.is-hidden) {
+  background-color: #fff;
+  border: 1px solid rgba(255, 201, 0, 1);
+  border-radius: 50%;
+  cursor: pointer;
+  left: auto;
+  padding: .8em;
+  position: absolute;
+  right: 0;
+  top: 0;
+  transform: translate(50%, -50%);
+}
+
+.icon-remove,
+.label-remove .label-icon-message {
+  color: var(--color-second);
+  fill: var(--color-second);
+  transition: all 350ms ease;
+}
+
+.icon-error,
+.label-error .label-icon-message {
+  color: var(--color-error);
+  fill: var(--color-error);
+  transition: all 350ms ease;
+}
+
+.is-validated:hover .icon-remove,
+.is-validated:focus-within .icon-remove,
+.is-validated:hover .label-remove .label-icon-message,
+.is-validated:focus-within .label-remove .label-icon-message {
+  color: var(--color-first);
+  fill: var(--color-first);
+  transition: all 350ms ease;
+}

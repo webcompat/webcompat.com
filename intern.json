@@ -1,0 +1,39 @@
+{
+  "functionalTimeouts": {
+    "pageLoad": 10000
+  },
+  "functionalBaseUrl": "http://localhost:5000",
+  "maxConcurrency": 2,
+  "plugins": "./tests/functional/lib/setup.js",
+  "tunnel": "selenium",
+  "tunnelOptions": {
+    "drivers": [
+      "firefox",
+      {
+        "name": "chrome",
+        "version": "2.44"
+      }
+    ]
+  },
+  "environments": [
+    {
+      "browserName": "firefox",
+      "moz:firefoxOptions": {
+        "args": [
+          "-headless"
+        ]
+      }
+    },
+    {
+      "browserName": "chrome",
+      "goog:chromeOptions": {
+        "args": [
+          "--headless",
+          "--disable-gpu"
+        ]
+      }
+    }
+  ],
+  "filterErrorStack": true,
+  "functionalSuites": "./tests/functional/*.js"
+}

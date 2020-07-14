@@ -1,0 +1,143 @@
+{% extends "layout.html" %}
+{% block title %}Report A Website Issue{% endblock %}
+{% block body %}
+<div>
+  {% include "nav/nav.html" %}
+  <main role="main">
+    <section class="grid grid-show-gap">
+      <div class="grid-row">
+        <aside class="grid-cell x1-fix">
+          {% include "contributors/sub-nav.html" %}
+        </aside>
+        <article class="grid-cell x1">
+          <h1 id="report" class="headline-1 heading">Report A Website Issue</h1>
+          <p>
+            Once upon a time there was an issue on a website. Something is behaving differently in your favorite browser and not in another one. A menu is not working; the layout is a bit off; you click or tap on this link but it doesn't respond. This seems like a good time to file a bug report on webcompat.com! Since we can’t fix every issue on the web, we have <a href="#tools">tools</a> and <a href="#recommendations">recommendations</a> to help you understand what issues are not in the scope of this project.
+          </p>
+        </article>
+      </div>
+    </section>
+    <section class="grid">
+      <div class="grid-row">
+        <div class="grid-cell x3">
+          <h2 id="how" class="headline-1 heading">How To Report An Issue?</h2>
+          <p>
+            The goal of reporting an issue is to give all the possible information that will help someone without any context to understand, reproduce and eventually diagnose the symptoms of this issue.
+          </p>
+
+          <p>
+            <img src="/img/contributors/report-bug_1-form-empty.png" class="img-fit" alt="Image of an empty bug report form" />
+            When reporting an issue directly on webcompat.com or through external tools, you will always end up on the <a href="/issues/new">webcompat form</a>. Some of the fields in this form are mandatory. Take time to be precise and to guide us through the steps that will make it possible to reproduce the issue.
+          </p>
+
+          <p>
+            <img src="/img/contributors/report-bug_2-form_filled.png" class="img-fit" alt="Image of a fully filled out bug report form" />
+          </p>
+
+          <ol>
+            <li>The exact URL.</li>
+            <li>A short summary helping us to understand the issue.</li>
+            <li>Select the type of bug.</li>
+            <li>List the steps you need to take in order to get to the issue. This includes which links you click, what you type into form inputs, and so on. Don't be shy! Be as precise as you can, as there are often multiple ways to do such simple-seeming things as log into a site or view an online shopping cart. </li>
+            <li>Modify the browser information if you are reporting an issue for another browser.</li>
+            <li>If possible, make sure you test in another browser before reporting. It may be that the web site simply has an issue no matter which browser is used. These are not web compatibility issues.</li>
+            <li>A screenshot of the page, or just the area of the page highlighting the issue, is one of the best ways to communicate the problem you experienced. Be mindful about screenshots containing private information about yourself or others (such as social network private pages or bank sites).</li>
+          </ol>
+
+          <p>
+            You can report the issue anonymously or with your <a href="https://help.github.com/" target="_blank">Github</a> username. (We use the GitHub issue reporting system behind-the-scenes for webcompat.com). When you are identified, we can better follow-up with you if there are additional information required to understand the issue. Anonymous issues which lack details will be closed when we can't reproduce the issue and create a diagnosis.
+          </p>
+        </div>
+      </div>
+    </section>
+    <section class="grid">
+      <div class="grid-row">
+        <div class="grid-cell x3">
+          <h2 id="tools" class="headline-1 heading">Tools To Report An Issue</h2>
+          <p>
+            There are basically three ways of reporting an issue depending on your browser.
+          </p>
+
+          <h3 id="form" class="headline-2">The Form</h3>
+          <p>
+            <img src="/img/contributors/report-bug_3-report-site-issue.gif" class="img-fit" alt="Screenshot of three dot menu in Firefox browser" />
+          </p>
+          <p>
+            The <a href="/issues/new">webcompat report form</a> is the main avenue to report an issue.
+          </p>
+
+          <h3 id="web-extensions" class="headline-2">Web Extensions</h3>
+          <p>
+            <a href="https://addons.mozilla.org/en-US/firefox/addon/webcompatcom-reporter/" target="_blank">Webcompat.com Reporter</a> for Firefox (<a href="https://www.mozilla.org/en-US/firefox/" target="_blank">normal</a> and <a href="https://www.mozilla.org/en-US/firefox/channel/desktop/" target="_blank">beta</a> releases)
+          </p>
+
+          <p>
+            <a href="https://chrome.google.com/webstore/detail/webcompatcom-reporter/ffnnhckjcpbbjlmgfjigknkoffakclol" target="_blank">Webcompat.com Reporter</a> for Chrome
+          </p>
+
+          <p>
+            We do not have currently an extension for Chrome on Android and Safari on iOS, you are welcome to contribute to the project, see <a href="https://github.com/webcompat/webcompat-reporter-extensions/issues/70" target="_blank">Support reporting issues from iOS browsers and Chrome for Android</a>.
+          </p>
+
+          <h3 id="in-browser" class="headline-2">In Browser</h3>
+          <p>
+            For now, only <a href="https://blog.nightly.mozilla.org/" target="_blank">Firefox Nightly</a> and <a href="https://www.mozilla.org/en-US/firefox/developer/" target="_blank">Firefox Developer Edition</a> have a feature for reporting issues directly from the browser interface.
+          </p>
+
+          <p>
+            On Firefox Desktop, there is a <span abbr="three dots" title="three dots">•••</span> menu with a Report Site Issue option in the URL bar. Once selected, it automatically brings you to the webcompat reporting form with pre-filed data about your configuration.
+          </p>
+
+          <p>
+            <img src="/img/contributors/report-bug_4-desktop-arrow.png" class="img-fit" alt="Screenshot of three dot menu in Firefox browser" />
+          </p>
+
+          <p>
+            On Firefox Android, you can use the menu button and scroll down to the Report Site Issue option.
+          </p>
+
+          <p>
+            <img src="/img/contributors/report-bug_5-fennec-report-menu.png" class="img-fit" alt="Screenshot of three dot menu in mobile Firefox browser on Android" />
+          </p>
+
+          <p>
+            Other browser vendors are welcome to provide a way to automatically report issues to webcompat.com in a similar fashion in their pre-release versions. <a href="https://github.com/webcompat/webcompat.com/issues/new" target="_blank">Open an issue</a> on the webcompat.com project.
+          </p>
+        </div>
+      </div>
+    </section>
+    <section class="grid">
+      <div class="grid-row">
+        <div class="grid-cell x3">
+          <h2 id="recommendations" class="headline-1 heading">Is It Really A Web Compatibility Issue?</h2>
+
+          <p>
+            In general there are four type of issues:
+          </p>
+
+          <ol>
+            <li>
+              Website issues, including layouts, features or content. Webcompat.com is the right place! Not all site issues are valid Web Compatibility issues. Network issues, ads and script blockers, flash requirements for every browser are likely <a href="http://www.otsukare.info/2017/10/05/what-is-a-webcompat-issue" target="_blank"> not compatibility issues</a>.
+            </li>
+            <li>
+              Deceptive websites (scams, malware). You can report them to the <a href="https://safebrowsing.google.com/safebrowsing/report_phish/" target="_blank">Report Phishing Page</a>.
+            </li>
+            <li>
+              Issues with the user interface of the browser itself and not the content of a website. These suggestions should be reported directly to the browser vendor.
+            </li>
+            <li>
+              Add-ons or web extensions. Report these issue directly to the creator of the extension.
+            </li>
+          </ol>
+        </article>
+      </div>
+    </section>
+  </main>
+</div>
+{% endblock %}
+{%- block extrascripts -%}
+<script type="module" src="{{ url_for('static', filename='dist/contributors.js')|bust_cache }}"></script>
+{%- if config.PRODUCTION or config.STAGING -%}
+<script nomodule src="{{ url_for('static', filename='dist/contributors.es5.js')|bust_cache }}"></script>
+{%- endif %}
+{%- endblock %}

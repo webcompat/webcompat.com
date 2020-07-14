@@ -1,0 +1,19 @@
+<script type="text/template">
+  <header class="label-box-editor-button">
+    <h3 class="headline-3">Status</h3>
+    <% if ($("body").data("username")) { %>
+    <span class="js-Issue-categoryEditor">
+      <button class="nav-button nav-link icon right js-CategoryEditorLauncher js-MilestoneEditorLauncher" aria-label="Edit Statuses">
+        <svg class="nav-text icon nav-icon" viewBox="0 0 30 30" role="presentation" aria-hidden="true">
+            <use xlink:href="#svg-sliders" />
+        </svg>
+      </button>
+    </span>
+    <% } %>
+  </header>
+   <div class="js-Category-list">
+    <span class="label label-<%= data.milestoneClass %> js-Milestone">
+      <%= data.milestone %>
+    </span>
+  </span>
+</script>

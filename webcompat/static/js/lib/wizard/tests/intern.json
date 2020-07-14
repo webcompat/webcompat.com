@@ -1,0 +1,10 @@
+{
+  "suites": "./webcompat/static/js/lib/wizard/tests/*.js",
+  "environments": ["node"],
+  "node": {
+    "plugins": "./webcompat/static/js/lib/wizard/tests/helpers/babel-register.js"
+  },
+  "instrumenterOptions": {
+    "esModules": true
+  }
+}

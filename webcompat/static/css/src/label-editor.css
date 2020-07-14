@@ -1,0 +1,162 @@
+@media (min-width: 665px) {
+  .label-editor.is-open {
+    align-items: center;
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    left: 0;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 10001; /* todo: decrease this value, depends of the header */
+  }
+}
+
+@media (max-width: 664px) {
+
+  /* Category editor */
+  .label-editor.is-open {
+    display: block;
+    left: 0;
+    position: absolute;
+    top: 23px;
+    white-space: nowrap;
+    width: 100%;
+    z-index: 5;
+  }
+}
+
+/* Category editor */
+.label-editor-container {
+  background-color: var(--color-bg-box);
+  border-radius: 2px;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, .24), 0 0 2px rgba(0, 0, 0, .12);
+  padding: 1em;
+}
+
+/* Category header */
+.label-editor-header {
+  background-color: var(--color-bg-box);
+  display: flex;
+  padding: .625em;
+}
+
+/* list category */
+.label-editor-list {
+  display: flex;
+  flex-direction: column;
+  max-height: 18.75em;
+  -webkit-overflow-scrolling: touch;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+@media all and (max-width: 23.43em) {
+  .label-editor-list {
+    max-height: inherit;
+  }
+}
+
+/* item category */
+.label-editor-list-item {
+  border-left: 4px solid;
+  border-top: 1px solid var(--color-default);
+  cursor: pointer;
+  display: block;
+  margin: 0;
+  order: 2;
+  padding: calc(var(--unit-space) * .75) calc(var(--unit-space) * .5);
+}
+
+.label-editor-list-item .small {
+  vertical-align: middle;
+}
+
+.label-editor-list-item::before {
+  content: "☐";
+  display: inline-block;
+  font-size: 1.5em;
+  margin-top: -4px;
+  vertical-align: middle;
+}
+
+.label-editor-list-item:last-child {
+  border-bottom: 1px solid #ddd;
+}
+
+/* event */
+.label-editor-list-item:focus,
+.label-editor-list-item.focused {
+  border-color: Highlight;
+  border-style: solid;
+  border-width: 2px 2px 2px 4px;
+  outline: none;
+}
+
+/* checkbox */
+.label-editor-list-item-checkbox {
+  clip: rect(0 0 0 0);
+  height: 0;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  visibility: hidden;
+  width: 0;
+}
+
+.label-editor-list-item-checkbox:checked + .label-editor-list-item::before {
+  content: "︎☑︎";
+}
+
+.label-editor-list-item-checkbox:checked + .label-editor-list-item {
+  order: 1;
+}
+
+/* Launch Category Editor */
+.label-editorLauncher {
+  border: none;
+  display: none;
+  font-size: 1.4em;
+  height: 1.3em;
+  opacity: .8;
+  padding: 0;
+  width: 1.3em;
+}
+
+/* display caret and category only if button is-active */
+.label-editorLauncher.is-active + .label-editor::after,
+.label-editorLauncher.is-active + .label-editor {
+  display: block;
+}
+
+.label-editor-launcher:hover {
+  opacity: 1;
+}
+
+.label-editor-launcher::before {
+  content: "\f013";
+}
+
+.label-editor-launcher.is-active::before {
+  content: "\f00d";
+}
+
+.label-editor-header .nav-button {
+  margin-top: -10px;
+}
+
+@media all and (min-width: 893.01px) {
+  .label-editor-header .nav-button {
+    margin-right: 5px;
+  }
+}
+
+@media all and (max-width: 893px) {
+  .label-editor-header .nav-button {
+    margin-right: -1px;
+  }
+}
+
+.wc-Issue-categoryEditor-button .label-editorLauncher {
+  pointer-events: auto;
+}

@@ -1,0 +1,14 @@
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    {% for category, message in messages %}
+      <div class="flashed-message"
+           data-category="{{ category }}"
+           data-message="{{ message }}">
+      </div>
+    {% endfor %}
+    <script type="module" src="{{ url_for('static', filename='dist/flashed-messages.js')|bust_cache }}"></script>
+    {%- if config.PRODUCTION or config.STAGING -%}
+      <script nomodule src="{{ url_for('static', filename='dist/flashed-messages.es5.js')|bust_cache }}"></script>
+    {% endif -%}
+  {% endif %}
+{% endwith %}

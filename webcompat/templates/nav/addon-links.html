@@ -1,0 +1,49 @@
+<ul class="nav-left nav-addon">
+    {%- if browser == 'firefox' %}
+    <li class="nav-item">
+        <a class="nav-link js-addon-link" href="https://addons.mozilla.org/firefox/addon/webcompatcom-reporter/"
+           title="Navigate to Firefox Add-on store">
+            <svg class="icon nav-icon" viewBox="0 0 30 30" role="presentation" aria-hidden="true">
+                <use xlink:href="#svg-download2" />
+            </svg>
+            <span class="link-text">Download Firefox Add-on</span>
+        </a>
+    </li>
+    {%- elif browser == 'firefox mobile' -%}
+    <li class="nav-item">
+        <a class="nav-link js-addon-link" href="https://addons.mozilla.org/android/addon/webcompatcom-mobile-reporter/"
+           title="Navigate to Firefox Add-on store">
+            <svg class="icon nav-icon" viewBox="0 0 30 30" role="presentation" aria-hidden="true">
+                <use xlink:href="#svg-download2" />
+            </svg>
+            <span class="link-text">Download Firefox Add-on</span>
+        </a>
+    </li>
+    {%- elif browser == 'chrome' -%}
+    <li class="nav-item">
+        <a class="nav-link js-addon-link" href="https://chrome.google.com/webstore/detail/webcompatcom-reporter/ffnnhckjcpbbjlmgfjigknkoffakclol"
+           title="Navigate to Chrome webstore">
+            <svg class="icon nav-icon" viewBox="0 0 30 30" role="presentation" aria-hidden="true">
+                <use xlink:href="#svg-download2" />
+            </svg>
+            <span class="link-text">Download Chrome Add-on</span>
+        </a>
+    </li>
+    {%- elif browser == 'opera' -%}
+    <li class="nav-item">
+        <a class="nav-link js-addon-link" href="https://addons.opera.com/extensions/details/webcompatcom-reporter/"
+           title="Navigate to Opera Add-ons">
+            <svg class="icon nav-icon" viewBox="0 0 30 30" role="presentation">
+                <use xlink:href="#svg-download2" />
+            </svg>
+            <span class="link-text">Download Opera Add-on</span>
+        </a>
+    </li>
+    {%- else -%}
+    <li class="nav-item">
+        <a class="nav-link" href="https://github.com/webcompat/webcompat.com/issues?state=open" title="Navigate to GitHub issues">
+            <span class="link-text">Give Feedback</span>
+        </a>
+    </li>
+    {%- endif -%}
+</ul>

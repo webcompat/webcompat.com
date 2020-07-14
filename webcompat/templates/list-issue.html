@@ -1,27 +1,38 @@
 {% extends "layout.html" %}
 {% block title %}Issues{% endblock %}
 {% block body %}
-<div class="wc-SearchIssue js-SearchIssue" data-username="{{ session.username }}">
-  {% include "shared/nav.html" %}
-  <main role="main">
-
-    <div class="wc-Loader js-loader"></div>
-
-    <section class="wc-UISection">
-      <div class="wc-UIContent js-SearchIssue-filter">
+<div class="js-SearchIssue" data-username="{{ session.username }}">
+  {% include "nav/nav.html" %}
+  <main role="main" class="loader js-loader is-active" data-repo-path="{{config['ISSUES_REPO_URI']}}">
+    <section class="grid SearchIssue-filter">
+      <div class="js-SearchIssue-filter">
         {% include "list-issue/search-issue-filter.html" %}
       </div>
     </section>
 
-    <section>
-      {% include "list-issue/search-issue-search-form.html" %}
-    </section>
-
-    <section class="wc-UISection wc-UISection--backgroundColor">
-      <div class="wc-SearchIssue-sorting">
-        {% include "list-issue/search-issue-sorting.html" %}
+    <section class="grid">
+      <div class="grid-row sorting issue-controls">
+        <div class="grid-cell js-SearchIssue-sorting">
+          {% include "list-issue/issuelist-sorting.jst" %}
+        </div>
+        <div class="grid-cell nav-right js-SearchForm">
+          {% include "list-issue/issuelist-search.jst" %}
+        </div>
+        <div class="grid-cell pagination">
+          <div class="js-Pagination-controls">
+            {% include "web_modules/pagination.html" %}
+          </div>
+        </div>
       </div>
-      {% include "list-issue/issue-list.html" %}
+      <div class="issues-list js-list-issue">
+        {% include "list-issue/issuelist-issue.jst" %}
+      </div>
+      <div class="grid-row js-Pagination-controls">
+        <div class="grid-cell x2">&nbsp;</div>
+        <div class="grid-cell pagination x1">
+          {% include "web_modules/pagination.html" %}
+        </div>
+      </div>
     </section>
 
   </main>
@@ -29,14 +40,8 @@
 
 {% endblock %}
 {% block extrascripts %}
-<script>var repoPath="{{config['ISSUES_REPO_URI']}}";</script>
+<script type="module" src="{{ url_for('static', filename='dist/issues-list.js')|bust_cache }}"></script>
 {%- if config.PRODUCTION or config.STAGING -%}
-<script src="{{ url_for('static', filename='js/issue-list.min.js')|bust_cache }}"></script>
-{% else %}
-<script src="{{ url_for('static', filename='js/lib/models/label-list.js') }}"></script>
-<script src="{{ url_for('static', filename='js/lib/labels.js') }}"></script>
-<script src="{{ url_for('static', filename='js/lib/models/issue.js') }}"></script>
-<script src="{{ url_for('static', filename='js/lib/mixins/pagination.js') }}"></script>
-<script src="{{ url_for('static', filename='js/lib/issue-list.js') }}"></script>
+<script nomodule src="{{ url_for('static', filename='dist/issues-list.es5.js')|bust_cache }}"></script>
 {%- endif %}
 {% endblock %}

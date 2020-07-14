@@ -1,0 +1,21 @@
+<script type="text/template">
+  <header class="label-box-editor-button">
+    <h3 class="headline-3">Labels</h3>
+    <% if ($("body").data("username")) { %>
+    <span class="js-Issue-categoryEditor">
+      <button class="nav-button nav-link icon right js-CategoryEditorLauncher js-LabelEditorLauncher" aria-label="Edit labels">
+        <svg class="nav-text icon nav-icon" viewBox="0 0 30 30" role="presentation" aria-hidden="true">
+            <use xlink:href="#svg-sliders" />
+        </svg>
+      </button>
+    </span>
+    <% } %>
+  </header>
+   <div class="js-Category-list">
+  <% _.each(data.labels, function(label) { %>
+    <span class="label label-<%= label.remoteName %> js-Label">
+      <%= label.name %>
+    </span>
+  <% }); %>
+  </div>
+</script>

@@ -1,0 +1,80 @@
+:root {
+  --base-background: #fff;
+  --base-colorDark: #ffc900; /* Dark Yellow */
+  --grid-outermargin-s: 9px;
+  --grid-outermargin-m: 19px;
+  --unit-gap: 45px;
+  --unit-space: 10px; /* inner padding value for grid tiles */
+  --unit-gutter: 15px;
+  --unit-gutter-m: 25px;
+  --unit-gutter-l: 45px;
+  --navi-height: 75px;
+  --input-size: 20px;
+  --page-size-l: 998px;
+  --page-size-m: 665px;
+  --page-size-s: 320px;
+  --unit-modul-l: calc(1080px - var(--unit-space)); /* x3 grid unit */
+  --unit-modul-m: calc(2 / 3 * var(--unit-modul-l) - var(--unit-space)); /* x2 grid unit */
+  --unit-modul-s: calc(1 / 3 * var(--unit-modul-l) - var(--unit-space)); /* x1 grid unit */
+  --button-primary-padding: 12px 23px;
+  --button-thanks-padding: 7px 10px;
+  --color-bg-page: rgba(250, 250, 250, 1); /* #fafafa; */
+  --color-bg-box: rgba(255, 255, 255, 1); /* #ffffff */
+  --color-bg-comment-header: rgba(245, 245, 245, 1); /* #f5f5f5 */
+  --color-first: rgba(255, 201, 0, 1); /* #ffc900 */
+  --color-first-contrast: rgba(255, 243, 201, .8);
+  --color-first-transparent: rgba(255, 201, 1, .8); /* #ffc901 20% transparency */
+  --color-first-light: rgba(255, 200, 3, .55); /* ffc803 45% transparency */
+  --color-second: rgba(64, 64, 64, 1); /* #404040 */
+  --color-third: rgba(240, 240, 240, 1); /* #f0f0f0 */
+  --color-fourth: rgba(192, 255, 238, 1); /* #c0ffee */
+  --color-form: rgba(0, 0, 0, .12); /* #000000 88% transparency */
+  --color-default: rgba(196, 196, 196, 1); /* c4c4c4 */
+  --color-error: rgba(204, 23, 23, 1); /* #CC1717 */
+  --color-error-transparent: rgba(204, 23, 23, .8); /* #CC1717 20% transparency */
+  --color-warning: rgba(255, 144, 0, 1); /* #ff9000 */
+  --color-success: rgba(47, 153, 0, 1); /* #2f9900 */
+  --label-needs-triage: rgba(255, 153, 0, 1); /* #ff9900 */
+  --label-needs-diagnosis: rgba(238, 204, 119, 1) /* #EECC77 */;
+  --label-needs-contact: rgba(187, 238, 204, 1); /* #BBEECC */
+  --label-outreach: rgba(119, 187, 238, 1); /* #77BBEE */
+  --label-site-contacted: rgba(187, 221, 238, 1); /* #BBDDEE */
+  --label-closed: var(--color-default);
+  --label-color-type: rgba(153, 221, 221, 1); /* #99DDDD */
+  --label-color-browser: rgba(255, 204, 0, 1); /* #FFCC00 */
+  --label-color-status: rgba(0, 135, 255), 1; /* #0088FF */
+  --label-color-priority: rgba(17, 170, 153, 1); /* #11AA99 */
+  --label-color-nsfw: rgba(221, 0, 0, 1); /* #DD0000 */
+  --label-color-device: rgba(188, 143, 143, 1); /* rosybrown */
+  --label-color-os: rgba(102, 51, 153, 1); /* rebeccapurple */
+  --label-fix-me-assign-a-status: rgba(255, 0, 0, 1); /* #ff0000 */
+
+  /* Bug form redesign */
+  --wizard-step-complete: rgba(86, 99, 140, 1); /* #56638c */
+  --wizard-step-empty: rgba(243, 243, 247, 1); /* #f3f3f7 */
+  --wizard-step-color: rgba(255, 255, 255, 1); /* #ffffff */
+  --wizard-step-error: rgba(226, 40, 80, 1); /* #e22850 */
+  --wizard-grey-bg: rgba(247, 247, 247, 1); /* #f7f7f7 */
+  --link-color: rgba(44, 118, 245, 1); /* #2c76f5 */
+  --issue-type-bg: rgba(86, 99, 140, 1); /* #56638c */
+  --issue-selected-outline: rgba(34, 181, 115, 1); /* #22b573 */
+  --input-placeholder: rgba(64, 64, 64, .5); /* #404040 */
+  --blowser-icon-bg: rgba(255, 255, 255, 1); /* #ffffff */
+  --blowser-icon-border: rgba(64, 64, 64, .3); /* #cccccc */
+  --button-box-border: rgba(228, 227, 227, 1); /* #e4e3e3 */
+  --warning-border: rgba(255, 184, 158, 1); /* #ffb89e */
+  --screenshot-shadow: rgba(0, 0, 0, .3); /* #000000 */
+  --warm-grey: rgba(151, 151, 151, 1); /* #979797 */
+  --upload-background: rgba(231, 231, 231, 1); /* #e7e7e7 */
+  --dot-color: rgba(50, 60, 89, 1); /* #323c59 */
+
+  /* Console log messages */
+  --level-log-border: rgba(242, 242, 244, 1); /* #F2F2F4 */
+  --level-warn-background: rgba(255, 251, 214, 1); /* #FFFBD6 */
+  --level-warn-border: rgba(215, 182, 0, .28); /* #D7B600 */
+  --level-warn-color: rgba(113, 81, 0, 1); /* #715100 */
+  --level-error-background: rgba(253, 242, 245, 1); /* #FDF2F5 */
+  --level-error-border: rgba(215, 0, 34, .12); /* #D70022 */
+  --level-error-color: rgba(164, 0, 15, 1); /* #A4000F */
+  --log-link-color: rgba(0, 62, 170, 1); /* #003EAA */
+}

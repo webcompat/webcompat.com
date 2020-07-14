@@ -1,0 +1,178 @@
+#issue.grid-row {
+  align-items: flex-start;
+}
+
+#issue :not(pre) > code[class *= "language-"] {
+  white-space: pre-wrap;
+}
+
+.issue-detail {
+  padding-bottom: calc (var(--unit-space) * 2);
+}
+
+@media all and (max-width: 664.99px) {
+  .issue-labels {
+    order: 1;
+  }
+}
+
+.grid-nested .grid-cell.issue-comment {
+  padding: 0;
+}
+
+.issue-labels {
+  max-width: calc(100% - var(--unit-space));
+}
+
+.issue-labels a {
+  word-break: break-all;
+  word-wrap: break-word;
+}
+
+.issue-comment {
+  max-width: calc(100% - 1 / 2 * var(--unit-space));
+  position: relative;
+  width: 100%;
+}
+
+.issue-comment .comment-header {
+  align-items: center;
+  background-color: var(--color-bg-comment-header);
+  display: flex;
+  justify-content: space-between;
+  padding: var(--unit-space);
+}
+
+.comment-header .comment-author {
+  align-items: center;
+  display: flex;
+  margin: 0;
+}
+
+.comment-header .comment-avatar {
+  border-radius: 50%;
+  height: 48px;
+  margin-right: 16px;
+  width: 48px;
+}
+
+.comment-header .comment-reporter {
+  line-height: 1.6em;
+}
+
+.issue-new-comment .grid-cell {
+  margin: 0;
+  padding: 0;
+}
+
+.issue-new-comment .form-text {
+  padding: 0;
+}
+
+.issue-new-comment .text-field {
+  box-sizing: border-box;
+  margin-bottom: calc(var(--unit-space) * 2);
+  padding: calc(var(--unit-space) * 2);
+}
+
+.issue-new-comment .form-upload {
+  margin-bottom: calc(var(--unit-space) * 2);
+  padding: calc(var(--unit-space) * 2);
+}
+
+.issue-new-comment .input-upload {
+  height: 60px;
+}
+
+.issue-new-comment .label-upload {
+  height: auto;
+}
+
+.issue-new-comment .comment-submit {
+  display: block;
+  margin: var(--unit-space);
+  width: calc(100% - 2 * var(--unit-space));
+}
+
+.comment-body {
+  max-width: 100%;
+  overflow: auto;
+}
+
+/* As we can not add a class to the img in the comment right now (markup parsers are complicated), we need to use the img element */
+
+.comment-body img,
+.js-Issue-comment-body img {
+  max-width: 100%;
+}
+
+/* var(--page-size-m) = 665px - vars not usable in queries */
+
+@media (min-width: 665px) {
+  #issue.grid-row {
+    flex-wrap: nowrap;
+  }
+  #issue > .x2 {
+    flex-basis: 66.66666%;
+    max-width: 66.66666%;
+    min-width: 0;
+  }
+  #issue > .x1 {
+    flex-basis: 33.33333%;
+    max-width: 33.33333%;
+    min-width: 0;
+  }
+}
+
+.issue-details {
+  word-break: break-word;
+}
+
+.issue-details-nsfw {
+  position: relative;
+}
+
+.issue-details-nsfw::after {
+  background: var(--base-colorDark);
+  color: var(--base-background);
+  content: "Click to show image";
+  cursor: pointer;
+  display: block;
+  left: 50%;
+  padding: 1em;
+  position: absolute;
+  text-align: center;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 50%;
+}
+
+.issue-details-nsfw img {
+  filter: blur(50px);
+}
+
+.issue-details-nsfw--display img {
+  filter: blur(0);
+}
+
+.issue-details-nsfw--display::after {
+  display: none;
+}
+
+.issue-comment li,
+.issue-comment ul,
+.issue-details li,
+.issue-details ul {
+  list-style: circle;
+  padding-left: 10px;
+}
+
+/* Code blocks */
+pre[class *= "language-"],
+.highlight > pre {
+  background-color: var(--base-background);
+  border: 1px solid #ddd;
+  margin: .5em 0;
+  overflow: auto;
+  padding: 1em;
+}

@@ -1,7 +1,0 @@
-Current user: {{ rl.user }}
-
-Core resources rate limit: {{ rl.resources.core.remaining }} / {{ rl.resources.core.limit }} requests.
-Reset in {{ rl.resources.core.reset|format_delta }}.
-
-Search rate limit: {{ rl.resources.search.remaining }} / {{ rl.resources.search.limit }} requests.
-Reset in {{ rl.resources.search.reset|format_delta }}.

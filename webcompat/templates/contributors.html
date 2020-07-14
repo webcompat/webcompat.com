@@ -2,106 +2,323 @@
 {% block title %}Contributors{% endblock %}
 {% block body %}
 <div>
-{% include "shared/nav.html" %}
-<main role="main">
-  <div class="wc-Hero wc-Hero--contributors">
-    <div class="wc-UIContent">
-      <div class="wc-Hero-wrapper">
-        <div class="wc-Hero-textContributors ">
-          <h1 class="wc-Title wc-Title--xl">
-            <span class="wc-Hero-title js-Hero-title">Welcome aboard!<br/>Get started below...</span>
-          </h1>
-        </div>
-        <div class="wc-Hero-SVG is-active js-Hero-svg">
-          {% include "shared/LightbulbwithBug.svg" %}
-        </div>
+  {% include "nav/nav.html" %}
+  <main role="main">
+    <section class="grid grid-show-gap">
+      <div class="grid-row">
+        <aside class="grid-cell x1-fix">
+          {% include "contributors/sub-nav.html" %}
+        </aside>
+        <article class="grid-cell x1">
+          <h3 class="headline-1 heading">The project</h3>
+          <p>
+            We believe the web is an amazing place that everyone should be free to create, explore and discover. But the web is also ever-changing. To help website developers keep up with changes, we’ve created this community space where problems with websites (bugs) can be reported, diagnosed and fixed.
+          </p>
+        </article>
       </div>
-    </div>
+    </section>
+    <section class="grid">
+    <div class="grid-row">
+      <div class="grid-cell x3">
+        <h3 class="headline-1 heading">The team</h3>
+      </div>
+
+<!-- Abdul Rauf -->
+<article class="grid-row bio">
+  <div class="grid-cell x1-fix">
+    <img src="https://avatars3.githubusercontent.com/u/951418" alt="Abdul Rauf" class="bio-img">
   </div>
-  <div class="contributors">
-    <div class="contributors__item">
-      <div class="contributors__item__header">
-        <div class="wc-UIContent contributors__item__title">
-          <h2 id="reproduce">
-            <button class="contributors__item__btn is-active r-ResetButton" type="button">
-              How to Reproduce a Bug
-              <span class="wc-Icon wc-Icon--contributors wc-Icon--contributors--disabled wc-Icon--minus" aria-hidden="true"></span>
-              <span class="wc-Icon wc-Icon--contributors wc-Icon--contributors--active wc-Icon--plus" aria-hidden="true"></span>
-            </button>
-          </h2>
-        </div>
-      </div>
-      <div class="contributors__item__content wc-UIContent is-open">{% include "contributors/reproduce-bug.html" %}</div>
+  <div class="grid-nested x1">
+    <div class="grid-cell bio-desc x1">
+      <h4 class="headline-2 heading">Abdul Rauf</h4>
+      <h4 class="headline-3">India</h4>
+      <p>
+        Community Web Opener, Open Source, Startups, Ruminater.
+        When not on computer - Traveling, Hiking, Food.
+      </p>
     </div>
-    <div class="contributors__item">
-      <div class="contributors__item__header">
-        <div class="wc-UIContent contributors__item__title">
-          <h2 id="diagnose">
-            <button class="contributors__item__btn r-ResetButton" type="button">
-              How to Diagnose a Bug
-              <span class="wc-Icon wc-Icon--contributors wc-Icon--contributors--disabled wc-Icon--minus" aria-hidden="true"></span>
-              <span class="wc-Icon wc-Icon--contributors wc-Icon--contributors--active wc-Icon--plus" aria-hidden="true"></span>
-            </button>
-          </h2>
-        </div>
-      </div>
-      <div class="contributors__item__content wc-UIContent">{% include "contributors/diagnose-bug.html" %}</div>
-    </div>
-    <div class="contributors__item">
-      <div class="contributors__item__header">
-        <div class="wc-UIContent contributors__item__title">
-          <h2 id="outreach">
-            <button class="contributors__item__btn r-ResetButton" type="button">
-              How to Do Site Outreach
-              <span class="wc-Icon wc-Icon--contributors wc-Icon--contributors--disabled wc-Icon--minus" aria-hidden="true"></span>
-              <span class="wc-Icon wc-Icon--contributors wc-Icon--contributors--active wc-Icon--plus" aria-hidden="true"></span>
-            </button>
-          </h2>
-        </div>
-      </div>
-      <div class="contributors__item__content wc-UIContent">{% include "contributors/site-outreach.html" %}</div>
-    </div>
-    <div class="contributors__item">
-      <div class="contributors__item__header">
-        <div class="wc-UIContent contributors__item__title">
-          <h2 id="contribute">
-            <button class="contributors__item__btn r-ResetButton" type="button">
-              Contribute to this site
-              <span class="wc-Icon wc-Icon--contributors wc-Icon--contributors--disabled wc-Icon--minus" aria-hidden="true"></span>
-              <span class="wc-Icon wc-Icon--contributors wc-Icon--contributors--active wc-Icon--plus" aria-hidden="true"></span>
-            </button>
-          </h2>
-        </div>
-      </div>
-      <div class="contributors__item__content page wc-UIContent">{% include "contributors/contribute.html" %}</div>
-    </div>
+    <p class="grid-cell bio-links x1">
+      <a class="bio-icon-twitter" href="http://twitter.com/haseeb_offline" title="haseeb_offline on twitter" target="_blank">twitter@haseeb_offline </a> <br>
+      <a class="bio-icon-github" href="http://github.com/haseebgit" title="haseebgit on github" target="_blank">github@haseebgit </a>
+    </p>
   </div>
+</article>
+
+<!-- ADAM STEVENSON -->
+      <article class="grid-row bio">
+        <div class="grid-cell x1-fix">
+          <img src="https://avatars0.githubusercontent.com/u/6587558" alt="Adam Stevenson" class="bio-img">
+        </div>
+        <div class="grid-nested x1">
+          <div class="grid-cell bio-desc x1">
+            <h4 class="headline-2 heading">Adam Stevenson</h4>
+            <h4 class="headline-3">Canada</h4>
+            <p>
+              Works on webcompat bugs and does outreach to sites / developers. Enjoys music, biking,
+              travel and sometimes photos.
+            </p>
+          </div>
+          <p class="grid-cell bio-links x1">
+            <a class="bio-icon-twitter" href="http://twitter.com/adamopenweb" title="adamopenweb on twitter" target="_blank">twitter@adamopenweb </a> <br>
+            <a class="bio-icon-github" href="http://github.com/adamopenweb" title="adamopenweb on github" target="_blank">github@adamopenweb </a>
+          </p>
+        </div>
+      </article>
+
+
+<!-- CIPRIAN CIOCAN -->
+<article class="grid-row bio">
+  <div class="grid-cell x1-fix">
+    <img src="https://avatars0.githubusercontent.com/u/45160931" alt="Ciprian Ciocan" class="bio-img">
+  </div>
+  <div class="grid-nested x1">
+    <div class="grid-cell bio-desc x1">
+      <h4 class="headline-2 heading">Ciprian Ciocan</h4>
+      <h4 class="headline-3">Romania</h4>
+      <p>
+        IT enthusiast. Basketball referee on my spare time. Love coffee and good food.
+      </p>
+    </div>
+    <p class="grid-cell bio-links x1">
+      <a class="bio-icon-github" href="http://github.com/cipriansv" title="cipriansv on github" target="_blank">github@cipriansv </a>
+    </p>
+  </div>
+</article>
+
+<!-- DENNIS SCHUBERT -->
+      <article class="grid-row bio">
+        <div class="grid-cell x1-fix">
+          <img src="https://avatars3.githubusercontent.com/u/344777" alt="Dennis Schubert" class="bio-img">
+        </div>
+        <div class="grid-nested x1">
+          <div class="grid-cell bio-desc x1">
+            <h4 class="headline-2 heading">Dennis Schubert</h4>
+            <h4 class="headline-3">Germany</h4>
+            <p>
+              Breaking and fixing the web in various ways, usually by creating open source software.
+            </p>
+          </div>
+          <p class="grid-cell bio-links x1">
+            <a class="bio-icon-twitter" href="http://twitter.com/denschub" title="denschub on twitter" target="_blank">twitter@denschub </a> <br>
+            <a class="bio-icon-github" href="http://github.com/denschub" title="denschub on github" target="_blank">github@denschub </a>
+          </p>
+        </div>
+      </article>
+
+<!-- Guillaume Demesy -->
+      <article class="grid-row bio">
+        <div class="grid-cell x1-fix">
+          <img src="https://avatars2.githubusercontent.com/u/1997108?s=460&v=4" alt="Guillaume Demesy" class="bio-img">
+        </div>
+        <div class="grid-nested x1">
+          <div class="grid-cell bio-desc x1">
+            <h4 class="headline-2 heading">Guillaume Demesy</h4>
+            <h4 class="headline-3">France</h4>
+            <p>
+              Front-end developer, enjoys coding and being a dad.
+            </p>
+          </div>
+          <p class="grid-cell bio-links x1">
+            <a class="bio-icon-twitter" href="http://twitter.com/magsout" title="magsout on twitter" target="_blank">twitter@magsout </a> <br>
+            <a class="bio-icon-github" href="http://github.com/magsout" title="magsout on github" target="_blank">github@magsout </a>
+          </p>
+        </div>
+      </article>
+
+<!-- Ioana Chiorean -->
+      <article class="grid-row bio">
+        <div class="grid-cell x1-fix">
+          <img src="https://avatars2.githubusercontent.com/u/1391451?s=460&v=4" alt="Ioana Chiorean" class="bio-img">
+        </div>
+        <div class="grid-nested x1">
+          <div class="grid-cell bio-desc x1">
+            <h4 class="headline-2 heading">Ioana Chiorean</h4>
+            <h4 class="headline-3">Romania</h4>
+            <p>
+              Works in mobile testing, and contributes to open source projects while hacking a coffee or a good wine. Bike lover, community supporter and explorer through running.
+            </p>
+          </div>
+          <p class="grid-cell bio-links x1">
+            <a class="bio-icon-twitter" href="https://twitter.com/ioana_cis" title="ioana_cis on twitter" target="_blank">twitter@ioana_cis </a> <br>
+            <a class="bio-icon-github" href="https://github.com/ioana-chiorean" title="ioana-chiorean on github" target="_blank">github@ioana_cis </a>
+          </p>
+        </div>
+      </article>
+
+<!-- Karl Dubost -->
+      <article class="grid-row bio">
+        <div class="grid-cell x1-fix">
+          <img src="https://avatars1.githubusercontent.com/u/505230" alt="Karl Dubost" class="bio-img">
+        </div>
+        <div class="grid-nested x1">
+          <div class="grid-cell bio-desc x1">
+            <h4 class="headline-2 heading">Karl Dubost</h4>
+            <h4 class="headline-3">Japan</h4>
+            <p>
+              Walking toward every nowhere.
+            </p>
+          </div>
+          <p class="grid-cell bio-links x1">
+            <a class="bio-icon-github" href="http://github.com/karlcow" title="karlcow on github" target="_blank">github@karlcow </a>
+          </p>
+        </div>
+      </article>
+
+<!-- Kate Manning -->
+      <article class="grid-row bio">
+        <div class="grid-cell x1-fix">
+          <img src="https://avatars3.githubusercontent.com/u/20972610" alt="Kate Manning" class="bio-img">
+        </div>
+        <div class="grid-nested x1">
+          <div class="grid-cell bio-desc x1">
+            <h4 class="headline-2 heading">Kate Manning</h4>
+            <h4 class="headline-3">Italy</h4>
+            <p>
+              Making it up as she goes along. Internet idealist and lover of open source, mountains, puns, and burritos. Outreachy alum.
+            </p>
+          </div>
+          <p class="grid-cell bio-links x1">
+            <a class="bio-icon-twitter" href="http://twitter.com/katlaghee" title="katlaghee on twitter" target="_blank">twitter@katlaghee
+            </a> <br>
+            <a class="bio-icon-github" href="http://github.com/laghee" title="laghee on github" target="_blank">github@laghee
+            </a>
+          </p>
+        </div>
+      </article>
+
+<!-- Ksenia Berezina -->
+<article class="grid-row bio">
+  <div class="grid-cell x1-fix">
+    <img src="https://avatars0.githubusercontent.com/u/1303908" alt="Ksenia Berezina" class="bio-img">
+  </div>
+  <div class="grid-nested x1">
+    <div class="grid-cell bio-desc x1">
+      <h4 class="headline-2 heading">Ksenia Berezina</h4>
+      <h4 class="headline-3">Canada</h4>
+      <p>
+
+      </p>
+    </div>
+    <p class="grid-cell bio-links x1">
+      <a class="bio-icon-github" href="http://github.com/ksy36" title="ksy36 on github" target="_blank">github@ksy36 </a>
+    </p>
+  </div>
+</article>
+
+<!-- Mike Taylor -->
+      <article class="grid-row bio">
+        <div class="grid-cell x1-fix">
+          <img src="https://avatars0.githubusercontent.com/u/67283" alt="Mike Taylor" class="bio-img">
+        </div>
+        <div class="grid-nested x1">
+          <div class="grid-cell bio-desc x1">
+            <h4 class="headline-2 heading">Mike Taylor</h4>
+            <h4 class="headline-3">USA</h4>
+            <p>
+              Looking at broken web pages like it's 1999. Lives in sunny Austin, TX.
+            </p>
+          </div>
+          <p class="grid-cell bio-links x1">
+            <a class="bio-icon-twitter" href="http://twitter.com/miketaylr" title="miketaylr on twitter" target="_blank">twitter@miketaylr </a> <br>
+            <a class="bio-icon-github" href="http://github.com/miketaylr" title="miketaylr on github" target="_blank">github@miketaylr </a>
+          </p>
+        </div>
+      </article>
+
+<!-- Oana Arbuzov -->
+      <article class="grid-row bio">
+        <div class="grid-cell x1-fix">
+          <img src="https://avatars3.githubusercontent.com/u/12184325" alt="Oana Arbuzov" class="bio-img">
+        </div>
+        <div class="grid-nested x1">
+          <div class="grid-cell bio-desc x1">
+            <h4 class="headline-2 heading">Oana Arbuzov</h4>
+            <h4 class="headline-3">Romania</h4>
+            <p>
+              I'm a QC Engineer. I enjoy testing on mobile (Android &amp; iOS) and web.
+              My hobbies are mountain biking, hiking, swimming, traveling and playing online rpg games.
+            </p>
+          </div>
+          <p class="grid-cell bio-links x1">
+            <a class="bio-icon-github" href="http://github.com/softvision-oana-arbuzov" title="softvision-oana-arbuzov on github" target="_blank">github@softvision-oana-arbuzov </a>
+          </p>
+        </div>
+      </article>
+
+
+<!--Reinhart Previano K.-->
+      <article class="grid-row bio">
+        <div class="grid-cell x1-fix">
+          <img src="https://avatars2.githubusercontent.com/u/17312341" alt="Reinhart Previano K." class="bio-img">
+        </div>
+        <div class="grid-nested x1">
+          <div class="grid-cell bio-desc x1">
+            <h4 class="headline-2 heading">Reinhart Previano K.</h4>
+            <h4 class="headline-3">Indonesia</h4>
+            <p>
+              Loves messing up with websites which others thought that I'm "hacking" them.
+            </p>
+          </div>
+          <p class="grid-cell bio-links x1">
+            <a class="bio-icon-twitter" href="http://twitter.com/ReinPre10" title="ReinPre10 on twitter" target="_blank">twitter@ReinPre10 </a> <br>
+            <a class="bio-icon-github" href="http://github.com/reinhart1010" title="reinhart1010 on github" target="_blank">github@reinhart1010 </a>
+          </p>
+        </div>
+      </article>
+
+<!-- Sergiu Logigan -->
+      <article class="grid-row bio">
+        <div class="grid-cell x1-fix">
+          <img src="https://avatars2.githubusercontent.com/u/16573771" alt="Sergiu Logigan" class="bio-img">
+        </div>
+        <div class="grid-nested x1">
+          <div class="grid-cell bio-desc x1">
+            <h4 class="headline-2 heading">Sergiu Logigan</h4>
+            <h4 class="headline-3">Romania</h4>
+            <p>
+              Helps making the WWW a better place, when he's not biking, hiking or traveling.
+            </p>
+          </div>
+          <p class="grid-cell bio-links x1">
+            <a class="bio-icon-github" href="http://github.com/softvision-sergiulogigan" title="softvision-sergiulogigan on github" target="_blank">github@softvision-sergiulogigan </a>
+          </p>
+        </div>
+      </article>
+
+
+<!-- Thomas Wisniewski -->
+      <article class="grid-row bio">
+        <div class="grid-cell x1-fix">
+          <img src="https://avatars0.githubusercontent.com/u/419743" alt="Thomas Wisniewski" class="bio-img">
+        </div>
+        <div class="grid-nested x1">
+          <div class="grid-cell bio-desc x1">
+            <h4 class="headline-2 heading">Thomas Wisniewski</h4>
+            <h4 class="headline-3">Canada</h4>
+            <p>
+              Full-stack web developer with an affection for the open web and open source. Diagnoses webcompat bugs, helps out with web standards and browser regressions, and loves good food, good drink and good company.
+            </p>
+          </div>
+          <p class="grid-cell bio-links x1">
+            <a class="bio-icon-github" href="http://github.com/wisniewskit" title="wisniewskit on github" target="_blank">github@wisniewskit </a>
+          </p>
+        </div>
+      </article>
+
+      <div class="grid-row">
+        <div class="grid-cell x3">
+          <a href="https://github.com/orgs/webcompat/people" title="You can find more contributors on Github" target="_blank">and many more...</a>
+        </div>
+      </div>
+  </section>
+      </div>
+    </section>
   </main>
 </div>
 {% endblock %}
 {%- block extrascripts -%}
-<script>
-$(function(){
-  var lightElm     = $('.js-Hero-svg');
-  var sections     = $('.contributors__item__content');
-  var ACTIVE_CLASS = 'is-active';
-  var OPEN_CLASS   = 'is-open';
-  $('.contributors__item__title').click(function(){
-    $(this).find('.contributors__item__btn').toggleClass(ACTIVE_CLASS)
-           .closest('.contributors__item').find('.contributors__item__content')
-           .toggleClass(OPEN_CLASS)
-    lightElm.toggleClass(ACTIVE_CLASS, sections.hasClass('is-open'));
-  });
-
-  // if the page was loaded with a hash, it's probably an id for linking so let's
-  // try to open the right section and scroll there.
-  var id;
-  if (id = location.hash) {
-    if (!$(id).find('.contributors__item__btn').hasClass(ACTIVE_CLASS)) {
-      $(id).parent().trigger('click');
-    }
-    window.scrollTo(0, $(id).offset().top);
-  }
-});
-</script>
+<script type="module" src="{{ url_for('static', filename='dist/contributors.js')|bust_cache }}"></script>
+{%- if config.PRODUCTION or config.STAGING -%}
+<script nomodule src="{{ url_for('static', filename='dist/contributors.es5.js')|bust_cache }}"></script>
+{%- endif %}
 {%- endblock %}

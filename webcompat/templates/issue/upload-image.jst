@@ -1,0 +1,24 @@
+<script type="text/template">
+  <div class="form-upload js-image-upload js-Form-group loader js-loader">
+    <input accept=".jpe,.jpg,.jpeg,.gif,.png,.bmp"
+           class="form-input input-upload js-buttonUpload"
+           id="image"
+           name="image"
+           type="file"
+    />
+    <div class="label-icon label-upload js-label-upload">
+      <svg class="icon icon-big" role="presentation" aria-hidden="true">
+        <use class="icon-upload" xlink:href="#svg-plus" />
+      </svg>
+      <small class="label-icon-message">Upload screenshot</small>
+    </div>
+
+    <div class="label-icon label-remove is-hidden js-remove-upload">
+      <svg class="icon icon-big" role="presentation" aria-hidden="true">
+        <use class="icon-remove" xlink:href="#svg-x" />
+      </svg>
+      <small class="label-icon-message">Remove screenshot</small>
+    </div>
+<!--- @todo add error state -->
+</div>
+</script>

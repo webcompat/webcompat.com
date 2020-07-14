@@ -1,0 +1,212 @@
+/*******************************
+** Issue List - status labels **
+*******************************/
+
+.issue.label-needstriage .x2 {
+  border-color: var(--label-needs-triage);
+}
+
+.issue.label-needsdiagnosis .x2 {
+  border-color: var(--label-needs-diagnosis);
+}
+
+.issue.label-needscontact .x2 {
+  border-color: var(--label-needs-contact);
+}
+
+.issue.label-contactready .x2 {
+  border-color: var(--label-outreach);
+}
+
+.issue.label-sitewait .x2 {
+  border-color: var(--label-site-contacted);
+}
+
+.issue.label-closed .x2 {
+  border-color: var(--label-closed);
+}
+
+/********************************
+** Issue List - context labels **
+*********************************/
+
+.issue .label[class *= "label-type"] {
+  border-color: var(--label-color-type);
+}
+
+.issue .label[class *= "label-browser"] {
+  border-color: var(--label-color-browser);
+}
+
+.issue .label[class *= "label-status"] {
+  border-color: var(--label-color-status);
+}
+
+.issue .label[class *= "label-priority"] {
+  border-color: var(--label-color-priority);
+}
+
+.issue .label[class *= "label-nsfw"] {
+  border-color: var(--label-color-nsfw);
+}
+
+.issue .label[class *= "label-device"] {
+  border-color: var(--label-color-device);
+}
+
+.issue .label[class *= "label-os"] {
+  border-color: var(--label-color-os);
+}
+
+/***************************************
+** Issue - status labels / milestones **
+****************************************/
+
+.label-box-editor .label {
+  background-color: var(--label-closed);
+}
+
+.label-box-header.label-needstriage,
+.label-box-editor .label-needstriage {
+  background-color: var(--label-needs-triage);
+}
+
+.label-box-header.label-needsdiagnosis,
+.label-box-editor .label-needsdiagnosis {
+  background-color: var(--label-needs-diagnosis);
+}
+
+.label-box-header.label-needscontact,
+.label-box-editor .label-needscontact {
+  background-color: var(--label-needs-contact);
+}
+
+.label-box-header.label-contactready,
+.label-box-editor .label-contactready {
+  background-color: var(--label-outreach);
+}
+
+.label-box-header.label-sitewait,
+.label-box-editor .label-sitewait {
+  background-color: var(--label-site-contacted);
+}
+
+.label-box-header.label-closed,
+.label-box-editor .label-closed {
+  background-color: var(--label-closed);
+}
+
+.label-box-header.label-fix-me-assign-a-status,
+.label-box-editor .label-fix-me-assign-a-status {
+  background-color: var(--label-fix-me-assign-a-status);
+}
+
+.label-box .label.label-no-status-assigned-yet {
+  background-color: var(--base-background);
+  color: var(--color-second);
+  font-weight: 700;
+}
+
+/***************************
+** Issue - context labels **
+***************************/
+
+.label-box [class *= "label-type"] {
+  background-color: var(--label-color-type);
+}
+
+.label-box [class *= "label-browser"] {
+  background-color: var(--label-color-browser);
+}
+
+.label-box [class *= "label-status"] {
+  background-color: var(--label-color-status);
+}
+
+.label-box [class *= "label-priority"] {
+  background-color: var(--label-color-priority);
+}
+
+.label-box [class *= "label-nsfw"] {
+  background-color: var(--label-color-nsfw);
+}
+
+.label-box [class *= "label-device"] {
+  background-color: var(--label-color-device);
+}
+
+.label-box [class *= "label-os"] {
+  background-color: var(--label-color-os);
+}
+
+.label-box [class *= "label-closed"],
+.label-box [class *= "label-status"] {
+  background-color: var(--label-closed);
+}
+
+/* label editor list for selecting content labels */
+
+.label-box .label-editor-list .label-editor-list-item {
+  background-color: var(--color-bg-box);
+}
+
+.label-box .label-editor-list [class *= "label-"] {
+  border-left-color: var(--label-closed);
+}
+
+.label-box .label-editor-list [class *= "label-type"] {
+  border-left-color: var(--label-color-type);
+}
+
+.label-box .label-editor-list [class *= "label-browser"] {
+  border-left-color: var(--label-color-browser);
+}
+
+.label-box .label-editor-list [class *= "label-status"] {
+  border-left-color: var(--label-color-status);
+}
+
+.label-box .label-editor-list [class *= "label-priority"] {
+  border-left-color: var(--label-color-priority);
+}
+
+.label-box .label-editor-list [class *= "label-nsfw"] {
+  border-left-color: var(--label-color-nsfw);
+}
+
+.label-box .label-editor-list [class *= "label-device"] {
+  border-left-color: var(--label-color-device);
+}
+
+.label-box .label-editor-list [class *= "label-os"] {
+  border-left-color: var(--label-color-os);
+}
+
+.label-box .label-editor-list [class *= "label-closed"],
+.label-box .label-editor-list [class *= "label-status"] {
+  border-left-color: var(--label-closed);
+}
+
+.label-box .label-editor-list .label-needstriage {
+  border-left-color: var(--label-needs-triage);
+}
+
+.label-box .label-editor-list .label-needsdiagnosis {
+  border-left-color: var(--label-needs-diagnosis);
+}
+
+.label-box .label-editor-list .label-needscontact {
+  border-left-color: var(--label-needs-contact);
+}
+
+.label-box .label-editor-list .label-contactready {
+  border-left-color: var(--label-outreach);
+}
+
+.label-box .label-editor-list .label-sitewait {
+  border-left-color: var(--label-site-contacted);
+}
+
+.label-box .label-editor-list .label-closed {
+  border-left-color: var(--label-closed);
+}

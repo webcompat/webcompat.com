@@ -1,0 +1,21 @@
+{
+  "action": "opened",
+  "issue": {
+    "title": "www.netflix.com - test valid event",
+    "repository_url": "https://api.github.com/repos/webcompat/webcompat-tests",
+    "number": 600,
+    "body": "<!-- @browser: Firefox 55.0 -->\n<!-- @ua_header: Mozilla/5.0 (X11; Linux x86_64; rv:55.0) Gecko/20100101 Firefox/55.0 -->\n<!-- @reported_with: web -->\n\n**URL**: https://www.netflix.com/",
+    "labels": [
+      {
+        "id": 1788251357,
+        "node_id": "MDU6TGFiZWwxNzg4MjUxMzU3",
+        "url": "https://api.github.com/repos/webcompat/webcompat-tests/labels/action-needsmoderation",
+        "name": "action-needsmoderation",
+        "color": "d36200",
+        "default": false,
+        "description": "issue in the process of being moderated"
+      }
+    ],
+    "state": "open"
+  }
+}

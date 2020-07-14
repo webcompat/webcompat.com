@@ -1,28 +1,33 @@
-<aside class="wc-Issue-aside">
-  <div class="wc-Issue-information wc-Issue-information--fullWidth" id="js-Issue-aside">
-    <script type="text/template" id="aside-tmpl">
-      <header class="wc-Issue-information-header wc-Issue-information-header--<%= stateClass %>">
-        <div><%= issueState %></div>
-        <div>#<%= number %></div>
-      </header>
-      <div class="wc-Issue-information-content">
-        <h1 class="wc-Issue-title js-Issue-title">
-          <%= title %>
-        </h1>
-      </div>
-      <div class="wc-Issue-information-content">
-        <div>Opened: <%= createdAt %></div>
-        <div>
-          Repoter:
-          <span class="wc-Issue-reporter js-Issue-reporter">
-            <a class="wc-Link" href="https://github.com/<%= reporter %>"><%= reporter %></a>
-          </span>
-        </div>
-        <div>Comments: <%= commentNumber %></div>
-      </div>
-    </script>
+<div id="js-Issue-aside">
+  <header class="js-state-class label-box-header label-{{issue_data|format_milestone_class}}">
+    <div class="js-milestone-title">{{ '🔒' if issue_data.locked else '' }}
+      {{ issue_data|format_milestone_title }}
+    </div>
+    <div class="js-issue-number">#{{ issue_data.number }}</div>
+  </header>
+  <div class="label-box-section">
+    <h1 class="js-issue-title headline-2">
+      {{ issue_data|format_title }}
+    </h1>
   </div>
-  <div class="wc-Issue-labels js-Issue-labels">
-    {% include "issue/issue-labels.html" %}
+  <div class="label-box-section">
+    <div>Opened: {{ issue_data.created_at|format_date }}</div>
+    <div>
+      Reporter:
+      <span class="js-Issue-reporter">
+        <a class="bold" href="https://github.com/{{ issue_data.user.login }}">
+          {{ issue_data.user.login }}
+        </a>
+      </span>
+    </div>
+    <div>Comments: {{ issue_data.comments }} </div>
   </div>
-</aside>
+</div>
+<div class="js-Issue-labels label-box-editor label-box-section">
+  {% include "issue/issue-labels.jst" %}
+  {% include "web_modules/label-editor.jst" %}
+</div>
+<div class="js-Issue-milestones label-box-editor label-box-section">
+  {% include "issue/issue-milestones.jst" %}
+  {% include "web_modules/milestone-editor.jst" %}
+</div>

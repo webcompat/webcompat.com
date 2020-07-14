@@ -1,0 +1,38 @@
+.bio .bio-img {
+  border-radius: 5px;
+  height: 220px;
+  width: 220px;
+}
+
+.bio .headline-2 {
+  margin-bottom: 15px;
+  margin-top: 5px;
+}
+
+.bio .headline-3 {
+  margin-top: 0;
+}
+
+.bio .bio-links {
+  align-self: center;
+}
+
+.bio.grid-row {
+  margin-top: 20px;
+}
+
+.bio .grid-nested:last-child,
+.bio-desc.grid-cell {
+  margin-top: -5px;
+  padding-top: 0;
+}
+
+@media screen and (min-width: 998px) {
+  .bio .bio-img {
+    filter: grayscale(100%);
+  }
+
+  .bio .bio-img:hover {
+    filter: grayscale(0%);
+  }
+}

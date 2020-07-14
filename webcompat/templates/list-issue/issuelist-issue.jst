@@ -1,0 +1,60 @@
+<script type="text/template">
+<% if (data.issues.length) { %>
+  <% _.each(data.issues, function(issue) { %>
+    <div class="grid-row issue label-<%= issue.stateClass %> js-IssueList">
+      <article class="grid-cell x2 issue-description js-issue-desc">
+        <a href="/issues/<%= issue.number %>">
+          <span class="issue-number">Issue <%= issue.number %></span> <br />
+          <span class="issue-url issue-type js-issue-title"><%- issue.title %></span> <br />
+        </a>
+        <p>
+          <span class="issue-date-open js-issue-date">Opened: <time><%= issue.createdAt %></time></span>
+          <span class="issue-comments js-issue-comments">Comments: <%= issue.commentNumber %></span>
+        </p>
+      </article>
+      <aside class="grid-cell x1 issue-labels">
+        <% _.each(issue.labels, function(label) { %>
+        <span class="label js-Issue-label label-<%= label.remoteName %>">
+          <a href="/issues?q=label:<%= label.remoteName %>"
+                 data-remotename="<%= label.remoteName %>"
+                 title="Labels : <%= label.name %>"><%= label.name %></a>
+        </span><% }); %>
+      </aside>
+    </div>
+  <% }); %>
+<% } else { %>
+<article class="grid-row">
+  <div class="grid-cell issue x3">
+    <h1 class="headline-1 js-no-results">Sorry, no results were found.</h1>
+     <p class="issue-labels js-Issue-label">
+      Please check your spelling or try a more general search. <br />
+      You can also search for popular labels like:
+
+      <a class="label label-browser-android"
+        href="#"
+        title="Labels : android"
+        data-remotename="browser-android"
+      >android</a>
+
+      <a class="label label-browser-chrome"
+        href="#"
+        title="Labels : chrome"
+        data-remotename="browser-chrome"
+      >chrome</a>
+
+      <a class="label label-browser-firefox"
+        href="#"
+        title="Labels : firefox"
+        data-remotename="browser-firefox"
+      >firefox</a>
+
+      <a class="label label-browser-ie"
+        href="#"
+        title="Labels : ie"
+        data-remotename="browser-ie"
+      >ie</a>
+     </p>
+  </div>
+</article>
+<% } %>
+</script>

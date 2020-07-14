@@ -1,0 +1,101 @@
+{% extends "layout.html" %}
+{% block title %}Organize Webcompat events{% endblock %}
+{% block body %}
+<div>
+  {% include "nav/nav.html" %}
+  <main role="main">
+    <section class="grid grid-show-gap">
+      <div class="grid-row">
+        <aside class="grid-cell x1-fix">
+          {% include "contributors/sub-nav.html" %}
+        </aside>
+        <div class="grid-cell x1">
+          <h1 id="event" class="headline-1 heading">Organize A Webcompat Event</h1>
+          <p>
+            From time to time you may want to organize an event for testing Web sites with a group of friends, volunteers, etc. It can be a fun way to discuss issues and understand them. It's also a good opportunity for people to learn about new technologies. During the event, people will report issues to <a href="https://webcompat.com/" target="_blank">webcompat.com</a>.
+          </p>
+          <p>
+            An event will require a bit of preparation. Here are some tips on the organization.
+          </p>
+        </div>
+      </div>
+    </section>
+    <section class="grid">
+      <div class="grid-row">
+        <div class="grid-cell x3">
+          <h2 id="before" class="headline-1 heading">Before</h2>
+          <ol>
+            <li>
+              Carefully read the <a href="contributors/report-bug" target="_blank">Report a bug</a> page.
+            </li>
+            <li>
+              Understand what is and what is not a webcompat issue.
+            </li>
+            <li>
+              You may wish to prepare a list of websites which need to be tested, with a column for people to place their names so that others can avoid needlessly testing the same site
+            </li>
+          </ol>
+        </div>
+      </div>
+    </section>
+    <section class="grid">
+      <div class="grid-row">
+        <div class="grid-cell x3">
+          <h2 id="during" class="headline-1 heading">During</h2>
+          <ol>
+            <li>
+              Explain to participants that the goal is quality, not quantity.
+            </li>
+            <li>
+              Help participants to create a fresh profile that they can reset at each restart of the browser.
+            </li>
+            <li>
+              Make sure that the site is tested in multiple browsers.
+            </li>
+            <li>
+              Avoid duplicates of the same issues. Too often during webcompat sprints, we close issues reported multiple times.
+            </li>
+            <li>
+              Encourage participants to write detailed steps for reproducing the issue. It can help to work as a team. One person finds an issue, and writes the steps they used to reproduce it into the form without yet submitting the report. Then a teammate attempts to reproduce the issue from those steps. If they cannot do so, then the report is likely incomplete.
+            </li>
+            <li>
+                Take pictures and share them online (if participants agree). Notify us on twitter at <a href="https://twitter.com/webcompat" target="_blank">@webcompat</a>
+            </li>
+          </ol>
+        </div>
+      </div>
+    </section>
+    <section class="grid">
+      <div class="grid-row">
+        <div class="grid-cell x3">
+            <h2 id="after" class="headline-1 heading">After</h2>
+            <p>
+              It's not about quantity, it's about quality. We try to improve the web. A larger number of issues might not necessary help us to fix a browser or a website faster. On the other hand, being able to followup on the issues when there are unknown details or additional questions from people triaging and diagnosing is invaluable. Reporting many issues that are unclear and cannot be clarified (whether due to disinterest or lack of time) is only likely to lead to the reports being closed as incomplete.
+            </p>
+            <p>
+              You may want to hold additional meetings specifically to follow up on these issues. It's a great opportunity to learn how to debug and understand what is happening in a web page.
+            </p>
+            <p>
+              Please tell us what worked for you and what didn't, so we can improve these guidelines.
+            </p>
+        </div>
+      </div>
+    </section>
+    <section class="grid">
+      <div class="grid-row">
+        <div class="grid-cell x3">
+            <h2 id="speak_about_webcompat" class="headline-1 heading">Speak about webcompat</h2>
+            <p>
+              Besides work-sprints, there is a huge need to communicate the importance of web compatibility and specifications. Feel free to write about this topic, and spread the word at conferences and meetups. Talk to your friends about the importance of web compatibility and how to produce clean code.
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+{% endblock %}
+{%- block extrascripts -%}
+<script type="module" src="{{ url_for('static', filename='dist/contributors.js')|bust_cache }}"></script>
+{%- if config.PRODUCTION or config.STAGING -%}
+<script nomodule src="{{ url_for('static', filename='dist/contributors.es5.js')|bust_cache }}"></script>
+{%- endif %}
+{%- endblock %}

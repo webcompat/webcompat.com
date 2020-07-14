@@ -1,0 +1,58 @@
+.sub-nav {
+  color: var(--color-second);
+  font-size: .95em;
+  padding-left: var(--unit-space);
+}
+
+.sub-nav,
+.sub-nav .sub-nav-item,
+.nested-sub-nav-item {
+  list-style: none;
+}
+
+.nested-sub-nav-item .link-text,
+.sub-nav .sub-nav-item .link-text {
+  text-decoration: none;
+}
+
+.nested-sub-nav {
+  display: none;
+  list-style: none;
+  padding-left: var(--unit-space);
+}
+
+.nested-sub::after {
+  background-image: url("../../img/svg/icons/svg-chevron-right.svg");
+  background-position: 0;
+  background-repeat: no-repeat;
+  background-size: contain;
+  content: " ";
+  height: 2em;
+  margin-left: 3px;
+  opacity: .7;
+  position: absolute;
+  width: 20px;
+}
+
+.active .nested-sub-nav {
+  display: block;
+}
+
+.active .nested-sub::after {
+  transform: rotate(90deg);
+}
+
+/* var(--page-size-s) = 320px - vars not usable in queries */
+@media (min-width: 320px) {
+  .sub-nav-header::after {
+    content: none;
+  }
+}
+
+.sub-nav-active {
+  border-left: 4px solid var(--color-first);
+  color: var(--color-second);
+  font-weight: 700;
+  margin-left: -4px;
+  padding-left: var(--unit-space);
+}

@@ -5,10 +5,9 @@
 [![Dependency Status](https://david-dm.org/webcompat/webcompat.com.svg)](https://david-dm.org/webcompat/webcompat.com)
 [![devDependency Status](https://david-dm.org/webcompat/webcompat.com/dev-status.svg)](https://david-dm.org/webcompat/webcompat.com/)
 
-[![Built with Grunt](https://cdn.gruntjs.com/builtwith.svg)](http://gruntjs.com/)
-[![Travis Build Status](https://travis-ci.org/webcompat/webcompat.com.svg?branch=master)](https://travis-ci.org/webcompat/webcompat.com)
+[![Built with Grunt](https://gruntjs.com/cdn/builtwith.svg)](http://gruntjs.com/)
+[![CircleCI](https://circleci.com/gh/webcompat/webcompat.com.svg?style=svg)](https://circleci.com/gh/webcompat/webcompat.com)
 
-[![Waffle Stories in Ready](https://badge.waffle.io/webcompat/webcompat.com.png?label=ready&title=Ready)](https://waffle.io/webcompat/webcompat.com)
 [![Twitter](https://img.shields.io/twitter/url/https/github.com/webcompat/webcompat.com.svg?style=social)](https://twitter.com/webcompat)
 
 
@@ -21,11 +20,11 @@ See the [CHANGELOG](https://github.com/webcompat/webcompat.com/blob/master/CHANG
 
 ## Contributing
 
-Contributions in the form of code, feature requests, bugs or other kinds of issues are welcome. Please check out [CONTRIBUTING.md]( https://github.com/webcompat/webcompat.com/blob/master/CONTRIBUTING.md) for more instructions.
+Your contributions are appreciated which could be; contributing code, design and UX, documentation, feature requests, taking care of bugs or other kinds of issues. For more details, please check out [CONTRIBUTING.md]( https://github.com/webcompat/webcompat.com/blob/master/.github/CONTRIBUTING.md) and for instructions on how to set up a [local build environment](https://github.com/webcompat/webcompat.com/blob/master/docs/dev-env-setup.md). Everyone interacting in our codebases, issue trackers, and any other form of communication, including chat rooms and mailing lists, is expected to follow our [code of conduct](https://github.com/webcompat/webcompat.com/blob/master/CODE_OF_CONDUCT.md) so we can all enjoy the effort we put into this project.
 
 ### Assets & Design
 
-See the [design](https://github.com/webcompat/design) repo and our [pattern portfolio](http://webcompat.github.io/webcompat.com/).
+See the [design](https://github.com/webcompat/design) repo and our [Living Style Guide](https://webcompat.github.io/design/).
 
 ### License
 
@@ -35,24 +34,4 @@ file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 ### Icons
 
-All icons are public domain or licensed from The Noun Project.
-
-[Lightbulb icon](http://thenounproject.com/term/light-bulb/5370/) designed by Jean-Philippe Cabaroc. (Licensed)
-
-[Bee icon](http://thenounproject.com/term/bee/26569/) designed by Peter Silk. (Licensed)
-
-[Arrow icon](http://thenounproject.com/term/arrow/5438/) designed by Jamison Wieser. (Licensed)
-
-[Form icon](http://thenounproject.com/term/list/14362/) designed by banoshi. (Licensed)
-
-[Diagnose bugs icon](https://thenounproject.com/rockicon/collection/office-line/?i=450639) designed by Rockicon (Licensed)
-
-[Reach out to sites icon](https://thenounproject.com/term/heart-care/518087/) designed by ProSymbols.  (Licensed)
-
-[Lightswitch](http://thenounproject.com/term/light-switch/2235/) designed by Jeremy Lloyd.  (Public domain)
-
-[Contribute icon](https://thenounproject.com/search/?q=group&i=876004) designed by Tjaša Kimovec. (Licensed)
-
-### Thanks
-
-Thanks to [BrowserStack](https://www.browserstack.com/) for providing the infrastructure that allows us to test in real browsers.
+All icons are from the [Feather icon set](https://github.com/feathericons/feather#feather) and published under the [MIT License](https://github.com/feathericons/feather/blob/master/LICENSE).
