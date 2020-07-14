@@ -126,7 +126,7 @@ class TestForm(unittest.TestCase):
             actual = form.get_form(form_data)
             expected_browser = 'Firefox 48.0'
             expected_os = 'Mac OS X 10.11'
-            self.assertIsInstance(actual, form.IssueForm)
+            self.assertIsInstance(actual, form.FormWizard)
             self.assertEqual(actual.browser.data, expected_browser)
             self.assertEqual(actual.os.data, expected_os)
             self.assertEqual(actual.reported_with.data, 'desktop-reporter')
