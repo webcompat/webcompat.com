@@ -28,7 +28,6 @@ from flask import session
 import requests
 from ua_parser import user_agent_parser
 
-from webcompat import api
 from webcompat import app
 from webcompat import github
 

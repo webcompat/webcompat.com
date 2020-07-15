@@ -24,10 +24,8 @@ from flask_firehose import push
 from webcompat.api.endpoints import proxy_issue
 from webcompat.db import session_db
 from webcompat.db import User
-from webcompat.form import AUTH_REPORT
 from webcompat.form import get_form
 from webcompat.form import FormWizard
-from webcompat.form import PROXY_REPORT
 from webcompat.form import normalize_url
 from webcompat.helpers import ab_active
 from webcompat.helpers import ab_current_experiments
@@ -305,7 +303,7 @@ def create_issue():
             msg = app.config['IS_DARKNET_DOMAIN'].format(form['url'])
             flash(msg, 'notimeout')
             return redirect(url_for('index'))
-        if form.get('submit_type') == PROXY_REPORT:
+        if form.get('submit_type') == 'github-proxy-report':
             if not app.config['ANONYMOUS_REPORTING_ENABLED']:
                 abort(400)
             # Checking blocked domains
@@ -319,7 +317,7 @@ def create_issue():
             return redirect(
                 url_for('show_issue', number=json_response.get('number')))
         # Authenticated reporting
-        if form.get('submit_type') == AUTH_REPORT:
+        if form.get('submit_type') == 'github-auth-report':
             if g.user:  # If you're already authed, submit the bug.
                 json_response = report_issue(form)
                 session['show_thanks'] = True

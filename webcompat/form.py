@@ -22,7 +22,6 @@ from flask_wtf.file import FileAllowed
 from flask_wtf.file import FileField
 from markupsafe import Markup
 from wtforms import HiddenField
-from wtforms import Label
 from wtforms import RadioField
 from wtforms import StringField
 from wtforms import TextAreaField
@@ -38,8 +37,6 @@ from webcompat.helpers import get_os
 from webcompat.helpers import get_details_list
 from webcompat.helpers import is_json_object
 
-AUTH_REPORT = 'github-auth-report'
-PROXY_REPORT = 'github-proxy-report'
 SCHEMES = ('http://', 'https://')
 BAD_SCHEMES = ('http:/', 'https:/', 'http:', 'https:')
 GITHUB_HELP = '_From [webcompat.com](https://webcompat.com/) with ❤️_'
@@ -86,14 +83,6 @@ NEW_ISSUE_STEPS = [
         'className': 'last',
         'label': 'Send report'
     }
-]
-
-problem_choices = [
-    ('detection_bug', 'Desktop site instead of mobile site'),
-    ('site_bug', 'Site is not usable'),
-    ('layout_bug', 'Design is broken'),
-    ('video_bug', 'Video or audio doesn\'t play'),
-    ('unknown_bug', 'Something else')
 ]
 
 problem_choices_wizard = [
@@ -176,77 +165,69 @@ contact_label = 'Sharing your GitHub username—without logging in—could help 
 
 
 class PrefixedRadioField(RadioField):
-    """Prefix radio field label with an image."""
+    """Prefix radio field label with an image.
+
+    This renders the radio elements with a specific html markup.
+    """
     def __init__(self, *args, **kwargs):
         prefixed_choices = kwargs.pop('choices')
-        template = '<div class={css_class}><img src={src}/></div> {text}'
         choices = []
-
-        css_class = 'icon-container'
         for slug, img, text in prefixed_choices:
-            filename = 'img/svg/icons/{img}'.format(img=img)
+            filename = f'img/svg/icons/{img}'
             src = url_for('static', filename=filename)
-            label = Markup(template.format(
-                src=src, css_class=css_class, text=text)
-            )
+            t = f'<div class="icon-container"><img src="{src}"/></div> {text}'
+            label = Markup(t)
             choice = (slug, label)
             choices.append(choice)
-
         kwargs['choices'] = choices
         super().__init__(*args, **kwargs)
 
 
-class IssueForm(FlaskForm):
-    """Define form fields and validation for our bug reporting form."""
+class FormWizard(FlaskForm):
+    """IssueForm to a multi step wizard form.
 
-    url = StringField(url_label,
-                      [InputRequired(message=url_message)])
-    browser = StringField('Is this information correct?', [Optional()])
-    os = StringField('Operating System', [Optional()])
-    # A dummy field to trap common bots. Users do not see that.
-    username = StringField('Username',
-                           [Length(max=0, message=username_message)])
-    # Field for people who want to be contacted, but do not want to login
-    # regex for GitHub usernames
-    username_pattern = r"^[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}$"
-    # Field definition
-    contact = StringField(
-        contact_label,
-        [Regexp(username_pattern,
-                flags=re.IGNORECASE,
-                message=contact_message)])
-    description = StringField(desc_label,
-                              [InputRequired(message=desc_message)])
-
-    steps_reproduce = TextAreaField(textarea_label, [Optional()])
-    problem_category = RadioField([InputRequired(message=radio_message)],
-                                  choices=problem_choices)
+    Attributes notes:
+    * contact:
+      Field for people who want to be contacted,
+      but do not want to login
+      github_username_pattern defines regex for GitHub usernames
+    * image:
+      We filter allowed type in uploads.py
+      We don't use the label programatically for this input[type=file],
+      any changes here need to be updated in form.html.
+    * username:
+      A dummy field to trap common bots. Users do not see that.
+    """
+    steps = NEW_ISSUE_STEPS
+    github_username_pattern = r"^[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}$"
+    # Hidden Form Fields
+    console_logs_url = HiddenField()
+    description = HiddenField()
+    details = HiddenField()
+    extra_labels = HiddenField()
+    reported_with = HiddenField()
+    submit_type = HiddenField()
+    ua_header = HiddenField()
+    # Visible Form Fields
+    browser = StringField(
+        u'Browser',
+        [Optional()]
+    )
     browser_test = RadioField(browser_test_label, [Optional()],
                               choices=tested_elsewhere)
-    # we filter allowed type in uploads.py
-    # Note, we don't use the label programtically for this input[type=file],
-    # any changes here need to be updated in form.html.
+    contact = StringField(
+        contact_label,
+        [Regexp(github_username_pattern,
+                flags=re.IGNORECASE,
+                message=contact_message)])
     image = FileField('Attach a screenshot image',
                       [Optional(),
                        FileAllowed(ImageUpload.ALLOWED_FORMATS,
                        image_message)])
-    details = HiddenField()
-    reported_with = HiddenField()
-    ua_header = HiddenField()
-    submit_type = HiddenField()
-    extra_labels = HiddenField()
-    console_logs_url = HiddenField()
-
-
-class FormWizard(IssueForm):
-    """Re-designed version of IssueForm to a multi step wizard form."""
-
-    steps = NEW_ISSUE_STEPS
-
-    browser = StringField(u'Browser', [Optional()])
     os = StringField('Operating System', [Optional()])
-    description = HiddenField()
-
+    steps_reproduce = TextAreaField(textarea_label, [Optional()])
+    url = StringField(url_label, [InputRequired(message=url_message)])
+    # Steps Form Fields
     problem_category = PrefixedRadioField(
         [InputRequired(message=radio_message)],
         choices=problem_choices_wizard
@@ -275,9 +256,12 @@ class FormWizard(IssueForm):
         [InputRequired(message=radio_message)],
         choices=browser_choices
     )
+    # Bots Trap
+    username = StringField('Username',
+                           [Length(max=0, message=username_message)])
 
 
-def get_form(form_data, form=IssueForm):
+def get_form(form_data, form=FormWizard):
     """Return an instance of flask_wtf.FlaskForm.
 
     It receives a dictionary of everything which needs to be fed to the form.
@@ -334,6 +318,8 @@ def build_details(details):
 
 def get_radio_button_label(field_value, label_list):
     """Return human-readable label for problem choices form value."""
+    if len(label_list[0]) == 3:
+        label_list = [(value, text) for value, icon, text in label_list]
     for value, text in label_list:
         if value == field_value:
             return text
@@ -349,7 +335,7 @@ def get_problem_summary(category):
     else:
         # Return the usual message in lowercase
         # because it is not at the start of the summary.
-        return get_radio_button_label(category, problem_choices).lower()
+        return get_radio_button_label(category, problem_choices_wizard).lower()
 
 
 def wrap_metadata(metadata):
@@ -524,7 +510,7 @@ def build_formdata(form_object):
         'browser': normalize_metadata(form_object.get('browser')),
         'os': normalize_metadata(form_object.get('os')),
         'problem_type': get_radio_button_label(
-            form_object.get('problem_category'), problem_choices),
+            form_object.get('problem_category'), problem_choices_wizard),
         'browser_test_type': get_radio_button_label(form_object.get(
             'browser_test'), tested_elsewhere),
         'description': form_object.get('description'),

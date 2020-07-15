@@ -100,22 +100,22 @@ class TestForm(unittest.TestCase):
 
     def test_radio_button_label(self):
         """Check that appropriate radio button label is returned."""
-        test_labels_list = [
-            ('detection_bug', 'Desktop site instead of mobile site'),
-            ('unknown_bug', 'Something else')
+        tests_labels_lists = [
+            [('detection_bug', 'i.svg', 'Desktop site instead of mobile site'),
+             ('unknown_bug', 'b.svg', 'Something else')],
+            [('detection_bug', 'Desktop site instead of mobile site'),
+             ('unknown_bug', 'Something else')],
         ]
 
-        r = form.get_radio_button_label('unknown_bug', test_labels_list)
-        self.assertEqual(r, 'Something else')
-
-        r = form.get_radio_button_label('detection_bug', test_labels_list)
-        self.assertEqual(r, 'Desktop site instead of mobile site')
-
-        r = form.get_radio_button_label(None, test_labels_list)
-        self.assertEqual(r, 'Unknown')
-
-        r = form.get_radio_button_label('failme', test_labels_list)
-        self.assertEqual(r, 'Unknown')
+        for test_labels_list in tests_labels_lists:
+            r = form.get_radio_button_label('unknown_bug', test_labels_list)
+            self.assertEqual(r, 'Something else')
+            r = form.get_radio_button_label('detection_bug', test_labels_list)
+            self.assertEqual(r, 'Desktop site instead of mobile site')
+            r = form.get_radio_button_label(None, test_labels_list)
+            self.assertEqual(r, 'Unknown')
+            r = form.get_radio_button_label('failme', test_labels_list)
+            self.assertEqual(r, 'Unknown')
 
     def test_get_form(self):
         """Check we return the right form with the appropriate data."""
@@ -126,7 +126,7 @@ class TestForm(unittest.TestCase):
             actual = form.get_form(form_data)
             expected_browser = 'Firefox 48.0'
             expected_os = 'Mac OS X 10.11'
-            self.assertIsInstance(actual, form.IssueForm)
+            self.assertIsInstance(actual, form.FormWizard)
             self.assertEqual(actual.browser.data, expected_browser)
             self.assertEqual(actual.os.data, expected_os)
             self.assertEqual(actual.reported_with.data, 'desktop-reporter')
