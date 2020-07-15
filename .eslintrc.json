@@ -14,28 +14,15 @@
     "prettier"
   ],
   "globals": {
-    "jQuery": true,
-    "$": true,
     "_": true,
     "Backbone": true,
     "console": true,
-    "define": true,
     "ga": true,
     "intern": true,
-    "md": true,
     "module": true,
-    "moment": true,
-    "Mousetrap": true,
-    "PaginationMixin": true,
-    "Prism": true,
     "Promise": true,
     "require": true,
-    "wcEvents": true,
-    "wcTmpl": true,
     "WindowHelpers": true,
-    "Validation": true,
-    "prefillForm": true,
-    "setAnalyticsData": true,
     "__dirname": true
   },
   "rules": {
