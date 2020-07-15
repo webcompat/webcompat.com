@@ -17,11 +17,8 @@ export const scrollToElement = (element, delay = 250) => {
   setTimeout(() => {
     const topOfElement =
       window.pageYOffset + element.getBoundingClientRect().top - HEADER_HEIGHT;
-    window.scroll({ top: topOfElement, behavior: "smooth" });
+    $("html, body").animate({ scrollTop: topOfElement });
   }, delay);
-
-  //@todo figure out why this is needed
-  //this.isSubproblem ? 450 : 250
 };
 
 export const showContainer = (container, animationName = "slidedown") => {

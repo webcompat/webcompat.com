@@ -15,8 +15,20 @@ const getOptions = (env) => {
   if (!isEs5(env)) return {};
 
   return {
+    sourceType: "unambiguous",
     babelrc: false,
-    presets: ["@babel/env"],
+    presets: [
+      [
+        "@babel/env",
+        {
+          // We're using core-js for polyfills, with useBuiltIns: "usage"
+          // option, which means polyfills will be added automatically
+          // when the usage of a certain feature is unsupported in legacy browsers
+          corejs: "3",
+          useBuiltIns: "usage",
+        },
+      ],
+    ],
   };
 };
 

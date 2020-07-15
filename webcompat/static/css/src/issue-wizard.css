@@ -1000,8 +1000,10 @@
   }
 
   .protruding-img {
+    left: 50%;
     position: absolute;
     top: -30px;
+    transform: translate(-50%, 0);
   }
 
   .step-container.step-url {
