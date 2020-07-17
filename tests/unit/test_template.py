@@ -139,7 +139,7 @@ def test_bust_cache_localhost():
 
 def test_bust_cache_production_missing_file():
     """Test for cache_bust the path is missing."""
-    expected = '/punkcat/nowhere?missing_file'
+    expected = 'punkcat/nowhere?missing_file'
     webcompat.app.config['LOCALHOST'] = None
     assert bust_cache('/punkcat/nowhere') == expected
 
