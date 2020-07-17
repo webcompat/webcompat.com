@@ -4,6 +4,26 @@
 2. New features: affect minor number
 3. API endpoint changes or (major) dependency version updates: affect major number
 
+## 35.0.0 - 2020-07-17
+
+* Fixes #3386 - Separate input validation animation from other checkmarks [Pull #3400](https://github.com/webcompat/webcompat.com/pull/3400)
+* Fixes #3398 - Add analytics event and vurtual page view tracking [Pull #3399](https://github.com/webcompat/webcompat.com/pull/3399)
+* Fixes #3391 - Remove js files for the old form and adjust eslint config [Pull #3394](https://github.com/webcompat/webcompat.com/pull/3394)
+* Fixes #3378 - IE 11 fixes [Pull #3390](https://github.com/webcompat/webcompat.com/pull/3390)
+* Fixes #3388 - message requesting multiple browser selection [Pull #3389](https://github.com/webcompat/webcompat.com/pull/3389)
+* Fixes #3380 - Makes Wizard Form the default (python) [Pull #3384](https://github.com/webcompat/webcompat.com/pull/3384)
+* Fixes #3382 - fixes the failing route. [Pull #3383](https://github.com/webcompat/webcompat.com/pull/3383)
+* Fixes #3350 - fixed overflow modal [Pull #3377](https://github.com/webcompat/webcompat.com/pull/3377)
+* Fixes #3360 - creates controled values list for reported_with [Pull #3371](https://github.com/webcompat/webcompat.com/pull/3371)
+* NPM update - Upgrade ejs-loader from 0.3.7 to 0.5.0. [Pull #3370](https://github.com/webcompat/webcompat.com/pull/3370)
+* Fixes #3368 - adds .coverage to .gitignore [Pull #3369](https://github.com/webcompat/webcompat.com/pull/3369)
+* Fixes #3362 - Remove grunt tasks and clean up package.json [Pull #3367](https://github.com/webcompat/webcompat.com/pull/3367)
+* Fixes #3364 - Updated README.md [Pull #3365](https://github.com/webcompat/webcompat.com/pull/3365)
+* Fixes #3316 - fixed misaligned check-marks [Pull #3363](https://github.com/webcompat/webcompat.com/pull/3363)
+* Fixes #3349 - Updates documentation for webpack and JS unit tests [Pull #3358](https://github.com/webcompat/webcompat.com/pull/3358)
+* Fixes #3351 - Moves the analytics comment [Pull #3357](https://github.com/webcompat/webcompat.com/pull/3357)
+* Fixes #3354 - Handles FileNotFoundError for assets [Pull #3355](https://github.com/webcompat/webcompat.com/pull/3355)
+
 ## 34.0.1 - 2020-06-16
 
 * Fixes #3352 - correct script location for es5 version of flashed-messages.js [Pull #3353](https://github.com/webcompat/webcompat.com/pull/3353)
