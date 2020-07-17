@@ -10,6 +10,7 @@ import notify from "../notify.js";
 import { isUrlValid } from "../validation.js";
 import { extractPrettyUrl } from "../utils.js";
 import { showError, showSuccess, hideSuccess } from "../ui-utils.js";
+import { sendAnalyticsEvent } from "../analytics.js";
 
 const urlField = $("#url");
 const nextStepButton = $(".next-url");
@@ -42,11 +43,15 @@ const onBlur = (value) => {
   handleEvent(value, () => showError(urlField, "A valid URL is required."));
 };
 
-urlField.on("input", (event) => onChange(event.target.value));
-urlField.on("blur", (event) => onBlur(event.target.value));
-nextStepButton.on("click", onClick);
+const initListeners = () => {
+  urlField.on("input", (event) => onChange(event.target.value));
+  urlField.on("blur", (event) => onBlur(event.target.value));
+  nextStepButton.on("click", onClick);
+  urlField.trigger("input");
+};
 
-urlField.trigger("input");
+initListeners();
+sendAnalyticsEvent("url", "start");
 
 export default {
   update: ({ url }) => {

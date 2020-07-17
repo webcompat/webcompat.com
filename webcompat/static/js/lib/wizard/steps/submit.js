@@ -12,6 +12,7 @@ import { isGithubUserNameValid } from "../validation.js";
 import { uploadConsoleLogs } from "./upload-helper/console-logs-upload.js";
 import { uploadImage } from "./upload-helper/image-upload.js";
 import { showError, hideError } from "../ui-utils.js";
+import { sendAnalyticsEvent } from "../analytics.js";
 
 const GITHUB_USERNAME_ERROR =
   "GitHub nicknames are 39 characters max, alphanumeric and hyphens only.";
@@ -51,6 +52,8 @@ const enableSubmits = () => {
 const submitForm = function () {
   const dfd = $.Deferred();
   const formEl = form.get(0);
+
+  sendAnalyticsEvent("success", "end");
 
   formEl.submit();
   dfd.resolve();
