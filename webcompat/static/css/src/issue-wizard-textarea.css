@@ -63,7 +63,7 @@
 .progress-textarea .progress.complete .tick {
   animation-duration: .25s;
   animation-fill-mode: forwards;
-  animation-name: validated;
+  animation-name: checkmark;
 }
 
 .char-limit {
