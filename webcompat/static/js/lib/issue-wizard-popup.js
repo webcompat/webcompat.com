@@ -3,6 +3,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 import $ from "jquery";
+import { sendAnalyticsEvent } from "./wizard/analytics.js";
 
 function Popup() {
   this.init = function () {
@@ -20,6 +21,7 @@ function Popup() {
     modalTriggers.forEach(function (trigger) {
       trigger.addEventListener("click", function (e) {
         e.preventDefault();
+        sendAnalyticsEvent("whatIsCompat", "click");
         var popupTrigger = trigger.dataset.popupTrigger;
         var popupModal = document.querySelector(
           '[data-popup-modal="'.concat(popupTrigger, '"]')

@@ -5,21 +5,12 @@
 import notify from "../notify.js";
 import { isSelfReport, convertToDataURI } from "../utils.js";
 import { blobOrFileTypeValid, isImageDataURIValid } from "../validation.js";
-import { sendAnalytics } from "../analytics.js";
+import { sendAnalyticsCS } from "../analytics.js";
 
 const updateStep = (id, data) => notify.publish("updateStep", { id, data });
 const updateUrl = (url) => updateStep("url", { url });
 const updateHidden = (data) => updateStep("hidden", { data });
 const updateScreenshot = (dataURI) => updateStep("screenshot", { dataURI });
-
-const setAnalytics = (campaign, source) => {
-  if (campaign && source) {
-    sendAnalytics({
-      campaignName: campaign,
-      campaignSource: source,
-    });
-  }
-};
 
 const handleMessage = (message) => {
   if (!message) return;
@@ -27,7 +18,7 @@ const handleMessage = (message) => {
 
   updateUrl(url);
   updateHidden(additional);
-  setAnalytics(utm_campaign, utm_source);
+  sendAnalyticsCS(utm_campaign, utm_source);
 };
 
 const handleScreenshot = (screenshot) => {

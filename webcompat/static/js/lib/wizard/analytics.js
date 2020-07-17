@@ -2,8 +2,28 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-export const sendAnalytics = (data) => {
+export const sendAnalyticsCS = (campaign, source) => {
+  if (window.ga && campaign && source) {
+    ga("set", {
+      campaignName: campaign,
+      campaignSource: source,
+    });
+  }
+};
+
+const sendAnalyticsVpv = (label) => {
+  ga("set", "page", `/vpv-${label}`);
+  ga("send", "pageview");
+};
+
+export const sendAnalyticsEvent = (label, action = "step") => {
   if (window.ga) {
-    ga("set", data);
+    ga("send", "event", {
+      eventCategory: "wizard",
+      eventAction: action,
+      eventLabel: label,
+    });
+
+    sendAnalyticsVpv(label);
   }
 };

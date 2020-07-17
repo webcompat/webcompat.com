@@ -4,6 +4,7 @@
 
 import notify from "./notify.js";
 import { STEPS } from "./steps/index.js";
+import { sendAnalyticsEvent } from "./analytics.js";
 
 const hideStep = (id) => {
   STEPS[id].module.hide();
@@ -13,6 +14,7 @@ const showStep = (message) => {
   const { id, data } = message;
   const step = STEPS[id];
   step.module.show(data);
+  sendAnalyticsEvent(id);
 };
 
 const updateStep = (message) => {
