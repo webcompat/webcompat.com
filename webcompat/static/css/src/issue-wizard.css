@@ -308,7 +308,6 @@
   animation-name: slideupandheight;
   max-height: 0;
   opacity: 0;
-  overflow: hidden;
   padding: 10px;
   width: 100%;
 }
