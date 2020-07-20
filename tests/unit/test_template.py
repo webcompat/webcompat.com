@@ -139,9 +139,11 @@ def test_bust_cache_localhost():
 
 def test_bust_cache_production_missing_file():
     """Test for cache_bust the path is missing."""
-    expected = 'punkcat/nowhere?missing_file'
+    expected = '/punkcat/nowhere?missing_file'
+    expected2 = 'punkcat/nowhere?missing_file'
     webcompat.app.config['LOCALHOST'] = None
     assert bust_cache('/punkcat/nowhere') == expected
+    assert bust_cache('punkcat/nowhere') == expected2
 
 
 def test_bust_cache_production_file_exists(tmpdir):
@@ -151,4 +153,6 @@ def test_bust_cache_production_file_exists(tmpdir):
     file_path = tmpdir.join('space.js')
     file_path.write_text('punkcat', encoding='utf-8')
     expected = 'space.js' + '?501753e94c8bfbbbd53c792c9688c8b5'
+    expected2 = '/space.js' + '?501753e94c8bfbbbd53c792c9688c8b5'
     assert bust_cache('space.js') == expected
+    assert bust_cache('/space.js') == expected2
