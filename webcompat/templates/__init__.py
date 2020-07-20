@@ -30,6 +30,8 @@ def bust_cache(file_path):
     """
     if app.config['LOCALHOST']:
         return file_path
+    if file_path.startswith('/'):
+        file_path = file_path[1:]
     absolute_path = os.path.join(STATIC_PATH, file_path)
     return file_path + '?' + get_checksum(absolute_path)
 
@@ -41,6 +43,7 @@ def get_checksum(file_path):
     except KeyError:
         checksum = md5_checksum(file_path)
         cache_dict[str(file_path)] = checksum
+        print('GET_CHECKSUM (after cache miss)', cache_dict)
     return checksum
 
 
