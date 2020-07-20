@@ -4,7 +4,11 @@
 2. New features: affect minor number
 3. API endpoint changes or (major) dependency version updates: affect major number
 
-## 35.0.0 - 2020-07-17
+## 35.0.1 - 2020-07-20
+
+* Fixes #3401 - Unbreak bust_cache [Pull #3402](https://github.com/webcompat/webcompat.com/pull/3402)
+
+## 35.0.0 - 2020-07-17 (known bad, do not deploy)
 
 * Fixes #3386 - Separate input validation animation from other checkmarks [Pull #3400](https://github.com/webcompat/webcompat.com/pull/3400)
 * Fixes #3398 - Add analytics event and vurtual page view tracking [Pull #3399](https://github.com/webcompat/webcompat.com/pull/3399)
