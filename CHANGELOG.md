@@ -4,7 +4,11 @@
 2. New features: affect minor number
 3. API endpoint changes or (major) dependency version updates: affect major number
 
-## 35.0.1 - 2020-07-20
+## 35.0.2 - 2020-07-20
+
+* Fixes #3401 - Don't modify the file_path inside bust_cache [Pull #3407](https://github.com/webcompat/webcompat.com/pull/3407)
+
+## 35.0.1 - 2020-07-20 (known bad, do not deploy)
 
 * Fixes #3401 - Unbreak bust_cache [Pull #3402](https://github.com/webcompat/webcompat.com/pull/3402)
 
