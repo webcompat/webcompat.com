@@ -347,6 +347,14 @@ class TestHelpers(unittest.TestCase):
                 method='GET',
                 environ_base={'HTTP_COOKIE': cookie}):
 
+            webcompat.app.config['AB_EXPERIMENTS'] = {
+                'exp': {
+                    'variations': {
+                        'ui-change-v1': (0, 100)
+                    },
+                    'max-age': 86400
+                }
+            }
             webcompat.app.preprocess_request()
 
             self.assertEqual(ab_active('exp'), 'ui-change-v1')
