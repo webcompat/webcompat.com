@@ -30,9 +30,10 @@ def bust_cache(file_path):
     """
     if app.config['LOCALHOST']:
         return file_path
+    trimmed_file_path = file_path
     if file_path.startswith('/'):
-        file_path = file_path[1:]
-    absolute_path = os.path.join(STATIC_PATH, file_path)
+        trimmed_file_path = file_path[1:]
+    absolute_path = os.path.join(STATIC_PATH, trimmed_file_path)
     return file_path + '?' + get_checksum(absolute_path)
 
 
