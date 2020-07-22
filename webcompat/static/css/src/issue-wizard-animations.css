@@ -111,7 +111,7 @@
     opacity: 0;
   }
   100% {
-    max-height: 300px;
+    max-height: 340px;
     opacity: 1;
     padding-top: 45px;
   }
