@@ -252,12 +252,11 @@ def process_issue_action(issue):
         else:
             msg_log('private:moving to public failed', issue.number)
             return ('ooops', 400, {'Content-Type': 'text/plain'})
-    elif (scope == 'private' and
-          issue.state == 'closed' and
+    elif (scope == 'private' and issue.state == 'closed' and
           not issue.milestone == 'accepted'):
         # private issue has been closed. It is rejected
         # We need to patch with a template.
-        response = private_issue_rejected(issue)
+        response = issue.reject_private_issue()
         if response.status_code == 200:
             return ('Moderated issue rejected',
                     200, {'Content-Type': 'text/plain'})
@@ -321,16 +320,6 @@ def prepare_accepted_issue(issue_info):
     return payload_request
 
 
-def private_issue_rejected(issue_info):
-    """Send a rejected moderation PATCH on the public issue."""
-    payload_request = prepare_rejected_issue()
-    public_number = get_public_issue_number(issue_info['public_url'])
-    # Preparing the proxy request
-    path = f'repos/{PUBLIC_REPO}/{public_number}'
-    proxy_response = make_request('patch', path, payload_request)
-    return proxy_response
-
-
 def prepare_rejected_issue():
     """Create the payload for the rejected moderated issue.
 
@@ -350,4 +339,3 @@ def prepare_rejected_issue():
     payload_request['state'] = 'closed'
     payload_request['milestone'] = invalid_id
     return payload_request
-

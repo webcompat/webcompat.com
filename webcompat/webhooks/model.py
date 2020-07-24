@@ -14,6 +14,7 @@ from webcompat.webhooks.helpers import make_request
 from webcompat.webhooks.helpers import get_issue_labels
 from webcompat.webhooks.helpers import get_public_issue_number
 from webcompat.webhooks.helpers import prepare_accepted_issue
+from webcompat.webhooks.helpers import prepare_rejected_issue
 
 PUBLIC_REPO = app.config['ISSUES_REPO_URI']
 PRIVATE_REPO = app.config['PRIVATE_REPO_URI']
@@ -80,6 +81,15 @@ class WebHookIssue:
         public_number = get_public_issue_number(public_url)
         # prepare the payload
         return f'[Original issue {public_number}]({public_url})'
+
+    def reject_private_issue(self):
+        """Send a rejected moderation PATCH on the public issue."""
+        payload_request = prepare_rejected_issue()
+        public_number = get_public_issue_number(issue_info['public_url'])
+        # Preparing the proxy request
+        path = f'repos/{PUBLIC_REPO}/{public_number}'
+        proxy_response = make_request('patch', path, payload_request)
+        return proxy_response
 
     def tag_as_public(self):
         """Set the core actions on new opened issues.

@@ -551,7 +551,8 @@ class TestWebhook(unittest.TestCase):
             self.assertEqual(rv.status_code, 400)
             self.assertEqual(rv.content_type, 'text/plain')
 
-    @patch('webcompat.webhooks.helpers.private_issue_rejected')
+    @patch.object(webcompat.webhooks.model.WebHookIssue,
+                  'reject_private_issue')
     def test_patch_not_acceptable_issue(self, mock_proxy):
         """Test for rejected issues from private repo.
 
@@ -577,7 +578,8 @@ class TestWebhook(unittest.TestCase):
             self.assertEqual(rv.status_code, 200)
             self.assertEqual(rv.content_type, 'text/plain')
 
-    @patch('webcompat.webhooks.helpers.private_issue_rejected')
+    @patch.object(webcompat.webhooks.model.WebHookIssue,
+                  'reject_private_issue')
     def test_patch_acceptable_issue_closed(self, mock_proxy):
         """Test for accepted issues being closed.
 
@@ -680,30 +682,6 @@ class TestWebhook(unittest.TestCase):
         """Test the extraction of the issue number from the public_url."""
         public_url = 'https://github.com/webcompat/webcompat-tests/issues/1'
         self.assertEqual(helpers.get_public_issue_number(public_url), '1')
-
-    @patch('webcompat.webhooks.helpers.make_request')
-    def test_arguments_private_issue_rejected(self, mock_proxy):
-        """Test rejected issue request with the right arguments."""
-        with webcompat.app.test_client() as c:
-            mock_proxy.return_value.status_code = 200
-            rv = helpers.private_issue_rejected(self.issue_info3)
-            method, url_path, data = mock_proxy.call_args[0]
-            issue_number = url_path.replace(
-                'repos/webcompat/webcompat-tests/issues/', '')
-            # testing that the path is having a number
-            self.assertNotEqual(issue_number, '')
-            # testing the path starts with the right string
-            self.assertTrue(
-                url_path.startswith('repos/webcompat/webcompat-tests/issues/'))
-            self.assertEqual('Issue rejected.', data['title'])
-            self.assertIn('Its original content has been deleted',
-                          data['body'])
-            self.assertEqual(['status-notacceptable'], data['labels'])
-            self.assertEqual('closed', data['state'])
-            self.assertIn('milestone', data)
-            assert url_path == 'repos/webcompat/webcompat-tests/issues/1'
-            assert method == 'patch'
-            assert data == ANY
 
     def test_prepare_rejected_issue(self):
         """Test we prepare the right payload for the rejected issue."""
