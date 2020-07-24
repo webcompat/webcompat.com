@@ -6,13 +6,14 @@
 
 """WebCompat Issue Model for webhooks."""
 
-from typing import List
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, InitVar
+from typing import Any, Dict, List
 
 from webcompat import app
-from webcompat.webhooks.helpers import make_request
+from webcompat.webhooks.helpers import extract_metadata
 from webcompat.webhooks.helpers import get_issue_labels
 from webcompat.webhooks.helpers import get_public_issue_number
+from webcompat.webhooks.helpers import make_request
 from webcompat.webhooks.helpers import prepare_accepted_issue
 from webcompat.webhooks.helpers import prepare_rejected_issue
 
@@ -23,16 +24,16 @@ PRIVATE_REPO = app.config['PRIVATE_REPO_URI']
 @dataclass
 class WebHookIssue:
     """WebCompat Issue Model for WebHook consumption"""
-    action: str
-    body: str
-    domain: str
-    number: int
-    public_url: str
-    repository_url: str
-    state: str
-    title: str
-    original_labels: List[str]
-    # These 2 need default values, so they come last
+    payload: InitVar[Dict[str, Any]]
+    action: str = field(init=False)
+    body: str = field(init=False)
+    domain: str = field(init=False)
+    number: int = field(init=False)
+    public_url: str = field(init=False)
+    repository_url: str = field(init=False)
+    state: str = field(init=False)
+    title: str = field(init=False)
+    original_labels: List[str] = field(init=False)
     milestone: str = ''
     milestoned_with: str = ''
 
@@ -119,3 +120,28 @@ class WebHookIssue:
         payload_request = {'labels': labels, 'milestone': self.milestone}
         proxy_response = make_request('patch', path, payload_request)
         return proxy_response
+
+    def __post_init__(self, payload):
+        """Build up the model from the initial WebHook payload."""
+        # Extract the title and the body
+        issue = payload.get('issue')
+        full_title = issue.get('title', 'Weird_Title - Inspect')
+        labels = issue.get('labels', [])
+        issue_body = issue.get('body')
+        public_url = extract_metadata(issue_body).get('public_url', '')
+        # Create the issue dictionary
+        self.action = payload.get('action')
+        self.body = issue_body
+        self.domain = full_title.partition(' ')[0]
+        self.number = issue.get('number')
+        self.public_url = public_url.strip()
+        self.repository_url = issue.get('repository_url')
+        self.state = issue.get('state')
+        self.title = full_title
+        self.original_labels = [label['name'] for label in labels]
+        # webhook with a milestone already set
+        if issue.get('milestone'):
+            self.milestone = issue['milestone']['title']
+        # webhook with a milestoned action
+        if payload.get('milestone'):
+            self.milestoned_with = payload.get('milestone')['title']

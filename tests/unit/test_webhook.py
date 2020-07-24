@@ -6,6 +6,7 @@
 
 """Tests for our webhooks."""
 
+from dataclasses import asdict
 import json
 import os
 import unittest
@@ -161,6 +162,8 @@ class TestWebhook(unittest.TestCase):
         self.issue_info4 = {
             'action': 'opened',
             'state': 'open',
+            'milestoned_with': '',
+            'milestone': '',
             'body': '<!-- @browser: Firefox 55.0 -->\n'
             '<!-- @ua_header: Mozilla/5.0 (X11; Linux x86_64; rv:55.0) '
             'Gecko/20100101 Firefox/55.0 -->\n'
@@ -176,7 +179,7 @@ class TestWebhook(unittest.TestCase):
                 'https://github.com/webcompat/webcompat-tests/issues/1',
             'repository_url':
                 'https://api.github.com/repos/webcompat/webcompat-tests-private',  # noqa
-            'title': 'www.netflix.com - test private issue accepted'}
+            'title': 'www.netflix.com - test valid event'}
 
     def tearDown(self):
         """Tear down tests."""
@@ -373,21 +376,23 @@ class TestWebhook(unittest.TestCase):
             self.assertTrue(webhook_request,
                             'X-GitHub-Event and X-Hub-Signature are correct')
 
-    def test_get_issue_info(self):
-        """Extract the right information from an issue."""
-        json_event, signature = event_data('new_event_invalid.json')
-        payload = json.loads(json_event)
-        expected = self.issue_info1
-        actual = helpers.get_issue_info(payload)
-        self.assertDictEqual(expected, actual)
+    def test_WebHookIssue_model(self):
+        """Test initializing a WebHookIssue model instance:
 
-    def test_get_milestoned_issue_info(self):
-        """Extract the right information for a milestoned issue."""
+        1. from a private new issue
+        2. from a milestoned issue
+        """
+        json_event, signature = event_data('private_issue_opened.json')
+        payload = json.loads(json_event)
+        issue = WebHookIssue(payload)
+        expected = self.issue_info4
+        assert expected == asdict(issue)
+
         json_event, signature = event_data('private_milestone_accepted.json')
         payload = json.loads(json_event)
+        issue = WebHookIssue(payload)
         expected = self.issue_info2
-        actual = helpers.get_issue_info(payload)
-        self.assertDictEqual(expected, actual)
+        assert expected == asdict(issue)
 
     def test_signature_check(self):
         """Test the signature check function for WebHooks."""
@@ -407,7 +412,9 @@ class TestWebhook(unittest.TestCase):
         with webcompat.app.test_request_context():
             with patch('webcompat.webhooks.helpers.make_request') as proxy:
                 proxy.return_value.status_code == 200
-                issue = WebHookIssue(**self.issue_info4)
+                json_event, signature = event_data('private_issue_opened.json')
+                payload = json.loads(json_event)
+                issue = WebHookIssue(payload)
                 issue.close_private_issue()
                 assert issue.state == 'closed'
 
@@ -416,8 +423,7 @@ class TestWebhook(unittest.TestCase):
         # A 200 response
         json_event, signature = event_data('new_event_valid.json')
         payload = json.loads(json_event)
-        issue_info = helpers.get_issue_info(payload)
-        issue = WebHookIssue(**issue_info)
+        issue = WebHookIssue(payload)
         with patch.object(webcompat.webhooks.model.WebHookIssue,
                           'tag_as_public') as proxy:
             proxy.return_value.status_code = 200
@@ -699,7 +705,9 @@ class TestWebhook(unittest.TestCase):
     def test_WebHookIssue_prepare_public_comment(self):
         """Test we prepare the right comment body."""
         expected_payload = '{"body": "[Original issue 1](https://github.com/webcompat/webcompat-tests/issues/1)"}'  # noqa
-        issue = WebHookIssue(**self.issue_info4)
+        json_event, signature = event_data('private_issue_opened.json')
+        payload = json.loads(json_event)
+        issue = WebHookIssue(payload)
         assert issue.prepare_public_comment() == json.loads(
             expected_payload).get('body')
 

@@ -13,7 +13,6 @@ import json
 
 from flask import request
 
-from webcompat.webhooks.helpers import get_issue_info
 from webcompat.webhooks.helpers import is_github_hook
 from webcompat.webhooks.helpers import process_issue_action
 from webcompat.webhooks.model import WebHookIssue
@@ -34,8 +33,7 @@ def hooklistener():
     event_type = request.headers.get('X-GitHub-Event')
     # Treating events related to issues
     if event_type == 'issues':
-        issue_info = get_issue_info(payload)
-        webhook_issue = WebHookIssue(**issue_info)
+        webhook_issue = WebHookIssue(payload)
         # we process the action
         response = process_issue_action(webhook_issue)
         return response

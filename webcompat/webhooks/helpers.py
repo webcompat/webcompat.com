@@ -141,36 +141,6 @@ def is_github_hook(request):
     return False
 
 
-def get_issue_info(payload):
-    """Extract all information we need when handling webhooks for issues."""
-    # Extract the title and the body
-    issue = payload.get('issue')
-    full_title = issue.get('title', 'Weird_Title - Inspect')
-    labels = issue.get('labels', [])
-    issue_body = issue.get('body')
-    public_url = extract_metadata(issue_body).get('public_url', '')
-    # Create the issue dictionary
-    issue_info = {
-        'action': payload.get('action'),
-        'body': issue_body,
-        'domain': full_title.partition(' ')[0],
-        'number': issue.get('number'),
-        'public_url': public_url.strip(),
-        'repository_url': issue.get('repository_url'),
-        'state': issue.get('state'),
-        'title': full_title}
-    # If labels on the original issue, we need them.
-    original_labels = [label['name'] for label in labels]
-    issue_info['original_labels'] = original_labels
-    # webhook with a milestone already set
-    if issue.get('milestone'):
-        issue_info['milestone'] = issue['milestone']['title']
-    # webhook with a milestoned action
-    if payload.get('milestone'):
-        issue_info['milestoned_with'] = payload.get('milestone')['title']
-    return issue_info
-
-
 def get_public_issue_number(public_url):
     """Extract the issue number from the public url."""
     public_number = public_url.strip().rsplit('/', 1)[1]
