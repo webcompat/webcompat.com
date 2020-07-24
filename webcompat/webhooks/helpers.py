@@ -234,7 +234,7 @@ def process_issue_action(issue):
             return ('ooops', 400, {'Content-Type': 'text/plain'})
     elif issue.action == 'opened' and scope == 'private':
         # webcompat-bot needs to comment on this issue with the URL
-        response = comment_public_uri(issue)
+        response = issue.comment_public_uri()
         if response.status_code == 200:
             return ('public url added', 200, {'Content-Type': 'text/plain'})
         else:
@@ -373,18 +373,3 @@ def prepare_rejected_issue():
     payload_request['milestone'] = invalid_id
     return payload_request
 
-
-def comment_public_uri(issue_info):
-    """Publish a comment on the private issue with the public uri."""
-    # issue number on private repo
-    number = issue_info['number']
-    # public issue data
-    public_url = issue_info['public_url']
-    public_number = get_public_issue_number(public_url)
-    # prepare the payload
-    comment_body = f'[Original issue {public_number}]({public_url})'
-    payload = {'body': comment_body}
-    # Preparing the proxy request
-    path = f'repos/{PRIVATE_REPO}/{number}/comments'
-    proxy_response = make_request('post', path, payload)
-    return proxy_response

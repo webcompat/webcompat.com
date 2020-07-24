@@ -717,21 +717,15 @@ class TestWebhook(unittest.TestCase):
         self.assertEqual(type(actual), dict)
         self.assertEqual(actual, expected)
 
-    @patch('webcompat.webhooks.helpers.make_request')
-    def test_comment_public_uri(self, mock_proxy):
-        """Test we post the right comment with public uri."""
-        dest = 'repos/webcompat/webcompat-tests-private/issues/600/comments'
+    def test_WebHookIssue_prepare_public_comment(self):
+        """Test we prepare the right comment body."""
         expected_payload = '{"body": "[Original issue 1](https://github.com/webcompat/webcompat-tests/issues/1)"}'  # noqa
-        with webcompat.app.test_client() as c:
-            mock_proxy.return_value.status_code = 200
-            rv = helpers.comment_public_uri(self.issue_info4)
-            method, path, payload = mock_proxy.call_args[0]
-            assert method == 'post'
-            assert path == dest
-            assert payload == json.loads(expected_payload)
+        issue = WebHookIssue(**self.issue_info4)
+        assert issue.prepare_public_comment() == json.loads(
+            expected_payload).get('body')
 
-    @patch('webcompat.webhooks.helpers.comment_public_uri')
-    def test_comment_public_uri_for_webhooks(self, mock_proxy):
+    @patch.object(webcompat.webhooks.model.WebHookIssue, 'comment_public_uri')
+    def test_WebHookIssue_comment_public_uri_for_webhooks(self, mock_proxy):
         """Test we are getting the right message on public uri comment
 
         payload: 'public url added'
@@ -754,8 +748,9 @@ class TestWebhook(unittest.TestCase):
             assert rv.status_code == 200
             assert rv.content_type == 'text/plain'
 
-    @patch('webcompat.webhooks.helpers.comment_public_uri')
-    def test_comment_public_uri_for_webhooks_fail(self, mock_proxy):
+    @patch.object(webcompat.webhooks.model.WebHookIssue, 'comment_public_uri')
+    def test_WebHookIssue_comment_public_uri_for_webhooks_fail(self,
+                                                               mock_proxy):
         """Test public uri comment which fails
         let's say the source url is missing.
 

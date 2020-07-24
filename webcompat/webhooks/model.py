@@ -12,6 +12,10 @@ from dataclasses import dataclass, field
 from webcompat import app
 from webcompat.webhooks.helpers import make_request
 from webcompat.webhooks.helpers import get_issue_labels
+from webcompat.webhooks.helpers import get_public_issue_number
+
+PUBLIC_REPO = app.config['ISSUES_REPO_URI']
+PRIVATE_REPO = app.config['PRIVATE_REPO_URI']
 
 
 @dataclass
@@ -29,6 +33,22 @@ class WebHookIssue:
     # These 2 need default values, so they come last
     milestone: str = ''
     milestoned_with: str = ''
+
+    def comment_public_uri(self):
+        """Publish a comment on the private issue with the public uri."""
+        payload = {'body': self.prepare_public_comment()}
+        # Preparing the proxy request
+        path = f'repos/{PRIVATE_REPO}/{self.number}/comments'
+        proxy_response = make_request('post', path, payload)
+        return proxy_response
+
+    def prepare_public_comment(self):
+        """Build the comment for the public repo."""
+        # public issue data
+        public_url = self.public_url
+        public_number = get_public_issue_number(public_url)
+        # prepare the payload
+        return f'[Original issue {public_number}]({public_url})'
 
     def tag_as_public(self):
         """Set the core actions on new opened issues.
