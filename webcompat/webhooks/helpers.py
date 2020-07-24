@@ -203,39 +203,7 @@ def make_request(method, path, payload_request):
         payload_request))
 
 
-def tag_new_public_issue(issue_info):
-    """Set the core actions on new opened issues.
-
-    When a new issue is opened, we set a couple of things.
-
-    - Browser label
-    - Priority label
-    - Issue milestone
-    - Any "extra" labels, set from GET params
-
-    Then Send a GitHub PATCH to set labels and milestone for the issue.
-
-    PATCH /repos/:owner/:repo/issues/:number
-    {
-        "milestone": 2,
-        "labels": ['Label1', 'Label2']
-    }
-    """
-    issue_body = issue_info['body']
-    issue_number = issue_info['number']
-    # Grabs the labels already set so they will not be erased
-    # Gets the labels from the body
-    labels = get_issue_labels(issue_body)
-    labels.extend(issue_info['original_labels'])
-    milestone = app.config['STATUSES']['needstriage']['id']
-    # Preparing the proxy request
-    path = f'repos/{PUBLIC_REPO}/{issue_number}'
-    payload_request = {'labels': labels, 'milestone': milestone}
-    proxy_response = make_request('patch', path, payload_request)
-    return proxy_response
-
-
-def process_issue_action(issue_info):
+def process_issue_action(issue):
     """Route the actions and provide different responses.
 
     There are two possible known scopes:
@@ -249,51 +217,50 @@ def process_issue_action(issue_info):
     * milestoned (private repo only)
       When the issue is being moderated with a milestone: accepted
     """
-    source_repo = issue_info['repository_url']
+    source_repo = issue.repository_url
     scope = repo_scope(source_repo)
-    issue_number = issue_info['number']
+    issue_number = issue.number
     # We do not process further in case
     # we don't know what we are dealing with
     if scope == 'unknown':
         return ('Wrong repository', 403, {'Content-Type': 'text/plain'})
-    if issue_info['action'] == 'opened' and scope == 'public':
+    if issue.action == 'opened' and scope == 'public':
         # we are setting labels on each new open issues
-        response = tag_new_public_issue(issue_info)
+        response = issue.tag_as_public()
         if response.status_code == 200:
             return ('gracias, amigo.', 200, {'Content-Type': 'text/plain'})
         else:
             msg_log('public:opened labels failed', issue_number)
             return ('ooops', 400, {'Content-Type': 'text/plain'})
-    elif issue_info['action'] == 'opened' and scope == 'private':
+    elif issue.action == 'opened' and scope == 'private':
         # webcompat-bot needs to comment on this issue with the URL
-        response = comment_public_uri(issue_info)
+        response = comment_public_uri(issue)
         if response.status_code == 200:
             return ('public url added', 200, {'Content-Type': 'text/plain'})
         else:
             msg_log('comment failed', issue_number)
             return ('ooops', 400, {'Content-Type': 'text/plain'})
-    elif (issue_info['action'] == 'milestoned' and
-          scope == 'private' and
-          issue_info['milestoned_with'] == 'accepted'):
+    elif (issue.action == 'milestoned' and scope == 'private' and
+          issue.milestoned_with == 'accepted'):
         # private issue have been moderated and we will make it public
-        response = private_issue_moderation(issue_info)
+        response = private_issue_moderation(issue)
         if response.status_code == 200:
             return ('Moderated issue accepted',
                     200, {'Content-Type': 'text/plain'})
         else:
-            msg_log('private:moving to public failed', issue_number)
+            msg_log('private:moving to public failed', issue.number)
             return ('ooops', 400, {'Content-Type': 'text/plain'})
     elif (scope == 'private' and
-          issue_info['state'] == 'closed' and
-          not issue_info['milestone'] == 'accepted'):
+          issue.state == 'closed' and
+          not issue.milestone == 'accepted'):
         # private issue has been closed. It is rejected
         # We need to patch with a template.
-        response = private_issue_rejected(issue_info)
+        response = private_issue_rejected(issue)
         if response.status_code == 200:
             return ('Moderated issue rejected',
                     200, {'Content-Type': 'text/plain'})
         else:
-            msg_log('public rejection failed', issue_number)
+            msg_log('public rejection failed', issue.number)
             return ('ooops', 400, {'Content-Type': 'text/plain'})
     else:
         return ('Not an interesting hook', 403, {'Content-Type': 'text/plain'})

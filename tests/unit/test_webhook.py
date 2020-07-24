@@ -18,6 +18,7 @@ import webcompat
 from webcompat.db import Site
 from webcompat.helpers import to_bytes
 from webcompat.webhooks import helpers
+from webcompat.webhooks.model import WebHookIssue
 
 
 # The key is being used for testing and computing the signature.
@@ -401,26 +402,28 @@ class TestWebhook(unittest.TestCase):
         post_signature = 'sha1=wrong'
         self.assertFalse(helpers.signature_check(key, post_signature, payload))
 
-    def test_tag_new_public_issue(self):
+    def test_WebHookIssue_tag_as_public(self):
         """Test the core actions on new opened issues for WebHooks."""
         # A 200 response
         json_event, signature = event_data('new_event_valid.json')
         payload = json.loads(json_event)
         issue_info = helpers.get_issue_info(payload)
-        with patch('webcompat.webhooks.helpers.make_request') as proxy:
+        issue = WebHookIssue(**issue_info)
+        with patch.object(webcompat.webhooks.model.WebHookIssue,
+                          'tag_as_public') as proxy:
             proxy.return_value.status_code = 200
-            response = helpers.tag_new_public_issue(issue_info)
+            response = issue.tag_as_public()
             self.assertEqual(response.status_code, 200)
             # A 401 response
             proxy.return_value.status_code = 401
             proxy.return_value.content = '{"message":"Bad credentials","documentation_url":"https://developer.github.com/v3"}'  # noqa
             with patch.dict('webcompat.webhooks.helpers.app.config',
                             {'OAUTH_TOKEN': ''}):
-                response = helpers.tag_new_public_issue(issue_info)
+                response = issue.tag_as_public()
                 self.assertEqual(response.status_code, 401)
                 self.assertTrue('Bad credentials' in response.content)
 
-    @patch('webcompat.webhooks.helpers.tag_new_public_issue')
+    @patch.object(webcompat.webhooks.model.WebHookIssue, 'tag_as_public')
     def test_new_issue_right_repo(self, mock_proxy):
         """Test that repository_url matches the CONFIG for public repo.
 
@@ -725,7 +728,7 @@ class TestWebhook(unittest.TestCase):
             method, path, payload = mock_proxy.call_args[0]
             assert method == 'post'
             assert path == dest
-            assert payload == expected_payload
+            assert payload == json.loads(expected_payload)
 
     @patch('webcompat.webhooks.helpers.comment_public_uri')
     def test_comment_public_uri_for_webhooks(self, mock_proxy):
