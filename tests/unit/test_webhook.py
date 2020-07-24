@@ -647,7 +647,10 @@ class TestWebhook(unittest.TestCase):
         will be different. So we return a value 'priority-critical' here.
         """
         mock_priority.return_value = 'priority-critical'
-        actual = helpers.prepare_accepted_issue(self.issue_info2)
+        json_event, signature = event_data('private_milestone_accepted.json')
+        payload = json.loads(json_event)
+        issue = WebHookIssue(payload)
+        actual = issue.prepare_accepted_issue()
         expected = {
             'body': '<!-- @browser: Firefox 55.0 -->\n'
             '<!-- @ua_header: Mozilla/5.0 (X11; Linux x86_64; rv:55.0) '

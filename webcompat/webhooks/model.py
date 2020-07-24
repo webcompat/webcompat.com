@@ -14,7 +14,6 @@ from webcompat.webhooks.helpers import extract_metadata
 from webcompat.webhooks.helpers import get_issue_labels
 from webcompat.webhooks.helpers import get_public_issue_number
 from webcompat.webhooks.helpers import make_request
-from webcompat.webhooks.helpers import prepare_accepted_issue
 from webcompat.webhooks.helpers import prepare_rejected_issue
 
 PUBLIC_REPO = app.config['ISSUES_REPO_URI']
@@ -67,13 +66,36 @@ class WebHookIssue:
 
         we get the destination through the public_url
         """
-        # TODO: move prepare_accepted_issue into the model
-        payload_request = prepare_accepted_issue(issue_info)
-        public_number = get_public_issue_number(issue_info['public_url'])
+        payload_request = self.prepare_accepted_issue()
+        public_number = get_public_issue_number(self.public_url)
         # Preparing the proxy request
         path = f'repos/{PUBLIC_REPO}/{public_number}'
         proxy_response = make_request('patch', path, payload_request)
         return proxy_response
+
+    def prepare_accepted_issue(self):
+        """Create the payload for the accepted moderated issue.
+
+        When the issue has been moderated as accepted,
+        we need to change a couple of things in the public space
+
+        - Title
+        - Body
+        - Any labels from the private issue
+        """
+        # Gets the labels from the body
+        labels = get_issue_labels(self.body)
+        labels.extend(self.original_labels)
+        # Let's remove action-needsmoderation in case it's here
+        if 'action-needsmoderation' in labels:
+            labels.remove('action-needsmoderation')
+        # Prepares the payload
+        payload_request = {
+            'labels': labels,
+            'title': self.title,
+            'body': self.body
+        }
+        return payload_request
 
     def prepare_public_comment(self):
         """Build the comment for the public repo."""

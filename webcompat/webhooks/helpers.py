@@ -261,35 +261,6 @@ def msg_log(msg, issue_number):
     log.info(msg)
 
 
-def prepare_accepted_issue(issue_info):
-    """Create the payload for the accepted moderated issue.
-
-    When the issue has been moderated as accepted,
-    we need to change a couple of things in the public space
-
-    - Title
-    - Body
-    - Any labels from the private issue
-    """
-    # Extract the relevant information
-    public_url = issue_info['public_url']
-    body = issue_info['body']
-    title = issue_info['title']
-    issue_number = issue_info['number']
-    # Gets the labels from the body
-    labels = get_issue_labels(body)
-    labels.extend(issue_info['original_labels'])
-    # Let's remove action-needsmoderation in case it's here
-    if 'action-needsmoderation' in labels:
-        labels.remove('action-needsmoderation')
-    # Prepares the payload
-    payload_request = {
-        'labels': labels,
-        'title': title,
-        'body': body}
-    return payload_request
-
-
 def prepare_rejected_issue():
     """Create the payload for the rejected moderated issue.
 
