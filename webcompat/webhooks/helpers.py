@@ -243,7 +243,7 @@ def process_issue_action(issue):
     elif (issue.action == 'milestoned' and scope == 'private' and
           issue.milestoned_with == 'accepted'):
         # private issue have been moderated and we will make it public
-        response = private_issue_moderation(issue)
+        response = issue.moderate_private_issue()
         if response.status_code == 200:
             return ('Moderated issue accepted',
                     200, {'Content-Type': 'text/plain'})
@@ -317,30 +317,6 @@ def prepare_accepted_issue(issue_info):
         'title': title,
         'body': body}
     return payload_request
-
-
-def private_issue_moderation(issue_info):
-    """Write the private issue in public.
-
-    Send a GitHub PATCH to set labels and milestone for the issue.
-
-    PATCH /repos/:owner/:repo/issues/:number
-    {
-        "title": "a string for the title",
-        "body": "the full body",
-        "labels": ['Label1', 'Label2'],
-    }
-
-    Milestone should be already set on needstriage
-
-    we get the destination through the public_url
-    """
-    payload_request = prepare_accepted_issue(issue_info)
-    public_number = get_public_issue_number(issue_info['public_url'])
-    # Preparing the proxy request
-    path = f'repos/{PUBLIC_REPO}/{public_number}'
-    proxy_response = make_request('patch', path, payload_request)
-    return proxy_response
 
 
 def private_issue_rejected(issue_info):

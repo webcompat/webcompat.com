@@ -13,6 +13,7 @@ from webcompat import app
 from webcompat.webhooks.helpers import make_request
 from webcompat.webhooks.helpers import get_issue_labels
 from webcompat.webhooks.helpers import get_public_issue_number
+from webcompat.webhooks.helpers import prepare_accepted_issue
 
 PUBLIC_REPO = app.config['ISSUES_REPO_URI']
 PRIVATE_REPO = app.config['PRIVATE_REPO_URI']
@@ -40,6 +41,30 @@ class WebHookIssue:
         # Preparing the proxy request
         path = f'repos/{PRIVATE_REPO}/{self.number}/comments'
         proxy_response = make_request('post', path, payload)
+        return proxy_response
+
+    def moderate_private_issue(self):
+        """Write the private issue in public.
+
+        Send a GitHub PATCH to set labels and milestone for the issue.
+
+        PATCH /repos/:owner/:repo/issues/:number
+        {
+            "title": "a string for the title",
+            "body": "the full body",
+            "labels": ['Label1', 'Label2'],
+        }
+
+        Milestone should be already set on needstriage
+
+        we get the destination through the public_url
+        """
+        # TODO: move prepare_accepted_issue into the model
+        payload_request = prepare_accepted_issue(issue_info)
+        public_number = get_public_issue_number(issue_info['public_url'])
+        # Preparing the proxy request
+        path = f'repos/{PUBLIC_REPO}/{public_number}'
+        proxy_response = make_request('patch', path, payload_request)
         return proxy_response
 
     def prepare_public_comment(self):

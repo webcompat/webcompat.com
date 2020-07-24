@@ -492,7 +492,8 @@ class TestWebhook(unittest.TestCase):
         actual = helpers.repo_scope(url)
         self.assertEqual(expected, actual)
 
-    @patch('webcompat.webhooks.helpers.private_issue_moderation')
+    @patch.object(webcompat.webhooks.model.WebHookIssue,
+                  'moderate_private_issue')
     def test_patch_acceptable_issue(self, mock_proxy):
         """Test for acceptable issues comes from private repo.
 
@@ -516,7 +517,8 @@ class TestWebhook(unittest.TestCase):
             self.assertEqual(rv.status_code, 200)
             self.assertEqual(rv.content_type, 'text/plain')
 
-    @patch('webcompat.webhooks.helpers.private_issue_moderation')
+    @patch.object(webcompat.webhooks.model.WebHookIssue,
+                  'moderate_private_issue')
     def test_patch_acceptable_issue_problem(self, mock_proxy):
         """Test for accepted issues failed.
 
@@ -594,7 +596,8 @@ class TestWebhook(unittest.TestCase):
             self.assertEqual(rv.status_code, 403)
             self.assertEqual(rv.content_type, 'text/plain')
 
-    @patch('webcompat.webhooks.helpers.private_issue_moderation')
+    @patch.object(webcompat.webhooks.model.WebHookIssue,
+                  'moderate_private_issue')
     def test_patch_wrong_repo_for_moderation(self, mock_proxy):
         """Test for issues in the wrong repo.
 
@@ -641,7 +644,8 @@ class TestWebhook(unittest.TestCase):
             'title': 'www.netflix.com - test private issue accepted'}
         self.assertEqual(expected, actual)
 
-    @patch('webcompat.webhooks.helpers.private_issue_moderation')
+    @patch.object(webcompat.webhooks.model.WebHookIssue,
+                  'moderate_private_issue')
     def test_private_issue_moderated_ok(self, mock_proxy):
         """Test for private issue successfully moderated.
 
@@ -662,18 +666,6 @@ class TestWebhook(unittest.TestCase):
             self.assertEqual(rv.data, b'Moderated issue accepted')
             self.assertEqual(rv.status_code, 200)
             self.assertEqual(rv.content_type, 'text/plain')
-
-    @patch('webcompat.webhooks.helpers.make_request')
-    def test_arguments_private_issue_moderation(self, mock_proxy):
-        """Test accepted issue request with the right arguments."""
-        with webcompat.app.test_client() as c:
-            mock_proxy.return_value.status_code = 200
-            rv = helpers.private_issue_moderation(self.issue_info2)
-            method, url_path, data = mock_proxy.call_args[0]
-            assert url_path == 'repos/webcompat/webcompat-tests/issues/1'
-            assert method == 'patch'
-            assert data == ANY
-            assert 'www.netflix.com - test private issue accepted' in data['title']  # noqa
 
     def test_get_public_issue_number(self):
         """Test the extraction of the issue number from the public_url."""
