@@ -690,7 +690,7 @@ class TestWebhook(unittest.TestCase):
     def test_get_public_issue_number(self):
         """Test the extraction of the issue number from the public_url."""
         public_url = 'https://github.com/webcompat/webcompat-tests/issues/1'
-        self.assertEqual(helpers.get_public_issue_number(public_url), '1')
+        self.assertEqual(WebHookIssue.get_public_issue_number(public_url), '1')
 
     def test_prepare_rejected_issue(self):
         """Test we prepare the right payload for the rejected issue."""

@@ -12,7 +12,6 @@ from typing import Any, Dict, List
 from webcompat import app
 from webcompat.webhooks.helpers import extract_metadata
 from webcompat.webhooks.helpers import get_issue_labels
-from webcompat.webhooks.helpers import get_public_issue_number
 from webcompat.webhooks.helpers import make_request
 from webcompat.webhooks.helpers import prepare_rejected_issue
 
@@ -67,7 +66,7 @@ class WebHookIssue:
         we get the destination through the public_url
         """
         payload_request = self.prepare_accepted_issue()
-        public_number = get_public_issue_number(self.public_url)
+        public_number = WebHookIssue.get_public_issue_number(self.public_url)
         # Preparing the proxy request
         path = f'repos/{PUBLIC_REPO}/{public_number}'
         proxy_response = make_request('patch', path, payload_request)
@@ -101,14 +100,15 @@ class WebHookIssue:
         """Build the comment for the public repo."""
         # public issue data
         public_url = self.public_url
-        public_number = get_public_issue_number(public_url)
+        public_number = WebHookIssue.get_public_issue_number(public_url)
         # prepare the payload
         return f'[Original issue {public_number}]({public_url})'
 
     def reject_private_issue(self):
         """Send a rejected moderation PATCH on the public issue."""
         payload_request = prepare_rejected_issue()
-        public_number = get_public_issue_number(issue_info['public_url'])
+        public_number = WebHookIssue.get_public_issue_number(
+            issue_info['public_url'])
         # Preparing the proxy request
         path = f'repos/{PUBLIC_REPO}/{public_number}'
         proxy_response = make_request('patch', path, payload_request)
@@ -142,6 +142,12 @@ class WebHookIssue:
         payload_request = {'labels': labels, 'milestone': self.milestone}
         proxy_response = make_request('patch', path, payload_request)
         return proxy_response
+
+    @staticmethod
+    def get_public_issue_number(public_url):
+        """Extract the issue number from the public url."""
+        public_number = public_url.strip().rsplit('/', 1)[1]
+        return public_number
 
     def __post_init__(self, payload):
         """Build up the model from the initial WebHook payload."""
