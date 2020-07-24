@@ -35,6 +35,12 @@ class WebHookIssue:
     milestone: str = ''
     milestoned_with: str = ''
 
+    def close_private_issue(self):
+        """Mark the private issue as closed."""
+        path = f'repos/{PRIVATE_REPO}/{self.number}'
+        self.state = 'closed'
+        make_request('patch', path, {'state': self.state})
+
     def comment_public_uri(self):
         """Publish a comment on the private issue with the public uri."""
         payload = {'body': self.prepare_public_comment()}

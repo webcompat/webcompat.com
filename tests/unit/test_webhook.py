@@ -402,6 +402,15 @@ class TestWebhook(unittest.TestCase):
         post_signature = 'sha1=wrong'
         self.assertFalse(helpers.signature_check(key, post_signature, payload))
 
+    def test_WebHookIssue_close_private_issue(self):
+        """Test issue state that is sent to GitHub."""
+        with webcompat.app.test_request_context():
+            with patch('webcompat.webhooks.helpers.make_request') as proxy:
+                proxy.return_value.status_code == 200
+                issue = WebHookIssue(**self.issue_info4)
+                issue.close_private_issue()
+                assert issue.state == 'closed'
+
     def test_WebHookIssue_tag_as_public(self):
         """Test the core actions on new opened issues for WebHooks."""
         # A 200 response

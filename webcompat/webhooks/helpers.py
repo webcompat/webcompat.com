@@ -245,6 +245,8 @@ def process_issue_action(issue):
         # private issue have been moderated and we will make it public
         response = issue.moderate_private_issue()
         if response.status_code == 200:
+            # if it succeeded, we can close the private issue
+            issue.close_private_issue()
             return ('Moderated issue accepted',
                     200, {'Content-Type': 'text/plain'})
         else:
