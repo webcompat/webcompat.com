@@ -4,6 +4,10 @@
 2. New features: affect minor number
 3. API endpoint changes or (major) dependency version updates: affect major number
 
+## 36.0.0 - 2020-07-27
+
+* Fixes #3412 - Udate python dependencies [Pull #3413](https://github.com/webcompat/webcompat.com/pull/3413)
+
 ## 35.0.2 - 2020-07-20
 
 * Fixes #3401 - Don't modify the file_path inside bust_cache [Pull #3407](https://github.com/webcompat/webcompat.com/pull/3407)
