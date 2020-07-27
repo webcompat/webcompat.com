@@ -28,7 +28,8 @@
   --color-second: rgba(64, 64, 64, 1); /* #404040 */
   --color-third: rgba(240, 240, 240, 1); /* #f0f0f0 */
   --color-fourth: rgba(192, 255, 238, 1); /* #c0ffee */
-  --color-form: rgba(0, 0, 0, .12); /* #000000 88% transparency */
+  --color-form: rgba(0, 0, 0, .4); /* #000000 40% transparency */
+  --color-footer: rgba(0, 0, 0, .12); /* #000000 12% transparency */
   --color-default: rgba(196, 196, 196, 1); /* c4c4c4 */
   --color-error: rgba(204, 23, 23, 1); /* #CC1717 */
   --color-error-transparent: rgba(204, 23, 23, .8); /* #CC1717 20% transparency */

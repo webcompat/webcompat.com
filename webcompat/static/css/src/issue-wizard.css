@@ -435,11 +435,7 @@
 }
 
 .issue-form .text-field {
-  border-color: var(--screenshot-shadow);
-  font-size: 14px;
-  font-weight: 200;
   padding: 4px 32px 5px 8px;
-  transition: box-shadow .3s;
 }
 
 .with-validation-icons.is-validated .input-wrapper::after,
@@ -487,9 +483,6 @@
 }
 
 .low .text-field {
-  border-radius: 2px;
-  color: var(--color-second);
-  font-weight: 200;
   margin-bottom: 17px;
   padding: 5px 32px 7px 8px;
 }
@@ -498,8 +491,8 @@
   border-color: var(--wizard-step-error);
 }
 
-.low .text-field::placeholder {
-  color: var(--input-placeholder);
+.issue-form .is-validated .text-field {
+  border-color: var(--issue-selected-outline);
 }
 
 .issue-btn {
@@ -651,14 +644,6 @@
   height: 28px;
   right: -11px;
   width: 28px;
-}
-
-.issue-form .is-validated .text-field {
-  border-color: var(--issue-selected-outline);
-}
-
-.issue-form .text-field:focus {
-  box-shadow: 0 0 0 3px var(--issue-type-bg);
 }
 
 #browsers li {
@@ -1031,18 +1016,15 @@
     display: none;
   }
 
-  .issue-form .text-field {
-    border-color: var(--color-form);
-    font-size: 90%;
+  .step-url .text-field {
     font-weight: 600;
+  }
+
+  .issue-form .text-field {
     padding: 11px 36px 11px 8px;
   }
 
   .low .text-field {
-    border-radius: 2px;
-    color: var(--color-second);
-    font-weight: 200;
-    margin-bottom: 17px;
     padding: 5px 32px 7px 8px;
   }
 

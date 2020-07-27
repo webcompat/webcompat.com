@@ -83,9 +83,10 @@
   margin: 0 auto;
   max-width: var(--unit-modul-l);
   min-width: var(--unit-modul-s);
+  padding: 0 10px;
   position: absolute;
   right: 0;
-  top: 1px;
+  top: 5px;
   transform: rotateY(-90deg);
   transition: all .2s ease 0s;
   visibility: hidden;
@@ -108,7 +109,7 @@
   float: right;
   position: relative;
   right: 10px;
-  top: -35px;
+  top: -32px;
   z-index: 1300;
 }
 
