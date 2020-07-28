@@ -142,19 +142,8 @@
 }
 
 .label-editor-header .nav-button {
-  margin-top: -10px;
-}
-
-@media all and (min-width: 893.01px) {
-  .label-editor-header .nav-button {
-    margin-right: 5px;
-  }
-}
-
-@media all and (max-width: 893px) {
-  .label-editor-header .nav-button {
-    margin-right: -1px;
-  }
+  margin-left: 10px;
+  margin-top: -2px;
 }
 
 .wc-Issue-categoryEditor-button .label-editorLauncher {

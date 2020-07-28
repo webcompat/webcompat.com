@@ -11,50 +11,11 @@
   padding: 10px 0 35px;
 }
 
-.form-element-bottom {
-  display: flex;
-  flex-flow: column nowrap;
-}
-
-.form-element-bottom .form-button {
-  margin-top: auto;
-}
-
 .form-element {
   margin: 0 0 20px;
   max-width: 100%;
   padding: 0;
   position: relative;
-}
-
-.form-button-multiple {
-  align-items: center;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  margin-left: -10px;
-  margin-right: -10px;
-  max-width: none;
-}
-
-.form-button-multiple .button-wrapper {
-  cursor: pointer;
-  display: flex;
-  flex: 1 1 auto;
-  margin: 20px 10px 0;
-  position: relative;
-}
-
-.form-button-multiple .button-wrapper .button {
-  flex: 1;
-}
-
-.form-button-multiple .button-wrapper .button:disabled {
-  pointer-events: none;
-}
-
-.form-button-multiple .button-wrapper:hover .button {
-  opacity: .85;
 }
 
 .form-field {
@@ -87,13 +48,6 @@
   visibility: hidden;
 }
 
-.form-required::after {
-  color: var(--color-error);
-  content: "*";
-  padding-left: 7px;
-  padding-right: 7px;
-}
-
 .form-label-message .form-label {
   display: inline-block;
 }
@@ -103,15 +57,6 @@
   color: var(--color-error);
   display: block;
   font-weight: 700;
-}
-
-/* form text privacy */
-.form-text-privacy {
-  background-color: var(--base-colorDark);
-  border-radius: 5px;
-  font-size: 14px;
-  padding: 6px;
-  text-align: center;
 }
 
 /* * Form input[type="text"], textarea (text-field) */
@@ -126,26 +71,27 @@
   min-height: 27px;
   padding: 8px 24px 8px 8px;
   position: relative;
+  transition: box-shadow .3s;
   width: 100%;
   z-index: 2;
 }
 
 .text-field:focus {
-  border-bottom: 1px solid var(--color-first);
+  box-shadow: 0 0 0 2px var(--issue-type-bg);
   outline: 1px solid transparent;
-  transition: border-bottom 1s linear;
+}
+
+@media (min-width: 665px) {
+  .text-field {
+    font-size: 100%;
+  }
+
+  .text-field:focus {
+    box-shadow: 0 0 0 3px var(--issue-type-bg);
+  }
 }
 
 /* * Form input[type="text"] validation */
-
-.form-input-validation {
-  display: inline-block;
-  position: relative;
-  text-align: right;
-  top: -2em;
-  width: 100%;
-  z-index: 0;
-}
 
 .is-validated .check::after {
   background-image: url("../../img/svg/icons/svg-checkmark.svg");
