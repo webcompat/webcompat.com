@@ -77,7 +77,8 @@ def after_request(response):
     session_db.remove()
     add_sec_headers(response)
     add_csp(response)
-    ab_init(response)
+    if app.config['AB_EXPERIMENTS']:
+        ab_init(response)
     return response
 
 

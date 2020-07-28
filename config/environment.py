@@ -73,6 +73,9 @@ if LOCALHOST:
     ANONYMOUS_REPORTING_ENABLED = strtobool(
         os.environ.get("ANONYMOUS_REPORTING", "on")
     )
+    AB_EXPERIMENTS = strtobool(
+        os.environ.get("AB_EXPERIMENT", "off")
+    )
 
 # BUG STATUS
 # The id will be initialized when the app is started.
