@@ -32,6 +32,18 @@ registerSuite("Reporting through passing GET params", {
         .then(function (value) {
           assert.equal(value, true);
         })
+        .end()
+        .findByCssSelector("#desc-url")
+        .getAttribute("class")
+        .then((className) => {
+          assert.notInclude(className, "is-hidden");
+        })
+        .end()
+        .findByCssSelector("#desc-no-url")
+        .getAttribute("class")
+        .then((className) => {
+          assert.include(className, "is-hidden");
+        })
         .end();
     },
   },
