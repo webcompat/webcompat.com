@@ -8,7 +8,6 @@
 
 from dataclasses import dataclass
 from dataclasses import field
-from dataclasses import InitVar
 from typing import Any
 from typing import Dict
 from typing import List
@@ -26,18 +25,45 @@ PRIVATE_REPO = app.config['PRIVATE_REPO_URI']
 @dataclass
 class WebHookIssue:
     """WebCompat Issue Model for WebHook consumption"""
-    payload: InitVar[Dict[str, Any]]
-    action: str = field(init=False)
-    body: str = field(init=False)
-    domain: str = field(init=False)
-    number: int = field(init=False)
-    public_url: str = field(init=False)
-    repository_url: str = field(init=False)
-    state: str = field(init=False)
-    title: str = field(init=False)
-    original_labels: List[str] = field(init=False)
-    milestone: str = ''
-    milestoned_with: str = ''
+    action: str
+    body: str
+    domain: str
+    number: int
+    public_url: str
+    repository_url: str
+    state: str
+    title: str
+    original_labels: List[str]
+    milestone: str
+    milestoned_with: str
+
+    @classmethod
+    def from_dict(cls, payload):
+        """Class method to allow instantiation from a GitHub response dict."""
+        # Extract the title and the body
+        issue = payload.get('issue')
+        full_title = issue.get('title', 'Weird_Title - Inspect')
+        labels = issue.get('labels', [])
+        issue_body = issue.get('body')
+        domain = full_title.partition(' ')[0]
+        public_url = extract_metadata(issue_body).get('public_url', '').strip()
+        original_labels = [label['name'] for label in labels]
+        # webhook with a milestone already set
+        milestone = ''
+        if issue.get('milestone'):
+            milestone = issue['milestone']['title']
+        # webhook with a milestoned action
+        milestoned_with = ''
+        if payload.get('milestone'):
+            milestoned_with = payload.get('milestone')['title']
+
+        return cls(action=payload.get('action'), body=issue_body,
+                   domain=domain, number=issue.get('number'),
+                   public_url=public_url,
+                   repository_url=issue.get('repository_url'),
+                   state=issue.get('state'), title=full_title,
+                   original_labels=original_labels,
+                   milestone=milestone, milestoned_with=milestoned_with)
 
     def close_private_issue(self):
         """Mark the private issue as closed."""
@@ -152,28 +178,3 @@ class WebHookIssue:
         """Extract the issue number from the public url."""
         public_number = public_url.strip().rsplit('/', 1)[1]
         return public_number
-
-    def __post_init__(self, payload):
-        """Build up the model from the initial WebHook payload."""
-        # Extract the title and the body
-        issue = payload.get('issue')
-        full_title = issue.get('title', 'Weird_Title - Inspect')
-        labels = issue.get('labels', [])
-        issue_body = issue.get('body')
-        public_url = extract_metadata(issue_body).get('public_url', '')
-        # Create the issue dictionary
-        self.action = payload.get('action')
-        self.body = issue_body
-        self.domain = full_title.partition(' ')[0]
-        self.number = issue.get('number')
-        self.public_url = public_url.strip()
-        self.repository_url = issue.get('repository_url')
-        self.state = issue.get('state')
-        self.title = full_title
-        self.original_labels = [label['name'] for label in labels]
-        # webhook with a milestone already set
-        if issue.get('milestone'):
-            self.milestone = issue['milestone']['title']
-        # webhook with a milestoned action
-        if payload.get('milestone'):
-            self.milestoned_with = payload.get('milestone')['title']

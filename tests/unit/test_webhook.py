@@ -384,13 +384,13 @@ class TestWebhook(unittest.TestCase):
         """
         json_event, signature = event_data('private_issue_opened.json')
         payload = json.loads(json_event)
-        issue = WebHookIssue(payload)
+        issue = WebHookIssue.from_dict(payload)
         expected = self.issue_info4
         assert expected == asdict(issue)
 
         json_event, signature = event_data('private_milestone_accepted.json')
         payload = json.loads(json_event)
-        issue = WebHookIssue(payload)
+        issue = WebHookIssue.from_dict(payload)
         expected = self.issue_info2
         assert expected == asdict(issue)
 
@@ -414,7 +414,7 @@ class TestWebhook(unittest.TestCase):
                 proxy.return_value.status_code == 200
                 json_event, signature = event_data('private_issue_opened.json')
                 payload = json.loads(json_event)
-                issue = WebHookIssue(payload)
+                issue = WebHookIssue.from_dict(payload)
                 issue.close_private_issue()
                 assert issue.state == 'closed'
 
@@ -423,7 +423,7 @@ class TestWebhook(unittest.TestCase):
         # A 200 response
         json_event, signature = event_data('new_event_valid.json')
         payload = json.loads(json_event)
-        issue = WebHookIssue(payload)
+        issue = WebHookIssue.from_dict(payload)
         with patch.object(webcompat.webhooks.model.WebHookIssue,
                           'tag_as_public') as proxy:
             proxy.return_value.status_code = 200
@@ -649,7 +649,7 @@ class TestWebhook(unittest.TestCase):
         mock_priority.return_value = 'priority-critical'
         json_event, signature = event_data('private_milestone_accepted.json')
         payload = json.loads(json_event)
-        issue = WebHookIssue(payload)
+        issue = WebHookIssue.from_dict(payload)
         actual = issue.prepare_accepted_issue()
         expected = {
             'body': '<!-- @browser: Firefox 55.0 -->\n'
@@ -710,7 +710,7 @@ class TestWebhook(unittest.TestCase):
         expected_payload = '{"body": "[Original issue 1](https://github.com/webcompat/webcompat-tests/issues/1)"}'  # noqa
         json_event, signature = event_data('private_issue_opened.json')
         payload = json.loads(json_event)
-        issue = WebHookIssue(payload)
+        issue = WebHookIssue.from_dict(payload)
         assert issue.prepare_public_comment() == json.loads(
             expected_payload).get('body')
 
