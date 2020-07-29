@@ -8,6 +8,13 @@
 
 from dataclasses import dataclass
 
+from jinja2 import Environment
+from jinja2 import PackageLoader
+from jinja2 import select_autoescape
+from jinja2 import Template
+
+
+
 @dataclass
 class Issue:
     """WebCompat Issue Model.
@@ -61,4 +68,19 @@ class Issue:
     def __post_init__(self):
         if self.number < 1:
             raise ValueError('Issue number can only be positive')
+
+
+    def as_html(self, template='archive'):
+        """Create an html rendering of an issue.
+
+        template: directory name with all subtemplates
+        it returns an html file with the content of the issue.
+        """
+        env = Environment(
+            loader=PackageLoader('tools.archive', f'templates/{template}'),
+            autoescape=select_autoescape(['html'])
+        )
+        issue_template = env.get_template('issue.html')
+        html_issue = issue_template.render(number = self.number)
+        return html_issue
 

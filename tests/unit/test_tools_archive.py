@@ -16,9 +16,21 @@ TODO: test that the issue fetching has failed
 TODO: test that the issue comments fetching has failed
 """
 
+import os
+
 import pytest
 
 from tools.archive import model
+
+# Some machinery for opening our test files
+def get_fixture(filename):
+    """Return a tuple with the content and its signature."""
+    current_root = os.path.realpath(os.curdir)
+    fixture_path = 'tests/fixtures/tools'
+    path = os.path.join(current_root, fixture_path, filename)
+    with open(path, 'r') as f:
+        data = f.read()
+    return data
 
 
 def test_issue_number_is_positive_integer():
@@ -28,3 +40,10 @@ def test_issue_number_is_positive_integer():
     assert str(ex_info.value) == 'Issue number can only be positive'
     issue = model.Issue(100)
     assert type(issue.number) is int
+
+
+def test_save_as_html():
+    """Test the html rendering of an Issue."""
+    issue = model.Issue(100)
+    archived_issue = get_fixture('issue_100.html')
+    assert issue.as_html(template='archive') == archived_issue
