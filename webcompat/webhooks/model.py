@@ -73,7 +73,8 @@ class WebHookIssue:
 
     def comment_public_uri(self):
         """Publish a comment on the private issue with the public uri."""
-        payload = {'body': self.prepare_public_comment()}
+        comment = self.prepare_public_comment()
+        payload = {'body': comment}
         # Preparing the proxy request
         path = f'repos/{PRIVATE_REPO}/{self.number}/comments'
         proxy_response = make_request('post', path, payload)
