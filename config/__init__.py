@@ -248,15 +248,8 @@ AB_DEFAULTS = {
 EXP_MAX_AGE = int(os.environ.get('EXP_MAX_AGE', 0))
 
 # AB testing config
-AB_EXPERIMENTS = {
-    'exp': {
-        'variations': {
-            'v1': get_variation('V1_VARIATION', AB_VARIATIONS, AB_DEFAULTS),
-            'v2': get_variation('V2_VARIATION', AB_VARIATIONS, AB_DEFAULTS),
-        },
-        'max-age': EXP_MAX_AGE
-    }
-}
+# See /docs/ab-testing.md for configuration instructions
+AB_EXPERIMENTS = {}
 
 
 from webcompat import app  # noqa

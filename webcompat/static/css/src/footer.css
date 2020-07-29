@@ -1,5 +1,5 @@
 .footer-item {
-  border-bottom: 1px solid var(--color-form);
+  border-bottom: 1px solid var(--color-footer);
   padding: var(--unit-space) var(--unit-gap);
 }
 
