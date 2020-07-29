@@ -53,8 +53,6 @@ const submitForm = function () {
   const dfd = $.Deferred();
   const formEl = form.get(0);
 
-  sendAnalyticsEvent("success", "end");
-
   formEl.submit();
   dfd.resolve();
   return dfd.promise();
@@ -62,6 +60,7 @@ const submitForm = function () {
 
 const onFormSubmit = (event) => {
   event.preventDefault();
+  sendAnalyticsEvent("success", "end");
   disableSubmits();
   showLoadingIndicator();
   uploadConsoleLogs().always(() => uploadImage().then(submitForm));
