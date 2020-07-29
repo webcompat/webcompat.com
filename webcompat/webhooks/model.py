@@ -6,8 +6,12 @@
 
 """WebCompat Issue Model for webhooks."""
 
-from dataclasses import dataclass, field, InitVar
-from typing import Any, Dict, List
+from dataclasses import dataclass
+from dataclasses import field
+from dataclasses import InitVar
+from typing import Any
+from typing import Dict
+from typing import List
 
 from webcompat import app
 from webcompat.webhooks.helpers import extract_metadata
