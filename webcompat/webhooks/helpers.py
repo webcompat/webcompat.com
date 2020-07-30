@@ -167,6 +167,16 @@ def make_request(method, path, payload_request):
         payload_request))
 
 
+def make_response(body, status_code):
+    """Helper method to return text/plain response with body & status_code"""
+    return (body, status_code, {'Content-Type': 'text/plain'})
+
+
+def oops():
+    """Lazy way to return an oops reponse."""
+    return make_response('oops', 400)
+
+
 def process_issue_action(issue):
     """Route the actions and provide different responses.
 
@@ -187,23 +197,23 @@ def process_issue_action(issue):
     # We do not process further in case
     # we don't know what we are dealing with
     if scope == 'unknown':
-        return ('Wrong repository', 403, {'Content-Type': 'text/plain'})
+        return make_response('Wrong repository', 403)
     if issue.action == 'opened' and scope == 'public':
         # we are setting labels on each new open issues
         response = issue.tag_as_public()
         if response.status_code == 200:
-            return ('gracias, amigo.', 200, {'Content-Type': 'text/plain'})
+            return make_response('gracias, amigo.', 200)
         else:
             msg_log('public:opened labels failed', issue_number)
-            return ('ooops', 400, {'Content-Type': 'text/plain'})
+            return oops()
     elif issue.action == 'opened' and scope == 'private':
         # webcompat-bot needs to comment on this issue with the URL
         response = issue.comment_public_uri()
         if response.status_code == 200:
-            return ('public url added', 200, {'Content-Type': 'text/plain'})
+            return make_response('public url added', 200)
         else:
             msg_log('comment failed', issue_number)
-            return ('ooops', 400, {'Content-Type': 'text/plain'})
+            return oops()
     elif (issue.action == 'milestoned' and scope == 'private' and
           issue.milestoned_with == 'accepted'):
         # private issue have been moderated and we will make it public
@@ -211,24 +221,22 @@ def process_issue_action(issue):
         if response.status_code == 200:
             # if it succeeded, we can close the private issue
             issue.close_private_issue()
-            return ('Moderated issue accepted',
-                    200, {'Content-Type': 'text/plain'})
+            return make_response('Moderated issue accepted', 200)
         else:
             msg_log('private:moving to public failed', issue.number)
-            return ('ooops', 400, {'Content-Type': 'text/plain'})
+            return oops()
     elif (scope == 'private' and issue.state == 'closed' and
           not issue.milestone == 'accepted'):
         # private issue has been closed. It is rejected
         # We need to patch with a template.
         response = issue.reject_private_issue()
         if response.status_code == 200:
-            return ('Moderated issue rejected',
-                    200, {'Content-Type': 'text/plain'})
+            return make_response('Moderated issue rejected', 200)
         else:
             msg_log('public rejection failed', issue.number)
-            return ('ooops', 400, {'Content-Type': 'text/plain'})
+            return oops()
     else:
-        return ('Not an interesting hook', 403, {'Content-Type': 'text/plain'})
+        return make_response('Not an interesting hook', 403)
 
 
 def repo_scope(source_repo):

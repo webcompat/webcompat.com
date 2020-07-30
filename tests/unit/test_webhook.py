@@ -537,7 +537,7 @@ class TestWebhook(unittest.TestCase):
     def test_patch_acceptable_issue_problem(self, mock_proxy):
         """Test for accepted issues failed.
 
-        payload: 'ooops'
+        payload: 'oops'
         status: 400
         content-type: text/plain
         """
@@ -553,7 +553,7 @@ class TestWebhook(unittest.TestCase):
                 data=json_event,
                 headers=headers
             )
-            self.assertEqual(rv.data, b'ooops')
+            self.assertEqual(rv.data, b'oops')
             self.assertEqual(rv.status_code, 400)
             self.assertEqual(rv.content_type, 'text/plain')
 
@@ -744,7 +744,7 @@ class TestWebhook(unittest.TestCase):
         """Test public uri comment which fails
         let's say the source url is missing.
 
-        payload: 'ooops'
+        payload: 'oops'
         status: 400
         content-type: text/plain
         """
@@ -760,7 +760,7 @@ class TestWebhook(unittest.TestCase):
                 data=json_event,
                 headers=headers
             )
-            assert rv.data == b'ooops'
+            assert rv.data == b'oops'
             assert rv.status_code == 400
             assert rv.content_type == 'text/plain'
 
