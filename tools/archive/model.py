@@ -7,6 +7,7 @@
 """WebCompat Issue Model for archives."""
 
 from dataclasses import dataclass
+from dataclasses import field
 
 from jinja2 import Environment
 from jinja2 import PackageLoader
@@ -63,13 +64,28 @@ class Issue:
         https://broken.example.org/punk/cat
     """
     number: int
-    title: str = ''
-
-    def __post_init__(self):
-        if self.number < 1:
-            raise ValueError('Issue number can only be positive')
+    title: str
 
 
+    @classmethod
+    def from_dict(cls, payload):
+        """Class method to allow instantiation from a GitHub response dict."""
+        # GitHub payload contains an issue part
+        issue = payload.get('issue')
+        return cls(
+            number = issue.get('number'),
+            title = issue.get('title')
+        )
+
+
+@dataclass
+class ArchivedIssue(Issue):
+    """WebCompat Archived Issue Model.
+
+    This provide a couple of additional methods
+    to make it possible to archive the issue as html or any format
+    dimmed important. It inherits from a larger Issue model
+    """
     def as_html(self, template='archive'):
         """Create an html rendering of an issue.
 
@@ -83,4 +99,3 @@ class Issue:
         issue_template = env.get_template('issue.html')
         html_issue = issue_template.render(number = self.number)
         return html_issue
-

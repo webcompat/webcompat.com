@@ -22,6 +22,15 @@ import pytest
 
 from tools.archive import model
 
+# TODO: Probably create a fixture with a real json loaded as dict
+PAYLOAD = {
+    'issue': {
+        'number': 100,
+        'title': 'tamala2010.example.org - A Punk Cat in Space'
+    }
+}
+
+
 
 def get_fixture(filename):
     """Return the data fixture."""
@@ -33,17 +42,15 @@ def get_fixture(filename):
     return data
 
 
-def test_issue_number_is_positive_integer():
-    """Test initial values of the Issue object."""
-    with pytest.raises(ValueError) as ex_info:
-        model.Issue(-1)
-    assert str(ex_info.value) == 'Issue number can only be positive'
-    issue = model.Issue(100)
-    assert type(issue.number) is int
-
-
-def test_save_as_html():
-    """Test the html rendering of an Issue."""
-    issue = model.Issue(100)
+def test_render_as_html():
+    """Test the html rendering of an ArchivedIssue."""
+    issue = model.ArchivedIssue.from_dict(PAYLOAD)
     archived_issue = get_fixture('issue_100.html')
     assert issue.as_html(template='archive') == archived_issue
+
+
+def test_issue_init_from_dict():
+    """Test we get the right set of data."""
+    issue = model.Issue.from_dict(PAYLOAD)
+    assert issue.number == 100
+    assert issue.title == 'tamala2010.example.org - A Punk Cat in Space'
