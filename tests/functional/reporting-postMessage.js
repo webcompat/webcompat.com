@@ -46,6 +46,18 @@ registerSuite("Reporting through postMessage", {
             assert.include(value, "type-marfeel");
           })
           .end()
+          .findByCssSelector("#desc-url")
+          .getAttribute("class")
+          .then((className) => {
+            assert.notInclude(className, "is-hidden");
+          })
+          .end()
+          .findByCssSelector("#desc-no-url")
+          .getAttribute("class")
+          .then((className) => {
+            assert.include(className, "is-hidden");
+          })
+          .end()
       );
     },
   },

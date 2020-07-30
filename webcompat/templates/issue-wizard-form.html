@@ -15,15 +15,16 @@
       <div class="input-control half">
         <div class="col">
           <div class="input-description">
-            {% if request.args.get('url') %}
+            <div id="desc-url" class="is-hidden">
               Thank you for filing a web compatibility issue.
               <a href="#" class="popup-trigger mobile-only" data-popup-trigger="what-is-webcompat">Learn more</a>
               <br>
               Do we have the <strong>correct site?</strong>
-            {% else %}
+            </div>
+            <div id="desc-no-url">
               <strong>Please enter the URL</strong> where you encountered the web compatibility issue.
               <a href="#" class="popup-trigger mobile-only" data-popup-trigger="what-is-webcompat">Learn more</a>
-            {% endif %}
+            </div>
           </div>
           <div class="form-text form-element js-Form-group form-label-message with-validation-icons">
             {{ form.url.label(class_='form-label is-hidden') }}
