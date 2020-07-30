@@ -22,9 +22,9 @@ import pytest
 
 from tools.archive import model
 
-# Some machinery for opening our test files
+
 def get_fixture(filename):
-    """Return a tuple with the content and its signature."""
+    """Return the data fixture."""
     current_root = os.path.realpath(os.curdir)
     fixture_path = 'tests/fixtures/tools'
     path = os.path.join(current_root, fixture_path, filename)
