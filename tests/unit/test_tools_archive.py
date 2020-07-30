@@ -31,7 +31,6 @@ PAYLOAD = {
 }
 
 
-
 def get_fixture(filename):
     """Return the data fixture."""
     current_root = os.path.realpath(os.curdir)
