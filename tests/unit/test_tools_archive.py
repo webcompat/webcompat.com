@@ -57,7 +57,13 @@ def test_issue_init_from_dict():
 
 
 def test_issue_archived_header():
-    """Test that the page has an archived notice"""
+    """Test that the page has an archived notice."""
     archive_msg = 'This issue has been archived. It is now read-only.'
     archived_issue = get_fixture('issue_100.html')
     assert archive_msg in archived_issue
+
+
+def test_issue_links_to_home():
+    """Test that the template has a link to the home page."""
+    archived_issue = get_fixture('issue_100.html')
+    assert '<a href="/" title="Navigate to main page."' in archived_issue
