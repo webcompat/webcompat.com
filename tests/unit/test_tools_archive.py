@@ -45,6 +45,7 @@ def test_render_as_html():
     """Test the html rendering of an ArchivedIssue."""
     issue = model.ArchivedIssue.from_dict(PAYLOAD)
     archived_issue = get_fixture('issue_100.html')
+    print(archived_issue)
     assert issue.as_html(template='archive') == archived_issue
 
 
@@ -53,3 +54,10 @@ def test_issue_init_from_dict():
     issue = model.Issue.from_dict(PAYLOAD)
     assert issue.number == 100
     assert issue.title == 'tamala2010.example.org - A Punk Cat in Space'
+
+
+def test_issue_archived_header():
+    """Test that the page has an archived notice"""
+    archive_msg = 'This issue has been archived. It is now read-only.'
+    archived_issue = get_fixture('issue_100.html')
+    assert archive_msg in archived_issue
