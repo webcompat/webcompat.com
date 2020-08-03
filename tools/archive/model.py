@@ -8,6 +8,7 @@
 
 from dataclasses import dataclass
 from dataclasses import field
+from typing import List
 import pathlib
 
 from jinja2 import Environment
@@ -15,6 +16,12 @@ from jinja2 import PackageLoader
 from jinja2 import select_autoescape
 from jinja2 import Template
 
+
+
+@dataclass
+class Comment:
+    """Model for describing the comments."""
+    pass
 
 
 @dataclass
@@ -64,9 +71,19 @@ class Issue:
     url: str
         https://broken.example.org/punk/cat
     """
+
+    # methods used to initialize values
+    # need to be defined before the variables.
+    def create_comments_list():
+        """Create a list of comments."""
+        return []
+
     number: int
     title: str
     comments_number: int
+    comments: List[Comment] = field(
+        init=False,
+        default_factory=create_comments_list)
 
 
     @classmethod
@@ -85,6 +102,11 @@ class Issue:
         if self.comments_number == 0:
             return False
         return True
+
+
+    def fetch_comments(page=all):
+        """Fetch comments from an issue."""
+        pass
 
 
 @dataclass
@@ -128,3 +150,5 @@ class ArchivedIssue(Issue):
             location.parent.mkdir(parents=True)
         location.write_text(content)
         return location
+
+

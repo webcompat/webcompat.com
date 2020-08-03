@@ -20,13 +20,6 @@ import pytest
 
 from tools.archive import model
 
-# TODO: Probably create a fixture with a real json loaded as dict
-PAYLOAD = {
-        'number': 100,
-        'title': 'tamala2010.example.org - A Punk Cat in Space',
-        'comments': 0
-    }
-
 
 def get_fixture(filename):
     """Return the data fixture."""
@@ -38,14 +31,16 @@ def get_fixture(filename):
 
 def test_render_as_html():
     """Test the html rendering of an ArchivedIssue."""
-    issue = model.ArchivedIssue.from_dict(PAYLOAD)
+    PAYLOAD_100 = json.loads(get_fixture('100.json'))
+    issue = model.ArchivedIssue.from_dict(PAYLOAD_100)
     archived_issue = get_fixture('issue_100.html')
     assert issue.as_html(template='archive') == archived_issue
 
 
 def test_issue_init_from_dict():
     """Test we get the right set of data."""
-    issue = model.Issue.from_dict(PAYLOAD)
+    PAYLOAD_100 = json.loads(get_fixture('100.json'))
+    issue = model.Issue.from_dict(PAYLOAD_100)
     assert issue.number == 100
     assert issue.title == 'tamala2010.example.org - A Punk Cat in Space'
 
@@ -70,7 +65,8 @@ def test_save_issue_in_file(tmp_path):
     expected_location = tmp_root / 'static' / 'issue' / 'issue-100.html'
     expected_archived = get_fixture('issue_100.html')
     # Initialize the issue
-    issue = model.ArchivedIssue.from_dict(PAYLOAD)
+    PAYLOAD_100 = json.loads(get_fixture('100.json'))
+    issue = model.ArchivedIssue.from_dict(PAYLOAD_100)
     # Test it returns the full path to the issue
     location = issue.save(root_dir_path=tmp_root)
     assert type(location) == pathlib.PosixPath
@@ -81,12 +77,43 @@ def test_save_issue_in_file(tmp_path):
 
 def test_issue_has_no_comments_default():
     """Test that an issue has no comments per default."""
-    issue = model.Issue.from_dict(PAYLOAD)
+    PAYLOAD_100 = json.loads(get_fixture('100.json'))
+    issue = model.Issue.from_dict(PAYLOAD_100)
     assert not issue.has_comments()
 
 
 def test_issue_has_comments():
     """Test that an issue has comments."""
-    JSON_PAYLOAD = json.loads(get_fixture('40000.json'))
-    issue = model.Issue.from_dict(JSON_PAYLOAD)
+    PAYLOAD_40000 = json.loads(get_fixture('40000.json'))
+    issue = model.Issue.from_dict(PAYLOAD_40000)
     assert issue.has_comments()
+
+
+def test_comments_fetch():
+    """Test the comments fetching.
+
+    Once the issue has been instantiated, we could go fetch the comments
+    only if requested: `issue.fetch_comments(page=1)`
+    maybe we need `page=1` as a default parameters
+    and a special `page=all` for everything.
+
+    What is happening if the fetching fails totally? partially?
+    the comments_number could be handy for checking we fetched
+    all comments.
+
+    Should there be a model for one Comment as we do for issues?
+
+    On Issue probably we need something like.
+      `comments: List[Comment] = field(default_factory=create_comments_list)`
+
+    return a list of dictionary, each dictionary represents a comment.
+    """
+    # Initialization
+    PAYLOAD_40000 = json.loads(get_fixture('40000.json'))
+    issue = issue = model.Issue.from_dict(PAYLOAD_40000)
+    # Before fetching the comments
+    assert type(issue.comments) == list
+    assert len(issue.comments) == 0
+    # Fetching the comments
+    issue.fetch_comments()
+    assert len(issue.comments) == 1
