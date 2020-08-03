@@ -11,9 +11,13 @@ import json
 import os
 import unittest
 from unittest.mock import ANY
+from unittest.mock import MagicMock
 from unittest.mock import patch
 
 import flask
+import pytest
+from requests.exceptions import HTTPError
+from requests.models import Response
 
 import webcompat
 from webcompat.db import Site
@@ -407,16 +411,29 @@ class TestWebhook(unittest.TestCase):
         post_signature = 'sha1=wrong'
         self.assertFalse(helpers.signature_check(key, post_signature, payload))
 
-    def test_WebHookIssue_close_private_issue(self):
+    @patch('webcompat.helpers.requests.patch')
+    def test_WebHookIssue_close_private_issue(self, mock_patch):
         """Test issue state that is sent to GitHub."""
         with webcompat.app.test_request_context():
-            with patch('webcompat.webhooks.helpers.make_request') as proxy:
-                proxy.return_value.status_code == 200
-                json_event, signature = event_data('private_issue_opened.json')
-                payload = json.loads(json_event)
-                issue = WebHookIssue.from_dict(payload)
+            mock_patch.return_value.status_code == 200
+            json_event, signature = event_data('private_issue_opened.json')
+            payload = json.loads(json_event)
+            issue = WebHookIssue.from_dict(payload)
+            issue.close_private_issue()
+            assert issue.state == 'closed'
+
+    @patch('webcompat.helpers.requests.patch')
+    def test_WebHookIssue_close_private_issue_fails(self, mock_patch):
+        """Test issue state that is sent to GitHub."""
+        with webcompat.app.test_request_context():
+            mock_patch.side_effect = HTTPError()
+            mock_patch.status_code = 400
+            json_event, signature = event_data('private_issue_opened.json')
+            payload = json.loads(json_event)
+            issue = WebHookIssue.from_dict(payload)
+            with pytest.raises(HTTPError):
                 issue.close_private_issue()
-                assert issue.state == 'closed'
+            assert issue.state == 'open'
 
     def test_WebHookIssue_tag_as_public(self):
         """Test the core actions on new opened issues for WebHooks."""
@@ -453,7 +470,7 @@ class TestWebhook(unittest.TestCase):
             'X-Hub-Signature': signature,
         }
         with webcompat.app.test_client() as c:
-            mock_proxy.return_value.status_code = 200
+            mock_proxy.return_value = MagicMock(status_code=200, spec=Response)
             rv = c.post(
                 '/webhooks/labeler',
                 data=json_event,
@@ -509,7 +526,8 @@ class TestWebhook(unittest.TestCase):
 
     @patch.object(webcompat.webhooks.model.WebHookIssue,
                   'moderate_private_issue')
-    def test_patch_acceptable_issue(self, mock_proxy):
+    @patch.object(webcompat.webhooks.model.WebHookIssue, 'close_private_issue')
+    def test_patch_acceptable_issue(self, mock_close, mock_moderate):
         """Test for acceptable issues comes from private repo.
 
         payload: 'Moderated issue accepted'
@@ -522,7 +540,9 @@ class TestWebhook(unittest.TestCase):
             'X-Hub-Signature': signature,
         }
         with webcompat.app.test_client() as c:
-            mock_proxy.return_value.status_code = 200
+            mock_close.return_value = MagicMock(status_code=200, spec=Response)
+            mock_moderate.return_value = MagicMock(
+                status_code=200, spec=Response)
             rv = c.post(
                 '/webhooks/labeler',
                 data=json_event,
@@ -534,7 +554,8 @@ class TestWebhook(unittest.TestCase):
 
     @patch.object(webcompat.webhooks.model.WebHookIssue,
                   'moderate_private_issue')
-    def test_patch_acceptable_issue_problem(self, mock_proxy):
+    @patch.object(webcompat.webhooks.model.WebHookIssue, 'close_private_issue')
+    def test_patch_acceptable_issue_problem(self, mock_close, mock_moderate):
         """Test for accepted issues failed.
 
         payload: 'oops'
@@ -547,19 +568,51 @@ class TestWebhook(unittest.TestCase):
             'X-Hub-Signature': signature,
         }
         with webcompat.app.test_client() as c:
-            mock_proxy.return_value.status_code = 400
+            mock_moderate.side_effect = HTTPError()
+            mock_moderate.status_code = 400
             rv = c.post(
                 '/webhooks/labeler',
                 data=json_event,
                 headers=headers
             )
-            self.assertEqual(rv.data, b'oops')
-            self.assertEqual(rv.status_code, 400)
-            self.assertEqual(rv.content_type, 'text/plain')
+            assert not mock_close.called, 'close_private_issue should not be called'  # noqa
+            assert rv.data == b'oops'
+            assert rv.status_code == 400
+            assert rv.content_type == 'text/plain'
 
     @patch.object(webcompat.webhooks.model.WebHookIssue,
                   'reject_private_issue')
-    def test_patch_not_acceptable_issue(self, mock_proxy):
+    @patch.object(webcompat.webhooks.model.WebHookIssue, 'close_private_issue')
+    def test_patch_acceptable_issue_problem(self, mock_close, mock_reject):
+        """Test for reject issues failed.
+
+        payload: 'oops'
+        status: 400
+        content-type: text/plain
+        """
+        json_event, signature = event_data('private_milestone_closed.json')
+        headers = {
+            'X-GitHub-Event': 'issues',
+            'X-Hub-Signature': signature,
+        }
+        with webcompat.app.test_client() as c:
+            mock_reject.side_effect = HTTPError()
+            mock_reject.status_code = 400
+            rv = c.post(
+                '/webhooks/labeler',
+                data=json_event,
+                headers=headers
+            )
+            assert not mock_close.called, 'close_private_issue should not be called'  # noqa
+            assert rv.data == b'oops'
+            assert rv.status_code == 400
+            assert rv.content_type == 'text/plain'
+
+    @patch.object(webcompat.webhooks.model.WebHookIssue,
+                  'reject_private_issue')
+    @patch.object(webcompat.webhooks.model.WebHookIssue,
+                  'close_private_issue')
+    def test_patch_not_acceptable_issue(self, mock_close, mock_reject):
         """Test for rejected issues from private repo.
 
         payload: 'Moderated issue rejected'
@@ -574,7 +627,10 @@ class TestWebhook(unittest.TestCase):
             'X-Hub-Signature': signature,
         }
         with webcompat.app.test_client() as c:
-            mock_proxy.return_value.status_code = 200
+            mock_close.return_value = MagicMock(status_code=200, spec=Response)
+            mock_reject.return_value = MagicMock(
+                status_code=200, spec=Response)
+
             rv = c.post(
                 '/webhooks/labeler',
                 data=json_event,
@@ -586,7 +642,9 @@ class TestWebhook(unittest.TestCase):
 
     @patch.object(webcompat.webhooks.model.WebHookIssue,
                   'reject_private_issue')
-    def test_patch_acceptable_issue_closed(self, mock_proxy):
+    @patch.object(webcompat.webhooks.model.WebHookIssue,
+                  'close_private_issue')
+    def test_patch_acceptable_issue_closed(self, mock_close, mock_reject):
         """Test for accepted issues being closed.
 
         payload: 'Not an interesting hook'
@@ -603,7 +661,9 @@ class TestWebhook(unittest.TestCase):
             'X-Hub-Signature': signature,
         }
         with webcompat.app.test_client() as c:
-            mock_proxy.return_value.status_code = 200
+            mock_close.return_value = MagicMock(status_code=200, spec=Response)
+            mock_reject.return_value = MagicMock(
+                status_code=200, spec=Response)
             rv = c.post(
                 '/webhooks/labeler',
                 data=json_event,
@@ -629,6 +689,7 @@ class TestWebhook(unittest.TestCase):
             'X-Hub-Signature': signature,
         }
         with webcompat.app.test_client() as c:
+            mock_proxy.return_value = MagicMock(status_code=200, spec=Response)
             rv = c.post(
                 '/webhooks/labeler',
                 data=json_event,
@@ -664,9 +725,12 @@ class TestWebhook(unittest.TestCase):
             'title': 'www.netflix.com - test private issue accepted'}
         self.assertEqual(expected, actual)
 
+    # moderate_private_issue calls close_private_issue, so we have to mock
+    # it as well.
     @patch.object(webcompat.webhooks.model.WebHookIssue,
                   'moderate_private_issue')
-    def test_private_issue_moderated_ok(self, mock_proxy):
+    @patch.object(webcompat.webhooks.model.WebHookIssue, 'close_private_issue')
+    def test_private_issue_moderated_ok(self, mock_close, mock_moderate):
         """Test for private issue successfully moderated.
 
         it returns a 200 code.
@@ -677,7 +741,9 @@ class TestWebhook(unittest.TestCase):
             'X-Hub-Signature': signature,
         }
         with webcompat.app.test_client() as c:
-            mock_proxy.return_value.status_code = 200
+            mock_close.return_value = MagicMock(status_code=200, spec=Response)
+            mock_moderate.return_value = MagicMock(
+                status_code=200, spec=Response)
             rv = c.post(
                 '/webhooks/labeler',
                 data=json_event,
@@ -728,7 +794,7 @@ class TestWebhook(unittest.TestCase):
             'X-Hub-Signature': signature,
         }
         with webcompat.app.test_client() as c:
-            mock_proxy.return_value.status_code = 200
+            mock_proxy.return_value = MagicMock(status_code=200, spec=Response)
             rv = c.post(
                 '/webhooks/labeler',
                 data=json_event,
@@ -740,7 +806,7 @@ class TestWebhook(unittest.TestCase):
 
     @patch.object(webcompat.webhooks.model.WebHookIssue, 'comment_public_uri')
     def test_WebHookIssue_comment_public_uri_for_webhooks_fail(self,
-                                                               mock_proxy):
+                                                               mock_comment):
         """Test public uri comment which fails
         let's say the source url is missing.
 
@@ -754,7 +820,8 @@ class TestWebhook(unittest.TestCase):
             'X-Hub-Signature': signature,
         }
         with webcompat.app.test_client() as c:
-            mock_proxy.return_value.status_code = 400
+            mock_comment.side_effect = HTTPError()
+            mock_comment.status_code = 400
             rv = c.post(
                 '/webhooks/labeler',
                 data=json_event,

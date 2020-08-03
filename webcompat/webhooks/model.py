@@ -12,6 +12,8 @@ from typing import Any
 from typing import Dict
 from typing import List
 
+from requests.exceptions import HTTPError
+
 from webcompat import app
 from webcompat.webhooks.helpers import extract_metadata
 from webcompat.webhooks.helpers import get_issue_labels
@@ -68,8 +70,13 @@ class WebHookIssue:
     def close_private_issue(self):
         """Mark the private issue as closed."""
         path = f'repos/{PRIVATE_REPO}/{self.number}'
-        self.state = 'closed'
-        make_request('patch', path, {'state': self.state})
+        try:
+            make_request('patch', path, {'state': 'closed'})
+        except HTTPError as e:
+            # pass the error up to process_issue_action
+            raise e
+        else:
+            self.state = 'closed'
 
     def comment_public_uri(self):
         """Publish a comment on the private issue with the public uri."""
@@ -77,8 +84,7 @@ class WebHookIssue:
         payload = {'body': comment}
         # Preparing the proxy request
         path = f'repos/{PRIVATE_REPO}/{self.number}/comments'
-        proxy_response = make_request('post', path, payload)
-        return proxy_response
+        make_request('post', path, payload)
 
     def moderate_private_issue(self):
         """Write the private issue in public.
@@ -94,14 +100,14 @@ class WebHookIssue:
 
         Milestone should be already set on needstriage
 
-        we get the destination through the public_url
+        we get the destination through the public_url.
+        If it succeeds, we close the private issue.
         """
         payload_request = self.prepare_accepted_issue()
         public_number = WebHookIssue.get_public_issue_number(self.public_url)
         # Preparing the proxy request
         path = f'repos/{PUBLIC_REPO}/{public_number}'
-        proxy_response = make_request('patch', path, payload_request)
-        return proxy_response
+        make_request('patch', path, payload_request)
 
     def prepare_accepted_issue(self):
         """Create the payload for the accepted moderated issue.
@@ -142,8 +148,7 @@ class WebHookIssue:
             issue_info['public_url'])
         # Preparing the proxy request
         path = f'repos/{PUBLIC_REPO}/{public_number}'
-        proxy_response = make_request('patch', path, payload_request)
-        return proxy_response
+        make_request('patch', path, payload_request)
 
     def tag_as_public(self):
         """Set the core actions on new opened issues.
@@ -171,8 +176,7 @@ class WebHookIssue:
         # Preparing the proxy request to the public repo
         path = f'repos/{PUBLIC_REPO}/{self.number}'
         payload_request = {'labels': labels, 'milestone': self.milestone}
-        proxy_response = make_request('patch', path, payload_request)
-        return proxy_response
+        make_request('patch', path, payload_request)
 
     @staticmethod
     def get_public_issue_number(public_url):

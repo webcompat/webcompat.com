@@ -40,4 +40,4 @@ def hooklistener():
     elif event_type == 'ping':
         return make_response('pong', 200)
     # If nothing worked as expected, the default response is 403.
-        return make_response('Not an interesting hook', 403)
+    return make_response('Not an interesting hook', 403)

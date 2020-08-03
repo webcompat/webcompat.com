@@ -11,6 +11,8 @@ import json
 import logging
 import re
 
+from requests.exceptions import HTTPError
+
 from webcompat import app
 from webcompat.db import Site
 from webcompat.db import site_db
@@ -161,10 +163,15 @@ def get_issue_labels(issue_body):
 
 
 def make_request(method, path, payload_request):
-    """Helper method to wrap webcompat.helpers.proxy_request."""
+    """Helper method to wrap webcompat.helpers.proxy_request.
+
+    Throws requests.exceptions.HTTPError for a non-2XX or 3XX response.
+    """
     headers = {'Authorization': f'token {app.config["OAUTH_TOKEN"]}'}
-    return proxy_request(method, path, headers=headers, data=json.dumps(
+    r = proxy_request(method, path, headers=headers, data=json.dumps(
         payload_request))
+    r.raise_for_status()
+    return r
 
 
 def make_response(body, status_code):
@@ -200,41 +207,48 @@ def process_issue_action(issue):
         return make_response('Wrong repository', 403)
     if issue.action == 'opened' and scope == 'public':
         # we are setting labels on each new open issues
-        response = issue.tag_as_public()
-        if response.status_code == 200:
-            return make_response('gracias, amigo.', 200)
-        else:
-            msg_log('public:opened labels failed', issue_number)
+        try:
+            issue.tag_as_public()
+        except HTTPError as e:
+            msg_log(f'public:opened labels failed ({e})', issue_number)
             return oops()
+        else:
+            return make_response('gracias, amigo.', 200)
     elif issue.action == 'opened' and scope == 'private':
         # webcompat-bot needs to comment on this issue with the URL
-        response = issue.comment_public_uri()
-        if response.status_code == 200:
-            return make_response('public url added', 200)
-        else:
-            msg_log('comment failed', issue_number)
+        try:
+            issue.comment_public_uri()
+        except HTTPError as e:
+            msg_log(f'comment failed ({e})', issue_number)
             return oops()
+        else:
+            return make_response('public url added', 200)
+
     elif (issue.action == 'milestoned' and scope == 'private' and
           issue.milestoned_with == 'accepted'):
         # private issue have been moderated and we will make it public
-        response = issue.moderate_private_issue()
-        if response.status_code == 200:
-            # if it succeeded, we can close the private issue
-            issue.close_private_issue()
-            return make_response('Moderated issue accepted', 200)
-        else:
+        try:
+            issue.moderate_private_issue()
+        except HTTPError as e:
             msg_log('private:moving to public failed', issue.number)
             return oops()
+        else:
+            # we didn't get exceptions, so it's safe to close it
+            issue.close_private_issue()
+            return make_response('Moderated issue accepted', 200)
     elif (scope == 'private' and issue.state == 'closed' and
           not issue.milestone == 'accepted'):
         # private issue has been closed. It is rejected
         # We need to patch with a template.
-        response = issue.reject_private_issue()
-        if response.status_code == 200:
-            return make_response('Moderated issue rejected', 200)
-        else:
+        try:
+            issue.reject_private_issue()
+        except HTTPError as e:
             msg_log('public rejection failed', issue.number)
             return oops()
+        else:
+            # we didn't get exceptions, so it's safe to close it
+            issue.close_private_issue()
+            return make_response('Moderated issue rejected', 200)
     else:
         return make_response('Not an interesting hook', 403)
 
