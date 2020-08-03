@@ -98,5 +98,4 @@ class ArchivedIssue(Issue):
         )
         issue_template = env.get_template('issue.html')
         html_issue = issue_template.render(number = self.number)
-        print(html_issue)
         return html_issue

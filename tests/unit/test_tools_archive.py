@@ -45,7 +45,6 @@ def test_render_as_html():
     """Test the html rendering of an ArchivedIssue."""
     issue = model.ArchivedIssue.from_dict(PAYLOAD)
     archived_issue = get_fixture('issue_100.html')
-    print(archived_issue)
     assert issue.as_html(template='archive') == archived_issue
 
 
