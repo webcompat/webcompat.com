@@ -66,17 +66,25 @@ class Issue:
     """
     number: int
     title: str
+    comments_number: int
 
 
     @classmethod
     def from_dict(cls, payload):
         """Class method to allow instantiation from a GitHub response dict."""
         # GitHub payload contains an issue part
-        issue = payload.get('issue')
         return cls(
-            number = issue.get('number'),
-            title = issue.get('title')
+            number = payload.get('number'),
+            title = payload.get('title'),
+            comments_number = payload.get('comments')
         )
+
+
+    def has_comments(self):
+        """Check the number of comments and returns a bool."""
+        if self.comments_number == 0:
+            return False
+        return True
 
 
 @dataclass

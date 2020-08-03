@@ -5,17 +5,15 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 """Tests for webcompat.com archive tools.
 
-TODO: test for json to html
-TODO: test for getting the issue as json
 TODO: test for getting the comments json
 TODO: test for navigating paged comments
-TODO: tests for an issue model
 TODO: test if issue is locked (live, frozen flag)
 TODO: test that an issue can be on a different repo
 TODO: test that the issue fetching has failed
 TODO: test that the issue comments fetching has failed
 """
 
+import json
 import pathlib
 
 import pytest
@@ -24,11 +22,10 @@ from tools.archive import model
 
 # TODO: Probably create a fixture with a real json loaded as dict
 PAYLOAD = {
-    'issue': {
         'number': 100,
-        'title': 'tamala2010.example.org - A Punk Cat in Space'
+        'title': 'tamala2010.example.org - A Punk Cat in Space',
+        'comments': 0
     }
-}
 
 
 def get_fixture(filename):
@@ -80,3 +77,16 @@ def test_save_issue_in_file(tmp_path):
     assert expected_location == location
     # Test it has written the correct content
     assert expected_archived == location.read_text()
+
+
+def test_issue_has_no_comments_default():
+    """Test that an issue has no comments per default."""
+    issue = model.Issue.from_dict(PAYLOAD)
+    assert not issue.has_comments()
+
+
+def test_issue_has_comments():
+    """Test that an issue has comments."""
+    JSON_PAYLOAD = json.loads(get_fixture('40000.json'))
+    issue = model.Issue.from_dict(JSON_PAYLOAD)
+    assert issue.has_comments()
