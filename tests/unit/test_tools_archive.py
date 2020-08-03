@@ -64,3 +64,19 @@ def test_issue_links_to_home():
     """Test that the template has a link to the home page."""
     archived_issue = get_fixture('issue_100.html')
     assert '<a href="/" title="Navigate to main page."' in archived_issue
+
+
+def test_save_issue_in_file(tmp_path):
+    """Test that we saved the issue in a static folder."""
+    # Create a temporary Path object for testing
+    tmp_root = tmp_path
+    expected_location = tmp_root / 'static' / 'issue' / 'issue-100.html'
+    expected_archived = get_fixture('issue_100.html')
+    # Initialize the issue
+    issue = model.ArchivedIssue.from_dict(PAYLOAD)
+    # Test it returns the full path to the issue
+    location = issue.save(root_dir_path=tmp_root)
+    assert type(location) == pathlib.PosixPath
+    assert expected_location == location
+    # Test it has written the correct content
+    assert expected_archived == location.read_text()

@@ -8,6 +8,7 @@
 
 from dataclasses import dataclass
 from dataclasses import field
+import pathlib
 
 from jinja2 import Environment
 from jinja2 import PackageLoader
@@ -89,8 +90,10 @@ class ArchivedIssue(Issue):
     def as_html(self, template='archive'):
         """Create an html rendering of an issue.
 
-        template: directory name with all subtemplates
-        it returns an html file with the content of the issue.
+        template: str
+            directory name with all subtemplates
+        return: str
+            it returns an html file with the content of the issue.
         """
         env = Environment(
             loader=PackageLoader('tools.archive', f'templates/{template}'),
@@ -99,3 +102,21 @@ class ArchivedIssue(Issue):
         issue_template = env.get_template('issue.html')
         html_issue = issue_template.render(number = self.number)
         return html_issue
+
+
+    def save(self, root_dir_path=None):
+        """Save an issue in a specific location.
+
+        root_dir: pathlib.Path
+            full path to where the directory will be saved.
+        return: pathlib.Path
+            it returns the full file location of the archived issue.
+            Probably /static/issue/issue-number.html for webcompat.com
+        """
+        archived_name = f'issue-{self.number}.html'
+        location = root_dir_path / 'static' / 'issue' / archived_name
+        content = self.as_html()
+        if not location.parent.is_dir():
+            location.parent.mkdir(parents=True)
+        location.write_text(content)
+        return location
