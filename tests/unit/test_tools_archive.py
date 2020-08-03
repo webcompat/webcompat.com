@@ -43,6 +43,8 @@ def test_issue_init_from_dict():
     issue = model.Issue.from_dict(PAYLOAD_100)
     assert issue.number == 100
     assert issue.title == 'tamala2010.example.org - A Punk Cat in Space'
+    assert issue.comments_number == 0
+    assert issue.comments_url == 'https://api.github.com/repos/webcompat/web-bugs/issues/100/comments'  # noqa
 
 
 def test_issue_archived_header():
@@ -115,5 +117,7 @@ def test_comments_fetch():
     assert type(issue.comments) == list
     assert len(issue.comments) == 0
     # Fetching the comments
+    # TODO: mockup the http request for the test suite.
+    # TODO: save a fixture for a json comment file
     issue.fetch_comments()
     assert len(issue.comments) == 1

@@ -8,14 +8,14 @@
 
 from dataclasses import dataclass
 from dataclasses import field
-from typing import List
 import pathlib
+from typing import List
 
 from jinja2 import Environment
 from jinja2 import PackageLoader
 from jinja2 import select_autoescape
 from jinja2 import Template
-
+import requests
 
 
 @dataclass
@@ -80,6 +80,7 @@ class Issue:
 
     number: int
     title: str
+    comments_url: str
     comments_number: int
     comments: List[Comment] = field(
         init=False,
@@ -93,7 +94,8 @@ class Issue:
         return cls(
             number = payload.get('number'),
             title = payload.get('title'),
-            comments_number = payload.get('comments')
+            comments_number = payload.get('comments'),
+            comments_url = payload.get('comments_url')
         )
 
 
@@ -104,9 +106,18 @@ class Issue:
         return True
 
 
-    def fetch_comments(page=all):
+    def fetch_comments(self, page=all):
         """Fetch comments from an issue."""
-        pass
+        if not self.has_comments():
+            return comments
+        try:
+            r = make_request(self.comments_url)
+            r.raise_for_status()
+        except requests.exceptions.HTTPError as err:
+            # TODO: log the message
+            pass
+        else:
+            self.comments = r.json()
 
 
 @dataclass
@@ -152,3 +163,6 @@ class ArchivedIssue(Issue):
         return location
 
 
+def make_request(url):
+    """create a request."""
+    return requests.get(url)
