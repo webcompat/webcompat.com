@@ -16,7 +16,7 @@ TODO: test that the issue fetching has failed
 TODO: test that the issue comments fetching has failed
 """
 
-import os
+import pathlib
 
 import pytest
 
@@ -33,12 +33,10 @@ PAYLOAD = {
 
 def get_fixture(filename):
     """Return the data fixture."""
-    current_root = os.path.realpath(os.curdir)
-    fixture_path = 'tests/fixtures/tools'
-    path = os.path.join(current_root, fixture_path, filename)
-    with open(path, 'r') as f:
-        data = f.read()
-    return data
+    current_root = pathlib.Path('.').resolve()
+    fixture_root = current_root / 'tests' / 'fixtures' / 'tools'
+    fixture_path = fixture_root / filename
+    return fixture_path.read_text()
 
 
 def test_render_as_html():
