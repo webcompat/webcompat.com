@@ -411,49 +411,52 @@ class TestWebhook(unittest.TestCase):
         post_signature = 'sha1=wrong'
         self.assertFalse(helpers.signature_check(key, post_signature, payload))
 
-    @patch('webcompat.helpers.requests.patch')
-    def test_WebHookIssue_close_private_issue(self, mock_patch):
+    @patch('webcompat.webhooks.model.make_request')
+    def test_WebHookIssue_close_private_issue(self, mock_mr):
         """Test issue state that is sent to GitHub."""
-        with webcompat.app.test_request_context():
-            mock_patch.return_value.status_code == 200
-            json_event, signature = event_data('private_issue_opened.json')
-            payload = json.loads(json_event)
-            issue = WebHookIssue.from_dict(payload)
+        mock_mr.return_value.status_code == 200
+        json_event, signature = event_data('private_issue_opened.json')
+        payload = json.loads(json_event)
+        issue = WebHookIssue.from_dict(payload)
+        issue.close_private_issue()
+        assert issue.state == 'closed'
+
+    @patch('webcompat.webhooks.model.make_request')
+    def test_WebHookIssue_close_private_issue_fails(self, mock_mr):
+        """Test issue state after a simulated GitHub failure."""
+        mock_mr.side_effect = HTTPError()
+        mock_mr.status_code = 400
+        json_event, signature = event_data('private_issue_opened.json')
+        payload = json.loads(json_event)
+        issue = WebHookIssue.from_dict(payload)
+        with pytest.raises(HTTPError):
             issue.close_private_issue()
-            assert issue.state == 'closed'
+        assert issue.state == 'open'
 
-    @patch('webcompat.helpers.requests.patch')
-    def test_WebHookIssue_close_private_issue_fails(self, mock_patch):
-        """Test issue state that is sent to GitHub."""
-        with webcompat.app.test_request_context():
-            mock_patch.side_effect = HTTPError()
-            mock_patch.status_code = 400
-            json_event, signature = event_data('private_issue_opened.json')
-            payload = json.loads(json_event)
-            issue = WebHookIssue.from_dict(payload)
-            with pytest.raises(HTTPError):
-                issue.close_private_issue()
-            assert issue.state == 'open'
-
-    def test_WebHookIssue_tag_as_public(self):
-        """Test the core actions on new opened issues for WebHooks."""
+    @patch('webcompat.webhooks.model.make_request')
+    def test_WebHookIssue_tag_as_public(self, mock_mr):
+        """Test tagging an issue as public."""
         # A 200 response
         json_event, signature = event_data('new_event_valid.json')
         payload = json.loads(json_event)
+        mock_mr.return_value = MagicMock(status_code=200, spec=Response)
         issue = WebHookIssue.from_dict(payload)
-        with patch.object(webcompat.webhooks.model.WebHookIssue,
-                          'tag_as_public') as proxy:
-            proxy.return_value.status_code = 200
-            response = issue.tag_as_public()
-            self.assertEqual(response.status_code, 200)
-            # A 401 response
-            proxy.return_value.status_code = 401
-            proxy.return_value.content = '{"message":"Bad credentials","documentation_url":"https://developer.github.com/v3"}'  # noqa
-            with patch.dict('webcompat.webhooks.helpers.app.config',
-                            {'OAUTH_TOKEN': ''}):
-                response = issue.tag_as_public()
-                self.assertEqual(response.status_code, 401)
-                self.assertTrue('Bad credentials' in response.content)
+        try:
+            issue.tag_as_public()
+            # did the milestone get set, and were labels updated?
+            method, uri, data = mock_mr.call_args[0]
+            assert issue.milestone == webcompat.app.config['STATUSES']['needstriage']['id']  # noqa
+            assert all(x in data['labels'] for x in
+                       ['browser-firefox', 'engine-gecko'])
+        except HTTPError:
+            pytest.fail("Unexpected requests.exceptions.HTTPError!")
+        # A 401 response
+        with patch.dict('webcompat.webhooks.helpers.app.config',
+                        {'OAUTH_TOKEN': ''}):
+            mock_mr.side_effect = HTTPError()
+            mock_mr.status_code = 401
+            with pytest.raises(HTTPError):
+                issue.tag_as_public()
 
     @patch.object(webcompat.webhooks.model.WebHookIssue, 'tag_as_public')
     def test_new_issue_right_repo(self, mock_proxy):

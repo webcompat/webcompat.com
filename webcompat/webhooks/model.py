@@ -101,7 +101,6 @@ class WebHookIssue:
         Milestone should be already set on needstriage
 
         we get the destination through the public_url.
-        If it succeeds, we close the private issue.
         """
         payload_request = self.prepare_accepted_issue()
         public_number = WebHookIssue.get_public_issue_number(self.public_url)
