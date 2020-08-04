@@ -17,6 +17,8 @@ import json
 import pathlib
 
 import pytest
+import requests
+from requests import Response
 
 from tools.archive import model
 
@@ -91,22 +93,8 @@ def test_issue_has_comments():
     assert issue.has_comments()
 
 
-def test_comments_fetch():
+def test_comments_fetch(mocker):
     """Test the comments fetching.
-
-    Once the issue has been instantiated, we could go fetch the comments
-    only if requested: `issue.fetch_comments(page=1)`
-    maybe we need `page=1` as a default parameters
-    and a special `page=all` for everything.
-
-    What is happening if the fetching fails totally? partially?
-    the comments_number could be handy for checking we fetched
-    all comments.
-
-    Should there be a model for one Comment as we do for issues?
-
-    On Issue probably we need something like.
-      `comments: List[Comment] = field(default_factory=create_comments_list)`
 
     return a list of dictionary, each dictionary represents a comment.
     """
@@ -117,7 +105,24 @@ def test_comments_fetch():
     assert type(issue.comments) == list
     assert len(issue.comments) == 0
     # Fetching the comments
-    # TODO: mockup the http request for the test suite.
-    # TODO: save a fixture for a json comment file
+    fake_resp = mocker.patch.object(model, 'make_request', spec=Response)
+    fake_resp.return_value.json.return_value = [{'body': 'a comment'}]
     issue.fetch_comments()
     assert len(issue.comments) == 1
+
+
+def test_comments_fetch_no_comments():
+    """Test the comments fetching without comments available."""
+    # Initialization
+    PAYLOAD_100 = json.loads(get_fixture('100.json'))
+    issue = issue = model.Issue.from_dict(PAYLOAD_100)
+    # Before fetching the comments
+    issue.fetch_comments()
+    assert len(issue.comments) == 0
+
+
+def test_make_request(mocker):
+    fake_resp = mocker.patch.object(model.requests, 'get')
+    fake_resp.return_value.status_code = 200
+    actual = model.make_request('http://example.org/')
+    assert actual.status_code == 200

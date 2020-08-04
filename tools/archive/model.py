@@ -109,7 +109,7 @@ class Issue:
     def fetch_comments(self, page=all):
         """Fetch comments from an issue."""
         if not self.has_comments():
-            return comments
+            return self.comments
         try:
             r = make_request(self.comments_url)
             r.raise_for_status()
