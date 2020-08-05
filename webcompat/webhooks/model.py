@@ -143,8 +143,8 @@ class WebHookIssue:
     def reject_private_issue(self):
         """Send a rejected moderation PATCH on the public issue."""
         payload_request = prepare_rejected_issue()
-        public_number = WebHookIssue.get_public_issue_number(
-            issue_info['public_url'])
+        public_url = self.public_url
+        public_number = WebHookIssue.get_public_issue_number(public_url)
         # Preparing the proxy request
         path = f'repos/{PUBLIC_REPO}/{public_number}'
         make_request('patch', path, payload_request)
@@ -180,5 +180,7 @@ class WebHookIssue:
     @staticmethod
     def get_public_issue_number(public_url):
         """Extract the issue number from the public url."""
-        public_number = public_url.strip().rsplit('/', 1)[1]
-        return public_number
+        url = public_url
+        if url:
+            url = public_url.strip().rsplit('/', 1)[1]
+        return url
