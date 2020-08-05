@@ -21,7 +21,8 @@ from webcompat.helpers import to_bytes
 from webcompat.issues import moderation_template
 
 BROWSERS = ['blackberry', 'brave', 'chrome', 'edge', 'firefox', 'iceweasel', 'ie', 'lynx', 'myie', 'opera', 'puffin', 'qq', 'safari', 'samsung', 'seamonkey', 'uc', 'vivaldi']  # noqa
-MOZILLA_BROWSERS = ['browser-fenix',
+MOZILLA_BROWSERS = ['browser-android-components',
+                    'browser-fenix',
                     'browser-firefox',
                     'browser-firefox-mobile',
                     'browser-firefox-reality',
