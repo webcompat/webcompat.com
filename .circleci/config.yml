@@ -8,7 +8,7 @@ jobs:
     docker:
       # specify the version you desire here
       # using -node-browsers to get node + firefox + chrome + geckoview
-      - image: circleci/python:3.7.3-stretch-node-browsers
+      - image: circleci/python:3.8.5-node-browsers
         environment:
           FLASK_CONFIG: testing
 
@@ -21,13 +21,6 @@ jobs:
           keys:
             - deps1-{{ .Branch }}-{{ checksum "config/requirements-dev.txt" }}
             - v1-npm-{{ .Branch }}-{{ checksum "package.json" }}
-      # - restore_cache:
-      #     keys:
-      #     - v1-pip-{{ checksum "config/requirements-dev.txt" }}
-      #     # fallback to using the latest cache if no exact match is found
-      #     - v1-pip-
-      #     - v1-npm-{{ checksum "package.json" }}
-      #     - v1-npm-
       - run:
           name: install python deps
           command: |
