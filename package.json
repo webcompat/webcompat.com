@@ -23,14 +23,14 @@
     "cssrecipes-utils": "^0.6.2",
     "suitcss-utils-align": "^1.0.0",
     "suitcss-utils-display": "^1.0.2",
-    "yargs": "15.3.1"
+    "yargs": "15.4.1"
   },
   "devDependencies": {
     "@babel/core": "^7.10.2",
     "@babel/preset-env": "^7.10.2",
     "@babel/register": "^7.10.1",
     "babel-loader": "^8.1.0",
-    "css-loader": "^3.5.3",
+    "css-loader": "^4.2.0",
     "ejs-loader": "^0.5.0",
     "eslint": "^7.1.0",
     "eslint-config-prettier": "^6.0.0",

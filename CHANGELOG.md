@@ -4,6 +4,14 @@
 2. New features: affect minor number
 3. API endpoint changes or (major) dependency version updates: affect major number
 
+## 36.1.0 - 2020-08-03
+
+* Fixes #3427 - Remove min char requirement from description field [Pull #3428](https://github.com/webcompat/webcompat.com/pull/3428)
+* Fixes #3425 - Adds a pytest.ini [Pull #3426](https://github.com/webcompat/webcompat.com/pull/3426)
+* Fixes #3395 - Change copy after filing an issue with "Report site issue" reporter [Pull #3424](https://github.com/webcompat/webcompat.com/pull/3424)
+* Fixes #3392 - Refactor css after original form removal [Pull #3416](https://github.com/webcompat/webcompat.com/pull/3416)
+* Fixes #3318 - Remove AB testing initialization [Pull #3414](https://github.com/webcompat/webcompat.com/pull/3414)
+
 ## 36.0.0 - 2020-07-27
 
 * Fixes #3412 - Udate python dependencies [Pull #3413](https://github.com/webcompat/webcompat.com/pull/3413)

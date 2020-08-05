@@ -167,8 +167,8 @@ registerSuite("Reporting with wizard", {
           .findDisplayedByCssSelector(".next-description")
           .getAttribute("disabled")
           .then(function (attribute) {
-            // Make sure "Continue" is disabled if there are not enough characters
-            assert.isNotNull(attribute);
+            // Make sure "Continue" is enabled by default
+            assert.isNull(attribute);
           })
           .end()
           .findById("steps_reproduce")
@@ -498,8 +498,8 @@ registerSuite("Reporting with wizard", {
           .findDisplayedByCssSelector(".next-description")
           .getAttribute("disabled")
           .then(function (attribute) {
-            // Make sure "Continue" is disabled if there are not enough characters
-            assert.isNotNull(attribute);
+            // Make sure "Continue" is enabled by default
+            assert.isNull(attribute);
           })
           .end()
           // Enter more than 30 characters in the description field

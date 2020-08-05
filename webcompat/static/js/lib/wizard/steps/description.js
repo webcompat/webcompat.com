@@ -12,6 +12,7 @@ import { showContainer } from "../ui-utils.js";
 const MIN_CHARACTERS = 30;
 
 const container = $(".step-container.step-description");
+const MIN_CHAR_MODE = container.data("min-char");
 const descriptionField = container.find("#steps_reproduce");
 const progress = container.find(".problem-description .progress");
 const bar = progress.find(".bar");
@@ -20,6 +21,10 @@ const nextStepButton = container.find(".next-description");
 const handleNext = (event) => {
   event.preventDefault();
   notify.publish("showStep", { id: "screenshot" });
+};
+
+const setButtonState = (isDisabled) => {
+  nextStepButton.prop("disabled", isDisabled);
 };
 
 const updateProgress = (percent) => {
@@ -33,7 +38,7 @@ const updateProgress = (percent) => {
     progress.removeClass("complete");
   }
 
-  nextStepButton.prop("disabled", !isReady);
+  setButtonState(!isReady);
 };
 
 const onChange = (value) => {
@@ -54,8 +59,21 @@ const updateDescription = (url) => {
   descriptionField.val((idx, value) => value + "\n" + imageURL);
 };
 
-descriptionField.on("blur input", (event) => onChange(event.target.value));
+const showProgress = () => {
+  progress.removeClass("is-hidden");
+  $(".char-limit").text("Minimum 30 characters");
+};
+
+const initMinCharMode = () => {
+  descriptionField.on("blur input", (event) => onChange(event.target.value));
+  setButtonState(true);
+  showProgress();
+};
+
 nextStepButton.on("click", handleNext);
+if (MIN_CHAR_MODE) {
+  initMinCharMode();
+}
 
 export default {
   show: () => {
