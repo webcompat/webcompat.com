@@ -58,13 +58,18 @@ def test_model_instance():
 
 @patch('webcompat.webhooks.model.make_request')
 def test_close_private_issue(mock_mr):
-    """Test issue state that is sent to GitHub."""
+    """Test issue state and API request that is sent to GitHub."""
     mock_mr.return_value.status_code == 200
     json_event, signature = event_data('private_issue_opened.json')
     payload = json.loads(json_event)
     issue = WebHookIssue.from_dict(payload)
     issue.close_private_issue()
+    method, uri, data = mock_mr.call_args[0]
+    # make sure our issue state is what we expect
     assert issue.state == 'closed'
+    # make sure we sent a patch with the right data to GitHub
+    assert method == 'patch'
+    assert 'state' in data
 
 
 @patch('webcompat.webhooks.model.make_request')
@@ -78,6 +83,53 @@ def test_close_private_issue_fails(mock_mr):
     with pytest.raises(HTTPError):
         issue.close_private_issue()
     assert issue.state == 'open'
+
+
+@patch('webcompat.webhooks.model.make_request')
+def test_comment_public_uri(mock_mr):
+    """Test issue state and API request that is sent to GitHub."""
+    mock_mr.return_value.status_code == 200
+    json_event, signature = event_data('private_issue_opened.json')
+    payload = json.loads(json_event)
+    issue = WebHookIssue.from_dict(payload)
+    issue.comment_public_uri()
+    method, uri, data = mock_mr.call_args[0]
+    # make sure we sent a post with the right data to GitHub
+    assert method == 'post'
+    assert 'body' in data
+    assert str(issue.number) in uri
+
+
+@patch('webcompat.webhooks.model.make_request')
+def test_moderate_public_issue(mock_mr):
+    """Test issue state and API request that is sent to GitHub."""
+    mock_mr.return_value.status_code == 200
+    json_event, signature = event_data('private_issue_opened.json')
+    payload = json.loads(json_event)
+    issue = WebHookIssue.from_dict(payload)
+    issue.moderate_private_issue()
+    method, uri, data = mock_mr.call_args[0]
+    # make sure we sent a patch with the right data to GitHub
+    assert method == 'patch'
+    assert 'title' in data
+    assert 'body' in data
+    assert 'labels' in data
+    assert WebHookIssue.get_public_issue_number(issue.public_url) in uri
+
+
+@patch('webcompat.webhooks.model.make_request')
+def test_reject_private_issue(mock_mr):
+    """Test issue state and API request that is sent to GitHub."""
+    mock_mr.return_value.status_code == 200
+    json_event, signature = event_data('private_issue_opened.json')
+    payload = json.loads(json_event)
+    issue = WebHookIssue.from_dict(payload)
+    issue.reject_private_issue()
+    method, uri, data = mock_mr.call_args[0]
+    # make sure we sent a patch with the right data to GitHub
+    assert method == 'patch'
+    assert type(data) == dict
+    assert WebHookIssue.get_public_issue_number(issue.public_url) in uri
 
 
 def test_prepare_public_comment():
