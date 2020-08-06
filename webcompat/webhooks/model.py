@@ -43,10 +43,10 @@ class WebHookIssue:
     def from_dict(cls, payload):
         """Class method to allow instantiation from a GitHub response dict."""
         # Extract the title and the body
-        issue = payload.get('issue')
+        issue = payload['issue']
         full_title = issue.get('title', 'Weird_Title - Inspect')
         labels = issue.get('labels', [])
-        issue_body = issue.get('body')
+        issue_body = issue['body']
         domain = full_title.partition(' ')[0]
         public_url = extract_metadata(issue_body).get('public_url', '').strip()
         original_labels = [label['name'] for label in labels]
@@ -59,7 +59,7 @@ class WebHookIssue:
         if payload.get('milestone'):
             milestoned_with = payload.get('milestone')['title']
 
-        return cls(action=payload.get('action'), body=issue_body,
+        return cls(action=payload['action'], body=issue_body,
                    domain=domain, number=issue.get('number'),
                    public_url=public_url,
                    repository_url=issue.get('repository_url'),
