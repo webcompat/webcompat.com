@@ -114,7 +114,7 @@ def test_moderate_public_issue(mock_mr):
     assert 'title' in data
     assert 'body' in data
     assert 'labels' in data
-    assert WebHookIssue.get_public_issue_number(issue.public_url) in uri
+    assert issue.get_public_issue_number() in uri
 
 
 @patch('webcompat.webhooks.model.make_request')
@@ -129,7 +129,7 @@ def test_reject_private_issue(mock_mr):
     # make sure we sent a patch with the right data to GitHub
     assert method == 'patch'
     assert type(data) == dict
-    assert WebHookIssue.get_public_issue_number(issue.public_url) in uri
+    assert issue.get_public_issue_number() in uri
 
 
 def test_prepare_public_comment():
@@ -144,8 +144,10 @@ def test_prepare_public_comment():
 
 def test_get_public_issue_number():
     """Test the extraction of the issue number from the public_url."""
-    public_url = 'https://github.com/webcompat/webcompat-tests/issues/1'
-    assert WebHookIssue.get_public_issue_number(public_url) == '1'
+    json_event, signature = event_data('private_issue_opened.json')
+    payload = json.loads(json_event)
+    issue = WebHookIssue.from_dict(payload)
+    assert issue.get_public_issue_number() == '1'
 
 
 @patch('webcompat.webhooks.model.make_request')
