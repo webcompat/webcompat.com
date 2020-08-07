@@ -3,6 +3,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 import $ from "jquery";
+import Mousetrap from "Mousetrap";
 import { sendAnalyticsEvent } from "./wizard/analytics.js";
 
 function Popup() {
@@ -26,6 +27,8 @@ function Popup() {
         btn.addEventListener("click", this.closeModal.bind(this));
       }.bind(this)
     );
+
+    Mousetrap.bind("esc", this.closeModal.bind(this));
   };
 
   this.openModal = function (e) {
@@ -48,8 +51,10 @@ function Popup() {
 
   this.closeModal = function () {
     var popupModal = document.querySelector(".popup-modal.is--visible");
-    popupModal.classList.remove("is--visible");
-    this.overlay.classList.remove("is-blacked-out");
+    if (popupModal && this.overlay.classList.contains("is-blacked-out")) {
+      popupModal.classList.remove("is--visible");
+      this.overlay.classList.remove("is-blacked-out");
+    }
   };
 
   return this.init();
