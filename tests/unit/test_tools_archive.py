@@ -31,22 +31,36 @@ def get_fixture(filename):
     return fixture_path.read_text()
 
 
-def test_render_as_html():
+def issue_init(issue_number):
+    """Initialize the issue."""
+    PAYLOAD = json.loads(get_fixture(f'{issue_number}.json'))
+    return model.ArchivedIssue.from_dict(PAYLOAD)
+
+
+@pytest.fixture
+def issue_40000():
+    """Return issue 40000."""
+    return issue_init(40000)
+
+
+@pytest.fixture
+def issue_100():
+    """Return issue 100."""
+    return issue_init(100)
+
+
+def test_render_as_html(issue_100):
     """Test the html rendering of an ArchivedIssue."""
-    PAYLOAD_100 = json.loads(get_fixture('100.json'))
-    issue = model.ArchivedIssue.from_dict(PAYLOAD_100)
     archived_issue = get_fixture('issue_100.html')
-    assert issue.as_html(template='archive') == archived_issue
+    assert issue_100.as_html(template='archive') == archived_issue
 
 
-def test_issue_init_from_dict():
+def test_issue_init_from_dict(issue_100):
     """Test we get the right set of data."""
-    PAYLOAD_100 = json.loads(get_fixture('100.json'))
-    issue = model.Issue.from_dict(PAYLOAD_100)
-    assert issue.number == 100
-    assert issue.title == 'tamala2010.example.org - A Punk Cat in Space'
-    assert issue.comments_number == 0
-    assert issue.comments_url == 'https://api.github.com/repos/webcompat/web-bugs/issues/100/comments'  # noqa
+    assert issue_100.number == 100
+    assert issue_100.title == 'tamala2010.example.org - A Punk Cat in Space'
+    assert issue_100.comments_number == 0
+    assert issue_100.comments_url == 'https://api.github.com/repos/webcompat/web-bugs/issues/100/comments'  # noqa
 
 
 def test_issue_archived_header():
@@ -62,63 +76,50 @@ def test_issue_links_to_home():
     assert '<a href="/" title="Navigate to main page."' in archived_issue
 
 
-def test_save_issue_in_file(tmp_path):
+def test_save_issue_in_file(tmp_path, issue_100):
     """Test that we saved the issue in a static folder."""
     # Create a temporary Path object for testing
     tmp_root = tmp_path
     expected_location = tmp_root / 'static' / 'issue' / 'issue-100.html'
     expected_archived = get_fixture('issue_100.html')
-    # Initialize the issue
-    PAYLOAD_100 = json.loads(get_fixture('100.json'))
-    issue = model.ArchivedIssue.from_dict(PAYLOAD_100)
     # Test it returns the full path to the issue
-    location = issue.save(root_dir_path=tmp_root)
+    location = issue_100.save(root_dir_path=tmp_root)
     assert type(location) == pathlib.PosixPath
     assert expected_location == location
     # Test it has written the correct content
     assert expected_archived == location.read_text()
 
 
-def test_issue_has_no_comments_default():
+def test_issue_has_no_comments_default(issue_100):
     """Test that an issue has no comments per default."""
-    PAYLOAD_100 = json.loads(get_fixture('100.json'))
-    issue = model.Issue.from_dict(PAYLOAD_100)
-    assert not issue.has_comments()
+    assert not issue_100.has_comments()
 
 
-def test_issue_has_comments():
+def test_issue_has_comments(issue_40000):
     """Test that an issue has comments."""
-    PAYLOAD_40000 = json.loads(get_fixture('40000.json'))
-    issue = model.Issue.from_dict(PAYLOAD_40000)
-    assert issue.has_comments()
+    assert issue_40000.has_comments()
 
 
-def test_comments_fetch(mocker):
+def test_comments_fetch(mocker, issue_40000):
     """Test the comments fetching.
 
     return a list of dictionary, each dictionary represents a comment.
     """
-    # Initialization
-    PAYLOAD_40000 = json.loads(get_fixture('40000.json'))
-    issue = issue = model.Issue.from_dict(PAYLOAD_40000)
     # Before fetching the comments
-    assert type(issue.comments) == list
-    assert len(issue.comments) == 0
+    assert type(issue_40000.comments) == list
+    assert len(issue_40000.comments) == 0
     # Fetching the comments
     fake_resp = mocker.patch.object(model, 'make_request', spec=Response)
     fake_resp.return_value.json.return_value = [{'body': 'a comment'}]
-    issue.fetch_comments()
-    assert len(issue.comments) == 1
+    issue_40000.fetch_comments()
+    assert len(issue_40000.comments) == 1
 
 
-def test_comments_fetch_no_comments():
+def test_comments_fetch_no_comments(issue_100):
     """Test the comments fetching without comments available."""
-    # Initialization
-    PAYLOAD_100 = json.loads(get_fixture('100.json'))
-    issue = issue = model.Issue.from_dict(PAYLOAD_100)
     # Before fetching the comments
-    issue.fetch_comments()
-    assert len(issue.comments) == 0
+    issue_100.fetch_comments()
+    assert len(issue_100.comments) == 0
 
 
 def test_make_request(mocker):
