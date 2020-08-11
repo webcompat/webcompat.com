@@ -8,6 +8,7 @@
 
 from dataclasses import dataclass
 from dataclasses import field
+import datetime
 import pathlib
 from typing import List
 
@@ -18,65 +19,24 @@ from jinja2 import Template
 import requests
 
 
+def create_comments_list():
+    """Create a list of comments."""
+    # TODO: wrong way of doing it, but working. Check dataclass doc.
+    return []
+
+
 @dataclass
 class Comment:
     """Model for describing the comments."""
-    pass
+    author: str
+    # date_created: datetime.datetime
+    # date_updated: datetime.datetime
+    body: str
 
 
 @dataclass
 class Issue:
-    """WebCompat Issue Model.
-
-    browser: str
-        name of the browser and version.
-        ex: 'Firefox Mobile 80.0'
-    console_url: str
-        location of the console.log
-        ex: 'https://webcompat.com/console_logs/2020/6/598955a8-f3b9-4d8a-af58-fe8cad822f05'
-    description: str
-        short description of the issue.
-        ex: 'Page not loading correctly'
-    details: list
-        list of parameters defined in the browser
-        ex: ['gfx.webrender.all: false', 'gfx.webrender.blob-images: true', 'gfx.webrender.enabled: false']
-    labels: list
-        list of labels associated with the issue
-        ex: ['browser-firefox-mobile', 'engine-gecko']
-    number: int
-        reference issue number
-        ex: 12345
-    reported_with: str
-        what the issue was reported with among
-            - desktop-reporter
-            - mobile-reporter
-            - web
-        ex: 'desktop-reporter'
-    stage: str
-        life stage of the issue:
-        - open: needstriage, needsdiagnosis, needscontact, contactready, sitewait
-        - closed: invalid, fixed, non-compat, incomplete, duplicate, worksforme, wontfix
-        ex: 'wontfix'
-    status: str
-        status of the issue, either open or closed
-        ex: 'open'
-    steps: str
-        prose of instructions and comments to reproduce the issue
-    title: str
-        full title of the issue
-        ex: 'broken.example.org - Page not loading correctly'
-    ua_header: str
-        browser UA string used for reporting the issue
-        ex: 'Mozilla/5.0 (Android 9; Mobile; rv:79.0) Gecko/79.0 Firefox/79.0'
-    url: str
-        https://broken.example.org/punk/cat
-    """
-
-    # methods used to initialize values
-    # need to be defined before the variables.
-    def create_comments_list():
-        """Create a list of comments."""
-        return []
+    """WebCompat Issue Model."""
 
     number: int
     title: str
@@ -84,8 +44,8 @@ class Issue:
     comments_number: int
     comments: List[Comment] = field(
         init=False,
-        default_factory=create_comments_list)
-
+        default_factory=create_comments_list
+        )
 
     @classmethod
     def from_dict(cls, payload):
@@ -106,10 +66,11 @@ class Issue:
         return True
 
 
-    def fetch_comments(self, page=all):
+    def fetch_comments(self, page='all'):
         """Fetch comments from an issue."""
+        comments = []
         if not self.has_comments():
-            return self.comments
+            return comments
         try:
             r = make_request(self.comments_url)
             r.raise_for_status()
@@ -117,7 +78,16 @@ class Issue:
             # TODO: log the message
             pass
         else:
-            self.comments = r.json()
+            comments_json = r.json()
+            # TODO: Refactor this as an individual function
+            for comment in comments_json:
+                comments.append(
+                    Comment(
+                        author=comment['user']['login'],
+                        body=comment.get('body')
+                        )
+                    )
+            self.comments = comments
 
 
 @dataclass
