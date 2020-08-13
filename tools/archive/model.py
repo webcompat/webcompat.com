@@ -9,6 +9,7 @@
 from dataclasses import dataclass
 from dataclasses import field
 import datetime
+import logging
 import pathlib
 from typing import List
 
@@ -68,11 +69,11 @@ class Issue:
 
     def fetch_comments(self):
         """Fetch comments from an issue."""
-        comments = []
-        if not self.has_comments():
-            return comments
-        comments_json = recursive_fetch(self.comments_url)
-        self.comments = self.comments_as_list(comments_json)
+        if self.has_comments():
+            comments_json = recursive_fetch(self.comments_url)
+            self.comments = self.comments_as_list(comments_json)
+        else:
+            self.comments = []
 
 
     def comments_as_list(self, comments_json):
@@ -148,11 +149,10 @@ def recursive_fetch(comments_url):
         r = make_request(comments_url)
         r.raise_for_status()
     except requests.exceptions.HTTPError as err:
-        # TODO: log the message
-        pass
+        logging.warning(f'Fetching comments failed {err}')
     else:
         comments = r.json()
         while 'next' in r.links.keys():
             r = make_request(r.links['next']['url'])
             comments.extend(r.json())
-    return comments
+        return comments

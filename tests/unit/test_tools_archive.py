@@ -14,11 +14,12 @@ TODO: test that the issue comments fetching has failed
 """
 
 import json
+import logging
 import pathlib
 
 import pytest
 import requests
-from requests import Response
+# from requests import Response
 
 from tools.archive import model
 
@@ -133,10 +134,14 @@ def test_make_request(mocker):
     assert actual.status_code == 200
 
 
-@pytest.mark.skip(reason="TODO: HTTP ERROR log for comments fetching")
-def test_http_error_log_comments_fetch():
+def test_http_error_log_comments_fetch(mocker, caplog):
     """Test that we record a log message for HTTP error when fetching."""
-    pass
+    fake_r = mocker.patch.object(model, 'make_request')
+    fake_r.side_effect = requests.exceptions.HTTPError()
+    fake_r.status_code = 400
+    caplog.set_level(logging.WARNING)
+    model.recursive_fetch('https://example.org/')
+    assert 'Fetching comments failed' in caplog.text
 
 
 @pytest.mark.skip(reason="TODO: JSON for ALL comments")
