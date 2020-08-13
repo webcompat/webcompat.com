@@ -4,6 +4,16 @@
 2. New features: affect minor number
 3. API endpoint changes or (major) dependency version updates: affect major number
 
+## 37.0.0 - 2020-08-10
+
+* Fixes #3440 - Actually add browser-android-components to EXTRA_LABELS [Pull #3442](https://github.com/webcompat/webcompat.com/pull/3442)
+* Fixes #3440 - Add browser-android-components to EXTRA_LABELS [Pull #3441](https://github.com/webcompat/webcompat.com/pull/3441)
+* Fixes #3437 - updates CircleCI to python 3.8.5 [Pull #3438](https://github.com/webcompat/webcompat.com/pull/3438)
+* NPM update - Upgrade css-loader from 3.6.0 to 4.2.0. [Pull #3434](https://github.com/webcompat/webcompat.com/pull/3434)
+* NPM update - Upgrade yargs from 15.3.1 to 15.4.1. [Pull #3433](https://github.com/webcompat/webcompat.com/pull/3433)
+* Fixes #3291 - Make issue moderation slightly more efficient #3379  [Pull #3415](https://github.com/webcompat/webcompat.com/pull/3415)
+
+
 ## 36.1.0 - 2020-08-03
 
 * Fixes #3427 - Remove min char requirement from description field [Pull #3428](https://github.com/webcompat/webcompat.com/pull/3428)

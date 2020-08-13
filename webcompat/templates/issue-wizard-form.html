@@ -21,13 +21,12 @@
               <br>
               Do we have the <strong>correct site?</strong>
             </div>
-            <div id="desc-no-url">
+            <label for="url" id="desc-no-url">
               <strong>Please enter the URL</strong> where you encountered the web compatibility issue.
               <a href="#" class="popup-trigger mobile-only" data-popup-trigger="what-is-webcompat">Learn more</a>
-            </div>
+            </label>
           </div>
           <div class="form-text form-element js-Form-group form-label-message with-validation-icons">
-            {{ form.url.label(class_='form-label is-hidden') }}
             {% if form.url.errors %}
               {% for error in form.url.errors %}
                 <small class="form-message-error">{{ error }}</small>

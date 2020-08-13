@@ -13,9 +13,10 @@ import json
 
 from flask import request
 
-from webcompat.webhooks.helpers import get_issue_info
 from webcompat.webhooks.helpers import is_github_hook
+from webcompat.webhooks.helpers import make_response
 from webcompat.webhooks.helpers import process_issue_action
+from webcompat.webhooks.model import WebHookIssue
 
 from webcompat import app
 
@@ -28,16 +29,15 @@ def hooklistener():
     """
     # webcompat/webcompat-tests/issues
     if not is_github_hook(request):
-        return ('Nothing to see here', 401, {'Content-Type': 'text/plain'})
+        return make_response('Nothing to see here', 401)
     payload = json.loads(request.data)
     event_type = request.headers.get('X-GitHub-Event')
     # Treating events related to issues
     if event_type == 'issues':
-        issue_info = get_issue_info(payload)
+        webhook_issue = WebHookIssue.from_dict(payload)
         # we process the action
-        response = process_issue_action(issue_info)
-        return response
+        return process_issue_action(webhook_issue)
     elif event_type == 'ping':
-        return ('pong', 200, {'Content-Type': 'text/plain'})
+        return make_response('pong', 200)
     # If nothing worked as expected, the default response is 403.
-    return ('Not an interesting hook', 403, {'Content-Type': 'text/plain'})
+    return make_response('Not an interesting hook', 403)
