@@ -66,28 +66,32 @@ class Issue:
         return True
 
 
-    def fetch_comments(self, page='all'):
+    def fetch_comments(self):
         """Fetch comments from an issue."""
         comments = []
         if not self.has_comments():
             return comments
-        try:
-            r = make_request(self.comments_url)
-            r.raise_for_status()
-        except requests.exceptions.HTTPError as err:
-            # TODO: log the message
-            pass
-        else:
-            comments_json = r.json()
-            # TODO: Refactor this as an individual function
-            for comment in comments_json:
-                comments.append(
-                    Comment(
-                        author=comment['user']['login'],
-                        body=comment.get('body')
-                        )
+        comments_json = recursive_fetch(self.comments_url)
+        self.comments = self.comments_as_list(comments_json)
+
+
+    def comments_as_list(self, comments_json):
+        """Create a list of Comments object.
+
+        - author
+        - body
+        - date_created
+        - date_updated
+        """
+        comments = []
+        for comment in comments_json:
+            comments.append(
+                Comment(
+                    author=comment['user']['login'],
+                    body=comment.get('body')
                     )
-            self.comments = comments
+                )
+        return comments
 
 
 @dataclass
@@ -136,3 +140,19 @@ class ArchivedIssue(Issue):
 def make_request(url):
     """create a request."""
     return requests.get(url)
+
+
+def recursive_fetch(comments_url):
+    """Fetch all comments."""
+    try:
+        r = make_request(comments_url)
+        r.raise_for_status()
+    except requests.exceptions.HTTPError as err:
+        # TODO: log the message
+        pass
+    else:
+        comments = r.json()
+        while 'next' in r.links.keys():
+            r = make_request(r.links['next']['url'])
+            comments.extend(r.json())
+    return comments

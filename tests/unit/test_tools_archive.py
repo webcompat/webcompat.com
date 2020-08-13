@@ -101,7 +101,6 @@ def test_issue_has_comments(issue_1470):
     assert issue_1470.comments_number == 41
 
 
-@pytest.mark.skip(reason="TODO: Need a proper mocker, but this is working")
 def test_comments_fetch(mocker, issue_1470):
     """Test the comments fetching.
 
@@ -110,11 +109,14 @@ def test_comments_fetch(mocker, issue_1470):
     # Before fetching the comments
     assert type(issue_1470.comments) == list
     assert len(issue_1470.comments) == 0
-    # Fetching the comments
-    fake_resp = mocker.patch.object(model, 'make_request', spec=Response)
-    # fake_resp.return_value.json.return_value = [{'body': 'a comment'}]
+    # Instead of fetching from the network, we get a fixture
+    fake_json = mocker.patch.object(model, 'recursive_fetch')
+    fake_json.return_value = json.loads(get_fixture('1470-comments-all.json'))
     issue_1470.fetch_comments()
-    assert len(issue_1470.comments) == 30
+    # actual tests after fetching
+    assert len(issue_1470.comments) == 41
+    assert type(issue_1470.comments) == list
+    assert type(issue_1470.comments[0]) == model.Comment
 
 
 def test_comments_fetch_no_comments(issue_100):
@@ -131,12 +133,6 @@ def test_make_request(mocker):
     assert actual.status_code == 200
 
 
-@pytest.mark.skip(reason="TODO: List of URLS for comments")
-def test_comments_urls_list():
-    """Test the extraction of comments URLs list."""
-    pass
-
-
 @pytest.mark.skip(reason="TODO: HTTP ERROR log for comments fetching")
 def test_http_error_log_comments_fetch():
     """Test that we record a log message for HTTP error when fetching."""
@@ -144,12 +140,12 @@ def test_http_error_log_comments_fetch():
 
 
 @pytest.mark.skip(reason="TODO: JSON for ALL comments")
-def test_comments_full_json():
+def test_recursive_fetch():
     """Test that we receive a JSON of all comments."""
     pass
 
 
-@pytest.mark.skip(reason="TODO: HTTP ERROR log for comments fetching")
-def test_http_error_log_comments_fetch():
-    """Test that we record a log message for HTTP error when fetching."""
+@pytest.mark.skip(reason="TODO: Test comment as list of Comment")
+def test_comments_as_list():
+    """Test comments json conversion to a list of Comment objects."""
     pass
