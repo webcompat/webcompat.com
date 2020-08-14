@@ -5,21 +5,20 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 """Tests for webcompat.com archive tools.
 
-TODO: test for getting the comments json
-TODO: test for navigating paged comments
 TODO: test if issue is locked (live, frozen flag)
 TODO: test that an issue can be on a different repo
 TODO: test that the issue fetching has failed
 TODO: test that the issue comments fetching has failed
 """
 
+import datetime
 import json
 import logging
 import pathlib
 
 import pytest
 import requests
-# from requests import Response
+from requests.exceptions import HTTPError
 
 from tools.archive import model
 
@@ -118,6 +117,12 @@ def test_comments_fetch(mocker, issue_1470):
     assert len(issue_1470.comments) == 41
     assert type(issue_1470.comments) == list
     assert type(issue_1470.comments[0]) == model.Comment
+    comment_0 = issue_1470.comments[0]
+    assert comment_0.author == 'karlcow'
+    assert 'ok. Thanks a lot' in comment_0.body
+    d = datetime.datetime(2015, 7, 28, 9, 25, 3, tzinfo=datetime.timezone.utc)
+    assert comment_0.created_at == d
+    assert comment_0.updated_at == d
 
 
 def test_comments_fetch_no_comments(issue_100):
@@ -136,8 +141,8 @@ def test_make_request(mocker):
 
 def test_http_error_log_comments_fetch(mocker, caplog):
     """Test that we record a log message for HTTP error when fetching."""
-    fake_r = mocker.patch.object(model, 'make_request')
-    fake_r.side_effect = requests.exceptions.HTTPError()
+    fake_r = mocker.patch.object(model.requests, 'get')
+    fake_r.side_effect = HTTPError()
     fake_r.status_code = 400
     caplog.set_level(logging.WARNING)
     model.recursive_fetch('https://example.org/')
@@ -145,12 +150,14 @@ def test_http_error_log_comments_fetch(mocker, caplog):
 
 
 @pytest.mark.skip(reason="TODO: JSON for ALL comments")
-def test_recursive_fetch():
+def test_recursive_fetch(mocker):
     """Test that we receive a JSON of all comments."""
+    # This a recursive function which is probably hard to test.
     pass
 
 
-@pytest.mark.skip(reason="TODO: Test comment as list of Comment")
-def test_comments_as_list():
-    """Test comments json conversion to a list of Comment objects."""
-    pass
+def test_to_datetime():
+    """convert date string to datetime object."""
+    expected_date = datetime.datetime(2020, 8, 14, 12, 34, 56,
+                                      tzinfo=datetime.timezone.utc)
+    assert model.to_datetime('2020-08-14T12:34:56Z') == expected_date

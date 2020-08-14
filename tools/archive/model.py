@@ -8,7 +8,7 @@
 
 from dataclasses import dataclass
 from dataclasses import field
-import datetime
+from datetime import datetime
 import logging
 import pathlib
 from typing import List
@@ -18,20 +18,15 @@ from jinja2 import PackageLoader
 from jinja2 import select_autoescape
 from jinja2 import Template
 import requests
-
-
-def create_comments_list():
-    """Create a list of comments."""
-    # TODO: wrong way of doing it, but working. Check dataclass doc.
-    return []
+from requests.exceptions import HTTPError
 
 
 @dataclass
 class Comment:
     """Model for describing the comments."""
     author: str
-    # date_created: datetime.datetime
-    # date_updated: datetime.datetime
+    created_at: datetime
+    updated_at: datetime
     body: str
 
 
@@ -45,7 +40,7 @@ class Issue:
     comments_number: int
     comments: List[Comment] = field(
         init=False,
-        default_factory=create_comments_list
+        default_factory=list
         )
 
     @classmethod
@@ -89,7 +84,9 @@ class Issue:
             comments.append(
                 Comment(
                     author=comment['user']['login'],
-                    body=comment.get('body')
+                    body=comment.get('body'),
+                    created_at=to_datetime(comment.get('created_at')),
+                    updated_at=to_datetime(comment.get('updated_at'))
                     )
                 )
         return comments
@@ -146,13 +143,22 @@ def make_request(url):
 def recursive_fetch(comments_url):
     """Fetch all comments."""
     try:
-        r = make_request(comments_url)
+        r = requests.get(comments_url)
         r.raise_for_status()
-    except requests.exceptions.HTTPError as err:
+    except HTTPError as err:
         logging.warning(f'Fetching comments failed {err}')
     else:
         comments = r.json()
         while 'next' in r.links.keys():
-            r = make_request(r.links['next']['url'])
+            r = requests.get(r.links['next']['url'])
             comments.extend(r.json())
         return comments
+
+
+def to_datetime(date_str):
+    """Convert date to datetime object.
+
+    date_str: 2015-07-28T09:25:03Z
+    """
+    normalized_date_str = date_str.replace("Z", "+00:00")
+    return datetime.fromisoformat(normalized_date_str)
