@@ -165,4 +165,4 @@ def test_to_datetime():
 
 def test_issue_is_locked(issue_100):
     """test if an issue is locked."""
-    assert issue_100.locked == True
+    assert issue_100.locked
