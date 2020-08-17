@@ -620,7 +620,7 @@ registerSuite("Reporting with wizard", {
           .execute(() => {
             // Click on "What is a web compatibility issue?"
             document
-              .querySelector("[data-popup-trigger='what-is-webcompat']")
+              .querySelector("[data-popup-trigger='what-is-compat']")
               .click();
           })
           .end()
