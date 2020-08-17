@@ -7,6 +7,7 @@ const { assert } = intern.getPlugin("chai");
 const { registerSuite } = intern.getInterface("object");
 const FunctionalHelpers = require("./lib/helpers.js");
 const path = require("path");
+const keys = require("@theintern/leadfoot/keys").default;
 
 const cwd = intern.config.basePath;
 const VALID_IMAGE_PATH = path.join(cwd, "tests/fixtures", "green_square.png");
@@ -610,6 +611,54 @@ registerSuite("Reporting with wizard", {
           .end()
           // Make sure "Report Anonymously" is visible
           .findDisplayedById("open-username")
+          .end()
+      );
+    },
+    "Learn more modal - closing with Esc": function () {
+      return (
+        FunctionalHelpers.openPage(this, url("issues/new"), "#js-ReportForm")
+          .execute(() => {
+            // Click on "What is a web compatibility issue?"
+            document
+              .querySelector("[data-popup-trigger='what-is-compat']")
+              .click();
+          })
+          .end()
+          // Make sure that popup is visible and close it
+          .findDisplayedByCssSelector(".popup-modal")
+          .getAttribute("class")
+          .then((className) => {
+            assert.include(className, "is--visible");
+          })
+          .pressKeys(keys.ESCAPE)
+          .end()
+          .findByCssSelector(".popup-modal")
+          .getAttribute("class")
+          .then((className) => {
+            assert.notInclude("is--visible", className);
+          })
+          .end()
+          .execute(() => {
+            // Click on "All information included in this report will
+            //           be publicly visible. Learn More?" modal
+            document
+              .querySelector("[data-popup-trigger='privacy-modal']")
+              .click();
+          })
+          .end()
+          // Make sure that popup is visible and close it
+          .findDisplayedByCssSelector(".popup-modal")
+          .getAttribute("class")
+          .then((className) => {
+            assert.include(className, "is--visible");
+          })
+          .pressKeys(keys.ESCAPE)
+          .end()
+          .findByCssSelector(".popup-modal")
+          .getAttribute("class")
+          .then((className) => {
+            assert.notInclude("is--visible", className);
+          })
           .end()
       );
     },
