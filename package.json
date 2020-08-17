@@ -93,12 +93,10 @@
   },
   "lint-staged": {
     "*.js": [
-      "npx eslint ./webpack ./tests ./webcompat/static/js/lib postcss.config.js",
-      "git add"
+      "npx eslint ./webpack ./tests ./webcompat/static/js/lib postcss.config.js"
     ],
     "*.css": [
-      "npx stylelint './webcompat/static/css/src/**/*.css' './webcompat/static/css/webcompat.dev.css'",
-      "git add"
+      "npx stylelint './webcompat/static/css/src/**/*.css' './webcompat/static/css/webcompat.dev.css'"
     ]
   },
   "license": "MPL-2.0"
