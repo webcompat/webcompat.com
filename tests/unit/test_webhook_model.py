@@ -8,6 +8,7 @@
 
 from dataclasses import asdict
 import json
+import logging
 from unittest.mock import patch
 
 import pytest
@@ -17,6 +18,15 @@ from requests.models import Response
 import webcompat
 from tests.unit.test_webhook import event_data
 from webcompat.webhooks.model import WebHookIssue
+
+# Some expected responses as tuples
+accepted = ('Moderated issue accepted', 200, {'Content-Type': 'text/plain'})
+rejected = ('Moderated issue rejected', 200, {'Content-Type': 'text/plain'})
+boring = ('Not an interesting hook', 403, {'Content-Type': 'text/plain'})
+gracias = ('gracias, amigo.', 200, {'Content-Type': 'text/plain'})
+wrong_repo = ('Wrong repository', 403, {'Content-Type': 'text/plain'})
+oops = ('oops', 400, {'Content-Type': 'text/plain'})
+comment_added = ('public url added', 200, {'Content-Type': 'text/plain'})
 
 issue_info1 = {
     'action': 'opened', 'state': 'open', 'milestoned_with': '',
@@ -193,3 +203,130 @@ def test_prepare_accepted_issue(mock_priority):
         'labels': ['browser-firefox', 'priority-critical', 'engine-gecko'],
         'title': 'www.netflix.com - test private issue accepted'}
     assert expected == actual
+
+
+@patch('webcompat.webhooks.model.make_request')
+def test_process_issue_action_right_repo(mock_mr):
+    """Test that repository_url matches the CONFIG for public repo."""
+    mock_mr.return_value.status_code == 200
+    json_event, signature = event_data('new_event_valid.json')
+    payload = json.loads(json_event)
+    issue = WebHookIssue.from_dict(payload)
+    with webcompat.app.test_request_context():
+        rv = issue.process_issue_action()
+        assert rv == gracias
+
+
+def test_process_issue_action_wrong_repo():
+    """Test when repository_url differs from the CONFIG for public repo."""
+    json_event, signature = event_data('wrong_repo.json')
+    payload = json.loads(json_event)
+    issue = WebHookIssue.from_dict(payload)
+    with webcompat.app.test_request_context():
+        rv = issue.process_issue_action()
+        assert rv == wrong_repo
+
+
+def test_process_issue_action_wrong_repo():
+    """Test for issues in the wrong repo."""
+    json_event, signature = event_data(
+        'private_milestone_accepted_wrong_repo.json')
+    payload = json.loads(json_event)
+    issue = WebHookIssue.from_dict(payload)
+    with webcompat.app.test_request_context():
+        rv = issue.process_issue_action()
+        assert rv == wrong_repo
+
+
+@patch('webcompat.webhooks.model.make_request')
+def test_process_issue_action_acceptable_issue(mock_mr):
+    """Test for acceptable issues from private repo."""
+    mock_mr.return_value.status_code == 200
+    json_event, signature = event_data('private_milestone_accepted.json')
+    payload = json.loads(json_event)
+    issue = WebHookIssue.from_dict(payload)
+    with webcompat.app.test_request_context():
+        rv = issue.process_issue_action()
+        assert rv == accepted
+
+
+@patch('webcompat.webhooks.model.make_request')
+def test_process_issue_action_private_issue_moderated_ok(mock_mr):
+    """Test for private issue successfully moderated."""
+    mock_mr.return_value.status_code == 200
+    json_event, signature = event_data('private_milestone_accepted.json')
+    payload = json.loads(json_event)
+    issue = WebHookIssue.from_dict(payload)
+    with webcompat.app.test_request_context():
+        rv = issue.process_issue_action()
+        assert rv == accepted
+
+
+@patch('webcompat.webhooks.model.make_request')
+def test_process_issue_action_reject_issue(mock_mr):
+    """Test for rejected issues from private repo."""
+    mock_mr.return_value.status_code == 200
+    json_event, signature = event_data('private_milestone_closed.json')
+    payload = json.loads(json_event)
+    issue = WebHookIssue.from_dict(payload)
+    with webcompat.app.test_request_context():
+        rv = issue.process_issue_action()
+        assert rv == rejected
+
+
+@patch('webcompat.webhooks.model.make_request')
+def test_process_issue_action_acceptable_issue_closed(mock_mr):
+    """Test for accepted issues being closed."""
+    mock_mr.return_value.status_code == 200
+    json_event, signature = event_data(
+        'private_milestone_accepted_closed.json')
+    payload = json.loads(json_event)
+    issue = WebHookIssue.from_dict(payload)
+    with webcompat.app.test_request_context():
+        rv = issue.process_issue_action()
+        assert rv == boring
+
+
+@patch('webcompat.webhooks.model.make_request')
+def test_process_issue_action_comment_public_uri(mock_mr):
+    """Test we are getting the right message on public uri comment."""
+    mock_mr.return_value.status_code == 200
+    json_event, signature = event_data('private_issue_opened.json')
+    payload = json.loads(json_event)
+    issue = WebHookIssue.from_dict(payload)
+    with webcompat.app.test_request_context():
+        rv = issue.process_issue_action()
+        assert rv == comment_added
+
+
+@patch('webcompat.webhooks.model.make_request')
+def test_process_issue_action_github_api_exception(mock_mr, caplog):
+    """Test GitHub API exception handling.
+
+    Each of the test scenarios have the following:
+    issue_payload, expected_log, method
+    method is unused in the test, but is meant to provide context to
+    the reader for where the exception is happening.
+    """
+    caplog.set_level(logging.INFO)
+    mock_mr.side_effect = HTTPError()
+    mock_mr.status_code = 400
+    scenarios = [
+        ('private_milestone_accepted.json',
+         'private:moving to public failed', 'moderate_private_issue'),
+        ('private_issue_no_source.json', 'comment failed',
+         'comment_public_uri'),
+        ('new_event_valid.json', 'public:opened labels failed',
+         'tag_as_public'),
+        ('private_milestone_closed.json',
+         'public rejection failed', 'reject_private_issue')
+    ]
+    for scenario in scenarios:
+        issue_payload, expected_log, method = scenario
+        json_event, signature = event_data(issue_payload)
+        payload = json.loads(json_event)
+        issue = WebHookIssue.from_dict(payload)
+        with webcompat.app.test_request_context():
+            rv = issue.process_issue_action()
+            assert rv == oops
+            assert expected_log in caplog.text
