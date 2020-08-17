@@ -21,6 +21,7 @@ from webcompat.webhooks.helpers import make_response
 from webcompat.webhooks.helpers import make_request
 from webcompat.webhooks.helpers import msg_log
 from webcompat.webhooks.helpers import oops
+from webcompat.webhooks.helpers import prepare_invalid_issue
 from webcompat.webhooks.helpers import prepare_rejected_issue
 from webcompat.webhooks.helpers import repo_scope
 
@@ -143,6 +144,14 @@ class WebHookIssue:
         # prepare the payload
         return f'[Original issue {public_number}]({self.public_url})'
 
+    def reject_invalid_issue(self):
+        """Send a passed-moderation-yet-invalid PATCH to the public issue."""
+        payload_request = prepare_invalid_issue(self.title)
+        public_number = self.get_public_issue_number()
+        # Preparing the proxy request
+        path = f'repos/{PUBLIC_REPO}/{public_number}'
+        make_request('patch', path, payload_request)
+
     def reject_private_issue(self):
         """Send a rejected moderation PATCH on the public issue."""
         payload_request = prepare_rejected_issue()
@@ -237,6 +246,19 @@ class WebHookIssue:
                 # we didn't get exceptions, so it's safe to close it
                 self.close_private_issue()
                 return make_response('Moderated issue accepted', 200)
+        elif (self.action == 'milestoned' and scope == 'private' and
+              self.milestoned_with == 'accepted: invalid'):
+            try:
+                self.reject_invalid_issue()
+            except HTTPError as e:
+                msg_log(
+                    'private:closing public issue as invalid failed',
+                    self.number)
+                return oops()
+            else:
+                # we didn't get exceptions, so it's safe to close it
+                self.close_private_issue()
+                return make_response('Moderated issue closed as invalid', 200)
         elif (scope == 'private' and self.state == 'closed' and
               not self.milestone == 'accepted'):
             # private issue has been closed. It is rejected

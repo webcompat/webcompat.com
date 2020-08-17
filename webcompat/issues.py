@@ -23,10 +23,10 @@ REPO_URI = app.config['ISSUES_REPO_URI']
 PRIVATE_REPO_URI = app.config['PRIVATE_REPO_URI']
 PRIVATE_REPO_MILESTONE = app.config['PRIVATE_REPO_MILESTONE']
 
-REJECTED_TITLE = 'Issue rejected.'
-REJECTED_BODY = '''<p>The content of this issue doesn't meet our
-<a href="https://webcompat.com/terms#acceptable-use">acceptable use</a>
-guidelines. Its original content has been deleted.</p>'''
+INVALID_BODY = '''<p>Thanks for the report, but this is not a Compatibility
+issue.</p><p>For this project we try to focus our effort on layouts, features
+or content that works as expected in one browser but not in another.
+Closing the issue as Invalid.</p>'''
 ONGOING_TITLE = 'In the moderation queue.'
 ONGOING_BODY = '''<p>This issue has been put in the moderation queue. A human
 will review if the message meets our current
@@ -35,20 +35,30 @@ acceptable use</a> guidelines.
 It will probably take a couple of days depending on the backlog.
 Once it has been reviewed, the content will be either made public
 or deleted.</p>'''
+REJECTED_TITLE = 'Issue rejected.'
+REJECTED_BODY = '''<p>The content of this issue doesn't meet our
+<a href="https://webcompat.com/terms#acceptable-use">acceptable use</a>
+guidelines. Its original content has been deleted.</p>'''
 
 
-def moderation_template(choice='ongoing'):
+def moderation_template(choice='ongoing', title=None):
     """Gets the placeholder data to send for unmoderated issues.
 
-    The moderation is for now two types:
+    The moderation is for now these types:
     - ongoing: the issue is in the moderation queue.
     - rejected: the issue has been rejected.
+    - invalid: the issue is invalid (but not rejected)
 
     The default is 'ongoing' even with unknown keywords.
     """
     if choice == 'rejected':
         title = REJECTED_TITLE
         body = REJECTED_BODY
+    elif choice == 'invalid':
+        if not title:
+            raise ValueError("A title must be passed in for invalid issues")
+        title = title
+        body = INVALID_BODY
     else:
         title = ONGOING_TITLE
         body = ONGOING_BODY

@@ -411,6 +411,21 @@ class TestWebhook(unittest.TestCase):
         actual = helpers.repo_scope(url)
         self.assertEqual(expected, actual)
 
+    def test_prepare_invalid_issue(self):
+        """Test we prepare the right payload for the invalid issue."""
+        expected = {'body': '<p>Thanks for the report, but this is not a Compatibility\nissue.</p><p>For this project we try to focus our effort on layouts, features\nor content that works as expected in one browser but not in another.\nClosing the issue as Invalid.</p>',  # noqa
+                    'milestone': 8,
+                    'state': 'closed',
+                    'title': 'Test title!'}
+        actual = helpers.prepare_invalid_issue('Test title!')
+        self.assertEqual(type(actual), dict)
+        self.assertEqual(actual, expected)
+
+    def test_prepare_invalid_issue_no_title(self):
+        """Test we raise for a missing title arguement."""
+        with pytest.raises(ValueError) as excinfo:
+            helpers.prepare_invalid_issue()
+
     def test_prepare_rejected_issue(self):
         """Test we prepare the right payload for the rejected issue."""
         expected = {'body': "<p>The content of this issue doesn't meet our\n"
