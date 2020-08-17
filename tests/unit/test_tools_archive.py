@@ -110,7 +110,7 @@ def test_comments_fetch(mocker, issue_1470):
     assert type(issue_1470.comments) == list
     assert len(issue_1470.comments) == 0
     # Instead of fetching from the network, we get a fixture
-    fake_json = mocker.patch.object(model, 'recursive_fetch')
+    fake_json = mocker.patch.object(model.Issue, 'recursive_fetch')
     fake_json.return_value = json.loads(get_fixture('1470-comments-all.json'))
     issue_1470.fetch_comments()
     # actual tests after fetching
@@ -139,13 +139,13 @@ def test_make_request(mocker):
     assert actual.status_code == 200
 
 
-def test_http_error_log_comments_fetch(mocker, caplog):
+def test_http_error_log_comments_fetch(mocker, caplog, issue_1470):
     """Test that we record a log message for HTTP error when fetching."""
     fake_r = mocker.patch.object(model.requests, 'get')
     fake_r.side_effect = HTTPError()
     fake_r.status_code = 400
     caplog.set_level(logging.WARNING)
-    model.recursive_fetch('https://example.org/')
+    model.Issue.recursive_fetch('https://example.org/')
     assert 'Fetching comments failed' in caplog.text
 
 

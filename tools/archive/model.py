@@ -65,7 +65,7 @@ class Issue:
     def fetch_comments(self):
         """Fetch comments from an issue."""
         if self.has_comments():
-            comments_json = recursive_fetch(self.comments_url)
+            comments_json = self.recursive_fetch(self.comments_url)
             self.comments = self.comments_as_list(comments_json)
         else:
             self.comments = []
@@ -90,6 +90,22 @@ class Issue:
                     )
                 )
         return comments
+
+
+    @staticmethod
+    def recursive_fetch(comments_url):
+        """Fetch all comments."""
+        try:
+            r = requests.get(comments_url)
+            r.raise_for_status()
+        except HTTPError as err:
+            logging.warning(f'Fetching comments failed {err}')
+        else:
+            comments = r.json()
+            while 'next' in r.links.keys():
+                r = requests.get(r.links['next']['url'])
+                comments.extend(r.json())
+            return comments
 
 
 @dataclass
@@ -138,21 +154,6 @@ class ArchivedIssue(Issue):
 def make_request(url):
     """create a request."""
     return requests.get(url)
-
-
-def recursive_fetch(comments_url):
-    """Fetch all comments."""
-    try:
-        r = requests.get(comments_url)
-        r.raise_for_status()
-    except HTTPError as err:
-        logging.warning(f'Fetching comments failed {err}')
-    else:
-        comments = r.json()
-        while 'next' in r.links.keys():
-            r = requests.get(r.links['next']['url'])
-            comments.extend(r.json())
-        return comments
 
 
 def to_datetime(date_str):
