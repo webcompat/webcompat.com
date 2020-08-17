@@ -9,6 +9,7 @@
 from dataclasses import dataclass
 from dataclasses import field
 from datetime import datetime
+# from distutils.util import strtobool
 import logging
 import pathlib
 from typing import List
@@ -42,6 +43,8 @@ class Issue:
         init=False,
         default_factory=list
         )
+    locked: bool
+
 
     @classmethod
     def from_dict(cls, payload):
@@ -51,7 +54,8 @@ class Issue:
             number = payload.get('number'),
             title = payload.get('title'),
             comments_number = payload.get('comments'),
-            comments_url = payload.get('comments_url')
+            comments_url = payload.get('comments_url'),
+            locked = payload.get('locked'),
         )
 
 

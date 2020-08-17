@@ -161,3 +161,8 @@ def test_to_datetime():
     expected_date = datetime.datetime(2020, 8, 14, 12, 34, 56,
                                       tzinfo=datetime.timezone.utc)
     assert model.to_datetime('2020-08-14T12:34:56Z') == expected_date
+
+
+def test_issue_is_locked(issue_100):
+    """test if an issue is locked."""
+    assert issue_100.locked == True
