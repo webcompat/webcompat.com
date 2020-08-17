@@ -37,6 +37,7 @@ class Issue:
 
     number: int
     title: str
+    body: str
     comments_url: str
     comments_number: int
     comments: List[Comment] = field(
@@ -44,6 +45,8 @@ class Issue:
         default_factory=list
         )
     locked: bool
+    issue_created: datetime
+    issue_updated: datetime
 
 
     @classmethod
@@ -53,9 +56,12 @@ class Issue:
         return cls(
             number = payload.get('number'),
             title = payload.get('title'),
+            body = payload.get('body'),
             comments_number = payload.get('comments'),
             comments_url = payload.get('comments_url'),
             locked = payload.get('locked'),
+            issue_created = to_datetime(payload.get('created_at')),
+            issue_updated = to_datetime(payload.get('updated_at')),
         )
 
 
@@ -133,7 +139,20 @@ class ArchivedIssue(Issue):
             autoescape=select_autoescape(['html'])
         )
         issue_template = env.get_template('issue.html')
-        html_issue = issue_template.render(number = self.number)
+        if self.locked:
+            locked = 'yes'
+        else:
+            locked = 'no'
+        html_issue = issue_template.render(
+            number = self.number,
+            comments_number = self.comments_number,
+            title = self.title,
+            # TODO: replace self.body markdown
+            issue_body = 'this is a body',
+            locked = locked,
+            issue_created = self.issue_created.strftime('%Y-%m-%d'),
+            issue_updated = self.issue_updated.strftime('%Y-%m-%d'),
+            )
         return html_issue
 
 
@@ -167,3 +186,4 @@ def to_datetime(date_str):
     """
     normalized_date_str = date_str.replace("Z", "+00:00")
     return datetime.fromisoformat(normalized_date_str)
+

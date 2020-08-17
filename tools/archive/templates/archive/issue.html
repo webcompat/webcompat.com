@@ -4,12 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Issue {{number}}</title>
+    <link href="https://webcompat.com/dist/webcompat.css" type="text/css" rel="stylesheet">
+    <style>table, td, th { border: 1px black solid; border-collapse: collapse;}</style>
   </head>
-  <body>
-    <header><h1>Issue {{number}}</h1></header>
+  <body id="body-webcompat">
+    <header><h1><span class="issue_title">{{title}}</span></h1></header>
     {%include "nav.html" %}
     <main>
         <section class="notice">This issue has been archived. It is now read-only.</section>
+        <section class="issue_data">
+          <table>
+            <tr class="issue_number"><th>Issue</th><td>{{number}}</td></tr>
+            <tr class="issue_created"><th>Created</th><td>{{issue_created}}</td></tr>
+            <tr class="issue_updated"><th>Updated</th><td>{{issue_updated}}</td></tr>
+            <tr class="comments_number"><th>Comments</th><td>{{comments_number}}</td></tr>
+            <tr class="locked"><th>Locked</th><td>{{locked}}</td></tr>
+          </table>
+        </section>
+        <section class="issue_body">{{issue_body}}</section>
+        <section class="comments"></section>
     </main>
     <footer></footer>
     {%include "svg_symbols.html" %}
