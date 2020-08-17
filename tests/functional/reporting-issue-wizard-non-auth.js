@@ -625,11 +625,7 @@ registerSuite("Reporting with wizard", {
           })
           .end()
           // Make sure that popup is visible and close it
-          .findDisplayedByCssSelector(".popup-modal")
-          .getAttribute("class")
-          .then((className) => {
-            assert.include(className, "is--visible");
-          })
+          .findDisplayedByCssSelector(".popup-modal.is--visible")
           .pressKeys(keys.ESCAPE)
           .end()
           .findByCssSelector(".popup-modal")
@@ -647,11 +643,7 @@ registerSuite("Reporting with wizard", {
           })
           .end()
           // Make sure that popup is visible and close it
-          .findDisplayedByCssSelector(".popup-modal")
-          .getAttribute("class")
-          .then((className) => {
-            assert.include(className, "is--visible");
-          })
+          .findDisplayedByCssSelector(".popup-modal.is--visible")
           .pressKeys(keys.ESCAPE)
           .end()
           .findByCssSelector(".popup-modal")
