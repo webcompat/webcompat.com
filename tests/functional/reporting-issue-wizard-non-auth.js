@@ -654,5 +654,42 @@ registerSuite("Reporting with wizard", {
           .end()
       );
     },
+    "Left and right key modal navigation": function () {
+      return (
+        FunctionalHelpers.openPage(this, url("issues/new"), "#js-ReportForm")
+          .execute(() => {
+            // Click on "What is a web compatibility issue?"
+            document
+              .querySelector("[data-popup-trigger='what-is-compat']")
+              .click();
+          })
+          .findDisplayedByCssSelector(".popup-modal.is--visible")
+          .execute(() => {
+            // calling pressKeys(keys.ARROW_RIGHT), etc. seems to fail
+            // in Firefox, but not Chrome. So just dispatch them manually.
+            let right = new KeyboardEvent("keydown", {
+              key: "ArrowRight",
+              keyCode: 39,
+              which: 39,
+            });
+            let left = new KeyboardEvent("keydown", {
+              key: "ArrowLeft",
+              keyCode: 37,
+              which: 37,
+            });
+            document.dispatchEvent(right);
+            document.dispatchEvent(right);
+            document.dispatchEvent(left);
+          })
+          .end()
+          .findByCssSelector(".dot.active")
+          .getAttribute("data-slide")
+          // two rights and a left should leave us in the middle
+          .then((dataset) => {
+            assert.include(dataset, "1");
+          })
+          .end()
+      );
+    },
   },
 });
