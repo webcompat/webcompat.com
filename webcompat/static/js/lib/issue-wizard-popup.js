@@ -29,6 +29,8 @@ function Popup() {
     );
 
     Mousetrap.bind("esc", this.closeModal.bind(this));
+    Mousetrap.bind("left", this.slideLeft.bind(this));
+    Mousetrap.bind("right", this.slideRight.bind(this));
   };
 
   this.openModal = function (e) {
@@ -54,6 +56,22 @@ function Popup() {
     if (popupModal && this.overlay.classList.contains("is-blacked-out")) {
       popupModal.classList.remove("is--visible");
       this.overlay.classList.remove("is-blacked-out");
+    }
+  };
+
+  this.slideLeft = function () {
+    var active = document.querySelector(".dot.active");
+    var slideNumber = active.dataset.slide;
+    if (slideNumber > 0) {
+      active.previousElementSibling.click();
+    }
+  };
+
+  this.slideRight = function () {
+    var active = document.querySelector(".dot.active");
+    var slideNumber = active.dataset.slide;
+    if (slideNumber < 2) {
+      active.nextElementSibling.click();
     }
   };
 
