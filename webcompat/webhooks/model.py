@@ -145,25 +145,20 @@ class WebHookIssue:
         # prepare the payload
         return f'[Original issue {public_number}]({self.public_url})'
 
-    def reject_incomplete_issue(self):
-        """Send a passed-moderation-yet-incomplete PATCH to public issue."""
-        payload_request = prepare_incomplete_issue(self.title)
-        public_number = self.get_public_issue_number()
-        # Preparing the proxy request
-        path = f'repos/{PUBLIC_REPO}/{public_number}'
-        make_request('patch', path, payload_request)
+    def close_public_issue(self, reason='rejected'):
+        """Close a public issue for the given reason.
 
-    def reject_invalid_issue(self):
-        """Send a passed-moderation-yet-invalid PATCH to the public issue."""
-        payload_request = prepare_invalid_issue(self.title)
-        public_number = self.get_public_issue_number()
-        # Preparing the proxy request
-        path = f'repos/{PUBLIC_REPO}/{public_number}'
-        make_request('patch', path, payload_request)
-
-    def reject_private_issue(self):
-        """Send a rejected moderation PATCH on the public issue."""
-        payload_request = prepare_rejected_issue()
+        Right now the accepted reasons are:
+        'incomplete'
+        'invalid'
+        'rejected' (default)
+        """
+        if reason == 'incomplete':
+            payload_request = prepare_incomplete_issue(self.title)
+        elif reason == 'invalid':
+            payload_request = prepare_invalid_issue(self.title)
+        else:
+            payload_request = prepare_rejected_issue()
         public_number = self.get_public_issue_number()
         # Preparing the proxy request
         path = f'repos/{PUBLIC_REPO}/{public_number}'
@@ -258,7 +253,7 @@ class WebHookIssue:
         elif (self.action == 'milestoned' and scope == 'private' and
               self.milestoned_with == 'accepted: incomplete'):
             try:
-                self.reject_incomplete_issue()
+                self.close_public_issue(reason='incomplete')
             except HTTPError as e:
                 msg_log(
                     'private:closing public issue as incomplete failed',
@@ -272,7 +267,7 @@ class WebHookIssue:
         elif (self.action == 'milestoned' and scope == 'private' and
               self.milestoned_with == 'accepted: invalid'):
             try:
-                self.reject_invalid_issue()
+                self.close_public_issue(reason='invalid')
             except HTTPError as e:
                 msg_log(
                     'private:closing public issue as invalid failed',
@@ -287,7 +282,7 @@ class WebHookIssue:
             # private issue has been closed. It is rejected
             # We need to patch with a template.
             try:
-                self.reject_private_issue()
+                self.close_public_issue(reason='rejected')
             except HTTPError as e:
                 msg_log('public rejection failed', self.number)
                 return oops()

@@ -134,10 +134,9 @@ def test_closing_public_issues(mock_mr):
     json_event, signature = event_data('private_issue_opened.json')
     payload = json.loads(json_event)
     issue = WebHookIssue.from_dict(payload)
-    test_functions = [issue.reject_incomplete_issue,
-                      issue.reject_invalid_issue, issue.reject_private_issue]
-    for fn in test_functions:
-        fn()
+    reasons = ['incomplete', 'invalid', 'rejected']
+    for reason in reasons:
+        issue.close_public_issue(reason=reason)
         method, uri, data = mock_mr.call_args[0]
         # make sure we sent a patch with the right data to GitHub
         assert method == 'patch'
@@ -322,13 +321,13 @@ def test_process_issue_action_github_api_exception(mock_mr, caplog):
         ('new_event_valid.json', 'public:opened labels failed',
          'tag_as_public'),
         ('private_milestone_closed.json',
-         'public rejection failed', 'reject_private_issue'),
+         'public rejection failed', 'close_public_issue'),
         ('private_milestone_accepted_invalid.json',
          'private:closing public issue as invalid failed',
-         'reject_invalid_issue'),
+         'close_public_issue'),
         ('private_milestone_accepted_incomplete.json',
          'private:closing public issue as incomplete failed',
-         'reject_incomplete_issue')
+         'close_public_issue')
     ]
     for scenario in scenarios:
         issue_payload, expected_log, method = scenario
