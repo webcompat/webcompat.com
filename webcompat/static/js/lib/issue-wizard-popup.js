@@ -6,76 +6,71 @@ import $ from "jquery";
 import Mousetrap from "Mousetrap";
 import { sendAnalyticsEvent } from "./wizard/analytics.js";
 
-function Popup() {
-  this.init = function () {
+class Popup {
+  constructor() {
+    this.activeSlide = null;
     this.closeButtons = document.querySelectorAll(".popup-modal__close");
     this.modalTriggers = document.querySelectorAll(".popup-trigger");
     this.overlay = document.querySelector(".popup-overlay");
 
     this.setUpEvents();
-  };
+  }
 
-  this.setUpEvents = function () {
-    this.modalTriggers.forEach(
-      function (trigger) {
-        trigger.addEventListener("click", this.openModal.bind(this));
-      }.bind(this)
-    );
+  setUpEvents() {
+    this.modalTriggers.forEach((trigger) => {
+      trigger.addEventListener("click", this.openModal.bind(this));
+    });
 
-    this.closeButtons.forEach(
-      function (btn) {
-        btn.addEventListener("click", this.closeModal.bind(this));
-      }.bind(this)
-    );
+    this.closeButtons.forEach((btn) => {
+      btn.addEventListener("click", this.closeModal.bind(this));
+    });
 
     Mousetrap.bind("esc", this.closeModal.bind(this));
     Mousetrap.bind("left", this.slideLeft.bind(this));
     Mousetrap.bind("right", this.slideRight.bind(this));
-  };
+  }
 
-  this.openModal = function (e) {
+  openModal(e) {
     e.preventDefault();
-
-    var popupTrigger = e.target.dataset.popupTrigger;
-    var popupModal = document.querySelector(
-      '[data-popup-modal="'.concat(popupTrigger, '"]')
+    const popupTrigger = e.target.dataset.popupTrigger;
+    const popupModal = document.querySelector(
+      `[data-popup-modal="${popupTrigger}"]`
     );
     sendAnalyticsEvent(
       // transform trigger into camelCase and send as our event
-      popupTrigger.replace(/-([a-z])/g, function (match) {
+      popupTrigger.replace(/-([a-z])/g, (match) => {
         return match[1].toUpperCase();
       }),
       "click"
     );
     popupModal.classList.add("is--visible");
     this.overlay.classList.add("is-blacked-out");
-  };
+    this.activeSlide = document.querySelector(".dot.active");
+  }
 
-  this.closeModal = function () {
-    var popupModal = document.querySelector(".popup-modal.is--visible");
+  closeModal() {
+    const popupModal = document.querySelector(".popup-modal.is--visible");
     if (popupModal && this.overlay.classList.contains("is-blacked-out")) {
       popupModal.classList.remove("is--visible");
       this.overlay.classList.remove("is-blacked-out");
     }
-  };
+  }
 
-  this.slideLeft = function () {
-    var active = document.querySelector(".dot.active");
-    var slideNumber = active.dataset.slide;
+  slideLeft() {
+    const slideNumber = this.activeSlide.dataset.slide;
     if (slideNumber > 0) {
-      active.previousElementSibling.click();
+      this.activeSlide = this.activeSlide.previousElementSibling;
+      this.activeSlide.click();
     }
-  };
+  }
 
-  this.slideRight = function () {
-    var active = document.querySelector(".dot.active");
-    var slideNumber = active.dataset.slide;
+  slideRight() {
+    const slideNumber = this.activeSlide.dataset.slide;
     if (slideNumber < 2) {
-      active.nextElementSibling.click();
+      this.activeSlide = this.activeSlide.nextElementSibling;
+      this.activeSlide.click();
     }
-  };
-
-  return this.init();
+  }
 }
 
 $(function () {
