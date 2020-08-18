@@ -27,6 +27,10 @@ INVALID_BODY = '''<p>Thanks for the report, but this is not a Compatibility
 issue.</p><p>For this project we try to focus our effort on layouts, features
 or content that works as expected in one browser but not in another.
 Closing the issue as Invalid.</p>'''
+INCOMPLETE_BODY = '''<p>Thanks for the report. Unfortunately without any
+detail about the issue you experienced, we cannot help with this bug.
+Please leave a comment with more detail, or file a new report and we will
+gladly investigate this further.</p>'''
 ONGOING_TITLE = 'In the moderation queue.'
 ONGOING_BODY = '''<p>This issue has been put in the moderation queue. A human
 will review if the message meets our current
@@ -47,6 +51,7 @@ def moderation_template(choice='ongoing', title=None):
     The moderation is for now these types:
     - ongoing: the issue is in the moderation queue.
     - rejected: the issue has been rejected.
+    - incomplete: the issue is incomplete (but not rejected)
     - invalid: the issue is invalid (but not rejected)
 
     The default is 'ongoing' even with unknown keywords.
@@ -59,6 +64,11 @@ def moderation_template(choice='ongoing', title=None):
             raise ValueError("A title must be passed in for invalid issues")
         title = title
         body = INVALID_BODY
+    elif choice == 'incomplete':
+        if not title:
+            raise ValueError("A title must be passed in for incomplete issues")
+        title = title
+        body = INCOMPLETE_BODY
     else:
         title = ONGOING_TITLE
         body = ONGOING_BODY

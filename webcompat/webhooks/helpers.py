@@ -209,6 +209,25 @@ def msg_log(msg, issue_number):
     log.info(msg)
 
 
+def prepare_incomplete_issue(title=None):
+    """Create the payload for the incomplete moderated issue.
+
+    When the issue has been moderated as "accepted:incomplete",
+    we need to change a couple of things in the public space
+
+    - change body
+    - close the issue
+    - remove the action-needsmoderation label
+    - change the milestone to invalid
+    """
+    # Extract the relevant information
+    incomplete_id = app.config['STATUSES']['incomplete']['id']
+    payload_request = moderation_template('incomplete', title)
+    payload_request['state'] = 'closed'
+    payload_request['milestone'] = incomplete_id
+    return payload_request
+
+
 def prepare_invalid_issue(title=None):
     """Create the payload for the invalid moderated issue.
 
