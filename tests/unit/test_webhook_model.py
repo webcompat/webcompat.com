@@ -22,6 +22,10 @@ from webcompat.webhooks.model import WebHookIssue
 # Some expected responses as tuples
 accepted = ('Moderated issue accepted', 200, {'Content-Type': 'text/plain'})
 rejected = ('Moderated issue rejected', 200, {'Content-Type': 'text/plain'})
+incomplete = ('Moderated issue closed as incomplete',
+              200, {'Content-Type': 'text/plain'})
+invalid = ('Moderated issue closed as invalid',
+           200, {'Content-Type': 'text/plain'})
 boring = ('Not an interesting hook', 403, {'Content-Type': 'text/plain'})
 gracias = ('gracias, amigo.', 200, {'Content-Type': 'text/plain'})
 wrong_repo = ('Wrong repository', 403, {'Content-Type': 'text/plain'})
@@ -208,97 +212,27 @@ def test_prepare_accepted_issue(mock_priority):
 
 
 @patch('webcompat.webhooks.model.make_request')
-def test_process_issue_action_right_repo(mock_mr):
-    """Test that repository_url matches the CONFIG for public repo."""
+def test_process_issue_action_scenarios(mock_mr):
+    """Test we are getting the right response for each scenario."""
+    test_data = [
+        ('new_event_valid.json', gracias),
+        ('wrong_repo.json', wrong_repo),
+        ('private_milestone_accepted_wrong_repo.json', wrong_repo),
+        ('private_milestone_accepted.json', accepted),
+        ('private_milestone_closed.json', rejected),
+        ('private_milestone_accepted_incomplete.json', incomplete),
+        ('private_milestone_accepted_invalid.json', invalid),
+        ('private_milestone_accepted_closed.json', boring),
+        ('private_issue_opened.json', comment_added)
+    ]
     mock_mr.return_value.status_code == 200
-    json_event, signature = event_data('new_event_valid.json')
-    payload = json.loads(json_event)
-    issue = WebHookIssue.from_dict(payload)
-    with webcompat.app.test_request_context():
-        rv = issue.process_issue_action()
-        assert rv == gracias
-
-
-def test_process_issue_action_wrong_repo():
-    """Test when repository_url differs from the CONFIG for public repo."""
-    json_event, signature = event_data('wrong_repo.json')
-    payload = json.loads(json_event)
-    issue = WebHookIssue.from_dict(payload)
-    with webcompat.app.test_request_context():
-        rv = issue.process_issue_action()
-        assert rv == wrong_repo
-
-
-def test_process_issue_action_wrong_repo():
-    """Test for issues in the wrong repo."""
-    json_event, signature = event_data(
-        'private_milestone_accepted_wrong_repo.json')
-    payload = json.loads(json_event)
-    issue = WebHookIssue.from_dict(payload)
-    with webcompat.app.test_request_context():
-        rv = issue.process_issue_action()
-        assert rv == wrong_repo
-
-
-@patch('webcompat.webhooks.model.make_request')
-def test_process_issue_action_acceptable_issue(mock_mr):
-    """Test for acceptable issues from private repo."""
-    mock_mr.return_value.status_code == 200
-    json_event, signature = event_data('private_milestone_accepted.json')
-    payload = json.loads(json_event)
-    issue = WebHookIssue.from_dict(payload)
-    with webcompat.app.test_request_context():
-        rv = issue.process_issue_action()
-        assert rv == accepted
-
-
-@patch('webcompat.webhooks.model.make_request')
-def test_process_issue_action_private_issue_moderated_ok(mock_mr):
-    """Test for private issue successfully moderated."""
-    mock_mr.return_value.status_code == 200
-    json_event, signature = event_data('private_milestone_accepted.json')
-    payload = json.loads(json_event)
-    issue = WebHookIssue.from_dict(payload)
-    with webcompat.app.test_request_context():
-        rv = issue.process_issue_action()
-        assert rv == accepted
-
-
-@patch('webcompat.webhooks.model.make_request')
-def test_process_issue_action_reject_issue(mock_mr):
-    """Test for rejected issues from private repo."""
-    mock_mr.return_value.status_code == 200
-    json_event, signature = event_data('private_milestone_closed.json')
-    payload = json.loads(json_event)
-    issue = WebHookIssue.from_dict(payload)
-    with webcompat.app.test_request_context():
-        rv = issue.process_issue_action()
-        assert rv == rejected
-
-
-@patch('webcompat.webhooks.model.make_request')
-def test_process_issue_action_acceptable_issue_closed(mock_mr):
-    """Test for accepted issues being closed."""
-    mock_mr.return_value.status_code == 200
-    json_event, signature = event_data(
-        'private_milestone_accepted_closed.json')
-    payload = json.loads(json_event)
-    issue = WebHookIssue.from_dict(payload)
-    with webcompat.app.test_request_context():
-        rv = issue.process_issue_action()
-        assert rv == boring
-
-
-@patch('webcompat.webhooks.model.make_request')
-def test_process_issue_action_comment_public_uri(mock_mr):
-    """Test we are getting the right message on public uri comment."""
-    mock_mr.return_value.status_code == 200
-    json_event, signature = event_data('private_issue_opened.json')
-    payload = json.loads(json_event)
-    issue = WebHookIssue.from_dict(payload)
-    with webcompat.app.test_request_context():
-        rv = issue.process_issue_action()
-        assert rv == comment_added
+    for issue_event, expected_rv in test_data:
+        json_event, signature = event_data(issue_event)
+        payload = json.loads(json_event)
+        issue = WebHookIssue.from_dict(payload)
+        with webcompat.app.test_request_context():
+            rv = issue.process_issue_action()
+            assert rv == expected_rv
 
 
 @patch('webcompat.webhooks.model.make_request')
