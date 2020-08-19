@@ -42,7 +42,12 @@ const onChange = (value) => handleEvent(value, () => hideSuccess(urlField));
 const onBlur = (value) => {
   if (!value) return;
 
-  handleEvent(value, () => showError(urlField, "A valid URL is required."));
+  handleEvent(value, () =>
+    showError(
+      urlField,
+      "Please enter a valid url starting with https:// or http://"
+    )
+  );
 };
 
 const updateDescription = (val) => {
@@ -56,17 +61,28 @@ const initListeners = () => {
   urlField.on("input", (event) => onChange(event.target.value));
   urlField.on("blur", (event) => onBlur(event.target.value));
   nextStepButton.on("click", onClick);
-  urlField.trigger("input");
-  updateDescription(urlField.val());
+};
+
+const setInitialInputState = () => {
+  if (!urlField.val()) {
+    urlField.focus();
+  } else {
+    // trigger a change to account for existing value
+    // after page refresh since Firefox is keeping form values
+    urlField.trigger("input");
+  }
 };
 
 initListeners();
+updateDescription(urlField.val());
+setInitialInputState();
 sendAnalyticsEvent("url", "start");
 
 export default {
+  //this method is called when url is prefilled via postMessage or GET request
   update: ({ url }) => {
     if (!url) return;
-    urlField.val(url).trigger("input");
+    urlField.val(url).trigger("input").blur();
     updateDescription(url);
   },
 };

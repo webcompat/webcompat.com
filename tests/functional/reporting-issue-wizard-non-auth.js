@@ -56,7 +56,7 @@ registerSuite("Reporting with wizard", {
         .then(function (texts) {
           assert.include(
             texts,
-            "A valid URL is required",
+            "Please enter a valid url starting with https:// or http://",
             "URL validation message is shown"
           );
         })
@@ -77,6 +77,13 @@ registerSuite("Reporting with wizard", {
     "Wizard stepper - scenario 1"() {
       return (
         FunctionalHelpers.openPage(this, url("issues/new"), "#js-ReportForm")
+          // Make sure that url field is focused
+          .getActiveElement()
+          .getProperty("id")
+          .then(function (elementId) {
+            assert.equal(elementId, "url", "Focused element id is #url");
+          })
+          .end()
           .findByCssSelector(".step.active .description")
           .getVisibleText()
           .then(function (text) {
