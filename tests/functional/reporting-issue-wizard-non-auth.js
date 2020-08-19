@@ -438,6 +438,17 @@ registerSuite("Reporting with wizard", {
             document.querySelector("[for=problem_category-4]").click();
           })
           .sleep(500)
+          // Make sure that other problem field is focused
+          .getActiveElement()
+          .getProperty("id")
+          .then(function (elementId) {
+            assert.equal(
+              elementId,
+              "other_problem",
+              "Focused element id is #other_problem"
+            );
+          })
+          .end()
           .findByCssSelector(".next-category")
           .getAttribute("disabled")
           .then(function (attribute) {
