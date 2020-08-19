@@ -15,6 +15,11 @@ registerSuite("Reporting through passing GET params", {
   tests: {
     "Form fields are prefilled"() {
       return FunctionalHelpers.openPage(this, url, "#js-ReportForm")
+        .getActiveElement()
+        .getProperty("id")
+        .then(function (elementId) {
+          assert.notEqual(elementId, "url", "Focused element id is not #url");
+        })
         .findByCssSelector("#url")
         .getProperty("value")
         .then(function (value) {

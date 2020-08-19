@@ -22,6 +22,12 @@ registerSuite("Reporting through postMessage", {
           // send data object through postMessage
           .execute(POSTMESSAGE_TEST)
           .sleep(1000)
+          .getActiveElement()
+          .getProperty("id")
+          .then(function (elementId) {
+            assert.notEqual(elementId, "url", "Focused element id is not #url");
+          })
+          .end()
           .findByCssSelector("#url")
           .getProperty("value")
           .then(function (value) {
