@@ -20,8 +20,10 @@ const otherProblem = $(".other-problem");
 const nextStepButton = $(".next-category");
 const otherProblemField = $("#other_problem");
 
-const showUnknown = () =>
+const showUnknown = () => {
   otherProblem.css("animation-name", "slidedownandheight");
+  otherProblemField.focus();
+};
 const hideUnknown = () =>
   otherProblem.css("animation-name", "slideupandheight");
 
