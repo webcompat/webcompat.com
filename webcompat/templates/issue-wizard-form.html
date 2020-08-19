@@ -68,7 +68,11 @@
               {% endfor %}
             {% endif %}
           </div>
-          {{form.problem_category(autocomplete='off')}}
+          <ul id="{{form.problem_category.id}}">
+          {% for radio in form.problem_category %}
+            <li>{{ radio }}{{ radio.label(tabIndex=0) }}</li>
+          {% endfor %}
+          </ul>
         </div>
       </div>
     </div>
@@ -103,7 +107,11 @@
               {% endfor %}
             {% endif %}
           </div>
-          {{form.site_bug_subcategory}}
+          <ul id="{{form.site_bug_subcategory.id}}">
+          {% for radio in form.site_bug_subcategory %}
+            <li>{{ radio }}{{ radio.label(tabIndex=0) }}</li>
+          {% endfor %}
+          </ul>
         </div>
         <div class="form-radio choice-control form-element js-Form-group layout_bug_subcategory">
           <div class="js-Form-information form-label-message">
@@ -114,7 +122,11 @@
               {% endfor %}
             {% endif %}
           </div>
-          {{form.layout_bug_subcategory}}
+          <ul id="{{form.layout_bug_subcategory.id}}">
+          {% for radio in form.layout_bug_subcategory %}
+            <li>{{ radio }}{{ radio.label(tabIndex=0) }}</li>
+          {% endfor %}
+          </ul>
         </div>
         <div class="form-radio choice-control form-element js-Form-group video_bug_subcategory">
           <div class="js-Form-information form-label-message">
@@ -125,7 +137,11 @@
               {% endfor %}
             {% endif %}
           </div>
-          {{form.video_bug_subcategory}}
+          <ul id="{{form.video_bug_subcategory.id}}">
+          {% for radio in form.video_bug_subcategory %}
+            <li>{{ radio }}{{ radio.label(tabIndex=0) }}</li>
+          {% endfor %}
+          </ul>
         </div>
       </div>
     </div>
@@ -201,7 +217,11 @@
               {% endfor %}
             {% endif %}
           </div>
-          {{form.tested_browsers}}
+          <ul id="{{form.tested_browsers.id}}">
+          {% for radio in form.tested_browsers %}
+            <li>{{ radio }}{{ radio.label(tabIndex=0) }}</li>
+          {% endfor %}
+          </ul>
         </div>
       </div>
     </div>
