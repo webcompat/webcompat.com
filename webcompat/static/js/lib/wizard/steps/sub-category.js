@@ -36,7 +36,11 @@ const handleSubCategory = (event) => {
   notify.publish("showStep", { id: "confirmBrowser" });
 };
 
-radio.on("change", handleSubCategory);
+const initListeners = () => {
+  radio.on("change", handleSubCategory);
+};
+
+initListeners();
 
 export default {
   show: (data) => {

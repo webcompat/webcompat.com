@@ -65,3 +65,14 @@ export const hideSuccess = (el) => {
 export const hideError = (el) => {
   el.parents(".js-Form-group").find(".form-message-error").remove();
 };
+
+export const addKeyDownListeners = () => {
+  const labels = document.querySelectorAll("label");
+  labels.forEach((label) => {
+    label.addEventListener("keydown", (e) => {
+      if (e.code === "Enter") {
+        e.target.click();
+      }
+    });
+  });
+};

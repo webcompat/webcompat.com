@@ -7,7 +7,12 @@
 import $ from "jquery";
 import notify from "../notify.js";
 import { isEmpty } from "../validation.js";
-import { showSuccess, hideSuccess, showContainer } from "../ui-utils.js";
+import {
+  showSuccess,
+  hideSuccess,
+  showContainer,
+  addKeyDownListeners,
+} from "../ui-utils.js";
 
 const container = $(".step-container.step-category");
 const detectionBug = $("#problem_category-0");
@@ -102,6 +107,7 @@ const initListeners = () => {
   unknownBug.on("change", handleUnknownBug);
   otherProblemField.on("blur input", onChange);
   nextStepButton.on("click", handleNextStep);
+  addKeyDownListeners();
 };
 
 initListeners();

@@ -43,9 +43,13 @@ const handleBrowserSelection = () => {
   testedOtherRadio.prop("checked", true);
 };
 
-nextStepButton.on("click", handleNext);
-noOtherButton.on("click", handleNoOther);
-radio.on("change", handleBrowserSelection);
+const initListeners = () => {
+  nextStepButton.on("click", handleNext);
+  noOtherButton.on("click", handleNoOther);
+  radio.on("change", handleBrowserSelection);
+};
+
+initListeners();
 
 export default {
   show: () => {
