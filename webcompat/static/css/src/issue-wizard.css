@@ -545,22 +545,6 @@
   width: 72px;
 }
 
-.choice-control .icon-container:hover {
-  border: 4px solid var(--issue-type-bg);
-}
-
-.choice-control .icon-container:hover::before {
-  border: 2px solid var(--color-bg-box);
-  border-radius: 3px;
-  bottom: 0;
-  content: " ";
-  left: 0;
-  position: absolute;
-  right: 0;
-  top: 0;
-  z-index: 0;
-}
-
 .choice-control.browsers .icon-container {
   align-items: center;
   background-color: var(--blowser-icon-bg);
@@ -574,6 +558,24 @@
   position: relative;
   transition: border .2s;
   width: 64px;
+}
+
+.choice-control .icon-container:hover,
+.choice-control label:focus .icon-container {
+  border: 4px solid var(--issue-type-bg);
+}
+
+.choice-control .icon-container:hover::before,
+.choice-control label:focus .icon-container::before {
+  border: 2px solid var(--color-bg-box);
+  border-radius: 3px;
+  bottom: 0;
+  content: " ";
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 0;
 }
 
 .device-data-hero img {
