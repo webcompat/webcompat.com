@@ -6,7 +6,11 @@
 
 import $ from "jquery";
 import notify from "../notify.js";
-import { showContainer, hideContainer } from "../ui-utils.js";
+import {
+  addKeyDownListeners,
+  hideContainer,
+  showContainer,
+} from "../ui-utils.js";
 
 const container = $(".step-container.step-tested-browsers");
 const nextStepButton = container.find("button.next-tested");
@@ -43,9 +47,14 @@ const handleBrowserSelection = () => {
   testedOtherRadio.prop("checked", true);
 };
 
-nextStepButton.on("click", handleNext);
-noOtherButton.on("click", handleNoOther);
-radio.on("change", handleBrowserSelection);
+const initListeners = () => {
+  nextStepButton.on("click", handleNext);
+  noOtherButton.on("click", handleNoOther);
+  radio.on("change", handleBrowserSelection);
+  addKeyDownListeners(container);
+};
+
+initListeners();
 
 export default {
   show: () => {

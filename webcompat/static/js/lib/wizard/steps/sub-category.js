@@ -5,7 +5,11 @@
 /* Allows the user to select a sub category of the problem they're experiencing */
 
 import $ from "jquery";
-import { showContainer, hideContainer } from "../ui-utils.js";
+import {
+  addKeyDownListeners,
+  hideContainer,
+  showContainer,
+} from "../ui-utils.js";
 import notify from "../notify.js";
 
 const container = $(".step-container.step-subproblem");
@@ -36,7 +40,12 @@ const handleSubCategory = (event) => {
   notify.publish("showStep", { id: "confirmBrowser" });
 };
 
-radio.on("change", handleSubCategory);
+const initListeners = () => {
+  radio.on("change", handleSubCategory);
+  addKeyDownListeners(container);
+};
+
+initListeners();
 
 export default {
   show: (data) => {
