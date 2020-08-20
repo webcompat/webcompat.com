@@ -709,5 +709,55 @@ registerSuite("Reporting with wizard", {
           .end()
       );
     },
+    "Enter can select category": function () {
+      return (
+        FunctionalHelpers.openPage(this, url("issues/new"), "#js-ReportForm")
+          .findByCssSelector("#url")
+          .type("http://example.com")
+          .end()
+          // Click on "Confirm"
+          .findByCssSelector(".next-url")
+          .click()
+          .end()
+          .execute(() => {
+            let label = document.querySelector("#problem_category-0 + label");
+            let enter = new KeyboardEvent("keydown", {
+              code: "Enter",
+              keyCode: 13,
+              which: 13,
+            });
+
+            label.dispatchEvent(enter);
+          })
+          .findByCssSelector("#problem_category-0")
+          .getProperty("checked")
+          .then((checkedProp) => {
+            assert.isTrue(checkedProp);
+          })
+          .end()
+          .execute(() => {
+            let label2 = document.querySelector("#problem_category-1 + label");
+            let enter = new KeyboardEvent("keydown", {
+              code: "Enter",
+              keyCode: 13,
+              which: 13,
+            });
+
+            label2.dispatchEvent(enter);
+          })
+          .findByCssSelector("#problem_category-0")
+          .getProperty("checked")
+          .then((checkedProp) => {
+            assert.isFalse(checkedProp);
+          })
+          .end()
+          .findByCssSelector("#problem_category-1")
+          .getProperty("checked")
+          .then((checkedProp) => {
+            assert.isTrue(checkedProp);
+          })
+          .end()
+      );
+    },
   },
 });
