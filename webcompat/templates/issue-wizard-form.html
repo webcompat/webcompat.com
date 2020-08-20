@@ -356,24 +356,16 @@
               <img class="" src="{{ url_for('static', filename='img/svg/icons/svg-github-white.svg') }}" title="Report via GitHub" alt="Report via GitHub" />
               {% if session.username %}Report as {{ session.username }}{% else %}Report via GitHub{% endif %}
             </button>
-            <button class="button button-primary"
+            <button class="button button-primary {{ 'js-Button' if anonymous_reporting else '' }}"
                     id="open-username"
+                    name="github-proxy-report"
                     type={{ 'submit' if anonymous_reporting else 'button' }}
                     {{ '' if anonymous_reporting else 'disabled' }}
                     >
                     {{'Report anonymously' if anonymous_reporting else 'Anonymous reports temporarily disabled'}}
             </button>
           </div>
-          <div class="optional-username centered low">
-            You can optionally provide your GitHub username, allowing us to contact you during diagnosis.
-            <div class="column narrow js-Form-group">
-              <div class="label">
-                <label class="form-label" for="contact">Optional GitHub username</label>
-                <div class="right-label">public</div>
-              </div>
-              {{ form.contact(class_='form-field text-field',
-                              placeholder='GitHub username',
-                              pattern='^[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}$') }}
+          <div class="column narrow js-Form-group">
             <div class="is-hidden" aria-hidden="true">
               <div class="form-text form-element js-Form-group">
                 {{ form.username.label(class_='form-label') }}
@@ -385,16 +377,7 @@
                 {{ form.username(class_='u-formInput') }}
               </div>
             </div>
-          </div>
-          <div class="col center">
-            <button class="button button-primary {{ 'js-Button' if anonymous_reporting else '' }}"
-                    id="submitanon"
-                    type="submit"
-                    name="github-proxy-report">
-              Send report
-            </button>
-           </div>
-          </div>
+        </div>
         </div>
       </div>
     </div>
