@@ -12,10 +12,8 @@ It includes helper methods.
 
 import json
 import random
-import re
 import urllib.parse
 
-from flask import g
 from flask import url_for
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileAllowed
@@ -28,7 +26,6 @@ from wtforms import TextAreaField
 from wtforms.validators import InputRequired
 from wtforms.validators import Length
 from wtforms.validators import Optional
-from wtforms.validators import Regexp
 
 from webcompat import app
 from webcompat.api.uploads import ImageUpload
@@ -160,9 +157,6 @@ textarea_label = 'Please describe what happened, including any steps you took be
 other_problem_label = 'Briefly describe the issue:'
 other_browser_label = 'Browser tested'
 
-contact_message = 'There is a mistake in the username.'  # noqa
-contact_label = 'Sharing your GitHub username—without logging in—could help us with diagnosis. This will be publicly visible.'  # noqa
-
 
 class PrefixedRadioField(RadioField):
     """Prefix radio field label with an image.
@@ -187,10 +181,6 @@ class FormWizard(FlaskForm):
     """IssueForm to a multi step wizard form.
 
     Attributes notes:
-    * contact:
-      Field for people who want to be contacted,
-      but do not want to login
-      github_username_pattern defines regex for GitHub usernames
     * image:
       We filter allowed type in uploads.py
       We don't use the label programatically for this input[type=file],
@@ -199,7 +189,6 @@ class FormWizard(FlaskForm):
       A dummy field to trap common bots. Users do not see that.
     """
     steps = NEW_ISSUE_STEPS
-    github_username_pattern = r"^[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}$"
     # Hidden Form Fields
     console_logs_url = HiddenField()
     description = HiddenField()
@@ -215,11 +204,6 @@ class FormWizard(FlaskForm):
     )
     browser_test = RadioField(browser_test_label, [Optional()],
                               choices=tested_elsewhere)
-    contact = StringField(
-        contact_label,
-        [Regexp(github_username_pattern,
-                flags=re.IGNORECASE,
-                message=contact_message)])
     image = FileField('Attach a screenshot image',
                       [Optional(),
                        FileAllowed(ImageUpload.ALLOWED_FORMATS,
@@ -542,14 +526,6 @@ def build_formdata(form_object):
     if form_object.get('image_upload') is not None:
         body += '\n\n![Screenshot of the site issue]({image_url})'.format(
             image_url=form_object.get('image_upload').get('url'))
-    # Append contact information if available
-    contact = form_object.get('contact', '')
-    # This probably deserves its own function.
-    contact = contact.strip()
-    contact = contact.replace('@', '')
-    if contact and not g.user:
-        body += '\n\nSubmitted in the name of `@{contact}`'.format(
-            contact=contact)
     # Append "from webcompat.com" message to bottom (for GitHub issue viewers)
     body += '\n\n{0}'.format(GITHUB_HELP)
     rv = {'title': summary, 'body': body}
