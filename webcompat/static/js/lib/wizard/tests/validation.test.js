@@ -4,7 +4,6 @@ import {
   isImageTypeValid,
   blobOrFileTypeValid,
   isImageDataURIValid,
-  isGithubUserNameValid,
 } from "../validation.js";
 
 const { describe, it } = intern.getPlugin("interface.bdd");
@@ -51,17 +50,6 @@ describe("validation", () => {
       isImageDataURIValid(
         "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAZC"
       )
-    );
-  });
-
-  it("isGithubUserNameValid detects if github username is valid", () => {
-    assert.isTrue(isGithubUserNameValid(""));
-    assert.isTrue(isGithubUserNameValid("test"));
-    assert.isFalse(isGithubUserNameValid("test test"));
-    assert.isFalse(isGithubUserNameValid("test--test"));
-    assert.isFalse(isGithubUserNameValid("test*test"));
-    assert.isFalse(
-      isGithubUserNameValid("testtesttesttesttesttesttesttesttesttest")
     );
   });
 });

@@ -8,30 +8,15 @@
 
 import $ from "jquery";
 import { showContainer } from "../ui-utils.js";
-import { isGithubUserNameValid } from "../validation.js";
 import { uploadConsoleLogs } from "./upload-helper/console-logs-upload.js";
 import { uploadImage } from "./upload-helper/image-upload.js";
-import { showError, hideError } from "../ui-utils.js";
 import { sendAnalyticsEvent } from "../analytics.js";
 
-const GITHUB_USERNAME_ERROR =
-  "GitHub nicknames are 39 characters max, alphanumeric and hyphens only.";
-
 const container = $(".step-container.step-submit");
-const usernameContainer = container.find(".optional-username");
-const submitAnonymouslyButton = $("#open-username");
 const form = $("#js-ReportForm form");
-const contactField = $("#contact");
 const submitButtons = $("#js-ReportForm .js-Button");
 const submitTypeField = $("#submit_type:hidden");
 const loadingIndicator = $(".js-loader");
-
-const showUserName = (event) => {
-  event.preventDefault();
-  event.target.setAttribute("disabled", true);
-  contactField.focus();
-  usernameContainer.css("animation-name", "slidedownusername");
-};
 
 const showLoadingIndicator = function () {
   loadingIndicator.addClass("is-active");
@@ -73,20 +58,8 @@ const saveSubmitType = (event) => {
   submitTypeField.val(event.target.name);
 };
 
-const onChange = (value) => {
-  if (isGithubUserNameValid(value)) {
-    enableSubmits();
-    hideError(contactField);
-  } else {
-    disableSubmits();
-    showError(contactField, GITHUB_USERNAME_ERROR);
-  }
-};
-
-submitAnonymouslyButton.on("click", showUserName);
 submitButtons.on("click", saveSubmitType);
 form.on("submit", onFormSubmit);
-contactField.on("blur input", (event) => onChange(event.target.value));
 
 export default {
   show: () => {
