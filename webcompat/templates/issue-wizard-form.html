@@ -332,7 +332,7 @@
             {% endif %}
           </div>
           <div class="row mobile-col">
-            <button class="button button-secondary right js-Button" id="submitgithub" type="submit" name="github-auth-report">
+            <button class="button button-secondary js-Button" id="submitgithub" type="submit" name="github-auth-report">
               <img class="" src="{{ url_for('static', filename='img/svg/icons/svg-github-white.svg') }}" title="Report via GitHub" alt="Report via GitHub" />
               {% if session.username %}Report as {{ session.username }}{% else %}Report via GitHub{% endif %}
             </button>
