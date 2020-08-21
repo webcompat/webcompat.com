@@ -276,8 +276,8 @@ class WebHookIssue:
                 # we didn't get exceptions, so it's safe to close it
                 self.close_private_issue()
                 return make_response('Moderated issue closed as invalid', 200)
-        elif (scope == 'private' and self.state == 'closed' and
-              not self.milestone == 'accepted'):
+        elif (scope == 'private' and self.action == 'closed' and
+              self.milestone == 'unmoderated'):
             # private issue has been closed. It is rejected
             # We need to patch with a template.
             try:
