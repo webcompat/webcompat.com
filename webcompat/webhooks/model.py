@@ -17,8 +17,14 @@ from requests.exceptions import HTTPError
 from webcompat import app
 from webcompat.webhooks.helpers import extract_metadata
 from webcompat.webhooks.helpers import get_issue_labels
+from webcompat.webhooks.helpers import make_response
 from webcompat.webhooks.helpers import make_request
+from webcompat.webhooks.helpers import msg_log
+from webcompat.webhooks.helpers import oops
+from webcompat.webhooks.helpers import prepare_incomplete_issue
+from webcompat.webhooks.helpers import prepare_invalid_issue
 from webcompat.webhooks.helpers import prepare_rejected_issue
+from webcompat.webhooks.helpers import repo_scope
 
 PUBLIC_REPO = app.config['ISSUES_REPO_URI']
 PRIVATE_REPO = app.config['PRIVATE_REPO_URI']
@@ -139,9 +145,20 @@ class WebHookIssue:
         # prepare the payload
         return f'[Original issue {public_number}]({self.public_url})'
 
-    def reject_private_issue(self):
-        """Send a rejected moderation PATCH on the public issue."""
-        payload_request = prepare_rejected_issue()
+    def close_public_issue(self, reason='rejected'):
+        """Close a public issue for the given reason.
+
+        Right now the accepted reasons are:
+        'incomplete'
+        'invalid'
+        'rejected' (default)
+        """
+        if reason == 'incomplete':
+            payload_request = prepare_incomplete_issue(self.title)
+        elif reason == 'invalid':
+            payload_request = prepare_invalid_issue(self.title)
+        else:
+            payload_request = prepare_rejected_issue()
         public_number = self.get_public_issue_number()
         # Preparing the proxy request
         path = f'repos/{PUBLIC_REPO}/{public_number}'
@@ -181,3 +198,96 @@ class WebHookIssue:
         if url:
             url = self.public_url.strip().rsplit('/', 1)[1]
         return url
+
+    def process_issue_action(self):
+        """Route the actions and provide different responses.
+
+        There are two possible known scopes:
+        * public repo
+        * private repo
+
+        Currently the actions we are handling are (for now):
+        * opened (public repo only)
+        Aka newly issues created and
+        need to be assigned labels and milestones
+        * milestoned (private repo only)
+        When the issue is being moderated with a milestone: accepted
+        """
+        source_repo = self.repository_url
+        scope = repo_scope(source_repo)
+        # We do not process further in case
+        # we don't know what we are dealing with
+        if scope == 'unknown':
+            return make_response('Wrong repository', 403)
+        if self.action == 'opened' and scope == 'public':
+            # we are setting labels on each new open issues
+            try:
+                self.tag_as_public()
+            except HTTPError as e:
+                msg_log(f'public:opened labels failed ({e})', self.number)
+                return oops()
+            else:
+                return make_response('gracias, amigo.', 200)
+        elif self.action == 'opened' and scope == 'private':
+            # webcompat-bot needs to comment on this issue with the URL
+            try:
+                self.comment_public_uri()
+            except HTTPError as e:
+                msg_log(f'comment failed ({e})', self.number)
+                return oops()
+            else:
+                return make_response('public url added', 200)
+        elif (self.action == 'milestoned' and scope == 'private' and
+              self.milestoned_with == 'accepted'):
+            # private issue have been moderated and we will make it public
+            try:
+                self.moderate_private_issue()
+            except HTTPError as e:
+                msg_log('private:moving to public failed', self.number)
+                return oops()
+            else:
+                # we didn't get exceptions, so it's safe to close it
+                self.close_private_issue()
+                return make_response('Moderated issue accepted', 200)
+        elif (self.action == 'milestoned' and scope == 'private' and
+              self.milestoned_with == 'accepted: incomplete'):
+            try:
+                self.close_public_issue(reason='incomplete')
+            except HTTPError as e:
+                msg_log(
+                    'private:closing public issue as incomplete failed',
+                    self.number)
+                return oops()
+            else:
+                # we didn't get exceptions, so it's safe to close it
+                self.close_private_issue()
+                return make_response('Moderated issue closed as incomplete',
+                                     200)
+        elif (self.action == 'milestoned' and scope == 'private' and
+              self.milestoned_with == 'accepted: invalid'):
+            try:
+                self.close_public_issue(reason='invalid')
+            except HTTPError as e:
+                msg_log(
+                    'private:closing public issue as invalid failed',
+                    self.number)
+                return oops()
+            else:
+                # we didn't get exceptions, so it's safe to close it
+                self.close_private_issue()
+                return make_response('Moderated issue closed as invalid', 200)
+        elif (scope == 'private' and self.state == 'closed' and
+              not self.milestone == 'accepted'):
+            # private issue has been closed. It is rejected
+            # We need to patch with a template.
+            try:
+                self.close_public_issue(reason='rejected')
+            except HTTPError as e:
+                msg_log('public rejection failed', self.number)
+                return oops()
+            else:
+                # we didn't get exceptions, so it's safe to close it
+                self.close_private_issue()
+                return make_response('Moderated issue rejected', 200)
+        else:
+            return make_response('Not an interesting hook', 403)

@@ -15,7 +15,6 @@ from flask import request
 
 from webcompat.webhooks.helpers import is_github_hook
 from webcompat.webhooks.helpers import make_response
-from webcompat.webhooks.helpers import process_issue_action
 from webcompat.webhooks.model import WebHookIssue
 
 from webcompat import app
@@ -36,7 +35,7 @@ def hooklistener():
     if event_type == 'issues':
         webhook_issue = WebHookIssue.from_dict(payload)
         # we process the action
-        return process_issue_action(webhook_issue)
+        return webhook_issue.process_issue_action()
     elif event_type == 'ping':
         return make_response('pong', 200)
     # If nothing worked as expected, the default response is 403.

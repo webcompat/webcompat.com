@@ -8,6 +8,7 @@
 
 from dataclasses import asdict
 import json
+import logging
 from unittest.mock import patch
 
 import pytest
@@ -17,6 +18,19 @@ from requests.models import Response
 import webcompat
 from tests.unit.test_webhook import event_data
 from webcompat.webhooks.model import WebHookIssue
+
+# Some expected responses as tuples
+accepted = ('Moderated issue accepted', 200, {'Content-Type': 'text/plain'})
+rejected = ('Moderated issue rejected', 200, {'Content-Type': 'text/plain'})
+incomplete = ('Moderated issue closed as incomplete',
+              200, {'Content-Type': 'text/plain'})
+invalid = ('Moderated issue closed as invalid',
+           200, {'Content-Type': 'text/plain'})
+boring = ('Not an interesting hook', 403, {'Content-Type': 'text/plain'})
+gracias = ('gracias, amigo.', 200, {'Content-Type': 'text/plain'})
+wrong_repo = ('Wrong repository', 403, {'Content-Type': 'text/plain'})
+oops = ('oops', 400, {'Content-Type': 'text/plain'})
+comment_added = ('public url added', 200, {'Content-Type': 'text/plain'})
 
 issue_info1 = {
     'action': 'opened', 'state': 'open', 'milestoned_with': '',
@@ -118,18 +132,20 @@ def test_moderate_public_issue(mock_mr):
 
 
 @patch('webcompat.webhooks.model.make_request')
-def test_reject_private_issue(mock_mr):
+def test_closing_public_issues(mock_mr):
     """Test issue state and API request that is sent to GitHub."""
     mock_mr.return_value.status_code == 200
     json_event, signature = event_data('private_issue_opened.json')
     payload = json.loads(json_event)
     issue = WebHookIssue.from_dict(payload)
-    issue.reject_private_issue()
-    method, uri, data = mock_mr.call_args[0]
-    # make sure we sent a patch with the right data to GitHub
-    assert method == 'patch'
-    assert type(data) == dict
-    assert issue.get_public_issue_number() in uri
+    reasons = ['incomplete', 'invalid', 'rejected']
+    for reason in reasons:
+        issue.close_public_issue(reason=reason)
+        method, uri, data = mock_mr.call_args[0]
+        # make sure we sent a patch with the right data to GitHub
+        assert method == 'patch'
+        assert type(data) == dict
+        assert issue.get_public_issue_number() in uri
 
 
 def test_prepare_public_comment():
@@ -193,3 +209,66 @@ def test_prepare_accepted_issue(mock_priority):
         'labels': ['browser-firefox', 'priority-critical', 'engine-gecko'],
         'title': 'www.netflix.com - test private issue accepted'}
     assert expected == actual
+
+
+@patch('webcompat.webhooks.model.make_request')
+def test_process_issue_action_scenarios(mock_mr):
+    """Test we are getting the right response for each scenario."""
+    test_data = [
+        ('new_event_valid.json', gracias),
+        ('wrong_repo.json', wrong_repo),
+        ('private_milestone_accepted_wrong_repo.json', wrong_repo),
+        ('private_milestone_accepted.json', accepted),
+        ('private_milestone_closed.json', rejected),
+        ('private_milestone_accepted_incomplete.json', incomplete),
+        ('private_milestone_accepted_invalid.json', invalid),
+        ('private_milestone_accepted_closed.json', boring),
+        ('private_issue_opened.json', comment_added)
+    ]
+    mock_mr.return_value.status_code == 200
+    for issue_event, expected_rv in test_data:
+        json_event, signature = event_data(issue_event)
+        payload = json.loads(json_event)
+        issue = WebHookIssue.from_dict(payload)
+        with webcompat.app.test_request_context():
+            rv = issue.process_issue_action()
+            assert rv == expected_rv
+
+
+@patch('webcompat.webhooks.model.make_request')
+def test_process_issue_action_github_api_exception(mock_mr, caplog):
+    """Test GitHub API exception handling.
+
+    Each of the test scenarios have the following:
+    issue_payload, expected_log, method
+    method is unused in the test, but is meant to provide context to
+    the reader for where the exception is happening.
+    """
+    caplog.set_level(logging.INFO)
+    mock_mr.side_effect = HTTPError()
+    mock_mr.status_code = 400
+    scenarios = [
+        ('private_milestone_accepted.json',
+         'private:moving to public failed', 'moderate_private_issue'),
+        ('private_issue_no_source.json', 'comment failed',
+         'comment_public_uri'),
+        ('new_event_valid.json', 'public:opened labels failed',
+         'tag_as_public'),
+        ('private_milestone_closed.json',
+         'public rejection failed', 'close_public_issue'),
+        ('private_milestone_accepted_invalid.json',
+         'private:closing public issue as invalid failed',
+         'close_public_issue'),
+        ('private_milestone_accepted_incomplete.json',
+         'private:closing public issue as incomplete failed',
+         'close_public_issue')
+    ]
+    for scenario in scenarios:
+        issue_payload, expected_log, method = scenario
+        json_event, signature = event_data(issue_payload)
+        payload = json.loads(json_event)
+        issue = WebHookIssue.from_dict(payload)
+        with webcompat.app.test_request_context():
+            rv = issue.process_issue_action()
+            assert rv == oops
+            assert expected_log in caplog.text

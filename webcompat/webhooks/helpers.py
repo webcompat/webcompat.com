@@ -185,75 +185,6 @@ def oops():
     return make_response('oops', 400)
 
 
-def process_issue_action(issue):
-    """Route the actions and provide different responses.
-
-    There are two possible known scopes:
-    * public repo
-    * private repo
-
-    Currently the actions we are handling are (for now):
-    * opened (public repo only)
-      Aka newly issues created and
-      need to be assigned labels and milestones
-    * milestoned (private repo only)
-      When the issue is being moderated with a milestone: accepted
-    """
-    source_repo = issue.repository_url
-    scope = repo_scope(source_repo)
-    issue_number = issue.number
-    # We do not process further in case
-    # we don't know what we are dealing with
-    if scope == 'unknown':
-        return make_response('Wrong repository', 403)
-    if issue.action == 'opened' and scope == 'public':
-        # we are setting labels on each new open issues
-        try:
-            issue.tag_as_public()
-        except HTTPError as e:
-            msg_log(f'public:opened labels failed ({e})', issue_number)
-            return oops()
-        else:
-            return make_response('gracias, amigo.', 200)
-    elif issue.action == 'opened' and scope == 'private':
-        # webcompat-bot needs to comment on this issue with the URL
-        try:
-            issue.comment_public_uri()
-        except HTTPError as e:
-            msg_log(f'comment failed ({e})', issue_number)
-            return oops()
-        else:
-            return make_response('public url added', 200)
-
-    elif (issue.action == 'milestoned' and scope == 'private' and
-          issue.milestoned_with == 'accepted'):
-        # private issue have been moderated and we will make it public
-        try:
-            issue.moderate_private_issue()
-        except HTTPError as e:
-            msg_log('private:moving to public failed', issue.number)
-            return oops()
-        else:
-            # we didn't get exceptions, so it's safe to close it
-            issue.close_private_issue()
-            return make_response('Moderated issue accepted', 200)
-    elif (scope == 'private' and issue.state == 'closed' and
-          not issue.milestone == 'accepted'):
-        # private issue has been closed. It is rejected
-        # We need to patch with a template.
-        try:
-            issue.reject_private_issue()
-        except HTTPError as e:
-            msg_log('public rejection failed', issue.number)
-            return oops()
-        else:
-            # we didn't get exceptions, so it's safe to close it
-            issue.close_private_issue()
-            return make_response('Moderated issue rejected', 200)
-    else:
-        return make_response('Not an interesting hook', 403)
-
-
 def repo_scope(source_repo):
     """Check the scope nature of the repository.
 
@@ -276,6 +207,44 @@ def msg_log(msg, issue_number):
     log.setLevel(logging.INFO)
     msg = f'issue {issue_number} {msg}'
     log.info(msg)
+
+
+def prepare_incomplete_issue(title=None):
+    """Create the payload for the incomplete moderated issue.
+
+    When the issue has been moderated as "accepted:incomplete",
+    we need to change a couple of things in the public space
+
+    - change body
+    - close the issue
+    - remove the action-needsmoderation label
+    - change the milestone to invalid
+    """
+    # Extract the relevant information
+    incomplete_id = app.config['STATUSES']['incomplete']['id']
+    payload_request = moderation_template('incomplete', title)
+    payload_request['state'] = 'closed'
+    payload_request['milestone'] = incomplete_id
+    return payload_request
+
+
+def prepare_invalid_issue(title=None):
+    """Create the payload for the invalid moderated issue.
+
+    When the issue has been moderated as "accepted:invalid",
+    we need to change a couple of things in the public space
+
+    - change body
+    - close the issue
+    - remove the action-needsmoderation label
+    - change the milestone to invalid
+    """
+    # Extract the relevant information
+    invalid_id = app.config['STATUSES']['invalid']['id']
+    payload_request = moderation_template('invalid', title)
+    payload_request['state'] = 'closed'
+    payload_request['milestone'] = invalid_id
+    return payload_request
 
 
 def prepare_rejected_issue():
