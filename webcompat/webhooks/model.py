@@ -237,7 +237,6 @@ class WebHookIssue:
                 return oops()
             else:
                 return make_response('public url added', 200)
-
         elif (self.action == 'milestoned' and scope == 'private' and
               self.milestoned_with == 'accepted'):
             # private issue have been moderated and we will make it public
