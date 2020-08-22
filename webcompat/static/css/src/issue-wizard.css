@@ -237,10 +237,6 @@
   z-index: -1;
 }
 
-.step-container.slower-animation:not(.step-url) {
-  animation-duration: .55s;
-}
-
 .step-container:not(.step-url):not(.step-category)::after {
   bottom: calc(100% + 7px);
   content: url("../../img/svg/icons/svg-step-arrow.svg");
@@ -301,8 +297,7 @@
 }
 
 .other-problem,
-.other-browser,
-.optional-username {
+.other-browser {
   animation-duration: .8s;
   animation-fill-mode: forwards;
   animation-name: slideupandheight;
@@ -798,50 +793,11 @@
   margin-right: 0;
 }
 
-.optional-username {
-  animation-duration: .5s;
-  font-size: 16px;
-  text-align: left;
-  width: 100%;
-}
-
-.optional-username .column.narrow {
-  margin: 0 auto;
-  max-width: 400px;
-  text-align: left;
-  width: 100%;
-}
-
 .mobile-only {
   display: inline-block;
 }
 
-.optional-username .label {
-  display: flex;
-  flex-wrap: wrap;
-  font-size: 16px;
-  font-weight: 600;
-  margin-top: 8px;
-}
-
-.optional-username .label .form-message-error {
-  font-size: 15px;
-  line-height: 1.4;
-  margin-bottom: 8px;
-  order: 1;
-}
-
-.optional-username .label .right-label {
-  flex: 1;
-  font-size: 12px;
-  font-weight: 200;
-  justify-self: flex-end;
-  margin-top: 10px;
-  text-align: right;
-  text-transform: capitalize;
-}
-
-.step-submit .button:not(#submitanon) {
+.step-submit .button {
   align-items: center;
   display: flex;
   padding: 8px 23px;
@@ -849,11 +805,8 @@
 
 .step-submit .button#open-username {
   justify-content: center;
+  margin-bottom: 16px;
   padding: 11px 23px;
-}
-
-#submitanon {
-  margin-top: 16px;
 }
 
 /*
@@ -1110,8 +1063,7 @@
   }
 
   .other-problem,
-  .other-browser,
-  .optional-username {
+  .other-browser {
     padding: 0;
   }
 
@@ -1182,25 +1134,7 @@
   }
 
   .step-submit .button#open-username {
-    margin-bottom: 16px;
     padding: 8px 23px;
-  }
-
-  .optional-username {
-    font-size: 18px;
-    padding-top: 5px;
-    text-align: center;
-    width: 100%;
-  }
-
-  #submitanon {
-    margin-top: 0;
-  }
-
-  .optional-username .label .right-label {
-    font-size: 16px;
-    margin-top: 0;
-    text-transform: none;
   }
 
   .label-upload {
