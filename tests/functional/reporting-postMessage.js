@@ -28,6 +28,12 @@ registerSuite("Reporting through postMessage", {
             assert.notEqual(elementId, "url", "Focused element id is not #url");
           })
           .end()
+          .findByCssSelector("#problem_category")
+          .isDisplayed()
+          .then(function (isDisplayed) {
+            assert.equal(isDisplayed, true, "Category step is visible.");
+          })
+          .end()
           .findByCssSelector("#url")
           .getProperty("value")
           .then(function (value) {

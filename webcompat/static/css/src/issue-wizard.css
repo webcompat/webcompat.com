@@ -237,10 +237,6 @@
   z-index: -1;
 }
 
-.step-container.slower-animation:not(.step-url) {
-  animation-duration: .55s;
-}
-
 .step-container:not(.step-url):not(.step-category)::after {
   bottom: calc(100% + 7px);
   content: url("../../img/svg/icons/svg-step-arrow.svg");
