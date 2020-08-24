@@ -4,6 +4,20 @@
 2. New features: affect minor number
 3. API endpoint changes or (major) dependency version updates: affect major number
 
+## 37.1.0 - 2020-08-24
+
+* Fixes #3429 - Skip step 1 if a report is made through "Report site issue". [Pull #3466](https://github.com/webcompat/webcompat.com/pull/3466)
+* Fixes #3464 - Only reject an issue for action==closed [Pull #3465](https://github.com/webcompat/webcompat.com/pull/3465)
+* Fixes #3458 - remove optional GitHub username field [Pull #3461](https://github.com/webcompat/webcompat.com/pull/3461)
+* Fixes #2964 - Add focus for url and "Briefly describe the issue" fields [Pull #3459](https://github.com/webcompat/webcompat.com/pull/3459)
+* Fixes #3417 - Add ability to navigate modal via left & right keys [Pull #3453](https://github.com/webcompat/webcompat.com/pull/3453)
+* Fixes #3445 - Add 2 more moderation milestones [Pull #3452](https://github.com/webcompat/webcompat.com/pull/3452)
+* Fixes #3450 - Remove is--visible class check, instead block on element being visible [Pull #3451](https://github.com/webcompat/webcompat.com/pull/3451)
+* Fixes #3448 - removes `git add` in lint-staged [Pull #3449](https://github.com/webcompat/webcompat.com/pull/3449)
+* Fixes #3391 - Add ability to close modals with Esc key [Pull #3446](https://github.com/webcompat/webcompat.com/pull/3446)
+* Fixes #3422 - Improve color contrast for disabled buttons [Pull #3444](https://github.com/webcompat/webcompat.com/pull/3444)
+* Fixes #3421 - Use a non-hidden <label> for the url input [Pull #3443](https://github.com/webcompat/webcompat.com/pull/3443)
+
 ## 37.0.0 - 2020-08-10
 
 * Fixes #3440 - Actually add browser-android-components to EXTRA_LABELS [Pull #3442](https://github.com/webcompat/webcompat.com/pull/3442)
