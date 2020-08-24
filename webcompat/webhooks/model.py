@@ -251,6 +251,9 @@ class WebHookIssue:
                 return make_response('Moderated issue accepted', 200)
         elif (self.action == 'milestoned' and scope == 'private' and
               self.milestoned_with == 'accepted: incomplete'):
+            # The private issue has been set to the "accepted: incomplete"
+            # milestone. This will close the public and private issues, and
+            # leave a message for the incomplete issue.
             try:
                 self.close_public_issue(reason='incomplete')
             except HTTPError as e:
@@ -265,6 +268,9 @@ class WebHookIssue:
                                      200)
         elif (self.action == 'milestoned' and scope == 'private' and
               self.milestoned_with == 'accepted: invalid'):
+            # The private issue has been set to the "accepted: invalid"
+            # milestone. This will close the public and private issues, and
+            # leave a message for the invalid issue.
             try:
                 self.close_public_issue(reason='invalid')
             except HTTPError as e:
@@ -276,10 +282,10 @@ class WebHookIssue:
                 # we didn't get exceptions, so it's safe to close it
                 self.close_private_issue()
                 return make_response('Moderated issue closed as invalid', 200)
-        elif (scope == 'private' and self.state == 'closed' and
-              not self.milestone == 'accepted'):
-            # private issue has been closed. It is rejected
-            # We need to patch with a template.
+        elif (scope == 'private' and self.action == 'closed' and
+              self.milestone == 'unmoderated'):
+            # The private issue has been closed. It is rejected and the
+            # private and public issues will be closed with a rejected message.
             try:
                 self.close_public_issue(reason='rejected')
             except HTTPError as e:

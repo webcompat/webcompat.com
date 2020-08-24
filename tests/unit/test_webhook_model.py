@@ -219,7 +219,7 @@ def test_process_issue_action_scenarios(mock_mr):
         ('wrong_repo.json', wrong_repo),
         ('private_milestone_accepted_wrong_repo.json', wrong_repo),
         ('private_milestone_accepted.json', accepted),
-        ('private_milestone_closed.json', rejected),
+        ('private_milestone_closed_unmoderated.json', rejected),
         ('private_milestone_accepted_incomplete.json', incomplete),
         ('private_milestone_accepted_invalid.json', invalid),
         ('private_milestone_accepted_closed.json', boring),
@@ -254,7 +254,7 @@ def test_process_issue_action_github_api_exception(mock_mr, caplog):
          'comment_public_uri'),
         ('new_event_valid.json', 'public:opened labels failed',
          'tag_as_public'),
-        ('private_milestone_closed.json',
+        ('private_milestone_closed_unmoderated.json',
          'public rejection failed', 'close_public_issue'),
         ('private_milestone_accepted_invalid.json',
          'private:closing public issue as invalid failed',
@@ -272,3 +272,47 @@ def test_process_issue_action_github_api_exception(mock_mr, caplog):
             rv = issue.process_issue_action()
             assert rv == oops
             assert expected_log in caplog.text
+
+
+@patch('webcompat.webhooks.model.make_request')
+@patch('webcompat.webhooks.model.WebHookIssue.close_public_issue')
+def test_process_issue_action_close_scenarios(mock_close, mock_mr):
+    """Test 3 scenarios that will result in a closed issue
+
+    1. milestoned w/ accepted: incomplete
+    2. milestoned w/ accepted: invalid
+    3. closed as unmoderated
+    And ensure it gets called with the right argument.
+    """
+    called = [
+        ('private_milestone_closed_unmoderated.json', 'rejected'),
+        ('private_milestone_accepted_incomplete.json', 'incomplete'),
+        ('private_milestone_accepted_invalid.json', 'invalid'),
+    ]
+    for scenario in called:
+        issue_payload, arg = scenario
+        json_event, signature = event_data(issue_payload)
+        payload = json.loads(json_event)
+        issue = WebHookIssue.from_dict(payload)
+        with webcompat.app.test_request_context():
+            issue.process_issue_action()
+            mock_close.assert_called_with(reason=arg)
+
+
+@patch('webcompat.webhooks.model.make_request')
+@patch('webcompat.webhooks.model.WebHookIssue.close_public_issue')
+def test_process_issue_action_not_closed_scenarios(mock_close, mock_mr):
+    """Test scenarios where close_public_issue is never called."""
+    not_called = [
+        'private_milestone_closed_invalid.json',
+        'new_event_valid.json',
+        'private_milestone_accepted_wrong_repo.json',
+        'private_issue_opened.json'
+    ]
+    for scenario in not_called:
+        json_event, signature = event_data(scenario)
+        payload = json.loads(json_event)
+        issue = WebHookIssue.from_dict(payload)
+        with webcompat.app.test_request_context():
+            issue.process_issue_action()
+            mock_close.assert_not_called()
