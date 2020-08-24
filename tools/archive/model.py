@@ -143,6 +143,9 @@ class ArchivedIssue(Issue):
             locked = 'yes'
         else:
             locked = 'no'
+        if self.has_comments():
+            # Let's initialize the comments
+            self.fetch_comments()
         html_issue = issue_template.render(
             number = self.number,
             comments_number = self.comments_number,
@@ -152,6 +155,7 @@ class ArchivedIssue(Issue):
             locked = locked,
             issue_created = self.issue_created.strftime('%Y-%m-%d'),
             issue_updated = self.issue_updated.strftime('%Y-%m-%d'),
+            comments = self.comments,
             )
         return html_issue
 

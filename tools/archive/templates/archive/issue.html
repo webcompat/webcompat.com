@@ -21,8 +21,19 @@
             <tr class="locked"><th>Locked</th><td>{{locked}}</td></tr>
           </table>
         </section>
-        <section class="issue_body">{{issue_body}}</section>
-        <section class="comments"></section>
+        <section class="issue_body">{{issue_body}}</section>{% if comments %}
+        <section class="comments">
+        <ul>
+          {% for comment in comments %}
+          <li class="comment">
+            <span class="author">{{ comment.author|e }}</span>
+            <span class="created_at">{{ comment.created_at|e }}</span>
+            <span class="updated_at">{{ comment.updated_at|e }}</span>
+            <div class="body">{{ comment.body|e }}</div>
+          </li>
+          {% endfor %}
+        </ul>
+        </section>{% endif %}
     </main>
     <footer></footer>
     {%include "svg_symbols.html" %}

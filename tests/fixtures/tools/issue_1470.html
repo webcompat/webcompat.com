@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Issue 1470</title>
+    <link href="https://webcompat.com/dist/webcompat.css" type="text/css" rel="stylesheet">
+    <style>table, td, th { border: 1px black solid; border-collapse: collapse;}</style>
+  </head>
+  <body id="body-webcompat">
+    <header><h1><span class="issue_title">trailers.apple.com - video doesn&#39;t play</span></h1></header>
+    <nav>
+    <ul>
+        <li>
+          <a href="/" title="Navigate to main page." class="js-Navbar-link nav-link">
+            <svg class="icon nav-icon" viewBox="0 0 30 30" role="presentation" aria-hidden="true">
+              <use xlink:href="#svg-home"></use>
+            </svg>
+            <span class="link-text">Home</span>
+          </a>
+        </li>
+    </ul>
+</nav>
+    <main>
+        <section class="notice">This issue has been archived. It is now read-only.</section>
+        <section class="issue_data">
+          <table>
+            <tr class="issue_number"><th>Issue</th><td>1470</td></tr>
+            <tr class="issue_created"><th>Created</th><td>2015-07-27</td></tr>
+            <tr class="issue_updated"><th>Updated</th><td>2017-10-30</td></tr>
+            <tr class="comments_number"><th>Comments</th><td>41</td></tr>
+            <tr class="locked"><th>Locked</th><td>no</td></tr>
+          </table>
+        </section>
+        <section class="issue_body">this is a body</section>
+        <section class="comments">
+        <ul>
+          
+          <li class="comment">
+            <span class="author">karlcow</span>
+            <span class="created_at">2015-07-28 09:25:03+00:00</span>
+            <span class="updated_at">2015-07-28 09:25:03+00:00</span>
+            <div class="body">ok. Thanks a lot @cpeterso 
+
+So using fake Chrome UA 
+`Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2227.1 Safari/537.36`
+on MacOS X 10.10.4 
+in Gecko browser (42.0a1 (2015-07-27))
+I get a green square
+
+![capture d ecran 2015-07-28 a 18 16 56](https://cloud.githubusercontent.com/assets/505230/8927865/6ed44d08-3555-11e5-9ff4-6393057e3fc2.jpg)
+
+``` html
+&lt;div style=&#34;width: 1280px; height: 544px;&#34; class=&#34;moviePanel &#34;&gt;
+    &lt;video 
+        style=&#34;width: 1280px; height: 544px;&#34; 
+        bgcolor=&#34;black&#34; 
+        preload=&#34;preload&#34; 
+        autoplay=&#34;autoplay&#34; 
+        x-webkit-airplay=&#34;allow&#34; 
+        src=&#34;http://movietrailers.apple.com/movies/disney/gooddinosaur/thegooddinosaur-tlr2_a720p.m4v?width=1280&amp;amp;height=544&#34; 
+        type=&#34;video/mp4&#34; 
+        class=&#34; video&#34; 
+        id=&#34;&#34; 
+        height=&#34;544&#34; width=&#34;1280&#34;&gt;&lt;/video&gt;
+    &lt;div style=&#34;width: 1280px; height: 544px;&#34; class=&#34;controllerPanel&#34;&gt;
+        …
+    &lt;/div&gt;
+&lt;/div&gt;
+```
+</div>
+          </li>
+          
+          <li class="comment">
+            <span class="author">karlcow</span>
+            <span class="created_at">2015-07-28 09:26:13+00:00</span>
+            <span class="updated_at">2015-07-28 09:26:13+00:00</span>
+            <div class="body">I sent an email to my contacts at Apple yesterday, but no reply yet. 
+</div>
+          </li>
+          
+          <li class="comment">
+            <span class="author">miketaylr</span>
+            <span class="created_at">2015-07-29 17:31:16+00:00</span>
+            <span class="updated_at">2015-07-29 17:31:16+00:00</span>
+            <div class="body">I also get a green square, but audio works fine.
+</div>
+          </li>
+          
+          <li class="comment">
+            <span class="author">karlcow</span>
+            <span class="created_at">2015-08-02 23:24:53+00:00</span>
+            <span class="updated_at">2015-08-02 23:24:53+00:00</span>
+            <div class="body">So far I got a big silence from my previous contacts at Apple.
+I wonder if I should try to find new contacts.
+</div>
+          </li>
+          
+          <li class="comment">
+            <span class="author">karlcow</span>
+            <span class="created_at">2015-08-02 23:29:22+00:00</span>
+            <span class="updated_at">2015-08-02 23:29:22+00:00</span>
+            <div class="body">Could @jonathandavis help us find the right contact at Apple?
+</div>
+          </li>
+          
+          <li class="comment">
+            <span class="author">karlcow</span>
+            <span class="created_at">2015-08-03 01:24:28+00:00</span>
+            <span class="updated_at">2015-08-03 01:24:28+00:00</span>
+            <div class="body">seeAlso: #427 duplicate?
+</div>
+          </li>
+          
+          <li class="comment">
+            <span class="author">cpeterso</span>
+            <span class="created_at">2015-08-04 17:01:39+00:00</span>
+            <span class="updated_at">2015-08-04 17:01:39+00:00</span>
+            <div class="body">Note that Firefox 40 enabled OS X hardware acceleration for video and the Apple trailers can crash Firefox or even the OS. This is Firefox [bug 1187103](https://bugzilla.mozilla.org/show_bug.cgi?id=1187103). The trailers play using fine using HTML5 on Windows or Firefox 39 on OS X.
+</div>
+          </li>
+          
+          <li class="comment">
+            <span class="author">miketaylr</span>
+            <span class="created_at">2015-08-11 14:12:16+00:00</span>
+            <span class="updated_at">2015-08-11 14:12:16+00:00</span>
+            <div class="body">I tweeted to @jonathandavis -- perhaps he doesn&#39;t read GitHub notifications: 
+
+https://twitter.com/miketaylr/status/631105717420716037
+</div>
+          </li>
+          
+          <li class="comment">
+            <span class="author">jonathandavis</span>
+            <span class="created_at">2015-08-11 18:33:57+00:00</span>
+            <span class="updated_at">2015-08-11 18:33:57+00:00</span>
+            <div class="body">Filed Radar 22234592: trailers.apple.com serving QuickTime movies to Firefox
+</div>
+          </li>
+          
+          <li class="comment">
+            <span class="author">miketaylr</span>
+            <span class="created_at">2015-08-11 18:48:57+00:00</span>
+            <span class="updated_at">2015-08-11 18:48:57+00:00</span>
+            <div class="body">Thanks Jonathan!
+</div>
+          </li>
+          
+          <li class="comment">
+            <span class="author">cpeterso</span>
+            <span class="created_at">2015-08-12 08:19:10+00:00</span>
+            <span class="updated_at">2015-08-12 08:19:10+00:00</span>
+            <div class="body">Thanks, @jonathandavis!
+
+[Firefox bug 1187103](https://bugzilla.mozilla.org/show_bug.cgi?id=1187103) has been fixed in Firefox (Nightly) 42, so trailers.apple.com&#39;s MP4 videos no longer crash Firefox on OS X.
+</div>
+          </li>
+          
+          <li class="comment">
+            <span class="author">karlcow</span>
+            <span class="created_at">2015-08-25 01:55:44+00:00</span>
+            <span class="updated_at">2015-08-25 01:55:44+00:00</span>
+            <div class="body">Confirmed that Firefox 42+ is now working with the code sent to Chrome browser User Agent.
+
+Currently Firefox is at version 40.0.2 So I guess in around 12 weeks it would be safer for Apple to move Firefox users to the Chrome code. 
+</div>
+          </li>
+          
+          <li class="comment">
+            <span class="author">cpeterso</span>
+            <span class="created_at">2015-09-28 17:29:13+00:00</span>
+            <span class="updated_at">2015-09-28 17:29:13+00:00</span>
+            <div class="body">trailers.apple.com also serves HTML5 video to MS Edge, but QuickTime to IE.
+</div>
+          </li>
+          
+          <li class="comment">
+            <span class="author">karlcow</span>
+            <span class="created_at">2015-10-28 23:48:36+00:00</span>
+            <span class="updated_at">2015-10-28 23:48:36+00:00</span>
+            <div class="body">I told yesterday to @hober about it at TPAC 2015.
+He told me that he will fill a bug at Apple for us. 
+</div>
+          </li>
+          
+          <li class="comment">
+            <span class="author">karlcow</span>
+            <span class="created_at">2015-10-28 23:49:36+00:00</span>
+            <span class="updated_at">2015-10-28 23:49:36+00:00</span>
+            <div class="body">/me points also @hober to #427 an issue for Opera browsers (blink) that @andreasbovens reported.
+</div>
+          </li>
+          
+          <li class="comment">
+            <span class="author">cpeterso</span>
+            <span class="created_at">2015-11-02 18:41:38+00:00</span>
+            <span class="updated_at">2015-11-02 18:41:38+00:00</span>
+            <div class="body">@karlcow and @hober: note that @jonathandavis filed Apple Radar issue 22234592 (&#34;trailers.apple.com serving QuickTime movies to Firefox&#34;) back in August.
+</div>
+          </li>
+          
+          <li class="comment">
+            <span class="author">karlcow</span>
+            <span class="created_at">2016-04-06 00:24:14+00:00</span>
+            <span class="updated_at">2016-04-06 00:24:14+00:00</span>
+            <div class="body">Related or duplicate of this bug
+https://bugzilla.mozilla.org/show_bug.cgi?id=1262149
+
+@jonathandavis and @hober any news about this issue.
+</div>
+          </li>
+          
+          <li class="comment">
+            <span class="author">karlcow</span>
+            <span class="created_at">2016-04-06 06:50:14+00:00</span>
+            <span class="updated_at">2016-04-06 06:50:14+00:00</span>
+            <div class="body">Contacted also someone else at Apple.
+</div>
+          </li>
+          
+          <li class="comment">
+            <span class="author">karlcow</span>
+            <span class="created_at">2016-04-07 01:02:14+00:00</span>
+            <span class="updated_at">2016-04-07 01:02:14+00:00</span>
+            <div class="body">My contact said he found the right person. They will come back to me later.
+</div>
+          </li>
+          
+          <li class="comment">
+            <span class="author">karlcow</span>
+            <span class="created_at">2016-04-07 07:15:19+00:00</span>
+            <span class="updated_at">2016-04-07 07:15:19+00:00</span>
+            <div class="body">Related #427
+</div>
+          </li>
+          
+          <li class="comment">
+            <span class="author">karlcow</span>
+            <span class="created_at">2016-04-26 06:59:28+00:00</span>
+            <span class="updated_at">2016-04-26 06:59:28+00:00</span>
+            <div class="body">I have been told it was fixed. I went today with Firefox.
+http://trailers.apple.com/trailers/sony/ourlittlesister/
+
+And got a `To view this video please use the latest version of Safari.`
+
+![Screenshot of the site issue](https://webcompat.com/uploads/2016/4/d1bcb687-623e-4005-a0a3-41700a5de24e.png)
+
+I will contact again to see if it was deployed.
+</div>
+          </li>
+          
+          <li class="comment">
+            <span class="author">karlcow</span>
+            <span class="created_at">2016-05-05 02:13:51+00:00</span>
+            <span class="updated_at">2016-05-05 02:13:51+00:00</span>
+            <div class="body">OK 9 days later. Still an issue.
+
+![Screenshot of the site issue](https://webcompat.com/uploads/2016/5/cf83d50f-d763-4211-98f7-60f788506d3a.png)
+</div>
+          </li>
+          
+          <li class="comment">
+            <span class="author">karlcow</span>
+            <span class="created_at">2016-05-05 02:28:53+00:00</span>
+            <span class="updated_at">2016-05-05 02:28:53+00:00</span>
+            <div class="body">http://trailers.apple.com/trailers/global/v4/scripts/app/app.js
+
+``` js
+            else {
+                //check for video errors
+                if (app.videoError &amp;&amp; app.isFirefox) {
+
+                    alert(app.langBank[app.videoError]);
+                }
+                else {
+```
+
+`isFirefox` is defined by:
+
+``` js
+    app.isFirefox = ua.match(&#39;Firefox&#39;);
+    if (app.isFirefox &amp;&amp; ua.match(/Mac OS X 10[_\.](\d+)/i)){
+        var fireVer = parseInt(ua.match(/Mac OS X 10[_\.](\d+)/i)[1]);
+        if (fireVer &gt; 10) {
+            app.videoError = &#39;ref-firefox-version-error&#39;;
+            // jqBody.prepend(&#39;&lt;div class=&#34;page-warning&#34; data-lang=&#34;ref-firefox-version-error&#34;&gt;&lt;/div&gt;&#39;);
+        }
+    }
+```
+
+which in my case right now returns:
+
+`fireVer = 11`
+
+which is strange because it is more… about macosx.
+
+so for macosx version &gt; 10.10 like 11, we get an error message. No idea why. I would love someone from Apple to explain. Also does that mean that Firefox on Windows gets a free ticket? Or do we hit an issue elsewhere?
+</div>
+          </li>
+          
+          <li class="comment">
+            <span class="author">karlcow</span>
+            <span class="created_at">2016-05-05 02:39:50+00:00</span>
+            <span class="updated_at">2016-05-05 02:39:50+00:00</span>
+            <div class="body">Faking a firefox windows user agent and reloading the page…
+
+wooot!?
+
+we get a player  on top… of an insert of the trailers homepage… !!!
+![Screenshot of the site issue](https://webcompat.com/uploads/2016/5/7d03900b-c937-4896-8cb8-9bbc7dfff34a.png)
+
+``` html
+&lt;div id=&#34;overlay&#34; style=&#34;opacity: 1;&#34;&gt;
+    &lt;section id=&#34;overlay-video&#34;&gt;
+        &lt;div id=&#34;clip-stage&#34; class=&#34;current-clip&#34; style=&#34;display: block;&#34;&gt;
+            &lt;div style=&#34;display: block;&#34;&gt;
+                &lt;div class=&#34;video-player animated&#34; style=&#34;width: 641px; height: 363px;&#34;&gt;
+                    &lt;div class=&#34;close-overlay&#34; style=&#34;display: none;&#34;&gt;&lt;a href=&#34;#&#34;&gt;X&lt;/a&gt;&lt;/div&gt;
+                    &lt;canvas id=&#34;video-loader&#34; width=&#34;848&#34; height=&#34;480&#34;&gt;&lt;/canvas&gt;
+                    &lt;div id=&#34;quicktimeWrapper&#34;&gt;
+                        &lt;object classid=&#34;clsid:02BF25D5-8C17-4B23-BC80-D3488ABDDC6B&#34; codebase=&#34;http://www.apple.com/qtactivex/qtplugin.cab#version=7,3,0,0&#34; id=&#34;quicktimeMovie&#34; width=&#34;100%&#34; height=&#34;100%&#34;&gt;
+                            &lt;param name=&#34;src&#34; value=&#34;http://movietrailers.apple.com/movies/independent/monkeykingheroisback/monkeyking-tlr1_i320.m4v&#34;&gt;
+                            &lt;param name=&#34;enablejavascript&#34; value=&#34;true&#34;&gt;
+                            &lt;param name=&#34;postdomevents&#34; value=&#34;true&#34;&gt;
+                            &lt;param name=&#34;wmode&#34; value=&#34;transparent&#34;&gt;
+                            &lt;param name=&#34;showlogo&#34; value=&#34;false&#34;&gt;
+                            &lt;param name=&#34;scale&#34; value=&#34;aspect&#34;&gt;
+                            &lt;param name=&#34;autoplay&#34; value=&#34;true&#34;&gt;
+                            &lt;param name=&#34;controller&#34; value=&#34;false&#34;&gt;
+                            &lt;param name=&#34;bgcolor&#34; value=&#34;000000&#34;&gt;
+                            &lt;embed type=&#34;video/quicktime&#34; src=&#34;http://movietrailers.apple.com/movies/independent/monkeykingheroisback/monkeyking-tlr1_i320.m4v&#34; pluginspage=&#34;http://www.apple.com/quicktime/download/&#34; name=&#34;quicktimeMovie&#34; id=&#34;quicktimeMovieInner&#34; enablejavascript=&#34;true&#34; postdomevents=&#34;true&#34; wmode=&#34;transparent&#34; showlogo=&#34;false&#34; scale=&#34;aspect&#34; autoplay=&#34;true&#34; controller=&#34;false&#34; bgcolor=&#34;000000&#34; width=&#34;100%&#34; height=&#34;100%&#34;&gt;
+                        &lt;/object&gt;
+                    &lt;/div&gt;
+                    &lt;div class=&#34;video-poster&#34; style=&#34;background-image:url(http://trailers.apple.com/trailers/independent/monkeykingheroisback/images/thumbnail_source_24333.jpg)&#34;&gt;
+                        &lt;div class=&#34;poster-block&#34;&gt;
+                            &lt;div class=&#34;poster-title&#34;&gt;Watch Again
+                                &lt;div class=&#34;poster-play initial-play&#34;&gt;&lt;span class=&#34;icon icon-play-circle&#34;&gt;&lt;/span&gt;&lt;/div&gt;
+                            &lt;/div&gt;
+                            &lt;div class=&#34;poster-share&#34;&gt;
+                                &lt;ul class=&#34;share&#34;&gt;
+                                    &lt;li&gt;Share Now:&lt;/li&gt;
+                                    &lt;li class=&#34;share-facebook&#34;&gt;&lt;a href=&#34;http://www.facebook.com/share.php?u=http://trailers.apple.com/trailers/independent/monkeykingheroisback/&#34; target=&#34;_block&#34;&gt;Facebook&lt;/a&gt;&lt;/li&gt;
+                                    &lt;li class=&#34;share-twitter&#34;&gt;&lt;a href=&#34;http://twitter.com/home?status=Monkey King: Hero is Back - See the trailer http://trailers.apple.com/trailers/independent/monkeykingheroisback/&#34; target=&#34;_block&#34;&gt;Twitter&lt;/a&gt;&lt;/li&gt;
+                                &lt;/ul&gt;
+                            &lt;/div&gt;
+                            &lt;!-- &lt;div class=&#34;poster-glass&#34;&gt;&lt;/div&gt;      &lt;div class=&#34;poster-back&#34; style=&#34;background-image:url(http://trailers.apple.com/trailers/independent/monkeykingheroisback/images/thumbnail_source_24333.jpg);width: 848px; height: 480px;&#34;&gt;&lt;/div&gt; --&gt;&lt;/div&gt;
+                    &lt;/div&gt;
+                    &lt;div id=&#34;media-controls&#34; class=&#34;videocontrols&#34; style=&#34;display: none;&#34;&gt;
+                        &lt;div class=&#34;controls&#34;&gt;
+                            &lt;div class=&#34;volume&#34; title=&#34;Volume&#34;&gt;
+                                &lt;div class=&#34;quieter&#34;&gt;&lt;/div&gt;
+                                &lt;div class=&#34;track&#34;&gt;
+                                    &lt;div class=&#34;playhead&#34;&gt;&lt;/div&gt;
+                                    &lt;div class=&#34;progress&#34;&gt;&lt;/div&gt;
+                                &lt;/div&gt;
+                                &lt;div class=&#34;louder&#34;&gt;&lt;/div&gt;
+                                &lt;div class=&#34;title&#34;&gt;&lt;/div&gt;
+                            &lt;/div&gt;
+                            &lt;div class=&#34;buttons&#34;&gt;
+                                &lt;button id=&#34;media-reverse&#34; class=&#34;icon icon-reverse&#34;&gt;&lt;/button&gt;
+                                &lt;button id=&#34;media-play&#34; class=&#34;icon icon-play&#34;&gt;&lt;/button&gt;
+                                &lt;button id=&#34;media-forward&#34; class=&#34;icon icon-forward&#34;&gt;&lt;/button&gt;
+                            &lt;/div&gt;
+                            &lt;ul class=&#34;options&#34;&gt;
+                                &lt;li class=&#34;option&#34;&gt;
+                                    &lt;button id=&#34;video-resolution&#34; class=&#34;icon icon-hd&#34;&gt;&lt;/button&gt;
+                                    &lt;ul id=&#34;menu-resolution&#34;&gt;
+                                        &lt;li class=&#34;active&#34;&gt;
+                                            &lt;button id=&#34;resolution-sd&#34; data-res=&#34;sd&#34;&gt;Standard Definition&lt;/button&gt;
+                                        &lt;/li&gt;
+                                        &lt;li class=&#34;&#34;&gt;
+                                            &lt;button id=&#34;resolution-hd720&#34; data-res=&#34;hd720&#34;&gt;High Definition - 720p&lt;/button&gt;
+                                        &lt;/li&gt;
+                                        &lt;li class=&#34;&#34;&gt;
+                                            &lt;button id=&#34;resolution-hd1080&#34; data-res=&#34;hd1080&#34;&gt;High Definition - 1080p&lt;/button&gt;
+                                        &lt;/li&gt;
+                                    &lt;/ul&gt;
+                                &lt;/li&gt;
+                                &lt;!-- &lt;li class=&#34;option&#34;&gt;&lt;button id=&#34;video-sizeup&#34; class=&#34;icon icon-view-size&#34;&gt;&lt;/button&gt;&lt;/li&gt; --&gt;
+                                &lt;li class=&#34;option&#34;&gt;
+                                    &lt;button id=&#34;video-fullscreen&#34; class=&#34;icon icon-enter-fs&#34; disabled=&#34;&#34; style=&#34;display: none;&#34;&gt;&lt;/button&gt;
+                                &lt;/li&gt;
+                            &lt;/ul&gt;
+                        &lt;/div&gt;
+                        &lt;div class=&#34;timeline&#34;&gt;
+                            &lt;div class=&#34;elapsed&#34;&gt;00:00&lt;/div&gt;
+                            &lt;div class=&#34;track&#34; id=&#34;video-track&#34;&gt;
+                                &lt;div class=&#34;playhead&#34; id=&#34;video-playhead&#34;&gt;&lt;/div&gt;
+                                &lt;div class=&#34;buffer&#34; id=&#34;video-buffer&#34;&gt;&lt;/div&gt;
+                                &lt;div class=&#34;progress&#34; id=&#34;video-progress&#34;&gt;&lt;/div&gt;
+                                &lt;div class=&#34;loaded&#34; id=&#34;video-loaded&#34;&gt;&lt;/div&gt;
+                            &lt;/div&gt;
+                            &lt;div class=&#34;remaining&#34;&gt;01:58&lt;/div&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div id=&#34;clip-tray&#34; style=&#34;display: none;&#34;&gt;
+            &lt;div&gt;
+                &lt;div class=&#34;scroll-container&#34;&gt;
+                    &lt;ul class=&#34;scroll-content&#34; style=&#34;width: 900px; transition: all 0.7s ease 0s;&#34;&gt;
+                        &lt;li class=&#34;trailer&#34; style=&#34;margin-left: 300px; margin-right: 300px;&#34;&gt;
+                            &lt;div class=&#34;col left&#34;&gt;
+                                &lt;a href=&#34;#&#34; class=&#34;thumb link-play&#34;&gt; &lt;span class=&#34;play&#34;&gt;&lt;/span&gt; &lt;img src=&#34;http://trailers.apple.com/trailers/independent/monkeykingheroisback/images/thumbnail_24333.jpg&#34; alt=&#34;Trailer&#34; width=&#34;160&#34; height=&#34;90&#34;&gt; &lt;/a&gt;
+                            &lt;/div&gt;
+                            &lt;div class=&#34;col right&#34;&gt;
+                                &lt;h3 title=&#34;Trailer&#34;&gt;Trailer&lt;/h3&gt;
+                                &lt;ul class=&#34;list-trailer-actions&#34;&gt;
+                                    &lt;li&gt;&lt;a href=&#34;#&#34; class=&#34;link-play&#34;&gt;Play&lt;/a&gt;1:58&lt;/li&gt;
+                                &lt;/ul&gt;
+                            &lt;/div&gt;
+                        &lt;/li&gt;
+                    &lt;/ul&gt;
+                &lt;/div&gt;
+                &lt;!--/thumb-strip-wrapper--&gt;
+                &lt;div class=&#34;fade-left&#34;&gt;&lt;/div&gt;
+                &lt;div class=&#34;fade-right&#34;&gt;&lt;/div&gt;
+                &lt;a class=&#34;arrow left paddle-left&#34; title=&#34;Scroll left&#34; style=&#34;display: none;&#34;&gt;&lt;/a&gt;
+                &lt;a class=&#34;arrow right paddle-right&#34; title=&#34;Scroll right&#34; style=&#34;display: none;&#34;&gt;&lt;/a&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/section&gt;
+&lt;/div&gt;
+```
+</div>
+          </li>
+          
+          <li class="comment">
+            <span class="author">karlcow</span>
+            <span class="created_at">2016-05-05 02:43:42+00:00</span>
+            <span class="updated_at">2016-05-05 02:43:42+00:00</span>
+            <div class="body">ok some weird things happening there. 
+
+![Screenshot of the site issue](https://webcompat.com/uploads/2016/5/c3dc6dfb-2c06-4c07-ba22-728169f914ab.png)
+
+After the `&lt;embed…&gt;` there is an insert indeed of… the trailers home page.
+</div>
+          </li>
+          
+          <li class="comment">
+            <span class="author">karlcow</span>
+            <span class="created_at">2016-05-05 02:45:50+00:00</span>
+            <span class="updated_at">2016-05-05 02:45:50+00:00</span>
+            <div class="body">to note that the original HTML  (through HTTP) contains nothing. Everything is done through JavaScript
+
+``` html
+    &lt;header id=&#34;header-wrapper&#34; class=&#34;top-wrapper&#34;&gt;&lt;/header&gt;
+    &lt;div id=&#34;main-wrapper&#34;&gt;&lt;/div&gt;
+    &lt;footer id=&#34;globalfooter&#34;&gt;
+        &lt;!-- Footer goes here --&gt;
+    &lt;/footer&gt;
+```
+</div>
+          </li>
+          
+          <li class="comment">
+            <span class="author">karlcow</span>
+            <span class="created_at">2016-05-05 02:48:21+00:00</span>
+            <span class="updated_at">2016-05-05 02:48:21+00:00</span>
+            <div class="body">Probably code is coming from 
+http://trailers.apple.com/trailers/global/v4/scripts/libs/ac_quicktime.js
+
+``` js
+  // init both tags with the required and &#34;special&#34; attributes
+  var objTag =  &#39;&lt;object &#39;
+          + _QTAddObjectAttr(&#34;classid&#34;)
+          + _QTAddObjectAttr(&#34;width&#34;)
+          + _QTAddObjectAttr(&#34;height&#34;)
+          + _QTAddObjectAttr(&#34;codebase&#34;)
+          + _QTAddObjectAttr(&#34;name&#34;)
+          + _QTAddObjectAttr(&#34;id&#34;)
+          + _QTAddObjectAttr(&#34;tabindex&#34;)
+          + _QTAddObjectAttr(&#34;hspace&#34;)
+          + _QTAddObjectAttr(&#34;vspace&#34;)
+          + _QTAddObjectAttr(&#34;border&#34;)
+          + _QTAddObjectAttr(&#34;align&#34;)
+          + _QTAddObjectAttr(&#34;class&#34;)
+          + _QTAddObjectAttr(&#34;title&#34;)
+          + _QTAddObjectAttr(&#34;accesskey&#34;)
+          + _QTAddObjectAttr(&#34;noexternaldata&#34;)
+          + _QTAddObjectAttr(&#34;obj#style&#34;)
+          + &#39;&gt;&#39;
+          + _QTAddObjectParam(&#34;src&#34;, generateXHTML);
+  var embedTag = &#39;&lt;embed &#39;
+          + _QTAddEmbedAttr(&#34;type&#34;)
+          + _QTAddEmbedAttr(&#34;src&#34;)
+          + _QTAddEmbedAttr(&#34;width&#34;)
+          + _QTAddEmbedAttr(&#34;height&#34;)
+          + _QTAddEmbedAttr(&#34;pluginspage&#34;)
+          + _QTAddEmbedAttr(&#34;name&#34;)
+          + _QTAddEmbedAttr(&#34;id&#34;)
+          + _QTAddEmbedAttr(&#34;align&#34;)
+          + _QTAddEmbedAttr(&#34;tabindex&#34;);
+
+  // delete the attributes/params we have already added
+  _QTDeleteTagAttrs(&#34;type&#34;,&#34;src&#34;,&#34;width&#34;,&#34;height&#34;,&#34;pluginspage&#34;,&#34;classid&#34;,&#34;codebase&#34;,&#34;name&#34;,&#34;tabindex&#34;,
+          &#34;hspace&#34;,&#34;vspace&#34;,&#34;border&#34;,&#34;align&#34;,&#34;noexternaldata&#34;,&#34;class&#34;,&#34;title&#34;,&#34;accesskey&#34;,&#34;id&#34;,&#34;style&#34;);
+
+  // and finally, add all of the remaining attributes to the embed and object
+  for ( var attrName in gTagAttrs )
+  {
+    attrValue = gTagAttrs[attrName];
+    if ( null != attrValue )
+    {
+      embedTag += _QTAddEmbedAttr(attrName);
+      objTag += _QTAddObjectParam(attrName, generateXHTML);
+    }
+  }
+
+  // end both tags, we&#39;re done
+  return objTag + embedTag + &#39;&gt;&lt;/em&#39; + &#39;bed&gt;&lt;/ob&#39; + &#39;ject&#39; + &#39;&gt;&#39;;
+}
+
+```
+</div>
+          </li>
+          
+          <li class="comment">
+            <span class="author">karlcow</span>
+            <span class="created_at">2016-05-05 02:50:59+00:00</span>
+            <span class="updated_at">2016-05-05 02:50:59+00:00</span>
+            <div class="body">So now I wonder if they blocked Firefox on mac because it was creating an issue with the DOM. 
+
+I&#39;m switching it back to needsdiagnosis so @miketaylr can have a look before I ping again Apple with it.
+</div>
+          </li>
+          
+          <li class="comment">
+            <span class="author">karlcow</span>
+            <span class="created_at">2016-05-05 04:41:23+00:00</span>
+            <span class="updated_at">2016-05-05 04:41:23+00:00</span>
+            <div class="body">Same issue by faking `Mac OS X 10.10` on Mac OS X 10.11.
+
+```
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:49.0) Gecko/20100101 Firefox/49.0
+```
+</div>
+          </li>
+          
+          <li class="comment">
+            <span class="author">karlcow</span>
+            <span class="created_at">2016-05-05 05:07:48+00:00</span>
+            <span class="updated_at">2016-05-05 05:07:48+00:00</span>
+            <div class="body">What is currently sent to Safari on the same OS.
+
+``` html
+&lt;div id=&#34;overlay&#34; style=&#34;opacity: 1;&#34;&gt;
+    &lt;section id=&#34;overlay-video&#34;&gt;
+        &lt;div id=&#34;clip-stage&#34; class=&#34;current-clip&#34; style=&#34;display: block;&#34;&gt;
+            &lt;div style=&#34;display: block;&#34;&gt;
+                &lt;div class=&#34;video-player animated&#34; style=&#34;width: 848px; height: 480px;&#34;&gt;
+                    &lt;div class=&#34;close-overlay&#34; style=&#34;display: none;&#34;&gt;&lt;a href=&#34;#&#34;&gt;X&lt;/a&gt;&lt;/div&gt;
+                    &lt;canvas id=&#34;video-loader&#34; width=&#34;848&#34; height=&#34;480&#34; style=&#34;display: none;&#34;&gt;&lt;/canvas&gt;
+                    &lt;video id=&#34;video-element&#34; class=&#34;video-element&#34; preload=&#34;auto&#34; poster=&#34;data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==&#34; autoplay=&#34;&#34; airplay=&#34;allow&#34; x-webkit-airplay=&#34;allow&#34;&gt;
+                        &lt;!-- MP4 for Safari, IE9, iPhone, iPad, Android, and Windows Phone 7 --&gt;
+                        &lt;source src=&#34;http://movietrailers.apple.com/movies/independent/monkeykingheroisback/monkeyking-tlr1_480p.mov&#34;&gt;
+                        &lt;!-- type=&#34;video/mp4&#34; --&gt;
+                    &lt;/video&gt;
+                    &lt;div class=&#34;video-poster&#34; style=&#34;background-image:url(http://trailers.apple.com/trailers/independent/monkeykingheroisback/images/thumbnail_source_24333.jpg)&#34;&gt;
+                        &lt;div class=&#34;poster-block&#34;&gt;
+                            &lt;div class=&#34;poster-title&#34;&gt;Watch Again
+                                &lt;div class=&#34;poster-play initial-play&#34;&gt;&lt;span class=&#34;icon icon-play-circle&#34;&gt;&lt;/span&gt;&lt;/div&gt;
+                            &lt;/div&gt;
+                            &lt;div class=&#34;poster-share&#34;&gt;
+                                &lt;ul class=&#34;share&#34;&gt;
+                                    &lt;li&gt;Share Now:&lt;/li&gt;
+                                    &lt;li class=&#34;share-facebook&#34;&gt;&lt;a href=&#34;http://www.facebook.com/share.php?u=http://trailers.apple.com/trailers/independent/monkeykingheroisback/&#34; target=&#34;_block&#34;&gt;Facebook&lt;/a&gt;&lt;/li&gt;
+                                    &lt;li class=&#34;share-twitter&#34;&gt;&lt;a href=&#34;http://twitter.com/home?status=Monkey King: Hero is Back - See the trailer http://trailers.apple.com/trailers/independent/monkeykingheroisback/&#34; target=&#34;_block&#34;&gt;Twitter&lt;/a&gt;&lt;/li&gt;
+                                &lt;/ul&gt;
+                            &lt;/div&gt;
+                            &lt;!-- &lt;div class=&#34;poster-glass&#34;&gt;&lt;/div&gt;      &lt;div class=&#34;poster-back&#34; style=&#34;background-image:url(http://trailers.apple.com/trailers/independent/monkeykingheroisback/images/thumbnail_source_24333.jpg);width: 848px; height: 480px;&#34;&gt;&lt;/div&gt; --&gt;&lt;/div&gt;
+                    &lt;/div&gt;
+                    &lt;div id=&#34;media-controls&#34; class=&#34;videocontrols&#34; style=&#34;display: none;&#34;&gt;
+                        &lt;div class=&#34;controls&#34;&gt;
+                            &lt;div class=&#34;volume&#34; title=&#34;Volume&#34;&gt;
+                                &lt;div class=&#34;quieter&#34;&gt;&lt;/div&gt;
+                                &lt;div class=&#34;track&#34;&gt;
+                                    &lt;div class=&#34;playhead&#34; style=&#34;left: 35px;&#34;&gt;&lt;/div&gt;
+                                    &lt;div class=&#34;progress&#34; style=&#34;width: 35px;&#34;&gt;&lt;/div&gt;
+                                &lt;/div&gt;
+                                &lt;div class=&#34;louder&#34;&gt;&lt;/div&gt;
+                                &lt;div class=&#34;title&#34;&gt;&lt;/div&gt;
+                            &lt;/div&gt;
+                            &lt;div class=&#34;buttons&#34;&gt;
+                                &lt;button id=&#34;media-reverse&#34; class=&#34;icon icon-reverse&#34;&gt;&lt;/button&gt;
+                                &lt;button id=&#34;media-play&#34; class=&#34;icon icon-play&#34;&gt;&lt;/button&gt;
+                                &lt;button id=&#34;media-forward&#34; class=&#34;icon icon-forward&#34;&gt;&lt;/button&gt;
+                            &lt;/div&gt;
+                            &lt;ul class=&#34;options&#34;&gt;
+                                &lt;li class=&#34;option&#34;&gt;
+                                    &lt;button id=&#34;video-airplay&#34; class=&#34;icon icon-airplay&#34; disabled=&#34;&#34; style=&#34;display: none;&#34;&gt;&lt;/button&gt;
+                                &lt;/li&gt;
+                                &lt;li class=&#34;option&#34;&gt;
+                                    &lt;button id=&#34;video-resolution&#34; class=&#34;icon icon-hd&#34;&gt;&lt;/button&gt;
+                                    &lt;ul id=&#34;menu-resolution&#34;&gt;
+                                        &lt;li class=&#34;active&#34;&gt;
+                                            &lt;button id=&#34;resolution-sd&#34; data-res=&#34;sd&#34;&gt;Standard Definition&lt;/button&gt;
+                                        &lt;/li&gt;
+                                        &lt;li class=&#34;&#34;&gt;
+                                            &lt;button id=&#34;resolution-hd720&#34; data-res=&#34;hd720&#34;&gt;High Definition - 720p&lt;/button&gt;
+                                        &lt;/li&gt;
+                                        &lt;li class=&#34;&#34;&gt;
+                                            &lt;button id=&#34;resolution-hd1080&#34; data-res=&#34;hd1080&#34;&gt;High Definition - 1080p&lt;/button&gt;
+                                        &lt;/li&gt;
+                                    &lt;/ul&gt;
+                                &lt;/li&gt;
+                                &lt;!-- &lt;li class=&#34;option&#34;&gt;&lt;button id=&#34;video-sizeup&#34; class=&#34;icon icon-view-size&#34;&gt;&lt;/button&gt;&lt;/li&gt; --&gt;
+                                &lt;li class=&#34;option&#34;&gt;
+                                    &lt;button id=&#34;video-fullscreen&#34; class=&#34;icon icon-enter-fs&#34;&gt;&lt;/button&gt;
+                                &lt;/li&gt;
+                            &lt;/ul&gt;
+                        &lt;/div&gt;
+                        &lt;div class=&#34;timeline&#34;&gt;
+                            &lt;div class=&#34;elapsed&#34;&gt;00:00&lt;/div&gt;
+                            &lt;div class=&#34;track&#34; id=&#34;video-track&#34;&gt;
+                                &lt;div class=&#34;playhead&#34; id=&#34;video-playhead&#34; style=&#34;left: 1px;&#34;&gt;&lt;/div&gt;
+                                &lt;div class=&#34;buffer&#34; id=&#34;video-buffer&#34; style=&#34;width: 330px;&#34;&gt;&lt;/div&gt;
+                                &lt;div class=&#34;progress&#34; id=&#34;video-progress&#34; style=&#34;width: 1px;&#34;&gt;&lt;/div&gt;
+                                &lt;div class=&#34;loaded&#34; id=&#34;video-loaded&#34;&gt;&lt;/div&gt;
+                            &lt;/div&gt;
+                            &lt;div class=&#34;remaining&#34;&gt;-01:57&lt;/div&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div id=&#34;clip-tray&#34; style=&#34;display: none;&#34;&gt;
+            &lt;div&gt;
+                &lt;div class=&#34;scroll-container&#34;&gt;
+                    &lt;ul class=&#34;scroll-content&#34; style=&#34;width: 900px; -webkit-transition: all 0.7s ease; transition: all 0.7s ease;&#34;&gt;
+                        &lt;li class=&#34;trailer&#34; style=&#34;margin-left: 300px; margin-right: 300px;&#34;&gt;
+                            &lt;div class=&#34;col left&#34;&gt;
+                                &lt;a href=&#34;#&#34; class=&#34;thumb link-play&#34;&gt; &lt;span class=&#34;play&#34;&gt;&lt;/span&gt; &lt;img src=&#34;http://trailers.apple.com/trailers/independent/monkeykingheroisback/images/thumbnail_24333.jpg&#34; width=&#34;160&#34; height=&#34;90&#34; alt=&#34;Trailer&#34;&gt; &lt;/a&gt;
+                            &lt;/div&gt;
+                            &lt;div class=&#34;col right&#34;&gt;
+                                &lt;h3 title=&#34;Trailer&#34;&gt;Trailer&lt;/h3&gt;
+                                &lt;ul class=&#34;list-trailer-actions&#34;&gt;
+                                    &lt;li&gt;&lt;a href=&#34;#&#34; class=&#34;link-play&#34;&gt;Play&lt;/a&gt;1:58&lt;/li&gt;
+                                &lt;/ul&gt;
+                            &lt;/div&gt;
+                        &lt;/li&gt;
+                    &lt;/ul&gt;
+                &lt;/div&gt;
+                &lt;!--/thumb-strip-wrapper--&gt;
+                &lt;div class=&#34;fade-left&#34;&gt;&lt;/div&gt;
+                &lt;div class=&#34;fade-right&#34;&gt;&lt;/div&gt;
+                &lt;a class=&#34;arrow left paddle-left&#34; title=&#34;Scroll left&#34; style=&#34;display: none;&#34;&gt;&lt;/a&gt;
+                &lt;a class=&#34;arrow right paddle-right&#34; title=&#34;Scroll right&#34; style=&#34;display: none;&#34;&gt;&lt;/a&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/section&gt;
+&lt;/div&gt;
+```
+</div>
+          </li>
+          
+          <li class="comment">
+            <span class="author">karlcow</span>
+            <span class="created_at">2016-05-05 05:11:39+00:00</span>
+            <span class="updated_at">2016-05-05 05:11:39+00:00</span>
+            <div class="body">What is sent to Chrome (faking the UA) on Firefox. 
+The video is working
+
+``` html
+&lt;div id=&#34;overlay&#34; style=&#34;opacity: 1;&#34;&gt;
+    &lt;section id=&#34;overlay-video&#34;&gt;
+        &lt;div id=&#34;clip-stage&#34; class=&#34;current-clip&#34; style=&#34;display: block;&#34;&gt;
+            &lt;div style=&#34;display: block;&#34;&gt;
+                &lt;div class=&#34;video-player animated&#34; style=&#34;width: 848px; height: 480px;&#34;&gt;
+                    &lt;div class=&#34;close-overlay&#34; style=&#34;display: none;&#34;&gt;&lt;a href=&#34;#&#34;&gt;X&lt;/a&gt;&lt;/div&gt;
+                    &lt;canvas id=&#34;video-loader&#34; width=&#34;848&#34; height=&#34;480&#34; style=&#34;display: none;&#34;&gt;&lt;/canvas&gt;
+                    &lt;video id=&#34;video-element&#34; class=&#34;video-element&#34; preload=&#34;auto&#34; poster=&#34;data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==&#34; autoplay=&#34;&#34; airplay=&#34;allow&#34; x-webkit-airplay=&#34;allow&#34;&gt;
+                        &lt;!-- MP4 for Safari, IE9, iPhone, iPad, Android, and Windows Phone 7 --&gt;
+                        &lt;source src=&#34;http://movietrailers.apple.com/movies/independent/monkeykingheroisback/monkeyking-tlr1_i320.m4v&#34;&gt;
+                        &lt;!-- type=&#34;video/mp4&#34; --&gt;
+                    &lt;/video&gt;
+                    &lt;div class=&#34;video-poster&#34; style=&#34;background-image:url(http://trailers.apple.com/trailers/independent/monkeykingheroisback/images/thumbnail_source_24333.jpg)&#34;&gt;
+                        &lt;div class=&#34;poster-block&#34;&gt;
+                            &lt;div class=&#34;poster-title&#34;&gt;Watch Again
+                                &lt;div class=&#34;poster-play initial-play&#34;&gt;&lt;span class=&#34;icon icon-play-circle&#34;&gt;&lt;/span&gt;&lt;/div&gt;
+                            &lt;/div&gt;
+                            &lt;div class=&#34;poster-share&#34;&gt;
+                                &lt;ul class=&#34;share&#34;&gt;
+                                    &lt;li&gt;Share Now:&lt;/li&gt;
+                                    &lt;li class=&#34;share-facebook&#34;&gt;&lt;a href=&#34;http://www.facebook.com/share.php?u=http://trailers.apple.com/trailers/independent/monkeykingheroisback/&#34; target=&#34;_block&#34;&gt;Facebook&lt;/a&gt;&lt;/li&gt;
+                                    &lt;li class=&#34;share-twitter&#34;&gt;&lt;a href=&#34;http://twitter.com/home?status=Monkey King: Hero is Back - See the trailer http://trailers.apple.com/trailers/independent/monkeykingheroisback/&#34; target=&#34;_block&#34;&gt;Twitter&lt;/a&gt;&lt;/li&gt;
+                                &lt;/ul&gt;
+                            &lt;/div&gt;
+                            &lt;!-- &lt;div class=&#34;poster-glass&#34;&gt;&lt;/div&gt;      &lt;div class=&#34;poster-back&#34; style=&#34;background-image:url(http://trailers.apple.com/trailers/independent/monkeykingheroisback/images/thumbnail_source_24333.jpg);width: 848px; height: 480px;&#34;&gt;&lt;/div&gt; --&gt;&lt;/div&gt;
+                    &lt;/div&gt;
+                    &lt;div id=&#34;media-controls&#34; class=&#34;videocontrols&#34; style=&#34;display: none;&#34;&gt;
+                        &lt;div class=&#34;controls&#34;&gt;
+                            &lt;div class=&#34;volume&#34; title=&#34;Volume&#34;&gt;
+                                &lt;div class=&#34;quieter&#34;&gt;&lt;/div&gt;
+                                &lt;div class=&#34;track&#34;&gt;
+                                    &lt;div class=&#34;playhead&#34; style=&#34;left: 35px;&#34;&gt;&lt;/div&gt;
+                                    &lt;div class=&#34;progress&#34; style=&#34;width: 35px;&#34;&gt;&lt;/div&gt;
+                                &lt;/div&gt;
+                                &lt;div class=&#34;louder&#34;&gt;&lt;/div&gt;
+                                &lt;div class=&#34;title&#34;&gt;&lt;/div&gt;
+                            &lt;/div&gt;
+                            &lt;div class=&#34;buttons&#34;&gt;
+                                &lt;button id=&#34;media-reverse&#34; class=&#34;icon icon-reverse&#34;&gt;&lt;/button&gt;
+                                &lt;button id=&#34;media-play&#34; class=&#34;icon icon-pause&#34;&gt;&lt;/button&gt;
+                                &lt;button id=&#34;media-forward&#34; class=&#34;icon icon-forward&#34;&gt;&lt;/button&gt;
+                            &lt;/div&gt;
+                            &lt;ul class=&#34;options&#34;&gt;
+                                &lt;li class=&#34;option&#34;&gt;
+                                    &lt;button id=&#34;video-resolution&#34; class=&#34;icon icon-hd&#34;&gt;&lt;/button&gt;
+                                    &lt;ul id=&#34;menu-resolution&#34;&gt;
+                                        &lt;li class=&#34;active&#34;&gt;
+                                            &lt;button id=&#34;resolution-sd&#34; data-res=&#34;sd&#34;&gt;Standard Definition&lt;/button&gt;
+                                        &lt;/li&gt;
+                                        &lt;li class=&#34;&#34;&gt;
+                                            &lt;button id=&#34;resolution-hd720&#34; data-res=&#34;hd720&#34;&gt;High Definition - 720p&lt;/button&gt;
+                                        &lt;/li&gt;
+                                        &lt;li class=&#34;&#34;&gt;
+                                            &lt;button id=&#34;resolution-hd1080&#34; data-res=&#34;hd1080&#34;&gt;High Definition - 1080p&lt;/button&gt;
+                                        &lt;/li&gt;
+                                    &lt;/ul&gt;
+                                &lt;/li&gt;
+                                &lt;!-- &lt;li class=&#34;option&#34;&gt;&lt;button id=&#34;video-sizeup&#34; class=&#34;icon icon-view-size&#34;&gt;&lt;/button&gt;&lt;/li&gt; --&gt;
+                                &lt;li class=&#34;option&#34;&gt;
+                                    &lt;button id=&#34;video-fullscreen&#34; class=&#34;icon icon-enter-fs&#34;&gt;&lt;/button&gt;
+                                &lt;/li&gt;
+                            &lt;/ul&gt;
+                        &lt;/div&gt;
+                        &lt;div class=&#34;timeline&#34;&gt;
+                            &lt;div class=&#34;elapsed&#34;&gt;00:17&lt;/div&gt;
+                            &lt;div class=&#34;track&#34; id=&#34;video-track&#34;&gt;
+                                &lt;div class=&#34;playhead&#34; id=&#34;video-playhead&#34; style=&#34;left: 49px;&#34;&gt;&lt;/div&gt;
+                                &lt;div class=&#34;buffer&#34; id=&#34;video-buffer&#34; style=&#34;width: 329.963px;&#34;&gt;&lt;/div&gt;
+                                &lt;div class=&#34;progress&#34; id=&#34;video-progress&#34; style=&#34;width: 49px;&#34;&gt;&lt;/div&gt;
+                                &lt;div class=&#34;loaded&#34; id=&#34;video-loaded&#34;&gt;&lt;/div&gt;
+                            &lt;/div&gt;
+                            &lt;div class=&#34;remaining&#34;&gt;-01:40&lt;/div&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div id=&#34;clip-tray&#34; style=&#34;display: none;&#34;&gt;
+            &lt;div&gt;
+                &lt;div class=&#34;scroll-container&#34;&gt;
+                    &lt;ul class=&#34;scroll-content&#34; style=&#34;width: 900px; transition: all 0.7s ease 0s;&#34;&gt;
+                        &lt;li class=&#34;trailer&#34; style=&#34;margin-left: 300px; margin-right: 300px;&#34;&gt;
+                            &lt;div class=&#34;col left&#34;&gt;
+                                &lt;a href=&#34;#&#34; class=&#34;thumb link-play&#34;&gt; &lt;span class=&#34;play&#34;&gt;&lt;/span&gt; &lt;img src=&#34;http://trailers.apple.com/trailers/independent/monkeykingheroisback/images/thumbnail_24333.jpg&#34; alt=&#34;Trailer&#34; width=&#34;160&#34; height=&#34;90&#34;&gt; &lt;/a&gt;
+                            &lt;/div&gt;
+                            &lt;div class=&#34;col right&#34;&gt;
+                                &lt;h3 title=&#34;Trailer&#34;&gt;Trailer&lt;/h3&gt;
+                                &lt;ul class=&#34;list-trailer-actions&#34;&gt;
+                                    &lt;li&gt;&lt;a href=&#34;#&#34; class=&#34;link-play&#34;&gt;Play&lt;/a&gt;1:58&lt;/li&gt;
+                                &lt;/ul&gt;
+                            &lt;/div&gt;
+                        &lt;/li&gt;
+                    &lt;/ul&gt;
+                &lt;/div&gt;
+                &lt;!--/thumb-strip-wrapper--&gt;
+                &lt;div class=&#34;fade-left&#34;&gt;&lt;/div&gt;
+                &lt;div class=&#34;fade-right&#34;&gt;&lt;/div&gt;
+                &lt;a class=&#34;arrow left paddle-left&#34; title=&#34;Scroll left&#34; style=&#34;display: none;&#34;&gt;&lt;/a&gt;
+                &lt;a class=&#34;arrow right paddle-right&#34; title=&#34;Scroll right&#34; style=&#34;display: none;&#34;&gt;&lt;/a&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/section&gt;
+&lt;/div&gt;
+```
+</div>
+          </li>
+          
+          <li class="comment">
+            <span class="author">karlcow</span>
+            <span class="created_at">2016-05-05 05:17:04+00:00</span>
+            <span class="updated_at">2016-05-05 05:17:04+00:00</span>
+            <div class="body">- Firefox mac 10.11 Go use Safari
+- Firefox windows object+embed to  http://movietrailers.apple.com/movies/independent/monkeykingheroisback/monkeyking-tlr1_i320.m4v
+- Safari http://movietrailers.apple.com/movies/independent/monkeykingheroisback/monkeyking-tlr1_480p.mov
+- Chrome video+source to http://movietrailers.apple.com/movies/independent/monkeykingheroisback/monkeyking-tlr1_i320.m4v
+</div>
+          </li>
+          
+          <li class="comment">
+            <span class="author">hallvors</span>
+            <span class="created_at">2016-05-05 14:50:49+00:00</span>
+            <span class="updated_at">2016-05-05 14:50:49+00:00</span>
+            <div class="body">```
+GET http://movietrailers.apple.com/movies/independent/welcometohappiness/welcomeothappiness-tlr1_i320.m4v
+302 Redirect to http://trailers.apple.com/
+```
+- since we&#39;re being an OBJECT (or EMBED) and not a VIDEO element Firefox obeys what the server tells it to and renders the home page when fetching the video URL.
+</div>
+          </li>
+          
+          <li class="comment">
+            <span class="author">miketaylr</span>
+            <span class="created_at">2016-05-06 19:56:01+00:00</span>
+            <span class="updated_at">2016-05-06 19:56:01+00:00</span>
+            <div class="body">&gt; What is sent to Chrome (faking the UA) on Firefox.
+
+So we could fix this with a UA override, correct?
+</div>
+          </li>
+          
+          <li class="comment">
+            <span class="author">adamopenweb</span>
+            <span class="created_at">2016-05-19 12:58:48+00:00</span>
+            <span class="updated_at">2016-05-19 13:02:54+00:00</span>
+            <div class="body">@miketaylr using the Chrome UA in Firefox OSX the video&#39;s will play which is a big win considering the current situation. But the movie controls in full screen mode are absent. You can still pause the video with space bar, but clicking does nothing.
+</div>
+          </li>
+          
+          <li class="comment">
+            <span class="author">adamopenweb</span>
+            <span class="created_at">2016-06-02 14:47:10+00:00</span>
+            <span class="updated_at">2016-06-02 14:47:10+00:00</span>
+            <div class="body">No longer getting the warning about Firefox, but when I click to play the video we get the console error:
+&#34;HTTP &#34;Content-Type&#34; of &#34;text/html&#34; is not supported. Load of media resource http://movietrailers.apple.com/movies/independent/thewailing/thewailing-tlr1_i320.m4v failed.&#34;
+</div>
+          </li>
+          
+          <li class="comment">
+            <span class="author">hallvors</span>
+            <span class="created_at">2016-06-03 20:25:50+00:00</span>
+            <span class="updated_at">2016-06-03 20:25:50+00:00</span>
+            <div class="body">The cause of that error is the redirect from the video URL to the home page (but getting a console error means they are now actually trying to use a VIDEO element instead of OBJECT..which I guess is progress..?)
+</div>
+          </li>
+          
+          <li class="comment">
+            <span class="author">cpeterso</span>
+            <span class="created_at">2016-06-03 20:49:41+00:00</span>
+            <span class="updated_at">2016-06-03 20:49:56+00:00</span>
+            <div class="body">The trailers now play correctly for me in Firefox 46 on OS X and Windows! I think this bug is fixed. 👍
+</div>
+          </li>
+          
+          <li class="comment">
+            <span class="author">adamopenweb</span>
+            <span class="created_at">2016-06-03 20:55:28+00:00</span>
+            <span class="updated_at">2016-06-03 20:55:28+00:00</span>
+            <div class="body">Sweet! Works for me as well. Closing.
+</div>
+          </li>
+          
+          <li class="comment">
+            <span class="author">miketaylr</span>
+            <span class="created_at">2016-06-03 21:12:48+00:00</span>
+            <span class="updated_at">2016-06-03 21:12:48+00:00</span>
+            <div class="body">Wow, that&#39;s awesome. Thanks Apple! @jonathandavis 🍎 ❤️ 
+</div>
+          </li>
+          
+          <li class="comment">
+            <span class="author">karlcow</span>
+            <span class="created_at">2016-06-06 06:24:14+00:00</span>
+            <span class="updated_at">2016-06-06 06:24:14+00:00</span>
+            <div class="body">fabulous! It finally happened. Thanks.
+</div>
+          </li>
+          
+        </ul>
+        </section>
+    </main>
+    <footer></footer>
+    <svg class="is-hidden" xmlns="http://www.w3.org/2000/svg">
+  <symbol id="svg-home" viewBox="0 0 24 24"><title>home</title><path d="M21.6 8.2l-9-7c-.4-.3-.9-.3-1.2 0l-9 7c-.3.2-.4.5-.4.8v11c0 1.7 1.3 3 3 3h14c1.7 0 3-1.3 3-3V9c0-.3-.1-.6-.4-.8zM14 21h-4v-8h4v8zm6-1c0 .6-.4 1-1 1h-3v-9c0-.6-.4-1-1-1H9c-.6 0-1 .4-1 1v9H5c-.6 0-1-.4-1-1V9.5l8-6.2 8 6.2V20z"/></symbol>
+</svg>
+  </body>
+</html>

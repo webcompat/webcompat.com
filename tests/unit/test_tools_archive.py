@@ -5,10 +5,7 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 """Tests for webcompat.com archive tools.
 
-TODO: test if issue is locked (live, frozen flag)
 TODO: test that an issue can be on a different repo
-TODO: test that the issue fetching has failed
-TODO: test that the issue comments fetching has failed
 """
 
 import datetime
@@ -53,6 +50,12 @@ def test_render_as_html(issue_100):
     """Test the html rendering of an ArchivedIssue."""
     archived_issue = get_fixture('issue_100.html')
     assert issue_100.as_html(template='archive') == archived_issue
+
+
+def test_render_as_html_with_comments(issue_1470):
+    """Test the html rendering of an ArchivedIssue with comments."""
+    archived_issue = get_fixture('issue_1470.html')
+    assert issue_1470.as_html(template='archive') == archived_issue
 
 
 def test_issue_init_from_dict(issue_100):
