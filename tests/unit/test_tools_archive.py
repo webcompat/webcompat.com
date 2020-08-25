@@ -5,7 +5,8 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 """Tests for webcompat.com archive tools.
 
-TODO: test that an issue can be on a different repo
+TODO: test the markdown conversion of issue body, and comments body.
+TODO: define what data we need for the content of the template.
 """
 
 import datetime
@@ -164,8 +165,3 @@ def test_to_datetime():
     expected_date = datetime.datetime(2020, 8, 14, 12, 34, 56,
                                       tzinfo=datetime.timezone.utc)
     assert model.to_datetime('2020-08-14T12:34:56Z') == expected_date
-
-
-def test_issue_is_locked(issue_100):
-    """test if an issue is locked."""
-    assert issue_100.locked

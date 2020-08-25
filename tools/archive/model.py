@@ -122,9 +122,9 @@ class Issue:
 class ArchivedIssue(Issue):
     """WebCompat Archived Issue Model.
 
-    This provide a couple of additional methods
+    This provides a couple of additional methods
     to make it possible to archive the issue as html or any format
-    dimmed important. It inherits from a larger Issue model
+    deemed important. It inherits from a larger Issue model
     """
     def as_html(self, template='archive'):
         """Create an html rendering of an issue.
