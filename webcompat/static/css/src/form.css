@@ -186,6 +186,10 @@
   z-index: 30;
 }
 
+label[for = "image"] {
+  cursor: pointer;
+}
+
 .form-upload .label-icon {
   left: 50%;
   margin: 0;
