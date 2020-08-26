@@ -61,3 +61,16 @@ export const showSuccess = (el) => {
 export const hideSuccess = (el) => {
   el.parents(".js-Form-group").removeClass("is-validated js-no-error");
 };
+
+export const hideError = (el) => {
+  el.parents(".js-Form-group").find(".form-message-error").remove();
+};
+
+export const addKeyDownListeners = (container) => {
+  const labels = container.find("label");
+  labels.on("keydown", (e) => {
+    if (e.originalEvent.code === "Enter") {
+      e.target.click();
+    }
+  });
+};
