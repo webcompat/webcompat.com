@@ -57,7 +57,7 @@
   --wizard-step-color: rgba(255, 255, 255, 1); /* #ffffff */
   --wizard-step-error: rgba(226, 40, 80, 1); /* #e22850 */
   --wizard-grey-bg: rgba(247, 247, 247, 1); /* #f7f7f7 */
-  --link-color: rgba(44, 118, 245, 1); /* #2c76f5 */
+  --link-color: rgba(0, 94, 255, 1); /* #005eff */
   --issue-type-bg: rgba(86, 99, 140, 1); /* #56638c */
   --issue-selected-outline: rgba(34, 181, 115, 1); /* #22b573 */
   --input-placeholder: rgba(64, 64, 64, .5); /* #404040 */
