@@ -149,7 +149,7 @@ def test_http_error_log_comments_fetch(mocker, caplog, issue_1470):
     fake_r.side_effect = HTTPError()
     fake_r.status_code = 400
     caplog.set_level(logging.WARNING)
-    model.Issue.recursive_fetch('https://example.org/')
+    issue_1470.get_comments('https://example.org/')
     assert 'Fetching comments failed' in caplog.text
 
 

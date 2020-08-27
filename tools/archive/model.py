@@ -9,7 +9,6 @@
 from dataclasses import dataclass
 from dataclasses import field
 from datetime import datetime
-# from distutils.util import strtobool
 import logging
 import pathlib
 from typing import List
@@ -102,20 +101,40 @@ class Issue:
         return comments
 
 
-    @staticmethod
-    def recursive_fetch(comments_url):
-        """Fetch all comments."""
+    def get_comments(self, comments_url):
+        """Getting the comments for an url"""
+        links = {}
+        comments = {}
         try:
             r = requests.get(comments_url)
             r.raise_for_status()
         except HTTPError as err:
             logging.warning(f'Fetching comments failed {err}')
         else:
+            links = r.links
             comments = r.json()
-            while 'next' in r.links.keys():
-                r = requests.get(r.links['next']['url'])
-                comments.extend(r.json())
-            return comments
+        return comments, links
+
+
+    def recursive_fetch(self, comments_url, prev_comments=[]):
+        """Fetch all comments.
+
+        * if 0 comments, response is empty
+        * if 1 page of comments, no links http header
+        * if 1+ page of comments
+          1st page has               next, last
+          next page has first, prev, next, last
+          last page has first, prev
+
+        so when there is no more next, we reached the last page
+        """
+        comments, links = self.get_comments(comments_url)
+        prev_comments.extend(comments)
+        if links:
+            has_next = links.get('next', False)
+            if has_next:
+                self.recursive_fetch(has_next['url'], comments)
+        return comments
 
 
 @dataclass
