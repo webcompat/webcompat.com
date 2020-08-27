@@ -162,14 +162,17 @@ class PrefixedRadioField(RadioField):
     """Prefix radio field label with an image.
 
     This renders the radio elements with a specific html markup.
+    Note: the empty alt='' on the <img> is intentional, as the surrounding
+    {text} already describes the icon.
     """
+
     def __init__(self, *args, **kwargs):
         prefixed_choices = kwargs.pop('choices')
         choices = []
         for slug, img, text in prefixed_choices:
             filename = f'img/svg/icons/{img}'
             src = url_for('static', filename=filename)
-            t = f'<div class="icon-container"><img src="{src}"/></div> {text}'
+            t = f'<div class="icon-container"><img src="{src}" alt=""></div> {text}'  # noqa
             label = Markup(t)
             choice = (slug, label)
             choices.append(choice)
@@ -207,7 +210,7 @@ class FormWizard(FlaskForm):
     image = FileField('Attach a screenshot image',
                       [Optional(),
                        FileAllowed(ImageUpload.ALLOWED_FORMATS,
-                       image_message)])
+                                   image_message)])
     os = StringField('Operating System', [Optional()])
     steps_reproduce = TextAreaField(textarea_label, [Optional()])
     url = StringField(url_label, [InputRequired(message=url_message)])
