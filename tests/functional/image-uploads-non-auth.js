@@ -213,14 +213,7 @@ registerSuite("Image Uploads (non-auth)", {
       return FunctionalHelpers.openPage(this, url, ".js-remove-upload")
         .execute(POSTMESSAGE_TEST_SQUARE)
         .sleep(1000)
-        .execute(() => {
-          document.querySelector(".js-image-upload").click();
-        })
         .execute(POSTMESSAGE_TEST_SQUARE)
-        .sleep(1000)
-        .execute(() => {
-          document.querySelector(".js-image-upload").click();
-        })
         .sleep(1000)
         .findByCssSelector(".js-image-upload")
         .getAttribute("style")
