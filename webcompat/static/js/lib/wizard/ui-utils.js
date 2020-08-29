@@ -66,11 +66,13 @@ export const hideError = (el) => {
   el.parents(".js-Form-group").find(".form-message-error").remove();
 };
 
-export const addKeyDownListeners = (container) => {
+export const addKeyDownListeners = (container, altTarget = null) => {
   const labels = container.find("label");
   labels.on("keydown", (e) => {
     if (e.originalEvent.code === "Enter") {
-      e.target.click();
+      e.preventDefault();
+      let target = altTarget ? altTarget : e.target;
+      target.click();
     }
   });
 };

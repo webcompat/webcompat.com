@@ -20,7 +20,7 @@ import {
   blobOrFileTypeValid,
   isImageDataURIValid,
 } from "../validation.js";
-import { showContainer } from "../ui-utils.js";
+import { addKeyDownListeners, showContainer } from "../ui-utils.js";
 import { downsampleImage, convertToDataURI } from "../utils.js";
 import imageHelper from "./image-helper/index.js";
 
@@ -100,6 +100,7 @@ const addListeners = () => {
   uploadField.on("change", onChange);
   nextStepButton.on("click", onClick);
   notify.subscribe("deleteImage", handleDelete);
+  addKeyDownListeners(container, uploadField);
 };
 
 addListeners();

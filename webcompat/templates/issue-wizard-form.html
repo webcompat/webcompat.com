@@ -298,26 +298,28 @@
         </div>
       </div>
       <div class="input-control half col">
-        <div class="form-upload form-element js-image-upload js-Form-group">
-          {{ form.image(class_='form-input input-upload', accept='.jpe,.jpg,.jpeg,.gif,.png,.bmp', id='image') }}
-          <div class="shadow"></div>
-          <div class="label-icon label-upload js-label-upload">
-            <img class="add-screenshot-icon" src="{{ url_for('static', filename='img/svg/icons/svg-add-image.svg') }}" title="Upload screenshot" alt="Upload screenshot" />
-            <br>
-            <small class="label-icon-message">Upload screenshot</small>
-          </div>
+        <label for="image" tabindex="0">
+          <div class="form-upload form-element js-image-upload js-Form-group">
+            {{ form.image(class_='form-input input-upload', tabindex="-1", accept='.jpe,.jpg,.jpeg,.gif,.png,.bmp', id='image') }}
+            <div class="shadow"></div>
+            <div class="label-icon label-upload js-label-upload">
+              <img class="add-screenshot-icon" src="{{ url_for('static', filename='img/svg/icons/svg-add-image.svg') }}" title="Upload screenshot" alt="Upload screenshot" />
+              <br>
+              <small class="label-icon-message">Upload screenshot</small>
+            </div>
 
-          <div class="label-icon label-error is-hidden js-error-upload">
-            <svg class="icon icon-big" role="presentation" title="An error occured">
-              <use class="icon-error" xlink:href="#svg-warning">An error occured</use>
-            </svg>
-            {% if form.image.errors %}
-              {% for error in form.image.errors %}
-                <small class="label-icon-message">{{ error }}</small>
-              {% endfor %}
-            {% endif %}
+            <div class="label-icon label-error is-hidden js-error-upload">
+              <svg class="icon icon-big" role="presentation" title="An error occured">
+                <use class="icon-error" xlink:href="#svg-warning">An error occured</use>
+              </svg>
+              {% if form.image.errors %}
+                {% for error in form.image.errors %}
+                  <small class="label-icon-message">{{ error }}</small>
+                {% endfor %}
+              {% endif %}
+            </div>
           </div>
-        </div>
+        </label>
       </div>
     </div>
     <div class="button-control row">
