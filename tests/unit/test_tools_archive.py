@@ -52,9 +52,11 @@ def test_render_as_html(issue_100):
     assert issue_100.as_html(template='archive') == archived_issue
 
 
-def test_render_as_html_with_comments(issue_1470):
+def test_render_as_html_with_comments(mocker, issue_1470):
     """Test the html rendering of an ArchivedIssue with comments."""
     archived_issue = get_fixture('issue_1470.html')
+    fake_json = mocker.patch.object(model.Issue, 'recursive_fetch')
+    fake_json.return_value = json.loads(get_fixture('1470-comments-all.json'))
     assert issue_1470.as_html(template='archive') == archived_issue
 
 
