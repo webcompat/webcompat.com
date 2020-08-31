@@ -30,7 +30,7 @@ Closing the issue as Invalid.</p>'''
 INCOMPLETE_BODY = '''<p>Thanks for the report. Unfortunately without any
 detail about the issue you experienced, we cannot help with this bug.
 Please leave a comment with more detail, or file a new report and we will
-gladly investigate this further.</p>'''
+gladly investigate this further. Closing the issue as Incomplete.</p>'''
 ONGOING_TITLE = 'In the moderation queue.'
 ONGOING_BODY = '''<p>This issue has been put in the moderation queue. A human
 will review if the message meets our current
