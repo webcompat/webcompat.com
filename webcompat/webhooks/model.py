@@ -23,6 +23,7 @@ from webcompat.webhooks.helpers import msg_log
 from webcompat.webhooks.helpers import oops
 from webcompat.webhooks.helpers import prepare_rejected_issue
 from webcompat.webhooks.helpers import repo_scope
+from webcompat.issues import moderation_template
 
 PUBLIC_REPO = app.config['ISSUES_REPO_URI']
 PRIVATE_REPO = app.config['PRIVATE_REPO_URI']
@@ -81,6 +82,19 @@ class WebHookIssue:
             raise e
         else:
             self.state = 'closed'
+
+    def comment_closed_reason(self, reason):
+        """Publish a comment on the public issue about why it was closed."""
+        if reason == 'invalid':
+            comment = moderation_template(reason).get('body')
+        elif reason == 'incomplete':
+            comment = moderation_template(reason).get('body')
+        else:
+            raise ValueError("Invalid reason")
+        payload = {'body': comment}
+        issue_number = self.get_public_issue_number()
+        path = f'repos/{PUBLIC_REPO}/{issue_number}/comments'
+        make_request('post', path, payload)
 
     def comment_public_uri(self):
         """Publish a comment on the private issue with the public uri."""
@@ -264,7 +278,9 @@ class WebHookIssue:
                     self.number)
                 return oops()
             else:
-                # we didn't get exceptions, so it's safe to close it
+                # we didn't get exceptions, so it's safe to comment why
+                # it was closed as incomplete, and close it.
+                self.comment_closed_reason(reason='incomplete')
                 self.close_private_issue()
                 return make_response('Moderated issue closed as incomplete',
                                      200)
@@ -281,7 +297,9 @@ class WebHookIssue:
                     self.number)
                 return oops()
             else:
-                # we didn't get exceptions, so it's safe to close it
+                # we didn't get exceptions, so it's safe to comment why
+                # it was closed as invalid, and close it.
+                self.comment_closed_reason(reason='invalid')
                 self.close_private_issue()
                 return make_response('Moderated issue closed as invalid', 200)
         elif (scope == 'private' and self.action == 'closed' and

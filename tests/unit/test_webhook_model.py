@@ -115,6 +115,25 @@ def test_comment_public_uri(mock_mr):
 
 
 @patch('webcompat.webhooks.model.make_request')
+def test_comment_closed_reason(mock_mr):
+    """Test comment API request that is sent to GitHub."""
+    mock_mr.return_value.status_code == 200
+    json_event, signature = event_data('private_issue_opened.json')
+    payload = json.loads(json_event)
+    issue = WebHookIssue.from_dict(payload)
+    reasons = ['invalid', 'incomplete']
+    for reason in reasons:
+        issue.comment_closed_reason(reason)
+    method, uri, data = mock_mr.call_args[0]
+    # make sure we sent a post with the right data to GitHub
+    assert method == 'post'
+    assert reason in data['body'].lower()
+    assert str(issue.get_public_issue_number()) in uri
+    with pytest.raises(ValueError):
+        issue.comment_closed_reason('boring garbage')
+
+
+@patch('webcompat.webhooks.model.make_request')
 def test_moderate_public_issue(mock_mr):
     """Test issue state and API request that is sent to GitHub."""
     mock_mr.return_value.status_code == 200
