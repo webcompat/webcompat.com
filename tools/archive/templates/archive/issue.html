@@ -21,7 +21,7 @@
             <tr class="locked"><th>Locked</th><td>{{locked}}</td></tr>
           </table>
         </section>
-        <section class="issue-body">{{issue_body}}</section>{% if comments %}
+        <section class="issue-body">{{issue_body|safe}}</section>{% if comments %}
         <section class="comments">
         <ul>
           {% for comment in comments %}
@@ -29,7 +29,7 @@
             <span class="author">{{ comment.author|e }}</span>
             <span class="created-at">{{ comment.created_at|e }}</span>
             <span class="updated-at">{{ comment.updated_at|e }}</span>
-            <div class="body">{{ comment.body|e }}</div>
+            <div class="body">{{ comment.body|safe }}</div>
           </li>
           {% endfor %}
         </ul>

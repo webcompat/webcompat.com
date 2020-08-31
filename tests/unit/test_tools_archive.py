@@ -5,7 +5,6 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 """Tests for webcompat.com archive tools.
 
-TODO: test the markdown conversion of issue body, and comments body.
 TODO: define what data we need for the content of the template.
 """
 
@@ -62,7 +61,7 @@ def test_render_as_html_with_comments(issue_1470):
 def test_issue_init_from_dict(issue_100):
     """Test we get the right set of data."""
     assert issue_100.number == 100
-    assert issue_100.title == 'tamala2010.example.org - A Punk Cat in Space'
+    assert issue_100.title == 'asd'
     assert issue_100.comments_number == 0
     assert issue_100.comments_url == 'https://api.github.com/repos/webcompat/web-bugs/issues/100/comments'  # noqa
 
@@ -134,13 +133,6 @@ def test_comments_fetch_no_comments(issue_100):
     # Before fetching the comments
     issue_100.fetch_comments()
     assert len(issue_100.comments) == 0
-
-
-def test_make_request(mocker):
-    fake_resp = mocker.patch.object(model.requests, 'get')
-    fake_resp.return_value.status_code = 200
-    actual = model.make_request('http://example.org/')
-    assert actual.status_code == 200
 
 
 def test_http_error_log_comments_fetch(mocker, caplog, issue_1470):

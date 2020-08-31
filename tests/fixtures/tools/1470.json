@@ -76,10 +76,10 @@
       "site_admin": false
     },
     "open_issues": 0,
-    "closed_issues": 1965,
+    "closed_issues": 2047,
     "state": "open",
     "created_at": "2017-10-18T01:35:12Z",
-    "updated_at": "2020-08-10T01:21:43Z",
+    "updated_at": "2020-08-28T14:29:22Z",
     "due_on": null,
     "closed_at": null
   },
@@ -89,7 +89,7 @@
   "closed_at": "2016-06-03T20:55:28Z",
   "author_association": "NONE",
   "active_lock_reason": null,
-  "body": "<!-- @browser: Firefox 42.0 -->\n\n<!-- @ua_header: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:42.0) Gecko/20100101 Firefox/42.0 -->\n\n**URL**: http://trailers.apple.com/\n**Browser / Version**: Firefox 42.0\n**Operating System**: Mac OS X 10.10\n**Problem type**: Video doesn't play\n\n**Steps to Reproduce**\ntrailers.apple.com requires the QuickTime plugin for Firefox but serves HTML5 video (M4V) to Chrome.\n\n1) On a Windows machine without Apple's QuickTime plugin installed, navigate to: http://trailers.apple.com/\n2) Try to watch a movie trailer, such as http://trailers.apple.com/trailers/disney/thegooddinosaur/\n\nExpected Behavior:\nThe video should play.\n\nActual Behavior:\nThe play will display a blank gray rectangle instead of the video or an error message saying \"A plugin is required to display this content.\" But if you fake Chrome's User-Agent and reload the movie trailer page, then the video will play correctly.\n\n3) Install the \"User Agent Switcher\" add-on: https://addons.mozilla.org/en-US/firefox/addon/user-agent-switcher/ **There are multiple User-Agent switching add-ons, but it is important to use this one because it changes both Firefox's User-Agent header and navigator.userAgent property.** Apple's trailer site checks the navigator.userAgent property.\n4) Switch your User-Agent string from Firefox to Chrome, e.g. \"Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36\"\n5) Reload the same movie trailer page.\n\nRESULT:\nThe video now plays in Firefox even though the QuickTime plugin is not installed.\n",
+  "body_html": "\n\n<p><strong>URL</strong>: <a rel=\"nofollow\" href=\"http://trailers.apple.com/\">http://trailers.apple.com/</a><br>\n<strong>Browser / Version</strong>: Firefox 42.0<br>\n<strong>Operating System</strong>: Mac OS X 10.10<br>\n<strong>Problem type</strong>: Video doesn't play</p>\n<p><strong>Steps to Reproduce</strong><br>\ntrailers.apple.com requires the QuickTime plugin for Firefox but serves HTML5 video (M4V) to Chrome.</p>\n<ol>\n<li>On a Windows machine without Apple's QuickTime plugin installed, navigate to: <a href=\"http://trailers.apple.com/\" rel=\"nofollow\">http://trailers.apple.com/</a></li>\n<li>Try to watch a movie trailer, such as <a href=\"http://trailers.apple.com/trailers/disney/thegooddinosaur/\" rel=\"nofollow\">http://trailers.apple.com/trailers/disney/thegooddinosaur/</a></li>\n</ol>\n<p>Expected Behavior:<br>\nThe video should play.</p>\n<p>Actual Behavior:<br>\nThe play will display a blank gray rectangle instead of the video or an error message saying \"A plugin is required to display this content.\" But if you fake Chrome's User-Agent and reload the movie trailer page, then the video will play correctly.</p>\n<ol start=\"3\">\n<li>Install the \"User Agent Switcher\" add-on: <a href=\"https://addons.mozilla.org/en-US/firefox/addon/user-agent-switcher/\" rel=\"nofollow\">https://addons.mozilla.org/en-US/firefox/addon/user-agent-switcher/</a> <strong>There are multiple User-Agent switching add-ons, but it is important to use this one because it changes both Firefox's User-Agent header and navigator.userAgent property.</strong> Apple's trailer site checks the navigator.userAgent property.</li>\n<li>Switch your User-Agent string from Firefox to Chrome, e.g. \"Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36\"</li>\n<li>Reload the same movie trailer page.</li>\n</ol>\n<p>RESULT:<br>\nThe video now plays in Firefox even though the QuickTime plugin is not installed.</p>",
   "closed_by": {
     "login": "adamopenweb",
     "id": 6587558,

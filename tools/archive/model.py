@@ -20,6 +20,9 @@ from jinja2 import Template
 import requests
 from requests.exceptions import HTTPError
 
+HEADERS = {'Accept': 'application/vnd.github.v3.html+json',
+           'User-Agent': 'WebCompat.com Archiver',
+          }
 
 @dataclass
 class Comment:
@@ -55,7 +58,7 @@ class Issue:
         return cls(
             number = payload.get('number'),
             title = payload.get('title'),
-            body = payload.get('body'),
+            body = payload.get('body_html'),
             comments_number = payload.get('comments'),
             comments_url = payload.get('comments_url'),
             locked = payload.get('locked'),
@@ -93,7 +96,7 @@ class Issue:
             comments.append(
                 Comment(
                     author=comment['user']['login'],
-                    body=comment.get('body'),
+                    body=comment.get('body_html'),
                     created_at=to_datetime(comment.get('created_at')),
                     updated_at=to_datetime(comment.get('updated_at'))
                     )
@@ -106,7 +109,7 @@ class Issue:
         links = {}
         comments = {}
         try:
-            r = requests.get(comments_url)
+            r = requests.get(comments_url, headers=HEADERS)
             r.raise_for_status()
         except HTTPError as err:
             logging.warning(f'Fetching comments failed {err}')
@@ -169,8 +172,7 @@ class ArchivedIssue(Issue):
             number = self.number,
             comments_number = self.comments_number,
             title = self.title,
-            # TODO: replace self.body markdown
-            issue_body = 'this is a body',
+            issue_body = self.body,
             locked = locked,
             issue_created = self.issue_created.strftime('%Y-%m-%d'),
             issue_updated = self.issue_updated.strftime('%Y-%m-%d'),
@@ -195,11 +197,6 @@ class ArchivedIssue(Issue):
             location.parent.mkdir(parents=True)
         location.write_text(content)
         return location
-
-
-def make_request(url):
-    """create a request."""
-    return requests.get(url)
 
 
 def to_datetime(date_str):
