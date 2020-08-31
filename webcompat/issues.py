@@ -45,7 +45,7 @@ REJECTED_BODY = '''<p>The content of this issue doesn't meet our
 guidelines. Its original content has been deleted.</p>'''
 
 
-def moderation_template(choice='ongoing', title=None):
+def moderation_template(choice='ongoing'):
     """Gets the placeholder data to send for unmoderated issues.
 
     The moderation is for now these types:
@@ -60,14 +60,10 @@ def moderation_template(choice='ongoing', title=None):
         title = REJECTED_TITLE
         body = REJECTED_BODY
     elif choice == 'invalid':
-        if not title:
-            raise ValueError("A title must be passed in for invalid issues")
-        title = title
+        title = ''
         body = INVALID_BODY
     elif choice == 'incomplete':
-        if not title:
-            raise ValueError("A title must be passed in for incomplete issues")
-        title = title
+        title = ''
         body = INCOMPLETE_BODY
     else:
         title = ONGOING_TITLE
