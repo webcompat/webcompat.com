@@ -211,6 +211,54 @@ def test_prepare_accepted_issue(mock_priority):
     assert expected == actual
 
 
+@patch('webcompat.webhooks.helpers.extract_priority_label')
+def test_prepare_accepted_issue(mock_priority):
+    """Test the payload preparation for accepted: invalid moderated issues.
+    """
+    mock_priority.return_value = 'priority-critical'
+    json_event, signature = event_data('private_milestone_accepted.json')
+    payload = json.loads(json_event)
+    issue = WebHookIssue.from_dict(payload)
+    actual = issue.prepare_accepted_issue('invalid')
+    expected = {
+        'body': '<!-- @browser: Firefox 55.0 -->\n'
+        '<!-- @ua_header: Mozilla/5.0 (X11; Linux x86_64; rv:55.0) '
+        'Gecko/20100101 Firefox/55.0 -->\n'
+        '<!-- @reported_with: web -->\n'
+        '<!-- @public_url: '
+        'https://github.com/webcompat/webcompat-tests/issues/1  -->\n'
+        '\n'
+        '**URL**: https://www.netflix.com/',
+        'labels': ['browser-firefox', 'priority-critical', 'engine-gecko'],
+        'title': 'www.netflix.com - test private issue accepted',
+        'milestone': 8, 'state': 'closed'}
+    assert expected == actual
+
+
+@patch('webcompat.webhooks.helpers.extract_priority_label')
+def test_prepare_accepted_issue(mock_priority):
+    """Test the payload preparation for accepted: invalid moderated issues.
+    """
+    mock_priority.return_value = 'priority-critical'
+    json_event, signature = event_data('private_milestone_accepted.json')
+    payload = json.loads(json_event)
+    issue = WebHookIssue.from_dict(payload)
+    actual = issue.prepare_accepted_issue('incomplete')
+    expected = {
+        'body': '<!-- @browser: Firefox 55.0 -->\n'
+        '<!-- @ua_header: Mozilla/5.0 (X11; Linux x86_64; rv:55.0) '
+        'Gecko/20100101 Firefox/55.0 -->\n'
+        '<!-- @reported_with: web -->\n'
+        '<!-- @public_url: '
+        'https://github.com/webcompat/webcompat-tests/issues/1  -->\n'
+        '\n'
+        '**URL**: https://www.netflix.com/',
+        'labels': ['browser-firefox', 'priority-critical', 'engine-gecko'],
+        'title': 'www.netflix.com - test private issue accepted',
+        'milestone': 7, 'state': 'closed'}
+    assert expected == actual
+
+
 @patch('webcompat.webhooks.model.make_request')
 def test_process_issue_action_scenarios(mock_mr):
     """Test we are getting the right response for each scenario."""

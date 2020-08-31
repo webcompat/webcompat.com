@@ -411,32 +411,6 @@ class TestWebhook(unittest.TestCase):
         actual = helpers.repo_scope(url)
         self.assertEqual(expected, actual)
 
-    def test_prepare_incomplete_issue(self):
-        """Test we prepare the right payload for the incomplete issue."""
-        expected = {'body': '<p>Thanks for the report. Unfortunately without any\ndetail about the issue you experienced, we cannot help with this bug.\nPlease leave a comment with more detail, or file a new report and we will\ngladly investigate this further.</p>',  # noqa
-                    'milestone': 7,
-                    'state': 'closed',
-                    'title': 'Test incomplete title!'}
-        actual = helpers.prepare_incomplete_issue('Test incomplete title!')
-        self.assertEqual(type(actual), dict)
-        self.assertEqual(actual, expected)
-
-    def test_prepare_invalid_issue(self):
-        """Test we prepare the right payload for the invalid issue."""
-        expected = {'body': '<p>Thanks for the report, but this is not a Compatibility\nissue.</p><p>For this project we try to focus our effort on layouts, features\nor content that works as expected in one browser but not in another.\nClosing the issue as Invalid.</p>',  # noqa
-                    'milestone': 8,
-                    'state': 'closed',
-                    'title': 'Test invalid title!'}
-        actual = helpers.prepare_invalid_issue('Test invalid title!')
-        self.assertEqual(type(actual), dict)
-        self.assertEqual(actual, expected)
-
-    def test_prepare_issue_no_title(self):
-        """Test we raise for missing title arguements."""
-        with pytest.raises(ValueError) as excinfo:
-            helpers.prepare_invalid_issue()
-            helpers.prepare_incomplete_issue()
-
     def test_prepare_rejected_issue(self):
         """Test we prepare the right payload for the rejected issue."""
         expected = {'body': "<p>The content of this issue doesn't meet our\n"

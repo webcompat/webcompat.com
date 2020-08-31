@@ -21,8 +21,6 @@ from webcompat.webhooks.helpers import make_response
 from webcompat.webhooks.helpers import make_request
 from webcompat.webhooks.helpers import msg_log
 from webcompat.webhooks.helpers import oops
-from webcompat.webhooks.helpers import prepare_incomplete_issue
-from webcompat.webhooks.helpers import prepare_invalid_issue
 from webcompat.webhooks.helpers import prepare_rejected_issue
 from webcompat.webhooks.helpers import repo_scope
 
@@ -114,7 +112,7 @@ class WebHookIssue:
         path = f'repos/{PUBLIC_REPO}/{public_number}'
         make_request('patch', path, payload_request)
 
-    def prepare_accepted_issue(self):
+    def prepare_accepted_issue(self, milestone=None):
         """Create the payload for the accepted moderated issue.
 
         When the issue has been moderated as accepted,
@@ -136,6 +134,10 @@ class WebHookIssue:
             'title': self.title,
             'body': self.body
         }
+        if milestone:
+            milestone_id = app.config['STATUSES'][f'{milestone}']['id']
+            payload_request['milestone'] = milestone_id
+            payload_request['state'] = 'closed'
         return payload_request
 
     def prepare_public_comment(self):
@@ -154,9 +156,9 @@ class WebHookIssue:
         'rejected' (default)
         """
         if reason == 'incomplete':
-            payload_request = prepare_incomplete_issue(self.title)
+            payload_request = self.prepare_accepted_issue('incomplete')
         elif reason == 'invalid':
-            payload_request = prepare_invalid_issue(self.title)
+            payload_request = self.prepare_accepted_issue('invalid')
         else:
             payload_request = prepare_rejected_issue()
         public_number = self.get_public_issue_number()
