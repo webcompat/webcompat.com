@@ -47,7 +47,7 @@
     "postcss-loader": "^3.0.0",
     "postcss-preset-env": "^6.7.0",
     "postcss-url": "^8.0.0",
-    "prettier": "2.0.5",
+    "prettier": "2.1.1",
     "sinon": "^9.0.1",
     "stylelint": "^13.1.0",
     "stylelint-config-standard": "^20.0.0",
