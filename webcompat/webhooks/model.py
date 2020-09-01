@@ -85,12 +85,10 @@ class WebHookIssue:
 
     def comment_closed_reason(self, reason):
         """Publish a comment on the public issue about why it was closed."""
-        if reason == 'invalid':
-            comment = moderation_template(reason).get('body')
-        elif reason == 'incomplete':
+        if reason in ['invalid', 'incomplete']:
             comment = moderation_template(reason).get('body')
         else:
-            raise ValueError("Invalid reason")
+            raise ValueError("reason must be one of invalid or incomplete")
         payload = {'body': comment}
         issue_number = self.get_public_issue_number()
         path = f'repos/{PUBLIC_REPO}/{issue_number}/comments'
