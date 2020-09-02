@@ -66,6 +66,7 @@ def test_issue_init_from_dict(issue_100):
     assert issue_100.title == 'asd'
     assert issue_100.comments_number == 0
     assert issue_100.comments_url == 'https://api.github.com/repos/webcompat/web-bugs/issues/100/comments'  # noqa
+    assert not issue_100.locked
 
 
 def test_issue_archived_header():
@@ -128,6 +129,19 @@ def test_comments_fetch(mocker, issue_1470):
     d = datetime.datetime(2015, 7, 28, 9, 25, 3, tzinfo=datetime.timezone.utc)
     assert comment_0.created_at == d
     assert comment_0.updated_at == d
+
+
+def test_comments_get(mocker, issue_1470):
+    """Test the comments fetching."""
+    expected_links = {'next': {'url': 'https://api.github.com/repositories/17914657/issues/1470/comments?page=2', 'rel': 'next'}, 'last': {'url': 'https://api.github.com/repositories/17914657/issues/1470/comments?page=2', 'rel': 'last'}}  # noqa
+    fake_r = mocker.patch.object(model.requests, 'get', autospec=True)
+    fake_r.return_value.json.return_value = json.loads(get_fixture('1470-comments.json'))  # noqa
+    fake_r.return_value.links = expected_links
+    comments, links = issue_1470.get_comments('https://api.github.com/repos/webcompat/web-bugs/issues/1470/comments')  # noqa
+    assert type(links) == dict
+    assert links == {'next': {'url': 'https://api.github.com/repositories/17914657/issues/1470/comments?page=2', 'rel': 'next'}, 'last': {'url': 'https://api.github.com/repositories/17914657/issues/1470/comments?page=2', 'rel': 'last'}}  # noqa
+    assert type(comments) == list
+    assert comments == json.loads(get_fixture('1470-comments.json'))  # noqa
 
 
 def test_comments_fetch_no_comments(issue_100):
