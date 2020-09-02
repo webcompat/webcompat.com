@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Issue {{number}}</title>
+    <link href="https://webcompat.com/dist/webcompat.css" type="text/css" rel="stylesheet">
+    <style>table, td, th { border: 1px black solid; border-collapse: collapse;}</style>
+  </head>
+  <body id="body-webcompat">
+    <header><h1><span class="issue-title">{{title}}</span></h1></header>
+    {%include "nav.html" %}
+    <main>
+        <section class="notice">This issue has been archived. It is now read-only.</section>
+        <section class="issue-data">
+          <table>
+            <tr class="issue-number"><th>Issue</th><td>{{number}}</td></tr>
+            <tr class="issue-created"><th>Created</th><td>{{issue_created}}</td></tr>
+            <tr class="issue-updated"><th>Updated</th><td>{{issue_updated}}</td></tr>
+            <tr class="comments-number"><th>Comments</th><td>{{comments_number}}</td></tr>
+            <tr class="locked"><th>Locked</th><td>{{locked}}</td></tr>
+          </table>
+        </section>
+        <section class="issue-body">{{issue_body|safe}}</section>{% if comments %}
+        <section class="comments">
+        <ul>
+          {% for comment in comments %}
+          <li class="comment">
+            <span class="author">{{ comment.author|e }}</span>
+            <span class="created-at">{{ comment.created_at|e }}</span>
+            <span class="updated-at">{{ comment.updated_at|e }}</span>
+            <div class="body">{{ comment.body|safe }}</div>
+          </li>
+          {% endfor %}
+        </ul>
+        </section>{% endif %}
+    </main>
+    <footer></footer>
+    {%include "svg_symbols.html" %}
+  </body>
+</html>

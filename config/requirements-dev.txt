@@ -2,3 +2,4 @@
 -r requirements.txt
 pycodestyle==2.6.0
 pytest==5.4.3
+pytest-mock==3.2.0
