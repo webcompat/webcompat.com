@@ -115,6 +115,25 @@ def test_comment_public_uri(mock_mr):
 
 
 @patch('webcompat.webhooks.model.make_request')
+def test_comment_closed_reason(mock_mr):
+    """Test comment API request that is sent to GitHub."""
+    mock_mr.return_value.status_code == 200
+    json_event, signature = event_data('private_issue_opened.json')
+    payload = json.loads(json_event)
+    issue = WebHookIssue.from_dict(payload)
+    reasons = ['invalid', 'incomplete']
+    for reason in reasons:
+        issue.comment_closed_reason(reason)
+    method, uri, data = mock_mr.call_args[0]
+    # make sure we sent a post with the right data to GitHub
+    assert method == 'post'
+    assert reason in data['body'].lower()
+    assert str(issue.get_public_issue_number()) in uri
+    with pytest.raises(ValueError):
+        issue.comment_closed_reason('boring garbage')
+
+
+@patch('webcompat.webhooks.model.make_request')
 def test_moderate_public_issue(mock_mr):
     """Test issue state and API request that is sent to GitHub."""
     mock_mr.return_value.status_code == 200
@@ -208,6 +227,54 @@ def test_prepare_accepted_issue(mock_priority):
         '**URL**: https://www.netflix.com/',
         'labels': ['browser-firefox', 'priority-critical', 'engine-gecko'],
         'title': 'www.netflix.com - test private issue accepted'}
+    assert expected == actual
+
+
+@patch('webcompat.webhooks.helpers.extract_priority_label')
+def test_prepare_accepted_issue(mock_priority):
+    """Test the payload preparation for accepted: invalid moderated issues.
+    """
+    mock_priority.return_value = 'priority-critical'
+    json_event, signature = event_data('private_milestone_accepted.json')
+    payload = json.loads(json_event)
+    issue = WebHookIssue.from_dict(payload)
+    actual = issue.prepare_accepted_issue('invalid')
+    expected = {
+        'body': '<!-- @browser: Firefox 55.0 -->\n'
+        '<!-- @ua_header: Mozilla/5.0 (X11; Linux x86_64; rv:55.0) '
+        'Gecko/20100101 Firefox/55.0 -->\n'
+        '<!-- @reported_with: web -->\n'
+        '<!-- @public_url: '
+        'https://github.com/webcompat/webcompat-tests/issues/1  -->\n'
+        '\n'
+        '**URL**: https://www.netflix.com/',
+        'labels': ['browser-firefox', 'priority-critical', 'engine-gecko'],
+        'title': 'www.netflix.com - test private issue accepted',
+        'milestone': 8, 'state': 'closed'}
+    assert expected == actual
+
+
+@patch('webcompat.webhooks.helpers.extract_priority_label')
+def test_prepare_accepted_issue(mock_priority):
+    """Test the payload preparation for accepted: invalid moderated issues.
+    """
+    mock_priority.return_value = 'priority-critical'
+    json_event, signature = event_data('private_milestone_accepted.json')
+    payload = json.loads(json_event)
+    issue = WebHookIssue.from_dict(payload)
+    actual = issue.prepare_accepted_issue('incomplete')
+    expected = {
+        'body': '<!-- @browser: Firefox 55.0 -->\n'
+        '<!-- @ua_header: Mozilla/5.0 (X11; Linux x86_64; rv:55.0) '
+        'Gecko/20100101 Firefox/55.0 -->\n'
+        '<!-- @reported_with: web -->\n'
+        '<!-- @public_url: '
+        'https://github.com/webcompat/webcompat-tests/issues/1  -->\n'
+        '\n'
+        '**URL**: https://www.netflix.com/',
+        'labels': ['browser-firefox', 'priority-critical', 'engine-gecko'],
+        'title': 'www.netflix.com - test private issue accepted',
+        'milestone': 7, 'state': 'closed'}
     assert expected == actual
 
 
