@@ -4,6 +4,16 @@
 2. New features: affect minor number
 3. API endpoint changes or (major) dependency version updates: affect major number
 
+## 38.0.0 - 2020-09-02
+
+* NPM update - Upgrade prettier from 2.0.5 to 2.1.1. [Pull #3475](https://github.com/webcompat/webcompat.com/pull/3475)
+* NPM update - Upgrade mini-css-extract-plugin from 0.9.0 to 0.11.0. [Pull #3474](https://github.com/webcompat/webcompat.com/pull/3474)
+* Fixes #3467 - Comment the reason why an issue was accepted but closed [Pull #3472](https://github.com/webcompat/webcompat.com/pull/3472)
+* Fixes #3419 - Make image upload keyboard navigable [Pull #3470](https://github.com/webcompat/webcompat.com/pull/3470)
+* Fixes #3456 - Add empty alt='' to form icons [Pull #3469](https://github.com/webcompat/webcompat.com/pull/3469)
+* Fixes #3454 - Improve contrast for --link-color [Pull #3468](https://github.com/webcompat/webcompat.com/pull/3468)
+* Fixes #3396 - Add ability to navigate and select categories via keyboard [Pull #3462](https://github.com/webcompat/webcompat.com/pull/3462)
+
 ## 37.1.0 - 2020-08-24
 
 * Fixes #3429 - Skip step 1 if a report is made through "Report site issue". [Pull #3466](https://github.com/webcompat/webcompat.com/pull/3466)
