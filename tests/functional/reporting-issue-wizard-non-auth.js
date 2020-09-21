@@ -110,7 +110,7 @@ registerSuite("Reporting with wizard", {
             // Click on "Desktop site instead of mobile site"
             document.querySelector("[for=problem_category-0]").click();
           })
-          .sleep(1000)
+          .sleep(1500)
           // Check that hidden description field has "Desktop site instead of mobile site"
           .findById("description")
           .getAttribute("value")
@@ -210,6 +210,7 @@ registerSuite("Reporting with wizard", {
           // Click on "Continue"
           .click()
           .end()
+          .sleep(1000)
           .findByCssSelector(".step.active .description")
           .getVisibleText()
           .then(function (text) {
@@ -253,6 +254,9 @@ registerSuite("Reporting with wizard", {
           .execute(function () {
             // Click on "Design is broken"
             document.querySelector("[for=problem_category-2]").click();
+          })
+          .sleep(500)
+          .execute(function () {
             // Click on "Images not loaded"
             document.querySelector("[for=layout_bug_subcategory-0]").click();
           })
@@ -335,7 +339,7 @@ registerSuite("Reporting with wizard", {
           .click()
           .end()
           .end()
-          .sleep(500)
+          .sleep(1000)
           .findByCssSelector(".button.next-warning")
           .getVisibleText()
           .then(function (text) {
@@ -542,7 +546,7 @@ registerSuite("Reporting with wizard", {
           .findByCssSelector("#image")
           .type(VALID_IMAGE_PATH)
           .end()
-          .sleep(500)
+          .sleep(1000)
           // Delete the image
           .findByCssSelector(".button.js-remove-upload")
           .click()

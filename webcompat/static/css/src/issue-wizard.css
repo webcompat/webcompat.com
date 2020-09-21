@@ -222,15 +222,9 @@
 }
 
 .step-container:not(.step-url) {
-  animation-duration: .1s;
-  animation-fill-mode: forwards;
-  animation-name: slideup;
-  margin-top: var(--presumed-step-height);
+  display: none;
+  margin-top: var(--between-steps-margin);
   opacity: 0;
-}
-
-.step-container.step-screenshot {
-  animation-name: slideupbig;
 }
 
 .step-container:not(.open) {
@@ -245,10 +239,6 @@
   transition: opacity .2s;
   width: 36px;
   z-index: 0;
-}
-
-.step-container.step-category {
-  margin-top: 0;
 }
 
 .issue-form .form-label {
@@ -670,7 +660,6 @@
 }
 
 .step-warning {
-  animation-name: slideup;
   border: 4px solid var(--warning-border);
   border-radius: 5px;
   display: flex;
@@ -951,11 +940,6 @@
     background-color: var(--base-background);
     box-shadow: 0 1px 4px 0 rgba(0, 0, 0, .2);
     margin-top: 23px;
-  }
-
-  .step-container:not(.step-url) {
-    animation-duration: .4s;
-    margin-top: var(--presumed-step-height);
   }
 
   .input-control {

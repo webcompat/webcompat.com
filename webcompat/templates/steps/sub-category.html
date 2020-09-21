@@ -1,0 +1,51 @@
+<div class="step-container step-subproblem col">
+  <div class="row">
+    <div class="input-control">
+      <div class="form-radio choice-control form-element js-Form-group site_bug_subcategory">
+        <div class="js-Form-information form-label-message">
+          <label class="form-label big" for="site_bug_subcategory">Why is the <strong>site not usable?</strong></label>
+          {% if form.site_bug_subcategory.errors %}
+          {% for error in form.site_bug_subcategory.errors %}
+          <small class="form-message-error">{{ error }}</small>
+          {% endfor %}
+          {% endif %}
+        </div>
+        <ul id="{{form.site_bug_subcategory.id}}">
+          {% for radio in form.site_bug_subcategory %}
+          <li>{{ radio }}{{ radio.label(tabIndex=0) }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+      <div class="form-radio choice-control form-element js-Form-group layout_bug_subcategory">
+        <div class="js-Form-information form-label-message">
+          <label class="form-label big" for="layout_bug_subcategory">How is the <strong>design broken?</strong></label>
+          {% if form.layout_bug_subcategory.errors %}
+          {% for error in form.layout_bug_subcategory.errors %}
+          <small class="form-message-error">{{ error }}</small>
+          {% endfor %}
+          {% endif %}
+        </div>
+        <ul id="{{form.layout_bug_subcategory.id}}">
+          {% for radio in form.layout_bug_subcategory %}
+          <li>{{ radio }}{{ radio.label(tabIndex=0) }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+      <div class="form-radio choice-control form-element js-Form-group video_bug_subcategory">
+        <div class="js-Form-information form-label-message">
+          <label class="form-label big" for="video_bug_subcategory">What is wrong with <strong>the video or audio?</strong></label>
+          {% if form.video_bug_subcategory.errors %}
+          {% for error in form.video_bug_subcategory.errors %}
+          <small class="form-message-error">{{ error }}</small>
+          {% endfor %}
+          {% endif %}
+        </div>
+        <ul id="{{form.video_bug_subcategory.id}}">
+          {% for radio in form.video_bug_subcategory %}
+          <li>{{ radio }}{{ radio.label(tabIndex=0) }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

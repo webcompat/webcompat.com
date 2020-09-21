@@ -117,8 +117,7 @@ initListeners();
 export default {
   show: (data) => {
     setUrl(data.url);
-    showContainer(container);
-    triggerChangeOnSelected();
+    showContainer(container, triggerChangeOnSelected);
   },
   update: ({ categoryName }) => {
     updateSelection(categoryName);

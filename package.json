@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "amd-to-commonjs-codemod": "^1.2.0",
+    "animejs": "^3.2.0",
     "core-js": "^3.6.5",
     "cssrecipes-custom-media-queries": "0.3.0",
     "cssrecipes-defaults": "^0.5.0",

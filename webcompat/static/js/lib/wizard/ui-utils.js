@@ -3,7 +3,10 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 import $ from "jquery";
+import anime from "animejs/lib/anime.es.js";
+
 const HEADER_HEIGHT = 130;
+const SPACING = 24;
 
 export const createInlineHelp = (text, className = "form-message-error") => {
   return $("<small></small>", {
@@ -12,24 +15,60 @@ export const createInlineHelp = (text, className = "form-message-error") => {
   });
 };
 
-export const scrollToElement = (element, delay = 250) => {
-  // Delay "scroll to element" effect in order to let the animation finish, otherwise the scroll point isn't correct
-  setTimeout(() => {
-    const topOfElement =
-      window.pageYOffset + element.getBoundingClientRect().top - HEADER_HEIGHT;
-    $("html, body").animate({ scrollTop: topOfElement });
-  }, delay);
+export const scrollToElement = (element) => {
+  const topOfElement =
+    window.pageYOffset +
+    element.getBoundingClientRect().top -
+    HEADER_HEIGHT -
+    SPACING;
+
+  anime({
+    targets: [document.documentElement, document.body],
+    scrollTop: topOfElement,
+    duration: 300,
+    easing: "linear",
+  });
 };
 
-export const showContainer = (container, animationName = "slidedown") => {
-  container.css("animation-name", animationName);
-  container.addClass("open");
-  scrollToElement(container[0]);
+export const showContainer = (container, cb) => {
+  const domElement = container[0];
+  const startPosition = container.hasClass("open") ? 0 : "-100%";
+  return anime({
+    easing: "linear",
+    duration: 300,
+    targets: domElement,
+    keyframes: [
+      { translateY: startPosition },
+      { opacity: 1, zIndex: 0, translateY: 0 },
+    ],
+    begin: () => {
+      domElement.style.display = "flex";
+    },
+    complete: () => {
+      container.addClass("open");
+      scrollToElement(domElement);
+      if (cb) cb();
+    },
+  });
 };
 
-export const hideContainer = (container, animationName = "slideup") => {
-  container.css("animation-name", animationName);
-  container.removeClass("open");
+export const hideContainer = (container) => {
+  const domElement = container[0];
+  return anime({
+    easing: "linear",
+    duration: 300,
+    targets: domElement,
+    keyframes: [
+      { zIndex: -1 },
+      { opacity: 0, zIndex: -1, translateY: "-100%" },
+    ],
+    begin: () => {
+      domElement.style.display = "none";
+    },
+    complete: () => {
+      container.removeClass("open");
+    },
+  });
 };
 
 export const showError = (el, text) => {

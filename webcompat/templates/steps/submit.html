@@ -1,0 +1,49 @@
+<div class="step-container col step-submit">
+  <div class="row header">
+    <div class="input-control step-submit-hero">
+      <img class="protruding-img" src="{{ url_for('static', filename='img/svg/cheering-people.svg') }}" title="Report ready to send" alt="Report ready to send" />
+    </div>
+    <div class="input-description">
+      Your report is ready to send!
+    </div>
+  </div>
+  <div class="button-control row">
+    <div class="input-control">
+      <div class="col center">
+        <div class="final-text">
+          Good job! You can&nbsp;<strong>report via GitHub</strong>{% if anonymous_reporting %} or&nbsp;<strong>report anonymously</strong>.
+          {% else %}
+          <div><strong>Anonymous reporting is temporarily disabled</strong>.</div>
+          {% endif %}
+        </div>
+        <div class="row mobile-col">
+          <button class="button button-secondary js-Button" id="submitgithub" type="submit" name="github-auth-report">
+            <img class="" src="{{ url_for('static', filename='img/svg/icons/svg-github-white.svg') }}" title="Report via GitHub" alt="Report via GitHub" />
+            {% if session.username %}Report as {{ session.username }}{% else %}Report via GitHub{% endif %}
+          </button>
+          <button class="button button-primary {{ 'js-Button' if anonymous_reporting else '' }}"
+                  id="open-username"
+                  name="github-proxy-report"
+                  type={{ 'submit' if anonymous_reporting else 'button' }}
+          {{ '' if anonymous_reporting else 'disabled' }}
+          >
+          {{'Report anonymously' if anonymous_reporting else 'Anonymous reports temporarily disabled'}}
+          </button>
+        </div>
+        <div class="column narrow js-Form-group">
+          <div class="is-hidden" aria-hidden="true">
+            <div class="form-text form-element js-Form-group">
+              {{ form.username.label(class_='form-label') }}
+              {% if form.username.errors %}
+              {% for error in form.username.errors %}
+              <small class="form-message-error">{{ error }}</small>
+              {% endfor %}
+              {% endif %}
+              {{ form.username(class_='u-formInput') }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

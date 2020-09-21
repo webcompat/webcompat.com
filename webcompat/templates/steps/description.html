@@ -1,0 +1,29 @@
+<div class="step-container step-description col" data-min-char="false">
+  <div class="row mobile-col">
+    <div class="input-control device-data-hero half">
+      <img class="protruding-img" src="{{ url_for('static', filename='img/svg/describe-issue.svg') }}" title="Describe issue" alt="Describe issue" />
+      <div class="description-text">
+        Any <strong>additional information</strong> you would like to specify? <br/>
+        That would help us diagnose the problem faster.
+      </div>
+    </div>
+    <div class="input-control half col">
+      <div class="form-text form-element js-Form-group problem-description progress-textarea bordered-container">
+        {{ form.steps_reproduce(class_='form-field text-field js-autogrow-field',
+        rows=3, placeholder="Describe what happened") }}
+        <div class="progress is-hidden">
+          <img class="tick" src="{{ url_for('static', filename='img/svg/icons/svg-check-issue.svg') }}" title="Valid message" alt="Valid message" />
+          <div class="bar"></div>
+        </div>
+      </div>
+      <div class="text-right char-limit">(optional)</div>
+    </div>
+  </div>
+  <div class="button-control row">
+    <div class="input-control">
+      <div class="col center">
+        <button class="button next-description issue-btn">Continue</button>
+      </div>
+    </div>
+  </div>
+</div>
