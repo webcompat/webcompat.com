@@ -8,7 +8,8 @@ Daniel Davis      @ourmaninjapan
 Dennis Schubert   @denschub       dschubert@mozilla.com
 Guillaume Demesy  @magsout        guillaume.demesy@gmail.com
 Karl Dubost       @karlpro
-Mike Taylor       @miketaylr      miket@mozilla.com
+Ksenia Berezina                   kberezina@mozilla.com
+Mike Taylor       @miketaylr      miketaylr@gmail.com
 
 
 
