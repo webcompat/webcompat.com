@@ -20,8 +20,6 @@ Please note that everyone interacting in our codebases, issue trackers, and any 
 
 If you have a question about the site or about web compatibility in general, feel free to join us in the #webcompat:mozilla.org channel on the Mozilla Matrix network. [Here's how to join](https://wiki.mozilla.org/Matrix#Connect_to_Matrix).
 
-Otherwise, you can try to ping Mike Taylor on the Freenode network with the following command `/msg miketaylr Hi, I have a question about webcompat.com`.
-
 ## Filing an Issue
 
 If you're using webcompat.com and something is confusing, broken, or you think it could be done in a better way, please let us know. Issues are how the project moves forward&mdash;let us know what's bothering you.
@@ -44,7 +42,7 @@ Anything labeled ["status: good-first-bug"](https://github.com/webcompat/webcomp
 
 There's also a `"prio: good-next-bug"` issue when you're ready to tackle something more complex or `"prio: important"` when you are an experienced open source contributor.
 
-> Note: We do not recommend working on more than two `good-first-bugs`, just one when you are a first time contributor. Take it slow and your time to get into the projects' own flow. 
+> Note: We do not recommend working on more than two `good-first-bugs`, just one when you are a first time contributor. Take it slow and your time to get into the projects' own flow.
 
 
 ## Feature Requests
