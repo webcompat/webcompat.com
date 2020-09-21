@@ -1,0 +1,55 @@
+<div class="step-container col step-screenshot">
+  <div class="row mobile-col">
+    <div class="input-control half flex-left">
+      <div class="description-text top up-message deleted-screenshot">
+        <strong>We deleted the screenshot.</strong><br>
+        Do you have a different screenshot you would like to share?<br>
+        <br class="desktop-only">
+        <strong>Uploaded images are publicly viewable.</strong>
+      </div>
+      <div class="description-text top up-message uploaded-screenshot">
+        Image uploaded.<br>
+        <strong>Uploaded images are publicly viewable.</strong>
+      </div>
+      <div class="description-text top up-message reset-screenshot">
+        Do you have a screenshot of the issue you would like to share? <br>
+        <strong>Uploaded images are publicly viewable.</strong>
+      </div>
+    </div>
+    <div class="input-control half col">
+      <label for="image" tabindex="0">
+        <div class="form-upload form-element js-image-upload js-Form-group">
+          {{ form.image(class_='form-input input-upload', tabindex="-1", accept='.jpe,.jpg,.jpeg,.gif,.png,.bmp', id='image') }}
+          <div class="shadow"></div>
+          <div class="label-icon label-upload js-label-upload">
+            <img class="add-screenshot-icon" src="{{ url_for('static', filename='img/svg/icons/svg-add-image.svg') }}" title="Upload screenshot" alt="Upload screenshot" />
+            <br>
+            <small class="label-icon-message">Upload screenshot</small>
+          </div>
+
+          <div class="label-icon label-error is-hidden js-error-upload">
+            <svg class="icon icon-big" role="presentation" title="An error occured">
+              <use class="icon-error" xlink:href="#svg-warning">An error occured</use>
+            </svg>
+            {% if form.image.errors %}
+            {% for error in form.image.errors %}
+            <small class="label-icon-message">{{ error }}</small>
+            {% endfor %}
+            {% endif %}
+          </div>
+        </div>
+      </label>
+    </div>
+  </div>
+  <div class="button-control row">
+    <div class="input-control">
+      <div class="col center">
+        <div class="row mobile-col">
+          <button class="button next-screenshot issue-btn">Continue without</button>
+          <button class="button js-remove-upload is-hidden issue-btn red">Delete this image</button>
+        </div>
+        <label for="image" class="is-hidden upload-other spaced-link" href="#">Upload a different image</label>
+      </div>
+    </div>
+  </div>
+</div>

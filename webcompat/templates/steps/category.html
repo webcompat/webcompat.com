@@ -1,0 +1,38 @@
+<div class="step-container step-category col">
+  <div class="row">
+    <div class="input-control">
+      <div class="form-radio choice-control form-element js-Form-group">
+        <div class="js-Form-information form-label-message">
+          <label class="form-label big" for="problem_category">What is wrong with the page at <strong id="website-url">example.com</strong><strong>?</strong></label>
+          {% if form.problem_category.errors %}
+          {% for error in form.problem_category.errors %}
+          <small class="form-message-error">{{ error }}</small>
+          {% endfor %}
+          {% endif %}
+        </div>
+        <ul id="{{form.problem_category.id}}">
+          {% for radio in form.problem_category %}
+          <li>{{ radio }}{{ radio.label(tabIndex=0) }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="row half centered other-problem form-element js-Form-groupform-element js-Form-group with-validation-icons low">
+    <div class="column full-width">
+      <div class="label">
+        {{ form.other_problem.label(class_='form-label') }}
+      </div>
+      {{ form.other_problem(class_='form-field text-field required',
+      placeholder='Issue description',
+      required=True, type='text', pattern='') }}
+    </div>
+  </div>
+  <div class="button-control row other-problem">
+    <div class="input-control">
+      <div class="col center">
+        <button class="button issue-btn next-category" disabled>Confirm</button>
+      </div>
+    </div>
+  </div>
+</div>

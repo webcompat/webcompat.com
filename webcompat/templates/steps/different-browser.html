@@ -1,0 +1,32 @@
+<div class="step-container col step-custom-browser">
+  <div class="row">
+    <div class="input-control">
+      <div class="col">
+        <div class="input-description">
+          <strong>What browser and device were you using</strong> when the issue was encountered?
+        </div>
+        <div class="row mobile-col">
+          <div class="form-element js-Form-group low with-validation-icons half">
+            {{ form.browser.label(class_='form-label') }}
+            <div class="input-wrapper">
+              {{ form.browser(class_='form-field text-field') }}
+            </div>
+          </div>
+          <div class="form-element js-Form-group low with-validation-icons half">
+            {{ form.os.label(class_='form-label') }}
+            <div class="input-wrapper">
+              {{ form.os(class_='form-field text-field') }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="button-control row">
+    <div class="input-control">
+      <div class="col center">
+        <button class="button issue-btn next-custom">Confirm</button>
+      </div>
+    </div>
+  </div>
+</div>

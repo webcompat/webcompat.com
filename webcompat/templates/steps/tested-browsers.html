@@ -1,0 +1,34 @@
+<div class="step-container step-tested-browsers col">
+  <div class="row">
+    <div class="input-control">
+      <div class="form-radio choice-control browsers form-element js-Form-group">
+        <div class="js-Form-information form-label-message">
+          <label class="form-label big" for="browsers">Please select <strong>another browser you have tested on</strong></label>
+          {% if form.tested_browsers.errors %}
+          {% for error in form.tested_browsers.errors %}
+          <small class="form-message-error">{{ error }}</small>
+          {% endfor %}
+          {% endif %}
+        </div>
+        <ul id="{{form.tested_browsers.id}}">
+          {% for radio in form.tested_browsers %}
+          <li>{{ radio }}{{ radio.label(tabIndex=0) }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="row half centered other-browser">
+    {{ form.browser_test(class_='form-field text-field required',
+    placeholder='Browser',
+    required=True, type='text') }}
+  </div>
+  <div class="button-control row">
+    <div class="input-control">
+      <div class="col center">
+        <button class="button next-tested issue-btn" disabled>Confirm</button>
+        <a class="no-other-browser" href="#">I have <strong>only tested on this browser</strong> ({{ form.browser.data }})</a>
+      </div>
+    </div>
+  </div>
+</div>

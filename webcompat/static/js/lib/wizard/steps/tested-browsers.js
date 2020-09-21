@@ -62,6 +62,6 @@ export default {
   },
 
   hide: () => {
-    hideContainer(container, "slideupandheight");
+    hideContainer(container);
   },
 };

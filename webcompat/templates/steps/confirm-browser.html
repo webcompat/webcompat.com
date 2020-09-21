@@ -1,0 +1,24 @@
+<div class="step-container step-browser col">
+  <div class="row mobile-col">
+    <div class="input-control device-data-hero">
+      <img class="protruding-img" src="{{ url_for('static', filename='img/svg/devices.svg') }}" title="Device data image" alt="Device data image" />
+    </div>
+    <div class="input-control device-data">
+      <div class="col">
+        <div class="input-description">
+          Did you encounter the issue on <strong>this device</strong> ({{ form.os.data }}) using <strong>this browser</strong> ({{ form.browser.data }})?
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="button-control row">
+    <div class="input-control">
+      <div class="col center">
+        <button class="button issue-btn next-browser">Yes</button>
+        <div class="other-option">
+          I encountered the issue on a <a class="next-custom" href="#">different device or browser</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

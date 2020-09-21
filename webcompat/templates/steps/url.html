@@ -1,0 +1,46 @@
+<div class="step-container step-url col open">
+  <div class="row mobile-col">
+    <div class="input-control half">
+      <div class="col">
+        <div class="input-description">
+          <div id="desc-url" class="is-hidden">
+            Thank you for filing a web compatibility issue.
+            <a href="#" class="popup-trigger mobile-only" data-popup-trigger="what-is-compat">Learn more</a>
+            <br>
+            Do we have the <strong>correct site?</strong>
+          </div>
+          <label for="url" id="desc-no-url">
+            <strong>Please enter the URL</strong> where you encountered the web compatibility issue.
+            <a href="#" class="popup-trigger mobile-only" data-popup-trigger="what-is-webcompat">Learn more</a>
+          </label>
+        </div>
+        <div class="form-text form-element js-Form-group form-label-message with-validation-icons">
+          {% if form.url.errors %}
+          {% for error in form.url.errors %}
+          <small class="form-message-error">{{ error }}</small>
+          {% endfor %}
+          {% endif %}
+          <div class="input-wrapper">
+            {{ form.url(class_='form-field text-field required',
+            placeholder='e.g. https://example.com',
+            required=True, type='url', pattern='') }}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="input-control half hero">
+      <img class="protruding-img" src="{{ url_for('static', filename='img/svg/reporting-people.svg') }}" title="Report" alt="Report" />
+    </div>
+  </div>
+  <div id="prefill"></div>
+  <div class="button-control row">
+    <div class="input-control half">
+      <div class="col center">
+        <button class="button issue-btn next-url" disabled>Confirm</button>
+        <a href="#" class="popup-trigger desktop-only" data-popup-trigger="what-is-compat">Learn more about web compatibility</a>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="issue-disclaimer">All information included in this report will be publicly visible. <a href="#" class="popup-trigger" data-popup-trigger="privacy-modal">Learn More</a></div>
+
