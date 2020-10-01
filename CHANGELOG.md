@@ -4,6 +4,14 @@
 2. New features: affect minor number
 3. API endpoint changes or (major) dependency version updates: affect major number
 
+## 38.0.1 - 2020-10-01
+
+* NPM update - Upgrade prettier from 2.1.1 to 2.1.2. [Pull #3489](https://github.com/webcompat/webcompat.com/pull/3489)
+* Fixes #3483 - Update some references to Mike Taylor [Pull #3486](https://github.com/webcompat/webcompat.com/pull/3486)
+* Fixes #3430 - Improve sliding animations on slow mobile phones [Pull #3484](https://github.com/webcompat/webcompat.com/pull/3484)
+* NPM update - Upgrade terser-webpack-plugin from 3.1.0 to 4.1.0. [Pull #3473](https://github.com/webcompat/webcompat.com/pull/3473)
+* Fixes #3326 - Adds a static issue generator [Pull #3406](https://github.com/webcompat/webcompat.com/pull/3406)
+
 ## 38.0.0 - 2020-09-02
 
 * NPM update - Upgrade prettier from 2.0.5 to 2.1.1. [Pull #3475](https://github.com/webcompat/webcompat.com/pull/3475)
