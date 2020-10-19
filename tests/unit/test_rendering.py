@@ -19,9 +19,6 @@ BROWSERS = {
     'firefox': (
         'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:61.0) Gecko/20100101 Firefox/61.0',  # noqa
         b'<span class="link-text">Download Firefox Add-on</span>'),
-    'firefox_mob': (
-        'Mozilla/5.0 (Android; Mobile; rv:61.0) Gecko/61.0 Firefox/61.0',
-        b'<span class="link-text">Download Firefox Add-on</span>'),
     'opera': (
         'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/28.0.1500.52 Safari/537.36 OPR/15.0.1147.100',  # noqa
         b'<span class="link-text">Download Opera Add-on</span>'),
