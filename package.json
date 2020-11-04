@@ -84,7 +84,7 @@
     "test:python": "pip install -e . && pytest",
     "dev": "webpack --config ./webpack/webpack.dev.js --watch",
     "prod": "webpack --config ./webpack/webpack.prod.js && npm run prod:es5",
-    "prod:es5": "webpack --config ./webpack/webpack.prod.js --env.es5"
+    "prod:es5": "webpack --config ./webpack/webpack.prod.js --env es5"
   },
   "husky": {
     "hooks": {

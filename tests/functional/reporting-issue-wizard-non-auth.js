@@ -210,7 +210,7 @@ registerSuite("Reporting with wizard", {
           // Click on "Continue"
           .click()
           .end()
-          .sleep(1000)
+          .sleep(1500)
           .findByCssSelector(".step.active .description")
           .getVisibleText()
           .then(function (text) {
