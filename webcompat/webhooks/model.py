@@ -43,9 +43,10 @@ class WebHookIssue:
     original_labels: List[str]
     milestone: str
     milestoned_with: str
+    host_reported_from: str
 
     @classmethod
-    def from_dict(cls, payload):
+    def from_dict(cls, payload, host=None):
         """Class method to allow instantiation from a GitHub response dict."""
         # Extract the title and the body
         issue = payload['issue']
@@ -63,6 +64,9 @@ class WebHookIssue:
         milestoned_with = ''
         if payload.get('milestone'):
             milestoned_with = payload.get('milestone')['title']
+        host_reported_from = ''
+        if host:
+            host_reported_from = host
 
         return cls(action=payload['action'], body=issue_body,
                    domain=domain, number=issue.get('number'),
@@ -70,7 +74,8 @@ class WebHookIssue:
                    repository_url=issue.get('repository_url'),
                    state=issue.get('state'), title=full_title,
                    original_labels=original_labels,
-                   milestone=milestone, milestoned_with=milestoned_with)
+                   milestone=milestone, milestoned_with=milestoned_with,
+                   host_reported_from=host_reported_from)
 
     def close_private_issue(self):
         """Mark the private issue as closed."""
@@ -100,6 +105,14 @@ class WebHookIssue:
         payload = {'body': comment}
         # Preparing the proxy request
         path = f'repos/{PRIVATE_REPO}/{self.number}/comments'
+        make_request('post', path, payload)
+
+    def comment_outreach_generator_uri(self):
+        """Publish a comment on the public issue with outreach uri."""
+        comment = self.prepare_outreach_comment()
+        payload = {'body': comment}
+        # Preparing the proxy request
+        path = f'repos/{PUBLIC_REPO}/{self.number}/comments'
         make_request('post', path, payload)
 
     def moderate_private_issue(self):
@@ -158,6 +171,16 @@ class WebHookIssue:
         public_number = self.get_public_issue_number()
         # prepare the payload
         return f'[Original issue {public_number}]({self.public_url})'
+
+    def prepare_outreach_comment(self):
+        """Build the comment with a link to the outreach generator page."""
+        # public issue data
+        public_number = self.get_public_issue_number()
+        host = self.host_reported_from
+        if not host:
+            host = "https://webcompat.com/"
+        # prepare the payload
+        return f'[Generate outreach template]({host}outreach/{public_number})'
 
     def close_public_issue(self, reason='rejected'):
         """Close a public issue for the given reason.
@@ -224,7 +247,8 @@ class WebHookIssue:
         * opened (public repo only)
         Aka newly issues created and
         need to be assigned labels and milestones
-        * milestoned (private repo only)
+        * milestoned
+        When the issue is moved to needscontact
         When the issue is being moderated with a milestone: accepted
         """
         source_repo = self.repository_url
@@ -242,6 +266,15 @@ class WebHookIssue:
                 return oops()
             else:
                 return make_response('gracias, amigo.', 200)
+        elif (self.action == 'milestoned' and scope == 'public' and
+              self.milestoned_with == 'needscontact'):
+            try:
+                self.comment_outreach_generator_uri()
+            except HTTPError as e:
+                msg_log(f'comment failed ({e})', self.number)
+                return oops()
+            else:
+                return make_response('outreach generator url added', 200)
         elif self.action == 'opened' and scope == 'private':
             # webcompat-bot needs to comment on this issue with the URL
             try:

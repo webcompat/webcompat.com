@@ -600,3 +600,13 @@ def show_logs(subpath, file_id):
         return render_template('console-logs.html', logs=logs)
     else:
         abort(404)
+
+
+@app.route('/outreach/<int:number>')
+def outreach_template_generator(number):
+    """Route redirecting to outreach template generator."""
+
+    return redirect(
+        'https://webcompat-outreach.herokuapp.com/issue/' + str(number),
+        code=308
+    )

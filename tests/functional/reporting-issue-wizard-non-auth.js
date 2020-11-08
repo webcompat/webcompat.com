@@ -200,7 +200,7 @@ registerSuite("Reporting with wizard", {
           .findByCssSelector("#image")
           .type(VALID_IMAGE_PATH)
           .end()
-          .sleep(500)
+          .sleep(1000)
           .findDisplayedByCssSelector(".next-screenshot")
           .getVisibleText()
           .then(function (text) {

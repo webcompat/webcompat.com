@@ -31,6 +31,7 @@ gracias = ('gracias, amigo.', 200, {'Content-Type': 'text/plain'})
 wrong_repo = ('Wrong repository', 403, {'Content-Type': 'text/plain'})
 oops = ('oops', 400, {'Content-Type': 'text/plain'})
 comment_added = ('public url added', 200, {'Content-Type': 'text/plain'})
+outreach_comment_added = ('outreach generator url added', 200, {'Content-Type': 'text/plain'})  # noqa
 
 issue_info1 = {
     'action': 'opened', 'state': 'open', 'milestoned_with': '',
@@ -39,7 +40,8 @@ issue_info1 = {
     'original_labels': ['action-needsmoderation'],
     'public_url': 'https://github.com/webcompat/webcompat-tests/issues/1',
     'repository_url': 'https://api.github.com/repos/webcompat/webcompat-tests-private',  # noqa
-    'title': 'www.netflix.com - test valid event'}
+    'title': 'www.netflix.com - test valid event',
+    'host_reported_from': ''}
 
 issue_info2 = {
     'action': 'milestoned', 'state': 'open', 'milestoned_with': 'accepted',
@@ -48,7 +50,8 @@ issue_info2 = {
     'original_labels': ['action-needsmoderation'],
     'public_url': 'https://github.com/webcompat/webcompat-tests/issues/1',
     'repository_url': 'https://api.github.com/repos/webcompat/webcompat-tests-private',  # noqa
-    'title': 'www.netflix.com - test private issue accepted'}
+    'title': 'www.netflix.com - test private issue accepted',
+    'host_reported_from': ''}
 
 
 def test_model_instance():
@@ -177,6 +180,16 @@ def test_prepare_public_comment():
         expected_payload).get('body')
 
 
+def test_prepare_outreach_comment():
+    """Test we prepare the right comment body."""
+    expected_payload = '{"body": "[Generate outreach template](https://webcompat.com/outreach/2598)"}'  # noqa
+    json_event, signature = event_data('public_milestone_needscontact.json')
+    payload = json.loads(json_event)
+    issue = WebHookIssue.from_dict(payload, "https://webcompat.com/")
+    assert issue.prepare_outreach_comment() == json.loads(
+        expected_payload).get('body')
+
+
 def test_get_public_issue_number():
     """Test the extraction of the issue number from the public_url."""
     json_event, signature = event_data('private_issue_opened.json')
@@ -290,7 +303,8 @@ def test_process_issue_action_scenarios(mock_mr):
         ('private_milestone_accepted_incomplete.json', incomplete),
         ('private_milestone_accepted_invalid.json', invalid),
         ('private_milestone_accepted_closed.json', boring),
-        ('private_issue_opened.json', comment_added)
+        ('private_issue_opened.json', comment_added),
+        ('public_milestone_needscontact.json', outreach_comment_added)
     ]
     mock_mr.return_value.status_code == 200
     for issue_event, expected_rv in test_data:
