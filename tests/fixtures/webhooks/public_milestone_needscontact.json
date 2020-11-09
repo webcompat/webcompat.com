@@ -1,0 +1,49 @@
+{
+  "action": "milestoned",
+  "issue": {
+    "url": "https://api.github.com/repos/webcompat/webcompat-tests/issues/2598",
+    "repository_url": "https://api.github.com/repos/webcompat/webcompat-tests",
+    "labels_url": "https://api.github.com/repos/webcompat/webcompat-tests/issues/2598/labels{/name}",
+    "comments_url": "https://api.github.com/repos/webcompat/webcompat-tests/issues/2598/comments",
+    "events_url": "https://api.github.com/repos/webcompat/webcompat-tests/issues/2598/events",
+    "html_url": "https://github.com/webcompat/webcompat-tests/issues/2598",
+    "id": 735747598,
+    "node_id": "MDU6SXNzdWU3MzU3NDc1OTg=",
+    "number": 2598,
+    "title": "bugzilla.mozilla.org - see bug description",
+    "state": "open",
+    "locked": false,
+    "assignee": null,
+    "assignees": [
+
+    ],
+    "milestone": {
+      "url": "https://api.github.com/repos/webcompat/webcompat-tests/milestones/3",
+      "html_url": "https://github.com/webcompat/webcompat-tests/milestone/3",
+      "labels_url": "https://api.github.com/repos/webcompat/webcompat-tests/milestones/3/labels",
+      "id": 2744176,
+      "node_id": "MDk6TWlsZXN0b25lMjc0NDE3Ng==",
+      "number": 3,
+      "title": "needscontact",
+      "description": "We are looking for an appropriate contact",
+      "open_issues": 62,
+      "closed_issues": 3,
+      "state": "open",
+      "created_at": "2017-09-05T03:40:35Z",
+      "updated_at": "2020-11-07T03:21:44Z",
+      "due_on": null,
+      "closed_at": null
+    },
+    "comments": 0,
+    "created_at": "2020-11-04T01:41:16Z",
+    "updated_at": "2020-11-07T03:21:44Z",
+    "closed_at": null,
+    "author_association": "NONE",
+    "active_lock_reason": null,
+    "body": "<!-- @browser: not set -->\n<!-- @ua_header: None -->\n<!-- @reported_with: None -->\n<!-- @public_url: https://github.com/webcompat/webcompat-tests/issues/2598 -->\n\n**URL**: https://bugzilla.mozilla.org/show_bug.cgi?id=1651119\n\n**Browser / Version**: not set\n**Operating System**: not set\n**Tested Another Browser**: Unknown \n\n**Problem type**: Something else\n**Description**: moved from bugzilla\n**Steps to Reproduce**:\ndescription from bugzilla\n\n\n\n_From [webcompat.com](https://webcompat.com/) with ❤️_",
+    "performed_via_github_app": null
+  },
+  "milestone": {
+    "title": "needscontact"
+  }
+}

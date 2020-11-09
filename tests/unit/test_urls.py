@@ -360,6 +360,11 @@ class TestURLs(unittest.TestCase):
         # do we not have a <script nonce=hash> in our response body?
         self.assertNotIn(b'<script nonce=', rv.data)
 
+    def outreach_template_generator(self):
+        """Request to /outreach/123 should be 308."""
+        rv = self.app.get('/outreach/123')
+        self.assertEqual(rv.status_code, 308)
+
 
 if __name__ == '__main__':
     unittest.main()

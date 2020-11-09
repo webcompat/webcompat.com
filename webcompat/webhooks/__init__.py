@@ -33,7 +33,7 @@ def hooklistener():
     event_type = request.headers.get('X-GitHub-Event')
     # Treating events related to issues
     if event_type == 'issues':
-        webhook_issue = WebHookIssue.from_dict(payload)
+        webhook_issue = WebHookIssue.from_dict(payload, request.url_root)
         # we process the action
         return webhook_issue.process_issue_action()
     elif event_type == 'ping':
