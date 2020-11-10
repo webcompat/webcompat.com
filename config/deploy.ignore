@@ -32,3 +32,4 @@ tests/
 tmp/
 uploads/
 venv/
+.flaskenv
