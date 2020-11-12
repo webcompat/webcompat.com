@@ -106,11 +106,11 @@ CSS_FIX_ME = """
 
 IS_BLOCKED_DOMAIN = ('Anonymous reporting for domain {0} '
                      'is temporarily disabled. Please contact '
-                     'miket@mozilla.com '
+                     'webcompat@mozilla.com '
                      'for more details.')
 
 IS_DARKNET_DOMAIN = ('Reporting for .onion domains is disabled.'
-                     'Please contact miket@mozilla.com '
+                     'Please contact webcompat@mozilla.com '
                      'for more details.')
 
 MESSAGE_410 = """
