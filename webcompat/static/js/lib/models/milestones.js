@@ -49,11 +49,12 @@ export const MilestonesModel = Backbone.Model.extend({
       type: "PATCH",
       url: "/api/issues/" + $("main").data("issueNumber") + "/edit",
       success: _.bind(function () {
-        var currentMilestone = _.find(this.get("milestones"), function (
-          status
-        ) {
-          return status.id === statusObject.id;
-        });
+        var currentMilestone = _.find(
+          this.get("milestones"),
+          function (status) {
+            return status.id === statusObject.id;
+          }
+        );
 
         this.set("milestone", currentMilestone);
         this.issueModel.set("milestone", currentMilestone.name);
