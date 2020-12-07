@@ -38,13 +38,11 @@ def bust_cache(file_path):
 
 
 def get_checksum(file_path):
-    print('GET_CHECKSUM', cache_dict)
     try:
         checksum = cache_dict[file_path]
     except KeyError:
         checksum = md5_checksum(file_path)
         cache_dict[str(file_path)] = checksum
-        print('GET_CHECKSUM (after cache miss)', cache_dict)
     return checksum
 
 
