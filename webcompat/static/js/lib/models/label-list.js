@@ -27,7 +27,10 @@ var issues = issues || {}; // eslint-disable-line no-use-before-define
 
 const LabelList = Backbone.Model.extend({
   initialize: function () {
-    this.set("namespaceRegex", /(browser|closed|os|priority|status)-(.+)/i);
+    this.set(
+      "namespaceRegex",
+      /(browser|closed|os|priority|status|action)-(.+)/i
+    );
     // Temporarily set pagination to 100 labels per page, until
     // we fix Issue #781
     this.set("defaultLabelURL", "/api/issues/labels?per_page=100");
