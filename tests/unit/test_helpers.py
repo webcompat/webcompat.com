@@ -31,7 +31,6 @@ from webcompat.helpers import get_serialized_value
 from webcompat.helpers import get_version_string
 from webcompat.helpers import is_json_object
 from webcompat.helpers import normalize_api_params
-from webcompat.helpers import parse_link_header
 from webcompat.helpers import prepare_form
 from webcompat.helpers import rewrite_and_sanitize_link
 from webcompat.helpers import rewrite_links
@@ -48,7 +47,7 @@ GITHUB_SEARCH_LINK_HEADER = '<https://api.github.com/search/issues?q=taco&page=2
 REWRITTEN_SEARCH_LINK_HEADER = '</api/issues/search?q=taco&page=2>; rel="next", </api/issues/search?q=taco&page=26>; rel="last"'  # noqa
 GITHUB_COMMENTS_LINK_HEADER = '<https://api.github.com/repositories/17839063/issues/398/comments?page=2>; rel="next", <https://api.github.com/repositories/17839063/issues/398/comments?page=4>; rel="last"'  # noqa
 REWRITTEN_COMMENTS_LINK_HEADER = '</api/issues/398/comments?page=2>; rel="next", </api/issues/398/comments?page=4>; rel="last"'  # noqa
-PARSED_LINKED_HEADERS = [{'link': 'https://api.github.com/repositories/17839063/issues?per_page=50&page=3', 'rel': 'next'}, {'link': 'https://api.github.com/repositories/17839063/issues?per_page=50&page=4', 'rel': 'last'}, {'link': 'https://api.github.com/repositories/17839063/issues?per_page=50&page=1', 'rel': 'first'}, {'link': 'https://api.github.com/repositories/17839063/issues?per_page=50&page=1', 'rel': 'prev'}]  # noqa
+PARSED_LINKED_HEADERS = [{'url': 'https://api.github.com/repositories/17839063/issues?per_page=50&page=3', 'rel': 'next'}, {'url': 'https://api.github.com/repositories/17839063/issues?per_page=50&page=4', 'rel': 'last'}, {'url': 'https://api.github.com/repositories/17839063/issues?per_page=50&page=1', 'rel': 'first'}, {'url': 'https://api.github.com/repositories/17839063/issues?per_page=50&page=1', 'rel': 'prev'}]  # noqa
 FIREFOX_UA = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:48.0) Gecko/20100101 Firefox/48.0'  # noqa
 FIREFOX_MOBILE_UA_OLD = 'Mozilla/5.0 (Android; Mobile; rv:40.0) Gecko/40.0 Firefox/40.0'  # noqa
 FIREFOX_MOBILE_UA = 'Mozilla/5.0 (Android 6.0.1; Mobile; rv:40.0) Gecko/40.0 Firefox/40.0'  # noqa
@@ -142,12 +141,6 @@ class TestHelpers(unittest.TestCase):
         self.assertEqual({'order': 'desc', 'foo': 'bar'},
                          normalize_api_params({'foo': 'bar',
                                               'direction': 'desc'}))
-
-    def test_parse_http_link_headers(self):
-        """Test HTTP Links parsing for GitHub only."""
-        link_header = GITHUB_ISSUES_LINK_HEADER
-        parsed_headers = PARSED_LINKED_HEADERS
-        self.assertEqual(parse_link_header(link_header), parsed_headers)
 
     def test_format_http_link_headers(self):
         """Test HTTP Links formating."""

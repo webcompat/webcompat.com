@@ -26,6 +26,7 @@ from flask import make_response
 from flask import request
 from flask import session
 import requests
+from requests.utils import parse_header_links
 from ua_parser import user_agent_parser
 
 from webcompat import app
@@ -291,9 +292,9 @@ def rewrite_links(link_header):
     </api/issues?per_page=50&page=2>; rel="next",
     </api/issues?per_page=50&page=4>; rel="last" etc.
     """
-    header_link_data = parse_link_header(link_header)
+    header_link_data = parse_header_links(link_header)
     for data in header_link_data:
-        uri = data['link']
+        uri = data['url']
         uri_tuple = urllib.parse.urlsplit(uri)
         path = uri_tuple.path
         query = uri_tuple.query
@@ -304,7 +305,7 @@ def rewrite_links(link_header):
         elif path.startswith('/search/issues'):
             path = 'issues/search'
         api_path = '{}{}'.format('/api/', path)
-        data['link'] = urllib.parse.urlunsplit(('', '', api_path, query, ''))
+        data['url'] = urllib.parse.urlunsplit(('', '', api_path, query, ''))
     return format_link_header(header_link_data)
 
 
@@ -313,9 +314,9 @@ def sanitize_link(link_header):
 
     see Also rewrite_links.
     """
-    header_link_data = parse_link_header(link_header)
+    header_link_data = parse_header_links(link_header)
     for data in header_link_data:
-        data['link'] = remove_oauth(data['link'])
+        data['url'] = remove_oauth(data['url'])
     return format_link_header(header_link_data)
 
 
@@ -339,32 +340,9 @@ def rewrite_and_sanitize_link(link_header):
     return rewrite_links(sanitize_link(link_header))
 
 
-def parse_link_header(link_header):
-    """Return a structured list of objects for an HTTP Link header.
-
-    This is adjusted for github links it will break in a more generic case.
-    Do not use this code for your own HTTP Link header parsing.
-    Use something like https://pypi.python.org/pypi/LinkHeader/ instead.
-    """
-    links_list = link_header.split(',')
-    header_link_data = []
-    for link in links_list:
-        # Assuming that link is `<uri>; rel="blah"`. Github only.
-        uri_info, rel_info = link.split(';')
-        uri_info = uri_info.strip()
-        rel_info = rel_info.strip()
-        rel_keyword, value = rel_info.split('=')
-        # rel values have the form `rel="foo"`, we want `foo`.
-        rel_value = value[1:-1]
-        # uri have the form `<http://…>`, we want `http://…`.
-        uri = uri_info[1:-1]
-        header_link_data.append({'link': uri, 'rel': rel_value})
-    return header_link_data
-
-
 def format_link_header(link_header_data):
     """Return a string ready to be used in a Link: header."""
-    links = ['<{0}>; rel="{1}"'.format(data['link'], data['rel'])
+    links = ['<{0}>; rel="{1}"'.format(data['url'], data['rel'])
              for data in link_header_data]
     return ', '.join(links)
 
