@@ -4,6 +4,27 @@
 2. New features: affect minor number
 3. API endpoint changes or (major) dependency version updates: affect major number
 
+## 39.0.0 - 2021-01-22
+
+* Fixes #3207 - Adds Terms of Service message to user upload [Pull #3519](https://github.com/webcompat/webcompat.com/pull/3519)
+* Fixes #3447 - Replaces custom link parsing with requests one [Pull #3517](https://github.com/webcompat/webcompat.com/pull/3517)
+* Fixes #3456 - Add aria-labelled-by attributes to wizard step icons [Pull #3516](https://github.com/webcompat/webcompat.com/pull/3516)
+* Fixes #3161 - Adds action keyword for labels regex [Pull #3515](https://github.com/webcompat/webcompat.com/pull/3515)
+* NPM update - Upgrade eslint-config-prettier from 6.15.0 to 7.1.0. [Pull #3513](https://github.com/webcompat/webcompat.com/pull/3513)
+* NPM update - Upgrade prettier from 2.1.2 to 2.2.1. [Pull #3511](https://github.com/webcompat/webcompat.com/pull/3511)
+* Fixes #3506 - Removes useless print statement [Pull #3507](https://github.com/webcompat/webcompat.com/pull/3507)
+* Fixes #3494 - Update Mike with generic email [Pull #3504](https://github.com/webcompat/webcompat.com/pull/3504)
+* Fixes #3502 - Adds .flaskenv to deploy.ignore [Pull #3503](https://github.com/webcompat/webcompat.com/pull/3503)
+* NPM update - Upgrade css-loader from 4.3.0 to 5.0.1. [Pull #3501](https://github.com/webcompat/webcompat.com/pull/3501)
+* Fixes #3374 - Adds a link to the github issue that will point to the outreach generator [Pull #3500](https://github.com/webcompat/webcompat.com/pull/3500)
+* NPM update - Upgrade css-loader from 4.3.0 to 5.0.0. [Pull #3499](https://github.com/webcompat/webcompat.com/pull/3499)
+* NPM update - Upgrade postcss-url from 8.0.0 to 9.0.0. [Pull #3498](https://github.com/webcompat/webcompat.com/pull/3498)
+* NPM update - Upgrade webpack-cli from 3.3.12 to 4.1.0. [Pull #3497](https://github.com/webcompat/webcompat.com/pull/3497)
+* NPM update - Upgrade mini-css-extract-plugin from 0.11.3 to 1.2.1. [Pull #3496](https://github.com/webcompat/webcompat.com/pull/3496)
+* Fixes #2859 - Remove addon link for mobile Firefox users [Pull #3495](https://github.com/webcompat/webcompat.com/pull/3495)
+* Fixes #3491 - Remove unused yargs dependency [Pull #3492](https://github.com/webcompat/webcompat.com/pull/3492)
+* NPM update - Upgrade yargs from 15.4.1 to 16.0.3. [Pull #3488](https://github.com/webcompat/webcompat.com/pull/3488)
+
 ## 38.0.1 - 2020-10-01
 
 * NPM update - Upgrade prettier from 2.1.1 to 2.1.2. [Pull #3489](https://github.com/webcompat/webcompat.com/pull/3489)
