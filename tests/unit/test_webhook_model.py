@@ -190,6 +190,16 @@ def test_prepare_outreach_comment():
         expected_payload).get('body')
 
 
+def test_prepare_outreach_comment_for_auth_report():
+    """Test we prepare the right comment body."""
+    expected_payload = '{"body": "[Generate outreach template](https://webcompat.com/outreach/2598)"}'  # noqa
+    json_event, signature = event_data('public_milestone_needscontact_auth_report.json')    # noqa
+    payload = json.loads(json_event)
+    issue = WebHookIssue.from_dict(payload, "https://webcompat.com/")
+    assert issue.prepare_outreach_comment() == json.loads(
+        expected_payload).get('body')
+
+
 def test_get_public_issue_number():
     """Test the extraction of the issue number from the public_url."""
     json_event, signature = event_data('private_issue_opened.json')

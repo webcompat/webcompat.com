@@ -174,13 +174,11 @@ class WebHookIssue:
 
     def prepare_outreach_comment(self):
         """Build the comment with a link to the outreach generator page."""
-        # public issue data
-        public_number = self.get_public_issue_number()
         host = self.host_reported_from
         if not host:
             host = "https://webcompat.com/"
         # prepare the payload
-        return f'[Generate outreach template]({host}outreach/{public_number})'
+        return f'[Generate outreach template]({host}outreach/{self.number})'
 
     def close_public_issue(self, reason='rejected'):
         """Close a public issue for the given reason.
