@@ -61,7 +61,7 @@ const updateDescription = (url) => {
 
 const showProgress = () => {
   progress.removeClass("is-hidden");
-  $(".char-limit").text("Minimum 30 characters");
+  $(".char-limit").text(`Minimum ${MIN_CHARACTERS} characters`);
 };
 
 const initMinCharMode = () => {
