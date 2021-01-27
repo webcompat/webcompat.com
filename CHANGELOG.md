@@ -4,6 +4,11 @@
 2. New features: affect minor number
 3. API endpoint changes or (major) dependency version updates: affect major number
 
+## 39.0.1 - 2021-01-27
+
+* Fixes #3522 - Fix outreach comment for auth reports [Pull #3525](https://github.com/webcompat/webcompat.com/pull/3525)
+* Fixes #3520 - Bring back min characters rule for description field [Pull #3521](https://github.com/webcompat/webcompat.com/pull/3521)
+
 ## 39.0.0 - 2021-01-22
 
 * Fixes #3207 - Adds Terms of Service message to user upload [Pull #3519](https://github.com/webcompat/webcompat.com/pull/3519)
