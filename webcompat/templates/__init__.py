@@ -108,7 +108,7 @@ def get_description(body_html):
     something sensible.
     """
     stripped_body = Markup.striptags(body_html)
-    description = re.search(r'Description: (.+) Steps', stripped_body)
+    description = re.search(r'Description: (.+?) Steps', stripped_body)
     if description:
         return description.group(1)[0:74]
     else:

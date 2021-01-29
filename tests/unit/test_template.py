@@ -60,6 +60,24 @@ def test_get_description():
     assert get_description(body_html_frag2) is None
 
 
+def test_get_description_multiple_steps():
+    """Test that we can pull out the first part of the description
+
+    (with multiple 'Steps to reproduce' occurrences in text).
+    """
+    body_html_frag = """
+<p><strong>Problem type</strong>: Site is not usable<br>
+<strong>Description</strong>: Missing items<br>
+<strong>Steps to Reproduce</strong>:<br>
+Account created and signed in.
+Steps to reproduce:
+    Navigate to site
+"""
+    body_html_frag2 = '😎'
+    assert get_description(body_html_frag) == 'Missing items'
+    assert get_description(body_html_frag2) is None
+
+
 def test_format_title():
     """Test putting issue titles together."""
     # title comes from body description
