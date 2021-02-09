@@ -1,5 +1,5 @@
 # This is for dev purpose
 -r requirements.txt
 pycodestyle==2.6.0
-pytest==5.4.3
-pytest-mock==3.2.0
+pytest==6.2.2
+pytest-mock==3.5.1

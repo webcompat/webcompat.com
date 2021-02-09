@@ -8,7 +8,7 @@ jobs:
     docker:
       # specify the version you desire here
       # using -node-browsers to get node + firefox + chrome + geckoview
-      - image: circleci/python:3.8.5-node-browsers
+      - image: circleci/python:3.9.1-node-browsers
         environment:
           FLASK_CONFIG: testing
 

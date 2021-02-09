@@ -30,26 +30,31 @@ pytest
 This will display an output similar to this when all tests are passing.
 
 ```
-========================= test session starts =======================
-========================= 154 passed in 33.19s ======================
-platform darwin -- Python 3.7.4, pytest-5.3.5, py-1.8.1, pluggy-0.13.1
-rootdir: /Users/karl/code/webcompat.com
-collected 154 items
-tests/unit/test_api_urls.py ...........                        [  7%]
-tests/unit/test_config.py ..                                   [  8%]
-tests/unit/test_console_logs.py .....                          [ 11%]
-tests/unit/test_form.py .................                      [ 22%]
-tests/unit/test_helpers.py ............................        [ 40%]
-tests/unit/test_http_caching.py ...                            [ 42%]
-tests/unit/test_issues.py ......                               [ 46%]
-tests/unit/test_rendering.py ......                            [ 50%]
-tests/unit/test_tools_changelog.py ..                          [ 51%]
-tests/unit/test_topsites.py ...                                [ 53%]
-tests/unit/test_uploads.py ...                                 [ 55%]
-tests/unit/test_urls.py .................................      [ 77%]
-tests/unit/test_webhook.py ................................... [100%]
+======================== test session starts =========================
+platform darwin -- Python 3.9.1, pytest-6.2.2, py-1.10.0, pluggy-0.13.1
+rootdir: /Users/karl/code/webcompat.com, configfile: pytest.ini, testpaths: tests/unit
+plugins: mock-3.5.1
+collected 190 items
 
-========================= 154 passed in 33.19s ======================
+tests/unit/test_api_helpers.py ..                              [  1%]
+tests/unit/test_api_urls.py ...........                        [  6%]
+tests/unit/test_config.py ..                                   [  7%]
+tests/unit/test_console_logs.py .....                          [ 10%]
+tests/unit/test_form.py .....................                  [ 21%]
+tests/unit/test_helpers.py ............................        [ 36%]
+tests/unit/test_http_caching.py ...                            [ 37%]
+tests/unit/test_issues.py .........                            [ 42%]
+tests/unit/test_rendering.py .....                             [ 45%]
+tests/unit/test_template.py .............                      [ 52%]
+tests/unit/test_tools_archive.py ............s.                [ 59%]
+tests/unit/test_tools_changelog.py ..                          [ 60%]
+tests/unit/test_topsites.py ...                                [ 62%]
+tests/unit/test_uploads.py ...                                 [ 63%]
+tests/unit/test_urls.py ................................       [ 80%]
+tests/unit/test_webhook.py ....................                [ 91%]
+tests/unit/test_webhook_model.py .................             [100%]
+
+=================== 189 passed, 1 skipped in 1.50s ===================
 ```
 
 You can also run them with following:

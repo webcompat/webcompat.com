@@ -1,7 +1,7 @@
 - [Development Environment Setup](#development-environment-setup)
   - [Simple setup](#simple-setup)
     - [Fork the webcompat.com project](#fork-the-webcompatcom-project)
-    - [Install Python 3.7](#install-python-37)
+    - [Install Python 3.9](#install-python-39)
     - [Install nodejs](#install-nodejs)
     - [Initializing project source code](#initializing-project-source-code)
   - [Detailed setup (all platforms)](#detailed-setup-all-platforms)
@@ -22,7 +22,7 @@
 For testing code locally, you will need a very basic setup. There are a few requirements. These instructions have been made for working with Linux, Windows and macOS. You need:
 
 - [GitHub account](https://github.com/join)
-- [Python](https://www.python.org/) 3.7.3 minimum
+- [Python](https://www.python.org/) 3.9.1 minimum
 - [Node.js](https://nodejs.org/en/download/) (current LTS version)
 - [GitHub](https://github.com) account
 - [Git](https://git-scm.com/download/win) 2.13.2 minimum
@@ -33,9 +33,9 @@ For testing code locally, you will need a very basic setup. There are a few requ
 
 Go to https://github.com/webcompat/webcompat.com/ and click on the Fork button (top right). This will create a copy of the project in your own account environmment on GitHub.
 
-#### Install Python 3.7
+#### Install Python 3.9
 
-This project requires Python 3. This is not available per default on most platforms. You will need to install it on your computer. The [download section](https://www.python.org/downloads/) of the Python website has binaries for most platforms. Choose the 3.7.3 or more version minimum.
+This project requires Python 3. This is not available per default on most platforms. You will need to install it on your computer. The [download section](https://www.python.org/downloads/) of the Python website has binaries for most platforms. Choose the 3.9.1 or more version minimum.
 
 #### Install nodejs
 
@@ -69,7 +69,7 @@ From the terminal, you can install python, pip, and nodejs and npm with the foll
 
 ```bash
 sudo apt-get update
-sudo apt-get install python3.7
+sudo apt-get install python3.9
 sudo apt-get install python3-pip
 sudo apt-get install nodejs
 sudo apt install npm
@@ -263,7 +263,7 @@ After certain kinds of changes are made, you need to build the project before se
 
 - Python: the Flask local server will detect changes and restart automatically. No need to rebuild.
 - HTML templates: the changes should be served from disk without the need for rebuilding.
-- JS and CSS: We use webpack for asset bundling. 
+- JS and CSS: We use webpack for asset bundling.
 
 See main webpack commands below:
 
@@ -274,8 +274,8 @@ in a new terminal tab:
 npm run build
 ```
 
-This build is meant for development and does not include optimizations for production. 
-Note that this command will not watch for changes in JS or CSS. 
+This build is meant for development and does not include optimizations for production.
+Note that this command will not watch for changes in JS or CSS.
 
 If you need to watch for changes and rebuild the assets on the fly, run this command instead:
 
