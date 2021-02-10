@@ -420,7 +420,7 @@
 }
 
 .issue-form .text-field {
-  padding: 4px 32px 5px 8px;
+  padding: 4px 32px 3ch 8px;
 }
 
 .with-validation-icons.is-validated .input-wrapper::after,
@@ -962,7 +962,7 @@
   }
 
   .issue-form .text-field {
-    padding: 11px 36px 11px 8px;
+    padding: 11px 36px 3ch 8px;
   }
 
   .low .text-field {
