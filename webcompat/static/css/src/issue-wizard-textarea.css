@@ -22,21 +22,16 @@
 .progress-textarea .progress {
   background: #b3f4d7;
   border-radius: 2px;
-  bottom: 0;
-  content: "";
   height: 20px;
-  left: 0;
   margin: 4px;
   overflow: hidden;
-  position: absolute;
-  width: calc(100% - 8px);
+  position: relative;
   z-index: 2;
 }
 
 .progress-textarea .progress .bar {
   background: #22b573;
   bottom: 0;
-  content: "";
   height: 20px;
   left: 0;
   min-width: 1%;
