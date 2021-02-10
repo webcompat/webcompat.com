@@ -4,6 +4,12 @@
 2. New features: affect minor number
 3. API endpoint changes or (major) dependency version updates: affect major number
 
+## 40.0.0 - 2021-02-10
+
+* Fixes #3528 - Fix CSS for description textarea [Pull #3535](https://github.com/webcompat/webcompat.com/pull/3535)
+* Fixes #3532 - Move to python 3.9.1 [Pull #3533](https://github.com/webcompat/webcompat.com/pull/3533)
+* Fixes #3526 - Make get_description regex less greedy [Pull #3527](https://github.com/webcompat/webcompat.com/pull/3527)
+
 ## 39.0.1 - 2021-01-27
 
 * Fixes #3522 - Fix outreach comment for auth reports [Pull #3525](https://github.com/webcompat/webcompat.com/pull/3525)
