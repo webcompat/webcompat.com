@@ -23,7 +23,7 @@ from webcompat.helpers import to_bytes
 from webcompat.issues import moderation_template
 
 BROWSERS = ['blackberry', 'brave', 'chrome', 'edge', 'firefox', 'iceweasel', 'ie', 'lynx', 'myie', 'opera', 'puffin', 'qq', 'safari', 'samsung', 'seamonkey', 'uc', 'vivaldi']  # noqa
-MOZILLA_BROWSERS = ['browser-android-components',
+GECKO_BROWSERS = ['browser-android-components',
                     'browser-fenix',
                     'browser-firefox',
                     'browser-firefox-mobile',
@@ -157,7 +157,7 @@ def get_issue_labels(issue_body):
         labelslist.extend(extra_labels)
     priority_label = extract_priority_label(issue_body)
     labelslist.extend([browser_label, priority_label])
-    if any(label for label in labelslist if label in MOZILLA_BROWSERS):
+    if any(label for label in labelslist if label in GECKO_BROWSERS):
         labelslist.append('engine-gecko')
     labelslist = [label for label in labelslist if label is not None]
     return labelslist
