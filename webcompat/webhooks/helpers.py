@@ -24,14 +24,14 @@ from webcompat.issues import moderation_template
 
 BROWSERS = ['blackberry', 'brave', 'chrome', 'edge', 'firefox', 'iceweasel', 'ie', 'lynx', 'myie', 'opera', 'puffin', 'qq', 'safari', 'samsung', 'seamonkey', 'uc', 'vivaldi']  # noqa
 GECKO_BROWSERS = ['browser-android-components',
-                    'browser-fenix',
-                    'browser-firefox',
-                    'browser-firefox-mobile',
-                    'browser-firefox-reality',
-                    'browser-firefox-tablet',
-                    'browser-focus-geckoview',
-                    'browser-geckoview',
-                    ]
+                  'browser-fenix',
+                  'browser-firefox',
+                  'browser-firefox-mobile',
+                  'browser-firefox-reality',
+                  'browser-firefox-tablet',
+                  'browser-focus-geckoview',
+                  'browser-geckoview', ]
+IOS_BROWSERS = ['browser-firefox-ios', ]
 PUBLIC_REPO = app.config['ISSUES_REPO_URI']
 PRIVATE_REPO = app.config['PRIVATE_REPO_URI']
 
@@ -159,6 +159,8 @@ def get_issue_labels(issue_body):
     labelslist.extend([browser_label, priority_label])
     if any(label for label in labelslist if label in GECKO_BROWSERS):
         labelslist.append('engine-gecko')
+    if any(label for label in labelslist if label in IOS_BROWSERS):
+        labelslist.append('os-ios')
     labelslist = [label for label in labelslist if label is not None]
     return labelslist
 
