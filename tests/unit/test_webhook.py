@@ -101,6 +101,21 @@ class TestWebhook(unittest.TestCase):
         <!-- @public_url: http://test.example.org/issues/1 -->
         """
 
+        self.issue_body8 = """
+        <!-- @browser: Firefox iOS 31.0 -->
+        <!-- @ua_header: Mozilla/5.0 (iPhone; CPU OS 14_4 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) FxiOS/31.0  Mobile/15E148 Safari/605.1.15 -->
+        <!-- @reported_with: mobile-reporter -->
+        <!-- @extra_labels: browser-firefox-ios -->
+        <!-- @public_url: https://github.com/webcompat/web-bugs/issues/67156 -->
+
+
+        **URL**: https://example.com/
+
+        **Browser / Version**: Firefox iOS 31.0
+        **Operating System**: iOS 14.4
+        **Tested Another Browser**: Yes Safari
+        """  # noqa
+
         self.issue_info1 = {
             'action': 'foobar',
             'state': 'open',
@@ -317,6 +332,7 @@ class TestWebhook(unittest.TestCase):
             (self.issue_body5, ['browser-firefox-reality', 'engine-gecko',
                                 'type-media']),
             (self.issue_body6, ['browser-safari']),
+            (self.issue_body8, ['browser-firefox-ios', 'os-ios']),
         ]
         for issue_body, expected in labels_tests:
             actual = helpers.get_issue_labels(issue_body)
