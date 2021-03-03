@@ -212,6 +212,7 @@ EXTRA_LABELS = [
     'browser-android-components',
     'browser-fenix',
     'browser-focus-geckoview',
+    'browser-firefox-ios',
     'browser-firefox-reality',
     'type-fastclick',
     'type-google',
