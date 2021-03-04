@@ -11,8 +11,6 @@ import json
 import logging
 import re
 
-from requests.exceptions import HTTPError
-
 from webcompat import app
 from webcompat.db import Site
 from webcompat.db import site_db
