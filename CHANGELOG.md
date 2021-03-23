@@ -4,6 +4,18 @@
 2. New features: affect minor number
 3. API endpoint changes or (major) dependency version updates: affect major number
 
+## 41.0.0 - 2021-03-23
+
+* Fixes #3541 - Adds detection for firefox iOS mobile reporter [Pull #3548](https://github.com/webcompat/webcompat.com/pull/3548)
+* NPM update - Upgrade husky from 4.3.8 to 5.1.2. [Pull #3543](https://github.com/webcompat/webcompat.com/pull/3543)
+* NPM update - Upgrade svgo from 1.3.2 to 2.1.0. [Pull #3542](https://github.com/webcompat/webcompat.com/pull/3542)
+* Fixes #3528 - Fix CSS for description textarea [Pull #3535](https://github.com/webcompat/webcompat.com/pull/3535)
+* Fixes #3528 - Fix CSS for description textarea [Pull #3534](https://github.com/webcompat/webcompat.com/pull/3534)
+* Fixes #3532 - Move to python 3.9.1 [Pull #3533](https://github.com/webcompat/webcompat.com/pull/3533)
+* Fixes #3529 - Fixes broken badges in README [Pull #3530](https://github.com/webcompat/webcompat.com/pull/3530)
+* Fixes #3526 - Make get_description regex less greedy [Pull #3527](https://github.com/webcompat/webcompat.com/pull/3527)
+
+
 ## 40.0.0 - 2021-02-10
 
 * Fixes #3528 - Fix CSS for description textarea [Pull #3535](https://github.com/webcompat/webcompat.com/pull/3535)
