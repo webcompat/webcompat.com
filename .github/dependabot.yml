@@ -1,0 +1,15 @@
+version: 2
+updates:
+- package-ecosystem: npm
+  directory: "/"
+  schedule:
+    interval: monthly
+    time: "11:00"
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: webpack-merge
+    versions:
+    - ">= 5.a, < 6"
+  - dependency-name: postcss-url
+    versions:
+    - 10.1.1
