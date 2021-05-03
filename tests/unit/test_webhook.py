@@ -116,6 +116,19 @@ class TestWebhook(unittest.TestCase):
         **Tested Another Browser**: Yes Safari
         """  # noqa
 
+        self.issue_body9 = """
+        <!-- @browser: Firefox iOS 33.1 -->
+        <!-- @ua_header: Mozilla/5.0 (iPhone; CPU OS 14_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) FxiOS/33.1  Mobile/15E148 Safari/605.1.15 -->
+        <!-- @reported_with: mobile-reporter -->
+
+
+        **URL**: https://example.com/
+
+        **Browser / Version**: Firefox iOS 33.1
+        **Operating System**: iOS 14.5
+        **Tested Another Browser**: No
+        """  # noqa
+
         self.issue_info1 = {
             'action': 'foobar',
             'state': 'open',
@@ -292,6 +305,7 @@ class TestWebhook(unittest.TestCase):
              ({'browser': 'Firefox 30.0',
              'extra_labels': 'browser-focus-geckoview'}, 'browser-firefox'),
             ({}, 'browser-fixme'),
+            ({'browser': 'Firefox iOS 33.1'}, 'browser-firefox-ios'),
         ]
         for metadata_dict, expected in metadata_tests:
             actual = helpers.extract_browser_label(metadata_dict)
@@ -333,6 +347,7 @@ class TestWebhook(unittest.TestCase):
                                 'type-media']),
             (self.issue_body6, ['browser-safari']),
             (self.issue_body8, ['browser-firefox-ios', 'os-ios']),
+            (self.issue_body9, ['browser-firefox-ios', 'os-ios']),
         ]
         for issue_body, expected in labels_tests:
             actual = helpers.get_issue_labels(issue_body)
