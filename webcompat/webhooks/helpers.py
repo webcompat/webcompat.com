@@ -71,6 +71,8 @@ def extract_browser_label(metadata_dict):
                 browser_type = 'mobile'
             if 'tablet' in remainder:
                 browser_type = 'tablet'
+            if 'ios' in remainder:
+                browser_type = 'ios'
             if browser_type:
                 dash_browser = f'{dash_browser}-{browser_type}'
     return f'browser-{dash_browser}'
