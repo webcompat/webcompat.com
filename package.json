@@ -51,7 +51,7 @@
     "prettier": "2.2.1",
     "sinon": "^9.0.1",
     "stylelint": "^13.1.0",
-    "stylelint-config-standard": "^20.0.0",
+    "stylelint-config-standard": "^22.0.0",
     "stylelint-order": "^4.0.0",
     "svg-sprite-generator": "0.0.7",
     "svgo": "^2.1.0",
