@@ -4,6 +4,16 @@
 2. New features: affect minor number
 3. API endpoint changes or (major) dependency version updates: affect major number
 
+## 42.0.0 - 2021-05-04
+
+* Fixes #3562 - Adds better detection for Firefox iOS [Pull #3570](https://github.com/webcompat/webcompat.com/pull/3570)
+* NPM update - Upgrade stylelint-config-standard from 20.0.0 to 22.0.0. [Pull #3566](https://github.com/webcompat/webcompat.com/pull/3566)
+* NPM update - Upgrade pillow from 8.1.0 to 8.1.1 in /config. [Pull #3556](https://github.com/webcompat/webcompat.com/pull/3556)
+* Fixes #3547 - Removes unused Requests library import [Pull #3549](https://github.com/webcompat/webcompat.com/pull/3549)
+* NPM update - Upgrade eslint-config-prettier from 7.2.0 to 8.1.0. [Pull #3545](https://github.com/webcompat/webcompat.com/pull/3545)
+* NPM update - Upgrade postcss-import from 12.0.1 to 14.0.0. [Pull #3544](https://github.com/webcompat/webcompat.com/pull/3544)
+
+
 ## 41.0.0 - 2021-03-23
 
 * Fixes #3541 - Adds detection for firefox iOS mobile reporter [Pull #3548](https://github.com/webcompat/webcompat.com/pull/3548)
