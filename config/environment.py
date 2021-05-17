@@ -39,6 +39,8 @@ if PRODUCTION:
     ANONYMOUS_REPORTING_ENABLED = strtobool(
         os.environ.get("PROD_ANON_REPORTING", "off")
     )
+    BUGBUG_HTTP_SERVER = "https://bugbug.herokuapp.com"
+    CLASSIFIER_PATH = "needsdiagnosis/predict/github/webcompat/web-bugs-private"  # noqa
 
 if STAGING:
     GITHUB_CLIENT_ID = os.environ.get('STAGING_GITHUB_CLIENT_ID')
@@ -55,6 +57,8 @@ if STAGING:
     ANONYMOUS_REPORTING_ENABLED = strtobool(
         os.environ.get("STAGING_ANON_REPORTING", "off")
     )
+    BUGBUG_HTTP_SERVER = "https://bugbug.herokuapp.com"
+    CLASSIFIER_PATH = "needsdiagnosis/predict/github/webcompat/webcompat-tests-private"  # noqa
 
 if LOCALHOST:
     # for now we are using .env only on localhost
@@ -76,6 +80,8 @@ if LOCALHOST:
     AB_EXPERIMENTS = strtobool(
         os.environ.get("AB_EXPERIMENT", "off")
     )
+    BUGBUG_HTTP_SERVER = "http://0.0.0.0:8000"
+    CLASSIFIER_PATH = "needsdiagnosis/predict/github/webcompat/webcompat-tests-private"  # noqa
 
 # BUG STATUS
 # The id will be initialized when the app is started.

@@ -10,6 +10,8 @@ import hmac
 import json
 import logging
 import re
+import requests
+import time
 
 from webcompat import app
 from webcompat.db import Site
@@ -32,6 +34,8 @@ GECKO_BROWSERS = ['browser-android-components',
 IOS_BROWSERS = ['browser-firefox-ios', ]
 PUBLIC_REPO = app.config['ISSUES_REPO_URI']
 PRIVATE_REPO = app.config['PRIVATE_REPO_URI']
+BUGBUG_HTTP_SERVER = app.config['BUGBUG_HTTP_SERVER']
+CLASSIFIER_PATH = app.config['CLASSIFIER_PATH']
 
 
 def extract_metadata(body):
@@ -230,3 +234,35 @@ def prepare_rejected_issue():
     payload_request['state'] = 'closed'
     payload_request['milestone'] = invalid_id
     return payload_request
+
+
+def make_classification_request(issue_number):
+    url = f"{BUGBUG_HTTP_SERVER}/{CLASSIFIER_PATH}/{issue_number}"
+    headers = {"X-Api-Key": "webcompat"}
+    response = requests.get(url, headers=headers)
+    response.raise_for_status()
+    return response
+
+
+def get_issue_classification(issue_number, retry_count=4, retry_sleep=3):
+    """Get issue classification from bugbug.
+
+    As classification happens in the background we need to make a second
+    request to get results.
+
+    The service returns 202 status if request is still in process
+    and 200 status if the issue is classified
+    """
+    for _ in range(retry_count):
+        response = make_classification_request(issue_number)
+
+        if response.status_code == 202:
+            time.sleep(retry_sleep)
+        else:
+            break
+    else:
+        total_sleep = retry_count * retry_sleep
+        msg = f"Couldn't classify issue {issue_number} in {total_sleep} seconds, aborting"  # noqa
+        raise Exception(msg)
+
+    return response.json()

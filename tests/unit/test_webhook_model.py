@@ -30,7 +30,7 @@ boring = ('Not an interesting hook', 403, {'Content-Type': 'text/plain'})
 gracias = ('gracias, amigo.', 200, {'Content-Type': 'text/plain'})
 wrong_repo = ('Wrong repository', 403, {'Content-Type': 'text/plain'})
 oops = ('oops', 400, {'Content-Type': 'text/plain'})
-comment_added = ('public url added', 200, {'Content-Type': 'text/plain'})
+comment_added = ('public url added and issue classified', 200, {'Content-Type': 'text/plain'})  # noqa
 outreach_comment_added = ('outreach generator url added', 200, {'Content-Type': 'text/plain'})  # noqa
 
 issue_info1 = {
@@ -76,7 +76,7 @@ def test_model_instance():
 @patch('webcompat.webhooks.model.make_request')
 def test_close_private_issue(mock_mr):
     """Test issue state and API request that is sent to GitHub."""
-    mock_mr.return_value.status_code == 200
+    mock_mr.return_value.status_code = 200
     json_event, signature = event_data('private_issue_opened.json')
     payload = json.loads(json_event)
     issue = WebHookIssue.from_dict(payload)
@@ -105,7 +105,7 @@ def test_close_private_issue_fails(mock_mr):
 @patch('webcompat.webhooks.model.make_request')
 def test_comment_public_uri(mock_mr):
     """Test issue state and API request that is sent to GitHub."""
-    mock_mr.return_value.status_code == 200
+    mock_mr.return_value.status_code = 200
     json_event, signature = event_data('private_issue_opened.json')
     payload = json.loads(json_event)
     issue = WebHookIssue.from_dict(payload)
@@ -120,7 +120,7 @@ def test_comment_public_uri(mock_mr):
 @patch('webcompat.webhooks.model.make_request')
 def test_comment_closed_reason(mock_mr):
     """Test comment API request that is sent to GitHub."""
-    mock_mr.return_value.status_code == 200
+    mock_mr.return_value.status_code = 200
     json_event, signature = event_data('private_issue_opened.json')
     payload = json.loads(json_event)
     issue = WebHookIssue.from_dict(payload)
@@ -139,7 +139,7 @@ def test_comment_closed_reason(mock_mr):
 @patch('webcompat.webhooks.model.make_request')
 def test_moderate_public_issue(mock_mr):
     """Test issue state and API request that is sent to GitHub."""
-    mock_mr.return_value.status_code == 200
+    mock_mr.return_value.status_code = 200
     json_event, signature = event_data('private_issue_opened.json')
     payload = json.loads(json_event)
     issue = WebHookIssue.from_dict(payload)
@@ -156,7 +156,7 @@ def test_moderate_public_issue(mock_mr):
 @patch('webcompat.webhooks.model.make_request')
 def test_closing_public_issues(mock_mr):
     """Test issue state and API request that is sent to GitHub."""
-    mock_mr.return_value.status_code == 200
+    mock_mr.return_value.status_code = 200
     json_event, signature = event_data('private_issue_opened.json')
     payload = json.loads(json_event)
     issue = WebHookIssue.from_dict(payload)
@@ -211,7 +211,7 @@ def test_get_public_issue_number():
 @patch('webcompat.webhooks.model.make_request')
 def test_tag_as_public(mock_mr):
     """Test tagging an issue as public."""
-    mock_mr.return_value.status_code == 200
+    mock_mr.return_value.status_code = 200
     json_event, signature = event_data('new_event_valid.json')
     payload = json.loads(json_event)
     issue = WebHookIssue.from_dict(payload)
@@ -301,8 +301,9 @@ def test_prepare_accepted_issue(mock_priority):
     assert expected == actual
 
 
+@patch('webcompat.webhooks.model.get_issue_classification')
 @patch('webcompat.webhooks.model.make_request')
-def test_process_issue_action_scenarios(mock_mr):
+def test_process_issue_action_scenarios(mock_mr, mock_classification):
     """Test we are getting the right response for each scenario."""
     test_data = [
         ('new_event_valid.json', gracias),
@@ -316,7 +317,11 @@ def test_process_issue_action_scenarios(mock_mr):
         ('private_issue_opened.json', comment_added),
         ('public_milestone_needscontact.json', outreach_comment_added)
     ]
-    mock_mr.return_value.status_code == 200
+    mock_mr.return_value.status_code = 200
+    mock_classification.return_value = (
+        {'prob': [0.03385603427886963, 0.9661439657211304], 'class': 1}
+    )
+
     for issue_event, expected_rv in test_data:
         json_event, signature = event_data(issue_event)
         payload = json.loads(json_event)
@@ -390,9 +395,10 @@ def test_process_issue_action_close_scenarios(mock_close, mock_mr):
             mock_close.assert_called_with(reason=arg)
 
 
+@patch('webcompat.webhooks.model.get_issue_classification')
 @patch('webcompat.webhooks.model.make_request')
 @patch('webcompat.webhooks.model.WebHookIssue.close_public_issue')
-def test_process_issue_action_not_closed_scenarios(mock_close, mock_mr):
+def test_process_issue_action_not_closed_scenarios(mock_close, mock_mr, mock_classification):  # noqa
     """Test scenarios where close_public_issue is never called."""
     not_called = [
         'private_milestone_closed_invalid.json',
@@ -400,6 +406,11 @@ def test_process_issue_action_not_closed_scenarios(mock_close, mock_mr):
         'private_milestone_accepted_wrong_repo.json',
         'private_issue_opened.json'
     ]
+
+    mock_classification.return_value = (
+        {'prob': [0.03385603427886963, 0.9661439657211304], 'class': 1}
+    )
+
     for scenario in not_called:
         json_event, signature = event_data(scenario)
         payload = json.loads(json_event)
@@ -407,3 +418,59 @@ def test_process_issue_action_not_closed_scenarios(mock_close, mock_mr):
         with webcompat.app.test_request_context():
             issue.process_issue_action()
             mock_close.assert_not_called()
+
+
+@patch('webcompat.webhooks.model.get_issue_classification')
+@patch('webcompat.webhooks.model.make_request')
+def test_classify_issue_probability_high(mock_mr, mock_classification):
+    """Test classifying an issue and adding a label."""
+    mock_mr.return_value.status_code = 200
+    mock_classification.return_value = (
+        {'prob': [0.03385603427886963, 0.9761439657211304], 'class': 1}
+    )
+
+    json_event, signature = event_data('private_issue_opened.json')
+    payload = json.loads(json_event)
+    issue = WebHookIssue.from_dict(payload)
+    issue.classify()
+    method, uri, data = mock_mr.call_args[0]
+
+    # make sure we set a bugbug-probability-high label and
+    # send a post request to Github
+    assert method == 'post'
+    assert type(data) == dict
+    assert data.get('labels') == ['bugbug-probability-high']
+
+
+@patch('webcompat.webhooks.model.get_issue_classification')
+@patch('webcompat.webhooks.model.make_request')
+def test_classify_issue_probability_low(mock_mr, mock_classification):
+    """Test classifying and not setting a label.
+
+    Use case when classification came back with probability threshold
+    lower than minimum.
+    """
+    mock_classification.return_value = (
+        {'prob': [0.03385603427886963, 0.8261439657211304], 'class': 1}
+    )
+
+    json_event, signature = event_data('private_issue_opened.json')
+    payload = json.loads(json_event)
+    issue = WebHookIssue.from_dict(payload)
+    issue.classify()
+    mock_mr.assert_not_called()
+
+
+@patch('webcompat.webhooks.model.get_issue_classification')
+@patch('webcompat.webhooks.model.make_request')
+def test_classify_issue_needsdiagnosis_true(mock_mr, mock_classification):
+    """Test classifying and not setting a label if needsdiagnosis=True."""
+    mock_classification.return_value = (
+        {'prob': [0.8261439657211304, 0.03385603427886963], 'class': 0}
+    )
+
+    json_event, signature = event_data('private_issue_opened.json')
+    payload = json.loads(json_event)
+    issue = WebHookIssue.from_dict(payload)
+    issue.classify()
+    mock_mr.assert_not_called()

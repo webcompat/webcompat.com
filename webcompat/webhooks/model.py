@@ -23,10 +23,12 @@ from webcompat.webhooks.helpers import msg_log
 from webcompat.webhooks.helpers import oops
 from webcompat.webhooks.helpers import prepare_rejected_issue
 from webcompat.webhooks.helpers import repo_scope
+from webcompat.webhooks.helpers import get_issue_classification
 from webcompat.issues import moderation_template
 
 PUBLIC_REPO = app.config['ISSUES_REPO_URI']
 PRIVATE_REPO = app.config['PRIVATE_REPO_URI']
+THRESHOLD = 0.97
 
 
 @dataclass
@@ -234,6 +236,21 @@ class WebHookIssue:
             url = self.public_url.strip().rsplit('/', 1)[1]
         return url
 
+    def classify(self):
+        """Make a request to bugbug and label the issue.
+
+        Gets issue classification from bugbug and labels
+        the issue if probability is high
+        """
+        data = get_issue_classification(self.number)
+        needsdiagnosis_false = data.get('class')
+        proba = data.get('prob')
+
+        if needsdiagnosis_false and proba and proba[1] > THRESHOLD:
+            payload = {'labels': ['bugbug-probability-high']}
+            path = f'repos/{PRIVATE_REPO}/{self.number}/labels'
+            make_request('post', path, payload)
+
     def process_issue_action(self):
         """Route the actions and provide different responses.
 
@@ -266,6 +283,8 @@ class WebHookIssue:
                 return make_response('gracias, amigo.', 200)
         elif (self.action == 'milestoned' and scope == 'public' and
               self.milestoned_with == 'needscontact'):
+            # add a comment with a link to outreach template generator
+            # when issue is moved to needscontact
             try:
                 self.comment_outreach_generator_uri()
             except HTTPError as e:
@@ -274,14 +293,21 @@ class WebHookIssue:
             else:
                 return make_response('outreach generator url added', 200)
         elif self.action == 'opened' and scope == 'private':
-            # webcompat-bot needs to comment on this issue with the URL
+            # webcompat-bot needs to comment public URL of the issue
+            # and we try to classify the issue using bugbug
             try:
                 self.comment_public_uri()
             except HTTPError as e:
                 msg_log(f'comment failed ({e})', self.number)
                 return oops()
-            else:
-                return make_response('public url added', 200)
+
+            try:
+                self.classify()
+            except HTTPError as e:
+                msg_log(f'classification failed ({e})', self.number)
+                return oops()
+
+            return make_response('public url added and issue classified', 200)
         elif (self.action == 'milestoned' and scope == 'private' and
               self.milestoned_with == 'accepted'):
             # private issue have been moderated and we will make it public

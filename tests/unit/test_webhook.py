@@ -455,6 +455,13 @@ class TestWebhook(unittest.TestCase):
         self.assertEqual(type(actual), dict)
         self.assertEqual(actual, expected)
 
+    @patch('webcompat.webhooks.helpers.make_classification_request')
+    def test_get_issue_classification(self, mock_classification):
+        """Test that api is called only once with response code is 200."""
+        mock_classification.return_value.status_code = 200
+        helpers.get_issue_classification(12345)
+        mock_classification.assert_called_once()
+
 
 if __name__ == '__main__':
     unittest.main()
