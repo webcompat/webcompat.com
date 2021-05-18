@@ -7,12 +7,9 @@
 """WebCompat Issue Model for webhooks."""
 
 from dataclasses import dataclass
-from dataclasses import field
-from typing import Any
-from typing import Dict
 from typing import List
 
-from requests.exceptions import HTTPError
+from requests.exceptions import HTTPError, ConnectionError
 
 from webcompat import app
 from webcompat.webhooks.helpers import extract_metadata
@@ -23,7 +20,7 @@ from webcompat.webhooks.helpers import msg_log
 from webcompat.webhooks.helpers import oops
 from webcompat.webhooks.helpers import prepare_rejected_issue
 from webcompat.webhooks.helpers import repo_scope
-from webcompat.webhooks.helpers import get_issue_classification
+from webcompat.webhooks.ml import get_issue_classification
 from webcompat.issues import moderation_template
 
 PUBLIC_REPO = app.config['ISSUES_REPO_URI']
@@ -303,7 +300,7 @@ class WebHookIssue:
 
             try:
                 self.classify()
-            except HTTPError as e:
+            except (HTTPError, ConnectionError) as e:
                 msg_log(f'classification failed ({e})', self.number)
                 return oops()
 

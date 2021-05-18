@@ -13,7 +13,6 @@ from unittest.mock import patch
 
 import pytest
 from requests.exceptions import HTTPError
-from requests.models import Response
 
 import webcompat
 from tests.unit.test_webhook import event_data
@@ -76,7 +75,6 @@ def test_model_instance():
 @patch('webcompat.webhooks.model.make_request')
 def test_close_private_issue(mock_mr):
     """Test issue state and API request that is sent to GitHub."""
-    mock_mr.return_value.status_code = 200
     json_event, signature = event_data('private_issue_opened.json')
     payload = json.loads(json_event)
     issue = WebHookIssue.from_dict(payload)
@@ -105,7 +103,6 @@ def test_close_private_issue_fails(mock_mr):
 @patch('webcompat.webhooks.model.make_request')
 def test_comment_public_uri(mock_mr):
     """Test issue state and API request that is sent to GitHub."""
-    mock_mr.return_value.status_code = 200
     json_event, signature = event_data('private_issue_opened.json')
     payload = json.loads(json_event)
     issue = WebHookIssue.from_dict(payload)
@@ -120,7 +117,6 @@ def test_comment_public_uri(mock_mr):
 @patch('webcompat.webhooks.model.make_request')
 def test_comment_closed_reason(mock_mr):
     """Test comment API request that is sent to GitHub."""
-    mock_mr.return_value.status_code = 200
     json_event, signature = event_data('private_issue_opened.json')
     payload = json.loads(json_event)
     issue = WebHookIssue.from_dict(payload)
@@ -139,7 +135,6 @@ def test_comment_closed_reason(mock_mr):
 @patch('webcompat.webhooks.model.make_request')
 def test_moderate_public_issue(mock_mr):
     """Test issue state and API request that is sent to GitHub."""
-    mock_mr.return_value.status_code = 200
     json_event, signature = event_data('private_issue_opened.json')
     payload = json.loads(json_event)
     issue = WebHookIssue.from_dict(payload)
@@ -156,7 +151,6 @@ def test_moderate_public_issue(mock_mr):
 @patch('webcompat.webhooks.model.make_request')
 def test_closing_public_issues(mock_mr):
     """Test issue state and API request that is sent to GitHub."""
-    mock_mr.return_value.status_code = 200
     json_event, signature = event_data('private_issue_opened.json')
     payload = json.loads(json_event)
     issue = WebHookIssue.from_dict(payload)
@@ -211,7 +205,6 @@ def test_get_public_issue_number():
 @patch('webcompat.webhooks.model.make_request')
 def test_tag_as_public(mock_mr):
     """Test tagging an issue as public."""
-    mock_mr.return_value.status_code = 200
     json_event, signature = event_data('new_event_valid.json')
     payload = json.loads(json_event)
     issue = WebHookIssue.from_dict(payload)
@@ -317,7 +310,6 @@ def test_process_issue_action_scenarios(mock_mr, mock_classification):
         ('private_issue_opened.json', comment_added),
         ('public_milestone_needscontact.json', outreach_comment_added)
     ]
-    mock_mr.return_value.status_code = 200
     mock_classification.return_value = (
         {'prob': [0.03385603427886963, 0.9661439657211304], 'class': 1}
     )
@@ -424,7 +416,6 @@ def test_process_issue_action_not_closed_scenarios(mock_close, mock_mr, mock_cla
 @patch('webcompat.webhooks.model.make_request')
 def test_classify_issue_probability_high(mock_mr, mock_classification):
     """Test classifying an issue and adding a label."""
-    mock_mr.return_value.status_code = 200
     mock_classification.return_value = (
         {'prob': [0.03385603427886963, 0.9761439657211304], 'class': 1}
     )
@@ -474,3 +465,18 @@ def test_classify_issue_needsdiagnosis_true(mock_mr, mock_classification):
     issue = WebHookIssue.from_dict(payload)
     issue.classify()
     mock_mr.assert_not_called()
+
+
+@patch('webcompat.webhooks.ml.make_classification_request')
+@patch('webcompat.webhooks.model.make_request')
+def test_classify_issue_service_exception(mock_mr, mock_classification, caplog):        # noqa
+    """Test that ml server error exception handled gracefully."""
+    caplog.set_level(logging.INFO)
+    mock_classification.side_effect = HTTPError()
+    json_event, signature = event_data('private_issue_opened.json')
+    payload = json.loads(json_event)
+    issue = WebHookIssue.from_dict(payload)
+    with webcompat.app.test_request_context():
+        rv = issue.process_issue_action()
+        assert rv == oops
+        assert 'classification failed' in caplog.text
