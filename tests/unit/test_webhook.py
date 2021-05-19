@@ -13,14 +13,13 @@ from unittest.mock import patch
 
 import flask
 import pytest
-from requests.exceptions import HTTPError
-from requests.models import Response
+from requests.exceptions import ConnectionError
 
 import webcompat
+
 from webcompat.db import Site
 from webcompat.helpers import to_bytes
-from webcompat.webhooks import helpers
-from webcompat.webhooks.model import WebHookIssue
+from webcompat.webhooks import helpers, ml
 
 
 # The key is being used for testing and computing the signature.
@@ -454,6 +453,31 @@ class TestWebhook(unittest.TestCase):
         actual = helpers.prepare_rejected_issue()
         self.assertEqual(type(actual), dict)
         self.assertEqual(actual, expected)
+
+    @patch('webcompat.webhooks.ml.make_classification_request')
+    def test_get_issue_classification(self, mock_class):
+        """Make only one request if it returns 200 status code right away.
+
+        If make_classification_request function returns 200 status code,
+        make sure that get_issue_classification is not calling it again.
+        """
+        mock_class.return_value.status_code = 200
+        ml.get_issue_classification(12345)
+        mock_class.assert_called_once()
+
+    @patch('time.sleep', return_value=None)
+    @patch('webcompat.webhooks.ml.make_classification_request')
+    def test_get_issue_classification_exception(self, mock_class, mock_time):
+        """Poll bugbug and raise an exception if request limit exceeded
+
+        If make_classification_request function returns 202 status code,
+        call get_issue_classification again until exception occurs.
+        """
+        mock_class.return_value.status_code = 202
+        with pytest.raises(ConnectionError):
+            ml.get_issue_classification(12345)
+
+        assert mock_class.call_count == 4
 
 
 if __name__ == '__main__':
