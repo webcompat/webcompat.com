@@ -4,6 +4,10 @@
 2. New features: affect minor number
 3. API endpoint changes or (major) dependency version updates: affect major number
 
+## 43.0.0 - 2021-05-20
+
+* Fixes #3571 - Use bugbug to classify issues [Pull #3573](https://github.com/webcompat/webcompat.com/pull/3573)
+
 ## 42.0.0 - 2021-05-04
 
 * Fixes #3562 - Adds better detection for Firefox iOS [Pull #3570](https://github.com/webcompat/webcompat.com/pull/3570)
