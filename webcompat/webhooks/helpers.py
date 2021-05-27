@@ -19,6 +19,7 @@ from webcompat.helpers import extract_url
 from webcompat.helpers import proxy_request
 from webcompat.helpers import to_bytes
 from webcompat.issues import moderation_template
+from webcompat.form import wrap_metadata
 
 BROWSERS = ['blackberry', 'brave', 'chrome', 'edge', 'firefox', 'iceweasel', 'ie', 'lynx', 'myie', 'opera', 'puffin', 'qq', 'safari', 'samsung', 'seamonkey', 'uc', 'vivaldi']  # noqa
 GECKO_BROWSERS = ['browser-android-components',
@@ -32,6 +33,16 @@ GECKO_BROWSERS = ['browser-android-components',
 IOS_BROWSERS = ['browser-firefox-ios', ]
 PUBLIC_REPO = app.config['ISSUES_REPO_URI']
 PRIVATE_REPO = app.config['PRIVATE_REPO_URI']
+REJECTED_CONFIG = {
+    'rejected': {
+        'template': 'rejected',
+        'labels': ['status-notacceptable']
+    },
+    'autoclosed': {
+        'template': 'autoclosed',
+        'labels': ['bugbug-probability-high']
+    }
+}
 
 
 def extract_metadata(body):
@@ -211,11 +222,12 @@ def msg_log(msg, issue_number):
     log.info(msg)
 
 
-def prepare_rejected_issue():
+def prepare_rejected_issue(reason='rejected'):
     """Create the payload for the rejected moderated issue.
 
-    When the issue has been moderated as rejected,
-    we need to change a couple of things in the public space
+    When the issue has been moderated as rejected or labelled
+    invalid by the bot we need to change a couple of things
+    in the public space
 
     - change Title
     - change body
@@ -225,8 +237,14 @@ def prepare_rejected_issue():
     """
     # Extract the relevant information
     invalid_id = app.config['STATUSES']['invalid']['id']
-    payload_request = moderation_template('rejected')
-    payload_request['labels'] = ['status-notacceptable']
+    config = REJECTED_CONFIG[reason]
+    payload_request = moderation_template(config['template'])
+    payload_request['labels'] = config['labels']
     payload_request['state'] = 'closed'
     payload_request['milestone'] = invalid_id
     return payload_request
+
+
+def prepare_private_url(private_url):
+    """Create metadata with private url"""
+    return "\n" + wrap_metadata(('private_url', private_url))

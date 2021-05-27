@@ -20,11 +20,13 @@ from webcompat.webhooks.helpers import msg_log
 from webcompat.webhooks.helpers import oops
 from webcompat.webhooks.helpers import prepare_rejected_issue
 from webcompat.webhooks.helpers import repo_scope
+from webcompat.webhooks.helpers import prepare_private_url
 from webcompat.webhooks.ml import get_issue_classification
 from webcompat.issues import moderation_template
 
 PUBLIC_REPO = app.config['ISSUES_REPO_URI']
 PRIVATE_REPO = app.config['PRIVATE_REPO_URI']
+AUTOCLOSED_MILESTONE_ID = app.config['AUTOCLOSED_MILESTONE_ID']
 THRESHOLD = 0.97
 
 
@@ -43,6 +45,7 @@ class WebHookIssue:
     milestone: str
     milestoned_with: str
     host_reported_from: str
+    html_url: str
 
     @classmethod
     def from_dict(cls, payload, host=None):
@@ -55,6 +58,7 @@ class WebHookIssue:
         domain = full_title.partition(' ')[0]
         public_url = extract_metadata(issue_body).get('public_url', '').strip()
         original_labels = [label['name'] for label in labels]
+        html_url = issue.get('html_url')
         # webhook with a milestone already set
         milestone = ''
         if issue.get('milestone'):
@@ -74,7 +78,7 @@ class WebHookIssue:
                    state=issue.get('state'), title=full_title,
                    original_labels=original_labels,
                    milestone=milestone, milestoned_with=milestoned_with,
-                   host_reported_from=host_reported_from)
+                   host_reported_from=host_reported_from, html_url=html_url)
 
     def close_private_issue(self):
         """Mark the private issue as closed."""
@@ -185,12 +189,19 @@ class WebHookIssue:
         Right now the accepted reasons are:
         'incomplete'
         'invalid'
+        'autoclosed'
         'rejected' (default)
         """
         if reason == 'incomplete':
             payload_request = self.prepare_accepted_issue('incomplete')
         elif reason == 'invalid':
             payload_request = self.prepare_accepted_issue('invalid')
+        elif reason == 'autoclosed':
+            payload_request = prepare_rejected_issue(reason)
+            # We add the private issue link to the body of the public issue,
+            # and it will be used to make a request during ml data fetching
+            # as public issue will no longer have relevant issue data
+            payload_request['body'] += prepare_private_url(self.html_url)
         else:
             payload_request = prepare_rejected_issue()
         public_number = self.get_public_issue_number()
@@ -234,19 +245,19 @@ class WebHookIssue:
         return url
 
     def classify(self):
-        """Make a request to bugbug and label the issue.
+        """Make a request to bugbug and add a milestone to the issue.
 
-        Gets issue classification from bugbug and labels
-        the issue if probability is high
+        Gets issue classification from bugbug and adds a milestone
+        to the issue if probability is high
         """
         data = get_issue_classification(self.number)
         needsdiagnosis_false = data.get('class')
         proba = data.get('prob')
 
         if needsdiagnosis_false and proba and proba[1] > THRESHOLD:
-            payload = {'labels': ['bugbug-probability-high']}
-            path = f'repos/{PRIVATE_REPO}/{self.number}/labels'
-            make_request('post', path, payload)
+            path = f'repos/{PRIVATE_REPO}/{self.number}'
+            payload_request = {'milestone': AUTOCLOSED_MILESTONE_ID}
+            make_request('patch', path, payload_request)
 
     def process_issue_action(self):
         """Route the actions and provide different responses.
@@ -354,6 +365,23 @@ class WebHookIssue:
                 self.comment_closed_reason(reason='invalid')
                 self.close_private_issue()
                 return make_response('Moderated issue closed as invalid', 200)
+        elif (self.action == 'milestoned' and scope == 'private' and
+              self.milestoned_with == 'ml-autoclosed'):
+            # The private issue has been automatically moved to ml-autoclosed
+            # milestone. This will close the public and private issues, and
+            # will replace the content of the public issue with placeholder.
+            try:
+                self.close_public_issue(reason='autoclosed')
+            except HTTPError as e:
+                msg_log(
+                    'private:closing public issue as invalid by ml-bot failed',
+                    self.number)
+                return oops()
+            else:
+                # we didn't get exceptions, so it's safe to
+                # close the private issue.
+                self.close_private_issue()
+                return make_response('Issue closed as invalid by ml bot', 200)
         elif (scope == 'private' and self.action == 'closed' and
               self.milestone == 'unmoderated'):
             # The private issue has been closed. It is rejected and the

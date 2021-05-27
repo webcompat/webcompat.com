@@ -8,6 +8,7 @@
 
 import requests
 import time
+import logging
 
 from requests.exceptions import ConnectionError
 
@@ -26,7 +27,7 @@ def make_classification_request(issue_number):
     return response
 
 
-def get_issue_classification(issue_number, retry_count=4, retry_sleep=3):
+def get_issue_classification(issue_number, max_retry_count=4, retry_sleep=7):
     """Get issue classification from bugbug.
 
     As classification happens in the background we need to make a second
@@ -35,16 +36,23 @@ def get_issue_classification(issue_number, retry_count=4, retry_sleep=3):
     The service returns 202 status if request is still in process
     and 200 status if the issue is classified
     """
-    for _ in range(retry_count):
+    log = app.logger
+    log.setLevel(logging.INFO)
+    start = time.monotonic()
+    retry_count = 0
+    for _ in range(max_retry_count):
         response = make_classification_request(issue_number)
 
         if response.status_code == 202:
             time.sleep(retry_sleep)
         else:
+            retry_count = _
             break
     else:
-        total_sleep = retry_count * retry_sleep
-        msg = f"Couldn't classify issue {issue_number} in {total_sleep} seconds, aborting"  # noqa
+        total = round(time.monotonic() - start, 2)
+        msg = f"ML FAIL: issue {issue_number} in {total} seconds with {max_retry_count} retries"  # noqa
         raise ConnectionError(msg)
-
+    total = round(time.monotonic() - start, 2)
+    msg = f"ML OK: issue {issue_number} in {total} seconds with {retry_count} retries"  # noqa
+    log.info(msg)
     return response.json()

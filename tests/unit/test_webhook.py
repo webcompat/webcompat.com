@@ -454,6 +454,21 @@ class TestWebhook(unittest.TestCase):
         self.assertEqual(type(actual), dict)
         self.assertEqual(actual, expected)
 
+    def test_prepare_rejected_issue_autoclosed(self):
+        """Test payload for the rejected issue that we want to auto close."""
+        expected = {
+            'body': '<p>Thanks for the report. We have closed this issue\n'
+                    'automatically as we suspect it is invalid. If we made '
+                    'a mistake, please\nfile a new issue and try to provide '
+                    'more context.</p>',
+                    'labels': ['bugbug-probability-high'],
+                    'milestone': 8,
+                    'state': 'closed',
+                    'title': 'Issue closed.'}
+        actual = helpers.prepare_rejected_issue("autoclosed")
+        self.assertEqual(type(actual), dict)
+        self.assertEqual(actual, expected)
+
     @patch('webcompat.webhooks.ml.make_classification_request')
     def test_get_issue_classification(self, mock_class):
         """Make only one request if it returns 200 status code right away.
@@ -478,6 +493,14 @@ class TestWebhook(unittest.TestCase):
             ml.get_issue_classification(12345)
 
         assert mock_class.call_count == 4
+
+    def test_prepare_private_url(self):
+        """Test private issue url is in the right format."""
+        expected = '\n<!-- @private_url: https://github.com/webcompat/webcompat-tests-private/issues/600 -->\n'     # noqa
+        actual = helpers.prepare_private_url(
+            'https://github.com/webcompat/webcompat-tests-private/issues/600'
+        )
+        self.assertEqual(actual, expected)
 
 
 if __name__ == '__main__':

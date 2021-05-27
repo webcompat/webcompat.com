@@ -43,6 +43,33 @@ REJECTED_TITLE = 'Issue rejected.'
 REJECTED_BODY = '''<p>The content of this issue doesn't meet our
 <a href="https://webcompat.com/terms#acceptable-use">acceptable use</a>
 guidelines. Its original content has been deleted.</p>'''
+AUTOCLOSE_TITLE = 'Issue closed.'
+AUTOCLOSE_BODY = '''<p>Thanks for the report. We have closed this issue
+automatically as we suspect it is invalid. If we made a mistake, please
+file a new issue and try to provide more context.</p>'''
+
+TEMPLATE_CONFIG = {
+    'rejected': {
+        'title': REJECTED_TITLE,
+        'body': REJECTED_BODY
+    },
+    'invalid': {
+        'title': '',
+        'body': INVALID_BODY
+    },
+    'incomplete': {
+        'title': '',
+        'body': INCOMPLETE_BODY
+    },
+    'autoclosed': {
+        'title': AUTOCLOSE_TITLE,
+        'body': AUTOCLOSE_BODY
+    },
+    'ongoing': {
+        'title': ONGOING_TITLE,
+        'body': ONGOING_BODY
+    }
+}
 
 
 def moderation_template(choice='ongoing'):
@@ -53,22 +80,20 @@ def moderation_template(choice='ongoing'):
     - rejected: the issue has been rejected.
     - incomplete: the issue is incomplete (but not rejected)
     - invalid: the issue is invalid (but not rejected)
+    - autoclosed: the issue is auto closed by ml bot
 
     The default is 'ongoing' even with unknown keywords.
     """
-    if choice == 'rejected':
-        title = REJECTED_TITLE
-        body = REJECTED_BODY
-    elif choice == 'invalid':
-        title = ''
-        body = INVALID_BODY
-    elif choice == 'incomplete':
-        title = ''
-        body = INCOMPLETE_BODY
+    if choice in TEMPLATE_CONFIG:
+        return {
+            'title': TEMPLATE_CONFIG[choice].get('title'),
+            'body': TEMPLATE_CONFIG[choice].get('body')
+        }
     else:
-        title = ONGOING_TITLE
-        body = ONGOING_BODY
-    return {'title': title, 'body': body}
+        temp = (", ".join(TEMPLATE_CONFIG.keys()))
+        raise ValueError(
+            f'Template choice must be one of the following: {temp}'
+        )
 
 
 def report_private_issue(form, public_url):
