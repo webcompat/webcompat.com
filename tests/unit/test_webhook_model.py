@@ -18,6 +18,8 @@ import webcompat
 from tests.unit.test_webhook import event_data
 from webcompat.webhooks.model import WebHookIssue
 
+AUTOCLOSED_MILESTONE_ID = webcompat.app.config['AUTOCLOSED_MILESTONE_ID']
+
 # Some expected responses as tuples
 accepted = ('Moderated issue accepted', 200, {'Content-Type': 'text/plain'})
 rejected = ('Moderated issue rejected', 200, {'Content-Type': 'text/plain'})
@@ -25,6 +27,8 @@ incomplete = ('Moderated issue closed as incomplete',
               200, {'Content-Type': 'text/plain'})
 invalid = ('Moderated issue closed as invalid',
            200, {'Content-Type': 'text/plain'})
+autoclosed = ('Issue closed as invalid by ml bot',
+              200, {'Content-Type': 'text/plain'})
 boring = ('Not an interesting hook', 403, {'Content-Type': 'text/plain'})
 gracias = ('gracias, amigo.', 200, {'Content-Type': 'text/plain'})
 wrong_repo = ('Wrong repository', 403, {'Content-Type': 'text/plain'})
@@ -40,7 +44,9 @@ issue_info1 = {
     'public_url': 'https://github.com/webcompat/webcompat-tests/issues/1',
     'repository_url': 'https://api.github.com/repos/webcompat/webcompat-tests-private',  # noqa
     'title': 'www.netflix.com - test valid event',
-    'host_reported_from': ''}
+    'host_reported_from': '',
+    'html_url': 'https://github.com/webcompat/webcompat-tests-private/issues/600'       # noqa
+}
 
 issue_info2 = {
     'action': 'milestoned', 'state': 'open', 'milestoned_with': 'accepted',
@@ -50,7 +56,9 @@ issue_info2 = {
     'public_url': 'https://github.com/webcompat/webcompat-tests/issues/1',
     'repository_url': 'https://api.github.com/repos/webcompat/webcompat-tests-private',  # noqa
     'title': 'www.netflix.com - test private issue accepted',
-    'host_reported_from': ''}
+    'host_reported_from': '',
+    'html_url': 'https://github.com/webcompat/webcompat-tests-private/issues/600'       # noqa
+}
 
 
 def test_model_instance():
@@ -162,6 +170,21 @@ def test_closing_public_issues(mock_mr):
         assert method == 'patch'
         assert type(data) == dict
         assert issue.get_public_issue_number() in uri
+
+
+@patch('webcompat.webhooks.model.make_request')
+def test_autoclose_public_issue(mock_mr):
+    """Test API request that is sent to GitHub for auto closed issue."""
+    json_event, signature = event_data('private_milestone_ml_autoclosed.json')
+    payload = json.loads(json_event)
+    issue = WebHookIssue.from_dict(payload)
+    issue.close_public_issue(reason='autoclosed')
+    method, uri, data = mock_mr.call_args[0]
+    # make sure we sent a patch with the right data to GitHub
+    assert method == 'patch'
+    assert type(data) == dict
+    assert issue.get_public_issue_number() in uri
+    assert issue.html_url in data['body']
 
 
 def test_prepare_public_comment():
@@ -306,9 +329,9 @@ def test_process_issue_action_scenarios(mock_mr, mock_classification):
         ('private_milestone_closed_unmoderated.json', rejected),
         ('private_milestone_accepted_incomplete.json', incomplete),
         ('private_milestone_accepted_invalid.json', invalid),
-        ('private_milestone_accepted_closed.json', boring),
         ('private_issue_opened.json', comment_added),
-        ('public_milestone_needscontact.json', outreach_comment_added)
+        ('public_milestone_needscontact.json', outreach_comment_added),
+        ('private_milestone_ml_autoclosed.json', autoclosed),
     ]
     mock_classification.return_value = (
         {'prob': [0.03385603427886963, 0.9661439657211304], 'class': 1}
@@ -349,6 +372,9 @@ def test_process_issue_action_github_api_exception(mock_mr, caplog):
          'close_public_issue'),
         ('private_milestone_accepted_incomplete.json',
          'private:closing public issue as incomplete failed',
+         'close_public_issue'),
+        ('private_milestone_ml_autoclosed.json',
+         'private:closing public issue as invalid by ml-bot failed',
          'close_public_issue')
     ]
     for scenario in scenarios:
@@ -376,6 +402,7 @@ def test_process_issue_action_close_scenarios(mock_close, mock_mr):
         ('private_milestone_closed_unmoderated.json', 'rejected'),
         ('private_milestone_accepted_incomplete.json', 'incomplete'),
         ('private_milestone_accepted_invalid.json', 'invalid'),
+        ('private_milestone_ml_autoclosed.json', 'autoclosed'),
     ]
     for scenario in called:
         issue_payload, arg = scenario
@@ -426,11 +453,11 @@ def test_classify_issue_probability_high(mock_mr, mock_classification):
     issue.classify()
     method, uri, data = mock_mr.call_args[0]
 
-    # make sure we set a bugbug-probability-high label and
-    # send a post request to Github
-    assert method == 'post'
+    # make sure we move the issue to ml-autoclosed milestone and
+    # send a patch request to Github
+    assert method == 'patch'
     assert type(data) == dict
-    assert data.get('labels') == ['bugbug-probability-high']
+    assert data.get('milestone') == AUTOCLOSED_MILESTONE_ID
 
 
 @patch('webcompat.webhooks.model.get_issue_classification')

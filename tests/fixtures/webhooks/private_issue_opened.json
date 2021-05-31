@@ -16,6 +16,7 @@
         "description": "issue in the process of being moderated"
       }
     ],
-    "state": "open"
+    "state": "open",
+    "html_url": "https://github.com/webcompat/webcompat-tests-private/issues/600"
   }
 }

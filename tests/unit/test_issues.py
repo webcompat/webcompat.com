@@ -132,6 +132,13 @@ def test_moderation_template_rejected(setup):
     assert 'Its original content has been deleted' in actual['body']
 
 
+def test_moderation_template_autoclosed(setup):
+    """Check the return values are for the rejected case."""
+    actual = moderation_template('autoclosed')
+    assert actual['title'] == 'Issue closed.'
+    assert 'We have closed this issue\nautomatically as we suspect it is invalid' in actual['body']     # noqa
+
+
 def test_moderation_template_ongoing(setup):
     """Check the return values are for the needsmoderation case."""
     # test the default
@@ -142,7 +149,6 @@ def test_moderation_template_ongoing(setup):
     actual = moderation_template('ongoing')
     assert actual['title'] == 'In the moderation queue.'
     assert 'put in the moderation queue.' in actual['body']
-    # bad keyword, we go back to the default.
-    actual = moderation_template('punkcat')
-    assert actual['title'] == 'In the moderation queue.'
-    assert 'put in the moderation queue.' in actual['body']
+    # bad keyword causes error.
+    with pytest.raises(ValueError):
+        moderation_template('punkcat')
