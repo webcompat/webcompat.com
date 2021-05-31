@@ -4,6 +4,11 @@
 2. New features: affect minor number
 3. API endpoint changes or (major) dependency version updates: affect major number
 
+## 44.0.0 - 2021-05-31
+
+* Fixes #3574 - Incorporate bugbug ml labelling into moderation process [Pull #3576](https://github.com/webcompat/webcompat.com/pull/3576)
+* Fixes #3571 - Use bugbug to classify issues [Pull #3573](https://github.com/webcompat/webcompat.com/pull/3573)
+
 ## 43.0.0 - 2021-05-20
 
 * Fixes #3571 - Use bugbug to classify issues [Pull #3573](https://github.com/webcompat/webcompat.com/pull/3573)
