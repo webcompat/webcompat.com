@@ -40,7 +40,7 @@
     "imagemin-webpack-plugin": "^2.4.2",
     "intern": "^4.8.4",
     "leadfoot": "1.7.6",
-    "lint-staged": "^10.0.8",
+    "lint-staged": "^11.0.0",
     "mini-css-extract-plugin": "^1.2.1",
     "optimize-css-assets-webpack-plugin": "^5.0.3",
     "postcss": "^8.2.8",
