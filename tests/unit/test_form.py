@@ -164,6 +164,24 @@ class TestForm(unittest.TestCase):
         expected = '<!-- @browser: Firefox 59.0 -->\n<!-- @ua_header: Mozilla/5.0...Firefox 59.0 -->\n<!-- @reported_with: desktop-reporter -->\n<!-- @extra_labels: browser-focus-geckoview -->\n'  # noqa
         self.assertEqual(actual, expected)
 
+    def test_bad_extra_labels_get_removed(self):
+        """Test that filtering out of not accepted EXTRA_LABELS is working.
+
+        type-punkcat is not a valid extra labels
+        """
+        form_object = MultiDict([
+            ('reported_with', 'mobile-reporter'),
+            ('url', 'http://localhost:5000/issues/new'),
+            ('extra_labels', ['browser-firefox-ios',
+                              'device-tablet', 'type-punkcat']),
+            ('ua_header', 'Mozilla/5.0...Firefox 91.0'),
+            ('browser', 'Firefox 91.0')])
+        metadata_keys = ['browser', 'ua_header', 'reported_with',
+                         'extra_labels']
+        actual = form.get_metadata(metadata_keys, form_object)
+        expected = '<!-- @browser: Firefox 91.0 -->\n<!-- @ua_header: Mozilla/5.0...Firefox 91.0 -->\n<!-- @reported_with: mobile-reporter -->\n<!-- @extra_labels: browser-firefox-ios, device-tablet -->\n'  # noqa
+        self.assertEqual(actual, expected)
+
     def test_normalize_metadata(self):
         """Avoid some type of strings."""
         cases = [('blue sky -->', 'blue sky'),
