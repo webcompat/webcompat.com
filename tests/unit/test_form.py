@@ -167,7 +167,7 @@ class TestForm(unittest.TestCase):
     def test_bad_extra_labels_get_removed(self):
         """Test that filtering out of not accepted EXTRA_LABELS is working.
 
-        type-punkcat is not a valid extra labels
+        type-punkcat is not a valid extra label
         """
         form_object = MultiDict([
             ('reported_with', 'mobile-reporter'),
