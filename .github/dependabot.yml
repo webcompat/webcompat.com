@@ -7,7 +7,7 @@ updates:
     time: "11:00"
   open-pull-requests-limit: 10
   labels:
-  - "type : dependencies"
+  - "type: dependencies"
   ignore:
   - dependency-name: webpack-merge
     versions:
