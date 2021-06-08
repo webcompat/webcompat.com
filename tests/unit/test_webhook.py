@@ -142,6 +142,19 @@ class TestWebhook(unittest.TestCase):
         **Tested Another Browser**: No
         """  # noqa
 
+        self.issue_body11 = """
+        <!-- @browser: Safari 13.1 -->
+        <!-- @ua_header: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_4) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.1 Safari/605.1.15 -->
+        <!-- @reported_with: mobile-reporter -->
+        <!-- @extra_labels: browser-firefox-ios, device-tablet -->
+
+        **URL**: http://mozilla.org/
+
+        **Browser / Version**: Safari 13.1
+        **Operating System**: Mac OS X 10.15.4
+        **Tested Another Browser**: Yes Edge
+        """  # noqa
+
         self.issue_info1 = {
             'action': 'foobar',
             'state': 'open',
@@ -362,6 +375,8 @@ class TestWebhook(unittest.TestCase):
             (self.issue_body8, ['browser-firefox-ios', 'os-ios']),
             (self.issue_body9, ['browser-firefox-ios', 'os-ios']),
             (self.issue_body10, ['browser-firefox-ios', 'device-tablet',
+                                 'os-ios']),
+            (self.issue_body11, ['browser-firefox-ios', 'device-tablet',
                                  'os-ios']),
         ]
         for issue_body, expected in labels_tests:
