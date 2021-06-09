@@ -214,6 +214,7 @@ EXTRA_LABELS = [
     'browser-focus-geckoview',
     'browser-firefox-ios',
     'browser-firefox-reality',
+    'device-tablet',
     'type-fastclick',
     'type-google',
     'type-marfeel',
