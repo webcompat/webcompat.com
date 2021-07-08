@@ -267,7 +267,8 @@ issueList.IssueView = Backbone.View.extend(
       "click .js-Issue-label .label": "labelSearch",
     },
     // NOTE: these filters don't need "status-" prefixes because appear in URL params
-    _filterRegex: /&*stage=(closed|contactready|needscontact|needsdiagnosis|needstriage|sitewait)&*/i,
+    _filterRegex:
+      /&*stage=(closed|contactready|needscontact|needsdiagnosis|needstriage|sitewait)&*/i,
     _searchRegex: /&*q=(?:([^&=]+))&*/i,
     _githubSearchEndpoint: "https://api.github.com/search/issues",
     _isLoggedIn: $("body").data("username"),

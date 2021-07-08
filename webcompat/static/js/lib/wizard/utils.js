@@ -86,7 +86,8 @@ export const isSelfReport = (href, origin) => {
   Note: browsers are inconsistent in quoting CSSOM serialization
 */
 export const getDataURIFromPreview = (bgImage) => {
-  const re = /url\(['"]{0,1}(data:image\/(?:jpeg*|jpg|png|gif|bmp);\s*base64,.+)['"]{0,1}\)/;
+  const re =
+    /url\(['"]{0,1}(data:image\/(?:jpeg*|jpg|png|gif|bmp);\s*base64,.+)['"]{0,1}\)/;
   const match = re.exec(bgImage);
 
   if (match === null) {
