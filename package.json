@@ -36,7 +36,7 @@
     "eslint-config-prettier": "^8.1.0",
     "eslint-plugin-prettier": "^3.0.0",
     "file-loader": "^6.0.0",
-    "husky": "^5.1.2",
+    "husky": "^7.0.0",
     "imagemin-webpack-plugin": "^2.4.2",
     "intern": "^4.8.4",
     "leadfoot": "1.7.6",
@@ -85,19 +85,15 @@
     "test:python": "pip install -e . && pytest",
     "dev": "webpack --config ./webpack/webpack.dev.js --watch",
     "prod": "webpack --config ./webpack/webpack.prod.js && npm run prod:es5",
-    "prod:es5": "webpack --config ./webpack/webpack.prod.js --env es5"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
+    "prod:es5": "webpack --config ./webpack/webpack.prod.js --env es5",
+    "prepare": "husky install"
   },
   "lint-staged": {
     "*.js": [
-      "npx eslint ./webpack ./tests ./webcompat/static/js/lib postcss.config.js"
+      "eslint ./webpack ./tests ./webcompat/static/js/lib postcss.config.js"
     ],
     "*.css": [
-      "npx stylelint './webcompat/static/css/src/**/*.css' './webcompat/static/css/webcompat.dev.css'"
+      "stylelint './webcompat/static/css/src/**/*.css' './webcompat/static/css/webcompat.dev.css'"
     ]
   },
   "license": "MPL-2.0"
