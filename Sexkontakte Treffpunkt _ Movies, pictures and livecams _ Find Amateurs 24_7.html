@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html ng-app="acngApp">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+	<title>Sexkontakte Treffpunkt | Movies, pictures and livecams | Find Amateurs 24/7</title>
+	<meta name="title" content="Sexkontakte Treffpunkt | Movies, pictures and livecams | Find Amateurs 24/7">
+	<meta name="description" content="Sexkontakte Treffpunkt - Chat with Amateurs, join them in the livecam and findd dates! Free movies and pictures | Free membership!">
+
+	<link href="https://c1.ng-source.com/build/css/vendor-4f689506.css" type="text/css" rel="stylesheet">
+
+	<script src="https://c1.ng-source.com/build/js/vendor-b1db5630.js"></script>
+	  
+	<script src="https://c1.ng-source.com/build/js/app-b1f92df3.js"></script>
+	<meta content="width=device-width, user-scalable=no" name="viewport">
+
+	<link rel="apple-touch-icon" sizes="180x180" href="https://c1.ng-source.com/build/skt/favicon/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://c1.ng-source.com/build/skt/favicon/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="194x194" href="https://c1.ng-source.com/build/skt/favicon/favicon-194x194.png">
+<link rel="icon" type="image/png" sizes="192x192" href="https://c1.ng-source.com/build/skt/favicon/android-chrome-192x192.png">
+<link rel="icon" type="image/png" sizes="16x16" href="https://c1.ng-source.com/build/skt/favicon/favicon-16x16.png">
+<link rel="manifest" href="https://c1.ng-source.com/build/skt/favicon/site.webmanifest">
+<link rel="mask-icon" href="https://c1.ng-source.com/build/skt/favicon/safari-pinned-tab.svg" color="#009688">
+<meta name="apple-mobile-web-app-title" content="Sexkontakte Treffpunkt">
+<meta name="application-name" content="Sexkontakte Treffpunkt">
+<meta name="msapplication-TileColor" content="#009688">
+<meta name="msapplication-TileImage" content="https://c1.ng-source.com/build/skt/favicon/mstile-144x144.png">
+<meta name="theme-color" content="#ffffff">
+
+	<link href="https://c1.ng-source.com/build/basic/css/all-7304f32a.css" type="text/css" rel="stylesheet">
+
+			
+			<link href="https://c1.ng-source.com/build/amx/css/all-2c1a6646.css" type="text/css" rel="stylesheet">
+			<link href="https://c1.ng-source.com/build/skt/css/all-87b99e06.css" type="text/css" rel="stylesheet">
+	
+	
+<script>
+
+  String.prototype.ucFirst = function () {
+  	return this.charAt(0).toUpperCase() + this.slice(1);
+  };
+
+  String.prototype.lcFirst = function () {
+  	return this.charAt(0).toLowerCase() + this.slice(1);
+  };
+
+  String.prototype.toDash = function () {
+    return this.replace(/([A-Z])/g, function ($1) {
+      return "-" + $1.toLowerCase();
+    });
+  };
+
+  String.prototype.toCamel = function () {
+    return this.replace(/(\-[a-z])/g, function ($1) {
+      return $1.toUpperCase().replace('-', '');
+    });
+  };
+
+  String.prototype.hashCode = function () {
+    var hash = 5381;
+    for (i = 0; i < this.length; i++) {
+      char = this.charCodeAt(i);
+      hash = ((hash << 5) + hash) + char;
+      /* hash * 33 + c */
+    }
+    return hash;
+  };
+
+  angular.module('acngApp', [
+    "core",
+    "acngMisc",
+"userPool",
+"regard",
+"rating",
+"achievement",
+"actionslider",
+"amateurPool",
+"comment",
+"friend",
+"hotornot",
+"imprint",
+"kiss",
+"livecam",
+"locale",
+"messenger",
+"moviePool",
+"payment",
+"picturePool",
+"pin",
+"privacyPolicy",
+"sexicon",
+"terms",
+    "ngSanitize",
+    "pascalprecht.translate",
+    "ngAnimate",
+    "ngStorage",
+    "storage",
+    "ons-actionslider",
+    "ngCookies",
+	"ons-LaForge-client"
+
+	    ])
+    .config(function ($translateProvider, startUpLanguage, VERSION) {
+      $translateProvider.useLoader('$translatePartialLoader', {
+        urlTemplate: '/language/{lang}/{part}?v=' + VERSION
+      });
+      $translateProvider.cloakClassName("ng-hide");
+      $translateProvider.preferredLanguage(startUpLanguage);
+      $translateProvider.useSanitizeValueStrategy('escaped');
+    })
+    .run(function (isMobile, $window, iOS) {
+      if (!isMobile || iOS) return;
+      var prev = $(document).height();
+      $window.addEventListener('resize', function () {
+        var cur = $(document).height();
+        if (prev > cur && document.activeElement) {
+          var el = document.activeElement;
+          if (el.parentNode.tagName.toUpperCase() === 'LABEL') {
+            el = el.parentNode;
+          }
+          el.scrollIntoView && el.scrollIntoView();
+        }
+        prev = cur;
+      });
+    })
+    .constant('livecamStartFactor', '1')
+    .constant('authUser', {"id":26270985,"nickname":"archmoha","coins":25,"points":0,"email":"arch.mohammedoly@gmail.com","signup_type":"soi","confirmed_at":null,"first_login":"2021-07-13 17:25:46","signup_wl_id":10027,"level":0,"uid":"21-26270985","partner_pool":"2","tester":false,"use_utm":false,"preferred_language":"en","split_tests":[],"usergroups":[],"languages":{"selected":null,"detected":"en"}})
+    .constant('startUpLanguage', 'en')
+    .constant('startUpFsk', '18')
+    .constant('imageFormats', {"small":"-small","medium":"-medium","large":"-large","svga":"-svga"})
+    .constant('startUpCountry', 'de')
+    .constant('flowLicense', '$832868980989275')
+    .constant('TROI', 'https://ws1.ng-source.com')
+    .constant('ARCHIMEDES', 'https://service.ng-payment.com/api/v1')
+    .constant('OBRIEN', 'https://wp.ng-source.com')
+    .constant('log', Logger)
+    .constant('supportEmail', 'support@sexkontaktetreffpunkt.com')
+    .constant('supportPhone', '+49 (0) 1805 / 909070')
+    .constant('isMobile', false)
+    .constant('media', {"content":{"movies":"https:\/\/c2.ng-source.com","pictures":"https:\/\/c2.ng-source.com","items":"https:\/\/c5.ng-source.com"},"user":"https:\/\/c2.ng-source.com\/mediafiles\/ng","assets":"https:\/\/c1.ng-source.com"})
+    .constant('webmailDomains', {"web":["web.de"],"gmx":["gmx.de","gmx.net","gmx.org","gmx.com"],"gmail":["gmail.com","gmail.de","googlemail.com"],"yahoo":["yahoo.com","ymail.com","rocketmail.com","yahoo.co.uk","yahoo.co.jp","yahoo.fr","yahoo.com.br","yahoo.co.in","yahoo.ca","yahoo.com.ar","yahoo.com.cn","yahoo.com.mx","yahoo.co.kr","yahoo.co.nz","yahoo.com.hk","yahoo.com.sg","yahoo.es","yahoo.gr","yahoo.de","yahoo.com.ph","yahoo.com.tw","yahoo.dk","yahoo.ie","yahoo.it","yahoo.se","yahoo.com.au","yahoo.co.id"],"t-online":["t-online.de","t-online.com","t-online.net","t-online.org"],"hotmail":["hotmail.com","hotmail.de","hotmail.org","hotmail.co.uk","hotmail.dk","hotmail.fr","hotmail.it","hotmail.nl","hotmail.eu","msn.com","msn.co.uk"]})
+    .constant('HELLO', 'https://ws2.ng-source.com')
+    .constant('RATATOSKR', 'https://ws3.ng-source.com')
+    .constant('sid', 'ahkFhLlpbDTr6IBer9gw2v7Y3yTWlrGEfjB6l3DI')
+    .constant('passwordResetToken', '')
+    .constant('iOS', /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream)
+    .constant('VERSION', '8db7175f978e38474e7227a4692e9085')
+    .constant('paymentConfig', {"flow":"productsFirst","packages":{"sorting":{"key":"price","order":"ASC"}}})
+    .constant('freeCoinsConfig', {
+      'value': 25
+	})
+  .constant('LaForge', 'https://log.ng-source.com')
+  .constant('UTM', 'ctm.ng-source.com')
+    .constant('SWFile', 'js/sw.js')
+    .constant('API_origin', 'https://api-origin.ng-source.com')
+    .constant('API_cdn', 'https://api.ng-source.com')
+	.constant('SystemCdnUsage', true)
+    .constant('portal', {
+      'id': 10027,
+      'name': 'Sexkontakte Treffpunkt',
+      'shortcut': 'SKT',
+      'copyright': '© 2021 Sexkontakte Treffpunkt',
+    });
+
+
+  $('document').ready(function () {
+    Logger.useDefaults();
+    window.document.body.style.display = null;
+  });
+
+</script>
+
+</head>
+
+<body style="display:none" onsw-hook hookname="body"><div class="box" translate-cloak>
+	<main class="ons-scroll btn-scroll-top columns pad10 shrink fixed-main" onsw-hook hookname="main"><div class="box">
+	<div onsw-teaser on-special-visibility-changed="$root.special=visible" ons-toggle-widget ons-toggle-widget-auth="user"></div>
+	<div onsw-hook class="tabs" hook-data="nickname" hookname="sedcardNav" ons-toggle-widget if-route="sedcardNav"></div>
+	<div onsw-amateur-label class="frame" nickname="{{nickname}}" ons-toggle-widget if-route="sedcardNav"></div>
+	<div onsw-hook class="col33-md col25-lg col20-xl right-md columns pad10 block" hookname="sidebar" ons-toggle-widget ons-toggle-widget-auth="user" ons-toggle-widget-route="^/(?!hotornot$|livecams|profile$|sedcard/[^/]+($|/movie/|/pictures/set/))"><div class="box">
+	<div onsw-hook class="frame group" hookname="stockSearch" ons-toggle-widget ons-toggle-widget-route="/stock"></div>
+	<div onsw-hook class="frame group" hookname="gallerySearch" ons-toggle-widget ons-toggle-widget-route="(/movies|/pictures/sets)$"> <div class="box">
+	<div onsw-heading class="default spacer" label="core.search"></div>
+	<div onsw-category-select class="spc-light" feature="picturePool" on-category-select="$root.Plimit = 5000; $root.Pcategories = categories; $root.Psearch = search;" ons-toggle-widget ons-toggle-widget-route="pictures/sets$"></div>
+	<div onsw-category-select class="spc-light" feature="moviePool" on-category-select="$root.Mlimit = 5000; $root.Mcategories = categories; $root.Msearch = search;" ons-toggle-widget ons-toggle-widget-route="/movies$"></div>
+</div>
+ </div>
+	<div class="ons-layout group columns pad10 frame" ons-toggle-widget ons-toggle-widget-route="^/amateurs/search$">
+		<div class="box">
+			<div onsw-heading class="default" label="amateurPool.searchFor"></div>
+			<div onsw-facet-filter class="columns pad10"></div>
+		</div>
+	</div>
+	<div class="ons-layout group hide-max-sm">
+		<div class="box" ng-init="slide={heading:'', page: 0}">
+			<div onsw-heading class="default frame" label="{{ slide.heading }}"></div>
+			<div onsw-hook class="slideshow sidebar remove-to to-left" hookname="otm" hook-data="slide"></div>
+		</div>
+	</div>
+	<div class="ons-layout group hide-max-sm" ons-toggle-widget ons-toggle-widget-route="[^/]">
+		<div class="box">
+			<div onsd-amateurs filter-id="'livecam'" limit="5000" on-amateurs-done="livecams=item"></div>
+			<div onsw-heading class="default frame" label="livecam.livecams"></div>
+			<div onsw-tiles class="columns pad10 default" item-class="col50-xs" item-hook="livecamTile" limit="12" list="livecams"></div>
+			<div onsw-link class="button list-footer" label="core.showAll" route="#/livecams/online"></div>
+		</div>
+	</div>
+	<div ng-hide="$root.user.isInternational()" onsw-hook class="frame group columns pad10 hide-max-sm" hookname="globalFeed"></div>
+	<div ng-hide="$root.user.isInternational()" class="ons-layout group hide-max-sm">
+		<div class="box">
+			<div onsw-heading class="default frame" label="amateurPool.amateursByZip"></div>
+			<div onsw-template template="amateurPool.amateurSelectorByZip"></div>
+		</div>
+	</div>
+</div>
+</div>
+	<div onsw-hook class="col66-md col75-lg col80-xl" hookname="imprint" ons-toggle-widget ons-toggle-widget-route="^/imprint$"></div>
+	<div onsw-hook class="col66-md col75-lg col80-xl" hookname="terms" ons-toggle-widget ons-toggle-widget-route="^/terms$"></div>
+	<div onsw-hook class="col66-md col75-lg col80-xl" hookname="privacyPolicy" ons-toggle-widget ons-toggle-widget-route="^/privacyPolicy$"></div>
+	<div onsw-hook class="col66-md col75-lg col80-xl columns shrink frame pad10 group" hookname="pageLogin" ons-toggle-widget ons-toggle-widget-route="^/login$"></div>
+	<div onsw-hook class="col66-md col75-lg col80-xl columns shrink frame pad10 group" hookname="passwordReset" ons-toggle-widget-auth="guest" ons-toggle-widget ons-toggle-widget-route="^/passwordReset$"></div>
+	<div onsw-hook class="col66-md col75-lg col80-xl columns shrink frame pad10 group" hookname="confirmMail" ons-toggle-widget ons-toggle-widget-route="^/sentConfirmMail$"></div>
+	<div onsw-hook class="col66-md col75-lg col80-xl" hookname="signup" ons-toggle-widget-auth="guest" ons-toggle-widget ons-toggle-widget-route="^/signup$"></div>
+	<div onsw-hook class="col66-md col75-lg col80-xl columns shrink frame pad10 group" hookname="unsubscribe" ons-toggle-widget ons-toggle-widget-route="^/newsletter/unsubscribe$"></div>
+	<div onsw-hook class="col66-md col75-lg col80-xl columns shrink frame pad10 group" hookname="passwordSetForm" ons-toggle-widget ons-toggle-widget-route="^/(passwordReset)/(.+)$"></div>
+	<div onsw-hook class="col66-md col75-lg col80-xl columns shrink frame pad10 group" hookname="profileImageEditor" ons-toggle-widget ons-toggle-widget-route="^/profile/(image)/(.+)$"></div>
+	<div onsw-hook class="group" hookname="livecams" ons-toggle-widget-auth="user" ons-toggle-widget ons-toggle-widget-route="^/(livecams)(?:/(all|online))?$"></div>
+	<div onsw-hook class="columns shrink pad10" hook-data="{movieId: movie, nickname: sedcard}" hookname="movieDetail" ons-toggle-widget ons-toggle-widget-route="^/(sedcard)/(.+)/(movie)/(\d+)$"></div>
+	<div onsw-hook class="columns shrink pad10" hook-data="sedcard" hookname="sedcard" ons-toggle-widget ons-toggle-widget-route="^/(sedcard)/([^/]+)$"></div>
+	<div onsw-hook class="columns shrink pad10" hookname="profile" ons-toggle-widget-auth="user" ons-toggle-widget ons-toggle-widget-route="^/profile$"></div>
+	<div onsw-hook class="columns shrink pad10" hook-data="{set: set, nickname: sedcard}" hookname="pictureSet" ons-toggle-widget ons-toggle-widget-route="^/(sedcard)/(.+)/pictures/(set)/(\d+)(?:/item/\d+)?$"></div>
+	<div onsw-hook class="col66-md col75-lg col80-xl columns pad10" hookname="amateurs" hook-data="'online'" ons-toggle-widget ons-toggle-widget-route="^/$" ons-toggle-widget-auth="user"></div>
+	<div onsw-hook class="columns pad10" hookname="homeGuest" ons-toggle-widget-auth="guest" ons-toggle-widget ons-toggle-widget-route="^/$"></div>
+	<div onsw-hook class="col66-md col75-lg col80-xl columns shrink pad10" hookname="achievements" ons-toggle-widget-auth="user" ons-toggle-widget ons-toggle-widget-route="^/achievements$"></div>
+	<div onsw-hook class="col66-md col75-lg col80-xl group" hookname="stock" ons-toggle-widget-auth="user" ons-toggle-widget ons-toggle-widget-route="^/stock$"></div>
+	<div onsw-hook class="col66-md col75-lg col80-xl group" hookname="movies" ons-toggle-widget-auth="user" ons-toggle-widget ons-toggle-widget-route="^(?:/(sedcard)/(.+))?/movies$"></div>
+	<div onsw-hook class="col66-md col75-lg col80-xl" hookname="fmotd" ons-toggle-widget ons-toggle-widget-route="^/fmotd$"></div>
+	<div onsw-hook class="col66-md col75-lg col80-xl group" hookname="pictureSets" ons-toggle-widget-auth="user" ons-toggle-widget ons-toggle-widget-route="^(?:/(sedcard)/(.+))?/pictures/sets$"></div>
+	<div onsw-hook class="col66-md col75-lg col80-xl columns pad10" hook-data="amateurs" hookname="amateurs" ons-toggle-widget-auth="user" ons-toggle-widget ons-toggle-widget-route="^/(amateurs)/(online|top|new|livedating)$"></div>
+	<div onsw-hook class="col66-md col75-lg col80-xl columns pad10" hook-data="feed" hookname="feed" ons-toggle-widget-auth="user" ons-toggle-widget ons-toggle-widget-route="^/(feed)/(all|posts|media|favorites)$"></div>
+	<div onsw-hook class="col66-md col75-lg col80-xl group" hookname="amateurSearch" ons-toggle-widget-auth="user" ons-toggle-widget ons-toggle-widget-route="^/amateurs/search$"></div>
+	<div onsw-hook class="col66-md col75-lg col80-xl" hook-data="friends" hookname="friends" ons-toggle-widget-auth="user" ons-toggle-widget ons-toggle-widget-route="^/profile/(friends)/(accept|user_reject|amateur_request|user_request)$"></div>
+	<div onsw-hook class="col66-md col75-lg col80-xl group" hook-data="sedcard" hookname="amateurFriends" ons-toggle-widget ons-toggle-widget-route="^/(sedcard)/([^/]*)/friends$"></div>
+	<div onsw-hook class="col66-md col75-lg col80-xl group" hookname="hotornotList" hook-data="hotornot" ons-toggle-widget-auth="user" ons-toggle-widget ons-toggle-widget-route="^/(hotornot)/(votes|matches)$"></div>
+	<div onsw-hook class="col66-md col75-lg col80-xl group" hookname="pins" ons-toggle-widget-auth="user" ons-toggle-widget ons-toggle-widget-route="^/pins$"></div>
+	<div onsw-hook class="group columns" hookname="amateurSignup" ons-toggle-widget-auth="guest" ons-toggle-widget ons-toggle-widget-route="^/amateursignup$"></div>
+	<div onsw-template template="core.footer" ons-toggle-widget ons-toggle-widget-route="^(?!/livecamShow)"></div>
+</div>
+</main>
+	<div onsw-hook class="fixed-main columns shrink" hook-data="livecamShow" hookname="livecamShow" ons-toggle-widget ons-toggle-widget-auth="user" ons-toggle-widget-route="^/(livecamShow)/(.+)$"></div>
+	<div onsd-livecams-loading on-livecams-loading-done="cams = item"></div>
+	<div onsw-hook class="fixed-main animate" hook-data="cams[0].id" hookname="livecamLoading" ng-if="cams && cams.length"></div>
+	<div onsw-open-overlay class="button" label="userPool.signup" hookname="signup" ons-toggle-widget ons-toggle-widget-auth="guest" ons-toggle-widget-route="^(?!/login)(?!/signup)"></div>
+	<div onsw-picture-slideshow class="animate overlay" picture-id="item" ons-toggle-widget ons-toggle-widget-route="^/sedcard/[^/]+/pictures/set/\d+/(item)/(\d+)$"></div>
+	<div onsw-hotornot class="fixed-main group" ons-toggle-widget ons-toggle-widget-auth="user" ons-toggle-widget-route="^/hotornot$" ons-toggle-widget-if="hasFeature('hotornot')"></div>
+	<div onsw-cookie-bar></div>
+	<div onsw-message-notification></div>
+	<!--<div onsw-video-banner></div>-->
+	<div onsw-hook hookname="header"><div class="box">
+	<div onsw-toggle-button class="no-label" click-close-except="[hookname='navMobile']" location-close="1" ons-icon="::menu" toggle-value="$root.menu" value-active="show"></div>
+	<div onsw-hook class="menu-mobile ons-scroll" hookname="navMobile"><div class="box">
+	<div onsw-open-overlay class="menu login" label="userPool.login" ons-icon="::login" hookname="pageLogin" ons-toggle-widget ons-toggle-widget-auth="guest"></div>
+	<div onsw-open-overlay class="menu spacer signup" label="userPool.signup" ons-icon="::signup" hookname="signup" ons-toggle-widget ons-toggle-widget-auth="guest"></div>
+	<div onsw-link class="menu" label="amateurPool.amateurs" ons-icon="::amateur" route="#/amateurs/online"></div>
+	<div onsw-link class="menu" label="hotornot.hotornot" ons-icon="::hotornot" route="#/hotornot" ons-toggle-widget ons-toggle-widget-auth="user" ons-toggle-widget-if="hasFeature('hotornot')"></div>
+	<div onsw-link class="menu" label="livecam.cams" ons-icon="::cam" route="#/livecams/online"></div>
+	<div onsw-link class="menu" label="amateurPool.allLivedates" ons-icon="::dating" route="#/amateurs/livedating"></div>
+	<div onsw-link class="menu" label="pin.pins" ons-icon="::favorite" route="#/pins" ons-toggle-widget ons-toggle-widget-auth="user"></div>
+<!--	<div onsw-link class="menu" label="moviePool.movies" ons-icon="::movie" route="#/movies" ng-if="hasFeature('moviePool')"></div>-->
+       <div onsw-link class="menu" label="moviePool.movies" ons-icon="::movie" route="#/movies" ng-if="hasFeature('moviePool')" click-action="betas()"></div>
+       <div class="ons-layout submenu" ng-if="$root.menu && hasFeature('moviePool')">
+               <div class="box">
+                       <div onsw-link class="menu" label="moviePool.freemovie.otm" route="#/fmotd"></div>
+               </div>
+       </div>
+
+	<div onsw-link class="menu" label="picturePool.pictures" ons-icon="::gallery" route="#/pictures/sets" ng-if="hasFeature('picturePool')"></div>
+	<div onsw-link class="menu" label="amateurPool.feed.global" ons-icon="::news" route="#/feed/all"></div>
+	<div onsw-toggle-button class="menu caret" click-close-except="[hookname='navMobileAccount']" label="userPool.myAccount" location-close="1" on-active="$root.menu = 'show'" ons-icon="::user" toggle-value="$parent.showAccount" value-active="1" ons-toggle-widget ons-toggle-widget-auth="user"></div>
+	<div onsw-hook hookname="navMobileAccount" ng-if="showAccount"></div>
+	<div onsw-open-overlay class="menu" label="payment.buyCoins" ons-icon="::coins" hookname="payment" ons-toggle-widget ons-toggle-widget-auth="user"></div>
+	<div onsw-toggle-button class="menu caret" click-close-except="[onsw-locale-change]" label="locale.setLang" on-active="$root.menu = 'show'" ons-icon="::language" toggle-value="showLang" value-active="1"></div>
+	<div onsw-locale-change item-class="menu locale" ng-if="showLang"></div>
+</div>
+</div>
+	<div onsw-hook class="logo" hookname="logo"></div>
+	<div onsw-messenger-button class="value" ons-icon="::chat" ons-toggle-widget ons-toggle-widget-auth="user"></div>
+	<div onsw-friend-link class="value animation" label="friend.friends" ons-icon="::friend,*,friendColor" type="amateur_request" ons-toggle-widget ons-toggle-widget-auth="user"></div>
+	<div onsw-link class="onsc-pin-count value" label="pin.pins" ons-icon="::favorite,*,favoriteColor" route="#/pins" ons-toggle-widget ons-toggle-widget-auth="user"></div>
+	<div onsw-open-overlay class="value" label="userPool.credits" ons-icon="::coins,*,coinsColor" hookname="payment" value="{{$root.user.coins}}" ons-toggle-widget ons-toggle-widget-auth="user"></div>
+	<div onsw-user-points class="value animation hide-max-md" ons-icon="::vip,*,vipColor" ons-toggle-widget ons-toggle-widget-auth="user"></div>
+	<div onsw-hook class="dropdown" hookname="userPopup" ng-if="userPopup"></div>
+	<div onsw-toggle-button class="caret hide-max-md" click-close-except="null" label="{{$root.user.nickname}}" toggle-value="$parent.userPopup" value-active="1" ons-toggle-widget ons-toggle-widget-auth="user" ons-icon="::user"></div>
+	<div onsw-item class="login" ons-icon="::login" label="'login'" click-action="openOverlay('pageLogin')" ons-toggle-widget ons-toggle-widget-auth="guest"></div>
+	<div onsw-hook class="header-block" hookname="headerLogin" ons-toggle-widget ons-toggle-widget-auth="guest"></div>
+	<div onsw-link class="no-label search" ons-icon="::search" route="#/amateurs/search" ons-toggle-widget ons-toggle-widget-min-fsk="18"></div>
+</div>
+</div>
+	<aside onsw-hook hookname="messenger" class="messenger_ng"><div class="box">
+		<div class="ons-layout tabs">
+				<div class="box">
+					<div onsw-toggle-button class="messengerNav link onsc-message-count" label="messenger.chat" toggle-value="tab">
+					</div><div onsw-toggle-button class="messengerNav link" label="pin.pins" toggle-value="tab" value-active="pins">
+					</div><div onsw-toggle-button class="messengerNav link" label="friend.friends" toggle-value="tab" value-active="friends">
+					</div>
+				</div>
+		</div>
+		<div onsw-nickname-filter list="tab == 'pins' ? pins : (tab == 'friends' ? friends : dialogs)" on-filter-change="filtered=item;filterNoMatch=noMatch;q=filter"></div>
+		<div class="ons-layout items ons-scroll btn-scroll-top btn-page-down">
+			<div class="box" style="height: 100%">
+				<div onsd-friends type="'accept'" on-friends-done="friends=item"></div>
+				<div onsd-pins on-pins-done="pins=item"></div>
+				<div onsd-dialogs on-dialogs-done="dialogs=item"></div>
+				<div onsw-loader ng-if="!dialogs.online() && !$root.user.guest" style="text-align:center;margin:10px"></div>
+				<div onsw-text translation-key="core.lostConnection" ng-if="!dialogs.online() && !$root.user.guest"></div>
+				<div onsw-text translation-key="messenger.noMatch" ng-if="filterNoMatch"></div>
+				<div class="ons-item link" ons-toggle-widget ons-toggle-widget-if="filterNoMatch" ons-toggle-widget-auth="user">
+					<a class="box" ng-href="#/amateurs/search?filter-search.nickname={{q}}">
+						<span class="label">{{'messenger.noMatchLink' | translate}}</span>
+					</a>
+				</div>
+				<div onsw-tiles list="filtered" item-hook="contact" class="columns" item-class="contact"></div>
+			</div>
+		</div>
+		<div onsw-hook hookname="messengerDialog" hook-data="$root.dialogAmateur"></div>
+</div>
+</aside>
+	<aside><regard-shop class="regard shop" ng-include="'/template/regard.shop'"></regard-shop></aside>
+	<aside onsw-alert></aside>
+	<outdated class="ons-form"></outdated>
+</div>
+</body>
+
+</html>
