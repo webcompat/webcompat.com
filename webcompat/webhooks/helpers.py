@@ -94,7 +94,8 @@ def extract_extra_labels(metadata_dict):
     labels = metadata_dict.get('extra_labels', None)
     if labels:
         extra_labels = labels.split(', ')
-        extra_labels = [label.lower() for label in extra_labels]
+        extra_labels = [label.lower() for label in extra_labels
+                        if label in app.config['EXTRA_LABELS']]
     else:
         extra_labels = labels
     return extra_labels
