@@ -343,9 +343,7 @@ class TestWebhook(unittest.TestCase):
             ({'extra_labels': 'type-media'}, ['type-media']),
             ({'extra_labels': 'browser-focus-geckoview'},
              ['browser-focus-geckoview']),
-            ({'extra_labels': 'cool, dude'}, ['cool', 'dude']),
-            ({'extra_labels': 'weather-☁'}, ['weather-☁']),
-            ({'extra_labels': 'weather-É'}, ['weather-é']),
+            ({'extra_labels': 'cool, dude'}, []),
             ({'burgers': 'french fries'}, None),
         ]
         for metadata_dict, expected in metadata_tests:
@@ -365,9 +363,9 @@ class TestWebhook(unittest.TestCase):
     def test_get_issue_labels(self):
         """Extract list of labels from an issue body."""
         labels_tests = [
-            (self.issue_body, ['browser-firefox', 'type-media', 'type-stylo',
+            (self.issue_body, ['browser-firefox', 'type-media',
                                'engine-gecko']),
-            (self.issue_body2, ['browser-fixme', 'type-foobar']),
+            (self.issue_body2, ['browser-fixme']),
             (self.issue_body3, ['browser-firefox-tablet', 'engine-gecko']),
             (self.issue_body5, ['browser-firefox-reality', 'engine-gecko',
                                 'type-media']),
