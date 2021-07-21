@@ -179,7 +179,7 @@ class TestAPIURLs(unittest.TestCase):
                                 environ_base=headers)
             self.assertEqual(rv.status_code, 403)
 
-    @patch('webcompat.api.endpoints.proxy_request')
+    @patch('webcompat.api.endpoints.api_request')
     def test_api_patch_issue_valid_request(self, github_data):
         """Patching the issue - Valid request."""
         with webcompat.app.app_context():
