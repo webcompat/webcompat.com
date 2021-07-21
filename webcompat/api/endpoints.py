@@ -207,7 +207,7 @@ def modify_labels(number):
     """
     if g.user:
         path = 'repos/{0}/{1}/labels'.format(ISSUES_PATH, number)
-        labels = proxy_request('put', path, data=request.data)
+        labels = api_request('put', path, data=request.data)
         return (labels.content, labels.status_code,
                 get_response_headers(labels))
     else:
