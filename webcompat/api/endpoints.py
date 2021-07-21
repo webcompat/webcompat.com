@@ -27,7 +27,6 @@ from webcompat.helpers import get_comment_data
 from webcompat.helpers import get_response_headers
 from webcompat.helpers import mockable_response
 from webcompat.helpers import normalize_api_params
-from webcompat.helpers import proxy_request
 from webcompat import limiter
 
 api_bp = Blueprint('api_bp', __name__, url_prefix='/api',
@@ -66,7 +65,7 @@ def edit_issue(number):
     data_check = (patch_data['milestone'], patch_data['state'])
     # The PATCH data can only be of length: 2
     if data_check in valid_statuses and len(patch_data) == 2:
-        edit = proxy_request('patch', path, data=request.data)
+        edit = api_request('patch', path, data=request.data)
         return (edit.content, edit.status_code,
                 {'content-type': JSON_MIME_HTML})
     # Default will be 403 for this route
