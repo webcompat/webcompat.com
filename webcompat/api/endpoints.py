@@ -52,10 +52,13 @@ def edit_issue(number):
     """XHR endpoint to push back edits to GitHub for a single issue.
 
     - It only allows change of state and change of milestones.
-    - It is always proxied to allow any logged in user
-      to be able to edit issues.
+    - It's not proxied, so only users with write access are
+      able to edit issues.
       Format: {'milestone': 2, 'state': 'open'}
     """
+    if not g.user:
+        abort(403)
+
     path = 'repos/{0}/{1}'.format(ISSUES_PATH, number)
     patch_data = json.loads(request.data)
     # Create a list of associated milestones id with their mandatory state.
@@ -65,8 +68,9 @@ def edit_issue(number):
     data_check = (patch_data['milestone'], patch_data['state'])
     # The PATCH data can only be of length: 2
     if data_check in valid_statuses and len(patch_data) == 2:
-        edit = api_request('patch', path, data=request.data)
-        return (edit.content, edit.status_code,
+        (content, status_code, headers) = api_request('patch',
+                                                      path, data=request.data)
+        return (content, status_code,
                 {'content-type': JSON_MIME_HTML})
     # Default will be 403 for this route
     abort(403)
@@ -201,14 +205,12 @@ def modify_labels(number):
     """XHR endpoint to modify issue labels.
 
     Sending in an empty array removes them all as well.
-    This method is always proxied because non-repo collabs
-    can't normally edit labels for an issue.
+    This method is not proxied, so only users with write access
+    will be able to edit labels.
     """
     if g.user:
         path = 'repos/{0}/{1}/labels'.format(ISSUES_PATH, number)
-        labels = api_request('put', path, data=request.data)
-        return (labels.content, labels.status_code,
-                get_response_headers(labels))
+        return api_request('put', path, data=request.data)
     else:
         abort(403)
 
