@@ -49,6 +49,12 @@ def mock_api_response(response_config={}):
     return api_response
 
 
+def get_user_mock():
+    user = MagicMock()
+    user.user_id = 1
+    return user
+
+
 class TestAPIURLs(unittest.TestCase):
     """Tests for all API URLs."""
 
@@ -137,12 +143,6 @@ class TestAPIURLs(unittest.TestCase):
             self.assertEqual(
                 rv.content_type, 'text/html')
 
-    def test_api_set_labels_without_auth(self):
-        """API setting labels without auth returns JSON 403 error code."""
-        rv = self.app.post('/api/issues/1/labels',
-                           environ_base=headers, data='[]')
-        self.assertEqual(rv.status_code, 403)
-
     def test_api_user_activity_without_auth(self):
         """API access to user activity without auth returns JSON 401."""
         rv = self.app.get('/api/issues/miketaylr/creator',
@@ -160,9 +160,16 @@ class TestAPIURLs(unittest.TestCase):
         self.assertEqual(rv.content_type, 'application/json')
         self.assertEqual(json_body['status'], 404)
 
-    def test_api_patch_issue_state_status(self):
+    @patch('webcompat.db.User.query')
+    def test_api_patch_issue_state_status(self, db_user_mock):
         """Patching the issue - Incompatible state and status."""
         with webcompat.app.app_context():
+
+            # mock authenticated user
+            db_user_mock.return_value.get.return_value = get_user_mock()
+            with self.app.session_transaction() as sess:
+                sess['user_id'] = 1
+
             webcompat.app.config.update(STATUSES=STATUSES)
             data = {'state': 'closed', 'milestone': 2}
             patch_data = json.dumps(data)
@@ -170,26 +177,71 @@ class TestAPIURLs(unittest.TestCase):
                                 environ_base=headers)
             self.assertEqual(rv.status_code, 403)
 
-    def test_api_patch_issue_too_many_json_elements(self):
+    @patch('webcompat.db.User.query')
+    def test_api_patch_issue_too_many_json_elements(self, db_user_mock):
         """Patching the issue - Too many elements in the JSON."""
         with webcompat.app.app_context():
+
+            # mock authenticated user
+            db_user_mock.return_value.get.return_value = get_user_mock()
+            with self.app.session_transaction() as sess:
+                sess['user_id'] = 1
+
             data = {'state': 'open', 'milestone': 2, 'foobar': 'z'}
             patch_data = json.dumps(data)
             rv = self.app.patch('/api/issues/1/edit', data=patch_data,
                                 environ_base=headers)
             self.assertEqual(rv.status_code, 403)
 
+    def test_api_patch_issue_without_auth(self):
+        """Patching the issue - Request without auth."""
+        with webcompat.app.app_context():
+            data = {'state': 'open', 'milestone': 2}
+            patch_data = json.dumps(data)
+            rv = self.app.patch('/api/issues/1/edit', data=patch_data,
+                                environ_base=headers)
+            self.assertEqual(rv.status_code, 403)
+
+    @patch('webcompat.db.User.query')
     @patch('webcompat.api.endpoints.api_request')
-    def test_api_patch_issue_valid_request(self, github_data):
+    def test_api_patch_issue_valid_request(self, github_data, db_user_mock):
         """Patching the issue - Valid request."""
         with webcompat.app.app_context():
-            github_data.return_value = mock_api_response(
-                {'status_code': 200, 'content': '[]'})
+
+            # mock authenticated user
+            db_user_mock.return_value.get.return_value = get_user_mock()
+            with self.app.session_transaction() as sess:
+                sess['user_id'] = 1
+
+            github_data.return_value = ('[]', 200, {})
             data = {'state': 'open', 'milestone': 2}
             patch_data = json.dumps(data)
             rv = self.app.patch('/api/issues/1/edit', data=patch_data,
                                 environ_base=headers)
             self.assertEqual(rv.status_code, 200)
+
+    @patch('webcompat.db.User.query')
+    @patch('webcompat.api.endpoints.api_request')
+    def test_api_set_labels_valid_request(self, github_data, db_user_mock):
+        """Setting labels - Valid request."""
+        with webcompat.app.app_context():
+
+            # mock authenticated user
+            db_user_mock.return_value.get.return_value = get_user_mock()
+            with self.app.session_transaction() as sess:
+                sess['user_id'] = 1
+
+            github_data.return_value = ('[]', 200, {})
+            rv = self.app.post('/api/issues/1/labels',
+                               environ_base=headers,
+                               data='["engine-gecko","priority-important"]')
+            self.assertEqual(rv.status_code, 200)
+
+    def test_api_set_labels_without_auth(self):
+        """API setting labels without auth returns JSON 403 error code."""
+        rv = self.app.post('/api/issues/1/labels',
+                           environ_base=headers, data='[]')
+        self.assertEqual(rv.status_code, 403)
 
 
 if __name__ == '__main__':
