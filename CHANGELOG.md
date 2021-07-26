@@ -4,6 +4,15 @@
 2. New features: affect minor number
 3. API endpoint changes or (major) dependency version updates: affect major number
 
+## 45.0.0 - 2021-07-26
+
+* Fixes #3607 - Make modify_labels and edit_issue expect tuple instead of Request [Pull #3609](https://github.com/webcompat/webcompat.com/pull/3609)
+* Fixes #3114 - Fix excessive labels assignment [Pull #3606](https://github.com/webcompat/webcompat.com/pull/3606)
+* Fixes #3555 - Add Raul Bucata to the contributors page [Pull #3605](https://github.com/webcompat/webcompat.com/pull/3605)
+* Fixes #3348 - Update contributing documentation [Pull #3601](https://github.com/webcompat/webcompat.com/pull/3601)
+* Fixes #3585 - fixes the misspelled dependabot label [Pull #3586](https://github.com/webcompat/webcompat.com/pull/3586)
+* Fixes #3578 - Adds device-tablet to the list of accepted extra labels [Pull #3584](https://github.com/webcompat/webcompat.com/pull/3584)
+
 ## 44.0.0 - 2021-05-31
 
 * Fixes #3574 - Incorporate bugbug ml labelling into moderation process [Pull #3576](https://github.com/webcompat/webcompat.com/pull/3576)
