@@ -155,6 +155,19 @@ class TestWebhook(unittest.TestCase):
         **Tested Another Browser**: Yes Edge
         """  # noqa
 
+        self.issue_body12 = """
+        <!-- @browser: Firefox 100.0 -->
+        <!-- @ua_header: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:100.0) Gecko/20100101 Firefox/100.0 -->
+        <!-- @reported_with: desktop-reporter -->
+        <!-- @extra_labels: version100 -->
+
+        **URL**: http://mozilla.org/
+
+        **Browser / Version**: Firefox 100.0
+        **Operating System**: Mac OS X 10.15
+        **Tested Another Browser**: Yes Edge
+        """  # noqa
+
         self.issue_info1 = {
             'action': 'foobar',
             'state': 'open',
@@ -332,6 +345,7 @@ class TestWebhook(unittest.TestCase):
              'extra_labels': 'browser-focus-geckoview'}, 'browser-firefox'),
             ({}, 'browser-fixme'),
             ({'browser': 'Firefox iOS 33.1'}, 'browser-firefox-ios'),
+            ({'browser': 'Firefox 100.0'}, 'browser-firefox'),
         ]
         for metadata_dict, expected in metadata_tests:
             actual = helpers.extract_browser_label(metadata_dict)
@@ -376,6 +390,8 @@ class TestWebhook(unittest.TestCase):
                                  'os-ios']),
             (self.issue_body11, ['browser-firefox-ios', 'device-tablet',
                                  'os-ios']),
+            (self.issue_body12, ['browser-firefox', 'engine-gecko',
+                                 'version100']),
         ]
         for issue_body, expected in labels_tests:
             actual = helpers.get_issue_labels(issue_body)
