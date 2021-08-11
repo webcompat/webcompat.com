@@ -133,6 +133,15 @@ def get_name(dictionary):
     return name
 
 
+def get_browser_version(user_agent_string=None):
+    """Return browser version number as an integer."""
+    if user_agent_string and isinstance(user_agent_string, str):
+        ua_dict = user_agent_parser.Parse(user_agent_string)
+        version = int(ua_dict['user_agent']['major'])
+        return version
+    return 0
+
+
 def get_browser(user_agent_string=None):
     """Return browser name family and version.
 

@@ -24,6 +24,7 @@ from webcompat.helpers import form_type
 from webcompat.helpers import format_link_header
 from webcompat.helpers import get_browser
 from webcompat.helpers import get_browser_name
+from webcompat.helpers import get_browser_version
 from webcompat.helpers import get_name
 from webcompat.helpers import get_os
 from webcompat.helpers import get_response_headers
@@ -250,6 +251,10 @@ class TestHelpers(unittest.TestCase):
         ]
         for test in tests:
             self.assertEqual(get_version_string(test[0]), test[1])
+
+    def test_get_browser_version(self):
+        """Test version extraction."""
+        self.assertEqual(get_browser_version(FIREFOX_V100), 100)
 
     def test_get_name(self):
         """Test name extraction from Dict via get_name helper method."""
