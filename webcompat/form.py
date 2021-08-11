@@ -32,6 +32,7 @@ from webcompat.api.uploads import ImageUpload
 from webcompat.helpers import get_browser
 from webcompat.helpers import get_os
 from webcompat.helpers import get_details_list
+from webcompat.helpers import get_browser_version
 from webcompat.helpers import is_json_object
 
 SCHEMES = ('http://', 'https://')
@@ -483,8 +484,18 @@ def build_formdata(form_object):
 
     metadata_keys = ['browser', 'ua_header', 'reported_with']
     extra_labels = form_object.get('extra_labels', None)
+    # As a temporary experiment we will be adding version 100 to the labels.
+    # It will hopefully help us detect breakages related to 3 digit
+    # version numbers.
+    version = get_browser_version(form_object.get('ua_header'))
     if extra_labels:
+        if version == 100:
+            extra_labels.append('version100')
         metadata_keys.append('extra_labels')
+    else:
+        if version == 100:
+            extra_labels = ['version100']
+            metadata_keys.append('extra_labels')
     extra_metadata = form_object.get('extra_metadata', None)
     if extra_metadata:
         for key in extra_metadata.keys():
@@ -532,4 +543,5 @@ def build_formdata(form_object):
     # Append "from webcompat.com" message to bottom (for GitHub issue viewers)
     body += '\n\n{0}'.format(GITHUB_HELP)
     rv = {'title': summary, 'body': body}
+    print(body)
     return rv
