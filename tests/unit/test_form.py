@@ -14,6 +14,7 @@ from webcompat import form
 from webcompat import helpers
 
 FIREFOX_UA = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:48.0) Gecko/20100101 Firefox/48.0'  # noqa
+FIREFOX_V100 = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:100.0) Gecko/20100101 Firefox/100.0'  # noqa
 
 
 class TestForm(unittest.TestCase):
@@ -180,6 +181,20 @@ class TestForm(unittest.TestCase):
                          'extra_labels']
         actual = form.get_metadata(metadata_keys, form_object)
         expected = '<!-- @browser: Firefox 91.0 -->\n<!-- @ua_header: Mozilla/5.0...Firefox 91.0 -->\n<!-- @reported_with: mobile-reporter -->\n<!-- @extra_labels: browser-firefox-ios, device-tablet -->\n'  # noqa
+        self.assertEqual(actual, expected)
+
+    def test_extra_labels_version100(self):
+        """Test that we set version100 for extra_labels."""
+        form_object = MultiDict([
+            ('reported_with', 'desktop-reporter'),
+            ('url', 'http://localhost:5000/issues/new'),
+            ('extra_labels', ['version100']),
+            ('ua_header', FIREFOX_V100),
+            ('browser', 'Firefox 100.0')])
+        metadata_keys = ['browser', 'ua_header', 'reported_with',
+                         'extra_labels']
+        actual = form.get_metadata(metadata_keys, form_object)
+        expected = '<!-- @browser: Firefox 100.0 -->\n<!-- @ua_header: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:100.0) Gecko/20100101 Firefox/100.0 -->\n<!-- @reported_with: desktop-reporter -->\n<!-- @extra_labels: version100 -->\n'  # noqa
         self.assertEqual(actual, expected)
 
     def test_normalize_metadata(self):
