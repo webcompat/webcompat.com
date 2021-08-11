@@ -59,6 +59,9 @@ CHROME_UA = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_4) AppleWebKit/537.36 
 CHROME_MOBILE_UA = 'Mozilla/5.0 (Linux; Android 4.0.4; Galaxy Nexus Build/IMM76B) AppleWebKit/535.19 (KHTML, like Gecko) Chrome/18.0.1025.133 Mobile Safari/535.19'  # noqa
 CHROME_TABLET_UA = 'Mozilla/5.0 (Linux; Android 4.0.4; Galaxy Nexus Build/IMM76B) AppleWebKit/535.19 (KHTML, like Gecko) Chrome/18.0.1025.133 Safari/535.19'  # noqa
 
+FIREFOX_V100 = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:100.0) Gecko/20100101 Firefox/100.0'  # noqa
+EDGE_V100 = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4596.0 Safari/537.36 Edg/100.0.979.0'  # noqa
+CHROME_V100 = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 11_2_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.0.0 Safari/537.36'  # noqa
 
 class TestHelpers(unittest.TestCase):
     """Class for testing helpers."""
@@ -170,6 +173,7 @@ class TestHelpers(unittest.TestCase):
         self.assertEqual(get_browser_name(True), 'unknown')
         self.assertEqual(get_browser_name(False), 'unknown')
         self.assertEqual(get_browser_name(None), 'unknown')
+        self.assertEqual(get_browser_name(EDGE_V100), 'edge')
 
     def test_get_browser(self):
         """Test browser parsing via get_browser helper method."""
@@ -193,6 +197,7 @@ class TestHelpers(unittest.TestCase):
         self.assertEqual(get_browser(True), 'Unknown')
         self.assertEqual(get_browser(False), 'Unknown')
         self.assertEqual(get_browser(None), 'Unknown')
+        self.assertEqual(get_browser(FIREFOX_V100), 'Firefox 100.0')
 
     def test_get_os(self):
         """Test OS parsing via get_os helper method."""
