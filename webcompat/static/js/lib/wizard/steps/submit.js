@@ -55,7 +55,7 @@ const onFormSubmit = (event) => {
 // about which <button> was clicked (since one wasn't clicked).
 // So we send that with the form data via a hidden input.
 const saveSubmitType = (event) => {
-  submitTypeField.val(event.target.name);
+  submitTypeField.val(event.currentTarget.name);
 };
 
 submitButtons.on("click", saveSubmitType);
