@@ -4,6 +4,10 @@
 2. New features: affect minor number
 3. API endpoint changes or (major) dependency version updates: affect major number
 
+## 45.0.1 - 2021-09-14
+
+* Fixes #3618 - Fix unset submit_type [Pull #3619](https://github.com/webcompat/webcompat.com/pull/3619)
+
 ## 45.0.0 - 2021-07-26
 
 * Fixes #3607 - Make modify_labels and edit_issue expect tuple instead of Request [Pull #3609](https://github.com/webcompat/webcompat.com/pull/3609)
