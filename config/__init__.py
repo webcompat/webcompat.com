@@ -224,6 +224,7 @@ EXTRA_LABELS = [
     'type-tracking-protection-strict',
     'type-webrender-enabled',
     'type-webvr',
+    'version100',
 ]
 
 # List of accepted values for browser sources.
