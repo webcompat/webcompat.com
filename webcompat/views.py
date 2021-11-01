@@ -20,6 +20,7 @@ from flask import send_from_directory
 from flask import session
 from flask import url_for
 from flask_firehose import push
+from flask_github import GitHubError
 
 from webcompat.api.endpoints import proxy_issue
 from webcompat.db import session_db
@@ -102,7 +103,7 @@ def login():
             # manually set the referer so we know where to come back to
             # when we return from GitHub
             set_referer(request)
-            return github.authorize('public_repo')
+            return github.authorize()
     else:
         return redirect(g.referer)
 
@@ -319,7 +320,20 @@ def create_issue():
                 url_for('show_issue', number=json_response.get('number')))
         # Authenticated reporting
         if form.get('submit_type') == 'github-auth-report':
-            if g.user:  # If you're already authed, submit the bug.
+            if g.user:
+                # If the user already authed, try to get user info from github.
+                # If this request is failing, the token has been revoked.
+                try:
+                    github.get('user')
+                except GitHubError as e:
+                    # In case of an error, logout the user and try to
+                    # fetch new token
+                    log.info(e)
+                    session.clear()
+                    session['form'] = form
+                    return redirect(url_for('login'))
+
+                # Otherwise proceed with submitting the form
                 json_response = report_issue(form)
                 session['show_thanks'] = True
                 return redirect(url_for('show_issue',
