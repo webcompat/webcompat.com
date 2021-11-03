@@ -4,6 +4,11 @@
 2. New features: affect minor number
 3. API endpoint changes or (major) dependency version updates: affect major number
 
+## 47.0.0 - 2021-11-03
+
+* Fixes #655 - Convert OAuth app to GitHub app to limit permissions we request  [Pull #3629](https://github.com/webcompat/webcompat.com/pull/3629)
+* Fixes #3624 - Add `version100` to the `label` GET param list [Pull #3625](https://github.com/webcompat/webcompat.com/pull/3625)
+
 ## 46.0.0 - 2021-09-29
 
 * Fixes #3572 - Update Flask, Flask-WTF, Werkzeug versions [Pull #3621](https://github.com/webcompat/webcompat.com/pull/3621)
