@@ -164,6 +164,9 @@ def get_search_results(query_string=None, params=None):
     query_string += " repo:{0}".format(REPO_PATH)
     params['q'] = query_string
 
+    # add a required parameter to request only issues and not PRs
+    params['q'] += ' is:issue'
+
     # convert issues api to search api params here.
     params = normalize_api_params(params)
     path = 'search/issues'
