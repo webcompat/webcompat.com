@@ -4,6 +4,10 @@
 2. New features: affect minor number
 3. API endpoint changes or (major) dependency version updates: affect major number
 
+## 47.0.1 - 2021-11-09
+
+* Fixes #3639 - Add a required parameter to request only issues [Pull #3641](https://github.com/webcompat/webcompat.com/pull/3641)
+
 ## 47.0.0 - 2021-11-03
 
 * Fixes #655 - Convert OAuth app to GitHub app to limit permissions we request  [Pull #3629](https://github.com/webcompat/webcompat.com/pull/3629)
