@@ -28,6 +28,7 @@ GECKO_BROWSERS = ['browser-android-components',
                   'browser-firefox-mobile',
                   'browser-firefox-reality',
                   'browser-firefox-tablet',
+                  'browser-focus'
                   'browser-focus-geckoview',
                   'browser-geckoview', ]
 IOS_BROWSERS = ['browser-firefox-ios', ]

@@ -211,9 +211,10 @@ for cat_label in cat_labels:
 EXTRA_LABELS = [
     'browser-android-components',
     'browser-fenix',
-    'browser-focus-geckoview',
     'browser-firefox-ios',
     'browser-firefox-reality',
+    'browser-focus',
+    'browser-focus-geckoview',
     'device-tablet',
     'type-fastclick',
     'type-google',
