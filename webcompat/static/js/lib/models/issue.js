@@ -43,6 +43,7 @@ export const Issue = Backbone.Model.extend({
     var milestoneClass;
     if (response.milestone) {
       milestone = response.milestone.title;
+      milestoneClass = response.milestone.title;
     } else {
       if (isLoggedIn) {
         milestone = "Fix me: assign a status";

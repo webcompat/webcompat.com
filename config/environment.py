@@ -98,9 +98,10 @@ STATUSES = {
     'fixed': {'id': 0, 'order': 2, 'state': 'closed'},
     'incomplete': {'id': 0, 'order': 3, 'state': 'closed'},
     'invalid': {'id': 0, 'order': 4, 'state': 'closed'},
-    'non-compat': {'id': 0, 'order': 5, 'state': 'closed'},
-    'wontfix': {'id': 0, 'order': 6, 'state': 'closed'},
-    'worksforme': {'id': 0, 'order': 7, 'state': 'closed'}}
+    'moved': {'id': 0, 'order': 5, 'state': 'closed'},
+    'non-compat': {'id': 0, 'order': 6, 'state': 'closed'},
+    'wontfix': {'id': 0, 'order': 7, 'state': 'closed'},
+    'worksforme': {'id': 0, 'order': 8, 'state': 'closed'}}
 
 # We don't need to compute for every requests.
 OPEN_STATUSES = [status for status in STATUSES
