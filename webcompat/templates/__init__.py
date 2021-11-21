@@ -131,6 +131,7 @@ def format_milestone_title(issue_data):
         'sitewait': 'Site Contacted',
         'wontfix': 'Won\'t Fix',
         'worksforme': 'Works For Me',
+        'moved': 'Moved'
     }
     state = issue_data.get('state')
     milestone = issue_data.get('milestone')

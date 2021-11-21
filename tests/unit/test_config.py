@@ -39,7 +39,7 @@ class TestConfig(unittest.TestCase):
 
     def test_update_status_config(self):
         """Update statuses with real milestones id."""
-        expected = {'sitewait': {'state': 'open', 'id': 5, 'order': 5}, 'worksforme': {'state': 'closed', 'id': 11, 'order': 7}, 'non-compat': {'state': 'closed', 'id': 12, 'order': 5}, 'needsdiagnosis': {'state': 'open', 'id': 2, 'order': 2}, 'contactready': {'state': 'open', 'id': 4, 'order': 4}, 'wontfix': {'state': 'closed', 'id': 6, 'order': 6}, 'needscontact': {'state': 'open', 'id': 3, 'order': 3}, 'invalid': {'state': 'closed', 'id': 8, 'order': 4}, 'needstriage': {'state': 'open', 'id': 1, 'order': 1}, 'duplicate': {'state': 'closed', 'id': 10, 'order': 1}, 'fixed': {'state': 'closed', 'id': 9, 'order': 2}, 'incomplete': {'state': 'closed', 'id': 7, 'order': 3}}  # noqa
+        expected = {'sitewait': {'state': 'open', 'id': 5, 'order': 5}, 'worksforme': {'state': 'closed', 'id': 11, 'order': 8}, 'non-compat': {'state': 'closed', 'id': 12, 'order': 6}, 'needsdiagnosis': {'state': 'open', 'id': 2, 'order': 2}, 'contactready': {'state': 'open', 'id': 4, 'order': 4}, 'wontfix': {'state': 'closed', 'id': 6, 'order': 7}, 'needscontact': {'state': 'open', 'id': 3, 'order': 3}, 'invalid': {'state': 'closed', 'id': 8, 'order': 4}, 'needstriage': {'state': 'open', 'id': 1, 'order': 1}, 'duplicate': {'state': 'closed', 'id': 10, 'order': 1}, 'fixed': {'state': 'closed', 'id': 9, 'order': 2}, 'incomplete': {'state': 'closed', 'id': 7, 'order': 3}, 'moved': {'state': 'closed', 'id': 13, 'order': 5}}  # noqa
         # Normal Case
         milestones_json = json_data('milestones_content.json')
         actual = update_status_config(milestones_json)
