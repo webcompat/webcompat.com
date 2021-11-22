@@ -4,6 +4,10 @@
 2. New features: affect minor number
 3. API endpoint changes or (major) dependency version updates: affect major number
 
+## 47.1.0 - 2021-11-22
+
+* Fixes #3644 - Add a "moved" milestone [Pull #3645](https://github.com/webcompat/webcompat.com/pull/3645)
+
 ## 47.0.1 - 2021-11-09
 
 * Fixes #3639 - Add a required parameter to request only issues [Pull #3641](https://github.com/webcompat/webcompat.com/pull/3641)
