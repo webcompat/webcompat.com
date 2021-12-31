@@ -146,6 +146,7 @@ def test_get_checksum_not_in_cache(tmp_path):
     file_path.write_text('punkcat')
     get_checksum(file_path)
     assert str(file_path) in cache_dict
+    cache_dict.clear()  # avoid flaky tests
 
 
 def test_bust_cache_localhost():
