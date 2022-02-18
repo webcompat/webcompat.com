@@ -73,7 +73,7 @@
               </p>
             </li>
 
-            <li>
+            <li id="last-step">
               Last step! You can report the issue anonymously or with your <a href="https://help.github.com/" target="_blank">Github</a> username. (We use the GitHub issue reporting system behind-the-scenes for webcompat.com). When you are identified,
               we can better follow-up with you if there are additional information required to understand the issue. Anonymous issues which lack details will be closed when we can't reproduce the issue and do diagnosis.
               <p>
@@ -151,24 +151,82 @@
           <h2 id="recommendations" class="headline-1 heading">Is It Really A Web Compatibility Issue?</h2>
 
           <p>
-            In general there are four type of issues:
+            Issues that fall into the web compatibility category are related to layout, content,
+            features or site functionality and occur in one browser, but not in another, for various reasons.
           </p>
 
+
+          <p>Therefore, we're looking for reports that represent <b>differences </b> in how browsers render web content with this principle in mind.</p>
+
+          For example:
+            <ol>
+              <li>Missing elements on the page in Chrome, but not in Firefox.</li>
+              <li>Can't access a site due to Safari on iOS being unsupported.</li>
+              <li>Video or audio doesn't play.</li>
+              <li>The desktop version of the site is displayed on Firefox for Android, but Chrome receives the mobile layout.</li>
+              <li>Buttons or links don't respond to clicks or taps.</li>
+              <li>Can't log in or constantly being logged out in Firefox, but it works in Edge.</li>
+              <li>Animation on a website is slow in one browser but fast in another.</li>
+            </ol>
+          <p id="non-compat">
+            Note that network issues, tracking, ads and script blockers, are likely <a href="http://www.otsukare.info/2017/10/05/what-is-a-webcompat-issue" target="_blank">not compatibility issues</a>.
+          </p>
+          <p>
+            <b> Issues that are not related to web compatibility efforts and will be closed: </b>
+          </p>
           <ol>
             <li>
-              Website issues, including layouts, features or content. Webcompat.com is the right place! Not all site issues are valid Web Compatibility issues. Network issues, ads and script blockers, flash requirements for every browser are likely <a href="http://www.otsukare.info/2017/10/05/what-is-a-webcompat-issue" target="_blank"> not compatibility issues</a>.
-            </li>
-            <li>
-              Deceptive websites (scams, malware). You can report them to the <a href="https://safebrowsing.google.com/safebrowsing/report_phish/" target="_blank">Report Phishing Page</a>.
+              Issues that are reproducible in all browsers. Likely this is a website issue and author or owner of the website should be notified instead.
             </li>
             <li>
               Issues with the user interface of the browser itself and not the content of a website. These suggestions should be reported directly to the browser vendor.
             </li>
             <li>
-              Add-ons or web extensions. Report these issue directly to the creator of the extension.
+              Add-ons or web extensions. Report these issues directly to the creator of the extension.
+            </li>
+            <li>
+              Deceptive websites (phishing, scam, malware). You can report such sites to the <a href="https://safebrowsing.google.com/safebrowsing/report_phish/" target="_blank">Report Phishing Page</a>.
+            </li>
+            <li>
+              Illegal content on the website. The best would be to report to your local authorities as we're not in a position to act on these issues.
+            </li>
+            <li>
+              Incorrect or inaccurate content. The best course of action is to get in touch with the author/owner of the website and let them know.
             </li>
           </ol>
-        </article>
+        </div>
+      </div>
+    </section>
+    <section class="grid">
+      <div class="grid-row">
+        <div class="grid-cell x3">
+          <h2 id="ml" class="headline-1 heading">Machine Learning for detecting invalid reports</h2>
+
+          <p>
+            We have added a machine learning bot into our workflow to help with incoming reports triage.
+            The bot analyses content of the reports and classifies them as valid or invalid based on the historical data.
+            Invalid reports are closed automatically without human involvement. </p>
+
+          <p>If your report was closed by the bot, there are three possible reasons:
+            <ol>
+              <li>
+                It falls into a <a href="#non-compat">category that is outside the scope of this project</a>.
+                Please take a closer look at the section describing <a href="#recommendations">web compatibility issues in detail</a>.
+              </li>
+              <li>
+                The problem you're experiencing has already been reported, and we received a lot of duplicates.
+                In this case, you could search for the domain in question on our <a target="_blank" href="https://github.com/webcompat/web-bugs/issues">GitHub page</a>
+                to look for similar reports and get updated information on their status.
+              </li>
+              <li>
+                It was closed by mistake. While these cases are rare, there is still a possibility that the bot classified your report as invalid mistakenly.
+                If you think it was closed by mistake, you could file another one using <a href="#last-step">"Report via GitHub"</a> option instead of
+                "Report anonymously". Reports from authenticated users don't get triaged by the bot.
+              </li>
+            </ol>
+          </p>
+
+        </div>
       </div>
     </section>
   </main>

@@ -46,7 +46,10 @@ guidelines. Its original content has been deleted.</p>'''
 AUTOCLOSE_TITLE = 'Issue closed.'
 AUTOCLOSE_BODY = '''<p>Thanks for the report. We have closed this issue
 automatically as we suspect it is invalid. If we made a mistake, please
-file a new issue and try to provide more context.</p>'''
+file a new issue and try to provide more context.</p><p>You can find more
+information in the <a href="https://webcompat.com/contributors/report-bug#ml">
+documentation</a> about our machine learning process
+for triaging reports.</p>'''
 
 TEMPLATE_CONFIG = {
     'rejected': {
