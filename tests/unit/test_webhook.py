@@ -489,12 +489,16 @@ class TestWebhook(unittest.TestCase):
             'body': '<p>Thanks for the report. We have closed this issue\n'
                     'automatically as we suspect it is invalid. If we made '
                     'a mistake, please\nfile a new issue and try to provide '
-                    'more context.</p>',
+                    'more context.</p><p>You can find more\ninformation in the'
+                    ' <a href="https://webcompat.com/contributors/report-bug#ml">'      # noqa
+                    '\ndocumentation</a> about our machine learning'
+                    ' process\nfor triaging reports.</p>',
                     'labels': ['bugbug-probability-high'],
                     'milestone': 8,
                     'state': 'closed',
                     'title': 'Issue closed.'}
         actual = helpers.prepare_rejected_issue("autoclosed")
+        print(actual)
         self.assertEqual(type(actual), dict)
         self.assertEqual(actual, expected)
 
