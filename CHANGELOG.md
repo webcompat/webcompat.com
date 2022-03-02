@@ -4,6 +4,14 @@
 2. New features: affect minor number
 3. API endpoint changes or (major) dependency version updates: affect major number
 
+## 47.1.1 - 2022-03-02
+
+* Fixes #3610 - Add explanation of our ML process to the contributing documentation [Pull #3678](https://github.com/webcompat/webcompat.com/pull/3678)
+* Fixes #3672 - Remove "Share on facebook" button [Pull #3677](https://github.com/webcompat/webcompat.com/pull/3677)
+* Fixes #3596 - Fixes overlapped check-marks [Pull #3665](https://github.com/webcompat/webcompat.com/pull/3665)
+* Fixes #3655 - Avoid flaky tests [Pull #3663](https://github.com/webcompat/webcompat.com/pull/3663)
+
+
 ## 47.1.0 - 2021-11-22
 
 * Fixes #3644 - Add a "moved" milestone [Pull #3645](https://github.com/webcompat/webcompat.com/pull/3645)
