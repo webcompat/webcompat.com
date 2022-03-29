@@ -17,7 +17,7 @@ from requests.exceptions import ConnectionError
 
 import webcompat
 
-from webcompat.db import Site
+from webcompat.db import SiteGlobal, SiteRegional
 from webcompat.helpers import to_bytes
 from webcompat.webhooks import helpers, ml
 
@@ -154,6 +154,11 @@ class TestWebhook(unittest.TestCase):
         **Operating System**: Mac OS X 10.15.4
         **Tested Another Browser**: Yes Edge
         """  # noqa
+
+        self.issue_body12 = """
+        **URL**: https://subdomain.example.com/
+        <!-- @browser: Firefox Mobile (Tablet) 40.0 -->
+        """
 
         self.issue_info1 = {
             'action': 'foobar',
@@ -350,18 +355,77 @@ class TestWebhook(unittest.TestCase):
             actual = helpers.extract_extra_labels(metadata_dict)
             self.assertEqual(expected, actual)
 
-    def test_extract_priority_label(self):
-        """Extract priority label."""
-        with patch('webcompat.db.site_db.query') as db_mock:
-            db_mock.return_value.filter_by.return_value = [
-                Site('google.com', 1, '', 1)]
-            priority_label = helpers.extract_priority_label(self.issue_body3)
-            self.assertEqual(priority_label, 'priority-critical')
-        priority_label_none = helpers.extract_priority_label(self.issue_body)
-        self.assertEqual(priority_label_none, None)
+    @patch('webcompat.db.regional_site_db.query')
+    @patch('webcompat.db.global_site_db.query')
+    def test_priority_label_regional_only(self, gm, rm):
+        """Extract priority label for a site found in regional db."""
+        rm.return_value.filter_by.return_value.first.return_value = SiteRegional(               # noqa
+            'example.com', 1, 'US', 1
+        )
 
-    def test_get_issue_labels(self):
+        priority_label = helpers.extract_priority_label(self.issue_body3)
+        gm.assert_not_called()
+        self.assertEqual(priority_label, 'priority-critical')
+
+    @patch('webcompat.db.regional_site_db.query')
+    @patch('webcompat.db.global_site_db.query')
+    def test_priority_label_global_only(self, gm, rm):
+        """Extract priority label for a site found in global db."""
+        rm.return_value.filter_by.return_value.first.return_value = None
+        gm.return_value.filter_by.return_value.first.return_value = SiteGlobal(
+            'example.com', 1, 3
+        )
+
+        priority_label = helpers.extract_priority_label(self.issue_body3)
+        gm.assert_called()
+        self.assertEqual(priority_label, 'priority-normal')
+
+    @patch('webcompat.db.regional_site_db.query')
+    @patch('webcompat.db.global_site_db.query')
+    def test_priority_label_sub(self, gm, rm):
+        """Extract priority label for subdomain."""
+
+        rm.return_value.filter_by.return_value.first.side_effect = [
+            None,
+            SiteRegional('example.com', 1, 'US', 1)
+        ]
+
+        gm.return_value.filter_by.return_value.first.return_value = None
+        priority_label = helpers.extract_priority_label(self.issue_body12)
+        self.assertEqual(priority_label, 'priority-critical')
+
+    @patch('webcompat.webhooks.helpers.priority_label_by_url')
+    def test_priority_label_not_found(self, mock_func):
+        """Extract priority label for a domain that is not in either db."""
+        mock_func.return_value = None
+        priority_label = helpers.extract_priority_label(self.issue_body)
+        assert mock_func.call_count == 2
+        self.assertEqual(priority_label, None)
+
+    def test_get_domains(self):
+        """Extract list of subdomains."""
+        self.assertEqual(
+            helpers.get_domains('www.example.com'), ['example.com']
+        )
+        self.assertEqual(
+            helpers.get_domains('sub.example.com'), ['example.com']
+        )
+        self.assertEqual(
+            helpers.get_domains('part.sub.example.com'),
+            ['sub.example.com', 'example.com']
+        )
+        self.assertEqual(
+            helpers.get_domains('test'),
+            []
+        )
+
+    @patch('webcompat.db.regional_site_db.query')
+    @patch('webcompat.db.global_site_db.query')
+    def test_get_issue_labels(self, gm, rm):
         """Extract list of labels from an issue body."""
+        rm.return_value.filter_by.return_value.first.return_value = None
+        gm.return_value.filter_by.return_value.first.return_value = None
+
         labels_tests = [
             (self.issue_body, ['browser-firefox', 'type-media',
                                'engine-gecko']),
