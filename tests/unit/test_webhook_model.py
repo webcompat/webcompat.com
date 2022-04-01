@@ -37,7 +37,8 @@ comment_added = ('public url added and issue classified', 200, {'Content-Type': 
 outreach_comment_added = ('outreach generator url added', 200, {'Content-Type': 'text/plain'})  # noqa
 
 issue_info1 = {
-    'action': 'opened', 'state': 'open', 'milestoned_with': '',
+    'action': 'opened', 'state': 'open',
+    'milestoned_with': '', 'labeled_with': '',
     'milestone': '', 'body': '<!-- @browser: Firefox 55.0 -->\n<!-- @ua_header: Mozilla/5.0 (X11; Linux x86_64; rv:55.0) Gecko/20100101 Firefox/55.0 -->\n<!-- @reported_with: web -->\n<!-- @public_url: https://github.com/webcompat/webcompat-tests/issues/1  -->\n\n**URL**: https://www.netflix.com/',   # noqa
     'domain': 'www.netflix.com', 'number': 600,
     'original_labels': ['action-needsmoderation'],
@@ -49,7 +50,8 @@ issue_info1 = {
 }
 
 issue_info2 = {
-    'action': 'milestoned', 'state': 'open', 'milestoned_with': 'accepted',
+    'action': 'milestoned', 'state': 'open',
+    'milestoned_with': 'accepted', 'labeled_with': '',
     'milestone': 'accepted', 'body': '<!-- @browser: Firefox 55.0 -->\n<!-- @ua_header: Mozilla/5.0 (X11; Linux x86_64; rv:55.0) Gecko/20100101 Firefox/55.0 -->\n<!-- @reported_with: web -->\n<!-- @public_url: https://github.com/webcompat/webcompat-tests/issues/1  -->\n\n**URL**: https://www.netflix.com/',  # noqa
     'domain': 'www.netflix.com', 'number': 600,
     'original_labels': ['action-needsmoderation'],
