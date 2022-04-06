@@ -4,6 +4,10 @@
 2. New features: affect minor number
 3. API endpoint changes or (major) dependency version updates: affect major number
 
+## 47.1.2 - 2022-04-06
+
+* Fixes #3685 - Automatically add labels for issues reopened after ML triage [Pull #3686](https://github.com/webcompat/webcompat.com/pull/3686)
+
 ## 47.1.1 - 2022-03-02
 
 * Fixes #3610 - Add explanation of our ML process to the contributing documentation [Pull #3678](https://github.com/webcompat/webcompat.com/pull/3678)
