@@ -44,6 +44,7 @@ class WebHookIssue:
     original_labels: List[str]
     milestone: str
     milestoned_with: str
+    labeled_with: str
     host_reported_from: str
     html_url: str
 
@@ -67,6 +68,12 @@ class WebHookIssue:
         milestoned_with = ''
         if payload.get('milestone'):
             milestoned_with = payload.get('milestone')['title']
+
+        # labeled/unlabeled action
+        labeled_with = ''
+        if payload.get('label'):
+            labeled_with = payload.get('label')['name']
+
         host_reported_from = ''
         if host:
             host_reported_from = host
@@ -78,7 +85,8 @@ class WebHookIssue:
                    state=issue.get('state'), title=full_title,
                    original_labels=original_labels,
                    milestone=milestone, milestoned_with=milestoned_with,
-                   host_reported_from=host_reported_from, html_url=html_url)
+                   host_reported_from=host_reported_from, html_url=html_url,
+                   labeled_with=labeled_with)
 
     def close_private_issue(self):
         """Mark the private issue as closed."""
@@ -259,6 +267,11 @@ class WebHookIssue:
             payload_request = {'milestone': AUTOCLOSED_MILESTONE_ID}
             make_request('patch', path, payload_request)
 
+    def add_bugbug_tracking_label(self, label_name):
+        payload = {'labels': [label_name]}
+        path = f'repos/{PUBLIC_REPO}/{self.number}/labels'
+        make_request('post', path, payload)
+
     def process_issue_action(self):
         """Route the actions and provide different responses.
 
@@ -300,6 +313,25 @@ class WebHookIssue:
                 return oops()
             else:
                 return make_response('outreach generator url added', 200)
+        elif (self.action == 'milestoned' and scope == 'public' and
+              self.milestoned_with in ('needsdiagnosis', 'moved')):
+            try:
+                if 'bugbug-reopened' in self.original_labels:
+                    self.add_bugbug_tracking_label('bugbug-valid')
+            except HTTPError as e:
+                msg_log(f'bugbug-valid labeling failed ({e})', self.number)
+                return oops()
+            else:
+                return make_response('bugbug-valid label added', 200)
+        elif (self.action == 'unlabeled' and scope == 'public' and
+              self.labeled_with == 'bugbug-probability-high'):
+            try:
+                self.add_bugbug_tracking_label('bugbug-reopened')
+            except HTTPError as e:
+                msg_log(f'bugbug-reopen labeling failed ({e})', self.number)
+                return oops()
+            else:
+                return make_response('bugbug-reopen label added', 200)
         elif self.action == 'opened' and scope == 'private':
             # webcompat-bot needs to comment public URL of the issue
             # and we try to classify the issue using bugbug
