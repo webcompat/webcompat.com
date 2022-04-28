@@ -2,6 +2,8 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
+import { UAParser } from "ua-parser-js";
+
 export const extractPrettyUrl = (url) => {
   const pathArray = url.trim().split("/");
   return pathArray[2];
@@ -97,4 +99,10 @@ export const getDataURIFromPreview = (bgImage) => {
   }
 
   return match[1];
+};
+
+export const getBrowserName = (useragent) => {
+  const toParse = useragent || window.navigator.userAgent;
+  const ua = new UAParser(toParse);
+  return ua.getBrowser().name;
 };

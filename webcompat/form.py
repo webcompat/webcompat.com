@@ -125,6 +125,7 @@ video_bug_choices = [
 
 browser_choices = [
     ('Chrome', 'svg-chrome.svg', 'Chrome'),
+    ('Firefox', 'svg-firefox.svg', 'Firefox'),
     ('Edge', 'svg-edge.svg', 'Edge'),
     ('Safari', 'svg-safari.svg', 'Safari'),
     ('Opera', 'svg-opera.svg', 'Opera'),
@@ -168,11 +169,22 @@ class PrefixedRadioField(RadioField):
 
     def __init__(self, *args, **kwargs):
         prefixed_choices = kwargs.pop('choices')
+        add_idd = False
+
+        if 'add_id' in kwargs:
+            add_idd = kwargs.pop('add_id')
+
         choices = []
+        element_id = None
         for slug, img, text in prefixed_choices:
             filename = f'img/svg/icons/{img}'
             src = url_for('static', filename=filename)
-            t = f'<div class="icon-container"><img src="{src}" alt=""></div> {text}'  # noqa
+            if add_idd:
+                element_id = 'id="browser-{}"'.format(
+                    slug.lower().replace(" ", "_")
+                )
+
+            t = f'<div {element_id if add_idd else ""} class="icon-container"><img src="{src}" alt=""></div> {text}'  # noqa
             label = Markup(t)
             choice = (slug, label)
             choices.append(choice)
@@ -241,7 +253,8 @@ class FormWizard(FlaskForm):
     )
     tested_browsers = PrefixedRadioField(
         [InputRequired(message=radio_message)],
-        choices=browser_choices
+        choices=browser_choices,
+        add_id=True
     )
     # Bots Trap
     username = StringField('Username',

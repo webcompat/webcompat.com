@@ -16,8 +16,15 @@ const BAD_IMAGE_PATH = path.join(cwd, "tests/fixtures", "evil.py");
 const url = function (path) {
   return intern.config.functionalBaseUrl + path;
 };
+let current_browser_id = "";
 
 registerSuite("Reporting with wizard", {
+  after() {
+    current_browser_id = "";
+  },
+  before() {
+    current_browser_id = "browser-" + this.remote.session.capabilities.browser;
+  },
   tests: {
     "Space in domain name validation"() {
       return FunctionalHelpers.openPage(
@@ -143,8 +150,14 @@ registerSuite("Reporting with wizard", {
             // Make sure that "Confirm" button is disabled if browser is not selected
             assert.isNotNull(attribute);
           })
+          .end()
+          .findById(current_browser_id)
+          .isDisplayed()
+          .then(function (isDisplayed) {
+            assert.equal(isDisplayed, false, "Current browser is hidden");
+          })
+          .end()
           .execute(function () {
-            // Click on "Chrome"
             document.querySelector("[for=tested_browsers-0]").click();
           })
           .end()
