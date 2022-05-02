@@ -24,7 +24,7 @@ const osField = container.find("#os");
 
 const handleNext = (event) => {
   event.preventDefault();
-  notify.publish("showStep", { id: "testedBrowsers" });
+  notify.publish("showStep", { id: "testedBrowsers", data: { showAll: true } });
 };
 
 const updateFieldState = (isValid, element, text) => {

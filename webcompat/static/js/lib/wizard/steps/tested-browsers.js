@@ -12,6 +12,17 @@ import {
   showContainer,
 } from "../ui-utils.js";
 
+const BROWSER_ICON_MAP = {
+  Chrome: "chrome",
+  "Chrome Headless": "chrome",
+  Edge: "edge",
+  Firefox: "firefox",
+  IE: "internet_explorer",
+  "Mobile Safari": "safari",
+  Opera: "opera",
+  Safari: "safari",
+};
+
 const container = $(".step-container.step-tested-browsers");
 const nextStepButton = container.find("button.next-tested");
 const noOtherButton = container.find(".no-other-browser");
@@ -54,10 +65,35 @@ const initListeners = () => {
   addKeyDownListeners(container);
 };
 
+const hideCurrentBrowser = ({ browser }) => {
+  const browserId = BROWSER_ICON_MAP[browser];
+
+  if (!browserId) return;
+
+  const toHide = $(`#browser-${browserId}`);
+  if (toHide.length) {
+    toHide.parents("li").hide();
+  }
+};
+
+const showAllBrowsers = () => {
+  $("#tested_browsers").children("li").show();
+};
+
 initListeners();
 
 export default {
-  show: () => {
+  show: (data) => {
+    if (data) {
+      if ("browser" in data) {
+        hideCurrentBrowser(data);
+      }
+
+      if ("showAll" in data) {
+        showAllBrowsers();
+      }
+    }
+
     showContainer(container);
   },
 

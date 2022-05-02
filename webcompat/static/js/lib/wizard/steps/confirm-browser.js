@@ -7,18 +7,20 @@
 import $ from "jquery";
 import { showContainer, hideContainer } from "../ui-utils.js";
 import notify from "../notify.js";
+import { getBrowserName } from "../utils.js";
 
 const container = $(".step-container.step-browser");
 const nextStepButton = container.find(".next-browser");
 const otherOption = container.find(".next-custom");
 
-const makeAStep = (id) => notify.publish("showStep", { id });
+const makeAStep = (id, data) => notify.publish("showStep", { id, data });
 const hideStep = (id) => notify.publish("hideStep", id);
 
 const handleNext = (event) => {
+  const browserName = getBrowserName();
   event.preventDefault();
   hideStep("differentBrowser");
-  makeAStep("testedBrowsers");
+  makeAStep("testedBrowsers", { browser: browserName });
 };
 
 const handleOther = (event) => {

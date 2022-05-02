@@ -6,6 +6,7 @@ const intern = require("intern").default;
 const { assert } = intern.getPlugin("chai");
 const { registerSuite } = intern.getInterface("object");
 const FunctionalHelpers = require("./lib/helpers.js");
+let current_browser_id = "";
 
 var url = function (path) {
   return intern.config.functionalBaseUrl + path;
@@ -13,6 +14,7 @@ var url = function (path) {
 
 registerSuite("Reporting (auth)", {
   before() {
+    current_browser_id = "browser-" + this.remote.session.capabilities.browser;
     return FunctionalHelpers.login(this);
   },
 
@@ -48,8 +50,14 @@ registerSuite("Reporting (auth)", {
             // Make sure that "Confirm" button is disabled if browser is not selected
             assert.isNotNull(attribute);
           })
+          .end()
+          .findById(current_browser_id)
+          .isDisplayed()
+          .then(function (isDisplayed) {
+            assert.equal(isDisplayed, false, "Current browser is hidden");
+          })
+          .end()
           .execute(function () {
-            // Click on "Chrome"
             document.querySelector("[for=tested_browsers-0]").click();
           })
           .end()
