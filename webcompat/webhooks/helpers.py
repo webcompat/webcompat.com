@@ -12,8 +12,10 @@ import logging
 import re
 
 from webcompat import app
-from webcompat.db import Site
-from webcompat.db import site_db
+from webcompat.db import SiteGlobal
+from webcompat.db import SiteRegional
+from webcompat.db import global_site_db
+from webcompat.db import regional_site_db
 from webcompat.form import domain_name
 from webcompat.helpers import extract_url
 from webcompat.helpers import proxy_request
@@ -101,24 +103,45 @@ def extract_extra_labels(metadata_dict):
     return extra_labels
 
 
+def priority_label_by_url(url):
+    priorities = ['critical', 'important', 'normal']
+    # Find hostname in the regional DB first,
+    # if it doesn't exist, look in global
+    site = regional_site_db.query(SiteRegional).filter_by(url=url).first()
+    if not site:
+        site = global_site_db.query(SiteGlobal).filter_by(url=url).first()
+
+    if site:
+        return f'priority-{priorities[site.priority - 1]}'
+
+    return None
+
+
+def get_domains(hostname):
+    """Extract subdomains"""
+    subparts = hostname.split('.')
+    domains = ['.'.join(subparts[i:])
+               for i, subpart in enumerate(subparts)
+               if 0 < i < hostname.count('.')]
+    return domains
+
+
 def extract_priority_label(body):
     """Parse url from body and query the priority labels."""
     hostname = domain_name(extract_url(body))
+    label = None
+
     if hostname:
-        priorities = ['critical', 'important', 'normal']
-        # Find host_name in DB
-        for site in site_db.query(Site).filter_by(url=hostname):
-            return f'priority-{priorities[site.priority - 1]}'
-        # No host_name in DB, find less-level domain (>2)
-        # If host_name is lv4.lv3.example.com, find lv3.example.com/example.com
-        subparts = hostname.split('.')
-        domains = ['.'.join(subparts[i:])
-                   for i, subpart in enumerate(subparts)
-                   if 0 < i < hostname.count('.')]
-        for domain in domains:
-            for site in site_db.query(Site).filter_by(url=domain):
-                return f'priority-{priorities[site.priority - 1]}'
-    return None
+        label = priority_label_by_url(hostname)
+        # If label for hostname not found, try less-level domain (>2)
+        # If hostname is lv4.lv3.example.com, find lv3.example.com/example.com
+        if not label:
+            domains = get_domains(hostname)
+            for domain in domains:
+                sub_label = priority_label_by_url(domain)
+                if sub_label:
+                    return sub_label
+    return label
 
 
 def signature_check(key, post_signature, payload):

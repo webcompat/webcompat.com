@@ -27,11 +27,18 @@ session_db = scoped_session(sessionmaker(autocommit=False,
                                          autoflush=False,
                                          bind=session_engine))
 
-site_engine = create_engine('sqlite:///' + os.path.join(
-    app.config['DATA_PATH'], 'topsites.db'))
-site_db = scoped_session(sessionmaker(autocommit=False,
-                                      autoflush=False,
-                                      bind=site_engine))
+global_site_engine = create_engine('sqlite:///' + os.path.join(
+    app.config['DATA_PATH'], 'topsites-global.db'))
+global_site_db = scoped_session(sessionmaker(autocommit=False,
+                                autoflush=False,
+                                bind=global_site_engine))
+
+
+regional_site_engine = create_engine('sqlite:///' + os.path.join(
+    app.config['DATA_PATH'], 'topsites-regional.db'))
+regional_site_db = scoped_session(sessionmaker(autocommit=False,
+                                  autoflush=False,
+                                  bind=regional_site_engine))
 
 
 UsersBase = declarative_base()
@@ -58,13 +65,37 @@ class User(UsersBase):
 
 UsersBase.metadata.create_all(bind=session_engine)
 
-SiteBase = declarative_base()
-SiteBase.query = site_db.query_property()
+GlobalSiteBase = declarative_base()
+GlobalSiteBase.query = global_site_db.query_property()
 
 
-class Site(SiteBase):
-    """SQLAchemy base object for an Alexa top site."""
-    __tablename__ = 'topsites'
+class SiteGlobal(GlobalSiteBase):
+    """SQLAchemy base object for Tranco top site."""
+
+    __tablename__ = "topsites-global"
+
+    url = Column(String, primary_key=True)
+    priority = Column(Integer)
+    ranking = Column(Integer)
+
+    def __init__(self, url, ranking, priority):
+        """Initialize parameters of the Tranco top site DB."""
+        self.url = url
+        self.ranking = ranking
+        self.priority = priority
+
+
+GlobalSiteBase.metadata.create_all(bind=global_site_engine)
+
+
+RegionalSiteBase = declarative_base()
+RegionalSiteBase.query = regional_site_db.query_property()
+
+
+class SiteRegional(RegionalSiteBase):
+    """SQLAchemy base object for an Alexa top site per region."""
+
+    __tablename__ = "topsites-regional"
 
     url = Column(String, primary_key=True)
     priority = Column(Integer)
@@ -72,10 +103,11 @@ class Site(SiteBase):
     ranking = Column(Integer)
 
     def __init__(self, url, priority, country_code, ranking):
+        """Initialize parameters of the Alexa regional top site DB."""
         self.url = url
         self.priority = priority
         self.country_code = country_code
         self.ranking = ranking
 
 
-SiteBase.metadata.create_all(bind=site_engine)
+RegionalSiteBase.metadata.create_all(bind=regional_site_engine)
