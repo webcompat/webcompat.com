@@ -4,6 +4,11 @@
 2. New features: affect minor number
 3. API endpoint changes or (major) dependency version updates: affect major number
 
+## 48.0.0 - 2022-05-03
+
+* Fixes #3016 - Remove current browser from list of tested browsers [Pull #3691](https://github.com/webcompat/webcompat.com/pull/3691)
+* Fixes #3656 - Top sites priority change [Pull #3690](https://github.com/webcompat/webcompat.com/pull/3690)
+
 ## 47.1.2 - 2022-04-06
 
 * Fixes #3685 - Automatically add labels for issues reopened after ML triage [Pull #3686](https://github.com/webcompat/webcompat.com/pull/3686)
