@@ -28,6 +28,13 @@ module.exports = {
     "./js/lib/autogrow-textfield.js",
     "./js/lib/issues.js",
   ],
+  "private-list": [
+    "BackboneMousetrap",
+    "./js/lib/models/label-list.js",
+    "./js/lib/models/issue.js",
+    "./js/lib/mixins/private-pagination.js",
+    "./js/lib/private-list.js",
+  ],
   contributors: ["./js/lib/contributors.js"],
   webcompat: ["./js/lib/navbar.js", "./js/lib/webcompat.js"],
   "flashed-messages": ["./js/lib/flashed-messages.js"],

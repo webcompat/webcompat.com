@@ -34,6 +34,8 @@ api_bp = Blueprint('api_bp', __name__, url_prefix='/api',
 JSON_MIME_HTML = 'application/vnd.github.v3.html+json'
 HTML_MIME = 'text/html'
 ISSUES_PATH = app.config['ISSUES_REPO_URI']
+PRIVATE_ISSUES_PATH = app.config['PRIVATE_REPO_URI']
+AUTOCLOSED_MILESTONE_ID = app.config['AUTOCLOSED_MILESTONE_ID']
 REPO_PATH = ISSUES_PATH[:-7]
 
 
@@ -91,6 +93,19 @@ def proxy_issues():
     elif params.get('q'):
         abort(404)
     path = 'repos/{0}'.format(ISSUES_PATH)
+    return api_request('get', path, params=params)
+
+
+@api_bp.route('/private')
+def proxy_autoclosed():
+    """List all issues from GitHub on the API endpoint."""
+    params = request.args.copy()
+    params.add('milestone', AUTOCLOSED_MILESTONE_ID)
+
+    if not g.user:
+        abort(404)
+
+    path = 'repos/{0}'.format(PRIVATE_ISSUES_PATH)
     return api_request('get', path, params=params)
 
 

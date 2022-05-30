@@ -624,3 +624,31 @@ def outreach_template_generator(number):
         'https://webcompat-outreach.herokuapp.com/issue/' + str(number),
         code=308
     )
+
+
+@app.route('/private')
+@cache_policy(private=True, uri_max_age=0, must_revalidate=True)
+def show_autoclosed():
+    """Route to display issues autoclosed by ml bot."""
+    push('/dist/webcompat.css', **{
+        'as': 'style',
+        'rel': 'preload'
+    })
+    push(bust_cache('/dist/vendor.js'), **{
+        'as': 'script',
+        'rel': 'preload'
+    })
+    push(bust_cache('/dist/webcompat.js'), **{
+        'as': 'script',
+        'rel': 'preload'
+    })
+    push(bust_cache('/dist/autoclosed-list.js'), **{
+        'as': 'script',
+        'rel': 'preload'
+    })
+    if g.user:
+        get_user_info()
+    else:
+        abort(404)
+
+    return render_template('list-private.html')

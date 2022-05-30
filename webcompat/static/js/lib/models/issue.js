@@ -75,6 +75,7 @@ export const Issue = Backbone.Model.extend({
           this.getDescription(response.body_html),
           response.title
         ),
+        shortSummary: this.getShortSummary(response.body),
       },
       { silent: true }
     );
@@ -118,6 +119,24 @@ export const Issue = Backbone.Model.extend({
       issue_title = domain + " - " + description;
     }
     return issue_title;
+  },
+
+  getShortSummary: function (body) {
+    // Get step to reproduce
+    var div = document.createElement("div");
+    div.innerHTML = body;
+
+    const browser = div.textContent.match(/Browser \/ Version\*\*: (.+)\n/);
+    const os = div.textContent.match(/Operating System\*\*: (.+)\n/);
+    const description = div.textContent.match(/Description\*\*: (.+)\n/);
+    const steps = div.textContent.match(/Steps to Reproduce\*\*:\n(.+)/m);
+
+    return {
+      steps: steps ? steps[1] : description,
+      browser: browser ? browser[1] : "",
+      os: os ? os[1] : "",
+      description: description ? description[1] : "",
+    };
   },
 
   updateLabels: function (labelsArray) {
