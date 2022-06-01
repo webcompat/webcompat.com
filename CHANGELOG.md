@@ -4,6 +4,10 @@
 2. New features: affect minor number
 3. API endpoint changes or (major) dependency version updates: affect major number
 
+## 48.0.1 - 2022-06-01
+
+* Fixes #3697 - Save classification result to elasticsearch db [Pull #3701](https://github.com/webcompat/webcompat.com/pull/3701)
+
 ## 48.0.0 - 2022-05-03
 
 * Fixes #3016 - Remove current browser from list of tested browsers [Pull #3691](https://github.com/webcompat/webcompat.com/pull/3691)
