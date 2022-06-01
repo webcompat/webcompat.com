@@ -255,6 +255,10 @@ EXP_MAX_AGE = int(os.environ.get('EXP_MAX_AGE', 0))
 # See /docs/ab-testing.md for configuration instructions
 AB_EXPERIMENTS = {}
 
+ES_LOG_ENABLED = False
+
+if PRODUCTION:
+    ES_LOG_ENABLED = True
 
 from webcompat import app  # noqa
 

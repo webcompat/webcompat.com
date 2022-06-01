@@ -8,6 +8,8 @@
 
 from dataclasses import dataclass
 from typing import List
+from datetime import datetime
+from elasticsearch import Elasticsearch
 
 from requests.exceptions import HTTPError, ConnectionError
 
@@ -28,6 +30,15 @@ PUBLIC_REPO = app.config['ISSUES_REPO_URI']
 PRIVATE_REPO = app.config['PRIVATE_REPO_URI']
 AUTOCLOSED_MILESTONE_ID = app.config['AUTOCLOSED_MILESTONE_ID']
 THRESHOLD = 0.97
+
+if app.config['ES_LOG_ENABLED']:
+    ES = Elasticsearch(
+        app.config['ES_URL'],
+        api_key=(
+            app.config['ES_API_KEY_ID'],
+            app.config['ES_API_KEY']
+        )
+    )
 
 
 @dataclass
@@ -266,6 +277,21 @@ class WebHookIssue:
             path = f'repos/{PRIVATE_REPO}/{self.number}'
             payload_request = {'milestone': AUTOCLOSED_MILESTONE_ID}
             make_request('patch', path, payload_request)
+
+        if app.config['ES_LOG_ENABLED']:
+            # save prediction result to ES
+            doc = {
+                "issue": int(self.number),
+                "issue_url": self.html_url,
+                "predicted_at": datetime.now(),
+                "prediction": data,
+            }
+
+            ES.index(
+                index="bugbug_predictions",
+                id=int(self.number),
+                body=doc,
+            )
 
     def add_bugbug_tracking_label(self, label_name):
         payload = {'labels': [label_name]}

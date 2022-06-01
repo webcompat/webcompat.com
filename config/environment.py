@@ -42,6 +42,9 @@ if PRODUCTION:
     BUGBUG_HTTP_SERVER = "https://bugbug.herokuapp.com"
     CLASSIFIER_PATH = "needsdiagnosis/predict/github/webcompat/web-bugs-private"  # noqa
     AUTOCLOSED_MILESTONE_ID = 15
+    ES_URL = os.environ.get('ES_URL')
+    ES_API_KEY_ID = os.environ.get('ES_API_KEY_ID')
+    ES_API_KEY = os.environ.get('ES_API_KEY')
 
 if STAGING:
     GITHUB_CLIENT_ID = os.environ.get('STAGING_GITHUB_CLIENT_ID')
@@ -61,6 +64,10 @@ if STAGING:
     BUGBUG_HTTP_SERVER = "https://bugbug.herokuapp.com"
     CLASSIFIER_PATH = "needsdiagnosis/predict/github/webcompat/webcompat-tests-private"  # noqa
     AUTOCLOSED_MILESTONE_ID = 5
+    ES_URL = os.environ.get('ES_URL')
+    ES_API_KEY_ID = os.environ.get('ES_API_KEY_ID')
+    ES_API_KEY = os.environ.get('ES_API_KEY')
+
 
 if LOCALHOST:
     # for now we are using .env only on localhost
@@ -85,6 +92,9 @@ if LOCALHOST:
     BUGBUG_HTTP_SERVER = "http://0.0.0.0:8000"
     CLASSIFIER_PATH = "needsdiagnosis/predict/github/webcompat/webcompat-tests-private"  # noqa
     AUTOCLOSED_MILESTONE_ID = 5
+    ES_URL = os.environ.get('ES_URL')
+    ES_API_KEY_ID = os.environ.get('ES_API_KEY_ID')
+    ES_API_KEY = os.environ.get('ES_API_KEY')
 
 # BUG STATUS
 # The id will be initialized when the app is started.
