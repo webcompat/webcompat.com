@@ -37,7 +37,7 @@
     "eslint-config-prettier": "^8.1.0",
     "eslint-plugin-prettier": "^4.0.0",
     "file-loader": "^6.0.0",
-    "husky": "^7.0.0",
+    "husky": "^8.0.1",
     "imagemin-webpack-plugin": "^2.4.2",
     "intern": "^4.8.4",
     "leadfoot": "1.7.6",
