@@ -40,6 +40,12 @@ regional_site_db = scoped_session(sessionmaker(autocommit=False,
                                   autoflush=False,
                                   bind=regional_site_engine))
 
+site_nsfw_engine = create_engine('sqlite:///' + os.path.join(
+    app.config['DATA_PATH'], 'site-nsfw.db'))
+site_nsfw_db = scoped_session(sessionmaker(autocommit=False,
+                                           autoflush=False,
+                                           bind=site_nsfw_engine))
+
 
 UsersBase = declarative_base()
 UsersBase.query = session_db.query_property()
@@ -111,3 +117,22 @@ class SiteRegional(RegionalSiteBase):
 
 
 RegionalSiteBase.metadata.create_all(bind=regional_site_engine)
+
+
+SiteNSFWBase = declarative_base()
+SiteNSFWBase.query = site_nsfw_db.query_property()
+
+
+class SiteNSFW(SiteNSFWBase):
+    """Define the DB for NSFW domains."""
+
+    __tablename__ = 'site-nsfw'
+
+    url = Column(String, primary_key=True)
+
+    def __init__(self, url):
+        """Initialize parameters of the NSFW domains DB."""
+        self.url = url
+
+
+SiteNSFWBase.metadata.create_all(bind=site_nsfw_engine)

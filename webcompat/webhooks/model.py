@@ -23,6 +23,7 @@ from webcompat.webhooks.helpers import oops
 from webcompat.webhooks.helpers import prepare_rejected_issue
 from webcompat.webhooks.helpers import repo_scope
 from webcompat.webhooks.helpers import prepare_private_url
+from webcompat.webhooks.helpers import extract_nsfw_label
 from webcompat.webhooks.ml import get_issue_classification
 from webcompat.issues import moderation_template
 
@@ -298,6 +299,14 @@ class WebHookIssue:
         path = f'repos/{PUBLIC_REPO}/{self.number}/labels'
         make_request('post', path, payload)
 
+    def label_nsfw(self):
+        nsfw_label = extract_nsfw_label(self.body)
+
+        if nsfw_label:
+            payload = {'labels': [nsfw_label]}
+            path = f'repos/{PRIVATE_REPO}/{self.number}/labels'
+            make_request('post', path, payload)
+
     def process_issue_action(self):
         """Route the actions and provide different responses.
 
@@ -365,6 +374,12 @@ class WebHookIssue:
                 self.comment_public_uri()
             except HTTPError as e:
                 msg_log(f'comment failed ({e})', self.number)
+                return oops()
+
+            try:
+                self.label_nsfw()
+            except HTTPError as e:
+                msg_log(f'labeling as nsfw failed ({e})', self.number)
                 return oops()
 
             try:

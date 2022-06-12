@@ -33,6 +33,8 @@ from webcompat.helpers import get_browser
 from webcompat.helpers import get_os
 from webcompat.helpers import get_details_list
 from webcompat.helpers import is_json_object
+from webcompat.nsfw import get_nsfw_label
+from webcompat.nsfw import moderate_screenshot
 
 SCHEMES = ('http://', 'https://')
 BAD_SCHEMES = ('http:/', 'https:/', 'http:', 'https:')
@@ -537,11 +539,11 @@ def build_formdata(form_object):
     details = form_object.get('details')
     if details:
         body += build_details(details)
+
+    if get_nsfw_label(domain):
+        body = moderate_screenshot(body)
+
     body += get_console_logs_url(form_object.get('console_logs_url'))
-    # Add the image, if there was one.
-    if form_object.get('image_upload') is not None:
-        body += '\n\n![Screenshot of the site issue]({image_url})'.format(
-            image_url=form_object.get('image_upload').get('url'))
     # Append "from webcompat.com" message to bottom (for GitHub issue viewers)
     body += '\n\n{0}'.format(GITHUB_HELP)
     rv = {'title': summary, 'body': body}

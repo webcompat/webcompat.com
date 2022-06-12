@@ -785,6 +785,15 @@ def get_filename_from_url(uri):
     return script_path
 
 
+def get_domains(hostname):
+    """Extract subdomains"""
+    subparts = hostname.split('.')
+    domains = ['.'.join(subparts[i:])
+               for i, subpart in enumerate(subparts)
+               if 0 < i < hostname.count('.')]
+    return domains
+
+
 @app.context_processor
 def register_get_filename_from_url():
     return dict(get_filename_from_url=get_filename_from_url)

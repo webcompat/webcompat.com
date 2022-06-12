@@ -38,6 +38,7 @@ from webcompat.helpers import sanitize_link
 from webcompat.helpers import get_extra_labels
 from webcompat.helpers import get_filename_from_url
 from webcompat.helpers import is_darknet_domain
+from webcompat.helpers import get_domains
 
 
 ACCESS_TOKEN_LINK = '<https://api.github.com/repositories/17839063/issues?per_page=50&page=3&access_token=12345>; rel="next", <https://api.github.com/repositories/17839063/issues?access_token=12345&per_page=50&page=4>; rel="last", <https://api.github.com/repositories/17839063/issues?per_page=50&access_token=12345&page=1>; rel="first", <https://api.github.com/repositories/17839063/issues?per_page=50&page=1&access_token=12345>; rel="prev"'  # noqa
@@ -601,6 +602,20 @@ class TestHelpers(unittest.TestCase):
             new_headers2 = get_response_headers(proxy_response,
                                                 mime_type='text/html')
             assert new_headers2.get('content-type') == 'text/html'
+
+    def test_get_domains(self):
+        """Extract list of subdomains."""
+        self.assertEqual(
+            get_domains('www.example.com'), ['example.com']
+        )
+        self.assertEqual(
+            get_domains('sub.example.com'), ['example.com']
+        )
+        self.assertEqual(
+            get_domains('part.sub.example.com'),
+            ['sub.example.com', 'example.com']
+        )
+        self.assertEqual(get_domains('test'), [])
 
 
 if __name__ == '__main__':
