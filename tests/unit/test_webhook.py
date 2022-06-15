@@ -17,7 +17,7 @@ from requests.exceptions import ConnectionError
 
 import webcompat
 
-from webcompat.db import SiteGlobal, SiteRegional
+from webcompat.db import SiteGlobal, SiteRegional, SiteNSFW
 from webcompat.helpers import to_bytes
 from webcompat.webhooks import helpers, ml
 
@@ -157,6 +157,21 @@ class TestWebhook(unittest.TestCase):
 
         self.issue_body12 = """
         **URL**: https://subdomain.example.com/
+        <!-- @browser: Firefox Mobile (Tablet) 40.0 -->
+        """
+
+        self.issue_body13 = """
+        <!-- @browser: Firefox 101.0 -->
+        <!-- @ua_header: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:101.0) Gecko/20100101 Firefox/101.0 -->
+        <!-- @reported_with: desktop-reporter -->
+        <!-- @public_url: https://github.com/webcompat/webcompat-tests/issues/2780 -->
+        <!-- @extra_labels: type-webrender-enabled -->
+
+        **URL**: http://pornhub.com/
+        """  # noqa
+
+        self.issue_body14 = """
+        **URL**: http://test.pornhub.com/
         <!-- @browser: Firefox Mobile (Tablet) 40.0 -->
         """
 
@@ -402,29 +417,14 @@ class TestWebhook(unittest.TestCase):
         assert mock_func.call_count == 2
         self.assertEqual(priority_label, None)
 
-    def test_get_domains(self):
-        """Extract list of subdomains."""
-        self.assertEqual(
-            helpers.get_domains('www.example.com'), ['example.com']
-        )
-        self.assertEqual(
-            helpers.get_domains('sub.example.com'), ['example.com']
-        )
-        self.assertEqual(
-            helpers.get_domains('part.sub.example.com'),
-            ['sub.example.com', 'example.com']
-        )
-        self.assertEqual(
-            helpers.get_domains('test'),
-            []
-        )
-
+    @patch('webcompat.db.site_nsfw_db.query')
     @patch('webcompat.db.regional_site_db.query')
     @patch('webcompat.db.global_site_db.query')
-    def test_get_issue_labels(self, gm, rm):
+    def test_get_issue_labels(self, gm, rm, nm):
         """Extract list of labels from an issue body."""
         rm.return_value.filter_by.return_value.first.return_value = None
         gm.return_value.filter_by.return_value.first.return_value = None
+        nm.return_value.filter_by.return_value.first.return_value = None
 
         labels_tests = [
             (self.issue_body, ['browser-firefox', 'type-media',
@@ -444,6 +444,34 @@ class TestWebhook(unittest.TestCase):
         for issue_body, expected in labels_tests:
             actual = helpers.get_issue_labels(issue_body)
             self.assertEqual(sorted(expected), sorted(actual))
+
+    @patch('webcompat.db.site_nsfw_db.query')
+    def test_nsfw_label(self, nsfw_mock):
+        """Extract nsfw label."""
+        nsfw_mock.return_value.filter_by.return_value.first.return_value = SiteNSFW(         # noqa
+            'pornhub.com'
+        )
+
+        nsfw_label = helpers.extract_nsfw_label(self.issue_body13)
+        self.assertEqual(nsfw_label, 'nsfw')
+
+    @patch('webcompat.db.site_nsfw_db.query')
+    def test_nsfw_label_subdomain(self, nsfw_mock):
+        """Extract nsfw for a subdomain."""
+        nsfw_mock.return_value.filter_by.return_value.first.return_value = SiteNSFW(         # noqa
+            'pornhub.com'
+        )
+
+        nsfw_label = helpers.extract_nsfw_label(self.issue_body14)
+        self.assertEqual(nsfw_label, 'nsfw')
+
+    @patch('webcompat.db.site_nsfw_db.query')
+    def test_nsfw_label_empty(self, nsfw_mock):
+        """Site is not found in nsfw db"""
+        nsfw_mock.return_value.filter_by.return_value.first.return_value = None
+
+        nsfw_label = helpers.extract_nsfw_label(self.issue_body13)
+        self.assertEqual(nsfw_label, None)
 
     def test_is_github_hook_missing_x_github_event(self):
         """Validation tests for GitHub Webhooks: Missing X-GitHub-Event."""

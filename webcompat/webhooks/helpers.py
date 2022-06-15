@@ -20,8 +20,10 @@ from webcompat.form import domain_name
 from webcompat.helpers import extract_url
 from webcompat.helpers import proxy_request
 from webcompat.helpers import to_bytes
+from webcompat.helpers import get_domains
 from webcompat.issues import moderation_template
 from webcompat.form import wrap_metadata
+from webcompat.nsfw import get_nsfw_label
 
 BROWSERS = ['blackberry', 'brave', 'chrome', 'edge', 'firefox', 'iceweasel', 'ie', 'lynx', 'myie', 'opera', 'puffin', 'qq', 'safari', 'samsung', 'seamonkey', 'uc', 'vivaldi']  # noqa
 GECKO_BROWSERS = ['browser-android-components',
@@ -117,15 +119,6 @@ def priority_label_by_url(url):
     return None
 
 
-def get_domains(hostname):
-    """Extract subdomains"""
-    subparts = hostname.split('.')
-    domains = ['.'.join(subparts[i:])
-               for i, subpart in enumerate(subparts)
-               if 0 < i < hostname.count('.')]
-    return domains
-
-
 def extract_priority_label(body):
     """Parse url from body and query the priority labels."""
     hostname = domain_name(extract_url(body))
@@ -142,6 +135,12 @@ def extract_priority_label(body):
                 if sub_label:
                     return sub_label
     return label
+
+
+def extract_nsfw_label(body):
+    """Parse url from body and query the nsfw DB."""
+    hostname = domain_name(extract_url(body))
+    return get_nsfw_label(hostname)
 
 
 def signature_check(key, post_signature, payload):
@@ -191,7 +190,8 @@ def get_issue_labels(issue_body):
             browser_label = None
         labelslist.extend(extra_labels)
     priority_label = extract_priority_label(issue_body)
-    labelslist.extend([browser_label, priority_label])
+    nsfw_label = extract_nsfw_label(issue_body)
+    labelslist.extend([browser_label, priority_label, nsfw_label])
     if any(label for label in labelslist if label in GECKO_BROWSERS):
         labelslist.append('engine-gecko')
     if any(label for label in labelslist if label in IOS_BROWSERS):
