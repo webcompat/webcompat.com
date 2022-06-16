@@ -4,6 +4,10 @@
 2. New features: affect minor number
 3. API endpoint changes or (major) dependency version updates: affect major number
 
+## 49.0.0 - 2022-06-16
+
+* Fixes #3703 - Automatically label nsfw issues [Pull #3704](https://github.com/webcompat/webcompat.com/pull/3704)
+
 ## 48.0.1 - 2022-06-01
 
 * Fixes #3697 - Save classification result to elasticsearch db [Pull #3701](https://github.com/webcompat/webcompat.com/pull/3701)
