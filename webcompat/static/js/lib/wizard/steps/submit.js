@@ -10,7 +10,6 @@ import $ from "jquery";
 import { showContainer } from "../ui-utils.js";
 import { uploadConsoleLogs } from "./upload-helper/console-logs-upload.js";
 import { uploadImage } from "./upload-helper/image-upload.js";
-import { sendAnalyticsEvent } from "../analytics.js";
 
 const container = $(".step-container.step-submit");
 const form = $("#js-ReportForm form");
@@ -45,7 +44,6 @@ const submitForm = function () {
 
 const onFormSubmit = (event) => {
   event.preventDefault();
-  sendAnalyticsEvent("success", "end");
   disableSubmits();
   showLoadingIndicator();
   uploadConsoleLogs().always(() => uploadImage().then(submitForm));

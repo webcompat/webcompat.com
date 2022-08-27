@@ -4,7 +4,6 @@
 
 import $ from "jquery";
 import Mousetrap from "Mousetrap";
-import { sendAnalyticsEvent } from "./wizard/analytics.js";
 
 class Popup {
   constructor() {
@@ -35,13 +34,6 @@ class Popup {
     const popupTrigger = e.target.dataset.popupTrigger;
     const popupModal = document.querySelector(
       `[data-popup-modal="${popupTrigger}"]`
-    );
-    sendAnalyticsEvent(
-      // transform trigger into camelCase and send as our event
-      popupTrigger.replace(/-([a-z])/g, (match) => {
-        return match[1].toUpperCase();
-      }),
-      "click"
     );
     popupModal.classList.add("is--visible");
     this.overlay.classList.add("is-blacked-out");

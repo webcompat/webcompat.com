@@ -10,20 +10,3 @@ export const sendAnalyticsCS = (campaign, source) => {
     });
   }
 };
-
-const sendAnalyticsVpv = (label) => {
-  ga("set", "page", `/vpv-${label}`);
-  ga("send", "pageview");
-};
-
-export const sendAnalyticsEvent = (label, action = "step") => {
-  if (window.ga) {
-    ga("send", "event", {
-      eventCategory: "wizard",
-      eventAction: action,
-      eventLabel: label,
-    });
-
-    sendAnalyticsVpv(label);
-  }
-};
