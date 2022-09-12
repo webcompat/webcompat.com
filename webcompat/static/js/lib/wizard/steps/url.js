@@ -10,7 +10,6 @@ import notify from "../notify.js";
 import { isUrlValid, isEmpty } from "../validation.js";
 import { extractPrettyUrl } from "../utils.js";
 import { showError, showSuccess, hideSuccess } from "../ui-utils.js";
-import { sendAnalyticsEvent } from "../analytics.js";
 
 const urlField = $("#url");
 const nextStepButton = $(".next-url");
@@ -76,7 +75,6 @@ const setInitialInputState = () => {
 initListeners();
 updateDescription(urlField.val());
 setInitialInputState();
-sendAnalyticsEvent("url", "start");
 
 export default {
   //this method is called when url is prefilled via postMessage or GET request
