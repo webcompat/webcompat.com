@@ -4,6 +4,12 @@
 2. New features: affect minor number
 3. API endpoint changes or (major) dependency version updates: affect major number
 
+## 49.0.1 - 2022-09-15
+
+* Fixes #3681 - Remove analytics for the form wizard [Pull #3729](https://github.com/webcompat/webcompat.com/pull/3729)
+* Fixes #3713 - Fixes for broken/invalid links and typos [Pull #3728](https://github.com/webcompat/webcompat.com/pull/3728)
+* Fixes #3717 - Change whois link to Google registry [Pull #3718](https://github.com/webcompat/webcompat.com/pull/3718)
+
 ## 49.0.0 - 2022-06-16
 
 * Fixes #3703 - Automatically label nsfw issues [Pull #3704](https://github.com/webcompat/webcompat.com/pull/3704)
