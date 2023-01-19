@@ -8,6 +8,11 @@ import anime from "animejs/lib/anime.es.js";
 const HEADER_HEIGHT = 130;
 const SPACING = 24;
 
+const isReducedMotion = () => {
+  const result = window.matchMedia("(prefers-reduced-motion: reduce)");
+  return result && result.matches;
+};
+
 export const createInlineHelp = (text, className = "form-message-error") => {
   return $("<small></small>", {
     class: `label-icon-message ${className}`,
@@ -30,8 +35,20 @@ export const scrollToElement = (element) => {
   });
 };
 
+const showContainerReduced = (container, cb) => {
+  const domElement = container[0];
+  domElement.style.display = "flex";
+  domElement.style.opacity = "1";
+  container.addClass("open");
+  if (cb) cb();
+};
+
 export const showContainer = (container, cb) => {
   const domElement = container[0];
+  if (isReducedMotion()) {
+    return showContainerReduced(container, cb);
+  }
+
   const startPosition = container.hasClass("open") ? 0 : "-100%";
   return anime({
     easing: "linear",
@@ -52,8 +69,19 @@ export const showContainer = (container, cb) => {
   });
 };
 
+const hideContainerReduced = (container) => {
+  const domElement = container[0];
+  domElement.style.display = "none";
+  container.removeClass("open");
+};
+
 export const hideContainer = (container) => {
   const domElement = container[0];
+
+  if (isReducedMotion()) {
+    return hideContainerReduced(container);
+  }
+
   return anime({
     easing: "linear",
     duration: 300,
