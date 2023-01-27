@@ -6,9 +6,7 @@ import notify from "../notify.js";
 import { isSelfReport, convertToDataURI } from "../utils.js";
 import { blobOrFileTypeValid, isImageDataURIValid } from "../validation.js";
 import { sendAnalyticsCS } from "../analytics.js";
-import { extractPrettyUrl } from "../utils.js";
 
-const showStep = (id, data) => notify.publish("showStep", { id, data });
 const updateStep = (id, data) => notify.publish("updateStep", { id, data });
 const updateUrl = (url) => updateStep("url", { url });
 const updateHidden = (data) => updateStep("hidden", { data });
@@ -20,9 +18,6 @@ const handleMessage = (message) => {
 
   sendAnalyticsCS(utm_campaign, utm_source);
   if (url) {
-    showStep("category", {
-      url: extractPrettyUrl(url),
-    });
     updateUrl(url);
   }
   updateHidden(additional);
