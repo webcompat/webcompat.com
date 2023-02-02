@@ -4,6 +4,11 @@
 2. New features: affect minor number
 3. API endpoint changes or (major) dependency version updates: affect major number
 
+## 49.0.2 - 2023-02-02
+
+* Fixes #3748 - Temporary disable outreach comment [Pull #3750](https://github.com/webcompat/webcompat.com/pull/3750)
+* Fixes #3505 - Remove animations/scrolling for prefers-reduced-motion [Pull #3747](https://github.com/webcompat/webcompat.com/pull/3747)
+
 ## 49.0.1 - 2022-09-15
 
 * Fixes #3681 - Remove analytics for the form wizard [Pull #3729](https://github.com/webcompat/webcompat.com/pull/3729)
