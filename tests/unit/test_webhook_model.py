@@ -199,6 +199,7 @@ def test_prepare_public_comment():
         expected_payload).get('body')
 
 
+@pytest.mark.skip(reason="Outreach comment temporary disabled")
 def test_prepare_outreach_comment():
     """Test we prepare the right comment body."""
     expected_payload = '{"body": "[Generate outreach template](https://webcompat.com/outreach/2598)"}'  # noqa
@@ -209,6 +210,7 @@ def test_prepare_outreach_comment():
         expected_payload).get('body')
 
 
+@pytest.mark.skip(reason="Outreach comment temporary disabled")
 def test_prepare_outreach_comment_for_auth_report():
     """Test we prepare the right comment body."""
     expected_payload = '{"body": "[Generate outreach template](https://webcompat.com/outreach/2598)"}'  # noqa
@@ -332,7 +334,7 @@ def test_process_issue_action_scenarios(mock_mr, mock_classification):
         ('private_milestone_accepted_incomplete.json', incomplete),
         ('private_milestone_accepted_invalid.json', invalid),
         ('private_issue_opened.json', comment_added),
-        ('public_milestone_needscontact.json', outreach_comment_added),
+        # ('public_milestone_needscontact.json', outreach_comment_added),
         ('private_milestone_ml_autoclosed.json', autoclosed),
     ]
     mock_classification.return_value = (

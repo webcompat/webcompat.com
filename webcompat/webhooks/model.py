@@ -338,17 +338,6 @@ class WebHookIssue:
             else:
                 return make_response('gracias, amigo.', 200)
         elif (self.action == 'milestoned' and scope == 'public' and
-              self.milestoned_with == 'needscontact'):
-            # add a comment with a link to outreach template generator
-            # when issue is moved to needscontact
-            try:
-                self.comment_outreach_generator_uri()
-            except HTTPError as e:
-                msg_log(f'comment failed ({e})', self.number)
-                return oops()
-            else:
-                return make_response('outreach generator url added', 200)
-        elif (self.action == 'milestoned' and scope == 'public' and
               self.milestoned_with in ('needsdiagnosis', 'moved')):
             try:
                 if 'bugbug-reopened' in self.original_labels:
