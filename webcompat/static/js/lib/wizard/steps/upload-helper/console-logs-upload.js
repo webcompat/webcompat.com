@@ -35,6 +35,9 @@ export const uploadConsoleLogs = () => {
   const formdata = new FormData();
   formdata.append("console_logs", JSON.stringify(details.consoleLog));
 
+  delete details.consoleLog;
+  detailsInput.val(JSON.stringify(details));
+
   return $.ajax({
     contentType: false,
     processData: false,
