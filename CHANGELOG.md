@@ -4,6 +4,10 @@
 2. New features: affect minor number
 3. API endpoint changes or (major) dependency version updates: affect major number
 
+## 49.0.3 - 2023-04-14
+
+* Fixes #3758 - Fix a problem with issue getting lost when filing an auth report [Pull #3759](https://github.com/webcompat/webcompat.com/pull/3759)
+
 ## 49.0.2 - 2023-02-02
 
 * Fixes #3748 - Temporary disable outreach comment [Pull #3750](https://github.com/webcompat/webcompat.com/pull/3750)
