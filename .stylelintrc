@@ -18,6 +18,8 @@
         "selector-attribute-operator-space-before": "always",
         "selector-attribute-operator-space-after": "always",
         "selector-attribute-brackets-space-inside": "never",
+        "selector-class-pattern": null,
+        "selector-id-pattern": null,
         "declaration-block-trailing-semicolon": "always",
         "declaration-no-important": true,
         "declaration-colon-space-before": "never",
