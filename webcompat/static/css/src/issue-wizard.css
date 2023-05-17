@@ -50,7 +50,7 @@
 }
 
 #wizard-container {
-  background-color: var(--base-colorDark);
+  background-color: var(--base-color-dark);
   display: flex;
   justify-content: space-evenly;
   margin-left: calc(var(--grid-outermargin-s) * -1);
@@ -69,7 +69,7 @@
 }
 
 #wizard-container.shadow {
-  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .5);
+  box-shadow: 0 2px 4px 0 rgb(0 0 0 / 50%);
 }
 
 #wizard-container .grid {
@@ -213,7 +213,7 @@
 .step-container {
   background-color: var(--base-background);
   border-radius: 5px;
-  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, .2);
+  box-shadow: 0 1px 4px 0 rgb(0 0 0 / 20%);
   display: flex;
   margin-top: 23px;
   padding: 0;
@@ -253,7 +253,7 @@
 .issue-disclaimer {
   background-color: var(--base-background);
   border-radius: 5px;
-  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, .2);
+  box-shadow: 0 1px 4px 0 rgb(0 0 0 / 20%);
   font-size: 14px;
   line-height: 22px;
   margin: 16px auto -35px;
@@ -938,12 +938,12 @@
 
   .step-container.step-url {
     background-color: var(--base-background);
-    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, .2);
+    box-shadow: 0 1px 4px 0 rgb(0 0 0 / 20%);
     margin-top: 23px;
   }
 
   .input-control {
-    padding: 25px 20px 14px 20px;
+    padding: 25px 20px 14px;
   }
 
   .input-control .input-description {
@@ -975,7 +975,7 @@
   }
 
   .button-control .input-control {
-    padding: 25px 0 14px 0;
+    padding: 25px 0 14px;
   }
 
   .with-validation-icons.is-validated .input-wrapper::after,
@@ -1020,7 +1020,7 @@
   }
 
   .device-data {
-    padding: 45px 20px 34px 20px;
+    padding: 45px 20px 34px;
     width: 70%;
   }
 

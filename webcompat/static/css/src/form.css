@@ -237,7 +237,7 @@ label[for = "image"] {
 
 .form-upload .label-remove:not(.is-hidden) {
   background-color: #fff;
-  border: 1px solid rgba(255, 201, 0, 1);
+  border: 1px solid rgb(255 201 0 / 100%);
   border-radius: 50%;
   cursor: pointer;
   left: auto;

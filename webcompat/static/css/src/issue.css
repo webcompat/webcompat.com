@@ -99,7 +99,8 @@
   overflow: auto;
 }
 
-/* As we can not add a class to the img in the comment right now (markup parsers are complicated), we need to use the img element */
+/* As we can not add a class to the img in the comment right now
+(markup parsers are complicated), we need to use the img element */
 
 .comment-body img,
 .js-Issue-comment-body img {
@@ -113,13 +114,13 @@
     flex-wrap: nowrap;
   }
   #issue > .x2 {
-    flex-basis: 66.66666%;
-    max-width: 66.66666%;
+    flex-basis: 66.6667%;
+    max-width: 66.6667%;
     min-width: 0;
   }
   #issue > .x1 {
-    flex-basis: 33.33333%;
-    max-width: 33.33333%;
+    flex-basis: 33.3333%;
+    max-width: 33.3333%;
     min-width: 0;
   }
 }
@@ -133,7 +134,7 @@
 }
 
 .issue-details-nsfw::after {
-  background: var(--base-colorDark);
+  background: var(--base-color-dark);
   color: var(--base-background);
   content: "Click to show image";
   cursor: pointer;
