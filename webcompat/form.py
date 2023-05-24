@@ -301,13 +301,14 @@ def get_console_logs_url(url):
 def build_details(details):
     """Populate and return the Browser Configuration section template.
 
-    If we get JSON, we try to pull out the console logs before building the
-    rest of the details.
+    If we get JSON, we try to pull out the console logs and any additional
+    data before building the rest of the details.
     """
     try:
         content = json.loads(details)
         if is_json_object(content):
             content.pop('consoleLog', None)
+            content.pop('additionalData', None)
     except ValueError:
         # if we got a ValueError, details was a string, so just pass it
         # into get_details below

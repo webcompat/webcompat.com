@@ -274,6 +274,21 @@ class TestForm(unittest.TestCase):
         expected_empty_log_arg = '<details>\n<summary>Browser Configuration</summary>\n<ul>\n  <li>a: b</li><li>c: false</li>\n</ul>\n</details>'  # noqa
         self.assertEqual(actual_empty_log_arg, expected_empty_log_arg)
 
+    def test_build_details_without_additional_data(self):
+        """Expected HTML is returned without additional data."""
+        actual_json_arg = form.build_details(json.dumps(
+            {'a': 'b', 'c': False,
+             'additionalData': {
+                 'applicationName': 'Firefox',
+                 'updateChannel': 'default'
+             }}))
+        expected_json_arg = '<details>\n<summary>Browser Configuration</summary>\n<ul>\n  <li>a: b</li><li>c: false</li>\n</ul>\n</details>'  # noqa
+        self.assertEqual(actual_json_arg, expected_json_arg)
+        actual_empty_log_arg = form.build_details(json.dumps(
+            {'a': 'b', 'c': False, 'additionalData': ''}))
+        expected_empty_log_arg = '<details>\n<summary>Browser Configuration</summary>\n<ul>\n  <li>a: b</li><li>c: false</li>\n</ul>\n</details>'  # noqa
+        self.assertEqual(actual_empty_log_arg, expected_empty_log_arg)
+
     def test_get_console_logs_url(self):
         """Assert we return an empty string, or a link to console logs page."""
         actual_empty_arg = form.get_console_logs_url('')
