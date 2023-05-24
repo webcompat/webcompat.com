@@ -4,6 +4,10 @@
 2. New features: affect minor number
 3. API endpoint changes or (major) dependency version updates: affect major number
 
+## 49.0.4 - 2023-05-24
+
+* Fixes #3767 - Don't save additional information from the reporter [Pull #3768](https://github.com/webcompat/webcompat.com/pull/3768)
+
 ## 49.0.3 - 2023-04-14
 
 * Fixes #3758 - Fix a problem with issue getting lost when filing an auth report [Pull #3759](https://github.com/webcompat/webcompat.com/pull/3759)
