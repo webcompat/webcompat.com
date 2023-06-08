@@ -26,6 +26,10 @@
             required=True, type='url', pattern='') }}
           </div>
         </div>
+          <div class="form-text form-element js-Form-group problem-description progress-textarea bordered-container">
+            {{ form.steps_reproduce(class_='form-field text-field js-autogrow-field',
+            rows=3, placeholder="Describe what happened") }}
+          </div>
       </div>
     </div>
     <div class="input-control half hero">
@@ -34,9 +38,15 @@
   </div>
   <div id="prefill"></div>
   <div class="button-control row">
-    <div class="input-control half">
+    <div class="input-control">
       <div class="col center">
-        <button class="button issue-btn next-url" disabled>Confirm</button>
+        <div class="final-text">
+          Almost ready! Submit as is or provide <strong> more information </strong> via our detailed reporter tool:
+        </div>
+        <div class="row mobile-col">
+          <button class="button issue-btn next-submit" disabled>Submit</button>
+          <button class="button issue-btn next-url" disabled>Add more details</button>
+        </div>
         <a href="#" class="popup-trigger desktop-only" data-popup-trigger="what-is-compat">Learn more about web compatibility</a>
       </div>
     </div>

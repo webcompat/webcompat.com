@@ -12,7 +12,9 @@ import { extractPrettyUrl } from "../utils.js";
 import { showError, showSuccess, hideSuccess } from "../ui-utils.js";
 
 const urlField = $("#url");
+const descriptionField = $("#steps_reproduce");
 const nextStepButton = $(".next-url");
+const submitButton = $(".next-submit");
 const urlDesc = $("#desc-url");
 const noUrlDesc = $("#desc-no-url");
 
@@ -22,6 +24,10 @@ const onClick = (event) => {
   event.preventDefault();
 
   showNextStep("category", { url: extractPrettyUrl(urlField.val()) });
+};
+
+const onSubmitClick = (event) => {
+  event.preventDefault();
 };
 
 const handleEvent = (value, errCb) => {
@@ -34,6 +40,7 @@ const handleEvent = (value, errCb) => {
   }
 
   nextStepButton.prop("disabled", !isValid);
+  submitButton.prop("disabled", !isValid);
 };
 
 const onChange = (value) => handleEvent(value, () => hideSuccess(urlField));
@@ -60,6 +67,7 @@ const initListeners = () => {
   urlField.on("input", (event) => onChange(event.target.value));
   urlField.on("blur", (event) => onBlur(event.target.value));
   nextStepButton.on("click", onClick);
+  submitButton.on("click", onSubmitClick);
 };
 
 const setInitialInputState = () => {
@@ -82,5 +90,6 @@ export default {
     if (!url) return;
     urlField.val(url).trigger("input").blur();
     updateDescription(url);
+    descriptionField.focus();
   },
 };

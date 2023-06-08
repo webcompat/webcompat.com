@@ -66,18 +66,12 @@ NEW_ISSUE_STEPS = [
     },
     {
         'number': 5,
-        'id': 'description',
-        'className': '',
-        'label': 'Description'
-    },
-    {
-        'number': 6,
         'id': 'screenshot',
         'className': '',
         'label': 'Screenshot'
     },
     {
-        'number': 7,
+        'number': 6,
         'id': 'send',
         'className': 'last',
         'label': 'Send report'
