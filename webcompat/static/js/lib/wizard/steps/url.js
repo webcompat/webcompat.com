@@ -12,22 +12,43 @@ import { extractPrettyUrl } from "../utils.js";
 import { showError, showSuccess, hideSuccess } from "../ui-utils.js";
 
 const urlField = $("#url");
+const form = $("#js-ReportForm form");
 const descriptionField = $("#steps_reproduce");
 const nextStepButton = $(".next-url");
 const submitButton = $(".next-submit");
 const urlDesc = $("#desc-url");
 const noUrlDesc = $("#desc-no-url");
+const hintText = $(".final-text");
+const submitTypeField = $("#submit_type:hidden");
 
 const showNextStep = (id, data) => notify.publish("showStep", { id, data });
 
 const onClick = (event) => {
   event.preventDefault();
 
-  showNextStep("category", { url: extractPrettyUrl(urlField.val()) });
+  const textLength = descriptionField[0].value.trim().length;
+
+  if (textLength > 0) {
+    showNextStep("category", { url: extractPrettyUrl(urlField.val()) });
+    submitButton.hide();
+    hintText.text(
+      "Please provide further details below, so we could understand the issue better:"
+    );
+  } else {
+    hintText.text(
+      "Please describe what happened in order to proceed to the detailed reporter."
+    );
+    descriptionField.focus();
+  }
 };
 
-const onSubmitClick = (event) => {
+const onSubmitEarlyClick = (event) => {
   event.preventDefault();
+  nextStepButton.prop("disabled", true);
+  submitButton.prop("disabled", true);
+  submitTypeField.val(event.currentTarget.name);
+  form.attr("action", "/reports/new");
+  form.get(0).submit();
 };
 
 const handleEvent = (value, errCb) => {
@@ -67,7 +88,7 @@ const initListeners = () => {
   urlField.on("input", (event) => onChange(event.target.value));
   urlField.on("blur", (event) => onBlur(event.target.value));
   nextStepButton.on("click", onClick);
-  submitButton.on("click", onSubmitClick);
+  submitButton.on("click", onSubmitEarlyClick);
 };
 
 const setInitialInputState = () => {

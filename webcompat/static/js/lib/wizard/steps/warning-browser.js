@@ -13,7 +13,7 @@ const nextStepButton = container.find(".next-warning");
 
 const handleNext = (event) => {
   event.preventDefault();
-  notify.publish("showStep", { id: "description" });
+  notify.publish("showStep", { id: "screenshot" });
 };
 
 nextStepButton.on("click", handleNext);
