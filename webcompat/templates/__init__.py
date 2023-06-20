@@ -107,7 +107,7 @@ def get_description(body_html):
     files and issue directly on GitHub and edits the template), return
     something sensible.
     """
-    stripped_body = Markup.striptags(body_html)
+    stripped_body = Markup(body_html).striptags()
     description = re.search(r'Description: (.+?) Steps', stripped_body)
     if description:
         return description.group(1)[0:74]
