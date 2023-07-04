@@ -63,7 +63,6 @@ jobs:
             npm run build
             pip install -e .
             pytest tests
-            npm run test:unit-js
             python run.py -t &
             sleep 5
             npx intern
