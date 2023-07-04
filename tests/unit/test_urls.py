@@ -44,6 +44,7 @@ class TestURLs(unittest.TestCase):
 
     def tearDown(self):
         """Tear down the tests."""
+        webcompat.app.config['ANONYMOUS_REPORTING_ENABLED'] = True
         pass
 
     def test_home(self):
@@ -57,7 +58,8 @@ class TestURLs(unittest.TestCase):
         self.assertEqual(rv.status_code, 200)
 
     @patch('webcompat.views.report_issue')
-    def test_successful_post_new_issue(self, mock_proxy):
+    @patch('webcompat.views.send_bq_report')
+    def test_successful_post_new_issue(self, mock_bq, mock_proxy):
         """Test that anonymous post succeeds on /issues/new."""
         webcompat.app.config['ANONYMOUS_REPORTING_ENABLED'] = True
         mock_proxy.return_value = POST_RESPONSE
@@ -78,7 +80,8 @@ class TestURLs(unittest.TestCase):
         assert b'<a href="/issues/1544">/issues/1544</a>' in rv.data
 
     @patch('webcompat.views.report_issue')
-    def test_fail_anonymous_post_new_issue(self, mock_proxy):
+    @patch('webcompat.views.send_bq_report')
+    def test_fail_anonymous_post_new_issue(self, mock_bq, mock_proxy):
         """Test that anonymous post fail when this is off."""
         webcompat.app.config['ANONYMOUS_REPORTING_ENABLED'] = False
         mock_proxy.return_value = POST_RESPONSE
@@ -116,7 +119,8 @@ class TestURLs(unittest.TestCase):
         self.assertEqual(rv.status_code, 400)
 
     @patch('webcompat.views.report_issue')
-    def test_successful_post_new_issue_with_incorrect_url(self, mock_proxy):
+    @patch('webcompat.views.send_bq_report')
+    def test_successful_post_issue_with_incorrect_url(self, mb, mock_proxy):
         """Test that anonymous post succeeds on /issues/new with incorrect url."""  # noqa
         mock_proxy.return_value = POST_RESPONSE
         rv = self.app.post(
@@ -134,6 +138,36 @@ class TestURLs(unittest.TestCase):
         self.assertEqual(rv.status_code, 302)
         self.assertTrue(
             b'<a href="/issues/1544">/issues/1544</a>' in rv.data)
+
+    @patch('webcompat.views.send_bq_report')
+    def test_successful_post_new_bq_report(self, mock_bq):
+        """Test that POST request succeeds on /reports/new."""
+        mock_bq.return_value = 'success'
+        rv = self.app.post(
+            '/reports/new',
+            content_type='multipart/form-data',
+            environ_base=headers,
+            data=dict(
+                submit_type='bq-report',
+                url='http://testing.example.org',
+                steps_reproduce='test'))
+        assert rv.status_code == 302
+        assert rv.headers['Location'] == 'http://localhost/report-complete'
+
+    @patch('webcompat.views.send_bq_report')
+    def test_fail_post_new_bq_report(self, mock_bq):
+        """Test that post is not working on /reports/new.
+
+        It will fail with a 400 because the URL is missing.
+        """
+        rv = self.app.post(
+            '/reports/new',
+            content_type='multipart/form-data',
+            environ_base=headers,
+            data=dict(
+                submit_type='bq-report',
+                steps_reproduce='test'))
+        self.assertEqual(rv.status_code, 400)
 
     def test_about(self):
         """Test that /about exists."""

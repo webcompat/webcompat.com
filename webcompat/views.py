@@ -43,10 +43,12 @@ from webcompat.helpers import is_blocked_domain
 from webcompat.helpers import to_str
 from webcompat.helpers import is_darknet_domain
 from webcompat.helpers import is_valid_issue_form
+from webcompat.helpers import is_valid_bq_report_form
 from webcompat.helpers import mockable_response
 from webcompat.helpers import prepare_form
 from webcompat.helpers import set_referer
 from webcompat.issues import report_issue
+from webcompat.bq import send_bq_report
 from webcompat.templates import bust_cache
 from webcompat import app
 from webcompat import github
@@ -315,6 +317,8 @@ def create_issue():
                 return redirect(url_for('index'))
             # Anonymous reporting
             json_response = report_issue(form, proxy=True)
+            # Record report to BQ as well
+            send_bq_report(form, json_response.get('html_url'))
             session['show_thanks'] = True
             return redirect(
                 url_for('show_issue', number=json_response.get('number')))
@@ -335,6 +339,8 @@ def create_issue():
 
                 # Otherwise proceed with submitting the form
                 json_response = report_issue(form)
+                # Record report to BQ as well
+                send_bq_report(form, json_response.get('html_url'))
                 session['show_thanks'] = True
                 return redirect(url_for('show_issue',
                                         number=json_response.get('number')))
@@ -345,6 +351,73 @@ def create_issue():
     else:
         log.info('400: Something else happened.')
         abort(400)
+
+
+@app.route('/reports/new', methods=['POST'])
+def create_bq_report():
+    log = app.logger
+    log.setLevel(logging.INFO)
+
+    request_type = form_type(request)
+
+    if request_type == 'create':
+        if not request.form:
+            log.info('400: POST request without form.')
+            abort(400)
+
+        form = request.form.copy()
+
+        # Logging the ip and url for investigation
+        log.info(f"{request.remote_addr} {form['url'].encode('utf-8')} BQ report")      # noqa
+
+        # Check if the form is valid
+        if not is_valid_bq_report_form(form):
+            log.info(
+                '400: POST request w/o valid form (is_valid_report_form).'
+            )
+            abort(400)
+
+        domain = urllib.parse.urlsplit(normalize_url(form['url'])).hostname
+
+        if is_darknet_domain(domain):
+            msg = app.config['IS_DARKNET_DOMAIN'].format(form['url'])
+            flash(msg, 'notimeout')
+            return redirect(url_for('index'))
+
+        status = send_bq_report(form)
+        session['bq_report'] = status
+
+        return redirect(url_for('report_complete'))
+
+    else:
+        log.info('400: Something else happened.')
+        abort(400)
+
+
+@app.route('/report-complete')
+@cache_policy(private=True, uri_max_age=0, must_revalidate=True)
+def report_complete():
+    """Route to display a single issue."""
+    push('/dist/webcompat.css', **{
+        'as': 'style',
+        'rel': 'preload'
+    })
+    push(bust_cache('/dist/vendor.js'), **{
+        'as': 'script',
+        'rel': 'preload'
+    })
+    push(bust_cache('/dist/webcompat.js'), **{
+        'as': 'script',
+        'rel': 'preload'
+    })
+
+    if session.get('bq_report'):
+        flash(session.get('bq_report'), 'bqreport')
+        session.pop('bq_report')
+    else:
+        abort(404)
+
+    return render_template('report-complete.html')
 
 
 @app.route('/issues/<int:number>')

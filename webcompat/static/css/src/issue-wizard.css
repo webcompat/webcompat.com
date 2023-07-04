@@ -73,6 +73,7 @@
 }
 
 #wizard-container .grid {
+  justify-content: center;
   width: 100%;
 }
 
@@ -81,7 +82,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  min-width: 14%;
+  min-width: 16%;
   padding-top: 6px;
   position: relative;
   transition: padding .5s;
@@ -957,7 +958,7 @@
     display: none;
   }
 
-  .step-url .text-field {
+  #url {
     font-weight: 600;
   }
 
@@ -1116,6 +1117,10 @@
   }
 
   #submitgithub {
+    margin-right: 16px;
+  }
+
+  .next-submit {
     margin-right: 16px;
   }
 
