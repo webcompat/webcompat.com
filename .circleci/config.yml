@@ -21,7 +21,6 @@ jobs:
       - restore_cache:
           keys:
             - deps1.1-{{ .Branch }}-{{ checksum "config/requirements-dev.txt" }}
-            - v1-npm-{{ .Branch }}-{{ checksum "package.json" }}
       - run:
           name: install python deps
           command: |
@@ -37,11 +36,6 @@ jobs:
           name: install npm deps
           command: |
             npm install
-
-      - save_cache:
-          paths:
-            - ./node_modules
-          key: v1-npm-{{ .Branch }}-{{ checksum "package.json" }}
 
       # Verify Firefox installation
       - run:
