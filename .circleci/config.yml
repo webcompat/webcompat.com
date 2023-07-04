@@ -20,7 +20,7 @@ jobs:
       - restore_cache:
           keys:
             - deps1-{{ .Branch }}-{{ checksum "config/requirements-dev.txt" }}
-            - v1-npm-{{ .Branch }}-{{ checksum "package.json" }}
+            - v1.1-npm-{{ .Branch }}-{{ checksum "package.json" }}
       - run:
           name: install python deps
           command: |
@@ -40,7 +40,7 @@ jobs:
       - save_cache:
           paths:
             - ./node_modules
-          key: v1-npm-{{ .Branch }}-{{ checksum "package.json" }}
+          key: v1.1-npm-{{ .Branch }}-{{ checksum "package.json" }}
 
       - run:
           name: Install latest Firefox
@@ -63,6 +63,7 @@ jobs:
             npm run build
             pip install -e .
             pytest tests
+            npm run test:unit-js
             python run.py -t &
             sleep 5
             npx intern
