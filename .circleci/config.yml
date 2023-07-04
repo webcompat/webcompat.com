@@ -25,7 +25,7 @@ jobs:
       - run:
           name: install python deps
           command: |
-            python3 -m venv env
+            python -m venv env
             . env/bin/activate
             pip install -r config/requirements-dev.txt
       - save_cache:
