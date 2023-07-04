@@ -36,6 +36,7 @@ jobs:
           name: install npm deps
           command: |
             npm install
+            npm install semver
 
       # Verify Firefox installation
       - run:
