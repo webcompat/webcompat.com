@@ -3,32 +3,31 @@
 # Check https://circleci.com/docs/2.0/language-python/ for more details
 #
 version: 2.1
+orbs:
+  browser-tools: circleci/browser-tools@1.1.0
 jobs:
   build:
     docker:
-      - image: cimg/python:3.9
+      - image: cimg/python:3.9.1
         environment:
           FLASK_CONFIG: testing
-      - image: cimg/node:18.16.1
-      - image: cimg/firefox:latest
 
     working_directory: ~/repo
 
     steps:
       - checkout
+      - browser-tools/install-browser-tools
       # Download and cache dependencies
       - restore_cache:
           keys:
             - deps1-{{ .Branch }}-{{ checksum "config/requirements-dev.txt" }}
             - v1-npm-{{ .Branch }}-{{ checksum "package.json" }}
-      # Install Python dependencies
       - run:
           name: install python deps
           command: |
             python3 -m venv env
             . env/bin/activate
             pip install -r config/requirements-dev.txt
-      # Save Python dependencies to cache
       - save_cache:
           key: deps1-{{ .Branch }}-{{ checksum "config/requirements-dev.txt" }}
           paths:
@@ -38,18 +37,19 @@ jobs:
           name: install npm deps
           command: |
             npm install
-      # Save NPM dependencies to cache
+
       - save_cache:
           paths:
             - ./node_modules
           key: v1-npm-{{ .Branch }}-{{ checksum "package.json" }}
+
       # Verify Firefox installation
       - run:
           name: Verify Firefox installation
           command: |
             firefox --version
             which firefox
-      # Run tests
+
       - run:
           name: Run Tests
           command: |
@@ -63,7 +63,6 @@ jobs:
             python run.py -t &
             sleep 5
             npx intern
-      # Store test reports
       - store_artifacts:
           path: test-reports/
           destination: test-reports
