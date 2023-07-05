@@ -4,6 +4,11 @@
 2. New features: affect minor number
 3. API endpoint changes or (major) dependency version updates: affect major number
 
+## 50.0.0 - 2023-07-05
+
+* Fixes #3773 - Fix an issue with auth report not being saved to BQ [Pull #3774](https://github.com/webcompat/webcompat.com/pull/3774)
+* Fixes #3769 - Dual form reporter [Pull #3771](https://github.com/webcompat/webcompat.com/pull/3771)
+
 ## 49.0.4 - 2023-05-24
 
 * Fixes #3767 - Don't save additional information from the reporter [Pull #3768](https://github.com/webcompat/webcompat.com/pull/3768)
