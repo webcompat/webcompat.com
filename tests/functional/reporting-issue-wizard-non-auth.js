@@ -408,7 +408,7 @@ registerSuite("Reporting with wizard", {
           // Click on "Continue without"
           .click()
           .end()
-          .sleep(500)
+          .sleep(1000)
           .findByCssSelector(".step.active .description")
           .getVisibleText()
           .then(function (text) {

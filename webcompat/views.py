@@ -153,6 +153,7 @@ def file_issue():
     if session and (form_data is None):
         abort(403)
     json_response = report_issue(session['form'])
+    send_bq_report(session['form'], json_response.get('html_url'))
     # Get rid of stashed form data
     session.pop('form', None)
     session['show_thanks'] = True
