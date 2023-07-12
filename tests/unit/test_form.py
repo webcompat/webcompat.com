@@ -300,25 +300,67 @@ class TestForm(unittest.TestCase):
                  'updateChannel': 'default'
              },
              'consoleLog': ['console.log(hi)']
-             }))
-        expected = {'applicationName': 'Firefox', 'updateChannel': 'default', 'consoleLog': ['console.log(hi)']}  # noqa
+             }),
+            'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:109.0) Gecko/20100101 Firefox/117.0'                  # noqa
+        )
+        expected = {
+            'applicationName': 'Firefox',
+            'updateChannel': 'default',
+            'consoleLog': ['console.log(hi)'],
+            'userAgent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:109.0) Gecko/20100101 Firefox/117.0'     # noqa
+        }  # noqa
         self.assertEqual(actual, expected)
 
         actual_log_only = form.build_bq_details(json.dumps(
-            {'a': 'b', 'c': False, 'consoleLog': ['console.log(hi)']}))
-        expected_log_only = {'consoleLog': ['console.log(hi)']}  # noqa
+            {
+                'a': 'b',
+                'c': False,
+                'consoleLog': ['console.log(hi)'],
+            }),
+            'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:109.0) Gecko/20100101 Firefox/117.0'                  # noqa
+        )
+        expected_log_only = {
+            'consoleLog': ['console.log(hi)'],
+            'userAgent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:109.0) Gecko/20100101 Firefox/117.0'     # noqa
+        }  # noqa
         self.assertEqual(actual_log_only, expected_log_only)
 
     def test_build_bq_details_empty(self):
         """Empty dict is returned if no data is passed."""
         actual_no_data = form.build_bq_details(json.dumps(
-            {'additionalData': ''}))
+            {'additionalData': ''}),
+            'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:109.0) Gecko/20100101 Firefox/117.0'                  # noqa
+        )
+        expected = {
+            'userAgent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:109.0) Gecko/20100101 Firefox/117.0'     # noqa
+        }
+        self.assertEqual(actual_no_data, expected)
+
+        actual_no_data = form.build_bq_details({}, '')
         expected = {}
         self.assertEqual(actual_no_data, expected)
 
-        actual_no_data = form.build_bq_details({})
-        expected = {}
-        self.assertEqual(actual_no_data, expected)
+    def test_build_bq_details_ua_original(self):
+        """Test that the original UA is not overwritten."""
+        actual = form.build_bq_details(json.dumps(
+            {'a': 'b', 'c': False,
+             'additionalData': {
+                 'applicationName': 'Firefox',
+                 'updateChannel': 'default',
+                 'userAgent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:109.0) Gecko/20100101 Firefox/117.0'    # noqa
+             },
+             'consoleLog': ['console.log(hi)']
+             }),
+            'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:109.0) Gecko/20100101 Firefox/114.0'                      # noqa
+        )
+
+        expected = {
+            'applicationName': 'Firefox',
+            'updateChannel': 'default',
+            'consoleLog': ['console.log(hi)'],
+            'userAgent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:109.0) Gecko/20100101 Firefox/117.0'         # noqa
+        }  # noqa
+        self.assertEqual(actual, expected)
 
     def test_build_formdata_bq(self):
         testdt = datetime(2023, 6, 1, 0, 0, 0, 0)
@@ -335,6 +377,7 @@ class TestForm(unittest.TestCase):
                 'details': json.dumps({
                     'additionalData': {
                         'applicationName': 'Firefox',
+                        'userAgent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:109.0) Gecko/20100101 Firefox/117.0'     # noqa
                     },
                     'consoleLog': ['console.log(hi)']
                 })
@@ -349,6 +392,7 @@ class TestForm(unittest.TestCase):
                 'reported_at': [testdt.isoformat()],
                 'details': json.dumps({
                     'applicationName': 'Firefox',
+                    'userAgent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:109.0) Gecko/20100101 Firefox/117.0',       # noqa
                     'consoleLog': ['console.log(hi)'],
                     'githubUrl':
                         'https://github.com/webcompat/web-bugs/issues/111'

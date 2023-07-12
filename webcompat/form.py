@@ -547,7 +547,7 @@ def build_formdata(form_object):
     return rv
 
 
-def build_bq_details(details):
+def build_bq_details(details, ua_header_string):
     """Extract additional details from form."""
     bq_details = {}
 
@@ -566,6 +566,9 @@ def build_bq_details(details):
         except ValueError:
             pass
 
+    if 'userAgent' not in bq_details and ua_header_string:
+        bq_details['userAgent'] = ua_header_string
+
     return bq_details
 
 
@@ -577,7 +580,10 @@ def build_formdata_bq(form_object, github_issue_url=None):
         'reported_at': [datetime.datetime.utcnow().isoformat()]
     }
 
-    details = build_bq_details(form_object.get('details'))
+    details = build_bq_details(
+        form_object.get('details'),
+        form_object.get("ua_header")
+    )
 
     if github_issue_url:
         details['githubUrl'] = github_issue_url
