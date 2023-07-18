@@ -70,7 +70,7 @@ if STAGING:
     ES_API_KEY_ID = os.environ.get('ES_API_KEY_ID')
     ES_API_KEY = os.environ.get('ES_API_KEY')
     BQ_PROJECT = 'moz-fx-dev-dschubert-wckb'
-    BQ_TABLE = 'webcompat_user_reports.user_reports_test'
+    BQ_TABLE = 'webcompat_user_reports.user_reports_staging'
 
 if LOCALHOST:
     # for now we are using .env only on localhost
@@ -99,7 +99,7 @@ if LOCALHOST:
     ES_API_KEY_ID = os.environ.get('ES_API_KEY_ID')
     ES_API_KEY = os.environ.get('ES_API_KEY')
     BQ_PROJECT = 'moz-fx-dev-dschubert-wckb'
-    BQ_TABLE = 'webcompat_user_reports.user_reports_test'
+    BQ_TABLE = 'webcompat_user_reports.user_reports_staging'
 
 # BUG STATUS
 # The id will be initialized when the app is started.

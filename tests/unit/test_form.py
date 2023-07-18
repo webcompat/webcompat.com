@@ -389,7 +389,7 @@ class TestForm(unittest.TestCase):
             expected = {
                 'url': 'https://example.com/',
                 'comments': 'site is broken',
-                'reported_at': [testdt.isoformat()],
+                'reported_at': testdt.isoformat(),
                 'details': json.dumps({
                     'applicationName': 'Firefox',
                     'userAgent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:109.0) Gecko/20100101 Firefox/117.0',       # noqa
@@ -406,7 +406,7 @@ class TestForm(unittest.TestCase):
             expected = {
                 'url': None,
                 'comments': '',
-                'reported_at': [testdt.isoformat()],
+                'reported_at': testdt.isoformat(),
             }
             self.assertIs(type(actual), dict)
             self.assertEqual(actual, expected)

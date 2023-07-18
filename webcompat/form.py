@@ -577,7 +577,7 @@ def build_formdata_bq(form_object, github_issue_url=None):
     form_data = {
         'url': normalize_url(form_object.get('url')),
         'comments': clean_comment(form_object.get('steps_reproduce', '')),
-        'reported_at': [datetime.datetime.utcnow().isoformat()]
+        'reported_at': datetime.datetime.utcnow().isoformat()
     }
 
     details = build_bq_details(
