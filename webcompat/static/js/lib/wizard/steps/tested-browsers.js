@@ -42,7 +42,7 @@ const resetBrowserSelection = (element) => {
 const handleNext = (event) => {
   event.preventDefault();
   hideStep("warningBrowser");
-  makeAStep("screenshot");
+  makeAStep("description");
 };
 
 const handleNoOther = (event) => {

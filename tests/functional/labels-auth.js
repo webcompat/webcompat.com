@@ -58,7 +58,6 @@ registerSuite("Labels (auth)", {
         .findByCssSelector(".js-label-search")
         .pressKeys("\uE00C")
         .end()
-        .sleep(500)
         .findByCssSelector(".js-LabelEditorLauncher")
         .click()
         .getAttribute("class")

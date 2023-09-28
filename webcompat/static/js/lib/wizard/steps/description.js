@@ -11,8 +11,7 @@ import { showContainer } from "../ui-utils.js";
 
 const MIN_CHARACTERS = 30;
 
-// "Steps to reproduce" has moved to the url step for the time being
-const container = $(".step-container.step-url");
+const container = $(".step-container.step-description");
 const MIN_CHAR_MODE = container.data("min-char");
 const descriptionField = container.find("#steps_reproduce");
 const progress = container.find(".problem-description .progress");

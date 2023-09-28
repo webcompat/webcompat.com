@@ -10,7 +10,6 @@ The module powers the issue reporting form on webcompat.com.
 It includes helper methods.
 """
 
-import datetime
 import json
 import random
 import urllib.parse
@@ -34,7 +33,6 @@ from webcompat.helpers import get_browser
 from webcompat.helpers import get_os
 from webcompat.helpers import get_details_list
 from webcompat.helpers import is_json_object
-from webcompat.helpers import clean_comment
 from webcompat.nsfw import get_nsfw_label
 from webcompat.nsfw import moderate_screenshot
 
@@ -68,12 +66,18 @@ NEW_ISSUE_STEPS = [
     },
     {
         'number': 5,
+        'id': 'description',
+        'className': '',
+        'label': 'Description'
+    },
+    {
+        'number': 6,
         'id': 'screenshot',
         'className': '',
         'label': 'Screenshot'
     },
     {
-        'number': 6,
+        'number': 7,
         'id': 'send',
         'className': 'last',
         'label': 'Send report'
@@ -153,7 +157,7 @@ url_label = 'Site URL (mandatory)'
 browser_test_label = 'Did you test in another browser?'
 textarea_label = 'Please describe what happened, including any steps you took before you saw the problem'  # noqa
 
-other_problem_label = 'Briefly summarize the issue:'
+other_problem_label = 'Briefly describe the issue:'
 other_browser_label = 'Browser tested'
 
 
@@ -545,50 +549,3 @@ def build_formdata(form_object):
     body += '\n\n{0}'.format(GITHUB_HELP)
     rv = {'title': summary, 'body': body}
     return rv
-
-
-def build_bq_details(details, ua_header_string):
-    """Extract additional details from form."""
-    bq_details = {}
-
-    if details:
-        try:
-            content = json.loads(details)
-            if is_json_object(content):
-
-                additional_data = content.get('additionalData', {})
-                if isinstance(additional_data, dict):
-                    bq_details.update(additional_data)
-
-                if 'consoleLog' in content:
-                    bq_details['consoleLog'] = content['consoleLog']
-
-        except ValueError:
-            pass
-
-    if 'userAgent' not in bq_details and ua_header_string:
-        bq_details['userAgent'] = ua_header_string
-
-    return bq_details
-
-
-def build_formdata_bq(form_object, github_issue_url=None):
-    """Build form object to be saved in BQ."""
-    form_data = {
-        'url': normalize_url(form_object.get('url')),
-        'comments': clean_comment(form_object.get('steps_reproduce', '')),
-        'reported_at': datetime.datetime.utcnow().isoformat()
-    }
-
-    details = build_bq_details(
-        form_object.get('details'),
-        form_object.get("ua_header")
-    )
-
-    if github_issue_url:
-        details['githubUrl'] = github_issue_url
-
-    if details:
-        form_data['details'] = json.dumps(details)
-
-    return form_data
