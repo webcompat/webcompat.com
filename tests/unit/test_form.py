@@ -3,12 +3,10 @@
 
 """Tests for form validation."""
 
-from datetime import datetime
 import json
-import pytest
 import unittest
 
-from unittest.mock import patch
+import pytest
 from werkzeug.datastructures import MultiDict
 
 import webcompat
@@ -290,126 +288,6 @@ class TestForm(unittest.TestCase):
             {'a': 'b', 'c': False, 'additionalData': ''}))
         expected_empty_log_arg = '<details>\n<summary>Browser Configuration</summary>\n<ul>\n  <li>a: b</li><li>c: false</li>\n</ul>\n</details>'  # noqa
         self.assertEqual(actual_empty_log_arg, expected_empty_log_arg)
-
-    def test_build_bq_details(self):
-        """Expected dict is returned."""
-        actual = form.build_bq_details(json.dumps(
-            {'a': 'b', 'c': False,
-             'additionalData': {
-                 'applicationName': 'Firefox',
-                 'updateChannel': 'default'
-             },
-             'consoleLog': ['console.log(hi)']
-             }),
-            'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:109.0) Gecko/20100101 Firefox/117.0'                  # noqa
-        )
-        expected = {
-            'applicationName': 'Firefox',
-            'updateChannel': 'default',
-            'consoleLog': ['console.log(hi)'],
-            'userAgent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:109.0) Gecko/20100101 Firefox/117.0'     # noqa
-        }  # noqa
-        self.assertEqual(actual, expected)
-
-        actual_log_only = form.build_bq_details(json.dumps(
-            {
-                'a': 'b',
-                'c': False,
-                'consoleLog': ['console.log(hi)'],
-            }),
-            'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:109.0) Gecko/20100101 Firefox/117.0'                  # noqa
-        )
-        expected_log_only = {
-            'consoleLog': ['console.log(hi)'],
-            'userAgent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:109.0) Gecko/20100101 Firefox/117.0'     # noqa
-        }  # noqa
-        self.assertEqual(actual_log_only, expected_log_only)
-
-    def test_build_bq_details_empty(self):
-        """Empty dict is returned if no data is passed."""
-        actual_no_data = form.build_bq_details(json.dumps(
-            {'additionalData': ''}),
-            'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:109.0) Gecko/20100101 Firefox/117.0'                  # noqa
-        )
-        expected = {
-            'userAgent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:109.0) Gecko/20100101 Firefox/117.0'     # noqa
-        }
-        self.assertEqual(actual_no_data, expected)
-
-        actual_no_data = form.build_bq_details({}, '')
-        expected = {}
-        self.assertEqual(actual_no_data, expected)
-
-    def test_build_bq_details_ua_original(self):
-        """Test that the original UA is not overwritten."""
-        actual = form.build_bq_details(json.dumps(
-            {'a': 'b', 'c': False,
-             'additionalData': {
-                 'applicationName': 'Firefox',
-                 'updateChannel': 'default',
-                 'userAgent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:109.0) Gecko/20100101 Firefox/117.0'    # noqa
-             },
-             'consoleLog': ['console.log(hi)']
-             }),
-            'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:109.0) Gecko/20100101 Firefox/114.0'                      # noqa
-        )
-
-        expected = {
-            'applicationName': 'Firefox',
-            'updateChannel': 'default',
-            'consoleLog': ['console.log(hi)'],
-            'userAgent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:109.0) Gecko/20100101 Firefox/117.0'         # noqa
-        }  # noqa
-        self.assertEqual(actual, expected)
-
-    def test_build_formdata_bq(self):
-        testdt = datetime(2023, 6, 1, 0, 0, 0, 0)
-
-        class MockDateTime:
-            @classmethod
-            def utcnow(cls):
-                return testdt
-
-        with patch('datetime.datetime', new=MockDateTime):
-            form_object = {
-                'url': 'https://example.com/',
-                'steps_reproduce': 'site is broken',
-                'details': json.dumps({
-                    'additionalData': {
-                        'applicationName': 'Firefox',
-                        'userAgent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:109.0) Gecko/20100101 Firefox/117.0'     # noqa
-                    },
-                    'consoleLog': ['console.log(hi)']
-                })
-            }
-            actual = form.build_formdata_bq(
-                form_object,
-                'https://github.com/webcompat/web-bugs/issues/111'
-            )
-            expected = {
-                'url': 'https://example.com/',
-                'comments': 'site is broken',
-                'reported_at': testdt.isoformat(),
-                'details': json.dumps({
-                    'applicationName': 'Firefox',
-                    'userAgent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:109.0) Gecko/20100101 Firefox/117.0',       # noqa
-                    'consoleLog': ['console.log(hi)'],
-                    'githubUrl':
-                        'https://github.com/webcompat/web-bugs/issues/111'
-                })
-            }
-            self.assertIs(type(actual), dict)
-            self.assertEqual(actual, expected)
-
-            form_object = {}
-            actual = form.build_formdata_bq(form_object)
-            expected = {
-                'url': None,
-                'comments': '',
-                'reported_at': testdt.isoformat(),
-            }
-            self.assertIs(type(actual), dict)
-            self.assertEqual(actual, expected)
 
     def test_get_console_logs_url(self):
         """Assert we return an empty string, or a link to console logs page."""

@@ -45,8 +45,6 @@ if PRODUCTION:
     ES_URL = os.environ.get('ES_URL')
     ES_API_KEY_ID = os.environ.get('ES_API_KEY_ID')
     ES_API_KEY = os.environ.get('ES_API_KEY')
-    BQ_PROJECT = 'moz-fx-dev-dschubert-wckb'
-    BQ_TABLE = 'webcompat_user_reports.user_reports'
 
 if STAGING:
     GITHUB_CLIENT_ID = os.environ.get('STAGING_GITHUB_CLIENT_ID')
@@ -69,8 +67,7 @@ if STAGING:
     ES_URL = os.environ.get('ES_URL')
     ES_API_KEY_ID = os.environ.get('ES_API_KEY_ID')
     ES_API_KEY = os.environ.get('ES_API_KEY')
-    BQ_PROJECT = 'moz-fx-dev-dschubert-wckb'
-    BQ_TABLE = 'webcompat_user_reports.user_reports_staging'
+
 
 if LOCALHOST:
     # for now we are using .env only on localhost
@@ -98,8 +95,6 @@ if LOCALHOST:
     ES_URL = os.environ.get('ES_URL')
     ES_API_KEY_ID = os.environ.get('ES_API_KEY_ID')
     ES_API_KEY = os.environ.get('ES_API_KEY')
-    BQ_PROJECT = 'moz-fx-dev-dschubert-wckb'
-    BQ_TABLE = 'webcompat_user_reports.user_reports_staging'
 
 # BUG STATUS
 # The id will be initialized when the app is started.

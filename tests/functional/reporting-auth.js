@@ -30,10 +30,6 @@ registerSuite("Reporting (auth)", {
           .findByCssSelector("#url")
           .type("http://example.com")
           .end()
-          .findById("steps_reproduce")
-          .type("This paragraph contains some description")
-          .end()
-          .sleep(500)
           // Click on "Confirm"
           .findByCssSelector(".next-url")
           .click()
@@ -65,9 +61,31 @@ registerSuite("Reporting (auth)", {
             document.querySelector("[for=tested_browsers-0]").click();
           })
           .end()
-          .sleep(1000)
+          .sleep(500)
           // Click on "Confirm"
           .findByCssSelector(".next-tested")
+          .click()
+          .end()
+          // Enter less than 30 characters in the description field
+          .findById("steps_reproduce")
+          .type("not enough characters")
+          .end()
+          .sleep(500)
+          .findDisplayedByCssSelector(".next-description")
+          .getAttribute("disabled")
+          .then(function (attribute) {
+            // Make sure "Continue" is disabled if there are not enough characters
+            assert.isNotNull(attribute);
+          })
+          .end()
+          .findById("steps_reproduce")
+          .clearValue()
+          // Enter more than 30 characters in the description field
+          .type("This paragraph contains more than 30 characters")
+          .end()
+          .sleep(500)
+          // Click on "Continue"
+          .findByCssSelector(".next-description")
           .click()
           .end()
           .sleep(1000)

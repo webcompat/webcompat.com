@@ -39,7 +39,6 @@ from webcompat.helpers import get_extra_labels
 from webcompat.helpers import get_filename_from_url
 from webcompat.helpers import is_darknet_domain
 from webcompat.helpers import get_domains
-from webcompat.helpers import clean_comment
 
 
 ACCESS_TOKEN_LINK = '<https://api.github.com/repositories/17839063/issues?per_page=50&page=3&access_token=12345>; rel="next", <https://api.github.com/repositories/17839063/issues?access_token=12345&per_page=50&page=4>; rel="last", <https://api.github.com/repositories/17839063/issues?per_page=50&access_token=12345&page=1>; rel="first", <https://api.github.com/repositories/17839063/issues?per_page=50&page=1&access_token=12345>; rel="prev"'  # noqa
@@ -617,18 +616,6 @@ class TestHelpers(unittest.TestCase):
             ['sub.example.com', 'example.com']
         )
         self.assertEqual(get_domains('test'), [])
-
-    def test_clean_comment(self):
-        """Asserts the <details> block is removed"""
-        actual = clean_comment(
-            ' page is empty <details><summary>View the screenshot</summary><img alt="Screenshot"></details>'    # noqa
-        )
-        expected = 'page is empty'
-        self.assertEqual(actual, expected)
-
-        actual = clean_comment(None)
-        expected = ''
-        self.assertEqual(actual, expected)
 
 
 if __name__ == '__main__':

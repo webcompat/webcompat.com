@@ -597,28 +597,6 @@ def is_valid_issue_form(form):
     return valid_form
 
 
-def is_valid_bq_report_form(form):
-    """Check if the bq report form matches requirements."""
-    values_check = False
-    must_parameters = [
-        'submit_type',
-        'url'
-    ]
-    parameters_check = set(must_parameters).issubset(list(form.keys()))
-    if parameters_check:
-        values_check = form['submit_type'] == 'bq-report'
-    valid_form = parameters_check and values_check
-    if not valid_form:
-        log.info('is_valid_report_form: form[submit_type] => {0}'.format(
-            form.get('submit_type') or 'empty submit_type value'))
-        log.info('is_valid_report_form: missing param(s)? => {0}'.format(
-            set(must_parameters).difference(list(form.keys()))))
-        log.info('is_valid_report_form: reporter ip => {0}'.format(
-            request.remote_addr
-        ))
-    return valid_form
-
-
 def is_blocked_domain(domain):
     """Check if the domain is part of an exclusion list."""
     # see https://github.com/webcompat/webcompat.com/issues/1141
@@ -819,18 +797,3 @@ def get_domains(hostname):
 @app.context_processor
 def register_get_filename_from_url():
     return dict(get_filename_from_url=get_filename_from_url)
-
-
-def clean_comment(original_str):
-    """Remove details block from text."""
-    if not original_str:
-        original_str = ""
-
-    cleaned_text = re.sub(
-        '<details>.*?</details>',
-        '',
-        str(original_str),
-        flags=re.DOTALL
-    ).strip()
-
-    return cleaned_text

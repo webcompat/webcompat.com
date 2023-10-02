@@ -6,7 +6,6 @@ Flask-Limiter==1.4
 Flask-SQLAlchemy==2.4.4
 Flask-WTF==0.15.1
 GitHub-Flask==3.2.0
-google-cloud-bigquery==3.11.1
 Pillow==9.3.0
 python-dotenv==0.15.0
 requests==2.25.1

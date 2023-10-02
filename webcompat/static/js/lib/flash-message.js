@@ -15,8 +15,6 @@ eventBus.trigger('flash:error', {message: 'hi', timeout: 1000});
 
 import Backbone from "Backbone";
 import thanksTemplate from "templates/issue/thanks.jst";
-import bqSuccessTemplate from "templates/bq-reports/success.jst";
-import bqErrorTemplate from "templates/bq-reports/error.jst";
 
 var wcEvents = _.extend({}, Backbone.Events);
 
@@ -28,7 +26,6 @@ var FlashMessageView = Backbone.View.extend({
     wcEvents.on("flash:info", _.bind(this.show, this));
     wcEvents.on("flash:notimeout", _.bind(this.showForever, this));
     wcEvents.on("flash:thanks", _.bind(this.showThanks, this));
-    wcEvents.on("flash:bqreport", _.bind(this.showBQMessage, this));
   },
   render: function (message) {
     this.$el.html(message).addClass("is-active").appendTo("body").show();
@@ -58,14 +55,6 @@ var FlashMessageView = Backbone.View.extend({
       .html(thanksTemplate({ number: opts.message }))
       .insertBefore(".js-Issue")
       .show();
-  },
-  showBQMessage: function (opts) {
-    let messageTemplate = bqErrorTemplate;
-    if (opts.message === "success") {
-      messageTemplate = bqSuccessTemplate;
-    }
-    this.$el.addClass("is-active notification-thanks grid-cell x3");
-    this.$el.html(messageTemplate()).insertBefore(".js-Issue").show();
   },
   hide: function () {
     this.$el.fadeOut();

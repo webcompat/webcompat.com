@@ -102,19 +102,7 @@ registerSuite("Reporting with wizard", {
           .findByCssSelector("#url")
           .type("http://example.com")
           .end()
-          .findDisplayedByCssSelector(".next-submit")
-          .getAttribute("disabled")
-          .then(function (attribute) {
-            // Make sure "Submit" is enabled
-            assert.isNull(attribute);
-          })
-          .end()
-          .findById("steps_reproduce")
-          .clearValue()
-          .type("This paragraph contains some description")
-          .end()
-          .sleep(500)
-          // Click on "Add more details"
+          // Click on "Confirm"
           .findByCssSelector(".next-url")
           .click()
           .end()
@@ -188,6 +176,35 @@ registerSuite("Reporting with wizard", {
           .findByCssSelector(".step.active .description")
           .getVisibleText()
           .then(function (text) {
+            // Make sure that progress label is "Description"
+            assert.include(text, "Description");
+          })
+          .end()
+          // Enter less than 30 characters in the description field
+          .findById("steps_reproduce")
+          .type("not enough characters")
+          .end()
+          .sleep(500)
+          .findDisplayedByCssSelector(".next-description")
+          .getAttribute("disabled")
+          .then(function (attribute) {
+            // Make sure "Continue" is disabled if there are not enough characters
+            assert.isNotNull(attribute);
+          })
+          .end()
+          .findById("steps_reproduce")
+          .clearValue()
+          // Enter more than 30 characters in the description field
+          .type("This paragraph contains more than 30 characters")
+          .end()
+          .sleep(500)
+          // Click on "Continue"
+          .findByCssSelector(".next-description")
+          .click()
+          .end()
+          .findByCssSelector(".step.active .description")
+          .getVisibleText()
+          .then(function (text) {
             // Make sure that progress label is "Screenshot"
             assert.include(text, "Screenshot");
           })
@@ -232,20 +249,6 @@ registerSuite("Reporting with wizard", {
             assert.include(text, "Web address");
           })
           .end()
-          .findDisplayedByCssSelector(".next-url")
-          .getAttribute("disabled")
-          .then(function (attribute) {
-            // Make sure "Add more details" is disabled if there is no url
-            assert.isNotNull(attribute);
-          })
-          .end()
-          .findDisplayedByCssSelector(".next-submit")
-          .getAttribute("disabled")
-          .then(function (attribute) {
-            // Make sure "Submit" is disabled if there is no url
-            assert.isNotNull(attribute);
-          })
-          .end()
           // Manual url enter
           .findByCssSelector("#url")
           .type("http://example.com")
@@ -257,38 +260,9 @@ registerSuite("Reporting with wizard", {
           .findByCssSelector(".step.active .description")
           .getVisibleText()
           .then(function (text) {
-            // Make sure that progress label is still "Web address"
-            assert.include(text, "Web address");
+            // Make sure that progress label is "Issue"
+            assert.include(text, "Issue");
           })
-          .end()
-          // Make sure that other problem field is focused
-          .getActiveElement()
-          .getProperty("id")
-          .then(function (elementId) {
-            assert.equal(
-              elementId,
-              "steps_reproduce",
-              "Focused element id is #steps_reproduce"
-            );
-          })
-          .end()
-          .findByCssSelector(".final-text")
-          .getVisibleText()
-          .then(function (text) {
-            assert.include(
-              text,
-              "Please describe what happened in order to proceed to the detailed reporter."
-            );
-          })
-          .end()
-          .findById("steps_reproduce")
-          .clearValue()
-          .type("This paragraph contains some description")
-          .end()
-          .sleep(500)
-          // Click on "Confirm"
-          .findByCssSelector(".next-url")
-          .click()
           .end()
           .execute(function () {
             // Click on "Design is broken"
@@ -390,11 +364,27 @@ registerSuite("Reporting with wizard", {
           .findByCssSelector(".step.active .description")
           .getVisibleText()
           .then(function (text) {
+            // Make sure that progress label is "Description"
+            assert.include(text, "Description");
+          })
+          .end()
+          // Enter more than 30 characters in the description field
+          .findById("steps_reproduce")
+          .type("This paragraph contains more than 30 characters")
+          .end()
+          .sleep(500)
+          // Click "Continue"
+          .findByCssSelector(".next-description")
+          .click()
+          .end()
+          .sleep(1000)
+          .findByCssSelector(".step.active .description")
+          .getVisibleText()
+          .then(function (text) {
             // Make sure that progress label is "Screenshot"
             assert.include(text, "Screenshot");
           })
           .end()
-          .sleep(500)
           .findDisplayedByCssSelector(".next-screenshot")
           .getVisibleText()
           .then(function (text) {
@@ -408,7 +398,6 @@ registerSuite("Reporting with wizard", {
           // Click on "Continue without"
           .click()
           .end()
-          .sleep(1000)
           .findByCssSelector(".step.active .description")
           .getVisibleText()
           .then(function (text) {
@@ -450,10 +439,7 @@ registerSuite("Reporting with wizard", {
           .end()
           .end()
           .sleep(500)
-          .findById("steps_reproduce")
-          .type("This paragraph contains some description")
-          .end()
-          .sleep(500)
+          // Click on "Confirm"
           .findByCssSelector(".next-url")
           .click()
           .end()
@@ -531,6 +517,35 @@ registerSuite("Reporting with wizard", {
           .end()
           // Click on "Confirm" button
           .findDisplayedByCssSelector(".next-tested")
+          .click()
+          .end()
+          .findByCssSelector(".step.active .description")
+          .getVisibleText()
+          .then(function (text) {
+            // Make sure that progress label is "Description"
+            assert.include(text, "Description");
+          })
+          .end()
+          // Enter less than 30 characters
+          .findById("steps_reproduce")
+          .type("not enough characters")
+          .end()
+          .sleep(500)
+          .findDisplayedByCssSelector(".next-description")
+          .getAttribute("disabled")
+          .then(function (attribute) {
+            // Make sure "Continue" is disabled if there are not enough characters
+            assert.isNotNull(attribute);
+          })
+          .end()
+          // Enter more than 30 characters in the description field
+          .findById("steps_reproduce")
+          .clearValue()
+          .type("This paragraph contains more than 30 characters")
+          .end()
+          .sleep(500)
+          // Click "Continue"
+          .findByCssSelector(".next-description")
           .click()
           .end()
           .findByCssSelector(".step.active .description")
