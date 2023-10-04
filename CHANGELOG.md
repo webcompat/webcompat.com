@@ -4,6 +4,10 @@
 2. New features: affect minor number
 3. API endpoint changes or (major) dependency version updates: affect major number
 
+## 51.0.0 - 2023-10-04
+
+* Fixes #3784 - Revert BQ and simple form changes [Pull #3786](https://github.com/webcompat/webcompat.com/pull/3786)
+
 ## 50.0.1 - 2023-07-12
 
 * Fixes #3775 - Add UA string to details (if it's missing in the additional data from the reporter) [Pull #3776](https://github.com/webcompat/webcompat.com/pull/3776)
