@@ -6,6 +6,13 @@ import stepper from "./stepper.js";
 import prefill from "./prefill.js";
 import progress from "./progress.js";
 
-prefill.init();
+// Set a window variable to let the in-browser reporting tool
+// know that the site is ready for the postMessage
+let wrtResolve;
+window.wrtReady = new Promise((r) => {
+  wrtResolve = r;
+});
+
+prefill.init(wrtResolve);
 stepper.init();
 progress.init();

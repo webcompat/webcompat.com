@@ -12,13 +12,21 @@ const url = intern.config.functionalBaseUrl + "issues/new";
 // This string is executed by calls to `execute()` in various tests
 // it postMessages a small green test square.
 const POSTMESSAGE_TEST =
-  'postMessage({screenshot:{}, message: {"url":"http://example.com","utm_source":"desktop-reporter","utm_campaign":"report-site-issue-button","src":"desktop-reporter","details":{"gfx.webrender.all":false,"gfx.webrender.blob-images":true,"gfx.webrender.enabled":false,"image.mem.shared":true,"buildID":"20191016225400","channel":"default","consoleLog":[],"hasTouchScreen":false,"mixed active content blocked":false,"mixed passive content blocked":false,"tracking content blocked":"false","hasMarfeel":true},"extra_labels":["type-marfeel"]}}, "http://localhost:5000")';
+  'postMessage({screenshot:{}, message: {"url":"http://example.com","utm_source":"desktop-reporter","utm_campaign":"report-site-issue-button","src":"desktop-reporter","details":{"gfx.webrender.all":false,"gfx.webrender.blob-images":true,"gfx.webrender.enabled":false,"image.mem.shared":true,"buildID":"20191016225400","channel":"default","consoleLog":[],"hasTouchScreen":false,"mixed active content blocked":false,"mixed passive content blocked":false,"tracking content blocked":"false","hasMarfeel":true},"extra_labels":["type-marfeel"], "description": "site is broken, please fix"}}, "http://localhost:5000")';
 
 registerSuite("Reporting through postMessage", {
   tests: {
     "postMessaged object"() {
       return (
         FunctionalHelpers.openPage(this, url, "#js-ReportForm")
+          .execute(() => "wrtReady" in window)
+          .then((value) =>
+            assert.equal(
+              value,
+              true,
+              "wrtReady variable exists in window object"
+            )
+          )
           // send data object through postMessage
           .execute(POSTMESSAGE_TEST)
           .sleep(1000)
@@ -50,6 +58,12 @@ registerSuite("Reporting through postMessage", {
           .getProperty("value")
           .then(function (value) {
             assert.include(value, "type-marfeel");
+          })
+          .end()
+          .findByCssSelector("#steps_reproduce")
+          .getProperty("value")
+          .then(function (value) {
+            assert.include(value, "site is broken, please fix");
           })
           .end()
           .findByCssSelector("#desc-url")
