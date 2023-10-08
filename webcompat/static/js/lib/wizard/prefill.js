@@ -6,9 +6,10 @@ import { parseGetParams } from "./helpers/getParamParser.js";
 import { onMessageReceived } from "./helpers/postMessageParser.js";
 
 export default {
-  init: () => {
+  init: (wrtResolve) => {
     // This module supports form prefilling with GET params or postMessage
     document.addEventListener("DOMContentLoaded", parseGetParams);
     window.addEventListener("message", onMessageReceived, false);
+    wrtResolve();
   },
 };

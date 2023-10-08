@@ -50,13 +50,18 @@ const onChange = (value) => {
   create the markdown with the URL of a newly uploaded
   image and add it to the bug description
 */
-const updateDescription = (url) => {
+const addScreenshotUrl = (url) => {
   const imageURL = `<details>
       <summary>View the screenshot</summary>
       <img alt="Screenshot" src="${url}">
       </details>`;
 
   descriptionField.val((idx, value) => value + "\n" + imageURL);
+};
+
+const addDescription = (description) => {
+  descriptionField.val(description);
+  descriptionField.trigger("input");
 };
 
 const showProgress = () => {
@@ -79,7 +84,15 @@ export default {
   show: () => {
     showContainer(container);
   },
-  update: ({ url }) => {
-    updateDescription(url);
+  update: (data) => {
+    const { screenshotUrl, description } = data;
+
+    if (description) {
+      addDescription(description);
+    }
+
+    if (screenshotUrl) {
+      addScreenshotUrl(screenshotUrl);
+    }
   },
 };

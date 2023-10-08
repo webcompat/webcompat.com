@@ -18,7 +18,10 @@ const previewEl = $(".js-image-upload");
 
 const addImageURL = ({ url }) => {
   if (!url) return;
-  notify.publish("updateStep", { id: "description", data: { url } });
+  notify.publish("updateStep", {
+    id: "description",
+    data: { screenshotUrl: url },
+  });
 };
 
 const handleUploadError = function (response) {

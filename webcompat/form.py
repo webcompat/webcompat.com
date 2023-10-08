@@ -157,7 +157,7 @@ url_label = 'Site URL (mandatory)'
 browser_test_label = 'Did you test in another browser?'
 textarea_label = 'Please describe what happened, including any steps you took before you saw the problem'  # noqa
 
-other_problem_label = 'Briefly describe the issue:'
+other_problem_label = 'Briefly summarize the issue:'
 other_browser_label = 'Browser tested'
 
 

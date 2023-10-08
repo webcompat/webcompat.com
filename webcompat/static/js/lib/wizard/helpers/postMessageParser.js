@@ -9,17 +9,24 @@ import { sendAnalyticsCS } from "../analytics.js";
 
 const updateStep = (id, data) => notify.publish("updateStep", { id, data });
 const updateUrl = (url) => updateStep("url", { url });
+const updateDescription = (description) =>
+  updateStep("description", { description });
 const updateHidden = (data) => updateStep("hidden", { data });
 const updateScreenshot = (dataURI) => updateStep("screenshot", { dataURI });
 
 const handleMessage = (message) => {
   if (!message) return;
-  const { url, utm_campaign, utm_source, ...additional } = message;
+  const { url, description, utm_campaign, utm_source, ...additional } = message;
 
   sendAnalyticsCS(utm_campaign, utm_source);
   if (url) {
     updateUrl(url);
   }
+
+  if (description && description.length) {
+    updateDescription(description);
+  }
+
   updateHidden(additional);
 };
 
