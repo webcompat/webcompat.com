@@ -4,6 +4,10 @@
 2. New features: affect minor number
 3. API endpoint changes or (major) dependency version updates: affect major number
 
+## 51.1.0 - 2023-10-12
+
+* Fixes #3785 - Prefill description from the new in-product reporter [Pull #3788](https://github.com/webcompat/webcompat.com/pull/3788)
+
 ## 51.0.0 - 2023-10-04
 
 * Fixes #3784 - Revert BQ and simple form changes [Pull #3786](https://github.com/webcompat/webcompat.com/pull/3786)
