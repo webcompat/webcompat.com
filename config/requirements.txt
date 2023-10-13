@@ -10,5 +10,5 @@ Pillow==9.3.0
 python-dotenv==0.15.0
 requests==2.25.1
 ua-parser==0.10.0
-Werkzeug==2.0.1
+Werkzeug==2.2.3
 WTForms==2.3.3
