@@ -615,6 +615,13 @@ def is_darknet_domain(domain):
     return domain.endswith('.onion')
 
 
+def is_localhost_domain(domain):
+    """Check if the reported domain is localhost"""
+    if not domain:
+        return False
+    return domain in ['localhost', '127.0.0.1']
+
+
 def form_type(form_request):
     """Check the type of form request for /issues/new.
 

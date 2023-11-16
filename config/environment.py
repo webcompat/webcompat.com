@@ -133,6 +133,11 @@ IS_DARKNET_DOMAIN = ('Reporting for .onion domains is disabled.'
                      'Please contact webcompat@mozilla.com '
                      'for more details.')
 
+IS_LOCALHOST_DOMAIN = ('Reporting for localhost '
+                       'is temporarily disabled. Please contact '
+                       'webcompat@mozilla.com '
+                       'for more details.')
+
 MESSAGE_410 = """
     All those moments will be lost in time…
     like tears in rain…
