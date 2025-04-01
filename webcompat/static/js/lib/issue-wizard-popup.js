@@ -33,7 +33,7 @@ class Popup {
     e.preventDefault();
     const popupTrigger = e.target.dataset.popupTrigger;
     const popupModal = document.querySelector(
-      `[data-popup-modal="${popupTrigger}"]`
+      `[data-popup-modal="${popupTrigger}"]`,
     );
     popupModal.classList.add("is--visible");
     this.overlay.classList.add("is-blacked-out");

@@ -29,7 +29,7 @@ const LabelList = Backbone.Model.extend({
   initialize: function () {
     this.set(
       "namespaceRegex",
-      /(browser|closed|os|priority|status|action)-(.+)/i
+      /(browser|closed|os|priority|status|action)-(.+)/i,
     );
     // Temporarily set pagination to 100 labels per page, until
     // we fix Issue #781

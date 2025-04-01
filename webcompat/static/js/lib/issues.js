@@ -21,7 +21,7 @@ issues.AsideView = Backbone.View.extend({
       "change",
       _.bind(function (model) {
         this.render(model);
-      }, this)
+      }, this),
     );
   },
   render: function (model) {
@@ -193,7 +193,7 @@ issues.MainView = Backbone.View.extend(
             // set listener for closing category editor only after its
             // been initialized.
             body.click(_.bind(this.closeCategoryEditor, this));
-          }, this)
+          }, this),
         );
         this.onAfterInit();
         this.handleKeyShortcuts();
@@ -251,7 +251,7 @@ issues.MainView = Backbone.View.extend(
         // or undefined if not found (which is falsey)
         this._isNSFW = !!_.find(
           this.issue.get("labels"),
-          _.matchesProperty("name", "nsfw")
+          _.matchesProperty("name", "nsfw"),
         );
 
         _.each([this.labels, this.milestones, this], function (elm) {
@@ -272,7 +272,7 @@ issues.MainView = Backbone.View.extend(
             {
               type: "GET",
               dataType: "html",
-            }
+            },
           )
             .done(
               _.bind(function (response) {
@@ -284,7 +284,7 @@ issues.MainView = Backbone.View.extend(
                   var _id = $(location.hash);
                   window.scrollTo(0, _id.offset().top);
                 }
-              }, this)
+              }, this),
             )
             .fail(function () {
               var msg =
@@ -329,7 +329,7 @@ issues.MainView = Backbone.View.extend(
                 loadingIndicator.removeClass("is-active");
                 textarea.val("");
                 $(".js-Issue-commentList").append(response);
-              }, this)
+              }, this),
             )
             .fail(function () {
               var msg =
@@ -366,8 +366,8 @@ issues.MainView = Backbone.View.extend(
       handleKeyShortcuts: function () {
         Mousetrap.bind("mod+enter", _.bind(this.addNewComment, this));
       },
-    }
-  )
+    },
+  ),
 );
 
 //Not using a router, so kick off things manually

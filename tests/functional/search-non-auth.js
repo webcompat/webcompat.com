@@ -36,7 +36,7 @@ registerSuite("Search (non-auth)", {
       return FunctionalHelpers.openPage(
         this,
         url("issues"),
-        "[data-remotename=browser-android]"
+        "[data-remotename=browser-android]",
       )
         .findByCssSelector("[data-remotename=browser-android]")
         .click()
@@ -46,7 +46,7 @@ registerSuite("Search (non-auth)", {
           assert.include(
             currUrl,
             "q=label%3Abrowser-android",
-            "Url updated with label name"
+            "Url updated with label name",
           );
         })
         .end();
@@ -56,7 +56,7 @@ registerSuite("Search (non-auth)", {
       return FunctionalHelpers.openPage(
         this,
         url("issues"),
-        "[data-remotename=browser-android"
+        "[data-remotename=browser-android",
       )
         .findByCssSelector("[data-remotename=browser-android]")
         .click()
@@ -68,7 +68,7 @@ registerSuite("Search (non-auth)", {
           assert.include(
             searchText,
             "label:browser-android",
-            "Url updated with label name"
+            "Url updated with label name",
           );
         })
         .end();
@@ -82,7 +82,7 @@ registerSuite("Search (non-auth)", {
           assert.equal(
             isDisplayed,
             true,
-            "Search input is visible for non-authed users."
+            "Search input is visible for non-authed users.",
           );
         })
         .end();
@@ -95,7 +95,7 @@ registerSuite("Search (non-auth)", {
       return FunctionalHelpers.openPage(
         this,
         url("issues", searchParam),
-        ".js-SearchForm"
+        ".js-SearchForm",
       )
         .findByCssSelector("#js-SearchForm-input")
         .clearValue()

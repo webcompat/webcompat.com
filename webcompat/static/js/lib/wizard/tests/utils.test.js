@@ -14,7 +14,7 @@ describe("utils", () => {
     assert.equal(extractPrettyUrl("http://example.com/test"), "example.com");
     assert.equal(
       extractPrettyUrl("http://www.example.com/test"),
-      "www.example.com"
+      "www.example.com",
     );
   });
 
@@ -22,14 +22,14 @@ describe("utils", () => {
     assert.equal(charsPercent("example text example text text", 30), 100);
     assert.equal(
       charsPercent("example text example text example text", 30),
-      100
+      100,
     );
     assert.equal(charsPercent("test12", 30), 20);
     assert.equal(charsPercent("123", 30), 10);
     assert.throws(
       () => charsPercent(123, 30),
       Error,
-      "First argument should be a string"
+      "First argument should be a string",
     );
   });
 
@@ -37,23 +37,23 @@ describe("utils", () => {
     assert.isFalse(
       isSelfReport(
         "http://localhost:5000/issues/new?url=http://example.com/",
-        "http://localhost:5000"
-      )
+        "http://localhost:5000",
+      ),
     );
     assert.isFalse(
-      isSelfReport("http://localhost:5000/issues/new", "http://localhost:5000")
+      isSelfReport("http://localhost:5000/issues/new", "http://localhost:5000"),
     );
     assert.isFalse(
       isSelfReport(
         "http://localhost:5000/issues/new?url=test",
-        "http://localhost:5000"
-      )
+        "http://localhost:5000",
+      ),
     );
     assert.isTrue(
       isSelfReport(
         "http://localhost:5000/issues/new?url=http://localhost:5000/",
-        "http://localhost:5000"
-      )
+        "http://localhost:5000",
+      ),
     );
   });
 
@@ -67,7 +67,7 @@ describe("utils", () => {
     assert.equal(getDataURIFromPreview(bgImageInQuotes), `${base64String}"`);
     assert.strictEqual(
       getDataURIFromPreview("invalid background..."),
-      undefined
+      undefined,
     );
     assert.strictEqual(getDataURIFromPreview("url('test.jpg')"), undefined);
   });

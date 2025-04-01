@@ -33,7 +33,7 @@ var sharedViewProps = {
     this.$el.html(
       this.template({
         issues: this.issues.toJSON(),
-      })
+      }),
     );
 
     return this;
@@ -58,7 +58,7 @@ var sharedViewProps = {
           this._loadingIndicator.removeClass("is-active");
           this.render(this.issues);
           instance.initPaginationLinks(this.issues);
-        }, this)
+        }, this),
       )
       .fail(
         _.bind(function (e) {
@@ -77,7 +77,7 @@ var sharedViewProps = {
             message: message,
             timeout: timeout,
           });
-        }, this)
+        }, this),
       );
   },
 };
@@ -96,7 +96,7 @@ issueList.NeedsInfoView = Backbone.View.extend(
         instance: needsinfoPagination,
       });
     },
-  })
+  }),
 );
 
 issueList.MyIssuesView = Backbone.View.extend(
@@ -110,14 +110,14 @@ issueList.MyIssuesView = Backbone.View.extend(
       myIssuesPagination.initMixin(
         this,
         this.issues,
-        $("#user-reported-issues")
+        $("#user-reported-issues"),
       );
       this.fetchAndRenderIssues({
         url: this.issues.url,
         instance: myIssuesPagination,
       });
     },
-  })
+  }),
 );
 
 issueList.IssueMentionsView = Backbone.View.extend(
@@ -132,14 +132,14 @@ issueList.IssueMentionsView = Backbone.View.extend(
       mentionsPagination.initMixin(
         this,
         this.issues,
-        $("#user-mentioned-issues")
+        $("#user-mentioned-issues"),
       );
       this.fetchAndRenderIssues({
         url: this.issues.url,
         instance: mentionsPagination,
       });
     },
-  })
+  }),
 );
 
 $(function () {

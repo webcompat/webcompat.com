@@ -22,7 +22,7 @@ export const MilestonesModel = Backbone.Model.extend({
       // sort first by state, in desc order (because open comes after closed, alphabetically)
       // then sort by order, in ascending order to get 1, 2, 3... etc.
       ["state", "order"],
-      ["desc", "asc"]
+      ["desc", "asc"],
     );
     this.set("milestones", orderedMilestones);
   },
@@ -53,7 +53,7 @@ export const MilestonesModel = Backbone.Model.extend({
           this.get("milestones"),
           function (status) {
             return status.id === statusObject.id;
-          }
+          },
         );
 
         this.set("milestone", currentMilestone);

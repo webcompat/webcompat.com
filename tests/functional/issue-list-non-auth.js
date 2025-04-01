@@ -18,7 +18,7 @@ registerSuite("Issue-list", {
       return FunctionalHelpers.openPage(
         this,
         url("issues"),
-        ".js-SearchIssue-filter"
+        ".js-SearchIssue-filter",
       )
         .findAllByCssSelector(".js-Tag")
         .then(function (elms) {
@@ -48,7 +48,7 @@ registerSuite("Issue-list", {
           assert.equal(
             isDisplayed,
             true,
-            "IssueList item is has non-empty title."
+            "IssueList item is has non-empty title.",
           );
         })
         .end()
@@ -58,7 +58,7 @@ registerSuite("Issue-list", {
           assert.match(
             text,
             /comments:\s\d+$/i,
-            "Issue should display number of comments"
+            "Issue should display number of comments",
           );
         })
         .end()
@@ -68,7 +68,7 @@ registerSuite("Issue-list", {
           assert.match(
             text,
             /^Opened:\s\d{4}-\d{2}-\d{2}/,
-            "Issue should display creation date"
+            "Issue should display creation date",
           );
         })
         .end();
@@ -78,7 +78,7 @@ registerSuite("Issue-list", {
       return FunctionalHelpers.openPage(
         this,
         url("issues"),
-        ".js-Pagination-controls"
+        ".js-Pagination-controls",
       )
         .findByCssSelector(".js-Pagination-controls")
         .isDisplayed()
@@ -92,7 +92,7 @@ registerSuite("Issue-list", {
           assert.include(
             className,
             "is-disabled",
-            "First page load should have disabled prev button"
+            "First page load should have disabled prev button",
           );
         })
         .end()
@@ -105,7 +105,7 @@ registerSuite("Issue-list", {
           assert.notInclude(
             className,
             "is-disabled",
-            "Clicking next enables prev button"
+            "Clicking next enables prev button",
           );
         })
         .end()
@@ -118,7 +118,7 @@ registerSuite("Issue-list", {
           assert.include(
             className,
             "is-disabled",
-            "Going back from first next click should have disabled prev button"
+            "Going back from first next click should have disabled prev button",
           );
         })
         .end();
@@ -128,7 +128,7 @@ registerSuite("Issue-list", {
       return FunctionalHelpers.openPage(
         this,
         url("issues"),
-        ".js-Pagination-controls"
+        ".js-Pagination-controls",
       )
         .findByCssSelector(".js-Dropdown-pagination")
         .isDisplayed()
@@ -136,7 +136,7 @@ registerSuite("Issue-list", {
           assert.equal(
             isDisplayed,
             true,
-            "pagination dropdown container is visible."
+            "pagination dropdown container is visible.",
           );
         })
         .end()
@@ -149,7 +149,7 @@ registerSuite("Issue-list", {
           assert.include(
             className,
             "is-active",
-            "clicking dropdown adds is-active class"
+            "clicking dropdown adds is-active class",
           );
         })
         .end()
@@ -160,7 +160,7 @@ registerSuite("Issue-list", {
         })
         .end()
         .findByCssSelector(
-          ".js-Dropdown-pagination .js-Dropdown-item:nth-child(3) > .js-Dropdown-link:nth-child(1)"
+          ".js-Dropdown-pagination .js-Dropdown-item:nth-child(3) > .js-Dropdown-link:nth-child(1)",
         )
         .click()
         .end()
@@ -170,7 +170,7 @@ registerSuite("Issue-list", {
           assert.include(
             text,
             "Show 100",
-            "Clicking first option updated dropdown label"
+            "Clicking first option updated dropdown label",
           );
         })
         .end()
@@ -186,7 +186,7 @@ registerSuite("Issue-list", {
       return FunctionalHelpers.openPage(
         this,
         url("issues"),
-        ".js-Pagination-controls"
+        ".js-Pagination-controls",
       )
         .findByCssSelector("body")
         .click()
@@ -198,7 +198,7 @@ registerSuite("Issue-list", {
           assert.match(
             url,
             /[https://github.com/^*/^*/issues/]/,
-            "We're at GitHub now."
+            "We're at GitHub now.",
           );
         })
         .end();
@@ -208,7 +208,7 @@ registerSuite("Issue-list", {
       return FunctionalHelpers.openPage(
         this,
         url("issues"),
-        "#js-SearchForm-input"
+        "#js-SearchForm-input",
       )
         .findByCssSelector("#js-SearchForm-input")
         .click()
@@ -226,14 +226,14 @@ registerSuite("Issue-list", {
       return FunctionalHelpers.openPage(
         this,
         url("issues"),
-        ".js-IssueList:nth-of-type(1)"
+        ".js-IssueList:nth-of-type(1)",
       )
         .getCurrentUrl()
         .then(function (currUrl) {
           assert.include(
             currUrl,
             "page=1&per_page=50&state=open",
-            "Default model params are added to the URL"
+            "Default model params are added to the URL",
           );
         });
     },
@@ -243,14 +243,14 @@ registerSuite("Issue-list", {
       return FunctionalHelpers.openPage(
         this,
         url("issues", params),
-        ".js-IssueList:nth-of-type(1)"
+        ".js-IssueList:nth-of-type(1)",
       )
         .getCurrentUrl()
         .then(function (currUrl) {
           assert.include(
             currUrl,
             "page=2&per_page=50&state=open",
-            "Default model params are merged with partial URL params"
+            "Default model params are merged with partial URL params",
           );
         });
     },
@@ -261,7 +261,7 @@ registerSuite("Issue-list", {
       return FunctionalHelpers.openPage(
         this,
         url("issues", params),
-        ".js-IssueList:nth-of-type(1)"
+        ".js-IssueList:nth-of-type(1)",
       )
         .findByCssSelector(".js-Dropdown-pagination .js-Dropdown-label")
         .getVisibleText()
@@ -269,7 +269,7 @@ registerSuite("Issue-list", {
           assert.equal(
             text,
             "Show 25",
-            "Pagination dropdown label is updated from URL params"
+            "Pagination dropdown label is updated from URL params",
           );
         })
         .end()
@@ -279,7 +279,7 @@ registerSuite("Issue-list", {
           assert.equal(
             text,
             "Recently Updated",
-            "Sort dropdown label is updated from URL params"
+            "Sort dropdown label is updated from URL params",
           );
         })
         .end();
@@ -292,7 +292,7 @@ registerSuite("Issue-list", {
         FunctionalHelpers.openPage(
           this,
           url("issues", params),
-          ".js-IssueList:nth-of-type(1)"
+          ".js-IssueList:nth-of-type(1)",
         )
           .findByCssSelector(".js-Dropdown-pagination .js-Dropdown-label")
           .getVisibleText()
@@ -300,7 +300,7 @@ registerSuite("Issue-list", {
             assert.equal(
               text,
               "Show 25",
-              "Pagination dropdown label is updated from URL params"
+              "Pagination dropdown label is updated from URL params",
             );
           })
           .end()
@@ -309,7 +309,7 @@ registerSuite("Issue-list", {
           .click()
           .end()
           .findByCssSelector(
-            ".js-Dropdown-pagination li.js-Dropdown-item:nth-child(3) > a:nth-child(1)"
+            ".js-Dropdown-pagination li.js-Dropdown-item:nth-child(3) > a:nth-child(1)",
           )
           .click()
           .end()
@@ -323,7 +323,7 @@ registerSuite("Issue-list", {
             assert.include(
               currUrl,
               "per_page=25",
-              "URL param is back to where we started"
+              "URL param is back to where we started",
             );
           })
           .end()
@@ -333,7 +333,7 @@ registerSuite("Issue-list", {
             assert.equal(
               text,
               "Show 25",
-              "Pagination dropdown label is back to where we started"
+              "Pagination dropdown label is back to where we started",
             );
           })
           .end()
@@ -347,7 +347,7 @@ registerSuite("Issue-list", {
       return FunctionalHelpers.openPage(
         this,
         url("issues", params),
-        ".js-IssueList:nth-of-type(1)"
+        ".js-IssueList:nth-of-type(1)",
       )
         .findByCssSelector(".js-Tag.is-active")
         .getVisibleText()
@@ -355,7 +355,7 @@ registerSuite("Issue-list", {
           assert.equal(
             "Needs Triage",
             text,
-            "Needs Triage filter is selected."
+            "Needs Triage filter is selected.",
           );
         })
         .end();
@@ -366,7 +366,7 @@ registerSuite("Issue-list", {
         FunctionalHelpers.openPage(
           this,
           url("issues"),
-          ".js-IssueList:nth-of-type(1)"
+          ".js-IssueList:nth-of-type(1)",
         )
           .findByCssSelector('[data-filter="contactready"]')
           .click()
@@ -379,7 +379,7 @@ registerSuite("Issue-list", {
             assert.include(
               currUrl,
               "stage=contactready",
-              "Stage filter added to URL correctly."
+              "Stage filter added to URL correctly.",
             );
           })
           .end()
@@ -391,7 +391,7 @@ registerSuite("Issue-list", {
         FunctionalHelpers.openPage(
           this,
           url("issues"),
-          ".js-IssueList:nth-of-type(1)"
+          ".js-IssueList:nth-of-type(1)",
         )
           .findByCssSelector('[data-filter="closed"]')
           .click()
@@ -407,7 +407,7 @@ registerSuite("Issue-list", {
             assert.notInclude(
               currUrl,
               "stage=closed",
-              "Stage filter added then removed from URL."
+              "Stage filter added then removed from URL.",
             );
           })
           .end()
@@ -419,7 +419,7 @@ registerSuite("Issue-list", {
         FunctionalHelpers.openPage(
           this,
           url("issues"),
-          ".js-IssueList:nth-of-type(1)"
+          ".js-IssueList:nth-of-type(1)",
         )
           .findByCssSelector('[data-filter="closed"]')
           .click()
@@ -435,12 +435,12 @@ registerSuite("Issue-list", {
             assert.include(
               currUrl,
               "stage=sitewait",
-              "Stage filter added to URL correctly."
+              "Stage filter added to URL correctly.",
             );
             assert.notInclude(
               currUrl,
               "stage=closed",
-              "Stage removed from URL correctly."
+              "Stage removed from URL correctly.",
             );
           })
           .end()

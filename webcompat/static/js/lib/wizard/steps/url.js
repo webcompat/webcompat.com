@@ -44,8 +44,8 @@ const onBlur = (value) => {
   handleEvent(value, () =>
     showError(
       urlField,
-      "Please enter a valid url starting with https:// or http://"
-    )
+      "Please enter a valid url starting with https:// or http://",
+    ),
   );
 };
 

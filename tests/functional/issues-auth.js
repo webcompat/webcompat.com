@@ -25,7 +25,7 @@ registerSuite("Issues (auth)", {
       return FunctionalHelpers.openPage(
         this,
         url("issues/70"),
-        ".js-Issue-comment-button"
+        ".js-Issue-comment-button",
       )
         .findByCssSelector("body")
         .click()
@@ -49,7 +49,7 @@ registerSuite("Issues (auth)", {
       return FunctionalHelpers.openPage(
         this,
         url("issues/70"),
-        ".js-Issue-comment-button"
+        ".js-Issue-comment-button",
       )
         .findByCssSelector(".js-DropdownHeader")
         .click()

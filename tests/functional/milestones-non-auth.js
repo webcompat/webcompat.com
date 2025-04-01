@@ -18,7 +18,7 @@ registerSuite("Milestones (non-auth)", {
         this,
         url("issues/9"),
         ".js-Issue",
-        true /* longerTimeout */
+        true /* longerTimeout */,
       )
         .findByCssSelector(".js-issue-title")
         .getVisibleText()
@@ -34,7 +34,7 @@ registerSuite("Milestones (non-auth)", {
         this,
         url("issues/9"),
         ".js-Issue",
-        true /* longerTimeout */
+        true /* longerTimeout */,
       )
         .findByCssSelector(".js-Milestone")
         .getVisibleText();
@@ -43,7 +43,7 @@ registerSuite("Milestones (non-auth)", {
         this,
         url("issues/9"),
         ".js-Issue",
-        true /* longerTimeout */
+        true /* longerTimeout */,
       )
         .findByCssSelector(".js-Milestone")
         .getVisibleText()

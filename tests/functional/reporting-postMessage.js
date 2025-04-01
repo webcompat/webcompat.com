@@ -24,8 +24,8 @@ registerSuite("Reporting through postMessage", {
             assert.equal(
               value,
               true,
-              "wrtReady variable exists in window object"
-            )
+              "wrtReady variable exists in window object",
+            ),
           )
           // send data object through postMessage
           .execute(POSTMESSAGE_TEST)

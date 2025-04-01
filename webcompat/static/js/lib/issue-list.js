@@ -28,12 +28,12 @@ issueList.DropdownView = Backbone.View.extend({
         if (!$(e.target).closest(this.$el).length) {
           this.closeDropdown();
         }
-      }, this)
+      }, this),
     );
 
     issueList.events.on(
       "dropdown:update",
-      _.bind(this.selectDropdownOption, this)
+      _.bind(this.selectDropdownOption, this),
     );
   },
   template: dropdownTemplate,
@@ -281,11 +281,11 @@ issueList.IssueView = Backbone.View.extend(
       issueList.events.on("issues:update", _.bind(this.updateIssues, this));
       issueList.events.on(
         "filter:add-to-model",
-        _.bind(this.updateModelParams, this)
+        _.bind(this.updateModelParams, this),
       );
       issueList.events.on(
         "filter:reset-stage",
-        _.bind(this.resetStageFilter, this)
+        _.bind(this.resetStageFilter, this),
       );
       wcEvents.on("dropdown:change", _.bind(this.updateModelParams, this));
       window.addEventListener("popstate", _.bind(this.loadIssues, this));
@@ -310,11 +310,11 @@ issueList.IssueView = Backbone.View.extend(
           _.delay(function () {
             issueList.events.trigger(
               "search:update",
-              decodeURIComponent(queryMatch[1])
+              decodeURIComponent(queryMatch[1]),
             );
             issueList.events.trigger(
               "search:current",
-              decodeURIComponent(queryMatch[1])
+              decodeURIComponent(queryMatch[1]),
             );
           }, 0);
         }
@@ -368,7 +368,7 @@ issueList.IssueView = Backbone.View.extend(
             this._loadingIndicator.removeClass("is-active");
             this.render(this.issues);
             issuesPagination.initPaginationLinks(this.issues);
-          }, this)
+          }, this),
         )
         .fail(
           _.bind(function (e) {
@@ -397,14 +397,14 @@ issueList.IssueView = Backbone.View.extend(
               message: message,
               timeout: timeout,
             });
-          }, this)
+          }, this),
         );
     },
     render: function (issues) {
       this.$el.html(
         this.template({
           issues: issues.toJSON(),
-        })
+        }),
       );
       return this;
     },
@@ -453,7 +453,7 @@ issueList.IssueView = Backbone.View.extend(
       } else if (_.includes(issuesAPICategories, category)) {
         this.issues.setURLState(
           "/api/issues/category/" + category,
-          this.removeParamQuery(params)
+          this.removeParamQuery(params),
         );
       } else {
         this.issues.setURLState("/api/issues", this.removeParamQuery(params));
@@ -477,7 +477,7 @@ issueList.IssueView = Backbone.View.extend(
           var key = kvArray[0];
           var value = kvArray[1];
           this.issues.params[key] = decodeURIComponent(value);
-        }, this)
+        }, this),
       );
     },
     updateModelParams: function (params, options) {
@@ -538,7 +538,7 @@ issueList.IssueView = Backbone.View.extend(
           toDelete,
           _.bind(function (param) {
             delete this.issues.params[param];
-          }, this)
+          }, this),
         );
 
         if (currentStateParamName in this.issues.params) {
@@ -568,7 +568,7 @@ issueList.IssueView = Backbone.View.extend(
         }
       }
     },
-  })
+  }),
 );
 
 issueList.MainView = Backbone.View.extend({
@@ -607,7 +607,7 @@ issueList.MainView = Backbone.View.extend({
         this.filter.render();
         this.issueSorter.render();
         this.search.render();
-      }, this)
+      }, this),
     );
   },
 });

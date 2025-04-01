@@ -26,7 +26,7 @@ registerSuite("Milestones (auth)", {
         this,
         url("issues/2"),
         ".js-MilestoneEditorLauncher",
-        true /* longerTimeout */
+        true /* longerTimeout */,
       )
         .findByCssSelector(".js-MilestoneEditorLauncher")
         .click()
@@ -50,7 +50,7 @@ registerSuite("Milestones (auth)", {
         this,
         url("issues/2"),
         ".js-MilestoneEditorLauncher",
-        true /* longerTimeout */
+        true /* longerTimeout */,
       )
         .findByCssSelector("body")
         .type("m")
@@ -72,7 +72,7 @@ registerSuite("Milestones (auth)", {
         this,
         url("issues/2"),
         ".js-MilestoneEditorLauncher",
-        true /* longerTimeout */
+        true /* longerTimeout */,
       )
         .findByCssSelector(".js-MilestoneEditorLauncher")
         .click()
@@ -95,7 +95,7 @@ registerSuite("Milestones (auth)", {
         this,
         url("issues/2"),
         ".js-MilestoneEditorLauncher",
-        true /* longerTimeout */
+        true /* longerTimeout */,
       )
         .execute(() => {
           document.querySelector(".js-MilestoneEditorLauncher").click();
@@ -116,7 +116,7 @@ registerSuite("Milestones (auth)", {
         this,
         url("issues/9"),
         ".js-Issue",
-        true /* longerTimeout */
+        true /* longerTimeout */,
       )
         .findByCssSelector(".js-Milestone")
         .getVisibleText();
@@ -125,7 +125,7 @@ registerSuite("Milestones (auth)", {
         this,
         url("issues/9"),
         ".js-Issue",
-        true /* longerTimeout */
+        true /* longerTimeout */,
       )
         .findByCssSelector(".js-Milestone")
         .getVisibleText()

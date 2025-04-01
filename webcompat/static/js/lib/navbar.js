@@ -57,7 +57,7 @@ function NavBar() {
         }, 500);
 
         this.addShadow($newIssueStepper, $(window).scrollTop());
-      }.bind(this)
+      }.bind(this),
     );
 
     window.setInterval(function () {

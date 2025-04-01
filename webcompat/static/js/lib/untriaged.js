@@ -32,7 +32,7 @@ untriaged.NeedsTriageView = Backbone.View.extend({
       this.template({
         // Just display the first 5.
         issues: this.issues.toJSON().slice(0, 5),
-      })
+      }),
     );
     return this;
   },

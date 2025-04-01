@@ -21,7 +21,7 @@ function Slider() {
     var slide = document.querySelectorAll(".slider .slides .slide");
     var controlNext = document.querySelector(".slider .controls .next");
     var controlFinish = document.querySelector(
-      ".slider .controls .close-control"
+      ".slider .controls .close-control",
     );
     var touchstartX = 0;
     var touchendX = 0;

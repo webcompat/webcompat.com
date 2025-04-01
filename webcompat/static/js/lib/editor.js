@@ -50,7 +50,7 @@ export const CategoryEditorView = Backbone.View.extend({
     _.defer(
       _.bind(function () {
         this.$el.find(".label-editor-header .form-field").focus();
-      }, this)
+      }, this),
     );
     return this;
   },
@@ -81,14 +81,14 @@ export const CategoryEditorView = Backbone.View.extend({
       _.defer(function () {
         var categoryEditorheight = parseInt(
           $(".label-box-editor").css("height"),
-          10
+          10,
         );
         var categoryHeaderheight = parseInt(
           $(".label-editor-header").css("height"),
-          10
+          10,
         );
         $(".label-editor-list").height(
-          categoryEditorheight - categoryHeaderheight
+          categoryEditorheight - categoryHeaderheight,
         );
         $("html, body").animate({ scrollTop: 0 }, 0);
       });
