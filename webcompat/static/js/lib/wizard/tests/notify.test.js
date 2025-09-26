@@ -13,12 +13,12 @@ describe("notify", () => {
     assert.throws(
       notify.subscribe,
       Error,
-      "Please provide channel name to subscribe"
+      "Please provide channel name to subscribe",
     );
     assert.throws(
       () => notify.subscribe("test"),
       Error,
-      "Please provide callback function to be called once there is a publish to a channel"
+      "Please provide callback function to be called once there is a publish to a channel",
     );
   });
 

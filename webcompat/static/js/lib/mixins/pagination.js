@@ -73,7 +73,7 @@ export function PaginationMixin() {
     issueList.events.on("paginate:next", _.bind(this.requestNextPage, this));
     issueList.events.on(
       "paginate:previous",
-      _.bind(this.requestPreviousPage, this)
+      _.bind(this.requestPreviousPage, this),
     );
   };
 
@@ -83,7 +83,7 @@ export function PaginationMixin() {
     var nextButton = this.paginationControls.el.find(".js-Pagination-next");
     var prevButton = this.paginationControls.el.find(".js-Pagination-previous");
     var paginationButtons = this.paginationControls.el.find(
-      ".js-Pagination-controls"
+      ".js-Pagination-controls",
     );
     var nextPage = issuesCollection.getNextPage();
     var prevPage = issuesCollection.getPrevPage();

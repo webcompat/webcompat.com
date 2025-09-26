@@ -30,7 +30,7 @@ registerSuite("Search (auth)", {
       return FunctionalHelpers.openPage(
         this,
         url("issues"),
-        ".js-SearchForm-button"
+        ".js-SearchForm-button",
       )
         .findDisplayedByCssSelector(".js-SearchForm-button")
         .click()
@@ -58,7 +58,7 @@ registerSuite("Search (auth)", {
           assert.notInclude(
             className,
             "is-active",
-            "Searching should clear all filters"
+            "Searching should clear all filters",
           );
         })
         .end();
@@ -70,7 +70,7 @@ registerSuite("Search (auth)", {
       return FunctionalHelpers.openPage(
         this,
         url("issues", params),
-        ".js-IssueList:nth-of-type(1)"
+        ".js-IssueList:nth-of-type(1)",
       )
         .findDisplayedByCssSelector(".js-IssueList:nth-of-type(1) a")
         .getVisibleText()
@@ -78,7 +78,7 @@ registerSuite("Search (auth)", {
           assert.include(
             text,
             "vladvlad",
-            "The search query results show up on the page."
+            "The search query results show up on the page.",
           );
         })
         .end()
@@ -87,7 +87,7 @@ registerSuite("Search (auth)", {
           assert.include(
             currUrl,
             "q=vladvlad",
-            "Our params didn't go anywhere."
+            "Our params didn't go anywhere.",
           );
         })
         .end();
@@ -97,7 +97,7 @@ registerSuite("Search (auth)", {
       return FunctionalHelpers.openPage(
         this,
         url("issues"),
-        ".js-IssueList:nth-of-type(10)"
+        ".js-IssueList:nth-of-type(10)",
       )
         .findByCssSelector(".js-SearchForm input")
         .type("vladvlad")
@@ -111,7 +111,7 @@ registerSuite("Search (auth)", {
           assert.include(
             text,
             "vladvlad",
-            "The search results show up on the page."
+            "The search results show up on the page.",
           );
         })
         .end();
@@ -121,7 +121,7 @@ registerSuite("Search (auth)", {
       return FunctionalHelpers.openPage(
         this,
         url("issues/new"),
-        ".js-ReportForm"
+        ".js-ReportForm",
       )
         .findByCssSelector(".js-SearchBarOpen")
         .click()
@@ -151,7 +151,7 @@ registerSuite("Search (auth)", {
       return FunctionalHelpers.openPage(
         this,
         url("issues"),
-        ".js-SearchForm input"
+        ".js-SearchForm input",
       )
         .findDisplayedByCssSelector(".js-SearchForm input")
         .type("vladvlad")
@@ -163,7 +163,7 @@ registerSuite("Search (auth)", {
           assert.include(
             text,
             "vladvlad",
-            "The search results show up on the page."
+            "The search results show up on the page.",
           );
         })
         .end();
@@ -189,7 +189,7 @@ registerSuite("Search (auth)", {
             assert.include(
               text,
               "vladvlad",
-              "The search query results show up on the page."
+              "The search query results show up on the page.",
             );
           })
           .end()
@@ -208,7 +208,7 @@ registerSuite("Search (auth)", {
       return FunctionalHelpers.openPage(
         this,
         url("issues", searchParam),
-        ".js-no-results"
+        ".js-no-results",
       )
         .findByCssSelector("#js-SearchForm-input")
         .clearValue()
@@ -217,14 +217,14 @@ registerSuite("Search (auth)", {
         .type("\uE007")
         .end()
         .findDisplayedByCssSelector(
-          ".js-IssueList:first-of-type .js-Issue-label"
+          ".js-IssueList:first-of-type .js-Issue-label",
         )
         .getVisibleText()
         .then(function (text) {
           assert.include(
             text,
             "tacos",
-            "The label:status-tacos search worked."
+            "The label:status-tacos search worked.",
           );
         })
         .end();
@@ -248,8 +248,8 @@ registerSuite("Search (auth)", {
           assert(
             url.includes(
               "q=label%3Abrowser-android",
-              "Redirect from a suggested label goes to correct URL."
-            )
+              "Redirect from a suggested label goes to correct URL.",
+            ),
           );
         });
     },
@@ -261,7 +261,7 @@ registerSuite("Search (auth)", {
       return FunctionalHelpers.openPage(
         this,
         url("issues", searchParam),
-        ".js-no-results"
+        ".js-no-results",
       )
         .findByCssSelector("#js-SearchForm-input")
         .getProperty("value")
@@ -269,7 +269,7 @@ registerSuite("Search (auth)", {
           assert.include(
             text,
             "one:two-three",
-            "The q param populated the search input."
+            "The q param populated the search input.",
           );
         })
         .end();

@@ -40,7 +40,7 @@ const LabelEditorView = CategoryEditorView.extend({
     if (remotename.match(/^(priority)/) && evt.target.checked) {
       var prefix = remotename.split("-")[0];
       checked = this.$el.find(
-        'input[type=checkbox][data-remotename^="' + prefix + '"]:checked'
+        'input[type=checkbox][data-remotename^="' + prefix + '"]:checked',
       );
       _.each(checked, function (item) {
         if (item !== evt.target) {
@@ -121,7 +121,7 @@ export const LabelsView = CategoryView.extend({
     $("#body-webcompat").addClass("is-label-editor-open");
     var toBeChecked = _.intersection(
       this.getIssueLabels(),
-      issues.allLabels.toArray()
+      issues.allLabels.toArray(),
     );
     _.each(toBeChecked, function (labelName) {
       $('[name="' + labelName + '"]').prop("checked", true);

@@ -30,7 +30,7 @@ registerSuite("Reporting with wizard", {
       return FunctionalHelpers.openPage(
         this,
         url("issues/new"),
-        "#js-ReportForm"
+        "#js-ReportForm",
       )
         .findByCssSelector("#url")
         .click()
@@ -47,7 +47,7 @@ registerSuite("Reporting with wizard", {
       return FunctionalHelpers.openPage(
         this,
         url("issues/new"),
-        "#js-ReportForm"
+        "#js-ReportForm",
       )
         .findByCssSelector("#url")
         .click()
@@ -64,7 +64,7 @@ registerSuite("Reporting with wizard", {
           assert.include(
             texts,
             "Please enter a valid url starting with https:// or http://",
-            "URL validation message is shown"
+            "URL validation message is shown",
           );
         })
         .end()
@@ -392,7 +392,7 @@ registerSuite("Reporting with wizard", {
             assert.include(
               text,
               "Continue without",
-              "Continue without image attached"
+              "Continue without image attached",
             );
           })
           // Click on "Continue without"
@@ -462,7 +462,7 @@ registerSuite("Reporting with wizard", {
             assert.equal(
               elementId,
               "other_problem",
-              "Focused element id is #other_problem"
+              "Focused element id is #other_problem",
             );
           })
           .end()
@@ -571,7 +571,7 @@ registerSuite("Reporting with wizard", {
             assert.include(
               text,
               "Continue without",
-              "Continue without image attached after deletion"
+              "Continue without image attached after deletion",
             );
           })
           .end()
@@ -590,7 +590,7 @@ registerSuite("Reporting with wizard", {
             assert.include(
               text,
               "Image must be one of the following",
-              "Image type validation message is shown"
+              "Image type validation message is shown",
             );
           })
           .end()
@@ -600,7 +600,7 @@ registerSuite("Reporting with wizard", {
             assert.notInclude(
               inlineStyle,
               "data:image/png;base64,iVBOR",
-              "The previous valid image preview should be removed."
+              "The previous valid image preview should be removed.",
             );
           })
           .end()
@@ -609,7 +609,7 @@ registerSuite("Reporting with wizard", {
           .then(function (isDisplayed) {
             assert.isFalse(
               isDisplayed,
-              "Upload label is hidden while the error is displayed"
+              "Upload label is hidden while the error is displayed",
             );
           })
           .end()
@@ -628,7 +628,7 @@ registerSuite("Reporting with wizard", {
             assert.include(
               text,
               "Continue",
-              "Continue with image attached after reupload"
+              "Continue with image attached after reupload",
             );
           })
           // Click "Continue"

@@ -9,7 +9,7 @@ export default {
     if (!channel) throw Error("Please provide channel name to subscribe");
     if (!cb)
       throw Error(
-        "Please provide callback function to be called once there is a publish to a channel"
+        "Please provide callback function to be called once there is a publish to a channel",
       );
 
     if (!channels.hasOwnProperty(channel)) {

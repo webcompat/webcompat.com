@@ -30,7 +30,7 @@ registerSuite("Image Uploads (non-auth)", {
             assert.include(
               inlineStyle,
               "data:image/png;base64,iVBOR",
-              "Base64 data shown as preview background"
+              "Base64 data shown as preview background",
             );
           })
           .end()
@@ -45,7 +45,7 @@ registerSuite("Image Uploads (non-auth)", {
             function (args) {
               WindowHelpers.getBlob(args).then(WindowHelpers.sendBlob);
             },
-            [targetOrigin]
+            [targetOrigin],
           )
           .sleep(1000)
           .findByCssSelector(".js-image-upload")
@@ -54,7 +54,7 @@ registerSuite("Image Uploads (non-auth)", {
             assert.include(
               inlineStyle,
               "data:image/png;base64,iVBOR",
-              "Base64 data shown as preview background"
+              "Base64 data shown as preview background",
             );
           })
           .end()
@@ -76,7 +76,7 @@ registerSuite("Image Uploads (non-auth)", {
             assert.include(
               inlineStyle,
               "data:image/png;base64,iVBOR",
-              "Base64 data shown as preview background"
+              "Base64 data shown as preview background",
             );
           })
           .end()
@@ -95,7 +95,7 @@ registerSuite("Image Uploads (non-auth)", {
           assert.include(
             inlineStyle,
             "data:image/png;base64,iVBOR",
-            "Base64 data shown as preview background"
+            "Base64 data shown as preview background",
           );
         })
         .end();
@@ -113,7 +113,7 @@ registerSuite("Image Uploads (non-auth)", {
             assert.notInclude(
               val,
               "<img alt='Screenshot' src='http://localhost:5000/uploads/",
-              "The data URI was not uploaded before form submission."
+              "The data URI was not uploaded before form submission.",
             );
           })
           .end()
@@ -134,7 +134,7 @@ registerSuite("Image Uploads (non-auth)", {
             assert.notInclude(
               val,
               "<img alt='Screenshot' src='",
-              "The data URI was not uploaded before form submission."
+              "The data URI was not uploaded before form submission.",
             );
           })
           .end()
@@ -153,7 +153,7 @@ registerSuite("Image Uploads (non-auth)", {
           assert.notInclude(
             val,
             "<img alt='Screenshot' src='",
-            "The data URI was not uploaded before form submission."
+            "The data URI was not uploaded before form submission.",
           );
         })
         .end();
@@ -177,7 +177,7 @@ registerSuite("Image Uploads (non-auth)", {
             assert.notInclude(
               inlineStyle,
               "data:image/png;base64,iVBOR",
-              "Preview was removed"
+              "Preview was removed",
             );
           })
           .end()
@@ -202,7 +202,7 @@ registerSuite("Image Uploads (non-auth)", {
             assert.notInclude(
               inlineStyle,
               "data:image/png;base64,iVBOR",
-              "Preview was removed"
+              "Preview was removed",
             );
           })
           .end()
@@ -221,7 +221,7 @@ registerSuite("Image Uploads (non-auth)", {
           assert.include(
             inlineStyle,
             "data:image/png;base64,iVBOR",
-            "Preview is shown"
+            "Preview is shown",
           );
         })
         .end();

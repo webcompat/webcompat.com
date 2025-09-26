@@ -73,10 +73,10 @@ export const Issue = Backbone.Model.extend({
         title: this.getTitle(
           this.getDomain(response.title),
           this.getDescription(response.body_html),
-          response.title
+          response.title,
         ),
       },
-      { silent: true }
+      { silent: true },
     );
 
     this.on(
@@ -84,14 +84,14 @@ export const Issue = Backbone.Model.extend({
       _.bind(function (model, newMilestone) {
         var newState = this.getState(
           this._statuses[newMilestone].state,
-          newMilestone
+          newMilestone,
         );
 
         this.set({
           issueState: newState,
           state: this._statuses[newMilestone].state,
         });
-      }, this)
+      }, this),
     );
   },
 

@@ -52,7 +52,7 @@ const showImagePreview = (dataURI) => {
     downsampleImage(
       dataURI,
       // Recurse until it's small enough for us to upload.
-      (downSampledData) => showImagePreview(downSampledData)
+      (downSampledData) => showImagePreview(downSampledData),
     );
   } else {
     addPreviewBackground(dataURI);

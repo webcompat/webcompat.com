@@ -21,7 +21,7 @@ registerSuite("Index", {
         .then(function (text) {
           assert.equal(
             text.toLowerCase(),
-            "Bug reporting\nfor the web.".toLowerCase()
+            "Bug reporting\nfor the web.".toLowerCase(),
           );
         })
         .end();
@@ -52,7 +52,7 @@ registerSuite("Index", {
           assert.match(
             text,
             /Issue\s\d+\n.+/,
-            "Issue should have a non-empty title"
+            "Issue should have a non-empty title",
           );
         })
         .end()
@@ -62,7 +62,7 @@ registerSuite("Index", {
           assert.match(
             text,
             /^Opened:\s\d{4}-\d{2}-\d{2}/,
-            "Issue should display creation date"
+            "Issue should display creation date",
           );
         })
         .end()
@@ -72,7 +72,7 @@ registerSuite("Index", {
           assert.match(
             text,
             /Comments:\s\d/,
-            "Issue should display number of comments"
+            "Issue should display number of comments",
           );
         })
         .end();

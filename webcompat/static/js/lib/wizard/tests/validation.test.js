@@ -43,13 +43,15 @@ describe("validation", () => {
   it("isImageDataURIValid detects is data URI is valid image", () => {
     assert.isFalse(isImageDataURIValid({}));
     assert.isFalse(
-      isImageDataURIValid("data:text/html,%3Ch1%3EHello%2C%20World!%3C%2Fh1%3E")
+      isImageDataURIValid(
+        "data:text/html,%3Ch1%3EHello%2C%20World!%3C%2Fh1%3E",
+      ),
     );
     assert.isFalse(isImageDataURIValid());
     assert.isTrue(
       isImageDataURIValid(
-        "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAZC"
-      )
+        "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAZC",
+      ),
     );
   });
 });

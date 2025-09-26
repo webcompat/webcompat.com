@@ -53,7 +53,7 @@ registerSuite("Issues", {
           assert.equal(
             text,
             "Today's date is Mon Sep 28 2015",
-            "Comment is displayed."
+            "Comment is displayed.",
           );
         });
     },
@@ -70,7 +70,7 @@ registerSuite("Issues", {
           assert.match(
             url,
             /[https://github.com/^*/^*/issues/100]/,
-            "We're at the GitHub issue page now."
+            "We're at the GitHub issue page now.",
           );
         });
     },
@@ -78,7 +78,7 @@ registerSuite("Issues", {
     "NSFW images are blurred"() {
       return FunctionalHelpers.openPage(this, url("issues/396"), ".js-Issue")
         .findDisplayedByCssSelector(
-          ".js-Issue-commentList .js-Comment-content p"
+          ".js-Issue-commentList .js-Comment-content p",
         )
         .getAttribute("class")
         .then(function (className) {
@@ -90,7 +90,7 @@ registerSuite("Issues", {
     "Clicking NSFW images toggles between blurry and not-blurry"() {
       return FunctionalHelpers.openPage(this, url("issues/396"), ".js-Issue")
         .findDisplayedByCssSelector(
-          ".js-Issue-commentList .js-Comment-content p"
+          ".js-Issue-commentList .js-Comment-content p",
         )
         .getAttribute("class")
         .then(function (className) {
@@ -124,7 +124,7 @@ registerSuite("Issues", {
           assert.equal(
             text,
             "www.prudential.com.sg - Text rendering missing",
-            "The title has been concatenated."
+            "The title has been concatenated.",
           );
         })
         .end();

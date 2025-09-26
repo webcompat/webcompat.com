@@ -17,7 +17,7 @@ registerSuite("New Issue Page", {
       return FunctionalHelpers.openPage(
         this,
         url("issues/new"),
-        ".js-Navbar-link"
+        ".js-Navbar-link",
       )
         .findByCssSelector(".js-Navbar-link")
         .getVisibleText()

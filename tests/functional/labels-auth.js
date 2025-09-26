@@ -26,7 +26,7 @@ registerSuite("Labels (auth)", {
         this,
         url("issues/2"),
         ".js-LabelEditorLauncher",
-        true /* longerTimeout */
+        true /* longerTimeout */,
       )
         .findByCssSelector(".js-LabelEditorLauncher")
         .click()
@@ -50,7 +50,7 @@ registerSuite("Labels (auth)", {
         this,
         url("issues/2"),
         ".js-LabelEditorLauncher",
-        true /* longerTimeout */
+        true /* longerTimeout */,
       )
         .findByCssSelector("body")
         .type("l")
@@ -72,7 +72,7 @@ registerSuite("Labels (auth)", {
         this,
         url("issues/2"),
         ".js-LabelEditorLauncher",
-        true /* longerTimeout */
+        true /* longerTimeout */,
       )
         .findByCssSelector(".js-LabelEditorLauncher")
         .click()
@@ -95,7 +95,7 @@ registerSuite("Labels (auth)", {
         this,
         url("issues/2"),
         ".js-LabelEditorLauncher",
-        true /* longerTimeout */
+        true /* longerTimeout */,
       )
         .execute(() => {
           document.querySelector(".js-LabelEditorLauncher").click();
@@ -117,7 +117,7 @@ registerSuite("Labels (auth)", {
         this,
         url("issues/100"),
         ".js-LabelEditorLauncher",
-        true /* longerTimeout */
+        true /* longerTimeout */,
       )
         .findByCssSelector(".js-LabelEditorLauncher")
         .click()
@@ -127,14 +127,14 @@ registerSuite("Labels (auth)", {
         .end()
         .sleep(1000)
         .findAllByXpath(
-          '//label[contains (@class, "label-editor-list-item") and not(@style="display: none;")]'
+          '//label[contains (@class, "label-editor-list-item") and not(@style="display: none;")]',
         )
         .then(function (elements) {
           count = elements.length;
           assert.deepEqual(
             1,
             count,
-            "Entering label name in search box filters to matching label"
+            "Entering label name in search box filters to matching label",
           );
         })
         .end();

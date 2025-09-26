@@ -64,7 +64,7 @@ registerSuite("Comments (auth)", {
             allCommentsLength = elms.length;
             assert(
               originalCommentsLength < allCommentsLength,
-              "Comment was successfully left."
+              "Comment was successfully left.",
             );
           })
       );
@@ -90,7 +90,7 @@ registerSuite("Comments (auth)", {
           allCommentsLength = elms.length;
           assert(
             originalCommentsLength === allCommentsLength,
-            "Comment was not successfully left."
+            "Comment was not successfully left.",
           );
         });
     },
@@ -99,7 +99,7 @@ registerSuite("Comments (auth)", {
       return FunctionalHelpers.openPage(
         this,
         url("issues/100"),
-        ".js-Comment-text"
+        ".js-Comment-text",
       )
         .findByCssSelector(".js-Comment-text")
         .type("g")
@@ -116,7 +116,7 @@ registerSuite("Comments (auth)", {
       return FunctionalHelpers.openPage(
         this,
         url("issues/100"),
-        ".js-Comment-text"
+        ".js-Comment-text",
       )
         .findByCssSelector(".js-Comment-text")
         .type("l")

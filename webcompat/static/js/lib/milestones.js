@@ -18,7 +18,7 @@ const MilestoneEditorView = CategoryEditorView.extend({
     // We try to make sure only one milestone is set
     // enumerate all checked milestones and uncheck the others.
     var checked = this.$el.find(
-      'input[type=checkbox][data-remotename^="milestone"]:checked'
+      'input[type=checkbox][data-remotename^="milestone"]:checked',
     );
     _.each(checked, function (item) {
       if (item !== evt.target) {
@@ -39,7 +39,7 @@ const MilestoneEditorView = CategoryEditorView.extend({
     _.defer(
       _.bind(function () {
         this.$el.find(".js-MilestoneEditor-search").focus();
-      }, this)
+      }, this),
     );
     return this;
   },

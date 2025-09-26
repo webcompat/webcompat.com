@@ -34,8 +34,8 @@ intern.registerPlugin("checkServer", function () {
             or
            \x1b[32m python run.py -t\x1b[0m
             =======================================================
-            `
-              )
+            `,
+              ),
             );
           } else {
             resolve("All is well!");
@@ -43,7 +43,7 @@ intern.registerPlugin("checkServer", function () {
         } catch (e) {
           console.log(e);
           reject(
-            new Error("Intern checkServer has failed trying to parse json")
+            new Error("Intern checkServer has failed trying to parse json"),
           );
         }
       });
@@ -57,8 +57,8 @@ intern.registerPlugin("checkServer", function () {
         ======================================================
         Intern checkServer Connection Error: ${err}
         ======================================================
-        `
-        )
+        `,
+        ),
       );
     });
     request.end();
