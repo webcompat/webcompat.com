@@ -318,6 +318,7 @@ registerSuite("Issue-list", {
           .execute(function () {
             history.back();
           })
+          .sleep(500)
           .getCurrentUrl()
           .then(function (currUrl) {
             assert.include(
