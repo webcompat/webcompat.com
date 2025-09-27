@@ -8,11 +8,7 @@
   "tunnel": "selenium",
   "tunnelOptions": {
     "drivers": [
-      "firefox",
-      {
-        "name": "chrome",
-        "version": "2.44"
-      }
+      "firefox"
     ]
   },
   "environments": [
