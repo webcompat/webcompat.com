@@ -16,7 +16,8 @@ jobs:
     working_directory: ~/repo
 
     steps:
-      - browser-tools/install_browser_tools
+      - browser-tools/install_browser_tools:
+          chrome_version: 114.0.5735.90
       - checkout
       # Download and cache dependencies
       - restore_cache:
