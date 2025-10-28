@@ -39,7 +39,7 @@ if PRODUCTION:
     ANONYMOUS_REPORTING_ENABLED = strtobool(
         os.environ.get("PROD_ANON_REPORTING", "off")
     )
-    BUGBUG_HTTP_SERVER = "https://bugbug.herokuapp.com"
+    BUGBUG_HTTP_SERVER = "https://bugbug.moz.tools"
     CLASSIFIER_PATH = "needsdiagnosis/predict/github/webcompat/web-bugs-private"  # noqa
     AUTOCLOSED_MILESTONE_ID = 15
     ES_URL = os.environ.get('ES_URL')
@@ -61,7 +61,7 @@ if STAGING:
     ANONYMOUS_REPORTING_ENABLED = strtobool(
         os.environ.get("STAGING_ANON_REPORTING", "off")
     )
-    BUGBUG_HTTP_SERVER = "https://bugbug.herokuapp.com"
+    BUGBUG_HTTP_SERVER = "https://bugbug.moz.tools"
     CLASSIFIER_PATH = "needsdiagnosis/predict/github/webcompat/webcompat-tests-private"  # noqa
     AUTOCLOSED_MILESTONE_ID = 5
     ES_URL = os.environ.get('ES_URL')
