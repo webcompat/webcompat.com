@@ -4,6 +4,11 @@
 2. New features: affect minor number
 3. API endpoint changes or (major) dependency version updates: affect major number
 
+## 51.2.0 - 2025-10-28
+
+* Fixes #3836 - Update bugbug URL to https://bugbug.moz.tools [Pull #3837](https://github.com/webcompat/webcompat.com/pull/3837)
+* Fixes #3829 - Migrate to Prettier v3 [Pull #3830](https://github.com/webcompat/webcompat.com/pull/3830)
+
 ## 51.1.0 - 2023-10-12
 
 * Fixes #3785 - Prefill description from the new in-product reporter [Pull #3788](https://github.com/webcompat/webcompat.com/pull/3788)
